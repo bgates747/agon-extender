@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — subtask review
+- Status: Complete — approved by the Author on 2026-08-20
 
 ## Scope
 
@@ -327,81 +327,11 @@ inline marker must identify the upstream project and pinned version or commit,
 the observed failure, any upstream issue or source location, the local remedy,
 and the condition under which the remedy may be removed.
 
-### SETUP-001.2 — Build the VDP architecture précis
-
-- Status: Approved for planning; not started
-- Create a reusable VDP architecture subject précis. Its durable location will
-  be selected when that documentation work begins. It should
-  describe the official VDP project rather than prescribe Extender-specific
-  implementation work.
-
-#### Pass A — Project and coding structure
-
-1. Map the official VDP directory and filename structure, including the purpose
-   and ownership of each major directory and important root file.
-2. Explain how PlatformIO discovers, configures, compiles, links, and packages
-   the firmware, and identify the roles of `platformio.ini`, environments,
-   framework configuration, libraries, source filters, and generated outputs.
-3. Describe the project's coding structure: entry points, translation units,
-   headers, global/shared state, classes, modules, libraries, configuration,
-   and conditional compilation.
-4. Distinguish upstream Agon-owned code, third-party code such as FabGL/vdp-gl,
-   generated material, and target- or board-specific code.
-5. Explain the C/C++ and embedded-development concepts in plain language, with
-   concrete file examples and SQL/eZ80 analogies where helpful.
-6. Record exact links to the official documentation and source files supporting
-   each major conclusion. Include only short excerpts needed to remove
-   ambiguity.
-
-#### Pass B — Runtime architecture and integration surfaces
-
-1. Trace startup from reset/framework entry through VDP initialization and the
-   steady-state main loop or task structure.
-2. Identify external interfaces and contracts, including communication with
-   MOS/eZ80, serial protocols, keyboard and mouse input, video output, audio
-   output, storage or filesystem use, debug/programming interfaces, and any
-   network-related facilities already present.
-3. Trace the major input paths: where bytes, commands, events, and assets enter;
-   how they are parsed or dispatched; and which state or subsystem consumes
-   them.
-4. Trace the major output paths: framebuffer/video generation, audio samples,
-   keyboard or mouse responses, protocol replies, diagnostics, and firmware
-   update behavior.
-5. Identify major insertion points for ESP32-P4 portability, board adaptation,
-   Extender transports, Ethernet/browser presentation, P4-local storage, and
-   future extended functions.
-6. Classify each insertion point as an existing abstraction, a narrow patch, a
-   target-specific replacement, or a likely upstream conflict. Explain why.
-7. Identify global state, timing assumptions, concurrency/tasks, interrupts,
-   buffering, ownership, memory constraints, and hardware dependencies that
-   could make a superficially simple port unsafe.
-8. Produce small control-flow and data-flow diagrams only where they make the
-   architecture materially easier to understand.
-
-#### Teaching and review deliverables
-
-1. Maintain a glossary of C/C++, PlatformIO, ESP-IDF, and software-architecture
-   terms encountered during the analysis.
-2. For every major subsystem, answer: what it does, where it starts, what data
-   enters, what data leaves, what state it owns, what calls it, and what it
-   calls.
-3. Separate verified facts from interpretation, recommendations, and unresolved
-   questions.
-4. Summarize findings with the Author in manageable sections and invite
-   questions before using them to make Extender architecture decisions.
-5. Stop for Author review of the completed précis before translating its
-   findings into a porting or modification plan.
-
 ## Dependencies and references
 
 - Official documentation: [agon-docs](https://github.com/AgonPlatform/agon-docs)
 - Official VDP source: [agon-vdp](https://github.com/AgonPlatform/agon-vdp)
 - Official MOS source: [agon-mos](https://github.com/AgonPlatform/agon-mos)
-
-## Task précis
-
-SETUP-001.2 will create the reusable VDP architecture précis. Task-specific
-setup findings and instructions remain in this file.
 
 ## Decisions and assumptions
 
@@ -433,17 +363,3 @@ setup findings and instructions remain in this file.
 | SETUP-D008 | Hybrid CMake boundary | Accepted | Start without project-authored CMake; add only the minimum proven necessary | `docs/decisions/ADR-0008-minimal-cmake-boundary.md` |
 | SETUP-D009 | PlatformIO command wrapper | Accepted | Transparent `scripts/vdp-pio.sh` pass-through using root `.venv` | `docs/decisions/ADR-0009-platformio-wrapper.md` |
 | SETUP-D010 | CPU frequency | Superseded by evidence | Forced 400 MHz rejected on rev 1.3; use 360 MHz pending an amended ADR | `docs/decisions/ADR-0010-cpu-frequency.md` |
-
-## Unresolved questions
-
-1. Additional implementation subtasks remain to be developed and reviewed.
-2. The depth and boundaries of the VDP architecture précis will be refined as
-   Pass A reveals the actual upstream structure.
-
-## Affected implementation
-
-To be determined during subtask review.
-
-## Validation gates
-
-To be determined during subtask review.
