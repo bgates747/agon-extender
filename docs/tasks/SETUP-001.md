@@ -275,6 +275,30 @@ Corrections and findings:
    binary contains the source identity and temporary unqualified-build marker;
    it is not the qualification binary.
 
+#### Canary r02 physical result and r03 correction
+
+Run `SETUP-001-2026-08-20-22-18-02Z` built r02 from clean committed candidate
+`a350cda1c6f1bbd33edba7c46e041a581df2f2e5`, verified its combined-image
+offsets and embedded build ID, and passed staged-hash, erase, write-hash, and
+independent `verify_flash` checks. No pre-flash backup was taken, as directed.
+
+The physical result rejected r02. QIO at 80 MHz, 16 MiB flash, the OTA layout,
+and 32 MiB hexadecimal PSRAM at 200 MHz all initialized successfully. On every
+boot, immediately after `SPI SRAM memory test OK`, ESP-IDF asserted at
+`esp_clk_init clk.c:142 (res)` and rebooted. The four 12-second captures contain
+38 occurrences of that same assertion; the application canary was never
+reached. This demonstrates that the upstream pre-v3 400 MHz warning applies to
+the attached rev 1.3 device despite the board vendor's nominal 400 MHz rating.
+
+Recovery reused the previously staged r01 combined image. Write verification,
+independent flash verification, and a captured boot all passed; the board is
+stable and usable at 360 MHz. The complete result and raw-log hashes are in
+`tests/runs/SETUP-001-2026-08-20-22-18-02Z/manifest.yaml`.
+
+R03 makes the safe response explicit rather than relying on an implicit
+default: it disables the pre-v3 override, selects 360 MHz, retains the corrected
+USB Serial/JTAG application report, and introduces qualification procedure r03.
+
 No inherited upstream defect has yet required a local patch. If one does, its
 inline marker must identify the upstream project and pinned version or commit,
 the observed failure, any upstream issue or source location, the local remedy,
@@ -385,7 +409,7 @@ setup findings and instructions remain in this file.
 | SETUP-D007 | Firmware partition layout | Accepted | Two 7 MiB OTA slots, rollback, no factory app, remaining space reserved | `docs/decisions/ADR-0007-flash-partition-strategy.md` |
 | SETUP-D008 | Hybrid CMake boundary | Accepted | Start without project-authored CMake; add only the minimum proven necessary | `docs/decisions/ADR-0008-minimal-cmake-boundary.md` |
 | SETUP-D009 | PlatformIO command wrapper | Accepted | Transparent `scripts/vdp-pio.sh` pass-through using root `.venv` | `docs/decisions/ADR-0009-platformio-wrapper.md` |
-| SETUP-D010 | CPU frequency | Accepted | Qualify vendor-rated 400 MHz; retain 360 MHz as diagnostic fallback | `docs/decisions/ADR-0010-cpu-frequency.md` |
+| SETUP-D010 | CPU frequency | Superseded by evidence | Forced 400 MHz rejected on rev 1.3; use 360 MHz pending an amended ADR | `docs/decisions/ADR-0010-cpu-frequency.md` |
 
 ## Unresolved questions
 

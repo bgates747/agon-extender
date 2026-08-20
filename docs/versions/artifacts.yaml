@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r02
-updated_at: 2026-08-20T22:10:41Z
+registry_revision: r03
+updated_at: 2026-08-20T22:24:00Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -17,7 +17,7 @@ artifacts:
   - artifact_id: setup-001-canary
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: setup-001-canary-r02
+    latest_identity: setup-001-canary-r03
     status: candidate
     variants:
       - olimex-p4-devkit
@@ -26,11 +26,13 @@ artifacts:
       - Revision r01 was rejected after physical qualification reported 360 MHz instead of 400 MHz.
       - Revision r01 also sent Arduino Serial output to UART0 rather than USB Serial/JTAG.
       - Revision r02 explicitly selects the pre-v3 400 MHz exception and reports through ESP-IDF logging.
+      - Revision r02 was rejected by SETUP-001-2026-08-20-22-18-02Z after the forced 400 MHz clock initialization asserted on every boot.
+      - Revision r03 retains USB Serial/JTAG logging but explicitly returns rev 1.3 silicon to 360 MHz.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile
     identity_scheme: revision
-    latest_identity: olimex-p4-devkit-profile-r02
+    latest_identity: olimex-p4-devkit-profile-r03
     status: candidate
     variants:
       - rev-d1-pre-v3
@@ -38,6 +40,7 @@ artifacts:
     notes:
       - Revision r01 did not propagate its 400 MHz board declaration into ESP-IDF Kconfig.
       - Revision r02 explicitly enables ESP-IDF's pre-v3 400 MHz qualification gate.
+      - Revision r02 was rejected on this rev 1.3 board; revision r03 removes the unsafe gate and explicitly selects 360 MHz.
 
   - artifact_id: p4-ota-partition-layout
     kind: flash_layout
@@ -50,12 +53,13 @@ artifacts:
   - artifact_id: p4-bringup-procedure
     kind: test_procedure
     identity_scheme: revision
-    latest_identity: p4-bringup-procedure-r02
+    latest_identity: p4-bringup-procedure-r03
     status: candidate
     variants: []
     description: Identity-check, flash, capture, verify, reset-stability, and recovery procedure for P4 qualification.
     notes:
       - Revision r02 deliberately omits flash backup because the prior firmware is reproducible from the legacy project.
+      - Revision r03 changes the required CPU observation to the proven-safe 360 MHz setting.
 
   - artifact_id: light2-harness
     kind: wiring_harness

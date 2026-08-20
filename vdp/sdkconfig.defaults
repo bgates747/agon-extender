@@ -2,16 +2,15 @@
 CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y
 CONFIG_ESP32P4_REV_MIN_100=y
 
-# Deliberate pre-v3 exception: ESP-IDF 5.5.5 defaults revision <3 silicon to
-# 360 MHz and hides the 400 MHz choice unless this experimental gate is set.
-# Provenance: components/esp_system/port/soc/esp32p4/Kconfig.cpu in the pinned
-# ESP-IDF package. Its warning says 400 MHz requires additionally qualified
-# chips. ADR-0010 accepts qualification at Olimex's vendor-rated 400 MHz, with
-# 360 MHz retained as the diagnostic fallback. Do not copy this exception to a
-# different P4 board or silicon revision without a fresh decision and test.
-CONFIG_ESP_FORCE_400MHZ_ON_REV_LESS_V3=y
-CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_400=y
-CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=400
+# ESP-IDF 5.5.5 deliberately defaults revision <3 P4 silicon to 360 MHz.
+# Qualification run SETUP-001-2026-08-20-22-18-02Z proved that overriding its
+# pre-v3 safety gate to request 400 MHz makes this rev 1.3 board assert in
+# esp_clk_init (clk.c:142) on every boot. Keep 360 MHz explicit here. The
+# rejected 400 MHz experiment and upstream Kconfig provenance are recorded in
+# the run manifest and ADR-0010; do not re-enable it without a new candidate.
+# CONFIG_ESP_FORCE_400MHZ_ON_REV_LESS_V3 is not set
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_360=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=360
 
 # External flash: 16 MiB, QIO at 80 MHz. This remains subject to the physical
 # qualification gate in ADR-0005. Do not "correct" a generated DIO image header

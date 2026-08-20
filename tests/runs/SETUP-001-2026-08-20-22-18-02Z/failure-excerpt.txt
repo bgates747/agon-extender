@@ -1,0 +1,17 @@
+Representative excerpt from each repeated r02 boot cycle:
+
+I (...) qio_mode: Enabling QIO for flash chip WinBond
+I (...) boot.esp32p4: SPI Speed      : 80MHz
+I (...) boot.esp32p4: SPI Mode       : QIO
+I (...) boot.esp32p4: SPI Flash Size : 16MB
+I (...) boot: Loaded app from partition at offset 0x20000
+I (...) esp_psram: Found 32MB PSRAM device
+I (...) esp_psram: Speed: 200MHz
+I (...) esp_psram: SPI SRAM memory test OK
+
+assert failed: esp_clk_init clk.c:142 (res)
+...
+Rebooting...
+
+The complete raw captures are retained with the bench run. This tracked excerpt
+contains no private network path or unique hardware address.

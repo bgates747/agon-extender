@@ -1,0 +1,66 @@
+schema_version: 1
+run_id: SETUP-001-2026-08-20-22-18-02Z
+task_id: SETUP-001
+outcome: rejected
+
+candidate:
+  commit: a350cda1c6f1bbd33edba7c46e041a581df2f2e5
+  source_identity: setup-001-canary-r02
+  build_id: setup-001-canary-r02-b2026-08-20-22-15-57Z
+  board_profile: olimex-p4-devkit-profile-r02
+  partition_layout: p4-ota-partition-layout-r01
+  procedure: p4-bringup-procedure-r02
+  platform: pioarduino-55.03.31-1
+  esp_idf: 5.5.5
+
+build:
+  factory_image_bytes: 439904
+  factory_image_sha256: c0805b4d32251d5db8ffaacc94baba00673e446a532380ec68c23a1afb1cc04d
+  firmware_sha256: 2bfc50c4414aadba89d21132a1f5594fc94532d00a531647e093b31512536cb7
+  bootloader_sha256: aa643da2d409712b9fda0633440898d351752e49d5269c1a675e41f32346e2bc
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  embedded_build_id_verified: true
+  combined_image_offsets_verified: true
+  generated_cpu_configuration: 400_mhz_forced_on_pre_v3
+  workspace_note: >-
+    Candidate commit was clean before the qualification build. An unrelated
+    untracked strategic-plan.md appeared afterward and was not read or changed.
+
+device:
+  board: Olimex ESP32-P4-DevKit Rev D1
+  chip: ESP32-P4 revision 1.3
+  stable_usb_identity_verified: true
+  flash_backup_taken: false
+
+deployment:
+  staged_hash_matched: true
+  erase_succeeded: true
+  write_hash_verified: true
+  independent_verify_flash_succeeded: true
+
+observations:
+  qio_80_mhz: pass
+  flash_16_mib: pass
+  ota_0_at_0x20000: pass
+  hex_psram_32_mib_200_mhz: pass
+  psram_memory_test: pass
+  cpu_400_mhz: fail
+  application_canary_reached: fail
+  reset_stability: fail
+  failure: >-
+    Every capture repeatedly asserted at esp_clk_init clk.c:142 immediately
+    after the successful PSRAM memory test, then rebooted. Across the four
+    12-second captures the assertion occurred 38 times.
+
+raw_log_sha256:
+  boot_initial: 8ec1ac8c4ed6446487b2b0f62635707d0efce3d0d2c49ef2168d8736aaef544e
+  boot_repeat_1: def7d19b9de418efe0ff65964f69739cd7fcafc497fc70f1a6841ec23ee677df
+  boot_repeat_2: d56dcb0eeb9ce926cd5cefa5def5cdef26d4d7dae9e9fc45d8fb2b470bd1ac23
+  boot_repeat_3: 829c928741d85b816be2cebf2887c72fc21a5f115324a68de54baf858a2a0f0c
+
+recovery:
+  image: setup-001-canary-r01
+  image_sha256: d36d016cd04ba26fd7dd8238add6496608ebfbe366be8fb45c754e5d43e455a7
+  write_hash_verified: true
+  independent_verify_flash_succeeded: true
+  booted_at_360_mhz_without_assertion: true

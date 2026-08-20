@@ -6,7 +6,7 @@
 // generated-identity interface when the official VDP source is imported.
 #pragma once
 
-#define AGON_EXTENDER_SOURCE_ID "setup-001-canary-r02"
+#define AGON_EXTENDER_SOURCE_ID "setup-001-canary-r03"
 
 #if defined(AGON_EXTENDER_QUALIFICATION_BUILD) && \
     !defined(AGON_EXTENDER_BUILD_ID)

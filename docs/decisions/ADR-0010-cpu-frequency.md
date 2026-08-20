@@ -1,8 +1,8 @@
-# ADR-0010 — Qualify the vendor-rated 400 MHz CPU frequency
+# ADR-0010 — Use 360 MHz on the current pre-v3 P4
 
 ## Status
 
-Accepted as a physical-board qualification candidate.
+Amended after failed physical qualification on 2026-08-20.
 
 ## Context
 
@@ -15,37 +15,46 @@ Extender's intended graphics, media, transport, and network workloads benefit
 from the board's full rated processing capability, but a successful boot alone
 does not establish sustained stability.
 
+Pinned ESP-IDF 5.5.5 also warns that forcing 400 MHz on pre-v3 silicon requires
+an additionally qualified chip and otherwise defaults this silicon to 360 MHz.
+
+Qualification run `SETUP-001-2026-08-20-22-18-02Z` forced 400 MHz on the
+attached rev 1.3 chip. All four captures passed flash and PSRAM initialization,
+then asserted in `esp_clk_init` before the application started and entered a
+reboot loop. Restoring the 360 MHz r01 canary restored stable operation.
+
 ## Decision
 
-Configure the primary board environment for 400 MHz and qualify it under
-sustained physical-board load. Retain 360 MHz as a controlled diagnostic
-fallback, not as the production default.
+Configure this pre-v3 board environment explicitly for 360 MHz. Do not enable
+ESP-IDF's pre-v3 400 MHz force gate for this physical board. A future silicon
+revision or separately proven hardware variant may receive its own 400 MHz
+profile and qualification decision.
 
 ## Qualification gate
 
-The canary must report the runtime CPU frequency and exercise:
+The 360 MHz canary must report runtime CPU frequency and exercise:
 
 - sustained computation on both high-performance cores where practical;
 - flash-intensive operation;
 - PSRAM allocation, access, and integrity testing; and
 - representative mixed CPU, flash, and PSRAM load.
 
-Any instability observed at 400 MHz must be reproduced with the same test at
-360 MHz before it is classified as frequency-related or attributed elsewhere.
+The 400 MHz setting is already rejected as non-bootable on this rev 1.3 board.
+It must not be reintroduced merely because a later workload appears stable at
+360 MHz.
 
 ## Rationale
 
-1. 400 MHz is the board vendor's published operating frequency rather than an
-   experimental overclock.
-2. The legacy project provides prior evidence of operation at that frequency on
-   the physical board.
-3. Multimedia and transport workloads can use the additional performance.
-4. A defined 360 MHz comparison prevents frequency assumptions from obscuring
-   diagnosis during bring-up.
+1. Repeated direct evidence outweighs the nominal vendor frequency and legacy
+   configuration assumption for this exact silicon revision.
+2. 360 MHz follows ESP-IDF's pre-v3 safety default and boots reliably.
+3. Separate profiles preserve a path to 400 MHz on later or qualified silicon
+   without weakening this board's baseline.
 
 ## Consequences
 
-1. The custom board definition uses `f_cpu = 400000000L`.
-2. Production qualification requires stress evidence, not merely a boot log.
-3. A frequency-correlated failure may supersede this decision with a lower
-   production setting without changing the broader firmware architecture.
+1. The generated ESP-IDF configuration must select 360 MHz explicitly.
+2. The custom board's PlatformIO declaration may remain a descriptive upstream
+   compatibility field, but it is not accepted as proof of runtime frequency;
+   generated Kconfig and boot evidence govern.
+3. Performance estimates for this hardware variant must assume 360 MHz.

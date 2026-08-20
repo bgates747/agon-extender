@@ -1,6 +1,6 @@
 # P4 Canary Qualification — r02
 
-Status: Candidate
+Status: Rejected by run `SETUP-001-2026-08-20-22-18-02Z`
 
 ## Purpose
 
@@ -61,3 +61,8 @@ Pass only if the initial boot and all three reset repetitions satisfy every
 required observation. Preserve failed evidence. Restore legacy firmware only
 if needed to return the board to a usable state; restoration is recovery, not
 part of a passing run.
+
+The run failed reproducibly: all four captures reached the PSRAM memory-test
+success message and then repeatedly asserted in `esp_clk_init` at `clk.c:142`.
+The application canary was never reached. The prior 360 MHz r01 canary was
+restored and independently verified to leave the board usable.
