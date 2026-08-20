@@ -31,7 +31,7 @@ The wrapper:
    directory;
 2. requires the repository root `.venv/bin/pio` executable;
 3. requires `vdp/platformio.ini`;
-4. selects `vdp/` as the PlatformIO project directory;
+4. runs PlatformIO with `vdp/` as its working project directory;
 5. reports the selected executable and project; and
 6. forwards all caller-supplied PlatformIO arguments unchanged.
 
@@ -39,7 +39,7 @@ It does not activate a shell environment, install dependencies, choose a serial
 port, build, clean, upload, or monitor unless the caller explicitly supplies
 the corresponding PlatformIO arguments.
 
-Direct invocation such as `.venv/bin/pio run --project-dir vdp` remains a
+Direct invocation such as `(cd vdp && ../.venv/bin/pio run)` remains a
 supported equivalent.
 
 ## Rationale

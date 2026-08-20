@@ -4,6 +4,7 @@
 # Local Codex handoff (may contain machine-specific paths and instructions)
 /AGENTS.md
 /agents/
+/HARDWARE.local.md
 
 # Project-local generated emulator profile
 /.emulator/
@@ -12,6 +13,16 @@
 .pio/
 .pioenvs/
 .piolibdeps/
+/vdp/managed_components/
+# ESP-IDF emits an environment-specific sdkconfig beside our tracked defaults.
+# The exception is essential: the broad generated-file rule also matches the
+# source-controlled file named sdkconfig.defaults.
+/vdp/sdkconfig.*
+!/vdp/sdkconfig.defaults
+# In this hybrid build PlatformIO generates these two CMake entry points. They
+# are intentionally not project-authored; see ADR-0008.
+/vdp/CMakeLists.txt
+/vdp/video/CMakeLists.txt
 .cache/
 .clang_complete
 .gcc-flags.json

@@ -1,8 +1,8 @@
 # Agon Extender Architecture
 
 This document describes the current accepted architecture. Open questions and
-implementation work belong in `TODO.md` and the corresponding local task-detail
-files rather than here.
+implementation work belong in `TODO.md` and the corresponding tracked files
+under `docs/tasks/` rather than here.
 
 ## VDP firmware lineage
 

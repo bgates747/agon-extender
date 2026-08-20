@@ -1,0 +1,3 @@
+# Used by scripts/validate-version-records.py. Pinning matches the parser
+# already supplied by the current PlatformIO environment.
+PyYAML==6.0.3

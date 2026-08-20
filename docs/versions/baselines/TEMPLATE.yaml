@@ -1,0 +1,34 @@
+# A baseline names an approved combination. Copy this file to <baseline-id>.yaml
+# and replace required nulls; do not edit an accepted baseline in place.
+schema_version: 1
+
+baseline:
+  baseline_id: null
+  revision: null
+  status: draft
+  description: null
+  compatibility_scope: null
+
+artifacts:
+  - artifact_id: null
+    identity: null
+    build_id: null
+    variant: null
+
+external_dependencies:
+  - name: null
+    identity: null
+    role: null
+
+compatibility:
+  requires: []
+  known_incompatible: []
+  unqualified: []
+
+qualification:
+  procedure:
+    artifact_id: null
+    identity: null
+  run_ids: []
+
+notes: []

@@ -1,0 +1,102 @@
+# Registry of project-controlled artifact lineages. This file names artifacts;
+# exact build provenance and test combinations belong in their own manifests.
+schema_version: 1
+registry_revision: r02
+updated_at: 2026-08-20T22:10:41Z
+
+artifacts:
+  - artifact_id: extender-vdp
+    kind: firmware
+    identity_scheme: semantic_version
+    latest_identity: null
+    status: draft
+    variants:
+      - olimex-p4-devkit
+    description: Production Extender VDP firmware lineage.
+
+  - artifact_id: setup-001-canary
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: setup-001-canary-r02
+    status: candidate
+    variants:
+      - olimex-p4-devkit
+    description: GPIO-inert hybrid-framework and board bring-up canary.
+    notes:
+      - Revision r01 was rejected after physical qualification reported 360 MHz instead of 400 MHz.
+      - Revision r01 also sent Arduino Serial output to UART0 rather than USB Serial/JTAG.
+      - Revision r02 explicitly selects the pre-v3 400 MHz exception and reports through ESP-IDF logging.
+
+  - artifact_id: olimex-p4-devkit-profile
+    kind: board_profile
+    identity_scheme: revision
+    latest_identity: olimex-p4-devkit-profile-r02
+    status: candidate
+    variants:
+      - rev-d1-pre-v3
+    description: PlatformIO and ESP-IDF profile for the current Olimex development board.
+    notes:
+      - Revision r01 did not propagate its 400 MHz board declaration into ESP-IDF Kconfig.
+      - Revision r02 explicitly enables ESP-IDF's pre-v3 400 MHz qualification gate.
+
+  - artifact_id: p4-ota-partition-layout
+    kind: flash_layout
+    identity_scheme: revision
+    latest_identity: p4-ota-partition-layout-r01
+    status: experimental
+    variants: []
+    description: Dual 7 MiB OTA layout with rollback, core dumps, and reserved capacity.
+
+  - artifact_id: p4-bringup-procedure
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: p4-bringup-procedure-r02
+    status: candidate
+    variants: []
+    description: Identity-check, flash, capture, verify, reset-stability, and recovery procedure for P4 qualification.
+    notes:
+      - Revision r02 deliberately omits flash backup because the prior firmware is reproducible from the legacy project.
+
+  - artifact_id: light2-harness
+    kind: wiring_harness
+    identity_scheme: revision
+    latest_identity: null
+    status: draft
+    variants:
+      - light2
+    description: Extender wiring harness for Agon Light 2 GPIO.
+
+  - artifact_id: console8-harness
+    kind: wiring_harness
+    identity_scheme: revision
+    latest_identity: null
+    status: draft
+    variants:
+      - console8
+    description: Extender wiring harness adapted to Console8 GPIO.
+
+  - artifact_id: forward-parallel-transport
+    kind: protocol
+    identity_scheme: semantic_version
+    latest_identity: null
+    status: draft
+    variants: []
+    description: One-way high-speed eZ80-to-P4 parallel transport contract.
+
+  - artifact_id: parallel-probe-map
+    kind: probe_map
+    identity_scheme: revision
+    latest_identity: null
+    status: draft
+    variants: []
+    description: Reusable logic-analyzer channel and probe assignment for the parallel transport.
+
+  - artifact_id: agon-transport-fixture
+    kind: test_program
+    identity_scheme: revision
+    latest_identity: null
+    status: draft
+    variants:
+      - light2
+      - console8
+    description: Agon-side software used to stimulate and validate Extender transports.

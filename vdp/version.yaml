@@ -1,0 +1,16 @@
+# Tracked source identity. Build IDs are injected and recorded separately; do
+# not put a timestamp here or edit this file without an approved revision.
+schema_version: 1
+artifact_id: setup-001-canary
+identity: setup-001-canary-r02
+status: candidate
+variant: olimex-p4-devkit
+
+configuration:
+  - artifact_id: olimex-p4-devkit-profile
+    identity: olimex-p4-devkit-profile-r02
+  - artifact_id: p4-ota-partition-layout
+    identity: p4-ota-partition-layout-r01
+
+compatibility:
+  requires: []

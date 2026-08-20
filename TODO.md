@@ -10,4 +10,9 @@ item is removed.
 - [ ] **SETUP-001 — Create the initial PlatformIO project**
   - Started: 2026-08-20 15:39 EDT
   - Finished: --
-  - Local details: [SETUP-001](agents/tasks/SETUP-001.md)
+  - Details: [SETUP-001](docs/tasks/SETUP-001.md)
+
+- [x] **SETUP-002 — Define human-readable project versioning**
+  - Started: 2026-08-20 17:34 EDT
+  - Finished: 2026-08-20 18:03 EDT
+  - Details: [SETUP-002](docs/tasks/SETUP-002.md)

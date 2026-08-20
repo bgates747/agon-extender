@@ -1,0 +1,62 @@
+# Physical board: Olimex ESP32-P4-DevKit Rev D1 with pre-v3 v1.3 silicon.
+CONFIG_ESP32P4_SELECTS_REV_LESS_V3=y
+CONFIG_ESP32P4_REV_MIN_100=y
+
+# Deliberate pre-v3 exception: ESP-IDF 5.5.5 defaults revision <3 silicon to
+# 360 MHz and hides the 400 MHz choice unless this experimental gate is set.
+# Provenance: components/esp_system/port/soc/esp32p4/Kconfig.cpu in the pinned
+# ESP-IDF package. Its warning says 400 MHz requires additionally qualified
+# chips. ADR-0010 accepts qualification at Olimex's vendor-rated 400 MHz, with
+# 360 MHz retained as the diagnostic fallback. Do not copy this exception to a
+# different P4 board or silicon revision without a fresh decision and test.
+CONFIG_ESP_FORCE_400MHZ_ON_REV_LESS_V3=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ_400=y
+CONFIG_ESP_DEFAULT_CPU_FREQ_MHZ=400
+
+# External flash: 16 MiB, QIO at 80 MHz. This remains subject to the physical
+# qualification gate in ADR-0005. Do not "correct" a generated DIO image header
+# to QIO: pinned pioarduino builder/main.py::_get_board_flash_mode deliberately
+# emits a ROM-compatible DIO header for QIO/QOUT builds; the second-stage
+# bootloader then enables configured QIO. Runtime logs must prove that handoff.
+CONFIG_ESPTOOLPY_FLASHMODE_QIO=y
+CONFIG_ESPTOOLPY_FLASHFREQ_80M=y
+CONFIG_ESPTOOLPY_FLASHSIZE_16MB=y
+CONFIG_ESPTOOLPY_FLASHSIZE="16MB"
+
+# Keep ESP-IDF's own flash manifest aligned with PlatformIO's custom table.
+# board_build.partitions alone generated the right packaged image but left
+# ESP-IDF's auxiliary flash_args at its default 0x10000 application offset.
+CONFIG_PARTITION_TABLE_CUSTOM=y
+CONFIG_PARTITION_TABLE_CUSTOM_FILENAME="partitions.csv"
+CONFIG_PARTITION_TABLE_FILENAME="partitions.csv"
+
+# In-package 32 MiB hexadecimal PSRAM at 200 MHz.
+CONFIG_IDF_EXPERIMENTAL_FEATURES=y
+CONFIG_SPIRAM=y
+CONFIG_SPIRAM_MODE_HEX=y
+CONFIG_SPIRAM_SPEED_200M=y
+CONFIG_SPIRAM_BOOT_INIT=y
+CONFIG_SPIRAM_USE_MALLOC=y
+CONFIG_SPIRAM_MEMTEST=y
+
+# The board is connected to the Pi through USB Serial/JTAG.
+# CONFIG_ESP_CONSOLE_UART_DEFAULT is not set
+CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG=y
+CONFIG_ESP_CONSOLE_SECONDARY_NONE=y
+
+# Two-slot update safety and compact flash crash evidence.
+CONFIG_BOOTLOADER_APP_ROLLBACK_ENABLE=y
+CONFIG_ESP_COREDUMP_ENABLE_TO_FLASH=y
+CONFIG_ESP_COREDUMP_DATA_FORMAT_ELF=y
+
+# Match the official VDP's performance-oriented build baseline.
+CONFIG_COMPILER_OPTIMIZATION_PERF=y
+CONFIG_LOG_DEFAULT_LEVEL_INFO=y
+
+# Required by Arduino-ESP32 when used as an ESP-IDF component. These are not
+# stylistic choices: pinned Arduino-ESP32's CMakeLists.txt rejects a tick rate
+# other than 1000, and Kconfig.projbuild says AUTOSTART supplies app_main() and
+# invokes the sketch's setup()/loop(). Without them configuration and linking,
+# respectively, failed.
+CONFIG_FREERTOS_HZ=1000
+CONFIG_AUTOSTART_ARDUINO=y

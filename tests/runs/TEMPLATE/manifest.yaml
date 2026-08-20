@@ -1,0 +1,79 @@
+# Copy this directory to tests/runs/<RUN-ID> before a decision-bearing run.
+# Required unknowns are null. Omit irrelevant optional sections after copying.
+schema_version: 1
+
+run:
+  run_id: null
+  task_id: null
+  started_at: null
+  ended_at: null
+  outcome: null
+  summary: null
+
+procedure:
+  artifact_id: null
+  identity: null
+  deviations: []
+
+artifacts_under_test:
+  - artifact_id: null
+    identity: null
+    build_id: null
+    variant: null
+    sha256: null
+
+base_hardware:
+  - role: null
+    manufacturer: null
+    model: null
+    manufacturer_revision: null
+    profile:
+      artifact_id: null
+      identity: null
+    specimen_alias: null
+
+connections:
+  harness:
+    artifact_id: null
+    identity: null
+    variant: null
+  breadboard:
+    artifact_id: null
+    identity: null
+  fixture:
+    artifact_id: null
+    identity: null
+  probe_map:
+    artifact_id: null
+    identity: null
+
+instrumentation:
+  - role: null
+    equipment_alias: null
+    manufacturer: null
+    model: null
+    hardware_revision: null
+    software:
+      name: null
+      version: null
+    settings: {}
+
+external_dependencies:
+  - name: null
+    identity: null
+    role: null
+
+compatibility_checked:
+  requirements: []
+  result: null
+
+observations: []
+
+evidence:
+  - filename: null
+    media_type: null
+    size_bytes: null
+    sha256: null
+    description: null
+
+corrections: []
