@@ -1,0 +1,100 @@
+# Local design and research notes (intentionally untracked)
+/notes/
+
+# PlatformIO
+.pio/
+.pioenvs/
+.piolibdeps/
+.cache/
+.clang_complete
+.gcc-flags.json
+
+# Python bytecode and caches
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.pyre/
+.hypothesis/
+.tox/
+.nox/
+.coverage
+.coverage.*
+htmlcov/
+coverage.xml
+
+# Python environments and packaging
+.venv/
+venv/
+env/
+ENV/
+build/
+dist/
+downloads/
+*.egg-info/
+.eggs/
+*.egg
+pip-wheel-metadata/
+
+# C/C++ build systems and generated files
+cmake-build-*/
+CMakeFiles/
+CMakeCache.txt
+cmake_install.cmake
+CTestTestfile.cmake
+compile_commands.json
+*.o
+*.obj
+*.a
+*.lib
+*.so
+*.so.*
+*.dylib
+*.dll
+*.exe
+*.out
+*.elf
+*.map
+*.hex
+*.bin
+*.d
+*.dep
+*.gcda
+*.gcno
+*.gcov
+
+# Debugger and profiling output
+*.dSYM/
+*.su
+*.profraw
+*.profdata
+gmon.out
+
+# Editors and IDEs
+.vscode/
+.idea/
+*.code-workspace
+*.swp
+*.swo
+*~
+
+# Operating-system metadata
+.DS_Store
+._*
+Thumbs.db
+Desktop.ini
+
+# Logs and temporary files
+*.log
+*.tmp
+*.temp
+*.bak
+*.orig
+*.rej
+
+# Local environment and secrets
+.env
+.env.*
+!.env.example
