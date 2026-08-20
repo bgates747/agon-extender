@@ -1,0 +1,67 @@
+schema_version: 1
+run_id: SETUP-001-2026-08-20-22-31-26Z
+task_id: SETUP-001
+outcome: passed
+
+candidate:
+  commit: 25697d3b39deed4fc671f50f50a26a3c70719f76
+  source_identity: setup-001-canary-r03
+  build_id: setup-001-canary-r03-b2026-08-20-22-27-00Z
+  board_profile: olimex-p4-devkit-profile-r03
+  partition_layout: p4-ota-partition-layout-r01
+  procedure: p4-bringup-procedure-r03
+  platform: pioarduino-55.03.31-1
+  esp_idf: 5.5.5
+
+build:
+  factory_image_bytes: 439904
+  factory_image_sha256: d5f1603d97e3e649330a2b8472b3268483d48a23dfc546d41130ae28f9910e58
+  firmware_sha256: db1c3996dd4bc7fdf7832b2478652e1e1c3b43bb5afbcbdee894bb79621396c9
+  bootloader_sha256: 8449812084633aa08e9520485b268b1ce4d6e9b9a76f2260b420868985357d1a
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  embedded_build_id_verified: true
+  combined_image_offsets_verified: true
+  generated_cpu_configuration: 360_mhz_explicit
+  stale_generated_config_guard: >-
+    The first post-clean build retained r02 Kconfig values because PlatformIO
+    clean does not remove sdkconfig.p4-canary. It was rejected before flashing;
+    the generated file was deleted and the committed defaults regenerated.
+  workspace_note: >-
+    The candidate commit contains all firmware inputs. An unrelated untracked
+    strategic-plan.md was deliberately excluded and left untouched.
+
+device:
+  board: Olimex ESP32-P4-DevKit Rev D1
+  chip: ESP32-P4 revision 1.3
+  stable_usb_identity_verified: true
+  flash_backup_taken: false
+
+deployment:
+  staged_hash_matched: true
+  erase_succeeded: true
+  write_hash_verified: true
+  independent_verify_flash_succeeded: true
+
+observations:
+  boot_capture_count: 4
+  qio_80_mhz: pass
+  flash_16_mib: pass
+  ota_0_at_0x20000: pass
+  hex_psram_32_mib_200_mhz: pass
+  psram_memory_test: pass
+  cpu_360_mhz: pass
+  exact_source_identity: pass
+  exact_build_identity: pass
+  no_extender_gpio: pass
+  reset_stability: pass
+  negative_error_scan: pass
+
+raw_log_sha256:
+  boot_initial: 71845099c3b9beaa4f97acad3a2607d573958c44d48e48f6e75f01f7e8b2f72a
+  boot_repeat_1: 3ff97eeabb111652fa5b864088338860e0e0b594db83639e997ce2b53d088be0
+  boot_repeat_2: 7a69f39ebe06a8ca273cef6e2323565c2c6e1c3221e5ee2d01631fef0599de87
+  boot_repeat_3: f3d73d4b8999ab31156eb8cf370e76b5ac50d15bfaf5318ff685687a50d4f95e
+
+final_state:
+  installed_firmware: setup-001-canary-r03-b2026-08-20-22-27-00Z
+  board_usable: true

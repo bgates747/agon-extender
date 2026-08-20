@@ -1,0 +1,19 @@
+All four captured boots contained the following observations (timestamps vary):
+
+chip revision: v1.3
+qio_mode: Enabling QIO for flash chip WinBond
+SPI Speed      : 80MHz
+SPI Mode       : QIO
+SPI Flash Size : 16MB
+Loaded app from partition at offset 0x20000
+Found 32MB PSRAM device
+Speed: 200MHz
+SPI SRAM memory test OK
+cpu freq: 360000000 Hz
+source_identity=setup-001-canary-r03
+build_id=setup-001-canary-r03-b2026-08-20-22-27-00Z
+No Extender GPIO is configured
+
+Each log produced zero matches for assertion, panic, reboot, abort, or memory
+test failure markers. Complete raw captures remain with the bench run; this
+summary contains no private network path or unique hardware address.

@@ -1,6 +1,6 @@
 # P4 Canary Qualification — r03
 
-Status: Candidate
+Status: Qualified by run `SETUP-001-2026-08-20-22-31-26Z`
 
 ## Purpose
 
@@ -16,8 +16,11 @@ after r02 proved that forcing 400 MHz on its rev 1.3 silicon is not bootable.
 - Pinned pioarduino `55.03.311`
 
 The candidate source and procedure must be committed before the qualification
-build. Inject a unique UTC build ID and preserve the exact commit, binary hash,
-size, generated SDK configuration, and workspace status.
+build. Delete the ignored generated `vdp/sdkconfig.p4-canary` before building:
+PlatformIO's clean target removes `.pio` but does not regenerate that file, so
+otherwise a prior candidate's Kconfig values can silently survive. Inject a
+unique UTC build ID and preserve the exact commit, binary hash, size, generated
+SDK configuration, and workspace status.
 
 Do not back up existing P4 flash. The prior firmware is reproducible from the
 retained legacy project. This does not weaken identity checks, write
@@ -38,3 +41,10 @@ check, erase/write/verify, initial capture, and three-reset repetition. Require:
 - no assertion, panic, memory-test failure, or reset loop in any capture.
 
 Pass only if all four boots satisfy every observation.
+
+## Outcome
+
+Run `SETUP-001-2026-08-20-22-31-26Z` passed. The initial boot and all three
+repeat resets satisfied every required observation, with no assertion, panic,
+memory-test failure, or reboot marker. The exact build and raw-log hashes are
+recorded in the run manifest.

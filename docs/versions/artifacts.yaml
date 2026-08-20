@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r03
-updated_at: 2026-08-20T22:24:00Z
+registry_revision: r04
+updated_at: 2026-08-20T22:34:00Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -18,7 +18,7 @@ artifacts:
     kind: experimental_firmware
     identity_scheme: revision
     latest_identity: setup-001-canary-r03
-    status: candidate
+    status: qualified
     variants:
       - olimex-p4-devkit
     description: GPIO-inert hybrid-framework and board bring-up canary.
@@ -28,12 +28,13 @@ artifacts:
       - Revision r02 explicitly selects the pre-v3 400 MHz exception and reports through ESP-IDF logging.
       - Revision r02 was rejected by SETUP-001-2026-08-20-22-18-02Z after the forced 400 MHz clock initialization asserted on every boot.
       - Revision r03 retains USB Serial/JTAG logging but explicitly returns rev 1.3 silicon to 360 MHz.
+      - Revision r03 passed initial boot plus three repeat resets in SETUP-001-2026-08-20-22-31-26Z.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile
     identity_scheme: revision
     latest_identity: olimex-p4-devkit-profile-r03
-    status: candidate
+    status: qualified
     variants:
       - rev-d1-pre-v3
     description: PlatformIO and ESP-IDF profile for the current Olimex development board.
@@ -41,12 +42,13 @@ artifacts:
       - Revision r01 did not propagate its 400 MHz board declaration into ESP-IDF Kconfig.
       - Revision r02 explicitly enables ESP-IDF's pre-v3 400 MHz qualification gate.
       - Revision r02 was rejected on this rev 1.3 board; revision r03 removes the unsafe gate and explicitly selects 360 MHz.
+      - Revision r03 physically qualified QIO 80 MHz, 16 MiB flash, 360 MHz CPU, and 32 MiB hexadecimal PSRAM at 200 MHz.
 
   - artifact_id: p4-ota-partition-layout
     kind: flash_layout
     identity_scheme: revision
     latest_identity: p4-ota-partition-layout-r01
-    status: experimental
+    status: qualified
     variants: []
     description: Dual 7 MiB OTA layout with rollback, core dumps, and reserved capacity.
 
@@ -54,12 +56,13 @@ artifacts:
     kind: test_procedure
     identity_scheme: revision
     latest_identity: p4-bringup-procedure-r03
-    status: candidate
+    status: qualified
     variants: []
     description: Identity-check, flash, capture, verify, reset-stability, and recovery procedure for P4 qualification.
     notes:
       - Revision r02 deliberately omits flash backup because the prior firmware is reproducible from the legacy project.
       - Revision r03 changes the required CPU observation to the proven-safe 360 MHz setting.
+      - Revision r03 passed all four boot captures in SETUP-001-2026-08-20-22-31-26Z.
 
   - artifact_id: light2-harness
     kind: wiring_harness

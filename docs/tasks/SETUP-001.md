@@ -68,8 +68,7 @@ identities to the affected artifacts and evidence.
 
 ### SETUP-001.1 — Inspect and reconcile project setup
 
-- Status: Initial physical canary completed with partial pass; pre-canary
-  firmware restored; CPU and Arduino USB-serial corrections required
+- Status: Complete — r03 qualified on the physical board at 360 MHz
 - Deliverable:
   [`SETUP-001.1 layout manifest`](SETUP-001.1-layout-manifest.md)
 - Inspect the official [Agon VDP](https://github.com/AgonPlatform/agon-vdp)
@@ -298,6 +297,30 @@ stable and usable at 360 MHz. The complete result and raw-log hashes are in
 R03 makes the safe response explicit rather than relying on an implicit
 default: it disables the pre-v3 override, selects 360 MHz, retains the corrected
 USB Serial/JTAG application report, and introduces qualification procedure r03.
+
+#### Canary r03 physical result
+
+Run `SETUP-001-2026-08-20-22-31-26Z` qualified r03. Before deployment, the
+generated-config inspection caught that PlatformIO's clean target had removed
+`.pio` but retained ignored `vdp/sdkconfig.p4-canary`, causing a first r03 build
+to inherit r02's forced 400 MHz configuration. That binary was not flashed.
+Deleting only the generated SDK config and rebuilding produced the required
+explicit 360 MHz configuration. Procedure r03 now calls out this mandatory
+regeneration step.
+
+The rebuilt image's embedded build ID, component hashes, sizes, and combined
+offsets passed inspection. Remote staging hash, erase, write-time hash check,
+and independent `verify_flash` all passed. The initial boot and three repeat
+resets consistently reported rev 1.3, QIO at 80 MHz, 16 MiB flash, `ota_0` at
+`0x20000`, 32 MiB hexadecimal PSRAM at 200 MHz with memory-test success, a
+360 MHz CPU, the exact source/build identities, and no configured Extender
+GPIO. All four negative scans found zero assertion, panic, memory-test-failure,
+abort, or reboot markers. R03 remains installed on the board.
+
+The firmware canary, board profile, partition layout, and procedure revisions
+are therefore qualified for this bring-up scope. This does not constitute the
+sustained mixed-load performance qualification required of later production
+firmware.
 
 No inherited upstream defect has yet required a local patch. If one does, its
 inline marker must identify the upstream project and pinned version or commit,

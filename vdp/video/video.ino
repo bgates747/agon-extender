@@ -1,8 +1,8 @@
 // Temporary SETUP-001 hybrid bring-up canary. The official agon-vdp video.ino
 // replaces this file unchanged at the source-import gate.
 //
-// This r02 revision reports through ESP-IDF logging because the first physical
-// run proved that the board's USB Serial/JTAG console carries ESP-IDF logs while
+// The r02-and-later revisions report through ESP-IDF logging because the first
+// physical run proved that the board's USB Serial/JTAG console carries ESP-IDF logs while
 // Arduino's global Serial object remains UART0 unless separate Arduino USB CDC
 // macros remap it. Qualification should observe the proven console rather than
 // change an upstream Arduino API mapping solely for this temporary file.
