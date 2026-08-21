@@ -1,0 +1,68 @@
+# Reviewed PORT-001 semantic claims that mechanical C++ token analysis cannot
+# establish safely. The graph builder validates every source reference before
+# normalizing these claims into the formal reviewed overlay.
+schema_version: 1
+source:
+  agon_vdp_release: v2.16.0
+  agon_vdp_commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+review:
+  status: accepted
+  reviewed_on: '2026-08-21'
+  basis: Manual source review for the first PORT-001 proof slice.
+nodes:
+  - id: protocol-packet:agon-vdp:packet-mode
+    kind: protocol-packet
+    owner: agon-vdp
+    label: PACKET_MODE screen-mode information
+    build_selection: selected
+    evidence:
+      owner: agon-vdp
+      path: video/agon.h
+      line: 98
+      fact: PACKET_MODE identifies the returned screen-dimension and mode packet.
+edges:
+  - from: method:agon-vdp:VDUStreamProcessor::vdu_mode(uint8_t%20mode)
+    relation: depends-on
+    to: subsystem:agon-vdp:graphics-display
+    confidence: confirmed
+    evidence:
+      owner: agon-vdp
+      path: video/vdu.h
+      line: 307
+      fact: VDU 22 delegates physical mode replacement to changeMode.
+  - from: method:agon-vdp:VDUStreamProcessor::vdu_mode(uint8_t%20mode)
+    relation: depends-on
+    to: subsystem:agon-vdp:physical-ps2-input
+    confidence: confirmed
+    evidence:
+      owner: agon-vdp
+      path: video/vdu.h
+      line: 328
+      fact: VDU 22 resets the stock mouse positioner against the new display geometry.
+  - from: method:agon-vdp:VDUStreamProcessor::sendModeInformation()
+    relation: depends-on
+    to: subsystem:agon-vdp:primary-vdp-transport
+    confidence: confirmed
+    evidence:
+      owner: agon-vdp
+      path: video/vdu_sys.h
+      line: 548
+      fact: Mode information is returned through send_packet on the active VDP output stream.
+  - from: method:agon-vdp:VDUStreamProcessor::sendModeInformation()
+    relation: sends-packet
+    to: protocol-packet:agon-vdp:packet-mode
+    confidence: confirmed
+    evidence:
+      owner: agon-vdp
+      path: video/vdu_sys.h
+      line: 548
+      fact: sendModeInformation emits PACKET_MODE with dimensions, colour depth, and mode number.
+annotations:
+  - target_kind: node
+    target_id: command:agon-vdp:vdu-22
+    namespace: port
+    key: disposition
+    value: retain
+    status: accepted
+    decision_ref: docs/tasks/SETUP-004/VDU-inventory.md:32
+    basis: SETUP-004 retains base VDU screen-mode selection.

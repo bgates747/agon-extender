@@ -1,0 +1,29 @@
+# Reviewed immutable source identities for the PORT-001 graph. Updating an
+# upstream release means adding or replacing a reviewed baseline and generating
+# a distinct graph identity; never point this record at a moving branch.
+schema_version: 1
+sources:
+  - owner: agon-vdp
+    repository: https://github.com/AgonPlatform/agon-vdp
+    identity_kind: tag
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+    root_placeholder: ${AGON_VDP_SOURCE}
+  - owner: vdp-gl
+    repository: https://github.com/AgonPlatform/vdp-gl
+    identity_kind: tag
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+    root_placeholder: ${VDP_GL_SOURCE}
+  - owner: ESP32Time
+    repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
+    identity_kind: release
+    identity: 2.0.6
+    commit: null
+    root_placeholder: ${ESP32TIME_SOURCE}
+  - owner: CRC
+    repository: https://registry.platformio.org/libraries/robtillaart/CRC
+    identity_kind: release
+    identity: 1.0.4
+    commit: null
+    root_placeholder: ${CRC_SOURCE}

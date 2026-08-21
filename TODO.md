@@ -31,3 +31,10 @@ item is removed.
   - Started: 2026-08-21 00:49 EDT
   - Finished: --
   - Details: [SETUP-005](docs/tasks/SETUP-005.md)
+
+## Porting
+
+- [x] **PORT-001 — Build the VDU-to-EDU dependency graph system**
+  - Started: 2026-08-21 01:03 EDT
+  - Finished: 2026-08-21 02:07 EDT
+  - Details: [PORT-001](docs/tasks/PORT-001.md)

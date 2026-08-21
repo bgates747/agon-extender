@@ -1,3 +1,8 @@
 # Used by scripts/validate-version-records.py. Pinning matches the parser
 # already supplied by the current PlatformIO environment.
 PyYAML==6.0.3
+
+# PORT-001 dependency-artifact schemas use JSON Schema draft 2020-12. The
+# project validator adds referential and deterministic-order checks that JSON
+# Schema cannot express across collections.
+jsonschema==4.25.1

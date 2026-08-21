@@ -2,6 +2,10 @@
 /notes/
 /scratch.md
 
+# PORT-001 rebuilds this full mechanical intermediate before applying the
+# tracked reviewed overlay. The authoritative merged graph remains tracked.
+/docs/tasks/PORT-001/generated/mechanical-graph.yaml
+
 # Local Codex handoff (may contain machine-specific paths and instructions)
 /AGENTS.md
 /agents/
