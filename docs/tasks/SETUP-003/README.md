@@ -13,6 +13,27 @@ Generated files must identify their inputs, generator, tool versions, and
 exact regeneration command. Avoid retaining bulky raw logs when a compact
 lossless extract records the relevant evidence.
 
+## Work 3 upstream control build
+
+Create a fresh temporary checkout at tag `v2.16.0`, then build and generate its
+compilation database with an isolated temporary PlatformIO core/package store:
+
+```sh
+PLATFORMIO_CORE_DIR=<isolated-temporary-platformio-core> \
+  PLATFORMIO_SETTING_ENABLE_TELEMETRY=no \
+  <project-venv>/bin/pio run -d <temporary-v2.16.0-checkout> -e esp32dev
+PLATFORMIO_CORE_DIR=<isolated-temporary-platformio-core> \
+  PLATFORMIO_SETTING_ENABLE_TELEMETRY=no \
+  <project-venv>/bin/pio run -d <temporary-v2.16.0-checkout> -e esp32dev -t compiledb
+.venv/bin/python docs/tasks/SETUP-003/scripts/generate-control-build-evidence.py \
+  --source <temporary-v2.16.0-checkout> \
+  --platformio-core <isolated-temporary-platformio-core>
+```
+
+The isolated PlatformIO store is mandatory. A temporary source checkout alone
+does not prevent an incompatible package with the same PlatformIO package name
+from being reused from the normal global store.
+
 ## Work 4 regeneration
 
 Against an isolated official `v2.16.0` checkout configured with the qualified

@@ -2,8 +2,7 @@
 
 ## State
 
-- Status: In progress — Work 1, 2, 4, 5, and 6 complete; Work 3 paused at its
-  unmodified-build review gate
+- Status: In progress — Work 1 through 6 complete
 
 ## Intent
 
@@ -35,22 +34,32 @@ does not make Extender design, portability, or source-modification decisions.
    regeneration command in every generated output or its common manifest.
 2. [x] Generate the canonical tracked-file inventory with `git ls-files` and
    `rg --files`, grouped by directory, extension, size, and line count.
-3. Attempt a pristine whole-project P4 build:
-   - use official VDP release `v2.16.0` and its exact selected dependency
-     releases;
-   - add only a separate experimental PlatformIO environment needed to select
-     the qualified P4 board profile and hybrid Arduino/ESP-IDF framework;
-   - make no VDP or dependency source fixes before the first complete build
-     attempt;
+3. [x] Build the pristine official VDP release as an upstream control:
+   - create a fresh temporary checkout of the official repository outside this
+     project and check out tag `v2.16.0` in detached-HEAD state;
+   - verify that the tag resolves to
+     `c7ac293d2aa81ddfa693390549bcd909069c8fc3` and that the checkout is clean;
+   - use the release's own `platformio.ini`, environment, board target,
+     framework selection, flags, and dependency declarations exactly as
+     published;
+   - do not add a P4 environment, alter source or dependency code, or otherwise
+     modify the upstream build configuration;
    - do not upload or otherwise mutate the physical board;
-   - capture PlatformIO's machine-readable metadata, verbose compiler and
-     linker invocations, flags, defines, include paths, selected sources,
-     libraries, generated artifacts, and complete first error set;
-   - distinguish configuration failures from source/compiler failures;
-   - classify each failure by owning project, file, subsystem, platform
-     assumption, and probable portability boundary; and
-   - stop for review of the unmodified-build evidence before correcting the
-     first source error or beginning iterative port work.
+   - record the PlatformIO and toolchain versions, exactly resolved dependency
+     versions, build environment, selected sources and libraries, final result,
+     and compact compiler/linker evidence sufficient to reproduce the build;
+   - generate the stock environment's compilation database and compare its
+     source selection, defines, include paths, and material flags with the P4
+     compilation evidence captured by Work 4;
+   - amend Work 4 evidence only if that comparison changes a material finding;
+     and
+   - retain only compact task evidence and generated metadata in this
+     repository; leave the temporary checkout and build products untracked.
+
+   Completed evidence:
+   [`SETUP-003/generated/control-build.yaml`](SETUP-003/generated/control-build.yaml)
+   and
+   [`SETUP-003/evidence/work-3-upstream-control.md`](SETUP-003/evidence/work-3-upstream-control.md).
 4. [x] Generate `compile_commands.json` with PlatformIO's `compiledb` target. Use
    compiler dependency output or `clang-scan-deps` to record the actual include
    graph. Because upstream implementation is heavily header-defined, retain a
@@ -97,29 +106,27 @@ does not make Extender design, portability, or source-modification decisions.
    Use targeted machine extraction plus source validation; preserve useful
    relationships rather than raw search matches. Stop for Author review of the
    proposed extraction and output shape before starting this work.
-7. From a successful ELF build, capture `size`, `nm`, `readelf`, and a linker
-   map sufficient to associate significant code/data symbols with source files
-   and libraries. Do not retain bulky disassembly or raw preprocessor output
-   unless it provides unique durable evidence.
-8. Generate compact dependency views from the structured data: file include
+7. Generate compact dependency views from the structured data: file include
    fan-in/fan-out, strongly connected groups where practical, subsystem
    dependencies, and task/callback entry relationships. Use Graphviz only for
    diagrams that remain legible and materially improve navigation.
-9. Store task scripts, evidence, and deterministic outputs under
+8. Store task scripts, evidence, and deterministic outputs under
    `docs/tasks/SETUP-003/`, favoring YAML or JSON plus small Markdown indexes.
    Provide reproducible task-local scripts rather than undocumented ad hoc
    commands. Promote an output into architecture documentation only when it
    becomes a durable reference beyond this task.
-10. Keep `docs/architecture/vdp-upstream-precis.md` as the compact agent-facing
-    index to generated evidence and the place for relationships or caveats that
-    tools cannot establish reliably. Do not add Extender design or port
-    recommendations.
+9. Keep `docs/architecture/vdp-upstream-precis.md` as the compact agent-facing
+   index to generated evidence and the place for relationships or caveats that
+   tools cannot establish reliably. Do not add Extender design or port
+   recommendations.
 
 ## Proposed outputs
 
 - `manifest.yaml` — source, dependency, tool, and generation provenance;
 - `files.yaml` — canonical file inventory and source statistics;
 - `build.yaml` — PlatformIO environment, flags, libraries, and outputs;
+- `control-build.yaml` — pristine stock build identity, resolved tools and
+  dependencies, artifact identities, and stock-to-P4 compilation comparison;
 - `symbols.yaml` — indexed declarations and definitions;
 - `includes.yaml` — compiler-derived include/dependency graph;
 - `globals.yaml` — global/static state and ownership clues;
@@ -127,7 +134,6 @@ does not make Extender design, portability, or source-modification decisions.
 - `protocols.yaml` — command/packet constants and handler cross-references;
 - `portability.yaml` — mechanical candidates plus reviewed subsystem ownership,
   lifecycle, coupling, externally visible behavior, and portability boundaries;
-- `memory.yaml` — ELF sections and significant symbol ownership; and
 - compact SVG dependency diagrams only where useful.
 
 ## Tool gate
