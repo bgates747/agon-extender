@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: In progress — scope established; survey not started
+- Status: In progress — VDU compatibility inventory complete; subsystem
+  disposition survey pending
 - Started: 2026-08-20 20:52 EDT
 - Finished: --
 
@@ -12,6 +13,12 @@ Review the official VDP and vdp-gl hardware-facing I/O facilities and decide
 which Extender must retain, replace, stub, omit, or defer. Reduce unnecessary
 ESP32-PICO-to-P4 porting while preserving the externally observable behavior
 required for VDP backward compatibility.
+
+Begin from the documented VDU interface rather than implementation internals.
+The Author will review each command or command family in
+[`SETUP-004/VDU-inventory.md`](SETUP-004/VDU-inventory.md) and state which
+observable behavior Extender promises to preserve. Driver disposition follows
+from that product-level compatibility boundary.
 
 This is a survey and disposition task. It does not implement driver removals,
 replacement drivers, compatibility adapters, or build-selection changes.
@@ -85,6 +92,37 @@ not be ported or built for Extender. Existing input responsibilities remain
 with the Agon main board and onboard VDP. Any future Extender input facility is
 project-owned. The survey must still trace protocol and compile-time coupling
 before assigning the precise **Omit**, **Stub**, or **Replace** mechanics.
+
+Retain keyboard and mouse command parsing and externally visible protocol state
+needed by exclusive compatibility mode, while leaving cooperative-mode routing
+unresolved. This retained surface does not reverse the physical-driver boundary:
+upstream PS/2 acquisition remains excluded, and couplings such as sprite command
+`&40` calling mouse-owned cursor code require a project-owned adapter or
+delegation boundary.
+
+Retain the complete buffered-callback facility unconditionally. Commands 80 and
+81 modify EDP-local registration state, while callback execution can alter or
+suppress later protocol packets. Exclusive compatibility mode requires those
+indirect MOS-visible effects to match the official VDP behavior.
+
+The Extender application interface is a stable, explicit EDU API with both
+directly linked and optional resident-service implementations. The resident
+service does not intercept stock VDU restart paths. See
+[ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
+
+### Known diagnostic-output constraint
+
+Official VDP `v2.16.0` implements buffered command 128 with
+`force_debug_log()` through `DBGSerial`, which is stock UART0 on ESP32 pins 3
+and 1. It reports the stream count, prints transform matrices in readable form,
+or emits the entire first buffer stream as hexadecimal. It sends no VDP protocol
+packet and modifies no MOS sysvar.
+
+The P4 port must bind this command to an explicit EDP diagnostic console or log
+sink rather than inherit the upstream UART mapping. Because output is
+synchronous and unbounded by command semantics, large buffers can stall VDU
+processing and may expose task-latency or watchdog problems. Preserve that
+behavioral warning during implementation and qualification.
 
 ## Outputs
 

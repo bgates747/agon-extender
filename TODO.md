@@ -17,12 +17,17 @@ item is removed.
   - Finished: 2026-08-20 18:03 EDT
   - Details: [SETUP-002](docs/tasks/SETUP-002.md)
 
-- [ ] **SETUP-003 — Generate the official VDP structural inventory**
+- [x] **SETUP-003 — Generate the official VDP structural inventory**
   - Started: 2026-08-20 19:18 EDT
-  - Finished: --
+  - Finished: 2026-08-21 00:49 EDT
   - Details: [SETUP-003](docs/tasks/SETUP-003.md)
 
 - [ ] **SETUP-004 — Determine upstream I/O driver disposition**
   - Started: 2026-08-20 20:52 EDT
   - Finished: --
   - Details: [SETUP-004](docs/tasks/SETUP-004.md)
+
+- [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
+  - Started: 2026-08-21 00:49 EDT
+  - Finished: --
+  - Details: [SETUP-005](docs/tasks/SETUP-005.md)
