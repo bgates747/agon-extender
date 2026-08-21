@@ -1,0 +1,895 @@
+# Manually reviewed source relationships for SETUP-003 Work 6.
+# The Work 6 generator validates every owner/path/line reference and each
+# source-wide search before merging this file into generated/portability.yaml.
+schema_version: 1
+source:
+  agon_vdp_release: v2.16.0
+  agon_vdp_commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp_gl_tag: all-the-plots
+  vdp_gl_commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+review_scope: >-
+  Runtime ownership, activation, platform coupling, and externally visible
+  behavior. Architectural driver dispositions are intentionally excluded.
+
+validated_searches:
+  - id: wifi-is-include-only
+    owner: agon-vdp
+    literal: WiFi
+    expected_locations:
+      - path: video/video.ino
+        line: 49
+  - id: no-official-vdp-cvbs-generator-reference
+    owner: agon-vdp
+    literal: CVBSGenerator
+    expected_locations: []
+  - id: no-official-vdp-icmp-reference
+    owner: agon-vdp
+    literal: ICMP
+    expected_locations: []
+  - id: no-official-vdp-ds3231-reference
+    owner: agon-vdp
+    literal: DS3231
+    expected_locations: []
+  - id: no-official-vdp-mcp23s17-reference
+    owner: agon-vdp
+    literal: MCP23S17
+    expected_locations: []
+  - id: no-official-vdp-tsi2c-reference
+    owner: agon-vdp
+    literal: TSI2C
+    expected_locations: []
+
+subsystems:
+  - id: startup-orchestration
+    runtime_status: unconditional-startup
+    owns:
+      - Arduino setup/loop lifecycle
+      - primary VDU processing task
+      - startup ordering for display, transport, input, and audio
+    activation:
+      - setup initializes display, font, UART protocol, stream processor,
+        processLoop task, and audio in a fixed sequence.
+      - processLoop initializes PS/2 input, waits for the eZ80 handshake, then
+        alternates terminal processing with VDU stream processing forever.
+      - Arduino loop is intentionally idle after setup.
+    owning_state:
+      - Core0Task
+      - processor
+      - Terminal
+      - terminalState
+      - consoleMode
+    direct_facilities:
+      - Arduino lifecycle and delay
+      - FreeRTOS pinned tasks
+      - ESP32 per-core watchdog controls
+    compile_conditions:
+      - VDP_USE_WDT changes watchdog behavior but not subsystem selection.
+      - USERSPACE changes emulator/debug behavior but is not a production
+        feature switch for display, input, transport, or audio.
+    visible_dependencies:
+      - All normal VDU command handling depends on processLoop and processor.
+      - Keyboard/mouse initialization and audio initialization are not guarded
+        by independent production feature switches.
+    portability_boundary: >-
+      The top-level lifecycle is a reusable orchestration concept, but its
+      startup sequence directly names ESP32 watchdog APIs, pinned FreeRTOS
+      tasks, physical PS/2 setup, FabGL display setup, and FabGL audio setup.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Removing this path removes normal VDU command processing.
+      required_boundary: Platform startup and subsystem lifecycle orchestration.
+    evidence:
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 99
+        fact: setup is the firmware startup entry point.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 105
+        fact: Display mode creation occurs before transport and task startup.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 107
+        fact: setup initializes the VDP protocol transport.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 109
+        fact: setup creates processLoop pinned to core 0.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 118
+        fact: setup initializes audio unconditionally.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 125
+        fact: Arduino loop performs no firmware work beyond sleeping.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 136
+        fact: processLoop initializes keyboard and mouse before its main loop.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 154
+        fact: processLoop repeatedly invokes processNext.
+
+  - id: primary-vdp-transport
+    runtime_status: unconditional-startup
+    owns:
+      - eZ80-to-VDP command byte stream
+      - VDP-to-MOS packet return path
+      - UART flow control and buffering
+    activation:
+      - setupVDPProtocol configures Serial2 at startup.
+      - VDUStreamProcessor is constructed over Serial2 as both input and
+        initial output stream.
+      - wait_eZ80 performs the initial command synchronization before normal
+        processNext dispatch.
+    owning_state:
+      - VDPSerial macro bound to Serial2
+      - VDUStreamProcessor inputStream
+      - VDUStreamProcessor outputStream
+      - VDUStreamProcessor originalOutputStream
+    direct_facilities:
+      - Arduino HardwareSerial and Stream
+      - UART2 pins, RTS/CTS flow control, receive buffer, and timeouts
+    compile_conditions: []
+    visible_dependencies:
+      - VDU commands arrive on this stream.
+      - MOS packets, keyboard/mouse events, audio acknowledgements, mode data,
+        RTC data, and transfer control bytes return on the same stream.
+    portability_boundary: >-
+      VDUStreamProcessor accepts the abstract Arduino Stream interface, but
+      the official runtime binds it to HardwareSerial Serial2 and shares that
+      same duplex stream for command input and protocol packet output.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Removing it removes the stock MOS/VDP command and return channel.
+      required_boundary: Duplex Stream-compatible VDP transport.
+    evidence:
+      - owner: agon-vdp
+        path: video/agon.h
+        line: 24
+        fact: The official UART rate is 1,152,000 baud.
+      - owner: agon-vdp
+        path: video/agon.h
+        line: 26
+        fact: The stock transport fixes ESP32 UART TX/RX/RTS/CTS pins.
+      - owner: agon-vdp
+        path: video/vdp_protocol.h
+        line: 17
+        fact: VDPSerial aliases Arduino Serial2.
+      - owner: agon-vdp
+        path: video/vdp_protocol.h
+        line: 23
+        fact: setupVDPProtocol owns UART initialization.
+      - owner: agon-vdp
+        path: video/vdp_protocol.h
+        line: 26
+        fact: Serial2 begins with the configured baud rate and pins.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 261
+        fact: The processor is constructed over an abstract Stream.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 516
+        fact: send_packet writes return packets through the processor output stream.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 597
+        fact: processNext is the normal command-processing entry point.
+
+  - id: graphics-display
+    runtime_status: unconditional-startup-and-command-driven
+    owns:
+      - VGA controller selection and lifetime
+      - video mode and resolution
+      - framebuffer, palette, canvas, sprites, cursors, and drawing queue
+    activation:
+      - setup calls changeMode before creating the command processor.
+      - updateVGAController ends the previous controller and begins a selected
+        FabGL VGA controller.
+      - changeResolution allocates the canvas and starts background primitive
+        execution.
+      - VDU text, graphics, mode, sprite, bitmap, cursor, and buffer commands
+        operate through the active Context, Canvas, and VGA controller.
+    owning_state:
+      - canvas
+      - _VGAController
+      - _VGAColourDepth
+      - palette
+      - canvasW and canvasH
+      - videoMode
+      - Context and contextStacks
+    direct_facilities:
+      - FabGL Canvas and VGA2/VGA4/VGA8/VGA16/VGA64 controllers
+      - ESP32 GPIO matrix
+      - I2S1 register block and interrupt source
+      - DMA descriptors and capability-specific heap allocation
+      - FreeRTOS primitive execution task
+    compile_conditions:
+      - No official production switch excludes graphics initialization.
+    visible_dependencies:
+      - Normal text and graphics output
+      - mode selection and PACKET_MODE dimensions
+      - pixel/character reads, palettes, sprites, cursors, and double buffering
+      - mouse cursor rendering and updater sprite/cursor suppression
+    portability_boundary: >-
+      The VDU graphics state machine and externally visible commands are
+      conceptually distinct from scanout, but official source directly stores
+      FabGL VGA/Canvas types and vdp-gl implements active VGA controllers with
+      ESP32 I2S1, GPIO, DMA, interrupts, and pinned tasks.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Direct omission removes most visible VDU behavior and mode state.
+      required_boundary: Graphics semantics, render state, and physical scanout.
+    evidence:
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 11
+        fact: Global Canvas and VGA-controller smart pointers own display objects.
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 38
+        fact: getVGAController selects one of five concrete FabGL VGA controllers.
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 186
+        fact: updateVGAController owns controller replacement and startup.
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 216
+        fact: changeResolution owns mode-line and Canvas setup.
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 229
+        fact: Display setup enables background primitive execution.
+      - owner: agon-vdp
+        path: video/agon_screen.h
+        line: 265
+        fact: changeMode maps protocol mode numbers to display configurations.
+      - owner: agon-vdp
+        path: video/context.h
+        line: 356
+        fact: Context stacks are global PSRAM-backed graphics/text state.
+      - owner: vdp-gl
+        path: src/dispdrivers/vgabasecontroller.cpp
+        line: 36
+        fact: VGA base implementation directly includes ESP32 I2S registers.
+      - owner: vdp-gl
+        path: src/dispdrivers/vgabasecontroller.cpp
+        line: 435
+        fact: VGA setup creates a pinned primitive execution task.
+      - owner: vdp-gl
+        path: src/dispdrivers/vgapalettedcontroller.cpp
+        line: 168
+        fact: Paletted VGA scanout allocates an I2S1 interrupt on a selected core.
+
+  - id: physical-ps2-input
+    runtime_status: unconditional-initialization-continuous-polling
+    owns:
+      - physical PS/2 keyboard and mouse ports
+      - keyboard layout, code page, typematic settings, and LED state
+      - mouse availability, motion settings, absolute position, and cursor state
+    activation:
+      - processLoop calls setupKeyboardAndMouse before command processing.
+      - setupKeyboardAndMouse starts FabGL PS2Controller and configures keyboard
+        and mouse state.
+      - every processNext invocation polls keyboard and mouse and emits events.
+    owning_state:
+      - FabGL PS2Controller singleton
+      - keyboard and mouse device objects
+      - keyboard/mouse globals in agon_ps2.h
+      - VDUStreamProcessor eventQueue and VDP input variables
+    direct_facilities:
+      - FabGL PS2Controller, Keyboard, Mouse, layouts, and Cursor
+      - ESP32 ULP, RTC GPIO, SENS registers, RTC interrupt, queues, and tasks
+      - active VGA controller for mouse positioning and cursor rendering
+    compile_conditions:
+      - USERSPACE stubs ZDI calls but does not remove the keyboard/mouse API.
+      - No official production switch excludes physical PS/2 initialization.
+    visible_dependencies:
+      - VDP_KEYCODE, VDP_KEYSTATE, and VDP_MOUSE command behavior
+      - PACKET_KEYCODE and PACKET_MOUSE events
+      - keyboard and mouse VDP variables and callbacks
+      - paged-mode and Ctrl/Shift pause/resume behavior
+      - terminal emergency-exit key and console/ZDI entry path
+      - mouse cursor graphics
+    portability_boundary: >-
+      Physical PS/2 acquisition is separable in concept from protocol-visible
+      keyboard/mouse semantics, but the official main loop, pause logic,
+      terminal mode, debug paths, VDP variables, and VGA cursor code all call
+      FabGL input objects directly.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: >-
+        Direct omission breaks callers outside the physical driver and changes
+        commands, packets, variables, pause behavior, and maintenance paths.
+      required_boundary: Input acquisition separated from VDP input state and protocol behavior.
+    evidence:
+      - owner: agon-vdp
+        path: video/agon_ps2.h
+        line: 12
+        fact: agon_ps2.h defines global keyboard and mouse state.
+      - owner: agon-vdp
+        path: video/agon_ps2.h
+        line: 47
+        fact: getKeyboard returns the FabGL PS2 singleton keyboard.
+      - owner: agon-vdp
+        path: video/agon_ps2.h
+        line: 59
+        fact: setupKeyboardAndMouse starts PS2Controller unconditionally when called.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 611
+        fact: processNext handles queued input and polls hardware on every iteration.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 704
+        fact: handleKeyboardAndMouse translates FabGL events into VDP state.
+      - owner: agon-vdp
+        path: video/vdu_stream_processor.h
+        line: 726
+        fact: Keyboard control characters can re-enter the VDU parser.
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 171
+        fact: VDP_KEYCODE dispatches keyboard-layout behavior.
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 201
+        fact: VDP_KEYSTATE and VDP_MOUSE are explicit command surfaces.
+      - owner: vdp-gl
+        path: src/comdrivers/ps2controller.cpp
+        line: 31
+        fact: The PS/2 implementation directly includes the ESP32 ULP API.
+      - owner: vdp-gl
+        path: src/comdrivers/ps2controller.cpp
+        line: 33
+        fact: The PS/2 implementation directly includes ESP32 SENS registers.
+
+  - id: terminal-mode
+    runtime_status: command-activated
+    owns:
+      - FabGL terminal emulator object and terminal state machine
+      - direct serial-to-terminal routing while terminal mode is enabled
+      - terminal input queue, blink timer, and consumer/keyboard-reader tasks
+    activation:
+      - VDP_TERMINALMODE starts or resumes terminal mode.
+      - processLoop gives terminal mode precedence over normal processNext.
+      - enabling constructs FabGL Terminal over the active VGA controller and
+        connects it directly to VDPSerial.
+    owning_state:
+      - Terminal
+      - terminalState
+      - FabGL Terminal queues, mutex, timer, and task handles
+    direct_facilities:
+      - FabGL Terminal, Canvas, active display controller, and PS/2 Keyboard
+      - Arduino HardwareSerial
+      - FreeRTOS mutex, timer, queue, and tasks
+    compile_conditions: []
+    visible_dependencies:
+      - VDP_TERMINALMODE and CP/M-style terminal behavior
+      - Ctrl-Alt-F12 emergency exit through physical keyboard events
+      - direct UART byte display while enabled
+    portability_boundary: >-
+      Terminal behavior is command-activated rather than required for normal
+      VDU processing, but the official integration binds it simultaneously to
+      the active FabGL display, VDP UART, physical keyboard, and FreeRTOS
+      resources.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Direct omission removes VDP_TERMINALMODE and leaves integration callers.
+      required_boundary: Terminal command behavior and its display, transport, and input adapters.
+    evidence:
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 383
+        fact: VDP_TERMINALMODE activates the terminal state machine.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 150
+        fact: processLoop gives active terminal processing precedence.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 276
+        fact: Enabling constructs a FabGL Terminal.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 277
+        fact: Terminal begins on the active VGA controller.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 278
+        fact: Terminal connects directly to VDPSerial.
+      - owner: vdp-gl
+        path: src/terminal.cpp
+        line: 342
+        fact: Terminal defaults to the initialized PS2Controller keyboard.
+      - owner: vdp-gl
+        path: src/terminal.cpp
+        line: 384
+        fact: Terminal creates a FreeRTOS blink timer.
+      - owner: vdp-gl
+        path: src/terminal.cpp
+        line: 388
+        fact: Terminal creates its input queue and consumer task.
+
+  - id: audio
+    runtime_status: unconditional-initialization-command-driven
+    owns:
+      - audio channels, sample store, envelopes, waveforms, and sample rate
+      - FabGL SoundGenerator lifetime
+      - audio channel driver task and physical ESP32 audio output
+    activation:
+      - setup calls initAudio without a feature guard.
+      - initAudio creates SoundGenerator, three default channels, and the
+        audioDriver task.
+      - VDP_AUDIO commands mutate channels, samples, waveforms, and envelopes
+        and return PACKET_AUDIO status.
+    owning_state:
+      - soundGeneratorMutex
+      - audioChannels
+      - audioTask
+      - samples
+      - soundGenerator
+    direct_facilities:
+      - FabGL SoundGenerator and waveform generators
+      - FreeRTOS pinned task
+      - ESP32 I2S0, DAC, sigma-delta, DMA-capable heap, interrupts, and timers
+      - PSRAM-backed sample storage
+    compile_conditions:
+      - FABGL_EMULATED adds SDL output inside vdp-gl.
+      - No official production switch excludes audio initialization.
+    visible_dependencies:
+      - VDP_AUDIO command family
+      - PACKET_AUDIO acknowledgements/status
+      - tone, waveform, sample, channel, envelope, and sample-rate behavior
+    portability_boundary: >-
+      Audio command and synthesis state can be distinguished from physical
+      output, but official code constructs FabGL SoundGenerator directly and
+      vdp-gl Auto mode selects ESP32 DAC output for VGA operation, backed by
+      I2S0 DMA and an interrupt.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: >-
+        Direct omission breaks unconditional startup and removes audio command,
+        synthesis, sample, and acknowledgement behavior.
+      required_boundary: Audio protocol/synthesis semantics separated from physical output.
+    evidence:
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 27
+        fact: Global channel, task, sample, and SoundGenerator state owns audio.
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 39
+        fact: audioDriver services every active channel each millisecond.
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 52
+        fact: Audio creates a pinned FreeRTOS driver task.
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 84
+        fact: Sample-rate changes reconstruct FabGL SoundGenerator.
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 97
+        fact: initAudio creates generator, default channels, and task.
+      - owner: agon-vdp
+        path: video/vdu_audio.h
+        line: 27
+        fact: vdu_sys_audio owns the VDP audio command dispatcher.
+      - owner: vdp-gl
+        path: src/devdrivers/soundgen.cpp
+        line: 519
+        fact: DAC output allocates DMA descriptors and sample buffers.
+      - owner: vdp-gl
+        path: src/devdrivers/soundgen.cpp
+        line: 530
+        fact: DAC output enables and programs ESP32 I2S0.
+      - owner: vdp-gl
+        path: src/devdrivers/soundgen.cpp
+        line: 572
+        fact: DAC output allocates the I2S0 interrupt.
+      - owner: vdp-gl
+        path: src/devdrivers/soundgen.cpp
+        line: 624
+        fact: Auto output selects DAC for non-CVBS video mode.
+
+  - id: memory-and-psram
+    runtime_status: pervasive-support-layer
+    owns:
+      - allocation policy for command buffers, contexts, audio samples,
+        fonts, sprites, bitmaps, and transfer sessions
+      - protocol-visible free-PSRAM reporting
+    activation:
+      - VDUStreamProcessor construction allocates Context state through the
+        PSRAM-preferred allocator.
+      - subsystem containers allocate as their corresponding commands create
+        data.
+      - YMODEM sessions make direct capability-specific SPIRAM allocations.
+    owning_state:
+      - psram_allocator and make_shared_psram helpers
+      - buffers and matrixMetadata
+      - contextStacks
+      - audio samples and other PSRAM-backed collections
+    direct_facilities:
+      - Arduino psramInit and ps_malloc
+      - ESP-IDF heap_caps allocation and MALLOC_CAP_SPIRAM
+      - Xtensa-specific optimized unaligned access when available
+    compile_conditions:
+      - __XTENSA__ selects optimized unaligned access; generic packed-access
+        fallbacks exist.
+      - FabGL applies an ESP32 revision-1 PSRAM workaround through inline
+        Xtensa assembly when configured.
+    visible_dependencies:
+      - Allocation success and maximum usable graphics/buffer/sample data
+      - VDPVAR_FREEPSRAM_LOW and VDPVAR_FREEPSRAM_HIGH
+      - YMODEM transfer capacity
+    portability_boundary: >-
+      Most official allocation helpers prefer PSRAM but fall back to ordinary
+      heap. Some transfer and display paths require explicit ESP-IDF memory
+      capabilities, and free-SPIRAM quantity is protocol-visible state.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Containers and transfer/display allocations depend on these facilities.
+      required_boundary: Allocation policy and protocol-visible memory accounting.
+    evidence:
+      - owner: agon-vdp
+        path: video/types.h
+        line: 47
+        fact: PreferPSRAMAlloc falls back to normal malloc when PSRAM is unavailable.
+      - owner: agon-vdp
+        path: video/types.h
+        line: 73
+        fact: psram_allocator is the common C++ allocator wrapper.
+      - owner: agon-vdp
+        path: video/types.h
+        line: 167
+        fact: make_shared_psram allocates shared objects through psram_allocator.
+      - owner: agon-vdp
+        path: video/buffers.h
+        line: 15
+        fact: Command buffer collections use psram_allocator.
+      - owner: agon-vdp
+        path: video/context.h
+        line: 356
+        fact: Context collections use psram_allocator.
+      - owner: agon-vdp
+        path: video/vdp_variables.h
+        line: 381
+        fact: Free SPIRAM is directly exposed through VDP variables.
+      - owner: agon-vdp
+        path: video/ymodem.h
+        line: 300
+        fact: YMODEM requires an explicit SPIRAM-capable file table allocation.
+      - owner: agon-vdp
+        path: video/mem_helpers.h
+        line: 30
+        fact: Xtensa hardware capability selects optimized unaligned reads.
+      - owner: vdp-gl
+        path: src/fabutils.h
+        line: 71
+        fact: FabGL documents and implements an ESP32 revision-1 PSRAM workaround.
+
+  - id: rtc-service
+    runtime_status: command-driven
+    owns:
+      - software-maintained RTC state through ESP32Time
+      - VDU time get/set commands and RTC packet data
+    activation:
+      - A global ESP32Time object is constructed at startup.
+      - VDP_RTC dispatch reads or sets it.
+      - VDP variable reads expose its date/time fields.
+    owning_state:
+      - rtc
+    direct_facilities:
+      - ESP32Time dependency
+    compile_conditions: []
+    visible_dependencies:
+      - VDP_RTC command
+      - PACKET_RTC
+      - RTC-related VDP variables
+    portability_boundary: >-
+      The official runtime uses ESP32Time, not vdp-gl's DS3231 hardware driver.
+      The protocol behavior therefore depends on a replacement-compatible time
+      service, not on that compiled FabGL peripheral driver.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Removing the service breaks RTC commands, packet data, and variables.
+      required_boundary: RTC service compatible with existing VDP time behavior.
+    evidence:
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 79
+        fact: rtc is a global ESP32Time object.
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 198
+        fact: VDP_RTC dispatches time handling.
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 515
+        fact: sendTime reads ESP32Time fields and sends PACKET_RTC.
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 553
+        fact: vdu_sys_video_time implements time get/set behavior.
+      - owner: agon-vdp
+        path: video/vdp_variables.h
+        line: 362
+        fact: VDP variables read RTC fields directly from ESP32Time.
+
+  - id: firmware-updater
+    runtime_status: command-activated
+    owns:
+      - unlock state
+      - firmware reception over the primary VDP stream
+      - ESP OTA partition write, boot selection, and restart
+    activation:
+      - VDP_UPDATER dispatches unlock, receive, or firmware-switch modes.
+      - receiveFirmware consumes size, payload, and checksum directly from the
+        active VDU stream.
+    owning_state:
+      - Updater::isLocked
+      - transient OTA handle, target partition, checksum, and receive buffer
+    direct_facilities:
+      - ESP-IDF OTA partition APIs and esp_restart
+      - active VGA controller and sprite state during update
+      - primary VDP Stream input
+    compile_conditions: []
+    visible_dependencies:
+      - VDP_UPDATER command
+      - serial-stream firmware transfer, status text, partition switch, reboot
+    portability_boundary: >-
+      Updater semantics are independent of networking: official v2.16.0
+      receives firmware through the VDP command stream. The implementation is
+      tied to ESP OTA partition APIs and also reaches into active VGA cursor
+      and sprite state before writing flash.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Direct omission removes VDP_UPDATER and leaves command dispatch callers.
+      required_boundary: Update command transport, flash/partition service, and display quiescence.
+    evidence:
+      - owner: agon-vdp
+        path: video/vdu_sys.h
+        line: 328
+        fact: VDP_UPDATER dispatches the updater command handler.
+      - owner: agon-vdp
+        path: video/updater.h
+        line: 30
+        fact: receiveFirmware reads a firmware image from the VDU stream.
+      - owner: agon-vdp
+        path: video/updater.h
+        line: 56
+        fact: Update preparation directly disables VGA cursors and sprites.
+      - owner: agon-vdp
+        path: video/updater.h
+        line: 61
+        fact: The updater selects and begins an ESP OTA partition update.
+      - owner: agon-vdp
+        path: video/updater.h
+        line: 100
+        fact: Firmware chunks are written with esp_ota_write.
+      - owner: agon-vdp
+        path: video/updater.h
+        line: 132
+        fact: Successful reception selects the update partition for boot.
+
+  - id: debug-zdi-and-file-transfer
+    runtime_status: command-or-console-activated
+    owns:
+      - UART0 debug/console transport
+      - Intel HEX loader
+      - direct eZ80 ZDI bit-bang interface
+      - in-memory YMODEM transfer sessions between VDP and MOS tooling
+    activation:
+      - setup always starts DBGSerial on UART0.
+      - console mode routes DBGSerial input through keyboard handling and Ctrl-Z
+        enters ZDI in production builds.
+      - VDU 23,28 dispatches HEX load or YMODEM receive/send.
+    owning_state:
+      - DBGSerial
+      - consoleMode
+      - HEX loader CRC and abort state
+      - ZDI state and GPIO constants
+      - YMODEM static buffers and per-session PSRAM files
+    direct_facilities:
+      - Arduino HardwareSerial UART0
+      - direct ESP32 GPIO register helper for ZDI
+      - GPIO26 and GPIO27
+      - CRC dependency
+      - PSRAM capability allocations
+      - PACKET_KEYCODE as a control/data return channel
+    compile_conditions:
+      - USERSPACE stubs ZDI and disables production HEX-load implementation.
+    visible_dependencies:
+      - console mode and ZDI debugging
+      - VDU 23,28 HEX/YMODEM operations
+      - PACKET_KEYCODE transfer framing
+    portability_boundary: >-
+      These maintenance paths are separate from normal VDU rendering but are
+      not a single subsystem: debug UART, ZDI GPIO, keyboard abort/entry logic,
+      CRC, PSRAM, and the primary VDP packet stream are cross-coupled. YMODEM
+      stores transfer files in memory; it does not use a local filesystem.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: >-
+        Individual features are command- or console-activated, but their entry,
+        abort, data, and response paths cross normal input and transport code.
+      required_boundary: Separate console, ZDI, HEX-load, and YMODEM service contracts.
+    evidence:
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 71
+        fact: DBGSerial globally owns UART0.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 104
+        fact: setup always starts DBGSerial on pins 3 and 1.
+      - owner: agon-vdp
+        path: video/agon_ps2.h
+        line: 105
+        fact: Console mode feeds DBGSerial through keyboard event handling.
+      - owner: agon-vdp
+        path: video/agon_ps2.h
+        line: 109
+        fact: Ctrl-Z on the console enters ZDI mode.
+      - owner: agon-vdp
+        path: video/hexload.h
+        line: 34
+        fact: HEX loading polls the PS2 keyboard for abort while reading DBGSerial.
+      - owner: agon-vdp
+        path: video/zdi.h
+        line: 10
+        fact: ZDI uses the direct GPIO helper.
+      - owner: agon-vdp
+        path: video/zdi.h
+        line: 12
+        fact: ZDI assigns GPIO26 and GPIO27.
+      - owner: agon-vdp
+        path: video/ymodem.h
+        line: 241
+        fact: MOS_YmodemSession owns in-memory transferred files.
+      - owner: agon-vdp
+        path: video/ymodem.h
+        line: 438
+        fact: YMODEM control uses PACKET_KEYCODE through sendKeycodeByte.
+
+  - id: dependency-source-selection
+    runtime_status: build-time-selection-with-mixed-runtime-reachability
+    owns:
+      - FabGL translation-unit inclusion in the PlatformIO library build
+      - umbrella-header declaration exposure
+    activation:
+      - Work 4 compile evidence records 31 vdp-gl translation units selected
+        for compilation.
+      - Official VDP includes fabgl.h, whose umbrella surface includes display,
+        terminal, PS/2, TSI2C, keyboard, mouse, DS3231, scene, collision, and
+        sound declarations.
+      - Runtime construction or calls—not compilation alone—activate hardware,
+        tasks, callbacks, or interrupts.
+    owning_state: []
+    direct_facilities:
+      - PlatformIO library source selection
+      - vdp-gl umbrella headers
+    compile_conditions:
+      - Library source selection is broader than the official VDP runtime call surface.
+    visible_dependencies:
+      - Active official paths directly use VGA, Canvas, Terminal, PS/2,
+        Keyboard, Mouse, and SoundGenerator.
+      - Exact official-source searches find no direct CVBSGenerator, ICMP,
+        DS3231, MCP23S17, or TSI2C reference.
+      - WiFi appears only as an include in video.ino; official v2.16.0 contains
+        no WiFi API use.
+    portability_boundary: >-
+      Build inclusion, header coupling, and runtime ownership are three
+      separate facts. A compiled dependency translation unit can fail on P4
+      without being part of the official runtime, while a shared header can
+      still block preprocessing even when its particular driver is unused.
+      The missing soc/frc_timer_reg.h is on FabGL's broad fabutils.h path and
+      therefore cannot be dismissed solely as an unused-driver failure.
+    omission_assessment:
+      cleanly_omittable_from_evidence: not-established
+      fallout: >-
+        Five translation units lack direct official VDP references, but source
+        filtering and link/header closure have not yet been qualified.
+      required_boundary: Build source selection must be reviewed separately from runtime interfaces.
+    compile_evidence:
+      normalized_compile_database: docs/tasks/SETUP-003/generated/compile-commands.json
+      vdp_gl_translation_units: 31
+      direct-reference-absence-candidates:
+        - src/devdrivers/cvbsgenerator.cpp
+        - src/network/ICMP.cpp
+        - src/devdrivers/DS3231.cpp
+        - src/devdrivers/MCP23S17.cpp
+        - src/comdrivers/tsi2c.cpp
+    evidence:
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 49
+        fact: WiFi is included but the validated source-wide search finds no other occurrence.
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 50
+        fact: Official VDP includes the FabGL umbrella header.
+      - owner: vdp-gl
+        path: src/fabgl.h
+        line: 311
+        fact: fabgl.h begins a broad umbrella include set with fabutils.
+      - owner: vdp-gl
+        path: src/fabgl.h
+        line: 322
+        fact: The umbrella includes PS2Controller and TSI2C declarations.
+      - owner: vdp-gl
+        path: src/fabgl.h
+        line: 326
+        fact: The umbrella includes DS3231 declarations.
+      - owner: vdp-gl
+        path: src/fabutils.h
+        line: 45
+        fact: Shared fabutils.h directly requires soc/frc_timer_reg.h.
+
+  - id: runtime-concurrency
+    runtime_status: cross-cutting
+    owns:
+      - task, timer, queue, mutex, callback, and interrupt relationships across
+        active runtime subsystems
+    activation:
+      - Official startup creates processLoop and audioDriver.
+      - VGA initialization creates a primitive task and I2S1 interrupt.
+      - PS/2 initialization activates ULP/RTC interrupt and keyboard/mouse tasks.
+      - Terminal activation creates timer, queue, consumer task, and serial
+        keyboard-reader task.
+    owning_state:
+      - Core0Task
+      - audioTask
+      - VGA primitive task and interrupt handle
+      - PS2Controller/Keyboard/Mouse task, queue, and interrupt state
+      - Terminal timer, queue, mutex, and task handles
+    direct_facilities:
+      - FreeRTOS tasks, queues, semaphores, and timers
+      - ESP32 interrupt allocation and core affinity
+      - I2S0, I2S1, RTC/ULP, and UART interrupt sources
+    compile_conditions:
+      - Some compiled-only vdp-gl units define additional tasks or interrupts,
+        but they are not active unless their owning object is constructed.
+    visible_dependencies:
+      - Responsiveness and ordering of VDU processing, drawing, input, audio,
+        and terminal mode
+    portability_boundary: >-
+      Port planning must preserve lifecycle and synchronization behavior for
+      retained protocol semantics, while separately reviewing each physical
+      interrupt source and core-affinity assumption. Static task-creation text
+      in an uninstantiated driver does not prove runtime activity.
+    omission_assessment:
+      cleanly_omittable_from_evidence: false
+      fallout: Concurrency resources follow active subsystem ownership and cannot be removed as one unit.
+      required_boundary: Per-subsystem lifecycle, synchronization, interrupt, and core-affinity contracts.
+    evidence:
+      - owner: agon-vdp
+        path: video/video.ino
+        line: 109
+        fact: Official startup creates processLoop pinned to core 0.
+      - owner: agon-vdp
+        path: video/agon_audio.h
+        line: 52
+        fact: Audio initialization creates audioDriver with core affinity.
+      - owner: vdp-gl
+        path: src/dispdrivers/vgabasecontroller.cpp
+        line: 435
+        fact: Active VGA initialization creates a primitive execution task.
+      - owner: vdp-gl
+        path: src/dispdrivers/vgapalettedcontroller.cpp
+        line: 168
+        fact: Active paletted VGA allocates the I2S1 interrupt.
+      - owner: vdp-gl
+        path: src/terminal.cpp
+        line: 384
+        fact: Terminal activation creates a periodic blink timer.
+      - owner: vdp-gl
+        path: src/terminal.cpp
+        line: 389
+        fact: Terminal activation creates the character-consumer task.

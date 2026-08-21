@@ -21,3 +21,8 @@ item is removed.
   - Started: 2026-08-20 19:18 EDT
   - Finished: --
   - Details: [SETUP-003](docs/tasks/SETUP-003.md)
+
+- [ ] **SETUP-004 — Determine upstream I/O driver disposition**
+  - Started: 2026-08-20 20:52 EDT
+  - Finished: --
+  - Details: [SETUP-004](docs/tasks/SETUP-004.md)

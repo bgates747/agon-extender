@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: In progress — Work 1 and 2 complete; remaining work not started
+- Status: In progress — Work 1, 2, 4, 5, and 6 complete; Work 3 paused at its
+  unmodified-build review gate
 
 ## Intent
 
@@ -50,24 +51,52 @@ does not make Extender design, portability, or source-modification decisions.
      assumption, and probable portability boundary; and
    - stop for review of the unmodified-build evidence before correcting the
      first source error or beginning iterative port work.
-4. Generate `compile_commands.json` with PlatformIO's `compiledb` target. Use
+4. [x] Generate `compile_commands.json` with PlatformIO's `compiledb` target. Use
    compiler dependency output or `clang-scan-deps` to record the actual include
    graph. Because upstream implementation is heavily header-defined, retain a
    controlled preprocessor/include-tree summary for `video.ino`.
-5. Generate a machine-readable symbol index with Universal Ctags JSON or a
+5. [x] Generate a machine-readable symbol index with Universal Ctags JSON or a
    Clang-based equivalent. At minimum enumerate functions, methods, classes,
    structs, enums, macros, global definitions, `extern` declarations, and their
    owning files.
-6. Generate focused structural inventories for:
-   - startup and task entry functions;
-   - FreeRTOS task handles, task creation, mutexes, queues, callbacks, and
-     interrupt handlers;
-   - globals and static owning objects;
-   - Arduino `Stream` users and implementations;
-   - direct FabGL, Arduino, ESP32, and FreeRTOS dependencies;
-   - PSRAM allocators and memory-capability calls;
-   - conditional-compilation symbols and regions; and
-   - VDP command, packet, audio, input, and feature constants.
+6. [x] Generate a focused **portability and ownership inventory**. Its purpose is
+   to support P4 port planning and SETUP-004 disposition decisions, not to
+   catalog every construct in the codebase.
+
+   Mechanical extraction and source-validated semantic relationship review are
+   complete. The combined machine-readable inventory is
+   [`SETUP-003/generated/portability.yaml`](SETUP-003/generated/portability.yaml),
+   with a compact review at
+   [`SETUP-003/portability-review.md`](SETUP-003/portability-review.md).
+
+   For each material runtime subsystem, record relationships sufficient to
+   answer:
+   - what physical hardware or platform facility the code owns;
+   - what startup path, task, callback, interrupt, or command handler activates
+     it;
+   - which global/static owning objects and shared state keep it alive;
+   - which FabGL, Arduino, ESP32, FreeRTOS, PSRAM, or memory-capability
+     facilities it uses directly;
+   - which conditional-compilation regions select or exclude it;
+   - which VDP commands, packets, audio/input behavior, or other externally
+     visible features depend on it; and
+   - whether the evidence suggests it can be omitted cleanly or requires a
+     retained interface or replacement boundary.
+
+   Prioritize:
+   - startup and task entry functions, task creation, callbacks, and interrupt
+     handlers;
+   - global/static subsystem owners;
+   - direct architecture and framework dependencies;
+   - PSRAM and capability-specific allocation; and
+   - compile-time switches and protocol constants tied to hardware behavior.
+
+   Do not exhaustively enumerate mutexes, queues, `Stream` uses, constants, or
+   other constructs that have no demonstrated bearing on ownership,
+   portability, lifecycle, externally visible behavior, or omission fallout.
+   Use targeted machine extraction plus source validation; preserve useful
+   relationships rather than raw search matches. Stop for Author review of the
+   proposed extraction and output shape before starting this work.
 7. From a successful ELF build, capture `size`, `nm`, `readelf`, and a linker
    map sufficient to associate significant code/data symbols with source files
    and libraries. Do not retain bulky disassembly or raw preprocessor output
@@ -76,10 +105,11 @@ does not make Extender design, portability, or source-modification decisions.
    fan-in/fan-out, strongly connected groups where practical, subsystem
    dependencies, and task/callback entry relationships. Use Graphviz only for
    diagrams that remain legible and materially improve navigation.
-9. Store durable, deterministic outputs under
-   `docs/architecture/generated/`, favoring YAML or JSON plus small Markdown
-   indexes. Provide one regeneration script rather than undocumented ad hoc
-   commands.
+9. Store task scripts, evidence, and deterministic outputs under
+   `docs/tasks/SETUP-003/`, favoring YAML or JSON plus small Markdown indexes.
+   Provide reproducible task-local scripts rather than undocumented ad hoc
+   commands. Promote an output into architecture documentation only when it
+   becomes a durable reference beyond this task.
 10. Keep `docs/architecture/vdp-upstream-precis.md` as the compact agent-facing
     index to generated evidence and the place for relationships or caveats that
     tools cannot establish reliably. Do not add Extender design or port
@@ -95,6 +125,8 @@ does not make Extender design, portability, or source-modification decisions.
 - `globals.yaml` — global/static state and ownership clues;
 - `tasks.yaml` — task, queue, mutex, callback, and interrupt inventory;
 - `protocols.yaml` — command/packet constants and handler cross-references;
+- `portability.yaml` — mechanical candidates plus reviewed subsystem ownership,
+  lifecycle, coupling, externally visible behavior, and portability boundaries;
 - `memory.yaml` — ELF sections and significant symbol ownership; and
 - compact SVG dependency diagrams only where useful.
 
