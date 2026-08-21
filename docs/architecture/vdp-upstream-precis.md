@@ -1,13 +1,13 @@
 # Official VDP Architecture Précis
 
 Status: Draft for Author review  
-Source baseline: AgonPlatform/agon-vdp
+Source baseline: AgonPlatform/agon-vdp release `v2.16.0`,
 [`c7ac293d2aa81ddfa693390549bcd909069c8fc3`](https://github.com/AgonPlatform/agon-vdp/commit/c7ac293d2aa81ddfa693390549bcd909069c8fc3),
-version 2.16.0
+verified as the latest official tag on 2026-08-20
 
 ## Scope
 
-This document describes the official VDP firmware at the pinned baseline. It
+This document describes the official VDP firmware at tagged release `v2.16.0`. It
 records source structure, build configuration, startup, runtime flow,
 interfaces, state, dependencies, and implementation coupling. Material not
 describing that firmware or its declared dependencies is outside its scope.
@@ -56,10 +56,11 @@ source directory and defines one `esp32dev` environment with:
 - PSRAM and the ESP32 PSRAM cache workaround;
 - serial monitor at 115200 baud and upload at 600000 baud.
 
-Declared libraries are AgonPlatform `vdp-gl` branch `all-the-plots`, ESP32Time
-2.x, and CRC 1.x. The vdp-gl dependency is a moving branch name rather than an
-immutable commit. The VDP commit therefore does not by itself identify the
-exact transitive vdp-gl source used for a build.
+Declared libraries are AgonPlatform `vdp-gl` tag `all-the-plots`, ESP32Time
+2.x, and CRC 1.x. The vdp-gl tag resolves to
+`ac2dd5986daf496c43ae8e7fe41836274aec54a0`. ESP32Time and CRC remain declared
+as compatible version ranges, so the VDP commit alone does not identify their
+exact resolved versions.
 
 ## Source organization
 
@@ -167,8 +168,7 @@ state, and renderer are therefore not separated by a high-level,
 renderer-independent draw-command interface.
 
 FabGL `Canvas` targets a `BitmappedDisplayController`; the AgonPlatform fork
-also contains a `GenericBitmappedDisplayController`. Their exact source
-identity is not fixed by the VDP repository's branch-based dependency.
+also contains a `GenericBitmappedDisplayController`.
 
 ## Buffers, contexts, fonts, and sprites
 
