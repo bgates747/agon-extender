@@ -1,8 +1,9 @@
 # ADR-0006 — Represent internal SRAM and external PSRAM separately
 
-## Status
-
-Accepted, subject to physical-board qualification.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Qualification: Physical-board qualification required
 
 ## Context
 

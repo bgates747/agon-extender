@@ -1,6 +1,7 @@
 # ADR-0002 — Use PlatformIO with Arduino and ESP-IDF together
 
 - Status: Accepted
+- Completeness: Complete
 - Date: 2026-08-20
 
 ## Context

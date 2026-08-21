@@ -1,8 +1,9 @@
 # ADR-0007 — Use two large OTA application slots
 
-## Status
-
-Accepted. Exact offsets remain subject to toolchain validation.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Qualification: Exact offsets require toolchain validation
 
 ## Context
 

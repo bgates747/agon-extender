@@ -1,8 +1,9 @@
 # ADR-0010 — Use 360 MHz on the current pre-v3 P4
 
-## Status
-
-Amended after failed physical qualification on 2026-08-20.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Amendment: Revised after failed 400 MHz physical qualification on 2026-08-20
 
 ## Context
 

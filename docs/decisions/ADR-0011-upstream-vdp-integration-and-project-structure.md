@@ -1,6 +1,7 @@
 # ADR-0011 — Maintain upstream VDP fidelity and separate project-owned structure
 
 - Status: Accepted
+- Completeness: Complete
 - Date: 2026-08-20
 - Related task: SETUP-003
 

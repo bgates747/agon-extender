@@ -55,6 +55,53 @@ Target adaptation should follow this preference order:
 Every deviation from upstream should remain attributable to a verified target
 requirement or an accepted Extender feature.
 
+## EDU operating modes and application interface
+
+Project terminology distinguishes the **Extended Display Unit (EDU)** exposed
+to eZ80 software from the **Extended Display Processor (EDP)** that implements
+it on the ESP32-P4. EDU names the command set, API, and logical facility; EDP
+names the processor and its firmware. The terms intentionally parallel Agon's
+existing VDU and VDP terminology.
+
+Extender-aware programs address the P4 through an explicit, stable, versioned
+EDU API. The API is independent of its eZ80-side implementation: synchronous
+foreground operations may use code linked into an application, while
+persistent or asynchronous facilities may use an explicitly installed resident
+service.
+
+The resident service is optional. Its presence does not intercept or redirect
+the stock `RST.LIL 10h` or `RST.LIL 18h` VDU paths, and applications must
+discover and open it deliberately. It may own persistent transport state,
+interrupt-driven reception, queues, and background work on behalf of clients.
+A future official MOS integration may supply another backend without changing
+the application-facing EDU contract. See
+[ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
+
+In **exclusive compatibility mode**, exactly one display processor owns the
+stock-compatible command path, responses, completion flags, and canonical MOS
+VDP sysvars. Only this mode may claim complete compatibility with untouched
+legacy software. Transparent EDP selection remains unresolved until the fixed
+legacy VDU restart paths and return traffic can be routed safely.
+
+In **extended cooperative mode**, the onboard VDP remains authoritative for VDU
+and MOS VDP sysvars while the EDP is addressed through EDU and retains results
+in an EDU-owned state domain. Applications and project-owned abstraction layers
+may coordinate both processors, but uncontrolled duplication of a VDU stream or
+competing writes to canonical sysvars is unsupported.
+
+Baseline extended cooperative mode supports stock MOS: EDU-aware applications
+reach the EDP through linked client code or the optional resident EDU service,
+and MOS need not know that Extender exists. An Extender-enabled MOS is required
+only by features that need system-wide integration, such as a MOS-based
+implementation of transparent legacy VDU routing; it is not a prerequisite for
+ordinary cooperative EDU use.
+
+Operator diagnostics form a separate output domain. Commands such as buffered
+command 128 write to the EDP diagnostic console or logging sink; they do not
+become MOS response packets, canonical sysvars, or EDU application results. The
+P4 port assigns that sink explicitly rather than inheriting the stock VDP's
+UART0 `DBGSerial` mapping.
+
 ## Firmware build model
 
 PlatformIO remains the outer project, dependency, build, upload, and monitoring

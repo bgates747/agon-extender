@@ -1,6 +1,7 @@
 # ADR-0012 — Vendor exact release dependencies for the VDP firmware
 
 - Status: Accepted
+- Completeness: Complete
 - Date: 2026-08-20
 - Related task: SETUP-003
 

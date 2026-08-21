@@ -1,8 +1,9 @@
 # ADR-0003 — Pin pioarduino release 55.03.311
 
-## Status
-
-Accepted, subject to build and physical-board qualification.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Qualification: Build and physical-board qualification required
 
 ## Context
 

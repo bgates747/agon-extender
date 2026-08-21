@@ -1,8 +1,9 @@
 # ADR-0005 — Qualify QIO flash operation at 80 MHz
 
-## Status
-
-Accepted as a physical-board qualification candidate.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Qualification: Physical-board qualification candidate
 
 ## Context
 

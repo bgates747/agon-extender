@@ -1,6 +1,7 @@
 # ADR-0001 — Place Extender code under `vdp/video/extender/`
 
 - Status: Accepted
+- Completeness: Complete
 - Date: 2026-08-20
 
 ## Context

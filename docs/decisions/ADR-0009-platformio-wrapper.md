@@ -1,8 +1,8 @@
 # ADR-0009 — Provide a transparent PlatformIO wrapper
 
-## Status
-
-Accepted.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
 
 ## Context
 

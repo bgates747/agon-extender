@@ -1,8 +1,9 @@
 # ADR-0004 — Identify the board as a pre-v3 ESP32-P4
 
-## Status
-
-Accepted, subject to generated-configuration and physical-board verification.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
+- Qualification: Generated-configuration and physical-board verification required
 
 ## Context
 

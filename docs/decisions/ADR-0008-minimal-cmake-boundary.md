@@ -1,8 +1,8 @@
 # ADR-0008 — Add CMake only when the hybrid build proves it necessary
 
-## Status
-
-Accepted.
+- Status: Accepted
+- Completeness: Complete
+- Date: 2026-08-20
 
 ## Context
 
