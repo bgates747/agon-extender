@@ -85,3 +85,21 @@ behavior, and portability boundaries. They deliberately make no
 retain/replace/stub/omit/defer disposition.
 
 The compact human index and conclusions are in `portability-review.md`.
+
+## Work 7 dependency-view regeneration
+
+```sh
+.venv/bin/python docs/tasks/SETUP-003/scripts/generate-dependency-views.py
+```
+
+The generator resolves the Work 6 direct-source include records against the
+indexed source set, computes distinct-file fan-in and fan-out, finds strongly
+connected components, and emits the complete graph as
+`generated/dependency-views.yaml`. It validates and merges the bounded,
+source-cited semantic relationships in `evidence/work-7-graph-model.yaml`.
+
+The `.dot` and `.svg` files are deterministic projections of that data. The
+cycle diagram intentionally omits edges between different strongly connected
+components to preserve legibility; those edges remain in the YAML. Graphviz
+layout may be adjusted through the model's presentation settings without
+changing semantic nodes or edges.

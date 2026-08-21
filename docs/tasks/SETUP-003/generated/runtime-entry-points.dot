@@ -1,0 +1,73 @@
+digraph runtime_entries {
+  rankdir=TB;
+  graph [label="Runtime entry, task, callback, and interrupt relationships", labelloc=t, fontsize=18, bgcolor="white", pad=0.25, nodesep=0.3, ranksep=0.55];
+  node [style="filled", fontname="DejaVu Sans", fontsize=9];
+  edge [fontname="DejaVu Sans", fontsize=8, color="#667085", fontcolor="#475467", arrowsize=0.7];
+  subgraph cluster_01 {
+    label="audio"; color="#98a2b3"; style="rounded";
+    "audio-driver" [label="audioDriver", shape=component, fillcolor="#ffd8df"];
+    "init-audio" [label="initAudio()", shape=box, fillcolor="#ffd8df"];
+    "sound-isr" [label="SoundGenerator ISR", shape=hexagon, fillcolor="#ffd8df"];
+  }
+  subgraph cluster_02 {
+    label="firmware-updater"; color="#98a2b3"; style="rounded";
+    "receive-firmware" [label="receiveFirmware()", shape=box, fillcolor="#d9f3f0"];
+    "updater-command" [label="VDP_UPDATER", shape=diamond, fillcolor="#d9f3f0"];
+  }
+  subgraph cluster_03 {
+    label="graphics-display"; color="#98a2b3"; style="rounded";
+    "change-mode" [label="changeMode()", shape=box, fillcolor="#ffe8cc"];
+    "primitive-task" [label="primitiveExecTask", shape=component, fillcolor="#ffe8cc"];
+    "vga-isr" [label="VGA I2S1 ISR", shape=hexagon, fillcolor="#ffe8cc"];
+  }
+  subgraph cluster_04 {
+    label="physical-ps2-input"; color="#98a2b3"; style="rounded";
+    "handle-input" [label="handleKeyboardAndMouse()", shape=box, fillcolor="#f1e1ff"];
+    "keyboard-task" [label="scancode converter", shape=component, fillcolor="#f1e1ff"];
+    "mouse-task" [label="mouseUpdateTask", shape=component, fillcolor="#f1e1ff"];
+    "ps2-isr" [label="ULPWakeISR", shape=hexagon, fillcolor="#f1e1ff"];
+    "setup-input" [label="setupKeyboardAndMouse()", shape=box, fillcolor="#f1e1ff"];
+  }
+  subgraph cluster_05 {
+    label="primary-vdp-transport"; color="#98a2b3"; style="rounded";
+    "process-next" [label="processNext()", shape=box, fillcolor="#dff5e1"];
+    "setup-vdp-protocol" [label="setupVDPProtocol()", shape=box, fillcolor="#dff5e1"];
+    "vdu-dispatch" [label="vdu()", shape=box, fillcolor="#dff5e1"];
+    "wait-ez80" [label="wait_eZ80()", shape=box, fillcolor="#dff5e1"];
+  }
+  subgraph cluster_06 {
+    label="startup-orchestration"; color="#98a2b3"; style="rounded";
+    "process-loop" [label="processLoop", shape=component, fillcolor="#dceeff"];
+    "setup" [label="setup()", shape=oval, fillcolor="#dceeff"];
+  }
+  subgraph cluster_07 {
+    label="terminal-mode"; color="#98a2b3"; style="rounded";
+    "process-terminal" [label="processTerminal()", shape=box, fillcolor="#fff3bf"];
+    "terminal-blink" [label="blinkTimerFunc", shape=octagon, fillcolor="#fff3bf"];
+    "terminal-command" [label="VDP_TERMINALMODE", shape=diamond, fillcolor="#fff3bf"];
+    "terminal-consumer" [label="charsConsumerTask", shape=component, fillcolor="#fff3bf"];
+    "terminal-keyboard" [label="keyboardReaderTask", shape=component, fillcolor="#fff3bf"];
+  }
+  "change-mode" -> "primitive-task" [label="creates task"];
+  "change-mode" -> "vga-isr" [label="allocates interrupt"];
+  "init-audio" -> "audio-driver" [label="creates task"];
+  "init-audio" -> "sound-isr" [label="activates output"];
+  "process-loop" -> "process-next" [label="loops"];
+  "process-loop" -> "process-terminal" [label="polls"];
+  "process-loop" -> "setup-input" [label="calls"];
+  "process-loop" -> "wait-ez80" [label="calls once"];
+  "process-next" -> "handle-input" [label="polls"];
+  "process-next" -> "vdu-dispatch" [label="dispatches byte"];
+  "process-terminal" -> "terminal-blink" [label="creates timer"];
+  "process-terminal" -> "terminal-consumer" [label="creates task"];
+  "process-terminal" -> "terminal-keyboard" [label="creates task"];
+  "setup" -> "change-mode" [label="calls"];
+  "setup" -> "init-audio" [label="calls"];
+  "setup" -> "process-loop" [label="creates task"];
+  "setup" -> "setup-vdp-protocol" [label="calls"];
+  "setup-input" -> "keyboard-task" [label="creates task"];
+  "setup-input" -> "mouse-task" [label="creates task"];
+  "setup-input" -> "ps2-isr" [label="allocates interrupt"];
+  "terminal-command" -> "process-terminal" [label="changes state"];
+  "updater-command" -> "receive-firmware" [label="dispatches"];
+}

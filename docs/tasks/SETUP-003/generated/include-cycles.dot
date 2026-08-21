@@ -1,0 +1,81 @@
+digraph include_cycles {
+  rankdir=LR;
+  graph [label="Direct source include cycles", labelloc=t, fontsize=18, bgcolor="white", pad=0.2];
+  node [shape=box, style="rounded,filled", fontname="DejaVu Sans", fontsize=10];
+  edge [color="#667085", arrowsize=0.7];
+  subgraph cluster_01 {
+    label="SCC 1 · 11 files";
+    color="#98a2b3"; style="rounded";
+    n011 [label="agon-vdp\nvideo/updater.h", fillcolor="#dceeff"];
+    n012 [label="agon-vdp\nvideo/vdp_variables.h", fillcolor="#dceeff"];
+    n013 [label="agon-vdp\nvideo/vdu.h", fillcolor="#dceeff"];
+    n014 [label="agon-vdp\nvideo/vdu_audio.h", fillcolor="#dceeff"];
+    n015 [label="agon-vdp\nvideo/vdu_buffered.h", fillcolor="#dceeff"];
+    n016 [label="agon-vdp\nvideo/vdu_context.h", fillcolor="#dceeff"];
+    n017 [label="agon-vdp\nvideo/vdu_fonts.h", fillcolor="#dceeff"];
+    n018 [label="agon-vdp\nvideo/vdu_layers.h", fillcolor="#dceeff"];
+    n019 [label="agon-vdp\nvideo/vdu_sprites.h", fillcolor="#dceeff"];
+    n020 [label="agon-vdp\nvideo/vdu_stream_processor.h", fillcolor="#dceeff"];
+    n021 [label="agon-vdp\nvideo/vdu_sys.h", fillcolor="#dceeff"];
+  }
+  subgraph cluster_02 {
+    label="SCC 2 · 5 files";
+    color="#98a2b3"; style="rounded";
+    n005 [label="agon-vdp\nvideo/context.h", fillcolor="#dceeff"];
+    n006 [label="agon-vdp\nvideo/context/cursor.h", fillcolor="#dceeff"];
+    n007 [label="agon-vdp\nvideo/context/fonts.h", fillcolor="#dceeff"];
+    n008 [label="agon-vdp\nvideo/context/graphics.h", fillcolor="#dceeff"];
+    n009 [label="agon-vdp\nvideo/context/viewport.h", fillcolor="#dceeff"];
+  }
+  subgraph cluster_03 {
+    label="SCC 3 · 3 files";
+    color="#98a2b3"; style="rounded";
+    n000 [label="agon-vdp\nvideo/agon_ps2.h", fillcolor="#dceeff"];
+    n001 [label="agon-vdp\nvideo/agon_screen.h", fillcolor="#dceeff"];
+    n002 [label="agon-vdp\nvideo/agon_ttxt.h", fillcolor="#dceeff"];
+  }
+  subgraph cluster_04 {
+    label="SCC 4 · 3 files";
+    color="#98a2b3"; style="rounded";
+    n003 [label="agon-vdp\nvideo/audio_channel.h", fillcolor="#dceeff"];
+    n004 [label="agon-vdp\nvideo/audio_sample.h", fillcolor="#dceeff"];
+    n010 [label="agon-vdp\nvideo/enhanced_samples_generator.h", fillcolor="#dceeff"];
+  }
+  n000 -> n001;
+  n001 -> n000;
+  n001 -> n002;
+  n002 -> n001;
+  n003 -> n004;
+  n003 -> n010;
+  n004 -> n003;
+  n005 -> n006;
+  n005 -> n007;
+  n005 -> n008;
+  n005 -> n009;
+  n006 -> n005;
+  n007 -> n005;
+  n008 -> n005;
+  n009 -> n005;
+  n010 -> n004;
+  n011 -> n020;
+  n012 -> n020;
+  n013 -> n014;
+  n013 -> n021;
+  n014 -> n020;
+  n015 -> n012;
+  n015 -> n020;
+  n016 -> n020;
+  n017 -> n020;
+  n018 -> n020;
+  n019 -> n020;
+  n020 -> n013;
+  n021 -> n011;
+  n021 -> n012;
+  n021 -> n014;
+  n021 -> n015;
+  n021 -> n016;
+  n021 -> n017;
+  n021 -> n018;
+  n021 -> n019;
+  n021 -> n020;
+}

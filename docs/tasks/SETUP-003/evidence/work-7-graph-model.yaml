@@ -1,0 +1,149 @@
+# Reviewed semantic graph input for SETUP-003 Work 7.
+# Every edge cites a reviewed source location. The generator validates
+# subsystem IDs, node IDs, and each reference against the indexed file extent.
+schema_version: 1
+source:
+  agon_vdp_release: v2.16.0
+  agon_vdp_commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp_gl_commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+
+presentation:
+  subsystem_rank_direction: LR
+  runtime_rank_direction: TB
+  include_cycle_rank_direction: LR
+
+subsystem_edges:
+  - from: startup-orchestration
+    to: graphics-display
+    relation: starts
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 105}
+  - from: startup-orchestration
+    to: primary-vdp-transport
+    relation: starts
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 107}
+  - from: startup-orchestration
+    to: audio
+    relation: starts
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 118}
+  - from: startup-orchestration
+    to: physical-ps2-input
+    relation: starts
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 136}
+  - from: graphics-display
+    to: memory-and-psram
+    relation: allocates-through
+    evidence: {owner: agon-vdp, path: video/agon_screen.h, line: 232}
+  - from: graphics-display
+    to: runtime-concurrency
+    relation: creates-task-and-isr
+    evidence: {owner: vdp-gl, path: src/dispdrivers/vgabasecontroller.cpp, line: 435}
+  - from: physical-ps2-input
+    to: graphics-display
+    relation: uses-cursor-and-positioner
+    evidence: {owner: agon-vdp, path: video/agon_ps2.h, line: 66}
+  - from: physical-ps2-input
+    to: primary-vdp-transport
+    relation: emits-input-packets
+    evidence: {owner: agon-vdp, path: video/vdu_stream_processor.h, line: 566}
+  - from: physical-ps2-input
+    to: runtime-concurrency
+    relation: creates-tasks-and-isr
+    evidence: {owner: vdp-gl, path: src/comdrivers/ps2controller.cpp, line: 1175}
+  - from: terminal-mode
+    to: graphics-display
+    relation: renders-through
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 277}
+  - from: terminal-mode
+    to: primary-vdp-transport
+    relation: connects-to
+    evidence: {owner: agon-vdp, path: video/video.ino, line: 278}
+  - from: terminal-mode
+    to: physical-ps2-input
+    relation: defaults-to-keyboard
+    evidence: {owner: vdp-gl, path: src/terminal.cpp, line: 342}
+  - from: terminal-mode
+    to: runtime-concurrency
+    relation: creates-timer-queue-tasks
+    evidence: {owner: vdp-gl, path: src/terminal.cpp, line: 384}
+  - from: audio
+    to: memory-and-psram
+    relation: stores-samples-in
+    evidence: {owner: agon-vdp, path: video/agon_audio.h, line: 30}
+  - from: audio
+    to: runtime-concurrency
+    relation: creates-task-and-isr
+    evidence: {owner: agon-vdp, path: video/agon_audio.h, line: 52}
+  - from: rtc-service
+    to: primary-vdp-transport
+    relation: returns-packets-over
+    evidence: {owner: agon-vdp, path: video/vdu_sys.h, line: 529}
+  - from: firmware-updater
+    to: primary-vdp-transport
+    relation: receives-image-over
+    evidence: {owner: agon-vdp, path: video/updater.h, line: 30}
+  - from: firmware-updater
+    to: graphics-display
+    relation: quiesces
+    evidence: {owner: agon-vdp, path: video/updater.h, line: 57}
+  - from: debug-zdi-and-file-transfer
+    to: primary-vdp-transport
+    relation: reuses-packet-channel
+    evidence: {owner: agon-vdp, path: video/ymodem.h, line: 439}
+  - from: debug-zdi-and-file-transfer
+    to: physical-ps2-input
+    relation: polls-for-abort
+    evidence: {owner: agon-vdp, path: video/hexload.h, line: 35}
+  - from: debug-zdi-and-file-transfer
+    to: memory-and-psram
+    relation: stores-transfer-files-in
+    evidence: {owner: agon-vdp, path: video/ymodem.h, line: 300}
+
+runtime_nodes:
+  - {id: setup, label: setup(), kind: entry, subsystem: startup-orchestration}
+  - {id: change-mode, label: changeMode(), kind: function, subsystem: graphics-display}
+  - {id: setup-vdp-protocol, label: setupVDPProtocol(), kind: function, subsystem: primary-vdp-transport}
+  - {id: process-loop, label: processLoop, kind: task, subsystem: startup-orchestration}
+  - {id: init-audio, label: initAudio(), kind: function, subsystem: audio}
+  - {id: setup-input, label: setupKeyboardAndMouse(), kind: function, subsystem: physical-ps2-input}
+  - {id: wait-ez80, label: wait_eZ80(), kind: function, subsystem: primary-vdp-transport}
+  - {id: process-terminal, label: processTerminal(), kind: handler, subsystem: terminal-mode}
+  - {id: process-next, label: processNext(), kind: handler, subsystem: primary-vdp-transport}
+  - {id: handle-input, label: handleKeyboardAndMouse(), kind: handler, subsystem: physical-ps2-input}
+  - {id: vdu-dispatch, label: vdu(), kind: handler, subsystem: primary-vdp-transport}
+  - {id: audio-driver, label: audioDriver, kind: task, subsystem: audio}
+  - {id: sound-isr, label: SoundGenerator ISR, kind: interrupt, subsystem: audio}
+  - {id: primitive-task, label: primitiveExecTask, kind: task, subsystem: graphics-display}
+  - {id: vga-isr, label: VGA I2S1 ISR, kind: interrupt, subsystem: graphics-display}
+  - {id: ps2-isr, label: ULPWakeISR, kind: interrupt, subsystem: physical-ps2-input}
+  - {id: keyboard-task, label: scancode converter, kind: task, subsystem: physical-ps2-input}
+  - {id: mouse-task, label: mouseUpdateTask, kind: task, subsystem: physical-ps2-input}
+  - {id: terminal-command, label: VDP_TERMINALMODE, kind: command, subsystem: terminal-mode}
+  - {id: terminal-blink, label: blinkTimerFunc, kind: timer-callback, subsystem: terminal-mode}
+  - {id: terminal-consumer, label: charsConsumerTask, kind: task, subsystem: terminal-mode}
+  - {id: terminal-keyboard, label: keyboardReaderTask, kind: task, subsystem: terminal-mode}
+  - {id: updater-command, label: VDP_UPDATER, kind: command, subsystem: firmware-updater}
+  - {id: receive-firmware, label: receiveFirmware(), kind: handler, subsystem: firmware-updater}
+
+runtime_edges:
+  - {from: setup, to: change-mode, relation: calls, evidence: {owner: agon-vdp, path: video/video.ino, line: 105}}
+  - {from: setup, to: setup-vdp-protocol, relation: calls, evidence: {owner: agon-vdp, path: video/video.ino, line: 107}}
+  - {from: setup, to: process-loop, relation: creates-task, evidence: {owner: agon-vdp, path: video/video.ino, line: 109}}
+  - {from: setup, to: init-audio, relation: calls, evidence: {owner: agon-vdp, path: video/video.ino, line: 118}}
+  - {from: process-loop, to: setup-input, relation: calls, evidence: {owner: agon-vdp, path: video/video.ino, line: 136}}
+  - {from: process-loop, to: wait-ez80, relation: calls-once, evidence: {owner: agon-vdp, path: video/video.ino, line: 137}}
+  - {from: process-loop, to: process-terminal, relation: polls, evidence: {owner: agon-vdp, path: video/video.ino, line: 150}}
+  - {from: process-loop, to: process-next, relation: loops, evidence: {owner: agon-vdp, path: video/video.ino, line: 154}}
+  - {from: process-next, to: handle-input, relation: polls, evidence: {owner: agon-vdp, path: video/vdu_stream_processor.h, line: 612}}
+  - {from: process-next, to: vdu-dispatch, relation: dispatches-byte, evidence: {owner: agon-vdp, path: video/vdu_stream_processor.h, line: 621}}
+  - {from: init-audio, to: audio-driver, relation: creates-task, evidence: {owner: agon-vdp, path: video/agon_audio.h, line: 105}}
+  - {from: init-audio, to: sound-isr, relation: activates-output, evidence: {owner: vdp-gl, path: src/devdrivers/soundgen.cpp, line: 572}}
+  - {from: change-mode, to: primitive-task, relation: creates-task, evidence: {owner: vdp-gl, path: src/dispdrivers/vgabasecontroller.cpp, line: 435}}
+  - {from: change-mode, to: vga-isr, relation: allocates-interrupt, evidence: {owner: vdp-gl, path: src/dispdrivers/vgapalettedcontroller.cpp, line: 168}}
+  - {from: setup-input, to: ps2-isr, relation: allocates-interrupt, evidence: {owner: vdp-gl, path: src/comdrivers/ps2controller.cpp, line: 1175}}
+  - {from: setup-input, to: keyboard-task, relation: creates-task, evidence: {owner: vdp-gl, path: src/devdrivers/keyboard.cpp, line: 111}}
+  - {from: setup-input, to: mouse-task, relation: creates-task, evidence: {owner: vdp-gl, path: src/devdrivers/mouse.cpp, line: 76}}
+  - {from: terminal-command, to: process-terminal, relation: changes-state, evidence: {owner: agon-vdp, path: video/vdu_sys.h, line: 384}}
+  - {from: process-terminal, to: terminal-blink, relation: creates-timer, evidence: {owner: vdp-gl, path: src/terminal.cpp, line: 384}}
+  - {from: process-terminal, to: terminal-consumer, relation: creates-task, evidence: {owner: vdp-gl, path: src/terminal.cpp, line: 389}}
+  - {from: process-terminal, to: terminal-keyboard, relation: creates-task, evidence: {owner: vdp-gl, path: src/terminal.cpp, line: 469}}
+  - {from: updater-command, to: receive-firmware, relation: dispatches, evidence: {owner: agon-vdp, path: video/updater.h, line: 176}}

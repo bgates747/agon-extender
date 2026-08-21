@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Work 1 through 6 complete
+- Status: Complete — Work 1 through 7 complete
 
 ## Intent
 
@@ -106,19 +106,27 @@ does not make Extender design, portability, or source-modification decisions.
    Use targeted machine extraction plus source validation; preserve useful
    relationships rather than raw search matches. Stop for Author review of the
    proposed extraction and output shape before starting this work.
-7. Generate compact dependency views from the structured data: file include
+7. [x] Generate compact dependency views from the structured data: file include
    fan-in/fan-out, strongly connected groups where practical, subsystem
    dependencies, and task/callback entry relationships. Use Graphviz only for
    diagrams that remain legible and materially improve navigation.
-8. Store task scripts, evidence, and deterministic outputs under
-   `docs/tasks/SETUP-003/`, favoring YAML or JSON plus small Markdown indexes.
-   Provide reproducible task-local scripts rather than undocumented ad hoc
-   commands. Promote an output into architecture documentation only when it
-   becomes a durable reference beyond this task.
-9. Keep `docs/architecture/vdp-upstream-precis.md` as the compact agent-facing
-   index to generated evidence and the place for relationships or caveats that
-   tools cannot establish reliably. Do not add Extender design or port
-   recommendations.
+
+   Completed evidence:
+   [`SETUP-003/generated/dependency-views.yaml`](SETUP-003/generated/dependency-views.yaml)
+   and
+   [`SETUP-003/dependency-review.md`](SETUP-003/dependency-review.md).
+
+## Maintenance requirements
+
+- Store task scripts, evidence, and deterministic outputs under
+  `docs/tasks/SETUP-003/`, favoring YAML or JSON plus small Markdown indexes.
+  Provide reproducible task-local scripts rather than undocumented ad hoc
+  commands. Promote an output into architecture documentation only when it
+  becomes a durable reference beyond this task.
+- Keep `docs/architecture/vdp-upstream-precis.md` as the compact agent-facing
+  index to generated evidence and the place for relationships or caveats that
+  tools cannot establish reliably. Do not add Extender design or port
+  recommendations.
 
 ## Proposed outputs
 
@@ -134,6 +142,8 @@ does not make Extender design, portability, or source-modification decisions.
 - `protocols.yaml` — command/packet constants and handler cross-references;
 - `portability.yaml` — mechanical candidates plus reviewed subsystem ownership,
   lifecycle, coupling, externally visible behavior, and portability boundaries;
+- `dependency-views.yaml` — complete resolved internal include edges, ranked
+  fan-in/fan-out, strongly connected components, and reviewed semantic graphs;
 - compact SVG dependency diagrams only where useful.
 
 ## Tool gate
