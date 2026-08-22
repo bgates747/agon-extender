@@ -1,114 +1,592 @@
-// See p4_display_controller.hpp. This file must remain visibly non-functional
-// until a later PORT-003 phase replaces each fail-fast contract method with a
-// tested framebuffer implementation.
+// See p4_display_controller.hpp.
+//
+// Generic wrappers and depth seams are adapted from the immutable vdp-gl
+// all-the-plots spans fingerprinted by PORT-003 Phase B. This implementation
+// uses the project bounds-safe codec; no classic VGA controller is compiled.
 #include "extender/display/p4_display_controller.hpp"
 
+#include <array>
+#include <climits>
+#include <cmath>
 #include <cstdlib>
 
+#if defined(ESP_PLATFORM)
+#include "esp_heap_caps.h"
 #include "esp_log.h"
+#endif
 
 namespace agon::extender::display {
 namespace {
 
 [[noreturn]] void unavailable(char const *operation) {
-  ESP_EARLY_LOGE("p4-display-contract-canary",
-                 "unimplemented display operation invoked: %s", operation);
+#if defined(ESP_PLATFORM)
+  ESP_EARLY_LOGE("p4-display-renderer", "deferred operation invoked: %s",
+                 operation);
+#else
+  (void)operation;
+#endif
   std::abort();
+}
+
+void rgb222ToHsv(int red, int green, int blue, double &hue,
+                 double &saturation, double &value) noexcept {
+  // Adapted from vdp-gl all-the-plots src/fabutils.cpp:443-463. Keeping this
+  // tiny pure calculation local avoids selecting broad classic fabutils.cpp.
+  double r = red / 3.0;
+  double g = green / 3.0;
+  double b = blue / 3.0;
+  double maximum = std::fmax(std::fmax(r, g), b);
+  double minimum = std::fmin(std::fmin(r, g), b);
+  double difference = maximum - minimum;
+  if (maximum == minimum)
+    hue = 0;
+  else if (maximum == r)
+    hue = std::fmod(60.0 * ((g - b) / difference) + 360.0, 360.0);
+  else if (maximum == g)
+    hue = std::fmod(60.0 * ((b - r) / difference) + 120.0, 360.0);
+  else
+    hue = std::fmod(60.0 * ((r - g) / difference) + 240.0, 360.0);
+  saturation = maximum == 0 ? 0 : (difference / maximum) * 100.0;
+  value = maximum * 100.0;
+}
+
+struct RGB222Value {
+  std::uint8_t red;
+  std::uint8_t green;
+  std::uint8_t blue;
+};
+
+constexpr std::array<RGB222Value, 16> kPalette16{{
+    {0, 0, 0}, {2, 0, 0}, {0, 2, 0}, {2, 2, 0},
+    {0, 0, 2}, {2, 0, 2}, {0, 2, 2}, {2, 2, 2},
+    {1, 1, 1}, {3, 0, 0}, {0, 3, 0}, {3, 3, 0},
+    {0, 0, 3}, {3, 0, 3}, {0, 3, 3}, {3, 3, 3},
+}};
+constexpr std::array<RGB222Value, 8> kPalette8{{
+    {0, 0, 0}, {2, 0, 0}, {0, 2, 0}, {0, 0, 2},
+    {3, 0, 0}, {0, 3, 0}, {0, 0, 3}, {3, 3, 3},
+}};
+constexpr std::array<RGB222Value, 4> kPalette4{{
+    {0, 0, 0}, {0, 0, 3}, {0, 3, 0}, {3, 3, 3},
+}};
+constexpr std::array<RGB222Value, 2> kPalette2{{{0, 0, 0}, {3, 3, 3}}};
+
+template <std::size_t Size>
+std::uint8_t nearestPalette(std::array<RGB222Value, Size> const &palette,
+                            std::uint8_t packed) noexcept {
+  double h1 = 0, s1 = 0, v1 = 0;
+  rgb222ToHsv(packed & 3, (packed >> 2) & 3, (packed >> 4) & 3, h1, s1, v1);
+  std::uint8_t best = 0;
+  double best_distance = 1.0e30;
+  for (std::size_t index = 0; index < palette.size(); ++index) {
+    double h2 = 0, s2 = 0, v2 = 0;
+    rgb222ToHsv(palette[index].red, palette[index].green,
+                palette[index].blue, h2, s2, v2);
+    double dh = h1 - h2, ds = s1 - s2, dv = v1 - v2;
+    double distance = dh * dh + ds * ds + dv * dv;
+    if (distance <= best_distance) {
+      best = static_cast<std::uint8_t>(index);
+      best_distance = distance;
+      if (distance == 0) break;
+    }
+  }
+  return best;
+}
+
+template <std::size_t Size>
+fabgl::RGB888 paletteColor(std::array<RGB222Value, Size> const &palette,
+                           std::uint8_t index) noexcept {
+  RGB222Value value = palette[index % palette.size()];
+  return fabgl::RGB888(value.red * 85, value.green * 85, value.blue * 85);
+}
+
+void *allocateDisplay(void *, std::size_t size) {
+#if defined(ESP_PLATFORM)
+  void *result = heap_caps_malloc(size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+  return result != nullptr ? result : heap_caps_malloc(size, MALLOC_CAP_8BIT);
+#else
+  return std::malloc(size);
+#endif
+}
+
+void deallocateDisplay(void *, void *allocation) {
+#if defined(ESP_PLATFORM)
+  heap_caps_free(allocation);
+#else
+  std::free(allocation);
+#endif
 }
 
 }  // namespace
 
-void P4DisplayControllerContractCanary::begin() {
-  setResolution(nullptr, 1, 1, false);
+Allocator defaultDisplayAllocator() noexcept {
+  return {nullptr, allocateDisplay, deallocateDisplay};
 }
 
-void P4DisplayControllerContractCanary::setResolution(char const *, int width,
-                                                       int height,
-                                                       bool double_buffered) {
-  if (double_buffered) unavailable("setResolution(double-buffered)");
-  width = width > 0 ? width : 1;
-  height = height > 0 ? height : 1;
-  setScreenSize(width, height);
-  m_viewPortWidth = width;
-  m_viewPortHeight = height;
-  setDoubleBuffered(false);
+P4DisplayController::P4DisplayController(Allocator allocator) noexcept
+    : storage_(allocator) {}
+
+ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexcept {
+  if (mode.width > INT_MAX || mode.height > INT_MAX) {
+    return ConfigureResult::InvalidDimensions;
+  }
+  ConfigureResult result = storage_.configure(mode);
+  if (result != ConfigureResult::Ok) return result;
+  setScreenSize(static_cast<int>(mode.width), static_cast<int>(mode.height));
+  m_viewPortWidth = static_cast<int>(mode.width);
+  m_viewPortHeight = static_cast<int>(mode.height);
+  setDoubleBuffered(mode.double_buffered);
   resetPaintState();
+  enableBackgroundPrimitiveExecution(false);
+  return ConfigureResult::Ok;
 }
 
-int P4DisplayControllerContractCanary::colorsCount() { return 64; }
+ConstPlaneView P4DisplayController::drawingPlane() const noexcept {
+  return storage_.drawingPlane();
+}
+ConstPlaneView P4DisplayController::visiblePlane() const noexcept {
+  return storage_.visiblePlane();
+}
 
-fabgl::NativePixelFormat P4DisplayControllerContractCanary::nativePixelFormat() {
+void P4DisplayController::begin() {
+  if (!storage_.configured() &&
+      configure({1, 1, NativePixelFormat::SBGR2222, false, 0xC0}) !=
+          ConfigureResult::Ok) {
+    unavailable("begin allocation");
+  }
+}
+
+void P4DisplayController::setResolution(char const *modeline, int width,
+                                        int height, bool double_buffered) {
+  if (modeline != nullptr || width <= 0 || height <= 0) {
+    unavailable("modeline-based setResolution (Phase E)");
+  }
+  NativePixelFormat format = storage_.configured()
+                                 ? storage_.mode().format
+                                 : NativePixelFormat::SBGR2222;
+  std::uint8_t sync = storage_.configured()
+                          ? storage_.mode().native_save_sync_bits
+                          : 0xC0;
+  if (configure({static_cast<std::size_t>(width), static_cast<std::size_t>(height),
+                 format, double_buffered, sync}) != ConfigureResult::Ok) {
+    unavailable("setResolution allocation");
+  }
+}
+
+int P4DisplayController::colorsCount() {
+  if (!storage_.configured()) return 0;
+  std::uint8_t maximum = 0;
+  return NativePixelCodec::maximumValue(storage_.mode().format, maximum) ==
+                 CodecResult::Ok
+             ? maximum + 1
+             : 0;
+}
+
+fabgl::NativePixelFormat P4DisplayController::nativePixelFormat() {
+  if (!storage_.configured()) return fabgl::NativePixelFormat::SBGR2222;
+  switch (storage_.mode().format) {
+    case NativePixelFormat::PALETTE2: return fabgl::NativePixelFormat::PALETTE2;
+    case NativePixelFormat::PALETTE4: return fabgl::NativePixelFormat::PALETTE4;
+    case NativePixelFormat::PALETTE8: return fabgl::NativePixelFormat::PALETTE8;
+    case NativePixelFormat::PALETTE16: return fabgl::NativePixelFormat::PALETTE16;
+    case NativePixelFormat::SBGR2222: return fabgl::NativePixelFormat::SBGR2222;
+  }
   return fabgl::NativePixelFormat::SBGR2222;
 }
 
-void P4DisplayControllerContractCanary::suspendBackgroundPrimitiveExecution() {}
-void P4DisplayControllerContractCanary::resumeBackgroundPrimitiveExecution() {}
+void P4DisplayController::suspendBackgroundPrimitiveExecution() {}
+void P4DisplayController::resumeBackgroundPrimitiveExecution() {}
+void P4DisplayController::swapBuffers() { unavailable("swapBuffers (Phase C)"); }
 
-void P4DisplayControllerContractCanary::
-    retainCommonPrimitiveExecutorForLinkEvidence() {
-  fabgl::Primitive flush(fabgl::PrimitiveCmd::Flush);
-  fabgl::Rect update;
-  execPrimitive(flush, update, false);
+std::uint8_t *P4DisplayController::row(int y) noexcept {
+  PlaneView plane = storage_.drawingPlane();
+  return plane.data + static_cast<std::size_t>(y) * plane.stride;
+}
+std::uint8_t const *P4DisplayController::row(int y) const noexcept {
+  ConstPlaneView plane = storage_.drawingPlane();
+  return plane.data + static_cast<std::size_t>(y) * plane.stride;
 }
 
-#define AGON_EXTENDER_UNAVAILABLE(method, signature) \
-  void P4DisplayControllerContractCanary::method signature { unavailable(#method); }
-
-AGON_EXTENDER_UNAVAILABLE(readScreen,
-                          (fabgl::Rect const &, fabgl::RGB888 *))
-AGON_EXTENDER_UNAVAILABLE(setPixelAt,
-                          (fabgl::PixelDesc const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(absDrawLine,
-                          (int, int, int, int, fabgl::RGB888))
-AGON_EXTENDER_UNAVAILABLE(fillRow, (int, int, int, fabgl::RGB888))
-AGON_EXTENDER_UNAVAILABLE(drawEllipse, (fabgl::Size const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(absDrawEllipseSheared,
-                          (fabgl::EllipseShearedParams const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(drawArc, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(fillSegment, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(fillSector, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(clear, (fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(VScroll, (int, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(HScroll, (int, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(drawGlyph,
-                          (fabgl::Glyph const &, fabgl::GlyphOptions,
-                           fabgl::RGB888, fabgl::RGB888, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(invertRect, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(swapFGBG, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(copyRect, (fabgl::Rect const &, fabgl::Rect &))
-AGON_EXTENDER_UNAVAILABLE(swapBuffers, ())
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmap_Native,
-                          (int, int, fabgl::Bitmap const *, int, int, int, int))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmap_Mask,
-                          (int, int, fabgl::Bitmap const *, void *, int, int,
-                           int, int))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmap_RGBA2222,
-                          (int, int, fabgl::Bitmap const *, void *, int, int,
-                           int, int))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmap_RGBA8888,
-                          (int, int, fabgl::Bitmap const *, void *, int, int,
-                           int, int))
-AGON_EXTENDER_UNAVAILABLE(rawCopyToBitmap,
-                          (int, int, int, void *, int, int, int, int))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmapWithMatrix_Mask,
-                          (int, int, fabgl::Rect &, fabgl::Bitmap const *,
-                           float const *))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmapWithMatrix_RGBA2222,
-                          (int, int, fabgl::Rect &, fabgl::Bitmap const *,
-                           float const *))
-AGON_EXTENDER_UNAVAILABLE(rawDrawBitmapWithMatrix_RGBA8888,
-                          (int, int, fabgl::Rect &, fabgl::Bitmap const *,
-                           float const *))
-
-#undef AGON_EXTENDER_UNAVAILABLE
-
-int P4DisplayControllerContractCanary::getBitmapSavePixelSize() {
-  unavailable("getBitmapSavePixelSize");
+std::uint8_t P4DisplayController::readLogical(std::uint8_t const *source,
+                                              int x) const noexcept {
+  std::uint8_t result = 0;
+  if (NativePixelCodec::read(source, storage_.mode().width, storage_.mode().format,
+                             static_cast<std::size_t>(x), result) != CodecResult::Ok)
+    std::abort();
+  return result;
 }
 
-std::unique_ptr<fabgl::BitmappedDisplayController>
-makeP4DisplayControllerContractCanary() {
-  return std::make_unique<P4DisplayControllerContractCanary>();
+void P4DisplayController::writeLogical(std::uint8_t *destination, int x,
+                                       std::uint8_t value) noexcept {
+  if (NativePixelCodec::write(destination, storage_.mode().width,
+                              storage_.mode().format,
+                              static_cast<std::size_t>(x), value) !=
+      CodecResult::Ok)
+    std::abort();
+}
+
+std::uint8_t P4DisplayController::colorToLogical(
+    fabgl::RGB888 const &color) const noexcept {
+  std::uint8_t packed = static_cast<std::uint8_t>(
+      (color.R >> 6) | ((color.G >> 6) << 2) | ((color.B >> 6) << 4));
+  switch (storage_.mode().format) {
+    case NativePixelFormat::PALETTE2: return nearestPalette(kPalette2, packed);
+    case NativePixelFormat::PALETTE4: return nearestPalette(kPalette4, packed);
+    case NativePixelFormat::PALETTE8: return nearestPalette(kPalette8, packed);
+    case NativePixelFormat::PALETTE16: return nearestPalette(kPalette16, packed);
+    case NativePixelFormat::SBGR2222: return packed;
+  }
+  return 0;
+}
+
+fabgl::RGB888 P4DisplayController::logicalToColor(std::uint8_t value) const noexcept {
+  switch (storage_.mode().format) {
+    case NativePixelFormat::PALETTE2: return paletteColor(kPalette2, value);
+    case NativePixelFormat::PALETTE4: return paletteColor(kPalette4, value);
+    case NativePixelFormat::PALETTE8: return paletteColor(kPalette8, value);
+    case NativePixelFormat::PALETTE16: return paletteColor(kPalette16, value);
+    case NativePixelFormat::SBGR2222:
+      return fabgl::RGB888((value & 3) * 85, ((value >> 2) & 3) * 85,
+                           ((value >> 4) & 3) * 85);
+  }
+  return {};
+}
+
+void P4DisplayController::writePainted(std::uint8_t *destination, int x,
+                                       std::uint8_t value,
+                                       fabgl::PaintMode mode) noexcept {
+  std::uint8_t maximum = 0;
+  NativePixelCodec::maximumValue(storage_.mode().format, maximum);
+  std::uint8_t old = readLogical(destination, x), result = old;
+  switch (mode) {
+    case fabgl::PaintMode::Set: result = value; break;
+    case fabgl::PaintMode::OR: result = old | value; break;
+    case fabgl::PaintMode::ORNOT: result = old | (~value & maximum); break;
+    case fabgl::PaintMode::AND: result = old & value; break;
+    case fabgl::PaintMode::ANDNOT: result = old & (~value & maximum); break;
+    case fabgl::PaintMode::XOR: result = old ^ value; break;
+    case fabgl::PaintMode::Invert: result = old ^ maximum; break;
+    case fabgl::PaintMode::NoOp: return;
+  }
+  writeLogical(destination, x, result & maximum);
+}
+
+P4DisplayController::PixelWriter P4DisplayController::pixelWriter(
+    fabgl::PaintMode mode) {
+  return [this, mode](int x, int y, std::uint8_t value) {
+    writePainted(row(y), x, value, mode);
+  };
+}
+P4DisplayController::RowPixelWriter P4DisplayController::rowPixelWriter(
+    fabgl::PaintMode mode) {
+  return [this, mode](std::uint8_t *target, int x, std::uint8_t value) {
+    writePainted(target, x, value, mode);
+  };
+}
+P4DisplayController::RowFiller P4DisplayController::rowFiller(
+    fabgl::PaintMode mode) {
+  return [this, mode](int y, int x1, int x2, std::uint8_t value) {
+    auto *target = row(y);
+    for (int x = x1; x <= x2; ++x) writePainted(target, x, value, mode);
+  };
+}
+
+void P4DisplayController::rawFillRow(int y, int x1, int x2,
+                                     std::uint8_t value) noexcept {
+  auto *target = row(y);
+  for (int x = x1; x <= x2; ++x) writeLogical(target, x, value);
+}
+void P4DisplayController::rawCopyRow(int x1, int x2, int source_y,
+                                     int destination_y) noexcept {
+  auto const *source = row(source_y);
+  auto *destination = row(destination_y);
+  for (int x = x1; x <= x2; ++x)
+    writeLogical(destination, x, readLogical(source, x));
+}
+
+void P4DisplayController::setPixelAt(fabgl::PixelDesc const &pixel,
+                                     fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericSetPixelAt(pixel, update,
+                    [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+                    pixelWriter(mode));
+}
+
+void P4DisplayController::absDrawLine(int x1, int y1, int x2, int y2,
+                                      fabgl::RGB888 color) {
+  auto mode = paintState().paintOptions.NOT ? fabgl::PaintMode::NOT
+                                             : paintState().paintOptions.mode;
+  genericAbsDrawLine(x1, y1, x2, y2, color,
+                     [this](fabgl::RGB888 const &value) { return colorToLogical(value); },
+                     rowFiller(mode), pixelWriter(mode));
+}
+
+void P4DisplayController::fillRow(int y, int x1, int x2, fabgl::RGB888 color) {
+  auto mode = paintState().paintOptions.mode;
+  rowFiller(mode)(y, x1, x2, colorToLogical(color));
+}
+
+void P4DisplayController::drawEllipse(fabgl::Size const &size,
+                                      fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericDrawEllipse(size, update,
+                     [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+                     pixelWriter(mode));
+}
+
+void P4DisplayController::absDrawEllipseSheared(
+    fabgl::EllipseShearedParams const &params, fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericDrawEllipseSheared(
+      params, update,
+      [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+      pixelWriter(mode));
+}
+
+void P4DisplayController::drawArc(fabgl::Rect const &rect, fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericDrawArc(rect, update,
+                 [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+                 pixelWriter(mode));
+}
+
+void P4DisplayController::fillSegment(fabgl::Rect const &rect,
+                                      fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericFillSegment(rect, update,
+                     [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+                     rowFiller(mode));
+}
+
+void P4DisplayController::fillSector(fabgl::Rect const &rect,
+                                     fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericFillSector(rect, update,
+                    [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+                    rowFiller(mode));
+}
+
+void P4DisplayController::clear(fabgl::Rect &update) {
+  hideSprites(update);
+  PlaneView plane = storage_.drawingPlane();
+  if (NativePixelCodec::clear(plane.data, storage_.mode().width,
+                              storage_.mode().height, storage_.mode().format,
+                              colorToLogical(getActualBrushColor())) !=
+      CodecResult::Ok)
+    std::abort();
+}
+
+void P4DisplayController::VScroll(int scroll, fabgl::Rect &update) {
+  genericVScroll(scroll, update,
+                 [this](int x1, int x2, int source_y, int destination_y) {
+                   rawCopyRow(x1, x2, source_y, destination_y);
+                 },
+                 [this](int y, int x1, int x2, fabgl::RGB888 color) {
+                   rawFillRow(y, x1, x2, colorToLogical(color));
+                 });
+}
+
+void P4DisplayController::HScroll(int scroll, fabgl::Rect &update) {
+  genericHScroll(
+      scroll, update,
+      [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+      [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) { return readLogical(source, x); },
+      [this](std::uint8_t *destination, int x, std::uint8_t value) {
+        writeLogical(destination, x, value);
+      });
+}
+
+void P4DisplayController::drawGlyph(fabgl::Glyph const &glyph,
+                                    fabgl::GlyphOptions options,
+                                    fabgl::RGB888 pen, fabgl::RGB888 brush,
+                                    fabgl::Rect &update) {
+  auto mode = paintState().paintOptions.mode;
+  genericDrawGlyph(
+      glyph, options, pen, brush, update,
+      [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+      [this](int y) { return row(y); }, rowPixelWriter(mode));
+}
+
+void P4DisplayController::invertRect(fabgl::Rect const &rect,
+                                     fabgl::Rect &update) {
+  genericInvertRect(rect, update, [this](int y, int x1, int x2) {
+    rowFiller(fabgl::PaintMode::Invert)(y, x1, x2, 0);
+  });
+}
+
+void P4DisplayController::swapFGBG(fabgl::Rect const &rect,
+                                   fabgl::Rect &update) {
+  genericSwapFGBG(
+      rect, update,
+      [this](fabgl::RGB888 const &color) { return colorToLogical(color); },
+      [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) { return readLogical(source, x); },
+      [this](std::uint8_t *destination, int x, std::uint8_t value) {
+        writeLogical(destination, x, value);
+      });
+}
+
+void P4DisplayController::copyRect(fabgl::Rect const &source,
+                                   fabgl::Rect &update) {
+  genericCopyRect(
+      source, update, [this](int y) { return row(y); },
+      [this](std::uint8_t *source_row, int x) { return readLogical(source_row, x); },
+      [this](std::uint8_t *destination, int x, std::uint8_t value) {
+        writeLogical(destination, x, value);
+      });
+}
+
+void P4DisplayController::readScreen(fabgl::Rect const &rect,
+                                     fabgl::RGB888 *destination) {
+  for (int y = rect.Y1; y <= rect.Y2; ++y) {
+    auto const *source = row(y);
+    for (int x = rect.X1; x <= rect.X2; ++x, ++destination)
+      *destination = logicalToColor(readLogical(source, x));
+  }
+}
+
+int P4DisplayController::getBitmapSavePixelSize() { return 1; }
+
+std::uint8_t P4DisplayController::nativeSavePixel(std::uint8_t logical) const noexcept {
+  if (storage_.mode().format == NativePixelFormat::SBGR2222)
+    return static_cast<std::uint8_t>((logical & 0x3F) |
+                                     storage_.mode().native_save_sync_bits);
+  fabgl::RGB888 color = logicalToColor(logical);
+  return static_cast<std::uint8_t>(storage_.mode().native_save_sync_bits |
+                                   (color.R >> 6) | ((color.G >> 6) << 2) |
+                                   ((color.B >> 6) << 4));
+}
+
+void P4DisplayController::rawDrawBitmap_Native(
+    int dest_x, int dest_y, fabgl::Bitmap const *bitmap, int x1, int y1,
+    int x_count, int y_count) {
+  genericRawDrawBitmap_Native(
+      dest_x, dest_y, bitmap->data, bitmap->width, x1, y1, x_count, y_count,
+      [this](int y) { return row(y); },
+      [this](std::uint8_t *destination, int x, std::uint8_t value) {
+        writeLogical(destination, x, value);
+      });
+}
+
+void P4DisplayController::rawDrawBitmap_Mask(
+    int dest_x, int dest_y, fabgl::Bitmap const *bitmap, void *saved_background,
+    int x1, int y1, int x_count, int y_count) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  std::uint8_t foreground = colorToLogical(
+      paintState().paintOptions.swapFGBG ? paintState().penColor
+                                         : bitmap->foregroundColor);
+  genericRawDrawBitmap_Mask(
+      dest_x, dest_y, bitmap, static_cast<std::uint8_t *>(saved_background), x1,
+      y1, x_count, y_count, [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) { return readLogical(source, x); },
+      [writer, foreground](std::uint8_t *destination, int x) {
+        writer(destination, x, foreground);
+      });
+}
+
+void P4DisplayController::rawDrawBitmap_RGBA2222(
+    int dest_x, int dest_y, fabgl::Bitmap const *bitmap, void *saved_background,
+    int x1, int y1, int x_count, int y_count) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  bool background = paintState().paintOptions.swapFGBG;
+  std::uint8_t background_value = colorToLogical(paintState().penColor);
+  genericRawDrawBitmap_RGBA2222(
+      dest_x, dest_y, bitmap, static_cast<std::uint8_t *>(saved_background), x1,
+      y1, x_count, y_count, [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) { return readLogical(source, x); },
+      [this, writer, background, background_value](std::uint8_t *destination,
+                                                    int x, std::uint8_t value) {
+        auto rgb = fabgl::RGB888((value & 3) * 85, ((value >> 2) & 3) * 85,
+                                 ((value >> 4) & 3) * 85);
+        writer(destination, x,
+               background ? background_value : colorToLogical(rgb));
+      });
+}
+
+void P4DisplayController::rawDrawBitmap_RGBA8888(
+    int dest_x, int dest_y, fabgl::Bitmap const *bitmap, void *saved_background,
+    int x1, int y1, int x_count, int y_count) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  bool background = paintState().paintOptions.swapFGBG;
+  std::uint8_t background_value = colorToLogical(paintState().penColor);
+  genericRawDrawBitmap_RGBA8888(
+      dest_x, dest_y, bitmap, static_cast<std::uint8_t *>(saved_background), x1,
+      y1, x_count, y_count, [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) { return readLogical(source, x); },
+      [this, writer, background, background_value](std::uint8_t *destination,
+                                                    int x,
+                                                    fabgl::RGBA8888 const &value) {
+        writer(destination, x,
+               background ? background_value
+                          : colorToLogical(fabgl::RGB888(value.R, value.G, value.B)));
+      });
+}
+
+void P4DisplayController::rawCopyToBitmap(int src_x, int src_y, int width,
+                                          void *save_buffer, int x1, int y1,
+                                          int x_count, int y_count) {
+  genericRawCopyToBitmap(
+      src_x, src_y, width, static_cast<std::uint8_t *>(save_buffer), x1, y1,
+      x_count, y_count, [this](int y) { return row(y); },
+      [this](std::uint8_t *source, int x) {
+        return nativeSavePixel(readLogical(source, x));
+      });
+}
+
+void P4DisplayController::rawDrawBitmapWithMatrix_Mask(
+    int dest_x, int dest_y, fabgl::Rect &drawing_rect,
+    fabgl::Bitmap const *bitmap, float const *inverse) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  std::uint8_t foreground = colorToLogical(
+      paintState().paintOptions.swapFGBG ? paintState().penColor
+                                         : bitmap->foregroundColor);
+  genericRawDrawTransformedBitmap_Mask(
+      dest_x, dest_y, drawing_rect, bitmap, inverse,
+      [this](int y) { return row(y); },
+      [writer, foreground](std::uint8_t *destination, int x) {
+        writer(destination, x, foreground);
+      });
+}
+
+void P4DisplayController::rawDrawBitmapWithMatrix_RGBA2222(
+    int dest_x, int dest_y, fabgl::Rect &drawing_rect,
+    fabgl::Bitmap const *bitmap, float const *inverse) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  bool background = paintState().paintOptions.swapFGBG;
+  std::uint8_t background_value = colorToLogical(paintState().penColor);
+  genericRawDrawTransformedBitmap_RGBA2222(
+      dest_x, dest_y, drawing_rect, bitmap, inverse,
+      [this](int y) { return row(y); },
+      [this, writer, background, background_value](std::uint8_t *destination,
+                                                    int x, std::uint8_t value) {
+        auto rgb = fabgl::RGB888((value & 3) * 85, ((value >> 2) & 3) * 85,
+                                 ((value >> 4) & 3) * 85);
+        writer(destination, x,
+               background ? background_value : colorToLogical(rgb));
+      });
+}
+
+void P4DisplayController::rawDrawBitmapWithMatrix_RGBA8888(
+    int dest_x, int dest_y, fabgl::Rect &drawing_rect,
+    fabgl::Bitmap const *bitmap, float const *inverse) {
+  auto writer = rowPixelWriter(paintState().paintOptions.mode);
+  bool background = paintState().paintOptions.swapFGBG;
+  std::uint8_t background_value = colorToLogical(paintState().penColor);
+  genericRawDrawTransformedBitmap_RGBA8888(
+      dest_x, dest_y, drawing_rect, bitmap, inverse,
+      [this](int y) { return row(y); },
+      [this, writer, background, background_value](std::uint8_t *destination,
+                                                    int x,
+                                                    fabgl::RGBA8888 const &value) {
+        writer(destination, x,
+               background ? background_value
+                          : colorToLogical(fabgl::RGB888(value.R, value.G, value.B)));
+      });
+}
+
+std::unique_ptr<fabgl::BitmappedDisplayController> makeP4DisplayController() {
+  return std::make_unique<P4DisplayController>(defaultDisplayAllocator());
 }
 
 }  // namespace agon::extender::display

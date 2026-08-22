@@ -1,0 +1,71 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_build_closure
+generated_by: docs/tasks/PORT-003/phase-b/scripts/validate-phase-b.py
+diagnostic_status: compile/link evidence only; not hardware qualification
+environment: p4-display-renderer
+build_invocation: .venv/bin/pio run -d vdp -e p4-display-renderer
+inputs:
+  source_selection:
+    path: vdp/pio/source-selection.json
+    sha256: f994a3b6be69406b8b8117fc730dbd1b917f8892623114c0ccf4baca205c096a
+  compile_commands:
+    path: vdp/.pio/build/p4-display-renderer/compile_commands.json
+    sha256: 94bcbec39c4c53b5073e14c77b89bcd3a4db3db2b53780d14156db692bfca9e9
+  linker_map:
+    path: vdp/.pio/build/p4-display-renderer/firmware.map
+    sha256: 32ba666f336a552f996788fb7ce062d1fc17441b2f1f43774800fc69b1f53e7b
+  normalized_elf_symbols_sha256: 64a7ff00e5322950553f47f8bcc37b099a65807fe75c27c7c0c175239cd6347f
+application_translation_units:
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/canary/display_renderer_canary.cpp
+  object: video/extender/canary/display_renderer_canary.cpp.o
+  object_loaded: true
+- source: video/extender/display/native_pixel_codec.cpp
+  object: video/extender/display/native_pixel_codec.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+- source: video/extender/display/plane_storage.cpp
+  object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+required_elf_symbols:
+- claim: project controller factory
+  symbol_fragment: agon::extender::display::makeP4DisplayController()
+  present: true
+- claim: project concrete controller vtable
+  symbol_fragment: vtable for agon::extender::display::P4DisplayController
+  present: true
+- claim: project native codec
+  symbol_fragment: agon::extender::display::NativePixelCodec::write(
+  present: true
+- claim: project transactional storage
+  symbol_fragment: agon::extender::display::PlaneStorage::configure(
+  present: true
+- claim: vendored Canvas constructor
+  symbol_fragment: fabgl::Canvas::Canvas(fabgl::BitmappedDisplayController*)
+  present: true
+- claim: vendored common controller primitive executor
+  symbol_fragment: fabgl::BitmappedDisplayController::execPrimitive(
+  present: true
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 7
+  project_translation_unit_count: 5
+  vendored_translation_unit_count: 2
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  closure_proved: true

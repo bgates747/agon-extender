@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: source_selection_projection
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
+  sha256: 0478e164e21c6e99ea96ddde54a5b9de3bef1f8368db04315c8d932fdb255f83
 build_profiles:
 - id: build-profile:extender:p4-default
   label: Agon Extender ESP32-P4 default target
@@ -10,7 +10,7 @@ build_profiles:
   target_board: Olimex ESP32-P4-DevKit
   platform: pioarduino 55.03.311
   framework: Arduino and ESP-IDF hybrid
-  configuration: declared source-selection target; firmware build not yet implemented
+  configuration: PORT-003 Phase B synchronous renderer compile/link proved; broader firmware integration remains incomplete
   source_ids:
   - source:CRC:1.0.4
   - source:ESP32Time:2.0.6
@@ -195107,35 +195107,50 @@ subjects:
     - SETUP-004.1.c:transport-stock-uart-hardware:replace
     replacement_subject_id: build-unit:extender:p4-port-adapters
 project_boundaries:
-- id: build-unit:extender:p4-display-contract-canary
-  label: PORT-003 Phase A display contract canary
-  path: video/extender/canary/display_contract_canary.cpp
-  state: diagnostic-canary
-  task: PORT-003
-  evidence_ids:
-  - evidence:build-profile:port-003-phase-a
-- id: build-unit:extender:p4-display-controller-contract
-  label: P4 concrete display-controller contract skeleton
+- id: build-unit:extender:p4-display-controller
+  label: P4 synchronous display controller
   path: video/extender/display/p4_display_controller.cpp
-  state: contract-only
+  state: phase-b-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-a
+  - evidence:build-profile:port-003-phase-b
+- id: build-unit:extender:p4-display-renderer-canary
+  label: PORT-003 Phase B renderer diagnostic entry
+  path: video/extender/canary/display_renderer_canary.cpp
+  state: diagnostic-renderer
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-b
+- id: build-unit:extender:p4-native-pixel-codec
+  label: P4 native pixel codecs
+  path: video/extender/display/native_pixel_codec.cpp
+  state: phase-b-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-b
+- id: build-unit:extender:p4-plane-storage
+  label: P4 transactional display-plane storage
+  path: video/extender/display/plane_storage.cpp
+  state: phase-b-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-b
 - id: build-unit:extender:p4-port-adapters
   label: Project-owned P4 port adapters
   path: null
-  state: phase-a-partial
+  state: phase-b-synchronous-renderer
   task: PORT-003
   evidence_ids:
   - evidence:reviewed:p4-port-adapter-boundary
   - evidence:build-profile:port-003-phase-a
+  - evidence:build-profile:port-003-phase-b
 - id: build-unit:extender:p4-vdp-gl-port-utility-closure
   label: P4 vdp-gl utility compatibility closure
   path: video/extender/port/fabutils_port.cpp
-  state: phase-a-narrow-port
+  state: phase-b-narrow-port
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-a
+  - evidence:build-profile:port-003-phase-b
 summary:
   build-profile:extender:p4-default:
     available-not-selected: 882

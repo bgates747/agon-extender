@@ -1,0 +1,28 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_allocation_failure_results
+generated_by: docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
+diagnostic_status: host ASan/UBSan plus explicit live-allocation accounting; LSAN unavailable under managed tracing
+production_sources:
+- path: docs/tasks/PORT-003/phase-b/tests/plane_storage_tests.cpp
+  sha256: ccd44bccccebbea16a6c6d8affa040514c079bb40427bb588b639180eaf06684
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: f78c72f8abc8a85ab877592b7c6655a4c34f2422bf8a3bea3f3b893de747aaa4
+covered_boundaries:
+- first-plane allocation failure preserves installed state
+- second-plane allocation failure frees temporary first plane and preserves installed state
+- successful replacement releases old allocations after commit
+- single/double drawing-visible identity
+- zero initialization
+- move ownership
+- idempotent release
+- dimension/sync/overflow/allocator validation
+program_output:
+- format-pass allocations=4 frees=4
+- format-pass allocations=4 frees=4
+- format-pass allocations=4 frees=4
+- format-pass allocations=4 frees=4
+- format-pass allocations=4 frees=4
+- validation-pass
+passed: true

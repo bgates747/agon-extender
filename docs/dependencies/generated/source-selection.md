@@ -240,7 +240,9 @@ queryable in the YAML projection.
 
 | Build unit | State | Project path | Task |
 |---|---|---|---|
-| `build-unit:extender:p4-display-contract-canary` | diagnostic-canary | `video/extender/canary/display_contract_canary.cpp` | `PORT-003` |
-| `build-unit:extender:p4-display-controller-contract` | contract-only | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
-| `build-unit:extender:p4-port-adapters` | phase-a-partial | — | `PORT-003` |
-| `build-unit:extender:p4-vdp-gl-port-utility-closure` | phase-a-narrow-port | `video/extender/port/fabutils_port.cpp` | `PORT-003` |
+| `build-unit:extender:p4-display-controller` | phase-b-qualified-host | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
+| `build-unit:extender:p4-display-renderer-canary` | diagnostic-renderer | `video/extender/canary/display_renderer_canary.cpp` | `PORT-003` |
+| `build-unit:extender:p4-native-pixel-codec` | phase-b-qualified-host | `video/extender/display/native_pixel_codec.cpp` | `PORT-003` |
+| `build-unit:extender:p4-plane-storage` | phase-b-qualified-host | `video/extender/display/plane_storage.cpp` | `PORT-003` |
+| `build-unit:extender:p4-port-adapters` | phase-b-synchronous-renderer | — | `PORT-003` |
+| `build-unit:extender:p4-vdp-gl-port-utility-closure` | phase-b-narrow-port | `video/extender/port/fabutils_port.cpp` | `PORT-003` |

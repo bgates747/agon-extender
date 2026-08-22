@@ -1,0 +1,12470 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_native_codec_fixtures
+generated_by: docs/tasks/PORT-003/phase-b/scripts/generate-fixtures.py
+generator_version: 1.0.0
+source_tag: agon-vdp-v2.16.0
+profile: port-003-phase-b-synchronous
+oracle_class: independent mathematical model
+implementation_output_prohibited: true
+fixtures:
+- id: codec-palette2-1x3
+  format: PALETTE2
+  width: 1
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  expected_pixels:
+  - - 0
+  - - 1
+  - - 1
+  expected_native_bytes:
+  - 0
+  - 128
+  - 128
+  content_sha256: 26ad87f6d62aa6566b4ec37aaba45858ef8cb62c42db5c71c2138b6164873770
+- id: codec-palette2-2x3
+  format: PALETTE2
+  width: 2
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 1
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+  - - 1
+    - 0
+  - - 1
+    - 0
+  expected_native_bytes:
+  - 64
+  - 128
+  - 128
+  content_sha256: 59a2af97d61c9b9140bef9b260077ce121d1960227f27ca5478d2d5f88d3dd23
+- id: codec-palette2-3x3
+  format: PALETTE2
+  width: 3
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+  - - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+  expected_native_bytes:
+  - 96
+  - 64
+  - 160
+  content_sha256: 4381bf8badde68d444a4dd4d996cc80351790064c9425a77fb337ffa0a583ff6
+- id: codec-palette2-7x3
+  format: PALETTE2
+  width: 7
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  expected_native_bytes:
+  - 106
+  - 84
+  - 170
+  content_sha256: 67aca8fc1a37bf8619e63ac4d54757ab7e5b9804ebca4e19ec79b2ba4cbe11ca
+- id: codec-palette2-8x3
+  format: PALETTE2
+  width: 8
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 1
+  - x: 3
+    y: 1
+    value: 0
+  - x: 4
+    y: 1
+    value: 1
+  - x: 5
+    y: 1
+    value: 0
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 0
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  expected_native_bytes:
+  - 106
+  - 170
+  - 170
+  content_sha256: 06a48a98071e4a3a2b83d111fab894d2bd881a5c2ad03648e8b23a97c5993fa1
+- id: codec-palette2-9x3
+  format: PALETTE2
+  width: 9
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 0
+  - x: 8
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 0
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  expected_native_bytes:
+  - 106
+  - 128
+  - 85
+  - 0
+  - 170
+  - 128
+  content_sha256: 21e08db48cc33bf492d3d18ddb62be856d23d01662761b961179a055d1f778ea
+- id: codec-palette2-15x3
+  format: PALETTE2
+  width: 15
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 0
+  - x: 8
+    y: 0
+    value: 1
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 0
+  - x: 12
+    y: 0
+    value: 1
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 0
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 1
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 1
+  - x: 12
+    y: 1
+    value: 0
+  - x: 13
+    y: 1
+    value: 1
+  - x: 14
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 1
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 0
+  - x: 14
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  expected_native_bytes:
+  - 106
+  - 170
+  - 85
+  - 84
+  - 170
+  - 170
+  content_sha256: 20d205784129567ee8365c2aeb7e1e0ce9fcdd3f77085dbab5d4ecfe2800a362
+- id: codec-palette2-16x3
+  format: PALETTE2
+  width: 16
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 0
+  - x: 8
+    y: 0
+    value: 1
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 0
+  - x: 12
+    y: 0
+    value: 1
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 1
+  - x: 3
+    y: 1
+    value: 0
+  - x: 4
+    y: 1
+    value: 1
+  - x: 5
+    y: 1
+    value: 0
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 0
+  - x: 8
+    y: 1
+    value: 1
+  - x: 9
+    y: 1
+    value: 0
+  - x: 10
+    y: 1
+    value: 1
+  - x: 11
+    y: 1
+    value: 0
+  - x: 12
+    y: 1
+    value: 1
+  - x: 13
+    y: 1
+    value: 0
+  - x: 14
+    y: 1
+    value: 1
+  - x: 15
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 1
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 0
+  - x: 14
+    y: 2
+    value: 1
+  - x: 15
+    y: 2
+    value: 0
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  expected_native_bytes:
+  - 106
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  content_sha256: 2062b2ea63ce9ad93891229deeca40a882464be260e51c9827fc824cf78ec885
+- id: codec-palette2-17x3
+  format: PALETTE2
+  width: 17
+  height: 3
+  stride: 3
+  operations:
+  - x: 0
+    y: 0
+    value: 1
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 0
+  - x: 4
+    y: 0
+    value: 1
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 0
+  - x: 8
+    y: 0
+    value: 1
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 0
+  - x: 12
+    y: 0
+    value: 1
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 0
+  - x: 16
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 0
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 1
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 1
+  - x: 12
+    y: 1
+    value: 0
+  - x: 13
+    y: 1
+    value: 1
+  - x: 14
+    y: 1
+    value: 0
+  - x: 15
+    y: 1
+    value: 1
+  - x: 16
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 1
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 0
+  - x: 14
+    y: 2
+    value: 1
+  - x: 15
+    y: 2
+    value: 0
+  - x: 16
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  expected_pixels:
+  - - 0
+    - 1
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  expected_native_bytes:
+  - 106
+  - 170
+  - 128
+  - 85
+  - 85
+  - 0
+  - 170
+  - 170
+  - 128
+  content_sha256: 09d246147da282beaaefce48b710aa428140a8bc0c165adfd9165b1804054f62
+- id: codec-palette4-1x3
+  format: PALETTE4
+  width: 1
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 0
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 3
+  - - 1
+  - - 2
+  expected_native_bytes:
+  - 192
+  - 64
+  - 128
+  content_sha256: e1066d4fa6066dc1a3b0b6d007e0c151507eaa76ff0629c9d725089824e5ec98
+- id: codec-palette4-2x3
+  format: PALETTE4
+  width: 2
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 1
+    y: 1
+    value: 2
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 0
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+  - - 2
+    - 3
+  - - 3
+    - 0
+  expected_native_bytes:
+  - 16
+  - 176
+  - 192
+  content_sha256: 24997d1de1b48e2352c902d58c7ddf9f174341938739373ba61ff309f42f567d
+- id: codec-palette4-3x3
+  format: PALETTE4
+  width: 3
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 3
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+  - - 3
+    - 3
+    - 0
+  - - 1
+    - 2
+    - 3
+  expected_native_bytes:
+  - 24
+  - 240
+  - 108
+  content_sha256: 5866ff0208479c9911bca5c70312017752b5ff1bd7820c5a8bc5d8da60fd0b51
+- id: codec-palette4-7x3
+  format: PALETTE4
+  width: 7
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 2
+  - x: 5
+    y: 1
+    value: 3
+  - x: 6
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 3
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  expected_native_bytes:
+  - 27
+  - 196
+  - 177
+  - 176
+  - 108
+  - 108
+  content_sha256: c7345137a1e249762ca795fa3124395ec2cda5441ed94c1292d3db32e9f4dcf7
+- id: codec-palette4-8x3
+  format: PALETTE4
+  width: 8
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 1
+  - x: 3
+    y: 1
+    value: 2
+  - x: 4
+    y: 1
+    value: 3
+  - x: 5
+    y: 1
+    value: 0
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 2
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 3
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  expected_native_bytes:
+  - 27
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  content_sha256: de4029693b47c410e05118f08e8718315fd7d03f2a30f5278e3cfe2d2cdd333b
+- id: codec-palette4-9x3
+  format: PALETTE4
+  width: 9
+  height: 3
+  stride: 3
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 2
+  - x: 8
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 2
+  - x: 3
+    y: 1
+    value: 3
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 2
+  - x: 7
+    y: 1
+    value: 3
+  - x: 8
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 3
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  expected_native_bytes:
+  - 27
+  - 198
+  - 192
+  - 27
+  - 27
+  - 0
+  - 108
+  - 108
+  - 64
+  content_sha256: 3776b93b0bb5257711b4c4ec738a2aeecfc69a9a4b8c549729644f041e6b90f3
+- id: codec-palette4-15x3
+  format: PALETTE4
+  width: 15
+  height: 3
+  stride: 4
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 2
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 3
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 1
+  - x: 4
+    y: 1
+    value: 2
+  - x: 5
+    y: 1
+    value: 3
+  - x: 6
+    y: 1
+    value: 0
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 2
+  - x: 9
+    y: 1
+    value: 3
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 1
+  - x: 12
+    y: 1
+    value: 2
+  - x: 13
+    y: 1
+    value: 3
+  - x: 14
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 3
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 2
+  - x: 10
+    y: 2
+    value: 3
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 2
+  - x: 14
+    y: 2
+    value: 3
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  expected_native_bytes:
+  - 27
+  - 198
+  - 198
+  - 196
+  - 177
+  - 177
+  - 177
+  - 176
+  - 108
+  - 108
+  - 108
+  - 108
+  content_sha256: 61e7f34a33235433f830c62a53e760e984a3337cfdfb8bc43a2c2f9a51446c82
+- id: codec-palette4-16x3
+  format: PALETTE4
+  width: 16
+  height: 3
+  stride: 4
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 2
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 3
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 1
+  - x: 3
+    y: 1
+    value: 2
+  - x: 4
+    y: 1
+    value: 3
+  - x: 5
+    y: 1
+    value: 0
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 2
+  - x: 8
+    y: 1
+    value: 3
+  - x: 9
+    y: 1
+    value: 0
+  - x: 10
+    y: 1
+    value: 1
+  - x: 11
+    y: 1
+    value: 2
+  - x: 12
+    y: 1
+    value: 3
+  - x: 13
+    y: 1
+    value: 0
+  - x: 14
+    y: 1
+    value: 1
+  - x: 15
+    y: 1
+    value: 2
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 1
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 3
+  - x: 5
+    y: 2
+    value: 0
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 2
+  - x: 8
+    y: 2
+    value: 3
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 1
+  - x: 11
+    y: 2
+    value: 2
+  - x: 12
+    y: 2
+    value: 3
+  - x: 13
+    y: 2
+    value: 0
+  - x: 14
+    y: 2
+    value: 1
+  - x: 15
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  expected_native_bytes:
+  - 27
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  - 198
+  content_sha256: b545ac9bc964d8c83610ebd72485129c8c1fae6bafe9cb647d74d3b48af7d095
+- id: codec-palette4-17x3
+  format: PALETTE4
+  width: 17
+  height: 3
+  stride: 5
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 1
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 3
+  - x: 5
+    y: 0
+    value: 0
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 2
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 1
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 3
+  - x: 13
+    y: 0
+    value: 0
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 2
+  - x: 16
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 1
+  - x: 2
+    y: 1
+    value: 2
+  - x: 3
+    y: 1
+    value: 3
+  - x: 4
+    y: 1
+    value: 0
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 2
+  - x: 7
+    y: 1
+    value: 3
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 1
+  - x: 10
+    y: 1
+    value: 2
+  - x: 11
+    y: 1
+    value: 3
+  - x: 12
+    y: 1
+    value: 0
+  - x: 13
+    y: 1
+    value: 1
+  - x: 14
+    y: 1
+    value: 2
+  - x: 15
+    y: 1
+    value: 3
+  - x: 16
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 3
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 2
+  - x: 10
+    y: 2
+    value: 3
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 2
+  - x: 14
+    y: 2
+    value: 3
+  - x: 15
+    y: 2
+    value: 0
+  - x: 16
+    y: 2
+    value: 1
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  expected_native_bytes:
+  - 27
+  - 198
+  - 198
+  - 198
+  - 192
+  - 27
+  - 27
+  - 27
+  - 27
+  - 0
+  - 108
+  - 108
+  - 108
+  - 108
+  - 64
+  content_sha256: 2bcdada61e2b8c551a8da0885c47995dbe4662b0fa5403d07be50881c9d51f31
+- id: codec-palette8-1x3
+  format: PALETTE8
+  width: 1
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 0
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  expected_pixels:
+  - - 6
+  - - 7
+  - - 5
+  expected_native_bytes:
+  - 192
+  - 224
+  - 160
+  content_sha256: 02d03b9708c720fab650b0375ebd4b9591f153f1b3e546218b798fa69e443da8
+- id: codec-palette8-2x3
+  format: PALETTE8
+  width: 2
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 5
+  - x: 1
+    y: 1
+    value: 2
+  - x: 0
+    y: 2
+    value: 7
+  - x: 1
+    y: 2
+    value: 4
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 0
+    y: 2
+    value: 4
+  - x: 1
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 1
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 6
+    - 7
+  - - 2
+    - 3
+  - - 4
+    - 5
+  expected_native_bytes:
+  - 220
+  - 76
+  - 148
+  content_sha256: a3114bb34b4703026319436bec51b1076ad02334bfa6bef04cab0ab283b69117
+- id: codec-palette8-3x3
+  format: PALETTE8
+  width: 3
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 7
+  - x: 2
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 6
+  - x: 2
+    y: 2
+    value: 3
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 4
+  - x: 2
+    y: 1
+    value: 5
+  - x: 0
+    y: 2
+    value: 6
+  - x: 1
+    y: 2
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+  - - 3
+    - 4
+    - 5
+  - - 6
+    - 7
+    - 3
+  expected_native_bytes:
+  - 5
+  - 0
+  - 114
+  - 128
+  - 221
+  - 128
+  content_sha256: 41ebc23f54a5f80a104445edee6fa7f0e52d76ed31223f6ae5c25141a73c64f4
+- id: codec-palette8-7x3
+  format: PALETTE8
+  width: 7
+  height: 3
+  stride: 3
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 6
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 5
+  - x: 4
+    y: 1
+    value: 2
+  - x: 5
+    y: 1
+    value: 7
+  - x: 6
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 6
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 5
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 7
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+  - - 7
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+  - - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+  expected_native_bytes:
+  - 5
+  - 57
+  - 112
+  - 236
+  - 85
+  - 224
+  - 57
+  - 138
+  - 184
+  content_sha256: 5454f62a5bd6071a5417844d566d0d4f4c323d10eda63514ac4e44ce5bbed832
+- id: codec-palette8-8x3
+  format: PALETTE8
+  width: 8
+  height: 3
+  stride: 3
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 5
+  - x: 3
+    y: 1
+    value: 2
+  - x: 4
+    y: 1
+    value: 7
+  - x: 5
+    y: 1
+    value: 4
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 6
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 5
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 7
+  - x: 5
+    y: 2
+    value: 4
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 6
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+  - - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+  - - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+  expected_native_bytes:
+  - 5
+  - 57
+  - 119
+  - 98
+  - 175
+  - 14
+  - 98
+  - 175
+  - 14
+  content_sha256: c5551ce54baba45ddfebf2cdfa567d7ac4326079a57cd1afd86de21a6c2ee7f7
+- id: codec-palette8-9x3
+  format: PALETTE8
+  width: 9
+  height: 3
+  stride: 4
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 5
+  - x: 2
+    y: 1
+    value: 2
+  - x: 3
+    y: 1
+    value: 7
+  - x: 4
+    y: 1
+    value: 4
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 6
+  - x: 7
+    y: 1
+    value: 3
+  - x: 8
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 5
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 7
+  - x: 3
+    y: 2
+    value: 4
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 6
+  - x: 6
+    y: 2
+    value: 3
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 3
+  - - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+  - - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+  expected_native_bytes:
+  - 5
+  - 57
+  - 119
+  - 96
+  - 21
+  - 120
+  - 115
+  - 0
+  - 171
+  - 195
+  - 152
+  - 160
+  content_sha256: c41a36f15f6ddfdf55ef36423409f8ecfd7f40c150f4ddcdb12126171cde8d86
+- id: codec-palette8-15x3
+  format: PALETTE8
+  width: 15
+  height: 3
+  stride: 6
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 7
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 6
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 5
+  - x: 4
+    y: 1
+    value: 2
+  - x: 5
+    y: 1
+    value: 7
+  - x: 6
+    y: 1
+    value: 4
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 6
+  - x: 9
+    y: 1
+    value: 3
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 5
+  - x: 12
+    y: 1
+    value: 2
+  - x: 13
+    y: 1
+    value: 7
+  - x: 14
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 6
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 0
+  - x: 4
+    y: 2
+    value: 5
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 7
+  - x: 7
+    y: 2
+    value: 4
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 6
+  - x: 10
+    y: 2
+    value: 3
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 5
+  - x: 13
+    y: 2
+    value: 2
+  - x: 14
+    y: 2
+    value: 7
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+  - - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+  - - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+  expected_native_bytes:
+  - 5
+  - 57
+  - 119
+  - 98
+  - 175
+  - 8
+  - 204
+  - 85
+  - 225
+  - 204
+  - 85
+  - 224
+  - 57
+  - 138
+  - 188
+  - 57
+  - 138
+  - 184
+  content_sha256: 978cda5245d9ebfc6b3f058518856ce09b49121271eb1d36db7ef4e1c337e593
+- id: codec-palette8-16x3
+  format: PALETTE8
+  width: 16
+  height: 3
+  stride: 6
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 7
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 5
+  - x: 3
+    y: 1
+    value: 2
+  - x: 4
+    y: 1
+    value: 7
+  - x: 5
+    y: 1
+    value: 4
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 6
+  - x: 8
+    y: 1
+    value: 3
+  - x: 9
+    y: 1
+    value: 0
+  - x: 10
+    y: 1
+    value: 5
+  - x: 11
+    y: 1
+    value: 2
+  - x: 12
+    y: 1
+    value: 7
+  - x: 13
+    y: 1
+    value: 4
+  - x: 14
+    y: 1
+    value: 1
+  - x: 15
+    y: 1
+    value: 6
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 0
+  - x: 2
+    y: 2
+    value: 5
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 7
+  - x: 5
+    y: 2
+    value: 4
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 6
+  - x: 8
+    y: 2
+    value: 3
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 5
+  - x: 11
+    y: 2
+    value: 2
+  - x: 12
+    y: 2
+    value: 7
+  - x: 13
+    y: 2
+    value: 4
+  - x: 14
+    y: 2
+    value: 1
+  - x: 15
+    y: 2
+    value: 6
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+  - - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+  - - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+  expected_native_bytes:
+  - 5
+  - 57
+  - 119
+  - 98
+  - 175
+  - 14
+  - 98
+  - 175
+  - 14
+  - 98
+  - 175
+  - 14
+  - 98
+  - 175
+  - 14
+  - 98
+  - 175
+  - 14
+  content_sha256: b04f73ada8c1947934aa9719fac31f0a778d3ed013e502983955a90468d0fd3c
+- id: codec-palette8-17x3
+  format: PALETTE8
+  width: 17
+  height: 3
+  stride: 7
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 0
+  - x: 2
+    y: 0
+    value: 5
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 4
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 3
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 2
+  - x: 12
+    y: 0
+    value: 7
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 1
+  - x: 15
+    y: 0
+    value: 6
+  - x: 16
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 5
+  - x: 2
+    y: 1
+    value: 2
+  - x: 3
+    y: 1
+    value: 7
+  - x: 4
+    y: 1
+    value: 4
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 6
+  - x: 7
+    y: 1
+    value: 3
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 5
+  - x: 10
+    y: 1
+    value: 2
+  - x: 11
+    y: 1
+    value: 7
+  - x: 12
+    y: 1
+    value: 4
+  - x: 13
+    y: 1
+    value: 1
+  - x: 14
+    y: 1
+    value: 6
+  - x: 15
+    y: 1
+    value: 3
+  - x: 16
+    y: 1
+    value: 0
+  - x: 0
+    y: 2
+    value: 5
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 7
+  - x: 3
+    y: 2
+    value: 4
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 6
+  - x: 6
+    y: 2
+    value: 3
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 5
+  - x: 9
+    y: 2
+    value: 2
+  - x: 10
+    y: 2
+    value: 7
+  - x: 11
+    y: 2
+    value: 4
+  - x: 12
+    y: 2
+    value: 1
+  - x: 13
+    y: 2
+    value: 6
+  - x: 14
+    y: 2
+    value: 3
+  - x: 15
+    y: 2
+    value: 0
+  - x: 16
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+  - - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+  - - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+    - 2
+    - 7
+    - 4
+    - 1
+    - 6
+    - 3
+    - 0
+    - 5
+  expected_native_bytes:
+  - 5
+  - 57
+  - 119
+  - 98
+  - 175
+  - 14
+  - 96
+  - 21
+  - 120
+  - 115
+  - 21
+  - 120
+  - 115
+  - 0
+  - 171
+  - 195
+  - 152
+  - 171
+  - 195
+  - 152
+  - 160
+  content_sha256: 3ae60103fac1b692e6d322ead6a51113dd2670aad9d2f3d319611e8dd4c5f581
+- id: codec-palette16-1x3
+  format: PALETTE16
+  width: 1
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 8
+  - x: 0
+    y: 2
+    value: 13
+  - x: 0
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 0
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  - x: 0
+    y: 2
+    value: 8
+  - x: 0
+    y: 0
+    value: 9
+  - x: 0
+    y: 1
+    value: 10
+  - x: 0
+    y: 2
+    value: 11
+  - x: 0
+    y: 0
+    value: 12
+  - x: 0
+    y: 1
+    value: 13
+  - x: 0
+    y: 2
+    value: 14
+  - x: 0
+    y: 0
+    value: 15
+  expected_pixels:
+  - - 15
+  - - 13
+  - - 14
+  expected_native_bytes:
+  - 240
+  - 208
+  - 224
+  content_sha256: e389d7b0f242d9b69bdfa3bb004002d1efba07a234ae08cf5a810087c72fb33e
+- id: codec-palette16-2x3
+  format: PALETTE16
+  width: 2
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 0
+    y: 1
+    value: 13
+  - x: 1
+    y: 1
+    value: 2
+  - x: 0
+    y: 2
+    value: 7
+  - x: 1
+    y: 2
+    value: 12
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 0
+    y: 2
+    value: 4
+  - x: 1
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 1
+    y: 0
+    value: 7
+  - x: 0
+    y: 1
+    value: 8
+  - x: 1
+    y: 1
+    value: 9
+  - x: 0
+    y: 2
+    value: 10
+  - x: 1
+    y: 2
+    value: 11
+  - x: 0
+    y: 0
+    value: 12
+  - x: 1
+    y: 0
+    value: 13
+  - x: 0
+    y: 1
+    value: 14
+  - x: 1
+    y: 1
+    value: 15
+  expected_pixels:
+  - - 12
+    - 13
+  - - 14
+    - 15
+  - - 10
+    - 11
+  expected_native_bytes:
+  - 205
+  - 239
+  - 171
+  content_sha256: 2bc5418293575d139a3faf09544bf65adeddc7372a7401f47733b03a93f29371
+- id: codec-palette16-3x3
+  format: PALETTE16
+  width: 3
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 7
+  - x: 2
+    y: 1
+    value: 12
+  - x: 0
+    y: 2
+    value: 1
+  - x: 1
+    y: 2
+    value: 6
+  - x: 2
+    y: 2
+    value: 11
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 4
+  - x: 2
+    y: 1
+    value: 5
+  - x: 0
+    y: 2
+    value: 6
+  - x: 1
+    y: 2
+    value: 7
+  - x: 2
+    y: 2
+    value: 8
+  - x: 0
+    y: 0
+    value: 9
+  - x: 1
+    y: 0
+    value: 10
+  - x: 2
+    y: 0
+    value: 11
+  - x: 0
+    y: 1
+    value: 12
+  - x: 1
+    y: 1
+    value: 13
+  - x: 2
+    y: 1
+    value: 14
+  - x: 0
+    y: 2
+    value: 15
+  expected_pixels:
+  - - 9
+    - 10
+    - 11
+  - - 12
+    - 13
+    - 14
+  - - 15
+    - 7
+    - 8
+  expected_native_bytes:
+  - 154
+  - 176
+  - 205
+  - 224
+  - 247
+  - 128
+  content_sha256: 083d09fb73058e0db07bbfe58c3894e4823aed164687ddf288c25424688ac8f3
+- id: codec-palette16-7x3
+  format: PALETTE16
+  width: 7
+  height: 3
+  stride: 4
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 6
+  - x: 1
+    y: 1
+    value: 11
+  - x: 2
+    y: 1
+    value: 0
+  - x: 3
+    y: 1
+    value: 5
+  - x: 4
+    y: 1
+    value: 10
+  - x: 5
+    y: 1
+    value: 15
+  - x: 6
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 9
+  - x: 1
+    y: 2
+    value: 14
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 8
+  - x: 4
+    y: 2
+    value: 13
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 7
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  - x: 1
+    y: 1
+    value: 8
+  - x: 2
+    y: 1
+    value: 9
+  - x: 3
+    y: 1
+    value: 10
+  - x: 4
+    y: 1
+    value: 11
+  - x: 5
+    y: 1
+    value: 12
+  - x: 6
+    y: 1
+    value: 13
+  - x: 0
+    y: 2
+    value: 14
+  - x: 1
+    y: 2
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+  - - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+  - - 14
+    - 15
+    - 3
+    - 8
+    - 13
+    - 2
+    - 7
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 96
+  - 120
+  - 154
+  - 188
+  - 208
+  - 239
+  - 56
+  - 210
+  - 112
+  content_sha256: 9f17af1d4b15e97f2173f28e195e19bafb612dfb8d24e27c172ae5834d2c9c66
+- id: codec-palette16-8x3
+  format: PALETTE16
+  width: 8
+  height: 3
+  stride: 4
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 11
+  - x: 1
+    y: 1
+    value: 0
+  - x: 2
+    y: 1
+    value: 5
+  - x: 3
+    y: 1
+    value: 10
+  - x: 4
+    y: 1
+    value: 15
+  - x: 5
+    y: 1
+    value: 4
+  - x: 6
+    y: 1
+    value: 9
+  - x: 7
+    y: 1
+    value: 14
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 8
+  - x: 2
+    y: 2
+    value: 13
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 7
+  - x: 5
+    y: 2
+    value: 12
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 6
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 0
+    y: 1
+    value: 8
+  - x: 1
+    y: 1
+    value: 9
+  - x: 2
+    y: 1
+    value: 10
+  - x: 3
+    y: 1
+    value: 11
+  - x: 4
+    y: 1
+    value: 12
+  - x: 5
+    y: 1
+    value: 13
+  - x: 6
+    y: 1
+    value: 14
+  - x: 7
+    y: 1
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+  - - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+  - - 3
+    - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 103
+  - 137
+  - 171
+  - 205
+  - 239
+  - 56
+  - 210
+  - 124
+  - 22
+  content_sha256: 47fa5156ea97d79bfbf8924854b02db0dd74a685b362356c7c479bc934bfc753
+- id: codec-palette16-9x3
+  format: PALETTE16
+  width: 9
+  height: 3
+  stride: 5
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 11
+  - x: 0
+    y: 1
+    value: 0
+  - x: 1
+    y: 1
+    value: 5
+  - x: 2
+    y: 1
+    value: 10
+  - x: 3
+    y: 1
+    value: 15
+  - x: 4
+    y: 1
+    value: 4
+  - x: 5
+    y: 1
+    value: 9
+  - x: 6
+    y: 1
+    value: 14
+  - x: 7
+    y: 1
+    value: 3
+  - x: 8
+    y: 1
+    value: 8
+  - x: 0
+    y: 2
+    value: 13
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 7
+  - x: 3
+    y: 2
+    value: 12
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 6
+  - x: 6
+    y: 2
+    value: 11
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 0
+    y: 1
+    value: 9
+  - x: 1
+    y: 1
+    value: 10
+  - x: 2
+    y: 1
+    value: 11
+  - x: 3
+    y: 1
+    value: 12
+  - x: 4
+    y: 1
+    value: 13
+  - x: 5
+    y: 1
+    value: 14
+  - x: 6
+    y: 1
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+  - - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 3
+    - 8
+  - - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 103
+  - 128
+  - 154
+  - 188
+  - 222
+  - 243
+  - 128
+  - 210
+  - 124
+  - 22
+  - 176
+  - 80
+  content_sha256: 76084a59d94b35f5068f578c882e4aaf544f9e5a9a6b10ab565f60b580516c2e
+- id: codec-palette16-15x3
+  format: PALETTE16
+  width: 15
+  height: 3
+  stride: 8
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 11
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 10
+  - x: 12
+    y: 0
+    value: 15
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 0
+    y: 1
+    value: 14
+  - x: 1
+    y: 1
+    value: 3
+  - x: 2
+    y: 1
+    value: 8
+  - x: 3
+    y: 1
+    value: 13
+  - x: 4
+    y: 1
+    value: 2
+  - x: 5
+    y: 1
+    value: 7
+  - x: 6
+    y: 1
+    value: 12
+  - x: 7
+    y: 1
+    value: 1
+  - x: 8
+    y: 1
+    value: 6
+  - x: 9
+    y: 1
+    value: 11
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 5
+  - x: 12
+    y: 1
+    value: 10
+  - x: 13
+    y: 1
+    value: 15
+  - x: 14
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 9
+  - x: 1
+    y: 2
+    value: 14
+  - x: 2
+    y: 2
+    value: 3
+  - x: 3
+    y: 2
+    value: 8
+  - x: 4
+    y: 2
+    value: 13
+  - x: 5
+    y: 2
+    value: 2
+  - x: 6
+    y: 2
+    value: 7
+  - x: 7
+    y: 2
+    value: 12
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 6
+  - x: 10
+    y: 2
+    value: 11
+  - x: 11
+    y: 2
+    value: 0
+  - x: 12
+    y: 2
+    value: 5
+  - x: 13
+    y: 2
+    value: 10
+  - x: 14
+    y: 2
+    value: 15
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 0
+    y: 1
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+  - - 15
+    - 3
+    - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+    - 4
+  - - 9
+    - 14
+    - 3
+    - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 103
+  - 137
+  - 171
+  - 205
+  - 224
+  - 243
+  - 141
+  - 39
+  - 193
+  - 107
+  - 5
+  - 175
+  - 64
+  - 158
+  - 56
+  - 210
+  - 124
+  - 22
+  - 176
+  - 90
+  - 240
+  content_sha256: 8f01871b13987d9b61699494800a0927803e111fad8b83e423675714293841a2
+- id: codec-palette16-16x3
+  format: PALETTE16
+  width: 16
+  height: 3
+  stride: 8
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 11
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 10
+  - x: 12
+    y: 0
+    value: 15
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 15
+    y: 0
+    value: 14
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 8
+  - x: 2
+    y: 1
+    value: 13
+  - x: 3
+    y: 1
+    value: 2
+  - x: 4
+    y: 1
+    value: 7
+  - x: 5
+    y: 1
+    value: 12
+  - x: 6
+    y: 1
+    value: 1
+  - x: 7
+    y: 1
+    value: 6
+  - x: 8
+    y: 1
+    value: 11
+  - x: 9
+    y: 1
+    value: 0
+  - x: 10
+    y: 1
+    value: 5
+  - x: 11
+    y: 1
+    value: 10
+  - x: 12
+    y: 1
+    value: 15
+  - x: 13
+    y: 1
+    value: 4
+  - x: 14
+    y: 1
+    value: 9
+  - x: 15
+    y: 1
+    value: 14
+  - x: 0
+    y: 2
+    value: 3
+  - x: 1
+    y: 2
+    value: 8
+  - x: 2
+    y: 2
+    value: 13
+  - x: 3
+    y: 2
+    value: 2
+  - x: 4
+    y: 2
+    value: 7
+  - x: 5
+    y: 2
+    value: 12
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 6
+  - x: 8
+    y: 2
+    value: 11
+  - x: 9
+    y: 2
+    value: 0
+  - x: 10
+    y: 2
+    value: 5
+  - x: 11
+    y: 2
+    value: 10
+  - x: 12
+    y: 2
+    value: 15
+  - x: 13
+    y: 2
+    value: 4
+  - x: 14
+    y: 2
+    value: 9
+  - x: 15
+    y: 2
+    value: 14
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 15
+    y: 0
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+  - - 3
+    - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+    - 4
+    - 9
+    - 14
+  - - 3
+    - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+    - 4
+    - 9
+    - 14
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 103
+  - 137
+  - 171
+  - 205
+  - 239
+  - 56
+  - 210
+  - 124
+  - 22
+  - 176
+  - 90
+  - 244
+  - 158
+  - 56
+  - 210
+  - 124
+  - 22
+  - 176
+  - 90
+  - 244
+  - 158
+  content_sha256: 3016e96ebed10c5e6541d1df72c633e13f0bd33aa24d9bc22e49c887cbc952be
+- id: codec-palette16-17x3
+  format: PALETTE16
+  width: 17
+  height: 3
+  stride: 9
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 2
+  - x: 4
+    y: 0
+    value: 7
+  - x: 5
+    y: 0
+    value: 12
+  - x: 6
+    y: 0
+    value: 1
+  - x: 7
+    y: 0
+    value: 6
+  - x: 8
+    y: 0
+    value: 11
+  - x: 9
+    y: 0
+    value: 0
+  - x: 10
+    y: 0
+    value: 5
+  - x: 11
+    y: 0
+    value: 10
+  - x: 12
+    y: 0
+    value: 15
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 15
+    y: 0
+    value: 14
+  - x: 16
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 8
+  - x: 1
+    y: 1
+    value: 13
+  - x: 2
+    y: 1
+    value: 2
+  - x: 3
+    y: 1
+    value: 7
+  - x: 4
+    y: 1
+    value: 12
+  - x: 5
+    y: 1
+    value: 1
+  - x: 6
+    y: 1
+    value: 6
+  - x: 7
+    y: 1
+    value: 11
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 5
+  - x: 10
+    y: 1
+    value: 10
+  - x: 11
+    y: 1
+    value: 15
+  - x: 12
+    y: 1
+    value: 4
+  - x: 13
+    y: 1
+    value: 9
+  - x: 14
+    y: 1
+    value: 14
+  - x: 15
+    y: 1
+    value: 3
+  - x: 16
+    y: 1
+    value: 8
+  - x: 0
+    y: 2
+    value: 13
+  - x: 1
+    y: 2
+    value: 2
+  - x: 2
+    y: 2
+    value: 7
+  - x: 3
+    y: 2
+    value: 12
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 6
+  - x: 6
+    y: 2
+    value: 11
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 5
+  - x: 9
+    y: 2
+    value: 10
+  - x: 10
+    y: 2
+    value: 15
+  - x: 11
+    y: 2
+    value: 4
+  - x: 12
+    y: 2
+    value: 9
+  - x: 13
+    y: 2
+    value: 14
+  - x: 14
+    y: 2
+    value: 3
+  - x: 15
+    y: 2
+    value: 8
+  - x: 16
+    y: 2
+    value: 13
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 15
+    y: 0
+    value: 15
+  expected_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 4
+    - 5
+    - 6
+    - 7
+    - 8
+    - 9
+    - 10
+    - 11
+    - 12
+    - 13
+    - 14
+    - 15
+    - 3
+  - - 8
+    - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+    - 4
+    - 9
+    - 14
+    - 3
+    - 8
+  - - 13
+    - 2
+    - 7
+    - 12
+    - 1
+    - 6
+    - 11
+    - 0
+    - 5
+    - 10
+    - 15
+    - 4
+    - 9
+    - 14
+    - 3
+    - 8
+    - 13
+  expected_native_bytes:
+  - 1
+  - 35
+  - 69
+  - 103
+  - 137
+  - 171
+  - 205
+  - 239
+  - 48
+  - 141
+  - 39
+  - 193
+  - 107
+  - 5
+  - 175
+  - 73
+  - 227
+  - 128
+  - 210
+  - 124
+  - 22
+  - 176
+  - 90
+  - 244
+  - 158
+  - 56
+  - 208
+  content_sha256: 5cea1964c655e69dd4aa06c874085f11319ae0210a011b0fcdedf699792dd609
+- id: codec-sbgr2222-1x3
+  format: SBGR2222
+  width: 1
+  height: 3
+  stride: 1
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 8
+  - x: 0
+    y: 2
+    value: 13
+  - x: 0
+    y: 0
+    value: 0
+  - x: 0
+    y: 1
+    value: 1
+  - x: 0
+    y: 2
+    value: 2
+  - x: 0
+    y: 0
+    value: 3
+  - x: 0
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  - x: 0
+    y: 2
+    value: 8
+  - x: 0
+    y: 0
+    value: 9
+  - x: 0
+    y: 1
+    value: 10
+  - x: 0
+    y: 2
+    value: 11
+  - x: 0
+    y: 0
+    value: 12
+  - x: 0
+    y: 1
+    value: 13
+  - x: 0
+    y: 2
+    value: 14
+  - x: 0
+    y: 0
+    value: 15
+  - x: 0
+    y: 1
+    value: 16
+  - x: 0
+    y: 2
+    value: 17
+  - x: 0
+    y: 0
+    value: 18
+  - x: 0
+    y: 1
+    value: 19
+  - x: 0
+    y: 2
+    value: 20
+  - x: 0
+    y: 0
+    value: 21
+  - x: 0
+    y: 1
+    value: 22
+  - x: 0
+    y: 2
+    value: 23
+  - x: 0
+    y: 0
+    value: 24
+  - x: 0
+    y: 1
+    value: 25
+  - x: 0
+    y: 2
+    value: 26
+  - x: 0
+    y: 0
+    value: 27
+  - x: 0
+    y: 1
+    value: 28
+  - x: 0
+    y: 2
+    value: 29
+  - x: 0
+    y: 0
+    value: 30
+  - x: 0
+    y: 1
+    value: 31
+  - x: 0
+    y: 2
+    value: 32
+  - x: 0
+    y: 0
+    value: 33
+  - x: 0
+    y: 1
+    value: 34
+  - x: 0
+    y: 2
+    value: 35
+  - x: 0
+    y: 0
+    value: 36
+  - x: 0
+    y: 1
+    value: 37
+  - x: 0
+    y: 2
+    value: 38
+  - x: 0
+    y: 0
+    value: 39
+  - x: 0
+    y: 1
+    value: 40
+  - x: 0
+    y: 2
+    value: 41
+  - x: 0
+    y: 0
+    value: 42
+  - x: 0
+    y: 1
+    value: 43
+  - x: 0
+    y: 2
+    value: 44
+  - x: 0
+    y: 0
+    value: 45
+  - x: 0
+    y: 1
+    value: 46
+  - x: 0
+    y: 2
+    value: 47
+  - x: 0
+    y: 0
+    value: 48
+  - x: 0
+    y: 1
+    value: 49
+  - x: 0
+    y: 2
+    value: 50
+  - x: 0
+    y: 0
+    value: 51
+  - x: 0
+    y: 1
+    value: 52
+  - x: 0
+    y: 2
+    value: 53
+  - x: 0
+    y: 0
+    value: 54
+  - x: 0
+    y: 1
+    value: 55
+  - x: 0
+    y: 2
+    value: 56
+  - x: 0
+    y: 0
+    value: 57
+  - x: 0
+    y: 1
+    value: 58
+  - x: 0
+    y: 2
+    value: 59
+  - x: 0
+    y: 0
+    value: 60
+  - x: 0
+    y: 1
+    value: 61
+  - x: 0
+    y: 2
+    value: 62
+  - x: 0
+    y: 0
+    value: 63
+  expected_pixels:
+  - - 63
+  - - 61
+  - - 62
+  expected_native_bytes:
+  - 63
+  - 61
+  - 62
+  expected_native_save:
+    '0x00':
+    - 63
+    - 61
+    - 62
+    '0x40':
+    - 127
+    - 125
+    - 126
+    '0x80':
+    - 191
+    - 189
+    - 190
+    '0xC0':
+    - 255
+    - 253
+    - 254
+  content_sha256: 808c576fec9f5406a6831b8dc643d376cded053d365848ed3cf0d7e54299b36e
+- id: codec-sbgr2222-2x3
+  format: SBGR2222
+  width: 2
+  height: 3
+  stride: 2
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 0
+    y: 1
+    value: 13
+  - x: 1
+    y: 1
+    value: 18
+  - x: 0
+    y: 2
+    value: 23
+  - x: 1
+    y: 2
+    value: 28
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 0
+    y: 1
+    value: 2
+  - x: 1
+    y: 1
+    value: 3
+  - x: 0
+    y: 2
+    value: 4
+  - x: 1
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 6
+  - x: 1
+    y: 0
+    value: 7
+  - x: 0
+    y: 1
+    value: 8
+  - x: 1
+    y: 1
+    value: 9
+  - x: 0
+    y: 2
+    value: 10
+  - x: 1
+    y: 2
+    value: 11
+  - x: 0
+    y: 0
+    value: 12
+  - x: 1
+    y: 0
+    value: 13
+  - x: 0
+    y: 1
+    value: 14
+  - x: 1
+    y: 1
+    value: 15
+  - x: 0
+    y: 2
+    value: 16
+  - x: 1
+    y: 2
+    value: 17
+  - x: 0
+    y: 0
+    value: 18
+  - x: 1
+    y: 0
+    value: 19
+  - x: 0
+    y: 1
+    value: 20
+  - x: 1
+    y: 1
+    value: 21
+  - x: 0
+    y: 2
+    value: 22
+  - x: 1
+    y: 2
+    value: 23
+  - x: 0
+    y: 0
+    value: 24
+  - x: 1
+    y: 0
+    value: 25
+  - x: 0
+    y: 1
+    value: 26
+  - x: 1
+    y: 1
+    value: 27
+  - x: 0
+    y: 2
+    value: 28
+  - x: 1
+    y: 2
+    value: 29
+  - x: 0
+    y: 0
+    value: 30
+  - x: 1
+    y: 0
+    value: 31
+  - x: 0
+    y: 1
+    value: 32
+  - x: 1
+    y: 1
+    value: 33
+  - x: 0
+    y: 2
+    value: 34
+  - x: 1
+    y: 2
+    value: 35
+  - x: 0
+    y: 0
+    value: 36
+  - x: 1
+    y: 0
+    value: 37
+  - x: 0
+    y: 1
+    value: 38
+  - x: 1
+    y: 1
+    value: 39
+  - x: 0
+    y: 2
+    value: 40
+  - x: 1
+    y: 2
+    value: 41
+  - x: 0
+    y: 0
+    value: 42
+  - x: 1
+    y: 0
+    value: 43
+  - x: 0
+    y: 1
+    value: 44
+  - x: 1
+    y: 1
+    value: 45
+  - x: 0
+    y: 2
+    value: 46
+  - x: 1
+    y: 2
+    value: 47
+  - x: 0
+    y: 0
+    value: 48
+  - x: 1
+    y: 0
+    value: 49
+  - x: 0
+    y: 1
+    value: 50
+  - x: 1
+    y: 1
+    value: 51
+  - x: 0
+    y: 2
+    value: 52
+  - x: 1
+    y: 2
+    value: 53
+  - x: 0
+    y: 0
+    value: 54
+  - x: 1
+    y: 0
+    value: 55
+  - x: 0
+    y: 1
+    value: 56
+  - x: 1
+    y: 1
+    value: 57
+  - x: 0
+    y: 2
+    value: 58
+  - x: 1
+    y: 2
+    value: 59
+  - x: 0
+    y: 0
+    value: 60
+  - x: 1
+    y: 0
+    value: 61
+  - x: 0
+    y: 1
+    value: 62
+  - x: 1
+    y: 1
+    value: 63
+  expected_pixels:
+  - - 60
+    - 61
+  - - 62
+    - 63
+  - - 58
+    - 59
+  expected_native_bytes:
+  - 60
+  - 61
+  - 62
+  - 63
+  - 58
+  - 59
+  expected_native_save:
+    '0x00':
+    - 60
+    - 61
+    - 62
+    - 63
+    - 58
+    - 59
+    '0x40':
+    - 124
+    - 125
+    - 126
+    - 127
+    - 122
+    - 123
+    '0x80':
+    - 188
+    - 189
+    - 190
+    - 191
+    - 186
+    - 187
+    '0xC0':
+    - 252
+    - 253
+    - 254
+    - 255
+    - 250
+    - 251
+  content_sha256: 6502527cbeee3a4f599ea9283e03205388d35fb3c75194628b3f13de367e1e39
+- id: codec-sbgr2222-3x3
+  format: SBGR2222
+  width: 3
+  height: 3
+  stride: 3
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 0
+    y: 1
+    value: 18
+  - x: 1
+    y: 1
+    value: 23
+  - x: 2
+    y: 1
+    value: 28
+  - x: 0
+    y: 2
+    value: 33
+  - x: 1
+    y: 2
+    value: 38
+  - x: 2
+    y: 2
+    value: 43
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 0
+    y: 1
+    value: 3
+  - x: 1
+    y: 1
+    value: 4
+  - x: 2
+    y: 1
+    value: 5
+  - x: 0
+    y: 2
+    value: 6
+  - x: 1
+    y: 2
+    value: 7
+  - x: 2
+    y: 2
+    value: 8
+  - x: 0
+    y: 0
+    value: 9
+  - x: 1
+    y: 0
+    value: 10
+  - x: 2
+    y: 0
+    value: 11
+  - x: 0
+    y: 1
+    value: 12
+  - x: 1
+    y: 1
+    value: 13
+  - x: 2
+    y: 1
+    value: 14
+  - x: 0
+    y: 2
+    value: 15
+  - x: 1
+    y: 2
+    value: 16
+  - x: 2
+    y: 2
+    value: 17
+  - x: 0
+    y: 0
+    value: 18
+  - x: 1
+    y: 0
+    value: 19
+  - x: 2
+    y: 0
+    value: 20
+  - x: 0
+    y: 1
+    value: 21
+  - x: 1
+    y: 1
+    value: 22
+  - x: 2
+    y: 1
+    value: 23
+  - x: 0
+    y: 2
+    value: 24
+  - x: 1
+    y: 2
+    value: 25
+  - x: 2
+    y: 2
+    value: 26
+  - x: 0
+    y: 0
+    value: 27
+  - x: 1
+    y: 0
+    value: 28
+  - x: 2
+    y: 0
+    value: 29
+  - x: 0
+    y: 1
+    value: 30
+  - x: 1
+    y: 1
+    value: 31
+  - x: 2
+    y: 1
+    value: 32
+  - x: 0
+    y: 2
+    value: 33
+  - x: 1
+    y: 2
+    value: 34
+  - x: 2
+    y: 2
+    value: 35
+  - x: 0
+    y: 0
+    value: 36
+  - x: 1
+    y: 0
+    value: 37
+  - x: 2
+    y: 0
+    value: 38
+  - x: 0
+    y: 1
+    value: 39
+  - x: 1
+    y: 1
+    value: 40
+  - x: 2
+    y: 1
+    value: 41
+  - x: 0
+    y: 2
+    value: 42
+  - x: 1
+    y: 2
+    value: 43
+  - x: 2
+    y: 2
+    value: 44
+  - x: 0
+    y: 0
+    value: 45
+  - x: 1
+    y: 0
+    value: 46
+  - x: 2
+    y: 0
+    value: 47
+  - x: 0
+    y: 1
+    value: 48
+  - x: 1
+    y: 1
+    value: 49
+  - x: 2
+    y: 1
+    value: 50
+  - x: 0
+    y: 2
+    value: 51
+  - x: 1
+    y: 2
+    value: 52
+  - x: 2
+    y: 2
+    value: 53
+  - x: 0
+    y: 0
+    value: 54
+  - x: 1
+    y: 0
+    value: 55
+  - x: 2
+    y: 0
+    value: 56
+  - x: 0
+    y: 1
+    value: 57
+  - x: 1
+    y: 1
+    value: 58
+  - x: 2
+    y: 1
+    value: 59
+  - x: 0
+    y: 2
+    value: 60
+  - x: 1
+    y: 2
+    value: 61
+  - x: 2
+    y: 2
+    value: 62
+  - x: 0
+    y: 0
+    value: 63
+  expected_pixels:
+  - - 63
+    - 55
+    - 56
+  - - 57
+    - 58
+    - 59
+  - - 60
+    - 61
+    - 62
+  expected_native_bytes:
+  - 63
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  expected_native_save:
+    '0x00':
+    - 63
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    '0x40':
+    - 127
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    '0x80':
+    - 191
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    '0xC0':
+    - 255
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+  content_sha256: 5c0033ddadce4f9d00da76e52896142eb1d690f498de2a73c19dc8ade6455df0
+- id: codec-sbgr2222-7x3
+  format: SBGR2222
+  width: 7
+  height: 3
+  stride: 7
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 0
+    y: 1
+    value: 38
+  - x: 1
+    y: 1
+    value: 43
+  - x: 2
+    y: 1
+    value: 48
+  - x: 3
+    y: 1
+    value: 53
+  - x: 4
+    y: 1
+    value: 58
+  - x: 5
+    y: 1
+    value: 63
+  - x: 6
+    y: 1
+    value: 4
+  - x: 0
+    y: 2
+    value: 9
+  - x: 1
+    y: 2
+    value: 14
+  - x: 2
+    y: 2
+    value: 19
+  - x: 3
+    y: 2
+    value: 24
+  - x: 4
+    y: 2
+    value: 29
+  - x: 5
+    y: 2
+    value: 34
+  - x: 6
+    y: 2
+    value: 39
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 0
+    y: 1
+    value: 7
+  - x: 1
+    y: 1
+    value: 8
+  - x: 2
+    y: 1
+    value: 9
+  - x: 3
+    y: 1
+    value: 10
+  - x: 4
+    y: 1
+    value: 11
+  - x: 5
+    y: 1
+    value: 12
+  - x: 6
+    y: 1
+    value: 13
+  - x: 0
+    y: 2
+    value: 14
+  - x: 1
+    y: 2
+    value: 15
+  - x: 2
+    y: 2
+    value: 16
+  - x: 3
+    y: 2
+    value: 17
+  - x: 4
+    y: 2
+    value: 18
+  - x: 5
+    y: 2
+    value: 19
+  - x: 6
+    y: 2
+    value: 20
+  - x: 0
+    y: 0
+    value: 21
+  - x: 1
+    y: 0
+    value: 22
+  - x: 2
+    y: 0
+    value: 23
+  - x: 3
+    y: 0
+    value: 24
+  - x: 4
+    y: 0
+    value: 25
+  - x: 5
+    y: 0
+    value: 26
+  - x: 6
+    y: 0
+    value: 27
+  - x: 0
+    y: 1
+    value: 28
+  - x: 1
+    y: 1
+    value: 29
+  - x: 2
+    y: 1
+    value: 30
+  - x: 3
+    y: 1
+    value: 31
+  - x: 4
+    y: 1
+    value: 32
+  - x: 5
+    y: 1
+    value: 33
+  - x: 6
+    y: 1
+    value: 34
+  - x: 0
+    y: 2
+    value: 35
+  - x: 1
+    y: 2
+    value: 36
+  - x: 2
+    y: 2
+    value: 37
+  - x: 3
+    y: 2
+    value: 38
+  - x: 4
+    y: 2
+    value: 39
+  - x: 5
+    y: 2
+    value: 40
+  - x: 6
+    y: 2
+    value: 41
+  - x: 0
+    y: 0
+    value: 42
+  - x: 1
+    y: 0
+    value: 43
+  - x: 2
+    y: 0
+    value: 44
+  - x: 3
+    y: 0
+    value: 45
+  - x: 4
+    y: 0
+    value: 46
+  - x: 5
+    y: 0
+    value: 47
+  - x: 6
+    y: 0
+    value: 48
+  - x: 0
+    y: 1
+    value: 49
+  - x: 1
+    y: 1
+    value: 50
+  - x: 2
+    y: 1
+    value: 51
+  - x: 3
+    y: 1
+    value: 52
+  - x: 4
+    y: 1
+    value: 53
+  - x: 5
+    y: 1
+    value: 54
+  - x: 6
+    y: 1
+    value: 55
+  - x: 0
+    y: 2
+    value: 56
+  - x: 1
+    y: 2
+    value: 57
+  - x: 2
+    y: 2
+    value: 58
+  - x: 3
+    y: 2
+    value: 59
+  - x: 4
+    y: 2
+    value: 60
+  - x: 5
+    y: 2
+    value: 61
+  - x: 6
+    y: 2
+    value: 62
+  - x: 0
+    y: 0
+    value: 63
+  expected_pixels:
+  - - 63
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+  - - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+  - - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+  expected_native_bytes:
+  - 63
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  expected_native_save:
+    '0x00':
+    - 63
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    '0x40':
+    - 127
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    '0x80':
+    - 191
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    '0xC0':
+    - 255
+    - 235
+    - 236
+    - 237
+    - 238
+    - 239
+    - 240
+    - 241
+    - 242
+    - 243
+    - 244
+    - 245
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+  content_sha256: ec8bc8d224d309b08160df8ffdc1ee958e8f73f6691c35a6ba111da9adb5113b
+- id: codec-sbgr2222-8x3
+  format: SBGR2222
+  width: 8
+  height: 3
+  stride: 8
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 38
+  - x: 0
+    y: 1
+    value: 43
+  - x: 1
+    y: 1
+    value: 48
+  - x: 2
+    y: 1
+    value: 53
+  - x: 3
+    y: 1
+    value: 58
+  - x: 4
+    y: 1
+    value: 63
+  - x: 5
+    y: 1
+    value: 4
+  - x: 6
+    y: 1
+    value: 9
+  - x: 7
+    y: 1
+    value: 14
+  - x: 0
+    y: 2
+    value: 19
+  - x: 1
+    y: 2
+    value: 24
+  - x: 2
+    y: 2
+    value: 29
+  - x: 3
+    y: 2
+    value: 34
+  - x: 4
+    y: 2
+    value: 39
+  - x: 5
+    y: 2
+    value: 44
+  - x: 6
+    y: 2
+    value: 49
+  - x: 7
+    y: 2
+    value: 54
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 0
+    y: 1
+    value: 8
+  - x: 1
+    y: 1
+    value: 9
+  - x: 2
+    y: 1
+    value: 10
+  - x: 3
+    y: 1
+    value: 11
+  - x: 4
+    y: 1
+    value: 12
+  - x: 5
+    y: 1
+    value: 13
+  - x: 6
+    y: 1
+    value: 14
+  - x: 7
+    y: 1
+    value: 15
+  - x: 0
+    y: 2
+    value: 16
+  - x: 1
+    y: 2
+    value: 17
+  - x: 2
+    y: 2
+    value: 18
+  - x: 3
+    y: 2
+    value: 19
+  - x: 4
+    y: 2
+    value: 20
+  - x: 5
+    y: 2
+    value: 21
+  - x: 6
+    y: 2
+    value: 22
+  - x: 7
+    y: 2
+    value: 23
+  - x: 0
+    y: 0
+    value: 24
+  - x: 1
+    y: 0
+    value: 25
+  - x: 2
+    y: 0
+    value: 26
+  - x: 3
+    y: 0
+    value: 27
+  - x: 4
+    y: 0
+    value: 28
+  - x: 5
+    y: 0
+    value: 29
+  - x: 6
+    y: 0
+    value: 30
+  - x: 7
+    y: 0
+    value: 31
+  - x: 0
+    y: 1
+    value: 32
+  - x: 1
+    y: 1
+    value: 33
+  - x: 2
+    y: 1
+    value: 34
+  - x: 3
+    y: 1
+    value: 35
+  - x: 4
+    y: 1
+    value: 36
+  - x: 5
+    y: 1
+    value: 37
+  - x: 6
+    y: 1
+    value: 38
+  - x: 7
+    y: 1
+    value: 39
+  - x: 0
+    y: 2
+    value: 40
+  - x: 1
+    y: 2
+    value: 41
+  - x: 2
+    y: 2
+    value: 42
+  - x: 3
+    y: 2
+    value: 43
+  - x: 4
+    y: 2
+    value: 44
+  - x: 5
+    y: 2
+    value: 45
+  - x: 6
+    y: 2
+    value: 46
+  - x: 7
+    y: 2
+    value: 47
+  - x: 0
+    y: 0
+    value: 48
+  - x: 1
+    y: 0
+    value: 49
+  - x: 2
+    y: 0
+    value: 50
+  - x: 3
+    y: 0
+    value: 51
+  - x: 4
+    y: 0
+    value: 52
+  - x: 5
+    y: 0
+    value: 53
+  - x: 6
+    y: 0
+    value: 54
+  - x: 7
+    y: 0
+    value: 55
+  - x: 0
+    y: 1
+    value: 56
+  - x: 1
+    y: 1
+    value: 57
+  - x: 2
+    y: 1
+    value: 58
+  - x: 3
+    y: 1
+    value: 59
+  - x: 4
+    y: 1
+    value: 60
+  - x: 5
+    y: 1
+    value: 61
+  - x: 6
+    y: 1
+    value: 62
+  - x: 7
+    y: 1
+    value: 63
+  expected_pixels:
+  - - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+  - - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+  - - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+  expected_native_bytes:
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  expected_native_save:
+    '0x00':
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    '0x40':
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    '0x80':
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    '0xC0':
+    - 240
+    - 241
+    - 242
+    - 243
+    - 244
+    - 245
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+    - 255
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+    - 237
+    - 238
+    - 239
+  content_sha256: 9fcc61c1c99e71a88162800dc2869c342fae4c60d18c08454761d0af70da1ba8
+- id: codec-sbgr2222-9x3
+  format: SBGR2222
+  width: 9
+  height: 3
+  stride: 9
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 38
+  - x: 8
+    y: 0
+    value: 43
+  - x: 0
+    y: 1
+    value: 48
+  - x: 1
+    y: 1
+    value: 53
+  - x: 2
+    y: 1
+    value: 58
+  - x: 3
+    y: 1
+    value: 63
+  - x: 4
+    y: 1
+    value: 4
+  - x: 5
+    y: 1
+    value: 9
+  - x: 6
+    y: 1
+    value: 14
+  - x: 7
+    y: 1
+    value: 19
+  - x: 8
+    y: 1
+    value: 24
+  - x: 0
+    y: 2
+    value: 29
+  - x: 1
+    y: 2
+    value: 34
+  - x: 2
+    y: 2
+    value: 39
+  - x: 3
+    y: 2
+    value: 44
+  - x: 4
+    y: 2
+    value: 49
+  - x: 5
+    y: 2
+    value: 54
+  - x: 6
+    y: 2
+    value: 59
+  - x: 7
+    y: 2
+    value: 0
+  - x: 8
+    y: 2
+    value: 5
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 0
+    y: 1
+    value: 9
+  - x: 1
+    y: 1
+    value: 10
+  - x: 2
+    y: 1
+    value: 11
+  - x: 3
+    y: 1
+    value: 12
+  - x: 4
+    y: 1
+    value: 13
+  - x: 5
+    y: 1
+    value: 14
+  - x: 6
+    y: 1
+    value: 15
+  - x: 7
+    y: 1
+    value: 16
+  - x: 8
+    y: 1
+    value: 17
+  - x: 0
+    y: 2
+    value: 18
+  - x: 1
+    y: 2
+    value: 19
+  - x: 2
+    y: 2
+    value: 20
+  - x: 3
+    y: 2
+    value: 21
+  - x: 4
+    y: 2
+    value: 22
+  - x: 5
+    y: 2
+    value: 23
+  - x: 6
+    y: 2
+    value: 24
+  - x: 7
+    y: 2
+    value: 25
+  - x: 8
+    y: 2
+    value: 26
+  - x: 0
+    y: 0
+    value: 27
+  - x: 1
+    y: 0
+    value: 28
+  - x: 2
+    y: 0
+    value: 29
+  - x: 3
+    y: 0
+    value: 30
+  - x: 4
+    y: 0
+    value: 31
+  - x: 5
+    y: 0
+    value: 32
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 34
+  - x: 8
+    y: 0
+    value: 35
+  - x: 0
+    y: 1
+    value: 36
+  - x: 1
+    y: 1
+    value: 37
+  - x: 2
+    y: 1
+    value: 38
+  - x: 3
+    y: 1
+    value: 39
+  - x: 4
+    y: 1
+    value: 40
+  - x: 5
+    y: 1
+    value: 41
+  - x: 6
+    y: 1
+    value: 42
+  - x: 7
+    y: 1
+    value: 43
+  - x: 8
+    y: 1
+    value: 44
+  - x: 0
+    y: 2
+    value: 45
+  - x: 1
+    y: 2
+    value: 46
+  - x: 2
+    y: 2
+    value: 47
+  - x: 3
+    y: 2
+    value: 48
+  - x: 4
+    y: 2
+    value: 49
+  - x: 5
+    y: 2
+    value: 50
+  - x: 6
+    y: 2
+    value: 51
+  - x: 7
+    y: 2
+    value: 52
+  - x: 8
+    y: 2
+    value: 53
+  - x: 0
+    y: 0
+    value: 54
+  - x: 1
+    y: 0
+    value: 55
+  - x: 2
+    y: 0
+    value: 56
+  - x: 3
+    y: 0
+    value: 57
+  - x: 4
+    y: 0
+    value: 58
+  - x: 5
+    y: 0
+    value: 59
+  - x: 6
+    y: 0
+    value: 60
+  - x: 7
+    y: 0
+    value: 61
+  - x: 8
+    y: 0
+    value: 62
+  - x: 0
+    y: 1
+    value: 63
+  expected_pixels:
+  - - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+  - - 63
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+  - - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+  expected_native_bytes:
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 53
+  expected_native_save:
+    '0x00':
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    '0x40':
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    '0x80':
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 165
+    - 166
+    - 167
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    '0xC0':
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+    - 255
+    - 229
+    - 230
+    - 231
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+    - 237
+    - 238
+    - 239
+    - 240
+    - 241
+    - 242
+    - 243
+    - 244
+    - 245
+  content_sha256: 36e3514530fbd69d23ee063613de62c8e54547db575ba78df9e3a1bee269c9e7
+- id: codec-sbgr2222-15x3
+  format: SBGR2222
+  width: 15
+  height: 3
+  stride: 15
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 38
+  - x: 8
+    y: 0
+    value: 43
+  - x: 9
+    y: 0
+    value: 48
+  - x: 10
+    y: 0
+    value: 53
+  - x: 11
+    y: 0
+    value: 58
+  - x: 12
+    y: 0
+    value: 63
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 0
+    y: 1
+    value: 14
+  - x: 1
+    y: 1
+    value: 19
+  - x: 2
+    y: 1
+    value: 24
+  - x: 3
+    y: 1
+    value: 29
+  - x: 4
+    y: 1
+    value: 34
+  - x: 5
+    y: 1
+    value: 39
+  - x: 6
+    y: 1
+    value: 44
+  - x: 7
+    y: 1
+    value: 49
+  - x: 8
+    y: 1
+    value: 54
+  - x: 9
+    y: 1
+    value: 59
+  - x: 10
+    y: 1
+    value: 0
+  - x: 11
+    y: 1
+    value: 5
+  - x: 12
+    y: 1
+    value: 10
+  - x: 13
+    y: 1
+    value: 15
+  - x: 14
+    y: 1
+    value: 20
+  - x: 0
+    y: 2
+    value: 25
+  - x: 1
+    y: 2
+    value: 30
+  - x: 2
+    y: 2
+    value: 35
+  - x: 3
+    y: 2
+    value: 40
+  - x: 4
+    y: 2
+    value: 45
+  - x: 5
+    y: 2
+    value: 50
+  - x: 6
+    y: 2
+    value: 55
+  - x: 7
+    y: 2
+    value: 60
+  - x: 8
+    y: 2
+    value: 1
+  - x: 9
+    y: 2
+    value: 6
+  - x: 10
+    y: 2
+    value: 11
+  - x: 11
+    y: 2
+    value: 16
+  - x: 12
+    y: 2
+    value: 21
+  - x: 13
+    y: 2
+    value: 26
+  - x: 14
+    y: 2
+    value: 31
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 0
+    y: 1
+    value: 15
+  - x: 1
+    y: 1
+    value: 16
+  - x: 2
+    y: 1
+    value: 17
+  - x: 3
+    y: 1
+    value: 18
+  - x: 4
+    y: 1
+    value: 19
+  - x: 5
+    y: 1
+    value: 20
+  - x: 6
+    y: 1
+    value: 21
+  - x: 7
+    y: 1
+    value: 22
+  - x: 8
+    y: 1
+    value: 23
+  - x: 9
+    y: 1
+    value: 24
+  - x: 10
+    y: 1
+    value: 25
+  - x: 11
+    y: 1
+    value: 26
+  - x: 12
+    y: 1
+    value: 27
+  - x: 13
+    y: 1
+    value: 28
+  - x: 14
+    y: 1
+    value: 29
+  - x: 0
+    y: 2
+    value: 30
+  - x: 1
+    y: 2
+    value: 31
+  - x: 2
+    y: 2
+    value: 32
+  - x: 3
+    y: 2
+    value: 33
+  - x: 4
+    y: 2
+    value: 34
+  - x: 5
+    y: 2
+    value: 35
+  - x: 6
+    y: 2
+    value: 36
+  - x: 7
+    y: 2
+    value: 37
+  - x: 8
+    y: 2
+    value: 38
+  - x: 9
+    y: 2
+    value: 39
+  - x: 10
+    y: 2
+    value: 40
+  - x: 11
+    y: 2
+    value: 41
+  - x: 12
+    y: 2
+    value: 42
+  - x: 13
+    y: 2
+    value: 43
+  - x: 14
+    y: 2
+    value: 44
+  - x: 0
+    y: 0
+    value: 45
+  - x: 1
+    y: 0
+    value: 46
+  - x: 2
+    y: 0
+    value: 47
+  - x: 3
+    y: 0
+    value: 48
+  - x: 4
+    y: 0
+    value: 49
+  - x: 5
+    y: 0
+    value: 50
+  - x: 6
+    y: 0
+    value: 51
+  - x: 7
+    y: 0
+    value: 52
+  - x: 8
+    y: 0
+    value: 53
+  - x: 9
+    y: 0
+    value: 54
+  - x: 10
+    y: 0
+    value: 55
+  - x: 11
+    y: 0
+    value: 56
+  - x: 12
+    y: 0
+    value: 57
+  - x: 13
+    y: 0
+    value: 58
+  - x: 14
+    y: 0
+    value: 59
+  - x: 0
+    y: 1
+    value: 60
+  - x: 1
+    y: 1
+    value: 61
+  - x: 2
+    y: 1
+    value: 62
+  - x: 3
+    y: 1
+    value: 63
+  expected_pixels:
+  - - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+  - - 60
+    - 61
+    - 62
+    - 63
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+  - - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+  expected_native_bytes:
+  - 45
+  - 46
+  - 47
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  expected_native_save:
+    '0x00':
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    '0x40':
+    - 109
+    - 110
+    - 111
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 83
+    - 84
+    - 85
+    - 86
+    - 87
+    - 88
+    - 89
+    - 90
+    - 91
+    - 92
+    - 93
+    - 94
+    - 95
+    - 96
+    - 97
+    - 98
+    - 99
+    - 100
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    '0x80':
+    - 173
+    - 174
+    - 175
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 147
+    - 148
+    - 149
+    - 150
+    - 151
+    - 152
+    - 153
+    - 154
+    - 155
+    - 156
+    - 157
+    - 158
+    - 159
+    - 160
+    - 161
+    - 162
+    - 163
+    - 164
+    - 165
+    - 166
+    - 167
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    '0xC0':
+    - 237
+    - 238
+    - 239
+    - 240
+    - 241
+    - 242
+    - 243
+    - 244
+    - 245
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+    - 255
+    - 211
+    - 212
+    - 213
+    - 214
+    - 215
+    - 216
+    - 217
+    - 218
+    - 219
+    - 220
+    - 221
+    - 222
+    - 223
+    - 224
+    - 225
+    - 226
+    - 227
+    - 228
+    - 229
+    - 230
+    - 231
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+  content_sha256: 3ae785563764f0207bd653087f68a6471429b99f8fe4f4b6fa9897e54ec7c137
+- id: codec-sbgr2222-16x3
+  format: SBGR2222
+  width: 16
+  height: 3
+  stride: 16
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 38
+  - x: 8
+    y: 0
+    value: 43
+  - x: 9
+    y: 0
+    value: 48
+  - x: 10
+    y: 0
+    value: 53
+  - x: 11
+    y: 0
+    value: 58
+  - x: 12
+    y: 0
+    value: 63
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 15
+    y: 0
+    value: 14
+  - x: 0
+    y: 1
+    value: 19
+  - x: 1
+    y: 1
+    value: 24
+  - x: 2
+    y: 1
+    value: 29
+  - x: 3
+    y: 1
+    value: 34
+  - x: 4
+    y: 1
+    value: 39
+  - x: 5
+    y: 1
+    value: 44
+  - x: 6
+    y: 1
+    value: 49
+  - x: 7
+    y: 1
+    value: 54
+  - x: 8
+    y: 1
+    value: 59
+  - x: 9
+    y: 1
+    value: 0
+  - x: 10
+    y: 1
+    value: 5
+  - x: 11
+    y: 1
+    value: 10
+  - x: 12
+    y: 1
+    value: 15
+  - x: 13
+    y: 1
+    value: 20
+  - x: 14
+    y: 1
+    value: 25
+  - x: 15
+    y: 1
+    value: 30
+  - x: 0
+    y: 2
+    value: 35
+  - x: 1
+    y: 2
+    value: 40
+  - x: 2
+    y: 2
+    value: 45
+  - x: 3
+    y: 2
+    value: 50
+  - x: 4
+    y: 2
+    value: 55
+  - x: 5
+    y: 2
+    value: 60
+  - x: 6
+    y: 2
+    value: 1
+  - x: 7
+    y: 2
+    value: 6
+  - x: 8
+    y: 2
+    value: 11
+  - x: 9
+    y: 2
+    value: 16
+  - x: 10
+    y: 2
+    value: 21
+  - x: 11
+    y: 2
+    value: 26
+  - x: 12
+    y: 2
+    value: 31
+  - x: 13
+    y: 2
+    value: 36
+  - x: 14
+    y: 2
+    value: 41
+  - x: 15
+    y: 2
+    value: 46
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 15
+    y: 0
+    value: 15
+  - x: 0
+    y: 1
+    value: 16
+  - x: 1
+    y: 1
+    value: 17
+  - x: 2
+    y: 1
+    value: 18
+  - x: 3
+    y: 1
+    value: 19
+  - x: 4
+    y: 1
+    value: 20
+  - x: 5
+    y: 1
+    value: 21
+  - x: 6
+    y: 1
+    value: 22
+  - x: 7
+    y: 1
+    value: 23
+  - x: 8
+    y: 1
+    value: 24
+  - x: 9
+    y: 1
+    value: 25
+  - x: 10
+    y: 1
+    value: 26
+  - x: 11
+    y: 1
+    value: 27
+  - x: 12
+    y: 1
+    value: 28
+  - x: 13
+    y: 1
+    value: 29
+  - x: 14
+    y: 1
+    value: 30
+  - x: 15
+    y: 1
+    value: 31
+  - x: 0
+    y: 2
+    value: 32
+  - x: 1
+    y: 2
+    value: 33
+  - x: 2
+    y: 2
+    value: 34
+  - x: 3
+    y: 2
+    value: 35
+  - x: 4
+    y: 2
+    value: 36
+  - x: 5
+    y: 2
+    value: 37
+  - x: 6
+    y: 2
+    value: 38
+  - x: 7
+    y: 2
+    value: 39
+  - x: 8
+    y: 2
+    value: 40
+  - x: 9
+    y: 2
+    value: 41
+  - x: 10
+    y: 2
+    value: 42
+  - x: 11
+    y: 2
+    value: 43
+  - x: 12
+    y: 2
+    value: 44
+  - x: 13
+    y: 2
+    value: 45
+  - x: 14
+    y: 2
+    value: 46
+  - x: 15
+    y: 2
+    value: 47
+  - x: 0
+    y: 0
+    value: 48
+  - x: 1
+    y: 0
+    value: 49
+  - x: 2
+    y: 0
+    value: 50
+  - x: 3
+    y: 0
+    value: 51
+  - x: 4
+    y: 0
+    value: 52
+  - x: 5
+    y: 0
+    value: 53
+  - x: 6
+    y: 0
+    value: 54
+  - x: 7
+    y: 0
+    value: 55
+  - x: 8
+    y: 0
+    value: 56
+  - x: 9
+    y: 0
+    value: 57
+  - x: 10
+    y: 0
+    value: 58
+  - x: 11
+    y: 0
+    value: 59
+  - x: 12
+    y: 0
+    value: 60
+  - x: 13
+    y: 0
+    value: 61
+  - x: 14
+    y: 0
+    value: 62
+  - x: 15
+    y: 0
+    value: 63
+  expected_pixels:
+  - - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+  - - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+  - - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+  expected_native_bytes:
+  - 48
+  - 49
+  - 50
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  expected_native_save:
+    '0x00':
+    - 48
+    - 49
+    - 50
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    '0x40':
+    - 112
+    - 113
+    - 114
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 80
+    - 81
+    - 82
+    - 83
+    - 84
+    - 85
+    - 86
+    - 87
+    - 88
+    - 89
+    - 90
+    - 91
+    - 92
+    - 93
+    - 94
+    - 95
+    - 96
+    - 97
+    - 98
+    - 99
+    - 100
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    '0x80':
+    - 176
+    - 177
+    - 178
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 144
+    - 145
+    - 146
+    - 147
+    - 148
+    - 149
+    - 150
+    - 151
+    - 152
+    - 153
+    - 154
+    - 155
+    - 156
+    - 157
+    - 158
+    - 159
+    - 160
+    - 161
+    - 162
+    - 163
+    - 164
+    - 165
+    - 166
+    - 167
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    '0xC0':
+    - 240
+    - 241
+    - 242
+    - 243
+    - 244
+    - 245
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+    - 255
+    - 208
+    - 209
+    - 210
+    - 211
+    - 212
+    - 213
+    - 214
+    - 215
+    - 216
+    - 217
+    - 218
+    - 219
+    - 220
+    - 221
+    - 222
+    - 223
+    - 224
+    - 225
+    - 226
+    - 227
+    - 228
+    - 229
+    - 230
+    - 231
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+    - 237
+    - 238
+    - 239
+  content_sha256: 9e1b4e90a3ed73eb00b52f22068a022875b0b35c8513ab0ef6c45daa4761411b
+- id: codec-sbgr2222-17x3
+  format: SBGR2222
+  width: 17
+  height: 3
+  stride: 17
+  operations:
+  - x: 0
+    y: 0
+    value: 3
+  - x: 1
+    y: 0
+    value: 8
+  - x: 2
+    y: 0
+    value: 13
+  - x: 3
+    y: 0
+    value: 18
+  - x: 4
+    y: 0
+    value: 23
+  - x: 5
+    y: 0
+    value: 28
+  - x: 6
+    y: 0
+    value: 33
+  - x: 7
+    y: 0
+    value: 38
+  - x: 8
+    y: 0
+    value: 43
+  - x: 9
+    y: 0
+    value: 48
+  - x: 10
+    y: 0
+    value: 53
+  - x: 11
+    y: 0
+    value: 58
+  - x: 12
+    y: 0
+    value: 63
+  - x: 13
+    y: 0
+    value: 4
+  - x: 14
+    y: 0
+    value: 9
+  - x: 15
+    y: 0
+    value: 14
+  - x: 16
+    y: 0
+    value: 19
+  - x: 0
+    y: 1
+    value: 24
+  - x: 1
+    y: 1
+    value: 29
+  - x: 2
+    y: 1
+    value: 34
+  - x: 3
+    y: 1
+    value: 39
+  - x: 4
+    y: 1
+    value: 44
+  - x: 5
+    y: 1
+    value: 49
+  - x: 6
+    y: 1
+    value: 54
+  - x: 7
+    y: 1
+    value: 59
+  - x: 8
+    y: 1
+    value: 0
+  - x: 9
+    y: 1
+    value: 5
+  - x: 10
+    y: 1
+    value: 10
+  - x: 11
+    y: 1
+    value: 15
+  - x: 12
+    y: 1
+    value: 20
+  - x: 13
+    y: 1
+    value: 25
+  - x: 14
+    y: 1
+    value: 30
+  - x: 15
+    y: 1
+    value: 35
+  - x: 16
+    y: 1
+    value: 40
+  - x: 0
+    y: 2
+    value: 45
+  - x: 1
+    y: 2
+    value: 50
+  - x: 2
+    y: 2
+    value: 55
+  - x: 3
+    y: 2
+    value: 60
+  - x: 4
+    y: 2
+    value: 1
+  - x: 5
+    y: 2
+    value: 6
+  - x: 6
+    y: 2
+    value: 11
+  - x: 7
+    y: 2
+    value: 16
+  - x: 8
+    y: 2
+    value: 21
+  - x: 9
+    y: 2
+    value: 26
+  - x: 10
+    y: 2
+    value: 31
+  - x: 11
+    y: 2
+    value: 36
+  - x: 12
+    y: 2
+    value: 41
+  - x: 13
+    y: 2
+    value: 46
+  - x: 14
+    y: 2
+    value: 51
+  - x: 15
+    y: 2
+    value: 56
+  - x: 16
+    y: 2
+    value: 61
+  - x: 0
+    y: 0
+    value: 0
+  - x: 1
+    y: 0
+    value: 1
+  - x: 2
+    y: 0
+    value: 2
+  - x: 3
+    y: 0
+    value: 3
+  - x: 4
+    y: 0
+    value: 4
+  - x: 5
+    y: 0
+    value: 5
+  - x: 6
+    y: 0
+    value: 6
+  - x: 7
+    y: 0
+    value: 7
+  - x: 8
+    y: 0
+    value: 8
+  - x: 9
+    y: 0
+    value: 9
+  - x: 10
+    y: 0
+    value: 10
+  - x: 11
+    y: 0
+    value: 11
+  - x: 12
+    y: 0
+    value: 12
+  - x: 13
+    y: 0
+    value: 13
+  - x: 14
+    y: 0
+    value: 14
+  - x: 15
+    y: 0
+    value: 15
+  - x: 16
+    y: 0
+    value: 16
+  - x: 0
+    y: 1
+    value: 17
+  - x: 1
+    y: 1
+    value: 18
+  - x: 2
+    y: 1
+    value: 19
+  - x: 3
+    y: 1
+    value: 20
+  - x: 4
+    y: 1
+    value: 21
+  - x: 5
+    y: 1
+    value: 22
+  - x: 6
+    y: 1
+    value: 23
+  - x: 7
+    y: 1
+    value: 24
+  - x: 8
+    y: 1
+    value: 25
+  - x: 9
+    y: 1
+    value: 26
+  - x: 10
+    y: 1
+    value: 27
+  - x: 11
+    y: 1
+    value: 28
+  - x: 12
+    y: 1
+    value: 29
+  - x: 13
+    y: 1
+    value: 30
+  - x: 14
+    y: 1
+    value: 31
+  - x: 15
+    y: 1
+    value: 32
+  - x: 16
+    y: 1
+    value: 33
+  - x: 0
+    y: 2
+    value: 34
+  - x: 1
+    y: 2
+    value: 35
+  - x: 2
+    y: 2
+    value: 36
+  - x: 3
+    y: 2
+    value: 37
+  - x: 4
+    y: 2
+    value: 38
+  - x: 5
+    y: 2
+    value: 39
+  - x: 6
+    y: 2
+    value: 40
+  - x: 7
+    y: 2
+    value: 41
+  - x: 8
+    y: 2
+    value: 42
+  - x: 9
+    y: 2
+    value: 43
+  - x: 10
+    y: 2
+    value: 44
+  - x: 11
+    y: 2
+    value: 45
+  - x: 12
+    y: 2
+    value: 46
+  - x: 13
+    y: 2
+    value: 47
+  - x: 14
+    y: 2
+    value: 48
+  - x: 15
+    y: 2
+    value: 49
+  - x: 16
+    y: 2
+    value: 50
+  - x: 0
+    y: 0
+    value: 51
+  - x: 1
+    y: 0
+    value: 52
+  - x: 2
+    y: 0
+    value: 53
+  - x: 3
+    y: 0
+    value: 54
+  - x: 4
+    y: 0
+    value: 55
+  - x: 5
+    y: 0
+    value: 56
+  - x: 6
+    y: 0
+    value: 57
+  - x: 7
+    y: 0
+    value: 58
+  - x: 8
+    y: 0
+    value: 59
+  - x: 9
+    y: 0
+    value: 60
+  - x: 10
+    y: 0
+    value: 61
+  - x: 11
+    y: 0
+    value: 62
+  - x: 12
+    y: 0
+    value: 63
+  expected_pixels:
+  - - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 13
+    - 14
+    - 15
+    - 16
+  - - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+  - - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+  expected_native_bytes:
+  - 51
+  - 52
+  - 53
+  - 54
+  - 55
+  - 56
+  - 57
+  - 58
+  - 59
+  - 60
+  - 61
+  - 62
+  - 63
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  - 24
+  - 25
+  - 26
+  - 27
+  - 28
+  - 29
+  - 30
+  - 31
+  - 32
+  - 33
+  - 34
+  - 35
+  - 36
+  - 37
+  - 38
+  - 39
+  - 40
+  - 41
+  - 42
+  - 43
+  - 44
+  - 45
+  - 46
+  - 47
+  - 48
+  - 49
+  - 50
+  expected_native_save:
+    '0x00':
+    - 51
+    - 52
+    - 53
+    - 54
+    - 55
+    - 56
+    - 57
+    - 58
+    - 59
+    - 60
+    - 61
+    - 62
+    - 63
+    - 13
+    - 14
+    - 15
+    - 16
+    - 17
+    - 18
+    - 19
+    - 20
+    - 21
+    - 22
+    - 23
+    - 24
+    - 25
+    - 26
+    - 27
+    - 28
+    - 29
+    - 30
+    - 31
+    - 32
+    - 33
+    - 34
+    - 35
+    - 36
+    - 37
+    - 38
+    - 39
+    - 40
+    - 41
+    - 42
+    - 43
+    - 44
+    - 45
+    - 46
+    - 47
+    - 48
+    - 49
+    - 50
+    '0x40':
+    - 115
+    - 116
+    - 117
+    - 118
+    - 119
+    - 120
+    - 121
+    - 122
+    - 123
+    - 124
+    - 125
+    - 126
+    - 127
+    - 77
+    - 78
+    - 79
+    - 80
+    - 81
+    - 82
+    - 83
+    - 84
+    - 85
+    - 86
+    - 87
+    - 88
+    - 89
+    - 90
+    - 91
+    - 92
+    - 93
+    - 94
+    - 95
+    - 96
+    - 97
+    - 98
+    - 99
+    - 100
+    - 101
+    - 102
+    - 103
+    - 104
+    - 105
+    - 106
+    - 107
+    - 108
+    - 109
+    - 110
+    - 111
+    - 112
+    - 113
+    - 114
+    '0x80':
+    - 179
+    - 180
+    - 181
+    - 182
+    - 183
+    - 184
+    - 185
+    - 186
+    - 187
+    - 188
+    - 189
+    - 190
+    - 191
+    - 141
+    - 142
+    - 143
+    - 144
+    - 145
+    - 146
+    - 147
+    - 148
+    - 149
+    - 150
+    - 151
+    - 152
+    - 153
+    - 154
+    - 155
+    - 156
+    - 157
+    - 158
+    - 159
+    - 160
+    - 161
+    - 162
+    - 163
+    - 164
+    - 165
+    - 166
+    - 167
+    - 168
+    - 169
+    - 170
+    - 171
+    - 172
+    - 173
+    - 174
+    - 175
+    - 176
+    - 177
+    - 178
+    '0xC0':
+    - 243
+    - 244
+    - 245
+    - 246
+    - 247
+    - 248
+    - 249
+    - 250
+    - 251
+    - 252
+    - 253
+    - 254
+    - 255
+    - 205
+    - 206
+    - 207
+    - 208
+    - 209
+    - 210
+    - 211
+    - 212
+    - 213
+    - 214
+    - 215
+    - 216
+    - 217
+    - 218
+    - 219
+    - 220
+    - 221
+    - 222
+    - 223
+    - 224
+    - 225
+    - 226
+    - 227
+    - 228
+    - 229
+    - 230
+    - 231
+    - 232
+    - 233
+    - 234
+    - 235
+    - 236
+    - 237
+    - 238
+    - 239
+    - 240
+    - 241
+    - 242
+  content_sha256: 1318b749956e42a0f63630549230a46202b1db8ca5dc05a9aff899f469e0806f
+- id: clear-palette2-0
+  format: PALETTE2
+  width: 17
+  height: 2
+  value: 0
+  expected_native_bytes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  content_sha256: 6d4a29e2e6dbd633a49334fcb9423d9e906db97551c641c5e1f845ba06effa2d
+- id: clear-palette2-1
+  format: PALETTE2
+  width: 17
+  height: 2
+  value: 1
+  expected_native_bytes:
+  - 255
+  - 255
+  - 128
+  - 255
+  - 255
+  - 128
+  content_sha256: 1195688c4bc16f6f23f854068a3251ddfdec95e7388dc64ee57d4f686cf5d780
+- id: clear-palette4-0
+  format: PALETTE4
+  width: 17
+  height: 2
+  value: 0
+  expected_native_bytes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  content_sha256: efbe800e0b6286982ecfc8bb64c39f59655e953d7452429978bcdfde05a8582a
+- id: clear-palette4-1
+  format: PALETTE4
+  width: 17
+  height: 2
+  value: 1
+  expected_native_bytes:
+  - 85
+  - 85
+  - 85
+  - 85
+  - 64
+  - 85
+  - 85
+  - 85
+  - 85
+  - 64
+  content_sha256: e4ce417487244d037482e9d4330e109a8a19f62ccf615034250b153726b9ba90
+- id: clear-palette4-2
+  format: PALETTE4
+  width: 17
+  height: 2
+  value: 2
+  expected_native_bytes:
+  - 170
+  - 170
+  - 170
+  - 170
+  - 128
+  - 170
+  - 170
+  - 170
+  - 170
+  - 128
+  content_sha256: fb2e7a634518e26959d69f62348c9cccf02b2a09de43970c845e0a2214493a37
+- id: clear-palette4-3
+  format: PALETTE4
+  width: 17
+  height: 2
+  value: 3
+  expected_native_bytes:
+  - 255
+  - 255
+  - 255
+  - 255
+  - 192
+  - 255
+  - 255
+  - 255
+  - 255
+  - 192
+  content_sha256: ac2fb18b96a86d04816e155b589fbccef6c3a4cb9e99409a5cfef2e4c0cf6c53
+- id: clear-palette8-0
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 0
+  expected_native_bytes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  content_sha256: 4798286154b756e1a5479245363f4a93c3b2b1ac0f3a760e475d47603c7f86ff
+- id: clear-palette8-1
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 1
+  expected_native_bytes:
+  - 36
+  - 146
+  - 73
+  - 36
+  - 146
+  - 73
+  - 32
+  - 36
+  - 146
+  - 73
+  - 36
+  - 146
+  - 73
+  - 32
+  content_sha256: c4dcdb57557737efc8c0d5bf2674d4a57c331c76a4d2039ee237e7087cfa0246
+- id: clear-palette8-2
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 2
+  expected_native_bytes:
+  - 73
+  - 36
+  - 146
+  - 73
+  - 36
+  - 146
+  - 64
+  - 73
+  - 36
+  - 146
+  - 73
+  - 36
+  - 146
+  - 64
+  content_sha256: bf4b2e3f6cd236090fc40dffbe2dcc069b27a20b0bddf9628bf4de29a628d717
+- id: clear-palette8-3
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 3
+  expected_native_bytes:
+  - 109
+  - 182
+  - 219
+  - 109
+  - 182
+  - 219
+  - 96
+  - 109
+  - 182
+  - 219
+  - 109
+  - 182
+  - 219
+  - 96
+  content_sha256: c4d56630c5d644cb7fedc0bbe8e5f8240ef3792d1a496d20dfc97099696fa3ad
+- id: clear-palette8-4
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 4
+  expected_native_bytes:
+  - 146
+  - 73
+  - 36
+  - 146
+  - 73
+  - 36
+  - 128
+  - 146
+  - 73
+  - 36
+  - 146
+  - 73
+  - 36
+  - 128
+  content_sha256: 585a82d38f369d847bfcfdcd01d619a0a703885e17714f9f1b8fafdabb90bf0a
+- id: clear-palette8-5
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 5
+  expected_native_bytes:
+  - 182
+  - 219
+  - 109
+  - 182
+  - 219
+  - 109
+  - 160
+  - 182
+  - 219
+  - 109
+  - 182
+  - 219
+  - 109
+  - 160
+  content_sha256: 9a1e2ea4a4f9dc48f85f41cb3d4edf0aba3549f2be7eb5e7aa610785a410acaf
+- id: clear-palette8-6
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 6
+  expected_native_bytes:
+  - 219
+  - 109
+  - 182
+  - 219
+  - 109
+  - 182
+  - 192
+  - 219
+  - 109
+  - 182
+  - 219
+  - 109
+  - 182
+  - 192
+  content_sha256: 57435820f64e410b6715ddc42dff6ce585f0f1c60e648f07dd2c50ad33d4c24e
+- id: clear-palette8-7
+  format: PALETTE8
+  width: 17
+  height: 2
+  value: 7
+  expected_native_bytes:
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 224
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 224
+  content_sha256: 85a0ddd243f13df4c07ca8bc4c287f24fe1c8ccee7db4c0cc3d18a11374b9a95
+- id: clear-palette16-0
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 0
+  expected_native_bytes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  content_sha256: 0b58b91eb3fde0d549a92f6ba8c038f2fc155dd294e0660e55d366c5db6d54af
+- id: clear-palette16-1
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 1
+  expected_native_bytes:
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 16
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 16
+  content_sha256: a6a92b6801ad8310fbe4d98e714f7926f2e7ae38bb7ae100b19b3582b39a1cb8
+- id: clear-palette16-2
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 2
+  expected_native_bytes:
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 32
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 32
+  content_sha256: 9712704afe5381a9a3cf8892931f21b0d2912fb1ccbb6f0307ce078a05fa893d
+- id: clear-palette16-3
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 3
+  expected_native_bytes:
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 48
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 48
+  content_sha256: 885a0cd757962d3d5d9e9b64b0fa059def9be348d6344f3d2f8e78e473524d23
+- id: clear-palette16-4
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 4
+  expected_native_bytes:
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 64
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 68
+  - 64
+  content_sha256: e2b6cd9e162503aa3341c72e91e1f6def2296287156d62d4da05f662fc71e048
+- id: clear-palette16-5
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 5
+  expected_native_bytes:
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 80
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 85
+  - 80
+  content_sha256: 7102901813023b300cca3317ce9c51730563c3ec90832318cd77878202f98be1
+- id: clear-palette16-6
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 6
+  expected_native_bytes:
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 96
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 102
+  - 96
+  content_sha256: a9de4daca6c59896b07fcc94bbfe9c58ebefcd193b3ba80c00a131fe74491ad3
+- id: clear-palette16-7
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 7
+  expected_native_bytes:
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 112
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 119
+  - 112
+  content_sha256: 140b682574f79287c9ca92547855826819e40bb05f7a22cdc70b352ca2041e3a
+- id: clear-palette16-8
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 8
+  expected_native_bytes:
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 128
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 136
+  - 128
+  content_sha256: 87ab4c7f56b887baf502a2fe6b1cbe6f6fc75eec53db49f076f97c17f9c131f5
+- id: clear-palette16-9
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 9
+  expected_native_bytes:
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 144
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 153
+  - 144
+  content_sha256: 547ce95acc09e5dedf267b09eb409bed6481166f8c486dabfc647236d14463e4
+- id: clear-palette16-10
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 10
+  expected_native_bytes:
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 160
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 170
+  - 160
+  content_sha256: 85d1fcc29947632805283906a36cd3d8ddf5219319e446075b108258736bea5f
+- id: clear-palette16-11
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 11
+  expected_native_bytes:
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 176
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 187
+  - 176
+  content_sha256: ddbd96f70e4c9298195715d89a413c6d5a7458ddfd1c17b45c7bb102679957f8
+- id: clear-palette16-12
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 12
+  expected_native_bytes:
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 192
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 204
+  - 192
+  content_sha256: a55d6d814e9c96a8d17cf57e08d52aef1e8418b866445acd1b2f32cecf8c71e2
+- id: clear-palette16-13
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 13
+  expected_native_bytes:
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 208
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 221
+  - 208
+  content_sha256: 8a00b19ef399a0acdd37533b9ecd7bbb9705508bbe13205ccedebc00c4f70362
+- id: clear-palette16-14
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 14
+  expected_native_bytes:
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 224
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 238
+  - 224
+  content_sha256: 0f5ac9a89cc9196b9cf309a3472ccd5a88a55cf57585f264fd54e8c0fce2a8fd
+- id: clear-palette16-15
+  format: PALETTE16
+  width: 17
+  height: 2
+  value: 15
+  expected_native_bytes:
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 240
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 255
+  - 240
+  content_sha256: a215c07d829ee477a284e2fa3951c6d018dcadf275e7f0167e2c61b6e8137b29
+- id: clear-sbgr2222-0
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 0
+  expected_native_bytes:
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  - 0
+  content_sha256: 407b5e9dac9364e30646253af6366db5731a44261421b4b0f9a601f379cdb916
+- id: clear-sbgr2222-1
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 1
+  expected_native_bytes:
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  - 1
+  content_sha256: 9ec2931b4ea832f39b8192cd75cf4da435f9c4bcabeb1786e17905594bda198a
+- id: clear-sbgr2222-2
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 2
+  expected_native_bytes:
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  - 2
+  content_sha256: 80a7d111a1655df8c4563ba3c8aa4ecf43e930ffc363edd56beada6a509a50b0
+- id: clear-sbgr2222-3
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 3
+  expected_native_bytes:
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  - 3
+  content_sha256: 2a93e21d6d553d2df99391c51c77aff9c70042a8366837e93aebbc38b4c55ffa
+- id: clear-sbgr2222-4
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 4
+  expected_native_bytes:
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  - 4
+  content_sha256: ff6dd0a6c61632897a9cdc517c3e0e5fbe625b00b7a1ceffaa0bb4bd01eda605
+- id: clear-sbgr2222-5
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 5
+  expected_native_bytes:
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  - 5
+  content_sha256: cf027ca0aa1666f8b9e0e47e4776924a745c094378b8f0f2496ac60181512429
+- id: clear-sbgr2222-6
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 6
+  expected_native_bytes:
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  - 6
+  content_sha256: fd7f5060292f2d5f0e704c46827d82bd7ba7b3a1966f02223f704df844c95ad8
+- id: clear-sbgr2222-7
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 7
+  expected_native_bytes:
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  - 7
+  content_sha256: f3bf87b602e1d5f14150715a20a7fd2bd4383f5c39ff8746e02bd285e8b7dd97
+- id: clear-sbgr2222-8
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 8
+  expected_native_bytes:
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  - 8
+  content_sha256: 151c8d6157becd3fc8a2b68e1ff778e0ed594b3d81748fe5854ddf7825ea9ec0
+- id: clear-sbgr2222-9
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 9
+  expected_native_bytes:
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  - 9
+  content_sha256: 91de6cb21881290d72416fa5b16de993ae1510b1809afec76d9bdf57be80c72f
+- id: clear-sbgr2222-10
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 10
+  expected_native_bytes:
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  - 10
+  content_sha256: 0785c7b0fce8b989430c5df8c19edf93e61bfc1bce05f903ed46bbee89a75fa1
+- id: clear-sbgr2222-11
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 11
+  expected_native_bytes:
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  - 11
+  content_sha256: 90f16585b6d5110ee40e2e136592936070472e98e462e2131fca320a75916581
+- id: clear-sbgr2222-12
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 12
+  expected_native_bytes:
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  - 12
+  content_sha256: f219b6fb2553c4f53883a4e84132c1d95c32b53b9305ac0c5a892e046ce1e03a
+- id: clear-sbgr2222-13
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 13
+  expected_native_bytes:
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  - 13
+  content_sha256: fba2a473cea86a1197d7ef03d86f82d33508c045509bf9c0400f7bd1e144c333
+- id: clear-sbgr2222-14
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 14
+  expected_native_bytes:
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  - 14
+  content_sha256: ada5ebec06ba124223e690a47aa8e48b0e46dfcbf653a8c86c4ed46ef48b8e52
+- id: clear-sbgr2222-15
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 15
+  expected_native_bytes:
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  - 15
+  content_sha256: f72bf69e9b516b98a62a1013b7b06fa2e835786491db9d013f079b543bbe09fa
+- id: clear-sbgr2222-16
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 16
+  expected_native_bytes:
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  - 16
+  content_sha256: ee30cb11f1f7ffdd2feef6da18b3ff042c1ecaef5dd20c020ea57b0000635480
+- id: clear-sbgr2222-17
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 17
+  expected_native_bytes:
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  - 17
+  content_sha256: 8f9cc6b609b2df938d7a36f3bd9a4b4bb70e8c55f930c0412d2b1b9ac19aa843
+- id: clear-sbgr2222-18
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 18
+  expected_native_bytes:
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  - 18
+  content_sha256: 1241cabe4b2947f46534b09151d8aa3eb8374c48ce9805f663772efd50788184
+- id: clear-sbgr2222-19
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 19
+  expected_native_bytes:
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  - 19
+  content_sha256: 8a21471a8d64591adc35ae95b313c84f6653568a34cc6cf248f9aa4c5da187f5
+- id: clear-sbgr2222-20
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 20
+  expected_native_bytes:
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  - 20
+  content_sha256: 86905060e2d5ef86c08b3f7ed5d1f1e6cdd1e3142958ed19daa5b57f77204c2a
+- id: clear-sbgr2222-21
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 21
+  expected_native_bytes:
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  - 21
+  content_sha256: fc2f35bc36f40d4acccc2b9feb7c79196833f3c0c91130e778c17c494aa669ae
+- id: clear-sbgr2222-22
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 22
+  expected_native_bytes:
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  - 22
+  content_sha256: 58e74d1cc64adb6d2c072d363c3ee35c270728428b9640d40ad533c6caf9bdb8
+- id: clear-sbgr2222-23
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 23
+  expected_native_bytes:
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  - 23
+  content_sha256: fb9477428e5d53d952179ff347db195d8f70b0d5b417cf61f6ea6d807d6c45a1
+- id: clear-sbgr2222-24
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 24
+  expected_native_bytes:
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  - 24
+  content_sha256: 3536d7d7b1058e113731cee6e0789c53092eba4a1ed7376b022b9a81c93e41f7
+- id: clear-sbgr2222-25
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 25
+  expected_native_bytes:
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  - 25
+  content_sha256: 4e5958150f33496864e27dd2c1f9628fee1d17b0b76ee1170f8ce7d9d4e60e2e
+- id: clear-sbgr2222-26
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 26
+  expected_native_bytes:
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  - 26
+  content_sha256: 0c0c7e5c074ccf4e9b9fa7cfb6bdd9079343dd2248ed4c6a9b0d150383ddf3b7
+- id: clear-sbgr2222-27
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 27
+  expected_native_bytes:
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  - 27
+  content_sha256: 9d303979184d51a9940755f77dfac162b91fcdb7169b4f51f1f6914f4666b1f3
+- id: clear-sbgr2222-28
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 28
+  expected_native_bytes:
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  - 28
+  content_sha256: 9451d2d866d42bcd9784b27edd468115ad3bb8e7c3095e5ebf1bb2d5d2a0130d
+- id: clear-sbgr2222-29
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 29
+  expected_native_bytes:
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  - 29
+  content_sha256: af6762c596aef76ddff484d5adb0ae3906e860afc5814f6a6e7b3dff95ade212
+- id: clear-sbgr2222-30
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 30
+  expected_native_bytes:
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  - 30
+  content_sha256: 4ecf7f1f983052e87781055421e7145b82122cfd72544e840fe6a28965849aa7
+- id: clear-sbgr2222-31
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 31
+  expected_native_bytes:
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  - 31
+  content_sha256: 2854ebae860116928ed5c033f038c2b963826b3c48eb5940855ee8c38bc38535
+- id: clear-sbgr2222-32
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 32
+  expected_native_bytes:
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  - 32
+  content_sha256: e056c108f69b77a95b2cf180edd0fb5188a0eb1d43078ff163953ef398b0db76
+- id: clear-sbgr2222-33
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 33
+  expected_native_bytes:
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  - 33
+  content_sha256: 2a2aac83e738dc8b010c536f0be8810361ec69b66df6fe4a94f5649678203f63
+- id: clear-sbgr2222-34
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 34
+  expected_native_bytes:
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  - 34
+  content_sha256: ccf446af0a14ebb48c2c3c76b5771b2185e79d8d026aed5ccc3dce9d76e120c4
+- id: clear-sbgr2222-35
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 35
+  expected_native_bytes:
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  - 35
+  content_sha256: cafaa5071ddc539e02107d7bd3b412c20a0e3c82ed8471228d5ce7b09e3afa2b
+- id: clear-sbgr2222-36
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 36
+  expected_native_bytes:
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  - 36
+  content_sha256: 9af6d18dc43a485a199a2b5ff036aa390096a48d2299461b4d0317a5d2858c73
+- id: clear-sbgr2222-37
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 37
+  expected_native_bytes:
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  - 37
+  content_sha256: d105c39badb1c745bb9b1e72a0ffb288006e73619f5e04c3fd5e34ea63cbbb44
+- id: clear-sbgr2222-38
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 38
+  expected_native_bytes:
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  - 38
+  content_sha256: 090ef48fd168e868a164b4c56629614d659ed8d630da687c12745b9ace89d89d
+- id: clear-sbgr2222-39
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 39
+  expected_native_bytes:
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  - 39
+  content_sha256: cd9df553254eebdeeb6dae0d61616bb060afb8ce758e7632027b263c0e17035c
+- id: clear-sbgr2222-40
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 40
+  expected_native_bytes:
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  - 40
+  content_sha256: fc18049e5ecc47fd6a900a349561a134d0a7d978d59741514b2eebd57c870332
+- id: clear-sbgr2222-41
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 41
+  expected_native_bytes:
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  - 41
+  content_sha256: 0cbe3db889cbeb95e645d5afe2f9ac0d1ab57fef1b49464ca0c675b027fef022
+- id: clear-sbgr2222-42
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 42
+  expected_native_bytes:
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  - 42
+  content_sha256: 28e480093eddd07e15653029b33ce9c2a778e686fa8fc5a3ac3aa6849c696918
+- id: clear-sbgr2222-43
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 43
+  expected_native_bytes:
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  - 43
+  content_sha256: 302aa571ed210535fd15104fd861332eadd093f26425f5abca62ce7d5711f09b
+- id: clear-sbgr2222-44
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 44
+  expected_native_bytes:
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  - 44
+  content_sha256: 45f92871b1869161471c521b37adde3fe966275f8b0e460b8e65cfccd7a00f25
+- id: clear-sbgr2222-45
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 45
+  expected_native_bytes:
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  - 45
+  content_sha256: 9318930350a69ca35c394e12e42799bb933baf4c1e1c0aa557e9e3e4fac901fc
+- id: clear-sbgr2222-46
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 46
+  expected_native_bytes:
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  - 46
+  content_sha256: 884ebc3a70873951808b2cf0f7f3464b94609d5372cf6386c65e69e92de935d2
+- id: clear-sbgr2222-47
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 47
+  expected_native_bytes:
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  - 47
+  content_sha256: bb7ba4415941d95890bd123d6da8faf6f82cbe7513e57909d8b3834403f8654f
+- id: clear-sbgr2222-48
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 48
+  expected_native_bytes:
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  - 48
+  content_sha256: c95f3b54a683d83fa03cc374b4cdb7702e6de2284eb878c297ee0fc1192fe554
+- id: clear-sbgr2222-49
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 49
+  expected_native_bytes:
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  - 49
+  content_sha256: 1636edc0ee96cf73e579a0ea6e69f07a56d0fe3e7db850317f996754d98cd2c2
+- id: clear-sbgr2222-50
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 50
+  expected_native_bytes:
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  - 50
+  content_sha256: 7957d6c42bf08fce259f1d084c2ed028656d6fcb278b8e45ab5e03d9bfb61a49
+- id: clear-sbgr2222-51
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 51
+  expected_native_bytes:
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  - 51
+  content_sha256: bda273624516021113023435ce4dcdb9487e7b5846c22d9f735ce53826b56c72
+- id: clear-sbgr2222-52
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 52
+  expected_native_bytes:
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  - 52
+  content_sha256: d5f848a61842b38a8c164078888103183e47f2d44ba6a26f2918ec837452185a
+- id: clear-sbgr2222-53
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 53
+  expected_native_bytes:
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  - 53
+  content_sha256: 1843af3aad05c68ccdb0b0319fdd782999b6beb1f6e7fbde3c9247877c75912d
+- id: clear-sbgr2222-54
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 54
+  expected_native_bytes:
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  - 54
+  content_sha256: 55f330ac9c20378926606a69c47dbf01525e9d9d1604e4ad0b3b00ec5b0694eb
+- id: clear-sbgr2222-55
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 55
+  expected_native_bytes:
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  - 55
+  content_sha256: 921116b62133a715a18b1f3b759686e22bacee7e291239c42f7b31dd2ba7e2e8
+- id: clear-sbgr2222-56
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 56
+  expected_native_bytes:
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  - 56
+  content_sha256: 174d98446cdbaaf5419775da266eff43e622f689165bdcf2a4156d5e650067e6
+- id: clear-sbgr2222-57
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 57
+  expected_native_bytes:
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  - 57
+  content_sha256: 12f6ead0cd773609eb16d8e74353460dd82a11206342f3c3c6716e6304cf381c
+- id: clear-sbgr2222-58
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 58
+  expected_native_bytes:
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  - 58
+  content_sha256: 35e0b3c1751372f04815fa8165722aecef4c50e349707bce06d00fc875e90f39
+- id: clear-sbgr2222-59
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 59
+  expected_native_bytes:
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  - 59
+  content_sha256: 48e09f3385e3c46d884b2f3e7767d30e045640930ad0fc4ee0a56a17f082da79
+- id: clear-sbgr2222-60
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 60
+  expected_native_bytes:
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  - 60
+  content_sha256: 9492fcbcb43761870b2dca6cef2c2022df2495eb02d010f279ded5ac5efa6dae
+- id: clear-sbgr2222-61
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 61
+  expected_native_bytes:
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  - 61
+  content_sha256: 6e85378fba96ae00d98ca8b215d33366d32eaaf422401831457269983f47c919
+- id: clear-sbgr2222-62
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 62
+  expected_native_bytes:
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  - 62
+  content_sha256: b38b2271484203ccc044a6f0847d47928d07c3197ca66cdf6898316af5b20f4a
+- id: clear-sbgr2222-63
+  format: SBGR2222
+  width: 17
+  height: 2
+  value: 63
+  expected_native_bytes:
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  - 63
+  content_sha256: 72de9b9f7c21ab27af5de5c2ffb437daf30a7b1f5a6ae17da7db9fb227e3e489
+fixture_set_sha256: c95f06e957ee53c57c8349cfc13e958a11f0763b1ee2a96e862991fe2ce4154c

@@ -1,20 +1,26 @@
-// PORT-003 Phase A contract-only display controller.
+// PORT-003 Phase B synchronous logical display controller.
 //
-// This type proves that the retained vdp-gl abstract/common renderer can bind
-// to a project-owned ESP32-P4 concrete class. It is intentionally incapable of
-// rendering. Every drawing, readback, or swap entry point fails visibly; a
-// framebuffer, frame service, and output sink belong to later PORT-003 phases.
+// This class binds retained vdp-gl common renderer templates to project-owned
+// P4-neutral storage. It deliberately has no frame service, output sink,
+// mutable palette/Copper compositor, or physical display-driver inheritance.
 #pragma once
 
+#include <functional>
 #include <memory>
 
 #include "displaycontroller.h"
+#include "extender/display/plane_storage.hpp"
 
 namespace agon::extender::display {
 
-class P4DisplayControllerContractCanary final
-    : public fabgl::GenericBitmappedDisplayController {
+class P4DisplayController final : public fabgl::GenericBitmappedDisplayController {
  public:
+  explicit P4DisplayController(Allocator allocator) noexcept;
+
+  ConfigureResult configure(ModeDescriptor const &mode) noexcept;
+  ConstPlaneView drawingPlane() const noexcept;
+  ConstPlaneView visiblePlane() const noexcept;
+
   void begin() override;
   void setResolution(char const *modeline, int view_port_width = -1,
                      int view_port_height = -1,
@@ -25,10 +31,9 @@ class P4DisplayControllerContractCanary final
   void resumeBackgroundPrimitiveExecution() override;
   void readScreen(fabgl::Rect const &rect, fabgl::RGB888 *destination) override;
 
-  // Phase A link-evidence seam only. The canary calls this behind a volatile
-  // false guard so the linker must retain the upstream common primitive
-  // executor without pretending that any drawing path is functional.
-  void retainCommonPrimitiveExecutorForLinkEvidence();
+  // Public solely so a deferred Phase B swap request has an explicit
+  // fail-fast entry point. Logical swap-at-frame-edge is Phase C behavior.
+  void swapBuffers() override;
 
  protected:
   void setPixelAt(fabgl::PixelDesc const &pixel, fabgl::Rect &update) override;
@@ -49,7 +54,6 @@ class P4DisplayControllerContractCanary final
   void invertRect(fabgl::Rect const &rect, fabgl::Rect &update) override;
   void swapFGBG(fabgl::Rect const &rect, fabgl::Rect &update) override;
   void copyRect(fabgl::Rect const &source, fabgl::Rect &update) override;
-  void swapBuffers() override;
   int getBitmapSavePixelSize() override;
   void rawDrawBitmap_Native(int dest_x, int dest_y, fabgl::Bitmap const *bitmap,
                             int x1, int y1, int x_count, int y_count) override;
@@ -78,9 +82,31 @@ class P4DisplayControllerContractCanary final
                                         fabgl::Rect &drawing_rect,
                                         fabgl::Bitmap const *bitmap,
                                         float const *inverse) override;
+
+ private:
+  using PixelWriter = std::function<void(int, int, std::uint8_t)>;
+  using RowPixelWriter = std::function<void(std::uint8_t *, int, std::uint8_t)>;
+  using RowFiller = std::function<void(int, int, int, std::uint8_t)>;
+
+  std::uint8_t *row(int y) noexcept;
+  std::uint8_t const *row(int y) const noexcept;
+  std::uint8_t readLogical(std::uint8_t const *source, int x) const noexcept;
+  void writeLogical(std::uint8_t *destination, int x, std::uint8_t value) noexcept;
+  std::uint8_t colorToLogical(fabgl::RGB888 const &color) const noexcept;
+  fabgl::RGB888 logicalToColor(std::uint8_t value) const noexcept;
+  void writePainted(std::uint8_t *destination, int x, std::uint8_t value,
+                    fabgl::PaintMode mode) noexcept;
+  PixelWriter pixelWriter(fabgl::PaintMode mode);
+  RowPixelWriter rowPixelWriter(fabgl::PaintMode mode);
+  RowFiller rowFiller(fabgl::PaintMode mode);
+  void rawFillRow(int y, int x1, int x2, std::uint8_t value) noexcept;
+  void rawCopyRow(int x1, int x2, int source_y, int destination_y) noexcept;
+  std::uint8_t nativeSavePixel(std::uint8_t logical) const noexcept;
+
+  PlaneStorage storage_;
 };
 
-std::unique_ptr<fabgl::BitmappedDisplayController>
-makeP4DisplayControllerContractCanary();
+Allocator defaultDisplayAllocator() noexcept;
+std::unique_ptr<fabgl::BitmappedDisplayController> makeP4DisplayController();
 
 }  // namespace agon::extender::display

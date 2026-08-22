@@ -1,0 +1,50 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_host_fixture_results
+generated_by: docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
+diagnostic_status: host ASan/UBSan behavior qualification; LSAN unavailable under managed tracing
+fixture_input:
+  path: docs/tasks/PORT-003/phase-b/fixtures/native-codecs.yaml
+  sha256: f439250ceb3e9c2313f970406f6064375d43ba8a84dc95e747ee62f1b1338782
+  fixture_set_sha256: c95f06e957ee53c57c8349cfc13e958a11f0763b1ee2a96e862991fe2ce4154c
+  oracle_class: independent mathematical model
+primitive_fixture_input:
+  path: docs/tasks/PORT-003/phase-b/fixtures/primitives.yaml
+  sha256: 83ae314852f4d360d2be1e12fd8947098e7f2a9e170d3e84ace5d4e7630796d1
+  fixture_set_sha256: cffde6eef3ea7f96cd10491c314bd7f8b88934cf5c67c1acde37287c776afca0
+  oracle_class: independent mathematical model
+production_sources:
+- path: docs/tasks/PORT-003/phase-b/tests/native_pixel_codec_tests.cpp
+  sha256: 603fe13d4d570ec14a4ce79da82066801204466d19583dda7e6e2e93c1fe79fc
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: docs/tasks/PORT-003/phase-b/tests/renderer_fixture_tests.cpp
+  sha256: cf49f9dd61803ceb94d66aecce6c7183c12943fe96d3864f43705e4a1dfa0364
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: f78c72f8abc8a85ab877592b7c6655a4c34f2422bf8a3bea3f3b893de747aaa4
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: dde9dfee8253de173970758065fd17e4c3e45ed9cd72d7ef673bd7efa4c352b8
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+summary:
+  fixture_count: 139
+  counts_by_format:
+    PALETTE16: 25
+    PALETTE2: 11
+    PALETTE4: 13
+    PALETTE8: 17
+    SBGR2222: 73
+  primitive_fixture_count: 115
+  primitive_counts_by_format:
+    PALETTE16: 23
+    PALETTE2: 23
+    PALETTE4: 23
+    PALETTE8: 23
+    SBGR2222: 23
+  failure_count: 0
+  passed: true
+invalid_operation_contract: contract-pass
+failures: []

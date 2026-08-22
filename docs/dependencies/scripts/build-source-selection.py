@@ -362,6 +362,12 @@ def main() -> int:
         default=Path("docs/tasks/PORT-003/phase-a/evidence/build-closure.yaml"),
         help="observed PORT-003 Phase A application closure, when present",
     )
+    parser.add_argument(
+        "--phase-b-evidence",
+        type=Path,
+        default=Path("docs/tasks/PORT-003/phase-b/evidence/build-closure.yaml"),
+        help="observed PORT-003 Phase B application closure, when present",
+    )
     parser.add_argument("--prior-graph", type=Path, help="previous official-tag graph; newly appearing files default to unresolved")
     parser.add_argument("--output", type=Path, default=Path("docs/dependencies/generated/code-graph.yaml"))
     args = parser.parse_args()
@@ -372,6 +378,7 @@ def main() -> int:
     evidence_dir = args.setup_evidence.resolve()
     compile_commands_path = args.compile_commands.resolve()
     phase_a_path = args.phase_a_evidence.resolve()
+    phase_b_path = args.phase_b_evidence.resolve()
     roots = dict(args.source_root)
     base = load_data(base_path)
     prior = load_data(args.prior_graph.resolve()) if args.prior_graph else None
@@ -429,6 +436,19 @@ def main() -> int:
                 "role": "observed PORT-003 Phase A application compile/link closure",
                 "schema_version": phase_a["schema_version"],
                 "sha256": sha256_file(phase_a_path),
+            }
+        )
+    phase_b = load_data(phase_b_path) if phase_b_path.is_file() else None
+    if phase_b:
+        if not phase_b.get("summary", {}).get("closure_proved"):
+            raise ValueError(f"{phase_b_path}: Phase B closure is not proved")
+        inputs.append(
+            {
+                "id": "input:port-003:phase-b-build-closure",
+                "path": phase_b_path.relative_to(repository_root).as_posix(),
+                "role": "observed PORT-003 Phase B application compile/link closure",
+                "schema_version": phase_b["schema_version"],
+                "sha256": sha256_file(phase_b_path),
             }
         )
     if args.prior_graph:
@@ -701,6 +721,23 @@ def main() -> int:
             }
         )
         adapter_evidence_ids.append(phase_a_evidence_id)
+    phase_b_evidence_id = None
+    if phase_b:
+        phase_b_evidence_id = "evidence:build-profile:port-003-phase-b"
+        evidence.append(
+            {
+                "id": phase_b_evidence_id,
+                "kind": "build-log",
+                "method": "mechanical",
+                "description": (
+                    "Successful PORT-003 Phase B synchronous renderer P4 compile/link closure; "
+                    "not hardware or output-sink qualification."
+                ),
+                "artifact_id": "input:port-003:phase-b-build-closure",
+                "record_pointer": "/application_translation_units",
+            }
+        )
+        adapter_evidence_ids.append(phase_b_evidence_id)
     nodes.append(
         {
             "id": "build-unit:extender:p4-port-adapters",
@@ -710,12 +747,31 @@ def main() -> int:
             "locations": [],
             "evidence_ids": adapter_evidence_ids,
             "properties": {
-                "port.state": "phase-a-partial" if phase_a else "planned",
+                "port.state": "phase-b-synchronous-renderer" if phase_b else ("phase-a-partial" if phase_a else "planned"),
                 "port.task": "PORT-003",
             },
         }
     )
-    if phase_a and phase_a_evidence_id:
+    active_evidence_id = phase_b_evidence_id or phase_a_evidence_id
+    if phase_b and phase_b_evidence_id:
+        project_units = [
+            ("build-unit:extender:p4-display-renderer-canary", "PORT-003 Phase B renderer diagnostic entry", "video/extender/canary/display_renderer_canary.cpp", "diagnostic-renderer"),
+            ("build-unit:extender:p4-display-controller", "P4 synchronous display controller", "video/extender/display/p4_display_controller.cpp", "phase-b-qualified-host"),
+            ("build-unit:extender:p4-native-pixel-codec", "P4 native pixel codecs", "video/extender/display/native_pixel_codec.cpp", "phase-b-qualified-host"),
+            ("build-unit:extender:p4-plane-storage", "P4 transactional display-plane storage", "video/extender/display/plane_storage.cpp", "phase-b-qualified-host"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "P4 vdp-gl utility compatibility closure", "video/extender/port/fabutils_port.cpp", "phase-b-narrow-port"),
+        ]
+        phase_edges = [
+            ("build-unit:extender:p4-display-renderer-canary", "depends-on", "build-unit:extender:p4-display-controller"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-native-pixel-codec"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-plane-storage"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-vdp-gl-port-utility-closure"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/canvas.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/displaycontroller.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "type:vdp-gl:fabgl::GenericBitmappedDisplayController"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "depends-on", "file:vdp-gl:src/fabutils.cpp"),
+        ]
+    elif phase_a and phase_a_evidence_id:
         project_units = [
             (
                 "build-unit:extender:p4-display-contract-canary",
@@ -736,6 +792,18 @@ def main() -> int:
                 "phase-a-narrow-port",
             ),
         ]
+        phase_edges = [
+            ("build-unit:extender:p4-display-contract-canary", "depends-on", "build-unit:extender:p4-display-controller-contract"),
+            ("build-unit:extender:p4-display-contract-canary", "depends-on", "build-unit:extender:p4-vdp-gl-port-utility-closure"),
+            ("build-unit:extender:p4-display-contract-canary", "depends-on", "file:vdp-gl:src/canvas.cpp"),
+            ("build-unit:extender:p4-display-contract-canary", "depends-on", "file:vdp-gl:src/displaycontroller.cpp"),
+            ("build-unit:extender:p4-display-controller-contract", "depends-on", "type:vdp-gl:fabgl::GenericBitmappedDisplayController"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "depends-on", "file:vdp-gl:src/fabutils.cpp"),
+        ]
+    else:
+        project_units = []
+        phase_edges = []
+    if active_evidence_id:
         for unit_id, label, path, state in project_units:
             nodes.append(
                 {
@@ -744,7 +812,7 @@ def main() -> int:
                     "owner": "extender",
                     "label": label,
                     "locations": [],
-                    "evidence_ids": [phase_a_evidence_id],
+                    "evidence_ids": [active_evidence_id],
                     "properties": {
                         "project.path": path,
                         "port.state": state,
@@ -752,38 +820,6 @@ def main() -> int:
                     },
                 }
             )
-        phase_edges = [
-            (
-                "build-unit:extender:p4-display-contract-canary",
-                "depends-on",
-                "build-unit:extender:p4-display-controller-contract",
-            ),
-            (
-                "build-unit:extender:p4-display-contract-canary",
-                "depends-on",
-                "build-unit:extender:p4-vdp-gl-port-utility-closure",
-            ),
-            (
-                "build-unit:extender:p4-display-contract-canary",
-                "depends-on",
-                "file:vdp-gl:src/canvas.cpp",
-            ),
-            (
-                "build-unit:extender:p4-display-contract-canary",
-                "depends-on",
-                "file:vdp-gl:src/displaycontroller.cpp",
-            ),
-            (
-                "build-unit:extender:p4-display-controller-contract",
-                "depends-on",
-                "type:vdp-gl:fabgl::GenericBitmappedDisplayController",
-            ),
-            (
-                "build-unit:extender:p4-vdp-gl-port-utility-closure",
-                "depends-on",
-                "file:vdp-gl:src/fabutils.cpp",
-            ),
-        ]
         for source_id, relation, target_id in phase_edges:
             edges.append(
                 {
@@ -792,7 +828,7 @@ def main() -> int:
                     "to": target_id,
                     "relation": relation,
                     "confidence": "confirmed",
-                    "evidence_ids": [phase_a_evidence_id],
+                    "evidence_ids": [active_evidence_id],
                 }
             )
 
@@ -815,7 +851,10 @@ def main() -> int:
             "target_board": "Olimex ESP32-P4-DevKit",
             "platform": "pioarduino 55.03.311",
             "framework": "Arduino and ESP-IDF hybrid",
-            "configuration": "declared source-selection target; firmware build not yet implemented",
+            "configuration": (
+                "PORT-003 Phase B synchronous renderer compile/link proved; broader firmware integration remains incomplete"
+                if phase_b else "declared source-selection target; firmware build not yet implemented"
+            ),
             "source_ids": sorted(source["id"] for source in sources),
             "evidence_ids": [disposition_evidence],
             "drift_against_profile_id": OBSERVED_PROFILE,

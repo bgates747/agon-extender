@@ -1,12 +1,14 @@
 {
   "schema_version": "1.0.0",
-  "environment": "p4-display-contract-canary",
-  "diagnostic_status": "compile/link contract canary only",
+  "environment": "p4-display-renderer",
+  "diagnostic_status": "Phase B synchronous renderer compile/link diagnostic only",
   "generated_build_files": [
     "video/CMakeLists.txt"
   ],
   "project_translation_units": [
-    "video/extender/canary/display_contract_canary.cpp",
+    "video/extender/canary/display_renderer_canary.cpp",
+    "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/plane_storage.cpp",
     "video/extender/display/p4_display_controller.cpp",
     "video/extender/port/fabutils_port.cpp"
   ],

@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Review Gate 1 approved; Phase A complete
+- Status: In progress — Review Gate 1 approved; Phases A–B complete
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -442,3 +442,236 @@ or making an unresolved SETUP-005 operating-mode choice. Also stop if imported
 bytes do not match the accepted baselines or if the minimum retained closure
 cannot be separated from an excluded subsystem without a new architectural
 decision.
+
+## Phase B — Native storage and synchronous renderer
+
+- Status: Complete — Gate B passed
+- Started: 2026-08-22 12:43 EDT
+- Finished: 2026-08-22 13:47 EDT
+
+The Author authorized continuation without an intermediate review after Phase
+A passed and was pushed. This checklist is therefore the controlling review
+surrogate: consult it before every action, update results against the same item,
+and stop rather than silently expanding the gate.
+
+Phase B implements authoritative logical pixel storage and the retained common
+renderer in a deliberately synchronous, sink-free configuration. It does not
+add logical frame time, background execution, palette/Copper composition,
+official mode-facade integration, or output delivery.
+
+### Detailed execution checklist
+
+1. [x] Freeze the Phase B package structure, exact source/test/evidence
+   boundaries, accepted inputs, oracle hierarchy, and stop rules under
+   `PORT-003/phase-b/`. Define a machine-readable implementation manifest so
+   project source, adapted upstream algorithms, host fixtures, and target build
+   units cannot drift apart.
+2. [x] Generate a bounded provenance inventory for native formats, storage,
+   allocation, pixel access, raw bitmap operations, copies, scrolls, drawing
+   primitives, and readback. Fingerprint the exact vdp-gl `all-the-plots`
+   declarations and old concrete-controller spans; classify each algorithm as
+   reusable unchanged, adapted with provenance, replaced by project logic, or
+    deferred outside Phase B. Do not manually transcribe an untraceable list.
+3. [x] Define project-owned contracts before implementing behavior:
+   - one logical mode descriptor for explicit dimensions, native format, and
+     single/double buffering, without importing the official mode table;
+   - depth-specific native pixel codecs preserving `PALETTE2`, `PALETTE4`,
+     `PALETTE8`, `PALETTE16`, and logical `SBGR2222` contracts;
+   - transactional plane ownership with injected allocation/failure and
+     deterministic zero initialization;
+   - drawing versus visible plane selection and native-save/readback rules;
+   - a synchronous controller lifecycle with background execution disabled;
+     and
+   - explicit result/error contracts that leave the old valid mode installed
+     after any failed reconfiguration.
+4. [x] Build independent deterministic test machinery before trusting the
+   implementation:
+   - pure host reference codecs and pixel matrices that do not call production
+     codec methods;
+   - canonical fixtures carrying source tag/profile, dimensions, depth,
+     buffering, seeded command sequence, expected native bytes/readback/pixels,
+     oracle class, generator identity, and content hash;
+   - a host C++ harness for project codec/storage code and, if feasible without
+     broad subsystem stubs, the actual retained Canvas/common renderer;
+   - injected allocator failures at every allocation boundary; and
+   - deterministic regeneration/validation that rejects implementation-derived
+     goldens and stale provenance.
+5. [x] Implement and qualify the five native codecs and transactional plane
+   storage independently of Canvas. Exhaustively cover every legal pixel value,
+   packed-byte boundary, odd width, row stride, clipping edge, clear pattern,
+   single/double-plane identity, reconfiguration, release, and allocation
+   failure. Preserve RGB222 logical bits; synthesize legacy native-save sync
+   bits only where the proven upstream contract requires them.
+6. [x] Replace the contract canary with a Phase B synchronous controller while
+   preserving the accepted factory/base-pointer shape. Implement direct pixel,
+   line, row, clear, scroll, copy, glyph, ellipse/arc/sector, flood-fill,
+   bitmap, transformed-bitmap, native-save, and logical readback entry points
+   through the retained common renderer and project codecs. Port only the
+   smallest old-controller algorithms demonstrated useful by item 2, keep exact
+   provenance inline, and make every still-deferred path fail visibly.
+7. [x] Run the complete native/primitives fixture matrix for all five depths,
+   relevant paint modes, clipping/origins, overlapping copies, edge
+   coordinates, bitmap formats/transforms, and single/double storage. Separate
+   independent host-model expectations, official captures, and reviewed
+   source-derived expectations in the evidence. A compile or self-comparison is
+   not a passing fixture.
+8. [x] Define a dedicated Phase B P4 diagnostic environment from the same
+   machine source manifest. Compile and link only the synchronous renderer,
+   retained common closure, and narrow project adaptations. Prove classic VGA,
+   CVBS, Scene, physical PS/2, audio, network, storage, official facade, frame
+   service, and output-consumer units remain absent. Do not deploy this build.
+9. [x] Update the canonical dependency graph, source-selection projection,
+   compatibility delta, task execution record, and development log with the
+   observed storage/renderer boundary and exact adapted-source provenance.
+   Distinguish host qualification, target compile evidence, and behavior still
+   awaiting physical P4 qualification.
+10. [x] Run a clean Phase B host and P4 build; complete fixture and allocation-
+    failure matrices; import/index verification; graph and task evidence
+    regeneration twice byte-identically; schema/source-span validation; all
+    permanent tests; local-link, absolute-path, SVG-background, whitespace, and
+    `git diff --check` audits. Commit and push only if every Gate B criterion
+    passes and no stop condition requires a new Author decision.
+
+### Phase B execution record
+
+1. Package and authority freeze — complete:
+   - `phase-b/README.md` defines the bounded task-local layout and Gate B
+     boundary;
+   - `phase-b/implementation-manifest.yaml` fixes production, host-test,
+     fixture, evidence, target-build, and excluded-unit roles before behavior
+     implementation; and
+   - independent expectations outrank implementation output, which is
+     explicitly forbidden from generating its own goldens.
+2. Algorithm provenance — complete:
+   - the deterministic extractor consumed the pinned SETUP-003 Universal Ctags
+     index and immutable vendored `vdp-gl` tree;
+   - 863 definitions/declarations in 17 files carry exact file and inclusive
+     source-span SHA-256 fingerprints, with anonymous lambdas covered by their
+     owning callable rather than promoted to false API boundaries;
+   - the inventory distinguishes 199 retained common records, 407 adapted
+     depth/native records, 67 platform replacements, 35 Phase C deferrals, 90
+     Phase D deferrals, and 65 classic-physical exclusions; and
+   - thirteen permanent provenance tests verify lexical span handling, tuple uniqueness,
+     all fingerprints, all five native algorithm families, critical boundary
+     classifications, and byte-identical regeneration.
+
+3–5. Contracts, independent oracles, codecs, and storage — complete:
+   - `phase-b/contracts.md` freezes the five native formats, row/plane sizing,
+     typed failures, transactional replacement, single/double identity,
+     native-save rules, and synchronous lifecycle before implementation;
+   - 139 generated codec cases cover every legal value, nine boundary widths,
+     odd rows, all clear values, and all SBGR sync combinations;
+   - pure codec/storage tests run under ASan/UBSan and explicit allocation
+     accounting, including first- and second-plane failures, old-state
+     preservation, successful replacement, move ownership, idempotent release,
+     and validation/overflow failures; and
+   - the independent oracle's first `PALETTE8` draft exposed that three-bit
+     pixels cross arbitrary byte boundaries. It was corrected to a bit-by-bit
+     MSB-first model before production output was accepted.
+
+6–7. Synchronous retained renderer — complete:
+   - the Phase A abort-only canary is replaced by `P4DisplayController`, backed
+     by `NativePixelCodec` and `PlaneStorage`, with no frame service or sink;
+   - a bounded host compatibility layer permits the actual unchanged Canvas
+     and common controller units to execute without emulating an unrelated
+     ESP32 subsystem;
+   - 115 primitive fixtures—23 scenarios at each depth—cover paint modes,
+     clipping/origin, lines/rows/rectangles, copies, scrolling, clear, glyph,
+     flood fill, ellipse/arc/segment/sector, mask/native/RGBA bitmaps, identity
+     transforms, readback, native-save output, and double-plane identity; and
+   - all 254 codec/renderer fixtures pass with zero mismatch under ASan/UBSan.
+     LeakSanitizer cannot inspect processes under the managed tracing boundary,
+     so it is disabled while the storage harness independently rejects leaks,
+     unknown frees, and double frees.
+
+   The retained narrow-glyph fast path reads a four-byte window from each
+   byte-stride row. The fixture supplies three safe trailing bytes and records
+   this inherited data contract rather than patching vendored code. The host
+   Xtensa wrappers are inert only around normally executed host floating-point
+   transforms; target wrappers remain the reviewed RISC-V compatibility seam.
+
+8. P4 diagnostic closure — complete:
+   - `p4-display-renderer` compiles five project units plus unchanged vendored
+     `canvas.cpp` and `displaycontroller.cpp`;
+   - initial links exposed only four pure geometry/bit helpers from broad
+     `fabutils.cpp`; those exact source-pinned routines were added to the
+     existing narrow port and the next build linked successfully; and
+   - the resulting ESP32-P4 image reports 586,082 bytes of flash use. Machine
+     evidence proves all seven selected objects and six required ELF symbols,
+     with zero classic VGA/CVBS/Scene/PS2/audio/network/storage units or symbol
+     families. This remains compile/link evidence; nothing was deployed.
+
+9. Durable integration records — complete:
+   - the canonical dependency graph now represents the five current
+     project-owned Phase B units and observed seven-unit closure rather than
+     stale Phase A canary nodes;
+   - source-selection projections and the VDU 22 proof slice regenerated twice
+     byte-identically across all 5,164 vendored files; and
+   - `phase-b/compatibility-delta.md` separates retained behavior, project
+     adaptations, host-only harness seams, and later-phase work.
+
+10. Gate B audit — complete:
+    - a clean P4 diagnostic rebuild produced an ELF whose validator proved all
+      seven selected units, six required symbols, and zero excluded source or
+      symbol families; nothing was deployed;
+    - the immutable import verifier matched all 5,164 baseline files and wrote
+      zero files;
+    - 139 codec and 115 renderer fixtures passed again, including every
+      allocation-failure boundary, and all seven Phase B generated artifacts
+      were byte-identical across independent output passes;
+    - the final clean-build evidence was incorporated into two byte-identical
+      canonical graph regenerations, after which full file/source-span
+      validation passed; and
+    - 17 Phase B, three Phase A, and 12 dependency-tool tests passed together
+      with version-record, changed-link, absolute-path, Python syntax,
+      SVG-background, whitespace, and `git diff --check` audits.
+
+Gate B passed under the Author's explicit authorization to check in and push
+this work without personal review. The next phase still requires its own
+detailed written plan before implementation begins.
+
+### Phase B explicit exclusions
+
+- No periodic timer, frame-service task, background primitive queue execution,
+  frame counter, completion sequence, logical swap-at-frame-edge, or consumer
+  notification. Those begin in Phase C.
+- No palette mutation/quantization service, Copper signal-list compositor,
+  hardware sprite/cursor presentation overlay, or sink output format. Those
+  begin in Phase D or later.
+- No edits to official `agon_screen.h`, official mode table/fallback, VDU
+  dispatch, contexts, Teletext, callbacks, MOS, or EDU/VDU operating modes.
+  Official integration remains Phase E.
+- No network/browser, RGB, MIPI-DSI, HDMI, audio, input, storage, updater, or
+  transport implementation; no classic physical driver or compatibility stub.
+- No vendored source edit, physical deployment, runtime P4 qualification, or
+  new firmware/version/build identity.
+
+### Gate B acceptance criteria
+
+1. Every codec round-trips all legal values and matches independent native-byte
+   goldens across packed boundaries and odd dimensions.
+2. Transactional single/double-plane allocation, initialization,
+   reconfiguration, release, and every injected failure leave a valid,
+   leak-free controller state in host evidence.
+3. Retained common primitives and all Phase B raw/readback operations match
+   independent deterministic goldens at every native depth; any intentionally
+   deferred method remains visibly unavailable and is outside the claimed
+   matrix.
+4. The synchronous controller never depends on a frame clock, sink, classic
+   VGA physical engine, or another excluded subsystem.
+5. A clean pinned P4 diagnostic build proves the selected application/link
+   closure without vendored edits, deployment, or runtime claims.
+6. Provenance, dependency selection, compatibility delta, generators, and tests
+   are deterministic, complete, and free of unexplained declared-versus-
+   observed drift.
+
+### Phase B stop conditions
+
+Stop for review if faithful native storage or renderer behavior requires
+changing an accepted pixel contract, retaining a classic physical controller,
+editing vendored source, implementing a frame service/sink/official facade,
+making a SETUP-005 mode decision, or inventing compatibility behavior without
+an independent oracle. Also stop if the actual common renderer cannot be host-
+tested without broad unrelated subsystem emulation, if target allocation
+constraints invalidate the accepted storage architecture, or if a material
+primitive/readback difference cannot be isolated and measured.

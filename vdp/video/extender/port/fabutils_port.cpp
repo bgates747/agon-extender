@@ -1,12 +1,13 @@
-// PORT-003 Phase A narrow vdp-gl utility closure for ESP32-P4.
+// PORT-003 narrow vdp-gl utility closure for ESP32-P4.
 //
-// The retained common displaycontroller.cpp needs only line clipping, timeout
-// conversion, and LightMemoryPool from vdp-gl's broad fabutils.cpp. Compiling
-// that entire upstream file would also select classic-ESP32 GPIO/ADC/RTC and
-// storage code already classified for replacement or omission. These routines
-// preserve the all-the-plots implementations at their existing ABI. Provenance:
-// vdp-gl tag all-the-plots, ac2dd5986daf496c43ae8e7fe41836274aec54a0,
-// src/fabutils.cpp lines 141-146, 273-325, 365-378, and 1416-1485.
+// The retained common renderer needs only a bounded subset of vdp-gl's broad
+// fabutils.cpp. Compiling that entire upstream file would also select
+// classic-ESP32 GPIO/ADC/RTC and storage code already classified for
+// replacement or omission. These routines preserve the all-the-plots
+// implementations at their existing ABI. Provenance: vdp-gl tag
+// all-the-plots, ac2dd5986daf496c43ae8e7fe41836274aec54a0,
+// src/fabutils.cpp lines 85-104, 141-146, 273-325, 365-381, 384-394,
+// 398-440, and 1416-1485.
 #include "fabutils.h"
 
 #include <cstdlib>
@@ -21,6 +22,24 @@ namespace fabgl {
 
 uint32_t msToTicks(int milliseconds) {
   return milliseconds < 0 ? portMAX_DELAY : pdMS_TO_TICKS(milliseconds);
+}
+
+int isqrt(int x) {
+  if (x < 1) return 0;
+  int squaredbit = 0x40000000;
+  int remainder = x;
+  int root = 0;
+  while (squaredbit > 0) {
+    if (remainder >= (squaredbit | root)) {
+      remainder -= (squaredbit | root);
+      root >>= 1;
+      root |= squaredbit;
+    } else {
+      root >>= 1;
+    }
+    squaredbit >>= 2;
+  }
+  return root;
 }
 
 namespace {
@@ -99,6 +118,58 @@ Rect IRAM_ATTR Rect::merge(Rect const &rect) const {
 Rect IRAM_ATTR Rect::intersection(Rect const &rect) const {
   return Rect(tmax(X1, rect.X1), tmax(Y1, rect.Y1), tmin(X2, rect.X2),
               tmin(Y2, rect.Y2));
+}
+
+bool getBit(uint8_t *array, size_t bitIndex) {
+  size_t byteIndex = bitIndex / 8;
+  int bitPosition = 7 - (bitIndex % 8);
+  return (array[byteIndex] >> bitPosition) & 1;
+}
+
+uint8_t getCircleQuadrant(int x, int y) {
+  if (x < 0) {
+    if (y > 0) return 2;
+    return 1;
+  }
+  if (y <= 0) return 0;
+  return 3;
+}
+
+bool quadrantContainsArcPixel(QuadrantInfo &quadrant, LineInfo &start,
+                              LineInfo &end, int16_t x, int16_t y) {
+  bool drawing = false;
+  if (quadrant.showAll) {
+    return true;
+  } else if (!quadrant.noArc) {
+    if (quadrant.containsStart) {
+      auto slopeTest = start.absDeltaY * std::abs(x);
+      if (quadrant.isEven) {
+        drawing = slopeTest <= (start.absDeltaX * std::abs(y));
+      } else {
+        drawing = slopeTest >= (start.absDeltaX * std::abs(y));
+      }
+      if (quadrant.containsEnd) {
+        slopeTest = end.absDeltaY * std::abs(x);
+        bool drawingEnd = false;
+        if (quadrant.isEven) {
+          drawingEnd = slopeTest >= (end.absDeltaX * std::abs(y));
+        } else {
+          drawingEnd = slopeTest <= (end.absDeltaX * std::abs(y));
+        }
+        if (quadrant.startCloserToHorizontal ^ quadrant.isEven) {
+          return drawing || drawingEnd;
+        }
+        return drawing && drawingEnd;
+      }
+    } else if (quadrant.containsEnd) {
+      auto slopeTest = end.absDeltaY * std::abs(x);
+      if (quadrant.isEven) {
+        return slopeTest >= (end.absDeltaX * std::abs(y));
+      }
+      return slopeTest <= (end.absDeltaX * std::abs(y));
+    }
+  }
+  return drawing;
 }
 
 void LightMemoryPool::mark(int position, int16_t size, bool allocated) {

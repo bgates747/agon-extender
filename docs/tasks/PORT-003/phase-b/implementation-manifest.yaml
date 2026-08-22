@@ -1,0 +1,83 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_implementation_manifest
+authority: docs/tasks/PORT-003.md#phase-b--native-storage-and-synchronous-renderer
+phase_contract: synchronous logical storage and renderer; no frame service, presentation compositor, official facade, or sink
+source_baselines:
+  agon_vdp: v2.16.0
+  vdp_gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+oracle_precedence:
+  - independently generated mathematical/native-byte expectations
+  - reviewed source-derived expectations with exact algorithm provenance
+  - diagnostic target compile and link evidence
+  - production implementation output, which may be observed but never used to generate its own expected result
+production:
+  headers:
+    - path: vdp/video/extender/display/native_pixel_codec.hpp
+      role: pure five-format native pixel and row encoding contract
+    - path: vdp/video/extender/display/plane_storage.hpp
+      role: allocator-injected transactional logical plane ownership
+    - path: vdp/video/extender/display/p4_display_controller.hpp
+      role: synchronous GenericBitmappedDisplayController implementation contract
+  translation_units:
+    - path: vdp/video/extender/display/native_pixel_codec.cpp
+      role: depth-specific native pixel and row operations
+    - path: vdp/video/extender/display/plane_storage.cpp
+      role: transactional storage lifecycle
+    - path: vdp/video/extender/display/p4_display_controller.cpp
+      role: retained common renderer adapter and synchronous entry points
+    - path: vdp/video/extender/port/fabutils_port.cpp
+      role: existing bounded P4 utility closure
+  diagnostic_entry_point:
+    path: vdp/video/extender/canary/display_renderer_canary.cpp
+    role: compile/link contract only; no runtime or display claim
+  vendored_translation_units:
+    - path: vdp/vendor/vdp-gl/src/canvas.cpp
+      disposition: compile unchanged
+    - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+      disposition: compile unchanged
+host_qualification:
+  independent_oracle:
+    path: docs/tasks/PORT-003/phase-b/scripts/generate-fixtures.py
+    prohibition: must not import, invoke, parse output from, or duplicate-call production codec/controller code
+  runners:
+    - docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
+    - docs/tasks/PORT-003/phase-b/scripts/validate-phase-b.py
+  harness_translation_units:
+    - docs/tasks/PORT-003/phase-b/tests/native_pixel_codec_tests.cpp
+    - docs/tasks/PORT-003/phase-b/tests/plane_storage_tests.cpp
+    - docs/tasks/PORT-003/phase-b/tests/renderer_fixture_tests.cpp
+  compatibility_headers:
+    root: docs/tasks/PORT-003/phase-b/tests/compat
+    role: host-only bounded FreeRTOS/ESP parser and synchronous execution surface
+    prohibition: never selected by a P4 firmware environment
+  python_tests:
+    - docs/tasks/PORT-003/phase-b/tests/test_algorithm_provenance.py
+    - docs/tasks/PORT-003/phase-b/tests/test_fixture_generator.py
+  fixtures:
+    - docs/tasks/PORT-003/phase-b/fixtures/native-codecs.yaml
+    - docs/tasks/PORT-003/phase-b/fixtures/primitives.yaml
+evidence:
+  generated:
+    - docs/tasks/PORT-003/phase-b/evidence/algorithm-provenance.yaml
+    - docs/tasks/PORT-003/phase-b/evidence/host-fixture-results.yaml
+    - docs/tasks/PORT-003/phase-b/evidence/allocation-failure-results.yaml
+    - docs/tasks/PORT-003/phase-b/evidence/build-closure.yaml
+    - docs/tasks/PORT-003/phase-b/evidence/link-exclusions.yaml
+  reviewed:
+    - docs/tasks/PORT-003/phase-b/compatibility-delta.md
+target_build:
+  environment: p4-display-renderer
+  source_selection: vdp/pio/source-selection.json
+  deploy: forbidden
+excluded_translation_unit_families:
+  - classic VGA and CVBS physical controllers
+  - Scene
+  - physical PS/2 input
+  - audio
+  - network
+  - storage and file browser
+  - official video/video.ino facade
+  - frame service and output consumers
+  - project palette, Copper, cursor, or sprite presentation compositor
