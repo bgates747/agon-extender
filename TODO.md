@@ -7,21 +7,6 @@ item is removed.
 
 ## Setup
 
-- [x] **SETUP-001 — Create the initial PlatformIO project**
-  - Started: 2026-08-20 15:39 EDT
-  - Finished: 2026-08-20 19:27 EDT
-  - Details: [SETUP-001](docs/tasks/SETUP-001.md)
-
-- [x] **SETUP-002 — Define human-readable project versioning**
-  - Started: 2026-08-20 17:34 EDT
-  - Finished: 2026-08-20 18:03 EDT
-  - Details: [SETUP-002](docs/tasks/SETUP-002.md)
-
-- [x] **SETUP-003 — Generate the official VDP structural inventory**
-  - Started: 2026-08-20 19:18 EDT
-  - Finished: 2026-08-21 00:49 EDT
-  - Details: [SETUP-003](docs/tasks/SETUP-003.md)
-
 - [ ] **SETUP-004 — Determine upstream I/O driver disposition**
   - Started: 2026-08-20 20:52 EDT
   - Finished: --
@@ -31,10 +16,3 @@ item is removed.
   - Started: 2026-08-21 00:49 EDT
   - Finished: --
   - Details: [SETUP-005](docs/tasks/SETUP-005.md)
-
-## Porting
-
-- [x] **PORT-001 — Build the VDU-to-EDU dependency graph system**
-  - Started: 2026-08-21 01:03 EDT
-  - Finished: 2026-08-21 02:07 EDT
-  - Details: [PORT-001](docs/tasks/PORT-001.md)
