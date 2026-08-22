@@ -79,6 +79,28 @@ waits and counters, callbacks, and mode failure/fallback behavior as closely as
 practical. The old GPIO-matrix, I2S1, DMA-chain, and VSync-ISR engine remains
 vendored reference material, not the P4 physical backend.
 
+The replacement is one project-owned `GenericBitmappedDisplayController`
+configured with the stock native pixel codecs. The initial compatibility
+backend retains packed 2-, 4-, 8-, and 16-color storage and the logical RGB222
+contract for 64-color modes; physical VGA sync bits do not belong to P4 logical
+storage. The official facade receives only narrow concrete-type,
+palette/Copper, frame-counter, and cursor-position binding adaptations.
+
+A periodic P4 logical frame clock and frame-service task advance official VDP
+time independently of every output sink. That service owns queued primitive
+execution, logical swaps, presentation publication, and explicit completion.
+Physical sink callbacks may recycle sink buffers but do not advance the VDP
+frame counter or unblock logical swaps.
+
+One central presentation compositor decodes native pixels, applies Copper
+palettes by scanline, and adds hardware sprites and cursors without changing
+logical framebuffer state or readback. Network/browser and later local-display
+sinks receive non-blocking latest-generation notifications through a common
+consumer contract. Slow sinks may drop reported presentation generations; they
+must not block rendering, grow an unbounded queue, or redefine logical frame
+timing. See
+[ADR-0015](decisions/ADR-0015-p4-display-backend-and-frame-service.md).
+
 The separate FabGL `VGATextController` is retained in the complete vendored
 vdp-gl source but excluded from Extender builds. Official VDP text remains on
 the retained Canvas/bitmapped-controller path, so the unused hardware

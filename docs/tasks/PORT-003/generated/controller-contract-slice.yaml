@@ -1,0 +1,1536 @@
+schema_version: 2.0.0
+artifact_kind: dependency_slice
+id: slice:graph:agon-extender:vdp-source-selection-v2:type:vdp-gl:fabgl::BitmappedDisplayController
+generator:
+  name: slice-dependency-graph
+  version: 0.2.0
+  path: docs/dependencies/scripts/slice-dependency-graph.py
+  argv:
+  - .venv/bin/python
+  - docs/dependencies/scripts/slice-dependency-graph.py
+  - --graph
+  - docs/dependencies/generated/code-graph.yaml
+  - --seed
+  - type:vdp-gl:fabgl::BitmappedDisplayController
+  - --direction
+  - incoming
+  - --relation
+  - allocates
+  - --relation
+  - calls
+  - --relation
+  - configures
+  - --relation
+  - defines
+  - --relation
+  - depends-on
+  - --relation
+  - dispatches-to
+  - --relation
+  - includes
+  - --relation
+  - invokes-callback
+  - --relation
+  - reads
+  - --relation
+  - requires-hardware
+  - --relation
+  - requires-platform-api
+  - --relation
+  - writes
+  - --maximum-depth
+  - '2'
+  - --title
+  - PORT-003 bitmapped-controller consumers
+  - --output
+  - docs/tasks/PORT-003/generated/controller-contract-slice.yaml
+sources:
+- id: source:CRC:1.0.4
+  owner: CRC
+  repository: https://registry.platformio.org/libraries/robtillaart/CRC
+  identity_kind: release
+  identity: 1.0.4
+  commit: null
+  tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
+  root_placeholder: ${CRC_SOURCE}
+  manifest_file_count: 51
+  presence_class: upstream-reference
+- id: source:ESP32Time:2.0.6
+  owner: ESP32Time
+  repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
+  identity_kind: release
+  identity: 2.0.6
+  commit: null
+  tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
+  root_placeholder: ${ESP32TIME_SOURCE}
+  manifest_file_count: 12
+  presence_class: upstream-reference
+- id: source:agon-vdp:v2.16.0
+  owner: agon-vdp
+  repository: https://github.com/AgonPlatform/agon-vdp
+  identity_kind: tag
+  identity: v2.16.0
+  commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
+  root_placeholder: ${AGON_VDP_SOURCE}
+  manifest_file_count: 53
+  presence_class: upstream-reference
+- id: source:vdp-gl:all-the-plots
+  owner: vdp-gl
+  repository: https://github.com/AgonPlatform/vdp-gl
+  identity_kind: tag
+  identity: all-the-plots
+  commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
+  root_placeholder: ${VDP_GL_SOURCE}
+  manifest_file_count: 5048
+  presence_class: upstream-reference
+inputs:
+- id: input:port-001:code-graph
+  path: docs/dependencies/generated/code-graph.yaml
+  role: canonical merged dependency graph
+  schema_version: 2.0.0
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+- id: input:port-002:base-code-graph
+  path: docs/dependencies/generated/base-code-graph.yaml
+  role: PORT-001 mechanical and reviewed relationship graph
+  schema_version: 1.0.0
+  sha256: 84d7f3d3afadfdce33463b77f7d0b69b9f0abfc42f30298b0d99ed0f4bb04c9c
+- id: input:port-002:setup-004-evidence
+  path: docs/tasks/SETUP-004/evidence
+  role: accepted source disposition records
+  schema_version: 1
+  sha256: 16d453fae76dd6e20efae763671e73ea38eb6b23d6d43e8fd4b0c59ea280ba39
+- id: input:setup-003:claims
+  path: docs/dependencies/reviewed/claims.yaml
+  role: manually reviewed PORT-001 semantic claims
+  schema_version: 1
+  sha256: 1e29362865c0352c68c9bfbf38726baeee2b7d495f41a33dd0ba6730711495c3
+- id: input:setup-003:compile-commands
+  path: docs/tasks/SETUP-003/generated/compile-commands.json
+  role: selected build translation units
+  schema_version: 1
+  sha256: 9bf6acfc2e6de5b6459e4f34d7aab0a7155edf8cc1b87a596796673f453db6a4
+- id: input:setup-003:dependency-views
+  path: docs/tasks/SETUP-003/generated/dependency-views.yaml
+  role: resolved includes and reviewed graph evidence
+  schema_version: 1
+  sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
+- id: input:setup-003:portability
+  path: docs/tasks/SETUP-003/generated/portability.yaml
+  role: global state and reviewed subsystem evidence
+  schema_version: 1
+  sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
+- id: input:setup-003:source-baselines
+  path: docs/dependencies/reviewed/source-baselines.yaml
+  role: reviewed immutable source baseline
+  schema_version: 1
+  sha256: bdc23325b9c6fdf64875a3d2c82170e065c234f20dde1f284153edf0f822c4c4
+- id: input:setup-003:symbols
+  path: docs/tasks/SETUP-003/generated/symbols.yaml
+  role: Ctags symbol index
+  schema_version: 1
+  sha256: d9c2dc04353d0fb9e103c53489a59e9acd088ec6be077ee9782e635780c2adff
+tools:
+- id: tool:ctags
+  name: Universal Ctags
+  version: Universal Ctags 5.9.0, Copyright (C) 2015 Universal Ctags Team
+- id: tool:python
+  name: Python
+  version: 3.14.6
+- id: tool:pyyaml
+  name: PyYAML
+  version: 6.0.3
+source_graph:
+  id: graph:agon-extender:vdp-source-selection-v2
+  path: docs/dependencies/generated/code-graph.yaml
+  schema_version: 2.0.0
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+title: PORT-003 bitmapped-controller consumers
+seed_nodes:
+- type:vdp-gl:fabgl::BitmappedDisplayController
+policy:
+  directions:
+  - incoming
+  relations:
+  - allocates
+  - calls
+  - configures
+  - defines
+  - depends-on
+  - dispatches-to
+  - includes
+  - invokes-callback
+  - reads
+  - requires-hardware
+  - requires-platform-api
+  - writes
+  node_kinds:
+  - artifact
+  - build-unit
+  - callback
+  - command
+  - dispatch
+  - file
+  - function
+  - interrupt
+  - macro
+  - method
+  - physical-facility
+  - platform-api
+  - protocol-packet
+  - resource
+  - source-region
+  - state
+  - subsystem
+  - task
+  - test
+  - timer
+  - type
+  - variable
+  maximum_depth: 2
+  stop_rules:
+  - id: stop:depth:2
+    kind: depth
+    values:
+    - 2
+    reason: Maximum traversal depth is 2.
+  - id: stop:node-kind-filter
+    kind: node-kind
+    values:
+    - artifact
+    - build-unit
+    - callback
+    - command
+    - dispatch
+    - file
+    - function
+    - interrupt
+    - macro
+    - method
+    - physical-facility
+    - platform-api
+    - protocol-packet
+    - resource
+    - source-region
+    - state
+    - subsystem
+    - task
+    - test
+    - timer
+    - type
+    - variable
+    reason: Target node kind was excluded by the slice node-kind filter.
+  - id: stop:relation-filter
+    kind: relation
+    values:
+    - allocates
+    - calls
+    - configures
+    - defines
+    - depends-on
+    - dispatches-to
+    - includes
+    - invokes-callback
+    - reads
+    - requires-hardware
+    - requires-platform-api
+    - writes
+    reason: Relationship was excluded by the slice relation filter.
+evidence:
+- id: evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  kind: reviewed-analysis
+  method: reviewed
+  description: Exhaustive immutable file manifest for vdp-gl all-the-plots.
+  artifact_id: input:setup-003:source-baselines
+  record_pointer: /sources/vdp-gl
+  review:
+    status: accepted
+    reviewed_on: '2026-08-22'
+    basis: Accepted PORT-002 Review Gate 1 model and accepted SETUP-004 dispositions.
+- id: evidence:source:vdp-gl:canvas.h:1:11d406b49e04
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.h
+    start_line: 1
+    end_line: 956
+    file_sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+    span_sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+- id: evidence:source:vdp-gl:canvas.h:41:9c53b452ffe8
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.h
+    start_line: 41
+    end_line: 41
+    file_sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:collisiondetector.h:1:0cf3108634cc
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/collisiondetector.h
+    start_line: 1
+    end_line: 250
+    file_sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+    span_sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+- id: evidence:source:vdp-gl:collisiondetector.h:42:624797c1ab44
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/collisiondetector.h
+    start_line: 42
+    end_line: 42
+    file_sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:displaycontroller.cpp:1:09097411d8d5
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 1
+    end_line: 1851
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+- id: evidence:source:vdp-gl:displaycontroller.cpp:28:ae17e52581c1
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 28
+    end_line: 28
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:displaycontroller.h:1:282491fa6499
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 1
+    end_line: 3050
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+- id: evidence:source:vdp-gl:displaycontroller.h:897:480c44ec2ad7
+  kind: source-span
+  method: mechanical
+  description: Ctags definition for fabgl::BitmappedDisplayController.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 897
+    end_line: 897
+    symbol: fabgl::BitmappedDisplayController
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: 9e53c46af05f7de0753e91e491c603d72ea14691c0c769cefccab3f613a7863f
+- id: evidence:source:vdp-gl:fabgl.h:1:512670a67db3
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 1
+    end_line: 378
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+- id: evidence:source:vdp-gl:fabgl.h:314:b632c3f089ae
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 314
+    end_line: 314
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:fabgl.h:315:bf1438f1577c
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgacontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 315
+    end_line: 315
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 475c928af805cdc4e5cffbc2a7163e970f7b1e9c36193aa926a6e7725304ea8f
+- id: evidence:source:vdp-gl:fabgl.h:317:27dd4e5ac83b
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vga2controller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 317
+    end_line: 317
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: f7a011d8d83491e7a35b2b61c7e9e40c2bf97ecdbe32069fdf8d49eff8148c9f
+- id: evidence:source:vdp-gl:fabgl.h:318:19a91fad87a5
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vga4controller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 318
+    end_line: 318
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: e0b254d17e430b614f28c37cfea23e4590fb41c9cfc8a3211cd1dc94ed73ed50
+- id: evidence:source:vdp-gl:fabgl.h:319:821236bffe36
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vga8controller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 319
+    end_line: 319
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: b3caec074fc5c3ea68da5054d4e691a01031ae2b48f5006dd676b42008a2c962
+- id: evidence:source:vdp-gl:fabgl.h:320:2bb555e268ad
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vga16controller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 320
+    end_line: 320
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 224734db1383377ac8f0735c67fa6615c260a8fe9473698fe54a24dcabdc5e32
+- id: evidence:source:vdp-gl:fabgl.h:321:c5371cd04900
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vga64controller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 321
+    end_line: 321
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 77b69555db6076ac2e9a11fa1640a1581ca4798492bc52d7df8ab7fd5ab9cd4c
+- id: evidence:source:vdp-gl:fabgl.h:325:15b55d4b2186
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/devdrivers/mouse.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 325
+    end_line: 325
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 94289fc6612ca4f215d76d6ae9f54f70b3509614e5ecf7c3df0835ae127f718b
+- id: evidence:source:vdp-gl:fabgl.h:328:86eedce15b41
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/collisiondetector.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 328
+    end_line: 328
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 84204c8086fd8b46fbbcfed68e0ded16df96cc11bfdcf5fa0e4f75466a6d12ce
+- id: evidence:source:vdp-gl:mouse.cpp:1:cc63031a18bd
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.cpp
+    start_line: 1
+    end_line: 348
+    file_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+    span_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+- id: evidence:source:vdp-gl:mouse.cpp:29:a59ff200ef15
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/devdrivers/mouse.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.cpp
+    start_line: 29
+    end_line: 29
+    file_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+    span_sha256: 7cef9e30e24122f1b20f04c649dfd8b9899bd6ed97bbfaa92060716f4b2183d5
+- id: evidence:source:vdp-gl:mouse.cpp:31:d874c7b172b8
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.cpp
+    start_line: 31
+    end_line: 31
+    file_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:mouse.h:1:e15e768ae963
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.h
+    start_line: 1
+    end_line: 408
+    file_sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+    span_sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+- id: evidence:source:vdp-gl:mouse.h:44:2f84111c35e6
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.h
+    start_line: 44
+    end_line: 44
+    file_sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga16controller.h:1:d094880d7b81
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.h
+    start_line: 1
+    end_line: 221
+    file_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+    span_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+- id: evidence:source:vdp-gl:vga16controller.h:51:5cdfeac67391
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga16controller.h:52:c0f0e4d9b7fc
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgapalettedcontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+    span_sha256: 9d6c1e76213232b0b3a4f009bf890fdaea9426302cead7c0befea015da2a4f94
+- id: evidence:source:vdp-gl:vga2controller.h:1:9ff4559fe01a
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.h
+    start_line: 1
+    end_line: 224
+    file_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+    span_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+- id: evidence:source:vdp-gl:vga2controller.h:51:e152e8689e71
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga2controller.h:52:a0f01997f515
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgapalettedcontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+    span_sha256: 9d6c1e76213232b0b3a4f009bf890fdaea9426302cead7c0befea015da2a4f94
+- id: evidence:source:vdp-gl:vga4controller.h:1:8dedaed1d90b
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.h
+    start_line: 1
+    end_line: 221
+    file_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+    span_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+- id: evidence:source:vdp-gl:vga4controller.h:51:f7e5f5ea71d1
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga4controller.h:52:1746987fc5db
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgapalettedcontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+    span_sha256: 9d6c1e76213232b0b3a4f009bf890fdaea9426302cead7c0befea015da2a4f94
+- id: evidence:source:vdp-gl:vga64controller.h:1:1f0a4ec4ad3d
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.h
+    start_line: 1
+    end_line: 227
+    file_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+    span_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+- id: evidence:source:vdp-gl:vga64controller.h:43:949c17524290
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.h
+    start_line: 43
+    end_line: 43
+    file_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga64controller.h:44:2d3caa094e41
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgapalettedcontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.h
+    start_line: 44
+    end_line: 44
+    file_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+    span_sha256: 9d6c1e76213232b0b3a4f009bf890fdaea9426302cead7c0befea015da2a4f94
+- id: evidence:source:vdp-gl:vga8controller.h:1:ada7b1d3573b
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.h
+    start_line: 1
+    end_line: 226
+    file_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+    span_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+- id: evidence:source:vdp-gl:vga8controller.h:51:f8a578b4ebca
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vga8controller.h:52:50acef6b20e5
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgapalettedcontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+    span_sha256: 9d6c1e76213232b0b3a4f009bf890fdaea9426302cead7c0befea015da2a4f94
+- id: evidence:source:vdp-gl:vgabasecontroller.h:1:bc94a954affb
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.h
+    start_line: 1
+    end_line: 420
+    file_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+    span_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+- id: evidence:source:vdp-gl:vgabasecontroller.h:50:b24139bddb78
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.h
+    start_line: 50
+    end_line: 50
+    file_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vgacontroller.h:1:c38c0213fed9
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgacontroller.h
+    start_line: 1
+    end_line: 312
+    file_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+    span_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+- id: evidence:source:vdp-gl:vgacontroller.h:51:8c887289adb0
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgacontroller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vgacontroller.h:52:b148f576d900
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgabasecontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgacontroller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+    span_sha256: d94ee51b1d8605d265a86c3d9026433229dd25341d17e98989af24e8d9b86f09
+- id: evidence:source:vdp-gl:vgapalettedcontroller.h:1:9fd8d2d7cce5
+  kind: source-span
+  method: mechanical
+  description: Source file indexed by SETUP-003.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.h
+    start_line: 1
+    end_line: 233
+    file_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+    span_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+- id: evidence:source:vdp-gl:vgapalettedcontroller.h:51:d765a010a223
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/displaycontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.h
+    start_line: 51
+    end_line: 51
+    file_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+    span_sha256: ccf754207cba71b5a1c0803c869cd41e69f16e99fd8f93204368162818d8ee3b
+- id: evidence:source:vdp-gl:vgapalettedcontroller.h:52:16833ae8738e
+  kind: source-span
+  method: mechanical
+  description: Resolved include of vdp-gl:src/dispdrivers/vgabasecontroller.h.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.h
+    start_line: 52
+    end_line: 52
+    file_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+    span_sha256: d94ee51b1d8605d265a86c3d9026433229dd25341d17e98989af24e8d9b86f09
+nodes:
+- id: file:vdp-gl:src/canvas.h
+  kind: file
+  owner: vdp-gl
+  label: src/canvas.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.h
+    start_line: 1
+    end_line: 956
+    file_sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+    span_sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:canvas.h:1:11d406b49e04
+  properties:
+    source.path: src/canvas.h
+    source.sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/collisiondetector.h
+  kind: file
+  owner: vdp-gl
+  label: src/collisiondetector.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/collisiondetector.h
+    start_line: 1
+    end_line: 250
+    file_sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+    span_sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:collisiondetector.h:1:0cf3108634cc
+  properties:
+    source.path: src/collisiondetector.h
+    source.sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/devdrivers/mouse.cpp
+  kind: file
+  owner: vdp-gl
+  label: src/devdrivers/mouse.cpp
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.cpp
+    start_line: 1
+    end_line: 348
+    file_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+    span_sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:mouse.cpp:1:cc63031a18bd
+  properties:
+    source.path: src/devdrivers/mouse.cpp
+    source.sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
+    source.role: firmware-source
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/devdrivers/mouse.h
+  kind: file
+  owner: vdp-gl
+  label: src/devdrivers/mouse.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/devdrivers/mouse.h
+    start_line: 1
+    end_line: 408
+    file_sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+    span_sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:mouse.h:1:e15e768ae963
+  properties:
+    source.path: src/devdrivers/mouse.h
+    source.sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vga16controller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vga16controller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.h
+    start_line: 1
+    end_line: 221
+    file_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+    span_sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vga16controller.h:1:d094880d7b81
+  properties:
+    source.path: src/dispdrivers/vga16controller.h
+    source.sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vga2controller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vga2controller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.h
+    start_line: 1
+    end_line: 224
+    file_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+    span_sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vga2controller.h:1:9ff4559fe01a
+  properties:
+    source.path: src/dispdrivers/vga2controller.h
+    source.sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vga4controller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vga4controller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.h
+    start_line: 1
+    end_line: 221
+    file_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+    span_sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vga4controller.h:1:8dedaed1d90b
+  properties:
+    source.path: src/dispdrivers/vga4controller.h
+    source.sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vga64controller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vga64controller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.h
+    start_line: 1
+    end_line: 227
+    file_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+    span_sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vga64controller.h:1:1f0a4ec4ad3d
+  properties:
+    source.path: src/dispdrivers/vga64controller.h
+    source.sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vga8controller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vga8controller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.h
+    start_line: 1
+    end_line: 226
+    file_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+    span_sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vga8controller.h:1:ada7b1d3573b
+  properties:
+    source.path: src/dispdrivers/vga8controller.h
+    source.sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vgabasecontroller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.h
+    start_line: 1
+    end_line: 420
+    file_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+    span_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vgabasecontroller.h:1:bc94a954affb
+  properties:
+    source.path: src/dispdrivers/vgabasecontroller.h
+    source.sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vgacontroller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgacontroller.h
+    start_line: 1
+    end_line: 312
+    file_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+    span_sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vgacontroller.h:1:c38c0213fed9
+  properties:
+    source.path: src/dispdrivers/vgacontroller.h
+    source.sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  kind: file
+  owner: vdp-gl
+  label: src/dispdrivers/vgapalettedcontroller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.h
+    start_line: 1
+    end_line: 233
+    file_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+    span_sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:vgapalettedcontroller.h:1:9fd8d2d7cce5
+  properties:
+    source.path: src/dispdrivers/vgapalettedcontroller.h
+    source.sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/displaycontroller.cpp
+  kind: file
+  owner: vdp-gl
+  label: src/displaycontroller.cpp
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 1
+    end_line: 1851
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:displaycontroller.cpp:1:09097411d8d5
+  properties:
+    source.path: src/displaycontroller.cpp
+    source.sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    source.role: firmware-source
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/displaycontroller.h
+  kind: file
+  owner: vdp-gl
+  label: src/displaycontroller.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 1
+    end_line: 3050
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:displaycontroller.h:1:282491fa6499
+  properties:
+    source.path: src/displaycontroller.h
+    source.sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: file:vdp-gl:src/fabgl.h
+  kind: file
+  owner: vdp-gl
+  label: src/fabgl.h
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/fabgl.h
+    start_line: 1
+    end_line: 378
+    file_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    span_sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+  evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
+  - evidence:source:vdp-gl:fabgl.h:1:512670a67db3
+  properties:
+    source.path: src/fabgl.h
+    source.sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
+    source.role: header
+    source.presence_class: upstream-reference
+    source.identity: all-the-plots
+- id: type:vdp-gl:fabgl::BitmappedDisplayController
+  kind: type
+  owner: vdp-gl
+  label: fabgl::BitmappedDisplayController
+  qualified_name: fabgl::BitmappedDisplayController
+  locations:
+  - source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 897
+    end_line: 897
+    symbol: fabgl::BitmappedDisplayController
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: 9e53c46af05f7de0753e91e491c603d72ea14691c0c769cefccab3f613a7863f
+  evidence_ids:
+  - evidence:source:vdp-gl:displaycontroller.h:897:480c44ec2ad7
+  properties:
+    source.ctags_kind: class
+    source.role: definition
+edges:
+- id: edge:defines:src/displaycontroller.h-BitmappedDisplayController-79eaa13be0d304ac
+  from: file:vdp-gl:src/displaycontroller.h
+  to: type:vdp-gl:fabgl::BitmappedDisplayController
+  relation: defines
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:displaycontroller.h:897:480c44ec2ad7
+- id: edge:includes:src/canvas.h-src/displaycontroller.h-5cf18dc7be321f22
+  from: file:vdp-gl:src/canvas.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:canvas.h:41:9c53b452ffe8
+- id: edge:includes:src/collisiondetector.h-src/displaycontroller.h-3afc36287b6b4e80
+  from: file:vdp-gl:src/collisiondetector.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:collisiondetector.h:42:624797c1ab44
+- id: edge:includes:src/devdrivers/mouse.cpp-src/devdrivers/mouse.h-4a29bb5ac300671d
+  from: file:vdp-gl:src/devdrivers/mouse.cpp
+  to: file:vdp-gl:src/devdrivers/mouse.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:mouse.cpp:29:a59ff200ef15
+- id: edge:includes:src/devdrivers/mouse.cpp-src/displaycontroller.h-6c95fd5b0679cf9b
+  from: file:vdp-gl:src/devdrivers/mouse.cpp
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:mouse.cpp:31:d874c7b172b8
+- id: edge:includes:src/devdrivers/mouse.h-src/displaycontroller.h-08cd187fa9be7530
+  from: file:vdp-gl:src/devdrivers/mouse.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:mouse.h:44:2f84111c35e6
+- id: edge:includes:src/dispdrivers/vga16controller.h-src/dispdrivers/vgapalettedcontrolle-a96bda979ee9b858
+  from: file:vdp-gl:src/dispdrivers/vga16controller.h
+  to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga16controller.h:52:c0f0e4d9b7fc
+- id: edge:includes:src/dispdrivers/vga16controller.h-src/displaycontroller.h-a7dbe7023bf8438d
+  from: file:vdp-gl:src/dispdrivers/vga16controller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga16controller.h:51:5cdfeac67391
+- id: edge:includes:src/dispdrivers/vga2controller.h-src/dispdrivers/vgapalettedcontrolle-6daf57311806bccb
+  from: file:vdp-gl:src/dispdrivers/vga2controller.h
+  to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga2controller.h:52:a0f01997f515
+- id: edge:includes:src/dispdrivers/vga2controller.h-src/displaycontroller.h-75ddb71033c8ee2c
+  from: file:vdp-gl:src/dispdrivers/vga2controller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga2controller.h:51:e152e8689e71
+- id: edge:includes:src/dispdrivers/vga4controller.h-src/dispdrivers/vgapalettedcontrolle-4eeabb02e4dbed7a
+  from: file:vdp-gl:src/dispdrivers/vga4controller.h
+  to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga4controller.h:52:1746987fc5db
+- id: edge:includes:src/dispdrivers/vga4controller.h-src/displaycontroller.h-8b61a44040f1babd
+  from: file:vdp-gl:src/dispdrivers/vga4controller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga4controller.h:51:f7e5f5ea71d1
+- id: edge:includes:src/dispdrivers/vga64controller.h-src/dispdrivers/vgapalettedcontrolle-3a173e694691df8a
+  from: file:vdp-gl:src/dispdrivers/vga64controller.h
+  to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga64controller.h:44:2d3caa094e41
+- id: edge:includes:src/dispdrivers/vga64controller.h-src/displaycontroller.h-c714178ac7cc97df
+  from: file:vdp-gl:src/dispdrivers/vga64controller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga64controller.h:43:949c17524290
+- id: edge:includes:src/dispdrivers/vga8controller.h-src/dispdrivers/vgapalettedcontrolle-710890b8c2c79902
+  from: file:vdp-gl:src/dispdrivers/vga8controller.h
+  to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga8controller.h:52:50acef6b20e5
+- id: edge:includes:src/dispdrivers/vga8controller.h-src/displaycontroller.h-9b8f401d08866213
+  from: file:vdp-gl:src/dispdrivers/vga8controller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vga8controller.h:51:f8a578b4ebca
+- id: edge:includes:src/dispdrivers/vgabasecontroller.h-src/displaycontroller.h-4d3d9184709c7482
+  from: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vgabasecontroller.h:50:b24139bddb78
+- id: edge:includes:src/dispdrivers/vgacontroller.h-src/dispdrivers/vgabasecontroller.h-9f6397d43e6ab0c2
+  from: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  to: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vgacontroller.h:52:b148f576d900
+- id: edge:includes:src/dispdrivers/vgacontroller.h-src/displaycontroller.h-93d2d279e1bd78dc
+  from: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vgacontroller.h:51:8c887289adb0
+- id: edge:includes:src/dispdrivers/vgapalettedcontrolle-src/dispdrivers/vgabasecontroller.h-529f1b0c0a7defac
+  from: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  to: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vgapalettedcontroller.h:52:16833ae8738e
+- id: edge:includes:src/dispdrivers/vgapalettedcontrolle-src/displaycontroller.h-a2ef7e4dad970f66
+  from: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:vgapalettedcontroller.h:51:d765a010a223
+- id: edge:includes:src/displaycontroller.cpp-src/displaycontroller.h-e44a914274342704
+  from: file:vdp-gl:src/displaycontroller.cpp
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:displaycontroller.cpp:28:ae17e52581c1
+- id: edge:includes:src/fabgl.h-src/collisiondetector.h-1a829c3e43b64a22
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/collisiondetector.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:328:86eedce15b41
+- id: edge:includes:src/fabgl.h-src/devdrivers/mouse.h-084544026e2b7a2f
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/devdrivers/mouse.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:325:15b55d4b2186
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vga16controller.h-9e76a83444e52e48
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vga16controller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:320:2bb555e268ad
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vga2controller.h-2650e5189f6509f4
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vga2controller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:317:27dd4e5ac83b
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vga4controller.h-d2e406a7f3eaa6ae
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vga4controller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:318:19a91fad87a5
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vga64controller.h-565e0494c42460db
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vga64controller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:321:c5371cd04900
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vga8controller.h-791b936bb41054c4
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vga8controller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:319:821236bffe36
+- id: edge:includes:src/fabgl.h-src/dispdrivers/vgacontroller.h-71fd3770cefcb63d
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:315:bf1438f1577c
+- id: edge:includes:src/fabgl.h-src/displaycontroller.h-d16f6527459c781f
+  from: file:vdp-gl:src/fabgl.h
+  to: file:vdp-gl:src/displaycontroller.h
+  relation: includes
+  confidence: confirmed
+  evidence_ids:
+  - evidence:source:vdp-gl:fabgl.h:314:b632c3f089ae
+groups:
+  file:
+  - file:vdp-gl:src/canvas.h
+  - file:vdp-gl:src/collisiondetector.h
+  - file:vdp-gl:src/devdrivers/mouse.cpp
+  - file:vdp-gl:src/devdrivers/mouse.h
+  - file:vdp-gl:src/dispdrivers/vga16controller.h
+  - file:vdp-gl:src/dispdrivers/vga2controller.h
+  - file:vdp-gl:src/dispdrivers/vga4controller.h
+  - file:vdp-gl:src/dispdrivers/vga64controller.h
+  - file:vdp-gl:src/dispdrivers/vga8controller.h
+  - file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  - file:vdp-gl:src/dispdrivers/vgacontroller.h
+  - file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  - file:vdp-gl:src/displaycontroller.cpp
+  - file:vdp-gl:src/displaycontroller.h
+  - file:vdp-gl:src/fabgl.h
+  type:
+  - type:vdp-gl:fabgl::BitmappedDisplayController
+boundaries:
+- from: file:vdp-gl:src/canvas.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/canvas.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/canvas.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/terminal.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/collisiondetector.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/collisiondetector.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/collisiondetector.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/scene.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/devdrivers/mouse.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/comdrivers/ps2controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/devdrivers/mouse.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/terminal.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga16controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vga16controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga16controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/fabutils.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga2controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vga2controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga2controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/fabutils.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga4controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vga4controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga64controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vga64controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga64controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/fabutils.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vga8controller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vga8controller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vgabasecontroller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vgacontroller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vgatextcontroller.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vgacontroller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/fabutils.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+  relation: includes
+  omitted_to: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/agon_audio.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/agon_fonts.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/agon_ps2.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/agon_screen.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/audio_channel.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/context.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/context/cursor.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/context/fonts.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/context/graphics.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/context/viewport.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/enhanced_samples_generator.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/sprites.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/vdu_audio.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/vdu_sprites.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/vdu_stream_processor.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/vdu_sys.h
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+- from: file:vdp-gl:src/fabgl.h
+  relation: includes
+  omitted_to: file:agon-vdp:video/video.ino
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
+unresolved: []
+summary:
+  node_count: 16
+  edge_count: 31
+  boundary_count: 36
+  unresolved_count: 0

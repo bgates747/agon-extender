@@ -15,7 +15,7 @@ item is removed.
 ## Porting
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: --
+  - Started: 2026-08-22 10:14 EDT
   - Finished: --
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
