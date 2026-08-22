@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: Not started — scope registered from SETUP-004 Work 1.b
-- Started: --
+- Status: In progress — Review Gate 1 approved; implementation not started
+- Started: 2026-08-22 07:03 EDT
 - Finished: --
 
 ## Intent
@@ -71,6 +71,11 @@ must not create a manually maintained second source of truth.
 
 ## Review gate
 
-Stop after proposing the schema extension, selection-cause vocabulary,
-generated artifact layout, and merge-attention rules. Obtain Author approval
-before implementation.
+The [Review Gate 1 proposal](PORT-002/PROPOSAL.md) defines the schema extension,
+selection-cause vocabulary, durable artifact layout, validation contract,
+merge-attention rules, and implementation proof set.
+
+Status: closed and approved by the Author on 2026-08-22. The accepted decisions
+are frozen before implementation. The next work session may implement the
+proposal, run the six-case proof set, and must stop at Review Gate 2 before
+treating the promoted system as routine production infrastructure.

@@ -15,7 +15,7 @@ item is removed.
 ## Porting
 
 - [ ] **PORT-002 — Integrate vendored-source selection and upstream merge guidance**
-  - Started: --
+  - Started: 2026-08-22 07:03 EDT
   - Finished: --
   - Details: [PORT-002](docs/tasks/PORT-002.md)
 
