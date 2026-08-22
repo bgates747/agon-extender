@@ -24,38 +24,38 @@ inputs:
 - path: docs/tasks/SETUP-004/evidence/work-1h-storage.yaml
   sha256: 6417fd58b9287b3b93ad2c416884a7423be150362fe9b488b36c93756064b12c
 - path: docs/tasks/SETUP-004/generated/work-1a/coverage.yaml
-  sha256: 0cf9fb24f0237c25e4b9e3dca7a186621a98db4633bbbc3799c14a1ba5a4a958
+  sha256: 4828763dbb8be6967d8510645f9c4b003945caeec1ebf99f7d9106138e0d3757
 - path: docs/tasks/SETUP-004/generated/work-1a/mechanical-facts.yaml
-  sha256: f8253073c5ffb3d4884077c17008e22bd88cd37bc5d0805d8853e692289ff7b9
+  sha256: d133df97adcf0b54b77acafc615736607cfe58a3f657b83116ae6c3799cdbbd8
 - path: docs/tasks/SETUP-004/generated/work-1b/coverage.yaml
-  sha256: d706ea4e2b9b2cb1e80c93afbe1af51dc5b7f19c54a88e6ab2f4ebf08bf6fa4a
+  sha256: 12573f2214dcf0ed6fc34cae8841d0a116469181de57efc48e8de292c270c32a
 - path: docs/tasks/SETUP-004/generated/work-1b/mechanical-facts.yaml
-  sha256: 83869bba60de9693a67acc829895f5efc3a337e5c5abae2a0e42ab71c10f1603
+  sha256: fec3dba6c26967a8b1e16714df8372f17a29c72e5c5c4895b8e2cdd2fca8d462
 - path: docs/tasks/SETUP-004/generated/work-1c/coverage.yaml
-  sha256: 1535e5f5dbafc431fed6367574c8caafed132c8233003c18fc5dbc04ad7a6db7
+  sha256: 2386d28478825f7c9f2a93a393d9b930e26dcedaad4ffd75d13592e471a3afd7
 - path: docs/tasks/SETUP-004/generated/work-1c/mechanical-facts.yaml
-  sha256: 8f23523e0cde39ec1078afec484f3d14aca237ed62f417c05b7d2512ed90bed1
+  sha256: 6c882531b79e9058e1fe9893d0e96f78e33dbba582f523d65701510d9f5b47bd
 - path: docs/tasks/SETUP-004/generated/work-1d/coverage.yaml
-  sha256: a3625dc0d7c51249fc8379d2db53955ba48a756757e297f148fde973ca8d0923
+  sha256: 3e61521c454db7f8ed7fef5d1ef2b728878183d637d11ceb9818d60e29353be7
 - path: docs/tasks/SETUP-004/generated/work-1d/mechanical-facts.yaml
-  sha256: 4a157b9a865c4ab0b7d75b61d13980f024e02022666153dd6ea6a6578bfe53c2
+  sha256: e4d0200b75e40e020991daae9b9e2e40f3bcf79340b87a8f297110e83f48b31d
 - path: docs/tasks/SETUP-004/generated/work-1e/coverage.yaml
-  sha256: c59700c10381811ee460d9f9f9a49f5735d4ef9f5007bbf92fc538787b870fd2
+  sha256: 78c62192f386e1430e9b9393c9b03ac36b3a4b78f886570be6c800d944b3532f
 - path: docs/tasks/SETUP-004/generated/work-1e/mechanical-facts.yaml
-  sha256: c72973483e4850cda5b67198fffe4d30d1ae541addacfe966d5b4ec2867287dc
+  sha256: 5a98e72f96390b6d262afe99de41e3db866d8f689f51699385dcb15b9802919a
 - path: docs/tasks/SETUP-004/generated/work-1f/coverage.yaml
-  sha256: 9254c6967725f93b1bc2689730bd8caa97692013aa56fa3f55a5b390c04db64f
+  sha256: 78556fb1d2c82f6968586931f3971e5ebb206eb09459e365b90d8c46094e2ac7
 - path: docs/tasks/SETUP-004/generated/work-1f/mechanical-facts.yaml
-  sha256: b8993303bf550058c1e963c267f97b211d4ad9c8de67df808dd4cc1f3e2006c8
+  sha256: b00b379cd99c1f12fbf56fa43e2ddeba96d478f075efe9902c4471060e42542f
 - path: docs/tasks/SETUP-004/generated/work-1g/coverage.yaml
-  sha256: 161af9f75401f68d5ad7fd2d1f29e01b6085dd520d65be118490a28938dfa7a1
+  sha256: 924c5c44ed053a882c52a0eae687c3809556a07308c97eb1e454114ee0152cc6
 - path: docs/tasks/SETUP-004/generated/work-1g/mechanical-facts.yaml
-  sha256: ddee415680c007a7a5b54c99f81de2245fdcfb8c564ef7ab91fe7485541cf0fe
+  sha256: ab4640f1393d2d8de49436d77fae1f5ed1dcfa1900f3f2636efa7dcb8bcec185
 - path: docs/tasks/SETUP-004/generated/work-1h/coverage.yaml
-  sha256: a851b704082bc8d0b8148f946860a8ca6722d7b0186934e22b8d4fb29daed24d
+  sha256: 3cc9e84f583d65d6aa761a3e02747cd855920a13afd1b48ec0bcd53e02a0a727
 - path: docs/tasks/SETUP-004/generated/work-1h/mechanical-facts.yaml
-  sha256: 51d9d96636821f57eeba77fb7bc1b971f3da1fb9a8eb763d6530ced202a098c2
-combined_input_sha256: 1cec05caebe32966c7c1ea0240370ea8aae0ca4f8a970450d67e391af1c1ea06
+  sha256: f7c5dfc58976f4cf00e82cba6f5842f554af8c8c963c13189e60d6b8e750ab78
+combined_input_sha256: 8d8520de563a889538737dc50a5ba0e82d0e2bdc7560bbb0c98fb98eff73063a
 sources:
 - id: source:CRC:1.0.4
   owner: CRC
@@ -63,32 +63,40 @@ sources:
   identity_kind: release
   identity: 1.0.4
   commit: null
-  tree_sha256: 71704c3689174580a1ceaced1d112f8aa21217ac90c4f4f2e72b185f7c3745fb
+  tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
   root_placeholder: ${CRC_SOURCE}
+  manifest_file_count: 51
+  presence_class: upstream-reference
 - id: source:ESP32Time:2.0.6
   owner: ESP32Time
   repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
   identity_kind: release
   identity: 2.0.6
   commit: null
-  tree_sha256: 652b49533c6d32cbf487ea93b20e0871ad35d32c7078a6dee0d1da096c3165f1
+  tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
   root_placeholder: ${ESP32TIME_SOURCE}
+  manifest_file_count: 12
+  presence_class: upstream-reference
 - id: source:agon-vdp:v2.16.0
   owner: agon-vdp
   repository: https://github.com/AgonPlatform/agon-vdp
   identity_kind: tag
   identity: v2.16.0
   commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
-  tree_sha256: c6302562cfc3aebaadac06d28f8e93a29a4f99f2079370693b9e004090225bbd
+  tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
   root_placeholder: ${AGON_VDP_SOURCE}
+  manifest_file_count: 53
+  presence_class: upstream-reference
 - id: source:vdp-gl:all-the-plots
   owner: vdp-gl
   repository: https://github.com/AgonPlatform/vdp-gl
   identity_kind: tag
   identity: all-the-plots
   commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
-  tree_sha256: fa4abb0321eff010e2a3e070b13521a396302e6789fa89187eed75d418688c0b
+  tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
   root_placeholder: ${VDP_GL_SOURCE}
+  manifest_file_count: 5048
+  presence_class: upstream-reference
 target_frameworks:
 - work_item: SETUP-004.1.a
   evidence_path: docs/tasks/SETUP-004/evidence/work-1a-framework-runtime.yaml
@@ -15208,6 +15216,7 @@ records:
     - file:vdp-gl:src/devdrivers/DS3231.cpp
     - file:vdp-gl:src/devdrivers/DS3231.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:DS3231.cpp:1:ddc89896fd7f
     - evidence:source:vdp-gl:DS3231.h:1:5b2778925550
     traversal_edge_ids: []
@@ -15421,6 +15430,7 @@ records:
     - file:vdp-gl:src/devdrivers/MCP23S17.cpp
     - file:vdp-gl:src/devdrivers/MCP23S17.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:MCP23S17.cpp:1:ac597274fbaf
     - evidence:source:vdp-gl:MCP23S17.h:1:df1e3f2febe9
     traversal_edge_ids: []
@@ -18713,6 +18723,7 @@ records:
     - platform-api:external:rtc_io_number_get
     evidence_ids:
     - evidence:reviewed:facility-physical-ps2-input-1
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ps2controller.cpp:1009:f9f772ace7fc
     - evidence:source:vdp-gl:ps2controller.cpp:1013:fb7c36d804af
     - evidence:source:vdp-gl:ps2controller.cpp:1029:df428b8be766
@@ -21543,6 +21554,7 @@ records:
     - file:vdp-gl:src/comdrivers/tsi2c.cpp
     - file:vdp-gl:src/comdrivers/tsi2c.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:tsi2c.cpp:1:8948303733be
     - evidence:source:vdp-gl:tsi2c.h:1:27dde805d014
     traversal_edge_ids: []
@@ -22076,6 +22088,7 @@ records:
     - physical-facility:reviewed:direct%20esp32%20gpio%20register%20helper%20for%20zdi
     - platform-api:external:rtc_reg
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:reviewed:facility-debug-zdi-and-file-transfer-1
     - evidence:source:agon-vdp:OneWire_direct_gpio.h:177:67c9696efa46
     - evidence:source:agon-vdp:OneWire_direct_gpio.h:1:c86444d0ffaa
@@ -23412,6 +23425,7 @@ records:
     - physical-facility:reviewed:uart2%20pins,%20rts/cts%20flow%20control,%20receive%20buffer,%20and%20timeouts
     - platform-api:reviewed:arduino%20hardwareserial
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:reviewed:facility-primary-vdp-transport-1
     - evidence:reviewed:facility-terminal-mode-1
     - evidence:source:agon-vdp:vdp_protocol.h:17:92cc12d409f2
@@ -24929,6 +24943,7 @@ records:
     - platform-api:reviewed:fabgl%20canvas%20and%20vga2/vga4/vga8/vga16/vga64%20controllers
     evidence_ids:
     - evidence:reviewed:facility-graphics-display-0
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:canvas.cpp:1:baf6528d94b9
     - evidence:source:vdp-gl:canvas.h:1:11d406b49e04
     - evidence:source:vdp-gl:displaycontroller.cpp:1:09097411d8d5
@@ -25247,6 +25262,7 @@ records:
     - file:vdp-gl:src/devdrivers/cvbsgenerator.cpp
     - file:vdp-gl:src/devdrivers/cvbsgenerator.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:cvbsgenerator.cpp:1:d9b9e0d48525
     - evidence:source:vdp-gl:cvbsgenerator.h:1:22ade2665890
     traversal_edge_ids: []
@@ -25406,6 +25422,7 @@ records:
     - file:vdp-gl:src/scene.cpp
     - file:vdp-gl:src/scene.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:scene.cpp:1:a3e882b0306a
     - evidence:source:vdp-gl:scene.h:1:54508e013f56
     traversal_edge_ids: []
@@ -25973,6 +25990,7 @@ records:
     - file:agon-vdp:video/agon_screen.h
     - subsystem:agon-vdp:graphics-display
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:agon_screen.h:11:793432903ce8
     - evidence:source:agon-vdp:agon_screen.h:186:6b2f3d0bf579
     - evidence:source:agon-vdp:agon_screen.h:1:7f89fe73b3f6
@@ -26801,6 +26819,7 @@ records:
     evidence_ids:
     - evidence:reviewed:facility-graphics-display-1
     - evidence:reviewed:facility-graphics-display-2
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga16controller.cpp:1:c30bf72281cf
     - evidence:source:vdp-gl:vga16controller.h:1:d094880d7b81
     - evidence:source:vdp-gl:vga2controller.cpp:1:ce33c8d7e73a
@@ -27133,6 +27152,7 @@ records:
     - file:vdp-gl:src/dispdrivers/vgatextcontroller.cpp
     - file:vdp-gl:src/dispdrivers/vgatextcontroller.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgatextcontroller.cpp:1:dfed84e5e305
     - evidence:source:vdp-gl:vgatextcontroller.h:1:bca35c8d6932
     traversal_edge_ids: []
@@ -28300,6 +28320,7 @@ records:
     - file:agon-vdp:video/vdu_audio.h
     - subsystem:agon-vdp:audio
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:adsr.h:1:fe01a05c07b4
     - evidence:source:agon-vdp:agon_audio.h:1:75c1ecd42417
     - evidence:source:agon-vdp:agon_audio.h:27:7b18252f1e90
@@ -28898,6 +28919,7 @@ records:
     - platform-api:reviewed:fabgl%20soundgenerator%20and%20waveform%20generators
     evidence_ids:
     - evidence:reviewed:facility-audio-0
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:soundgen.cpp:1:45ba63d07f0b
     - evidence:source:vdp-gl:soundgen.h:1:cdd73983bca7
     traversal_edge_ids:
@@ -29894,6 +29916,7 @@ records:
     - file:agon-vdp:video/vdu_sys.h
     - subsystem:agon-vdp:physical-ps2-input
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:agon_ps2.h:12:b396915edf21
     - evidence:source:agon-vdp:agon_ps2.h:1:c2c222f21cf0
     - evidence:source:agon-vdp:agon_ps2.h:47:162628b85b49
@@ -31611,6 +31634,7 @@ records:
     - file:vdp-gl:src/devdrivers/keyboard.cpp
     - file:vdp-gl:src/devdrivers/keyboard.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:kbdlayouts.cpp:1:eb4d95ef715a
     - evidence:source:vdp-gl:kbdlayouts.h:1:6c0bf4f651ba
     - evidence:source:vdp-gl:keyboard.cpp:1:341213aacab9
@@ -32657,6 +32681,7 @@ records:
     - file:vdp-gl:src/devdrivers/mouse.cpp
     - file:vdp-gl:src/devdrivers/mouse.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:mouse.cpp:1:cc63031a18bd
     - evidence:source:vdp-gl:mouse.h:1:e15e768ae963
     traversal_edge_ids: []
@@ -33166,6 +33191,7 @@ records:
     evidence_ids:
     - evidence:reviewed:facility-physical-ps2-input-0
     - evidence:reviewed:facility-physical-ps2-input-1
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ps2controller.cpp:1:cee72572cd1d
     - evidence:source:vdp-gl:ps2controller.h:1:d090dde0b9b3
     traversal_edge_ids:
@@ -33393,6 +33419,7 @@ records:
     - file:vdp-gl:src/network/ICMP.cpp
     - file:vdp-gl:src/network/ICMP.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ICMP.cpp:1:ceef08895718
     - evidence:source:vdp-gl:ICMP.h:1:0959b27f2cb6
     traversal_edge_ids: []
@@ -33823,6 +33850,7 @@ records:
     - file:agon-vdp:video/hexload.h
     - file:agon-vdp:video/ymodem.h
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:hexload.h:1:2ed464842440
     - evidence:source:agon-vdp:ymodem.h:1:1561120a56af
     traversal_edge_ids: []
@@ -35509,6 +35537,7 @@ records:
     - file:vdp-gl:src/fabutils.cpp
     - file:vdp-gl:src/fabutils.h
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:fabutils.cpp:1:30942e3e5ac0
     - evidence:source:vdp-gl:fabutils.h:1:273f85fdbe4e
     traversal_edge_ids: []

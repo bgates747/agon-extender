@@ -154,6 +154,12 @@ class GraphIndex:
         self.nodes = {node["id"]: node for node in graph["nodes"]}
         self.evidence = {item["id"]: item for item in graph["evidence"]}
         self.edges = {edge["id"]: edge for edge in graph["edges"]}
+        self.observed_selection = {
+            record["subject_id"]: record["status"]
+            for record in graph.get("selection_records", [])
+            if record["build_profile_id"]
+            == "build-profile:upstream:agon-vdp-v2.16.0-esp32"
+        }
         self.in_edges: dict[str, list[dict[str, Any]]] = defaultdict(list)
         self.out_edges: dict[str, list[dict[str, Any]]] = defaultdict(list)
         for edge in graph["edges"]:
@@ -163,8 +169,9 @@ class GraphIndex:
         for node in graph["nodes"]:
             if node["kind"] != "file":
                 continue
-            for location in node.get("locations", []):
-                self.file_nodes[source_key(node["owner"], location["path"])] = node["id"]
+            path = node.get("properties", {}).get("source.path")
+            if path:
+                self.file_nodes[source_key(node["owner"], path)] = node["id"]
 
     def evidence_sources(self, evidence_ids: Iterable[str]) -> set[str]:
         result: set[str] = set()
@@ -239,7 +246,9 @@ class GraphIndex:
             }
         node = self.nodes.get(file_node_id or "", {})
         return {
-            "classification": node.get("build_selection", "source-participation-unresolved"),
+            "classification": self.observed_selection.get(
+                node.get("id", ""), "source-participation-unresolved"
+            ),
             "selected_by": [],
         }
 
@@ -270,7 +279,7 @@ def project_paths(task_root: Path) -> dict[str, Path]:
     project_root = task_root.parents[2]
     return {
         "project_root": project_root,
-        "graph": project_root / "docs/tasks/PORT-001/generated/code-graph.yaml",
+        "graph": project_root / "docs/dependencies/generated/code-graph.yaml",
         "compile_commands": project_root / "docs/tasks/SETUP-003/generated/compile-commands.json",
         "includes": project_root / "docs/tasks/SETUP-003/generated/includes.yaml",
         "symbols": project_root / "docs/tasks/SETUP-003/generated/symbols.yaml",

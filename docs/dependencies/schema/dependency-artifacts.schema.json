@@ -1,0 +1,158 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agon-extender.invalid/schema/dependency-artifacts-2.0.0.json",
+  "title": "Agon Extender dependency artifacts",
+  "description": "Durable graph, source-selection, and bounded-slice contract.",
+  "oneOf": [{ "$ref": "#/$defs/codeGraph" }, { "$ref": "#/$defs/dependencySlice" }],
+  "$defs": {
+    "id": { "type": "string", "pattern": "^[a-z][a-z0-9_-]*:[^\\s]+$" },
+    "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+    "idArray": { "type": "array", "items": { "$ref": "#/$defs/id" }, "uniqueItems": true },
+    "generator": {
+      "type": "object", "additionalProperties": false,
+      "required": ["name", "version", "path", "argv"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "path": { "type": "string", "minLength": 1 },
+        "argv": { "type": "array", "minItems": 1, "items": { "type": "string" } }
+      }
+    },
+    "sourceIdentity": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "owner", "repository", "identity_kind", "identity", "commit", "tree_sha256", "root_placeholder", "manifest_file_count", "presence_class"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "owner": { "type": "string", "minLength": 1 },
+        "repository": { "type": "string", "minLength": 1 },
+        "identity_kind": { "enum": ["tag", "release", "commit", "vendored-release", "framework"] },
+        "identity": { "type": "string", "minLength": 1 },
+        "commit": { "type": ["string", "null"], "pattern": "^[0-9a-f]{40}$" },
+        "tree_sha256": { "$ref": "#/$defs/sha256" },
+        "root_placeholder": { "type": "string", "pattern": "^\\$\\{[A-Z][A-Z0-9_]*\\}$" },
+        "manifest_file_count": { "type": "integer", "minimum": 1 },
+        "presence_class": { "enum": ["upstream-reference", "vendored", "project-owned", "external-platform"] }
+      }
+    },
+    "inputArtifact": {
+      "type": "object", "additionalProperties": false, "required": ["id", "path", "role", "sha256"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "path": { "type": "string", "minLength": 1 },
+        "role": { "type": "string", "minLength": 1 }, "schema_version": { "type": ["string", "integer", "null"] },
+        "sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "tool": {
+      "type": "object", "additionalProperties": false, "required": ["id", "name", "version"],
+      "properties": { "id": { "$ref": "#/$defs/id" }, "name": { "type": "string", "minLength": 1 }, "version": { "type": "string", "minLength": 1 } }
+    },
+    "sourceSpan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["source_id", "path", "start_line", "end_line", "file_sha256", "span_sha256"],
+      "properties": {
+        "source_id": { "$ref": "#/$defs/id" }, "path": { "type": "string", "minLength": 1 },
+        "start_line": { "type": "integer", "minimum": 1 }, "end_line": { "type": "integer", "minimum": 1 },
+        "symbol": { "type": ["string", "null"] }, "file_sha256": { "$ref": "#/$defs/sha256" }, "span_sha256": { "$ref": "#/$defs/sha256" }
+      }
+    },
+    "evidence": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "method", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["compile-database", "compiler-dependency", "compiler-diagnostic", "preprocessor", "symbol-index", "source-span", "official-documentation", "build-log", "test-result", "reviewed-analysis"] },
+        "method": { "enum": ["mechanical", "reviewed"] }, "description": { "type": "string", "minLength": 1 },
+        "span": { "$ref": "#/$defs/sourceSpan" }, "artifact_id": { "$ref": "#/$defs/id" }, "record_pointer": { "type": "string" },
+        "review": {
+          "type": "object", "additionalProperties": false, "required": ["status", "reviewed_on", "basis"],
+          "properties": { "status": { "enum": ["proposed", "accepted", "rejected", "superseded"] }, "reviewed_on": { "type": "string", "format": "date" }, "basis": { "type": "string", "minLength": 1 } }
+        }
+      },
+      "allOf": [{ "if": { "properties": { "method": { "const": "reviewed" } } }, "then": { "required": ["review"] } }]
+    },
+    "namespacedProperties": { "type": "object", "propertyNames": { "pattern": "^[a-z][a-z0-9_-]*\\.[a-z][a-z0-9_-]*$" } },
+    "node": {
+      "type": "object", "additionalProperties": false, "required": ["id", "kind", "owner", "label", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": { "enum": ["command", "dispatch", "function", "method", "type", "macro", "variable", "file", "source-region", "state", "callback", "task", "interrupt", "timer", "protocol-packet", "subsystem", "platform-api", "physical-facility", "resource", "build-unit", "test", "artifact"] },
+        "owner": { "type": "string", "minLength": 1 }, "label": { "type": "string", "minLength": 1 },
+        "qualified_name": { "type": ["string", "null"] }, "locations": { "type": "array", "items": { "$ref": "#/$defs/sourceSpan" } },
+        "evidence_ids": { "$ref": "#/$defs/idArray" }, "properties": { "$ref": "#/$defs/namespacedProperties" }
+      }
+    },
+    "edge": {
+      "type": "object", "additionalProperties": false, "required": ["id", "from", "to", "relation", "confidence", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "from": { "$ref": "#/$defs/id" }, "to": { "$ref": "#/$defs/id" },
+        "relation": { "enum": ["contains", "defines", "declares", "includes", "dispatches-to", "calls", "may-call", "reads", "writes", "owns", "resets", "configures", "constructs", "allocates", "creates-task", "invokes-callback", "sends-packet", "receives-packet", "depends-on", "requires-platform-api", "requires-hardware", "delegates-to", "affects"] },
+        "confidence": { "enum": ["confirmed", "strong", "provisional", "unresolved"] }, "rationale": { "type": "string", "minLength": 1 },
+        "evidence_ids": { "$ref": "#/$defs/idArray" }, "properties": { "$ref": "#/$defs/namespacedProperties" }
+      }
+    },
+    "buildProfile": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "label", "profile_kind", "target_board", "platform", "framework", "configuration", "source_ids", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "label": { "type": "string", "minLength": 1 }, "profile_kind": { "enum": ["observed-build", "declared-target"] },
+        "target_board": { "type": "string", "minLength": 1 }, "platform": { "type": "string", "minLength": 1 }, "framework": { "type": "string", "minLength": 1 },
+        "configuration": { "type": "string", "minLength": 1 }, "source_ids": { "$ref": "#/$defs/idArray" }, "evidence_ids": { "$ref": "#/$defs/idArray" },
+        "drift_against_profile_id": { "$ref": "#/$defs/id" }
+      }
+    },
+    "selectionCause": {
+      "type": "object", "additionalProperties": false, "required": ["code", "class", "effect", "evidence_ids", "decision_refs"],
+      "properties": {
+        "code": { "enum": ["direct-build-input", "build-rule-match", "transitive-include", "header-defined-implementation", "generated-build-input", "retained-compatibility-requirement", "project-adapter", "inherited-broad-build-selection", "deliberate-exclusion", "non-runtime-upstream-content", "unresolved-selection"] },
+        "class": { "enum": ["mechanical", "reviewed"] }, "effect": { "enum": ["selects", "excludes", "does-not-select", "explains-presence", "marks-unresolved"] },
+        "evidence_ids": { "$ref": "#/$defs/idArray" }, "decision_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true }
+      }
+    },
+    "selectionRecord": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "build_profile_id", "subject_id", "status", "causes", "entry_point_ids", "disposition_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "build_profile_id": { "$ref": "#/$defs/id" }, "subject_id": { "$ref": "#/$defs/id" },
+        "status": { "enum": ["selected", "excluded", "available-not-selected", "not-applicable", "unresolved"] },
+        "causes": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/selectionCause" } },
+        "entry_point_ids": { "$ref": "#/$defs/idArray" }, "disposition_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "uniqueItems": true },
+        "replacement_subject_id": { "$ref": "#/$defs/id" }, "unresolved_reason": { "type": "string", "minLength": 1 },
+        "drift_from_status": { "enum": ["selected", "excluded", "available-not-selected", "not-applicable", "unresolved"] },
+        "drift_disposition": { "enum": ["expected-port-selection", "unresolved"] }
+      }
+    },
+    "unresolved": {
+      "type": "object", "required": ["id", "kind", "evidence_ids"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" }, "kind": { "type": "string", "minLength": 1 },
+        "subject": { "type": "string", "minLength": 1 }, "subject_id": { "$ref": "#/$defs/id" },
+        "reason": { "type": "string", "minLength": 1 }, "description": { "type": "string", "minLength": 1 },
+        "candidate_ids": { "$ref": "#/$defs/idArray" }, "evidence_ids": { "$ref": "#/$defs/idArray" }
+      }
+    },
+    "codeGraph": {
+      "type": "object", "additionalProperties": false,
+      "required": ["schema_version", "artifact_kind", "id", "generator", "sources", "inputs", "tools", "vocabulary", "build_profiles", "evidence", "nodes", "edges", "selection_records", "unresolved"],
+      "properties": {
+        "schema_version": { "const": "2.0.0" }, "artifact_kind": { "const": "code_graph" }, "id": { "$ref": "#/$defs/id" },
+        "generator": { "$ref": "#/$defs/generator" }, "sources": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/sourceIdentity" } },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/inputArtifact" } }, "tools": { "type": "array", "items": { "$ref": "#/$defs/tool" } },
+        "vocabulary": { "type": "object" }, "build_profiles": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/buildProfile" } },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }, "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/edge" } }, "selection_records": { "type": "array", "items": { "$ref": "#/$defs/selectionRecord" } },
+        "unresolved": { "type": "array", "items": { "$ref": "#/$defs/unresolved" } }
+      }
+    },
+    "dependencySlice": {
+      "type": "object",
+      "required": ["schema_version", "artifact_kind", "id", "generator", "sources", "inputs", "tools", "source_graph", "title", "seed_nodes", "policy", "evidence", "nodes", "edges", "groups", "boundaries", "unresolved", "summary"],
+      "properties": {
+        "schema_version": { "const": "2.0.0" }, "artifact_kind": { "const": "dependency_slice" }, "id": { "$ref": "#/$defs/id" },
+        "generator": { "$ref": "#/$defs/generator" }, "sources": { "type": "array", "items": { "$ref": "#/$defs/sourceIdentity" } },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/inputArtifact" } }, "tools": { "type": "array", "items": { "$ref": "#/$defs/tool" } },
+        "source_graph": { "type": "object" }, "title": { "type": "string" }, "seed_nodes": { "$ref": "#/$defs/idArray" }, "policy": { "type": "object" },
+        "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } }, "nodes": { "type": "array", "items": { "$ref": "#/$defs/node" } },
+        "edges": { "type": "array", "items": { "$ref": "#/$defs/edge" } }, "groups": { "type": "object" }, "boundaries": { "type": "array" },
+        "unresolved": { "type": "array", "items": { "$ref": "#/$defs/unresolved" } }, "summary": { "type": "object" }
+      }
+    }
+  }
+}

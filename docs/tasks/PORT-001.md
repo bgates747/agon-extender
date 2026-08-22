@@ -103,9 +103,8 @@ top-level `scripts/` directory.
 ## Review Gate 1
 
 - [Graph and slice proposal](PORT-001/schema/PROPOSAL.md)
-- [Schema contract and conventions](PORT-001/schema/README.md)
-- [Formal JSON Schema](PORT-001/schema/dependency-artifacts.schema.json)
-- [Illustrative dependency slice](PORT-001/schema/examples/representative-slice.yaml)
+- [Current durable schema contract](../dependencies/schema/README.md)
+- [Current formal JSON Schema](../dependencies/schema/dependency-artifacts.schema.json)
 
 Status: approved by the Author on 2026-08-21. YAML remains authoritative;
 project validation enforces graph-wide constraints; SQLite may later be a
@@ -113,18 +112,16 @@ disposable generated query index but not a second source of truth.
 
 ## Review Gate 2
 
-- [Implementation and maintenance workflow](PORT-001/README.md)
+- [Current durable implementation and maintenance workflow](../dependencies/README.md)
 - [First proof review](PORT-001/proof-vdu-22.md)
-- [Authoritative VDU 22 proof slice](PORT-001/generated/commands/vdu-22.yaml)
-- [Compact Markdown projection](PORT-001/generated/commands/vdu-22.md)
-- [SVG projection](PORT-001/generated/diagrams/vdu-22.svg)
+- [Authoritative VDU 22 proof slice](../dependencies/generated/commands/vdu-22.yaml)
+- [Compact Markdown projection](../dependencies/generated/commands/vdu-22.md)
+- [SVG projection](../dependencies/generated/diagrams/vdu-22.svg)
 
 Status: approved by the Author on 2026-08-21. The validated task-local system
-and first proof complete PORT-001. Promotion into a continuing project tool
-boundary and future test/build/release relationships remain separate follow-on
-work. [PORT-002](PORT-002.md) owns the accepted extension for complete vendored
-source classification, build-selection rationale, and upstream merge-attention
-guidance.
+and first proof completed PORT-001. PORT-002 subsequently promoted the reusable
+system to `docs/dependencies/`; this task retains the original proposal and
+acceptance history while linking to the current durable artifacts.
 
 ## Review gates
 

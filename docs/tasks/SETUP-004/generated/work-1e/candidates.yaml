@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_candidates
 counts:
   scoped_items: 458
@@ -41,6 +41,7 @@ candidates:
     label: video/agon_audio.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:agon_audio.h:1:75c1ecd42417
   - id: graph-node:file:agon-vdp:video/audio_channel.h
     kind: graph-node
@@ -49,6 +50,7 @@ candidates:
     label: video/audio_channel.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:audio_channel.h:1:e4c10789ccc2
   - id: graph-node:file:agon-vdp:video/audio_sample.h
     kind: graph-node
@@ -57,6 +59,7 @@ candidates:
     label: video/audio_sample.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:audio_sample.h:1:d24f21f1e7ad
   - id: graph-node:file:agon-vdp:video/enhanced_samples_generator.h
     kind: graph-node
@@ -65,6 +68,7 @@ candidates:
     label: video/enhanced_samples_generator.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:enhanced_samples_generator.h:1:f473de3e7585
   - id: graph-node:file:agon-vdp:video/envelopes/adsr.h
     kind: graph-node
@@ -73,6 +77,7 @@ candidates:
     label: video/envelopes/adsr.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:adsr.h:1:fe01a05c07b4
   - id: graph-node:file:agon-vdp:video/envelopes/frequency.h
     kind: graph-node
@@ -81,6 +86,7 @@ candidates:
     label: video/envelopes/frequency.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:frequency.h:1:e3e09eeeaeb6
   - id: graph-node:file:agon-vdp:video/envelopes/multiphase_adsr.h
     kind: graph-node
@@ -89,6 +95,7 @@ candidates:
     label: video/envelopes/multiphase_adsr.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:multiphase_adsr.h:1:0c0627896cab
   - id: graph-node:file:agon-vdp:video/envelopes/types.h
     kind: graph-node
@@ -97,6 +104,7 @@ candidates:
     label: video/envelopes/types.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:types.h:1:0bad61b1d30e
   - id: graph-node:file:agon-vdp:video/vdu_audio.h
     kind: graph-node
@@ -105,6 +113,7 @@ candidates:
     label: video/vdu_audio.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdu_audio.h:1:0b1f97c15ff6
   - id: graph-node:subsystem:agon-vdp:audio
     kind: graph-node
@@ -1548,6 +1557,7 @@ candidates:
     label: src/devdrivers/soundgen.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:soundgen.cpp:1:45ba63d07f0b
   - id: graph-node:file:vdp-gl:src/devdrivers/soundgen.h
     kind: graph-node
@@ -1556,6 +1566,7 @@ candidates:
     label: src/devdrivers/soundgen.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:soundgen.h:1:cdd73983bca7
   - id: graph-node:platform-api:reviewed:fabgl%20soundgenerator%20and%20waveform%20generators
     kind: graph-node

@@ -2,9 +2,9 @@
 
 ## State
 
-- Status: In progress — Review Gate 1 approved; implementation not started
+- Status: Complete — Review Gate 2 approved
 - Started: 2026-08-22 07:03 EDT
-- Finished: --
+- Finished: 2026-08-22 10:08 EDT
 
 ## Intent
 
@@ -76,6 +76,105 @@ selection-cause vocabulary, durable artifact layout, validation contract,
 merge-attention rules, and implementation proof set.
 
 Status: closed and approved by the Author on 2026-08-22. The accepted decisions
-are frozen before implementation. The next work session may implement the
-proposal, run the six-case proof set, and must stop at Review Gate 2 before
-treating the promoted system as routine production infrastructure.
+were frozen before implementation. Schema 2.0, durable tooling, complete source
+manifests, normalized profile selections, source-region seams, projections,
+queries, merge-attention comparison, documentation, and the six-case proof are
+implemented. Work is paused at Review Gate 2 before the promoted system is
+treated as routine production infrastructure.
+
+## Review Gate 2
+
+- [Durable workflow](../dependencies/README.md)
+- [Schema contract](../dependencies/schema/README.md)
+- [Canonical graph](../dependencies/generated/code-graph.yaml)
+- [Complete source-selection projection](../dependencies/generated/source-selection.yaml)
+- [Compact source-selection guide](../dependencies/generated/source-selection.md)
+- [Six-case proof report](../dependencies/generated/port-002-proof.yaml)
+- [Upstream watch and tagged-release procedure](../dependencies/UPSTREAM-WATCH.md)
+
+Status: approved by the Author on 2026-08-22. The infrastructure is accepted
+as the routine production baseline, subject to the explicit distinction
+between declared source selection and a successfully compiled P4 firmware.
+
+### Author review questions
+
+- **RG2-1 — Declared P4 profile (accepted by delegation, 2026-08-22):** The
+  Author accepts the generated P4 source-selection profile as the planning
+  baseline without representing that he performed a record-by-record review.
+  Acceptance delegates technical judgment to the Agent and rests on the
+  Author's detailed SETUP-004 disposition decisions, the approved PORT-002
+  proposal, the six-case proof, and completed automated validation. The profile
+  records intended selection and has not yet been demonstrated by a successful
+  P4 firmware build.
+- **RG2-2 — Mixed-file seams (accepted, 2026-08-22):** Two exact `fabutils`
+  source-region boundaries and the remaining reviewed seam anchors are
+  accepted as the honest interim representation. Exact conditional or
+  extracted-code boundaries remain deferred until the affected port work is
+  implemented and supplies sufficient evidence.
+- **RG2-3 — Infrastructure promotion (accepted by delegation, 2026-08-22):**
+  The Author delegates the detailed technical judgment to the Agent and
+  approves the schema, generators, validators, queries, generated artifacts,
+  and upstream-watch procedure as routine project infrastructure. PORT-002 is
+  authorized to close. This approval rests on the accepted preparatory
+  decisions, proof cases, deterministic regeneration, source verification, and
+  regression tests rather than a personal line-by-line audit by the Author.
+
+## Implementation record
+
+All nine work items are implemented for review:
+
+1. schema 2.0 models exhaustive files, source regions, observed/declared build
+   profiles, and normalized profile/subject selections;
+2. the closed cause vocabulary is schema- and validator-enforced;
+3. selection derives from immutable manifests, the control compilation/include
+   closure, accepted SETUP-004 records, and graph entry points;
+4. validation enforces manifest completeness, tuple uniqueness, cause/evidence
+   compatibility, accepted exclusions, explicit drift, and region parents;
+5. complete YAML and compact Markdown source-selection guides are generated;
+6. tagged-release comparison emits complete Tier A–D merge attention and
+   conservative hash-equal rename candidates;
+7. bounded queries cover source, profile, status, cause, disposition, graph
+   proximity, and optional tagged-release change/tier filters;
+8. the six required v2.16.0 cases pass; and
+9. regeneration, informational upstream watch, tagged reconciliation, review,
+   and acceptance procedures are documented.
+
+Implementation facts and gotchas:
+
+- PORT-001's relationship graph remains a reproducible ignored schema-1
+  intermediate. The enrichment pass removes its obsolete node scalar and emits
+  the sole canonical schema-2 graph; the reviewed overlay is likewise ignored
+  rather than tracked as a second large authority.
+- The immutable inputs remain external `upstream-reference` trees. PORT-002
+  imports no firmware source and deliberately makes no false `vendored` claim.
+- The four exact source manifests contain 5,164 files; vdp-gl's documentation,
+  examples, images, and generated documentation account for most of them. They
+  remain visible as non-runtime or available content instead of being silently
+  discarded.
+- The two profiles yield 10,375 file/region selection records. The declared P4
+  profile has 129 selected files, 42 excluded files, 882 available but not
+  selected, and 4,111 non-runtime files, plus 47 excluded source-region seams.
+- Mixed accepted dispositions cannot be represented honestly at file level.
+  Exact reviewed spans are used for the two `fabutils` storage boundaries;
+  other mixed seams are explicitly labeled as reviewed anchors until port work
+  establishes precise conditional boundaries. No anchor claims that a source
+  guard already exists.
+- Replace dispositions resolve to a planned project-owned adapter build-unit.
+  No adapter source is marked selected before PORT-003 implements it.
+- No real merge-attention report is generated because only one official-tag
+  graph exists. The comparator is regression-tested with deterministic
+  fixtures; the first tracked report requires an independently generated later
+  official tag.
+- The canonical graph is approximately 30 MiB and the exhaustive selection
+  projection approximately 8 MiB. Ignored base/mechanical/overlay intermediates
+  prevent another copy of those large relationships from entering history.
+
+Validation completed on 2026-08-22:
+
+- JSON Schema and project invariant validation of the graph and VDU 22 slice;
+- full input, source-tree, file, and source-span fingerprint verification for
+  all four immutable source roots;
+- ten regression tests, including new-file fail-visible behavior, the six-case
+  proof, and Tier D visibility;
+- a live bounded DS3231 query; and
+- two complete pipeline passes with byte-identical tracked outputs.

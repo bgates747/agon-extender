@@ -9,7 +9,7 @@ generator:
 work_item: SETUP-004.1.b
 inputs:
 - path: docs/tasks/SETUP-004/scope/work-1b.yaml
-  sha256: 81dd59274a8293650601efb546ecbeb28c5faba7d90f132a8e613ec220a82a73
+  sha256: aa7362eb4076e794754cfacae4b71ba8e6fa745a822e440efefd012bec9b859b
 - path: docs/tasks/SETUP-003/generated/compile-commands.json
   sha256: 9bf6acfc2e6de5b6459e4f34d7aab0a7155edf8cc1b87a596796673f453db6a4
 - path: docs/tasks/SETUP-003/generated/includes.yaml
@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_mechanical_facts
 candidates:
 - id: rtc-protocol-surface
@@ -969,6 +969,7 @@ candidates:
   - file:vdp-gl:src/devdrivers/DS3231.cpp
   - file:vdp-gl:src/devdrivers/DS3231.h
   evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
   - evidence:source:vdp-gl:DS3231.cpp:1:ddc89896fd7f
   - evidence:source:vdp-gl:DS3231.h:1:5b2778925550
   traversal_edge_ids: []
@@ -1109,6 +1110,7 @@ candidates:
   - file:vdp-gl:src/devdrivers/MCP23S17.cpp
   - file:vdp-gl:src/devdrivers/MCP23S17.h
   evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
   - evidence:source:vdp-gl:MCP23S17.cpp:1:ac597274fbaf
   - evidence:source:vdp-gl:MCP23S17.h:1:df1e3f2febe9
   traversal_edge_ids: []

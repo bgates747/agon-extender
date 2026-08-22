@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_mechanical_facts
 candidates:
 - id: storage-vdp-gl-filebrowser-api
@@ -753,6 +753,7 @@ candidates:
   - file:vdp-gl:src/fabutils.cpp
   - file:vdp-gl:src/fabutils.h
   evidence_ids:
+  - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
   - evidence:source:vdp-gl:fabutils.cpp:1:30942e3e5ac0
   - evidence:source:vdp-gl:fabutils.h:1:273f85fdbe4e
   traversal_edge_ids: []

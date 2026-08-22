@@ -5,7 +5,7 @@ Review status is tracked per candidate. Detailed mechanical facts, reviewed
 conclusions, and agent entry points are in
 `generated/subsystem-inventory.yaml`.
 
-Input digest: `1cec05caebe32966c7c1ea0240370ea8aae0ca4f8a970450d67e391af1c1ea06`
+Input digest: `8d8520de563a889538737dc50a5ba0e82d0e2bdc7560bbb0c98fb98eff73063a`
 
 | Work | Candidate | Layer | Physical owner | Disposition | Review | Rationale |
 |---|---|---|---|---|---|---|

@@ -50,7 +50,7 @@ SETUP-004/
   does not belong in the repository's top-level routine build/deployment
   scripts.
 
-The official tagged source, PORT-001 graph, and existing project decisions
+The official tagged source, durable dependency graph, and existing project decisions
 remain authoritative. This inventory narrows source review; it does not replace
 source inspection when implementation details matter. Work 1.a has passed the
 mechanical and reviewed-evidence audit, and all 13 candidate dispositions have
@@ -96,7 +96,7 @@ the framework or physical implementation from any externally visible behavior
 that must survive its removal.
 
 1. Approve or revise the bounded `scope/work-<item>.yaml` input.
-2. Generate candidates and mechanical facts from SETUP-003 and PORT-001.
+2. Generate candidates and mechanical facts from SETUP-003 and the durable dependency graph.
 3. Resolve or explicitly retain extraction gaps reported by the coverage audit.
 4. Add bounded reviewed interpretations and provisional dispositions under
    `evidence/`.

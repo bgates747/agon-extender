@@ -14,10 +14,10 @@ The system itself remains seed-agnostic.
 
 ## Generated evidence
 
-- [Authoritative slice](generated/commands/vdu-22.yaml)
-- [Markdown projection](generated/commands/vdu-22.md)
-- [Graphviz source](generated/diagrams/vdu-22.dot)
-- [SVG projection](generated/diagrams/vdu-22.svg)
+- [Authoritative slice](../../dependencies/generated/commands/vdu-22.yaml)
+- [Markdown projection](../../dependencies/generated/commands/vdu-22.md)
+- [Graphviz source](../../dependencies/generated/diagrams/vdu-22.dot)
+- [SVG projection](../../dependencies/generated/diagrams/vdu-22.svg)
 
 The depth-four slice contains 59 nodes, 105 included relationships, 59 explicit
 continuation boundaries, and 71 unresolved lexical relationships. The high
@@ -84,9 +84,9 @@ bounded view is the complete firmware closure.
    objects. Applying a reviewed annotation could therefore change a later
    digest calculation for an already-written file. Artifact digests are now
    frozen immediately after each write.
-4. The full mechanical and merged YAML graphs are each roughly 22 MiB. The
-   mechanical graph is a reproducible ignored intermediate; only the merged
-   authoritative graph is retained, avoiding duplicate repository weight.
+4. The full mechanical graph is a large reproducible ignored intermediate.
+   PORT-002 later promoted and enriched its merged result as the durable
+   schema-2 graph under `docs/dependencies/`.
 
 ## Validation completed
 
@@ -100,4 +100,3 @@ bounded view is the complete firmware closure.
   four source owners;
 - six focused regression tests; and
 - byte-identical graph, overlay, slice, Markdown, DOT, and SVG regeneration.
-

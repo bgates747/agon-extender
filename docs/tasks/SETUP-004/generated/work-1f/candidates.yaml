@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_candidates
 counts:
   scoped_items: 521
@@ -41,6 +41,7 @@ candidates:
     label: video/agon_ps2.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:agon_ps2.h:1:c2c222f21cf0
   - id: graph-node:file:agon-vdp:video/vdp_variables.h
     kind: graph-node
@@ -49,6 +50,7 @@ candidates:
     label: video/vdp_variables.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdp_variables.h:1:dd2aeda58fb5
   - id: graph-node:file:agon-vdp:video/vdu_sprites.h
     kind: graph-node
@@ -57,6 +59,7 @@ candidates:
     label: video/vdu_sprites.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdu_sprites.h:1:ba9871cfb358
   - id: graph-node:file:agon-vdp:video/vdu_stream_processor.h
     kind: graph-node
@@ -65,6 +68,7 @@ candidates:
     label: video/vdu_stream_processor.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdu_stream_processor.h:1:0485516551a1
   - id: graph-node:file:agon-vdp:video/vdu_sys.h
     kind: graph-node
@@ -73,6 +77,7 @@ candidates:
     label: video/vdu_sys.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdu_sys.h:1:404f0b15efc2
   - id: graph-node:subsystem:agon-vdp:physical-ps2-input
     kind: graph-node
@@ -1202,6 +1207,7 @@ candidates:
     label: src/devdrivers/kbdlayouts.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:kbdlayouts.cpp:1:eb4d95ef715a
   - id: graph-node:file:vdp-gl:src/devdrivers/kbdlayouts.h
     kind: graph-node
@@ -1210,6 +1216,7 @@ candidates:
     label: src/devdrivers/kbdlayouts.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:kbdlayouts.h:1:6c0bf4f651ba
   - id: graph-node:file:vdp-gl:src/devdrivers/keyboard.cpp
     kind: graph-node
@@ -1218,6 +1225,7 @@ candidates:
     label: src/devdrivers/keyboard.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:keyboard.cpp:1:341213aacab9
   - id: graph-node:file:vdp-gl:src/devdrivers/keyboard.h
     kind: graph-node
@@ -1226,6 +1234,7 @@ candidates:
     label: src/devdrivers/keyboard.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:keyboard.h:1:64df7acecb57
   - id: include:vdp-gl:src/comdrivers/ps2controller.cpp:42:devdrivers/keyboard.h
     kind: include
@@ -3746,6 +3755,7 @@ candidates:
     label: src/devdrivers/mouse.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:mouse.cpp:1:cc63031a18bd
   - id: graph-node:file:vdp-gl:src/devdrivers/mouse.h
     kind: graph-node
@@ -3754,6 +3764,7 @@ candidates:
     label: src/devdrivers/mouse.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:mouse.h:1:e15e768ae963
   - id: include:vdp-gl:src/comdrivers/ps2controller.cpp:43:devdrivers/mouse.h
     kind: include
@@ -4559,6 +4570,7 @@ candidates:
     label: src/comdrivers/ps2controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ps2controller.cpp:1:cee72572cd1d
   - id: graph-node:file:vdp-gl:src/comdrivers/ps2controller.h
     kind: graph-node
@@ -4567,6 +4579,7 @@ candidates:
     label: src/comdrivers/ps2controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ps2controller.h:1:d090dde0b9b3
   - id: graph-node:physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio,%20sens%20registers,%20rtc%20interrupt,%20queues,%20and%20tasks
     kind: graph-node

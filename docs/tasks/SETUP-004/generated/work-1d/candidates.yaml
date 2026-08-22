@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_candidates
 counts:
   scoped_items: 1002
@@ -41,6 +41,7 @@ candidates:
     label: video/agon_screen.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:agon_screen.h:1:7f89fe73b3f6
   - id: graph-node:subsystem:agon-vdp:graphics-display
     kind: graph-node
@@ -1335,6 +1336,7 @@ candidates:
     label: src/canvas.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:canvas.cpp:1:baf6528d94b9
   - id: graph-node:file:vdp-gl:src/canvas.h
     kind: graph-node
@@ -1343,6 +1345,7 @@ candidates:
     label: src/canvas.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:canvas.h:1:11d406b49e04
   - id: graph-node:file:vdp-gl:src/displaycontroller.cpp
     kind: graph-node
@@ -1351,6 +1354,7 @@ candidates:
     label: src/displaycontroller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:displaycontroller.cpp:1:09097411d8d5
   - id: graph-node:file:vdp-gl:src/displaycontroller.h
     kind: graph-node
@@ -1359,6 +1363,7 @@ candidates:
     label: src/displaycontroller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:displaycontroller.h:1:282491fa6499
   - id: graph-node:platform-api:reviewed:fabgl%20canvas%20and%20vga2/vga4/vga8/vga16/vga64%20controllers
     kind: graph-node
@@ -4844,6 +4849,7 @@ candidates:
     label: src/dispdrivers/vga16controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga16controller.cpp:1:c30bf72281cf
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga16controller.h
     kind: graph-node
@@ -4852,6 +4858,7 @@ candidates:
     label: src/dispdrivers/vga16controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga16controller.h:1:d094880d7b81
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga2controller.cpp
     kind: graph-node
@@ -4860,6 +4867,7 @@ candidates:
     label: src/dispdrivers/vga2controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga2controller.cpp:1:ce33c8d7e73a
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga2controller.h
     kind: graph-node
@@ -4868,6 +4876,7 @@ candidates:
     label: src/dispdrivers/vga2controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga2controller.h:1:9ff4559fe01a
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga4controller.cpp
     kind: graph-node
@@ -4876,6 +4885,7 @@ candidates:
     label: src/dispdrivers/vga4controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga4controller.cpp:1:ac9f3f618771
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga4controller.h
     kind: graph-node
@@ -4884,6 +4894,7 @@ candidates:
     label: src/dispdrivers/vga4controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga4controller.h:1:8dedaed1d90b
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga64controller.cpp
     kind: graph-node
@@ -4892,6 +4903,7 @@ candidates:
     label: src/dispdrivers/vga64controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga64controller.cpp:1:3cc6aeff5c1f
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga64controller.h
     kind: graph-node
@@ -4900,6 +4912,7 @@ candidates:
     label: src/dispdrivers/vga64controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga64controller.h:1:1f0a4ec4ad3d
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga8controller.cpp
     kind: graph-node
@@ -4908,6 +4921,7 @@ candidates:
     label: src/dispdrivers/vga8controller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga8controller.cpp:1:c9307cbff268
   - id: graph-node:file:vdp-gl:src/dispdrivers/vga8controller.h
     kind: graph-node
@@ -4916,6 +4930,7 @@ candidates:
     label: src/dispdrivers/vga8controller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vga8controller.h:1:ada7b1d3573b
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgabasecontroller.cpp
     kind: graph-node
@@ -4924,6 +4939,7 @@ candidates:
     label: src/dispdrivers/vgabasecontroller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgabasecontroller.cpp:1:c80f40d5bb8c
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgabasecontroller.h
     kind: graph-node
@@ -4932,6 +4948,7 @@ candidates:
     label: src/dispdrivers/vgabasecontroller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgabasecontroller.h:1:bc94a954affb
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgacontroller.cpp
     kind: graph-node
@@ -4940,6 +4957,7 @@ candidates:
     label: src/dispdrivers/vgacontroller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgacontroller.cpp:1:46cd4020d3f8
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgacontroller.h
     kind: graph-node
@@ -4948,6 +4966,7 @@ candidates:
     label: src/dispdrivers/vgacontroller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgacontroller.h:1:c38c0213fed9
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp
     kind: graph-node
@@ -4956,6 +4975,7 @@ candidates:
     label: src/dispdrivers/vgapalettedcontroller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgapalettedcontroller.cpp:1:caf26c0b918d
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
     kind: graph-node
@@ -4964,6 +4984,7 @@ candidates:
     label: src/dispdrivers/vgapalettedcontroller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgapalettedcontroller.h:1:9fd8d2d7cce5
   - id: graph-node:physical-facility:reviewed:esp32%20gpio%20matrix
     kind: graph-node
@@ -11578,6 +11599,7 @@ candidates:
     label: src/dispdrivers/vgatextcontroller.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgatextcontroller.cpp:1:dfed84e5e305
   - id: graph-node:file:vdp-gl:src/dispdrivers/vgatextcontroller.h
     kind: graph-node
@@ -11586,6 +11608,7 @@ candidates:
     label: src/dispdrivers/vgatextcontroller.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:vgatextcontroller.h:1:bca35c8d6932
   - id: include:vdp-gl:src/fabgl.h:316:dispdrivers/vgatextcontroller.h
     kind: include
@@ -12085,6 +12108,7 @@ candidates:
     label: src/devdrivers/cvbsgenerator.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:cvbsgenerator.cpp:1:d9b9e0d48525
   - id: graph-node:file:vdp-gl:src/devdrivers/cvbsgenerator.h
     kind: graph-node
@@ -12093,6 +12117,7 @@ candidates:
     label: src/devdrivers/cvbsgenerator.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:cvbsgenerator.h:1:22ade2665890
   - id: include:vdp-gl:src/devdrivers/cvbsgenerator.cpp:39:devdrivers/cvbsgenerator.h
     kind: include
@@ -12519,6 +12544,7 @@ candidates:
     label: src/scene.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:scene.cpp:1:a3e882b0306a
   - id: graph-node:file:vdp-gl:src/scene.h
     kind: graph-node
@@ -12527,6 +12553,7 @@ candidates:
     label: src/scene.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:scene.h:1:54508e013f56
   - id: include:vdp-gl:src/fabgl.h:327:scene.h
     kind: include

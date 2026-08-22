@@ -29,7 +29,7 @@ The extraction scripts consume these tracked artifacts:
 - `SETUP-003/generated/portability.yaml` for platform occurrences and reviewed
   runtime facts;
 - `SETUP-003/generated/dependency-views.yaml` for file-level coupling;
-- `PORT-001/generated/code-graph.yaml` for typed source, call, state, task,
+- `docs/dependencies/generated/code-graph.yaml` for typed source, call, state, task,
   callback, packet, platform, and physical-facility relationships;
 - `SETUP-004/VDU-inventory.md` for the accepted compatibility surface; and
 - accepted ADRs and open task decisions for project ownership and architecture.

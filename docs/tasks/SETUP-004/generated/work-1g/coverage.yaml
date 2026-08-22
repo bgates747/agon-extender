@@ -9,11 +9,11 @@ generator:
 work_item: SETUP-004.1.g
 inputs:
 - path: docs/tasks/SETUP-004/generated/work-1g/candidates.yaml
-  sha256: 642d0483a0816d867a5363233bb1cccff6ebccf9c1f21c9a87e2750bb420f727
+  sha256: eff9343461fde0da8a05f7f01249efec7c05e11142bb778b583ea790b3a83947
 - path: docs/tasks/SETUP-004/generated/work-1g/mechanical-facts.yaml
-  sha256: ddee415680c007a7a5b54c99f81de2245fdcfb8c564ef7ab91fe7485541cf0fe
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+  sha256: ab4640f1393d2d8de49436d77fae1f5ed1dcfa1900f3f2636efa7dcb8bcec185
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 - path: docs/tasks/SETUP-004/evidence/work-1g-network-transfer.yaml
   sha256: a83aab00d282abfa39de44b1f9c698e18cc70ce4ead0ed2a080c2ebb41593e3f
 status: pass-ready-for-author-review

@@ -20,8 +20,8 @@ inputs:
   sha256: f29b4d4f3711769b48a7d38dcafe4e543d7beaca77f49baf9904f8774ed5d7b7
 - path: docs/tasks/SETUP-003/generated/dependency-views.yaml
   sha256: 657a3af0d61b07c0dfd86e0fbf761e64c4f431ad5b3a752d0a92bbf692d19dd4
-- path: docs/tasks/PORT-001/generated/code-graph.yaml
-  sha256: 218250642ad9ad7f71f8bc518a264feb593765b8bb8a1089fb32fdb4efa381f9
+- path: docs/dependencies/generated/code-graph.yaml
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
 artifact_kind: setup_004_candidates
 counts:
   scoped_items: 703
@@ -41,6 +41,7 @@ candidates:
     label: video/vdp_protocol.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:vdp_protocol.h:1:4da15b968c35
   - id: graph-node:macro:agon-vdp:VDPSerial@video/vdp_protocol.h%23variant-dbcd3c44de4c
     kind: graph-node
@@ -1920,6 +1921,7 @@ candidates:
     label: src/comdrivers/tsi2c.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:tsi2c.cpp:1:8948303733be
   - id: graph-node:file:vdp-gl:src/comdrivers/tsi2c.h
     kind: graph-node
@@ -1928,6 +1930,7 @@ candidates:
     label: src/comdrivers/tsi2c.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:tsi2c.h:1:27dde805d014
   - id: include:vdp-gl:src/comdrivers/tsi2c.cpp:33:tsi2c.h
     kind: include
@@ -3204,6 +3207,7 @@ candidates:
     label: src/ulp_macro_ex.cpp
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ulp_macro_ex.cpp:1:dbe3a8555267
   - id: graph-node:file:vdp-gl:src/ulp_macro_ex.h
     kind: graph-node
@@ -3212,6 +3216,7 @@ candidates:
     label: src/ulp_macro_ex.h
     owner: vdp-gl
     evidence_ids:
+    - evidence:reviewed:vdp-gl:source-baselines.yaml:1:9f4d81547468
     - evidence:source:vdp-gl:ulp_macro_ex.h:1:b805a7270864
   - id: graph-node:physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio,%20sens%20registers,%20rtc%20interrupt,%20queues,%20and%20tasks
     kind: graph-node
@@ -4824,6 +4829,7 @@ candidates:
     label: video/OneWire_direct_gpio.h
     owner: agon-vdp
     evidence_ids:
+    - evidence:reviewed:agon-vdp:source-baselines.yaml:1:b7dd427e5e08
     - evidence:source:agon-vdp:OneWire_direct_gpio.h:1:c86444d0ffaa
   - id: graph-node:physical-facility:reviewed:direct%20esp32%20gpio%20register%20helper%20for%20zdi
     kind: graph-node

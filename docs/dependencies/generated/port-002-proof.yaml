@@ -1,0 +1,86 @@
+schema_version: 1.0.0
+artifact_kind: port_002_proof
+source_graph:
+  id: graph:agon-extender:vdp-source-selection-v2
+  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+cases:
+- id: proof-1-ds3231-whole-file-exclusion
+  status: pass
+  subjects:
+  - file:vdp-gl:src/devdrivers/DS3231.cpp
+  assertions:
+  - DS3231 exists in the exhaustive upstream manifest
+  - upstream control build selects DS3231
+  - P4 target deliberately excludes DS3231
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:vdp-gl:src/devdrivers/DS3231.cpp
+  - selection:build-profile:extender:p4-default:file:vdp-gl:src/devdrivers/DS3231.cpp
+- id: proof-2-fused-fabutils-regions
+  status: pass
+  subjects:
+  - file:vdp-gl:src/fabutils.cpp
+  - source-region:vdp-gl:src/fabutils.cpp:storage-vdp-gl-filebrowser-api
+  - source-region:vdp-gl:src/fabutils.cpp:storage-vdp-gl-esp32-mount-format-backends
+  assertions:
+  - fabutils.cpp remains selected
+  - FileBrowser region is excluded
+  - classic ESP32 storage region is excluded
+  - FileBrowser carries an exact fingerprinted boundary
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:vdp-gl:src/fabutils.cpp
+  - selection:build-profile:extender:p4-default:file:vdp-gl:src/fabutils.cpp
+  - selection:build-profile:extender:p4-default:source-region:vdp-gl:src/fabutils.cpp:storage-vdp-gl-filebrowser-api
+  - selection:build-profile:extender:p4-default:source-region:vdp-gl:src/fabutils.cpp:storage-vdp-gl-esp32-mount-format-backends
+- id: proof-3-vga-replacement-boundary
+  status: pass
+  subjects:
+  - file:vdp-gl:src/dispdrivers/vga8controller.cpp
+  assertions:
+  - upstream control build selects concrete VGA source
+  - P4 target excludes concrete VGA source
+  - replacement points to the planned project adapter boundary
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:vdp-gl:src/dispdrivers/vga8controller.cpp
+  - selection:build-profile:extender:p4-default:file:vdp-gl:src/dispdrivers/vga8controller.cpp
+- id: proof-4-header-defined-official-vdp
+  status: pass
+  subjects:
+  - file:agon-vdp:video/vdu.h
+  assertions:
+  - official implementation header is selected upstream
+  - selection is mechanically represented as transitive include
+  - P4 compatibility target retains the header
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:agon-vdp:video/vdu.h
+  - selection:build-profile:extender:p4-default:file:agon-vdp:video/vdu.h
+- id: proof-5-pinned-release-library
+  status: pass
+  subjects:
+  - file:ESP32Time:ESP32Time.cpp
+  assertions:
+  - ESP32Time exact release identity is recorded
+  - upstream build selects the release source
+  - P4 target retains the release source
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:ESP32Time:ESP32Time.cpp
+  - selection:build-profile:extender:p4-default:file:ESP32Time:ESP32Time.cpp
+- id: proof-6-license-visible-non-runtime
+  status: pass
+  subjects:
+  - file:vdp-gl:LICENSE
+  assertions:
+  - license is classified explicitly
+  - license is not a firmware build candidate
+  - license remains merge-visible non-runtime content
+  failures: []
+  selection_records:
+  - selection:build-profile:upstream:agon-vdp-v2.16.0-esp32:file:vdp-gl:LICENSE
+  - selection:build-profile:extender:p4-default:file:vdp-gl:LICENSE
+summary:
+  passed: 6
+  failed: 0
