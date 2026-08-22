@@ -1,8 +1,14 @@
 # P4 Frame-Service Qualification — r02
 
-Status: Candidate
+Status: Deprecated
 
 Identity: `p4-frame-service-qualification-r02`
+
+Superseded before physical execution by
+[`p4-frame-service-qualification-r03`](p4-frame-service-qualification-r03.md),
+which adds control of the already-attached product harness, logic-analyzer
+fixture, and disconnected-Agon boundary. The firmware test contract below is
+otherwise unchanged.
 
 ## Purpose
 

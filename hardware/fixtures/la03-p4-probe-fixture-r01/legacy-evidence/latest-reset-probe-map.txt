@@ -1,0 +1,3 @@
+D4=purple:REV_OE_N/GPIO21/EXT2_pin_12
+D7=brown:FWD_OE_N/GPIO15/EXT1_pin_16
+GND=black:qualified_P4_ground

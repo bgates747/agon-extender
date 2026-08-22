@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r07
-updated_at: 2026-08-22T23:28:40Z
+registry_revision: r09
+updated_at: 2026-08-22T23:47:02Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -46,13 +46,15 @@ artifacts:
   - artifact_id: p4-frame-service-qualification
     kind: test_procedure
     identity_scheme: revision
-    latest_identity: p4-frame-service-qualification-r02
+    latest_identity: p4-frame-service-qualification-r03
     status: candidate
     variants: []
     description: Committed build, deployment, and sink-free logical frame-service qualification procedure.
     notes:
       - Revision r01 was rejected with its D008 firmware candidate and must not be used for corrected source.
       - Revision r02 qualifies the D009 faithful-port lifecycle and one-edge-per-recorded-tick behavior.
+      - Revision r02 was superseded before physical execution because it did not control the already-attached product harness, analyzer fixture, or disconnected-Agon boundary.
+      - Revision r03 retains the r02 firmware contract and adds those physical controls plus mandatory pre-flash probe-seat verification.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile
@@ -119,13 +121,16 @@ artifacts:
     variants: []
     description: One-way high-speed eZ80-to-P4 parallel transport contract.
 
-  - artifact_id: parallel-probe-map
+  - artifact_id: la03-p4-probe-fixture
     kind: probe_map
     identity_scheme: revision
-    latest_identity: null
-    status: draft
+    latest_identity: la03-p4-probe-fixture-r01
+    status: candidate
     variants: []
-    description: Reusable logic-analyzer channel and probe assignment for the parallel transport.
+    description: LA-03 logic-analyzer harness and P4 endpoint assignment.
+    notes:
+      - Revision r01 vendors the predecessor channel/color harness, LA-03 endpoint procedure, and latest reset-run probe record.
+      - The Author physically verified green D0 on GPIO32; the authoritative Rev D1 pinout resolves it to EXT2 pin 9 and the contradictory legacy pin-10 label remains provenance only.
 
   - artifact_id: agon-transport-fixture
     kind: test_program

@@ -1,0 +1,68 @@
+# Authoritative machine-readable definition of la03-p4-probe-fixture-r01.
+schema_version: 1
+artifact_id: la03-p4-probe-fixture
+identity: la03-p4-probe-fixture-r01
+kind: probe_map
+status: candidate
+authority: tracked-first-fixture-target
+precedence:
+  - profile.yaml
+  - README.md
+  - legacy-evidence
+
+provenance:
+  repository: https://github.com/bgates747/agon-extender-legacy.git
+  repository_commit: df54cf6a7a23cd40e98076856f68cff0559d1c77
+  last_relevant_change_commit: 45e0c270717e5e828b1872734356d31c31ce391e
+  imported_at: 2026-08-22T23:42:04Z
+  files:
+    - path: legacy-evidence/logic-analyzer-harness.md
+      source_path: docs/logic-analyzer.md
+      source_sha256: 93e0638ac01dc008a4c67b246df08eacfd41760da47a76935530aae8a0958c3b
+      preservation: bounded-relevant-extract
+    - path: legacy-evidence/la-03-p4.md
+      source_path: tests/procedures/la-03-p4.md
+      source_sha256: 566f214ae103ae443ad5a39367c992dac30f7d03caaa3d94807962d2f7dcb708
+      preservation: bounded-relevant-extract
+    - path: legacy-evidence/rev-01d-reset-safety.md
+      source_path: tests/procedures/rev-01d-reset-safety.md
+      source_sha256: e49d6ef7ae33be34e53cff6b2c98bf870dec2692cf0369954629704ba075120d
+      preservation: bounded-relevant-extract
+    - path: legacy-evidence/latest-reset-probe-map.txt
+      source_path: tests/runs/2026-08-19_151000_rev-03-reset/probe-map.txt
+      source_sha256: 352f554cdc474f9c1a0e617ebe5eed05b57c6c5ffac38bbc4cfc55f6d0de4a70
+      preservation: verbatim
+
+analyzer_harness:
+  channels:
+    D0: green
+    D1: yellow
+    D2: blue
+    D3: orange
+    D4: purple
+    D5: red
+    D6: gray
+    D7: brown
+  ground: black-qualified-position
+  ribbons:
+    even: [D0, D2, D4, D6]
+    odd: [D1, D3, D5, D7]
+
+assignments:
+  - {channel: D0, color: green, p4_gpio: 32, p4_header: EXT2, p4_header_pin: 9, net: parallel-D4, status: author-physically-verified-2026-08-22}
+  - {channel: D1, color: yellow, p4_gpio: 12, p4_header: EXT1, p4_header_pin: 13, net: uart-tx-parallel-D1, status: candidate}
+  - {channel: D2, color: blue, p4_gpio: 22, p4_header: EXT2, p4_header_pin: 11, net: uart-rx-parallel-D0, status: candidate}
+  - {channel: D3, color: orange, p4_gpio: 13, p4_header: EXT1, p4_header_pin: 14, net: VALID_N, status: candidate}
+  - {channel: D4, color: purple, p4_gpio: 21, p4_header: EXT2, p4_header_pin: 12, net: REV_OE_N, status: legacy-run-verified}
+  - {channel: D5, color: red, p4_gpio: 14, p4_header: EXT1, p4_header_pin: 15, net: CLOCK, status: candidate}
+  - {channel: D6, color: gray, p4_gpio: 20, p4_header: EXT2, p4_header_pin: 13, net: READY_N, status: candidate}
+  - {channel: D7, color: brown, p4_gpio: 15, p4_header: EXT1, p4_header_pin: 16, net: FWD_OE_N, status: legacy-run-verified}
+  - {channel: GND, color: black, endpoint: qualified-p4-ground, net: signal-ground, status: legacy-run-verified}
+
+resolved_discrepancies:
+  - id: LA03-R01-D001
+    legacy_claim: green D0 is GPIO32 / EXT2 pin 10
+    resolution: green D0 physically verified on GPIO32; authoritative Rev D1 pinout identifies GPIO32 as EXT2 pin 9
+    resolved_by: Author physical inspection
+    resolved_on: 2026-08-22
+    recurring_gate: verify attachment before every capture because the probe is known to loosen

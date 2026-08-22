@@ -977,7 +977,9 @@ This build is diagnostic only. The old `port-003-frame-service-canary-r01` and
 `p4-frame-service-qualification-r01` identities describe the superseded D008
 candidate and are rejected. The Author approved corrected candidate identities
 `port-003-frame-service-canary-r02` and
-`p4-frame-service-qualification-r02` in registry r07. Item 10 remains open
+`p4-frame-service-qualification-r03` in registry r09. Procedure r03 preserves
+r02's firmware contract while controlling the attached `light2-harness-r01`,
+`la03-p4-probe-fixture-r01`, and disconnected-Agon boundary. Item 10 remains open
 until this coherent candidate is committed and pushed as the pre-qualification
 checkpoint. No physical qualification is authorized by this corrective record.
 

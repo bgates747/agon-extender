@@ -37,7 +37,9 @@ The former `port-003-frame-service-canary-r01` candidate and
 `p4-frame-service-qualification-r01` procedure describe the superseded D008
 candidate and must not be used for the corrected source. Replacement
 identities `port-003-frame-service-canary-r02` and
-`p4-frame-service-qualification-r02` were approved for the corrected source;
+`p4-frame-service-qualification-r03` were approved for the corrected source
+and controlled live fixture state. Procedure r02 was deprecated before
+physical execution;
 physical qualification still requires their clean committed checkpoint.
 
 ## Gate boundary

@@ -38,7 +38,7 @@ generated_evidence:
   - docs/tasks/PORT-003/phase-c/evidence/target-runs.yaml
 accepted_integration_seam: PORT-003-D009
 candidate_identity: port-003-frame-service-canary-r02
-qualification_procedure: p4-frame-service-qualification-r02
+qualification_procedure: p4-frame-service-qualification-r03
 superseded_candidate_identity: port-003-frame-service-canary-r01
 superseded_qualification_procedure: p4-frame-service-qualification-r01
 patched_vendor_files: []

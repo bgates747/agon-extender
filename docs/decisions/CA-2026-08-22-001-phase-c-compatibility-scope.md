@@ -239,3 +239,8 @@ approved `port-003-frame-service-canary-r02`,
 `p4-frame-service-qualification-r02`, and artifact registry r07 for the
 corrected source. Physical qualification still requires their clean committed
 and pushed checkpoint.
+
+Procedure `p4-frame-service-qualification-r03` subsequently superseded r02
+before physical execution. It changes no corrective firmware behavior; it
+adds control of the attached product harness, analyzer fixture,
+disconnected-Agon boundary, and pre-flash probe inspection.
