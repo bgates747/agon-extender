@@ -1,0 +1,207 @@
+# Reviewed SETUP-004 Work 1.d input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.d
+subject: FabGL display integration, rendering semantics, and physical video drivers
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+  source_evidence:
+    - {id: target:p4-display-soc-caps, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/soc/esp32p4/include/soc/soc_caps.h, sha256: 4aba7eaad13804d97e6cf8ff4cfe965e4892438fab43eb1fc18193eb072ad651}
+    - {id: target:p4-interrupt-sources, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/soc/esp32p4/include/soc/interrupts.h, sha256: 1375fd3d96b6ad660435b2b4d0da0a08978c3f03132b8d677fa6d1012b32cdc1}
+    - {id: target:p4-mipi-dsi, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_lcd/dsi/include/esp_lcd_mipi_dsi.h, sha256: 603aecb410f2a1ab1e494482ea3b31fa71fb2daf5d0152ab4ff1f02306cf6efc}
+    - {id: target:p4-rgb-panel, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_lcd/rgb/include/esp_lcd_panel_rgb.h, sha256: e1b398a69876b20536e99b0ddb80e2d3fcacc262edb117108eb62797ee01f37f}
+records:
+  - id: display-vdp-screen-facade
+    name: Official VDP screen, mode, palette, and controller integration facade
+    layer: Header-defined official VDP integration
+    scope: Global Canvas/controller ownership, mode selection and fallback, logical dimensions and scaling, palette operations, Copper signal-list forwarding, double buffering, plot completion, and frame-counter access.
+    upstream_owner: agon-vdp
+    source_highlights: [agon-vdp:video/agon_screen.h, agon-vdp:video/context.h, agon-vdp:video/vdu.h, agon-vdp:video/video.ino]
+    implementation_highlights:
+      selected_translation_units: [agon-vdp:video/video.ino]
+      header_implementation: [agon-vdp:video/agon_screen.h, agon-vdp:video/context.h, agon-vdp:video/vdu.h]
+    facilities: [global Canvas and controller lifetime, five stock color-depth modes, logical palette and Copper palette lists, framebuffer swap and completion waits, logical frame counter]
+    activation: [Startup selects the initial mode., VDU 22 and mode-changing extensions replace the active controller and Canvas., Drawing, palette, Copper, sprite, read-pixel, and frame-wait commands use the globals continuously.]
+    connections: {startup: [setup and initial mode selection], tasks: [processLoop and retained display worker], interrupts: [upstream VGA VSync ISR through frameCounter], timers: [], callbacks: [CALLBACK_MODE_CHANGE, CALLBACK_PALETTE, CALLBACK_VSYNC], global_state: [_VGAController, canvas, canvasW, canvasH, palette, videoMode, logicalScaleX, logicalScaleY]}
+    visible_behavior: [All accepted screen, text, graphics, bitmap, sprite, palette, Copper, tile, context, plot, screen-read, mode-information, buffering, and VSYNC behaviors pass through this facade., VDU 22 failure falls back to the prior mode and then mode 1., Frame progression drives waits, cursor state, and buffered VSYNC callbacks.]
+    target_compatibility:
+      status: source-shape-retainable-controller-binding-requires-adaptation
+      finding: The header-defined facade is architecture-neutral except for its concrete VGABaseController types and assumptions; P4 output requires a retained facade over an Extender-compatible controller implementation.
+      evidence: [target:p4-display-soc-caps, target:p4-mipi-dsi]
+    physical_owner_class: Extender
+    physical_owner: Extender EDP owns the facade and selected display state in EDP-active modes
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: The accepted VDU inventory requires its complete logical surface, while preserving upstream names and placement minimizes future tagged-release merge work.
+    omission_fallout: Omission removes the central display state used throughout the effective video.ino translation unit; retention still requires a narrow controller-construction adaptation.
+    dependencies: [W1D-Q02, W1D-Q03, SETUP-005-D002]
+    dependency_effects:
+      - {id: W1D-Q02, effect: blocks-implementation}
+      - {id: W1D-Q03, effect: blocks-implementation}
+      - {id: SETUP-005-D002, effect: requires-later-qualification}
+    evidence_ids: [evidence:reviewed:facility-graphics-display-0]
+    graph_node_ids: [subsystem:agon-vdp:graphics-display, file:agon-vdp:video/agon_screen.h]
+    agent_entry_points: [agon-vdp:video/agon_screen.h:1, agon-vdp:video/vdu.h:299, agon-vdp:video/context.h:1312]
+
+  - id: display-canvas-common-rendering
+    name: FabGL Canvas and common bitmapped rendering semantics
+    layer: vdp-gl portable drawing command and state layer
+    scope: Canvas command generation plus common primitive queues, paint state, clipping, geometry, glyph, bitmap transform, sprite, cursor, readback, and double-buffer contracts; excludes concrete pixel storage and output scanout.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/canvas.cpp, vdp-gl:src/canvas.h, vdp-gl:src/displaycontroller.cpp, vdp-gl:src/displaycontroller.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/canvas.cpp, vdp-gl:src/displaycontroller.cpp]
+      header_implementation: [vdp-gl:src/canvas.h, vdp-gl:src/displaycontroller.h]
+    facilities: [Canvas API, FreeRTOS primitive queue, paint and clipping state, generic geometry and bitmap algorithms, software sprite and cursor composition, abstract BitmappedDisplayController contract]
+    activation: [changeResolution constructs Canvas over the active controller., Nearly every retained text and graphics command queues or executes Canvas primitives., The concrete backend drains primitives and reports updates.]
+    connections: {startup: [Canvas construction after mode selection], tasks: [upstream primitive task or replacement display worker], interrupts: [upstream may execute primitives in VSync ISR], timers: [], callbacks: [], global_state: [controller paint state, primitive queue, sprites, mouse cursor, text cursor]}
+    visible_behavior: [Defines ordering and results for retained text, plot, path, font, bitmap, sprite, cursor, transform, scroll, readback, flush, and buffer-swap operations., Queue completion and refresh timing are observable through waits and VSYNC-dependent commands.]
+    target_compatibility:
+      status: mostly-portable-with-one-architecture-specific-isr-path
+      finding: Canvas and most common controller code use portable C++ and retained FreeRTOS APIs, but transformed-bitmap execution inside an ISR directly saves Xtensa coprocessor state with xthal calls and cannot be retained unchanged on the RISC-V P4.
+      evidence: [target:p4-display-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender EDP rendering runtime and framebuffer state
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: This is the closest existing semantic seam beneath official VDP commands and preserves mature drawing behavior without rewriting the parser or graphics model.
+    omission_fallout: Omission forces a complete rewrite of the accepted drawing surface; retention requires removing or replacing only architecture-specific ISR execution assumptions and connecting a new concrete backend.
+    dependencies: [W1D-Q03]
+    dependency_effects:
+      - {id: W1D-Q03, effect: blocks-implementation}
+    evidence_ids: [evidence:reviewed:facility-graphics-display-0]
+    graph_node_ids: [file:vdp-gl:src/canvas.cpp, file:vdp-gl:src/canvas.h, file:vdp-gl:src/displaycontroller.cpp, file:vdp-gl:src/displaycontroller.h]
+    agent_entry_points: [vdp-gl:src/canvas.h:70, vdp-gl:src/displaycontroller.h:897, vdp-gl:src/displaycontroller.cpp:792]
+
+  - id: display-vga-concrete-controller-family
+    name: FabGL concrete VGA framebuffer renderers and ESP32 scanout engine
+    layer: vdp-gl concrete framebuffer and physical output implementation
+    scope: VGA2/4/8/16/64 pixel formats and drawing methods, palettes and Copper signal lists, scanline sprite composition, modelines, framebuffer allocation, frame counter, primitive scheduling, GPIO matrix, I2S1 DMA, and VSync ISRs.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp, vdp-gl:src/dispdrivers/vga2controller.cpp, vdp-gl:src/dispdrivers/vga4controller.cpp, vdp-gl:src/dispdrivers/vga8controller.cpp, vdp-gl:src/dispdrivers/vga16controller.cpp, vdp-gl:src/dispdrivers/vga64controller.cpp]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/dispdrivers/vgacontroller.cpp, vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp, vdp-gl:src/dispdrivers/vga2controller.cpp, vdp-gl:src/dispdrivers/vga4controller.cpp, vdp-gl:src/dispdrivers/vga8controller.cpp, vdp-gl:src/dispdrivers/vga16controller.cpp, vdp-gl:src/dispdrivers/vga64controller.cpp]
+      header_implementation: [vdp-gl:src/dispdrivers/vgabasecontroller.h, vdp-gl:src/dispdrivers/vgapalettedcontroller.h, vdp-gl:src/dispdrivers/vga2controller.h, vdp-gl:src/dispdrivers/vga4controller.h, vdp-gl:src/dispdrivers/vga8controller.h, vdp-gl:src/dispdrivers/vga16controller.h, vdp-gl:src/dispdrivers/vga64controller.h]
+    facilities: [packed legacy framebuffer formats, RGB222 and indexed palettes, Copper scanline palette changes, software and scanline sprite composition, Linux-style modelines, I2S1 parallel output, legacy DMA descriptor chains, GPIO matrix, VSync ISR and frame counter]
+    activation: [getVGAController constructs one concrete class on every startup or mode change., begin and setResolution configure GPIO, I2S1, DMA, framebuffer, worker, and ISR state., Every retained drawing command ultimately calls the selected controller.]
+    connections: {startup: [updateVGAController and changeResolution], tasks: [primitiveExecTask], interrupts: [I2S1 VSync and scanline ISRs], timers: [], callbacks: [frameCounter observed by CALLBACK_VSYNC processing], global_state: [_VGAController, framebuffer rows, visible and drawing buffers, palettes, signal lists, DMA chains]}
+    visible_behavior: [Provides exact stock pixel formats, palette quantization, screen dimensions, readback, sprites, Copper scanline effects, double buffering, frame timing, and all rendered output., Mode and memory failures are visible to VDU 22 fallback behavior.]
+    target_compatibility:
+      status: physical-engine-incompatible-behavioral-reference-required
+      finding: The implementation is inseparably specialized for classic ESP32 GPIO-matrix plus I2S1 VGA scanout and legacy DMA/ISR behavior; P4 instead exposes native LCD, RGB, and MIPI-DSI facilities, while Extender's guaranteed initial sink is network/browser video.
+      evidence: [target:p4-display-soc-caps, target:p4-interrupt-sources, target:p4-mipi-dsi, target:p4-rgb-panel]
+    physical_owner_class: Extender
+    physical_owner: Extender EDP owns replacement framebuffer production and output sinks; the onboard VDP retains its original VGA hardware in legacy mode
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: replace
+    rationale: Preserve the class-facing and application-visible behavior as closely as practical, reuse proven algorithms where separable, and replace the ESP32 VGA physical engine with an Extender-owned framebuffer/frame-clock backend that can feed network and later local-display sinks.
+    omission_fallout: Direct omission breaks agon_screen.h construction, palette casts, Canvas, every drawing command, frame waits, and callbacks; replacement must satisfy those seams before source filtering the old concrete translation units.
+    dependencies: [SETUP-005-D002]
+    dependency_effects:
+      - {id: SETUP-005-D002, effect: requires-later-qualification}
+    fallout_analysis: {kind: replace-fused-display-backend, first_failure: agon_screen.h cannot construct or type the active controller after the old classes are excluded., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Introduce an Extender-compatible BitmappedDisplayController implementation and narrow construction/type adaptations while preserving logical mode and frame contracts., residual_risk: Pixel-level fidelity, Copper timing, sprite composition, frame pacing, memory limits, and sink synchronization require implementation and qualified comparison.}
+    evidence_ids: [evidence:reviewed:facility-graphics-display-1, evidence:reviewed:facility-graphics-display-2, evidence:reviewed:facility-graphics-display-3, evidence:reviewed:facility-graphics-display-4]
+    graph_node_ids: [file:vdp-gl:src/dispdrivers/vgabasecontroller.cpp, file:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp, physical-facility:reviewed:esp32%20gpio%20matrix, physical-facility:reviewed:i2s1%20register%20block%20and%20interrupt%20source]
+    agent_entry_points: [agon-vdp:video/agon_screen.h:38, vdp-gl:src/dispdrivers/vgabasecontroller.h:118, vdp-gl:src/dispdrivers/vgapalettedcontroller.h:67, vdp-gl:src/dispdrivers/vga8controller.cpp:701]
+
+  - id: display-vga-text-controller
+    name: Unused FabGL hardware VGA text controller
+    layer: Independently compiled vdp-gl physical display driver
+    scope: FabGL character-cell VGA controller; distinct from official VDP text rendering, which uses Canvas on a bitmapped controller.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/dispdrivers/vgatextcontroller.cpp, vdp-gl:src/dispdrivers/vgatextcontroller.h, vdp-gl:src/fabgl.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/dispdrivers/vgatextcontroller.cpp]
+      header_implementation: [vdp-gl:src/dispdrivers/vgatextcontroller.h]
+    facilities: [character map, hardware text cursor, ESP32 GPIO/I2S1/DMA VGA scanout, scanline ISR]
+    activation: [The broad vdp-gl library build selects the translation unit., No official VDP construction or runtime reference was found.]
+    connections: {startup: [], tasks: [], interrupts: [dormant unless constructed], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [No official VDP v2.16.0 command, response, status packet, or display behavior reaches this controller.]
+    target_compatibility:
+      status: architecture-specific-and-runtime-unused
+      finding: The driver uses the same classic ESP32 I2S1/GPIO VGA architecture as the replaced bitmapped family and supplies no selected official VDP behavior.
+      evidence: [target:p4-display-soc-caps]
+    physical_owner_class: none
+    physical_owner: No Extender v1 behavior selects this independent hardware text controller
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: Official VDP text is already rendered through retained Canvas/bitmapped behavior, so porting a second unused physical VGA implementation would add risk without compatibility value.
+    omission_fallout: Exclude the independent translation unit; keep umbrella declarations in the vendor tree unless build selection requires a narrow header guard.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: requires-later-qualification}
+    fallout_analysis: {kind: omit-unused-translation-unit, first_failure: An unexpected direct constructor would fail to link after exclusion., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Source-filter vgatextcontroller.cpp and verify no retained runtime reference., residual_risk: Future tagged vdp-gl releases must be re-audited for new consumers.}
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/dispdrivers/vgatextcontroller.cpp, file:vdp-gl:src/dispdrivers/vgatextcontroller.h]
+    agent_entry_points: [vdp-gl:src/dispdrivers/vgatextcontroller.h:79, vdp-gl:src/dispdrivers/vgatextcontroller.cpp:95]
+
+  - id: display-composite-video-generator
+    name: Unused FabGL ESP32 composite-video generator
+    layer: Independently compiled vdp-gl physical video generator
+    scope: PAL/NTSC-style composite signal generation through ESP32 DAC, I2S0, DMA, and scanline callbacks.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/cvbsgenerator.cpp, vdp-gl:src/devdrivers/cvbsgenerator.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/devdrivers/cvbsgenerator.cpp]
+      header_implementation: [vdp-gl:src/devdrivers/cvbsgenerator.h]
+    facilities: [composite timing profiles, DAC output, I2S0 DMA chain, ISR, scanline callback]
+    activation: [The broad vdp-gl library build selects the translation unit., No official VDP construction, callback registration, or runtime reference was found.]
+    connections: {startup: [], tasks: [], interrupts: [dormant I2S0 ISR unless constructed], timers: [], callbacks: [dormant scanline callback], global_state: []}
+    visible_behavior: [No official VDP v2.16.0 command, response, status packet, or display behavior reaches this generator.]
+    target_compatibility:
+      status: architecture-specific-and-product-unselected
+      finding: The driver targets classic ESP32 DAC/I2S0 composite output; Extender guarantees browser video and plans MIPI-DSI-derived local output rather than composite video.
+      evidence: [target:p4-display-soc-caps, target:p4-mipi-dsi]
+    physical_owner_class: none
+    physical_owner: Extender v1 has no selected composite-video output and the onboard VDP provides VGA rather than this facility
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: It is neither part of official VDP behavior nor a selected Extender output path.
+    omission_fallout: Exclude the independent translation unit; no retained constructor or callback edge requires a stub.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: requires-later-qualification}
+    fallout_analysis: {kind: omit-unused-translation-unit, first_failure: An unexpected CVBSGenerator construction would fail to link after exclusion., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Source-filter cvbsgenerator.cpp and verify no retained runtime reference., residual_risk: Future tagged vdp-gl releases must be re-audited for new consumers.}
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/devdrivers/cvbsgenerator.cpp, file:vdp-gl:src/devdrivers/cvbsgenerator.h]
+    agent_entry_points: [vdp-gl:src/devdrivers/cvbsgenerator.h:127, vdp-gl:src/devdrivers/cvbsgenerator.cpp:300]
+
+  - id: display-fabgl-scene-helper
+    name: Unused FabGL scene compositor helper
+    layer: Independently compiled vdp-gl software helper
+    scope: Optional Scene task, sprite-update scheduling, mutex, and collision-detector integration; distinct from official VDP sprite state and BitmappedDisplayController composition.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/scene.cpp, vdp-gl:src/scene.h, vdp-gl:src/fabgl.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/scene.cpp]
+      header_implementation: [vdp-gl:src/scene.h]
+    facilities: [FreeRTOS scene update task, sprite list, mutex, collision callback]
+    activation: [The broad vdp-gl library build selects the translation unit., No official VDP Scene object, start call, or runtime reference was found; official sprite commands use their own state and the active bitmapped controller.]
+    connections: {startup: [], tasks: [dormant Scene update task unless start is called], interrupts: [], timers: [], callbacks: [dormant collision callback], global_state: []}
+    visible_behavior: [No official VDP v2.16.0 command, response, status packet, or sprite behavior reaches Scene.]
+    target_compatibility:
+      status: portable-but-runtime-unused
+      finding: The helper is mostly portable under the retained FreeRTOS substrate, but source compatibility alone does not make it part of the official VDP runtime.
+      evidence: []
+    physical_owner_class: none
+    physical_owner: No Extender v1 feature presently selects FabGL Scene
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: Carrying and compiling an unused parallel sprite scheduler would confuse it with the retained official VDP sprite path and add unnecessary task/concurrency surface.
+    omission_fallout: Exclude the independent translation unit; retain shared Sprite and collision types used elsewhere, which do not require Scene construction.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: requires-later-qualification}
+    fallout_analysis: {kind: omit-unused-translation-unit, first_failure: An unexpected Scene constructor or start call would fail to link after exclusion., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Source-filter scene.cpp while retaining independently required Sprite and display-controller types., residual_risk: Future tagged vdp-gl releases and future Extender features must be re-audited before using Scene.}
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/scene.cpp, file:vdp-gl:src/scene.h]
+    agent_entry_points: [vdp-gl:src/scene.h:55, vdp-gl:src/scene.cpp:1, agon-vdp:video/vdu_sprites.h:1]

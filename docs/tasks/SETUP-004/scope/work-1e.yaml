@@ -1,0 +1,121 @@
+# Reviewed extraction scope for SETUP-004 Work 1.e. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.e
+title: Sound generators and physical audio output
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:fabgl%20soundgenerator.*$'
+    - '^physical-facility:reviewed:esp32%20i2s0,%20dac,%20sigma-delta.*$'
+  explicit_graph_node_ids:
+    - subsystem:agon-vdp:audio
+    - file:agon-vdp:video/agon_audio.h
+    - file:agon-vdp:video/audio_channel.h
+    - file:agon-vdp:video/audio_sample.h
+    - file:agon-vdp:video/enhanced_samples_generator.h
+    - file:agon-vdp:video/envelopes/adsr.h
+    - file:agon-vdp:video/envelopes/frequency.h
+    - file:agon-vdp:video/envelopes/multiphase_adsr.h
+    - file:agon-vdp:video/envelopes/types.h
+    - file:agon-vdp:video/vdu_audio.h
+    - file:vdp-gl:src/devdrivers/soundgen.cpp
+    - file:vdp-gl:src/devdrivers/soundgen.h
+  include_target_patterns:
+    - '^devdrivers/soundgen\.h$'
+    - '^driver/(?:dac|sigmadelta)\.h$'
+    - '^soc/(?:i2s_reg|i2s_struct|rtc|sens_reg|sens_struct)\.h$'
+    - '^(?:rom|esp32/rom)/lldesc\.h$'
+  occurrence_patterns:
+    - '\b(?:AudioChannel|AudioSample|EnhancedSamplesGenerator|VolumeEnvelope|FrequencyEnvelope|vdu_sys_audio|sendAudioStatus|initAudio|audioDriver)\b'
+    - '\b(?:WaveformGenerator|SineWaveformGenerator|SquareWaveformGenerator|TriangleWaveformGenerator|SawtoothWaveformGenerator|NoiseWaveformGenerator|VICNoiseGenerator|SamplesGenerator|SoundGenerator)\b'
+    - '\b(?:dac_init|sigmadelta_init|setDMANode|ISRHandler|timerHandler|SoundGenMethod|I2S0|dac_i2s_enable|dac_output_enable|sigmadelta_config|sigmadelta_set_duty|PERIPH_I2S0_MODULE|ETS_I2S0_INTR_SOURCE)\b'
+
+candidate_groups:
+  - id: audio-vdp-command-and-channel-runtime
+    name: Official VDP audio protocol, channel, envelope, and sample runtime
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:audio$'
+      - '^file:agon-vdp:video/(?:agon_audio|audio_channel|audio_sample|enhanced_samples_generator|vdu_audio)\.h$'
+      - '^file:agon-vdp:video/envelopes/(?:adsr|frequency|multiphase_adsr|types)\.h$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:AudioChannel|AudioSample|EnhancedSamplesGenerator|VolumeEnvelope|FrequencyEnvelope|vdu_sys_audio|sendAudioStatus|initAudio|audioDriver)\b'
+
+  - id: audio-waveform-and-mixer-core
+    name: FabGL waveform generation, channel attachment, and PCM mixing core
+    graph_node_patterns:
+      - '^platform-api:reviewed:fabgl%20soundgenerator.*$'
+      - '^file:vdp-gl:src/devdrivers/soundgen\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^devdrivers/soundgen\.h$'
+    occurrence_patterns:
+      - '\b(?:WaveformGenerator|SineWaveformGenerator|SquareWaveformGenerator|TriangleWaveformGenerator|SawtoothWaveformGenerator|NoiseWaveformGenerator|VICNoiseGenerator|SamplesGenerator|SoundGenerator)\b'
+
+  - id: audio-classic-esp32-physical-output
+    name: FabGL classic-ESP32 DAC, sigma-delta, DMA, timer, and ISR output paths
+    graph_node_patterns:
+      - '^physical-facility:reviewed:esp32%20i2s0,%20dac,%20sigma-delta.*$'
+    include_target_patterns:
+      - '^driver/(?:dac|sigmadelta)\.h$'
+      - '^soc/(?:i2s_reg|i2s_struct|rtc|sens_reg|sens_struct)\.h$'
+      - '^(?:rom|esp32/rom)/lldesc\.h$'
+    occurrence_patterns:
+      - '\b(?:dac_init|sigmadelta_init|setDMANode|ISRHandler|timerHandler|SoundGenMethod|I2S0|dac_i2s_enable|dac_output_enable|sigmadelta_config|sigmadelta_set_duty|PERIPH_I2S0_MODULE|ETS_I2S0_INTR_SOURCE)\b'
+
+boundaries:
+  - id: boundary-audio-network-transport
+    owner: SETUP-004.1.g
+    reason: Work 1.e identifies the PCM-production and sink seam; network transport, browser delivery, buffering, and congestion policy belong to network and transfer disposition.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-audio-onboard-vdp-forwarding
+    owner: SETUP-005-D005
+    reason: Whether any operating mode forwards EDP audio commands to the onboard VDP for local playback is an unresolved routing decision, not part of physical P4 audio generation.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-audio-framebuffer-mode-coupling
+    owner: SETUP-004.1.d
+    reason: FabGL Auto output selection reads VGA-versus-CVBS state, but Work 1.d has already replaced those concrete output backends; Work 1.e records and severs the audio-side dependency.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:CurrentVideoMode|VideoMode)\b'
+
+  - id: boundary-audio-framework-services
+    owner: SETUP-004.1.a
+    reason: FreeRTOS tasks, mutexes, Arduino timing, PSRAM allocation, and portable framework services were disposed in Work 1.a; Work 1.e reviews only their audio consumers.
+    graph_node_patterns:
+      - '^platform-api:reviewed:freertos%20pinned%20task$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-audio-timer-and-interrupt-substrate
+    owner: SETUP-004.1.c
+    reason: Generic timer and interrupt facilities were disposed in Work 1.c; the classic-ESP32 audio backend's exact consumers remain reviewed here.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:i2s0,%20i2s1,%20rtc/ulp,%20and%20uart%20interrupt%20sources$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:esp_timer_create|esp_timer_start_periodic|esp_timer_stop|esp_timer_delete|esp_intr_alloc_pinnedToCore|esp_intr_free)\b'

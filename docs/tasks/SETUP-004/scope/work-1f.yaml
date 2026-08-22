@@ -1,0 +1,118 @@
+# Reviewed extraction scope for SETUP-004 Work 1.f. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.f
+title: PS/2 keyboard and mouse controllers
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:fabgl%20ps2controller.*$'
+    - '^physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio.*$'
+  explicit_graph_node_ids:
+    - subsystem:agon-vdp:physical-ps2-input
+    - file:agon-vdp:video/agon_ps2.h
+    - file:agon-vdp:video/vdu_stream_processor.h
+    - file:agon-vdp:video/vdu_sys.h
+    - file:agon-vdp:video/vdu_sprites.h
+    - file:agon-vdp:video/vdp_variables.h
+    - file:vdp-gl:src/comdrivers/ps2controller.cpp
+    - file:vdp-gl:src/comdrivers/ps2controller.h
+    - file:vdp-gl:src/devdrivers/kbdlayouts.cpp
+    - file:vdp-gl:src/devdrivers/kbdlayouts.h
+    - file:vdp-gl:src/devdrivers/keyboard.cpp
+    - file:vdp-gl:src/devdrivers/keyboard.h
+    - file:vdp-gl:src/devdrivers/mouse.cpp
+    - file:vdp-gl:src/devdrivers/mouse.h
+  include_target_patterns:
+    - '^comdrivers/ps2controller\.h$'
+    - '^devdrivers/(?:kbdlayouts|keyboard|mouse)\.h$'
+  occurrence_patterns:
+    - '\b(?:setupKeyboardAndMouse|getKeyboard|getMouse|getKeyboardKey|packKeyboardModifiers|getKeyboardState|setKeyboardState|mouseMoved|sendKeyboardData|sendMouseData|handleKeyboardAndMouse|vdu_sys_mouse|setKeyboardLayout|setMouseCursor|makeMouseCursor)\b'
+    - '\b(?:PS2Controller|Keyboard|VirtualKey|VirtualKeyItem|KeyboardLayout|Mouse|MouseStatus|MouseDelta)\b'
+    - '\b(?:ulp_|ULP|rtc_gpio|RTC_CNTL|SENS_)\w*\b'
+
+candidate_groups:
+  - id: input-official-compatibility-integration
+    name: Official VDP keyboard/mouse protocol, event, state, and cursor integration
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:physical-ps2-input$'
+      - '^file:agon-vdp:video/(?:agon_ps2|vdu_stream_processor|vdu_sys|vdu_sprites|vdp_variables)\.h$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:setupKeyboardAndMouse|getKeyboard|getMouse|getKeyboardKey|packKeyboardModifiers|getKeyboardState|setKeyboardState|mouseMoved|sendKeyboardData|sendMouseData|handleKeyboardAndMouse|vdu_sys_mouse|setKeyboardLayout|setMouseCursor|makeMouseCursor)\b'
+
+  - id: input-vdp-gl-keyboard-and-layout
+    name: vdp-gl keyboard device, virtual-key translation, and layout engine
+    graph_node_patterns:
+      - '^file:vdp-gl:src/devdrivers/(?:kbdlayouts|keyboard)\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^devdrivers/(?:kbdlayouts|keyboard)\.h$'
+    occurrence_patterns:
+      - '\b(?:Keyboard|VirtualKey|VirtualKeyItem|KeyboardLayout)\b'
+
+  - id: input-vdp-gl-mouse-device
+    name: vdp-gl mouse device, delta, absolute-position, and acceleration engine
+    graph_node_patterns:
+      - '^file:vdp-gl:src/devdrivers/mouse\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^devdrivers/mouse\.h$'
+    occurrence_patterns:
+      - '\b(?:Mouse|MouseStatus|MouseDelta)\b'
+
+  - id: input-vdp-gl-physical-ps2-controller
+    name: vdp-gl ESP32 ULP-backed physical PS/2 controller
+    graph_node_patterns:
+      - '^platform-api:reviewed:fabgl%20ps2controller.*$'
+      - '^physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio.*$'
+      - '^file:vdp-gl:src/comdrivers/ps2controller\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^comdrivers/ps2controller\.h$'
+    occurrence_patterns:
+      - '\bPS2Controller\b'
+      - '\b(?:ulp_|ULP|rtc_gpio|RTC_CNTL|SENS_)\w*\b'
+
+boundaries:
+  - id: boundary-input-ulp-substrate
+    owner: SETUP-004.1.c
+    reason: Work 1.c already accepted omission of the ESP32 ULP/RTC-domain substrate; Work 1.f records the concrete PS/2 consumer and compile fallout.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-input-display-cursor-rendering
+    owner: SETUP-004.1.d
+    reason: Retained Canvas/controller cursor rendering belongs to display disposition; Work 1.f owns input-state and cursor-selection integration only.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-input-mode-routing
+    owner: SETUP-005-D007
+    reason: How onboard-VDP processed events reach an EDP-exclusive session and canonical MOS sysvars is an unresolved operating-mode decision; Work 1.f determines the required code and adapter surfaces.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-input-maintenance-paths
+    owner: SETUP-005-D006
+    reason: Keyboard use by terminal, updater, ZDI, HEX, and YMODEM maintenance facilities follows their separately omitted or unresolved compatibility behavior.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []

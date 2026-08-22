@@ -55,6 +55,82 @@ Target adaptation should follow this preference order:
 Every deviation from upstream should remain attributable to a verified target
 requirement or an accepted Extender feature.
 
+The official header-defined screen facade remains the display integration
+boundary for the port. Preserve its global Canvas/controller ownership, mode
+selection and fallback, logical dimensions and scaling, palette and Copper
+state, logical frame counter, completion waits, and buffer swaps. P4 display
+work may narrowly adapt the concrete controller created behind that facade; it
+must not replace the facade with an unrelated project-owned display model.
+
+FabGL `Canvas` and the common bitmapped rendering layer remain the semantic
+implementation beneath that facade. Preserve their primitive ordering and
+queues, paint and clipping state, geometry, glyph and bitmap operations,
+sprites, cursors, readback, completion, and buffering contracts. Direct
+assumptions about the old Xtensa VGA-ISR environment may receive narrow P4
+adaptations; those changes do not authorize unrelated renderer redesign.
+
+The classic-ESP32 concrete VGA controller family is replaced by an
+Extender-owned concrete bitmapped controller. It produces framebuffer state and
+logical frame progression independently of any one physical output sink, so
+the guaranteed network/browser path and later P4-native local displays consume
+one rendering model. Preserve stock mode dimensions, palette quantization,
+Copper scanline effects, sprite composition, readback, double buffering, frame
+waits and counters, callbacks, and mode failure/fallback behavior as closely as
+practical. The old GPIO-matrix, I2S1, DMA-chain, and VSync-ISR engine remains
+vendored reference material, not the P4 physical backend.
+
+The separate FabGL `VGATextController` is retained in the complete vendored
+vdp-gl source but excluded from Extender builds. Official VDP text remains on
+the retained Canvas/bitmapped-controller path, so the unused hardware
+character-cell VGA driver receives neither a P4 port nor a compatibility stub.
+
+FabGL `CVBSGenerator` likewise remains in the complete vendored vdp-gl source
+but is excluded from Extender builds. Composite video is neither part of the
+official VDP runtime nor a selected Extender output, so its classic-ESP32
+DAC/I2S0/DMA implementation receives no P4 replacement or stub.
+
+FabGL `Scene` also remains vendored but is excluded from Extender builds.
+Official VDP sprites retain their own state and bitmapped-controller path;
+shared Sprite/display types survive independently. No Scene task, mutex,
+collision callback, or parallel sprite scheduler is selected unless a future
+Extender feature adopts it explicitly.
+
+The official header-defined VDP audio runtime remains the audio integration
+boundary. Preserve its parser, `PACKET_AUDIO` acknowledgements, channel state,
+envelopes, buffer-backed samples, playback timing, audio-control task, and VDU
+7 behavior. P4 audio work may narrowly adapt its direct
+`fabgl::SoundGenerator` binding to the selected synthesis and output service;
+it must not replace the official runtime with a separate audio model.
+
+The vdp-gl waveform and mixer core remains the synthesis layer beneath that
+runtime. Preserve waveform generation, channel attachment and lifetime,
+sample-rate propagation, channel and global volume behavior, and signed
+eight-bit PCM mixing. A narrow P4 adaptation may expose mixed samples to an
+Extender-owned scheduler or sink; output backends must not create independent
+synthesis semantics.
+
+An Extender-owned PCM scheduler and sink service replaces FabGL's
+classic-ESP32 DAC, sigma-delta, I2S0-register, legacy-DMA, fixed-pin, ISR/timer,
+and display-mode-selected output machinery. Those physical paths remain in the
+complete vendored source but are excluded from the P4 build. Network/browser
+audio is the guaranteed Rev 1 sink; Rev 1 does not promise the stock analog
+output location or exact analog characteristics.
+
+Logical audio playback runs from the selected sample clock independently of
+sink latency, backpressure, or availability. A disconnected or slow browser
+must not block VDU processing, delay logical note completion, or alter channel
+status; delivery may drop or resynchronize instead. Optional forwarding to the
+onboard VDP for local playback remains a separate operating-mode decision.
+
+The dormant vdp-gl `FileBrowser` remains in the complete vendored source but is
+excluded from Extender builds. Extender does not presently select a file-browser
+API, and required local storage does not imply one. The P4 DevKit microSD card
+is a required v1 capability deferred beyond the first beta; its implementation
+will follow maintained Olimex/Espressif P4 SDMMC reference code and a
+project-owned lifecycle rather than FabGL's classic-ESP32 storage backend.
+Future installed-application, media, network-file, or browser interfaces consume
+that storage capability without defining its physical backend.
+
 ## Hardware design target
 
 The authoritative first Agon Light 2 wiring target is
@@ -160,20 +236,44 @@ preclude future compile-time performance profiles that exploit P4 resources at
 the cost of legacy behavioral fidelity. EDU-aware applications must discover
 the active profile's advertised capabilities rather than infer them.
 
-Extender v1 initially leaves physical keyboard and mouse ownership with the
-onboard VDP. Its stock packets to MOS remain the canonical legacy input path.
-An EDP-exclusive session nevertheless requires a controlled copy or equivalent
-representation of processed events for display-local behavior such as paged
-mode, control keys, mouse cursors, VDP variables, and callbacks. The routing
-mechanism and single-writer relationship with MOS sysvars remain open under
-SETUP-005-D007. P4-owned physical input may be added later as an EDU extension;
-it is not the initial compatibility baseline.
+The onboard VDP remains the physical keyboard and mouse owner. Its stock packets
+to MOS remain the canonical legacy input path. In the proof of concept, an
+EDU-aware eZ80 application reads stock input and explicitly forwards processed
+events to an EDP input-injection adapter when it needs display-local behavior
+such as paged mode, control keys, mouse cursors, VDP variables, or callbacks.
+The adapter updates EDP-local state and does not automatically echo stock input
+packets back to the forwarding application. This profile makes no compatibility
+claim for untouched applications. A more automatic v1 route and its
+single-writer relationship with MOS sysvars remain open under SETUP-005-D007.
+V1 adds no P4-owned keyboard, mouse, or other
+peripheral hardware beyond facilities already present on the selected P4
+DevKit; additional input hardware is post-v1 work.
+
+The vdp-gl physical keyboard device, scan-code conversion task, locale-layout
+engine, typematic/LED device control, and compiled layout tables remain in the
+complete vendored source but are excluded from the P4 build. The onboard VDP
+owns those operations. Extender retains only the stable virtual-key and event
+vocabulary required by its processed-event injection adapter.
+
+The vdp-gl physical mouse device, PS/2 packet decoder, task, queues,
+acceleration, and direct display-positioning engine likewise remain vendored
+but are excluded from the P4 build. The onboard VDP owns physical mouse
+processing. Application-forwarded processed mouse fields feed the EDP adapter,
+which owns EDP-local state and cursor effects through the retained display
+backend.
 
 Extender retains ESP-IDF's OTA image, boot-partition, rollback, and restart
 lifecycle as the low-level update substrate. This is independent of the omitted
 stock VDP serial updater and does not select an update transport. A project-
 owned replacement is warranted only if evidence shows the ESP-IDF facilities
 are materially inferior to sound clean-sheet ESP32-P4 practice.
+
+Extender networking is project-owned. The P4 DevKit's native wired Ethernet is
+the primary Rev 1 backend; the dedicated-header Olimex MOD-WIFI-ESP8266 is an
+optional Rev 1 wireless backend whose P4-to-module protocol and module firmware
+must be selected and qualified separately. The dormant vendored vdp-gl ICMP
+helper is excluded from the P4 build: it assumes a local Arduino WiFi/raw-lwIP
+interface and is not an adapter for a separate ESP8266 network processor.
 
 The initial build pins pioarduino platform release `55.03.311`, which combines
 Arduino-ESP32 3.3.11 with ESP-IDF 5.5.5. A moving release alias or development

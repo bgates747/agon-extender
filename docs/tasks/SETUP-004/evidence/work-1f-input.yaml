@@ -1,0 +1,142 @@
+# Reviewed SETUP-004 Work 1.f input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.f
+subject: Keyboard and mouse compatibility state versus physical PS/2 acquisition
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0013-vdp-survey-integration-boundaries.md
+    - docs/decisions/ADR-0014-edu-operating-modes-and-service-architecture.md
+  source_evidence:
+    - {id: target:p4-input-soc-caps, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/soc/esp32p4/include/soc/soc_caps.h, sha256: 4aba7eaad13804d97e6cf8ff4cfe965e4892438fab43eb1fc18193eb072ad651}
+records:
+  - id: input-official-compatibility-integration
+    name: Official VDP keyboard/mouse protocol, event, state, and cursor integration
+    layer: Header-defined official VDP input integration
+    scope: Keyboard and mouse command parsing, event variables, packets, callbacks, control-key and paged-mode behavior, logical mouse position, cursor selection and custom cursor bitmaps; excludes physical PS/2 acquisition and unresolved processor/MOS routing.
+    upstream_owner: agon-vdp
+    source_highlights: [agon-vdp:video/agon_ps2.h, agon-vdp:video/vdu_sys.h, agon-vdp:video/vdu_stream_processor.h, agon-vdp:video/vdu_sprites.h, agon-vdp:video/vdp_variables.h, agon-vdp:video/video.ino]
+    implementation_highlights:
+      selected_translation_units: [agon-vdp:video/video.ino]
+      header_implementation: [agon-vdp:video/agon_ps2.h, agon-vdp:video/vdu_sys.h, agon-vdp:video/vdu_stream_processor.h, agon-vdp:video/vdu_sprites.h, agon-vdp:video/vdp_variables.h]
+    facilities: [keyboard locale repeat LED control and key polling, mouse enable reset position parameters and cursor commands, PACKET_KEYCODE PACKET_KEYSTATE and PACKET_MOUSE, keyboard and mouse callbacks, VDP input variables and event queue, control-key dispatch, paged-mode resume, display cursor state and custom cursor bitmaps]
+    activation: [processLoop unconditionally calls setupKeyboardAndMouse., Every processNext iteration drains events and calls handleKeyboardAndMouse., System keyboard/mouse commands call helpers in agon_ps2.h., Mode changes and sprite command &40 update mouse cursor state.]
+    connections:
+      startup: [setupKeyboardAndMouse from processLoop]
+      tasks: [processLoop polling; physical device tasks through direct FabGL objects]
+      interrupts: [indirect upstream PS/2 ULP and RTC interrupt acquisition]
+      timers: [keyboard typematic and mouse timing inside direct FabGL objects]
+      callbacks: [CALLBACK_KEYBOARD, CALLBACK_MOUSE, CALLBACK_SENDING_VDPP and CALLBACK_SENT_VDPP for key mouse and key-state packets]
+      global_state: [_keycode, kbRepeatDelay, kbRepeatRate, kbRegion, kbEnabled, mouseEnabled, mouseVisible, mouse parameters, mouseCursors, mCursor, VDP input variables, eventQueue]
+    visible_behavior: [Consumes all keyboard and mouse command bytes in the accepted inventory., Exclusive compatibility mode requires stock key mouse and key-state packet formats callbacks event variables control-key behavior paged-mode behavior and display-local cursor effects., Cooperative mode routing and ownership remain unresolved., Legacy mode leaves all behavior with the onboard VDP.]
+    target_compatibility:
+      status: required-behavior-fused-to-excluded-device-objects
+      finding: The parser, packet, callback, VDP-variable, control-key, and cursor behavior is required for later compatibility profiles, but official helpers directly acquire global FabGL Keyboard and Mouse objects and start PS2Controller. The proof-of-concept adapter accepts processed input explicitly forwarded by an EDU-aware eZ80 application, updates EDP-local state and behavior, and does not re-emit the same stock input packets by default; any more transparent v1 route remains open under SETUP-005-D007.
+      evidence: [target:p4-input-soc-caps]
+    physical_owner_class: shared
+    physical_owner: The onboard VDP owns Rev 1 physical input while Extender owns the EDP-local compatibility state and display effects required in EDP-exclusive operation
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: replace
+    rationale: Preserve the complete code and semantics needed by later compatibility profiles while replacing the inseparable direct PS/2 device bindings with a project-owned injection adapter. The proof of concept uses explicit aware-application forwarding and suppresses automatic packet echo; literal retention contradicts the accepted physical-owner boundary and omission prevents even aware applications from supplying display-local input.
+    omission_fallout: Direct omission removes command consumers packet generation callbacks input variables control-key and paged-mode behavior and cursor integration from the effective video.ino unit; replacement must satisfy those seams before physical drivers are filtered.
+    dependencies: [SETUP-005-D007]
+    dependency_effects: [{id: SETUP-005-D007, effect: blocks-implementation}]
+    fallout_analysis: {kind: replace-fused-input-integration, first_failure: Removing agon_ps2.h or its FabGL objects breaks startup processNext system commands VDP variables mode changes and sprite cursor command &40., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Preserve official parsers state packets callbacks and display effects behind a project-owned processed-event injection adapter initially driven by aware applications., residual_risk: Any transparent v1 routing sysvar ownership event ordering and failure behavior remain unresolved in SETUP-005-D007.}
+    evidence_ids: [evidence:reviewed:facility-physical-ps2-input-0]
+    graph_node_ids: [subsystem:agon-vdp:physical-ps2-input, file:agon-vdp:video/agon_ps2.h, file:agon-vdp:video/vdu_stream_processor.h, file:agon-vdp:video/vdu_sys.h, file:agon-vdp:video/vdu_sprites.h, file:agon-vdp:video/vdp_variables.h]
+    agent_entry_points: [agon-vdp:video/agon_ps2.h:12, agon-vdp:video/video.ino:136, agon-vdp:video/vdu_stream_processor.h:531, agon-vdp:video/vdu_stream_processor.h:704, agon-vdp:video/vdu_sys.h:171, agon-vdp:video/vdu_sys.h:608, agon-vdp:video/vdu_sprites.h:220]
+
+  - id: input-vdp-gl-keyboard-and-layout
+    name: vdp-gl keyboard device, virtual-key translation, and layout engine
+    layer: vdp-gl physical keyboard device and scancode translator
+    scope: PS/2 keyboard reset and commands, scancode queue and conversion task, virtual-key state, typematic and LEDs, locale layouts, codepage translation, key injection, and physical device lifecycle; excludes the official packet and VDP-variable contract.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/keyboard.cpp, vdp-gl:src/devdrivers/keyboard.h, vdp-gl:src/devdrivers/kbdlayouts.cpp, vdp-gl:src/devdrivers/kbdlayouts.h]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/devdrivers/keyboard.cpp, vdp-gl:src/devdrivers/kbdlayouts.cpp], header_implementation: [vdp-gl:src/devdrivers/keyboard.h, vdp-gl:src/devdrivers/kbdlayouts.h]}
+    facilities: [PS2Device keyboard commands, scancode-to-VirtualKey conversion task, virtual-key queue and state map, locale layout tables, codepage conversion, typematic and LED hardware control]
+    activation: [PS2Controller constructs or returns the Keyboard object., setupKeyboardAndMouse sets layout codepage and typematic behavior., processLoop polls VirtualKeyItem events., keyboard commands directly mutate this object.]
+    connections: {startup: [setupKeyboardAndMouse], tasks: [SCodeToVKConverterTask], interrupts: [physical PS/2 substrate], timers: [typematic timing], callbacks: [], global_state: [Keyboard queues modifier states layout codepage LEDs and virtual-key map]}
+    visible_behavior: [Contributes translated ASCII virtual-key modifier scancode and key-state values to PACKET_KEYCODE and VDP variables., Implements locale typematic LED and check-key behavior when a physical keyboard is attached directly.]
+    target_compatibility:
+      status: physical-translation-owner-remains-onboard-vdp
+      finding: Rev 1 receives already processed keyboard events from the onboard VDP compatibility path rather than PS/2 scan codes on the P4. The compiled device and layout engine is therefore unnecessary, although stable VirtualKey and event field vocabularies may remain as vendored declarations or be represented by the replacement adapter.
+      evidence: [target:p4-input-soc-caps]
+    physical_owner_class: onboard VDP
+    physical_owner: The onboard VDP owns PS/2 keyboard reset scan-code decoding layouts typematic LEDs and physical key state for Rev 1
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: No P4 keyboard is selected and processed events arrive from the onboard owner; compile-time retention would duplicate physical translation and tasks. Preserve only shared wire/event vocabulary required by the adapter.
+    omission_fallout: Official helpers currently construct and call Keyboard layout key-state LED and injection APIs, so the replacement compatibility adapter and routing contract must land before keyboard.cpp and kbdlayouts.cpp are source-filtered.
+    dependencies: [W1F-Q01, SETUP-005-D007]
+    dependency_effects:
+      - {id: W1F-Q01, effect: blocks-implementation}
+      - {id: SETUP-005-D007, effect: blocks-implementation}
+    fallout_analysis: {kind: omit-physical-keyboard-engine, first_failure: Direct official calls to Keyboard and layout constants fail after filtering the translation units., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Route keyboard commands and processed event fields through the Work 1.f compatibility adapter while retaining only necessary stable type declarations., residual_risk: Check-key locale LED and typematic fidelity depend on the eventual onboard-VDP routing contract.}
+    evidence_ids: [evidence:reviewed:facility-physical-ps2-input-0]
+    graph_node_ids: [file:vdp-gl:src/devdrivers/keyboard.cpp, file:vdp-gl:src/devdrivers/keyboard.h, file:vdp-gl:src/devdrivers/kbdlayouts.cpp, file:vdp-gl:src/devdrivers/kbdlayouts.h]
+    agent_entry_points: [vdp-gl:src/devdrivers/keyboard.cpp:34, vdp-gl:src/devdrivers/keyboard.cpp:54, vdp-gl:src/devdrivers/kbdlayouts.cpp:1, agon-vdp:video/agon_ps2.h:59]
+
+  - id: input-vdp-gl-mouse-device
+    name: vdp-gl mouse device, delta, absolute-position, and acceleration engine
+    layer: vdp-gl physical mouse device and positioning engine
+    scope: PS/2 packet acquisition and decoding, mouse reset and device commands, movement and wheel acceleration, absolute-position state, queues/tasks, and direct display-controller cursor position updates; excludes official command parsing packets variables and cursor bitmap ownership.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/mouse.cpp, vdp-gl:src/devdrivers/mouse.h]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/devdrivers/mouse.cpp], header_implementation: [vdp-gl:src/devdrivers/mouse.h]}
+    facilities: [PS2Device mouse commands, legacy and IntelliMouse packet decoding, mouseUpdateTask, delta and absolute queues, acceleration and wheel scaling, absolute positioner, direct display cursor updates]
+    activation: [PS2Controller supplies the Mouse object., setupKeyboardAndMouse initializes the absolute positioner., processLoop polls deltas and updates variables., mouse system commands directly control the object.]
+    connections: {startup: [setupKeyboardAndMouse and resetMousePositioner], tasks: [mouseUpdateTask], interrupts: [physical PS/2 substrate], timers: [delta timing and acceleration], callbacks: [], global_state: [Mouse packet queue delta queue status area acceleration and display-controller pointer]}
+    visible_behavior: [Contributes position buttons wheel and deltas to PACKET_MOUSE callbacks and VDP variables., Implements device parameters and display cursor movement when a mouse is attached directly.]
+    target_compatibility:
+      status: physical-processing-owner-remains-onboard-vdp
+      finding: Rev 1 receives processed mouse position button wheel and delta fields from the onboard VDP path rather than PS/2 packets on P4. A replacement EDP-local adapter owns mirrored state and cursor effects; the physical decoder task queues and acceleration engine are unnecessary.
+      evidence: [target:p4-input-soc-caps]
+    physical_owner_class: onboard VDP
+    physical_owner: The onboard VDP owns PS/2 mouse reset packet decoding sampling resolution scaling and acceleration for Rev 1
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: No P4 mouse is selected and direct retention would duplicate physical processing already performed by the onboard owner; required EDP-local position packet and cursor behavior belongs to the replacement compatibility adapter.
+    omission_fallout: Official helpers call Mouse methods and read its status directly, so those dependencies must move behind the replacement adapter before mouse.cpp is source-filtered; shared MouseStatus or MouseDelta vocabulary may remain if useful.
+    dependencies: [W1F-Q01, SETUP-005-D007]
+    dependency_effects:
+      - {id: W1F-Q01, effect: blocks-implementation}
+      - {id: SETUP-005-D007, effect: blocks-implementation}
+    fallout_analysis: {kind: omit-physical-mouse-engine, first_failure: Direct official calls to Mouse reset parameters queues status and positioner fail after source filtering., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Feed processed mouse events into the Work 1.f adapter and preserve official packet variable callback and display-cursor effects there., residual_risk: Command forwarding event ordering coordinate scaling mode changes and cursor synchronization depend on SETUP-005-D007.}
+    evidence_ids: [evidence:reviewed:facility-physical-ps2-input-0]
+    graph_node_ids: [file:vdp-gl:src/devdrivers/mouse.cpp, file:vdp-gl:src/devdrivers/mouse.h]
+    agent_entry_points: [vdp-gl:src/devdrivers/mouse.cpp:35, vdp-gl:src/devdrivers/mouse.cpp:52, vdp-gl:src/devdrivers/mouse.cpp:137, agon-vdp:video/agon_ps2.h:238]
+
+  - id: input-vdp-gl-physical-ps2-controller
+    name: vdp-gl ESP32 ULP-backed physical PS/2 controller
+    layer: vdp-gl classic-ESP32 physical acquisition backend
+    scope: PS/2 port ownership, RTC GPIO, classic ESP32 ULP program, SENS/RTC registers, RTC interrupt, ISR/task/queue handoff, and Keyboard/Mouse device attachment.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/comdrivers/ps2controller.cpp, vdp-gl:src/comdrivers/ps2controller.h]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/comdrivers/ps2controller.cpp], header_implementation: [vdp-gl:src/comdrivers/ps2controller.h]}
+    facilities: [classic ESP32 ULP finite-state programs, RTC-domain GPIO, SENS and RTC register access, RTC interrupt and FreeRTOS handoff, two physical PS/2 ports]
+    activation: [Official setupKeyboardAndMouse unconditionally calls PS2Controller::begin., Keyboard and Mouse objects obtain data through its ports.]
+    connections: {startup: [setupKeyboardAndMouse], tasks: [PS2 event processing tasks], interrupts: [RTC interrupt], timers: [], callbacks: [ULP wake and ISR/task handoff], global_state: [two PS2 ports shared ULP memory device pointers and queues]}
+    visible_behavior: [No independent VDU surface; supplies physical events that official keyboard and mouse integration turns into packets variables callbacks and cursor behavior.]
+    target_compatibility:
+      status: incompatible-and-unselected
+      finding: The source requires classic ESP32 esp32/ulp.h RTC GPIO SENS registers and ULP macros that are unavailable on P4, and ADR-0013 assigns Rev 1 physical input to the onboard VDP.
+      evidence: [target:p4-input-soc-caps]
+    physical_owner_class: onboard VDP
+    physical_owner: The onboard VDP remains the Rev 1 physical PS/2 controller
+    author_review: {status: accepted, decision_date: 2026-08-20}
+    disposition: omit
+    rationale: Accepted ADR-0013 and Work 1.c architecture excludes FabGL PS/2 and its incompatible ESP32 ULP substrate; no P4 stub or replacement physical controller is selected.
+    omission_fallout: Exclude ps2controller.cpp only after direct official startup and Keyboard/Mouse consumers are replaced or omitted; broad vdp-gl headers may still require narrow guards around declarations and unavailable includes.
+    dependencies: [W1F-Q01]
+    dependency_effects: [{id: W1F-Q01, effect: blocks-implementation}]
+    fallout_analysis: {kind: omit-incompatible-physical-controller, first_failure: setupKeyboardAndMouse and vdp-gl Keyboard/Mouse construction reference PS2Controller after its translation unit is excluded., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Replace official startup and event access through the compatibility adapter then source-filter the physical controller and dependent device engines., residual_risk: Umbrella-header and shared-type coupling must be qualified during PORT-002 source selection.}
+    evidence_ids: [evidence:reviewed:facility-physical-ps2-input-1]
+    graph_node_ids: ['platform-api:reviewed:fabgl%20ps2controller,%20keyboard,%20mouse,%20layouts,%20and%20cursor', 'physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio,%20sens%20registers,%20rtc%20interrupt,%20queues,%20and%20tasks', file:vdp-gl:src/comdrivers/ps2controller.cpp, file:vdp-gl:src/comdrivers/ps2controller.h]
+    agent_entry_points: [vdp-gl:src/comdrivers/ps2controller.cpp:31, vdp-gl:src/comdrivers/ps2controller.cpp:33, vdp-gl:src/comdrivers/ps2controller.h:1, agon-vdp:video/agon_ps2.h:59]

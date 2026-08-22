@@ -1,0 +1,122 @@
+# Reviewed extraction scope for SETUP-004 Work 1.g. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.g
+title: Network, updater, and transfer facilities
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:(?:arduino%20hardwareserial(?:%20and%20stream)?|crc%20dependency|esp-idf%20ota%20partition%20apis%20and%20esp_restart|psram%20capability%20allocations)$'
+  explicit_graph_node_ids:
+    - subsystem:agon-vdp:firmware-updater
+    - command:agon-vdp-runtime:updater-command
+    - subsystem:agon-vdp:debug-zdi-and-file-transfer
+    - file:agon-vdp:video/updater.h
+    - file:agon-vdp:video/hexload.h
+    - file:agon-vdp:video/ymodem.h
+    - file:agon-vdp:video/vdu_sys.h
+    - file:agon-vdp:video/vdu_stream_processor.h
+    - file:vdp-gl:src/network/ICMP.cpp
+    - file:vdp-gl:src/network/ICMP.h
+  include_target_patterns:
+    - '^(?:WiFi|WiFiGeneric|Update|esp_ota_ops|CRC16|CRC32|network/ICMP|ICMP)\.h$'
+    - '^lwip/(?:netdb|raw|icmp|inet_chksum)\.h$'
+  occurrence_patterns:
+    - '\b(?:VDP_UPDATER|vdu_sys_updater|receiveFirmware|switchFirmware|esp_ota_\w+|esp_restart)\b'
+    - '\b(?:vdu_sys_hexload|sendKeycodeByte|getIHex\w*|consumeHexMarker|linecrc16|crc32tmp|IHEX_\w+|DEF_LOAD_ADDRESS|OVERRUNTIMEOUT)\b'
+    - '\b(?:vdu_sys_ymodem_(?:send|receive)|YMODEM_\w+|ymodem_\w+|sendKeycodeUINT32_T|receiveKeycodeUINT32|sendKeycodeBytestream|receiveKeycodeBytestream|make_ymodem_block0)\b'
+    - '\b(?:ICMP|raw_recv_fn|WiFiGenericClass|raw_(?:new|recv|bind|sendto|remove)|icmp_echo_hdr|inet_chksum)\b'
+
+candidate_groups:
+  - id: network-vdp-gl-icmp-helper
+    name: vdp-gl WiFi-coupled ICMP ping helper
+    graph_node_patterns:
+      - '^file:vdp-gl:src/network/ICMP\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^(?:WiFiGeneric|network/ICMP|ICMP)\.h$'
+      - '^lwip/(?:netdb|raw|icmp|inet_chksum)\.h$'
+    occurrence_patterns:
+      - '\b(?:ICMP|raw_recv_fn|WiFiGenericClass|raw_(?:new|recv|bind|sendto|remove)|icmp_echo_hdr|inet_chksum)\b'
+
+  - id: transfer-stock-hex-and-ymodem
+    name: Stock UART Intel HEX and YMODEM transfer services
+    graph_node_patterns:
+      - '^file:agon-vdp:video/hexload\.h$'
+      - '^file:agon-vdp:video/ymodem\.h$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:vdu_sys_hexload|sendKeycodeByte|getIHex\w*|consumeHexMarker|linecrc16|crc32tmp|IHEX_\w+|DEF_LOAD_ADDRESS|OVERRUNTIMEOUT)\b'
+      - '\b(?:vdu_sys_ymodem_(?:send|receive)|YMODEM_\w+|ymodem_\w+|sendKeycodeUINT32_T|receiveKeycodeUINT32|sendKeycodeBytestream|receiveKeycodeBytestream|make_ymodem_block0)\b'
+
+boundaries:
+  - id: boundary-network-unused-wifi-include
+    owner: SETUP-004.1.a
+    reason: Work 1.a already accepted removal of the unused top-level WiFi.h include; it is not an active upstream network facility.
+    graph_node_patterns: []
+    include_target_patterns:
+      - '^WiFi\.h$'
+    occurrence_patterns: []
+
+  - id: boundary-update-primitives-and-stock-updater
+    owner: SETUP-004.1.a
+    reason: Work 1.a already accepted retention of the ESP-IDF OTA/restart substrate and omission of the defective stock serial updater command transaction.
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:firmware-updater$'
+      - '^command:agon-vdp-runtime:updater-command$'
+      - '^file:agon-vdp:video/updater\.h$'
+      - '^platform-api:reviewed:esp-idf%20ota%20partition%20apis%20and%20esp_restart$'
+    include_target_patterns:
+      - '^(?:Update|esp_ota_ops)\.h$'
+    occurrence_patterns:
+      - '\b(?:VDP_UPDATER|vdu_sys_updater|receiveFirmware|switchFirmware|esp_ota_\w+|esp_restart)\b'
+
+  - id: boundary-transfer-shared-dispatch-and-transport
+    owner: SETUP-005-D006
+    reason: Work 1.g owns HEX/YMODEM implementations; strict and non-strict parser behavior after their omission remains an operating-mode decision.
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:debug-zdi-and-file-transfer$'
+      - '^file:agon-vdp:video/(?:vdu_sys|vdu_stream_processor)\.h$'
+      - '^platform-api:reviewed:arduino%20hardwareserial(?:%20and%20stream)?$'
+      - '^platform-api:reviewed:psram%20capability%20allocations$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-transfer-crc-source-selection
+    owner: PORT-002
+    reason: CRC remains vendored at its pinned release; whether any selected non-transfer consumer requires it belongs to the authoritative source-selection manifest.
+    graph_node_patterns:
+      - '^platform-api:reviewed:crc%20dependency$'
+    include_target_patterns:
+      - '^CRC(?:16|32)\.h$'
+    occurrence_patterns: []
+
+  - id: boundary-network-media-sinks
+    owner: PORT-003/PORT-004
+    reason: Project-owned network/browser video and audio sinks are implementation work and have no upstream official VDP source candidate to extract.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-storage-filesystem
+    owner: SETUP-004.1.h
+    reason: Filesystem and storage ownership used by future project-owned transfer services belongs to Work 1.h.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []

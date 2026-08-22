@@ -1,0 +1,90 @@
+# Reviewed extraction scope for SETUP-004 Work 1.h. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.h
+title: Storage and filesystem interfaces
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:esp32%20per-core%20watchdog%20controls$'
+  explicit_graph_node_ids:
+    - file:vdp-gl:src/fabutils.cpp
+    - file:vdp-gl:src/fabutils.h
+  include_target_patterns:
+    - '^(?:ff|diskio|dirent|esp_vfs_fat|esp_task_wdt|sdmmc_cmd|esp_spiffs)\.h$'
+    - '^driver/sdspi_host\.h$'
+    - '^sys/stat\.h$'
+  occurrence_patterns:
+    - '\b(?:struct\s+DirItem|class\s+FileBrowser)\b'
+    - '\b(?:DirComp|FileBrowser::(?:FileBrowser|~FileBrowser|clear|setDirectory|changeDirectory|countDirEntries|exists|filePathExists|fileSize|fileCreationDate|fileUpdateDate|fileAccessDate|reload|makeDirectory|remove|rename|createTempFilename|truncate|getFullPath|openFile))\b'
+    - '\bFileBrowser::(?:format|mountSDCard|unmountSDCard|remountSDCard|mountSPIFFS|unmountSPIFFS|remountSPIFFS|getFSInfo|getDriveType|getCurrentDriveType)\b'
+    - '\b(?:s_SPIFFS\w*|s_SDCard\w*|esp_vfs_fat_\w+|esp_vfs_spiffs_\w+|esp_spiffs_\w+|SDSPI_HOST_DEFAULT|SDSPI_DEVICE_CONFIG_DEFAULT|sdmmc_\w+|f_(?:mount|fdisk|mkfs|getfree))\b'
+
+candidate_groups:
+  - id: storage-vdp-gl-filebrowser-api
+    name: vdp-gl FileBrowser directory and POSIX-style file operations
+    graph_node_patterns:
+      - '^file:vdp-gl:src/fabutils\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^dirent\.h$'
+      - '^sys/stat\.h$'
+    occurrence_patterns:
+      - '\b(?:struct\s+DirItem|class\s+FileBrowser)\b'
+      - '\b(?:DirComp|FileBrowser::(?:FileBrowser|~FileBrowser|clear|setDirectory|changeDirectory|countDirEntries|exists|filePathExists|fileSize|fileCreationDate|fileUpdateDate|fileAccessDate|reload|makeDirectory|remove|rename|createTempFilename|truncate|getFullPath|openFile))\b'
+
+  - id: storage-vdp-gl-esp32-mount-format-backends
+    name: vdp-gl classic-ESP32 SD/SPIFFS mount, format, and capacity backends
+    graph_node_patterns:
+      - '^platform-api:reviewed:esp32%20per-core%20watchdog%20controls$'
+    include_target_patterns:
+      - '^(?:ff|diskio|esp_vfs_fat|esp_task_wdt|sdmmc_cmd|esp_spiffs)\.h$'
+      - '^driver/sdspi_host\.h$'
+    occurrence_patterns:
+      - '\bFileBrowser::(?:format|mountSDCard|unmountSDCard|remountSDCard|mountSPIFFS|unmountSPIFFS|remountSPIFFS|getFSInfo|getDriveType|getCurrentDriveType)\b'
+      - '\b(?:s_SPIFFS\w*|s_SDCard\w*|esp_vfs_fat_\w+|esp_vfs_spiffs_\w+|esp_spiffs_\w+|SDSPI_HOST_DEFAULT|SDSPI_DEVICE_CONFIG_DEFAULT|sdmmc_\w+|f_(?:mount|fdisk|mkfs|getfree))\b'
+
+boundaries:
+  - id: boundary-storage-shared-fabutils
+    owner: SETUP-004.1.a/SETUP-004.1.d
+    reason: fabutils.cpp contains retained timing, geometry, containers, memory, and display helpers outside FileBrowser; Work 1.h may alter only the bounded FileBrowser region and storage-related includes.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-storage-spi-substrate
+    owner: SETUP-004.1.c
+    reason: Work 1.c retained the normal P4 SPI substrate but did not retain any concrete storage driver or stock pin assignment.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-storage-network-services
+    owner: PORT-006
+    reason: FTP, browser, and other network exposure of Extender storage belongs to the project-owned network service; Work 1.h owns local storage and filesystem facilities.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-storage-transfer-staging
+    owner: SETUP-004.1.g
+    reason: The omitted YMODEM service stages files in PSRAM rather than mounting a filesystem; its disposition is closed in Work 1.g.
+    graph_node_patterns: []
+    include_target_patterns: []
+    occurrence_patterns: []

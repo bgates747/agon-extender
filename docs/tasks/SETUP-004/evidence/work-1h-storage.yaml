@@ -1,0 +1,100 @@
+# Reviewed SETUP-004 Work 1.h input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.h
+subject: vdp-gl FileBrowser and classic-ESP32 filesystem backends
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+    - docs/decisions/ADR-0007-flash-partition-strategy.md
+  source_evidence:
+    - {id: target:p4-vfs-fat, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/fatfs/vfs/esp_vfs_fat.h, sha256: e97cc946cd4662878370cbf275f86fd2522b98ff5b0e1a011c8832a06ee5f68e}
+    - {id: target:p4-sdmmc-host, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_sdmmc/include/driver/sdmmc_host.h, sha256: 5ccca618622e02bac6f9b6a3134a1df01ae050e67bfe5c9be69c21c39842d7bd}
+    - {id: target:p4-sdspi-host, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_sdspi/include/driver/sdspi_host.h, sha256: 4f2b3a3e6f4ce37e3b5de17e49d05f19da9b0f4bdffdfadc0f6c45a580adcb38}
+    - {id: target:p4-spiffs, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/spiffs/include/esp_spiffs.h, sha256: 04b4f71fdc4a99c4ed669d72ebfd35606172947e5b407f7a6dc12802d04de016}
+    - {id: target:idf-task-watchdog, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_system/include/esp_task_wdt.h, sha256: a5c22abf8b35a4d85a81e2df163c0dbb5e0c596085e5c450e3ad869520ef040e}
+  official_reference_sources:
+    - url: https://github.com/OLIMEX/ESP32-P4-DevKit/tree/main/SOFTWARE/Demo_Examples/sdmmc
+      finding: Olimex publishes an ESP-IDF SDMMC example for the selected DevKit, including four-line P4 pin configuration, internal-LDO selection, FAT/VFS mounting, card information, POSIX file operations, and opt-in formatting.
+    - url: https://github.com/espressif/esp-idf/tree/master/examples/storage/sd_card/sdmmc
+      finding: Espressif's maintained P4 SDMMC example provides the underlying current ESP-IDF mount, bus-width, power-control, and filesystem pattern from which the Olimex example is derived.
+records:
+  - id: storage-vdp-gl-filebrowser-api
+    name: vdp-gl FileBrowser directory and POSIX-style file operations
+    layer: Dormant utility region inside the otherwise retained fabutils source
+    scope: Directory enumeration and sorting, path navigation, stat timestamps, file existence/size/open, mkdir, remove, rename, temporary names, and copy-based truncation; excludes physical mount, unmount, formatting, and capacity queries.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/fabutils.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/fabutils.cpp]
+      header_implementation: [vdp-gl:src/fabutils.h]
+    facilities: [fabgl::FileBrowser, DirItem and DriveType vocabulary, POSIX directory and stdio file operations, SPIFFS-specific simulated-directory behavior, synthetic mounted-drive root]
+    activation: [fabutils.cpp is selected for many non-storage utilities., Exact official-source search finds no constructed or called FileBrowser in agon-vdp., The only non-example vdp-gl consumer outside fabutils is the already-omitted MCP23S17 driver's mounted-SD coordination check., FileBrowser methods therefore have no selected runtime activation.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: [FileBrowser current directory, item/name allocations, sorting and hidden-file policy, shared mount-state variables]}
+    visible_behavior: [No official VDU command, VDP response/status packet, callback, sysvar, or other accepted compatibility behavior exposes FileBrowser., Future Extender storage, installed-application, media, FTP, and web-file services require file operations but do not require this class or its semantics.]
+    target_compatibility:
+      status: mostly-portable-but-unselected-and-policy-coupled
+      finding: The ordinary POSIX/VFS calls are available on P4, but the class mixes them with SPIFFS simulated-directory rules, two hard-coded drive types, raw allocation, weak error reporting, copy-based truncation, and global mount state. Retaining it would adopt those choices as an unnecessary internal contract despite no upstream runtime consumer.
+      evidence: [target:p4-vfs-fat]
+    physical_owner_class: none
+    physical_owner: This dormant helper owns no active device or compatibility surface; the separate Extender P4 SD-card capability does not require a FileBrowser API
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: Extender does not presently require a file browser, and no official VDP behavior or selected vdp-gl consumer requires this class. Retain the upstream source unchanged for provenance but exclude its bounded FileBrowser region from the P4 build. Any future browser, RPC, or user-facing file service will be selected independently from the required v1 P4 SD-card backend.
+    omission_fallout: fabutils.cpp cannot be source-filtered because retained vdp-gl code needs unrelated utilities from the same translation unit. The bounded FileBrowser declarations, definitions, storage-only includes, and umbrella export must be conditionally excluded or otherwise made non-selected without disturbing the rest of fabutils.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: blocks-implementation}
+    fallout_analysis:
+      kind: replace-dormant-region-in-retained-translation-unit
+      first_failure: Excluding all of fabutils.cpp removes retained timing, geometry, containers, memory, and display helpers; removing declarations alone leaves the existing FileBrowser definitions ill-formed.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Add one narrow, provenance-rich selection boundary around the FileBrowser declaration/definition region and its exclusive includes while keeping unrelated fabutils text upstream-shaped. Project storage lives under extender rather than replacing unrelated FabGL utilities.
+      residual_risk: Verify no newly selected vdp-gl consumer appears after each tagged import; generated source-selection evidence must distinguish the omitted FileBrowser region from the retained fabutils translation unit.
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/fabutils.cpp, file:vdp-gl:src/fabutils.h]
+    agent_entry_points: [vdp-gl:src/fabutils.h:788, vdp-gl:src/fabutils.cpp:676]
+
+  - id: storage-vdp-gl-esp32-mount-format-backends
+    name: vdp-gl classic-ESP32 SD/SPIFFS mount, format, and capacity backends
+    layer: Fused classic-ESP32 physical filesystem backend in fabutils
+    scope: SD-over-SPI setup, chip-package pin overrides, mount state, SD/SPIFFS mount/unmount/remount, FAT partitioning and formatting, SPIFFS formatting, free-space queries, and formatting watchdog policy; excludes generic file operations.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/fabutils.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/fabutils.cpp]
+      header_implementation: [vdp-gl:src/fabutils.h]
+    facilities: [classic ESP32 SDSPI host on HSPI_HOST, hard-coded DMA channel 2, PICO-D4 and D0WDQ5 pin overrides, FATFS fdisk/mkfs/free-space calls, ESP-IDF FAT VFS, SPIFFS VFS, global mount metadata, unconditional watchdog reconfiguration during format]
+    activation: [No official VDP startup or command mounts storage., The methods are compiled as part of fabutils.cpp but have no selected caller after the MCP23S17 omission., Future Extender local-storage startup will require a new explicit owner and lifecycle.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: [global SD and SPIFFS mount paths flags limits pins allocation size and card handle, SPI bus and VFS registrations, FATFS volume state, task-watchdog configuration]}
+    visible_behavior: [No official VDP command or packet exposes these methods., Future Extender behavior includes direct access to the P4 DevKit card, local assets and installed applications, storage-backed media, and network services over a separate Extender namespace.]
+    target_compatibility:
+      status: substrate-available-but-backend-and-policy-incompatible
+      finding: ESP-IDF 5.5.5 supplies P4 FAT VFS, SDMMC, SDSPI, and SPIFFS facilities, but the upstream backend assumes classic-chip packages, HSPI, fixed DMA channel and pins, a 19 MHz VGA/WiFi workaround, and the obsolete esp_task_wdt_init(45,false) signature. Board wiring, bus mode, hotplug, concurrency, and destructive-format policy require a P4-native design.
+      evidence: [target:p4-vfs-fat, target:p4-sdmmc-host, target:p4-sdspi-host, target:p4-spiffs, target:idf-task-watchdog]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 owns the DevKit microSD card and any selected local flash filesystem; the Agon main board separately owns its MOS-managed SD card
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: Omit this classic-ESP32 backend from the P4 build. The required v1 P4 DevKit SD-card capability is a separate project-owned feature, deferred beyond the first beta and based on current proven Olimex/Espressif P4 SDMMC code rather than this backend. Do not carry chip-package pin overrides, stock SPI-host assumptions, VGA/WiFi workaround, global watchdog mutation, or format-on-mount policy. Keep any internal-flash filesystem unselected until a concrete service requires it.
+    omission_fallout: The backend shares fabutils.cpp and the FileBrowser class with generic operations, so it cannot be source-filtered as a translation unit. Its methods, static members, includes, DriveType assumptions, and MCP23S17 mounted-card coupling require one bounded selection/adaptation boundary.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: blocks-implementation}
+    fallout_analysis:
+      kind: replace-fused-classic-storage-backend
+      first_failure: Unchanged source fails at the ESP-IDF 5 task-watchdog call and may compile inappropriate host, DMA, pin, and bus assumptions; deleting the entire fabutils unit breaks unrelated retained services.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Exclude the bounded upstream storage backend and exclusive headers while retaining the rest of fabutils. Implement the separately tracked v1 P4 card capability under extender storage ownership from the maintained Olimex/Espressif P4 SDMMC baseline.
+      residual_risk: Exact DevKit card interface and pins, card-detect behavior, supported FAT variants, throughput, removal/reinsertion, power loss, simultaneous consumers, write durability, and safe formatting require implementation design and qualified hardware tests.
+    evidence_ids: [evidence:reviewed:facility-startup-orchestration-2]
+    graph_node_ids: [platform-api:reviewed:esp32%20per-core%20watchdog%20controls]
+    agent_entry_points: [vdp-gl:src/fabutils.cpp:1180, vdp-gl:src/fabutils.cpp:1198, vdp-gl:src/fabutils.cpp:1245, vdp-gl:src/fabutils.cpp:1343]

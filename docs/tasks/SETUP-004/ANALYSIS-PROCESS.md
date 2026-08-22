@@ -301,6 +301,18 @@ passing coverage audit with no ambiguous or unclassified scoped evidence. The
 Author accepted all 13 dispositions; named follow-on work preserves deferred
 implementation, qualification, and architecture details.
 
+Work 1.b has four reviewed candidate records and a passing coverage audit: 145
+scoped items, 141 assigned and four explicitly delegated to Work 1.c, with no
+ambiguous or unclassified evidence. The Author accepted both retained RTC
+candidates and both device-driver omissions; the separate clock-policy question
+was explicitly deferred to `SETUP-005-D008`.
+
+Work 1.c has ten reviewed candidate records and a passing coverage audit: 703
+scoped items, 507 assigned and 196 explicitly delegated to later subsystem
+owners, with no ambiguous or unclassified evidence. All ten dispositions have
+completed Author review, including the narrow P4-native replacement of
+ESP32/Xtensa clock and cycle-counter internals.
+
 The PORT-001 graph deliberately preserves unresolved lexical relationships.
 Those IDs may appear in mechanically complete candidates without becoming
 unclassified scope residuals: the extractor retains them as uncertainty, and

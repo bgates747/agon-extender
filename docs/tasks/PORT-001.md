@@ -122,7 +122,9 @@ disposable generated query index but not a second source of truth.
 Status: approved by the Author on 2026-08-21. The validated task-local system
 and first proof complete PORT-001. Promotion into a continuing project tool
 boundary and future test/build/release relationships remain separate follow-on
-work.
+work. [PORT-002](PORT-002.md) owns the accepted extension for complete vendored
+source classification, build-selection rationale, and upstream merge-attention
+guidance.
 
 ## Review gates
 

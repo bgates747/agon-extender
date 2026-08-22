@@ -7,12 +7,39 @@ item is removed.
 
 ## Setup
 
-- [ ] **SETUP-004 — Determine upstream I/O driver disposition**
-  - Started: 2026-08-20 20:52 EDT
-  - Finished: --
-  - Details: [SETUP-004](docs/tasks/SETUP-004.md)
-
 - [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
   - Started: 2026-08-21 00:49 EDT
   - Finished: --
   - Details: [SETUP-005](docs/tasks/SETUP-005.md)
+
+## Porting
+
+- [ ] **PORT-002 — Integrate vendored-source selection and upstream merge guidance**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-002](docs/tasks/PORT-002.md)
+
+- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-003](docs/tasks/PORT-003.md)
+
+- [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-004](docs/tasks/PORT-004.md)
+
+- [ ] **PORT-005 — Implement the EDU processed-input injection adapter**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-005](docs/tasks/PORT-005.md)
+
+- [ ] **PORT-006 — Implement the Extender network foundation and update service**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-006](docs/tasks/PORT-006.md)
+
+- [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-007](docs/tasks/PORT-007.md)

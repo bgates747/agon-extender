@@ -55,7 +55,38 @@ remain authoritative. This inventory narrows source review; it does not replace
 source inspection when implementation details matter. Work 1.a has passed the
 mechanical and reviewed-evidence audit, and all 13 candidate dispositions have
 completed Author review. Named follow-on tasks retain deferred implementation,
-qualification, and architectural work.
+qualification, and architectural work. Work 1.b has also passed its mechanical
+and reviewed-evidence audit; all four candidate dispositions have completed
+Author review and its clock-policy dependency is explicitly deferred to
+`SETUP-005-D008`.
+Work 1.c has passed its mechanical and reviewed-evidence audit. Six of its ten
+candidate dispositions inherit accepted architecture and the remaining four
+completed Author review; Work 1.c is complete.
+Work 1.d has passed its mechanical and reviewed-evidence audit with 1,002
+scoped items, six candidates, two explicit boundary delegations, and no
+ambiguity or warnings. All six dispositions completed Author review; Work 1.d
+is complete, with implementation delegated to `PORT-003` and source-selection
+representation delegated to `PORT-002`.
+Work 1.e has passed its mechanical and reviewed-evidence audit with 458 scoped
+items, three candidates, and no ambiguity or warnings. All three dispositions
+completed Author review; Work 1.e is complete, with implementation delegated
+to `PORT-004` and source-selection representation delegated to `PORT-002`.
+Work 1.f has passed its mechanical and reviewed-evidence audit with 521 scoped
+items, four candidates, and no ambiguity or warnings. All four dispositions
+are accepted; Work 1.f is complete, with the proof-of-concept injection adapter
+delegated to `PORT-005` and source-selection representation delegated to
+`PORT-002`.
+Work 1.g has passed its mechanical and reviewed-evidence audit with 353 scoped
+items, two candidates, 42 explicit boundary delegations, and no ambiguity or
+warnings. Both dispositions are accepted; Work 1.g is complete. The dormant
+vdp-gl ICMP helper remains vendored but is excluded from the P4 build, while
+the stock updater and Intel HEX/YMODEM decisions inherit accepted Work 1.a and
+ADR-0014 policy. Project-owned networking is delegated to `PORT-006`.
+Work 1.h has passed its mechanical and reviewed-evidence audit with 139 scoped
+items, two candidates, and no exclusions, ambiguity, or warnings. Both
+dispositions are accepted; Work 1.h and SETUP-004 are complete. FileBrowser and
+the classic-ESP32 storage backend remain vendored but are excluded from the P4
+build. Independent v1 DevKit microSD implementation is delegated to `PORT-007`.
 
 ## Record lifecycle
 

@@ -1,0 +1,99 @@
+# Reviewed extraction scope for SETUP-004 Work 1.b. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.b
+title: RTC service and peripheral-device drivers
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:esp32time%20dependency$'
+  explicit_graph_node_ids:
+    - subsystem:agon-vdp:rtc-service
+    - macro:agon-vdp:VDP_RTC@video/agon.h%23variant-c7bb28db25ef
+    - macro:agon-vdp:PACKET_RTC@video/agon.h%23variant-17deebd38963
+    - method:agon-vdp:VDUStreamProcessor::sendTime()
+    - method:agon-vdp:VDUStreamProcessor::vdu_sys_video_time()
+    - variable:agon-vdp:rtc
+    - file:vdp-gl:src/devdrivers/DS3231.cpp
+    - file:vdp-gl:src/devdrivers/DS3231.h
+    - file:vdp-gl:src/devdrivers/MCP23S17.cpp
+    - file:vdp-gl:src/devdrivers/MCP23S17.h
+    - file:vdp-gl:src/comdrivers/tsi2c.cpp
+    - file:vdp-gl:src/comdrivers/tsi2c.h
+  include_target_patterns:
+    - '^(?:ESP32Time|DS3231|MCP23S17)\.h$'
+    - '^devdrivers/(?:DS3231|MCP23S17)\.h$'
+    - '^comdrivers/tsi2c\.h$'
+  occurrence_patterns:
+    - '\bESP32Time\b'
+    - '\brtc\s*\.'
+    - '\bDS3231\b'
+    - '\bMCP23S17\b'
+    - '\bTSI2C\b'
+
+candidate_groups:
+  - id: rtc-protocol-surface
+    name: Stock VDP RTC command, packet, variables, and callbacks
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:rtc-service$'
+      - '^macro:agon-vdp:(?:VDP_RTC|PACKET_RTC)@'
+      - '^method:agon-vdp:VDUStreamProcessor::(?:sendTime|vdu_sys_video_time)\(\)$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: rtc-esp32time-provider
+    name: ESP32Time software-clock provider
+    graph_node_patterns:
+      - '^platform-api:reviewed:esp32time%20dependency$'
+      - '^variable:agon-vdp:rtc$'
+    include_target_patterns:
+      - '^ESP32Time\.h$'
+    occurrence_patterns:
+      - '\bESP32Time\b'
+      - '\brtc\s*\.'
+
+  - id: peripheral-vdp-gl-ds3231
+    name: Unused vdp-gl DS3231 I2C RTC driver
+    graph_node_patterns:
+      - '^file:vdp-gl:src/devdrivers/DS3231\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^(?:devdrivers/)?DS3231\.h$'
+    occurrence_patterns:
+      - '\bDS3231\b'
+
+  - id: peripheral-vdp-gl-mcp23s17
+    name: Unused vdp-gl MCP23S17 SPI GPIO-expander driver
+    graph_node_patterns:
+      - '^file:vdp-gl:src/devdrivers/MCP23S17\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^(?:devdrivers/)?MCP23S17\.h$'
+    occurrence_patterns:
+      - '\bMCP23S17\b'
+
+boundaries:
+  - id: boundary-low-level-i2c
+    owner: SETUP-004.1.c
+    reason: The generic vdp-gl TSI2C bus implementation belongs to low-level bus review; Work 1.b records it only as DS3231 fallout.
+    graph_node_patterns:
+      - '^file:vdp-gl:src/comdrivers/tsi2c\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^comdrivers/tsi2c\.h$'
+    occurrence_patterns:
+      - '\bTSI2C\b'

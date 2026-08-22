@@ -3,7 +3,8 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
-- Related task: SETUP-003
+- Last amended: 2026-08-22
+- Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-007
 
 ## Context
 
@@ -44,6 +45,144 @@ ESP32-specific `esp32/ulp.h`.
 7. Record each material omission discovered during SETUP-003 with the upstream
    subsystem, the retained compatibility surface, and the replacement owner or
    reason no replacement is required.
+8. Retain pinned ESP32Time `2.0.6` as the initial P4 provider behind the stock
+   RTC command and state surface. Keep clock authority, synchronization,
+   persistence, and operating-mode policy in a project-owned layer around the
+   provider; replace ESP32Time only if qualification demonstrates a material
+   limitation.
+9. Omit vdp-gl's unused DS3231 translation unit from Extender builds while
+   retaining it unchanged inside the complete vendored upstream release. The
+   current hardware has no DS3231 and official VDP has no evidenced runtime
+   consumer; any future use requires a new project-owned hardware decision.
+10. Treat vendored availability and build selection as separate, explicit graph
+    properties. Deterministically generate human-readable source-selection and
+    tagged-release merge guidance so upstream integration can prioritize the
+    selected dependency closure without making unselected changes invisible.
+11. Omit vdp-gl's unused MCP23S17 translation unit from Extender builds while
+    retaining it unchanged inside the complete vendored upstream release. The
+    current hardware has no MCP23S17 and official VDP has no evidenced runtime
+    consumer; future GPIO-expander hardware is a project-owned addition.
+12. Retain ordinary Arduino and ESP-IDF GPIO direction, read, and write services
+    for surviving P4 drivers. This platform-service decision does not retain an
+    upstream physical driver, pin assignment, or peripheral extension; those
+    remain independently selected through hardware profiles and subsystem
+    dispositions.
+13. Retain ESP-IDF's P4 SPI master substrate independently of every concrete
+    upstream consumer. This does not reverse the MCP23S17 or vdp-gl storage
+    omissions; PORT-007 independently selects SDMMC for the DevKit card, and
+    future project-owned SPI devices require explicit source selection,
+    hardware profiles, and qualification.
+14. Retain ESP-IDF's P4 `esp_timer` monotonic-clock and callback lifecycle as a
+    shared platform service. Every surviving display, audio, input, scene, or
+    utility consumer remains responsible for qualifying its own callback
+    latency, jitter, pacing, timeout, and scheduling assumptions.
+15. Replace vdp-gl's ESP32/Xtensa-specific CPU/APB clock, APLL/resource,
+    FRC-timer, and cycle-counter internals with narrow P4-native implementations
+    at the existing upstream seams. Preserve names and call sites wherever
+    practical, record the substitution in the compatibility delta and
+    dependency graph, and do not use unavoidable architecture work as license
+    for unrelated upstream refactoring.
+16. Retain the official VDP's header-defined screen facade, including its
+    global Canvas/controller ownership, mode selection and fallback, logical
+    dimensions and scaling, palette and Copper state, frame counter, completion
+    waits, and buffer swaps. Keep its names and source placement recognizable;
+    adapt only the narrow concrete-controller binding required by the P4
+    display backend rather than create a parallel project-owned display model.
+17. Retain vdp-gl `Canvas`, the abstract bitmapped-controller contract, and the
+    common primitive, paint, clipping, geometry, glyph, bitmap, sprite, cursor,
+    readback, completion, and buffering semantics. Apply narrow P4 adaptations
+    where common code directly assumes the old Xtensa VGA-ISR environment,
+    including transformed-bitmap coprocessor-state handling; do not redesign
+    unrelated common rendering code as part of that adaptation.
+18. Replace vdp-gl's concrete VGA2/VGA4/VGA8/VGA16/VGA64 physical-controller
+    family with an Extender-owned concrete `BitmappedDisplayController` backed
+    by framebuffer production and logical frame progression independent of any
+    one output sink. Preserve stock mode dimensions, palette quantization,
+    Copper scanline effects, sprite composition, readback, double buffering,
+    frame waits and counters, callbacks, and mode failure/fallback behavior as
+    closely as practical. Reuse separable upstream algorithms where useful,
+    but do not retain the classic-ESP32 GPIO-matrix, I2S1, DMA-chain, or
+    VSync-ISR physical engine.
+19. Omit vdp-gl's independently compiled `VGATextController` translation unit
+    from Extender builds while retaining it unchanged in the complete vendored
+    release. Official VDP text uses Canvas over the retained bitmapped path and
+    has no runtime constructor or visible dependency on this separate hardware
+    character-cell VGA driver; no stub or replacement is required.
+20. Omit vdp-gl's independently compiled `CVBSGenerator` translation unit from
+    Extender builds while retaining it unchanged in the complete vendored
+    release. Official VDP has no runtime construction or visible dependency on
+    this classic-ESP32 DAC/I2S0/DMA composite-video facility, and composite
+    video is not a selected Extender output; no stub or replacement is needed.
+21. Omit vdp-gl's independently compiled `Scene` translation unit from Extender
+    builds while retaining it unchanged in the complete vendored release.
+    Official VDP sprite commands use their own state and the retained
+    bitmapped-controller path; no Scene object or start call exists at runtime.
+    Retain independently required Sprite/display types, but provide no Scene
+    stub or replacement unless a future Extender feature deliberately adopts
+    that separate scheduler.
+22. Retain the official VDP's header-defined audio parser, `PACKET_AUDIO`
+    acknowledgements, channel state machines, envelopes, buffer-backed samples,
+    playback timing, audio-control task, and VDU 7 behavior. Preserve its names,
+    placement, and application-visible behavior; adapt only the direct
+    `fabgl::SoundGenerator` binding required to connect it to the selected P4
+    synthesis and output service rather than create a parallel audio model.
+23. Retain vdp-gl's waveform generators, channel attachment and lifetime rules,
+    sample-rate propagation, channel and global volume behavior, and signed
+    eight-bit PCM mixer. Narrowly adapt the fused `SoundGenerator` boundary to
+    expose mixed samples to an Extender-owned scheduler or sink; do not use that
+    seam to redesign unrelated synthesis semantics.
+24. Replace vdp-gl's classic-ESP32 DAC, sigma-delta, I2S0-register, legacy-DMA,
+    fixed-pin, ISR/timer, VGA/CVBS-selection, and target SDL output machinery
+    with an Extender-owned PCM scheduler and sink service. Retain the old source
+    in the complete vendored release but omit its physical target paths from the
+    P4 build. Network/browser audio is the guaranteed Rev 1 sink; no P4-local
+    analog transducer is selected.
+25. Preserve logical audio compatibility independently of output delivery. The
+    replacement scheduler advances playback at the selected sample rate even
+    when a sink is absent, slow, or congested; sink behavior must not block VDU
+    processing, delay logical note completion, or change channel status.
+    Delivery may drop or resynchronize when necessary. Rev 1 does not guarantee
+    the stock analog-output location, analog distortion, or sink latency.
+26. Replace official VDP input integration's direct global FabGL keyboard,
+    mouse, and PS/2-controller bindings with a narrow processed-event injection
+    adapter. In the proof of concept an EDU-aware eZ80 application reads stock
+    onboard-VDP input and injects it explicitly. Injection updates EDP-local
+    variables, callbacks, control-key and paged-mode logic, mouse state, and
+    cursor effects without automatically echoing the same input packets back to
+    the forwarding application. Preserve official packet/event semantics for
+    later profiles, but do not presume transparent routing.
+27. Omit vdp-gl's physical keyboard device, scan-code conversion task, locale
+    layout engine, typematic/LED device control, and compiled layout tables from
+    the P4 build while retaining the complete sources in the vendored release.
+    The onboard VDP remains the physical translation and device-state owner;
+    retain only stable virtual-key and event vocabulary required by the EDP
+    injection adapter.
+28. Omit vdp-gl's physical mouse device, PS/2 packet decoder, update task,
+    queues, acceleration, and direct display-positioning engine from the P4
+    build while retaining the complete sources in the vendored release. The
+    onboard VDP remains the physical packet-processing owner; application-
+    forwarded processed mouse fields feed the EDP injection adapter, which owns
+    only EDP-local state and cursor effects.
+29. Omit vdp-gl's independently compiled `ICMP.cpp` helper from the P4 build
+    while retaining it in the complete vendored release. It has no official VDP
+    consumer or visible compatibility surface and binds directly to a local
+    Arduino WiFi/raw-lwIP interface. Extender networking is project-owned. The
+    optional Rev 1 MOD-WIFI-ESP8266 module is a separate processor reached over
+    its dedicated-header host protocol and does not justify selecting this
+    P4-local helper.
+30. Omit vdp-gl's dormant `FileBrowser` API and implementation from the P4
+    build while retaining it in the complete vendored release. No official VDP
+    behavior or selected vdp-gl consumer requires it, and Extender does not
+    presently select a file-browser interface. Required v1 P4 DevKit SD-card
+    support is a separate project-owned capability, deferred beyond the first
+    beta; future browser or network file interfaces require their own concrete
+    consumers and service decisions.
+31. Omit vdp-gl's classic-ESP32 SDSPI/SPIFFS mount, format, capacity, pin,
+    host/DMA, global-watchdog, and VGA/WiFi-workaround backend from the P4
+    build while retaining it in the complete vendored release. Provide no
+    compatibility stub or FabGL-shaped replacement. Implement the required v1
+    DevKit microSD capability independently from maintained Olimex/Espressif P4
+    SDMMC code, with its own production lifecycle and qualification.
 
 ## Rationale
 
@@ -68,3 +207,78 @@ ESP32-specific `esp32/ulp.h`.
    require a stub, or require a project-owned adapter.
 4. Future Extender input hardware or network input features require their own
    architecture and qualification decisions.
+5. RTC qualification must distinguish the retained clock provider from the
+   separately selected authority and synchronization policy.
+6. Upstream integration review must use generated build-selection evidence and
+   dependency boundaries rather than infer importance from the presence of a
+   file in the vendor tree.
+7. Work 1.c must validate the SPI, GPIO, interrupt, and link fallout from
+   excluding MCP23S17 before the source filter becomes an implementation change.
+8. Every retained GPIO consumer must use an explicit target hardware profile
+   and receive pin-mux and electrical qualification; no stock pin mapping is
+   inherited merely because the portable API survives.
+9. Build and dependency records must prevent retention of the SPI platform API
+   from being interpreted as retention of all upstream SPI device code.
+10. Retaining `esp_timer` establishes an implementation substrate, not proof
+    that ESP32-PICO timing behavior carries over to the P4.
+11. Architecture substitutions are expected recurring port work. Each must be
+    locally bounded, provenance-rich, and traceable to the retained consumer
+    that makes it necessary so later tagged-release merges can distinguish
+    intentional P4 adaptations from accidental divergence.
+12. The retained screen facade becomes the stable upstream-shaped integration
+    seam for display work. Replacement physical output code must satisfy that
+    seam instead of forcing broad changes through official command-processing
+    source.
+13. The retained Canvas/common-renderer layer is the behavioral seam beneath
+    the facade. Concrete P4 display backends must implement its controller
+    contract and preserve observable ordering, completion, refresh, sprite,
+    readback, and buffering behavior.
+14. Network/browser video and later P4-native local displays consume the same
+    logical framebuffer/frame service rather than defining separate VDP
+    rendering models. Output-sink pacing must not silently redefine the stock
+    frame semantics relied upon by commands and callbacks.
+15. Source-selection evidence must keep the omitted hardware text controller
+    visible for tagged-release merge review without implying that it belongs in
+    the Extender firmware image.
+16. The same vendored-versus-selected evidence must keep the unused composite
+    generator visible for upstream review without carrying its physical driver
+    into the P4 build.
+17. Omitting Scene removes an unused task, mutex, collision-callback, and
+    parallel sprite-scheduling surface without changing official VDP sprites.
+    Future adoption requires an explicit source-selection and concurrency
+    decision rather than accidental activation through broad library builds.
+18. The official audio runtime becomes the stable upstream-shaped integration
+    seam for audio porting. Replacement scheduling or output code must satisfy
+    its command, state, timing, sample, callback, and packet contracts instead
+    of forcing broad changes through official audio-processing source.
+19. The retained vdp-gl mixer is the behavioral seam beneath the official audio
+    runtime. Output backends consume its mixed PCM rather than implementing
+    independent waveform, attachment, volume, or sample-rate models.
+20. Audio qualification must test protocol responses and logical playback
+    timing separately from end-to-end browser latency and fidelity. A network
+    outage or backpressured client may degrade delivered audio but cannot alter
+    the command processor or logical channel state.
+21. Optional forwarding to the onboard VDP for local playback is not implied by
+    the replacement sink and remains a separate operating-mode decision.
+22. The input adapter provides a stable seam between official display-local
+    input behavior and whichever event route an operating mode selects. The
+    proof-of-concept route validates aware applications only; transparent v1
+    routing remains separately unresolved.
+23. Source selection must not pull the keyboard task and layout tables back into
+    the P4 image merely because shared virtual-key declarations remain visible
+    in the complete vendor tree.
+24. Shared mouse event/status vocabulary may remain available to the adapter,
+    but it must not pull the physical decoder, task, queues, acceleration, or
+    display-positioning implementation into the P4 image.
+25. The source-selection manifest must keep the dormant ICMP helper visible for
+    tagged-release review without compiling it into the P4 image. Native wired
+    Ethernet and optional ESP8266 wireless support share project-owned network
+    service boundaries rather than inheriting FabGL's unused WiFi helper.
+26. Because FileBrowser is fused into otherwise retained `fabutils.cpp`, source
+    selection needs a narrow, provenance-rich region boundary rather than
+    excluding the whole translation unit. Later tagged imports must verify that
+    no newly selected upstream consumer has appeared.
+27. The fused physical backend requires the same narrow source-region boundary.
+    Its omission must not remove unrelated retained fabutils services, and the
+    new P4 storage service must not make automatic formatting, global watchdog
+    mutation, or classic-chip bus assumptions accidental product policy.

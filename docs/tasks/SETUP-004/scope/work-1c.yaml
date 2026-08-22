@@ -1,0 +1,207 @@
+# Reviewed extraction scope for SETUP-004 Work 1.c. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.c
+title: UART, GPIO, ADC, I2C, SPI, timers, interrupts, and ULP facilities
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:external:(?:esp_(?:ipc|timer)_.*|gpio_.*|rtc_.*)$'
+    - '^platform-api:reviewed:(?:arduino%20hardwareserial|esp32%20interrupt%20allocation.*|gpio26%20and%20gpio27)$'
+    - '^physical-facility:reviewed:(?:direct%20esp32%20gpio.*|esp32%20gpio%20matrix|esp32%20i2s.*|esp32%20ulp.*|i2s0.*|i2s1.*|uart2.*)$'
+  explicit_graph_node_ids:
+    - macro:agon-vdp:VDPSerial@video/vdp_protocol.h%23variant-dbcd3c44de4c
+    - file:agon-vdp:video/vdp_protocol.h
+    - file:agon-vdp:video/OneWire_direct_gpio.h
+    - file:vdp-gl:src/comdrivers/tsi2c.cpp
+    - file:vdp-gl:src/comdrivers/tsi2c.h
+    - file:vdp-gl:src/ulp_macro_ex.cpp
+    - file:vdp-gl:src/ulp_macro_ex.h
+  include_target_patterns:
+    - '^(?:HardwareSerial|esp_timer|esp_ipc)\.h$'
+    - '^driver/(?:adc|gpio|i2c|rtc_io|spi_master)\.h$'
+    - '^(?:esp32/)?rom/uart\.h$'
+    - '^soc/(?:adc_channel|frc_timer_reg|gpio_sig_map|rtc|rtc_cntl_reg|rtc_io_periph|sens_reg|uart_reg|uart_struct)\.h$'
+    - '^esp32/ulp\.h$'
+    - '^(?:comdrivers/)?tsi2c\.h$'
+    - '^ulp_macro_ex\.h$'
+    - '^OneWire_direct_gpio\.h$'
+  occurrence_patterns:
+    - '\b(?:VDPSerial|Serial2|HardwareSerial|uart_[A-Za-z0-9_]+|UART_[A-Za-z0-9_]+)\b'
+    - '\b(?:digitalRead|digitalWrite|pinMode|gpio_[A-Za-z0-9_]+)\s*\('
+    - '\b(?:adc1_[A-Za-z0-9_]+|ADC1_GPIO2Channel)\s*\('
+    - '\b(?:I2C|i2c[A-Za-z0-9_]+)\b'
+    - '\bspi_(?:bus|device)[A-Za-z0-9_]*\s*\('
+    - '\besp_timer_[A-Za-z0-9_]+\s*\('
+    - '\b(?:esp_intr_[A-Za-z0-9_]+|esp_ipc_[A-Za-z0-9_]+)\s*\('
+    - '\b(?:ulp_[A-Za-z0-9_]+|rtc_gpio_[A-Za-z0-9_]+|rtc_io_number_get|rtc_reg)\b'
+    - '\b(?:rtc_clk_[A-Za-z0-9_]+|getCycleCount|getAPBFrequency)\s*\('
+    - '\bDIRECT_(?:READ|WRITE_LOW|WRITE_HIGH|MODE_INPUT|MODE_OUTPUT)\b'
+    - '\b(?:i2s|I2S|dac_|sigmadelta_)[A-Za-z0-9_]*\b'
+
+candidate_groups:
+  - id: transport-stock-uart-hardware
+    name: Stock VDP UART hardware binding and flow-control configuration
+    graph_node_patterns:
+      - '^platform-api:reviewed:arduino%20hardwareserial$'
+      - '^physical-facility:reviewed:uart2%20pins,.*$'
+      - '^macro:agon-vdp:VDPSerial@'
+      - '^file:agon-vdp:video/vdp_protocol\.h$'
+    include_target_patterns:
+      - '^HardwareSerial\.h$'
+      - '^(?:esp32/)?rom/uart\.h$'
+      - '^soc/(?:uart_reg|uart_struct)\.h$'
+    occurrence_patterns:
+      - '\b(?:VDPSerial|Serial2|HardwareSerial|uart_[A-Za-z0-9_]+|UART_[A-Za-z0-9_]+)\b'
+
+  - id: peripheral-portable-gpio-services
+    name: Portable GPIO configuration and level services
+    graph_node_patterns:
+      - '^platform-api:external:gpio_(?:get_level|set_direction|set_level)$'
+      - '^platform-api:reviewed:gpio26%20and%20gpio27$'
+    include_target_patterns:
+      - '^driver/gpio\.h$'
+    occurrence_patterns:
+      - '\b(?:digitalRead|digitalWrite|pinMode|gpio_(?:config|get_level|set_direction|set_level))\s*\('
+
+  - id: peripheral-terminal-adc-services
+    name: FabGL terminal-mode ADC extension services
+    graph_node_patterns: []
+    include_target_patterns:
+      - '^driver/adc\.h$'
+      - '^soc/adc_channel\.h$'
+    occurrence_patterns:
+      - '\b(?:adc1_[A-Za-z0-9_]+|ADC1_GPIO2Channel)\s*\('
+
+  - id: peripheral-vdp-gl-i2c-service
+    name: vdp-gl task-serialized I2C service
+    graph_node_patterns:
+      - '^file:vdp-gl:src/comdrivers/tsi2c\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^driver/i2c\.h$'
+      - '^(?:comdrivers/)?tsi2c\.h$'
+    occurrence_patterns:
+      - '\b(?:I2C|i2c[A-Za-z0-9_]+)\b'
+
+  - id: peripheral-spi-services
+    name: ESP-IDF SPI bus and device services used by vdp-gl
+    graph_node_patterns: []
+    include_target_patterns:
+      - '^driver/spi_master\.h$'
+    occurrence_patterns:
+      - '\bspi_(?:bus|device)[A-Za-z0-9_]*\s*\('
+
+  - id: timing-idf-high-resolution-service
+    name: ESP-IDF high-resolution timer and monotonic-clock services
+    graph_node_patterns:
+      - '^platform-api:external:esp_timer_.*$'
+    include_target_patterns:
+      - '^esp_timer\.h$'
+    occurrence_patterns:
+      - '\besp_timer_[A-Za-z0-9_]+\s*\('
+
+  - id: interrupt-pinned-allocation-helper
+    name: vdp-gl pinned-core interrupt allocation helper
+    graph_node_patterns:
+      - '^platform-api:reviewed:esp32%20interrupt%20allocation.*$'
+      - '^platform-api:external:esp_ipc_.*$'
+    include_target_patterns:
+      - '^esp_ipc\.h$'
+    occurrence_patterns:
+      - '\b(?:esp_intr_[A-Za-z0-9_]+|esp_ipc_[A-Za-z0-9_]+)\s*\('
+
+  - id: peripheral-esp32-ulp-rtc-domain
+    name: ESP32 ULP and RTC-domain support used by physical PS/2 input
+    graph_node_patterns:
+      - '^physical-facility:reviewed:esp32%20ulp,.*$'
+      - '^file:vdp-gl:src/ulp_macro_ex\.(?:cpp|h)$'
+      - '^platform-api:external:rtc_(?:gpio_.*|io_number_get)$'
+    include_target_patterns:
+      - '^driver/rtc_io\.h$'
+      - '^esp32/ulp\.h$'
+      - '^soc/(?:rtc_cntl_reg|rtc_io_periph|sens_reg)\.h$'
+      - '^ulp_macro_ex\.h$'
+    occurrence_patterns:
+      - '\b(?:ulp_[A-Za-z0-9_]+|rtc_gpio_[A-Za-z0-9_]+|rtc_io_number_get|rtc_reg)\b'
+
+  - id: architecture-cpu-clock-and-cycle-counter
+    name: ESP32 CPU/APB clock and cycle-counter utilities
+    graph_node_patterns:
+      - '^platform-api:external:rtc_clk_.*$'
+    include_target_patterns:
+      - '^soc/(?:frc_timer_reg|rtc)\.h$'
+    occurrence_patterns:
+      - '\b(?:rtc_clk_[A-Za-z0-9_]+|getCycleCount|getAPBFrequency)\s*\('
+
+  - id: peripheral-zdi-direct-gpio-helper
+    name: Direct-register GPIO helper used by the omitted ZDI facility
+    graph_node_patterns:
+      - '^physical-facility:reviewed:direct%20esp32%20gpio.*$'
+      - '^file:agon-vdp:video/OneWire_direct_gpio\.h$'
+      - '^platform-api:external:rtc_reg$'
+    include_target_patterns:
+      - '^OneWire_direct_gpio\.h$'
+    occurrence_patterns:
+      - '\bDIRECT_(?:READ|WRITE_LOW|WRITE_HIGH|MODE_INPUT|MODE_OUTPUT)\b'
+
+boundaries:
+  - id: boundary-display-scanout
+    owner: SETUP-004.1.d
+    reason: GPIO-matrix and I2S1 scanout sources belong to display-driver disposition.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:(?:esp32%20gpio%20matrix|i2s1%20register.*)$'
+      - '^platform-api:external:gpio_matrix_.*$'
+    include_target_patterns:
+      - '^soc/gpio_sig_map\.h$'
+    occurrence_patterns:
+      - '\bgpio_matrix_[A-Za-z0-9_]+\s*\('
+
+  - id: boundary-audio-output
+    owner: SETUP-004.1.e
+    reason: I2S0, DAC, sigma-delta, and audio-timer activation belong to physical audio disposition.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:esp32%20i2s0,.*$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:i2s|I2S|dac_|sigmadelta_)[A-Za-z0-9_]*\b'
+
+  - id: boundary-concrete-interrupt-sources
+    owner: SETUP-004.1.d-1.f
+    reason: Concrete I2S and input interrupt-source ownership follows the display, audio, and input drivers that activate them.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:i2s0,%20i2s1,%20rtc/ulp,.*$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-rtc-service
+    owner: SETUP-004.1.b
+    reason: RTC command behavior and ESP32Time system-clock policy were reviewed in Work 1.b.
+    graph_node_patterns:
+      - '^platform-api:reviewed:esp32time%20dependency$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-storage
+    owner: SETUP-004.1.h
+    reason: SD-card SPI activation and filesystem behavior belong to storage disposition; shared SPI primitives remain visible in the Work 1.c candidate.
+    graph_node_patterns:
+      - '^platform-api:external:esp_(?:vfs|spiffs)_.*$'
+    include_target_patterns: []
+    occurrence_patterns: []

@@ -1,0 +1,99 @@
+# Reviewed SETUP-004 Work 1.g input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.g
+subject: Upstream network helper, firmware updater boundary, and serial transfer services
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+    - docs/decisions/ADR-0007-flash-partition-strategy.md
+  source_evidence:
+    - {id: target:arduino-wifi, package: arduino-esp32, version: 3.3.11, path: libraries/WiFi/src/WiFi.h, sha256: 67942f9b0a1a6b731387c0306df71260829556a4236b2b4411a06c04efd486be}
+    - {id: target:idf-ota, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/app_update/include/esp_ota_ops.h, sha256: 6a1942c7621d02d83839a763ca4521a540e3a114ff479b17730685cb7db278d4}
+records:
+  - id: network-vdp-gl-icmp-helper
+    name: vdp-gl WiFi-coupled ICMP ping helper
+    layer: Independently compiled but dormant vdp-gl network utility
+    scope: ICMP echo request/reply, hostname lookup, timeout queue, and raw-lwIP callback; excludes any project-owned Ethernet initialization, web service, media stream, or update transport.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/network/ICMP.cpp, vdp-gl:src/network/ICMP.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/network/ICMP.cpp]
+      header_implementation: [vdp-gl:src/network/ICMP.h]
+    facilities: [fabgl::ICMP ping API, WiFiGeneric hostname lookup, raw lwIP ICMP PCB and receive callback, one-element FreeRTOS completion queue]
+    activation: [The vdp-gl library build selects ICMP.cpp., No official VDP or selected vdp-gl consumer constructs or calls fabgl::ICMP., No startup path or VDU command reaches the helper.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [synchronous one-second receive timeout], callbacks: [raw lwIP receive callback], global_state: [per-instance destination sequence result and queue state]}
+    visible_behavior: [No official VDP command, response packet, status packet, callback-buffer effect, or application-visible behavior reaches this helper.]
+    target_compatibility:
+      status: available-but-unselected-and-wrong-ownership-seam
+      finding: The utility is compiled only because the whole vdp-gl source tree is selected. Its hostname lookup is coupled directly to Arduino WiFiGeneric even though Rev 1 networking uses the P4 DevKit's wired Ethernet; raw lwIP and FreeRTOS facilities are available, but no product requirement selects this ping wrapper.
+      evidence: [target:arduino-wifi]
+    physical_owner_class: none
+    physical_owner: none in the official VDP runtime; future Extender network diagnostics would be project-owned
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: Source-filter this dormant helper from the P4 build while retaining it in the pinned vendored vdp-gl tree. It supplies no compatibility surface, and adapting a WiFi-coupled ping class would create porting and maintenance cost without a selected capability. A future ping diagnostic should use the project network abstraction and the then-current P4 Ethernet stack.
+    omission_fallout: ICMP.cpp is an independently selected translation unit with no evidenced inbound consumer; excluding it and its private header creates no official VDP compile, link, protocol, or runtime fallout.
+    dependencies: [PORT-002]
+    dependency_effects:
+      - {id: PORT-002, effect: blocks-implementation}
+    fallout_analysis:
+      kind: omit-independent-unreferenced-translation-unit
+      first_failure: none-evidenced
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Exclude src/network/ICMP.cpp from the P4 source-selection manifest; retain both files unchanged in the vendored source tree.
+      residual_risk: Re-audit inbound references after each tagged vdp-gl import and reconsider only if a selected upstream consumer or explicit Extender ping requirement appears. The optional MOD-WIFI-ESP8266 backend does not itself create such a dependency because it is a separate processor reached through a host protocol rather than the P4's local WiFiGeneric/lwIP interface.
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/network/ICMP.cpp, file:vdp-gl:src/network/ICMP.h]
+    agent_entry_points: [vdp-gl:src/network/ICMP.h:79, vdp-gl:src/network/ICMP.cpp:52]
+
+  - id: transfer-stock-hex-and-ymodem
+    name: Stock UART Intel HEX and YMODEM transfer services
+    layer: Header-defined official VDP maintenance and operator facilities
+    scope: VDU 23,28 dispatch, Intel HEX decoding and eZ80 relay, YMODEM send/receive sessions, UART0 tool traffic, CRC checking, PSRAM staging, PACKET_KEYCODE data relay, primary-stream acknowledgements, and keyboard Escape abort; excludes ZDI and the stock firmware updater.
+    upstream_owner: agon-vdp
+    source_highlights: [agon-vdp:video/hexload.h, agon-vdp:video/ymodem.h, agon-vdp:video/vdu_sys.h, agon-vdp:video/vdu_stream_processor.h]
+    implementation_highlights:
+      selected_translation_units: [agon-vdp:video/video.ino]
+      header_implementation: [agon-vdp:video/hexload.h, agon-vdp:video/ymodem.h, agon-vdp:video/vdu_sys.h, agon-vdp:video/vdu_stream_processor.h]
+    facilities: [VDU 23,28 Intel HEX loader, VDU 23,28,1 YMODEM receive, VDU 23,28,2 YMODEM send, DBGSerial UART0 protocol endpoint, CRC16 and CRC32 validation, PACKET_KEYCODE control/data relay, PSRAM file staging, keyboard Escape abort]
+    activation: [The VDU 23 system dispatcher enters the transfer family on subcommand 28., Intel HEX reads ASCII records from DBGSerial and relays address and payload bytes to the eZ80 through PACKET_KEYCODE with stream acknowledgements., YMODEM bridges an external UART0 utility to eZ80/MOS data exchanges and stages batches in PSRAM., The implementation temporarily repurposes normal keyboard-packet and input-stream contracts as a maintenance data path.]
+    connections:
+      startup: []
+      tasks: []
+      interrupts: []
+      timers: [Arduino millis timeout and pacing loops]
+      callbacks: []
+      global_state: [CRC accumulators, transfer abort flags, YMODEM block buffers, staged file table, DBGSerial, VDU input and output streams]
+    visible_behavior: [Consumes VDU 23,28 command forms and suppresses normal echo., Emits progress and protocol traffic on the local debug UART., Relays data and control values through PACKET_KEYCODE packets and receives acknowledgements over the primary VDP stream., Can be aborted through the locally attached stock keyboard.]
+    target_compatibility:
+      status: mechanically-portable-parts-but-excluded-product-surface
+      finding: Most parsing and CRC logic could compile on P4 with retained Arduino, Stream, PSRAM, and CRC facilities, but the service assumes a stock DBGSerial maintenance endpoint, direct keyboard access, and packet/stream handshakes intentionally excluded from Extender v1.
+      evidence: []
+    physical_owner_class: onboard VDP
+    physical_owner: The onboard VDP retains these maintenance facilities in legacy mode and any cooperative operation that leaves their ordinary VDU path available; Extender has no v1 physical or protocol ownership
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: ADR-0014 explicitly excludes Intel HEX and YMODEM from Extender v1. They are not part of the guaranteed normal application-facing compatibility surface, and retaining them would also retain stock UART0, keyboard, PSRAM staging, and packet-channel assumptions that conflict with accepted ownership boundaries.
+    omission_fallout: Both implementations are pulled into the effective video.ino translation unit through headers. Removal must condition or remove hexload.h and ymodem.h includes, VDUStreamProcessor declarations, VDU 23,28 dispatch and shared sendKeycodeByte coupling together; merely filtering a .cpp file cannot remove them.
+    dependencies: [PORT-002, SETUP-005-D006]
+    dependency_effects:
+      - {id: PORT-002, effect: blocks-implementation}
+      - {id: SETUP-005-D006, effect: blocks-implementation}
+    fallout_analysis:
+      kind: omit-coupled-header-defined-maintenance-subsystem
+      first_failure: Removing only hexload.h breaks the YMODEM calls to its sendKeycodeByte method; removing either implementation without its declarations and VDU 23,28 dispatch leaves compile errors or dangling behavior.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Treat Intel HEX and YMODEM as one source-selection unit; condition their includes, declarations, dispatch, shared helper, CRC dependency, DBGSerial use, and direct keyboard coupling together, with the required upstream-deviation comments.
+      residual_risk: SETUP-005-D006 must define strict and non-strict consumption and failure behavior for attempted commands so omission cannot desynchronize the command stream.
+    evidence_ids: [evidence:reviewed:facility-debug-zdi-and-file-transfer-0, evidence:reviewed:facility-debug-zdi-and-file-transfer-3, evidence:reviewed:facility-debug-zdi-and-file-transfer-4, evidence:reviewed:facility-debug-zdi-and-file-transfer-5]
+    graph_node_ids: [file:agon-vdp:video/hexload.h, file:agon-vdp:video/ymodem.h]
+    agent_entry_points: [agon-vdp:video/vdu_sys.h:115, agon-vdp:video/hexload.h:114, agon-vdp:video/ymodem.h:568, agon-vdp:video/ymodem.h:726]

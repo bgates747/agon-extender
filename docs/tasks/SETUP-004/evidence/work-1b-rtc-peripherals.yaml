@@ -1,0 +1,388 @@
+# Reviewed SETUP-004 Work 1.b input. Mechanical facts come from the immutable
+# SETUP-003 and PORT-001 evidence; dispositions remain provisional until the
+# Author accepts them.
+schema_version: 1
+work_item: SETUP-004.1.b
+subject: RTC service and peripheral-device drivers
+sources:
+  agon_vdp:
+    release: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp_gl:
+    release: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  esp32time:
+    release: 2.0.6
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+  source_evidence:
+    - id: target:arduino-core
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/Arduino.h
+      sha256: 4f2231bcd14bf14c1bfbb667c10a06484a336217974ae76c7f15dc5507a406d4
+    - id: target:idf-system-time
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/newlib/platform_include/sys/time.h
+      sha256: d84739a7dc16297bb974ae24b377103df598905a9aba66a4b2d4f175aacdc99e
+records:
+  - id: rtc-protocol-surface
+    name: Stock VDP RTC command, packet, variables, and callbacks
+    layer: VDP protocol and state
+    scope: >-
+      VDU 23,0,&87 read/set behavior, PACKET_RTC framing, RTC-backed VDP
+      variables, and before/after packet callbacks; excludes the concrete clock
+      provider and unresolved clock-authority policy.
+    upstream_owner: agon-vdp
+    source_highlights:
+      - agon-vdp:video/agon.h
+      - agon-vdp:video/vdu_sys.h
+      - agon-vdp:video/vdp_variables.h
+      - agon-vdp:video/vdu_stream_processor.h
+    implementation_highlights:
+      selected_translation_units:
+        - agon-vdp:video/video.ino
+      header_implementation:
+        - agon-vdp:video/vdu_sys.h
+        - agon-vdp:video/vdp_variables.h
+        - agon-vdp:video/vdu_stream_processor.h
+    facilities:
+      - VDP_RTC command dispatch
+      - PACKET_RTC response framing
+      - RTC-related VDP variables
+      - VDP protocol packet callbacks
+    activation:
+      - VDU 23,0,&87,0 reads the active time service and sends PACKET_RTC.
+      - VDU 23,0,&87,1 parses date/time fields and sets the active time service.
+      - VDP variable reads and writes access individual RTC fields.
+    connections:
+      startup: []
+      tasks:
+        - processLoop
+      interrupts: []
+      timers: []
+      callbacks:
+        - CALLBACK_SENDING_VDPP for PACKET_RTC
+        - CALLBACK_SENT_VDPP for PACKET_RTC
+      global_state:
+        - rtc
+    visible_behavior:
+      - VDU 23,0,&87 preserves stock read and set command framing.
+      - >-
+        The stock RTC response is an eight-octet wire frame: packet header
+        0x87, payload length 0x06, and six packed RTC payload octets.
+      - >-
+        MOS v3.0.2's UART0 VDP-protocol parser copies only the six payload
+        octets into MOS-owned sysvars at offset 0x1A and sets completion-flag
+        bit 5.
+      - >-
+        The adopted Extender harness terminates its P4 return path on eZ80
+        UART1 at PC0/PC1. Stock MOS does not route that UART through its VDP
+        packet parser, so an EDP-emitted RTC frame cannot update canonical MOS
+        sysvars without an Extender-enabled MOS path.
+      - Buffered VDP-protocol callbacks may inspect or alter RTC packet state.
+      - RTC-related VDP variables expose and modify the same active clock.
+    target_compatibility:
+      status: provider-independent-contract
+      finding: >-
+        The command, packet, variable, and callback behavior is independent of
+        a physical RTC device. The P4 can reproduce the stock wire frame, but
+        stock MOS cannot consume it from the adopted UART1 return path;
+        response routing, sysvar updates, and clock authority therefore depend
+        on the selected operating mode and MOS integration.
+      evidence:
+        - target:idf-system-time
+    physical_owner_class: shared
+    physical_owner: MOS owns canonical sysvar storage; the onboard VDP or EDP may supply RTC response data only through the selected mode-specific route
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: retain
+    rationale: >-
+      The stock RTC command, six-byte payload, wire framing, variable, and
+      callback semantics are normal application-visible VDP behavior and
+      belong inside the EDP-exclusive backward-compatibility contract.
+      Retention grants the EDP no ownership of MOS memory: legacy and stock-MOS
+      cooperative operation leave canonical sysvars to the onboard VDP, while
+      EDP-exclusive sysvar compatibility requires an explicit MOS-owned parser
+      route. Clock authority and network synchronization remain separate.
+    omission_fallout: >-
+      Omission breaks VDU 23,0,&87, PACKET_RTC compatibility, RTC-backed VDP
+      variables, and RTC packet callbacks. MOS RTC-sysvar compatibility is
+      possible only where a selected route delivers the frame to MOS's parser.
+    dependencies:
+      - SETUP-005-D003
+      - SETUP-005-D008
+    dependency_effects:
+      - id: SETUP-005-D003
+        effect: blocks-implementation
+      - id: SETUP-005-D008
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: retained-compatibility-contract
+      first_failure: Removing dispatch or packet code breaks legacy RTC calls and response waiting.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Keep the protocol surface independent of the replaceable clock provider and mode-routing policy.
+      residual_risk: Competing MOS, onboard-VDP, EDP, and network clock authorities remain unresolved.
+    evidence_ids:
+      - evidence:source:agon-vdp:vdu_sys.h:198:0e2e42b48bdf
+      - evidence:source:agon-vdp:vdu_sys.h:515:666059cbc150
+      - evidence:source:agon-vdp:vdu_sys.h:553:053f954574e7
+      - evidence:source:agon-vdp:vdp_variables.h:362:e75723671e8c
+    graph_node_ids:
+      - subsystem:agon-vdp:rtc-service
+      - macro:agon-vdp:VDP_RTC@video/agon.h%23variant-c7bb28db25ef
+      - macro:agon-vdp:PACKET_RTC@video/agon.h%23variant-17deebd38963
+      - method:agon-vdp:VDUStreamProcessor::sendTime()
+      - method:agon-vdp:VDUStreamProcessor::vdu_sys_video_time()
+    agent_entry_points:
+      - agon-vdp:video/vdu_sys.h:513
+      - agon-vdp:video/vdp_variables.h:15
+      - docs/tasks/SETUP-004/VDU-inventory.md
+
+  - id: rtc-esp32time-provider
+    name: ESP32Time software-clock provider
+    layer: Arduino/POSIX time service
+    scope: >-
+      The global ESP32Time object and its system-time-backed getters/setters;
+      excludes the stock RTC protocol surface and future synchronization policy.
+    upstream_owner: agon-vdp and ESP32Time
+    source_highlights:
+      - ESP32Time:ESP32Time.cpp
+      - ESP32Time:ESP32Time.h
+      - agon-vdp:video/video.ino
+      - agon-vdp:video/vdu_sys.h
+      - agon-vdp:video/vdp_variables.h
+    implementation_highlights:
+      selected_translation_units:
+        - ESP32Time:ESP32Time.cpp
+        - agon-vdp:video/video.ino
+      header_implementation:
+        - ESP32Time:ESP32Time.h
+        - agon-vdp:video/vdu_sys.h
+        - agon-vdp:video/vdp_variables.h
+    facilities:
+      - ESP32Time 2.0.6
+      - POSIX settimeofday/gettimeofday and C time conversion
+      - global rtc object
+    activation:
+      - The global rtc object is constructed during static initialization.
+      - RTC commands and VDP variables call its field getters and setTime().
+      - ESP32Time delegates storage to the ESP-IDF/Newlib system clock.
+    connections:
+      startup:
+        - static construction of rtc
+      tasks: []
+      interrupts: []
+      timers:
+        - ESP-IDF system timekeeping
+      callbacks: []
+      global_state:
+        - rtc
+        - process-wide system clock
+    visible_behavior:
+      - Supplies every field returned by PACKET_RTC.
+      - VDU and VDP-variable writes alter the process-wide system clock.
+      - The provider is software timekeeping, not vdp-gl's DS3231 hardware driver.
+      - Power-cycle persistence and automatic network synchronization are not supplied by this library alone.
+    target_compatibility:
+      status: source-compatible-runtime-unqualified
+      finding: >-
+        The pinned P4 build selects ESP32Time.cpp, and ESP-IDF 5.5.5 provides
+        the Newlib system-time surface it uses. Runtime accuracy, reset
+        persistence, timezone behavior, and network synchronization remain
+        unqualified on the P4.
+      evidence:
+        - target:arduino-core
+        - target:idf-system-time
+    physical_owner_class: Extender
+    physical_owner: Extender P4 system clock when the EDP owns RTC behavior
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: retain
+    rationale: >-
+      Retaining this thin, already-vendored provider minimizes divergence from
+      upstream and uses normal P4 system-time facilities. A project-owned clock
+      service may later wrap it to enforce authority and synchronization policy;
+      replacement is unnecessary until a material limitation is evidenced.
+    omission_fallout: >-
+      Direct omission breaks the global rtc object and every RTC command and
+      VDP-variable getter/setter unless a source-compatible provider replaces it.
+    dependencies:
+      - SETUP-004.1.g
+      - SETUP-005-D008
+    dependency_effects:
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+      - id: SETUP-005-D008
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: retained-provider
+      first_failure: Removing ESP32Time first breaks compilation at rtc declaration and direct method calls.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Preserve the existing API behind any future project-owned authority/synchronization layer.
+      residual_risk: Software-clock persistence, timezone semantics, and multi-authority synchronization remain unqualified.
+    evidence_ids:
+      - evidence:reviewed:facility-rtc-service-0
+      - evidence:source:agon-vdp:vdp_variables.h:15:8af761941a85
+      - evidence:source:agon-vdp:video.ino:79:1d21981b99ae
+    graph_node_ids:
+      - platform-api:reviewed:esp32time%20dependency
+      - variable:agon-vdp:rtc
+    agent_entry_points:
+      - ESP32Time:ESP32Time.cpp:25
+      - agon-vdp:video/video.ino:79
+      - agon-vdp:video/vdu_sys.h:515
+      - agon-vdp:video/vdp_variables.h:15
+
+  - id: peripheral-vdp-gl-ds3231
+    name: Unused vdp-gl DS3231 I2C RTC driver
+    layer: vdp-gl device driver
+    scope: >-
+      The independently compiled DS3231 translation unit and umbrella-exposed
+      declarations; excludes the generic TSI2C implementation reviewed in Work
+      1.c and the official ESP32Time-backed RTC service.
+    upstream_owner: vdp-gl
+    source_highlights:
+      - vdp-gl:src/devdrivers/DS3231.cpp
+      - vdp-gl:src/devdrivers/DS3231.h
+      - vdp-gl:src/fabgl.h
+    implementation_highlights:
+      selected_translation_units:
+        - vdp-gl:src/devdrivers/DS3231.cpp
+      header_implementation:
+        - vdp-gl:src/devdrivers/DS3231.h
+    facilities:
+      - external DS3231 RTC over I2C
+      - RTC temperature and oscillator control
+      - vdp-gl TSI2C dependency
+    activation: []
+    connections:
+      startup: []
+      tasks: []
+      interrupts: []
+      timers: []
+      callbacks: []
+      global_state: []
+    visible_behavior: []
+    target_compatibility:
+      status: compiled-selection-runtime-absent
+      finding: >-
+        PlatformIO selects the translation unit, but exact official-source and
+        graph searches find no construction, call, or application-visible path.
+        Its generic I2C dependency remains unqualified for P4 under Work 1.c.
+      evidence: []
+    physical_owner_class: none
+    physical_owner: No DS3231 device exists in the selected Extender v1 or stock Agon hardware baseline
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: omit
+    rationale: >-
+      The official RTC service uses ESP32Time, not this hardware driver. Exclude
+      the unused translation unit from the Extender vdp-gl build while avoiding
+      unnecessary edits to upstream umbrella declarations.
+    omission_fallout: >-
+      Source filtering removes no evidenced runtime behavior. DS3231 declarations
+      may remain exposed by fabgl.h unless link closure or upstream build rules
+      require a narrower header change.
+    dependencies:
+      - SETUP-004.1.c
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: requires-later-qualification
+    fallout_analysis:
+      kind: omit-unused-translation-unit
+      first_failure: No runtime failure is evidenced; an unexpected DS3231 reference would first fail at link time after source exclusion.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Exclude DS3231.cpp through project-owned vdp-gl source selection and retain declarations unless qualification proves otherwise.
+      residual_risk: Build/link closure and future upstream use must be rechecked on each tagged import.
+    evidence_ids:
+      - evidence:source:vdp-gl:DS3231.cpp:1:ddc89896fd7f
+      - evidence:source:vdp-gl:DS3231.h:1:5b2778925550
+    graph_node_ids:
+      - file:vdp-gl:src/devdrivers/DS3231.cpp
+      - file:vdp-gl:src/devdrivers/DS3231.h
+    agent_entry_points:
+      - vdp-gl:src/devdrivers/DS3231.cpp:1
+      - vdp-gl:src/devdrivers/DS3231.h:1
+      - docs/tasks/SETUP-003/portability-review.md
+
+  - id: peripheral-vdp-gl-mcp23s17
+    name: Unused vdp-gl MCP23S17 SPI GPIO-expander driver
+    layer: vdp-gl device driver
+    scope: >-
+      The independently compiled MCP23S17 SPI GPIO-expander translation unit;
+      excludes the generic SPI bus and future Extender-owned expansion hardware.
+    upstream_owner: vdp-gl
+    source_highlights:
+      - vdp-gl:src/devdrivers/MCP23S17.cpp
+      - vdp-gl:src/devdrivers/MCP23S17.h
+    implementation_highlights:
+      selected_translation_units:
+        - vdp-gl:src/devdrivers/MCP23S17.cpp
+      header_implementation:
+        - vdp-gl:src/devdrivers/MCP23S17.h
+    facilities:
+      - external MCP23S17 16-bit GPIO expander over SPI
+      - ESP-IDF SPI master API
+      - ESP32-package-specific default pin selection
+    activation: []
+    connections:
+      startup: []
+      tasks: []
+      interrupts: []
+      timers: []
+      callbacks: []
+      global_state: []
+    visible_behavior: []
+    target_compatibility:
+      status: compiled-selection-runtime-absent
+      finding: >-
+        PlatformIO selects the translation unit, but exact official-source and
+        graph searches find no construction, call, or application-visible path.
+        Its default pins and chip-package branches are ESP32-PICO-era assumptions.
+      evidence: []
+    physical_owner_class: none
+    physical_owner: No MCP23S17 device exists in the selected Extender v1 or stock Agon hardware baseline
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: omit
+    rationale: >-
+      The driver serves no selected Extender v1 hardware or stock-compatible
+      behavior. Exclude the unused translation unit rather than porting its
+      ESP32-package and SPI assumptions speculatively.
+    omission_fallout: >-
+      Source filtering removes no evidenced runtime or protocol behavior. A
+      future GPIO-expander design must be treated as project-owned hardware and
+      may select a different chip or driver.
+    dependencies:
+      - SETUP-004.1.c
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: requires-later-qualification
+    fallout_analysis:
+      kind: omit-unused-translation-unit
+      first_failure: No runtime failure is evidenced; an unexpected MCP23S17 reference would first fail at link time after source exclusion.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Exclude MCP23S17.cpp through project-owned vdp-gl source selection.
+      residual_risk: Build/link closure and future upstream use must be rechecked on each tagged import.
+    evidence_ids:
+      - evidence:source:vdp-gl:MCP23S17.cpp:1:ac597274fbaf
+      - evidence:source:vdp-gl:MCP23S17.h:1:df1e3f2febe9
+    graph_node_ids:
+      - file:vdp-gl:src/devdrivers/MCP23S17.cpp
+      - file:vdp-gl:src/devdrivers/MCP23S17.h
+    agent_entry_points:
+      - vdp-gl:src/devdrivers/MCP23S17.cpp:1
+      - vdp-gl:src/devdrivers/MCP23S17.h:1
+      - docs/tasks/SETUP-003/portability-review.md

@@ -1,0 +1,324 @@
+# Reviewed SETUP-004 Work 1.c input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.c
+subject: Low-level transport, bus, timing, interrupt, and architecture services
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+  source_evidence:
+    - {id: target:hardware-serial, package: arduino-esp32, version: 3.3.11, path: cores/esp32/HardwareSerial.h, sha256: f0a25409647e9c5daf3cb9b59f5d7020a422962aab7afe7cb0e637e510af92ac}
+    - {id: target:arduino-i2c-hal, package: arduino-esp32, version: 3.3.11, path: cores/esp32/esp32-hal-i2c.h, sha256: df86cea815e803bc599c9839bacc9a3dedd7da1a5891de81c8285cc858f87c74}
+    - {id: target:p4-gpio, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_gpio/include/driver/gpio.h, sha256: 41bc6adb2301355c5b40639ef57fdc5593a37637fdd06e59ddd648b40903a444}
+    - {id: target:p4-deprecated-adc, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/driver/deprecated/driver/adc.h, sha256: 3688b31f2af11908c6de0853cf0be6b79b3a409a71222a4cc646507336075763}
+    - {id: target:p4-spi, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_spi/include/driver/spi_master.h, sha256: d16510774ba61cbf1c8c0fddc2fa06db27f34fbfd7194593973dba6a13aee99e}
+    - {id: target:p4-esp-timer, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_timer/include/esp_timer.h, sha256: 9ef47843590090f5ffccdc956c924e650cfb479ad4d7b2553bf0453ffac492fd}
+    - {id: target:p4-esp-ipc, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_system/include/esp_ipc.h, sha256: cb53788f58387591222a61337b55808fc80e9fa912050414eae8a8b28d8d86d5}
+    - {id: target:p4-soc-caps, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/soc/esp32p4/include/soc/soc_caps.h, sha256: 4aba7eaad13804d97e6cf8ff4cfe965e4892438fab43eb1fc18193eb072ad651}
+    - {id: target:p4-esp-cpu, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_hw_support/include/esp_cpu.h, sha256: 59f4ba4f23a16c36689b79d53e488dc6847ced7beae96e212d62639e76722511}
+records:
+  - id: transport-stock-uart-hardware
+    name: Stock VDP UART hardware binding and flow-control configuration
+    layer: Transport hardware
+    scope: Stock Serial2 binding, 1.152-Mbaud setup, pins, flow control, buffering, and timeouts; excludes the retained Stream parser contract.
+    upstream_owner: agon-vdp and vdp-gl
+    source_highlights: [agon-vdp:video/vdp_protocol.h, agon-vdp:video/agon.h, agon-vdp:video/video.ino, vdp-gl:src/terminal.cpp]
+    implementation_highlights:
+      selected_translation_units: [agon-vdp:video/video.ino, vdp-gl:src/terminal.cpp]
+      header_implementation: [agon-vdp:video/vdp_protocol.h, agon-vdp:video/agon.h]
+    facilities: [Arduino HardwareSerial, stock UART2 pins, RTS/CTS flow control, receive buffering and timeouts]
+    activation: [setupVDPProtocol initializes Serial2 during VDP startup; terminal mode can rebind the serial path.]
+    connections: {startup: [setupVDPProtocol], tasks: [processLoop], interrupts: [], timers: [], callbacks: [], global_state: [VDPSerial]}
+    visible_behavior: [Carries the complete stock VDU byte stream and framed VDP responses at 1,152,000 baud., Flow control and timeout behavior affect parser pacing and legacy compatibility.]
+    target_compatibility:
+      status: portable-api-incompatible-binding
+      finding: Arduino HardwareSerial exists on P4, but stock pins, one-duplex-stream ownership, and terminal/maintenance coupling do not match the adopted Extender transport.
+      evidence: [target:hardware-serial, target:p4-soc-caps]
+    physical_owner_class: shared
+    physical_owner: Agon main board and Extender P4 across the adopted parallel-forward and UART1-return harness
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: replace
+    rationale: Prior Work 1.a and harness decisions require Stream-compatible Extender transport adapters while preserving the stock wire contract where strict mode requires it.
+    omission_fallout: Omission removes all command input and return packets; direct retention conflicts with Extender wiring and mode ownership.
+    dependencies: [SETUP-004.1.g, SETUP-005-D001, SETUP-005-D003]
+    dependency_effects:
+      - {id: SETUP-004.1.g, effect: requires-later-qualification}
+      - {id: SETUP-005-D001, effect: blocks-implementation}
+      - {id: SETUP-005-D003, effect: blocks-implementation}
+    fallout_analysis: {kind: replace-hardware-binding, first_failure: Removing VDPSerial without an adapter breaks setup and parser construction., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Preserve Stream-facing calls behind separate Extender forward and return transports., residual_risk: Target-speed flow control and mode routing remain unqualified.}
+    evidence_ids: []
+    graph_node_ids: ['macro:agon-vdp:VDPSerial@video/vdp_protocol.h%23variant-dbcd3c44de4c', 'physical-facility:reviewed:uart2%20pins,%20rts/cts%20flow%20control,%20receive%20buffer,%20and%20timeouts']
+    agent_entry_points: [agon-vdp:video/vdp_protocol.h:1, agon-vdp:video/agon.h:24, hardware/designs/light2-harness-r01/README.md]
+
+  - id: peripheral-portable-gpio-services
+    name: Portable GPIO configuration and level services
+    layer: ESP-IDF and Arduino GPIO API
+    scope: Portable pin direction/read/write calls; excludes GPIO-matrix scanout and direct-register ZDI access.
+    upstream_owner: agon-vdp and vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/terminal.cpp, agon-vdp:video/OneWire_direct_gpio.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/fabutils.cpp, vdp-gl:src/terminal.cpp]
+      header_implementation: [agon-vdp:video/OneWire_direct_gpio.h]
+    facilities: [gpio_set_direction, gpio_get_level, gpio_set_level, pinMode, digitalRead, digitalWrite]
+    activation: [Display and utility code configures selected pins; omitted terminal and device paths contain additional consumers.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: [Terminal]}
+    visible_behavior: [No standalone VDU packet surface; effects are inherited through whichever display or peripheral subsystem activates a pin., Terminal extension sequences expose GPIO only when omitted terminal mode is active.]
+    target_compatibility:
+      status: portable-api-available
+      finding: ESP-IDF 5.5.5 and Arduino supply P4 GPIO direction and level services; exact pins and activation remain subsystem configuration.
+      evidence: [target:p4-gpio]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 pins selected by retained project hardware profiles
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: Retain normal portable GPIO services for surviving drivers without retaining any stock pin assignment or omitted consumer.
+    omission_fallout: Omission prevents retained and replacement hardware drivers from configuring P4 pins.
+    dependencies: [SETUP-004.1.d, SETUP-004.1.e, SETUP-004.1.h]
+    dependency_effects:
+      - {id: SETUP-004.1.d, effect: requires-later-qualification}
+      - {id: SETUP-004.1.e, effect: requires-later-qualification}
+      - {id: SETUP-004.1.h, effect: requires-later-qualification}
+    fallout_analysis: {kind: retained-platform-service, first_failure: Not applicable; concrete consumers fail if the API is unavailable., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Keep pin mappings and activation in owning subsystem profiles., residual_risk: Pin-mux and electrical conflicts require per-profile qualification.}
+    evidence_ids: []
+    graph_node_ids: [platform-api:external:gpio_get_level, platform-api:external:gpio_set_direction, platform-api:external:gpio_set_level]
+    agent_entry_points: [vdp-gl:src/fabutils.cpp:199, vdp-gl:src/terminal.cpp:3972, hardware/designs/light2-harness-r01/profile.yaml]
+
+  - id: peripheral-terminal-adc-services
+    name: FabGL terminal-mode ADC extension services
+    layer: Omitted terminal peripheral extension
+    scope: FabGL terminal escape sequences for ADC setup/read and their legacy ESP-IDF ADC1 helpers.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/terminal.cpp, vdp-gl:src/fabutils.cpp, vdp-gl:src/fabutils.h]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/terminal.cpp, vdp-gl:src/fabutils.cpp], header_implementation: [vdp-gl:src/fabutils.h]}
+    facilities: [deprecated ADC1 driver, FabGL terminal ADC extension protocol]
+    activation: [Only FabGL terminal extension sequences configure or read ADC.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [Returns ASCII hexadecimal ADC data through FabGL terminal serial output; it is not a normal VDP packet or retained VDU surface.]
+    target_compatibility:
+      status: deprecated-api-available-but-unneeded
+      finding: P4 retains the legacy ADC1 API under a deprecated header, but Extender v1 omits terminal mode and exposes no selected ADC hardware feature.
+      evidence: [target:p4-deprecated-adc, target:p4-soc-caps]
+    physical_owner_class: none
+    physical_owner: No Extender v1 ADC feature owns this inherited terminal interface
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: ADR-0014 omits terminal mode and local operator facilities; retaining deprecated ADC code would preserve no promised behavior.
+    omission_fallout: ADC helper declarations remain entangled in fabutils, so implementation must remove or condition only the terminal ADC path without restructuring unrelated utilities.
+    dependencies: [SETUP-005-D006]
+    dependency_effects: [{id: SETUP-005-D006, effect: blocks-implementation}]
+    fallout_analysis: {kind: omit-runtime-path, first_failure: Removing shared ADC helpers without guarding terminal cases breaks terminal.cpp compilation., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Exclude terminal mode or condition its ADC cases while preserving shared fabutils., residual_risk: Header coupling may require a narrow compatibility guard.}
+    evidence_ids: []
+    graph_node_ids: []
+    agent_entry_points: [vdp-gl:src/terminal.cpp:4045, vdp-gl:src/fabutils.cpp:172]
+
+  - id: peripheral-vdp-gl-i2c-service
+    name: vdp-gl task-serialized I2C service
+    layer: vdp-gl communication driver
+    scope: Independently compiled TSI2C implementation used by the omitted DS3231 driver.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/comdrivers/tsi2c.cpp, vdp-gl:src/comdrivers/tsi2c.h, vdp-gl:src/devdrivers/DS3231.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/comdrivers/tsi2c.cpp, vdp-gl:src/devdrivers/DS3231.cpp], header_implementation: [vdp-gl:src/comdrivers/tsi2c.h]}
+    facilities: [Arduino internal I2C HAL, pinned communication task, FreeRTOS event-group serialization]
+    activation: [No official VDP runtime construction was found; DS3231 is the only concrete source consumer.]
+    connections: {startup: [], tasks: [I2C::commTaskFunc when begin is called], interrupts: [], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [No official VDP command, packet, status, or runtime behavior reaches this service.]
+    target_compatibility:
+      status: source-api-available-runtime-absent
+      finding: Arduino-ESP32 3.3.11 still exposes the internal I2C HAL used by this source, but no retained upstream consumer requires it.
+      evidence: [target:arduino-i2c-hal, target:p4-soc-caps]
+    physical_owner_class: none
+    physical_owner: No selected Extender v1 I2C device uses this inherited service
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: The Author omitted the sole DS3231 consumer; future Extender I2C hardware should use a deliberate project-owned service.
+    omission_fallout: Exclude tsi2c.cpp with DS3231.cpp; umbrella declarations may remain unless link/build qualification requires a guard.
+    dependencies: [SETUP-004.1.b]
+    dependency_effects: [{id: SETUP-004.1.b, effect: requires-later-qualification}]
+    fallout_analysis: {kind: omit-unused-translation-unit, first_failure: An unexpected retained I2C object would fail to link after exclusion., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Exclude the independent translation unit and verify no retained constructor/reference., residual_risk: Broad upstream source selection and future tagged releases must be re-audited.}
+    evidence_ids: []
+    graph_node_ids: [file:vdp-gl:src/comdrivers/tsi2c.cpp, file:vdp-gl:src/comdrivers/tsi2c.h]
+    agent_entry_points: [vdp-gl:src/comdrivers/tsi2c.cpp:1, vdp-gl:src/devdrivers/DS3231.cpp:101]
+
+  - id: peripheral-spi-services
+    name: ESP-IDF SPI bus and device services used by vdp-gl
+    layer: ESP-IDF SPI platform service
+    scope: SPI master primitives used by omitted MCP23S17 and by FileBrowser SD-card mounting; excludes filesystem policy.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/MCP23S17.cpp, vdp-gl:src/devdrivers/MCP23S17.h, vdp-gl:src/fabutils.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/devdrivers/MCP23S17.cpp, vdp-gl:src/fabutils.cpp], header_implementation: [vdp-gl:src/devdrivers/MCP23S17.h]}
+    facilities: [ESP-IDF SPI master bus and device APIs]
+    activation: [MCP23S17 begins a device bus if constructed; FileBrowser initializes an SPI bus when mounting SD storage.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [No direct VDP protocol surface; behavior is inherited through the activating device or storage facility.]
+    target_compatibility:
+      status: portable-api-available
+      finding: ESP-IDF 5.5.5 supplies P4 SPI master services; device pins, host, DMA, and coexistence require owning-subsystem qualification.
+      evidence: [target:p4-spi, target:p4-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 for any retained storage or future project-owned SPI hardware
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: Retain the normal P4 SPI substrate while omitting MCP23S17 and both dormant vdp-gl storage regions. PORT-007 independently selects SDMMC rather than inheriting this SPI availability as a storage-backend decision.
+    omission_fallout: Global omission would pre-empt future project-owned SPI facilities; retaining the API does not compile any omitted MCP or storage implementation.
+    dependencies: [PORT-007]
+    dependency_effects: [{id: PORT-007, effect: requires-later-qualification}]
+    fallout_analysis: {kind: retained-platform-service, first_failure: Not applicable; selected consumers fail if SPI is unavailable., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Select concrete consumers independently from the platform API., residual_risk: Board SPI pin and resource ownership remains subject to each future consumer; PORT-007 must verify that its separate SDMMC selection creates no conflict.}
+    evidence_ids: []
+    graph_node_ids: []
+    agent_entry_points: [vdp-gl:src/devdrivers/MCP23S17.cpp:119, vdp-gl:src/fabutils.cpp:1250]
+
+  - id: timing-idf-high-resolution-service
+    name: ESP-IDF high-resolution timer and monotonic-clock services
+    layer: ESP-IDF timing platform service
+    scope: esp_timer monotonic reads and callback timers used by utility, display, mouse, scene, and audio code.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/scene.cpp, vdp-gl:src/devdrivers/soundgen.cpp, vdp-gl:src/devdrivers/mouse.cpp, vdp-gl:src/dispdrivers/vgacontroller.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/fabutils.cpp, vdp-gl:src/scene.cpp, vdp-gl:src/devdrivers/soundgen.cpp, vdp-gl:src/devdrivers/mouse.cpp, vdp-gl:src/dispdrivers/vgacontroller.cpp], header_implementation: []}
+    facilities: [esp_timer_get_time, esp_timer callback lifecycle]
+    activation: [Timeout and profiling code reads the monotonic clock; sigma-delta audio creates a periodic callback timer.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [SoundGenerator periodic timer], callbacks: [SoundGenerator::timerHandler], global_state: []}
+    visible_behavior: [Indirectly controls timeout, pacing, profiling, mouse timing, display budgets, and one physical audio backend.]
+    target_compatibility:
+      status: portable-api-available
+      finding: ESP-IDF 5.5.5 supplies the same microsecond monotonic clock and timer lifecycle on P4; callback timing still requires subsystem qualification.
+      evidence: [target:p4-esp-timer]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 runtime for whichever consumers survive
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: Preserve the normal P4 monotonic/timer service and qualify behavior per retained consumer rather than replace a standard ESP-IDF facility.
+    omission_fallout: Omission breaks shared timeouts and retained consumers even if physical audio and input drivers are excluded.
+    dependencies: [SETUP-004.1.d, SETUP-004.1.e, SETUP-004.1.f]
+    dependency_effects:
+      - {id: SETUP-004.1.d, effect: requires-later-qualification}
+      - {id: SETUP-004.1.e, effect: requires-later-qualification}
+      - {id: SETUP-004.1.f, effect: requires-later-qualification}
+    fallout_analysis: {kind: retained-platform-service, first_failure: Not applicable; direct consumers fail to compile or lose timing semantics., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Qualify activation and callback latency in each owning subsystem., residual_risk: P4 scheduling and callback jitter may differ from ESP32-PICO behavior.}
+    evidence_ids: []
+    graph_node_ids: [platform-api:external:esp_timer_get_time, platform-api:external:esp_timer_create]
+    agent_entry_points: [vdp-gl:src/fabutils.cpp:69, vdp-gl:src/devdrivers/soundgen.cpp:595]
+
+  - id: interrupt-pinned-allocation-helper
+    name: vdp-gl pinned-core interrupt allocation helper
+    layer: ESP-IDF interrupt utility
+    scope: vdp-gl wrapper that runs esp_intr_alloc/free on a selected core; excludes concrete interrupt sources and ISRs.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/fabutils.h, vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/devdrivers/soundgen.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/fabutils.cpp, vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/devdrivers/soundgen.cpp], header_implementation: [vdp-gl:src/fabutils.h]}
+    facilities: [esp_intr_alloc, esp_intr_free, esp_ipc_call_blocking, selected-core allocation wrapper]
+    activation: [Surviving display, audio, or input drivers call the helper when installing hardware ISRs.]
+    connections: {startup: [], tasks: [owning driver tasks], interrupts: [display audio and input ISRs], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [No direct protocol surface; incorrect allocation changes timing, stability, and externally observable reset/failure behavior.]
+    target_compatibility:
+      status: portable-api-available-runtime-unqualified
+      finding: P4 is dual-core and ESP-IDF 5.5.5 supplies esp_ipc_call_blocking and interrupt allocation; exact sources, affinity, and ISR constraints remain driver-specific.
+      evidence: [target:p4-esp-ipc, target:p4-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 runtime for retained concrete interrupt drivers
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: Work 1.a already retained portable ESP-IDF interrupt mechanisms without retaining concrete drivers; this helper is source-compatible unless qualification proves otherwise.
+    omission_fallout: Omission breaks every retained vdp-gl driver that installs an ISR through the helper.
+    dependencies: [SETUP-004.1.d, SETUP-004.1.e, SETUP-004.1.f]
+    dependency_effects:
+      - {id: SETUP-004.1.d, effect: requires-later-qualification}
+      - {id: SETUP-004.1.e, effect: requires-later-qualification}
+      - {id: SETUP-004.1.f, effect: requires-later-qualification}
+    fallout_analysis: {kind: retained-utility, first_failure: Not applicable unless all concrete interrupt consumers are omitted., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Select and qualify the helper only with surviving interrupt consumers., residual_risk: Concrete source IDs affinity and IRAM safety remain unresolved.}
+    evidence_ids: []
+    graph_node_ids: ['platform-api:external:esp_ipc_call_blocking', 'platform-api:reviewed:esp32%20interrupt%20allocation%20and%20core%20affinity']
+    agent_entry_points: [vdp-gl:src/fabutils.cpp:226, vdp-gl:src/fabutils.h:1235]
+
+  - id: peripheral-esp32-ulp-rtc-domain
+    name: ESP32 ULP and RTC-domain support used by physical PS/2 input
+    layer: ESP32-specific input hardware substrate
+    scope: ESP32 ULP macro loader, RTC GPIO/register mapping, and SENS coupling used by vdp-gl PS/2 acquisition.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/ulp_macro_ex.cpp, vdp-gl:src/ulp_macro_ex.h, vdp-gl:src/comdrivers/ps2controller.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/ulp_macro_ex.cpp, vdp-gl:src/comdrivers/ps2controller.cpp], header_implementation: [vdp-gl:src/ulp_macro_ex.h]}
+    facilities: [ESP32 ULP coprocessor macros, RTC GPIO mapping, RTC and SENS registers]
+    activation: [Physical vdp-gl PS/2 controller initializes ULP-assisted pin sampling.]
+    connections: {startup: [], tasks: [keyboard and mouse tasks], interrupts: [PS2 ISR], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [Supplies physical keyboard and mouse acquisition only; retained command/state compatibility is handled separately.]
+    target_compatibility:
+      status: architecture-incompatible-and-unneeded
+      finding: P4 has an LP core but not the ESP32-specific esp32/ulp.h/register program assumed here; the exact upstream build already stops at that header, and Extender v1 omits physical PS/2 ownership.
+      evidence: [target:p4-soc-caps]
+    physical_owner_class: onboard VDP
+    physical_owner: Onboard VDP remains the physical keyboard and mouse owner for Extender v1
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: ADR-0013 excludes physical PS/2 drivers; porting an incompatible ULP implementation would preserve no selected Extender hardware behavior.
+    omission_fallout: Exclude ulp_macro_ex.cpp with ps2controller.cpp; retained keyboard/mouse protocol state needs project-owned adapters but not this hardware substrate.
+    dependencies: [SETUP-004.1.f]
+    dependency_effects: [{id: SETUP-004.1.f, effect: requires-later-qualification}]
+    fallout_analysis: {kind: omit-architecture-specific-source, first_failure: Keeping the source first fails at missing esp32/ulp.h on P4., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Exclude ULP and physical PS2 translation units while preserving protocol adapters., residual_risk: Work 1.f must prove no retained cursor/input behavior links back to these objects.}
+    evidence_ids: []
+    graph_node_ids: ['file:vdp-gl:src/ulp_macro_ex.cpp', 'file:vdp-gl:src/ulp_macro_ex.h', 'physical-facility:reviewed:esp32%20ulp,%20rtc%20gpio,%20sens%20registers,%20rtc%20interrupt,%20queues,%20and%20tasks']
+    agent_entry_points: [vdp-gl:src/ulp_macro_ex.cpp:1, vdp-gl:src/comdrivers/ps2controller.cpp:990]
+
+  - id: architecture-cpu-clock-and-cycle-counter
+    name: ESP32 CPU/APB clock and cycle-counter utilities
+    layer: Architecture-specific timing utility
+    scope: ESP32 RTC clock configuration, APLL control, FRC timer header, and Xtensa-era cycle assumptions used throughout vdp-gl drivers.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/fabutils.cpp, vdp-gl:src/fabutils.h, vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/devdrivers/soundgen.cpp]
+    implementation_highlights: {selected_translation_units: [vdp-gl:src/fabutils.cpp, vdp-gl:src/dispdrivers/vgabasecontroller.cpp, vdp-gl:src/devdrivers/soundgen.cpp], header_implementation: [vdp-gl:src/fabutils.h]}
+    facilities: [CPU and APB frequency queries, APLL control, cycle counter, FRC timer definitions]
+    activation: [Display and audio timing code queries clocks and cycle counts; utility code exposes shared helpers.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [Indirectly determines display timing, audio timing, timeout budgets, and performance measurements.]
+    target_compatibility:
+      status: architecture-incompatible-replacement-required
+      finding: ESP32-P4 is RISC-V and the upstream survey already fails at soc/frc_timer_reg.h; P4 provides different CPU facilities and retained consumers require P4-native timing implementations.
+      evidence: [target:p4-esp-cpu, target:p4-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 timing and clock hardware
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: replace
+    rationale: Preserve required timing semantics at existing call seams while replacing ESP32/Xtensa register and frequency assumptions with P4-native implementations.
+    omission_fallout: Omission breaks shared vdp-gl utilities and any retained display/audio consumer; direct retention does not compile or cannot be trusted on P4.
+    dependencies: [SETUP-004.1.d, SETUP-004.1.e]
+    dependency_effects:
+      - {id: SETUP-004.1.d, effect: requires-later-qualification}
+      - {id: SETUP-004.1.e, effect: requires-later-qualification}
+    fallout_analysis: {kind: replace-architecture-utility, first_failure: Direct preprocessing fails at soc/frc_timer_reg.h before deeper P4 incompatibilities are compiled., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Implement narrow P4-native clock/cycle helpers behind preserved upstream seams., residual_risk: Required fidelity and timing tolerances depend on surviving display and audio designs.}
+    evidence_ids: []
+    graph_node_ids: [platform-api:external:rtc_clk_cpu_freq_get_config]
+    agent_entry_points: [vdp-gl:src/fabutils.cpp:207, vdp-gl:src/fabutils.h:1]
+
+  - id: peripheral-zdi-direct-gpio-helper
+    name: Direct-register GPIO helper used by the omitted ZDI facility
+    layer: Omitted maintenance hardware substrate
+    scope: OneWire-derived direct GPIO register macros used by agon-vdp ZDI bit banging.
+    upstream_owner: agon-vdp
+    source_highlights: [agon-vdp:video/OneWire_direct_gpio.h, agon-vdp:video/zdi.h]
+    implementation_highlights: {selected_translation_units: [agon-vdp:video/video.ino], header_implementation: [agon-vdp:video/OneWire_direct_gpio.h, agon-vdp:video/zdi.h]}
+    facilities: [direct GPIO register access, timing-critical ZDI bit banging]
+    activation: [Only ZDI command handling calls the direct macros in official VDP.]
+    connections: {startup: [], tasks: [], interrupts: [], timers: [], callbacks: [], global_state: []}
+    visible_behavior: [Implements omitted local ZDI maintenance commands; it has no retained normal application-facing VDU surface.]
+    target_compatibility:
+      status: architecture-specific-and-unneeded
+      finding: The helper contains ESP32-generation register branches and generic fallbacks, but Extender v1 explicitly omits ZDI and therefore has no reason to qualify it on P4.
+      evidence: [target:p4-gpio, target:p4-soc-caps]
+    physical_owner_class: onboard VDP
+    physical_owner: Onboard VDP retains legacy ZDI maintenance behavior in legacy and applicable cooperative operation
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: omit
+    rationale: ADR-0014 excludes ZDI from Extender v1; carrying its direct-register helper adds architecture risk without selected behavior.
+    omission_fallout: zdi.h is header-defined inside the effective video.ino translation unit, so implementation must remove or condition the ZDI include/dispatch rather than merely source-filter OneWire_direct_gpio.h.
+    dependencies: [SETUP-005-D006]
+    dependency_effects: [{id: SETUP-005-D006, effect: blocks-implementation}]
+    fallout_analysis: {kind: omit-header-defined-subsystem, first_failure: Removing the helper alone breaks zdi.h macro references inside video.ino., selected_consumers: mechanical.source_roles.inbound_consumers, severance: Condition the ZDI command path and helper includes together with provenance comments., residual_risk: Strict-mode parser behavior for attempted ZDI commands remains unresolved.}
+    evidence_ids: []
+    graph_node_ids: ['file:agon-vdp:video/OneWire_direct_gpio.h', 'physical-facility:reviewed:direct%20esp32%20gpio%20register%20helper%20for%20zdi']
+    agent_entry_points: [agon-vdp:video/zdi.h:1, agon-vdp:video/OneWire_direct_gpio.h:1]

@@ -1,0 +1,137 @@
+# Reviewed SETUP-004 Work 1.e input. Mechanical facts come from immutable
+# SETUP-003 and PORT-001 evidence. Pending dispositions require Author review.
+schema_version: 1
+work_item: SETUP-004.1.e
+subject: Audio command semantics, synthesis, mixing, and output delivery
+sources:
+  agon_vdp: {release: v2.16.0, commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3}
+  vdp_gl: {release: all-the-plots, commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0}
+target_framework:
+  platform: pioarduino 55.03.311
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  architecture: hybrid Arduino and ESP-IDF
+  authority:
+    - docs/decisions/ADR-0002-hybrid-firmware-framework.md
+    - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+  source_evidence:
+    - {id: target:p4-audio-soc-caps, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/soc/esp32p4/include/soc/soc_caps.h, sha256: 4aba7eaad13804d97e6cf8ff4cfe965e4892438fab43eb1fc18193eb072ad651}
+    - {id: target:p4-sdm-driver, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_sdm/include/driver/sdm.h, sha256: a44993989e09411ca4700f0582d6343041139906dc85d4133f4b0783989844b0}
+    - {id: target:p4-i2s-driver, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/esp_driver_i2s/include/driver/i2s_std.h, sha256: f72d9b5b2b8654e0a732f20c8f775877b34794ea9c2c8e0134d333963347c47a}
+    - {id: target:p4-deprecated-dac-header, package: esp-idf-libs-esp32p4, version: 5.5.5, path: include/driver/deprecated/driver/dac.h, sha256: caf6abbbdb4e31c34fae5af895fe03f0b8140325d36d02aad38c0123680bb750}
+records:
+  - id: audio-vdp-command-and-channel-runtime
+    name: Official VDP audio protocol, channel, envelope, and sample runtime
+    layer: Header-defined official VDP audio service
+    scope: VDU audio parsing, command acknowledgements, channel state, volume and frequency envelopes, waveform selection, buffer-backed samples, playback timing, and sample-rate control; excludes the final PCM sink and optional onboard-VDP forwarding.
+    upstream_owner: agon-vdp
+    source_highlights: [agon-vdp:video/agon_audio.h, agon-vdp:video/audio_channel.h, agon-vdp:video/audio_sample.h, agon-vdp:video/enhanced_samples_generator.h, agon-vdp:video/envelopes/adsr.h, agon-vdp:video/envelopes/frequency.h, agon-vdp:video/envelopes/multiphase_adsr.h, agon-vdp:video/envelopes/types.h, agon-vdp:video/vdu_audio.h]
+    implementation_highlights:
+      selected_translation_units: [agon-vdp:video/video.ino]
+      header_implementation: [agon-vdp:video/agon_audio.h, agon-vdp:video/audio_channel.h, agon-vdp:video/audio_sample.h, agon-vdp:video/enhanced_samples_generator.h, agon-vdp:video/envelopes/adsr.h, agon-vdp:video/envelopes/frequency.h, agon-vdp:video/envelopes/multiphase_adsr.h, agon-vdp:video/envelopes/types.h, agon-vdp:video/vdu_audio.h]
+    facilities: ['VDU 23,0,&85 parser', PACKET_AUDIO acknowledgements, AudioChannel state machines, volume and frequency envelopes, buffer-backed PCM samples, one-millisecond audio control task, global channel and sample state]
+    activation: [setup calls initAudio unconditionally after constructing the VDU stream processor., initAudio constructs the generator, default channels, and pinned audioDriver task., VDU audio commands mutate channels and samples and return status packets., VDU 7 invokes the same note-playing service on channel zero.]
+    connections:
+      startup: [video.ino setup calls initAudio]
+      tasks: [audioDriver polls all enabled AudioChannel instances every millisecond]
+      interrupts: []
+      timers: [Arduino millis drives note and envelope progression]
+      callbacks: [sendAudioStatus invokes buffered callbacks for CALLBACK_SENDING_VDPP plus PACKET_AUDIO before sending each acknowledgement]
+      global_state: [soundGeneratorMutex, audioChannels, audioTask, samples, soundGenerator]
+    visible_behavior: ['Implements every accepted VDU 23,0,&85 audio command and VDU 7 bell behavior.', Returns two-byte channel/status PACKET_AUDIO acknowledgements over the VDP response path., Channel status, note scheduling, envelopes, sample seek/repeat/rate behavior, and command success or failure are application-visible.]
+    target_compatibility:
+      status: logical-runtime-retainable-output-binding-requires-adaptation
+      finding: Channel, envelope, sample, parser, and task logic use retained C++/Arduino/FreeRTOS/PSRAM services, but the headers construct and manipulate fabgl::SoundGenerator directly and therefore require the output seam selected by W1E-Q02 and W1E-Q03.
+      evidence: [target:p4-audio-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender EDP owns audio command state and generated audio in EDP-active modes; the onboard VDP remains independent in legacy mode
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: The accepted VDU inventory keeps the complete audio command surface, status packets, channel semantics, samples, and envelopes; retaining the official implementation minimizes upstream merge divergence while isolating only its concrete output dependency.
+    omission_fallout: Omission removes all accepted audio commands, acknowledgements, VDU 7 sound, and channel/sample state from the effective video.ino translation unit.
+    dependencies: [W1E-Q02, SETUP-005-D005]
+    dependency_effects:
+      - {id: W1E-Q02, effect: blocks-implementation}
+      - {id: SETUP-005-D005, effect: requires-later-qualification}
+    evidence_ids: [evidence:reviewed:facility-audio-0, evidence:reviewed:facility-audio-1]
+    graph_node_ids: [subsystem:agon-vdp:audio, file:agon-vdp:video/agon_audio.h, file:agon-vdp:video/audio_channel.h, file:agon-vdp:video/audio_sample.h, file:agon-vdp:video/enhanced_samples_generator.h, file:agon-vdp:video/envelopes/adsr.h, file:agon-vdp:video/envelopes/frequency.h, file:agon-vdp:video/envelopes/multiphase_adsr.h, file:agon-vdp:video/envelopes/types.h, file:agon-vdp:video/vdu_audio.h]
+    agent_entry_points: [agon-vdp:video/video.ino:118, agon-vdp:video/agon_audio.h:35, agon-vdp:video/audio_channel.h:17, agon-vdp:video/vdu_audio.h:27, agon-vdp:video/vdu_audio.h:235]
+
+  - id: audio-waveform-and-mixer-core
+    name: FabGL waveform generation, channel attachment, and PCM mixing core
+    layer: vdp-gl logical synthesis and mixing service
+    scope: Waveform sample generation, frequency/phase progression, channel attachment and lifetime, channel/global volume, sample-rate propagation, sample playback, and final signed PCM mixing; excludes DAC, sigma-delta, SDL, DMA, timer, and interrupt delivery.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/soundgen.cpp, vdp-gl:src/devdrivers/soundgen.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/devdrivers/soundgen.cpp]
+      header_implementation: [vdp-gl:src/devdrivers/soundgen.h]
+    facilities: [WaveformGenerator contract, sine square triangle sawtooth noise and VIC-noise generators, sample generator, attachment list, auto-detach and lifetime rules, signed eight-bit PCM mixer, global volume scaling]
+    activation: [Official initAudio constructs SoundGenerator., AudioChannel constructs and attaches one waveform generator per enabled channel., The active output callback repeatedly calls SoundGenerator::getSample., Sample-rate changes reconstruct SoundGenerator and reattach channels.]
+    connections:
+      startup: [constructed by initAudio]
+      tasks: [official audioDriver updates attached waveform state]
+      interrupts: [upstream DAC ISR consumes getSample; replacement sink must not make the mixer ISR-specific]
+      timers: [upstream sigma-delta timer consumes getSample]
+      callbacks: [upstream SDL callback consumes getSample only in emulated builds]
+      global_state: [SoundGenerator channel list, sample rate, play state, global volume]
+    visible_behavior: [Determines waveform shape, frequency, duration, duty cycle, noise sequence, sample playback, channel mixing, clipping/normalization, and volume heard at the selected sink., Its state backs VDU audio status and command outcomes indirectly.]
+    target_compatibility:
+      status: portable-algorithms-fused-to-incompatible-output-class
+      finding: The waveform arithmetic, attachment rules, and getSample mixer are portable C++, but getSample is private and the same class and headers embed classic-ESP32 physical members, register headers, initialization, and callbacks; retention requires a narrow PCM pull/sink seam and physical conditioning rather than excluding soundgen.cpp.
+      evidence: [target:p4-audio-soc-caps]
+    physical_owner_class: Extender
+    physical_owner: Extender EDP synthesis runtime produces PCM for whichever Extender output sink is active
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: retain
+    rationale: These mature synthesis semantics directly implement accepted audio commands; a bounded adaptation exposing mixed PCM avoids rewriting waveforms and channel behavior while permitting a project-owned sink.
+    omission_fallout: Omission leaves retained AudioChannel code without waveform classes, attachment services, volume control, or a mixer and would require rewriting the complete synthesis layer.
+    dependencies: [W1E-Q03]
+    dependency_effects:
+      - {id: W1E-Q03, effect: blocks-implementation}
+    evidence_ids: [evidence:reviewed:facility-audio-0]
+    graph_node_ids: [platform-api:reviewed:fabgl%20soundgenerator%20and%20waveform%20generators, file:vdp-gl:src/devdrivers/soundgen.cpp, file:vdp-gl:src/devdrivers/soundgen.h]
+    agent_entry_points: [vdp-gl:src/devdrivers/soundgen.h:44, vdp-gl:src/devdrivers/soundgen.h:328, vdp-gl:src/devdrivers/soundgen.h:350, vdp-gl:src/devdrivers/soundgen.cpp:724]
+
+  - id: audio-classic-esp32-physical-output
+    name: FabGL classic-ESP32 DAC, sigma-delta, DMA, timer, and ISR output paths
+    layer: Fused vdp-gl hardware output backend
+    scope: Output-method selection, DAC GPIO defaults, I2S0 register programming, legacy DMA descriptors, DAC enable, ISR-driven sample delivery, sigma-delta GPIO output, esp_timer-driven sample delivery, and host-only SDL callback; excludes waveform and mixing algorithms retained from the same source unit.
+    upstream_owner: vdp-gl
+    source_highlights: [vdp-gl:src/devdrivers/soundgen.cpp, vdp-gl:src/devdrivers/soundgen.h]
+    implementation_highlights:
+      selected_translation_units: [vdp-gl:src/devdrivers/soundgen.cpp]
+      header_implementation: [vdp-gl:src/devdrivers/soundgen.h]
+    facilities: [SoundGenMethod DAC SigmaDelta and Auto selection, classic ESP32 I2S0 registers, built-in DAC on GPIO 25 or 26, legacy lldesc DMA chain, pinned I2S0 ISR, sigma-delta GPIO 23 default, periodic esp_timer callback, conditional SDL host sink]
+    activation: [SoundGenerator::play first calls init., Auto selects DAC for VGA and sigma-delta for CVBS., DAC mode fills alternating DMA buffers in the I2S0 ISR., Sigma-delta mode emits one mixed sample per periodic timer callback., FABGL_EMULATED separately opens an SDL audio device.]
+    connections:
+      startup: [initAudio constructs SoundGenerator and calls play]
+      tasks: [esp_timer task dispatches sigma-delta samples]
+      interrupts: [I2S0 output-EOF ISR fills DAC DMA buffers]
+      timers: [periodic esp_timer at the selected audio sample rate]
+      callbacks: [SoundGenerator::timerHandler, conditional SDLAudioCallback]
+      global_state: [I2S0 registers, DMA descriptor chain, interrupt handle, timer handle, output method, output GPIO, play state]
+    visible_behavior: [Turns mixed samples into stock local mono audio., Output scheduling controls effective sample rate, continuity, latency, underruns, and audio timing., Auto output selection is coupled to the stock VGA/CVBS mode even though Extender replaces those display backends.]
+    target_compatibility:
+      status: source-incompatible-and-product-output-mismatch
+      finding: ESP32-P4 has modern I2S and SDM peripherals but no SOC_DAC_SUPPORTED built-in DAC; the vendored code directly programs classic ESP32 I2S0 registers, uses ESP32-only dac_i2s_enable, legacy lldesc and sigma-delta APIs, fixed classic pins, and a display-mode selector already replaced by Work 1.d. Rev 1 instead requires network/browser audio and selects no local P4 audio hardware.
+      evidence: [target:p4-audio-soc-caps, target:p4-sdm-driver, target:p4-i2s-driver, target:p4-deprecated-dac-header]
+    physical_owner_class: Extender
+    physical_owner: Extender P4 owns replacement PCM scheduling and network delivery; no Rev 1 local audio transducer is selected
+    author_review: {status: accepted, decision_date: 2026-08-22}
+    disposition: replace
+    rationale: Audio output remains required, but none of the stock DAC/sigma-delta physical implementation or VGA/CVBS selection policy fits the target. Replace it with an Extender-owned PCM scheduler and sink seam whose guaranteed Rev 1 consumer is network/browser delivery; logical playback and status timing must remain independent of sink latency or availability.
+    omission_fallout: The old physical methods and headers must be omitted from the P4 build path, but soundgen.cpp cannot be excluded wholesale because it also contains retained waveform and mixer code; play, init, teardown, and getSample access require a bounded replacement.
+    dependencies: [SETUP-004.1.g, SETUP-005-D005]
+    dependency_effects:
+      - {id: SETUP-004.1.g, effect: blocks-implementation}
+      - {id: SETUP-005-D005, effect: requires-later-qualification}
+    fallout_analysis:
+      kind: replace-fused-audio-output-backend
+      first_failure: Excluding soundgen.cpp removes both incompatible hardware output and required waveform/mixer definitions; merely deleting hardware methods leaves SoundGenerator play, initialization, and teardown unresolved.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Preserve waveform and mixer behavior while introducing an Extender-owned scheduler/sink contract; condition out DAC, sigma-delta, SDL, old DMA/register headers, callbacks, fixed pins, and display-mode Auto selection from the P4 path.
+      residual_risk: PCM format, buffering, pacing, clock drift, browser/network backpressure, latency, and exact stock synthesis fidelity require implementation and qualified tests.
+    evidence_ids: [evidence:reviewed:facility-audio-2]
+    graph_node_ids: ['physical-facility:reviewed:esp32%20i2s0,%20dac,%20sigma-delta,%20dma-capable%20heap,%20interrupts,%20and%20timers']
+    agent_entry_points: [vdp-gl:src/devdrivers/soundgen.h:328, vdp-gl:src/devdrivers/soundgen.h:350, vdp-gl:src/devdrivers/soundgen.cpp:454, vdp-gl:src/devdrivers/soundgen.cpp:517, vdp-gl:src/devdrivers/soundgen.cpp:586, vdp-gl:src/devdrivers/soundgen.cpp:620, vdp-gl:src/devdrivers/soundgen.cpp:724]

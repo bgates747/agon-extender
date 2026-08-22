@@ -31,7 +31,11 @@ retained behavior is routed between processors and MOS.
 - [ ] **SETUP-005-D003 — Compatible response delivery:** determine how EDP
   responses and onboard-VDP input packets populate canonical MOS sysvars in
   exclusive mode, and define the separate EDU result domain used in extended
-  cooperative mode.
+  cooperative mode. The adopted P4 return path terminates on eZ80 UART1, while
+  stock MOS feeds only the onboard VDP's UART0 stream through its VDP packet
+  parser. Extender, applications, and a resident service must not write
+  MOS-owned sysvars directly; compatible updates require an explicitly
+  selected MOS-owned parser route.
 - [ ] **SETUP-005-D004 — Legacy abstraction boundary:** define which classes of
   non-EDU-aware software can be supported through wrappers or loaders in
   extended cooperative mode and the qualification required for each class.
@@ -52,15 +56,29 @@ retained behavior is routed between processors and MOS.
   explicitly which modes are strict before assigning command behavior.
 - [ ] **SETUP-005-D007 — Peripheral-input ownership and routing:** retain the
   onboard VDP as the initial physical keyboard and mouse owner and preserve its
-  stock packets to MOS as the canonical legacy input path. Determine how an
-  EDP-exclusive session also receives the processed input events required for
+  stock packets to MOS as the canonical legacy input path. The proof of concept
+  uses an EDU-aware eZ80 application to read stock input and explicitly forward
+  processed events to Extender. Injected events update EDP-local behavior and do
+  not automatically echo stock input packets back to the forwarding eZ80
+  application. This does not support untouched applications or constitute
+  transparent exclusive routing. Determine whether and how v1 adds
+  a more automatic route by which an EDP-exclusive session receives events for
   display-local behavior—including paged mode, control-key handling, mouse
   cursor state, VDP variables, and callbacks—without creating competing MOS
   sysvar writers. Compare an Extender-enabled MOS relay, an onboard-VDP bridge,
-  and other routing mechanisms. Physical P4 input ownership remains a possible
-  future EDU extension, not the Extender v1 compatibility baseline.
+  aware-application forwarding, and other routing mechanisms. V1 will not add
+  P4-owned keyboard, mouse, or other peripheral hardware beyond facilities
+  already present on the selected P4 DevKit; any such expansion is post-v1.
+- [ ] **SETUP-005-D008 — RTC authority and synchronization:** define the
+  authoritative clock and read/set routing in legacy, EDP-exclusive, and
+  extended cooperative modes. Specify how MOS RTC sysvars, the onboard VDP,
+  the EDP system clock, and optional network time interact; prevent competing
+  writers; define reset persistence, timezone expectations, conflict and
+  failure behavior, and any capability/status reporting. Do not allow network
+  synchronization to silently override an application-set clock unless the
+  selected policy explicitly permits it.
 
-When all seven decisions are accepted and incorporated into ADR-0014, change its
+When all eight decisions are accepted and incorporated into ADR-0014, change its
 completeness to `Complete` and remove the resolved items from this task after
 recording their disposition in the development log.
 

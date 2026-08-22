@@ -103,8 +103,11 @@ that processor.
    applications to adopt a different application protocol.
 11. Define **EDP-exclusive compatibility mode** as selection of the EDP as the
     authoritative audio/video processor and compatibility interface. The EDP
-    owns stock-compatible command processing, responses, completion flags, and
-    canonical MOS VDP sysvars through the selected routing mechanism.
+    owns stock-compatible command processing and supplies the corresponding
+    response stream through the selected routing mechanism. MOS retains
+    ownership of canonical VDP sysvar storage, completion flags, and the
+    mechanism that updates them; neither the EDP nor an application or resident
+    service may write that MOS-owned state directly.
 12. Permit EDP-exclusive mode to claim complete compatibility for the declared
     normal application-facing surface only after ordinary legacy VDU traffic
     and responses can be routed transparently. Explicitly exclude the v1
@@ -146,6 +149,23 @@ that processor.
 21. In extended cooperative mode, ordinary VDU continues to reach the onboard
     VDP, so its maintenance facilities may remain available through that stock
     path. Their availability does not make them Extender-supported features.
+22. Retain the stock RTC command and state surface for strict EDP-exclusive
+    compatibility with as much fidelity as practical: `VDU 23,0,&87`, its
+    six-byte packed payload and eight-octet response frame, RTC-backed VDP
+    variables, and packet callbacks. Canonical RTC sysvar effects require the
+    selected response to reach a MOS-owned parser; this decision grants the EDP
+    no ownership of MOS memory. The strict-mode requirement is independently
+    sufficient to retain this surface.
+23. Use explicit aware-application input forwarding for the proof of concept.
+    An EDU-aware eZ80 program reads processed keyboard and mouse input through
+    the stock onboard VDP path and injects the events into the EDP through EDU.
+    Injection updates EDP-local state and behavior and does not automatically
+    emit the same stock input packets back to the forwarding application. This
+    profile does not transparently support untouched applications and does not
+    settle the more automatic input route that v1 may adopt.
+24. Keep physical keyboard and mouse ownership on the onboard VDP through v1.
+    V1 adds no P4-owned peripheral hardware beyond facilities already present
+    on the selected P4 DevKit; any additional input hardware is post-v1 work.
 
 ## Rationale
 
@@ -210,7 +230,8 @@ that processor.
    unresolved route by which the EDP receives processed events needed for its
    display-local behavior.
 10. Reusing MOS's normal packet parser would preserve sysvar semantics better
-    than having the EDP or a resident service write MOS-owned memory directly.
+    than having the EDP or a resident service write MOS-owned memory directly;
+    direct writes by either are outside the accepted ownership model.
 11. Documentation, releases, and compatibility metadata must distinguish
     stock-MOS cooperative operation from features that require an
     Extender-enabled MOS build.
@@ -220,3 +241,6 @@ that processor.
 13. Compatibility metadata must name the maintenance/operator carve-out when
     claiming EDP-exclusive compatibility. Legacy mode remains the fallback for
     those facilities.
+14. The proof-of-concept input profile is intentionally application-mediated.
+    It validates EDP-local input behavior without claiming transparent legacy
+    compatibility or pre-deciding the v1 routing mechanism.

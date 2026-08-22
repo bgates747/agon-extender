@@ -1,0 +1,151 @@
+# Reviewed extraction scope for SETUP-004 Work 1.d. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.d
+title: FabGL VGA, composite-video, display-controller, and canvas drivers
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^platform-api:reviewed:fabgl%20canvas.*$'
+    - '^physical-facility:reviewed:(?:active%20vga%20controller.*|esp32%20gpio%20matrix|i2s1%20register.*)$'
+  explicit_graph_node_ids:
+    - subsystem:agon-vdp:graphics-display
+    - file:agon-vdp:video/agon_screen.h
+    - file:vdp-gl:src/canvas.cpp
+    - file:vdp-gl:src/canvas.h
+    - file:vdp-gl:src/displaycontroller.cpp
+    - file:vdp-gl:src/displaycontroller.h
+    - file:vdp-gl:src/scene.cpp
+    - file:vdp-gl:src/scene.h
+    - file:vdp-gl:src/dispdrivers/vgabasecontroller.cpp
+    - file:vdp-gl:src/dispdrivers/vgabasecontroller.h
+    - file:vdp-gl:src/dispdrivers/vgacontroller.cpp
+    - file:vdp-gl:src/dispdrivers/vgacontroller.h
+    - file:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp
+    - file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
+    - file:vdp-gl:src/dispdrivers/vga2controller.cpp
+    - file:vdp-gl:src/dispdrivers/vga2controller.h
+    - file:vdp-gl:src/dispdrivers/vga4controller.cpp
+    - file:vdp-gl:src/dispdrivers/vga4controller.h
+    - file:vdp-gl:src/dispdrivers/vga8controller.cpp
+    - file:vdp-gl:src/dispdrivers/vga8controller.h
+    - file:vdp-gl:src/dispdrivers/vga16controller.cpp
+    - file:vdp-gl:src/dispdrivers/vga16controller.h
+    - file:vdp-gl:src/dispdrivers/vga64controller.cpp
+    - file:vdp-gl:src/dispdrivers/vga64controller.h
+    - file:vdp-gl:src/dispdrivers/vgatextcontroller.cpp
+    - file:vdp-gl:src/dispdrivers/vgatextcontroller.h
+    - file:vdp-gl:src/devdrivers/cvbsgenerator.cpp
+    - file:vdp-gl:src/devdrivers/cvbsgenerator.h
+  include_target_patterns:
+    - '^canvas\.h$'
+    - '^displaycontroller\.h$'
+    - '^scene\.h$'
+    - '^dispdrivers/(?:vgabasecontroller|vgacontroller|vgapalettedcontroller|vga2controller|vga4controller|vga8controller|vga16controller|vga64controller|vgatextcontroller)\.h$'
+    - '^devdrivers/cvbsgenerator\.h$'
+  occurrence_patterns:
+    - '\b(?:canvas|Canvas|BitmappedDisplayController|GenericBitmappedDisplayController|BaseDisplayController)\b'
+    - '\b(?:_VGAController|getVGAController|updateVGAController|changeResolution)\b'
+    - '\b(?:VGABaseController|VGAPalettedController|VGAController|VGA2Controller|VGA4Controller|VGA8Controller|VGA16Controller|VGA64Controller)\b'
+    - '\bVGATextController\b'
+    - '\bCVBSGenerator\b'
+    - '\bScene\b'
+
+candidate_groups:
+  - id: display-vdp-screen-facade
+    name: Official VDP screen, mode, palette, and controller integration facade
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:graphics-display$'
+      - '^file:agon-vdp:video/agon_screen\.h$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:_VGAController|getVGAController|updateVGAController|changeResolution)\b'
+
+  - id: display-canvas-common-rendering
+    name: FabGL Canvas and common bitmapped rendering semantics
+    graph_node_patterns:
+      - '^platform-api:reviewed:fabgl%20canvas.*$'
+      - '^file:vdp-gl:src/(?:canvas|displaycontroller)\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^(?:canvas|displaycontroller)\.h$'
+    occurrence_patterns:
+      - '\b(?:canvas|Canvas|BitmappedDisplayController|GenericBitmappedDisplayController|BaseDisplayController)\b'
+
+  - id: display-vga-concrete-controller-family
+    name: FabGL concrete VGA framebuffer renderers and ESP32 scanout engine
+    graph_node_patterns:
+      - '^physical-facility:reviewed:(?:esp32%20gpio%20matrix|i2s1%20register.*)$'
+      - '^file:vdp-gl:src/dispdrivers/(?:vgabasecontroller|vgacontroller|vgapalettedcontroller|vga2controller|vga4controller|vga8controller|vga16controller|vga64controller)\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^dispdrivers/(?:vgabasecontroller|vgacontroller|vgapalettedcontroller|vga2controller|vga4controller|vga8controller|vga16controller|vga64controller)\.h$'
+    occurrence_patterns:
+      - '\b(?:VGABaseController|VGAPalettedController|VGAController|VGA2Controller|VGA4Controller|VGA8Controller|VGA16Controller|VGA64Controller)\b'
+
+  - id: display-vga-text-controller
+    name: Unused FabGL hardware VGA text controller
+    graph_node_patterns:
+      - '^file:vdp-gl:src/dispdrivers/vgatextcontroller\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^dispdrivers/vgatextcontroller\.h$'
+    occurrence_patterns:
+      - '\bVGATextController\b'
+
+  - id: display-composite-video-generator
+    name: Unused FabGL ESP32 composite-video generator
+    graph_node_patterns:
+      - '^file:vdp-gl:src/devdrivers/cvbsgenerator\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^devdrivers/cvbsgenerator\.h$'
+    occurrence_patterns:
+      - '\bCVBSGenerator\b'
+
+  - id: display-fabgl-scene-helper
+    name: Unused FabGL scene compositor helper
+    graph_node_patterns:
+      - '^file:vdp-gl:src/scene\.(?:cpp|h)$'
+    include_target_patterns:
+      - '^scene\.h$'
+    occurrence_patterns:
+      - '\bScene\b'
+
+boundaries:
+  - id: boundary-firmware-updater-display-state
+    owner: SETUP-004.1.g
+    reason: Updater-triggered screen and sprite manipulation belongs to updater disposition; Work 1.d records only the display-side dependency.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:active%20vga%20controller%20and%20sprite%20state%20during%20update$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-input-cursor-positioning
+    owner: SETUP-004.1.f
+    reason: Mouse-owned cursor positioning and physical input activation belong to PS/2 input disposition; retained display-side cursor rendering remains in the common controller candidate.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:active%20vga%20controller%20for%20mouse%20positioning.*$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: boundary-audio-i2s0
+    owner: SETUP-004.1.e
+    reason: I2S0 and DAC audio output belong to physical audio disposition; the composite generator remains independently reviewed here because it is a video facility.
+    graph_node_patterns:
+      - '^physical-facility:reviewed:esp32%20i2s0,.*$'
+    include_target_patterns: []
+    occurrence_patterns: []
