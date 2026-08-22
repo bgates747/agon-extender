@@ -28,18 +28,22 @@ host model and production state machine must not generate each other's
 expected results.
 
 `compatibility-delta.md` is the human review surface for retained behavior,
-project-owned implementation, the accepted patched-vendor seam, and deferred
+project-owned implementation, the pristine-vendor boundary, and deferred
 or excluded behavior. `implementation-manifest.yaml` is the machine-readable
 scope authority consumed by Phase C validation and later source-selection
 work. Generated files are never hand-edited.
 
-Physical qualification follows the controlled
-[`p4-frame-service-qualification-r01`](../../../procedures/p4-frame-service-qualification-r01.md)
-procedure after all candidate inputs are committed and the worktree is clean.
+The former `port-003-frame-service-canary-r01` candidate and
+`p4-frame-service-qualification-r01` procedure describe the superseded D008
+candidate and must not be used for the corrected source. Replacement
+identities `port-003-frame-service-canary-r02` and
+`p4-frame-service-qualification-r02` were approved for the corrected source;
+physical qualification still requires their clean committed checkpoint.
 
 ## Gate boundary
 
-Phase C owns logical ticks, task-context frame work, primitive/swap completion,
-frame count, publication generation, and bounded mock-consumer notification.
+Phase C owns logical ticks, task-context frame work through unchanged common
+completion/swap behavior, frame count, publication generation, and bounded
+mock-consumer notification.
 It does not own presentation composition, palette/Copper/overlays, an official
 mode facade, an output sink, or EDU/VDU routing.

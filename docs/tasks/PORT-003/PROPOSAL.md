@@ -127,8 +127,7 @@ The initial compatibility target is:
    semantics;
 3. execute a queued buffer swap against logical drawing/visible planes;
 4. refresh software-sprite state and freeze the presentation metadata;
-5. publish a new presentation generation; and
-6. signal primitive/swap completion outside the state lock.
+5. publish a new presentation generation.
 
 This mirrors the stock fact that the physical frame interrupt increments the
 counter before processing its primitive batch. Exact callback observation and
@@ -144,24 +143,20 @@ plane.
 
 In a double-buffered mode, ordinary Canvas drawing retains its immediate
 execution against the drawing plane. The swap primitive waits until a logical
-frame edge, exchanges drawing and visible planes, publishes the newly visible
-state, and then notifies its caller.
+frame edge, exchanges drawing and visible planes, and immediately notifies its
+caller through unchanged common execution before Phase C publishes metadata.
 
-The implementation must use an explicit submitted/completed sequence rather
-than treating an empty FreeRTOS queue as completion. This removes a race in the
-old polling implementation without changing the caller-visible ordering.
+The strict-compatible implementation retains upstream queue-depth completion
+waiting, including its treatment of already-dequeued work. `UPSTREAM-001`
+separately evaluates stronger submitted/completed sequencing as a possible
+upstream correction.
 
 ### Overrun policy
 
-Logical time must not block on rendering or a sink. If the frame-service task
-misses a deadline, pending timer events may be coalesced for rendering, while
-the frame counter accounts for elapsed logical ticks. The service publishes
-the newest completed generation and records missed deadlines. It must not run
-a burst of stale full-frame presentations merely to catch up.
-
-This is the recommended safe policy; exact frame-wait and callback behavior
-under deliberate overload must be measured against stock firmware before it
-is accepted as compatible.
+Logical time must not block on a sink. Every recorded timer event receives a
+distinct logical frame edge and bounded renderer opportunity, preserving the
+upstream physical-VSYNC event model. Exact backlog, frame-wait, and callback
+behavior under deliberate overload must be measured against stock firmware.
 
 ## Presentation composition
 

@@ -63,8 +63,8 @@ callback.
 
 This is sufficient to create nominal 60, 70, and 75 Hz logical cadence when no
 physical display is attached. It is not proof of deadline accuracy under full
-rendering, encoding, network, and peripheral load. Drift, jitter, overrun, and
-tick-coalescing behavior belong in target qualification.
+rendering, encoding, network, and peripheral load. Drift, jitter, backlog, and
+per-tick service behavior belong in target qualification.
 
 ## Potential physical frame consumers
 
@@ -103,12 +103,13 @@ still replace these old assumptions:
 - interrupt-safe queue reads as the normal render path;
 - task affinity used to make a classic Xtensa cycle counter comparable;
 - frame budgets calculated from VGA blanking intervals; and
-- spin-waiting on queue occupancy as proof of completion.
+- the physical ISR as the owner of queue consumption.
 
-The P4 executor should use task-context rendering, an explicit completion
-sequence/notification, short state locks, and bounded sink queues. Exact core
-affinity, priority, stack, and queue sizes are measurements to make during
-implementation, not constants to guess at this gate.
+The strict P4 executor uses task-context rendering through unchanged upstream
+queue-depth waits and swap notifications, plus short project-state locks and
+bounded sink queues. Exact core affinity, priority, stack, and queue sizes are
+measurements to make during implementation, not constants to guess at this
+gate.
 
 ## Feasibility conclusion
 

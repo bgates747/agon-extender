@@ -1,8 +1,13 @@
 # P4 Frame-Service Qualification — r01
 
-Status: Candidate
+Status: Rejected
 
 Identity: `p4-frame-service-qualification-r01`
+
+This procedure applies only to the rejected D008 candidate. It is retained for
+historical reproduction and `UPSTREAM-001`; do not use it to qualify current
+product source. The corrected procedure is
+[`p4-frame-service-qualification-r02`](p4-frame-service-qualification-r02.md).
 
 ## Purpose
 

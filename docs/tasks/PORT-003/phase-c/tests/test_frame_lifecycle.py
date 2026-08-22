@@ -39,15 +39,15 @@ class FrameLifecycleArtifactTests(unittest.TestCase):
         by_symbol = {}
         for item in self.data["records"]:
             by_symbol.setdefault(item["symbol"], set()).add(item["disposition"])
-        self.assertIn("adapt-common-sequence", by_symbol["primitivesExecutionWait"])
-        self.assertIn("adapt-common-sequence", by_symbol["addPrimitive"])
+        self.assertIn("retain-common-contract", by_symbol["primitivesExecutionWait"])
+        self.assertIn("retain-common-contract", by_symbol["addPrimitive"])
         self.assertIn("adapt-logical-swap", by_symbol["swapBuffers"])
         self.assertIn("exclude-physical-trigger", by_symbol["VSyncInterrupt"])
         self.assertIn("retain-facade-contract", by_symbol["checkForVSYNC"])
 
-    def test_findings_make_queue_race_and_override_limit_explicit(self):
+    def test_findings_make_queue_behavior_and_override_limit_explicit(self):
         findings = self.data["findings"]
-        self.assertIn("dequeued", findings["queue_empty_race"])
+        self.assertIn("dequeued", findings["queue_depth_wait_behavior"])
         self.assertIn("non-virtual", findings["derived_override_limit"])
 
 

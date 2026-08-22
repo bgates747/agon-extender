@@ -84,7 +84,7 @@ class GeneratedArtifactTests(unittest.TestCase):
 
     def test_fixed_pinned_scope_and_unique_records(self) -> None:
         self.assertEqual(self.artifact["source"]["commit"], MODULE.EXPECTED_COMMIT)
-        self.assertEqual(self.artifact["source"]["local_patch_decisions"], ["PORT-003-D008"])
+        self.assertEqual(self.artifact["source"]["local_patch_decisions"], [])
         self.assertEqual(self.artifact["summary"]["file_count"], 17)
         ids = [item["id"] for item in self.artifact["algorithms"]]
         self.assertEqual(ids, sorted(ids))

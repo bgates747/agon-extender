@@ -74,8 +74,10 @@ void P4FrameService::stop() noexcept {
   if (task != nullptr) xTaskNotifyGive(task);
   if (task_stopped_ != nullptr) {
     xSemaphoreTake(task_stopped_, portMAX_DELAY);
-    // Only after the sole owner task has exited may the logical stop cancel
-    // queued work and release dynamic payloads without racing execution.
+    // Only after the sole owner task has exited may logical stop invoke the
+    // unchanged upstream background-disable path. That path drains queued
+    // work and owns its normal dynamic-payload lifetime without racing this
+    // task's bounded executor.
     logical_service_.stop();
     vSemaphoreDelete(task_stopped_);
     task_stopped_ = nullptr;

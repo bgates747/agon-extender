@@ -383,8 +383,8 @@ def main() -> int:
             "source_id": SOURCE_ID,
             "identity": "all-the-plots",
             "commit": EXPECTED_COMMIT,
-            "local_patch_decisions": ["PORT-003-D008"],
-            "source_state": "pinned upstream plus the audited Phase C common-controller seam",
+            "local_patch_decisions": [],
+            "source_state": "pristine pinned upstream",
             "root_placeholder": "${VDP_GL_VENDOR_ROOT}",
         },
         "inputs": [

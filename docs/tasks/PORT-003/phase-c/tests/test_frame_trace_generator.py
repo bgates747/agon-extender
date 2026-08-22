@@ -21,7 +21,7 @@ class FrameTraceFixtureTests(unittest.TestCase):
             payload = dict(fixture)
             del payload["content_sha256"]
             self.assertEqual(expected, hashlib.sha256(canonical_yaml(payload).encode("utf-8")).hexdigest())
-            self.assertEqual(fixture["oracle_class"], "independent written-contract state model")
+            self.assertEqual(fixture["oracle_class"], "independent upstream-derived contract state model")
         self.assertEqual(
             self.data["fixture_set_sha256"],
             hashlib.sha256(canonical_yaml(self.data["fixtures"]).encode("utf-8")).hexdigest(),
@@ -29,34 +29,34 @@ class FrameTraceFixtureTests(unittest.TestCase):
 
     def test_required_scenario_families_exist(self):
         required = {
-            "sink-free-edge", "coalesced-three-ticks", "frame-counter-rollover",
-            "writable-counter-continues", "dequeued-is-not-complete",
+            "sink-free-edge", "three-distinct-frame-edges", "frame-counter-rollover",
+            "writable-counter-continues", "dequeued-satisfies-upstream-queue-wait",
             "single-buffer-fifo-budget", "single-buffer-flush-next-edge",
             "double-immediate-and-swap", "slow-consumer-latest-only",
             "consumer-disconnect-reconnect", "tick-arrives-between-services",
-            "stop-cancels-and-releases",
+            "stop-drains-and-releases",
         }
         self.assertEqual(required, set(self.fixtures))
 
-    def test_dequeued_wait_is_blocked_until_finish(self):
-        results = [event["result"] for event in self.fixtures["dequeued-is-not-complete"]["expected_events"] if event["event"] == "wait-result"]
-        self.assertEqual(results, ["blocked", "satisfied"])
+    def test_dequeued_item_satisfies_upstream_queue_depth_wait(self):
+        results = [event["result"] for event in self.fixtures["dequeued-satisfies-upstream-queue-wait"]["expected_events"] if event["event"] == "wait-result"]
+        self.assertEqual(results, ["satisfied", "satisfied"])
 
-    def test_swap_visibility_precedes_publication_and_completion(self):
+    def test_swap_completion_precedes_publication(self):
         events = [event["event"] for event in self.fixtures["double-immediate-and-swap"]["expected_events"]]
         self.assertLess(events.index("planes-swapped"), events.index("published"))
-        self.assertLess(events.index("published"), events.index("completed"))
+        self.assertLess(events.index("completed"), events.index("published"))
 
     def test_slow_consumer_is_bounded_and_reports_drops(self):
         final = self.fixtures["slow-consumer-latest-only"]["expected_final"]
         self.assertIsNone(final["consumers"]["slow"]["slot"])
         self.assertEqual(final["consumers"]["slow"]["drops"], 2)
 
-    def test_coalescing_accounts_time_but_publishes_once(self):
-        final = self.fixtures["coalesced-three-ticks"]["expected_final"]
+    def test_each_tick_produces_a_distinct_edge(self):
+        final = self.fixtures["three-distinct-frame-edges"]["expected_final"]
         self.assertEqual(final["frame_counter"], 3)
-        self.assertEqual(final["generation"], 1)
-        self.assertEqual(final["metrics"]["coalesced_ticks"], 2)
+        self.assertEqual(final["generation"], 3)
+        self.assertEqual(final["metrics"]["serviced_edges"], 3)
 
 
 if __name__ == "__main__":

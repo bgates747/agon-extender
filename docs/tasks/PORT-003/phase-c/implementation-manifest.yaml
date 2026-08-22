@@ -1,20 +1,20 @@
 schema_version: 1.0.0
 artifact_kind: port_003_phase_c_implementation_manifest
 authority: docs/tasks/PORT-003.md#phase-c--logical-frame-service
-phase_contract: sink-independent logical ticks, bounded task-context work, completion, swaps, frame count, and mock publication only
+phase_contract: sink-independent logical ticks, bounded task-context execution through unchanged upstream queue semantics, swaps, frame count, and mock publication only
 source_baselines:
   agon_vdp: v2.16.0
   vdp_gl:
     identity: all-the-plots
     commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
 oracle_precedence:
-  - written state-transition and event-order contract
-  - reviewed source-derived expectations with exact provenance
+  - reviewed upstream source behavior with exact provenance
+  - written state-transition and event-order contract constrained by that behavior
   - committed target measurements
   - production output, which may be observed but never used to generate its own expected trace
 production:
   - path: vdp/video/extender/display/logical_frame_service.hpp
-    role: platform-neutral state, sequence, tick, generation, and bounded consumer contracts
+    role: platform-neutral tick, generation, and bounded consumer contracts
   - path: vdp/video/extender/display/logical_frame_service.cpp
     role: deterministic state transitions and task-context frame work
   - path: vdp/video/extender/display/p4_frame_service.hpp
@@ -36,14 +36,12 @@ generated_evidence:
   - docs/tasks/PORT-003/phase-c/evidence/build-closure.yaml
   - docs/tasks/PORT-003/phase-c/evidence/link-exclusions.yaml
   - docs/tasks/PORT-003/phase-c/evidence/target-runs.yaml
-accepted_integration_seam: PORT-003-D008
-candidate_identity: port-003-frame-service-canary-r01
-qualification_procedure: p4-frame-service-qualification-r01
-patched_vendor_files:
-  - path: vdp/vendor/vdp-gl/src/displaycontroller.h
-    role: default-no-op lifecycle hooks and virtual completion-wait seam
-  - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
-    role: queue lifecycle calls, deferred swap notification, and cancelled-payload release
+accepted_integration_seam: PORT-003-D009
+candidate_identity: port-003-frame-service-canary-r02
+qualification_procedure: p4-frame-service-qualification-r02
+superseded_candidate_identity: port-003-frame-service-canary-r01
+superseded_qualification_procedure: p4-frame-service-qualification-r01
+patched_vendor_files: []
 excluded_families:
   - palette, Copper, presentation compositor, sprites, and cursor overlays
   - official mode facade, contexts, callbacks, Teletext, VDU routing, and MOS

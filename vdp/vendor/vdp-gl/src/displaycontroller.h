@@ -914,11 +914,7 @@ public:
 
   void addPrimitive(Primitive & primitive);
 
-  // AGON EXTENDER PATCH (PORT-003-D008): upstream queue-depth polling cannot
-  // represent a primitive that has been dequeued but is still executing. The
-  // virtual seam preserves the upstream implementation for every existing
-  // controller while allowing the P4 port to wait on explicit sequences.
-  virtual void primitivesExecutionWait();
+  void primitivesExecutionWait();
 
   /**
    * @brief Enables or disables drawings inside vertical retracing time.
@@ -1203,27 +1199,9 @@ protected:
 
   void resetPaintState();
 
-  // AGON EXTENDER PATCH (PORT-003-D008): default-no-op lifecycle hooks keep
-  // upstream controller behavior unchanged. The P4 controller uses them to
-  // account for reserved, enqueued, started, and actually completed work
-  // without exposing the private upstream queue or duplicating this
-  // translation unit.
-  virtual void primitiveQueued(Primitive const &) { }
-  virtual void primitiveEnqueued(Primitive const &) { }
-  virtual void primitiveStarted(Primitive const &) { }
-  virtual void primitiveCompleted() { }
-  virtual void primitiveCancelled(Primitive const &) { }
-  virtual bool deferPrimitiveTaskNotification(Primitive const &) { return false; }
-
-  // AGON EXTENDER PATCH (PORT-003-D008): release queued dynamic payloads on a
-  // stopped P4 lifecycle without executing stale drawing or swap operations.
-  // Non-P4 controllers never call this protected seam.
-  void cancelQueuedPrimitives();
-
 private:
 
   void primitiveReplaceDynamicBuffers(Primitive & primitive);
-  void primitiveReleaseDynamicBuffers(Primitive & primitive);
 
 
   PaintState             m_paintState;
@@ -3067,3 +3045,6 @@ protected:
 
 
 } // end of namespace
+
+
+

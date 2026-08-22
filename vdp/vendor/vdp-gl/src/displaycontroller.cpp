@@ -526,15 +526,7 @@ void BitmappedDisplayController::addPrimitive(Primitive & primitive)
 {
   if ((m_backgroundPrimitiveExecutionEnabled && m_doubleBuffered == false) || primitive.cmd == PrimitiveCmd::SwapBuffers) {
     primitiveReplaceDynamicBuffers(primitive);
-    // AGON EXTENDER PATCH (PORT-003-D008): see lifecycle hooks in
-    // displaycontroller.h. Record submission before the worker can observe the
-    // queue item; this remains a no-op for upstream controllers.
-    primitiveQueued(primitive);
     xQueueSendToBack(m_execQueue, &primitive, portMAX_DELAY);
-    // AGON EXTENDER PATCH (PORT-003-D008): distinguish reservation from queue
-    // acceptance. A frame edge may race the blocking send; P4 publication must
-    // not call the work submitted until the queue copy is complete.
-    primitiveEnqueued(primitive);
 
     if (m_doubleBuffered) {
       // wait notufy from PrimitiveCmd::SwapBuffers executor
@@ -594,44 +586,6 @@ void BitmappedDisplayController::primitiveReplaceDynamicBuffers(Primitive & prim
 }
 
 
-// AGON EXTENDER PATCH (PORT-003-D008): counterpart to
-// primitiveReplaceDynamicBuffers(). This exists because the retained common
-// queue owns copied path/matrix payloads which a stopped P4 frame lifecycle
-// must release without executing stale work. Keep cases synchronized with the
-// allocation switch above and the normal execPrimitive cleanup paths.
-void BitmappedDisplayController::primitiveReleaseDynamicBuffers(Primitive & primitive)
-{
-  switch (primitive.cmd) {
-    case PrimitiveCmd::DrawPath:
-    case PrimitiveCmd::FillPath:
-      if (primitive.path.freePoints) {
-        m_primDynMemPool.free((void*)primitive.path.points);
-        primitive.path.freePoints = false;
-      }
-      break;
-    case PrimitiveCmd::DrawTransformedBitmap:
-      if (primitive.bitmapTransformedDrawingInfo.freeMatrix) {
-        m_primDynMemPool.free((void*)primitive.bitmapTransformedDrawingInfo.transformMatrix);
-        m_primDynMemPool.free((void*)primitive.bitmapTransformedDrawingInfo.transformInverse);
-        primitive.bitmapTransformedDrawingInfo.freeMatrix = false;
-      }
-      break;
-    default:
-      break;
-  }
-}
-
-
-void BitmappedDisplayController::cancelQueuedPrimitives()
-{
-  Primitive primitive;
-  while (xQueueReceive(m_execQueue, &primitive, 0)) {
-    primitiveReleaseDynamicBuffers(primitive);
-    primitiveCancelled(primitive);
-  }
-}
-
-
 // call this only inside an ISR
 bool IRAM_ATTR BitmappedDisplayController::getPrimitiveISR(Primitive * primitive)
 {
@@ -641,10 +595,7 @@ bool IRAM_ATTR BitmappedDisplayController::getPrimitiveISR(Primitive * primitive
 
 bool BitmappedDisplayController::getPrimitive(Primitive * primitive, int timeOutMS)
 {
-  bool received = xQueueReceive(m_execQueue, primitive, msToTicks(timeOutMS));
-  if (received)
-    primitiveStarted(*primitive);  // AGON EXTENDER PATCH (PORT-003-D008)
-  return received;
+  return xQueueReceive(m_execQueue, primitive, msToTicks(timeOutMS));
 }
 
 
@@ -689,10 +640,8 @@ void IRAM_ATTR BitmappedDisplayController::processPrimitives()
   suspendBackgroundPrimitiveExecution();
   Rect updateRect = Rect(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
   Primitive prim;
-  while (getPrimitive(&prim, 0)) {
+  while (xQueueReceive(m_execQueue, &prim, 0) == pdTRUE)
     execPrimitive(prim, updateRect, false);
-    primitiveCompleted();  // AGON EXTENDER PATCH (PORT-003-D008)
-  }
   showSprites(updateRect);
   resumeBackgroundPrimitiveExecution();
   Primitive p(PrimitiveCmd::Refresh, updateRect);
@@ -978,15 +927,10 @@ void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim,
     case PrimitiveCmd::SwapBuffers:
       swapBuffers();
       updateRect = updateRect.merge(Rect(0, 0, getViewPortWidth() - 1, getViewPortHeight() - 1));
-      // AGON EXTENDER PATCH (PORT-003-D008): the P4 frame service defers this
-      // wake until publication and explicit completion. Upstream controllers
-      // retain the original immediate notification by default.
-      if (!deferPrimitiveTaskNotification(prim)) {
-        if (insideISR) {
-          vTaskNotifyGiveFromISR(prim.notifyTask, nullptr);
-        } else {
-          xTaskNotifyGive(prim.notifyTask);
-        }
+      if (insideISR) {
+        vTaskNotifyGiveFromISR(prim.notifyTask, nullptr);
+      } else {
+        xTaskNotifyGive(prim.notifyTask);
       }
       break;
     case PrimitiveCmd::DrawPath:

@@ -37,7 +37,7 @@ physical P4 behavior.
 
 ## Deliberately deferred
 
-- Background primitive execution, completion sequences, frame cadence and
+- Background primitive execution, retained completion behavior, frame cadence and
   counter, swap-at-frame-edge, and frame consumers are Phase C.
 - Mutable palettes, Copper, sprites, cursors, and presentation composition are
   Phase D.

@@ -7,7 +7,7 @@ source_profile:
 prohibition: production frame-service output is not an oracle input
 fixtures:
 - id: sink-free-edge
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: tick
@@ -37,31 +37,45 @@ fixtures:
     metrics:
       elapsed_ticks: 1
       serviced_edges: 1
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: 7c80456815e8debf77acd637058b05358c83e23715885c438245a3992fbb63b6
-- id: coalesced-three-ticks
-  oracle_class: independent written-contract state model
+  content_sha256: 5866ba000e8494e866ff55384bc8c3daa8f343bd5a465e3212f9b72d7eec9006
+- id: three-distinct-frame-edges
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: tick
     count: 3
+  - op: service
+  - op: service
   - op: service
   expected_events:
   - event: ticks-recorded
     count: 3
     pending: 3
   - event: frame-edge
-    elapsed: 3
-    frame_counter: 3
+    elapsed: 1
+    frame_counter: 1
   - event: published
     generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 2
+  - event: published
+    generation: 2
+    frame_counter: 2
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 3
+  - event: published
+    generation: 3
     frame_counter: 3
     visible: 0
   expected_final:
     frame_counter: 3
-    generation: 1
+    generation: 3
     pending_ticks: 0
     submitted_sequence: 0
     started_sequence: 0
@@ -72,33 +86,47 @@ fixtures:
     drawing_plane: 0
     metrics:
       elapsed_ticks: 3
-      serviced_edges: 1
-      coalesced_ticks: 2
-      overruns: 1
+      serviced_edges: 3
     consumers: {}
-  content_sha256: 3fc67e0ff6895fee2e418489da86785fb5906d4be2cd434d3c16d593f0efefe3
+  content_sha256: a8f3406c80fbd61116d5e017ca0efda808aa7d9378ecf15f3811e3bcd4d522c9
 - id: frame-counter-rollover
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial:
     frame_counter: 4294967294
   operations:
   - op: tick
     count: 3
   - op: service
+  - op: service
+  - op: service
   expected_events:
   - event: ticks-recorded
     count: 3
     pending: 3
   - event: frame-edge
-    elapsed: 3
-    frame_counter: 1
+    elapsed: 1
+    frame_counter: 4294967295
   - event: published
     generation: 1
+    frame_counter: 4294967295
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 0
+  - event: published
+    generation: 2
+    frame_counter: 0
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: published
+    generation: 3
     frame_counter: 1
     visible: 0
   expected_final:
     frame_counter: 1
-    generation: 1
+    generation: 3
     pending_ticks: 0
     submitted_sequence: 0
     started_sequence: 0
@@ -109,19 +137,18 @@ fixtures:
     drawing_plane: 0
     metrics:
       elapsed_ticks: 3
-      serviced_edges: 1
-      coalesced_ticks: 2
-      overruns: 1
+      serviced_edges: 3
     consumers: {}
-  content_sha256: ef1dac0b9e04119adcc5f4b9036e17441aebd6b793f79d54554b8f2bfa65c3d3
+  content_sha256: fdc37a8f4dfbdf837cf56544701d0db54e16cdf757c7b1b15d45b56059c5880e
 - id: writable-counter-continues
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: write-frame-counter
     value: 305463295
   - op: tick
     count: 2
+  - op: service
   - op: service
   expected_events:
   - event: frame-counter-written
@@ -130,15 +157,22 @@ fixtures:
     count: 2
     pending: 2
   - event: frame-edge
-    elapsed: 2
-    frame_counter: 305463297
+    elapsed: 1
+    frame_counter: 305463296
   - event: published
     generation: 1
+    frame_counter: 305463296
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 305463297
+  - event: published
+    generation: 2
     frame_counter: 305463297
     visible: 0
   expected_final:
     frame_counter: 305463297
-    generation: 1
+    generation: 2
     pending_ticks: 0
     submitted_sequence: 0
     started_sequence: 0
@@ -149,13 +183,11 @@ fixtures:
     drawing_plane: 0
     metrics:
       elapsed_ticks: 2
-      serviced_edges: 1
-      coalesced_ticks: 1
-      overruns: 1
+      serviced_edges: 2
     consumers: {}
-  content_sha256: a69d13c537585e48a2ebc8468ddfe8633917a4c19f5490e085fbb19444710832
-- id: dequeued-is-not-complete
-  oracle_class: independent written-contract state model
+  content_sha256: 552e6b6fbad4b2226d27219826c8530375ee0b042d62335ff33aae1973d2c964
+- id: dequeued-satisfies-upstream-queue-wait
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: submit
@@ -173,7 +205,7 @@ fixtures:
     kind: line
   - event: wait-result
     sequence: 1
-    result: blocked
+    result: satisfied
   - event: completed
     sequence: 1
     kind: line
@@ -194,12 +226,10 @@ fixtures:
     metrics:
       elapsed_ticks: 0
       serviced_edges: 0
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: b624eff3f394e96ad9e85b109744930ce4b00c7e85b338365ffae207c3d88a9d
+  content_sha256: ac5e7263ec28dc26205c1f250f0039c804a3a9a633f832d79042172ddd4982e8
 - id: single-buffer-fifo-budget
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: submit
@@ -233,13 +263,13 @@ fixtures:
   - event: started
     sequence: 1
     kind: line
+  - event: completed
+    sequence: 1
+    kind: line
   - event: published
     generation: 1
     frame_counter: 1
     visible: 0
-  - event: completed
-    sequence: 1
-    kind: line
   - event: wait-result
     sequence: 2
     result: blocked
@@ -254,13 +284,13 @@ fixtures:
     kind: glyph
   - event: payload-released
     sequence: 2
+  - event: completed
+    sequence: 2
+    kind: glyph
   - event: published
     generation: 2
     frame_counter: 2
     visible: 0
-  - event: completed
-    sequence: 2
-    kind: glyph
   - event: wait-result
     sequence: 2
     result: satisfied
@@ -278,12 +308,10 @@ fixtures:
     metrics:
       elapsed_ticks: 2
       serviced_edges: 2
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: fbc241dd5b54d38da54accb06be8a7736d676d44d97b83f73750afe85b711a11
+  content_sha256: 53aff862b63380f8453b3b0a7a3083ba1e3164c54ec48d7a493208981b0b5232
 - id: single-buffer-flush-next-edge
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: submit
@@ -308,13 +336,13 @@ fixtures:
   - event: started
     sequence: 1
     kind: flush
+  - event: completed
+    sequence: 1
+    kind: flush
   - event: published
     generation: 1
     frame_counter: 1
     visible: 0
-  - event: completed
-    sequence: 1
-    kind: flush
   - event: wait-result
     sequence: 1
     result: satisfied
@@ -332,12 +360,10 @@ fixtures:
     metrics:
       elapsed_ticks: 1
       serviced_edges: 1
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: cb41e37bd1a42b17db95bbf1b2e4429d2b95a16c169d8dde634476a074cf14de
+  content_sha256: f783a7abd2e848176bdc134702caf449d61d70b4f97c514ebf0d8bb1370e4b2f
 - id: double-immediate-and-swap
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial:
     double_buffered: true
   operations:
@@ -371,13 +397,13 @@ fixtures:
     sequence: 1
     visible: 1
     drawing: 0
+  - event: completed
+    sequence: 1
+    kind: swap
   - event: published
     generation: 1
     frame_counter: 1
     visible: 1
-  - event: completed
-    sequence: 1
-    kind: swap
   - event: wait-result
     sequence: 1
     result: satisfied
@@ -395,12 +421,10 @@ fixtures:
     metrics:
       elapsed_ticks: 1
       serviced_edges: 1
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: a19db209d2e7388dbe487c268e83be8e795fab868896028bdf8b1dc4330fac17
+  content_sha256: 3644d8e2440a89ffa7db097cd66a55ea7d2b454da750028bb71c45c2916883a6
 - id: slow-consumer-latest-only
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: register
@@ -480,16 +504,14 @@ fixtures:
     metrics:
       elapsed_ticks: 3
       serviced_edges: 3
-      coalesced_ticks: 0
-      overruns: 0
     consumers:
       slow:
         connected: true
         slot: null
         drops: 2
-  content_sha256: 4a7a9b9676cb3ec09fe530d5a7505d3668bfed7b2df2b78eb979ef3605d05daf
+  content_sha256: 99bcbcc33f75e766de01f09be5378d1d1b867e3e636b4b563e520c84d3eb72f1
 - id: consumer-disconnect-reconnect
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: register
@@ -498,6 +520,7 @@ fixtures:
     consumer: mock
   - op: tick
     count: 2
+  - op: service
   - op: service
   - op: reconnect
     consumer: mock
@@ -512,10 +535,17 @@ fixtures:
     count: 2
     pending: 2
   - event: frame-edge
-    elapsed: 2
-    frame_counter: 2
+    elapsed: 1
+    frame_counter: 1
   - event: published
     generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 2
+  - event: published
+    generation: 2
     frame_counter: 2
     visible: 0
   - event: consumer-reconnected
@@ -527,15 +557,15 @@ fixtures:
     elapsed: 1
     frame_counter: 3
   - event: published
-    generation: 2
+    generation: 3
     frame_counter: 3
     visible: 0
   - event: consumer-notified
     consumer: mock
-    generation: 2
+    generation: 3
   expected_final:
     frame_counter: 3
-    generation: 2
+    generation: 3
     pending_ticks: 0
     submitted_sequence: 0
     started_sequence: 0
@@ -546,23 +576,22 @@ fixtures:
     drawing_plane: 0
     metrics:
       elapsed_ticks: 3
-      serviced_edges: 2
-      coalesced_ticks: 1
-      overruns: 1
+      serviced_edges: 3
     consumers:
       mock:
         connected: true
-        slot: 2
+        slot: 3
         drops: 0
-  content_sha256: 9edc5567af282442b2d6ed38288ca2239d568963a2004770c760eb3f3308f91b
+  content_sha256: d3168d8ba96e30cef53d76a5c633ba3461a6c945a4f6bbd525c95b83b04b9f07
 - id: tick-arrives-between-services
-  oracle_class: independent written-contract state model
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: tick
   - op: service
   - op: tick
     count: 2
+  - op: service
   - op: service
   expected_events:
   - event: ticks-recorded
@@ -579,15 +608,22 @@ fixtures:
     count: 2
     pending: 2
   - event: frame-edge
-    elapsed: 2
-    frame_counter: 3
+    elapsed: 1
+    frame_counter: 2
   - event: published
     generation: 2
+    frame_counter: 2
+    visible: 0
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 3
+  - event: published
+    generation: 3
     frame_counter: 3
     visible: 0
   expected_final:
     frame_counter: 3
-    generation: 2
+    generation: 3
     pending_ticks: 0
     submitted_sequence: 0
     started_sequence: 0
@@ -598,13 +634,11 @@ fixtures:
     drawing_plane: 0
     metrics:
       elapsed_ticks: 3
-      serviced_edges: 2
-      coalesced_ticks: 1
-      overruns: 1
+      serviced_edges: 3
     consumers: {}
-  content_sha256: 587b54a94f0600142dbece2995f274f832c85adc6c721717772318021d1a50f7
-- id: stop-cancels-and-releases
-  oracle_class: independent written-contract state model
+  content_sha256: 81c259bba0cd3d91816fd6d862b27743a0d547e3fe10db6975518bd0dd474232
+- id: stop-drains-and-releases
+  oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
   - op: submit
@@ -628,23 +662,32 @@ fixtures:
     sequence: 1
     kind: path
   - event: payload-released
-    sequence: 2
-  - event: payload-released
     sequence: 1
+  - event: completed
+    sequence: 1
+    kind: path
+  - event: started
+    sequence: 2
+    kind: transform
+  - event: payload-released
+    sequence: 2
+  - event: completed
+    sequence: 2
+    kind: transform
   - event: stopped
-    cancelled:
-    - 2
+    drained:
     - 1
+    - 2
   - event: wait-result
     sequence: 2
-    result: cancelled
+    result: satisfied
   expected_final:
     frame_counter: 0
     generation: 0
     pending_ticks: 0
     submitted_sequence: 2
-    started_sequence: 1
-    completed_sequence: 0
+    started_sequence: 2
+    completed_sequence: 2
     queue_depth: 0
     active: null
     visible_plane: 0
@@ -652,8 +695,6 @@ fixtures:
     metrics:
       elapsed_ticks: 0
       serviced_edges: 0
-      coalesced_ticks: 0
-      overruns: 0
     consumers: {}
-  content_sha256: dc3a19226c5f4e81836faaf0f896beaa47be7fc40cdb8cbef358777d473a035f
-fixture_set_sha256: 19ad59951db2e893a89d2d50935466e069766f1f7886b870c676833b9949c8b1
+  content_sha256: 1cc632f69dc0ed5f95f648cbeb97b13a143016ea7f2aefdf2faaf5c323b5c428
+fixture_set_sha256: 8b3361206574d72dba99a5aec3bd1d22b8b8dbc22d2ba4519c69d15076166efe

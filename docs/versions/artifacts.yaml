@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r06
-updated_at: 2026-08-22T21:52:25Z
+registry_revision: r07
+updated_at: 2026-08-22T23:28:40Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -33,21 +33,26 @@ artifacts:
   - artifact_id: port-003-frame-service-canary
     kind: experimental_firmware
     identity_scheme: revision
-    latest_identity: port-003-frame-service-canary-r01
+    latest_identity: port-003-frame-service-canary-r02
     status: candidate
     variants:
       - olimex-p4-devkit
     description: Sink-free PORT-003 logical frame-service qualification firmware.
     notes:
-      - Revision r01 exercises cadence, rollover, coalescing, bounded unconsumed-consumer drops, lifecycle restart, and heap stability without a physical output sink.
+      - Revision r01 was rejected after corrective review found project-authored queue-completion, swap-notification, cancellation, and tick-coalescing behavior outside the faithful-port directive.
+      - Revision r02 restores pinned upstream queue, completion-wait, swap-notification, background-lifecycle, and payload behavior while retaining the necessary P4 logical frame executor.
+      - Revision r02 exercises cadence, rollover, one-edge-per-recorded-tick backlog handling, bounded unconsumed-consumer drops, lifecycle restart, and heap stability without a physical output sink.
 
   - artifact_id: p4-frame-service-qualification
     kind: test_procedure
     identity_scheme: revision
-    latest_identity: p4-frame-service-qualification-r01
+    latest_identity: p4-frame-service-qualification-r02
     status: candidate
     variants: []
     description: Committed build, deployment, and sink-free logical frame-service qualification procedure.
+    notes:
+      - Revision r01 was rejected with its D008 firmware candidate and must not be used for corrected source.
+      - Revision r02 qualifies the D009 faithful-port lifecycle and one-edge-per-recorded-tick behavior.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile

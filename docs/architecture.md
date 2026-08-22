@@ -88,15 +88,18 @@ palette/Copper, frame-counter, and cursor-position binding adaptations.
 
 A periodic P4 logical frame clock and frame-service task advance official VDP
 time independently of every output sink. That service owns queued primitive
-execution, logical swaps, presentation publication, and explicit completion.
-Physical sink callbacks may recycle sink buffers but do not advance the VDP
-frame counter or unblock logical swaps.
+execution through the unchanged common controller, logical frame progression,
+and presentation publication. Each recorded tick receives its own logical edge
+rather than being coalesced. Physical sink callbacks may recycle sink buffers
+but do not advance the VDP frame counter or unblock logical swaps.
 
-The retained common renderer exposes a narrowly patched compatibility seam for
-P4 completion: default-no-op queued/started/completed hooks and a virtual wait.
-The P4 controller uses explicit submission/completion sequences so a dequeued
-primitive cannot be mistaken for completed work. Other vendored controllers
-retain their upstream behavior; the patch remains a direct audited delta.
+The retained common renderer remains byte-identical to pinned upstream for
+queue submission, completion waits, background draining, dynamic payloads, and
+swap notification. The P4 controller replaces only the unavailable physical
+frame executor through existing protected seams. In particular, strict
+compatibility retains upstream queue-depth completion behavior even though a
+separate A/B research task may evaluate stronger semantics for an upstream
+contribution.
 
 One central presentation compositor decodes native pixels, applies Copper
 palettes by scanline, and adds hardware sprites and cursors without changing

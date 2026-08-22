@@ -3,6 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-22
+- Last amended: 2026-08-22
 - Related task: PORT-003
 
 ## Context
@@ -47,16 +48,18 @@ creating separate VDP renderers or clocks.
    callback records ticks and wakes a frame-service task; it performs no
    rendering. Physical sink callbacks report only sink progress and buffer
    availability.
-5. Let the frame-service task own frame-boundary state, queued primitive
-   execution, logical buffer swaps, presentation publication, and explicit
-   completion sequencing. Preserve immediate drawing into the drawing plane
-   for double-buffered modes. Do not use queue emptiness alone as proof that an
-   already dequeued primitive has completed.
-6. At each logical frame edge, advance the writable 32-bit compatibility
-   counter, execute frame-bounded work, apply a queued logical swap, freeze
-   presentation state, publish the newest generation, and notify waiters
-   outside the state lock. Exact overload behavior remains fixture-qualified;
-   rendering may coalesce stale ticks, but sinks never block logical time.
+5. Let the frame-service task replace only the excluded physical VSYNC
+   executor: it owns frame-boundary state and invokes the retained common queue
+   and primitive executor in task context. Preserve upstream queue-depth
+   completion waiting, immediate double-buffered drawing, swap execution, and
+   submitter-notification ordering unless a later compatibility decision
+   explicitly authorizes different behavior.
+6. Process each recorded logical frame edge independently. At each edge,
+   advance the writable 32-bit compatibility counter by one, execute bounded
+   frame work through the retained common controller, then publish the newest
+   presentation generation. Do not coalesce multiple elapsed ticks into one
+   renderer pass in the strict-compatible baseline. Sinks never own or block
+   logical time.
 7. Implement one central presentation compositor for every sink. It decodes
    native logical pixels, selects palette state by Copper scanline, converts
    to a requested output format, and adds hardware sprites and cursors without
@@ -74,13 +77,14 @@ creating separate VDP renderers or clocks.
    handoff, and integrated P4 qualification. Each gate requires its own
    deterministic evidence; compilation or a visible image alone is
    insufficient.
-10. Replace queue-emptiness completion on the P4 through a minimal auditable
-    patch to the vendored common controller: default-no-op primitive
-    queued/started/completed hooks plus a virtual completion wait. Project code
-    supplies the sequence policy. Non-P4 controllers retain their existing
-    behavior, and future upstream imports expose the change as a small direct
-    compatibility diff rather than linker interposition or a copied common
-    translation unit.
+10. Keep the vendored common controller's queue, completion wait, primitive
+    execution, swap notification, background enable/disable, and dynamic
+    payload behavior unchanged in the strict-compatible P4 baseline. The P4
+    controller may call the existing protected queue/execution seams needed to
+    replace the physical executor, but it must not patch inherited lifecycle
+    semantics merely to improve them. The rejected correction candidate is
+    preserved under `UPSTREAM-001` for A/B regression testing and a possible
+    upstream contribution.
 
 ## Rationale
 
@@ -91,10 +95,10 @@ logical storage, presentation composition, and physical consumers prevents a
 browser, LCD, HDMI bridge, or disconnected cable from redefining official VDP
 behavior.
 
-Task-context rendering and explicit completion remove dependencies on the old
-VGA ISR and close a queue-empty race without requiring a new renderer. A
-central compositor prevents Copper and hardware-overlay behavior from being
-reimplemented differently for each output path.
+Task-context rendering removes dependency on the old VGA ISR without silently
+changing retained queue semantics. A central compositor prevents Copper and
+hardware-overlay behavior from being reimplemented differently for each output
+path.
 
 ## Consequences
 
@@ -114,9 +118,22 @@ reimplemented differently for each output path.
    stalls or unbounded queues.
 7. Strict compatibility, optional performance profiles, single-buffer tearing,
    overload handling, and exact callback ordering are claims to qualify with
-   recorded fixtures rather than infer from the design.
+   recorded fixtures rather than infer from the design. Corrected lifecycle
+   behavior may be evaluated separately but is not the strict baseline.
 8. This decision does not choose EDU/VDU routing, MOS integration, input
    ownership, network protocols, or a physical display implementation.
-9. The vdp-gl compatibility delta includes a narrow common-code patch. Its
-   exact upstream spans, rationale, local behavior, and removal condition must
-   remain mechanically auditable for every imported release.
+9. The strict baseline carries no PORT-003 lifecycle patch in vdp-gl common
+   code. The former patch remains recoverable from its recorded commit and
+   tracked upstream-research task rather than residing in the product source
+   selection.
+
+## Corrective amendment
+
+The original 2026-08-22 version selected explicit P4 completion sequences,
+deferred swap notification, tick coalescing, and a two-file vendored vdp-gl
+patch. [CA-2026-08-22-001](CA-2026-08-22-001-phase-c-compatibility-scope.md)
+found that these were good-faith robustness improvements but were not required
+to replace unavailable P4 hardware and had not been proven application-visible
+stock behavior. The Author directed their removal from the strict-compatible
+candidate. `UPSTREAM-001` preserves the improvement hypothesis and exact
+candidate provenance for independent A/B testing.

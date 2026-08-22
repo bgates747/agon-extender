@@ -29,7 +29,6 @@ class FrameWorkExecutor {
   virtual ~FrameWorkExecutor() = default;
   virtual void setFrameServiceRunning(bool running) noexcept = 0;
   virtual std::size_t executeFrameWork(std::size_t maximum_primitives) = 0;
-  virtual void completeFrameWork(std::size_t executed_primitives) noexcept = 0;
   virtual std::uint32_t advanceFrameCounter(
       std::uint32_t elapsed_ticks) noexcept = 0;
   virtual std::uint32_t frameCounter() const noexcept = 0;
@@ -43,8 +42,6 @@ class FrameWorkExecutor {
 struct FrameServiceMetrics {
   std::uint64_t elapsed_ticks{};
   std::uint64_t serviced_edges{};
-  std::uint64_t coalesced_ticks{};
-  std::uint64_t overruns{};
   std::uint64_t published_generations{};
   std::uint64_t executed_primitives{};
   std::uint64_t saturated_tick_notifications{};
@@ -68,7 +65,9 @@ class LogicalFrameService final {
   bool running() const noexcept;
 
   // Timer/host notification boundary. This is allocation-free and lock-free
-  // when the target's 32-bit atomic implementation is lock-free.
+  // when the target's 32-bit atomic implementation is lock-free. Each pending
+  // tick is serviced as its own logical edge to preserve the upstream
+  // one-VSYNC-event/one-frame-edge model.
   bool recordTicks(std::uint32_t elapsed_ticks = 1) noexcept;
   FrameServiceResult servicePending();
 

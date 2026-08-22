@@ -67,7 +67,7 @@ struct Harness final : FrameWorkExecutor {
   bool stopped{};
   std::deque<Item> queue;
   std::vector<Item> active;
-  std::vector<Item> executed;
+  std::vector<std::uint64_t> drained_on_stop;
   std::vector<Event> events;
   std::map<std::string, MockConsumer> consumers;
   LogicalFrameService service;
@@ -132,22 +132,27 @@ struct Harness final : FrameWorkExecutor {
 
   void setFrameServiceRunning(bool running) noexcept override {
     active_running = running;
+    if (!running) {
+      if (!active.empty()) {
+        drained_on_stop.push_back(active.front().sequence);
+        finishOne(true);
+      }
+      while (!queue.empty()) {
+        startOne();
+        drained_on_stop.push_back(active.front().sequence);
+        finishOne(true);
+      }
+    }
   }
 
   std::size_t executeFrameWork(std::size_t maximum) override {
-    executed.clear();
-    while (executed.size() < maximum && !queue.empty()) {
+    std::size_t executed = 0;
+    while (executed < maximum && !queue.empty()) {
       startOne();
-      executed.push_back(finishOne(false));
+      finishOne(true);
+      ++executed;
     }
-    return executed.size();
-  }
-
-  void completeFrameWork(std::size_t count) noexcept override {
-    if (count != executed.size()) std::abort();
-    observePublications();
-    for (auto const &item : executed) complete(item);
-    executed.clear();
+    return executed;
   }
 
   std::uint32_t advanceFrameCounter(std::uint32_t elapsed) noexcept override {
@@ -198,27 +203,14 @@ struct Harness final : FrameWorkExecutor {
   }
 
   void stop() {
-    std::vector<std::uint64_t> cancelled;
-    for (auto const &item : queue) {
-      cancelled.push_back(item.sequence);
-      if (item.dynamic)
-        event("payload-released", {{"sequence", std::to_string(item.sequence)}});
-    }
-    for (auto const &item : active) {
-      cancelled.push_back(item.sequence);
-      if (item.dynamic)
-        event("payload-released", {{"sequence", std::to_string(item.sequence)}});
-    }
-    queue.clear();
-    active.clear();
     service.stop();
     stopped = true;
     std::string list = "[";
-    for (std::size_t index = 0; index < cancelled.size(); ++index) {
+    for (std::size_t index = 0; index < drained_on_stop.size(); ++index) {
       if (index != 0) list += ',';
-      list += std::to_string(cancelled[index]);
+      list += std::to_string(drained_on_stop[index]);
     }
-    event("stopped", {{"cancelled", list + ']'}});
+    event("stopped", {{"drained", list + ']'}});
   }
 };
 
@@ -248,9 +240,8 @@ void emit(Harness const &harness) {
             << ",\"drawing_plane\":" << unsigned(harness.drawing)
             << ",\"metrics\":{"
             << "\"elapsed_ticks\":" << metrics.elapsed_ticks << ','
-            << "\"serviced_edges\":" << metrics.serviced_edges << ','
-            << "\"coalesced_ticks\":" << metrics.coalesced_ticks << ','
-            << "\"overruns\":" << metrics.overruns << "},\"consumers\":{";
+            << "\"serviced_edges\":" << metrics.serviced_edges
+            << "},\"consumers\":{";
   bool first = true;
   for (auto const &[name, consumer] : harness.consumers) {
     if (!first) std::cout << ',';
@@ -292,7 +283,8 @@ int main() {
       std::cin >> requested_budget;
       harness.ensureStarted();
       if (requested_budget != budget) std::abort();
-      harness.service.servicePending();
+      if (harness.service.servicePending() == FrameServiceResult::Serviced)
+        harness.observePublications();
     } else if (command == "START_ONE") {
       harness.startOne();
     } else if (command == "FINISH_ONE") {
@@ -300,8 +292,9 @@ int main() {
     } else if (command == "WAIT") {
       std::uint64_t target;
       std::cin >> target;
-      std::string result = harness.completed >= target ? "satisfied" :
-                           (harness.stopped ? "cancelled" : "blocked");
+      // Upstream primitivesExecutionWait() observes queue depth only. An item
+      // already dequeued into active execution therefore satisfies the wait.
+      std::string result = harness.queue.empty() ? "satisfied" : "blocked";
       harness.event("wait-result", {{"sequence", std::to_string(target)},
                                     {"result", quote(result)}});
     } else if (command == "WRITE_FRAME") {
@@ -336,6 +329,7 @@ int main() {
       harness.event(consumer.connected ? "consumer-reconnected" : "consumer-disconnected",
                     {{"consumer", quote(name)}});
     } else if (command == "STOP") {
+      harness.ensureStarted();
       harness.stop();
     } else if (command == "END") {
       break;

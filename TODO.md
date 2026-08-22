@@ -38,3 +38,10 @@ item is removed.
   - Started: --
   - Finished: --
   - Details: [PORT-007](docs/tasks/PORT-007.md)
+
+## Upstream research
+
+- [ ] **UPSTREAM-001 — A/B test vdp-gl lifecycle corrections for a possible upstream PR**
+  - Started: --
+  - Finished: --
+  - Details: [UPSTREAM-001](docs/tasks/UPSTREAM-001.md)

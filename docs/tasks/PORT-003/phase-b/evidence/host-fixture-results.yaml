@@ -22,13 +22,13 @@ production_sources:
 - path: vdp/video/extender/display/plane_storage.cpp
   sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
 - path: vdp/video/extender/display/p4_display_controller.cpp
-  sha256: 50d8377ad7b97ead65749bd91f1c5b90ff12d52be49bb8e3af9aedb6154f4ae1
+  sha256: 48b675ef0a217cb137451e5fa49057a3299a7472d3cb4c8c0f2e23cb70257bf6
 - path: vdp/video/extender/port/fabutils_port.cpp
   sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
 - path: vdp/vendor/vdp-gl/src/canvas.cpp
   sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
 - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
-  sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
 summary:
   fixture_count: 139
   counts_by_format:

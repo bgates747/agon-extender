@@ -2,7 +2,7 @@
 
 Phase C adds logical frame scheduling to the qualified Phase B renderer. This
 record distinguishes behavior retained from official VDP/vdp-gl, narrow
-patched-vendor integration, project-owned P4 behavior, and behavior deferred
+P4 physical-executor replacement, project-owned output infrastructure, and behavior deferred
 to later PORT-003 phases. Exact source spans and hashes are generated in
 `evidence/frame-lifecycle.yaml`; build inclusion is generated in
 `evidence/build-closure.yaml` and the canonical dependency graph.
@@ -15,43 +15,40 @@ to later PORT-003 phases. Exact source spans and hashes are generated in
 - Double-buffer drawing remains immediate against the drawing plane; queued
   `SwapBuffers` remains the frame-bounded visibility operation.
 - Copied path and transformation payloads retain upstream allocation,
-  execution, and normal cleanup behavior.
+  execution, draining, and cleanup behavior.
 - The compatibility frame counter remains writable and wraps modulo 2^32.
-- Non-P4 vdp-gl controllers retain their prior behavior because every added
-  common-code lifecycle hook has a default no-op or false implementation.
+- Queue-depth completion waiting, immediate swap notification after logical
+  visibility changes, background enable/disable ordering, and the trailing
+  single-buffer `Refresh` remain unchanged upstream behavior.
 
-## Audited patched-vendor seam
+## Pristine vendored common code
 
-`PORT-003-D008` permits local changes only to
-`vdp/vendor/vdp-gl/src/displaycontroller.h` and `displaycontroller.cpp`.
-The patch exposes reservation, successful enqueue, start, completion,
-cancellation, swap-notification deferral, queue cancellation, and a virtual
-completion wait. It corrects the P4 queue-empty race without copying the whole
-common translation unit or interposing toolchain-specific symbols.
+`PORT-003-D009` supersedes the former D008 lifecycle patch. The strict P4
+baseline carries byte-identical vdp-gl `all-the-plots`
+`displaycontroller.h` and `displaycontroller.cpp`. The P4 frame task invokes
+the existing protected task-context dequeue and primitive executor; inherited
+queue state and public Canvas completion behavior remain owned by common code.
 
-The canonical source-baseline validator requires these two paths to differ
-from pinned vdp-gl `all-the-plots`, records both hashes and the decision ID, and
-rejects every undeclared vendored difference. Remove or revise this seam only
-when a later reviewed upstream baseline provides an equivalent auditable
-completion contract.
+The canonical source-baseline validator now requires every managed vdp-gl path
+to match the pinned release. The rejected stronger completion candidate remains
+recoverable from commit `8aecb0e` and is tracked by `UPSTREAM-001` for A/B
+regression testing; it is not product source.
 
 ## Project-owned behavior
 
-- `LogicalFrameService` accounts for all elapsed ticks, coalesces stale work
-  into one newest-state pass, and owns monotonic publication generations.
+- `LogicalFrameService` records elapsed ticks and services each as a distinct
+  logical frame edge, preserving the upstream one-VSYNC-event/one-edge model.
+  It also owns monotonic publication generations.
 - `P4FrameService` binds that logic to one `esp_timer` notifier and one
-  FreeRTOS owner task; timer callbacks never render, swap, publish, or complete
-  work.
-- `P4DisplayController` owns lifecycle-local sequence accounting, explicit
-  completion waits, logical plane identity exchange, teardown cancellation,
-  and the writable P4 compatibility counter.
+  FreeRTOS owner task; timer callbacks never render, swap, or publish work.
+- `P4DisplayController` owns logical plane identity exchange, P4 task
+  suspension, and the writable P4 compatibility counter. The unchanged common
+  controller owns queue waits, swap notification, background draining, and
+  dynamic payload execution/release.
 - Publications are immutable metadata notices delivered through eight bounded
   latest-state mailboxes. Consumers poll independently, so no sink code runs
   on the frame-service task. This is a qualification seam, not the frozen
   production sink API.
-- The P4 controller explicitly contains an inherited vdp-gl disable-ordering
-  quirk that otherwise leaves a trailing queued `Refresh`; comments at the
-  workaround state its provenance and removal condition.
 
 ## Deferred or excluded
 
@@ -63,5 +60,5 @@ VSYNC ISR, and Xtensa timing machinery remains vendored but excluded from the
 P4 build.
 
 Target compilation proves closure only. Cadence, jitter, rollover,
-coalescing, teardown, and memory claims require the committed Phase C physical
+per-edge backlog handling, teardown, and memory claims require the committed Phase C physical
 qualification run.

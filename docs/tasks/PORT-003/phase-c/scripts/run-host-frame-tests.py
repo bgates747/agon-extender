@@ -143,9 +143,9 @@ def main() -> int:
         if controller_run is not None:
             controller_output = controller_run.stdout.splitlines()
         expected_controller = [
-            "dequeued-completion-pass", "double-buffer-swap-pass",
+            "upstream-queue-wait-pass", "double-buffer-swap-pass",
             "single-buffer-edge-stop-pass", "suspension-counter-pass",
-            "cancellation-restart-reconfigure-pass",
+            "drain-restart-reconfigure-pass",
         ]
         if controller_run is not None and (controller_run.returncode != 0 or controller_output != expected_controller):
             failures.append({"id": "retained-controller-integration", "reason": "process-or-output", "returncode": controller_run.returncode, "stdout": controller_run.stdout.strip(), "stderr": controller_run.stderr.strip()})

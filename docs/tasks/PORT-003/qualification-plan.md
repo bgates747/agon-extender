@@ -74,8 +74,8 @@ Do not silently regenerate a golden file from the implementation under test.
 ### Queue, frame, and concurrency
 
 - primitive submission order and dynamic-buffer lifetime;
-- wait-for-completion does not return while an already-dequeued primitive is
-  still executing;
+- wait-for-completion retains upstream queue-depth behavior when a primitive
+  has already been dequeued;
 - single-buffer no-op waits for the next logical frame;
 - double-buffer swap becomes visible and unblocks exactly at a logical frame
   edge;
@@ -83,8 +83,8 @@ Do not silently regenerate a golden file from the implementation under test.
 - sink-free cadence, disconnected consumer, deliberately slow consumer, and
   consumer reconnection;
 - palette/Copper/sprite mutation concurrent with frame publication; and
-- forced service overruns verify counter, dropped-generation, and completion
-  policy without deadlock or unbounded memory growth.
+- forced service backlog verifies one edge per recorded tick, consumer drops,
+  and unchanged completion behavior without deadlock or unbounded growth.
 
 ## Target qualification families
 
@@ -138,12 +138,13 @@ allocation failure leaves a valid controller state.
 
 ### Phase C — Logical frame service
 
-- Add timer notification, frame-service task, explicit completion sequences,
-  single-buffer queue behavior, double-buffer swaps, and frame counter.
+- Add timer notification, frame-service task, unchanged common queue/completion
+  behavior, single-buffer queue behavior, double-buffer swaps, and frame
+  counter.
 - Add null and slow mock consumers.
 
-Gate C: host concurrency tests and target cadence/overrun tests pass without a
-physical sink, deadlock, premature completion, or unbounded queue growth.
+Gate C: host concurrency tests and target cadence/backlog tests pass without a
+physical sink, deadlock, or unbounded queue growth.
 
 ### Phase D — Palette, Copper, and overlays
 

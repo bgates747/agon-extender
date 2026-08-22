@@ -10,15 +10,15 @@ inputs:
     sha256: 7f6a5605387e4ff701134302f6270d8dec3d2d4beb2bf698e48a71fd36be790f
   compile_commands:
     path: vdp/.pio/build/p4-frame-service/compile_commands.json
-    sha256: ecd086caa97e7d635770a45dcc1e2641f30f6c5e06334af2c89f929c3c488f86
+    sha256: a8c444fc1066ff3b19628b0630454603b2a37dc2ed6d4fef913241508bdc3dce
   linker_map:
     path: vdp/.pio/build/p4-frame-service/firmware.map
-    sha256: c15839c4a1746671dbd84be9a087ab5f620b78d746ba6f308857ed2af62163cc
-  normalized_elf_symbols_sha256: 55dcd770bc2de2d1e718f3ce6cf8348040995307059e112fd481c26dd6a9b93c
+    sha256: c54dfab5b0681e0cba09bde89304426aa8a54ffdbb56d55ae82d56016c1f99f9
+  normalized_elf_symbols_sha256: 706d31bc90d03bce1d66b8eaf659aa6f2c817fc37e59de735f2a48baf890936e
 firmware:
   path: vdp/.pio/build/p4-frame-service/firmware.bin
-  sha256: 807a10f821eb5222bef91eca2a826d65c1441187f0639b091bf39f035f477269
-  size_bytes: 597744
+  sha256: 77549ee26bcff9c4c5e4e6a0099bab8785ef4c6a0b2cf0698889c53204451ba8
+  size_bytes: 595920
 application_translation_units:
 - source: vendor/vdp-gl/src/canvas.cpp
   object: selected-vdp-gl/canvas.o
@@ -54,11 +54,11 @@ required_elf_symbols:
 - claim: logical frame state machine
   symbol_fragment: agon::extender::display::LogicalFrameService::servicePending()
   present: true
-- claim: P4 controller completion seam
-  symbol_fragment: agon::extender::display::P4DisplayController::primitiveCompleted()
+- claim: retained upstream completion wait
+  symbol_fragment: fabgl::BitmappedDisplayController::primitivesExecutionWait()
   present: true
-- claim: P4 controller cancellation seam
-  symbol_fragment: agon::extender::display::P4DisplayController::primitiveCancelled(
+- claim: retained task-context dequeue
+  symbol_fragment: fabgl::BitmappedDisplayController::getPrimitive(
   present: true
 - claim: logical plane exchange
   symbol_fragment: agon::extender::display::PlaneStorage::swapPlanes()

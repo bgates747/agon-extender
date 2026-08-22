@@ -36,7 +36,7 @@ class ContractModel:
         self.active: dict[str, Any] | None = None
         self.stopped = False
         self.consumers: dict[str, dict[str, Any]] = {}
-        self.metrics = {"elapsed_ticks": 0, "serviced_edges": 0, "coalesced_ticks": 0, "overruns": 0}
+        self.metrics = {"elapsed_ticks": 0, "serviced_edges": 0}
         self.events: list[dict[str, Any]] = []
 
     def event(self, name: str, **fields: Any) -> None:
@@ -93,26 +93,19 @@ class ContractModel:
         if self.pending_ticks == 0:
             self.event("service-idle")
             return
-        elapsed = self.pending_ticks
-        self.pending_ticks = 0
-        self.frame = (self.frame + elapsed) & 0xFFFFFFFF
-        self.metrics["elapsed_ticks"] += elapsed
+        self.pending_ticks -= 1
+        self.frame = (self.frame + 1) & 0xFFFFFFFF
+        self.metrics["elapsed_ticks"] += 1
         self.metrics["serviced_edges"] += 1
-        if elapsed > 1:
-            self.metrics["coalesced_ticks"] += elapsed - 1
-            self.metrics["overruns"] += 1
-        self.event("frame-edge", elapsed=elapsed, frame_counter=self.frame)
-        completed: list[dict[str, Any]] = []
+        self.event("frame-edge", elapsed=1, frame_counter=self.frame)
         for _ in range(budget):
             if not self.queue:
                 break
             self.start_one()
             item = self.execute_active()
             if item is not None:
-                completed.append(item)
+                self.complete(item)
         self.publish()
-        for item in completed:
-            self.complete(item)
 
     def apply(self, operation: dict[str, Any]) -> None:
         op = operation["op"]
@@ -132,7 +125,7 @@ class ContractModel:
                 self.complete(item)
         elif op == "wait":
             target = int(operation.get("sequence", self.submitted))
-            result = "satisfied" if self.completed >= target else ("cancelled" if self.stopped else "blocked")
+            result = "satisfied" if not self.queue else "blocked"
             self.event("wait-result", sequence=target, result=result)
         elif op == "write-frame-counter":
             self.frame = int(operation["value"]) & 0xFFFFFFFF
@@ -155,17 +148,21 @@ class ContractModel:
             self.consumers[operation["consumer"]]["connected"] = True
             self.event("consumer-reconnected", consumer=operation["consumer"])
         elif op == "stop":
-            cancelled = [item["sequence"] for item in self.queue]
+            drained: list[int] = []
             if self.active is not None:
-                cancelled.append(self.active["sequence"])
-            for item in self.queue + ([self.active] if self.active is not None else []):
-                if item["dynamic"]:
-                    self.event("payload-released", sequence=item["sequence"])
-            self.queue.clear()
-            self.active = None
+                drained.append(self.active["sequence"])
+                item = self.execute_active()
+                if item is not None:
+                    self.complete(item)
+            while self.queue:
+                self.start_one()
+                drained.append(self.active["sequence"])
+                item = self.execute_active()
+                if item is not None:
+                    self.complete(item)
             self.pending_ticks = 0
             self.stopped = True
-            self.event("stopped", cancelled=cancelled)
+            self.event("stopped", drained=drained)
         else:
             raise ValueError(f"unknown operation {op}")
 
@@ -188,17 +185,17 @@ class ContractModel:
 
 SCENARIOS = (
     ("sink-free-edge", {}, [{"op": "tick"}, {"op": "service"}]),
-    ("coalesced-three-ticks", {}, [{"op": "tick", "count": 3}, {"op": "service"}]),
-    ("frame-counter-rollover", {"frame_counter": 0xFFFFFFFE}, [{"op": "tick", "count": 3}, {"op": "service"}]),
-    ("writable-counter-continues", {}, [{"op": "write-frame-counter", "value": 0x1234FFFF}, {"op": "tick", "count": 2}, {"op": "service"}]),
-    ("dequeued-is-not-complete", {}, [{"op": "submit", "kind": "line"}, {"op": "start-one"}, {"op": "wait"}, {"op": "finish-one"}, {"op": "wait"}]),
+    ("three-distinct-frame-edges", {}, [{"op": "tick", "count": 3}, {"op": "service"}, {"op": "service"}, {"op": "service"}]),
+    ("frame-counter-rollover", {"frame_counter": 0xFFFFFFFE}, [{"op": "tick", "count": 3}, {"op": "service"}, {"op": "service"}, {"op": "service"}]),
+    ("writable-counter-continues", {}, [{"op": "write-frame-counter", "value": 0x1234FFFF}, {"op": "tick", "count": 2}, {"op": "service"}, {"op": "service"}]),
+    ("dequeued-satisfies-upstream-queue-wait", {}, [{"op": "submit", "kind": "line"}, {"op": "start-one"}, {"op": "wait"}, {"op": "finish-one"}, {"op": "wait"}]),
     ("single-buffer-fifo-budget", {}, [{"op": "submit", "kind": "line"}, {"op": "submit", "kind": "glyph", "dynamic": True}, {"op": "tick"}, {"op": "service", "budget": 1}, {"op": "wait", "sequence": 2}, {"op": "tick"}, {"op": "service", "budget": 1}, {"op": "wait", "sequence": 2}]),
     ("single-buffer-flush-next-edge", {}, [{"op": "submit", "kind": "flush"}, {"op": "wait"}, {"op": "tick"}, {"op": "service"}, {"op": "wait"}]),
     ("double-immediate-and-swap", {"double_buffered": True}, [{"op": "submit", "kind": "line"}, {"op": "submit", "kind": "swap"}, {"op": "wait"}, {"op": "tick"}, {"op": "service"}, {"op": "wait"}]),
     ("slow-consumer-latest-only", {}, [{"op": "register", "consumer": "slow"}, {"op": "tick"}, {"op": "service"}, {"op": "tick"}, {"op": "service"}, {"op": "tick"}, {"op": "service"}, {"op": "consume", "consumer": "slow"}]),
-    ("consumer-disconnect-reconnect", {}, [{"op": "register", "consumer": "mock"}, {"op": "disconnect", "consumer": "mock"}, {"op": "tick", "count": 2}, {"op": "service"}, {"op": "reconnect", "consumer": "mock"}, {"op": "tick"}, {"op": "service"}]),
-    ("tick-arrives-between-services", {}, [{"op": "tick"}, {"op": "service"}, {"op": "tick", "count": 2}, {"op": "service"}]),
-    ("stop-cancels-and-releases", {}, [{"op": "submit", "kind": "path", "dynamic": True}, {"op": "submit", "kind": "transform", "dynamic": True}, {"op": "start-one"}, {"op": "stop"}, {"op": "wait", "sequence": 2}]),
+    ("consumer-disconnect-reconnect", {}, [{"op": "register", "consumer": "mock"}, {"op": "disconnect", "consumer": "mock"}, {"op": "tick", "count": 2}, {"op": "service"}, {"op": "service"}, {"op": "reconnect", "consumer": "mock"}, {"op": "tick"}, {"op": "service"}]),
+    ("tick-arrives-between-services", {}, [{"op": "tick"}, {"op": "service"}, {"op": "tick", "count": 2}, {"op": "service"}, {"op": "service"}]),
+    ("stop-drains-and-releases", {}, [{"op": "submit", "kind": "path", "dynamic": True}, {"op": "submit", "kind": "transform", "dynamic": True}, {"op": "start-one"}, {"op": "stop"}, {"op": "wait", "sequence": 2}]),
 )
 
 
@@ -212,7 +209,7 @@ def build_fixture(name: str, initial: dict[str, Any], operations: list[dict[str,
         model.apply(operation)
     fixture = {
         "id": name,
-        "oracle_class": "independent written-contract state model",
+        "oracle_class": "independent upstream-derived contract state model",
         "initial": copy.deepcopy(initial),
         "operations": copy.deepcopy(operations),
         "expected_events": model.events,

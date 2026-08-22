@@ -56,16 +56,20 @@ bool LogicalFrameService::recordTicks(std::uint32_t elapsed_ticks) noexcept {
 
 FrameServiceResult LogicalFrameService::servicePending() {
   if (!running()) return FrameServiceResult::Stopped;
-  std::uint32_t elapsed = pending_ticks_.exchange(0, std::memory_order_acq_rel);
-  if (elapsed == 0) return FrameServiceResult::Idle;
-
-  std::uint32_t frame_counter = executor_.advanceFrameCounter(elapsed);
-  metrics_.elapsed_ticks += elapsed;
-  ++metrics_.serviced_edges;
-  if (elapsed > 1) {
-    metrics_.coalesced_ticks += elapsed - 1;
-    ++metrics_.overruns;
+  std::uint32_t pending = pending_ticks_.load(std::memory_order_acquire);
+  for (;;) {
+    if (pending == 0) return FrameServiceResult::Idle;
+    if (pending_ticks_.compare_exchange_weak(
+            pending, pending - 1, std::memory_order_acq_rel,
+            std::memory_order_acquire)) {
+      break;
+    }
+    if (!running()) return FrameServiceResult::Stopped;
   }
+
+  std::uint32_t frame_counter = executor_.advanceFrameCounter(1);
+  ++metrics_.elapsed_ticks;
+  ++metrics_.serviced_edges;
 
   std::size_t executed = executor_.executeFrameWork(work_budget_);
   ++generation_;
@@ -93,9 +97,6 @@ FrameServiceResult LogicalFrameService::servicePending() {
     slot.notice_lock.clear(std::memory_order_release);
   }
 
-  // Completion follows publication so swap visibility/generation are stable
-  // before Canvas or another waiter can continue.
-  executor_.completeFrameWork(executed);
   ++metrics_.published_generations;
   metrics_.executed_primitives += executed;
   return FrameServiceResult::Serviced;

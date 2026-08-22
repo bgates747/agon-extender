@@ -20,8 +20,8 @@ from dependency_model import sha256_bytes, sha256_file, write_canonical  # noqa:
 REQUIRED_SYMBOLS = {
     "P4 timer/task adapter": "agon::extender::display::P4FrameService::start(",
     "logical frame state machine": "agon::extender::display::LogicalFrameService::servicePending()",
-    "P4 controller completion seam": "agon::extender::display::P4DisplayController::primitiveCompleted()",
-    "P4 controller cancellation seam": "agon::extender::display::P4DisplayController::primitiveCancelled(",
+    "retained upstream completion wait": "fabgl::BitmappedDisplayController::primitivesExecutionWait()",
+    "retained task-context dequeue": "fabgl::BitmappedDisplayController::getPrimitive(",
     "logical plane exchange": "agon::extender::display::PlaneStorage::swapPlanes()",
     "retained Canvas submission": "fabgl::Canvas::noOp()",
     "retained common primitive executor": "fabgl::BitmappedDisplayController::execPrimitive(",

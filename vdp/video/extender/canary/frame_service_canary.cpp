@@ -135,6 +135,10 @@ void setup() {
     return;
   }
   canvas->noOp();
+  // Exercise the unchanged upstream queue-depth completion path in the target
+  // closure. The running logical frame task must drain the marker; this is not
+  // evidence that already-dequeued work remains outstanding.
+  canvas->waitCompletion(true);
   initial_free_heap = heap_caps_get_free_size(MALLOC_CAP_8BIT);
   phase_started_ms = millis();
 }
@@ -157,9 +161,8 @@ void loop() {
     reportTiming("normal");
     ESP_LOGI("frame-service",
              "phase=normal elapsed=%" PRIu64 " edges=%" PRIu64
-             " coalesced=%" PRIu64 " overruns=%" PRIu64 " heap=%u",
+             " heap=%u",
              normal_metrics.elapsed_ticks, normal_metrics.serviced_edges,
-             normal_metrics.coalesced_ticks, normal_metrics.overruns,
              static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_8BIT)));
 
     controller.writeFrameCounter(UINT32_MAX - 2);
@@ -168,8 +171,8 @@ void loop() {
       phase = QualificationPhase::Finished;
       return;
     }
-    // The next real timer callback wakes the owner task, which must consume
-    // this injected burst together with elapsed physical ticks in one pass.
+    // The next real timer callback wakes the owner task, which must service
+    // every injected tick as a distinct logical edge.
     injected_ticks_accepted = frame_service.logicalService().recordTicks(5);
     if (!injected_ticks_accepted) {
       ESP_LOGE("frame-service", "injected tick burst was rejected");
@@ -184,15 +187,15 @@ void loop() {
     frame_service.stop();
     pollTimingNotice();
     auto final_metrics = frame_service.logicalService().metrics();
-    std::uint64_t injected_coalesced =
-        final_metrics.coalesced_ticks - normal_metrics.coalesced_ticks;
+    std::uint64_t injected_edges =
+        final_metrics.serviced_edges - normal_metrics.serviced_edges;
     std::uint64_t unconsumed_drops =
         frame_service.logicalService().consumerDrops(unconsumed_slot);
     reportTiming("rollover");
     ESP_LOGI("frame-service",
-             "phase=rollover frame=%" PRIu32 " coalesced_delta=%" PRIu64
+             "phase=rollover frame=%" PRIu32 " edge_delta=%" PRIu64
              " unconsumed_drops=%" PRIu64,
-             controller.frameCounter(), injected_coalesced, unconsumed_drops);
+             controller.frameCounter(), injected_edges, unconsumed_drops);
 
     bool lifecycle_ok = true;
     for (int cycle = 0; cycle < 20; ++cycle) {
@@ -205,7 +208,7 @@ void loop() {
                   normal_metrics.elapsed_ticks <= 650 &&
                   normal_timing_samples >= 500 &&
                   normal_timing_maximum < 100000 &&
-                  injected_ticks_accepted && injected_coalesced >= 4 &&
+                  injected_ticks_accepted && injected_edges >= 5 &&
                   controller.frameCounter() < 1000 &&
                   unconsumed_drops != 0 && lifecycle_ok &&
                   final_free_heap + 4096 >= initial_free_heap;

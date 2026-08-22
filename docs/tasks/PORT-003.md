@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Review Gate 1 approved; Phases A–B complete
+- Status: In progress — Phases A–B complete; corrected Phase C pending Author review and candidate re-identification
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -633,7 +633,7 @@ detailed written plan before implementation begins.
 ### Phase B explicit exclusions
 
 - No periodic timer, frame-service task, background primitive queue execution,
-  frame counter, completion sequence, logical swap-at-frame-edge, or consumer
+  frame counter, background completion behavior, logical swap-at-frame-edge, or consumer
   notification. Those begin in Phase C.
 - No palette mutation/quantization service, Copper signal-list compositor,
   hardware sprite/cursor presentation overlay, or sink output format. Those
@@ -690,10 +690,16 @@ official-facade, sink, transport, or operating-mode work.
 
 Phase C adds sink-independent logical time and bounded asynchronous work to the
 qualified Phase B renderer. It owns timer notification, frame-service task
-execution, explicit submission/completion sequences, logical buffer swaps,
+execution through unchanged common queue semantics, logical buffer swaps,
 the writable compatibility frame counter, provisional latest-generation
 publication, and null/slow mock consumers. It does not compose presentation
 pixels or implement a physical consumer.
+
+On 2026-08-22 the Author ordered the corrective action recorded by
+`CA-2026-08-22-001`. The strict candidate must retain upstream queue-depth
+waiting, swap notification, background draining, dynamic payload, and
+one-tick/one-edge behavior. The rejected stronger completion candidate remains
+in commit `8aecb0e` and is promoted to the independent `UPSTREAM-001` A/B task.
 
 ### Detailed execution checklist
 
@@ -708,24 +714,23 @@ pixels or implement a physical consumer.
    Xtensa synchronization, and physical timing source; do not compile or copy
    the latter merely because they share a file.
 3. [x] Define contracts before implementation for:
-   - submitted, started, and completed primitive/swap sequences, including
-     cancellation and mode teardown;
+   - unchanged upstream queue-depth waits, swap notification, background
+     draining, dynamic payload lifetime, and mode teardown;
    - single-buffer frame waits and double-buffer drawing/visible-plane swaps;
    - writable modulo-2^32 compatibility frame count and independent monotonic
      publication generation;
-   - elapsed-tick accounting, coalesced service work, missed-deadline and
-     overrun counters;
+   - one-logical-edge-per-recorded-tick accounting and backlog handling;
    - a short timer-notification boundary and one frame-service owner;
    - bounded latest-generation consumer notification, drop accounting, and
      lease/pointer lifetime; and
-   - transactional startup/reconfiguration/stop that preserves or cleanly
-     invalidates waiters and the last valid renderer state.
+   - transactional startup/reconfiguration/stop around the retained upstream
+     lifecycle and last valid renderer state.
 4. [x] Build an independent deterministic host model and trace fixtures before
-   trusting production scheduling code. Cover exact event order, queue depth,
-   submitted/started/completed states, dynamic payload lifetime, single-buffer
+   trusting production scheduling code. Cover exact event order, upstream
+   queue-depth wait behavior, dynamic payload lifetime, single-buffer
    next-edge waits, double-buffer swap visibility, frame-count writes and
    rollover, generation publication, null/slow/disconnecting consumers,
-   coalesced ticks, forced overruns, cancellation, teardown, and bounded memory.
+   accumulated ticks as distinct edges, teardown draining, and bounded memory.
    Expected traces must come from the written contract or reviewed upstream
    behavior, never production output.
 5. [x] Extend Phase B storage/controller seams only as required by those
@@ -737,13 +742,13 @@ pixels or implement a physical consumer.
 6. [x] Implement a platform-neutral logical frame state machine plus the
    narrowest ESP32-P4 adapter: `esp_timer` callback records elapsed ticks and
    wakes one FreeRTOS frame-service task; only that task runs frame-boundary
-   work. Timer and sink callbacks must never render, swap planes, publish
-   mutable storage, or signal logical completion directly.
-7. [x] Integrate retained Canvas/common background primitive execution with
-   explicit sequences rather than queue emptiness. Prove an already-dequeued
-   primitive cannot be reported complete early, ordinary single-buffer queued
-   work remains ordered, double-buffer drawing remains immediate, and queued
-   swap completes only after the logical frame edge that changes visibility.
+   work. Timer and sink callbacks must never render, swap planes, or publish
+   mutable storage.
+7. [x] Integrate retained Canvas/common background primitive execution without
+   modifying it. Preserve queue-depth waiting—including its already-dequeued
+   behavior—ordinary single-buffer FIFO work, immediate double-buffer drawing,
+   immediate post-swap submitter notification, upstream stop draining, dynamic
+   payload cleanup, and trailing single-buffer `Refresh` behavior.
 8. [x] Add a provisional sink-neutral publication contract and null, fast,
    slow, disconnecting, and reconnecting mock consumers. Notifications must be
    latest-state and bounded; consumers may record drops but cannot block the
@@ -752,10 +757,10 @@ pixels or implement a physical consumer.
 9. [x] Run deterministic host concurrency/stress qualification under
    sanitizers and explicit allocation/thread accounting. Exercise adversarial
    interleavings, rollover, repeated start/stop/reconfigure, forced tick bursts,
-   slow consumers, waiter cancellation, and long bounded runs; reject deadlock,
-   premature completion, stale-plane access, leaks, or growth with elapsed
+   slow consumers, upstream lifecycle draining, and long bounded runs; reject
+   deadlock, stale-plane access, leaks, or growth with elapsed
    frames.
-10. [x] Add a dedicated Phase C P4 diagnostic/qualification environment and
+10. [ ] Add a dedicated Phase C P4 diagnostic/qualification environment and
     prove the exact compile/link closure without deployment. Update the
     dependency graph, source-selection projection, compatibility delta, task
     record, and development log. Once host and clean target gates pass, create
@@ -765,7 +770,7 @@ pixels or implement a physical consumer.
     P4 identity, connection, toolchain, and safety boundary, then deploy only
     the committed qualification artifact. No backup of the pre-existing P4
     firmware is required. Measure sink-free cadence, jitter, drift, rollover
-    seam, tick coalescing, deliberate overruns, null/slow consumers, teardown,
+    seam, accumulated-tick backlog, null/slow consumers, teardown,
     and memory bounds at the accepted 360 MHz configuration; preserve serial
     capture and structured run evidence. Stop on identity mismatch, unstable
     power/transport, unexplained reset, or a result requiring contract change.
@@ -786,33 +791,35 @@ pixels or implement a physical consumer.
   transport implementation and no classic VGA/CVBS physical engine.
 - No frame consumer API freeze, production sink, or claim that host scheduling
   proves target cadence. Phase F owns final consumer handoff.
-- No vendored source edit beyond the accepted, mechanically audited
-  `PORT-003-D008` two-file lifecycle seam is permitted. No uncommitted or
+- No vendored lifecycle source edit is permitted. No uncommitted or
   unidentified firmware may be used for a qualified physical run.
 
 ### Phase C decision register
 
 | ID | State | Decision requested |
 |---|---|---|
-| `PORT-003-D008` | Accepted | Use a minimal, annotated vdp-gl common-code patch exposing default-no-op lifecycle hooks and a virtual completion wait. |
+| `PORT-003-D008` | Superseded | The proposed vdp-gl lifecycle patch is excluded from the strict-compatible product baseline and preserved under `UPSTREAM-001`. |
+| `PORT-003-D009` | Accepted | Retain upstream common queue, completion-wait, swap-notification, background-lifecycle, and payload behavior unchanged; replace only the unavailable physical executor. |
 
-`PORT-003-D008` is material because the retained common methods are
-non-virtual and their queue state is private. The recommended option is a
-minimal, prominently annotated patch to the two vendored vdp-gl common files:
-add default-no-op primitive queued/started/completed hooks and make the wait
-method virtual, then implement the P4 sequence/wait policy in project code.
-This preserves all default upstream behavior and produces a small direct diff
-for every future tag import. The Author accepted this option on 2026-08-22.
+`PORT-003-D008` was accepted on 2026-08-22 because the retained common methods
+are non-virtual and their queue state is private. Corrective review established
+that the proposed hooks were being used to improve inherited completion and
+notification semantics even though the P4 can execute the common queue code as
+written. The Author therefore superseded D008 with D009 on 2026-08-22.
 
-Alternatives are (a) a linker-symbol interposition tied to C++ name mangling,
-(b) build-time FreeRTOS queue-function interception with hidden global state,
-or (c) a project copy of the entire common controller translation unit. All
-avoid changing pristine bytes in place but are less visible, less portable, or
-far larger to reconcile upstream. Leaving queue-depth polling unchanged is not
-an option because it fails ADR-0015 and Gate C's no-premature-completion
-criterion.
+D009 uses no linker interposition, queue interception, copied common
+translation unit, or vendored lifecycle patch. The P4 task replaces the
+unavailable physical executor through existing protected common seams while
+the inherited queue-depth wait and swap notification remain authoritative.
+The former correction candidate is recoverable from commit `8aecb0e` and has a
+separate A/B regression path in `UPSTREAM-001`; it is not discarded or silently
+represented as product compatibility.
 
-### Phase C execution record
+### Original Phase C candidate record — superseded by corrective action
+
+The following record describes commit `8aecb0e` and is retained as the exact
+input to `UPSTREAM-001`. Its D008 completion, notification, coalescing, and
+cancellation claims are not current product architecture.
 
 1. Scope and plan freeze — complete:
    - the 12-item checklist, package boundary, gate criteria, explicit
@@ -936,22 +943,61 @@ criterion.
       `p4-frame-service-qualification-r01`; registry `r06` and the committed
       qualification procedure define their exact scope.
 
+### Corrective execution record — current candidate
+
+On 2026-08-22 the Author approved `CA-2026-08-22-001` and superseded D008 with
+D009. The corrective implementation:
+
+1. restored `vdp-gl` `displaycontroller.h` and `displaycontroller.cpp`
+   byte-for-byte to pinned `all-the-plots` and returned the complete managed
+   vdp-gl import to `vendored` status;
+2. removed P4 reservation/submission/start/completion sequences, virtual
+   completion waiting, deferred swap notification, queued-payload cancellation,
+   and the extra trailing-`Refresh` drain;
+3. retained the necessary P4 physical-executor replacement through upstream's
+   existing protected task-context dequeue and primitive executor;
+4. changed accumulated ticks to distinct logical edges, each advancing the
+   compatibility counter once, receiving one bounded renderer opportunity, and
+   publishing one generation;
+5. retained the Extender-owned bounded mailbox strictly after common primitive
+   execution, so it changes no queue wait or swap notification; and
+6. registered `UPSTREAM-001` with exact commit provenance and stock/patched A/B
+   regression gates for a possible upstream contribution.
+
+Corrected host evidence passes all 12 upstream-constrained traces, five
+retained-controller cases, three stress cases, and ten Phase C provenance and
+fixture tests under ASan/UBSan where applicable. A P4 diagnostic build succeeds
+with nine selected application units; closure evidence proves all eight
+required symbols—including the unchanged upstream wait and task-context
+dequeue—and zero excluded physical families. The complete dependency pipeline
+regenerates byte-identically with 5,164 pristine managed files, and all 17
+Phase B provenance tests pass against the restored source.
+
+This build is diagnostic only. The old `port-003-frame-service-canary-r01` and
+`p4-frame-service-qualification-r01` identities describe the superseded D008
+candidate and are rejected. The Author approved corrected candidate identities
+`port-003-frame-service-canary-r02` and
+`p4-frame-service-qualification-r02` in registry r07. Item 10 remains open
+until this coherent candidate is committed and pushed as the pre-qualification
+checkpoint. No physical qualification is authorized by this corrective record.
+
 ### Gate C acceptance criteria
 
-1. Host traces prove normative tick, work, swap, publication, and completion
-   ordering without queue-empty races or implementation-derived expectations.
-2. Single-buffer waits and double-buffer swaps complete at the specified
-   logical edge; drawing/visible identities and payload lifetimes remain valid
-   under concurrency, cancellation, reconfiguration, and teardown.
-3. Frame count accounts for elapsed logical ticks modulo 32 bits while service
-   work may coalesce; publication generations remain monotonic and report
-   overruns/drops explicitly.
+1. Host traces prove one-edge-per-tick progression, retained upstream queue
+   waits and swap notification, task-context work, and publication ordering
+   without implementation-derived expectations.
+2. Single-buffer FIFO work and double-buffer swaps execute at a logical edge;
+   drawing/visible identities and upstream payload lifetimes remain valid under
+   concurrency, draining, reconfiguration, and teardown.
+3. Frame count accounts for every logical tick modulo 32 bits without
+   coalescing edges; publication generations remain monotonic and report
+   consumer drops explicitly.
 4. Null, slow, disconnected, and reconnecting mock consumers cannot block
    logical progress, grow memory without bound, or retain mutable storage past
    the defined access lifetime.
 5. A clean pinned P4 build proves the selected closure, and a committed,
-   versioned bench run measures accepted cadence/overrun bounds at 360 MHz with
-   no physical sink, deadlock, premature completion, or unexplained reset.
+   versioned bench run measures accepted cadence/backlog bounds at 360 MHz with
+   no physical sink, deadlock, or unexplained reset.
 6. Provenance, dependency selection, compatibility delta, generators, tests,
    host evidence, and target evidence are deterministic and contain no
    unexplained declared-versus-observed drift.
@@ -960,7 +1006,7 @@ criterion.
 
 Stop for Author review if the phase requires changing ADR-0015 ordering,
 letting a sink or timer callback own logical progress, editing vendored source
-beyond the accepted and audited `PORT-003-D008` seam,
+for lifecycle behavior,
 adding a presentation compositor or official facade, choosing SETUP-005 mode
 policy, exposing an unbounded queue or mutable indefinite frame lease, or
 claiming compatibility without an independent trace oracle. Also stop if
