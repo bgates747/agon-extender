@@ -14,10 +14,15 @@ from pathlib import Path
 Import("env")  # type: ignore[name-defined]  # Provided by PlatformIO/SCons.
 
 
-project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
-selection_path = project_dir / "pio/source-selection.json"
-selection = json.loads(selection_path.read_text(encoding="utf-8"))
 environment = env.subst("$PIOENV")  # type: ignore[name-defined]
+project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
+environment_selection = project_dir / f"pio/{environment}-source-selection.json"
+selection_path = (
+    environment_selection
+    if environment_selection.is_file()
+    else project_dir / "pio/source-selection.json"
+)
+selection = json.loads(selection_path.read_text(encoding="utf-8"))
 if environment != selection["environment"]:
     raise RuntimeError(
         f"{selection_path}: describes {selection['environment']}, not {environment}"

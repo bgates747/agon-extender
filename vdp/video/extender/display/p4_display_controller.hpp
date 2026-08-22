@@ -5,21 +5,43 @@
 // mutable palette/Copper compositor, or physical display-driver inheritance.
 #pragma once
 
+#include <atomic>
 #include <functional>
 #include <memory>
 
 #include "displaycontroller.h"
+#include "extender/display/logical_frame_service.hpp"
 #include "extender/display/plane_storage.hpp"
 
 namespace agon::extender::display {
 
-class P4DisplayController final : public fabgl::GenericBitmappedDisplayController {
+class P4DisplayController final : public fabgl::GenericBitmappedDisplayController,
+                                  public FrameWorkExecutor {
  public:
   explicit P4DisplayController(Allocator allocator) noexcept;
 
   ConfigureResult configure(ModeDescriptor const &mode) noexcept;
   ConstPlaneView drawingPlane() const noexcept;
   ConstPlaneView visiblePlane() const noexcept;
+  std::uint8_t drawingPlaneIdentity() const noexcept;
+  std::uint8_t visiblePlaneIdentity() const noexcept override;
+
+  void setFrameServiceRunning(bool running) noexcept override;
+  std::size_t executeFrameWork(
+      std::size_t maximum_primitives) override;
+  void completeFrameWork(
+      std::size_t executed_primitives) noexcept override;
+  std::uint32_t frameCounter() const noexcept override;
+  void writeFrameCounter(std::uint32_t value) noexcept;
+  std::uint32_t advanceFrameCounter(
+      std::uint32_t elapsed_ticks) noexcept override;
+  std::size_t logicalWidth() const noexcept override;
+  std::size_t logicalHeight() const noexcept override;
+  NativePixelFormat logicalFormat() const noexcept override;
+  bool logicalDoubleBuffered() const noexcept override;
+  std::uint64_t submittedSequence() const noexcept;
+  std::uint64_t startedSequence() const noexcept;
+  std::uint64_t completedSequence() const noexcept;
 
   void begin() override;
   void setResolution(char const *modeline, int view_port_width = -1,
@@ -27,6 +49,7 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
                      bool double_buffered = false) override;
   int colorsCount() override;
   fabgl::NativePixelFormat nativePixelFormat() override;
+  void primitivesExecutionWait() override;
   void suspendBackgroundPrimitiveExecution() override;
   void resumeBackgroundPrimitiveExecution() override;
   void readScreen(fabgl::Rect const &rect, fabgl::RGB888 *destination) override;
@@ -82,6 +105,13 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
                                         fabgl::Rect &drawing_rect,
                                         fabgl::Bitmap const *bitmap,
                                         float const *inverse) override;
+  void primitiveQueued(fabgl::Primitive const &primitive) override;
+  void primitiveEnqueued(fabgl::Primitive const &primitive) override;
+  void primitiveStarted(fabgl::Primitive const &primitive) override;
+  void primitiveCompleted() override;
+  void primitiveCancelled(fabgl::Primitive const &primitive) override;
+  bool deferPrimitiveTaskNotification(
+      fabgl::Primitive const &primitive) override;
 
  private:
   using PixelWriter = std::function<void(int, int, std::uint8_t)>;
@@ -104,6 +134,17 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   std::uint8_t nativeSavePixel(std::uint8_t logical) const noexcept;
 
   PlaneStorage storage_;
+  std::atomic<std::uint64_t> reserved_sequence_{};
+  std::atomic<std::uint64_t> submitted_sequence_{};
+  std::atomic<std::uint64_t> started_sequence_{};
+  std::atomic<std::uint64_t> completed_sequence_{};
+  std::atomic<std::uint64_t> cancelled_primitives_{};
+  std::atomic<std::uint32_t> frame_counter_{};
+  std::atomic<std::uint32_t> suspension_depth_{};
+  std::atomic<bool> frame_service_running_{};
+  std::atomic<bool> executing_frame_work_{};
+  std::atomic<TaskHandle_t> completion_waiter_{};
+  TaskHandle_t pending_swap_waiter_{};
 };
 
 Allocator defaultDisplayAllocator() noexcept;

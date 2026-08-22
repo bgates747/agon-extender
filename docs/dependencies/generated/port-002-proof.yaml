@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: port_002_proof
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: 0478e164e21c6e99ea96ddde54a5b9de3bef1f8368db04315c8d932fdb255f83
+  sha256: b14886ba7880f9297114ba15d8ec2956981d6acfb94315a66720c718928a1956
 cases:
 - id: proof-1-ds3231-whole-file-exclusion
   status: pass

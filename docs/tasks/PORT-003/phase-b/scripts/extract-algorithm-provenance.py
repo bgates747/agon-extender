@@ -1,9 +1,11 @@
 #!/usr/bin/env python3
-"""Generate exact upstream algorithm provenance for PORT-003 Phase B.
+"""Generate exact algorithm provenance for the vendored PORT-003 renderer.
 
 This is task-local analysis machinery, not firmware.  It deliberately records
-the immutable old concrete-controller implementations that inform the P4 port
-without making those physical VGA controllers build dependencies.  Anonymous
+the pinned old concrete-controller implementations that inform the P4 port
+without making those physical VGA controllers build dependencies. The common
+controller may contain only separately audited local seams recorded below.
+Anonymous
 lambdas are covered by their owning callable's exact source span; promoting
 them to independent records would invent an API boundary that upstream does
 not have.
@@ -381,6 +383,8 @@ def main() -> int:
             "source_id": SOURCE_ID,
             "identity": "all-the-plots",
             "commit": EXPECTED_COMMIT,
+            "local_patch_decisions": ["PORT-003-D008"],
+            "source_state": "pinned upstream plus the audited Phase C common-controller seam",
             "root_placeholder": "${VDP_GL_VENDOR_ROOT}",
         },
         "inputs": [

@@ -368,6 +368,12 @@ def main() -> int:
         default=Path("docs/tasks/PORT-003/phase-b/evidence/build-closure.yaml"),
         help="observed PORT-003 Phase B application closure, when present",
     )
+    parser.add_argument(
+        "--phase-c-evidence",
+        type=Path,
+        default=Path("docs/tasks/PORT-003/phase-c/evidence/build-closure.yaml"),
+        help="observed PORT-003 Phase C application closure, when present",
+    )
     parser.add_argument("--prior-graph", type=Path, help="previous official-tag graph; newly appearing files default to unresolved")
     parser.add_argument("--output", type=Path, default=Path("docs/dependencies/generated/code-graph.yaml"))
     args = parser.parse_args()
@@ -379,6 +385,7 @@ def main() -> int:
     compile_commands_path = args.compile_commands.resolve()
     phase_a_path = args.phase_a_evidence.resolve()
     phase_b_path = args.phase_b_evidence.resolve()
+    phase_c_path = args.phase_c_evidence.resolve()
     roots = dict(args.source_root)
     base = load_data(base_path)
     prior = load_data(args.prior_graph.resolve()) if args.prior_graph else None
@@ -451,6 +458,19 @@ def main() -> int:
                 "sha256": sha256_file(phase_b_path),
             }
         )
+    phase_c = load_data(phase_c_path) if phase_c_path.is_file() else None
+    if phase_c:
+        if not phase_c.get("summary", {}).get("closure_proved"):
+            raise ValueError(f"{phase_c_path}: Phase C closure is not proved")
+        inputs.append(
+            {
+                "id": "input:port-003:phase-c-build-closure",
+                "path": phase_c_path.relative_to(repository_root).as_posix(),
+                "role": "observed PORT-003 Phase C application compile/link closure",
+                "schema_version": phase_c["schema_version"],
+                "sha256": sha256_file(phase_c_path),
+            }
+        )
     if args.prior_graph:
         prior_path = args.prior_graph.resolve()
         inputs.append(
@@ -503,6 +523,19 @@ def main() -> int:
         managed_presence = baseline_source.get("managed_import", {}).get(
             "presence_class", "upstream-reference"
         )
+        patch_records = {
+            item["path"]: item["decision_ref"]
+            for item in baseline_source.get("managed_import", {}).get(
+                "patched_paths", []
+            )
+        }
+        unknown_patches = sorted(set(patch_records) - set(paths))
+        if unknown_patches:
+            raise ValueError(f"{owner}: patched paths absent from source: {unknown_patches}")
+        if managed_presence == "vendored-patched" and not patch_records:
+            raise ValueError(f"{owner}: vendored-patched import has no patched paths")
+        if managed_presence != "vendored-patched" and patch_records:
+            raise ValueError(f"{owner}: patched paths require vendored-patched presence")
         for path, repository_path in managed_paths.items():
             if repository_path is None:
                 continue
@@ -512,10 +545,14 @@ def main() -> int:
                 )
             source_hash = sha256_file(roots[owner] / path)
             managed_hash = sha256_file(repository_path)
-            if managed_hash != source_hash:
+            if managed_hash != source_hash and path not in patch_records:
                 raise ValueError(
                     f"{owner}:{path}: managed import differs from immutable source "
                     f"({managed_hash} != {source_hash})"
+                )
+            if managed_hash == source_hash and path in patch_records:
+                raise ValueError(
+                    f"{owner}:{path}: declared local patch is byte-identical to upstream"
                 )
         exhaustive_paths[owner] = paths
         source = base_sources[owner]
@@ -550,6 +587,11 @@ def main() -> int:
                 source_properties["source.repository_path"] = managed_paths[path].relative_to(
                     repository_root
                 ).as_posix()
+                if path in patch_records:
+                    source_properties["source.repository_sha256"] = sha256_file(
+                        managed_paths[path]
+                    )
+                    source_properties["source.patch_decision"] = patch_records[path]
             node = {
                 "id": node_id,
                 "kind": "file",
@@ -738,6 +780,23 @@ def main() -> int:
             }
         )
         adapter_evidence_ids.append(phase_b_evidence_id)
+    phase_c_evidence_id = None
+    if phase_c:
+        phase_c_evidence_id = "evidence:build-profile:port-003-phase-c"
+        evidence.append(
+            {
+                "id": phase_c_evidence_id,
+                "kind": "build-log",
+                "method": "mechanical",
+                "description": (
+                    "Successful PORT-003 Phase C sink-free logical frame-service "
+                    "P4 compile/link closure; not physical qualification."
+                ),
+                "artifact_id": "input:port-003:phase-c-build-closure",
+                "record_pointer": "/application_translation_units",
+            }
+        )
+        adapter_evidence_ids.append(phase_c_evidence_id)
     nodes.append(
         {
             "id": "build-unit:extender:p4-port-adapters",
@@ -747,13 +806,36 @@ def main() -> int:
             "locations": [],
             "evidence_ids": adapter_evidence_ids,
             "properties": {
-                "port.state": "phase-b-synchronous-renderer" if phase_b else ("phase-a-partial" if phase_a else "planned"),
+                "port.state": "phase-c-logical-frame-service" if phase_c else ("phase-b-synchronous-renderer" if phase_b else ("phase-a-partial" if phase_a else "planned")),
                 "port.task": "PORT-003",
             },
         }
     )
-    active_evidence_id = phase_b_evidence_id or phase_a_evidence_id
-    if phase_b and phase_b_evidence_id:
+    active_evidence_id = phase_c_evidence_id or phase_b_evidence_id or phase_a_evidence_id
+    if phase_c and phase_c_evidence_id:
+        project_units = [
+            ("build-unit:extender:p4-frame-service-canary", "PORT-003 Phase C frame-service diagnostic entry", "video/extender/canary/frame_service_canary.cpp", "diagnostic-frame-service"),
+            ("build-unit:extender:p4-logical-frame-service", "Sink-independent logical frame state machine", "video/extender/display/logical_frame_service.cpp", "phase-c-qualified-host"),
+            ("build-unit:extender:p4-frame-task-adapter", "ESP timer and FreeRTOS frame-service adapter", "video/extender/display/p4_frame_service.cpp", "phase-c-target-closure"),
+            ("build-unit:extender:p4-display-controller", "P4 retained-renderer display controller", "video/extender/display/p4_display_controller.cpp", "phase-c-qualified-host"),
+            ("build-unit:extender:p4-native-pixel-codec", "P4 native pixel codecs", "video/extender/display/native_pixel_codec.cpp", "phase-b-qualified-host"),
+            ("build-unit:extender:p4-plane-storage", "P4 transactional display-plane storage", "video/extender/display/plane_storage.cpp", "phase-c-qualified-host"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "P4 vdp-gl utility compatibility closure", "video/extender/port/fabutils_port.cpp", "phase-b-narrow-port"),
+        ]
+        phase_edges = [
+            ("build-unit:extender:p4-frame-service-canary", "depends-on", "build-unit:extender:p4-frame-task-adapter"),
+            ("build-unit:extender:p4-frame-service-canary", "depends-on", "build-unit:extender:p4-display-controller"),
+            ("build-unit:extender:p4-frame-task-adapter", "depends-on", "build-unit:extender:p4-logical-frame-service"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-logical-frame-service"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-native-pixel-codec"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-plane-storage"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-vdp-gl-port-utility-closure"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/canvas.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/displaycontroller.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "type:vdp-gl:fabgl::GenericBitmappedDisplayController"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "depends-on", "file:vdp-gl:src/fabutils.cpp"),
+        ]
+    elif phase_b and phase_b_evidence_id:
         project_units = [
             ("build-unit:extender:p4-display-renderer-canary", "PORT-003 Phase B renderer diagnostic entry", "video/extender/canary/display_renderer_canary.cpp", "diagnostic-renderer"),
             ("build-unit:extender:p4-display-controller", "P4 synchronous display controller", "video/extender/display/p4_display_controller.cpp", "phase-b-qualified-host"),
@@ -852,8 +934,9 @@ def main() -> int:
             "platform": "pioarduino 55.03.311",
             "framework": "Arduino and ESP-IDF hybrid",
             "configuration": (
-                "PORT-003 Phase B synchronous renderer compile/link proved; broader firmware integration remains incomplete"
-                if phase_b else "declared source-selection target; firmware build not yet implemented"
+                "PORT-003 Phase C sink-free logical frame-service compile/link proved; physical output and official facade remain incomplete"
+                if phase_c else ("PORT-003 Phase B synchronous renderer compile/link proved; broader firmware integration remains incomplete"
+                if phase_b else "declared source-selection target; firmware build not yet implemented")
             ),
             "source_ids": sorted(source["id"] for source in sources),
             "evidence_ids": [disposition_evidence],

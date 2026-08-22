@@ -7,6 +7,9 @@ source:
   source_id: source:vdp-gl:all-the-plots
   identity: all-the-plots
   commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  local_patch_decisions:
+  - PORT-003-D008
+  source_state: pinned upstream plus the audited Phase C common-controller seam
   root_placeholder: ${VDP_GL_VENDOR_ROOT}
 inputs:
 - path: docs/tasks/SETUP-003/generated/symbols.yaml
@@ -57,10 +60,10 @@ scope:
     sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
     family: classic-paletted-base
   - path: src/displaycontroller.cpp
-    sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     family: common-renderer
   - path: src/displaycontroller.h
-    sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     family: common-renderer
   - path: src/fabutils.cpp
     sha256: 0906c9b846ea60a710f4301c3972d883ce3986600408d35f9ad718c56c8a0aec
@@ -10276,10 +10279,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1004
-    end_line: 1007
+    end_line: 1004
     symbol: fabgl::BitmappedDisplayController::fillRowFromPos
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 37b6e943bd71328496e4cb3ed88bf27db882d8bb8f14d1261fb4759f146410ca
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: a3c0d62840ff9f8f639f7e9825f9b63507aef08d4b934f7056962dd2b228ddf4
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1012:fabgl::BitmappedDisplayController::absFillRowScan
   family: common-renderer
   symbol: absFillRowScan
@@ -10293,10 +10296,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1012
-    end_line: 1065
+    end_line: 1013
     symbol: fabgl::BitmappedDisplayController::absFillRowScan
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: bf10afff3ee1ce38adda94e4c0039b553fa350c2bb0c7fdb05acd497cd0a0986
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 056a26fb19c88d47eeac29e62a8ad1d8a84562e909579209841f21f557bac83b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:101:fabgl::RGB888::RGB888
   family: common-renderer
   symbol: RGB888
@@ -10312,7 +10315,7 @@ algorithms:
     start_line: 101
     end_line: 104
     symbol: fabgl::RGB888::RGB888
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 51fb06c8ae48e4904e661ee44ffab2d5bcb8ff21bc15416d23442f885a4aba37
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1068:fabgl::BitmappedDisplayController::floodFillFromPos
   family: common-renderer
@@ -10327,10 +10330,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1068
-    end_line: 1071
+    end_line: 1121
     symbol: fabgl::BitmappedDisplayController::floodFillFromPos
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 658b0d00406e8c4efee0d035e1565e0f72f9d2f08730aecdb8de681343f650f2
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: bf10afff3ee1ce38adda94e4c0039b553fa350c2bb0c7fdb05acd497cd0a0986
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1078:fabgl::BitmappedDisplayController::absFloodFill
   family: common-renderer
   symbol: absFloodFill
@@ -10344,10 +10347,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1078
-    end_line: 1186
+    end_line: 1080
     symbol: fabgl::BitmappedDisplayController::absFloodFill
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 81df360dad5828160eb914d69a01ba28b63dd8cc12d74e422072f593e73fe127
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1ab0bd118cebf7f753b795d9bbcb39a04e2fde4c79200ae16d0a4cc4c8599f4c
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:112:fabgl::RGB888toPackedRGB222
   family: common-renderer
   symbol: RGB888toPackedRGB222
@@ -10363,7 +10366,7 @@ algorithms:
     start_line: 112
     end_line: 145
     symbol: fabgl::RGB888toPackedRGB222
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 57a794ce5a1bfb6cc538d5aad4470c52fbd400aa40c5299bcd8b58315213a3a6
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1189:fabgl::BitmappedDisplayController::updateAbsoluteClippingRect
   family: common-renderer
@@ -10378,10 +10381,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1189
-    end_line: 1196
+    end_line: 1189
     symbol: fabgl::BitmappedDisplayController::updateAbsoluteClippingRect
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: c8da3de38f77fc8ed8a8f667e5b6b8217cf24a9d83ab1e9d03410cce2b25f62a
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1f3e15d5b5024bbaa26ee367fa60060e7e1577b55356f1d7ac279f9a1b28de08
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1199:fabgl::BitmappedDisplayController::drawRect
   family: common-renderer
   symbol: drawRect
@@ -10395,10 +10398,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1199
-    end_line: 1215
+    end_line: 1199
     symbol: fabgl::BitmappedDisplayController::drawRect
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 3b8818587394498be3c87ab5e3db7f08b2a1f3eac05345a77158a2758896e7b3
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 46e458514dffcb84632d44dea0ead9af03a63a9b5f6aad8eb002059f7e2c1458
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1218:fabgl::BitmappedDisplayController::fillRect
   family: common-renderer
   symbol: fillRect
@@ -10412,10 +10415,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1218
-    end_line: 1243
+    end_line: 1218
     symbol: fabgl::BitmappedDisplayController::fillRect
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 6218ef598fae5b87a8015a25ecd3c4b6de40aca8dbdf65d1228d7003caaaf7ef
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: f96f2831d41186384972ed5c93736973d9c07c83dc0294559b44f24e93dce052
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1247:fabgl::BitmappedDisplayController::fillEllipse
   family: common-renderer
   symbol: fillEllipse
@@ -10429,10 +10432,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1247
-    end_line: 1307
+    end_line: 1247
     symbol: fabgl::BitmappedDisplayController::fillEllipse
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: a7c3ba8a8780875308e1db8bbd8966938f48b27f8904e2455f83dc9564daaaf8
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 3ab0bd06a3659f078c4573c1eaac158042677ebc205c734bbcba8f310f2980de
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1310:fabgl::BitmappedDisplayController::drawEllipseSheared
   family: common-renderer
   symbol: drawEllipseSheared
@@ -10446,10 +10449,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1310
-    end_line: 1313
+    end_line: 1310
     symbol: fabgl::BitmappedDisplayController::drawEllipseSheared
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 44f5c4678376cf6670e107f555b0865b7f69b3732a270ece5035b73b929b083f
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 512ea103582582fcaf1b2be7fd1868bd401dd6e20a11f966b30ad3de0bcac25b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1321:fabgl::BitmappedDisplayController::fillEllipseSheared
   family: common-renderer
   symbol: fillEllipseSheared
@@ -10463,10 +10466,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1321
-    end_line: 1421
+    end_line: 1321
     symbol: fabgl::BitmappedDisplayController::fillEllipseSheared
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 4fcfcc047ba0c3f758158ececef557612461f8cc27500da5b5f8f800b1964941
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 0cddc1de4ba1af2ecf776e1854f38e59d0ca171491c4b5aa537f09b2ac8e242f
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1424:fabgl::BitmappedDisplayController::renderGlyphsBuffer
   family: common-renderer
   symbol: renderGlyphsBuffer
@@ -10480,10 +10483,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1424
-    end_line: 1446
+    end_line: 1424
     symbol: fabgl::BitmappedDisplayController::renderGlyphsBuffer
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 23f7469b6216de7df7516e1b58de94f0c35ca83f142bcd8d8e6bfece8cb24032
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 4a75a0a9a9e6a3a6b0ee1f37078c4461bfdc6674f38266efef4a02400d559fdb
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1449:fabgl::BitmappedDisplayController::drawPath
   family: common-renderer
   symbol: drawPath
@@ -10497,10 +10500,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1449
-    end_line: 1495
+    end_line: 1449
     symbol: fabgl::BitmappedDisplayController::drawPath
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: f744ff76a2367b07f4fbe45c7f9f3a9503fb4b91fbfcc1c2b38a264ba808eb92
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: d355d9c2dc194c9fc8025a41eb9b9f99fea49b45905d11b9996b426514567313
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1498:fabgl::BitmappedDisplayController::fillPath
   family: common-renderer
   symbol: fillPath
@@ -10514,10 +10517,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1498
-    end_line: 1569
+    end_line: 1498
     symbol: fabgl::BitmappedDisplayController::fillPath
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 640ccf8ba6cfd367dcba7f488ac524f917d4960ec534eb89186a9c0b9480e796
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 619c8295780272600b38a556201a258334d7e374c85eafc65101c9c16aab1ddd
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:154:fabgl::Sprite::Sprite
   family: common-renderer
   symbol: Sprite
@@ -10533,7 +10536,7 @@ algorithms:
     start_line: 154
     end_line: 172
     symbol: fabgl::Sprite::Sprite
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 28a453e004301aec3b666e5209236f45bfc793e6f84632acf90b8aa27db783cc
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1572:fabgl::BitmappedDisplayController::absDrawThickLine
   family: common-renderer
@@ -10548,10 +10551,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1572
-    end_line: 1613
+    end_line: 1573
     symbol: fabgl::BitmappedDisplayController::absDrawThickLine
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: fa63d2316de2147f19af35525e8bbfe94eb94cfd158f3c032a7713c3fa96f9c9
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 99041d8ffec7836be4021f41a39a38c995c10cb87ae1fce4ecaebe0b50f39acc
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1616:fabgl::BitmappedDisplayController::drawBitmap
   family: common-renderer
   symbol: drawBitmap
@@ -10565,10 +10568,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1616
-    end_line: 1623
+    end_line: 1617
     symbol: fabgl::BitmappedDisplayController::drawBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 5e2424aae4a14e0f57bb87340ab7751e7acc257744b2a113989572f8c1be4d0a
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: f52a03478929a4bf70ecb07fb2d9a0f329cef916c69842f1f87f7a53b3b08ea9
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1626:fabgl::BitmappedDisplayController::absDrawBitmap
   family: common-renderer
   symbol: absDrawBitmap
@@ -10582,10 +10585,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1626
-    end_line: 1692
+    end_line: 1669
     symbol: fabgl::BitmappedDisplayController::absDrawBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 26e5e9bb4bdf3757386cbb69a4345744f0eac0ca2b14755ca49302a3fdede2fc
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 9c3a824cf23d7b84109361e695c4bd1c9dcf628bc18f0995cb0b849f5c04495b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1695:fabgl::BitmappedDisplayController::copyToBitmap
   family: common-renderer
   symbol: copyToBitmap
@@ -10599,10 +10602,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1695
-    end_line: 1700
+    end_line: 1695
     symbol: fabgl::BitmappedDisplayController::copyToBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: d2d6d04f61260723f4ce3fc1c020f935ef539df9e7ec600554f6cdf3d99a7028
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1d7ea7af31ddc62747c5306ce026988636325d5e4097307fe86f8216f132335b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1703:fabgl::BitmappedDisplayController::absCopyToBitmap
   family: common-renderer
   symbol: absCopyToBitmap
@@ -10616,10 +10619,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1703
-    end_line: 1746
+    end_line: 1703
     symbol: fabgl::BitmappedDisplayController::absCopyToBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 1385dd000e6bd0b426647f96d1fe17abac0d779f2d299aed77b442026241f183
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 9c5e3bfa23d47d81195c1210b2d1a40f4a22e4066579a73ff0c3f2faa6c211f6
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:1749:fabgl::BitmappedDisplayController::drawBitmapWithTransform
   family: common-renderer
   symbol: drawBitmapWithTransform
@@ -10633,10 +10636,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 1749
-    end_line: 1848
+    end_line: 1756
     symbol: fabgl::BitmappedDisplayController::drawBitmapWithTransform
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: b5e2cefb849326d341fb6ce2236da5d6b6fb01005b6e79acf19844ddff26f726
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 9af9141387262d1d4a99df6efdb3e83308bd01e95f19a84962cddcf26da4fdf6
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:175:fabgl::Sprite::~Sprite
   family: common-renderer
   symbol: ~Sprite
@@ -10652,7 +10655,7 @@ algorithms:
     start_line: 175
     end_line: 180
     symbol: fabgl::Sprite::~Sprite
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: c61cfb64b91003acaac8b16cbc902e227f8926afca6fc0a70eb4a8d751da9a58
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:183:fabgl::Sprite::clearBitmaps
   family: common-renderer
@@ -10669,7 +10672,7 @@ algorithms:
     start_line: 183
     end_line: 189
     symbol: fabgl::Sprite::clearBitmaps
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 00191d178bb5884d2bedc42a24f82f53f9d4d9b7ce39ea8edd72b0585bf854ff
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:192:fabgl::Sprite::addBitmap
   family: common-renderer
@@ -10686,7 +10689,7 @@ algorithms:
     start_line: 192
     end_line: 199
     symbol: fabgl::Sprite::addBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 151719b481a1ecdde8bbfcb79854d5e700ccbcb10183efbafaa61f037b206ebc
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:202:fabgl::Sprite::addBitmap
   family: common-renderer
@@ -10703,7 +10706,7 @@ algorithms:
     start_line: 202
     end_line: 210
     symbol: fabgl::Sprite::addBitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 304c9a55313157f8bead9d6dff1896234ab177975ba5a4f26ca93466ab1b2e43
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:213:fabgl::Sprite::moveBy
   family: common-renderer
@@ -10720,7 +10723,7 @@ algorithms:
     start_line: 213
     end_line: 218
     symbol: fabgl::Sprite::moveBy
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 6d642ab279fd50fd62ff5e9626f3e6334deaa3797b97a18a1eb228949fe49c7f
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:221:fabgl::Sprite::moveBy
   family: common-renderer
@@ -10737,7 +10740,7 @@ algorithms:
     start_line: 221
     end_line: 234
     symbol: fabgl::Sprite::moveBy
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 8c1bcce3d590c6e4831614d35f3f4c5977b4ac541f486dd09388fa8e0240cd53
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:237:fabgl::Sprite::moveTo
   family: common-renderer
@@ -10754,7 +10757,7 @@ algorithms:
     start_line: 237
     end_line: 242
     symbol: fabgl::Sprite::moveTo
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 0620e9be2850d53aa41b42d70beb09cb5c91ac1cd49ec45160ae6a31648d7007
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:252:fabgl::Bitmap::Bitmap
   family: common-renderer
@@ -10771,7 +10774,7 @@ algorithms:
     start_line: 252
     end_line: 264
     symbol: fabgl::Bitmap::Bitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: fd4ae64f888f90de90d453fe0aa6775608e4ad3c4a8a6ea0923330d6004e4447
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:267:fabgl::Bitmap::Bitmap
   family: common-renderer
@@ -10788,7 +10791,7 @@ algorithms:
     start_line: 267
     end_line: 270
     symbol: fabgl::Bitmap::Bitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 4e0dc12e224fe4615547d07b87fbf3f7ae6491ce4bc05f75789e1763de7d0941
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:273:fabgl::Bitmap::allocate
   family: common-renderer
@@ -10805,7 +10808,7 @@ algorithms:
     start_line: 273
     end_line: 294
     symbol: fabgl::Bitmap::allocate
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 031ecae78fc1d7be94e08a26cef51140d87b9ff4ecd0b705375929557136fcc7
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:298:fabgl::Bitmap::copyFrom
   family: common-renderer
@@ -10822,7 +10825,7 @@ algorithms:
     start_line: 298
     end_line: 314
     symbol: fabgl::Bitmap::copyFrom
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: da228e5eb87cad206969029447d7b8be7ddec9c9a81b0d2879f1f3dc58951b9e
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:317:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -10839,7 +10842,7 @@ algorithms:
     start_line: 317
     end_line: 325
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 2b29fa8fc193fcea0581756f15358ac9dddb2f01b9b2836912db08d86192a180
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:328:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -10856,7 +10859,7 @@ algorithms:
     start_line: 328
     end_line: 331
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 5ac8bff5b9a51f9e5d4f9756d811ed0bfb5aa9da36e99ed42b9d8e134b7d8339
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:334:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -10873,7 +10876,7 @@ algorithms:
     start_line: 334
     end_line: 337
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: d9d18bef3fddd92bdfd8bd050ac9fc4a0b6f7997effbb16aaf8bfa4381020f84
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:340:fabgl::Bitmap::getAlpha
   family: common-renderer
@@ -10890,7 +10893,7 @@ algorithms:
     start_line: 340
     end_line: 364
     symbol: fabgl::Bitmap::getAlpha
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 8780e0e42ce39f31de68ea09ddf43ac2e576f66b4b522b1a5a6625ec55bbcd8b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:367:fabgl::Bitmap::getPixel2222
   family: common-renderer
@@ -10907,7 +10910,7 @@ algorithms:
     start_line: 367
     end_line: 408
     symbol: fabgl::Bitmap::getPixel2222
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: b0b5bfc67d384e30fa0cba09713a9240507d2877547efebe6b5fd2de5b6389f3
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:411:fabgl::Bitmap::getPixel8888
   family: common-renderer
@@ -10924,7 +10927,7 @@ algorithms:
     start_line: 411
     end_line: 452
     symbol: fabgl::Bitmap::getPixel8888
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 0c5e95f67fa1763f30504e79e71c12575b126f5f5eb699de8dc61f876539e29d
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:455:fabgl::Bitmap::~Bitmap
   family: common-renderer
@@ -10941,7 +10944,7 @@ algorithms:
     start_line: 455
     end_line: 459
     symbol: fabgl::Bitmap::~Bitmap
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 1905ea034641c6589af7837ecefda3348916ed39ab42c9c7a416ebdf1152ee5b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:471:fabgl::BitmappedDisplayController::BitmappedDisplayController
   family: common-renderer
@@ -10958,7 +10961,7 @@ algorithms:
     start_line: 471
     end_line: 486
     symbol: fabgl::BitmappedDisplayController::BitmappedDisplayController
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: a0d7240a091fb6cff9f29ea1dfaf7d83f19934eb0dfc78120100a45196fa227f
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:489:fabgl::BitmappedDisplayController::~BitmappedDisplayController
   family: common-renderer
@@ -10975,7 +10978,7 @@ algorithms:
     start_line: 489
     end_line: 492
     symbol: fabgl::BitmappedDisplayController::~BitmappedDisplayController
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 1964b8d88a771e238514f49a7d761a53e5c660e98e64663b424615d0863ed5d5
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:495:fabgl::BitmappedDisplayController::setDoubleBuffered
   family: common-renderer
@@ -10992,7 +10995,7 @@ algorithms:
     start_line: 495
     end_line: 502
     symbol: fabgl::BitmappedDisplayController::setDoubleBuffered
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 76a2318fa0a7c80cffb3bc95b159f767520d402cf7124e1890952bf24ad1d283
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:505:fabgl::BitmappedDisplayController::resetPaintState
   family: common-renderer
@@ -11009,7 +11012,7 @@ algorithms:
     start_line: 505
     end_line: 522
     symbol: fabgl::BitmappedDisplayController::resetPaintState
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: fde3e7aa4a83f2d5a958c79c14a23800acfa490b978a018769f9076f038bef1a
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:525:fabgl::BitmappedDisplayController::addPrimitive
   family: common-renderer
@@ -11024,10 +11027,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 525
-    end_line: 541
+    end_line: 549
     symbol: fabgl::BitmappedDisplayController::addPrimitive
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 1768f2d5cc3a224bfa7fedfdd7f596e09d80160584ffc966d509e5a29bfb4285
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1d43454b932a5ae1116bb310b75157cd2604b6afe8db89f9756020f1aa3c75bd
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:547:fabgl::BitmappedDisplayController::primitiveReplaceDynamicBuffers
   family: common-renderer
   symbol: primitiveReplaceDynamicBuffers
@@ -11041,10 +11044,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 547
-    end_line: 586
+    end_line: 547
     symbol: fabgl::BitmappedDisplayController::primitiveReplaceDynamicBuffers
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: e9789e1326c8d6f78d276d971c164f298f0fbd55cecbbede8a74788d30e39be6
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 86ae5c948f4744a280ea56dbedd3f160ca30d6451da628246e09b7b0ee083093
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:590:fabgl::BitmappedDisplayController::getPrimitiveISR
   family: common-renderer
   symbol: getPrimitiveISR
@@ -11058,10 +11061,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 590
-    end_line: 593
+    end_line: 592
     symbol: fabgl::BitmappedDisplayController::getPrimitiveISR
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 2129d593f5c1d0a5121a5a1c82d9f8114702d17450207d69bc0a9a477c03403e
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: c264ff8f99ff8d0af9d77e9df9d5efecb9a53ac8282f6df8ef2ca25a70b3c6da
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:596:fabgl::BitmappedDisplayController::getPrimitive
   family: common-renderer
   symbol: getPrimitive
@@ -11075,10 +11078,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 596
-    end_line: 599
+    end_line: 622
     symbol: fabgl::BitmappedDisplayController::getPrimitive
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: ea8ac5e8409fe6a0726970a129aa654a69800ac13925121e9bc2e96072f510d2
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 3047c9944a1306de070f50ba57104e085f991fff84283cf032c32ccd33cf81fc
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:603:fabgl::BitmappedDisplayController::waitForPrimitives
   family: common-renderer
   symbol: waitForPrimitives
@@ -11092,10 +11095,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 603
-    end_line: 607
+    end_line: 622
     symbol: fabgl::BitmappedDisplayController::waitForPrimitives
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 61f171b72b5c3e60dc2a233086f5c45ef3e898fe136bdf36c339d7ecfc8b191b
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: cd04c959b434f8d52e1b489d73862f9aaaeb23a7f65e208c0bc8551cc0097ef9
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:610:fabgl::BitmappedDisplayController::primitivesExecutionWait
   family: common-renderer
   symbol: primitivesExecutionWait
@@ -11109,10 +11112,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 610
-    end_line: 616
+    end_line: 611
     symbol: fabgl::BitmappedDisplayController::primitivesExecutionWait
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 569b6db980509f132cd069e8600b99e1b959b25e39a02062ad19aa374410631f
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: c6150985bf7286589a93f651e8b3cf31925681fdca41f7208b2422b6cd6b07db
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:622:fabgl::BitmappedDisplayController::enableBackgroundPrimitiveExecution
   family: common-renderer
   symbol: enableBackgroundPrimitiveExecution
@@ -11126,10 +11129,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 622
-    end_line: 633
+    end_line: 632
     symbol: fabgl::BitmappedDisplayController::enableBackgroundPrimitiveExecution
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: d8e2e06a43da01d7823ebc24e08b2c5271fcdf974826274e9b1e943865049474
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1a3d618642006fc78326f1e7d0f98ac5b507d587de81472fac6bc60ca0b8615e
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:638:fabgl::BitmappedDisplayController::processPrimitives
   family: common-renderer
   symbol: processPrimitives
@@ -11143,10 +11146,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 638
-    end_line: 649
+    end_line: 638
     symbol: fabgl::BitmappedDisplayController::processPrimitives
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 163225ff54598607e424a19d15454600e8c9b081c5134158d1e8e92c9eac6bd5
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 3a6e4ffbdfc9f2b0c80ec6827152e60dabc4e93236b104ab64de2f22c1aed15f
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:652:fabgl::BitmappedDisplayController::setSprites
   family: common-renderer
   symbol: setSprites
@@ -11160,10 +11163,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 652
-    end_line: 684
+    end_line: 656
     symbol: fabgl::BitmappedDisplayController::setSprites
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 82ba2999a457190e013dbbf2de0468cc1116498696bd1d3fbeb852c52550b82e
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 61f171b72b5c3e60dc2a233086f5c45ef3e898fe136bdf36c339d7ecfc8b191b
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:687:fabgl::BitmappedDisplayController::getSprite
   family: common-renderer
   symbol: getSprite
@@ -11177,10 +11180,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 687
-    end_line: 690
+    end_line: 700
     symbol: fabgl::BitmappedDisplayController::getSprite
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: c564bc5fa109410f9f84419af5ee042b095d353d22fa7047354cfd7ca43384fd
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 4866ab416a8ac1772fd2e92c462968d1cabd6ad5f8ebf73c62229a99ab20a4f6
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:693:fabgl::BitmappedDisplayController::refreshSprites
   family: common-renderer
   symbol: refreshSprites
@@ -11194,10 +11197,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 693
-    end_line: 697
+    end_line: 693
     symbol: fabgl::BitmappedDisplayController::refreshSprites
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 0de97302f7cd2e391d7a9b26c0ef44b263c70a16cd3121e01ef2f5f3d812b780
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 48578fe4ac3a4ee0f4aabc2b51d585d7287cb8d5eb0bd9265a825f5c2b9bb646
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:700:fabgl::BitmappedDisplayController::hideSprites
   family: common-renderer
   symbol: hideSprites
@@ -11211,10 +11214,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 700
-    end_line: 723
+    end_line: 735
     symbol: fabgl::BitmappedDisplayController::hideSprites
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 138d12d54499c4b321367624178652334c2001ccbde862172b5e739ca8a233f7
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 85aeb945644999d9b059466a71eea2cda373e8223671e5cb857a20b1cd8c8309
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:726:fabgl::BitmappedDisplayController::showSprites
   family: common-renderer
   symbol: showSprites
@@ -11228,10 +11231,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 726
-    end_line: 758
+    end_line: 726
     symbol: fabgl::BitmappedDisplayController::showSprites
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: c0eff4cd46ed0da21ed6aed527b5808c19d48c9971bb182f85a13c6b58036f62
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 74e90f8d96c496d4b8bb9558338995620d7149175597499ff5e77b9470402609
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:762:fabgl::BitmappedDisplayController::setMouseCursor
   family: common-renderer
   symbol: setMouseCursor
@@ -11245,10 +11248,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 762
-    end_line: 777
+    end_line: 762
     symbol: fabgl::BitmappedDisplayController::setMouseCursor
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: c5fbd577227c40281b441cdba9ecf096d470c23573ff80a522bddad2397b184c
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 4cba8e23810757b34aeee4ec5a916e5908f6be7bd70166198f74efb2581f60be
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:780:fabgl::BitmappedDisplayController::setMouseCursor
   family: common-renderer
   symbol: setMouseCursor
@@ -11262,10 +11265,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 780
-    end_line: 783
+    end_line: 780
     symbol: fabgl::BitmappedDisplayController::setMouseCursor
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: a2bbf057d99b315c781ebbd30c40b5921c66742f55e6c3a68b6efc5d3929a7b8
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 392ae435e20c2c913f61bc93469d4f25b6f901cda71c1572ba69fc7a407ad87d
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:786:fabgl::BitmappedDisplayController::setMouseCursorPos
   family: common-renderer
   symbol: setMouseCursorPos
@@ -11279,10 +11282,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 786
-    end_line: 789
+    end_line: 786
     symbol: fabgl::BitmappedDisplayController::setMouseCursorPos
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 7c906ac294aacba5fd2af9f20b674183af7a16b4663f2eccdbf93b86b6c779df
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 960bbc230963d13cd62c87ebeb262699b99dfe792d068d32680fe3ff622a12e0
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:792:fabgl::BitmappedDisplayController::execPrimitive
   family: common-renderer
   symbol: execPrimitive
@@ -11296,10 +11299,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 792
-    end_line: 969
+    end_line: 792
     symbol: fabgl::BitmappedDisplayController::execPrimitive
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: c02aff6556cb3ef1532841caf593ddb9cf88a856565a41228f06e74df9c57667
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 802b4bd233557541b247bd5c7f6458e8eea2bf7c5d0b89114e77a858212ad117
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:81:fabgl::RGB222::RGB222
   family: common-renderer
   symbol: RGB222
@@ -11315,7 +11318,7 @@ algorithms:
     start_line: 81
     end_line: 92
     symbol: fabgl::RGB222::RGB222
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
     span_sha256: 0e7a04155858893b7312fb32e68dd60d83795b76a5e46a44f3aff333b7c24ed8
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:972:fabgl::BitmappedDisplayController::getActualBrushColor
   family: common-renderer
@@ -11330,10 +11333,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 972
-    end_line: 975
+    end_line: 973
     symbol: fabgl::BitmappedDisplayController::getActualBrushColor
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: b941eba6d689b8db4e5d93c51c93e2aeb73ea50e36bf7b2dddf79f100447e1c6
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 92933c3e7041cca9498c60316723b9acdfc9b03aecbe21d3fe95d305e5e6e462
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:978:fabgl::BitmappedDisplayController::getActualPenColor
   family: common-renderer
   symbol: getActualPenColor
@@ -11347,10 +11350,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 978
-    end_line: 981
+    end_line: 979
     symbol: fabgl::BitmappedDisplayController::getActualPenColor
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 35d9431690c5ce65907ce9637d13a88edf2e449f6b098d20172f934ecb84d116
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: ef6a26e29fd3ec407c2ef1e51f8cfe6e4517766de035ad5bc6766ccd790952ee
 - id: algorithm:vdp-gl:src/displaycontroller.cpp:984:fabgl::BitmappedDisplayController::lineTo
   family: common-renderer
   symbol: lineTo
@@ -11364,10 +11367,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.cpp
     start_line: 984
-    end_line: 1001
+    end_line: 990
     symbol: fabgl::BitmappedDisplayController::lineTo
-    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
-    span_sha256: 32f7436f9c0d152464466cf6283243b2e35df0301bfa5976745277d1b91b1e04
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 577044a1878c26fba594199caad166faca27a99dcc45777666dc72a674a29075
 - id: algorithm:vdp-gl:src/displaycontroller.h:1001:fabgl::BitmappedDisplayController::removeSprites
   family: common-renderer
   symbol: removeSprites
@@ -11381,10 +11384,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1001
-    end_line: 1001
+    end_line: 1005
     symbol: fabgl::BitmappedDisplayController::removeSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: d46fefb05d78a49288a36c5a0f6a6ef40070b8e16a721cf7e832d708d9af8ef4
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 74834f530a226b3a59dff7db0050fa441e98b35722ce6cd6917ba397429c2073
 - id: algorithm:vdp-gl:src/displaycontroller.h:1011:fabgl::BitmappedDisplayController::refreshSprites
   family: common-renderer
   symbol: refreshSprites
@@ -11398,10 +11401,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1011
-    end_line: 1011
+    end_line: 1015
     symbol: fabgl::BitmappedDisplayController::refreshSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: e57f9185f6f9bb5fdc0e57e6a9823fee4b83bfc68a679d7bdf42c5a7a3347b7a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 5b4908369fc301a9accd28ef4d8c572b39ce7dfac33e64c21b729e412128d41d
 - id: algorithm:vdp-gl:src/displaycontroller.h:1018:fabgl::BitmappedDisplayController::isDoubleBuffered
   family: common-renderer
   symbol: isDoubleBuffered
@@ -11415,10 +11418,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1018
-    end_line: 1018
+    end_line: 1022
     symbol: fabgl::BitmappedDisplayController::isDoubleBuffered
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 4df7abd8287f929e34e875be4e2fd941642f51d4f39e7dfb07db5b6051aad803
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 2f9671ac466c87acda17c39d6008502b12b38dc3f86cbfec938c6a9065a109fc
 - id: algorithm:vdp-gl:src/displaycontroller.h:1025:fabgl::BitmappedDisplayController::setMouseCursor
   family: common-renderer
   symbol: setMouseCursor
@@ -11432,10 +11435,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1025
-    end_line: 1025
+    end_line: 1029
     symbol: fabgl::BitmappedDisplayController::setMouseCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 1edee8199c2efdc6268fa929c4a8608b04dc3f99175a64e897ec6abdb72aa3e9
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 226b24e4998801a06d5b46cb0accf01e0732d1d43310f8fcc0b890e2c0e7fefd
 - id: algorithm:vdp-gl:src/displaycontroller.h:1036:fabgl::BitmappedDisplayController::setMouseCursor
   family: common-renderer
   symbol: setMouseCursor
@@ -11449,10 +11452,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1036
-    end_line: 1036
+    end_line: 1040
     symbol: fabgl::BitmappedDisplayController::setMouseCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 5bf24415dec61be3da5d0adf096c8a4df3c87f2137b8a1a11ca438ad02829d76
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: a27b61d11b56ba7b7022d72d701888eddab904b942c33c10fd94e1506ae24da0
 - id: algorithm:vdp-gl:src/displaycontroller.h:1044:fabgl::BitmappedDisplayController::setMouseCursorPos
   family: common-renderer
   symbol: setMouseCursorPos
@@ -11466,10 +11469,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1044
-    end_line: 1044
+    end_line: 1048
     symbol: fabgl::BitmappedDisplayController::setMouseCursorPos
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: fc833602402b16c0e45dc95ae98fe3f7bde29a26ddbc3c6fcf270d9fdd2301ca
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c0727308486d39961e961d165c0d8973292c7c5d0b5c694d2081b96ee7a58446
 - id: algorithm:vdp-gl:src/displaycontroller.h:1051:fabgl::BitmappedDisplayController::setTextCursor
   family: common-renderer
   symbol: setTextCursor
@@ -11483,10 +11486,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1051
-    end_line: 1051
+    end_line: 1055
     symbol: fabgl::BitmappedDisplayController::setTextCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: fd50f6a0af7375c82e4f265879606fda8ef0a2e9a9d5f069215c853cde3047ef
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 5748cb34e4330680de1914d6cf2836088468368542434826a751d61adef2b25a
 - id: algorithm:vdp-gl:src/displaycontroller.h:1053:fabgl::BitmappedDisplayController::readScreen
   family: common-renderer
   symbol: readScreen
@@ -11500,10 +11503,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1053
-    end_line: 1053
+    end_line: 1055
     symbol: fabgl::BitmappedDisplayController::readScreen
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 7f67f6cef2c0f0df03d2ce5a9dd29171a092e36edd02f108adb6159f6905cbbd
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: be62bba79522ef4db1ceef22698e224876546c0728ac2294c74dd291b6cfe17e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1072:fabgl::BitmappedDisplayController::setPixelAt
   family: common-renderer
   symbol: setPixelAt
@@ -11517,10 +11520,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1072
-    end_line: 1072
+    end_line: 1076
     symbol: fabgl::BitmappedDisplayController::setPixelAt
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 54ee22ad8fac8094b8175fbdb1e57b87c6b03537698cd44c98c7e9b280fc6610
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: aedfbea0ac0abb8ace0fe240ea956b51e190946e133d98cc62e87170698298cc
 - id: algorithm:vdp-gl:src/displaycontroller.h:1074:fabgl::BitmappedDisplayController::absDrawLine
   family: common-renderer
   symbol: absDrawLine
@@ -11534,10 +11537,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1074
-    end_line: 1074
+    end_line: 1076
     symbol: fabgl::BitmappedDisplayController::absDrawLine
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 72a96993ca5d754d7e2629e15462ec21b2ae293e6bb7a7b0e30b6ed8aa01aead
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 00e869d8ba50c3642c4a0b2a10c9b5bddb8940643ac3e25a1ff09ea6b0a18077
 - id: algorithm:vdp-gl:src/displaycontroller.h:1076:fabgl::BitmappedDisplayController::fillRow
   family: common-renderer
   symbol: fillRow
@@ -11553,8 +11556,8 @@ algorithms:
     start_line: 1076
     end_line: 1076
     symbol: fabgl::BitmappedDisplayController::fillRow
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 66ed99013b412eb42737712d6ea161f4d0b72a13ea5036e10a53c2f074c13c63
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 54ee22ad8fac8094b8175fbdb1e57b87c6b03537698cd44c98c7e9b280fc6610
 - id: algorithm:vdp-gl:src/displaycontroller.h:1081:fabgl::BitmappedDisplayController::absFillRowScan
   family: common-renderer
   symbol: absFillRowScan
@@ -11568,10 +11571,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1081
-    end_line: 1081
+    end_line: 1085
     symbol: fabgl::BitmappedDisplayController::absFillRowScan
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 90683c9fca0619a5d607b4903d1b38fe823560a9a50250bf798ea46c5eff1a20
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 62706e5c5488ebb6ebad4c717276b1e8659af0881f21a67e65a8d86e342d4d9e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1086:fabgl::BitmappedDisplayController::absFloodFill
   family: common-renderer
   symbol: absFloodFill
@@ -11585,10 +11588,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1086
-    end_line: 1086
+    end_line: 1090
     symbol: fabgl::BitmappedDisplayController::absFloodFill
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 07d9f85b3d204af66dbdc5381c156ed98963b78948cb679d0a9422188a44c2c1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 07d8ddcedec2c50602e0aa60242f17e7b486f5915af75f3bd2bf80a320c840ab
 - id: algorithm:vdp-gl:src/displaycontroller.h:1088:fabgl::BitmappedDisplayController::drawEllipse
   family: common-renderer
   symbol: drawEllipse
@@ -11602,10 +11605,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1088
-    end_line: 1088
+    end_line: 1090
     symbol: fabgl::BitmappedDisplayController::drawEllipse
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: ff71bd646cce01ee84bf6bc20fb74c35cde84fac7fd87e8c9917f0d8facbdb02
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: dc2949a57653260b0ac70646b67c22fe1145245822b7f4b09e246287cab2c447
 - id: algorithm:vdp-gl:src/displaycontroller.h:1090:fabgl::BitmappedDisplayController::absDrawEllipseSheared
   family: common-renderer
   symbol: absDrawEllipseSheared
@@ -11621,8 +11624,8 @@ algorithms:
     start_line: 1090
     end_line: 1090
     symbol: fabgl::BitmappedDisplayController::absDrawEllipseSheared
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 64171da03fe30b9d8b84e471f8f1266e22e84a919a0191b9bed795c7d0de713b
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 07d9f85b3d204af66dbdc5381c156ed98963b78948cb679d0a9422188a44c2c1
 - id: algorithm:vdp-gl:src/displaycontroller.h:1092:fabgl::BitmappedDisplayController::drawArc
   family: common-renderer
   symbol: drawArc
@@ -11638,8 +11641,8 @@ algorithms:
     start_line: 1092
     end_line: 1092
     symbol: fabgl::BitmappedDisplayController::drawArc
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 46c77b56effe4f372530fd4a70c14553c79d53c75868e02a3c400ae602a71acd
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: ff71bd646cce01ee84bf6bc20fb74c35cde84fac7fd87e8c9917f0d8facbdb02
 - id: algorithm:vdp-gl:src/displaycontroller.h:1094:fabgl::BitmappedDisplayController::fillSegment
   family: common-renderer
   symbol: fillSegment
@@ -11655,8 +11658,8 @@ algorithms:
     start_line: 1094
     end_line: 1094
     symbol: fabgl::BitmappedDisplayController::fillSegment
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: eeb734baedc3d34f74f8d5a35143c7c26984c128082da59bc5cfe20a03211bf8
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 64171da03fe30b9d8b84e471f8f1266e22e84a919a0191b9bed795c7d0de713b
 - id: algorithm:vdp-gl:src/displaycontroller.h:1096:fabgl::BitmappedDisplayController::fillSector
   family: common-renderer
   symbol: fillSector
@@ -11672,8 +11675,8 @@ algorithms:
     start_line: 1096
     end_line: 1096
     symbol: fabgl::BitmappedDisplayController::fillSector
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: dda576cfe8d7c38703866f089ecf0eac1fad8e847df64d59544582975ea9d1da
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 46c77b56effe4f372530fd4a70c14553c79d53c75868e02a3c400ae602a71acd
 - id: algorithm:vdp-gl:src/displaycontroller.h:1098:fabgl::BitmappedDisplayController::clear
   family: common-renderer
   symbol: clear
@@ -11689,8 +11692,8 @@ algorithms:
     start_line: 1098
     end_line: 1098
     symbol: fabgl::BitmappedDisplayController::clear
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 80f9335e798ab004751e2b40f3dc79b2449d2e74eab88471a2a04ad332edfa3a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: eeb734baedc3d34f74f8d5a35143c7c26984c128082da59bc5cfe20a03211bf8
 - id: algorithm:vdp-gl:src/displaycontroller.h:1100:fabgl::BitmappedDisplayController::VScroll
   family: common-renderer
   symbol: VScroll
@@ -11706,8 +11709,8 @@ algorithms:
     start_line: 1100
     end_line: 1100
     symbol: fabgl::BitmappedDisplayController::VScroll
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: c373cbc04fa53f9aae090110381f76c5f30c280cb93558e25bb367f5d4640064
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: dda576cfe8d7c38703866f089ecf0eac1fad8e847df64d59544582975ea9d1da
 - id: algorithm:vdp-gl:src/displaycontroller.h:1102:fabgl::BitmappedDisplayController::HScroll
   family: common-renderer
   symbol: HScroll
@@ -11723,8 +11726,8 @@ algorithms:
     start_line: 1102
     end_line: 1102
     symbol: fabgl::BitmappedDisplayController::HScroll
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: cc55a2584ff2e9d46a9cd5d8e3addb1ccd299340f2355acefe7f81c97c045c0f
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 80f9335e798ab004751e2b40f3dc79b2449d2e74eab88471a2a04ad332edfa3a
 - id: algorithm:vdp-gl:src/displaycontroller.h:1104:fabgl::BitmappedDisplayController::drawGlyph
   family: common-renderer
   symbol: drawGlyph
@@ -11740,8 +11743,8 @@ algorithms:
     start_line: 1104
     end_line: 1104
     symbol: fabgl::BitmappedDisplayController::drawGlyph
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: a0c1dd00a5c740efdaa97ed469a4ae4c6fd7620f190c4925f9001e8866c3d658
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c373cbc04fa53f9aae090110381f76c5f30c280cb93558e25bb367f5d4640064
 - id: algorithm:vdp-gl:src/displaycontroller.h:1106:fabgl::BitmappedDisplayController::invertRect
   family: common-renderer
   symbol: invertRect
@@ -11757,8 +11760,8 @@ algorithms:
     start_line: 1106
     end_line: 1106
     symbol: fabgl::BitmappedDisplayController::invertRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 9a11e0191473e810eecce3632b108d81436e45ef2d553161a5f5384af0626944
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: cc55a2584ff2e9d46a9cd5d8e3addb1ccd299340f2355acefe7f81c97c045c0f
 - id: algorithm:vdp-gl:src/displaycontroller.h:1108:fabgl::BitmappedDisplayController::swapFGBG
   family: common-renderer
   symbol: swapFGBG
@@ -11774,8 +11777,8 @@ algorithms:
     start_line: 1108
     end_line: 1108
     symbol: fabgl::BitmappedDisplayController::swapFGBG
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 9f9a6440074e7b073b9001d96b818034a16609d959bcd7ec9642a735d8ca16e1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: a0c1dd00a5c740efdaa97ed469a4ae4c6fd7620f190c4925f9001e8866c3d658
 - id: algorithm:vdp-gl:src/displaycontroller.h:1110:fabgl::BitmappedDisplayController::copyRect
   family: common-renderer
   symbol: copyRect
@@ -11791,8 +11794,8 @@ algorithms:
     start_line: 1110
     end_line: 1110
     symbol: fabgl::BitmappedDisplayController::copyRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 3c251a4a5928c89afd13a8b7b2a1dd63a8ca3372878a9cc6d59fe1ca975d3623
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 9a11e0191473e810eecce3632b108d81436e45ef2d553161a5f5384af0626944
 - id: algorithm:vdp-gl:src/displaycontroller.h:1112:fabgl::BitmappedDisplayController::swapBuffers
   family: common-renderer
   symbol: swapBuffers
@@ -11808,8 +11811,8 @@ algorithms:
     start_line: 1112
     end_line: 1112
     symbol: fabgl::BitmappedDisplayController::swapBuffers
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 63a8eb9bcedeaa11c57c48ef73bcb89c4a8a7719ad73317409732f4ca6517d16
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 9f9a6440074e7b073b9001d96b818034a16609d959bcd7ec9642a735d8ca16e1
 - id: algorithm:vdp-gl:src/displaycontroller.h:1114:fabgl::BitmappedDisplayController::getBitmapSavePixelSize
   family: common-renderer
   symbol: getBitmapSavePixelSize
@@ -11825,8 +11828,8 @@ algorithms:
     start_line: 1114
     end_line: 1114
     symbol: fabgl::BitmappedDisplayController::getBitmapSavePixelSize
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 6dcb9c78cf961ff86f51086abb1f96739e67537ce93639e07fe36ea2c709c88a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 3c251a4a5928c89afd13a8b7b2a1dd63a8ca3372878a9cc6d59fe1ca975d3623
 - id: algorithm:vdp-gl:src/displaycontroller.h:1116:fabgl::BitmappedDisplayController::rawDrawBitmap_Native
   family: common-renderer
   symbol: rawDrawBitmap_Native
@@ -11842,8 +11845,8 @@ algorithms:
     start_line: 1116
     end_line: 1116
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmap_Native
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f64d3a54ab5ce6e340a8867d969bac20fc7e5842bb263e4fc510bba8adaf0fd6
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 63a8eb9bcedeaa11c57c48ef73bcb89c4a8a7719ad73317409732f4ca6517d16
 - id: algorithm:vdp-gl:src/displaycontroller.h:1118:fabgl::BitmappedDisplayController::rawDrawBitmap_Mask
   family: common-renderer
   symbol: rawDrawBitmap_Mask
@@ -11859,8 +11862,8 @@ algorithms:
     start_line: 1118
     end_line: 1118
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmap_Mask
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: c45e01521695c2b2ed94adc7ab0c05e5f277bf22ae921cc477e06f3e0a183b3c
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 6dcb9c78cf961ff86f51086abb1f96739e67537ce93639e07fe36ea2c709c88a
 - id: algorithm:vdp-gl:src/displaycontroller.h:1120:fabgl::BitmappedDisplayController::rawDrawBitmap_RGBA2222
   family: common-renderer
   symbol: rawDrawBitmap_RGBA2222
@@ -11876,8 +11879,8 @@ algorithms:
     start_line: 1120
     end_line: 1120
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmap_RGBA2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: ad87878ed8ffccdad72b5647fab8309aea2e5ef68ae3969e38544c24cb2ad645
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: f64d3a54ab5ce6e340a8867d969bac20fc7e5842bb263e4fc510bba8adaf0fd6
 - id: algorithm:vdp-gl:src/displaycontroller.h:1122:fabgl::BitmappedDisplayController::rawDrawBitmap_RGBA8888
   family: common-renderer
   symbol: rawDrawBitmap_RGBA8888
@@ -11893,8 +11896,8 @@ algorithms:
     start_line: 1122
     end_line: 1122
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmap_RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 202522b175ce9d551b2c763c8dbadca91d2eefb1bde749791174a7c094b9249e
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c45e01521695c2b2ed94adc7ab0c05e5f277bf22ae921cc477e06f3e0a183b3c
 - id: algorithm:vdp-gl:src/displaycontroller.h:1124:fabgl::BitmappedDisplayController::rawCopyToBitmap
   family: common-renderer
   symbol: rawCopyToBitmap
@@ -11910,8 +11913,8 @@ algorithms:
     start_line: 1124
     end_line: 1124
     symbol: fabgl::BitmappedDisplayController::rawCopyToBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: fb79a3d739e67ccebdd1b9d962c74620558dec9460e74bcfb6618468b71977d3
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: ad87878ed8ffccdad72b5647fab8309aea2e5ef68ae3969e38544c24cb2ad645
 - id: algorithm:vdp-gl:src/displaycontroller.h:1128:fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_Mask
   family: common-renderer
   symbol: rawDrawBitmapWithMatrix_Mask
@@ -11927,8 +11930,8 @@ algorithms:
     start_line: 1128
     end_line: 1128
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_Mask
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 7e094e816e3aebe348204b68c53b686841be988bf416bb34efd6bd1e4aeb54ae
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: fb79a3d739e67ccebdd1b9d962c74620558dec9460e74bcfb6618468b71977d3
 - id: algorithm:vdp-gl:src/displaycontroller.h:1130:fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_RGBA2222
   family: common-renderer
   symbol: rawDrawBitmapWithMatrix_RGBA2222
@@ -11942,10 +11945,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1130
-    end_line: 1130
+    end_line: 1132
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_RGBA2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: d6ad4eacfbe89164e09d2fdd50d1bcc2f3e7e43d79ad279a476f3fc5a5fac46a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 267ff5bbb60fbc36d6c91d6a3eae8aa67df127ad3bd3018542d008eeb9baca96
 - id: algorithm:vdp-gl:src/displaycontroller.h:1132:fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_RGBA8888
   family: common-renderer
   symbol: rawDrawBitmapWithMatrix_RGBA8888
@@ -11961,8 +11964,8 @@ algorithms:
     start_line: 1132
     end_line: 1132
     symbol: fabgl::BitmappedDisplayController::rawDrawBitmapWithMatrix_RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 040171c0840c3f01a1c6ca364f497be90bb808f67be1d109ee1aaa50d6184d81
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 7e094e816e3aebe348204b68c53b686841be988bf416bb34efd6bd1e4aeb54ae
 - id: algorithm:vdp-gl:src/displaycontroller.h:1136:fabgl::BitmappedDisplayController::execPrimitive
   family: common-renderer
   symbol: execPrimitive
@@ -11978,8 +11981,8 @@ algorithms:
     start_line: 1136
     end_line: 1136
     symbol: fabgl::BitmappedDisplayController::execPrimitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: ed7132cc2539abf3e1c1b74df2c425d775ae9305a822656eaf9c1d2e3a891177
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 040171c0840c3f01a1c6ca364f497be90bb808f67be1d109ee1aaa50d6184d81
 - id: algorithm:vdp-gl:src/displaycontroller.h:1138:fabgl::BitmappedDisplayController::updateAbsoluteClippingRect
   family: common-renderer
   symbol: updateAbsoluteClippingRect
@@ -11993,10 +11996,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1138
-    end_line: 1138
+    end_line: 1140
     symbol: fabgl::BitmappedDisplayController::updateAbsoluteClippingRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 4658762e164a75b9289af42dc198427704aaac03a57a9e6836f758a9dc3ecbf4
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c6a2db09d34dad2105ffc4fc3b42d95a9705ddbeb48a81fec2559bf7ac8f1086
 - id: algorithm:vdp-gl:src/displaycontroller.h:1140:fabgl::BitmappedDisplayController::getActualPenColor
   family: common-renderer
   symbol: getActualPenColor
@@ -12012,8 +12015,8 @@ algorithms:
     start_line: 1140
     end_line: 1140
     symbol: fabgl::BitmappedDisplayController::getActualPenColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 0a8d2170faacecc417f25c4724d79784fadae389aec1fd81dd50c25e6940c74e
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: ed7132cc2539abf3e1c1b74df2c425d775ae9305a822656eaf9c1d2e3a891177
 - id: algorithm:vdp-gl:src/displaycontroller.h:1142:fabgl::BitmappedDisplayController::getActualBrushColor
   family: common-renderer
   symbol: getActualBrushColor
@@ -12029,8 +12032,8 @@ algorithms:
     start_line: 1142
     end_line: 1142
     symbol: fabgl::BitmappedDisplayController::getActualBrushColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 476bdca253bd5d8266ca449ba616159cf3633843f6a77b9f4935f33205e7c86a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 4658762e164a75b9289af42dc198427704aaac03a57a9e6836f758a9dc3ecbf4
 - id: algorithm:vdp-gl:src/displaycontroller.h:1144:fabgl::BitmappedDisplayController::lineTo
   family: common-renderer
   symbol: lineTo
@@ -12046,8 +12049,8 @@ algorithms:
     start_line: 1144
     end_line: 1144
     symbol: fabgl::BitmappedDisplayController::lineTo
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: b19c1789db21467a6f5fe83501a3eeb316738aaebd6d0bb3d2583e2233a72431
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 0a8d2170faacecc417f25c4724d79784fadae389aec1fd81dd50c25e6940c74e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1146:fabgl::BitmappedDisplayController::drawRect
   family: common-renderer
   symbol: drawRect
@@ -12063,8 +12066,8 @@ algorithms:
     start_line: 1146
     end_line: 1146
     symbol: fabgl::BitmappedDisplayController::drawRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: bf0ffb159f903144d25cce5c9a2b1d5469bc45d7cde7fd603bd800979bd8ab37
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 476bdca253bd5d8266ca449ba616159cf3633843f6a77b9f4935f33205e7c86a
 - id: algorithm:vdp-gl:src/displaycontroller.h:1148:fabgl::BitmappedDisplayController::drawPath
   family: common-renderer
   symbol: drawPath
@@ -12080,8 +12083,8 @@ algorithms:
     start_line: 1148
     end_line: 1148
     symbol: fabgl::BitmappedDisplayController::drawPath
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: e076e429be32a23f1c0c25c3ce4dfc5f1208998afbe0386a294828cf98c7deb1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: b19c1789db21467a6f5fe83501a3eeb316738aaebd6d0bb3d2583e2233a72431
 - id: algorithm:vdp-gl:src/displaycontroller.h:1150:fabgl::BitmappedDisplayController::absDrawThickLine
   family: common-renderer
   symbol: absDrawThickLine
@@ -12097,8 +12100,8 @@ algorithms:
     start_line: 1150
     end_line: 1150
     symbol: fabgl::BitmappedDisplayController::absDrawThickLine
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 4e79c1e6a3eaa1c03b727d848a0d5dac18173ed145f62897a0e26e8bc9d48f18
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: bf0ffb159f903144d25cce5c9a2b1d5469bc45d7cde7fd603bd800979bd8ab37
 - id: algorithm:vdp-gl:src/displaycontroller.h:1152:fabgl::BitmappedDisplayController::fillRowFromPos
   family: common-renderer
   symbol: fillRowFromPos
@@ -12114,8 +12117,8 @@ algorithms:
     start_line: 1152
     end_line: 1152
     symbol: fabgl::BitmappedDisplayController::fillRowFromPos
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 332003caf75151eaea99a29c5008c3ad18b4d28cdd355c32fdf63820f80e3f89
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: e076e429be32a23f1c0c25c3ce4dfc5f1208998afbe0386a294828cf98c7deb1
 - id: algorithm:vdp-gl:src/displaycontroller.h:1154:fabgl::BitmappedDisplayController::floodFillFromPos
   family: common-renderer
   symbol: floodFillFromPos
@@ -12131,8 +12134,8 @@ algorithms:
     start_line: 1154
     end_line: 1154
     symbol: fabgl::BitmappedDisplayController::floodFillFromPos
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 17b1d7a1a129807af8aa890e1a93d205b31ed48700428f49206c1013be000530
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 4e79c1e6a3eaa1c03b727d848a0d5dac18173ed145f62897a0e26e8bc9d48f18
 - id: algorithm:vdp-gl:src/displaycontroller.h:1156:fabgl::BitmappedDisplayController::fillRect
   family: common-renderer
   symbol: fillRect
@@ -12148,8 +12151,8 @@ algorithms:
     start_line: 1156
     end_line: 1156
     symbol: fabgl::BitmappedDisplayController::fillRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: a9c539562db3e0e31f9082de245b9843c0d0e57c200523a75d73c7cbfac18a3d
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 332003caf75151eaea99a29c5008c3ad18b4d28cdd355c32fdf63820f80e3f89
 - id: algorithm:vdp-gl:src/displaycontroller.h:1158:fabgl::BitmappedDisplayController::fillEllipse
   family: common-renderer
   symbol: fillEllipse
@@ -12165,8 +12168,8 @@ algorithms:
     start_line: 1158
     end_line: 1158
     symbol: fabgl::BitmappedDisplayController::fillEllipse
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 8546488c423cfe135b035e3229b8010abf7d6b935f4608ac4d1df02595f786dd
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 17b1d7a1a129807af8aa890e1a93d205b31ed48700428f49206c1013be000530
 - id: algorithm:vdp-gl:src/displaycontroller.h:1160:fabgl::BitmappedDisplayController::drawEllipseSheared
   family: common-renderer
   symbol: drawEllipseSheared
@@ -12182,8 +12185,8 @@ algorithms:
     start_line: 1160
     end_line: 1160
     symbol: fabgl::BitmappedDisplayController::drawEllipseSheared
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 5d6fb19f0d691cb5b577698a7c4b3bdd08b10df09a43b2536850b1a7fcb01fa2
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: a9c539562db3e0e31f9082de245b9843c0d0e57c200523a75d73c7cbfac18a3d
 - id: algorithm:vdp-gl:src/displaycontroller.h:1162:fabgl::BitmappedDisplayController::fillEllipseSheared
   family: common-renderer
   symbol: fillEllipseSheared
@@ -12199,8 +12202,8 @@ algorithms:
     start_line: 1162
     end_line: 1162
     symbol: fabgl::BitmappedDisplayController::fillEllipseSheared
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: b6294e42b635eaca3986fc6a04c7bb1e6b4c39543c3cb5226a7f42a54fea896e
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 8546488c423cfe135b035e3229b8010abf7d6b935f4608ac4d1df02595f786dd
 - id: algorithm:vdp-gl:src/displaycontroller.h:1164:fabgl::BitmappedDisplayController::fillPath
   family: common-renderer
   symbol: fillPath
@@ -12216,8 +12219,8 @@ algorithms:
     start_line: 1164
     end_line: 1164
     symbol: fabgl::BitmappedDisplayController::fillPath
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 3c9ac874032bb3aeeaf9ba526b5309cf7bf4a8ba2f5bfe0a4cb83730bc506c8e
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 5d6fb19f0d691cb5b577698a7c4b3bdd08b10df09a43b2536850b1a7fcb01fa2
 - id: algorithm:vdp-gl:src/displaycontroller.h:1166:fabgl::BitmappedDisplayController::renderGlyphsBuffer
   family: common-renderer
   symbol: renderGlyphsBuffer
@@ -12233,8 +12236,8 @@ algorithms:
     start_line: 1166
     end_line: 1166
     symbol: fabgl::BitmappedDisplayController::renderGlyphsBuffer
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 7604d174f01110a05d81ad3ecb31260157adf676ae1cbae2eb584c79a6ffdcca
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: b6294e42b635eaca3986fc6a04c7bb1e6b4c39543c3cb5226a7f42a54fea896e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1168:fabgl::BitmappedDisplayController::setSprites
   family: common-renderer
   symbol: setSprites
@@ -12250,8 +12253,8 @@ algorithms:
     start_line: 1168
     end_line: 1168
     symbol: fabgl::BitmappedDisplayController::setSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: c836844131eade88fbecca21edcf88e352a69d61155fbed5fef9dd9a94c49be3
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 3c9ac874032bb3aeeaf9ba526b5309cf7bf4a8ba2f5bfe0a4cb83730bc506c8e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1170:fabgl::BitmappedDisplayController::getSprite
   family: common-renderer
   symbol: getSprite
@@ -12267,8 +12270,8 @@ algorithms:
     start_line: 1170
     end_line: 1170
     symbol: fabgl::BitmappedDisplayController::getSprite
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 24305b41d8d8b0a27af3446a1be99384d33503a9b5f0ba97023d580c6210e90a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 7604d174f01110a05d81ad3ecb31260157adf676ae1cbae2eb584c79a6ffdcca
 - id: algorithm:vdp-gl:src/displaycontroller.h:1172:fabgl::BitmappedDisplayController::spritesCount
   family: common-renderer
   symbol: spritesCount
@@ -12284,8 +12287,8 @@ algorithms:
     start_line: 1172
     end_line: 1172
     symbol: fabgl::BitmappedDisplayController::spritesCount
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 0696af2d33e4d666ab07e8c77ebbcf96c65c868b57158b0d0f1a0a003df41f8f
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c836844131eade88fbecca21edcf88e352a69d61155fbed5fef9dd9a94c49be3
 - id: algorithm:vdp-gl:src/displaycontroller.h:1174:fabgl::BitmappedDisplayController::hideSprites
   family: common-renderer
   symbol: hideSprites
@@ -12301,8 +12304,8 @@ algorithms:
     start_line: 1174
     end_line: 1174
     symbol: fabgl::BitmappedDisplayController::hideSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 17d5699534f44e82468c183c270d1a4e5db56cd9b37b9ddadae25012d6d7fd75
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 24305b41d8d8b0a27af3446a1be99384d33503a9b5f0ba97023d580c6210e90a
 - id: algorithm:vdp-gl:src/displaycontroller.h:1176:fabgl::BitmappedDisplayController::showSprites
   family: common-renderer
   symbol: showSprites
@@ -12318,8 +12321,8 @@ algorithms:
     start_line: 1176
     end_line: 1176
     symbol: fabgl::BitmappedDisplayController::showSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: fba8ef06df5c63325b9cf3ae6e6c8e47f527e821d262e57910f9f4dab49334c5
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 0696af2d33e4d666ab07e8c77ebbcf96c65c868b57158b0d0f1a0a003df41f8f
 - id: algorithm:vdp-gl:src/displaycontroller.h:1178:fabgl::BitmappedDisplayController::drawBitmap
   family: common-renderer
   symbol: drawBitmap
@@ -12335,8 +12338,8 @@ algorithms:
     start_line: 1178
     end_line: 1178
     symbol: fabgl::BitmappedDisplayController::drawBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: ba86608805ca5b20017de8b88da9dbecfaf85f020fd88a544c5985461ff3be3f
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 17d5699534f44e82468c183c270d1a4e5db56cd9b37b9ddadae25012d6d7fd75
 - id: algorithm:vdp-gl:src/displaycontroller.h:1180:fabgl::BitmappedDisplayController::absDrawBitmap
   family: common-renderer
   symbol: absDrawBitmap
@@ -12352,8 +12355,8 @@ algorithms:
     start_line: 1180
     end_line: 1180
     symbol: fabgl::BitmappedDisplayController::absDrawBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: d062d2fe10673052d5a06f5f756c37d4a514fb7dbf1b8e8af4ef5068b2520071
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: fba8ef06df5c63325b9cf3ae6e6c8e47f527e821d262e57910f9f4dab49334c5
 - id: algorithm:vdp-gl:src/displaycontroller.h:1182:fabgl::BitmappedDisplayController::copyToBitmap
   family: common-renderer
   symbol: copyToBitmap
@@ -12369,8 +12372,8 @@ algorithms:
     start_line: 1182
     end_line: 1182
     symbol: fabgl::BitmappedDisplayController::copyToBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 1d420e619fc6a248ccf107ebbe8b96d75ec9e059e21994bec030e8b8aa901664
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: ba86608805ca5b20017de8b88da9dbecfaf85f020fd88a544c5985461ff3be3f
 - id: algorithm:vdp-gl:src/displaycontroller.h:1184:fabgl::BitmappedDisplayController::absCopyToBitmap
   family: common-renderer
   symbol: absCopyToBitmap
@@ -12386,8 +12389,8 @@ algorithms:
     start_line: 1184
     end_line: 1184
     symbol: fabgl::BitmappedDisplayController::absCopyToBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: b670f65d8d5cd9268cddfad3b903357e4d306b44ebae8952e3c7e236ed0eaef3
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: d062d2fe10673052d5a06f5f756c37d4a514fb7dbf1b8e8af4ef5068b2520071
 - id: algorithm:vdp-gl:src/displaycontroller.h:1186:fabgl::BitmappedDisplayController::drawBitmapWithTransform
   family: common-renderer
   symbol: drawBitmapWithTransform
@@ -12403,8 +12406,8 @@ algorithms:
     start_line: 1186
     end_line: 1186
     symbol: fabgl::BitmappedDisplayController::drawBitmapWithTransform
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 3ada042ba61008337eb810a275d10e8604c07784190ff5f5b7f1c77520111c65
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 1d420e619fc6a248ccf107ebbe8b96d75ec9e059e21994bec030e8b8aa901664
 - id: algorithm:vdp-gl:src/displaycontroller.h:1188:fabgl::BitmappedDisplayController::setDoubleBuffered
   family: common-renderer
   symbol: setDoubleBuffered
@@ -12420,8 +12423,8 @@ algorithms:
     start_line: 1188
     end_line: 1188
     symbol: fabgl::BitmappedDisplayController::setDoubleBuffered
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: a572f066cb0e73cd300f659aa5d8dcdf5e83aed2a6e77577df59cc72755c055d
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: b670f65d8d5cd9268cddfad3b903357e4d306b44ebae8952e3c7e236ed0eaef3
 - id: algorithm:vdp-gl:src/displaycontroller.h:1190:fabgl::BitmappedDisplayController::getPrimitive
   family: common-renderer
   symbol: getPrimitive
@@ -12437,8 +12440,8 @@ algorithms:
     start_line: 1190
     end_line: 1190
     symbol: fabgl::BitmappedDisplayController::getPrimitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f0c848b82ee84ef04a35d297f81666252df4b17a7135f1b2039f608b2dd728f7
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 3ada042ba61008337eb810a275d10e8604c07784190ff5f5b7f1c77520111c65
 - id: algorithm:vdp-gl:src/displaycontroller.h:1192:fabgl::BitmappedDisplayController::getPrimitiveISR
   family: common-renderer
   symbol: getPrimitiveISR
@@ -12454,8 +12457,8 @@ algorithms:
     start_line: 1192
     end_line: 1192
     symbol: fabgl::BitmappedDisplayController::getPrimitiveISR
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 582507345ccd0f889325fb97bbd6ba29d092e21585ba258a7ae729b2d7f87860
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: a572f066cb0e73cd300f659aa5d8dcdf5e83aed2a6e77577df59cc72755c055d
 - id: algorithm:vdp-gl:src/displaycontroller.h:1194:fabgl::BitmappedDisplayController::waitForPrimitives
   family: common-renderer
   symbol: waitForPrimitives
@@ -12471,8 +12474,8 @@ algorithms:
     start_line: 1194
     end_line: 1194
     symbol: fabgl::BitmappedDisplayController::waitForPrimitives
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 38631782c56cccde3ac19536dcf319df4b22727322dcd017071b7f88da8e238c
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: f0c848b82ee84ef04a35d297f81666252df4b17a7135f1b2039f608b2dd728f7
 - id: algorithm:vdp-gl:src/displaycontroller.h:1196:fabgl::BitmappedDisplayController::mouseCursor
   family: common-renderer
   symbol: mouseCursor
@@ -12488,8 +12491,8 @@ algorithms:
     start_line: 1196
     end_line: 1196
     symbol: fabgl::BitmappedDisplayController::mouseCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 2c52c29dd9f4dada2be986dbe7a79987b0b2300dbbf98fd9b11af0b0766411c9
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 582507345ccd0f889325fb97bbd6ba29d092e21585ba258a7ae729b2d7f87860
 - id: algorithm:vdp-gl:src/displaycontroller.h:1198:fabgl::BitmappedDisplayController::textCursor
   family: common-renderer
   symbol: textCursor
@@ -12505,8 +12508,8 @@ algorithms:
     start_line: 1198
     end_line: 1198
     symbol: fabgl::BitmappedDisplayController::textCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 3ca0161c0611e8106f157abf645ce76de7dcdc55816f183bff59d499c0e5408b
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 38631782c56cccde3ac19536dcf319df4b22727322dcd017071b7f88da8e238c
 - id: algorithm:vdp-gl:src/displaycontroller.h:1200:fabgl::BitmappedDisplayController::resetPaintState
   family: common-renderer
   symbol: resetPaintState
@@ -12522,8 +12525,8 @@ algorithms:
     start_line: 1200
     end_line: 1200
     symbol: fabgl::BitmappedDisplayController::resetPaintState
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 3a3980b97f999de4c0c3c4c398ecc634632143b9dc375b121d07ba03b284c8b3
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 2c52c29dd9f4dada2be986dbe7a79987b0b2300dbbf98fd9b11af0b0766411c9
 - id: algorithm:vdp-gl:src/displaycontroller.h:1204:fabgl::BitmappedDisplayController::primitiveReplaceDynamicBuffers
   family: common-renderer
   symbol: primitiveReplaceDynamicBuffers
@@ -12539,8 +12542,8 @@ algorithms:
     start_line: 1204
     end_line: 1204
     symbol: fabgl::BitmappedDisplayController::primitiveReplaceDynamicBuffers
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: d8733ac673dca95d6e6220b9dc90b9f3d23a44a67752e02a293fc5e7cacbf67a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 3a3980b97f999de4c0c3c4c398ecc634632143b9dc375b121d07ba03b284c8b3
 - id: algorithm:vdp-gl:src/displaycontroller.h:1247:fabgl::GenericBitmappedDisplayController::genericSetPixelAt
   family: common-renderer
   symbol: genericSetPixelAt
@@ -12554,10 +12557,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1247
-    end_line: 1262
+    end_line: 1248
     symbol: fabgl::GenericBitmappedDisplayController::genericSetPixelAt
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 408ac81246212cfad8fb611a7a25167c743898da2b84aabaf15523691c3c14d0
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: bb9f7e6a2c46eb5c62e510dad3f9b04199cdd51c29f82ca6a05652d5522c711e
 - id: algorithm:vdp-gl:src/displaycontroller.h:1268:fabgl::GenericBitmappedDisplayController::genericAbsDrawLine
   family: common-renderer
   symbol: genericAbsDrawLine
@@ -12571,10 +12574,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1268
-    end_line: 1377
+    end_line: 1284
     symbol: fabgl::GenericBitmappedDisplayController::genericAbsDrawLine
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 621b0176d03318ef2137036ec42ef62aef1fd38f0a4e2bc84de7b6e74523bae2
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 88391fe95517396f6c37b2c878b1c2e52834c22d63dd4b40c1ba42ffce6ac11c
 - id: algorithm:vdp-gl:src/displaycontroller.h:1382:fabgl::GenericBitmappedDisplayController::genericDrawEllipse
   family: common-renderer
   symbol: genericDrawEllipse
@@ -12588,10 +12591,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1382
-    end_line: 1449
+    end_line: 1382
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawEllipse
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 6e72e9f5086b804bd36f0373758f407ca65f1e1ef76432766f3c9ae0a8d23bad
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 00bc152ad94547df4196896f3b8f7dce62253e6630689e1d70a3988462ef2c01
 - id: algorithm:vdp-gl:src/displaycontroller.h:1459:fabgl::GenericBitmappedDisplayController::genericDrawEllipseSheared
   family: common-renderer
   symbol: genericDrawEllipseSheared
@@ -12605,10 +12608,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1459
-    end_line: 1575
+    end_line: 1459
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawEllipseSheared
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 163d044c4bbd7d1cf545158fb2bca95b685d38b08389dff4ac8446ad7932d773
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 19cb88fcd015430f591453e852f88792edc6d0e1576ddb40507b7e2b411f79e0
 - id: algorithm:vdp-gl:src/displaycontroller.h:1583:fabgl::GenericBitmappedDisplayController::genericFillRowScan
   family: common-renderer
   symbol: genericFillRowScan
@@ -12622,10 +12625,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1583
-    end_line: 1643
+    end_line: 1586
     symbol: fabgl::GenericBitmappedDisplayController::genericFillRowScan
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 5c798d777d9cd25e1393baf6f82eed470bc531912ce8c74adbc66990ab25541b
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: d75f3ee66ba3876907db79d9bb7a7e85943935a27e219c181c0495315e0c8b7d
 - id: algorithm:vdp-gl:src/displaycontroller.h:1654:fabgl::GenericBitmappedDisplayController::genericFloodFill
   family: common-renderer
   symbol: genericFloodFill
@@ -12639,10 +12642,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1654
-    end_line: 1802
+    end_line: 1654
     symbol: fabgl::GenericBitmappedDisplayController::genericFloodFill
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f27b0df96f8b59493efc1768aacb43199d52b4afe64beffd9cef274fe07def08
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 7b6ee9b88cb66c463139fe9bed3d98614c26c4ca451a386469f75d7af030689d
 - id: algorithm:vdp-gl:src/displaycontroller.h:1807:fabgl::GenericBitmappedDisplayController::genericDrawArc
   family: common-renderer
   symbol: genericDrawArc
@@ -12656,10 +12659,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1807
-    end_line: 1863
+    end_line: 1810
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawArc
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 03950add99e96a07f0d99811f6d8c0449939badc415fa9dd0e784b28176e16af
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: e4d07d6ef9adb3f9da825860e010124ebba9aaa47f2880e3cd823c6b7bcfd398
 - id: algorithm:vdp-gl:src/displaycontroller.h:1868:fabgl::GenericBitmappedDisplayController::genericFillSegment
   family: common-renderer
   symbol: genericFillSegment
@@ -12673,10 +12676,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1868
-    end_line: 1988
+    end_line: 1872
     symbol: fabgl::GenericBitmappedDisplayController::genericFillSegment
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 90f531058ab6d64e87009c203345417e55619ad3969d1f04309a91d3f605717a
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 71103a8ddfbc06f6bd0890a11268810096f2f95ecaf61d85457fbcb3d9b7b056
 - id: algorithm:vdp-gl:src/displaycontroller.h:1993:fabgl::GenericBitmappedDisplayController::genericFillSector
   family: common-renderer
   symbol: genericFillSector
@@ -12690,10 +12693,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 1993
-    end_line: 2261
+    end_line: 1993
     symbol: fabgl::GenericBitmappedDisplayController::genericFillSector
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 0252b5c35e081025cc8ee0fb3d7c4399ec9a64ad66059bd4fd580a7d6b4fadaa
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 228ed3acc5222ed67e1778191d747d310dde530a134f7e9b1b2a187515395ac8
 - id: algorithm:vdp-gl:src/displaycontroller.h:2265:fabgl::GenericBitmappedDisplayController::genericDrawGlyph
   family: common-renderer
   symbol: genericDrawGlyph
@@ -12707,10 +12710,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2265
-    end_line: 2271
+    end_line: 2269
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawGlyph
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f996c70f24942a7a77f596c1b6095569cd4ec4234a0f2a8db4a9579010af55a6
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 031c69ef5dea4e0a50d805ed87190d336e38c0f0e3ce6b005067bcc17608a834
 - id: algorithm:vdp-gl:src/displaycontroller.h:2276:fabgl::GenericBitmappedDisplayController::genericDrawGlyph_full
   family: common-renderer
   symbol: genericDrawGlyph_full
@@ -12724,10 +12727,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2276
-    end_line: 2429
+    end_line: 2279
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawGlyph_full
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 8291f13548115c9a1b7d15dc0967f461ba9f62be1551388d2593325a2e1fe2a6
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 5dbdf4bcffe8c584a4b3b4b7b2f77b86b97e3556388c78147279cb12150b29b5
 - id: algorithm:vdp-gl:src/displaycontroller.h:2440:fabgl::GenericBitmappedDisplayController::genericDrawGlyph_light
   family: common-renderer
   symbol: genericDrawGlyph_light
@@ -12741,10 +12744,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2440
-    end_line: 2528
+    end_line: 2441
     symbol: fabgl::GenericBitmappedDisplayController::genericDrawGlyph_light
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f9f0b7b536f9876ec163df59ce3fa926011ecc457915564e376d13e53696a928
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 286492a7726277d996180f85fb10977288ad063acd54ef92c367b8158fd9312a
 - id: algorithm:vdp-gl:src/displaycontroller.h:2532:fabgl::GenericBitmappedDisplayController::genericInvertRect
   family: common-renderer
   symbol: genericInvertRect
@@ -12758,10 +12761,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2532
-    end_line: 2552
+    end_line: 2533
     symbol: fabgl::GenericBitmappedDisplayController::genericInvertRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 4b95223692b87d32cf24c9be9bc8ddb3f331dd86e370f5b940b6beac85c712fd
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: b8da7b7571f4bf426e2821bd977db03dd66ef51ab1d5d9271fa3acf95a480006
 - id: algorithm:vdp-gl:src/displaycontroller.h:2556:fabgl::GenericBitmappedDisplayController::genericSwapFGBG
   family: common-renderer
   symbol: genericSwapFGBG
@@ -12775,10 +12778,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2556
-    end_line: 2587
+    end_line: 2556
     symbol: fabgl::GenericBitmappedDisplayController::genericSwapFGBG
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: e77d6ce04b9158fb8f793e4ba291ea06f6bf86686900da059cbd886f5ac62402
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: f51b44cfe09478ce61c3ac30ff05e43a2ed75338438558e323d8e65603957171
 - id: algorithm:vdp-gl:src/displaycontroller.h:2591:fabgl::GenericBitmappedDisplayController::genericCopyRect
   family: common-renderer
   symbol: genericCopyRect
@@ -12792,10 +12795,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2591
-    end_line: 2630
+    end_line: 2591
     symbol: fabgl::GenericBitmappedDisplayController::genericCopyRect
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 5d6e7bb4b59aac8328a946987a469f2a238a86ea8336f70403e53c09674143a8
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 7a53d264194ed433d83520e0a6bc9053c1b6d444d8d731bbbbac55db893419b5
 - id: algorithm:vdp-gl:src/displaycontroller.h:2634:fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_Native
   family: common-renderer
   symbol: genericRawDrawBitmap_Native
@@ -12809,10 +12812,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2634
-    end_line: 2645
+    end_line: 2635
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_Native
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: babc847bc9017d45e87b698621fef288d29b86a560f4413a3a2d82b551205630
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c88031eafada8fda212500c2e21332fcb9c71e3b1ee93c974bbcd446ec05b458
 - id: algorithm:vdp-gl:src/displaycontroller.h:2650:fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_Mask
   family: common-renderer
   symbol: genericRawDrawBitmap_Mask
@@ -12826,10 +12829,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2650
-    end_line: 2686
+    end_line: 2667
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_Mask
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 51cbf75b15d2347589df62777464a7d5c29927862e549b946f14f09b76e5f584
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 8474cae1c032f54edd90617ef310a9eed807fd06660b54e7e91027b9a9e023b7
 - id: algorithm:vdp-gl:src/displaycontroller.h:2690:fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_RGBA2222
   family: common-renderer
   symbol: genericRawDrawBitmap_RGBA2222
@@ -12843,10 +12846,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2690
-    end_line: 2725
+    end_line: 2691
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_RGBA2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 830028851b032fbc4b589114858129c61ea293399062e009ba41deddffac70f5
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 13aad83f2990e4ed8df8d7328b058ab3feb01b1ded12059b3dc06edffe841ff1
 - id: algorithm:vdp-gl:src/displaycontroller.h:2729:fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_RGBA8888
   family: common-renderer
   symbol: genericRawDrawBitmap_RGBA8888
@@ -12860,10 +12863,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2729
-    end_line: 2764
+    end_line: 2730
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawBitmap_RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 80bd3cfc558a9ce4b7c85a8814467a34e313405148c9cfc7065b226d33391910
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 7e828ecc62df33f7862b9de8a8ebb79728e6d84fb9d4add10286fffe1c26f907
 - id: algorithm:vdp-gl:src/displaycontroller.h:2768:fabgl::GenericBitmappedDisplayController::genericRawCopyToBitmap
   family: common-renderer
   symbol: genericRawCopyToBitmap
@@ -12877,10 +12880,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2768
-    end_line: 2782
+    end_line: 2769
     symbol: fabgl::GenericBitmappedDisplayController::genericRawCopyToBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 29cba9f302897f323e03445e97e3642e64218cc2ba3c7f47804576d2a7be324d
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 1ac875a67bed4ca3759fd900ea15631982b71196f21be548b86e38ab4c8d2455
 - id: algorithm:vdp-gl:src/displaycontroller.h:2786:fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask
   family: common-renderer
   symbol: genericRawDrawTransformedBitmap_Mask
@@ -12894,10 +12897,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2786
-    end_line: 2819
+    end_line: 2804
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 2177195524dd8f3461b701eb0752840e70de9e3d8c1c559e49b56498086a1547
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 5526f491840f8ddc5626df02cb641d680f292f05e23d7521e4c72935c719e611
 - id: algorithm:vdp-gl:src/displaycontroller.h:2823:fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222
   family: common-renderer
   symbol: genericRawDrawTransformedBitmap_RGBA2222
@@ -12911,10 +12914,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2823
-    end_line: 2855
+    end_line: 2823
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 10edc453c3c7d7e29fa2566ce60b17207267213bc54debab6cf94b3f2b465b1c
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 66a2c5366880abb44be191421d4862efab4cdfc3e955e26fed157f8f42df8da6
 - id: algorithm:vdp-gl:src/displaycontroller.h:2859:fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888
   family: common-renderer
   symbol: genericRawDrawTransformedBitmap_RGBA8888
@@ -12928,10 +12931,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2859
-    end_line: 2891
+    end_line: 2859
     symbol: fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 99e79199c3e502226928fc651b76e4d7d4b2f35f03d4a68ba6e6513edb47649b
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 73cf7e820fcc3beb242d79613544105b7954fdc8b488213adb01667f08445556
 - id: algorithm:vdp-gl:src/displaycontroller.h:2898:fabgl::GenericBitmappedDisplayController::genericVScroll
   family: common-renderer
   symbol: genericVScroll
@@ -12945,10 +12948,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2898
-    end_line: 2934
+    end_line: 2898
     symbol: fabgl::GenericBitmappedDisplayController::genericVScroll
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 9cd02d4341e86207cb2c838bf974bd593e69e774cc2ba362bdf9529682df36eb
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c51a36203a3ad39d9c6f5b1c9dd21f2515a51c41428c2e6a2f26cc5442295d01
 - id: algorithm:vdp-gl:src/displaycontroller.h:2941:fabgl::GenericBitmappedDisplayController::genericVScroll
   family: common-renderer
   symbol: genericVScroll
@@ -12962,10 +12965,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 2941
-    end_line: 2994
+    end_line: 2941
     symbol: fabgl::GenericBitmappedDisplayController::genericVScroll
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: db930e11cc40cf075f83aae9ddfe3239fb8f130fe76e194082de55aa1fc9875f
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 1c0e78dd1462843e00690979f6ea403822bce85aee521d5f17a4dd30d5e4b7d9
 - id: algorithm:vdp-gl:src/displaycontroller.h:298:fabgl::RGB888::RGB888
   family: common-renderer
   symbol: RGB888
@@ -12981,7 +12984,7 @@ algorithms:
     start_line: 298
     end_line: 298
     symbol: fabgl::RGB888::RGB888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 098ed2f75ee180b97f3336ad95596cf96779a089650e1ff5caee767a58fd4419
 - id: algorithm:vdp-gl:src/displaycontroller.h:299:fabgl::RGB888::RGB888
   family: common-renderer
@@ -12998,7 +13001,7 @@ algorithms:
     start_line: 299
     end_line: 299
     symbol: fabgl::RGB888::RGB888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3ab97f8b914df4ab7b702507b10268a0f6e4ed8237ebbd4f2599bb569d186fd9
 - id: algorithm:vdp-gl:src/displaycontroller.h:3002:fabgl::GenericBitmappedDisplayController::genericHScroll
   family: common-renderer
@@ -13013,10 +13016,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 3002
-    end_line: 3038
+    end_line: 3003
     symbol: fabgl::GenericBitmappedDisplayController::genericHScroll
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: e041c3ab089ca700b1b2ed786bdc142a3351e8df5f3ee9f04a1800bca35aeac1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: d4a0d03d98a0b38efd49da9e08e5432a03e36be26b8c2019577965173ba35244
 - id: algorithm:vdp-gl:src/displaycontroller.h:300:fabgl::RGB888::RGB888
   family: common-renderer
   symbol: RGB888
@@ -13032,7 +13035,7 @@ algorithms:
     start_line: 300
     end_line: 300
     symbol: fabgl::RGB888::RGB888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 78dab30b3711adca1df58c3279c0bfebad88ddccebce2d771ddd0c06369a2bff
 - id: algorithm:vdp-gl:src/displaycontroller.h:304:fabgl::operator%20==
   family: common-renderer
@@ -13049,7 +13052,7 @@ algorithms:
     start_line: 304
     end_line: 307
     symbol: fabgl::operator ==
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: a76ede560a92d38db43bc3ea7ef461c1a6fade08f8df5a31963a338e155854d1
 - id: algorithm:vdp-gl:src/displaycontroller.h:310:fabgl::operator%20%21=
   family: common-renderer
@@ -13066,7 +13069,7 @@ algorithms:
     start_line: 310
     end_line: 313
     symbol: fabgl::operator !=
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 172fd852a6fff28495ede3019c5be87b1f0be2b9a38b96dc4acf0887d0deb0e8
 - id: algorithm:vdp-gl:src/displaycontroller.h:328:fabgl::RGBA8888::RGBA8888
   family: common-renderer
@@ -13083,7 +13086,7 @@ algorithms:
     start_line: 328
     end_line: 328
     symbol: fabgl::RGBA8888::RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 8112475aa0ae0b587459fc866a2a2d1f55be508f29337ba72b5214dc49e6e705
 - id: algorithm:vdp-gl:src/displaycontroller.h:329:fabgl::RGBA8888::RGBA8888
   family: common-renderer
@@ -13100,7 +13103,7 @@ algorithms:
     start_line: 329
     end_line: 329
     symbol: fabgl::RGBA8888::RGBA8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3609ed8e5f92a306eef728ff2daa54741b833b43f240bee146d58de7d2953669
 - id: algorithm:vdp-gl:src/displaycontroller.h:345:fabgl::RGB222::RGB222
   family: common-renderer
@@ -13117,7 +13120,7 @@ algorithms:
     start_line: 345
     end_line: 345
     symbol: fabgl::RGB222::RGB222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: e25d978b62796aaeeaed2bf5d24fd30acd6b486d846cfbb21c633e6a98ce5ace
 - id: algorithm:vdp-gl:src/displaycontroller.h:346:fabgl::RGB222::RGB222
   family: common-renderer
@@ -13134,7 +13137,7 @@ algorithms:
     start_line: 346
     end_line: 346
     symbol: fabgl::RGB222::RGB222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: af1643775efae1b217f7577a6e944484bcaacbaccfdb61f6650be7ac5a40d1c4
 - id: algorithm:vdp-gl:src/displaycontroller.h:347:fabgl::RGB222::RGB222
   family: common-renderer
@@ -13151,7 +13154,7 @@ algorithms:
     start_line: 347
     end_line: 347
     symbol: fabgl::RGB222::RGB222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 7a5fa03d6792f64a762496301f875e320a67b9e61f7a0dc29341ac53f2a63fd0
 - id: algorithm:vdp-gl:src/displaycontroller.h:353:fabgl::operator%20==
   family: common-renderer
@@ -13168,7 +13171,7 @@ algorithms:
     start_line: 353
     end_line: 356
     symbol: fabgl::operator ==
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: bc6a0489ad548e46be315ffd0ea79c1765eeaf22c437f438cfd81d50481a5fdd
 - id: algorithm:vdp-gl:src/displaycontroller.h:359:fabgl::operator%20%21=
   family: common-renderer
@@ -13185,7 +13188,7 @@ algorithms:
     start_line: 359
     end_line: 362
     symbol: fabgl::operator !=
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 28935395a1afc51b2ba8c930b0e72690caf9ce90d3ad41725cd41f3c5baf9cf9
 - id: algorithm:vdp-gl:src/displaycontroller.h:376:fabgl::RGBA2222::RGBA2222
   family: common-renderer
@@ -13202,7 +13205,7 @@ algorithms:
     start_line: 376
     end_line: 376
     symbol: fabgl::RGBA2222::RGBA2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 55369a4684a1fe86e18832cf9de4aa52c5dcf4f2410e5787014687c2d89c3643
 - id: algorithm:vdp-gl:src/displaycontroller.h:384:fabgl::RGB888toPackedRGB222
   family: common-renderer
@@ -13219,7 +13222,7 @@ algorithms:
     start_line: 384
     end_line: 384
     symbol: fabgl::RGB888toPackedRGB222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3f207bb41f18fc171836e03e790c5f996d24ca38f7bfffd4c584b81c1659b3a1
 - id: algorithm:vdp-gl:src/displaycontroller.h:399:fabgl::Glyph::Glyph
   family: common-renderer
@@ -13236,7 +13239,7 @@ algorithms:
     start_line: 399
     end_line: 399
     symbol: fabgl::Glyph::Glyph
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: ee8f492a40704ca5e5f9cde3c8b45cdf0ffc0aa189cc611d2d3d01ef6d5d0949
 - id: algorithm:vdp-gl:src/displaycontroller.h:400:fabgl::Glyph::Glyph
   family: common-renderer
@@ -13253,7 +13256,7 @@ algorithms:
     start_line: 400
     end_line: 400
     symbol: fabgl::Glyph::Glyph
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 212686b5bd3f218ad2c3e239e191ce670f6dc6a512095bf728c020e9142e708d
 - id: algorithm:vdp-gl:src/displaycontroller.h:424:fabgl::GlyphOptions::FillBackground
   family: common-renderer
@@ -13270,7 +13273,7 @@ algorithms:
     start_line: 424
     end_line: 424
     symbol: fabgl::GlyphOptions::FillBackground
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 754e35a4c144457f46e83b29fee85d75a5ead5588f2e76f92389b1895a215ba5
 - id: algorithm:vdp-gl:src/displaycontroller.h:427:fabgl::GlyphOptions::Bold
   family: common-renderer
@@ -13287,7 +13290,7 @@ algorithms:
     start_line: 427
     end_line: 427
     symbol: fabgl::GlyphOptions::Bold
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: dc690ab110421eaad9b30fa8c83d2c883e1df911b4bff0ac9e09b1bba25c1ed4
 - id: algorithm:vdp-gl:src/displaycontroller.h:430:fabgl::GlyphOptions::Italic
   family: common-renderer
@@ -13304,7 +13307,7 @@ algorithms:
     start_line: 430
     end_line: 430
     symbol: fabgl::GlyphOptions::Italic
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: ed22a8dff5b286a1f25b8de7b8be80865a5e5586afa726b5ac61abf7e51e375d
 - id: algorithm:vdp-gl:src/displaycontroller.h:433:fabgl::GlyphOptions::Underline
   family: common-renderer
@@ -13321,7 +13324,7 @@ algorithms:
     start_line: 433
     end_line: 433
     symbol: fabgl::GlyphOptions::Underline
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: dc2b2af1411511d6c431abc2d4194a30d200192515c1f4f064f0c50e8a7c3378
 - id: algorithm:vdp-gl:src/displaycontroller.h:436:fabgl::GlyphOptions::DoubleWidth
   family: common-renderer
@@ -13338,7 +13341,7 @@ algorithms:
     start_line: 436
     end_line: 436
     symbol: fabgl::GlyphOptions::DoubleWidth
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: eff898b85289d3e3999ed80b964dd395fee1bfa6d549b0818b54c0eefdfef07a
 - id: algorithm:vdp-gl:src/displaycontroller.h:439:fabgl::GlyphOptions::Invert
   family: common-renderer
@@ -13355,7 +13358,7 @@ algorithms:
     start_line: 439
     end_line: 439
     symbol: fabgl::GlyphOptions::Invert
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: fa123d3276b8b591c97a8bb6e963daf1fbd316336b2611f277d9bd8f084e25f8
 - id: algorithm:vdp-gl:src/displaycontroller.h:442:fabgl::GlyphOptions::Blank
   family: common-renderer
@@ -13372,7 +13375,7 @@ algorithms:
     start_line: 442
     end_line: 442
     symbol: fabgl::GlyphOptions::Blank
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 7446710ebdaf0b4223a0120dfdefbbf8037384a504a52b87a3d409733de13382
 - id: algorithm:vdp-gl:src/displaycontroller.h:459:fabgl::glyphMapItem_getIndex
   family: common-renderer
@@ -13389,7 +13392,7 @@ algorithms:
     start_line: 459
     end_line: 459
     symbol: fabgl::glyphMapItem_getIndex
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: d3684dead5cf55da5db6243f58049d7756ae72af39bbe789803d45024cb29612
 - id: algorithm:vdp-gl:src/displaycontroller.h:460:fabgl::glyphMapItem_getIndex
   family: common-renderer
@@ -13406,7 +13409,7 @@ algorithms:
     start_line: 460
     end_line: 460
     symbol: fabgl::glyphMapItem_getIndex
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: b4283072b44514786e04023f0b8e46809c11461a3b6788914d37e16938cd7c0f
 - id: algorithm:vdp-gl:src/displaycontroller.h:462:fabgl::glyphMapItem_getBGColor
   family: common-renderer
@@ -13423,7 +13426,7 @@ algorithms:
     start_line: 462
     end_line: 462
     symbol: fabgl::glyphMapItem_getBGColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: f20fbd719de7a880edba324ae6c4555f3094170ca4f8fc1041bab836102d32fa
 - id: algorithm:vdp-gl:src/displaycontroller.h:463:fabgl::glyphMapItem_getBGColor
   family: common-renderer
@@ -13440,7 +13443,7 @@ algorithms:
     start_line: 463
     end_line: 463
     symbol: fabgl::glyphMapItem_getBGColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: f8819fbb891f0952473b14af6dab0b84a902c8966b368061c5f058b3dfdba384
 - id: algorithm:vdp-gl:src/displaycontroller.h:465:fabgl::glyphMapItem_getFGColor
   family: common-renderer
@@ -13457,7 +13460,7 @@ algorithms:
     start_line: 465
     end_line: 465
     symbol: fabgl::glyphMapItem_getFGColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 55f0c4556f49504cc9960dd46952e40daaf3d3a082ba161832a4a06e8bd660d4
 - id: algorithm:vdp-gl:src/displaycontroller.h:466:fabgl::glyphMapItem_getFGColor
   family: common-renderer
@@ -13474,7 +13477,7 @@ algorithms:
     start_line: 466
     end_line: 466
     symbol: fabgl::glyphMapItem_getFGColor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3d2ad0de0fb478b7411bdf751769853d51dc73285ecb507d23a2f22393cf6bee
 - id: algorithm:vdp-gl:src/displaycontroller.h:468:fabgl::glyphMapItem_getOptions
   family: common-renderer
@@ -13491,7 +13494,7 @@ algorithms:
     start_line: 468
     end_line: 468
     symbol: fabgl::glyphMapItem_getOptions
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0c81975e643e37b064eaa51eeb9350859e526fbdcb548bfec253c26c852cb505
 - id: algorithm:vdp-gl:src/displaycontroller.h:469:fabgl::glyphMapItem_getOptions
   family: common-renderer
@@ -13508,7 +13511,7 @@ algorithms:
     start_line: 469
     end_line: 469
     symbol: fabgl::glyphMapItem_getOptions
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 4288df40643e8fb63b2a8bb6344b5c784e69007aa793b0c2153f524c24df0a68
 - id: algorithm:vdp-gl:src/displaycontroller.h:471:fabgl::glyphMapItem_setOptions
   family: common-renderer
@@ -13525,7 +13528,7 @@ algorithms:
     start_line: 471
     end_line: 471
     symbol: fabgl::glyphMapItem_setOptions
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 02f2281be470d81d37a9f67ad4adf93003eb61dc3582e89daefd08c99f826981
 - id: algorithm:vdp-gl:src/displaycontroller.h:488:fabgl::GlyphsBufferRenderInfo::GlyphsBufferRenderInfo
   family: common-renderer
@@ -13542,7 +13545,7 @@ algorithms:
     start_line: 488
     end_line: 488
     symbol: fabgl::GlyphsBufferRenderInfo::GlyphsBufferRenderInfo
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 03c5065d1aae26bf9b766447effeac656bafdf115fda57c0750a52b99f6ebc4b
 - id: algorithm:vdp-gl:src/displaycontroller.h:538:fabgl::Bitmap::Bitmap
   family: common-renderer
@@ -13559,7 +13562,7 @@ algorithms:
     start_line: 538
     end_line: 538
     symbol: fabgl::Bitmap::Bitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0c178e485cf458dc9574a07c37827882a993bda3020231298404e1c55c343ade
 - id: algorithm:vdp-gl:src/displaycontroller.h:539:fabgl::Bitmap::Bitmap
   family: common-renderer
@@ -13576,7 +13579,7 @@ algorithms:
     start_line: 539
     end_line: 539
     symbol: fabgl::Bitmap::Bitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: d6f167e7f6003c7e33eaf810390445e5ed8407e9762d301a40f306fcb3e80244
 - id: algorithm:vdp-gl:src/displaycontroller.h:540:fabgl::Bitmap::Bitmap
   family: common-renderer
@@ -13593,7 +13596,7 @@ algorithms:
     start_line: 540
     end_line: 540
     symbol: fabgl::Bitmap::Bitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: e18cd481f8dd0509f92c732828994554bafe6ac878bd7a0a5b8ded0d7bc0069a
 - id: algorithm:vdp-gl:src/displaycontroller.h:541:fabgl::Bitmap::~Bitmap
   family: common-renderer
@@ -13610,7 +13613,7 @@ algorithms:
     start_line: 541
     end_line: 541
     symbol: fabgl::Bitmap::~Bitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 12488c3567325619a69b9b7e1e0a9861c3ada88729a6cada37c070e7d2b9eeb1
 - id: algorithm:vdp-gl:src/displaycontroller.h:543:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -13627,7 +13630,7 @@ algorithms:
     start_line: 543
     end_line: 543
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: c9e9ca82d1089c8d4a1e69a748a67a8f1f0ff2f30ebd4d3cc9d3c308607307d3
 - id: algorithm:vdp-gl:src/displaycontroller.h:544:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -13644,7 +13647,7 @@ algorithms:
     start_line: 544
     end_line: 544
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: a66be3f71f542d5e2c4cde7042c5c09e5c4970db7b6f78f1d6fe035bddd0c3d8
 - id: algorithm:vdp-gl:src/displaycontroller.h:545:fabgl::Bitmap::setPixel
   family: common-renderer
@@ -13661,7 +13664,7 @@ algorithms:
     start_line: 545
     end_line: 545
     symbol: fabgl::Bitmap::setPixel
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 2e587aca84d805be8b4ab36055acc53bfeacc54e0e8754d257ad74c094ec2fbf
 - id: algorithm:vdp-gl:src/displaycontroller.h:547:fabgl::Bitmap::getAlpha
   family: common-renderer
@@ -13678,7 +13681,7 @@ algorithms:
     start_line: 547
     end_line: 547
     symbol: fabgl::Bitmap::getAlpha
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 89d8e96b9e5a9295047813b57b95b73905da448d8f4098021a5fb3a230b901e4
 - id: algorithm:vdp-gl:src/displaycontroller.h:549:fabgl::Bitmap::getPixel2222
   family: common-renderer
@@ -13695,7 +13698,7 @@ algorithms:
     start_line: 549
     end_line: 549
     symbol: fabgl::Bitmap::getPixel2222
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0a1ae8f718f6b8665216c591e35ed2857c65eca6344dd138a6f597d79a4c3a17
 - id: algorithm:vdp-gl:src/displaycontroller.h:550:fabgl::Bitmap::getPixel8888
   family: common-renderer
@@ -13712,7 +13715,7 @@ algorithms:
     start_line: 550
     end_line: 550
     symbol: fabgl::Bitmap::getPixel8888
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 94684153388592937334d93a1e8eca25e96475b9d8f76d4ef80d2c9684d06e3c
 - id: algorithm:vdp-gl:src/displaycontroller.h:553:fabgl::Bitmap::allocate
   family: common-renderer
@@ -13729,7 +13732,7 @@ algorithms:
     start_line: 553
     end_line: 553
     symbol: fabgl::Bitmap::allocate
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: aadecafcfb54854f20e113223c707f4bb098ced5112fc4570982b0da40d37644
 - id: algorithm:vdp-gl:src/displaycontroller.h:554:fabgl::Bitmap::copyFrom
   family: common-renderer
@@ -13746,7 +13749,7 @@ algorithms:
     start_line: 554
     end_line: 554
     symbol: fabgl::Bitmap::copyFrom
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0e53fc477a12ee217f0d8904099c0ae15729bfa8556ba3c77bb85e5eca16fd53
 - id: algorithm:vdp-gl:src/displaycontroller.h:563:fabgl::BitmapDrawingInfo::BitmapDrawingInfo
   family: common-renderer
@@ -13763,7 +13766,7 @@ algorithms:
     start_line: 563
     end_line: 563
     symbol: fabgl::BitmapDrawingInfo::BitmapDrawingInfo
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 1e7d1f63680ddf9849975fa712f636a94b4b17bf14eb12de55a9c3d0659da60c
 - id: algorithm:vdp-gl:src/displaycontroller.h:575:fabgl::BitmapTransformedDrawingInfo::BitmapTransformedDrawingInfo
   family: common-renderer
@@ -13780,7 +13783,7 @@ algorithms:
     start_line: 575
     end_line: 576
     symbol: fabgl::BitmapTransformedDrawingInfo::BitmapTransformedDrawingInfo
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 95eb1622009ba07a3770f7b16b01cce8df76302aff574ce2184c421fb8e3701a
 - id: algorithm:vdp-gl:src/displaycontroller.h:639:fabgl::PaintOptions::PaintOptions
   family: common-renderer
@@ -13797,7 +13800,7 @@ algorithms:
     start_line: 639
     end_line: 639
     symbol: fabgl::PaintOptions::PaintOptions
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: df3e0c28ffe059e028c5567d24b48c36a4c7f19b52a1d0abc7aedbc178155f56
 - id: algorithm:vdp-gl:src/displaycontroller.h:675:fabgl::Sprite::Sprite
   family: common-renderer
@@ -13814,7 +13817,7 @@ algorithms:
     start_line: 675
     end_line: 675
     symbol: fabgl::Sprite::Sprite
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: e1e8f02df130893d8c6e7d51bc040be39229cf95c4ffec5609efac99ddad442c
 - id: algorithm:vdp-gl:src/displaycontroller.h:676:fabgl::Sprite::~Sprite
   family: common-renderer
@@ -13831,7 +13834,7 @@ algorithms:
     start_line: 676
     end_line: 676
     symbol: fabgl::Sprite::~Sprite
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 756ec48e213d33326429539e0a8b466884b0ddd197118bd4ee913fbfedd8a376
 - id: algorithm:vdp-gl:src/displaycontroller.h:677:fabgl::Sprite::getFrame
   family: common-renderer
@@ -13848,7 +13851,7 @@ algorithms:
     start_line: 677
     end_line: 677
     symbol: fabgl::Sprite::getFrame
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 16c992ce9fbb6850d56f32886857d84565aa44b792c1a2b131dee8d5db6480e5
 - id: algorithm:vdp-gl:src/displaycontroller.h:678:fabgl::Sprite::getFrameIndex
   family: common-renderer
@@ -13865,7 +13868,7 @@ algorithms:
     start_line: 678
     end_line: 678
     symbol: fabgl::Sprite::getFrameIndex
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: bd450d8b3f19d5300f9606e0ce65626d55487921aee8eb127ea3b937cc91d80a
 - id: algorithm:vdp-gl:src/displaycontroller.h:679:fabgl::Sprite::nextFrame
   family: common-renderer
@@ -13882,7 +13885,7 @@ algorithms:
     start_line: 679
     end_line: 679
     symbol: fabgl::Sprite::nextFrame
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 36c1cee99957a5b2a83d5b6ad32cbd988dde81daeaa7f9fd0b11fdee0b7b4236
 - id: algorithm:vdp-gl:src/displaycontroller.h:680:fabgl::Sprite::setFrame
   family: common-renderer
@@ -13899,7 +13902,7 @@ algorithms:
     start_line: 680
     end_line: 680
     symbol: fabgl::Sprite::setFrame
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 79a86a82a8f7e975fbc12f0a76d7ff80e009826b66ef5aed87e289c0bc2adcf4
 - id: algorithm:vdp-gl:src/displaycontroller.h:681:fabgl::Sprite::addBitmap
   family: common-renderer
@@ -13916,7 +13919,7 @@ algorithms:
     start_line: 681
     end_line: 681
     symbol: fabgl::Sprite::addBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 46600f803abc97445256cf58d345f7d73740a72d8debf60fbfc810f3ec682df4
 - id: algorithm:vdp-gl:src/displaycontroller.h:682:fabgl::Sprite::addBitmap
   family: common-renderer
@@ -13933,7 +13936,7 @@ algorithms:
     start_line: 682
     end_line: 682
     symbol: fabgl::Sprite::addBitmap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 554088a015e450977f68301ad2335f9c4514c0d41e38363c8db78c20852c56e6
 - id: algorithm:vdp-gl:src/displaycontroller.h:683:fabgl::Sprite::clearBitmaps
   family: common-renderer
@@ -13950,7 +13953,7 @@ algorithms:
     start_line: 683
     end_line: 683
     symbol: fabgl::Sprite::clearBitmaps
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: b3fa2289723abe7eeb2d0c50729933faed0a8a44970d6a8416bca0e19c48e2ee
 - id: algorithm:vdp-gl:src/displaycontroller.h:684:fabgl::Sprite::getWidth
   family: common-renderer
@@ -13967,7 +13970,7 @@ algorithms:
     start_line: 684
     end_line: 684
     symbol: fabgl::Sprite::getWidth
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 93bc4ec579f0a82a52d0ed53ec32b58e26cdba342e512e92d5e1a85a6e793d24
 - id: algorithm:vdp-gl:src/displaycontroller.h:685:fabgl::Sprite::getHeight
   family: common-renderer
@@ -13984,7 +13987,7 @@ algorithms:
     start_line: 685
     end_line: 685
     symbol: fabgl::Sprite::getHeight
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 70baf2946106e1ad8e6154c802cc94785c59c8ef2ab4d437b6dc8299723510e0
 - id: algorithm:vdp-gl:src/displaycontroller.h:686:fabgl::Sprite::moveBy
   family: common-renderer
@@ -14001,7 +14004,7 @@ algorithms:
     start_line: 686
     end_line: 686
     symbol: fabgl::Sprite::moveBy
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: bff4ec419422472d80b3d0c4b77d8312350c8de3b668ef900fe73ece47404bf2
 - id: algorithm:vdp-gl:src/displaycontroller.h:687:fabgl::Sprite::moveBy
   family: common-renderer
@@ -14018,7 +14021,7 @@ algorithms:
     start_line: 687
     end_line: 687
     symbol: fabgl::Sprite::moveBy
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: adeb50f058e00d312b3f9a8ff07254b36e8f5d02068f0ca75707136ffc545ea0
 - id: algorithm:vdp-gl:src/displaycontroller.h:688:fabgl::Sprite::moveTo
   family: common-renderer
@@ -14035,7 +14038,7 @@ algorithms:
     start_line: 688
     end_line: 688
     symbol: fabgl::Sprite::moveTo
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0f0e3fc74d461b6c790bff5a2b45f7d5b5be3bc55c50d6a558b8b836ec2ec7a7
 - id: algorithm:vdp-gl:src/displaycontroller.h:709:fabgl::LinePattern::setPattern
   family: common-renderer
@@ -14052,7 +14055,7 @@ algorithms:
     start_line: 709
     end_line: 713
     symbol: fabgl::LinePattern::setPattern
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: d9bbaaddca8442f2fd38e31621269e3987372639d355085eb3b3cdd14c940f9c
 - id: algorithm:vdp-gl:src/displaycontroller.h:762:fabgl::Primitive::Primitive
   family: common-renderer
@@ -14069,7 +14072,7 @@ algorithms:
     start_line: 762
     end_line: 762
     symbol: fabgl::Primitive::Primitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 151868246f159f3d5f936f53da450d852aacc2d9536ee8045fa1993f654c1dd7
 - id: algorithm:vdp-gl:src/displaycontroller.h:763:fabgl::Primitive::Primitive
   family: common-renderer
@@ -14086,7 +14089,7 @@ algorithms:
     start_line: 763
     end_line: 763
     symbol: fabgl::Primitive::Primitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3658564a8a15fc4fdb1563ef9dd5e24545d55549e21d50bc7ff51aabb2114741
 - id: algorithm:vdp-gl:src/displaycontroller.h:764:fabgl::Primitive::Primitive
   family: common-renderer
@@ -14103,7 +14106,7 @@ algorithms:
     start_line: 764
     end_line: 764
     symbol: fabgl::Primitive::Primitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: a419b0c53c2021836462034b9ebaeb9f130f59616c7907be65cc25d95575d0f5
 - id: algorithm:vdp-gl:src/displaycontroller.h:784:fabgl::PaintState::pushPosition
   family: common-renderer
@@ -14120,7 +14123,7 @@ algorithms:
     start_line: 784
     end_line: 787
     symbol: fabgl::PaintState::pushPosition
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: ec739ea22f558e6564e851a7145de371bbfa8b0944efeca68883a134a8b74e00
 - id: algorithm:vdp-gl:src/displaycontroller.h:809:fabgl::BaseDisplayController::setResolution
   family: common-renderer
@@ -14137,7 +14140,7 @@ algorithms:
     start_line: 809
     end_line: 809
     symbol: fabgl::BaseDisplayController::setResolution
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: a5d4f46aeb4f65a2c80b24d3a7fcbfd5e636b2165d9f5a1fd7625a574f47f9ad
 - id: algorithm:vdp-gl:src/displaycontroller.h:811:fabgl::BaseDisplayController::begin
   family: common-renderer
@@ -14154,7 +14157,7 @@ algorithms:
     start_line: 811
     end_line: 811
     symbol: fabgl::BaseDisplayController::begin
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 6be485cd012966688a38d8db237e1757778103a71071592a814f50bfb54e3d62
 - id: algorithm:vdp-gl:src/displaycontroller.h:818:fabgl::BaseDisplayController::controllerType
   family: common-renderer
@@ -14171,7 +14174,7 @@ algorithms:
     start_line: 818
     end_line: 818
     symbol: fabgl::BaseDisplayController::controllerType
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 19f28b5ebf37cf5d6cf858ccc3b482bccbceba69e99a096ba781067c99d6ab3c
 - id: algorithm:vdp-gl:src/displaycontroller.h:825:fabgl::BaseDisplayController::colorsCount
   family: common-renderer
@@ -14188,7 +14191,7 @@ algorithms:
     start_line: 825
     end_line: 825
     symbol: fabgl::BaseDisplayController::colorsCount
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 564047f5ab43dc0b7d5d167d979c9ace1abce1da3b49b9a0102fc8893c90c03f
 - id: algorithm:vdp-gl:src/displaycontroller.h:832:fabgl::BaseDisplayController::getScreenWidth
   family: common-renderer
@@ -14205,7 +14208,7 @@ algorithms:
     start_line: 832
     end_line: 832
     symbol: fabgl::BaseDisplayController::getScreenWidth
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 9be3dcd0ca33ba599e698ac4dde2668516d8902ea1166a7f93b7e7c93c1b7b09
 - id: algorithm:vdp-gl:src/displaycontroller.h:839:fabgl::BaseDisplayController::getScreenHeight
   family: common-renderer
@@ -14222,7 +14225,7 @@ algorithms:
     start_line: 839
     end_line: 839
     symbol: fabgl::BaseDisplayController::getScreenHeight
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: f1099059b6b7718d919a7cc24597a19ef0049e73d84e996797c03a96c625b936
 - id: algorithm:vdp-gl:src/displaycontroller.h:846:fabgl::BaseDisplayController::getViewPortWidth
   family: common-renderer
@@ -14239,7 +14242,7 @@ algorithms:
     start_line: 846
     end_line: 846
     symbol: fabgl::BaseDisplayController::getViewPortWidth
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 8552d051a31d1275ef4a44fb1ea40cb6806b7069f87476161d8931b63b564137
 - id: algorithm:vdp-gl:src/displaycontroller.h:853:fabgl::BaseDisplayController::getViewPortHeight
   family: common-renderer
@@ -14256,7 +14259,7 @@ algorithms:
     start_line: 853
     end_line: 853
     symbol: fabgl::BaseDisplayController::getViewPortHeight
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 73563d9cedcd8c6d57fc34c41c88b430835c2e353d50d5feca9088caa92d84ea
 - id: algorithm:vdp-gl:src/displaycontroller.h:858:fabgl::BaseDisplayController::setScreenSize
   family: common-renderer
@@ -14273,7 +14276,7 @@ algorithms:
     start_line: 858
     end_line: 858
     symbol: fabgl::BaseDisplayController::setScreenSize
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 24cf27f4ffd4c654e44f7b13e1e740c45cb67c710d136298df6d0295f9b30406
 - id: algorithm:vdp-gl:src/displaycontroller.h:879:fabgl::TextualDisplayController::controllerType
   family: common-renderer
@@ -14290,7 +14293,7 @@ algorithms:
     start_line: 879
     end_line: 879
     symbol: fabgl::TextualDisplayController::controllerType
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 52c9ac6cb60530d6477a03c5a44c7ebb98cf232df624ce6c849e45919edd58c6
 - id: algorithm:vdp-gl:src/displaycontroller.h:881:fabgl::TextualDisplayController::getColumns
   family: common-renderer
@@ -14307,7 +14310,7 @@ algorithms:
     start_line: 881
     end_line: 881
     symbol: fabgl::TextualDisplayController::getColumns
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 12fe65ee4aa6ce2abcd04815d74e3a99a9de767ae7a64a5c0154255f49c4e5b2
 - id: algorithm:vdp-gl:src/displaycontroller.h:882:fabgl::TextualDisplayController::getRows
   family: common-renderer
@@ -14324,7 +14327,7 @@ algorithms:
     start_line: 882
     end_line: 882
     symbol: fabgl::TextualDisplayController::getRows
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: b07168dd196cf9f877ec9a07c4f9294cf9135c62f71a2f51785c4868b5c094b0
 - id: algorithm:vdp-gl:src/displaycontroller.h:883:fabgl::TextualDisplayController::adjustMapSize
   family: common-renderer
@@ -14341,7 +14344,7 @@ algorithms:
     start_line: 883
     end_line: 883
     symbol: fabgl::TextualDisplayController::adjustMapSize
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: f4dbd8424b568f5617f3401889ecb469f5104917a4605807c23d54df20aef7d7
 - id: algorithm:vdp-gl:src/displaycontroller.h:884:fabgl::TextualDisplayController::setTextMap
   family: common-renderer
@@ -14358,7 +14361,7 @@ algorithms:
     start_line: 884
     end_line: 884
     symbol: fabgl::TextualDisplayController::setTextMap
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 0b5329c9bb408b67c2e6b85c3b9371a670e9741725d25dcbaae38734ec06234d
 - id: algorithm:vdp-gl:src/displaycontroller.h:885:fabgl::TextualDisplayController::enableCursor
   family: common-renderer
@@ -14375,7 +14378,7 @@ algorithms:
     start_line: 885
     end_line: 885
     symbol: fabgl::TextualDisplayController::enableCursor
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 4cc82519e21c67e74f5dee11dfa8105c3754563c508bdd453270ea58b6a7588b
 - id: algorithm:vdp-gl:src/displaycontroller.h:886:fabgl::TextualDisplayController::setCursorPos
   family: common-renderer
@@ -14392,7 +14395,7 @@ algorithms:
     start_line: 886
     end_line: 886
     symbol: fabgl::TextualDisplayController::setCursorPos
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: e1fec3aef7ab53f90c50f61b0ca9b7dd67148fe7833c600601f6f8e95316a5dd
 - id: algorithm:vdp-gl:src/displaycontroller.h:887:fabgl::TextualDisplayController::setCursorForeground
   family: common-renderer
@@ -14409,7 +14412,7 @@ algorithms:
     start_line: 887
     end_line: 887
     symbol: fabgl::TextualDisplayController::setCursorForeground
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 77928f7782d7565a899e9cb7e26157e5c45713f507949a244d20332bc1410519
 - id: algorithm:vdp-gl:src/displaycontroller.h:888:fabgl::TextualDisplayController::setCursorBackground
   family: common-renderer
@@ -14426,7 +14429,7 @@ algorithms:
     start_line: 888
     end_line: 888
     symbol: fabgl::TextualDisplayController::setCursorBackground
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 3401b616d917f03bcaab532e582edcc119a7d8b7699a03043d5f871f37796aaf
 - id: algorithm:vdp-gl:src/displaycontroller.h:889:fabgl::TextualDisplayController::getFont
   family: common-renderer
@@ -14443,7 +14446,7 @@ algorithms:
     start_line: 889
     end_line: 889
     symbol: fabgl::TextualDisplayController::getFont
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 21265f18abc978b9bb464da07fe3e85f2ee3302749f9d8ca06c29d4ddb99a3bf
 - id: algorithm:vdp-gl:src/displaycontroller.h:901:fabgl::BitmappedDisplayController::BitmappedDisplayController
   family: common-renderer
@@ -14460,7 +14463,7 @@ algorithms:
     start_line: 901
     end_line: 901
     symbol: fabgl::BitmappedDisplayController::BitmappedDisplayController
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: a384137c8df535d1dd5adcc6ea9fd47eda0aaf902a24f40f4988a0e5388d5b73
 - id: algorithm:vdp-gl:src/displaycontroller.h:902:fabgl::BitmappedDisplayController::~BitmappedDisplayController
   family: common-renderer
@@ -14477,7 +14480,7 @@ algorithms:
     start_line: 902
     end_line: 902
     symbol: fabgl::BitmappedDisplayController::~BitmappedDisplayController
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 2ea20d535fae7e389d13b3d8fa6f05bf3f9bbf1ef431fd92e99486e6e898a34a
 - id: algorithm:vdp-gl:src/displaycontroller.h:904:fabgl::BitmappedDisplayController::controllerType
   family: common-renderer
@@ -14494,7 +14497,7 @@ algorithms:
     start_line: 904
     end_line: 904
     symbol: fabgl::BitmappedDisplayController::controllerType
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 242f5380ffa213b5a201f85629b1fcf0e5d836bd1430fe8fc9965396feaea803
 - id: algorithm:vdp-gl:src/displaycontroller.h:911:fabgl::BitmappedDisplayController::nativePixelFormat
   family: common-renderer
@@ -14511,7 +14514,7 @@ algorithms:
     start_line: 911
     end_line: 911
     symbol: fabgl::BitmappedDisplayController::nativePixelFormat
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: baa57ab8e4c362b5e03a67bc1c5530c05222e5a33f48116ea8aab1f8bc092f60
 - id: algorithm:vdp-gl:src/displaycontroller.h:913:fabgl::BitmappedDisplayController::paintState
   family: common-renderer
@@ -14528,7 +14531,7 @@ algorithms:
     start_line: 913
     end_line: 913
     symbol: fabgl::BitmappedDisplayController::paintState
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 8f4fb474909553b2d1cf808240fbca480398f8ea569196b4c3e5badbde83f32b
 - id: algorithm:vdp-gl:src/displaycontroller.h:915:fabgl::BitmappedDisplayController::addPrimitive
   family: common-renderer
@@ -14545,7 +14548,7 @@ algorithms:
     start_line: 915
     end_line: 915
     symbol: fabgl::BitmappedDisplayController::addPrimitive
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
     span_sha256: 7bb171e99f9b669a033d0e100648a93f0c728a43d9bd77b7ce4acb1635ad78f8
 - id: algorithm:vdp-gl:src/displaycontroller.h:917:fabgl::BitmappedDisplayController::primitivesExecutionWait
   family: common-renderer
@@ -14560,10 +14563,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 917
-    end_line: 917
+    end_line: 921
     symbol: fabgl::BitmappedDisplayController::primitivesExecutionWait
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: b0c851d00b93b041a446748cfd397827b86eda254de811aa1692fd1822c1b1aa
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: c8ce99f35b8428fd970460b08ed2c97bf877f458a721fd688a7f1ea370145b33
 - id: algorithm:vdp-gl:src/displaycontroller.h:930:fabgl::BitmappedDisplayController::enableBackgroundPrimitiveExecution
   family: common-renderer
   symbol: enableBackgroundPrimitiveExecution
@@ -14577,10 +14580,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 930
-    end_line: 930
+    end_line: 934
     symbol: fabgl::BitmappedDisplayController::enableBackgroundPrimitiveExecution
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 6174a43d6d2cae57fe42cb7c2a9b44aae279a223428f1bd3d495e7ecad2be576
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 447433cda9535322cb25dbbcff717b339cffafc28d977994fa6ba11d374af717
 - id: algorithm:vdp-gl:src/displaycontroller.h:939:fabgl::BitmappedDisplayController::enableBackgroundPrimitiveTimeout
   family: common-renderer
   symbol: enableBackgroundPrimitiveTimeout
@@ -14594,10 +14597,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 939
-    end_line: 939
+    end_line: 943
     symbol: fabgl::BitmappedDisplayController::enableBackgroundPrimitiveTimeout
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: c43a8dfecb991f773193607333847dd71ffa220140edf2c5e496cac518ba237d
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 879e6d099123835c280ba327d8edcc24a57366fe2073681340c2541259029033
 - id: algorithm:vdp-gl:src/displaycontroller.h:941:fabgl::BitmappedDisplayController::backgroundPrimitiveTimeoutEnabled
   family: common-renderer
   symbol: backgroundPrimitiveTimeoutEnabled
@@ -14611,10 +14614,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 941
-    end_line: 941
+    end_line: 943
     symbol: fabgl::BitmappedDisplayController::backgroundPrimitiveTimeoutEnabled
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: efd77c403a4af916e0989cd5574f139ba20a3c30ea999b6e2daebf978a85fd6f
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 3c5ac9f0d8fc251f952ee51de5b68ae31e895972a6f452dee170a89a47cf690c
 - id: algorithm:vdp-gl:src/displaycontroller.h:951:fabgl::BitmappedDisplayController::suspendBackgroundPrimitiveExecution
   family: common-renderer
   symbol: suspendBackgroundPrimitiveExecution
@@ -14628,10 +14631,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 951
-    end_line: 951
+    end_line: 955
     symbol: fabgl::BitmappedDisplayController::suspendBackgroundPrimitiveExecution
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: f01fd0a1bc6ed15172efd093e6f10abf4116dcd4a0f73bd6113d8d97e3ffa9f1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 4275000793f854b16cef831d9ec3d23516eecafda5d5c691e930ef1c7611cc96
 - id: algorithm:vdp-gl:src/displaycontroller.h:958:fabgl::BitmappedDisplayController::resumeBackgroundPrimitiveExecution
   family: common-renderer
   symbol: resumeBackgroundPrimitiveExecution
@@ -14645,10 +14648,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 958
-    end_line: 958
+    end_line: 962
     symbol: fabgl::BitmappedDisplayController::resumeBackgroundPrimitiveExecution
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: c8a47122428c19b416607f95aab676b6df7129680782c858b82ad912b8b8e336
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 218fee0ee42e581af549e91aee1822483679bf3bf43ca09d5f11d363aa0ee97d
 - id: algorithm:vdp-gl:src/displaycontroller.h:966:fabgl::BitmappedDisplayController::processPrimitives
   family: common-renderer
   symbol: processPrimitives
@@ -14662,10 +14665,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 966
-    end_line: 966
+    end_line: 970
     symbol: fabgl::BitmappedDisplayController::processPrimitives
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: 389f9954eda186eb97f08e78ef6058d57f1da7167c6923aa921651f5976badeb
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 8a00c96769bf8c2fc07fd39802aebf22a5e35d052b95bc1c7e46f94c2bdc13e7
 - id: algorithm:vdp-gl:src/displaycontroller.h:992:fabgl::BitmappedDisplayController::setSprites
   family: common-renderer
   symbol: setSprites
@@ -14679,10 +14682,10 @@ algorithms:
     source_id: source:vdp-gl:all-the-plots
     path: src/displaycontroller.h
     start_line: 992
-    end_line: 994
+    end_line: 998
     symbol: fabgl::BitmappedDisplayController::setSprites
-    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
-    span_sha256: b581fe912c352f26f2607b49bbd97d89eb466105d70438b07fe59e361942e9e1
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: b4f57c9b3213328d435ef3d08031219c2467f85db85af2db11f74f550d57abac
 - id: algorithm:vdp-gl:src/fabutils.cpp:377:fabgl::getBit
   family: common-geometry
   symbol: getBit

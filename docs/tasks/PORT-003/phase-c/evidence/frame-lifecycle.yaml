@@ -1,0 +1,569 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_frame_lifecycle_provenance
+generated_by: docs/tasks/PORT-003/phase-c/scripts/extract-frame-lifecycle.py
+diagnostic_status: source-derived design evidence; not runtime qualification
+inputs:
+- path: docs/tasks/SETUP-003/generated/symbols.yaml
+  sha256: d9c2dc04353d0fb9e103c53489a59e9acd088ec6be077ee9782e635780c2adff
+sources:
+- owner: agon-vdp
+  path: video/agon_screen.h
+  sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+- owner: agon-vdp
+  path: video/context.h
+  sha256: 5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e
+- owner: vdp-gl
+  path: src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- owner: vdp-gl
+  path: src/dispdrivers/vga16controller.cpp
+  sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+- owner: vdp-gl
+  path: src/dispdrivers/vga2controller.cpp
+  sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+- owner: vdp-gl
+  path: src/dispdrivers/vga4controller.cpp
+  sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+- owner: vdp-gl
+  path: src/dispdrivers/vga64controller.cpp
+  sha256: 8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b
+- owner: vdp-gl
+  path: src/dispdrivers/vga8controller.cpp
+  sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+- owner: vdp-gl
+  path: src/dispdrivers/vgabasecontroller.cpp
+  sha256: 443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa
+- owner: vdp-gl
+  path: src/dispdrivers/vgabasecontroller.h
+  sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+- owner: vdp-gl
+  path: src/dispdrivers/vgacontroller.cpp
+  sha256: 77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541
+- owner: vdp-gl
+  path: src/displaycontroller.cpp
+  sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+- owner: vdp-gl
+  path: src/displaycontroller.h
+  sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+records:
+- id: frame-lifecycle:agon-vdp:video/agon_screen.h:477:waitPlotCompletion
+  owner: agon-vdp
+  kind: callable
+  symbol: waitPlotCompletion
+  qualified_name: waitPlotCompletion
+  signature: (bool waitForVSync=false)
+  disposition: retain-facade-contract
+  rationale: Official completion facade delegates to Canvas.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 477
+    end_line: 479
+    symbol: waitPlotCompletion
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: b39a50070f735ebdb6b17da9815fb7e529b038e1f3befdd17a04f7844fd98fc9
+- id: frame-lifecycle:agon-vdp:video/agon_screen.h:484:switchBuffer
+  owner: agon-vdp
+  kind: callable
+  symbol: switchBuffer
+  qualified_name: switchBuffer
+  signature: ()
+  disposition: retain-facade-contract
+  rationale: Official single/double-buffer behavior requires a logical frame edge.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 484
+    end_line: 491
+    symbol: switchBuffer
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 79a30429fe46e67ea5ca73b775600616e14351515945b94c20fadab8ade29111
+- id: frame-lifecycle:agon-vdp:video/context.h:1013:frame-counter-variable-writes
+  owner: agon-vdp
+  kind: source-region
+  symbol: frame-counter-variable-writes
+  disposition: retain-facade-contract
+  rationale: VDP variables write the low/high halves of the live 32-bit counter.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/context.h
+    start_line: 1013
+    end_line: 1021
+    symbol: frame-counter-variable-writes
+    file_sha256: 5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e
+    span_sha256: 8e30a91733892f0428334767b8e7c914a1a0966f5b0fd7e64c206c3891544587
+- id: frame-lifecycle:agon-vdp:video/context.h:1312:checkForVSYNC
+  owner: agon-vdp
+  kind: callable
+  symbol: checkForVSYNC
+  qualified_name: Context::checkForVSYNC
+  signature: (bool hasPendingCommands)
+  disposition: retain-facade-contract
+  rationale: Official contexts observe frame-counter changes and frame waits.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/context.h
+    start_line: 1312
+    end_line: 1336
+    symbol: checkForVSYNC
+    file_sha256: 5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e
+    span_sha256: 157cdf361b77fb63361a79edd201b52d370e735200fbdd244f44e0d812df5159
+- id: frame-lifecycle:agon-vdp:video/context.h:19:last-frame-counter-global
+  owner: agon-vdp
+  kind: source-region
+  symbol: last-frame-counter-global
+  disposition: retain-facade-contract
+  rationale: Official contexts retain the last observed frame count.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/context.h
+    start_line: 19
+    end_line: 19
+    symbol: last-frame-counter-global
+    file_sha256: 5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e
+    span_sha256: 4b9836f43de41bf195c5669b07a4ef78070fa1d6011c308870e77fbba6c70be6
+- id: frame-lifecycle:vdp-gl:src/canvas.cpp:105:endUpdate
+  owner: vdp-gl
+  kind: callable
+  symbol: endUpdate
+  qualified_name: fabgl::Canvas::endUpdate
+  signature: ()
+  disposition: retain-common-contract
+  rationale: Canvas resumes rendering after an update scope.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.cpp
+    start_line: 105
+    end_line: 108
+    symbol: endUpdate
+    file_sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+    span_sha256: f37eeb706917d0934b2da863f7c6d942f09d05dc1fb74ea193894069b9aacd42
+- id: frame-lifecycle:vdp-gl:src/canvas.cpp:647:swapBuffers
+  owner: vdp-gl
+  kind: callable
+  symbol: swapBuffers
+  qualified_name: fabgl::Canvas::swapBuffers
+  signature: ()
+  disposition: retain-common-contract
+  rationale: Canvas submits a notifying swap and waits for completion.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.cpp
+    start_line: 647
+    end_line: 654
+    symbol: swapBuffers
+    file_sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+    span_sha256: 02fc99443faedb9190361e57e322004acb9858fd99a45f59bbfb58af0e7e65d0
+- id: frame-lifecycle:vdp-gl:src/canvas.cpp:713:noOp
+  owner: vdp-gl
+  kind: callable
+  symbol: noOp
+  qualified_name: fabgl::Canvas::noOp
+  signature: ()
+  disposition: retain-common-contract
+  rationale: Official single-buffer frame waits enqueue a Flush marker.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.cpp
+    start_line: 713
+    end_line: 718
+    symbol: noOp
+    file_sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+    span_sha256: 14ac5466c86ce72d33c2a6f97e7cb9d63bd01ff80e9d2ab0b2d634e9a916bd41
+- id: frame-lifecycle:vdp-gl:src/canvas.cpp:85:waitCompletion
+  owner: vdp-gl
+  kind: callable
+  symbol: waitCompletion
+  qualified_name: fabgl::Canvas::waitCompletion
+  signature: (bool waitVSync)
+  disposition: adapt-common-sequence
+  rationale: Caller-visible completion currently delegates to a queue-depth poll.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.cpp
+    start_line: 85
+    end_line: 92
+    symbol: waitCompletion
+    file_sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+    span_sha256: 520d5f0d9e540db4c05065e3e78c191011507f6ee48a5f7f0d4126a5bec22011
+- id: frame-lifecycle:vdp-gl:src/canvas.cpp:99:beginUpdate
+  owner: vdp-gl
+  kind: callable
+  symbol: beginUpdate
+  qualified_name: fabgl::Canvas::beginUpdate
+  signature: ()
+  disposition: retain-common-contract
+  rationale: Canvas exposes nested rendering suspension.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/canvas.cpp
+    start_line: 99
+    end_line: 102
+    symbol: beginUpdate
+    file_sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+    span_sha256: 6d620eb325257bb143cd23e74624110115f50462701b419df5b23bc0087768cc
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vga16controller.cpp:817:vga16-frame-edge
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga16-frame-edge
+  disposition: exclude-physical-trigger
+  rationale: Physical scan completion increments the counter and wakes the old task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.cpp
+    start_line: 817
+    end_line: 825
+    symbol: vga16-frame-edge
+    file_sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+    span_sha256: 105fa64fb3e9c1aabbc1fc1c0da8469a8e33fccbb021caf30ab800125ec84d81
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vga2controller.cpp:775:vga2-frame-edge
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga2-frame-edge
+  disposition: exclude-physical-trigger
+  rationale: Physical scan completion increments the counter and wakes the old task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.cpp
+    start_line: 775
+    end_line: 783
+    symbol: vga2-frame-edge
+    file_sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+    span_sha256: 9be2b0c69f341fb33ada0e38965f13947ade26178ecd76f58ed7c5789f3c4ad0
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vga4controller.cpp:809:vga4-frame-edge
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga4-frame-edge
+  disposition: exclude-physical-trigger
+  rationale: Physical scan completion increments the counter and wakes the old task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.cpp
+    start_line: 809
+    end_line: 817
+    symbol: vga4-frame-edge
+    file_sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+    span_sha256: df8dd9392831f55cad6621a72826149f8b4a17fd196e35191353eb5a251d78f6
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vga64controller.cpp:741:vga64-frame-edge
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga64-frame-edge
+  disposition: exclude-physical-trigger
+  rationale: Physical scan completion increments the counter and wakes the old task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.cpp
+    start_line: 741
+    end_line: 749
+    symbol: vga64-frame-edge
+    file_sha256: 8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b
+    span_sha256: ed35f332ec5e0bce3125ec45179093c61363a2ccfcc189840a98da47d951f37a
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vga8controller.cpp:774:vga8-frame-edge
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga8-frame-edge
+  disposition: exclude-physical-trigger
+  rationale: Physical scan completion increments the counter and wakes the old task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.cpp
+    start_line: 774
+    end_line: 782
+    symbol: vga8-frame-edge
+    file_sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+    span_sha256: 74db30e8179de90fb61f545c513951a019940e3eeff0d34c6badeb6c8f6f62f4
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgabasecontroller.cpp:346:suspendBackgroundPrimitiveExecution
+  owner: vdp-gl
+  kind: callable
+  symbol: suspendBackgroundPrimitiveExecution
+  qualified_name: fabgl::VGABaseController::suspendBackgroundPrimitiveExecution
+  signature: ()
+  disposition: replace-platform-task
+  rationale: Busy-wait suspension over VGA task flags is not a P4 synchronization contract.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.cpp
+    start_line: 346
+    end_line: 351
+    symbol: suspendBackgroundPrimitiveExecution
+    file_sha256: 443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa
+    span_sha256: ebb21ce50852bf77b77c7ff7e9cb540a369208fa488e3f223b0d0317e9268a41
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgabasecontroller.cpp:356:resumeBackgroundPrimitiveExecution
+  owner: vdp-gl
+  kind: callable
+  symbol: resumeBackgroundPrimitiveExecution
+  qualified_name: fabgl::VGABaseController::resumeBackgroundPrimitiveExecution
+  signature: ()
+  disposition: replace-platform-task
+  rationale: The P4 service requires project-owned nested suspension.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.cpp
+    start_line: 356
+    end_line: 359
+    symbol: resumeBackgroundPrimitiveExecution
+    file_sha256: 443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa
+    span_sha256: a6f7c025170c19cea5cbcda0889b72824b111df580679546b3d6458392c14059
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgabasecontroller.cpp:769:swapBuffers
+  owner: vdp-gl
+  kind: callable
+  symbol: swapBuffers
+  qualified_name: fabgl::VGABaseController::swapBuffers
+  signature: ()
+  disposition: adapt-logical-swap
+  rationale: Only logical drawing/visible identity exchange is retained.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.cpp
+    start_line: 769
+    end_line: 776
+    symbol: swapBuffers
+    file_sha256: 443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa
+    span_sha256: ba9d2f73799971ca682aa23db45d4a749cafa1bc1695f9b45d31c2533dc031e8
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgabasecontroller.cpp:781:primitiveExecTask
+  owner: vdp-gl
+  kind: callable
+  symbol: primitiveExecTask
+  qualified_name: fabgl::VGABaseController::primitiveExecTask
+  signature: (void * arg)
+  disposition: replace-platform-task
+  rationale: Retain bounded task-context execution but replace VSYNC notification and Xtensa cycle budgets.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.cpp
+    start_line: 781
+    end_line: 806
+    symbol: primitiveExecTask
+    file_sha256: 443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa
+    span_sha256: 0d7ff9a7b67ddea6d617abc10a19b5b83e8e91922a44619762b6bc458961f712
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgabasecontroller.h:289:writable-frame-counter
+  owner: vdp-gl
+  kind: source-region
+  symbol: writable-frame-counter
+  disposition: retain-facade-contract
+  rationale: The official facade expects a directly writable 32-bit-compatible field.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgabasecontroller.h
+    start_line: 289
+    end_line: 292
+    symbol: writable-frame-counter
+    file_sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
+    span_sha256: 1d87af89068498d5a84eddce640066a282612d82ac2e966fa4b8c7bc4d90bf5e
+- id: frame-lifecycle:vdp-gl:src/dispdrivers/vgacontroller.cpp:131:VSyncInterrupt
+  owner: vdp-gl
+  kind: callable
+  symbol: VSyncInterrupt
+  qualified_name: fabgl::VGAController::VSyncInterrupt
+  signature: (void * arg)
+  disposition: exclude-physical-trigger
+  rationale: The old I2S EOF ISR supplies timing and rendering and must not enter the P4 build.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgacontroller.cpp
+    start_line: 131
+    end_line: 152
+    symbol: VSyncInterrupt
+    file_sha256: 77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541
+    span_sha256: 80e049f602631fbae5dd02262a3bae71403ee6260e27238920671a4ddfadbe6d
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:495:setDoubleBuffered
+  owner: vdp-gl
+  kind: callable
+  symbol: setDoubleBuffered
+  qualified_name: fabgl::BitmappedDisplayController::setDoubleBuffered
+  signature: (bool value)
+  disposition: adapt-common-sequence
+  rationale: Queue capacity and plane mode are coupled in common code.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 495
+    end_line: 502
+    symbol: setDoubleBuffered
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 76a2318fa0a7c80cffb3bc95b159f767520d402cf7124e1890952bf24ad1d283
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:525:addPrimitive
+  owner: vdp-gl
+  kind: callable
+  symbol: addPrimitive
+  qualified_name: fabgl::BitmappedDisplayController::addPrimitive
+  signature: (Primitive & primitive)
+  disposition: adapt-common-sequence
+  rationale: Submission, dynamic payload ownership, immediate drawing, and swap notification begin here.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 525
+    end_line: 549
+    symbol: addPrimitive
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1d43454b932a5ae1116bb310b75157cd2604b6afe8db89f9756020f1aa3c75bd
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:547:primitiveReplaceDynamicBuffers
+  owner: vdp-gl
+  kind: callable
+  symbol: primitiveReplaceDynamicBuffers
+  qualified_name: fabgl::BitmappedDisplayController::primitiveReplaceDynamicBuffers
+  signature: (Primitive & primitive)
+  disposition: retain-common-contract
+  rationale: Queued path and transform payloads require owned lifetime until execution.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 547
+    end_line: 547
+    symbol: primitiveReplaceDynamicBuffers
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 86ae5c948f4744a280ea56dbedd3f160ca30d6451da628246e09b7b0ee083093
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:590:getPrimitiveISR
+  owner: vdp-gl
+  kind: callable
+  symbol: getPrimitiveISR
+  qualified_name: fabgl::BitmappedDisplayController::getPrimitiveISR
+  signature: (Primitive * primitive)
+  disposition: exclude-physical-trigger
+  rationale: ISR dequeue is tied to the old physical execution path.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 590
+    end_line: 592
+    symbol: getPrimitiveISR
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: c264ff8f99ff8d0af9d77e9df9d5efecb9a53ac8282f6df8ef2ca25a70b3c6da
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:596:getPrimitive
+  owner: vdp-gl
+  kind: callable
+  symbol: getPrimitive
+  qualified_name: fabgl::BitmappedDisplayController::getPrimitive
+  signature: (Primitive * primitive,int timeOutMS)
+  disposition: adapt-common-sequence
+  rationale: The P4 frame task needs task-context dequeue with explicit completion.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 596
+    end_line: 622
+    symbol: getPrimitive
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 3047c9944a1306de070f50ba57104e085f991fff84283cf032c32ccd33cf81fc
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:603:waitForPrimitives
+  owner: vdp-gl
+  kind: callable
+  symbol: waitForPrimitives
+  qualified_name: fabgl::BitmappedDisplayController::waitForPrimitives
+  signature: ()
+  disposition: adapt-common-sequence
+  rationale: The upstream helper peeks for queue non-emptiness rather than completion.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 603
+    end_line: 622
+    symbol: waitForPrimitives
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: cd04c959b434f8d52e1b489d73862f9aaaeb23a7f65e208c0bc8551cc0097ef9
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:610:primitivesExecutionWait
+  owner: vdp-gl
+  kind: callable
+  symbol: primitivesExecutionWait
+  qualified_name: fabgl::BitmappedDisplayController::primitivesExecutionWait
+  signature: ()
+  disposition: adapt-common-sequence
+  rationale: Queue emptiness can race an already-dequeued primitive.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 610
+    end_line: 611
+    symbol: primitivesExecutionWait
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: c6150985bf7286589a93f651e8b3cf31925681fdca41f7208b2422b6cd6b07db
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:622:enableBackgroundPrimitiveExecution
+  owner: vdp-gl
+  kind: callable
+  symbol: enableBackgroundPrimitiveExecution
+  qualified_name: fabgl::BitmappedDisplayController::enableBackgroundPrimitiveExecution
+  signature: (bool value)
+  disposition: adapt-common-sequence
+  rationale: Mode switching drains work and invokes platform suspension hooks.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 622
+    end_line: 632
+    symbol: enableBackgroundPrimitiveExecution
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 1a3d618642006fc78326f1e7d0f98ac5b507d587de81472fac6bc60ca0b8615e
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:638:processPrimitives
+  owner: vdp-gl
+  kind: callable
+  symbol: processPrimitives
+  qualified_name: fabgl::BitmappedDisplayController::processPrimitives
+  signature: ()
+  disposition: adapt-common-sequence
+  rationale: Immediate draining must preserve completion and payload lifetime.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 638
+    end_line: 638
+    symbol: processPrimitives
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: 3a6e4ffbdfc9f2b0c80ec6827152e60dabc4e93236b104ab64de2f22c1aed15f
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.cpp:927:swap-execution-and-notification
+  owner: vdp-gl
+  kind: source-region
+  symbol: swap-execution-and-notification
+  disposition: adapt-common-sequence
+  rationale: Swap changes visibility before notifying its submitting task.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 927
+    end_line: 938
+    symbol: swap-execution-and-notification
+    file_sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+    span_sha256: d51232dda63c44d5281f099c3be673b9eaad9f90ca8eb13c9b337d3a7ee44d35
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.h:1208:queue-and-background-state
+  owner: vdp-gl
+  kind: source-region
+  symbol: queue-and-background-state
+  disposition: adapt-common-sequence
+  rationale: Private queue/background fields prevent a derived controller from replacing completion semantics alone.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 1208
+    end_line: 1214
+    symbol: queue-and-background-state
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: fb58ff4fa4bc843a1a35c5d148c1a27c2ea721dcec42ee28105b0ea3e67a865f
+- id: frame-lifecycle:vdp-gl:src/displaycontroller.h:211:swap-primitive-contract
+  owner: vdp-gl
+  kind: source-region
+  symbol: swap-primitive-contract
+  disposition: retain-common-contract
+  rationale: SwapBuffers carries the waiting task identity.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 211
+    end_line: 218
+    symbol: swap-primitive-contract
+    file_sha256: 3d94f5e18f2a096d5640ca12e48d0212e0ed6ccfee173f44a48b2a16fe133ed4
+    span_sha256: 69a2d8c74561d1b86efa224417d8f8fc4188ce7f74fef8c733112afe18866494
+findings:
+  queue_empty_race: primitivesExecutionWait observes queued count only; dequeued execution is not represented
+  derived_override_limit: queue and background state are private and completion methods are non-virtual
+  swap_order: logical swap precedes submitter notification
+  frame_edge_order: old controllers increment frameCounter before waking or executing frame-bounded primitive work
+summary:
+  record_count: 33
+  source_file_count: 13
+  counts_by_disposition:
+    adapt-common-sequence: 10
+    adapt-logical-swap: 1
+    exclude-physical-trigger: 7
+    replace-platform-task: 3
+    retain-common-contract: 6
+    retain-facade-contract: 6

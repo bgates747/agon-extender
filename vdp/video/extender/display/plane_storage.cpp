@@ -31,11 +31,15 @@ PlaneStorage::PlaneStorage(PlaneStorage &&other) noexcept
     : allocator_(other.allocator_),
       mode_(other.mode_),
       planes_{other.planes_[0], other.planes_[1]},
+      drawing_index_(other.drawing_index_),
+      visible_index_(other.visible_index_),
       plane_size_(other.plane_size_),
       stride_(other.stride_),
       configured_(other.configured_) {
   other.planes_[0] = nullptr;
   other.planes_[1] = nullptr;
+  other.drawing_index_ = 0;
+  other.visible_index_ = 0;
   other.plane_size_ = 0;
   other.stride_ = 0;
   other.configured_ = false;
@@ -48,11 +52,15 @@ PlaneStorage &PlaneStorage::operator=(PlaneStorage &&other) noexcept {
   mode_ = other.mode_;
   planes_[0] = other.planes_[0];
   planes_[1] = other.planes_[1];
+  drawing_index_ = other.drawing_index_;
+  visible_index_ = other.visible_index_;
   plane_size_ = other.plane_size_;
   stride_ = other.stride_;
   configured_ = other.configured_;
   other.planes_[0] = nullptr;
   other.planes_[1] = nullptr;
+  other.drawing_index_ = 0;
+  other.visible_index_ = 0;
   other.plane_size_ = 0;
   other.stride_ = 0;
   other.configured_ = false;
@@ -98,12 +106,22 @@ ConfigureResult PlaneStorage::configure(ModeDescriptor const &mode) noexcept {
   planes_[0] = first;
   planes_[1] = second;
   mode_ = mode;
+  visible_index_ = 0;
+  drawing_index_ = mode.double_buffered ? 1 : 0;
   plane_size_ = new_size;
   stride_ = new_stride;
   configured_ = true;
   if (old_second != nullptr) allocator_.deallocate(allocator_.context, old_second);
   if (old_first != nullptr) allocator_.deallocate(allocator_.context, old_first);
   return ConfigureResult::Ok;
+}
+
+bool PlaneStorage::swapPlanes() noexcept {
+  if (!configured_ || !mode_.double_buffered) return false;
+  std::uint8_t temporary = visible_index_;
+  visible_index_ = drawing_index_;
+  drawing_index_ = temporary;
+  return true;
 }
 
 void PlaneStorage::release() noexcept {
@@ -115,6 +133,8 @@ void PlaneStorage::release() noexcept {
   }
   planes_[0] = nullptr;
   planes_[1] = nullptr;
+  drawing_index_ = 0;
+  visible_index_ = 0;
   plane_size_ = 0;
   stride_ = 0;
   configured_ = false;
@@ -125,19 +145,27 @@ bool PlaneStorage::configured() const noexcept { return configured_; }
 ModeDescriptor const &PlaneStorage::mode() const noexcept { return mode_; }
 
 PlaneView PlaneStorage::drawingPlane() noexcept {
-  return mutableView(planes_[mode_.double_buffered ? 1 : 0], plane_size_, stride_);
+  return mutableView(planes_[drawing_index_], plane_size_, stride_);
 }
 
 PlaneView PlaneStorage::visiblePlane() noexcept {
-  return mutableView(planes_[0], plane_size_, stride_);
+  return mutableView(planes_[visible_index_], plane_size_, stride_);
 }
 
 ConstPlaneView PlaneStorage::drawingPlane() const noexcept {
-  return constView(planes_[mode_.double_buffered ? 1 : 0], plane_size_, stride_);
+  return constView(planes_[drawing_index_], plane_size_, stride_);
 }
 
 ConstPlaneView PlaneStorage::visiblePlane() const noexcept {
-  return constView(planes_[0], plane_size_, stride_);
+  return constView(planes_[visible_index_], plane_size_, stride_);
+}
+
+std::uint8_t PlaneStorage::drawingPlaneIdentity() const noexcept {
+  return drawing_index_;
+}
+
+std::uint8_t PlaneStorage::visiblePlaneIdentity() const noexcept {
+  return visible_index_;
 }
 
 }  // namespace agon::extender::display

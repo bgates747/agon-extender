@@ -92,11 +92,18 @@ execution, logical swaps, presentation publication, and explicit completion.
 Physical sink callbacks may recycle sink buffers but do not advance the VDP
 frame counter or unblock logical swaps.
 
+The retained common renderer exposes a narrowly patched compatibility seam for
+P4 completion: default-no-op queued/started/completed hooks and a virtual wait.
+The P4 controller uses explicit submission/completion sequences so a dequeued
+primitive cannot be mistaken for completed work. Other vendored controllers
+retain their upstream behavior; the patch remains a direct audited delta.
+
 One central presentation compositor decodes native pixels, applies Copper
 palettes by scanline, and adds hardware sprites and cursors without changing
 logical framebuffer state or readback. Network/browser and later local-display
-sinks receive non-blocking latest-generation notifications through a common
-consumer contract. Slow sinks may drop reported presentation generations; they
+sinks receive fixed-capacity latest-generation mailboxes through a common
+consumer contract. The frame service never invokes sink code; sinks poll from
+their own tasks. Slow sinks may drop reported presentation generations; they
 must not block rendering, grow an unbounded queue, or redefine logical frame
 timing. See
 [ADR-0015](decisions/ADR-0015-p4-display-backend-and-frame-service.md).

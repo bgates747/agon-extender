@@ -1,0 +1,31 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-frame-service",
+  "diagnostic_status": "Phase C sink-free logical frame service compile/link diagnostic",
+  "generated_build_files": [
+    "video/CMakeLists.txt"
+  ],
+  "project_translation_units": [
+    "video/extender/canary/frame_service_canary.cpp",
+    "video/extender/display/logical_frame_service.cpp",
+    "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/p4_display_controller.cpp",
+    "video/extender/display/p4_frame_service.cpp",
+    "video/extender/display/plane_storage.cpp",
+    "video/extender/port/fabutils_port.cpp"
+  ],
+  "vendored_translation_units": [
+    "vendor/vdp-gl/src/canvas.cpp",
+    "vendor/vdp-gl/src/displaycontroller.cpp"
+  ],
+  "excluded_source_families": [
+    "vendor/vdp-gl/src/VGA*.cpp",
+    "vendor/vdp-gl/src/CVBS*.cpp",
+    "vendor/vdp-gl/src/scene.cpp",
+    "vendor/vdp-gl/src/ps2*.cpp",
+    "vendor/vdp-gl/src/soundgen.cpp",
+    "vendor/vdp-gl/src/network.cpp",
+    "vendor/vdp-gl/src/fabutils.cpp",
+    "video/video.ino"
+  ]
+}

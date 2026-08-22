@@ -1,0 +1,51 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_implementation_manifest
+authority: docs/tasks/PORT-003.md#phase-c--logical-frame-service
+phase_contract: sink-independent logical ticks, bounded task-context work, completion, swaps, frame count, and mock publication only
+source_baselines:
+  agon_vdp: v2.16.0
+  vdp_gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+oracle_precedence:
+  - written state-transition and event-order contract
+  - reviewed source-derived expectations with exact provenance
+  - committed target measurements
+  - production output, which may be observed but never used to generate its own expected trace
+production:
+  - path: vdp/video/extender/display/logical_frame_service.hpp
+    role: platform-neutral state, sequence, tick, generation, and bounded consumer contracts
+  - path: vdp/video/extender/display/logical_frame_service.cpp
+    role: deterministic state transitions and task-context frame work
+  - path: vdp/video/extender/display/p4_frame_service.hpp
+    role: ESP32-P4 timer/task lifecycle adapter
+  - path: vdp/video/extender/display/p4_frame_service.cpp
+    role: esp_timer notification and FreeRTOS service-task implementation
+  - path: vdp/video/extender/display/plane_storage.cpp
+    role: transactional logical drawing/visible-plane exchange
+  - path: vdp/video/extender/display/p4_display_controller.cpp
+    role: retained primitive queue integration and frame-boundary execution
+host_qualification:
+  independent_oracle: docs/tasks/PORT-003/phase-c/scripts/generate-frame-traces.py
+  runner: docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
+  fixtures: docs/tasks/PORT-003/phase-c/fixtures/frame-traces.yaml
+  prohibition: the oracle must not import, invoke, or parse production frame-service output
+generated_evidence:
+  - docs/tasks/PORT-003/phase-c/evidence/frame-lifecycle.yaml
+  - docs/tasks/PORT-003/phase-c/evidence/host-frame-results.yaml
+  - docs/tasks/PORT-003/phase-c/evidence/build-closure.yaml
+  - docs/tasks/PORT-003/phase-c/evidence/link-exclusions.yaml
+  - docs/tasks/PORT-003/phase-c/evidence/target-runs.yaml
+accepted_integration_seam: PORT-003-D008
+candidate_identity: port-003-frame-service-canary-r01
+qualification_procedure: p4-frame-service-qualification-r01
+patched_vendor_files:
+  - path: vdp/vendor/vdp-gl/src/displaycontroller.h
+    role: default-no-op lifecycle hooks and virtual completion-wait seam
+  - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+    role: queue lifecycle calls, deferred swap notification, and cancelled-payload release
+excluded_families:
+  - palette, Copper, presentation compositor, sprites, and cursor overlays
+  - official mode facade, contexts, callbacks, Teletext, VDU routing, and MOS
+  - physical output consumers and transport subsystems
+  - classic VGA/CVBS GPIO, I2S, DMA, VSYNC ISR, and Xtensa cycle-budget machinery

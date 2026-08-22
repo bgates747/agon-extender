@@ -25,7 +25,12 @@ sources:
     commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
     root_placeholder: ${VDP_GL_SOURCE}
     managed_import:
-      presence_class: vendored
+      presence_class: vendored-patched
+      patched_paths:
+        - path: src/displaycontroller.cpp
+          decision_ref: PORT-003-D008
+        - path: src/displaycontroller.h
+          decision_ref: PORT-003-D008
       mappings:
         - source_prefix: ""
           repository_path: vdp/vendor/vdp-gl/

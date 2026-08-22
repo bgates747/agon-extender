@@ -11,8 +11,11 @@ declared P4 target selection, narrower source-region seams, architectural
 rationale, and upstream merge attention. Reviewed managed-import mappings in
 `source-baselines.yaml` classify release trees as `vendored` only after the
 generator verifies every repository copy byte-for-byte against its immutable
-source root. Canonical file nodes retain both the upstream-relative path and
-repository-managed path so merge work can find either representation.
+source root. `vendored-patched` additionally requires every differing path to
+name its accepted decision; undeclared differences and stale byte-identical
+patch declarations both fail regeneration. Canonical file nodes retain the
+upstream and repository hashes plus paths so merge work can find either
+representation.
 Observed project-owned port seams are represented as Extender build units with
 machine-evidenced dependencies. The compact source-selection projection lists
 those units separately from immutable upstream file selections so a diagnostic

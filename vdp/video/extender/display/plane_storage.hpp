@@ -33,6 +33,7 @@ enum class ConfigureResult : std::uint8_t {
   InvalidSyncBits,
   SizeOverflow,
   InvalidAllocator,
+  ServiceRunning,
   FirstPlaneAllocationFailed,
   SecondPlaneAllocationFailed,
 };
@@ -60,6 +61,7 @@ class PlaneStorage final {
   PlaneStorage &operator=(PlaneStorage &&other) noexcept;
 
   ConfigureResult configure(ModeDescriptor const &mode) noexcept;
+  bool swapPlanes() noexcept;
   void release() noexcept;
 
   bool configured() const noexcept;
@@ -68,11 +70,15 @@ class PlaneStorage final {
   PlaneView visiblePlane() noexcept;
   ConstPlaneView drawingPlane() const noexcept;
   ConstPlaneView visiblePlane() const noexcept;
+  std::uint8_t drawingPlaneIdentity() const noexcept;
+  std::uint8_t visiblePlaneIdentity() const noexcept;
 
  private:
   Allocator allocator_;
   ModeDescriptor mode_{};
   std::uint8_t *planes_[2]{};
+  std::uint8_t drawing_index_{};
+  std::uint8_t visible_index_{};
   std::size_t plane_size_{};
   std::size_t stride_{};
   bool configured_{};

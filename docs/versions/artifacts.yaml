@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r05
-updated_at: 2026-08-22T03:51:00Z
+registry_revision: r06
+updated_at: 2026-08-22T21:52:25Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -29,6 +29,25 @@ artifacts:
       - Revision r02 was rejected by SETUP-001-2026-08-20-22-18-02Z after the forced 400 MHz clock initialization asserted on every boot.
       - Revision r03 retains USB Serial/JTAG logging but explicitly returns rev 1.3 silicon to 360 MHz.
       - Revision r03 passed initial boot plus three repeat resets in SETUP-001-2026-08-20-22-31-26Z.
+
+  - artifact_id: port-003-frame-service-canary
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: port-003-frame-service-canary-r01
+    status: candidate
+    variants:
+      - olimex-p4-devkit
+    description: Sink-free PORT-003 logical frame-service qualification firmware.
+    notes:
+      - Revision r01 exercises cadence, rollover, coalescing, bounded unconsumed-consumer drops, lifecycle restart, and heap stability without a physical output sink.
+
+  - artifact_id: p4-frame-service-qualification
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: p4-frame-service-qualification-r01
+    status: candidate
+    variants: []
+    description: Committed build, deployment, and sink-free logical frame-service qualification procedure.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile

@@ -1,0 +1,87 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_build_closure
+generated_by: docs/tasks/PORT-003/phase-c/scripts/validate-phase-c.py
+diagnostic_status: clean P4 compile/link evidence only; not physical qualification
+environment: p4-frame-service
+build_invocation: .venv/bin/pio run -d vdp -e p4-frame-service
+inputs:
+  source_selection:
+    path: vdp/pio/p4-frame-service-source-selection.json
+    sha256: 7f6a5605387e4ff701134302f6270d8dec3d2d4beb2bf698e48a71fd36be790f
+  compile_commands:
+    path: vdp/.pio/build/p4-frame-service/compile_commands.json
+    sha256: ecd086caa97e7d635770a45dcc1e2641f30f6c5e06334af2c89f929c3c488f86
+  linker_map:
+    path: vdp/.pio/build/p4-frame-service/firmware.map
+    sha256: c15839c4a1746671dbd84be9a087ab5f620b78d746ba6f308857ed2af62163cc
+  normalized_elf_symbols_sha256: 55dcd770bc2de2d1e718f3ce6cf8348040995307059e112fd481c26dd6a9b93c
+firmware:
+  path: vdp/.pio/build/p4-frame-service/firmware.bin
+  sha256: 807a10f821eb5222bef91eca2a826d65c1441187f0639b091bf39f035f477269
+  size_bytes: 597744
+application_translation_units:
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/canary/frame_service_canary.cpp
+  object: video/extender/canary/frame_service_canary.cpp.o
+  object_loaded: true
+- source: video/extender/display/logical_frame_service.cpp
+  object: video/extender/display/logical_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/native_pixel_codec.cpp
+  object: video/extender/display/native_pixel_codec.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_frame_service.cpp
+  object: video/extender/display/p4_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/plane_storage.cpp
+  object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+required_elf_symbols:
+- claim: P4 timer/task adapter
+  symbol_fragment: agon::extender::display::P4FrameService::start(
+  present: true
+- claim: logical frame state machine
+  symbol_fragment: agon::extender::display::LogicalFrameService::servicePending()
+  present: true
+- claim: P4 controller completion seam
+  symbol_fragment: agon::extender::display::P4DisplayController::primitiveCompleted()
+  present: true
+- claim: P4 controller cancellation seam
+  symbol_fragment: agon::extender::display::P4DisplayController::primitiveCancelled(
+  present: true
+- claim: logical plane exchange
+  symbol_fragment: agon::extender::display::PlaneStorage::swapPlanes()
+  present: true
+- claim: retained Canvas submission
+  symbol_fragment: fabgl::Canvas::noOp()
+  present: true
+- claim: retained common primitive executor
+  symbol_fragment: fabgl::BitmappedDisplayController::execPrimitive(
+  present: true
+- claim: ESP timer creation
+  symbol_fragment: esp_timer_create
+  present: true
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 9
+  project_translation_unit_count: 7
+  vendored_translation_unit_count: 2
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  closure_proved: true

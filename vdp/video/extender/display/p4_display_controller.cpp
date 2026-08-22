@@ -127,6 +127,9 @@ P4DisplayController::P4DisplayController(Allocator allocator) noexcept
     : storage_(allocator) {}
 
 ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexcept {
+  if (frame_service_running_.load(std::memory_order_acquire)) {
+    return ConfigureResult::ServiceRunning;
+  }
   if (mode.width > INT_MAX || mode.height > INT_MAX) {
     return ConfigureResult::InvalidDimensions;
   }
@@ -138,6 +141,17 @@ ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexc
   setDoubleBuffered(mode.double_buffered);
   resetPaintState();
   enableBackgroundPrimitiveExecution(false);
+  // PORT-003 Phase C inherited-behavior containment: upstream vdp-gl
+  // enableBackgroundPrimitiveExecution(false) calls processPrimitives() before
+  // changing its private mode flag. processPrimitives() consequently queues a
+  // final Refresh instead of executing it synchronously. Drain that artifact
+  // now that the flag is false, then establish a clean project-owned sequence
+  // baseline. Remove this workaround only if the vendored ordering changes.
+  processPrimitives();
+  reserved_sequence_.store(0, std::memory_order_release);
+  submitted_sequence_.store(0, std::memory_order_release);
+  started_sequence_.store(0, std::memory_order_release);
+  completed_sequence_.store(0, std::memory_order_release);
   return ConfigureResult::Ok;
 }
 
@@ -146,6 +160,14 @@ ConstPlaneView P4DisplayController::drawingPlane() const noexcept {
 }
 ConstPlaneView P4DisplayController::visiblePlane() const noexcept {
   return storage_.visiblePlane();
+}
+
+std::uint8_t P4DisplayController::drawingPlaneIdentity() const noexcept {
+  return storage_.drawingPlaneIdentity();
+}
+
+std::uint8_t P4DisplayController::visiblePlaneIdentity() const noexcept {
+  return storage_.visiblePlaneIdentity();
 }
 
 void P4DisplayController::begin() {
@@ -194,9 +216,179 @@ fabgl::NativePixelFormat P4DisplayController::nativePixelFormat() {
   return fabgl::NativePixelFormat::SBGR2222;
 }
 
-void P4DisplayController::suspendBackgroundPrimitiveExecution() {}
-void P4DisplayController::resumeBackgroundPrimitiveExecution() {}
-void P4DisplayController::swapBuffers() { unavailable("swapBuffers (Phase C)"); }
+void P4DisplayController::setFrameServiceRunning(bool running) noexcept {
+  frame_service_running_.store(running, std::memory_order_release);
+  if (running) {
+    reserved_sequence_.store(0, std::memory_order_release);
+    submitted_sequence_.store(0, std::memory_order_release);
+    started_sequence_.store(0, std::memory_order_release);
+    completed_sequence_.store(0, std::memory_order_release);
+    cancelled_primitives_.store(0, std::memory_order_release);
+  } else {
+    // The P4 adapter joins its sole service task before entering this path, so
+    // no primitive can be active while queued payloads are cancelled.
+    cancelQueuedPrimitives();
+    // Return to the Phase B synchronous lifecycle state. Upstream's disable
+    // ordering may enqueue its final Refresh in a single-buffered mode, so a
+    // second cancellation is required for an actually empty stopped queue.
+    enableBackgroundPrimitiveExecution(false);
+    cancelQueuedPrimitives();
+    auto waiter = completion_waiter_.exchange(nullptr, std::memory_order_acq_rel);
+    if (waiter != nullptr) xTaskNotifyGive(waiter);
+    if (pending_swap_waiter_ != nullptr) {
+      xTaskNotifyGive(pending_swap_waiter_);
+      pending_swap_waiter_ = nullptr;
+    }
+  }
+}
+
+std::size_t P4DisplayController::executeFrameWork(
+    std::size_t maximum_primitives) {
+  if (maximum_primitives == 0 ||
+      suspension_depth_.load(std::memory_order_acquire) != 0) {
+    return 0;
+  }
+  executing_frame_work_.store(true, std::memory_order_release);
+  fabgl::Rect update(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
+  std::size_t executed = 0;
+  fabgl::Primitive primitive;
+  while (executed < maximum_primitives && getPrimitive(&primitive, 0)) {
+    execPrimitive(primitive, update, false);
+    ++executed;
+  }
+  showSprites(update);
+  executing_frame_work_.store(false, std::memory_order_release);
+  return executed;
+}
+
+void P4DisplayController::completeFrameWork(
+    std::size_t executed_primitives) noexcept {
+  while (executed_primitives-- > 0) primitiveCompleted();
+}
+
+std::uint32_t P4DisplayController::frameCounter() const noexcept {
+  return frame_counter_.load(std::memory_order_acquire);
+}
+
+void P4DisplayController::writeFrameCounter(std::uint32_t value) noexcept {
+  frame_counter_.store(value, std::memory_order_release);
+}
+
+std::uint32_t P4DisplayController::advanceFrameCounter(
+    std::uint32_t elapsed_ticks) noexcept {
+  return frame_counter_.fetch_add(elapsed_ticks, std::memory_order_acq_rel) +
+         elapsed_ticks;
+}
+
+std::size_t P4DisplayController::logicalWidth() const noexcept {
+  return storage_.configured() ? storage_.mode().width : 0;
+}
+
+std::size_t P4DisplayController::logicalHeight() const noexcept {
+  return storage_.configured() ? storage_.mode().height : 0;
+}
+
+NativePixelFormat P4DisplayController::logicalFormat() const noexcept {
+  return storage_.configured() ? storage_.mode().format
+                               : NativePixelFormat::SBGR2222;
+}
+
+bool P4DisplayController::logicalDoubleBuffered() const noexcept {
+  return storage_.configured() && storage_.mode().double_buffered;
+}
+
+std::uint64_t P4DisplayController::submittedSequence() const noexcept {
+  return submitted_sequence_.load(std::memory_order_acquire);
+}
+
+std::uint64_t P4DisplayController::startedSequence() const noexcept {
+  return started_sequence_.load(std::memory_order_acquire);
+}
+
+std::uint64_t P4DisplayController::completedSequence() const noexcept {
+  return completed_sequence_.load(std::memory_order_acquire);
+}
+
+void P4DisplayController::primitivesExecutionWait() {
+  std::uint64_t target = submittedSequence();
+  while (completedSequence() < target &&
+         frame_service_running_.load(std::memory_order_acquire)) {
+    auto current = xTaskGetCurrentTaskHandle();
+    completion_waiter_.store(current, std::memory_order_release);
+    if (completedSequence() >= target ||
+        !frame_service_running_.load(std::memory_order_acquire)) {
+      completion_waiter_.store(nullptr, std::memory_order_release);
+      break;
+    }
+    ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+    completion_waiter_.store(nullptr, std::memory_order_release);
+  }
+}
+
+void P4DisplayController::suspendBackgroundPrimitiveExecution() {
+  suspension_depth_.fetch_add(1, std::memory_order_acq_rel);
+  while (executing_frame_work_.load(std::memory_order_acquire)) taskYIELD();
+}
+
+void P4DisplayController::resumeBackgroundPrimitiveExecution() {
+  std::uint32_t depth = suspension_depth_.load(std::memory_order_acquire);
+  while (depth != 0 &&
+         !suspension_depth_.compare_exchange_weak(
+             depth, depth - 1, std::memory_order_acq_rel,
+             std::memory_order_acquire)) {
+  }
+}
+
+void P4DisplayController::swapBuffers() {
+  if (!storage_.swapPlanes()) unavailable("swapBuffers without double buffering");
+}
+
+void P4DisplayController::primitiveQueued(
+    fabgl::Primitive const &) {
+  reserved_sequence_.fetch_add(1, std::memory_order_acq_rel);
+}
+
+void P4DisplayController::primitiveEnqueued(
+    fabgl::Primitive const &) {
+  submitted_sequence_.fetch_add(1, std::memory_order_acq_rel);
+}
+
+void P4DisplayController::primitiveStarted(
+    fabgl::Primitive const &primitive) {
+  // The common hook reserves before the blocking send and publishes submission
+  // after it. If a frame-service task dequeues in between, wait only for the
+  // sender to finish that already-successful queue handoff.
+  std::uint64_t next = started_sequence_.load(std::memory_order_acquire) + 1;
+  while (submitted_sequence_.load(std::memory_order_acquire) < next) taskYIELD();
+  started_sequence_.fetch_add(1, std::memory_order_acq_rel);
+  if (primitive.cmd == fabgl::PrimitiveCmd::SwapBuffers)
+    pending_swap_waiter_ = primitive.notifyTask;
+}
+
+void P4DisplayController::primitiveCompleted() {
+  completed_sequence_.fetch_add(1, std::memory_order_acq_rel);
+  if (pending_swap_waiter_ != nullptr) {
+    xTaskNotifyGive(pending_swap_waiter_);
+    pending_swap_waiter_ = nullptr;
+  }
+  auto waiter = completion_waiter_.load(std::memory_order_acquire);
+  if (waiter != nullptr) xTaskNotifyGive(waiter);
+}
+
+void P4DisplayController::primitiveCancelled(
+    fabgl::Primitive const &primitive) {
+  cancelled_primitives_.fetch_add(1, std::memory_order_acq_rel);
+  completed_sequence_.fetch_add(1, std::memory_order_acq_rel);
+  if (primitive.cmd == fabgl::PrimitiveCmd::SwapBuffers &&
+      primitive.notifyTask != nullptr) {
+    xTaskNotifyGive(primitive.notifyTask);
+  }
+}
+
+bool P4DisplayController::deferPrimitiveTaskNotification(
+    fabgl::Primitive const &primitive) {
+  return primitive.cmd == fabgl::PrimitiveCmd::SwapBuffers;
+}
 
 std::uint8_t *P4DisplayController::row(int y) noexcept {
   PlaneView plane = storage_.drawingPlane();

@@ -675,3 +675,297 @@ an independent oracle. Also stop if the actual common renderer cannot be host-
 tested without broad unrelated subsystem emulation, if target allocation
 constraints invalidate the accepted storage architecture, or if a material
 primitive/readback difference cannot be isolated and measured.
+
+## Phase C — Logical frame service
+
+- Status: In progress
+- Started: 2026-08-22 13:49 EDT
+- Finished: --
+
+The Author explicitly authorized this phase to proceed, including check-in,
+without personal review after Gate B passed. This checklist is the controlling
+review surrogate. Consult it before every action, record results against the
+same item, and stop rather than expanding logical frame service into palette,
+official-facade, sink, transport, or operating-mode work.
+
+Phase C adds sink-independent logical time and bounded asynchronous work to the
+qualified Phase B renderer. It owns timer notification, frame-service task
+execution, explicit submission/completion sequences, logical buffer swaps,
+the writable compatibility frame counter, provisional latest-generation
+publication, and null/slow mock consumers. It does not compose presentation
+pixels or implement a physical consumer.
+
+### Detailed execution checklist
+
+1. [x] Freeze this detailed scope, package/evidence layout, authority, oracle
+   order, physical-qualification preconditions, and stop rules before changing
+   production code. Record the Author's no-review authorization and keep the
+   accepted ADR-0015 lifecycle ordering normative.
+2. [x] Generate a bounded, deterministic Phase C provenance inventory from the
+   existing symbol/source graph. Fingerprint the exact upstream queue,
+   background primitive, swap, frame-counter, wait, callback, and teardown
+   spans. Classify behavior separately from the old VSYNC ISR, I2S/DMA engine,
+   Xtensa synchronization, and physical timing source; do not compile or copy
+   the latter merely because they share a file.
+3. [x] Define contracts before implementation for:
+   - submitted, started, and completed primitive/swap sequences, including
+     cancellation and mode teardown;
+   - single-buffer frame waits and double-buffer drawing/visible-plane swaps;
+   - writable modulo-2^32 compatibility frame count and independent monotonic
+     publication generation;
+   - elapsed-tick accounting, coalesced service work, missed-deadline and
+     overrun counters;
+   - a short timer-notification boundary and one frame-service owner;
+   - bounded latest-generation consumer notification, drop accounting, and
+     lease/pointer lifetime; and
+   - transactional startup/reconfiguration/stop that preserves or cleanly
+     invalidates waiters and the last valid renderer state.
+4. [x] Build an independent deterministic host model and trace fixtures before
+   trusting production scheduling code. Cover exact event order, queue depth,
+   submitted/started/completed states, dynamic payload lifetime, single-buffer
+   next-edge waits, double-buffer swap visibility, frame-count writes and
+   rollover, generation publication, null/slow/disconnecting consumers,
+   coalesced ticks, forced overruns, cancellation, teardown, and bounded memory.
+   Expected traces must come from the written contract or reviewed upstream
+   behavior, never production output.
+5. [x] Extend Phase B storage/controller seams only as required by those
+   contracts. Add transactional drawing/visible-plane exchange and explicit
+   logical frame-counter access without importing palette/Copper/overlay or
+   official `agon_screen.h` behavior. Preserve synchronous execution as a
+   selectable test/lifecycle state and make invalid direct swap paths fail
+   visibly.
+6. [x] Implement a platform-neutral logical frame state machine plus the
+   narrowest ESP32-P4 adapter: `esp_timer` callback records elapsed ticks and
+   wakes one FreeRTOS frame-service task; only that task runs frame-boundary
+   work. Timer and sink callbacks must never render, swap planes, publish
+   mutable storage, or signal logical completion directly.
+7. [x] Integrate retained Canvas/common background primitive execution with
+   explicit sequences rather than queue emptiness. Prove an already-dequeued
+   primitive cannot be reported complete early, ordinary single-buffer queued
+   work remains ordered, double-buffer drawing remains immediate, and queued
+   swap completes only after the logical frame edge that changes visibility.
+8. [x] Add a provisional sink-neutral publication contract and null, fast,
+   slow, disconnecting, and reconnecting mock consumers. Notifications must be
+   latest-state and bounded; consumers may record drops but cannot block the
+   frame service, retain mutable logical storage indefinitely, alter frame
+   count, or create an unbounded queue. Interface freeze remains Phase F.
+9. [x] Run deterministic host concurrency/stress qualification under
+   sanitizers and explicit allocation/thread accounting. Exercise adversarial
+   interleavings, rollover, repeated start/stop/reconfigure, forced tick bursts,
+   slow consumers, waiter cancellation, and long bounded runs; reject deadlock,
+   premature completion, stale-plane access, leaks, or growth with elapsed
+   frames.
+10. [x] Add a dedicated Phase C P4 diagnostic/qualification environment and
+    prove the exact compile/link closure without deployment. Update the
+    dependency graph, source-selection projection, compatibility delta, task
+    record, and development log. Once host and clean target gates pass, create
+    and push a pre-qualification checkpoint and assign the human-readable
+    firmware/build/test identities required by `docs/versions/README.md`.
+11. [ ] Before physical work, reread `HARDWARE.local.md`, verify the named Pi,
+    P4 identity, connection, toolchain, and safety boundary, then deploy only
+    the committed qualification artifact. No backup of the pre-existing P4
+    firmware is required. Measure sink-free cadence, jitter, drift, rollover
+    seam, tick coalescing, deliberate overruns, null/slow consumers, teardown,
+    and memory bounds at the accepted 360 MHz configuration; preserve serial
+    capture and structured run evidence. Stop on identity mismatch, unstable
+    power/transport, unexplained reset, or a result requiring contract change.
+12. [ ] Regenerate all Phase C and canonical graph artifacts twice
+    byte-identically; verify immutable imports and index, schemas/source spans,
+    host and target evidence, all permanent tests, links, absolute paths, SVG
+    backgrounds, whitespace, and staged diff. Mark Gate C complete and commit
+    and push the final evidence only if every criterion below passes.
+
+### Phase C explicit exclusions
+
+- No palette mutation, Copper lists, presentation composition, hardware
+  sprites/cursors, or output pixel format; those remain Phase D.
+- No official mode table/fallback, `agon_screen.h`, contexts, callbacks,
+  Teletext, VDU dispatch, MOS, or EDU/VDU operating-mode integration; those
+  remain Phase E or SETUP-005.
+- No browser/network, RGB, MIPI-DSI, HDMI, audio, input, storage, updater, or
+  transport implementation and no classic VGA/CVBS physical engine.
+- No frame consumer API freeze, production sink, or claim that host scheduling
+  proves target cadence. Phase F owns final consumer handoff.
+- No vendored source edit beyond the accepted, mechanically audited
+  `PORT-003-D008` two-file lifecycle seam is permitted. No uncommitted or
+  unidentified firmware may be used for a qualified physical run.
+
+### Phase C decision register
+
+| ID | State | Decision requested |
+|---|---|---|
+| `PORT-003-D008` | Accepted | Use a minimal, annotated vdp-gl common-code patch exposing default-no-op lifecycle hooks and a virtual completion wait. |
+
+`PORT-003-D008` is material because the retained common methods are
+non-virtual and their queue state is private. The recommended option is a
+minimal, prominently annotated patch to the two vendored vdp-gl common files:
+add default-no-op primitive queued/started/completed hooks and make the wait
+method virtual, then implement the P4 sequence/wait policy in project code.
+This preserves all default upstream behavior and produces a small direct diff
+for every future tag import. The Author accepted this option on 2026-08-22.
+
+Alternatives are (a) a linker-symbol interposition tied to C++ name mangling,
+(b) build-time FreeRTOS queue-function interception with hidden global state,
+or (c) a project copy of the entire common controller translation unit. All
+avoid changing pristine bytes in place but are less visible, less portable, or
+far larger to reconcile upstream. Leaving queue-depth polling unchanged is not
+an option because it fails ADR-0015 and Gate C's no-premature-completion
+criterion.
+
+### Phase C execution record
+
+1. Scope and plan freeze — complete:
+   - the 12-item checklist, package boundary, gate criteria, explicit
+     exclusions, physical-run checkpoint, and stop conditions were written
+     before production changes; and
+   - the Author's explicit no-review authorization is recorded while material
+     stop conditions remain binding.
+
+2. Frame-lifecycle provenance — complete:
+   - `phase-c/scripts/extract-frame-lifecycle.py` deterministically fingerprints
+     33 callable/source-region records across 13 pinned official files;
+   - the records distinguish six retained common contracts, six official
+     facade contracts, ten common sequence adaptations, one logical swap,
+     three platform-task replacements, and seven physical-trigger exclusions;
+   - four permanent tests verify tuple uniqueness, every file/span hash,
+     critical dispositions, and the queue-race/override findings, and a second
+     generation was byte-identical; and
+   - the trace proves old frame edges increment `frameCounter` before waking or
+     executing bounded work, swaps change visible identity before notifying,
+     and `primitivesExecutionWait()` observes only queued count. Because a
+     dequeued primitive is absent while still executing, the latter is not a
+     valid completion proof.
+
+3. Contracts — complete:
+   - `phase-c/contracts.md` freezes execution ownership, elapsed-tick and
+     overrun accounting, 32-bit writable frame count, 64-bit publication
+     generation, FIFO sequence completion, single/double-buffer behavior,
+     transactional lifecycle, and bounded metadata-only mock consumers; and
+   - the contract identifies the exact private/non-virtual common-code boundary
+     that cannot be completed solely in the existing P4 subclass; and
+   - the Author accepted `PORT-003-D008`: a minimal annotated common-code patch
+     with default-no-op lifecycle hooks and virtual completion waiting, leaving
+     stock behavior unchanged for every non-P4 controller.
+
+4. Independent event traces — complete:
+   - `phase-c/scripts/generate-frame-traces.py` is a pure written-contract model
+     that imports no production frame-service code or output;
+   - 12 fixtures cover sink-free and coalesced ticks, frame-counter writes and
+     rollover, dequeued-but-incomplete work, FIFO budgets, single-buffer Flush,
+     double-buffer immediate drawing/swap, latest-only slow consumers,
+     disconnect/reconnect, later tick arrival, and teardown payload release;
+   - expected ordering places swap visibility before publication and
+     publication before completion, while a started primitive remains an
+     unsatisfied wait target until execution returns; and
+   - six fixture tests plus the four provenance tests pass, and independent
+     regeneration is byte-identical.
+
+5. Storage and controller seams — complete:
+   - `PlaneStorage` now owns explicit drawing and visible identities and
+     performs a constant-time logical exchange only in double-buffered modes;
+   - `P4DisplayController` exposes the Phase C frame descriptor and writable
+     compatibility counter while rejecting reconfiguration during an active
+     frame lifecycle; and
+   - the synchronous Phase B lifecycle remains available after stop. An
+     inherited upstream disable-ordering quirk queues one trailing `Refresh`;
+     the controller prominently drains/cancels it before establishing a clean
+     lifecycle sequence baseline.
+
+6. Logical service and P4 adapter — complete:
+   - `LogicalFrameService` is platform-neutral, uses a bounded eight-slot
+     consumer registry and 32-bit lock-free tick accumulator, and maintains a
+     separate 64-bit publication generation;
+   - one service pass advances elapsed logical time, executes bounded work,
+     observes any swap, publishes immutable metadata, and only then completes
+     the executed sequences; and
+   - `P4FrameService` confines `esp_timer` to tick recording/task wakeup. Its
+     sole FreeRTOS owner task is joined before stop cancels queued payloads.
+
+7. Retained queue integration — complete:
+   - accepted seam `PORT-003-D008` adds default-no-op reservation, enqueue,
+     start, completion, cancellation, notification-deferral, and virtual-wait
+     hooks to the two common vdp-gl controller files;
+   - P4 accounting distinguishes pre-send reservation from successful queue
+     acceptance, including the narrow worker/sender handoff race, and does not
+     report a dequeued primitive complete until execution and publication
+     finish; and
+   - teardown releases copied path/matrix payloads without executing stale
+     work and wakes cancelled completion/swap waiters.
+
+8. Provisional consumers — complete:
+   - publications contain metadata only and expose no mutable framebuffer
+     lease; the service writes fixed-capacity mailboxes and never invokes sink
+     code;
+   - null, polled, unconsumed, slow, disconnected, and reconnecting cases
+     retain bounded latest-state behavior and explicit per-consumer drops; and
+   - the contract remains deliberately provisional until Phase F supplies a
+     real sink and freezes the handoff API.
+
+   Pre-candidate audit rejected the first implementation even though its host
+   fixtures passed: it called a nominally non-blocking virtual consumer method
+   directly from the service task, so a misbehaving or merely slow sink could
+   stall logical time. The replacement contains no consumer callbacks. It uses
+   fixed latest-notice mailboxes whose producer lock is attempted once; busy
+   or unconsumed slots report drops while the service continues. The retained
+   tests were adapted to observe those production mailboxes without changing
+   the independently generated expected traces.
+
+9. Host concurrency and stress qualification — complete:
+   - all 12 independent oracle fixtures pass under ASan/UBSan;
+   - five retained Canvas/controller cases prove dequeued completion, double
+     swaps, single-buffer edges, suspension, cancellation, restart, and
+     reconfiguration behavior; and
+   - three adversarial cases prove a concurrent 200,000-tick burst, saturated
+     accounting across 1,000 lifecycles, and bounded consumer registration.
+     LeakSanitizer is unavailable under managed tracing; Phase B allocation
+     accounting continues to cover owned framebuffer allocations.
+
+10. Target compile/link closure — complete:
+    - `p4-frame-service` selects nine application translation units and links
+      the retained common Canvas/controller implementation without a physical
+      output sink;
+    - the clean pinned target build succeeds at the qualified 360 MHz board
+      profile, and machine validation proves required service symbols plus
+      exclusion of classic VGA/CVBS, physical input, audio, network, and
+      storage families; and
+    - the dependency graph now represents vdp-gl as `vendored-patched`, permits
+      only the two D008 paths to differ, records both upstream and repository
+      hashes, and regenerates byte-identically.
+    - the Author approved candidate identities
+      `port-003-frame-service-canary-r01` and
+      `p4-frame-service-qualification-r01`; registry `r06` and the committed
+      qualification procedure define their exact scope.
+
+### Gate C acceptance criteria
+
+1. Host traces prove normative tick, work, swap, publication, and completion
+   ordering without queue-empty races or implementation-derived expectations.
+2. Single-buffer waits and double-buffer swaps complete at the specified
+   logical edge; drawing/visible identities and payload lifetimes remain valid
+   under concurrency, cancellation, reconfiguration, and teardown.
+3. Frame count accounts for elapsed logical ticks modulo 32 bits while service
+   work may coalesce; publication generations remain monotonic and report
+   overruns/drops explicitly.
+4. Null, slow, disconnected, and reconnecting mock consumers cannot block
+   logical progress, grow memory without bound, or retain mutable storage past
+   the defined access lifetime.
+5. A clean pinned P4 build proves the selected closure, and a committed,
+   versioned bench run measures accepted cadence/overrun bounds at 360 MHz with
+   no physical sink, deadlock, premature completion, or unexplained reset.
+6. Provenance, dependency selection, compatibility delta, generators, tests,
+   host evidence, and target evidence are deterministic and contain no
+   unexplained declared-versus-observed drift.
+
+### Phase C stop conditions
+
+Stop for Author review if the phase requires changing ADR-0015 ordering,
+letting a sink or timer callback own logical progress, editing vendored source
+beyond the accepted and audited `PORT-003-D008` seam,
+adding a presentation compositor or official facade, choosing SETUP-005 mode
+policy, exposing an unbounded queue or mutable indefinite frame lease, or
+claiming compatibility without an independent trace oracle. Also stop if
+retained Canvas queue semantics cannot be separated from the classic physical
+engine by a narrow evidenced seam, if clean target compilation invalidates the
+host architecture, or if physical qualification reveals a material cadence,
+completion, reset, memory, or concurrency failure that cannot be isolated
+without changing the accepted contract.

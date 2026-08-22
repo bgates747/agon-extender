@@ -77,6 +77,18 @@ class DependencyToolTests(unittest.TestCase):
         ]
         self.assertEqual(len(tuples), len(set(tuples)))
 
+    def test_reviewed_vdp_gl_patch_is_explicit_and_hash_distinct(self) -> None:
+        graph = load_data(TASK_ROOT / "generated/code-graph.yaml")
+        source = next(item for item in graph["sources"] if item["owner"] == "vdp-gl")
+        self.assertEqual("vendored-patched", source["presence_class"])
+        nodes = {node["id"]: node for node in graph["nodes"]}
+        for path in ("src/displaycontroller.cpp", "src/displaycontroller.h"):
+            properties = nodes[f"file:vdp-gl:{path}"]["properties"]
+            self.assertEqual("PORT-003-D008", properties["source.patch_decision"])
+            self.assertNotEqual(
+                properties["source.sha256"], properties["source.repository_sha256"]
+            )
+
     def test_six_case_port_002_proof_passes(self) -> None:
         proof_module = load_script_module("port002_proof", "verify-port-002-proof.py")
         report = proof_module.build_report(load_data(TASK_ROOT / "generated/code-graph.yaml"))

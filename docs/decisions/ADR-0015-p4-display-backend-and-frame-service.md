@@ -63,8 +63,9 @@ creating separate VDP renderers or clocks.
    modifying logical framebuffer state. Logical readback excludes those
    overlays. Software sprites remain in the retained framebuffer path.
 8. Expose a project-owned, sink-neutral consumer contract consisting of frame
-   generation and description, bounded read/composition access, non-blocking
-   latest-generation notification, and explicit drop counters. Slow or absent
+   generation and description, bounded read/composition access, fixed-capacity
+   latest-generation mailboxes, and explicit drop counters. The frame service
+   never invokes sink code; consumers poll independently. Slow or absent
    consumers may drop presentation generations but may not retain mutable
    logical storage indefinitely, block rendering, or change VDP timing.
 9. Implement and qualify the backend through the phased gates defined by
@@ -73,6 +74,13 @@ creating separate VDP renderers or clocks.
    handoff, and integrated P4 qualification. Each gate requires its own
    deterministic evidence; compilation or a visible image alone is
    insufficient.
+10. Replace queue-emptiness completion on the P4 through a minimal auditable
+    patch to the vendored common controller: default-no-op primitive
+    queued/started/completed hooks plus a virtual completion wait. Project code
+    supplies the sequence policy. Non-P4 controllers retain their existing
+    behavior, and future upstream imports expose the change as a small direct
+    compatibility diff rather than linker interposition or a copied common
+    translation unit.
 
 ## Rationale
 
@@ -109,3 +117,6 @@ reimplemented differently for each output path.
    recorded fixtures rather than infer from the design.
 8. This decision does not choose EDU/VDU routing, MOS integration, input
    ownership, network protocols, or a physical display implementation.
+9. The vdp-gl compatibility delta includes a narrow common-code patch. Its
+   exact upstream spans, rationale, local behavior, and removal condition must
+   remain mechanically auditable for every imported release.

@@ -1,0 +1,659 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_frame_trace_fixtures
+generated_by: docs/tasks/PORT-003/phase-c/scripts/generate-frame-traces.py
+source_profile:
+  agon_vdp: v2.16.0
+  vdp_gl: all-the-plots
+prohibition: production frame-service output is not an oracle input
+fixtures:
+- id: sink-free-edge
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: tick
+  - op: service
+  expected_events:
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  expected_final:
+    frame_counter: 1
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 1
+      serviced_edges: 1
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: 7c80456815e8debf77acd637058b05358c83e23715885c438245a3992fbb63b6
+- id: coalesced-three-ticks
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: tick
+    count: 3
+  - op: service
+  expected_events:
+  - event: ticks-recorded
+    count: 3
+    pending: 3
+  - event: frame-edge
+    elapsed: 3
+    frame_counter: 3
+  - event: published
+    generation: 1
+    frame_counter: 3
+    visible: 0
+  expected_final:
+    frame_counter: 3
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 3
+      serviced_edges: 1
+      coalesced_ticks: 2
+      overruns: 1
+    consumers: {}
+  content_sha256: 3fc67e0ff6895fee2e418489da86785fb5906d4be2cd434d3c16d593f0efefe3
+- id: frame-counter-rollover
+  oracle_class: independent written-contract state model
+  initial:
+    frame_counter: 4294967294
+  operations:
+  - op: tick
+    count: 3
+  - op: service
+  expected_events:
+  - event: ticks-recorded
+    count: 3
+    pending: 3
+  - event: frame-edge
+    elapsed: 3
+    frame_counter: 1
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  expected_final:
+    frame_counter: 1
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 3
+      serviced_edges: 1
+      coalesced_ticks: 2
+      overruns: 1
+    consumers: {}
+  content_sha256: ef1dac0b9e04119adcc5f4b9036e17441aebd6b793f79d54554b8f2bfa65c3d3
+- id: writable-counter-continues
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: write-frame-counter
+    value: 305463295
+  - op: tick
+    count: 2
+  - op: service
+  expected_events:
+  - event: frame-counter-written
+    value: 305463295
+  - event: ticks-recorded
+    count: 2
+    pending: 2
+  - event: frame-edge
+    elapsed: 2
+    frame_counter: 305463297
+  - event: published
+    generation: 1
+    frame_counter: 305463297
+    visible: 0
+  expected_final:
+    frame_counter: 305463297
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 2
+      serviced_edges: 1
+      coalesced_ticks: 1
+      overruns: 1
+    consumers: {}
+  content_sha256: a69d13c537585e48a2ebc8468ddfe8633917a4c19f5490e085fbb19444710832
+- id: dequeued-is-not-complete
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: submit
+    kind: line
+  - op: start-one
+  - op: wait
+  - op: finish-one
+  - op: wait
+  expected_events:
+  - event: submitted
+    sequence: 1
+    kind: line
+  - event: started
+    sequence: 1
+    kind: line
+  - event: wait-result
+    sequence: 1
+    result: blocked
+  - event: completed
+    sequence: 1
+    kind: line
+  - event: wait-result
+    sequence: 1
+    result: satisfied
+  expected_final:
+    frame_counter: 0
+    generation: 0
+    pending_ticks: 0
+    submitted_sequence: 1
+    started_sequence: 1
+    completed_sequence: 1
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 0
+      serviced_edges: 0
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: b624eff3f394e96ad9e85b109744930ce4b00c7e85b338365ffae207c3d88a9d
+- id: single-buffer-fifo-budget
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: submit
+    kind: line
+  - op: submit
+    kind: glyph
+    dynamic: true
+  - op: tick
+  - op: service
+    budget: 1
+  - op: wait
+    sequence: 2
+  - op: tick
+  - op: service
+    budget: 1
+  - op: wait
+    sequence: 2
+  expected_events:
+  - event: submitted
+    sequence: 1
+    kind: line
+  - event: submitted
+    sequence: 2
+    kind: glyph
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: started
+    sequence: 1
+    kind: line
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: completed
+    sequence: 1
+    kind: line
+  - event: wait-result
+    sequence: 2
+    result: blocked
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 2
+  - event: started
+    sequence: 2
+    kind: glyph
+  - event: payload-released
+    sequence: 2
+  - event: published
+    generation: 2
+    frame_counter: 2
+    visible: 0
+  - event: completed
+    sequence: 2
+    kind: glyph
+  - event: wait-result
+    sequence: 2
+    result: satisfied
+  expected_final:
+    frame_counter: 2
+    generation: 2
+    pending_ticks: 0
+    submitted_sequence: 2
+    started_sequence: 2
+    completed_sequence: 2
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 2
+      serviced_edges: 2
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: fbc241dd5b54d38da54accb06be8a7736d676d44d97b83f73750afe85b711a11
+- id: single-buffer-flush-next-edge
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: submit
+    kind: flush
+  - op: wait
+  - op: tick
+  - op: service
+  - op: wait
+  expected_events:
+  - event: submitted
+    sequence: 1
+    kind: flush
+  - event: wait-result
+    sequence: 1
+    result: blocked
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: started
+    sequence: 1
+    kind: flush
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: completed
+    sequence: 1
+    kind: flush
+  - event: wait-result
+    sequence: 1
+    result: satisfied
+  expected_final:
+    frame_counter: 1
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 1
+    started_sequence: 1
+    completed_sequence: 1
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 1
+      serviced_edges: 1
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: cb41e37bd1a42b17db95bbf1b2e4429d2b95a16c169d8dde634476a074cf14de
+- id: double-immediate-and-swap
+  oracle_class: independent written-contract state model
+  initial:
+    double_buffered: true
+  operations:
+  - op: submit
+    kind: line
+  - op: submit
+    kind: swap
+  - op: wait
+  - op: tick
+  - op: service
+  - op: wait
+  expected_events:
+  - event: immediate
+    kind: line
+  - event: submitted
+    sequence: 1
+    kind: swap
+  - event: wait-result
+    sequence: 1
+    result: blocked
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: started
+    sequence: 1
+    kind: swap
+  - event: planes-swapped
+    sequence: 1
+    visible: 1
+    drawing: 0
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 1
+  - event: completed
+    sequence: 1
+    kind: swap
+  - event: wait-result
+    sequence: 1
+    result: satisfied
+  expected_final:
+    frame_counter: 1
+    generation: 1
+    pending_ticks: 0
+    submitted_sequence: 1
+    started_sequence: 1
+    completed_sequence: 1
+    queue_depth: 0
+    active: null
+    visible_plane: 1
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 1
+      serviced_edges: 1
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: a19db209d2e7388dbe487c268e83be8e795fab868896028bdf8b1dc4330fac17
+- id: slow-consumer-latest-only
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: register
+    consumer: slow
+  - op: tick
+  - op: service
+  - op: tick
+  - op: service
+  - op: tick
+  - op: service
+  - op: consume
+    consumer: slow
+  expected_events:
+  - event: consumer-registered
+    consumer: slow
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: consumer-notified
+    consumer: slow
+    generation: 1
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 2
+  - event: published
+    generation: 2
+    frame_counter: 2
+    visible: 0
+  - event: consumer-drop
+    consumer: slow
+    dropped_generation: 1
+    drops: 1
+  - event: consumer-notified
+    consumer: slow
+    generation: 2
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 3
+  - event: published
+    generation: 3
+    frame_counter: 3
+    visible: 0
+  - event: consumer-drop
+    consumer: slow
+    dropped_generation: 2
+    drops: 2
+  - event: consumer-notified
+    consumer: slow
+    generation: 3
+  - event: consumer-consumed
+    consumer: slow
+    generation: 3
+  expected_final:
+    frame_counter: 3
+    generation: 3
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 3
+      serviced_edges: 3
+      coalesced_ticks: 0
+      overruns: 0
+    consumers:
+      slow:
+        connected: true
+        slot: null
+        drops: 2
+  content_sha256: 4a7a9b9676cb3ec09fe530d5a7505d3668bfed7b2df2b78eb979ef3605d05daf
+- id: consumer-disconnect-reconnect
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: register
+    consumer: mock
+  - op: disconnect
+    consumer: mock
+  - op: tick
+    count: 2
+  - op: service
+  - op: reconnect
+    consumer: mock
+  - op: tick
+  - op: service
+  expected_events:
+  - event: consumer-registered
+    consumer: mock
+  - event: consumer-disconnected
+    consumer: mock
+  - event: ticks-recorded
+    count: 2
+    pending: 2
+  - event: frame-edge
+    elapsed: 2
+    frame_counter: 2
+  - event: published
+    generation: 1
+    frame_counter: 2
+    visible: 0
+  - event: consumer-reconnected
+    consumer: mock
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 3
+  - event: published
+    generation: 2
+    frame_counter: 3
+    visible: 0
+  - event: consumer-notified
+    consumer: mock
+    generation: 2
+  expected_final:
+    frame_counter: 3
+    generation: 2
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 3
+      serviced_edges: 2
+      coalesced_ticks: 1
+      overruns: 1
+    consumers:
+      mock:
+        connected: true
+        slot: 2
+        drops: 0
+  content_sha256: 9edc5567af282442b2d6ed38288ca2239d568963a2004770c760eb3f3308f91b
+- id: tick-arrives-between-services
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: tick
+  - op: service
+  - op: tick
+    count: 2
+  - op: service
+  expected_events:
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 1
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: ticks-recorded
+    count: 2
+    pending: 2
+  - event: frame-edge
+    elapsed: 2
+    frame_counter: 3
+  - event: published
+    generation: 2
+    frame_counter: 3
+    visible: 0
+  expected_final:
+    frame_counter: 3
+    generation: 2
+    pending_ticks: 0
+    submitted_sequence: 0
+    started_sequence: 0
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 3
+      serviced_edges: 2
+      coalesced_ticks: 1
+      overruns: 1
+    consumers: {}
+  content_sha256: 587b54a94f0600142dbece2995f274f832c85adc6c721717772318021d1a50f7
+- id: stop-cancels-and-releases
+  oracle_class: independent written-contract state model
+  initial: {}
+  operations:
+  - op: submit
+    kind: path
+    dynamic: true
+  - op: submit
+    kind: transform
+    dynamic: true
+  - op: start-one
+  - op: stop
+  - op: wait
+    sequence: 2
+  expected_events:
+  - event: submitted
+    sequence: 1
+    kind: path
+  - event: submitted
+    sequence: 2
+    kind: transform
+  - event: started
+    sequence: 1
+    kind: path
+  - event: payload-released
+    sequence: 2
+  - event: payload-released
+    sequence: 1
+  - event: stopped
+    cancelled:
+    - 2
+    - 1
+  - event: wait-result
+    sequence: 2
+    result: cancelled
+  expected_final:
+    frame_counter: 0
+    generation: 0
+    pending_ticks: 0
+    submitted_sequence: 2
+    started_sequence: 1
+    completed_sequence: 0
+    queue_depth: 0
+    active: null
+    visible_plane: 0
+    drawing_plane: 0
+    metrics:
+      elapsed_ticks: 0
+      serviced_edges: 0
+      coalesced_ticks: 0
+      overruns: 0
+    consumers: {}
+  content_sha256: dc3a19226c5f4e81836faaf0f896beaa47be7fc40cdb8cbef358777d473a035f
+fixture_set_sha256: 19ad59951db2e893a89d2d50935466e069766f1f7886b870c676833b9949c8b1

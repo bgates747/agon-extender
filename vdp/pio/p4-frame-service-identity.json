@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "artifact_id": "port-003-frame-service-canary",
+  "source_identity": "port-003-frame-service-canary-r01",
+  "status": "candidate",
+  "variant": "olimex-p4-devkit"
+}

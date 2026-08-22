@@ -1,0 +1,61 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_host_frame_results
+generated_by: docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
+diagnostic_status: host ASan/UBSan deterministic logical-frame qualification; LSAN unavailable under managed tracing
+fixture_input:
+  path: docs/tasks/PORT-003/phase-c/fixtures/frame-traces.yaml
+  sha256: 5aab08070c3db7050d40beaad83fde263296a9644fc0e8af14389cfe40b794ee
+  fixture_set_sha256: 19ad59951db2e893a89d2d50935466e069766f1f7886b870c676833b9949c8b1
+production_sources:
+- path: docs/tasks/PORT-003/phase-c/tests/logical_frame_service_tests.cpp
+  sha256: 4028696563c362684c8cc31c7725ff66c86da409f4cf3ebbf1d20a92c5942125
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 9c051ccacfbf4a400577febf821973d15d129bd01b23b63444549cebbf001793
+retained_controller_sources:
+- path: docs/tasks/PORT-003/phase-c/tests/controller_frame_tests.cpp
+  sha256: 06ff8e9bf41ebf9b6a2acf40f3eb2fe6989d746012bbde69599deb493c99cc80
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 9c051ccacfbf4a400577febf821973d15d129bd01b23b63444549cebbf001793
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: 50d8377ad7b97ead65749bd91f1c5b90ff12d52be49bb8e3af9aedb6154f4ae1
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: 6b415f6631e0d04523bdefaffd0ed200aafb7baaccf7d35289c54374004b905e
+retained_controller_output:
+- dequeued-completion-pass
+- double-buffer-swap-pass
+- single-buffer-edge-stop-pass
+- suspension-counter-pass
+- cancellation-restart-reconfigure-pass
+stress_output:
+- concurrent-tick-burst-pass
+- saturation-lifecycle-pass
+- bounded-consumer-registry-pass
+summary:
+  fixture_count: 12
+  pass_count: 12
+  controller_case_count: 5
+  stress_case_count: 3
+  failure_count: 0
+  passed: true
+passes:
+- sink-free-edge
+- coalesced-three-ticks
+- frame-counter-rollover
+- writable-counter-continues
+- dequeued-is-not-complete
+- single-buffer-fifo-budget
+- single-buffer-flush-next-edge
+- double-immediate-and-swap
+- slow-consumer-latest-only
+- consumer-disconnect-reconnect
+- tick-arrives-between-services
+- stop-cancels-and-releases
+failures: []
