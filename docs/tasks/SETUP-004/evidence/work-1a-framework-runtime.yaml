@@ -1,5 +1,6 @@
 # Reviewed SETUP-004 Work 1.a input. Source facts are tied to the immutable
-# PORT-001 graph; dispositions remain provisional until Author review.
+# PORT-001 graph; each disposition remains provisional until its author_review
+# status is accepted.
 schema_version: 1
 work_item: SETUP-004.1.a
 subject: Arduino, ESP-IDF, and FreeRTOS runtime abstractions
@@ -18,6 +19,92 @@ target_framework:
   authority:
     - docs/decisions/ADR-0002-hybrid-firmware-framework.md
     - docs/decisions/ADR-0003-pioarduino-platform-baseline.md
+  source_evidence:
+    - id: target:arduino-core
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/Arduino.h
+      sha256: 4f2231bcd14bf14c1bfbb667c10a06484a336217974ae76c7f15dc5507a406d4
+    - id: target:arduino-lifecycle
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/main.cpp
+      sha256: 3a80fad62e9a4243aeb67ed1215fac81f47ba4ddc707db57850ec8cab68f1291
+    - id: target:arduino-string
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/WString.h
+      sha256: e17d75d8ab183deb56677de708cca5e73b635e5ecdb5af118ce6f34b9ca6565d
+    - id: target:arduino-stream
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/Stream.h
+      sha256: b7e4835a173c28b4e7eae09072536c304b45c3d47e00f77c4094ac83bde8391e
+    - id: target:arduino-hardware-serial
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/HardwareSerial.h
+      sha256: f0a25409647e9c5daf3cb9b59f5d7020a422962aab7afe7cb0e637e510af92ac
+    - id: target:arduino-hal
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/esp32-hal.h
+      sha256: d32126b520f6a639a10eb4114478c5c0e32a6bea94079b418250f6f346e44126
+    - id: target:arduino-psram
+      package: arduino-esp32
+      version: 3.3.11
+      path: cores/esp32/esp32-hal-psram.h
+      sha256: 06f090d6f1f1bb5068af8a6196eef3fc112542263bed6a83d92e0bb0e72f7bd9
+    - id: target:arduino-wifi
+      package: arduino-esp32
+      version: 3.3.11
+      path: libraries/WiFi/src/WiFi.h
+      sha256: 67942f9b0a1a6b731387c0306df71260829556a4236b2b4411a06c04efd486be
+    - id: target:freertos-task
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/freertos/FreeRTOS-Kernel/include/freertos/task.h
+      sha256: 8b908b964d2c87377838762478253eec04312b985e6bb680bacd3f03ab253897
+    - id: target:freertos-queue
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/freertos/FreeRTOS-Kernel/include/freertos/queue.h
+      sha256: 55d69a2a06167b9775e64cc5a5cbf0335e9b49ca961e50ca563b262f3208c3c2
+    - id: target:freertos-semaphore
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/freertos/FreeRTOS-Kernel/include/freertos/semphr.h
+      sha256: 677a4be50d694714d1b0304d5858a976fb4556e80f7f87fb79a9b2bf7fcbc6f6
+    - id: target:freertos-timer
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/freertos/FreeRTOS-Kernel/include/freertos/timers.h
+      sha256: 2f83045657b7cc0c8f3cfa1453b1c37fe0a1e1555bee5b08502afdf0d59c4200
+    - id: target:idf-task-watchdog
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/esp_system/include/esp_task_wdt.h
+      sha256: a5c22abf8b35a4d85a81e2df163c0dbb5e0c596085e5c450e3ad869520ef040e
+    - id: target:idf-capability-heap
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/heap/include/esp_heap_caps.h
+      sha256: 5fd9bf5e089788bc91b81474047379c96826c768607f0f7ad4b8e0930a7de3ec
+    - id: target:idf-ota
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/app_update/include/esp_ota_ops.h
+      sha256: 6a1942c7621d02d83839a763ca4521a540e3a114ff479b17730685cb7db278d4
+    - id: target:idf-interrupt-allocation
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/esp_hw_support/include/esp_intr_alloc.h
+      sha256: 749853317ef0cf342d49bccff37c61db69250c9d1dfd9ceaca74d1a61e5c2581
+    - id: target:idf-system
+      package: esp-idf-libs-esp32p4
+      version: 5.5.5
+      path: include/esp_system/include/esp_system.h
+      sha256: d29fb527ae8bfd21376799aacf33241fab8084caceca417529b8cffe9c6ce7b4
 records:
   - id: framework-arduino-sketch-lifecycle
     name: Arduino sketch lifecycle and top-level startup
@@ -26,9 +113,9 @@ records:
       Arduino-provided app_main dispatch into upstream-shaped setup() and
       loop(), plus the VDP-owned startup ordering in video.ino.
     upstream_owner: agon-vdp
-    source_files:
+    source_highlights:
       - agon-vdp:video/video.ino
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation: []
@@ -47,6 +134,7 @@ records:
       tasks:
         - processLoop
       interrupts: []
+      timers: []
       callbacks: []
       global_state:
         - processor
@@ -55,7 +143,20 @@ records:
     visible_behavior:
       - Every normally processed VDU command depends on successful startup and processLoop activation.
       - Startup ordering determines when transport and visible output become available.
+    target_compatibility:
+      status: physically-qualified
+      finding: >-
+        Arduino-ESP32 3.3.11 supplies the sketch dispatcher, and the P4 canary
+        qualified setup()/loop() startup under the accepted hybrid framework.
+      evidence:
+        - target:arduino-core
+        - target:arduino-lifecycle
+        - docs/procedures/p4-canary-r03.md
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-21
     disposition: retain
     rationale: >-
       The accepted hybrid framework deliberately preserves Arduino lifecycle
@@ -71,6 +172,17 @@ records:
       - SETUP-004.1.d
       - SETUP-004.1.e
       - SETUP-004.1.f
+    dependency_effects:
+      - id: SETUP-004.1.b
+        effect: blocks-implementation
+      - id: SETUP-004.1.c
+        effect: blocks-implementation
+      - id: SETUP-004.1.d
+        effect: blocks-implementation
+      - id: SETUP-004.1.e
+        effect: blocks-implementation
+      - id: SETUP-004.1.f
+        effect: blocks-implementation
     evidence_ids:
       - evidence:reviewed:facility-startup-orchestration-0
       - evidence:source:agon-vdp:video.ino:99:4ee9a5776baa
@@ -86,6 +198,86 @@ records:
       - docs/tasks/SETUP-001.md
       - agon-vdp:video/video.ino:99
 
+  - id: framework-arduino-core-types
+    name: Arduino core types and utility compatibility
+    layer: Arduino core API
+    scope: >-
+      Direct Arduino.h coupling, Arduino String use in ESP32Time, and Arduino
+      map() use in the VDP envelope implementations; excludes device APIs
+      classified under their own candidates.
+    upstream_owner: agon-vdp, vdp-gl, ESP32Time, and CRC
+    source_highlights:
+      - CRC:src/CrcDefines.h
+      - ESP32Time:ESP32Time.cpp
+      - ESP32Time:ESP32Time.h
+      - agon-vdp:video/envelopes/adsr.h
+      - agon-vdp:video/envelopes/multiphase_adsr.h
+    implementation_highlights:
+      selected_translation_units:
+        - ESP32Time:ESP32Time.cpp
+      header_implementation:
+        - CRC:src/CrcDefines.h
+        - ESP32Time:ESP32Time.h
+        - agon-vdp:video/envelopes/adsr.h
+        - agon-vdp:video/envelopes/multiphase_adsr.h
+    facilities:
+      - Arduino.h core definitions
+      - Arduino String
+      - Arduino map()
+    activation:
+      - ESP32Time formatting constructs and returns Arduino String values.
+      - Audio envelope evaluation calls Arduino map().
+      - CRC and selected vdp-gl sources include Arduino.h directly.
+    connections:
+      startup: []
+      tasks:
+        - audioDriver through envelope evaluation
+      interrupts: []
+      timers: []
+      callbacks: []
+      global_state: []
+    visible_behavior:
+      - RTC formatting depends on Arduino String compatibility.
+      - Audio envelope interpolation depends on Arduino map() integer semantics.
+    target_compatibility:
+      status: source-confirmed
+      finding: >-
+        Arduino-ESP32 3.3.11 provides Arduino.h, WString, and map(); integration
+        remains subject to the subsystem builds that consume them.
+      evidence:
+        - target:arduino-core
+        - target:arduino-string
+    physical_owner_class: Extender
+    physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-21
+    disposition: retain
+    rationale: >-
+      These are source-level compatibility contracts shared by vendored code.
+      Retaining them avoids needless rewrites and preserves upstream structure.
+    omission_fallout: >-
+      Direct omission breaks ESP32Time String declarations and VDP audio
+      envelope compilation; replacing them would create project-owned forks of
+      otherwise available Arduino facilities.
+    dependencies:
+      - SETUP-004.1.b
+      - SETUP-004.1.e
+      - SETUP-004.1.g
+    dependency_effects:
+      - id: SETUP-004.1.b
+        effect: requires-later-qualification
+      - id: SETUP-004.1.e
+        effect: requires-later-qualification
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+    evidence_ids: []
+    graph_node_ids: []
+    agent_entry_points:
+      - ESP32Time:ESP32Time.h:28
+      - agon-vdp:video/envelopes/adsr.h:49
+      - agon-vdp:video/envelopes/multiphase_adsr.h:101
+
   - id: framework-arduino-stream-contract
     name: Arduino Stream and Print-compatible byte-stream contract
     layer: Arduino core API
@@ -94,11 +286,11 @@ records:
       in-memory BufferStream/MultiBufferStream implementations; excludes the
       concrete UART binding.
     upstream_owner: agon-vdp
-    source_files:
+    source_highlights:
       - agon-vdp:video/vdu_stream_processor.h
       - agon-vdp:video/buffer_stream.h
       - agon-vdp:video/multi_buffer_stream.h
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation:
@@ -120,6 +312,7 @@ records:
       tasks:
         - processLoop
       interrupts: []
+      timers: []
       callbacks:
         - buffered command callbacks
       global_state:
@@ -130,7 +323,18 @@ records:
       - VDU parsing consumes an ordered byte stream independent of its physical transport.
       - VDPP responses and callbacks write through the active output stream.
       - Buffered commands depend on reusable in-memory stream semantics.
+    target_compatibility:
+      status: source-confirmed
+      finding: >-
+        Arduino-ESP32 3.3.11 retains the Stream/Print inheritance contract used
+        by the parser, packet writer, and in-memory stream implementations.
+      evidence:
+        - target:arduino-stream
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-21
     disposition: retain
     rationale: >-
       Stream is the principal existing seam between VDP semantics and physical
@@ -142,6 +346,11 @@ records:
     dependencies:
       - SETUP-004.1.c
       - SETUP-005-D003
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: blocks-implementation
+      - id: SETUP-005-D003
+        effect: blocks-implementation
     evidence_ids:
       - evidence:reviewed:facility-primary-vdp-transport-0
       - evidence:source:agon-vdp:vdu_stream_processor.h:261:1746dee96818
@@ -161,10 +370,10 @@ records:
     name: Arduino monotonic timing and delay services
     layer: Arduino core API
     scope: >-
-      delay() and millis() uses in active VDP code; excludes RTC wall-clock
-      service and hardware timer/interrupt implementation.
-    upstream_owner: agon-vdp
-    source_files:
+      delay(), delayMicroseconds(), millis(), and micros() uses in the effective
+      build; excludes RTC wall-clock service and hardware timer implementation.
+    upstream_owner: agon-vdp and vdp-gl
+    source_highlights:
       - agon-vdp:video/video.ino
       - agon-vdp:video/agon_audio.h
       - agon-vdp:video/audio_channel.h
@@ -172,7 +381,9 @@ records:
       - agon-vdp:video/updater.h
       - agon-vdp:video/vdu_buffered.h
       - agon-vdp:video/ymodem.h
-    implementation_form:
+      - agon-vdp:video/zdi.h
+      - vdp-gl:src/network/ICMP.cpp
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation:
@@ -184,7 +395,9 @@ records:
         - agon-vdp:video/ymodem.h
     facilities:
       - Arduino delay()
+      - Arduino delayMicroseconds()
       - Arduino millis()
+      - Arduino micros()
     activation:
       - Startup and idle loop use delay().
       - Audio scheduling, transfer timeouts, updater timing, and diagnostics use millis().
@@ -196,12 +409,24 @@ records:
         - processLoop
         - audioDriver
       interrupts: []
+      timers: []
       callbacks: []
       global_state: []
     visible_behavior:
       - Timeouts, playback duration, and cooperative task pacing depend on monotonic timing.
       - Buffered-operation timing is diagnostic only.
+    target_compatibility:
+      status: source-confirmed
+      finding: >-
+        Arduino-ESP32 3.3.11 declares all four timing APIs. Their P4 timing and
+        scheduling behavior still requires subsystem qualification.
+      evidence:
+        - target:arduino-hal
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-21
     disposition: retain
     rationale: >-
       The pinned Arduino core supplies these portable APIs on P4. Retaining
@@ -214,6 +439,13 @@ records:
       - SETUP-004.1.d
       - SETUP-004.1.e
       - SETUP-004.1.g
+    dependency_effects:
+      - id: SETUP-004.1.d
+        effect: requires-later-qualification
+      - id: SETUP-004.1.e
+        effect: requires-later-qualification
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
     evidence_ids:
       - evidence:source:agon-vdp:video.ino:127:f08279fa4795
       - evidence:source:agon-vdp:agon_audio.h:41:78e48821af55
@@ -228,77 +460,200 @@ records:
       - agon-vdp:video/hexload.h:33
       - agon-vdp:video/ymodem.h:60
 
-  - id: framework-concrete-serial-bindings
-    name: Concrete Arduino HardwareSerial transport and diagnostic bindings
+  - id: framework-primary-vdp-serial-binding
+    name: Primary VDP protocol serial binding
     layer: Arduino device API
     scope: >-
-      Official bindings of the protocol stream to Serial2 and diagnostics,
-      printer, ZDI, and transfer paths to DBGSerial on UART0; excludes the
-      retained abstract Stream contract.
+      Official binding of the primary VDP protocol stream to Serial2 and its
+      underlying Arduino HardwareSerial API; excludes the retained abstract
+      Stream contract and the separately inventoried DBGSerial binding.
     upstream_owner: agon-vdp
-    source_files:
+    source_highlights:
       - agon-vdp:video/video.ino
       - agon-vdp:video/vdp_protocol.h
-      - agon-vdp:video/hexload.h
-      - agon-vdp:video/ymodem.h
-      - agon-vdp:video/zdi.h
-    implementation_form:
+      - vdp-gl:src/terminal.cpp
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation:
         - agon-vdp:video/vdp_protocol.h
-        - agon-vdp:video/hexload.h
-        - agon-vdp:video/ymodem.h
-        - agon-vdp:video/zdi.h
     facilities:
       - Arduino HardwareSerial
       - Serial2 VDP transport
-      - UART0 DBGSerial
     activation:
-      - setup() initializes DBGSerial and setupVDPProtocol().
+      - setup() calls setupVDPProtocol().
       - VDUStreamProcessor initially uses Serial2 for both command input and packet output.
-      - Console, printer, ZDI, HEX load, and YMODEM paths use DBGSerial or the active stream.
     connections:
       startup:
         - setupVDPProtocol()
       tasks:
         - processLoop
       interrupts: []
+      timers: []
       callbacks:
         - VDPP callback emission
       global_state:
-        - DBGSerial
         - VDPSerial
     visible_behavior:
       - Stock VDU input and VDPP output are duplex on Serial2.
-      - Debug, printer, console, transfer, and ZDI behavior assumes UART0 availability.
-    physical_owner: Split between Extender forward transport, Extender UART return, and diagnostic service
+      - Unaware legacy applications must continue to default to the regular UART contract.
+      - Routing between onboard VDP and EDP may change the endpoint, but not the legacy wire contract.
+    target_compatibility:
+      status: api-available-mapping-unqualified
+      finding: >-
+        Arduino-ESP32 3.3.11 provides HardwareSerial on P4, but the official
+        Serial2 instance, pin, flow-control, and duplex binding contains
+        ESP32-PICO assumptions and is not a usable Extender transport design.
+      evidence:
+        - target:arduino-hardware-serial
+    physical_owner_class: Extender
+    physical_owner: Extender forward command transport and UART return transport
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
     disposition: replace
     rationale: >-
       Rev 1 uses a high-speed forward path for command input and UART for return
       traffic, so the stock single-duplex Serial2 binding cannot remain. UART0
-      is also not a safe implicit P4 diagnostic sink. Narrow Stream-compatible
-      adapters preserve upstream parser semantics.
+      diagnostics are a separate candidate. Narrow Stream-compatible adapters
+      preserve upstream parser semantics. Unaware legacy applications default
+      to regular UART, and the unresolved VDP/EDP routing mechanism may change
+      the selected endpoint but must not change the legacy wire contract.
     omission_fallout: >-
-      Removing the bindings without replacements leaves no MOS command ingress,
-      no VDPP return path, and no defined sink for diagnostic or maintenance
-      output.
+      Removing the binding without replacements leaves no MOS command ingress
+      or VDPP return path.
     dependencies:
       - SETUP-004.1.c
-      - SETUP-004.1.g
       - SETUP-005-D003
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: blocks-implementation
+      - id: SETUP-005-D003
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: replacement-required
+      first_failure: >-
+        Removing VDPSerial first breaks compilation at its direct consumers;
+        retaining it unchanged binds command ingress and return packets to the
+        wrong UART ownership and pins.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: >-
+        Preserve Stream-facing contracts and replace primary VDPSerial with
+        explicit forward-input and UART-return adapters.
+      residual_risk: Transport ownership remains blocked by SETUP-004.1.c and SETUP-005-D003.
     evidence_ids:
       - evidence:source:agon-vdp:vdp_protocol.h:17:507e0a51692b
       - evidence:source:agon-vdp:vdp_protocol.h:26:5f52aa9326ab
-      - evidence:reviewed:facility-debug-zdi-and-file-transfer-0
     graph_node_ids:
       - function:agon-vdp:setupVDPProtocol()
       - macro:agon-vdp:VDPSerial@video/vdp_protocol.h%23variant-dbcd3c44de4c
       - platform-api:reviewed:arduino%20hardwareserial
-      - physical-facility:reviewed:arduino%20hardwareserial%20uart0
     agent_entry_points:
       - agon-vdp:video/vdp_protocol.h:17
       - agon-vdp:video/video.ino:71
+      - hardware/designs/light2-harness-r01/profile.yaml
+
+  - id: framework-debug-serial-binding
+    name: DBGSerial maintenance and operator binding
+    layer: Arduino device API
+    scope: >-
+      Official UART0 DBGSerial object and its printer, console, diagnostic,
+      keyboard-debug, ZDI, Intel HEX, YMODEM, and updater consumers; excludes
+      the separately inventoried primary VDP protocol transport.
+    upstream_owner: agon-vdp
+    source_highlights:
+      - agon-vdp:video/video.ino
+      - agon-vdp:video/agon_ps2.h
+      - agon-vdp:video/hexload.h
+      - agon-vdp:video/vdu.h
+      - agon-vdp:video/ymodem.h
+      - agon-vdp:video/zdi.h
+    implementation_highlights:
+      selected_translation_units:
+        - agon-vdp:video/video.ino
+      header_implementation:
+        - agon-vdp:video/agon_ps2.h
+        - agon-vdp:video/hexload.h
+        - agon-vdp:video/vdu.h
+        - agon-vdp:video/ymodem.h
+        - agon-vdp:video/zdi.h
+    facilities:
+      - Arduino HardwareSerial UART0
+      - DBGSerial
+    activation:
+      - setup() initializes DBGSerial on UART0.
+      - Console, printer, ZDI, HEX load, YMODEM, and debug-keyboard paths consume DBGSerial.
+    connections:
+      startup:
+        - DBGSerial.begin()
+      tasks:
+        - processLoop
+      interrupts: []
+      timers: []
+      callbacks: []
+      global_state:
+        - DBGSerial
+    visible_behavior:
+      - Debug, printer, console, transfer, ZDI, and debug-keyboard behavior assumes UART0 availability.
+      - Extender v1 does not provide these DBGSerial-owned maintenance/operator facilities.
+      - Legacy mode leaves Extender absent and preserves stock facilities through the onboard VDP.
+      - Cooperative mode may reach onboard facilities through ordinary VDU routing.
+      - EDP-exclusive handling depends on the strict compatibility contract selected for that mode.
+    target_compatibility:
+      status: api-available-mapping-unqualified
+      finding: >-
+        Arduino-ESP32 3.3.11 provides HardwareSerial on P4, but the upstream
+        UART0 binding is an ESP32-PICO maintenance-port assumption and is not a
+        selected Extender v1 facility.
+      evidence:
+        - target:arduino-hardware-serial
+    physical_owner_class: onboard VDP
+    physical_owner: Onboard VDP in legacy and applicable cooperative operation; none on Extender v1
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: omit
+    rationale: >-
+      Extender v1 omits the stock local maintenance/operator serial facility.
+      Command parsers that expose related application-visible commands remain
+      subject to mode-specific compatibility behavior under SETUP-005-D006.
+      This initial boundary may be revised if deeper source review proves that
+      a narrower adapter or retained facility is required.
+    omission_fallout: >-
+      Direct removal breaks compilation at DBGSerial consumers and leaves
+      maintenance commands without defined mode-specific behavior.
+    dependencies:
+      - SETUP-004.1.c
+      - SETUP-004.1.g
+      - SETUP-005-D006
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: requires-later-qualification
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+      - id: SETUP-005-D006
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: omission-requires-consumer-treatment
+      first_failure: >-
+        Removing DBGSerial first breaks compilation at its declaration,
+        initialization, and direct consumers.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: >-
+        Remove the UART0 object and initialization only after every direct
+        consumer is omitted, delegated, or given the mode-specific behavior
+        defined by SETUP-005-D006.
+      residual_risk: Deeper review may expose shared parser state or an operator facility that requires revising this initial split.
+    evidence_ids:
+      - evidence:reviewed:facility-debug-zdi-and-file-transfer-0
+    graph_node_ids:
+      - variable:agon-vdp:DBGSerial
+      - physical-facility:reviewed:arduino%20hardwareserial%20uart0
+    agent_entry_points:
+      - agon-vdp:video/video.ino:71
+      - agon-vdp:video/vdu.h:12
+      - agon-vdp:video/hexload.h:11
+      - agon-vdp:video/ymodem.h:34
       - docs/tasks/SETUP-004.md#known-diagnostic-output-constraint
 
   - id: framework-freertos-concurrency
@@ -309,7 +664,7 @@ records:
       paths; individual task ownership and physical-driver selection remain
       with their subsystem work items.
     upstream_owner: agon-vdp and vdp-gl
-    source_files:
+    source_highlights:
       - agon-vdp:video/video.ino
       - agon-vdp:video/agon_audio.h
       - vdp-gl:src/displaycontroller.cpp
@@ -317,7 +672,7 @@ records:
       - vdp-gl:src/terminal.cpp
       - vdp-gl:src/devdrivers/keyboard.cpp
       - vdp-gl:src/devdrivers/mouse.cpp
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
         - vdp-gl:src/displaycontroller.cpp
@@ -349,6 +704,8 @@ records:
         - mouseUpdateTask
       interrupts:
         - display ISR notification paths
+      timers:
+        - terminal blink timer
       callbacks:
         - terminal blink timer
       global_state:
@@ -356,7 +713,23 @@ records:
         - audioTask
     visible_behavior:
       - Command processing, rendering completion, audio progression, terminal behavior, and physical input are concurrency-dependent.
+    target_compatibility:
+      status: physically-qualified-runtime
+      finding: >-
+        ESP-IDF 5.5.5 supplies the task, queue, semaphore, timer, and
+        notification APIs for ESP32-P4; the canary qualified the required
+        1000 Hz FreeRTOS tick and normal Arduino task startup.
+      evidence:
+        - target:freertos-task
+        - target:freertos-queue
+        - target:freertos-semaphore
+        - target:freertos-timer
+        - docs/procedures/p4-canary-r03.md
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
     disposition: retain
     rationale: >-
       ESP-IDF 5.5.5 supplies FreeRTOS on P4 and the accepted hybrid canary
@@ -372,6 +745,15 @@ records:
       - SETUP-004.1.d
       - SETUP-004.1.e
       - SETUP-004.1.f
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: requires-later-qualification
+      - id: SETUP-004.1.d
+        effect: requires-later-qualification
+      - id: SETUP-004.1.e
+        effect: requires-later-qualification
+      - id: SETUP-004.1.f
+        effect: requires-later-qualification
     evidence_ids:
       - evidence:reviewed:facility-runtime-concurrency-0
       - evidence:source:agon-vdp:video.ino:109:66014389d591
@@ -395,16 +777,18 @@ records:
       Per-core watchdog disable/reset calls, task pinning policy, and core-load
       selection assumptions embedded in official startup and vdp-gl.
     upstream_owner: agon-vdp and vdp-gl
-    source_files:
+    source_highlights:
       - agon-vdp:video/video.ino
+      - agon-vdp:video/vdu_sys.h
+      - vdp-gl:src/fabglconf.h
       - vdp-gl:src/fabutils.cpp
-      - vdp-gl:src/dispdrivers/vgabasecontroller.cpp
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
         - vdp-gl:src/fabutils.cpp
-        - vdp-gl:src/dispdrivers/vgabasecontroller.cpp
-      header_implementation: []
+      header_implementation:
+        - agon-vdp:video/vdu_sys.h
+        - vdp-gl:src/fabglconf.h
     facilities:
       - disableCore0WDT()
       - disableCore1WDT()
@@ -423,17 +807,36 @@ records:
         - processLoop
         - primitiveExecTask
       interrupts: []
+      timers: []
       callbacks: []
       global_state: []
     visible_behavior:
       - Failure policy and task scheduling affect availability and latency but define no VDU command surface directly.
+    target_compatibility:
+      status: mixed-source-incompatible
+      finding: >-
+        Arduino-ESP32 3.3.11 still provides per-core watchdog helpers, but
+        ESP-IDF 5.5.5 changed esp_task_wdt_init() to accept an
+        esp_task_wdt_config_t pointer. The inherited vdp-gl call
+        esp_task_wdt_init(45, false) is therefore source-incompatible.
+      evidence:
+        - target:arduino-hal
+        - target:idf-task-watchdog
+        - target:idf-system
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware runtime
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
     disposition: replace
     rationale: >-
       Preserve the intent—long-running VDP tasks remain schedulable and
       supervised—but replace inherited global watchdog disabling and ESP32-era
-      core assumptions with an explicit P4 task/watchdog policy. Portable
-      FreeRTOS pinning remains available where measurement justifies it.
+      core assumptions with one explicit P4 task/watchdog policy. Activation
+      and workload are mode-aware, while strict compatibility applies to
+      externally observable reset/failure behavior rather than obsolete
+      internals. Portable FreeRTOS pinning remains available where measurement
+      justifies it.
     omission_fallout: >-
       Blind omission can cause watchdog resets or uncontrolled hangs; blind
       retention can disable useful fault detection and preserve unqualified
@@ -442,6 +845,25 @@ records:
       - SETUP-004.1.c
       - SETUP-004.1.d
       - SETUP-004.1.e
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: blocks-implementation
+      - id: SETUP-004.1.d
+        effect: blocks-implementation
+      - id: SETUP-004.1.e
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: replacement-required
+      first_failure: >-
+        Blind retention first fails to compile at vdp-gl FileBrowser::format()
+        because its ESP-IDF 4-era two-argument esp_task_wdt_init() call is not
+        valid in ESP-IDF 5.5.5. Blind removal also changes reset and hang policy.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: >-
+        Replace global watchdog disabling and obsolete initialization with an
+        explicit P4 task-watchdog policy, retaining reset-reason and task
+        supervision behavior only where the owning subsystem requires it.
+      residual_risk: Final mode activation, task affinity, watchdog subscriptions, timeouts, and controlled-reset cases depend on retained workers and qualification.
     evidence_ids:
       - evidence:reviewed:facility-startup-orchestration-2
       - evidence:source:agon-vdp:video.ino:109:66014389d591
@@ -463,7 +885,7 @@ records:
       services; excludes individual graphics/audio/storage allocation policy
       and Xtensa-only optimized access.
     upstream_owner: agon-vdp and vdp-gl
-    source_files:
+    source_highlights:
       - agon-vdp:video/types.h
       - agon-vdp:video/context.h
       - agon-vdp:video/vdu_buffered.h
@@ -472,7 +894,7 @@ records:
       - vdp-gl:src/displaycontroller.cpp
       - vdp-gl:src/dispdrivers/vgabasecontroller.cpp
       - vdp-gl:src/devdrivers/soundgen.cpp
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
         - vdp-gl:src/displaycontroller.cpp
@@ -499,6 +921,7 @@ records:
         - rendering and audio workers
       interrupts:
         - DMA-capable display and audio buffers
+      timers: []
       callbacks: []
       global_state:
         - contextStacks
@@ -507,13 +930,30 @@ records:
     visible_behavior:
       - Available memory limits buffers, bitmaps, samples, layers, and transfers.
       - Free-PSRAM values are exposed through VDP variables.
+    target_compatibility:
+      status: physically-qualified
+      finding: >-
+        Arduino-ESP32 3.3.11 and ESP-IDF 5.5.5 expose the required PSRAM and
+        capability-heap APIs, and the P4 canary qualified the board's 32 MiB
+        PSRAM configuration and allocation path.
+      evidence:
+        - target:arduino-psram
+        - target:idf-capability-heap
+        - docs/procedures/p4-canary-r03.md
+    physical_owner_class: Extender
     physical_owner: Extender P4 memory subsystem
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
     disposition: retain
     rationale: >-
       The P4 profile has qualified 32 MiB PSRAM and the pinned hybrid framework
       supplies both API families. Retaining common allocation wrappers reduces
       source divergence; capability and failure semantics require later
-      subsystem qualification.
+      subsystem qualification. Future compile-time profiles may use P4
+      resources more aggressively at the cost of strict behavioral fidelity;
+      EDU-aware applications must discover such capabilities rather than assume
+      them.
     omission_fallout: >-
       Direct omission breaks pervasive header-defined allocators and materially
       reduces or removes storage for graphics, buffers, samples, and transfers.
@@ -522,6 +962,15 @@ records:
       - SETUP-004.1.e
       - SETUP-004.1.g
       - SETUP-004.1.h
+    dependency_effects:
+      - id: SETUP-004.1.d
+        effect: requires-later-qualification
+      - id: SETUP-004.1.e
+        effect: requires-later-qualification
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+      - id: SETUP-004.1.h
+        effect: requires-later-qualification
     evidence_ids:
       - evidence:reviewed:facility-memory-and-psram-0
       - evidence:reviewed:facility-memory-and-psram-1
@@ -539,61 +988,182 @@ records:
       - agon-vdp:video/ymodem.h:300
       - vdp-gl:src/dispdrivers/vgabasecontroller.cpp:392
 
-  - id: framework-idf-ota-and-restart
-    name: ESP-IDF OTA partition and restart services
+  - id: framework-idf-ota-and-restart-primitives
+    name: ESP-IDF OTA partition and restart primitives
     layer: ESP-IDF system API
     scope: >-
-      Official serial-stream updater's use of ESP-IDF OTA partition APIs and
-      esp_restart(); excludes the product's eventual network update design.
+      Reusable ESP-IDF flash-partition update and processor-restart APIs reached
+      by official source; excludes the stock command parser, serial image
+      transport, progress UI, and complete update transaction.
     upstream_owner: agon-vdp
-    source_files:
+    source_highlights:
       - agon-vdp:video/updater.h
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation:
         - agon-vdp:video/updater.h
     facilities:
       - esp_ota_get_next_update_partition()
-      - esp_ota_begin()/write()/end()
+      - esp_ota_begin()/write()
       - esp_ota_set_boot_partition()
       - esp_restart()
     activation:
-      - VDP_UPDATER enters the updater through a VDU system command.
-      - Successful or cancelled update paths can restart the processor.
+      - Any selected Extender update service may invoke these primitives.
+      - A selected boot-partition switch is made effective by processor restart.
     connections:
       startup: []
       tasks:
         - processLoop
       interrupts: []
+      timers: []
       callbacks: []
       global_state: []
     visible_behavior:
-      - Existing firmware-update commands consume the primary VDP Stream and report progress visibly.
       - Partition selection and restart determine update recovery behavior.
+    target_compatibility:
+      status: api-available
+      finding: >-
+        ESP-IDF 5.5.5 provides the OTA partition and restart APIs. Correct
+        transaction sequencing remains the responsibility of the caller.
+      evidence:
+        - target:idf-ota
+        - target:idf-system
+    physical_owner_class: Extender
     physical_owner: Extender P4 firmware and bootloader
-    disposition: defer
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: retain
     rationale: >-
-      ESP-IDF OTA is available and the Extender partition strategy already
-      reserves two OTA slots, but retention of the official serial updater
-      versus a project-owned network updater belongs to Work 1.g and its safety
-      architecture.
+      The accepted Extender flash layout reserves two OTA slots and ADR-0007
+      requires ESP-IDF image validity and rollback integration. Retaining these
+      primitives does not retain the stock serial updater or select the eventual
+      network update service. Prefer this proven P4-native substrate unless
+      evidence shows it is materially worse than sound clean-sheet P4 practice;
+      do not replace it merely to create a project-owned wheel.
     omission_fallout: >-
-      Removing the header without stubbing or replacing its command path breaks
-      existing updater commands; retaining it unchanged assumes stock stream,
-      display, partition, and restart behavior.
+      Omitting the primitives requires a different flash-write, boot-selection,
+      validation, rollback, and restart implementation for any firmware update
+      service.
     dependencies:
       - SETUP-004.1.g
+    dependency_effects:
+      - id: SETUP-004.1.g
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: retained-platform-service
+      first_failure: Extender update implementation loses its selected ESP-IDF transaction and restart substrate.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Keep direct ESP-IDF use bounded behind the eventual Extender update service defined by Work 1.g.
+      residual_risk: Partition validation, rollback, power-loss recovery, authorization, and transport remain unimplemented.
     evidence_ids:
-      - evidence:reviewed:facility-firmware-updater-2
-      - evidence:source:agon-vdp:updater.h:30:a4d3fe2e4fce
+      - evidence:reviewed:facility-firmware-updater-0
       - evidence:source:agon-vdp:updater.h:147:e1f674864b20
     graph_node_ids:
       - platform-api:reviewed:esp-idf%20ota%20partition%20apis%20and%20esp_restart
       - platform-api:external:esp_restart
     agent_entry_points:
-      - agon-vdp:video/updater.h:30
+      - agon-vdp:video/updater.h:61
       - docs/decisions/ADR-0007-flash-partition-strategy.md
+
+  - id: framework-stock-serial-updater
+    name: Stock VDP serial updater command path
+    layer: VDP command service
+    scope: >-
+      The VDP_UPDATER command, receiveFirmware transaction, primary-stream image
+      transport, progress UI, and reboot behavior; excludes the separately
+      inventoried reusable ESP-IDF OTA/restart primitives.
+    upstream_owner: agon-vdp
+    source_highlights:
+      - agon-vdp:video/updater.h
+      - agon-vdp:video/vdu_sys.h
+    implementation_highlights:
+      selected_translation_units:
+        - agon-vdp:video/video.ino
+      header_implementation:
+        - agon-vdp:video/updater.h
+        - agon-vdp:video/vdu_sys.h
+    facilities:
+      - VDP_UPDATER command dispatcher
+      - receiveFirmware()
+      - primary VDP Stream image input
+      - stock on-screen progress and restart flow
+    activation:
+      - VDP_UPDATER enters the updater through a VDU system command.
+      - receiveFirmware consumes image size, payload, and checksum from the active VDP stream.
+    connections:
+      startup: []
+      tasks:
+        - processLoop
+      interrupts: []
+      timers: []
+      callbacks: []
+      global_state: []
+    visible_behavior:
+      - Existing firmware-update commands consume the primary VDP stream and report progress visibly.
+      - Successful receive and partition-switch paths restart the processor.
+      - Extender v1 does not support this stock local updater facility.
+      - Strict and non-strict handling of attempts remains governed by SETUP-005-D006.
+    target_compatibility:
+      status: implementation-defective-and-transport-unselected
+      finding: >-
+        The command path assumes the stock duplex VDP stream and active VGA
+        state. Official VDP v2.16.0 also begins and writes an OTA operation but
+        never calls esp_ota_end() or esp_ota_abort().
+      evidence:
+        - target:idf-ota
+        - target:idf-system
+    known_upstream_deviation:
+      provenance: agon-vdp v2.16.0 video/updater.h receiveFirmware()
+      defect: >-
+        The esp_ota_begin() handle is neither finalized nor aborted before boot
+        partition selection or error return, so explicit final validation and
+        handle cleanup are omitted.
+      local_remedy: Do not enable this path on Extender; use a correct project-owned update transaction if later selected.
+      removal_condition: Upstream adopts a correct transaction and Extender deliberately selects a compatible serial updater.
+    physical_owner_class: none
+    physical_owner: No Extender v1 implementation; onboard VDP only in legacy or applicable cooperative operation
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
+    disposition: omit
+    rationale: >-
+      The Author has already excluded the stock updater and DBGSerial-owned
+      maintenance facilities from Extender v1. A project-owned network updater
+      may use the retained ESP-IDF primitives without retaining this command
+      path. Mode-specific handling of the unsupported command belongs to
+      SETUP-005-D006.
+    omission_fallout: >-
+      Direct source removal breaks VDP_UPDATER dispatch and receiveFirmware
+      references; the parser must still consume attempted command framing
+      according to the selected compatibility mode.
+    dependencies:
+      - SETUP-004.1.g
+      - SETUP-005-D006
+    dependency_effects:
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+      - id: SETUP-005-D006
+        effect: blocks-implementation
+    fallout_analysis:
+      kind: omission-requires-consumer-treatment
+      first_failure: Removing updater.h first breaks command dispatch and linked method declarations.
+      selected_consumers: mechanical.source_roles.inbound_consumers
+      severance: Remove the stock command implementation only after dispatch and parser behavior are explicitly replaced for each mode.
+      residual_risk: Strict compatibility may require preserving stock-observable failure behavior without enabling unsafe flash writes.
+    evidence_ids:
+      - evidence:reviewed:facility-firmware-updater-2
+      - evidence:source:agon-vdp:updater.h:30:a4d3fe2e4fce
+      - evidence:source:agon-vdp:updater.h:176:49927fd12cc0
+    graph_node_ids:
+      - subsystem:agon-vdp:firmware-updater
+      - command:agon-vdp-runtime:updater-command
+      - method:agon-vdp:VDUStreamProcessor::receiveFirmware()
+    agent_entry_points:
+      - agon-vdp:video/updater.h:30
+      - agon-vdp:video/updater.h:176
+      - docs/tasks/SETUP-004/VDU-inventory.md
 
   - id: framework-unused-wifi-include
     name: Unused Arduino WiFi include
@@ -602,9 +1172,9 @@ records:
       The WiFi.h include in video.ino; no official v2.16.0 WiFi API use or
       runtime behavior was found.
     upstream_owner: agon-vdp
-    source_files:
+    source_highlights:
       - agon-vdp:video/video.ino
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
       header_implementation: []
@@ -615,18 +1185,40 @@ records:
       startup: []
       tasks: []
       interrupts: []
+      timers: []
       callbacks: []
       global_state: []
     visible_behavior: []
+    target_compatibility:
+      status: available-but-unused
+      finding: >-
+        Arduino-ESP32 3.3.11 supplies WiFi.h, but the effective official VDP
+        source has no WiFi API calls, symbols, state, or runtime activation.
+      evidence:
+        - target:arduino-wifi
+    physical_owner_class: none
     physical_owner: none
+    author_review:
+      status: accepted
+      decision_date: 2026-08-21
     disposition: omit
     rationale: >-
-      The validated full-source search finds WiFi only at the include. Extender
-      networking is project-owned and does not require preserving an unused
-      upstream Arduino WiFi dependency.
+      The validated source scan finds WiFi.h only at this include and no WiFi
+      API consumer. Extender networking is project-owned and does not require
+      preserving the unused upstream dependency.
     omission_fallout: No compile, link, runtime, protocol, or visible fallout is evidenced.
     dependencies:
       - SETUP-004.1.g
+    dependency_effects:
+      - id: SETUP-004.1.g
+        effect: requires-later-qualification
+    fallout_analysis:
+      kind: omission-safe
+      first_failure: none-evidenced
+      selected_consumers:
+        - agon-vdp:video/video.ino preprocessor include only
+      severance: Remove the single WiFi.h include; no adapter or stub is required.
+      residual_risk: Rerun the source and compile/link audits after each upstream import.
     evidence_ids:
       - evidence:source:agon-vdp:video.ino:49:f9f3aaba6280
     graph_node_ids:
@@ -642,14 +1234,14 @@ records:
       and IRAM placement mechanisms used by hardware-facing vdp-gl and VDP
       paths; excludes each physical driver's implementation.
     upstream_owner: agon-vdp and vdp-gl
-    source_files:
+    source_highlights:
       - agon-vdp:video/OneWire_direct_gpio.h
       - agon-vdp:video/vdu.h
       - agon-vdp:video/vdu_buffered.h
       - vdp-gl:src/dispdrivers/vgabasecontroller.cpp
       - vdp-gl:src/devdrivers/soundgen.cpp
       - vdp-gl:src/comdrivers/ps2controller.cpp
-    implementation_form:
+    implementation_highlights:
       selected_translation_units:
         - agon-vdp:video/video.ino
         - vdp-gl:src/dispdrivers/vgabasecontroller.cpp
@@ -678,18 +1270,35 @@ records:
         - display scanout ISR
         - audio ISR
         - physical PS/2 ISR
+      timers: []
       callbacks: []
       global_state: []
     visible_behavior:
       - Rendering, audio, and input timing depend on correct ISR/task handoff.
       - The abstraction itself has no independent VDU command surface.
+    target_compatibility:
+      status: api-available-parameters-unqualified
+      finding: >-
+        ESP-IDF 5.5.5 provides interrupt allocation/free on ESP32-P4. Every
+        retained driver must still select P4-valid sources, affinity, flags,
+        placement, and ISR/task handoff parameters.
+      evidence:
+        - target:idf-interrupt-allocation
+        - target:freertos-task
+        - target:freertos-queue
+    physical_owner_class: Extender
     physical_owner: Extender P4 hardware drivers
+    author_review:
+      status: accepted
+      decision_date: 2026-08-22
     disposition: retain
     rationale: >-
       ESP-IDF 5.5.5 provides these services on P4, so retain the portable
       abstraction and ISR/task handoff patterns. Each retained or replacement
       driver must still replace ESP32-PICO register, interrupt-source,
-      core-affinity, and placement assumptions with P4-valid parameters.
+      core-affinity, and placement assumptions with P4-valid parameters. This
+      does not retain physical PS/2 input drivers on Extender v1; input
+      ownership and event replication remain under SETUP-005-D007.
     omission_fallout: >-
       Omitting the services while retaining an interrupt-driven driver breaks
       compilation or runtime operation. Omitting a complete physical driver may
@@ -699,6 +1308,18 @@ records:
       - SETUP-004.1.d
       - SETUP-004.1.e
       - SETUP-004.1.f
+      - SETUP-005-D007
+    dependency_effects:
+      - id: SETUP-004.1.c
+        effect: requires-later-qualification
+      - id: SETUP-004.1.d
+        effect: requires-later-qualification
+      - id: SETUP-004.1.e
+        effect: requires-later-qualification
+      - id: SETUP-004.1.f
+        effect: requires-later-qualification
+      - id: SETUP-005-D007
+        effect: requires-later-qualification
     evidence_ids:
       - evidence:reviewed:facility-runtime-concurrency-1
       - evidence:source:vdp-gl:vgabasecontroller.cpp:435:15624bac802e

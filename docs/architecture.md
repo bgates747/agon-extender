@@ -55,6 +55,23 @@ Target adaptation should follow this preference order:
 Every deviation from upstream should remain attributable to a verified target
 requirement or an accepted Extender feature.
 
+## Hardware design target
+
+The authoritative first Agon Light 2 wiring target is
+[`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md). It
+adopts the predecessor project's physically exercised eight-bit forward-bus
+pin map, installed-view routing geometry, series resistance, and control-signal
+biasing. Its tracked YAML profile is the normative pin authority; vendored text
+is provenance and supporting evidence, while the inherited SVGs are advisory.
+
+The predecessor's 115,200-baud reverse-UART fixture exercised the same buffered
+PC0/PC1 circuit selected as the first physical target for the official legacy
+UART contract. The lower rate deliberately prioritized wiring and directional
+correctness over speed margin; it does not qualify operation at the required
+1,152,000 baud. Complete legacy flow control, target-speed operation,
+production isolation, either-order power behavior, final carrier construction,
+and Console8 adaptation remain unqualified.
+
 ## EDU operating modes and application interface
 
 Project terminology distinguishes the **Extended Display Unit (EDU)** exposed
@@ -79,9 +96,11 @@ the application-facing EDU contract. See
 
 In **exclusive compatibility mode**, exactly one display processor owns the
 stock-compatible command path, responses, completion flags, and canonical MOS
-VDP sysvars. Only this mode may claim complete compatibility with untouched
-legacy software. Transparent EDP selection remains unresolved until the fixed
-legacy VDU restart paths and return traffic can be routed safely.
+VDP sysvars. EDP-exclusive mode may claim compatibility only for the declared
+normal application-facing surface; Extender v1 explicitly excludes local
+printer/USB serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug
+facilities. Transparent EDP selection remains unresolved until the fixed legacy
+VDU restart paths and return traffic can be routed safely.
 
 In **extended cooperative mode**, the onboard VDP remains authoritative for VDU
 and MOS VDP sysvars while the EDP is addressed through EDU and retains results
@@ -96,11 +115,19 @@ only by features that need system-wide integration, such as a MOS-based
 implementation of transparent legacy VDU routing; it is not a prerequisite for
 ordinary cooperative EDU use.
 
-Operator diagnostics form a separate output domain. Commands such as buffered
-command 128 write to the EDP diagnostic console or logging sink; they do not
-become MOS response packets, canonical sysvars, or EDU application results. The
-P4 port assigns that sink explicitly rather than inheriting the stock VDP's
-UART0 `DBGSerial` mapping.
+In **legacy mode**, Extender is electrically and logically absent from the Agon
+interface even when connected and powered. The onboard VDP owns all stock
+behavior, including maintenance/operator facilities omitted by Extender. In
+extended cooperative mode those facilities may likewise remain available
+through ordinary VDU to the onboard VDP; they are not implemented by Extender.
+
+Extender v1 does not inherit the stock VDP's UART0 `DBGSerial` mapping or local
+operator facilities. In EDP-exclusive mode, attempts to invoke those paths must
+follow stock VDP command consumption and observable failure behavior as closely
+as practical. Strict compatibility modes preserve even undesirable observable
+stock behavior; other modes should provide improved deterministic failure and
+recovery. The exact strict-mode boundary and command-level semantics are tracked
+under SETUP-005-D006.
 
 ## Firmware build model
 
@@ -117,6 +144,36 @@ Ethernet, multimedia peripherals, and future Extender functions.
 The hybrid framework choice must pass a minimal build and physical-board canary
 before it becomes the foundation for source adaptation. See
 [ADR-0002](decisions/ADR-0002-hybrid-firmware-framework.md).
+
+FreeRTOS supplied by ESP-IDF remains the firmware concurrency substrate.
+Extender replaces inherited ESP32-PICO watchdog disabling and core-placement
+assumptions with one explicit P4-native policy. Operating modes may change
+which tasks run and how they are supervised; strict compatibility governs
+externally observable reset and failure behavior rather than requiring obsolete
+watchdog internals. Exact task affinity, subscriptions, timeouts, and controlled
+resets require subsystem-specific qualification.
+
+Arduino PSRAM and ESP-IDF capability-aware allocation remain the underlying
+memory substrate, preserving explicit selection of external, internal,
+DMA-capable, and other constrained memory. The compatibility baseline does not
+preclude future compile-time performance profiles that exploit P4 resources at
+the cost of legacy behavioral fidelity. EDU-aware applications must discover
+the active profile's advertised capabilities rather than infer them.
+
+Extender v1 initially leaves physical keyboard and mouse ownership with the
+onboard VDP. Its stock packets to MOS remain the canonical legacy input path.
+An EDP-exclusive session nevertheless requires a controlled copy or equivalent
+representation of processed events for display-local behavior such as paged
+mode, control keys, mouse cursors, VDP variables, and callbacks. The routing
+mechanism and single-writer relationship with MOS sysvars remain open under
+SETUP-005-D007. P4-owned physical input may be added later as an EDU extension;
+it is not the initial compatibility baseline.
+
+Extender retains ESP-IDF's OTA image, boot-partition, rollback, and restart
+lifecycle as the low-level update substrate. This is independent of the omitted
+stock VDP serial updater and does not select an update transport. A project-
+owned replacement is warranted only if evidence shows the ESP-IDF facilities
+are materially inferior to sound clean-sheet ESP32-P4 practice.
 
 The initial build pins pioarduino platform release `55.03.311`, which combines
 Arduino-ESP32 3.3.11 with ESP-IDF 5.5.5. A moving release alias or development
@@ -163,8 +220,7 @@ upload, installation, port selection, or environment activation. Direct
 PlatformIO invocation remains supported. See
 [ADR-0009](decisions/ADR-0009-platformio-wrapper.md).
 
-The primary board environment configures the CPU at the vendor-rated 400 MHz.
-This remains subject to sustained CPU, flash, PSRAM, and mixed-load physical
-qualification. A 360 MHz environment or override is retained solely as a
-controlled diagnostic fallback for frequency-correlated failures. See
+The primary Rev-D1 pre-v3 board environment configures the CPU at 360 MHz. A
+forced 400 MHz candidate repeatedly asserted during clock initialization on the
+attached rev 1.3 silicon and is rejected for this hardware profile. See
 [ADR-0010](decisions/ADR-0010-cpu-frequency.md).

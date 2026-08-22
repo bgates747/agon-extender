@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r04
-updated_at: 2026-08-20T22:34:00Z
+registry_revision: r05
+updated_at: 2026-08-22T03:51:00Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -67,11 +67,16 @@ artifacts:
   - artifact_id: light2-harness
     kind: wiring_harness
     identity_scheme: revision
-    latest_identity: null
-    status: draft
+    latest_identity: light2-harness-r01
+    status: candidate
     variants:
       - light2
     description: Extender wiring harness for Agon Light 2 GPIO.
+    notes:
+      - Revision r01 adopts the physically exercised predecessor breadboard pin map as the authoritative first design target.
+      - Its forward mapping has inherited qualification evidence; the clean-project combination remains a candidate.
+      - The buffered PC0/PC1 UART circuit is the selected first wiring target; predecessor tests deliberately qualified correctness at 115.2 kbaud.
+      - Operation at the required 1.152 Mbaud legacy rate, required flow-control behavior, production isolation, power behavior, and final carrier construction remain unqualified.
 
   - artifact_id: console8-harness
     kind: wiring_harness

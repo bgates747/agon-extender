@@ -3,14 +3,15 @@
 Source: official `agon-docs` VDU documentation; VDP baseline `v2.16.0`.
 
 Legend: ✅ supported · 🟡 accepted no-op · 🔀 retained, mode-dependent ·
-❓ unresolved · ⬜ unreviewed
+⛔ unsupported by Extender v1; legacy/onboard-VDP only · ❓ unresolved ·
+⬜ unreviewed
 
 ## Base VDU commands
 
 - ✅ `VDU 0` — Null (no operation).
-- ✅ `VDU 1` — Send next character to the printer.
-- ✅ `VDU 2` — Enable printer output.
-- ✅ `VDU 3` — Disable printer output.
+- ⛔ `VDU 1` — Send next character to the printer.
+- ⛔ `VDU 2` — Enable printer output.
+- ⛔ `VDU 3` — Disable printer output.
 - ✅ `VDU 4` — Write text at the text cursor.
 - ✅ `VDU 5` — Write text at the graphics cursor.
 - ✅ `VDU 6` — Enable screen processing.
@@ -50,7 +51,7 @@ Legend: ✅ supported · 🟡 accepted no-op · 🔀 retained, mode-dependent ·
 - ✅ `VDU 23, 16, setting, mask` — Define cursor movement behaviour.
 - ✅ `VDU 23, 23, thickness` — Set line thickness.
 - ✅ `VDU 23, 27, command, <params>` — Execute bitmap or sprite command.
-- ✅ `VDU 23, 28` — Enter Intel HEX loader.
+- ⛔ `VDU 23, 28, [command]` — Enter Intel HEX or YMODEM transfer mode.
 
 ## System commands — VDU 23, 0
 
@@ -85,7 +86,7 @@ Legend: ✅ supported · 🟡 accepted no-op · 🔀 retained, mode-dependent ·
 - ✅ `VDU 23, 0, &9E` — Set graphics origin using graphics coordinates.
 - ✅ `VDU 23, 0, &9F` — Move graphics origin and viewports.
 - ✅ `VDU 23, 0, &A0, bufferId;, command, <params>` — Execute buffered command.
-- ✅ `VDU 23, 0, &A1` — Receive and install a VDP firmware update.
+- ⛔ `VDU 23, 0, &A1` — Receive and install a VDP firmware update.
 - ✅ `VDU 23, 0, &C0, n` — Enable or disable logical screen scaling.
 - ✅ `VDU 23, 0, &C1, n` — Enable or disable legacy modes.
 - ✅ `VDU 23, 0, &C2, command, <params>` — Execute tile-engine command.
@@ -96,8 +97,8 @@ Legend: ✅ supported · 🟡 accepted no-op · 🔀 retained, mode-dependent ·
 - ✅ `VDU 23, 0, &F2, n` — Set dot-dash pattern length.
 - ✅ `VDU 23, 0, &F8, variableId; value;` — Set a VDP variable.
 - ✅ `VDU 23, 0, &F9, variableId;` — Clear a VDP variable.
-- ❓ `VDU 23, 0, &FE, n` — Console-mode implementation unresolved.
-- ❓ `VDU 23, 0, &FF` — Terminal-mode support unresolved.
+- ⛔ `VDU 23, 0, &FE, n` — Select console mode.
+- ⛔ `VDU 23, 0, &FF` — Enter or resume terminal mode.
 
 ## Mouse commands — VDU 23, 0, &89
 
@@ -225,8 +226,11 @@ boundary rather than the upstream physical PS/2 implementation.
 
 ## Buffered commands — VDU 23, 0, &A0, bufferId;
 
-Command 128 writes only to the EDP diagnostic console. It does not return a VDP
-protocol packet, update MOS sysvars, or provide application-readable results.
+Command 128 is not supported by Extender v1. In official VDP it writes only to
+the local diagnostic console and does not return a protocol packet, update MOS
+sysvars, or provide application-readable results. Legacy/onboard-VDP modes may
+retain that behavior. EDP-exclusive safe no-op/rejection behavior is tracked by
+SETUP-005-D006.
 
 Callback commands 80 and 81 are unqualified keepers. Registration and removal
 are EDP-internal, but invoked callback buffers may alter or suppress later
@@ -260,7 +264,7 @@ MOS-visible effects in exclusive compatibility mode.
 - ✅ `..., 72, <params>` — Expand bitmap.
 - ✅ `..., 80, eventType;` — Register callback buffer.
 - ✅ `..., 81, eventType;` — Remove callback buffer.
-- ✅ `..., 128` — Emit buffer information to the EDP diagnostic console.
+- ⛔ `..., 128` — Emit buffer information to the local diagnostic console.
 
 ## PLOT families — VDU 25, mode, x; y;
 

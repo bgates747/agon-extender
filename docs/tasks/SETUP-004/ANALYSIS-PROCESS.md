@@ -80,7 +80,7 @@ projection. Neither file introduces new conclusions.
 
 ### `extract-work-item.py`
 
-Proposed command:
+Command:
 
 ```sh
 .venv/bin/python docs/tasks/SETUP-004/scripts/extract-work-item.py \
@@ -100,9 +100,10 @@ Responsibilities:
    - declaration-only/header coupling;
    - compiled but not proven runtime-reachable; or
    - available upstream but not selected.
-5. Traverse the graph both forward and backward to gather direct hardware,
-   architecture, startup, task, interrupt, callback, state, command, packet,
-   and visible-behavior relationships.
+5. Traverse matched graph facilities backward to their consumers and inspect
+   their outgoing relationships to gather direct hardware, architecture,
+   startup, task, interrupt, callback, state, command, packet, and
+   visible-behavior relationships.
 6. Stop traversal at explicit subsystem boundaries and record every excluded
    continuation in the candidate rather than silently truncating it.
 7. Emit deterministic candidate and mechanical-fact files with input hashes,
@@ -112,7 +113,7 @@ The extractor proposes no physical owner and no disposition.
 
 ### `audit-work-item.py`
 
-Proposed command:
+Command:
 
 ```sh
 .venv/bin/python docs/tasks/SETUP-004/scripts/audit-work-item.py \
@@ -138,17 +139,19 @@ Responsibilities:
 
 ### `generate-subsystem-inventory.py`
 
-The existing script is the initial projection layer. It must be revised to:
+The projection layer:
 
 1. consume validated mechanical outputs as well as reviewed evidence;
-2. prevent reviewed inputs from contradicting mechanical facts without an
-   explicit correction record and evidence;
+2. requires reviewed source and implementation highlights to have mechanical
+   provenance, while retaining the complete mechanical and reviewed layers
+   separately;
 3. require every final candidate to pass the field-completeness rules below;
 4. retain provenance separately for mechanical facts, reviewed source
    conclusions, accepted product decisions, and provisional recommendations;
 5. generate the aggregate YAML and Markdown matrix deterministically; and
-6. refuse to mark a Work item complete unless its coverage audit passes and
-   the Author has reviewed its provisional dispositions.
+6. refuses projection unless the coverage audit passes and every audited input
+   hash remains current, and labels projected Work items as awaiting Author
+   review rather than complete.
 
 ## Required-field evidence plan
 
@@ -292,9 +295,15 @@ Every omit, stub, or replace proposal receives a dedicated fallout analysis:
 
 ## Current implementation status
 
-Only `generate-subsystem-inventory.py` presently exists. It validates and
-projects manually reviewed records but does not prove candidate completeness or
-scope coverage. The current Work 1.a records are useful preliminary hypotheses
-to feed into this process; they are not accepted results and must be reconciled
-against the future mechanical extraction and coverage audit.
+The extractor, coverage audit, and projection generator are implemented for
+the common Work 1 process. Work 1.a has 13 reviewed candidate records and a
+passing coverage audit with no ambiguous or unclassified scoped evidence. The
+Author accepted all 13 dispositions; named follow-on work preserves deferred
+implementation, qualification, and architecture details.
 
+The PORT-001 graph deliberately preserves unresolved lexical relationships.
+Those IDs may appear in mechanically complete candidates without becoming
+unclassified scope residuals: the extractor retains them as uncertainty, and
+the reviewed layer may make only bounded conclusions supported by targeted
+source inspection. Later Work 1 items reuse this distinction rather than
+silently treating unresolved graph edges as absent behavior.

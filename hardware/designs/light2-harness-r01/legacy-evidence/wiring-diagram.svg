@@ -1,0 +1,872 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg
+   viewBox="-150 0 1400 1250"
+   font-family="Menlo, Consolas, monospace"
+   font-size="12px"
+   version="1.1"
+   id="svg580"
+   sodipodi:docname="wiring-diagram.svg"
+   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   width="1400"
+   height="1250"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <defs
+     id="defs584" />
+  <sodipodi:namedview
+     id="namedview582"
+     pagecolor="#ffffff"
+     bordercolor="#000000"
+     borderopacity="0.25"
+     inkscape:showpageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#d1d1d1"
+     showgrid="false"
+     inkscape:zoom="0.74167645"
+     inkscape:cx="838.64063"
+     inkscape:cy="456.39848"
+     inkscape:window-width="1920"
+     inkscape:window-height="987"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg580">
+    <inkscape:grid
+       type="xygrid"
+       id="grid1092"
+       originx="0"
+       originy="0" />
+  </sodipodi:namedview>
+  <rect
+     id="canvas-background"
+     x="-150"
+     y="0"
+     width="1400"
+     height="1250"
+     fill="#ffffff" />
+  <g id="breadboard-indices" fill="#555555" font-size="12" text-anchor="middle">
+    <text x="16" y="60.8089">20</text>
+    <text x="16" y="190.8089">15</text>
+    <text x="16" y="320.8089">10</text>
+    <text x="16" y="450.8089">5</text>
+    <text x="16" y="554.8089">1</text>
+    <text x="950" y="60.8089">20</text>
+    <text x="950" y="190.8089">15</text>
+    <text x="950" y="320.8089">10</text>
+    <text x="950" y="450.8089">5</text>
+    <text x="950" y="554.8089">1</text>
+    <text x="16" y="669.2549">20</text>
+    <text x="16" y="799.2549">15</text>
+    <text x="16" y="929.2549">10</text>
+    <text x="16" y="1059.2549">5</text>
+    <text x="16" y="1163.2549">1</text>
+    <text x="670" y="669.2549">20</text>
+    <text x="670" y="799.2549">15</text>
+    <text x="670" y="929.2549">10</text>
+    <text x="670" y="1059.2549">5</text>
+    <text x="670" y="1163.2549">1</text>
+  </g>
+  <g id="power-rails">
+    <path id="rail-gnd" d="M 1190,45.8089 V 1163.2549" fill="none" stroke="#111111" stroke-width="5" />
+    <path id="rail-3v3" d="M 1220,45.8089 V 1163.2549" fill="none" stroke="#d32f2f" stroke-width="5" />
+    <text id="rail-gnd-label" x="1190" y="14" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GND</text>
+    <text id="rail-3v3-label" x="1220" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#d32f2f">3.3 V</text>
+  </g>
+  <g id="left-power-rails">
+    <path id="left-rail-gnd" d="M -100,45.8089 V 1163.2549" fill="none" stroke="#111111" stroke-width="5" />
+    <path id="left-rail-3v3" d="M -70,45.8089 V 1163.2549" fill="none" stroke="#d32f2f" stroke-width="5" />
+    <text id="left-rail-gnd-label" x="-100" y="14" text-anchor="middle" font-size="12" font-weight="bold" fill="#111111">GND</text>
+    <text id="left-rail-3v3-label" x="-70" y="30" text-anchor="middle" font-size="12" font-weight="bold" fill="#d32f2f">3.3 V</text>
+
+    <path id="wire-agon-pin33-gnd-underlay" d="M 39.82832,498.8089 H -100" fill="none" stroke="#ffffff" stroke-width="7" />
+    <path id="wire-agon-pin33-gnd" d="M 39.82832,498.8089 H -100" fill="none" stroke="#111111" stroke-width="3" />
+    <path id="wire-agon-pin34-3v3" d="M 40,1055.2549 H -70" fill="none" stroke="#d32f2f" stroke-width="3" />
+    <path id="wire-p4-ext1-pin2-gnd-underlay" d="M 400,1133.2549 H 380 V 1200 H -100 V 1163.2549" fill="none" stroke="#ffffff" stroke-width="7" stroke-linejoin="round" />
+    <path id="wire-p4-ext1-pin2-gnd" d="M 400,1133.2549 H 380 V 1200 H -100 V 1163.2549" fill="none" stroke="#111111" stroke-width="3" stroke-linejoin="round" />
+  </g>
+  <!-- State-defining bias for the three control/handshake signals. -->
+  <g id="control-signal-biases">
+    <path id="pull-x2a-n-start" d="M 930,238.8089 H 1010" fill="none" stroke="#1976d2" stroke-width="2" />
+    <rect id="pull-x2a-n" x="1010" y="230.8089" width="64" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5" />
+    <text id="pull-x2a-n-label" x="1042" y="242.3089" text-anchor="middle" font-size="10" fill="#111111">10 kΩ</text>
+    <path id="pull-x2a-n-end-underlay" d="M 1074,238.8089 H 1220" fill="none" stroke="#ffffff" stroke-width="6" />
+    <path id="pull-x2a-n-end" d="M 1074,238.8089 H 1220" fill="none" stroke="#d32f2f" stroke-width="2" />
+    <text x="1084" y="228.8089" font-size="10" fill="#555555">READY_N pull-up</text>
+
+    <path id="pull-a2x-start" d="M 650,795.2549 H 1050" fill="none" stroke="#111111" stroke-width="2" />
+    <rect id="pull-a2x" x="1050" y="787.2549" width="64" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5" />
+    <text id="pull-a2x-label" x="1082" y="798.7549" text-anchor="middle" font-size="10" fill="#111111">10 kΩ</text>
+    <path id="pull-a2x-end" d="M 1114,795.2549 H 1190" fill="none" stroke="#111111" stroke-width="2" />
+    <text x="940" y="765.2549" font-size="10" fill="#555555">CLOCK pull-down</text>
+
+    <path id="pull-valid-n-start-border" d="M 650,821.2549 H 1050" fill="none" stroke="#666666" stroke-width="4" />
+    <path id="pull-valid-n-start" d="M 650,821.2549 H 1050" fill="none" stroke="#ffffff" stroke-width="2" />
+    <rect id="pull-valid-n" x="1050" y="813.2549" width="64" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5" />
+    <text id="pull-valid-n-label" x="1082" y="824.7549" text-anchor="middle" font-size="10" fill="#111111">10 kΩ</text>
+    <path id="pull-valid-n-end-underlay" d="M 1114,821.2549 H 1220" fill="none" stroke="#ffffff" stroke-width="6" />
+    <path id="pull-valid-n-end" d="M 1114,821.2549 H 1220" fill="none" stroke="#d32f2f" stroke-width="2" />
+    <text x="940" y="839.2549" font-size="10" fill="#555555">VALID_N pull-up</text>
+  </g>
+  <g
+     id="g882"
+     transform="translate(0,528.2549)">
+    <rect
+       x="40"
+       y="516"
+       width="150"
+       height="22"
+       fill="#d32f2f"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect4" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="531"
+       id="text10"><tspan
+         font-weight="bold"
+         id="tspan6">34</tspan><tspan
+         fill="#ffffff"
+         id="tspan8">&#160;+3.3V</tspan></text>
+    <rect
+       x="40"
+       y="490"
+       width="150"
+       height="22"
+       fill="#6d4c41"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect20" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="505"
+       id="text26"><tspan
+         font-weight="bold"
+         id="tspan22">32</tspan><tspan
+         fill="#ffffff"
+         id="tspan24">&#160;PB7</tspan></text>
+    <rect
+       x="40"
+       y="464"
+       width="150"
+       height="22"
+       fill="#d32f2f"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect36" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="479"
+       id="text42"><tspan
+         font-weight="bold"
+         id="tspan38">30</tspan><tspan
+         fill="#ffffff"
+         id="tspan40">&#160;SCL</tspan></text>
+    <rect
+       x="40"
+       y="438"
+       width="150"
+       height="22"
+       fill="#f57c00"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect52" />
+    <text
+       fill="#111111"
+       x="46"
+       y="453"
+       id="text58"><tspan
+         font-weight="bold"
+         id="tspan54">28</tspan><tspan
+         fill="#111111"
+         id="tspan56">&#160;CLK</tspan></text>
+    <rect
+       x="40"
+       y="412"
+       width="150"
+       height="22"
+       fill="#fbc02d"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect68" />
+    <text
+       fill="#111111"
+       x="46"
+       y="427"
+       id="text74"><tspan
+         font-weight="bold"
+         id="tspan70">26</tspan><tspan
+         fill="#111111"
+         id="tspan72">&#160;PB5</tspan></text>
+    <rect
+       x="40"
+       y="386"
+       width="150"
+       height="22"
+       fill="#388e3c"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect84" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="401"
+       id="text90"><tspan
+         font-weight="bold"
+         id="tspan86">24</tspan><tspan
+         fill="#ffffff"
+         id="tspan88">&#160;PC7 / D7</tspan></text>
+    <rect
+       x="40"
+       y="360"
+       width="150"
+       height="22"
+       fill="#1976d2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect100" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="375"
+       id="text106"><tspan
+         font-weight="bold"
+         id="tspan102">22</tspan><tspan
+         fill="#ffffff"
+         id="tspan104">&#160;PC5 / D5</tspan></text>
+    <rect
+       x="40"
+       y="334"
+       width="150"
+       height="22"
+       fill="#7b1fa2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect116" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="349"
+       id="text122"><tspan
+         font-weight="bold"
+         id="tspan118">20</tspan><tspan
+         fill="#ffffff"
+         id="tspan120">&#160;PC3 / D3</tspan></text>
+    <rect
+       x="40"
+       y="308"
+       width="150"
+       height="22"
+       fill="#808080"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect132" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="323"
+       id="text138"><tspan
+         font-weight="bold"
+         id="tspan134">18</tspan><tspan
+         fill="#ffffff"
+         id="tspan136">&#160;PC1 / D1</tspan></text>
+    <rect
+       x="40"
+       y="282"
+       width="150"
+       height="22"
+       fill="#ffffff"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect148" />
+    <text
+       fill="#111111"
+       x="46"
+       y="297"
+       id="text154"><tspan
+         font-weight="bold"
+         id="tspan150">16</tspan><tspan
+         fill="#111111"
+         id="tspan152">&#160;PD7 / VALID_N</tspan></text>
+    <rect
+       x="40"
+       y="256"
+       width="150"
+       height="22"
+       fill="#111111"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect164" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="271"
+       id="text170"><tspan
+         font-weight="bold"
+         id="tspan166">14</tspan><tspan
+         fill="#ffffff"
+         id="tspan168">&#160;PD5 / CLOCK</tspan></text>
+    <rect
+       x="40"
+       y="230"
+       width="150"
+       height="22"
+       fill="#6d4c41"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect180" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="245"
+       id="text186"><tspan
+         font-weight="bold"
+         id="tspan182">12</tspan><tspan
+         fill="#ffffff"
+         id="tspan184">&#160;ESP38</tspan></text>
+    <rect
+       x="40"
+       y="204"
+       width="150"
+       height="22"
+       fill="#d32f2f"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect196" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="219"
+       id="text202"><tspan
+         font-weight="bold"
+         id="tspan198">10</tspan><tspan
+         fill="#ffffff"
+         id="tspan200">&#160;ESP36</tspan></text>
+    <rect
+       x="40"
+       y="178"
+       width="150"
+       height="22"
+       fill="#f57c00"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect212" />
+    <text
+       fill="#111111"
+       x="46"
+       y="193"
+       id="text218"><tspan
+         font-weight="bold"
+         id="tspan214">8</tspan><tspan
+         fill="#111111"
+         id="tspan216">&#160;ESP27</tspan></text>
+    <rect
+       x="40"
+       y="152"
+       width="150"
+       height="22"
+       fill="#fbc02d"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect228" />
+    <text
+       fill="#111111"
+       x="46"
+       y="167"
+       id="text234"><tspan
+         font-weight="bold"
+         id="tspan230">6</tspan><tspan
+         fill="#111111"
+         id="tspan232">&#160;ESP39</tspan></text>
+    <rect
+       x="40"
+       y="126"
+       width="150"
+       height="22"
+       fill="#388e3c"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect244" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="141"
+       id="text250"><tspan
+         font-weight="bold"
+         id="tspan246">4</tspan><tspan
+         fill="#ffffff"
+         id="tspan248">&#160;+5V</tspan></text>
+    <rect
+       x="40"
+       y="100"
+       width="150"
+       height="22"
+       fill="#1976d2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect260" />
+    <text
+       fill="#ffffff"
+       x="46"
+       y="115"
+       id="text266"><tspan
+         font-weight="bold"
+         id="tspan262">2</tspan><tspan
+         fill="#ffffff"
+         id="tspan264">&#160;+5V USB</tspan></text>
+  </g>
+  <g
+     id="g812"
+     transform="translate(-190.17168,-28.1911)">
+    <rect
+       x="230"
+       y="516"
+       width="150"
+       height="22"
+       fill="#111111"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect12" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="531"
+       id="text18"><tspan
+         font-weight="bold"
+         id="tspan14">33</tspan><tspan
+         fill="#ffffff"
+         id="tspan16">&#160;GND</tspan></text>
+    <rect
+       x="230"
+       y="490"
+       width="150"
+       height="22"
+       fill="#7b1fa2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect28" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="505"
+       id="text34"><tspan
+         font-weight="bold"
+         id="tspan30">31</tspan><tspan
+         fill="#ffffff"
+         id="tspan32">&#160;PB3</tspan></text>
+    <rect
+       x="230"
+       y="464"
+       width="150"
+       height="22"
+       fill="#808080"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect44" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="479"
+       id="text50"><tspan
+         font-weight="bold"
+         id="tspan46">29</tspan><tspan
+         fill="#ffffff"
+         id="tspan48">&#160;SDA</tspan></text>
+    <rect
+       x="230"
+       y="438"
+       width="150"
+       height="22"
+       fill="#ffffff"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect60" />
+    <text
+       fill="#111111"
+       x="236"
+       y="453"
+       id="text66"><tspan
+         font-weight="bold"
+         id="tspan62">27</tspan><tspan
+         fill="#111111"
+         id="tspan64">&#160;PB6</tspan></text>
+    <rect
+       x="230"
+       y="412"
+       width="150"
+       height="22"
+       fill="#111111"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect76" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="427"
+       id="text82"><tspan
+         font-weight="bold"
+         id="tspan78">25</tspan><tspan
+         fill="#ffffff"
+         id="tspan80">&#160;CS</tspan></text>
+    <rect
+       x="230"
+       y="386"
+       width="150"
+       height="22"
+       fill="#6d4c41"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect92" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="401"
+       id="text98"><tspan
+         font-weight="bold"
+         id="tspan94">23</tspan><tspan
+         fill="#ffffff"
+         id="tspan96">&#160;PC6 / D6</tspan></text>
+    <rect
+       x="230"
+       y="360"
+       width="150"
+       height="22"
+       fill="#d32f2f"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect108" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="375"
+       id="text114"><tspan
+         font-weight="bold"
+         id="tspan110">21</tspan><tspan
+         fill="#ffffff"
+         id="tspan112">&#160;PC4 / D4</tspan></text>
+    <rect
+       x="230"
+       y="334"
+       width="150"
+       height="22"
+       fill="#f57c00"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect124" />
+    <text
+       fill="#111111"
+       x="236"
+       y="349"
+       id="text130"><tspan
+         font-weight="bold"
+         id="tspan126">19</tspan><tspan
+         fill="#111111"
+         id="tspan128">&#160;PC2 / D2</tspan></text>
+    <rect
+       x="230"
+       y="308"
+       width="150"
+       height="22"
+       fill="#fbc02d"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect140" />
+    <text
+       fill="#111111"
+       x="236"
+       y="323"
+       id="text146"><tspan
+         font-weight="bold"
+         id="tspan142">17</tspan><tspan
+         fill="#111111"
+         id="tspan144">&#160;PC0 / D0</tspan></text>
+    <rect
+       x="230"
+       y="282"
+       width="150"
+       height="22"
+       fill="#388e3c"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect156" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="297"
+       id="text162"><tspan
+         font-weight="bold"
+         id="tspan158">15</tspan><tspan
+         fill="#ffffff"
+         id="tspan160">&#160;PD6</tspan></text>
+    <rect
+       x="230"
+       y="256"
+       width="150"
+       height="22"
+       fill="#1976d2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect172" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="271"
+       id="text178"><tspan
+         font-weight="bold"
+         id="tspan174">13</tspan><tspan
+         fill="#ffffff"
+         id="tspan176">&#160;PD4 / READY_N</tspan></text>
+    <rect
+       x="230"
+       y="230"
+       width="150"
+       height="22"
+       fill="#7b1fa2"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect188" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="245"
+       id="text194"><tspan
+         font-weight="bold"
+         id="tspan190">11</tspan><tspan
+         fill="#ffffff"
+         id="tspan192">&#160;ESP37</tspan></text>
+    <rect
+       x="230"
+       y="204"
+       width="150"
+       height="22"
+       fill="#808080"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect204" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="219"
+       id="text210"><tspan
+         font-weight="bold"
+         id="tspan206">9</tspan><tspan
+         fill="#ffffff"
+         id="tspan208">&#160;ESP26</tspan></text>
+    <rect
+       x="230"
+       y="178"
+       width="150"
+       height="22"
+       fill="#ffffff"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect220" />
+    <text
+       fill="#111111"
+       x="236"
+       y="193"
+       id="text226"><tspan
+         font-weight="bold"
+         id="tspan222">7</tspan><tspan
+         fill="#111111"
+         id="tspan224">&#160;ESP35</tspan></text>
+    <rect
+       x="230"
+       y="152"
+       width="150"
+       height="22"
+       fill="#111111"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect236" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="167"
+       id="text242"><tspan
+         font-weight="bold"
+         id="tspan238">5</tspan><tspan
+         fill="#ffffff"
+         id="tspan240">&#160;GND</tspan></text>
+    <rect
+       x="230"
+       y="126"
+       width="150"
+       height="22"
+       fill="#808080"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect252" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="141"
+       id="text258"><tspan
+         font-weight="bold"
+         id="tspan254">3</tspan><tspan
+         fill="#ffffff"
+         id="tspan256">&#160;GND</tspan></text>
+    <rect
+       x="230"
+       y="100"
+       width="150"
+       height="22"
+       fill="#d32f2f"
+       stroke="#333333"
+       stroke-width="1.5"
+       rx="3"
+       id="rect268" />
+    <text
+       fill="#ffffff"
+       x="236"
+       y="115"
+       id="text274"><tspan
+         font-weight="bold"
+         id="tspan270">1</tspan><tspan
+         fill="#ffffff"
+         id="tspan272">&#160;VBAT</tspan></text>
+  </g>
+  <!-- Provisional individual breadboard routes. -->
+  <g id="provisional-routes" fill="none" stroke-linejoin="round" stroke-linecap="round">
+    <g id="route-pd4">
+      <polyline id="wire-pd4-underlay" points="190,238.8089 630,238.8089" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-pd4" class="wire-conductor" data-net="PD4" points="190,238.8089 630,238.8089" stroke="#1976d2" stroke-width="3"/>
+    </g>
+    <g id="route-d0">
+      <polyline id="wire-d0-underlay" points="190,290.8089 630,290.8089" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d0" class="wire-conductor" data-net="D0" points="190,290.8089 630,290.8089" stroke="#fbc02d" stroke-width="3"/>
+    </g>
+    <g id="route-d2">
+      <polyline id="wire-d2-underlay" points="190,316.8089 630,316.8089" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d2" class="wire-conductor" data-net="D2" points="190,316.8089 630,316.8089" stroke="#f57c00" stroke-width="3"/>
+    </g>
+    <g id="route-d4">
+      <polyline id="wire-d4-underlay" points="190,342.8089 630,342.8089" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d4" class="wire-conductor" data-net="D4" points="190,342.8089 630,342.8089" stroke="#d32f2f" stroke-width="3"/>
+    </g>
+    <g id="route-d6">
+      <polyline id="wire-d6-underlay" points="190,368.8089 630,368.8089" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d6" class="wire-conductor" data-net="D6" points="190,368.8089 630,368.8089" stroke="#6d4c41" stroke-width="3"/>
+    </g>
+    <g id="route-pd5">
+      <polyline id="wire-pd5-underlay" points="190,795.2549 400,795.2549" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-pd5" class="wire-conductor" data-net="PD5" points="190,795.2549 400,795.2549" stroke="#111111" stroke-width="3"/>
+    </g>
+    <g id="route-pd7">
+      <polyline id="wire-pd7-border" points="190,821.2549 400,821.2549" stroke="#666666" stroke-width="5"/>
+      <polyline id="wire-pd7" class="wire-conductor" data-net="PD7" points="190,821.2549 400,821.2549" stroke="#ffffff" stroke-width="3"/>
+    </g>
+    <g id="route-d1">
+      <polyline id="wire-d1-underlay" points="190,847.2549 400,847.2549" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d1" class="wire-conductor" data-net="D1" points="190,847.2549 400,847.2549" stroke="#808080" stroke-width="3"/>
+    </g>
+    <g id="route-d3">
+      <polyline id="wire-d3-underlay" points="190,873.2549 400,873.2549" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d3" class="wire-conductor" data-net="D3" points="190,873.2549 400,873.2549" stroke="#7b1fa2" stroke-width="3"/>
+    </g>
+    <g id="route-d5">
+      <polyline id="wire-d5-underlay" points="190,899.2549 400,899.2549" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d5" class="wire-conductor" data-net="D5" points="190,899.2549 400,899.2549" stroke="#1976d2" stroke-width="3"/>
+    </g>
+    <g id="route-d7">
+      <polyline id="wire-d7-underlay" points="190,925.2549 400,925.2549" stroke="#ffffff" stroke-width="9"/>
+      <polyline id="wire-d7" class="wire-conductor" data-net="D7" points="190,925.2549 400,925.2549" stroke="#388e3c" stroke-width="3"/>
+    </g>
+  </g>
+  <g id="data-series-resistors">
+    <rect id="resistor-d0" x="215" y="282.8089" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="294.3089" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d2" x="215" y="308.8089" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="320.3089" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d4" x="215" y="334.8089" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="346.3089" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d6" x="215" y="360.8089" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="372.3089" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d1" x="215" y="839.2549" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="850.7549" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d3" x="215" y="865.2549" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="876.7549" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d5" x="215" y="891.2549" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="902.7549" text-anchor="middle" font-size="10">220 Ω</text>
+    <rect id="resistor-d7" x="215" y="917.2549" width="52" height="16" rx="2" fill="#fffaf0" stroke="#8d6e63" stroke-width="1.5"/><text x="241" y="928.7549" text-anchor="middle" font-size="10">220 Ω</text>
+  </g>
+  <!-- Olimex ESP32-P4-DevKit Rev D1 expansion headers.  Pin order follows
+       the physical board from the Ethernet end (20) toward the USB end (1). -->
+  <g id="p4-ext1" transform="translate(400,654.2549)">
+    <text x="0" y="-16" font-size="14" font-weight="bold" fill="#111111">ESP32-P4-DevKit Rev D1 — EXT1, board left</text>
+    <rect id="p4-ext1-pin20" x="0" y="0" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="15"><tspan font-weight="bold">20</tspan><tspan> GPIO19</tspan></text>
+    <rect id="p4-ext1-pin19" x="0" y="26" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="41"><tspan font-weight="bold">19</tspan><tspan> GPIO18</tspan></text>
+    <rect id="p4-ext1-pin18" x="0" y="52" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="67"><tspan font-weight="bold">18</tspan><tspan> GPIO17</tspan></text>
+    <rect id="p4-ext1-pin17" x="0" y="78" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="93"><tspan font-weight="bold">17</tspan><tspan> GPIO16</tspan></text>
+    <rect id="p4-ext1-pin16" x="0" y="104" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="119"><tspan font-weight="bold">16</tspan><tspan> GPIO15</tspan></text>
+    <rect id="p4-ext1-pin15" x="0" y="130" width="250" height="22" rx="3" fill="#111111" stroke="#333333" stroke-width="1.5"/><text x="6" y="145" fill="#ffffff"><tspan font-weight="bold">15</tspan><tspan> GPIO14 / CLOCK</tspan></text><circle id="probe-gray-gpio14" cx="237" cy="141" r="7" fill="#808080" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext1-pin14" x="0" y="156" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="171"><tspan font-weight="bold">14</tspan><tspan> GPIO13 / VALID_N</tspan></text><circle id="probe-purple-gpio13" cx="237" cy="167" r="7" fill="#7b1fa2" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext1-pin13" x="0" y="182" width="250" height="22" rx="3" fill="#808080" stroke="#333333" stroke-width="1.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO12 / D1</tspan></text><circle id="probe-blue-gpio12" cx="237" cy="193" r="7" fill="#1976d2" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext1-pin12" x="0" y="208" width="250" height="22" rx="3" fill="#7b1fa2" stroke="#333333" stroke-width="1.5"/><text x="6" y="223" fill="#ffffff"><tspan font-weight="bold">12</tspan><tspan> GPIO11 / D3</tspan></text><circle id="probe-green-gpio11" cx="237" cy="219" r="7" fill="#388e3c" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext1-pin11" x="0" y="234" width="250" height="22" rx="3" fill="#1976d2" stroke="#333333" stroke-width="1.5"/><text x="6" y="249" fill="#ffffff"><tspan font-weight="bold">11</tspan><tspan> GPIO10 / D5</tspan></text>
+    <rect id="p4-ext1-pin10" x="0" y="260" width="250" height="22" rx="3" fill="#388e3c" stroke="#333333" stroke-width="1.5"/><text x="6" y="275" fill="#ffffff"><tspan font-weight="bold">10</tspan><tspan> GPIO9 / D7</tspan></text>
+    <rect id="p4-ext1-pin9" x="0" y="286" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="301"><tspan font-weight="bold">9</tspan><tspan> GPIO8 / I2C_SCL</tspan></text>
+    <rect id="p4-ext1-pin8" x="0" y="312" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="327"><tspan font-weight="bold">8</tspan><tspan> GPIO7 / I2C_SDA</tspan></text>
+    <rect id="p4-ext1-pin7" x="0" y="338" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="353"><tspan font-weight="bold">7</tspan><tspan> GPIO6</tspan></text>
+    <rect id="p4-ext1-pin6" x="0" y="364" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="379"><tspan font-weight="bold">6</tspan><tspan> GPIO5 / SPI_CSn (CS#)</tspan></text>
+    <rect id="p4-ext1-pin5" x="0" y="390" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="405"><tspan font-weight="bold">5</tspan><tspan> GPIO4 / SPI_SCK (CLK)</tspan></text>
+    <rect id="p4-ext1-pin4" x="0" y="416" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="431"><tspan font-weight="bold">4</tspan><tspan> GPIO3 / SD_DET</tspan></text>
+    <rect id="p4-ext1-pin3" x="0" y="442" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="457"><tspan font-weight="bold">3</tspan><tspan> GPIO2 / USER_LED</tspan></text>
+    <rect id="p4-ext1-pin2" x="0" y="468" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="483"><tspan font-weight="bold">2</tspan><tspan> GND</tspan></text>
+    <rect id="p4-ext1-pin1" x="0" y="494" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="509"><tspan font-weight="bold">1</tspan><tspan> +3.3V</tspan></text>
+  </g>
+  <g id="p4-ext2" transform="translate(630,45.8089)">
+    <text x="0" y="-16" font-size="14" font-weight="bold" fill="#111111">ESP32-P4-DevKit Rev D1 — EXT2, board right</text>
+    <rect id="p4-ext2-pin20" x="0" y="0" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="15"><tspan font-weight="bold">20</tspan><tspan> USB_DN</tspan></text>
+    <rect id="p4-ext2-pin19" x="0" y="26" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="41"><tspan font-weight="bold">19</tspan><tspan> USB_DP</tspan></text>
+    <rect id="p4-ext2-pin18" x="0" y="52" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="67"><tspan font-weight="bold">18</tspan><tspan> GND</tspan></text>
+    <rect id="p4-ext2-pin17" x="0" y="78" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="93"><tspan font-weight="bold">17</tspan><tspan> USB1P1_1N (GPIO26)</tspan></text>
+    <rect id="p4-ext2-pin16" x="0" y="104" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="119"><tspan font-weight="bold">16</tspan><tspan> USB1P1_1P (GPIO27)</tspan></text>
+    <rect id="p4-ext2-pin15" x="0" y="130" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="145"><tspan font-weight="bold">15</tspan><tspan> GND</tspan></text>
+    <rect id="p4-ext2-pin14" x="0" y="156" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="171"><tspan font-weight="bold">14</tspan><tspan> ESP_EN</tspan></text>
+    <rect id="p4-ext2-pin13" x="0" y="182" width="300" height="22" rx="3" fill="#1976d2" stroke="#333333" stroke-width="1.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO20 / READY_N</tspan></text><circle id="probe-yellow-gpio20" cx="287" cy="193" r="7" fill="#fbc02d" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext2-pin12" x="0" y="208" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="223"><tspan font-weight="bold">12</tspan><tspan> GPIO21</tspan></text><circle id="probe-orange-gpio21" cx="287" cy="219" r="7" fill="#f57c00" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext2-pin11" x="0" y="234" width="300" height="22" rx="3" fill="#fbc02d" stroke="#333333" stroke-width="1.5"/><text x="6" y="249" fill="#111111"><tspan font-weight="bold">11</tspan><tspan> GPIO22 / D0</tspan></text><circle id="probe-red-gpio22" cx="287" cy="245" r="7" fill="#d32f2f" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext2-pin10" x="0" y="260" width="300" height="22" rx="3" fill="#f57c00" stroke="#333333" stroke-width="1.5"/><text x="6" y="275" fill="#111111"><tspan font-weight="bold">10</tspan><tspan> GPIO23 / D2</tspan></text><circle id="probe-brown-gpio23" cx="287" cy="271" r="7" fill="#6d4c41" stroke="#555555" stroke-width="1.5"/>
+    <rect id="p4-ext2-pin9" x="0" y="286" width="300" height="22" rx="3" fill="#d32f2f" stroke="#333333" stroke-width="1.5"/><text x="6" y="301" fill="#ffffff"><tspan font-weight="bold">9</tspan><tspan> GPIO32 / D4</tspan></text>
+    <rect id="p4-ext2-pin8" x="0" y="312" width="300" height="22" rx="3" fill="#6d4c41" stroke="#333333" stroke-width="1.5"/><text x="6" y="327" fill="#ffffff"><tspan font-weight="bold">8</tspan><tspan> GPIO33 / D6</tspan></text>
+    <rect id="p4-ext2-pin7" x="0" y="338" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="353"><tspan font-weight="bold">7</tspan><tspan> GPIO46</tspan></text>
+    <rect id="p4-ext2-pin6" x="0" y="364" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="379"><tspan font-weight="bold">6</tspan><tspan> GPIO47</tspan></text>
+    <rect id="p4-ext2-pin5" x="0" y="390" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="405"><tspan font-weight="bold">5</tspan><tspan> GPIO48</tspan></text>
+    <rect id="p4-ext2-pin4" x="0" y="416" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="431"><tspan font-weight="bold">4</tspan><tspan> GPIO53 / SPI_TX (MOSI)</tspan></text>
+    <rect id="p4-ext2-pin3" x="0" y="442" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="457"><tspan font-weight="bold">3</tspan><tspan> GPIO54 / SPI_RX (MISO)</tspan></text>
+    <rect id="p4-ext2-pin2" x="0" y="468" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="483"><tspan font-weight="bold">2</tspan><tspan> GND</tspan></text>
+    <rect id="p4-ext2-pin1" x="0" y="494" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="509"><tspan font-weight="bold">1</tspan><tspan> +5V</tspan></text>
+  </g>
+</svg>

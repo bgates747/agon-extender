@@ -23,6 +23,7 @@ SETUP-004/
 │   │   └── coverage.yaml
 │   └── subsystem-inventory.yaml
 └── scripts/
+    ├── analysis_model.py
     ├── extract-work-item.py
     ├── audit-work-item.py
     └── generate-subsystem-inventory.py
@@ -51,9 +52,10 @@ SETUP-004/
 
 The official tagged source, PORT-001 graph, and existing project decisions
 remain authoritative. This inventory narrows source review; it does not replace
-source inspection when implementation details matter. The present Work 1.a
-evidence and projections predate the complete extraction design and are
-preliminary inputs, not proof that Work 1.a is complete.
+source inspection when implementation details matter. Work 1.a has passed the
+mechanical and reviewed-evidence audit, and all 13 candidate dispositions have
+completed Author review. Named follow-on tasks retain deferred implementation,
+qualification, and architectural work.
 
 ## Record lifecycle
 
@@ -77,13 +79,18 @@ that must survive its removal.
 From the project root:
 
 ```sh
+.venv/bin/python docs/tasks/SETUP-004/scripts/extract-work-item.py \
+  --work-item SETUP-004.1.a
+.venv/bin/python docs/tasks/SETUP-004/scripts/audit-work-item.py \
+  --work-item SETUP-004.1.a
 .venv/bin/python docs/tasks/SETUP-004/scripts/generate-subsystem-inventory.py
 ```
 
-The currently implemented projection generator validates reviewed record
-fields, unique candidate IDs, disposition vocabulary, Work 1 item IDs,
-PORT-001 evidence and graph-node references, and source identities. It does not
-perform the discovery or coverage-audit stages specified in
-`ANALYSIS-PROCESS.md`; those scripts must exist before any Work 1 item can be
-closed. Output ordering and input fingerprints are deterministic.
-
+The extractor verifies immutable source identities and exact source-file
+hashes, discovers and assigns scoped evidence, and emits exhaustive mechanical
+facts. The audit validates residual coverage, reviewed-field completeness,
+target-framework evidence, decision dependencies, and removal fallout. The
+projection generator accepts only passing, current audits; it rejects stale
+input hashes or mismatched mechanical/reviewed candidate sets and preserves the
+two layers separately. Output ordering and input fingerprints are
+deterministic.

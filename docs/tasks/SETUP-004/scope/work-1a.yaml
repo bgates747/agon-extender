@@ -1,0 +1,234 @@
+# Reviewed extraction scope for SETUP-004 Work 1.a. Matching a rule selects
+# evidence for classification; it does not establish runtime reachability or a
+# disposition.
+schema_version: 1
+work_item: SETUP-004.1.a
+title: Arduino, ESP-IDF, and FreeRTOS runtime abstractions
+sources:
+  agon-vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp-gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  ESP32Time:
+    identity: 2.0.6
+    commit: null
+  CRC:
+    identity: 1.0.4
+    commit: null
+
+discovery:
+  graph_node_kinds:
+    - platform-api
+    - physical-facility
+  graph_node_patterns:
+    - '^.*$'
+  explicit_graph_node_ids:
+    - variable:agon-vdp:DBGSerial
+    - macro:agon-vdp:VDPSerial@video/vdp_protocol.h%23variant-dbcd3c44de4c
+    - subsystem:agon-vdp:firmware-updater
+    - command:agon-vdp-runtime:updater-command
+    - method:agon-vdp:VDUStreamProcessor::receiveFirmware()
+  include_target_patterns:
+    - '^(Arduino|HardwareSerial|Stream|WiFi)\.h$'
+    - '^freertos/'
+    - '^esp_(attr|heap_caps|intr_alloc|ota_ops|system|task_wdt)\.h$'
+  occurrence_patterns:
+    - '\b(?:delay|millis|micros|delayMicroseconds)\s*\('
+    - '\b(?:psramInit|ps_malloc|heap_caps_[A-Za-z0-9_]+)\s*\('
+    - '\b(?:esp_restart|esp_reset_reason|esp_ota_[A-Za-z0-9_]+|esp_intr_[A-Za-z0-9_]+|esp_task_wdt_[A-Za-z0-9_]+)\s*\('
+    - '\b(?:xTask|vTask|xQueue|xSemaphore|xTimer)[A-Za-z0-9_]*\s*\('
+    - '\b(?:TaskHandle_t|QueueHandle_t|SemaphoreHandle_t|TimerHandle_t|IRAM_ATTR|intr_handle_t|portMUX_TYPE)\b'
+    - '\b(?:DBGSerial|VDPSerial|Serial2|HardwareSerial)\b'
+    - '\b(?:disableCore[01]WDT|enableCore[01]WDT|xPortGetCoreID|WIFI_TASK_CORE_ID|ARDUINO_(?:EVENT_)?RUNNING_CORE)\b'
+    - '\b(?:noInterrupts|interrupts|portENTER_CRITICAL|portEXIT_CRITICAL)\s*\('
+    - '\bString\b'
+    - '\bmap\s*\('
+
+candidate_groups:
+  - id: framework-arduino-sketch-lifecycle
+    name: Arduino sketch lifecycle and top-level startup
+    graph_node_patterns:
+      - '^platform-api:reviewed:arduino%20lifecycle%20and%20delay$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: framework-arduino-core-types
+    name: Arduino core types and utility compatibility
+    graph_node_patterns: []
+    include_target_patterns:
+      - '^Arduino\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]Arduino\.h[>"]'
+      - '\bString\b'
+      - '\bmap\s*\('
+
+  - id: framework-arduino-stream-contract
+    name: Arduino Stream and Print-compatible byte-stream contract
+    graph_node_patterns:
+      - '^platform-api:reviewed:arduino%20hardwareserial%20and%20stream$'
+      - '^platform-api:reviewed:primary%20vdp%20stream%20input$'
+    include_target_patterns:
+      - '^Stream\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]Stream\.h[>"]'
+
+  - id: framework-arduino-timing
+    name: Arduino monotonic timing and delay services
+    graph_node_patterns:
+      - '^platform-api:external:(?:delay|millis)$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\b(?:delay|millis|micros|delayMicroseconds)\s*\('
+
+  - id: framework-primary-vdp-serial-binding
+    name: Primary VDP protocol serial binding
+    graph_node_patterns:
+      - '^platform-api:reviewed:arduino%20hardwareserial$'
+      - '^macro:agon-vdp:VDPSerial@video/vdp_protocol\.h%23variant-dbcd3c44de4c$'
+    include_target_patterns:
+      - '^HardwareSerial\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]HardwareSerial\.h[>"]'
+      - '\b(?:VDPSerial|Serial2|HardwareSerial)\b'
+
+  - id: framework-debug-serial-binding
+    name: DBGSerial maintenance and operator binding
+    graph_node_patterns:
+      - '^physical-facility:reviewed:arduino%20hardwareserial%20uart0$'
+      - '^variable:agon-vdp:DBGSerial$'
+    include_target_patterns: []
+    occurrence_patterns:
+      - '\bDBGSerial\b'
+
+  - id: framework-freertos-concurrency
+    name: FreeRTOS tasks, queues, semaphores, timers, and notifications
+    graph_node_patterns:
+      - '^platform-api:external:(?:vTask|xQueue|xSemaphore|xTask|xTimer).*$'
+      - '^platform-api:reviewed:freertos%20.*$'
+    include_target_patterns:
+      - '^freertos/'
+    occurrence_patterns:
+      - '#include\s*[<"]freertos/'
+      - '\b(?:xTask|vTask|xQueue|xSemaphore|xTimer)[A-Za-z0-9_]*\s*\('
+      - '\b(?:TaskHandle_t|QueueHandle_t|SemaphoreHandle_t|TimerHandle_t)\b'
+
+  - id: framework-watchdog-and-core-control
+    name: ESP32 watchdog and core-control policy
+    graph_node_patterns:
+      - '^platform-api:external:esp_(?:reset_reason|task_wdt_.*)$'
+      - '^platform-api:reviewed:esp32%20per-core%20watchdog%20controls$'
+    include_target_patterns:
+      - '^esp_task_wdt\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]esp_task_wdt\.h[>"]'
+      - '\b(?:esp_task_wdt_[A-Za-z0-9_]+|esp_reset_reason)\s*\('
+      - '\b(?:disableCore[01]WDT|enableCore[01]WDT|xPortGetCoreID|WIFI_TASK_CORE_ID|ARDUINO_(?:EVENT_)?RUNNING_CORE)\b'
+
+  - id: framework-psram-and-capability-heap
+    name: Arduino PSRAM and ESP-IDF capability-heap services
+    graph_node_patterns:
+      - '^platform-api:external:(?:heap_caps_.*|psramInit)$'
+      - '^platform-api:reviewed:(?:arduino%20psraminit%20and%20ps_malloc|esp-idf%20heap_caps%20allocation%20and%20malloc_cap_spiram|psram%20capability%20allocations|psram-backed%20sample%20storage)$'
+      - '^physical-facility:reviewed:dma%20descriptors%20and%20capability-specific%20heap%20allocation$'
+    include_target_patterns:
+      - '^esp_heap_caps\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]esp_heap_caps\.h[>"]'
+      - '\b(?:psramInit|ps_malloc|heap_caps_[A-Za-z0-9_]+)\s*\('
+
+  - id: framework-idf-ota-and-restart-primitives
+    name: ESP-IDF OTA partition and restart primitives
+    graph_node_patterns:
+      - '^platform-api:external:(?:esp_ota_.*|esp_restart)$'
+      - '^platform-api:reviewed:esp-idf%20ota%20partition%20apis%20and%20esp_restart$'
+    include_target_patterns:
+      - '^esp_(?:ota_ops|system)\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]esp_(?:ota_ops|system)\.h[>"]'
+      - '\b(?:esp_ota_[A-Za-z0-9_]+|esp_restart)\s*\('
+
+  - id: framework-stock-serial-updater
+    name: Stock VDP serial updater command path
+    graph_node_patterns:
+      - '^subsystem:agon-vdp:firmware-updater$'
+      - '^command:agon-vdp-runtime:updater-command$'
+      - '^method:agon-vdp:VDUStreamProcessor::receiveFirmware\(\)$'
+    include_target_patterns: []
+    occurrence_patterns: []
+
+  - id: framework-unused-wifi-include
+    name: Unused Arduino WiFi include
+    graph_node_patterns: []
+    include_target_patterns:
+      - '^WiFi\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]WiFi\.h[>"]'
+
+  - id: framework-idf-interrupt-and-critical-services
+    name: ESP-IDF interrupt, ISR, and critical-section services
+    graph_node_patterns:
+      - '^platform-api:external:esp_intr_.*$'
+      - '^platform-api:reviewed:esp32%20interrupt%20allocation%20and%20core%20affinity$'
+    include_target_patterns:
+      - '^esp_(?:attr|intr_alloc)\.h$'
+    occurrence_patterns:
+      - '#include\s*[<"]esp_(?:attr|intr_alloc)\.h[>"]'
+      - '\besp_intr_[A-Za-z0-9_]+\s*\('
+      - '\b(?:IRAM_ATTR|intr_handle_t|portMUX_TYPE)\b'
+      - '\b(?:noInterrupts|interrupts|portENTER_CRITICAL|portEXIT_CRITICAL)\s*\('
+
+boundaries:
+  - id: boundary-rtc-driver
+    owner: SETUP-004.1.b
+    reason: RTC service and ESP32Time behavior belong to the RTC/peripheral survey.
+    graph_node_patterns:
+      - '^platform-api:reviewed:esp32time%20dependency$'
+
+  - id: boundary-low-level-peripherals
+    owner: SETUP-004.1.c
+    reason: GPIO, timers, buses, RTC registers, and architecture-specific paths require peripheral-level review.
+    graph_node_patterns:
+      - '^platform-api:external:(?:esp_ipc_.*|esp_timer_.*|gpio_.*|rtc_.*)$'
+      - '^platform-api:reviewed:(?:gpio26%20and%20gpio27|xtensa-specific%20.*)$'
+      - '^physical-facility:reviewed:(?:direct%20esp32%20gpio%20register%20helper%20for%20zdi|i2s0,%20i2s1,%20rtc/ulp,%20and%20uart%20interrupt%20sources|uart2%20pins,%20rts/cts%20flow%20control,%20receive%20buffer,%20and%20timeouts)$'
+
+  - id: boundary-display
+    owner: SETUP-004.1.d
+    reason: FabGL display, VGA, GPIO matrix, and scanout hardware belong to the display survey.
+    graph_node_patterns:
+      - '^platform-api:reviewed:(?:fabgl%20canvas%20and%20vga.*|vdp-gl%20umbrella%20headers)$'
+      - '^physical-facility:reviewed:(?:active%20vga%20controller%20and%20sprite%20state%20during%20update|esp32%20gpio%20matrix|i2s1%20register%20block%20and%20interrupt%20source)$'
+
+  - id: boundary-audio
+    owner: SETUP-004.1.e
+    reason: SoundGenerator and physical audio hardware belong to the audio survey.
+    graph_node_patterns:
+      - '^platform-api:reviewed:fabgl%20soundgenerator%20and%20waveform%20generators$'
+      - '^physical-facility:reviewed:esp32%20i2s0,%20dac,%20sigma-delta,%20dma-capable%20heap,%20interrupts,%20and%20timers$'
+
+  - id: boundary-input
+    owner: SETUP-004.1.f
+    reason: PS/2, keyboard, mouse, cursor, and input packet behavior belong to the input survey.
+    graph_node_patterns:
+      - '^platform-api:reviewed:(?:fabgl%20ps2controller.*|packet_keycode%20.*)$'
+      - '^physical-facility:reviewed:(?:active%20vga%20controller%20for%20mouse%20positioning%20and%20cursor%20rendering|esp32%20ulp,%20rtc%20gpio,%20sens%20registers,%20rtc%20interrupt,%20queues,%20and%20tasks|fabgl%20terminal,%20canvas,%20active%20display%20controller,%20and%20ps/2%20keyboard)$'
+
+  - id: boundary-network-transfer
+    owner: SETUP-004.1.g
+    reason: CRC and network/update transfer policy beyond the framework API belong to the network/transfer survey.
+    graph_node_patterns:
+      - '^platform-api:reviewed:crc%20dependency$'
+
+  - id: boundary-storage
+    owner: SETUP-004.1.h
+    reason: Filesystem and storage APIs belong to the storage survey.
+    graph_node_patterns:
+      - '^platform-api:external:esp_(?:spiffs_.*|vfs_.*)$'
+
+  - id: boundary-build-selection
+    owner: SETUP-004
+    reason: PlatformIO and source-selection mechanics are task-wide evidence rather than a framework runtime candidate.
+    graph_node_patterns:
+      - '^platform-api:reviewed:platformio%20library%20source%20selection$'

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Validate reviewed SETUP-004 records and generate deterministic projections."""
+"""Generate deterministic SETUP-004 projections from passing audited evidence."""
 
 from __future__ import annotations
 
@@ -11,90 +11,101 @@ from typing import Any
 
 import yaml
 
-
-GENERATOR_VERSION = "1.0.0"
-DISPOSITIONS = {"retain", "replace", "stub", "omit", "defer"}
-REQUIRED_RECORD_FIELDS = (
-    "id",
-    "name",
-    "layer",
-    "scope",
-    "upstream_owner",
-    "source_files",
-    "implementation_form",
-    "facilities",
-    "activation",
-    "connections",
-    "visible_behavior",
-    "physical_owner",
-    "disposition",
-    "rationale",
-    "omission_fallout",
-    "dependencies",
-    "evidence_ids",
-    "graph_node_ids",
-    "agent_entry_points",
-)
+from analysis_model import dump_yaml, load_yaml, project_paths, sha256
 
 
-def sha256(path: Path) -> str:
-    return hashlib.sha256(path.read_bytes()).hexdigest()
+GENERATOR_VERSION = "2.0.0"
 
 
-def load_yaml(path: Path) -> dict[str, Any]:
-    data = yaml.safe_load(path.read_text(encoding="utf-8"))
-    if not isinstance(data, dict):
-        raise ValueError(f"{path}: expected a YAML mapping")
-    return data
-
-
-def require_string(value: Any, location: str) -> None:
+def require_string(value: Any, location: str) -> str:
     if not isinstance(value, str) or not value.strip():
         raise ValueError(f"{location}: expected a non-empty string")
+    return value
 
 
-def validate_record(
-    record: dict[str, Any],
-    location: str,
-    work_item: str,
-    evidence_ids: set[str],
-    node_ids: set[str],
+def project_path(project_root: Path, path: Path) -> str:
+    try:
+        return path.resolve().relative_to(project_root).as_posix()
+    except ValueError as error:
+        raise ValueError(f"tracked input is outside the project: {path}") from error
+
+
+def verify_coverage_inputs(project_root: Path, coverage: dict[str, Any], location: Path) -> None:
+    """Refuse projection when an audited input has changed since the audit."""
+
+    inputs = coverage.get("inputs")
+    if not isinstance(inputs, list) or not inputs:
+        raise ValueError(f"{location}.inputs: expected a non-empty list")
+    for index, item in enumerate(inputs):
+        if not isinstance(item, dict):
+            raise ValueError(f"{location}.inputs[{index}]: expected a mapping")
+        relative = require_string(item.get("path"), f"{location}.inputs[{index}].path")
+        expected = require_string(item.get("sha256"), f"{location}.inputs[{index}].sha256")
+        input_path = (project_root / relative).resolve()
+        if not input_path.is_relative_to(project_root):
+            raise ValueError(f"{location}.inputs[{index}]: path escapes the project")
+        if not input_path.is_file():
+            raise ValueError(f"{location}: audited input is absent: {relative}")
+        actual = sha256(input_path)
+        if actual != expected:
+            raise ValueError(
+                f"{location}: audited input changed after audit: {relative}; rerun audit-work-item.py"
+            )
+
+
+def load_reviewed(task_root: Path, work_item: str) -> list[tuple[Path, dict[str, Any]]]:
+    suffix = work_item.rsplit(".", 1)[-1]
+    documents: list[tuple[Path, dict[str, Any]]] = []
+    for path in sorted((task_root / "evidence").glob(f"work-1{suffix}-*.yaml")):
+        document = load_yaml(path)
+        if document.get("work_item") != work_item:
+            raise ValueError(f"{path}: work_item mismatch")
+        documents.append((path, document))
+    if not documents:
+        raise ValueError(f"{task_root / 'evidence'}: no reviewed evidence for {work_item}")
+    return documents
+
+
+def validate_reviewed_provenance(
+    mechanical: dict[str, Any], reviewed: dict[str, Any], location: str
 ) -> None:
-    missing = [field for field in REQUIRED_RECORD_FIELDS if field not in record]
-    if missing:
-        raise ValueError(f"{location}: missing fields: {', '.join(missing)}")
-    for field in ("id", "name", "layer", "scope", "upstream_owner", "physical_owner", "rationale", "omission_fallout"):
-        require_string(record[field], f"{location}.{field}")
-    if record["disposition"] not in DISPOSITIONS:
-        raise ValueError(f"{location}.disposition: invalid value {record['disposition']!r}")
-    for field in (
-        "source_files",
-        "facilities",
-        "activation",
-        "visible_behavior",
-        "dependencies",
-        "evidence_ids",
-        "graph_node_ids",
-        "agent_entry_points",
-    ):
-        if not isinstance(record[field], list):
-            raise ValueError(f"{location}.{field}: expected a list")
-    if not record["source_files"] or not record["evidence_ids"] or not record["graph_node_ids"]:
-        raise ValueError(f"{location}: source_files, evidence_ids, and graph_node_ids may not be empty")
-    implementation = record["implementation_form"]
-    if not isinstance(implementation, dict) or set(implementation) != {"selected_translation_units", "header_implementation"}:
-        raise ValueError(f"{location}.implementation_form: expected selected_translation_units and header_implementation")
-    connections = record["connections"]
-    expected_connections = {"startup", "tasks", "interrupts", "callbacks", "global_state"}
-    if not isinstance(connections, dict) or set(connections) != expected_connections:
-        raise ValueError(f"{location}.connections: expected {sorted(expected_connections)}")
-    unknown_evidence = sorted(set(record["evidence_ids"]) - evidence_ids)
-    if unknown_evidence:
-        raise ValueError(f"{location}: unknown PORT-001 evidence IDs: {unknown_evidence}")
-    unknown_nodes = sorted(set(record["graph_node_ids"]) - node_ids)
-    if unknown_nodes:
-        raise ValueError(f"{location}: unknown PORT-001 graph node IDs: {unknown_nodes}")
-    record["work_item"] = work_item
+    """Check reviewed source highlights against the exhaustive mechanical layer."""
+
+    mechanical_sources = set(mechanical.get("source_files", []))
+    highlights = set(reviewed.get("source_highlights", []))
+    unknown_highlights = sorted(highlights - mechanical_sources)
+    if unknown_highlights:
+        raise ValueError(f"{location}: source highlights lack mechanical provenance: {unknown_highlights}")
+
+    participation = {
+        item["source"]: item for item in mechanical.get("source_participation", [])
+    }
+    selected_roots = {
+        selected_by
+        for item in participation.values()
+        for selected_by in item.get("selected_by", [])
+    }
+    selected_roots.update(
+        source
+        for source, item in participation.items()
+        if item.get("classification") == "selected-translation-unit"
+    )
+    implementation = reviewed.get("implementation_highlights", {})
+    if not isinstance(implementation, dict):
+        raise ValueError(f"{location}.implementation_highlights: expected a mapping")
+    selected = implementation.get("selected_translation_units", [])
+    headers = implementation.get("header_implementation", [])
+    if not isinstance(selected, list) or not isinstance(headers, list):
+        raise ValueError(f"{location}.implementation_highlights: expected two lists")
+    for source in selected:
+        if source not in selected_roots:
+            raise ValueError(f"{location}: selected translation unit is not mechanically proven: {source}")
+    for source in headers:
+        facts = participation.get(source)
+        if not facts or not str(facts.get("classification", "")).startswith(
+            "header-defined-implementation"
+        ):
+            raise ValueError(f"{location}: header implementation is not mechanically proven: {source}")
 
 
 def md_escape(value: Any) -> str:
@@ -112,15 +123,17 @@ def render_matrix(records: list[dict[str, Any]], input_digest: str) -> str:
         "<!-- Generated by scripts/generate-subsystem-inventory.py; do not hand-edit. -->",
         "# SETUP-004 provisional disposition matrix",
         "",
-        "Every disposition remains provisional until Author review. Detailed evidence and",
-        "agent entry points are in `generated/subsystem-inventory.yaml`.",
+        "Review status is tracked per candidate. Detailed mechanical facts, reviewed",
+        "conclusions, and agent entry points are in",
+        "`generated/subsystem-inventory.yaml`.",
         "",
         f"Input digest: `{input_digest}`",
         "",
-        "| Work | Candidate | Layer | Physical owner | Disposition | Provisional rationale |",
-        "|---|---|---|---|---|---|",
+        "| Work | Candidate | Layer | Physical owner | Disposition | Review | Rationale |",
+        "|---|---|---|---|---|---|---|",
     ]
     for record in records:
+        reviewed = record["reviewed"]
         lines.append(
             "| "
             + " | ".join(
@@ -128,147 +141,193 @@ def render_matrix(records: list[dict[str, Any]], input_digest: str) -> str:
                 for value in (
                     record["work_item"],
                     record["name"],
-                    record["layer"],
-                    record["physical_owner"],
-                    record["disposition"].upper(),
-                    first_sentence(record["rationale"]),
+                    reviewed["layer"],
+                    reviewed["physical_owner"],
+                    reviewed["disposition"].upper(),
+                    reviewed["author_review"]["status"].upper(),
+                    first_sentence(reviewed["rationale"]),
                 )
             )
             + " |"
         )
     lines.extend(("", "## Coverage", ""))
     by_work: dict[str, int] = {}
+    accepted_by_work: dict[str, int] = {}
     for record in records:
         by_work[record["work_item"]] = by_work.get(record["work_item"], 0) + 1
+        if record["reviewed"]["author_review"]["status"] == "accepted":
+            accepted_by_work[record["work_item"]] = accepted_by_work.get(record["work_item"], 0) + 1
     for work_item, count in sorted(by_work.items()):
-        lines.append(f"- `{work_item}`: {count} candidates inventoried")
+        accepted = accepted_by_work.get(work_item, 0)
+        lines.append(
+            f"- `{work_item}`: {accepted} accepted; {count - accepted} awaiting Author review"
+        )
     lines.append("")
     return "\n".join(lines)
 
 
 def main() -> int:
     script_path = Path(__file__).resolve()
-    task_root = script_path.parent.parent
-    project_root = task_root.parents[2]
+    default_task_root = script_path.parent.parent
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--task-root", type=Path, default=task_root)
-    parser.add_argument(
-        "--graph",
-        type=Path,
-        default=project_root / "docs/tasks/PORT-001/generated/code-graph.yaml",
-    )
+    parser.add_argument("--task-root", type=Path, default=default_task_root)
     args = parser.parse_args()
 
     task_root = args.task_root.resolve()
-    graph_path = args.graph.resolve()
-    evidence_paths = sorted((task_root / "evidence").glob("work-*.yaml"))
-    if not evidence_paths:
-        raise ValueError(f"{task_root / 'evidence'}: no work evidence files found")
-
-    graph = load_yaml(graph_path)
-    if graph.get("artifact_kind") != "code_graph":
-        raise ValueError(f"{graph_path}: expected PORT-001 code_graph")
-    graph_evidence_ids = {item["id"] for item in graph.get("evidence", [])}
-    graph_node_ids = {item["id"] for item in graph.get("nodes", [])}
-    graph_sources = {
-        item["owner"]: {"identity": item["identity"], "commit": item.get("commit")}
-        for item in graph.get("sources", [])
-    }
+    paths = project_paths(task_root)
+    project_root = paths["project_root"]
+    coverage_paths = sorted((task_root / "generated").glob("work-*/coverage.yaml"))
+    if not coverage_paths:
+        raise ValueError(f"{task_root / 'generated'}: no coverage audits found")
 
     records: list[dict[str, Any]] = []
-    seen_record_ids: set[str] = set()
-    input_entries: list[dict[str, str]] = []
-    covered_work_items: list[str] = []
     target_frameworks: list[dict[str, Any]] = []
+    input_paths: set[Path] = set()
+    work_summaries: list[dict[str, Any]] = []
+    global_ids: set[str] = set()
 
-    for evidence_path in evidence_paths:
-        reviewed = load_yaml(evidence_path)
-        if reviewed.get("schema_version") != 1:
-            raise ValueError(f"{evidence_path}: unsupported schema_version")
-        work_item = reviewed.get("work_item")
-        require_string(work_item, f"{evidence_path}.work_item")
-        if not work_item.startswith("SETUP-004.1."):
-            raise ValueError(f"{evidence_path}.work_item: expected SETUP-004.1.<letter>")
-        covered_work_items.append(work_item)
+    for coverage_path in coverage_paths:
+        coverage = load_yaml(coverage_path)
+        work_item = require_string(coverage.get("work_item"), f"{coverage_path}.work_item")
+        if coverage.get("status") != "pass-ready-for-author-review":
+            raise ValueError(f"{coverage_path}: coverage audit has not passed")
+        if coverage.get("errors"):
+            raise ValueError(f"{coverage_path}: coverage audit contains errors")
+        verify_coverage_inputs(project_root, coverage, coverage_path)
 
-        sources = reviewed.get("sources", {})
-        for key, owner in (("agon_vdp", "agon-vdp"), ("vdp_gl", "vdp-gl")):
-            source = sources.get(key, {})
-            expected = graph_sources.get(owner)
-            if not expected or source.get("release") != expected["identity"] or source.get("commit") != expected["commit"]:
-                raise ValueError(f"{evidence_path}.sources.{key}: does not match PORT-001 graph source")
+        mechanical_path = coverage_path.parent / "mechanical-facts.yaml"
+        mechanical_doc = load_yaml(mechanical_path)
+        if mechanical_doc.get("work_item") != work_item:
+            raise ValueError(f"{mechanical_path}: work_item mismatch")
+        mechanical_records = mechanical_doc.get("candidates")
+        if not isinstance(mechanical_records, list) or not mechanical_records:
+            raise ValueError(f"{mechanical_path}.candidates: expected a non-empty list")
+        mechanical_by_id = {record["id"]: record for record in mechanical_records}
+        if len(mechanical_by_id) != len(mechanical_records):
+            raise ValueError(f"{mechanical_path}: duplicate candidate ID")
 
-        target_framework = reviewed.get("target_framework")
-        if target_framework:
-            target_frameworks.append(target_framework)
-        reviewed_records = reviewed.get("records")
-        if not isinstance(reviewed_records, list) or not reviewed_records:
-            raise ValueError(f"{evidence_path}.records: expected a non-empty list")
-        for index, record in enumerate(reviewed_records):
-            if not isinstance(record, dict):
-                raise ValueError(f"{evidence_path}.records[{index}]: expected a mapping")
-            validate_record(
-                record,
-                f"{evidence_path}.records[{index}]",
-                work_item,
-                graph_evidence_ids,
-                graph_node_ids,
+        reviewed_documents = load_reviewed(task_root, work_item)
+        reviewed_by_id: dict[str, dict[str, Any]] = {}
+        for reviewed_path, document in reviewed_documents:
+            framework = document.get("target_framework")
+            if framework:
+                target_frameworks.append(
+                    {
+                        "work_item": work_item,
+                        "evidence_path": project_path(project_root, reviewed_path),
+                        **framework,
+                    }
+                )
+            reviewed_records = document.get("records")
+            if not isinstance(reviewed_records, list) or not reviewed_records:
+                raise ValueError(f"{reviewed_path}.records: expected a non-empty list")
+            for reviewed in reviewed_records:
+                candidate_id = reviewed["id"]
+                if candidate_id in reviewed_by_id:
+                    raise ValueError(f"duplicate reviewed candidate ID: {candidate_id}")
+                reviewed_by_id[candidate_id] = reviewed
+            input_paths.add(reviewed_path)
+
+        if set(mechanical_by_id) != set(reviewed_by_id):
+            missing = sorted(set(mechanical_by_id) - set(reviewed_by_id))
+            extra = sorted(set(reviewed_by_id) - set(mechanical_by_id))
+            raise ValueError(
+                f"{work_item}: mechanical/reviewed candidate mismatch; missing={missing}, extra={extra}"
             )
-            if record["id"] in seen_record_ids:
-                raise ValueError(f"duplicate record ID: {record['id']}")
-            seen_record_ids.add(record["id"])
-            records.append(record)
-        input_entries.append(
+
+        for candidate_id in sorted(mechanical_by_id):
+            if candidate_id in global_ids:
+                raise ValueError(f"duplicate aggregate candidate ID: {candidate_id}")
+            global_ids.add(candidate_id)
+            mechanical = mechanical_by_id[candidate_id]
+            reviewed = reviewed_by_id[candidate_id]
+            if mechanical.get("name") != reviewed.get("name"):
+                raise ValueError(f"{candidate_id}: mechanical/reviewed candidate names differ")
+            validate_reviewed_provenance(mechanical, reviewed, candidate_id)
+            records.append(
+                {
+                    "id": candidate_id,
+                    "name": mechanical["name"],
+                    "work_item": work_item,
+                    "mechanical": mechanical,
+                    "reviewed": reviewed,
+                }
+            )
+
+        counts = coverage.get("counts", {})
+        accepted_count = sum(
+            record["author_review"]["status"] == "accepted"
+            for record in reviewed_by_id.values()
+        )
+        work_summaries.append(
             {
-                "path": evidence_path.relative_to(project_root).as_posix(),
-                "sha256": sha256(evidence_path),
+                "work_item": work_item,
+                "status": (
+                    "author-review-complete"
+                    if accepted_count == len(mechanical_by_id)
+                    else "author-review-in-progress"
+                ),
+                "candidate_count": len(mechanical_by_id),
+                "accepted_count": accepted_count,
+                "pending_count": len(mechanical_by_id) - accepted_count,
+                "scoped_items": counts.get("scoped_items"),
+                "unclassified": counts.get("unclassified"),
+                "ambiguous": counts.get("ambiguous"),
+                "coverage_path": project_path(project_root, coverage_path),
             }
         )
+        input_paths.update({coverage_path, mechanical_path})
 
     records.sort(key=lambda item: (item["work_item"], item["id"]))
+    input_entries = [
+        {"path": project_path(project_root, path), "sha256": sha256(path)}
+        for path in sorted(input_paths)
+    ]
     input_digest = hashlib.sha256(
         "".join(f"{item['path']}:{item['sha256']}\n" for item in input_entries).encode()
     ).hexdigest()
     output = {
-        "schema_version": 1,
+        "schema_version": 2,
         "artifact_kind": "setup_004_subsystem_inventory",
         "generator": {
             "name": "generate-subsystem-inventory",
             "version": GENERATOR_VERSION,
-            "path": script_path.relative_to(project_root).as_posix(),
-            "regeneration_command": ".venv/bin/python docs/tasks/SETUP-004/scripts/generate-subsystem-inventory.py",
+            "path": project_path(project_root, script_path),
+            "regeneration_command": (
+                ".venv/bin/python "
+                "docs/tasks/SETUP-004/scripts/generate-subsystem-inventory.py"
+            ),
         },
-        "inputs": {
-            "reviewed": input_entries,
-            "combined_sha256": input_digest,
-            "port_001_graph": {
-                "path": graph_path.relative_to(project_root).as_posix(),
-                "id": graph["id"],
-                "sha256": sha256(graph_path),
-            },
-        },
-        "sources": graph.get("sources", []),
+        "inputs": input_entries,
+        "combined_input_sha256": input_digest,
+        "sources": load_yaml(paths["graph"]).get("sources", []),
         "target_frameworks": target_frameworks,
         "coverage": {
-            "completed_work_items": sorted(set(covered_work_items)),
+            "status": (
+                "author_review_complete"
+                if all(
+                    record["reviewed"]["author_review"]["status"] == "accepted"
+                    for record in records
+                )
+                else "author_review_in_progress"
+            ),
+            "work_items": sorted(work_summaries, key=lambda item: item["work_item"]),
             "record_count": len(records),
-            "status": "provisional_pending_author_review",
         },
         "records": records,
     }
 
     generated_dir = task_root / "generated"
-    generated_dir.mkdir(parents=True, exist_ok=True)
     inventory_path = generated_dir / "subsystem-inventory.yaml"
-    inventory_path.write_text(
-        "# Generated by scripts/generate-subsystem-inventory.py; do not hand-edit.\n"
-        + yaml.safe_dump(output, sort_keys=False, allow_unicode=True, width=100),
-        encoding="utf-8",
+    dump_yaml(
+        inventory_path,
+        output,
+        "Generated by scripts/generate-subsystem-inventory.py; do not hand-edit.",
     )
     (task_root / "disposition-matrix.md").write_text(
         render_matrix(records, input_digest), encoding="utf-8"
     )
-    print(f"generated {inventory_path.relative_to(project_root)} with {len(records)} records")
+    print(f"generated {project_path(project_root, inventory_path)} with {len(records)} records")
     return 0
 
 
@@ -278,4 +337,3 @@ if __name__ == "__main__":
     except (OSError, ValueError, yaml.YAMLError) as error:
         print(f"error: {error}", file=sys.stderr)
         sys.exit(1)
-

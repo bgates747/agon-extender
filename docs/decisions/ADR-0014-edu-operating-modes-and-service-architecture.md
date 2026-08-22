@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-08-21
+- Last amended: 2026-08-22
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -61,6 +61,13 @@ returns no packet to MOS, and updates no sysvar. Diagnostic output therefore
 needs its own ownership boundary distinct from VDU responses, EDU results,
 network media output, and application-visible state.
 
+Official printer/USB-serial output, console and terminal modes, ZDI, Intel HEX,
+YMODEM, firmware updating, and local debug output are maintenance or operator
+facilities rather than the normal application-facing audio/video contract.
+Extender v1 does not implement those facilities. They remain available through
+the onboard VDP whenever the selected operating mode leaves ordinary VDU with
+that processor.
+
 ## Decision
 
 1. Adopt **Extended Display Unit (EDU)** as the official project term for the
@@ -94,14 +101,14 @@ network media output, and application-visible state.
 10. Keep transport and resident-program mechanics behind the EDU API. A future
    official MOS integration may provide another backend without requiring EDU
    applications to adopt a different application protocol.
-11. Define **exclusive compatibility mode** as a binary selection of one
-    authoritative display processor and compatibility interface. The onboard
-    VDP or EDP, but never both, owns stock-compatible command processing,
-    responses, completion flags, and canonical MOS VDP sysvars in this mode.
-12. Make exclusive compatibility mode the only mode permitted to claim complete
-    compatibility with unmodified legacy software. EDP selection earns that
-    claim only after ordinary legacy VDU traffic and responses can be routed
-    transparently through the EDP compatibility implementation.
+11. Define **EDP-exclusive compatibility mode** as selection of the EDP as the
+    authoritative audio/video processor and compatibility interface. The EDP
+    owns stock-compatible command processing, responses, completion flags, and
+    canonical MOS VDP sysvars through the selected routing mechanism.
+12. Permit EDP-exclusive mode to claim complete compatibility for the declared
+    normal application-facing surface only after ordinary legacy VDU traffic
+    and responses can be routed transparently. Explicitly exclude the v1
+    maintenance/operator carve-outs named in the Context from that claim.
 13. Define **extended cooperative mode** as simultaneous, explicitly addressed
     use of the onboard VDP through VDU and the EDP through EDU. The processors
     may perform coordinated work, but their command and response channels remain
@@ -125,10 +132,20 @@ network media output, and application-visible state.
     require system-wide integration, including any accepted implementation of
     transparent legacy VDU routing that depends on MOS. Modified MOS is not a
     general prerequisite for EDU-aware software or cooperative use.
-19. Preserve local diagnostic commands such as buffered command 128 without
-    converting their output into MOS response packets or EDU application
-    results. Route them to an EDP diagnostic console or logging sink in every
-    operating mode.
+19. Do not implement the upstream local USB/UART maintenance and operator
+    facilities in Extender v1, including printer output, console/terminal
+    modes, ZDI, Intel HEX, YMODEM, firmware updating, and buffered-command debug
+    output. Handling attempts is mode-contract dependent: strict compatibility
+    preserves stock-observable behavior, including undesirable failures, while
+    non-strict operation should improve failure and recovery. Exact behavior
+    and the strict-mode boundary remain in the linked task rather than this ADR.
+20. Define **legacy mode** as the stock-machine mode in which Extender is
+    electrically and logically absent from the Agon interface even when it is
+    connected and powered. The onboard VDP owns ordinary VDU, responses,
+    sysvars, input, and maintenance facilities without Extender interception.
+21. In extended cooperative mode, ordinary VDU continues to reach the onboard
+    VDP, so its maintenance facilities may remain available through that stock
+    path. Their availability does not make them Extender-supported features.
 
 ## Rationale
 
@@ -158,6 +175,12 @@ network media output, and application-visible state.
    explicitly.
 10. Keeping diagnostics out of protocol return paths prevents console text from
     corrupting packet framing or being mistaken for application data.
+11. A truly inert legacy mode provides an unconditional stock fallback for
+    software and maintenance workflows outside the EDP-exclusive compatibility
+    surface.
+12. Explicit carve-outs make the compatibility claim testable and avoid
+    importing high-risk operator transports that are not needed by normal
+    applications.
 
 ## Consequences
 
@@ -182,15 +205,18 @@ network media output, and application-visible state.
    authority; “compatible” without that context is insufficient.
 9. In EDP-exclusive compatibility mode, input-device configuration still needs
    a controlled route to the onboard VDP even though ordinary audio/video output
-   is consumed by the EDP.
+   is consumed by the EDP. The onboard VDP remains the initial physical input
+   owner and its packets to MOS remain canonical; `SETUP-005-D007` owns the
+   unresolved route by which the EDP receives processed events needed for its
+   display-local behavior.
 10. Reusing MOS's normal packet parser would preserve sysvar semantics better
     than having the EDP or a resident service write MOS-owned memory directly.
 11. Documentation, releases, and compatibility metadata must distinguish
     stock-MOS cooperative operation from features that require an
     Extender-enabled MOS build.
-12. The P4 port must provide an explicit replacement for upstream `DBGSerial`;
-    its UART0 mapping cannot be inherited accidentally when UART resources may
-    serve EDP transport.
-13. Diagnostic commands may emit an entire buffer synchronously. Implementations
-    must preserve useful diagnostics while accounting for large-output latency,
-    VDU-task stalls, and watchdog exposure.
+12. The P4 port must not inherit upstream `DBGSerial` or its UART0 mapping.
+    Unsupported command paths must not block waiting for an absent external
+    serial peer, corrupt parser framing, or enter a partially active mode.
+13. Compatibility metadata must name the maintenance/operator carve-out when
+    claiming EDP-exclusive compatibility. Legacy mode remains the fallback for
+    those facilities.

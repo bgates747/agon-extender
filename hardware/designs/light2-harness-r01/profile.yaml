@@ -1,0 +1,99 @@
+# Authoritative machine-readable definition of light2-harness-r01.
+schema_version: 1
+artifact_id: light2-harness
+identity: light2-harness-r01
+kind: wiring_harness
+variant: light2
+status: candidate
+authority: authoritative-first-design-target
+precedence:
+  - profile.yaml
+  - README.md
+  - legacy-evidence textual documents
+  - legacy-evidence SVG diagrams
+
+provenance:
+  repository: https://github.com/bgates747/agon-extender-legacy.git
+  imported_from_commit: df54cf6a7a23cd40e98076856f68cff0559d1c77
+  design_last_changed_commit: 5c8b98f10869ea85cfd5f911b20f3c2e802706ea
+  imported_at: 2026-08-22T03:51:00Z
+  files:
+    - path: legacy-evidence/carrier-breakout-design.md
+      sha256: 31a739858bd6e4564437deaa46c50655bd12495fed95a543f70accf5582f3d41
+    - path: legacy-evidence/esp32-p4-devkit-rev-d1-pinout.md
+      sha256: 59c8ee642d31eb96cd552dbdaffad889bdbb15c515c5ec34e920c2a091a78a77
+    - path: legacy-evidence/wiring-diagram.svg
+      sha256: 8c58bfda00ab77e236b25da750b50e441317e5431ae2867d063e68c29fc93c2e
+    - path: legacy-evidence/carrier-breakout-layout.svg
+      sha256: 1fb4de0703fb7c10f5a25b20fe3d57f683e8f874b86bd46ee012a5782b1dbb0a
+    - path: legacy-evidence/u1-power-and-ground.svg
+      sha256: f6c5bc2b8de4d70d47a4f75acddbd872bf00378812d15815a83c362092f02fd3
+    - path: legacy-evidence/prx-06-results.md
+      sha256: 38ccf5bbeb7017aa47315c6c90a9179a062ebd26111764e4e9e0ac5f98b588f8
+    - path: legacy-evidence/rev-02-results.md
+      sha256: 9b4b328d651ba35456e8f5bbe0c9d7393789edec68e624b5ac1683efc4c24574
+    - path: legacy-evidence/reverse-uart-driver.md
+      sha256: 93d41c3aaf0a7391f35d47a443ea7254f591da8677e29f85335abf9368be0a0c
+
+hardware:
+  host:
+    product: Agon Light 2
+    revision: null
+  extender:
+    product: Olimex ESP32-P4-DevKit
+    revision: Rev D1
+
+signals:
+  - {name: D0, agon_signal: PC0, agon_header_pin: 17, p4_gpio: 22, p4_header: EXT2, p4_header_pin: 11, direction: agon-to-p4}
+  - {name: D1, agon_signal: PC1, agon_header_pin: 18, p4_gpio: 12, p4_header: EXT1, p4_header_pin: 13, direction: agon-to-p4}
+  - {name: D2, agon_signal: PC2, agon_header_pin: 19, p4_gpio: 23, p4_header: EXT2, p4_header_pin: 10, direction: agon-to-p4}
+  - {name: D3, agon_signal: PC3, agon_header_pin: 20, p4_gpio: 11, p4_header: EXT1, p4_header_pin: 12, direction: agon-to-p4}
+  - {name: D4, agon_signal: PC4, agon_header_pin: 21, p4_gpio: 32, p4_header: EXT2, p4_header_pin: 9, direction: agon-to-p4}
+  - {name: D5, agon_signal: PC5, agon_header_pin: 22, p4_gpio: 10, p4_header: EXT1, p4_header_pin: 11, direction: agon-to-p4}
+  - {name: D6, agon_signal: PC6, agon_header_pin: 23, p4_gpio: 33, p4_header: EXT2, p4_header_pin: 8, direction: agon-to-p4}
+  - {name: D7, agon_signal: PC7, agon_header_pin: 24, p4_gpio: 9, p4_header: EXT1, p4_header_pin: 10, direction: agon-to-p4}
+  - {name: READY_N, agon_signal: PD4, agon_header_pin: 13, p4_gpio: 20, p4_header: EXT2, p4_header_pin: 13, direction: p4-to-agon-open-drain}
+  - {name: CLOCK, agon_signal: PD5, agon_header_pin: 14, p4_gpio: 14, p4_header: EXT1, p4_header_pin: 15, direction: agon-to-p4}
+  - {name: VALID_N, agon_signal: PD7, agon_header_pin: 16, p4_gpio: 13, p4_header: EXT1, p4_header_pin: 14, direction: agon-to-p4}
+
+electrical:
+  logic_voltage_v: 3.3
+  common_ground:
+    agon_header_pin: 33
+    p4_header: EXT1
+    p4_header_pin: 2
+  data_series_resistance_ohm: 220
+  control_bias:
+    READY_N: {resistance_ohm: 10000, direction: pull-up}
+    VALID_N: {resistance_ohm: 10000, direction: pull-up}
+    CLOCK: {resistance_ohm: 10000, direction: pull-down}
+  power_boundary: independently-powered-rails-must-not-be-joined
+
+qualification_scope:
+  inherited_evidence:
+    - forward pin identity and complete-record reception
+    - PARLIO forward-path operation
+    - approximately 0.84 MiB/s useful endpoint payload in the fastest tested fixture
+  current_project_status: requires qualification against committed clean-project baselines
+
+legacy_uart_candidate:
+  physical_path:
+    p4_rx_gpio: 22
+    p4_tx_gpio: 12
+    forward_enable_gpio: 15
+    reverse_enable_gpio: 21
+  qualification:
+    tested_baud: 115200
+    target_baud: 1152000
+    tested_framing: 8N1
+    status: selected-first-design-target-target-speed-unqualified
+  notes:
+    - The predecessor fixture deliberately reduced baud to prove wiring and directional correctness before speed margin.
+    - Its reverse-UART name describes the tested ownership phase, not a separate product transport.
+
+unqualified:
+  - legacy UART operation at 1,152,000 baud
+  - complete official legacy UART flow-control behavior and endpoint routing
+  - production isolation and either-order power behavior
+  - final connector and carrier PCB design
+  - Console8 harness adaptation

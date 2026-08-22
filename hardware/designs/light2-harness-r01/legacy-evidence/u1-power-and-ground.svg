@@ -1,0 +1,88 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1100" height="900" viewBox="0 0 1100 900">
+  <rect width="1100" height="900" fill="#fff"/>
+  <style>
+    text { font-family: DejaVu Sans, sans-serif; fill: #111; }
+    .title { font-size: 28px; font-weight: bold; }
+    .pintext { font-size: 17px; font-weight: bold; }
+    .note { font-size: 16px; }
+    .body { fill: #edf1f4; stroke: #111; stroke-width: 4; }
+    .pin { fill: #fff; stroke: #111; stroke-width: 2; }
+    .hot { stroke: #d7191c; fill: none; stroke-width: 5; }
+    .gnd { stroke: #222; fill: none; stroke-width: 5; }
+    .res { fill: #f3dfad; stroke: #111; stroke-width: 2; }
+    .cap { stroke: #111; stroke-width: 4; }
+    .unused { fill: #eee; }
+  </style>
+
+  <text x="550" y="48" text-anchor="middle" class="title">U1 SN74HC125N — power, ground, and passives only</text>
+
+  <!-- rails -->
+  <line x1="70" y1="95" x2="1030" y2="95" class="hot"/>
+  <text x="75" y="82" class="pintext" fill="#d7191c">+3.3 V</text>
+  <line x1="70" y1="825" x2="1030" y2="825" class="gnd"/>
+  <text x="75" y="855" class="pintext">GND</text>
+
+  <!-- DIP body and notch -->
+  <rect x="390" y="170" width="320" height="570" rx="18" class="body"/>
+  <path d="M510 170 A40 40 0 0 0 590 170" fill="white" stroke="#111" stroke-width="4"/>
+  <circle cx="425" cy="205" r="8" fill="#111"/>
+  <text x="550" y="455" text-anchor="middle" class="title">SN74HC125N</text>
+  <text x="550" y="487" text-anchor="middle" class="note">notch up</text>
+
+  <!-- left pins 1 through 7 -->
+  <g>
+    <rect x="300" y="200" width="90" height="48" class="pin"/><text x="345" y="230" text-anchor="middle" class="pintext">1  1OE_N</text>
+    <rect x="300" y="275" width="90" height="48" class="pin unused"/><text x="345" y="305" text-anchor="middle" class="pintext">2  1A</text>
+    <rect x="300" y="350" width="90" height="48" class="pin unused"/><text x="345" y="380" text-anchor="middle" class="pintext">3  1Y</text>
+    <rect x="300" y="425" width="90" height="48" class="pin"/><text x="345" y="455" text-anchor="middle" class="pintext">4  2OE_N</text>
+    <rect x="300" y="500" width="90" height="48" class="pin unused"/><text x="345" y="530" text-anchor="middle" class="pintext">5  2A</text>
+    <rect x="300" y="575" width="90" height="48" class="pin unused"/><text x="345" y="605" text-anchor="middle" class="pintext">6  2Y</text>
+    <rect x="300" y="650" width="90" height="48" class="pin"/><text x="345" y="680" text-anchor="middle" class="pintext">7  GND</text>
+  </g>
+
+  <!-- right pins 14 through 8 -->
+  <g>
+    <rect x="710" y="200" width="90" height="48" class="pin"/><text x="755" y="230" text-anchor="middle" class="pintext">14 VCC</text>
+    <rect x="710" y="275" width="90" height="48" class="pin"/><text x="755" y="305" text-anchor="middle" class="pintext">13 4OE_N</text>
+    <rect x="710" y="350" width="90" height="48" class="pin unused"/><text x="755" y="380" text-anchor="middle" class="pintext">12 4A</text>
+    <rect x="710" y="425" width="90" height="48" class="pin unused"/><text x="755" y="455" text-anchor="middle" class="pintext">11 4Y</text>
+    <rect x="710" y="500" width="90" height="48" class="pin"/><text x="755" y="530" text-anchor="middle" class="pintext">10 3OE_N</text>
+    <rect x="710" y="575" width="90" height="48" class="pin"/><text x="755" y="605" text-anchor="middle" class="pintext">9  3A</text>
+    <rect x="710" y="650" width="90" height="48" class="pin unused"/><text x="755" y="680" text-anchor="middle" class="pintext">8  3Y</text>
+  </g>
+
+  <!-- pin 14 direct to hot -->
+  <path d="M800 224 H950 V95" class="hot"/>
+
+  <!-- shared pins 1 and 13 pull-up -->
+  <path d="M300 224 H245 V184" class="hot"/>
+  <path d="M800 299 H825 V184 H245" class="hot"/>
+  <rect x="220" y="112" width="50" height="72" rx="8" class="res"/>
+  <text x="245" y="143" text-anchor="middle" class="pintext">10k</text>
+  <path d="M245 112 V95" class="hot"/>
+
+  <!-- pin 4 pull-up -->
+  <path d="M300 449 H180 V320" class="hot"/>
+  <rect x="155" y="248" width="50" height="72" rx="8" class="res"/>
+  <text x="180" y="290" text-anchor="middle" class="pintext">10k</text>
+  <path d="M180 248 V95" class="hot"/>
+
+  <!-- pin 10 pull-up -->
+  <path d="M800 524 H875 V320" class="hot"/>
+  <rect x="850" y="248" width="50" height="72" rx="8" class="res"/>
+  <text x="875" y="290" text-anchor="middle" class="pintext">10k</text>
+  <path d="M875 248 V95" class="hot"/>
+
+  <!-- grounds -->
+  <path d="M300 674 H260 V825" class="gnd"/>
+  <path d="M800 599 H835 V825" class="gnd"/>
+
+  <!-- decoupling capacitor -->
+  <path d="M980 95 V370" class="hot"/>
+  <line x1="950" y1="370" x2="1010" y2="370" class="cap"/>
+  <line x1="950" y1="392" x2="1010" y2="392" class="cap"/>
+  <path d="M980 392 V825" class="gnd"/>
+  <text x="915" y="387" text-anchor="end" class="pintext">100 nF</text>
+
+  <text x="550" y="790" text-anchor="middle" class="note">Gray pins are shown for counting only; this drawing intentionally omits all signal wiring.</text>
+</svg>

@@ -25,8 +25,9 @@ retained behavior is routed between processors and MOS.
   for routing untouched legacy `RST.LIL 10h` and `RST.LIL 18h` traffic to the
   EDP in exclusive compatibility mode.
 - [ ] **SETUP-005-D002 — Mode lifecycle:** define selection, discovery,
-  transition, reset, failure, and recovery behavior for exclusive compatibility
-  and extended cooperative modes.
+  transition, reset, failure, and recovery behavior for legacy,
+  EDP-exclusive compatibility, and extended cooperative modes. Legacy mode
+  must make Extender electrically and logically absent from the Agon interface.
 - [ ] **SETUP-005-D003 — Compatible response delivery:** determine how EDP
   responses and onboard-VDP input packets populate canonical MOS sysvars in
   exclusive mode, and define the separate EDU result domain used in extended
@@ -38,8 +39,28 @@ retained behavior is routed between processors and MOS.
   EDP audio commands to the onboard VDP for local hardware playback. Retaining
   the complete audio command surface does not require this route; the currently
   scoped Rev 1 output is network/browser audio.
+- [ ] **SETUP-005-D006 — Unsupported maintenance-command behavior:** define the
+  closest practical stock-VDP-compatible command consumption, parser recovery,
+  and externally observable failure behavior used in EDP-exclusive mode for
+  printer/USB serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and
+  local-debug commands. Determine the stock behavior for each command and
+  classify behavior by operating mode. Strict compatibility modes must permit
+  stock-observable Bad Things—including corrupted output, resets, crashes, or
+  Guru Meditations—where suppressing them would violate compatibility. Modes
+  without that strict promise should improve the behavior with deterministic
+  no-op, rejection, status, timeout, parser recovery, and diagnostics. Define
+  explicitly which modes are strict before assigning command behavior.
+- [ ] **SETUP-005-D007 — Peripheral-input ownership and routing:** retain the
+  onboard VDP as the initial physical keyboard and mouse owner and preserve its
+  stock packets to MOS as the canonical legacy input path. Determine how an
+  EDP-exclusive session also receives the processed input events required for
+  display-local behavior—including paged mode, control-key handling, mouse
+  cursor state, VDP variables, and callbacks—without creating competing MOS
+  sysvar writers. Compare an Extender-enabled MOS relay, an onboard-VDP bridge,
+  and other routing mechanisms. Physical P4 input ownership remains a possible
+  future EDU extension, not the Extender v1 compatibility baseline.
 
-When all five decisions are accepted and incorporated into ADR-0014, change its
+When all seven decisions are accepted and incorporated into ADR-0014, change its
 completeness to `Complete` and remove the resolved items from this task after
 recording their disposition in the development log.
 
