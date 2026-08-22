@@ -1,0 +1,6 @@
+# Official agon-vdp v2.16.0 is vendored byte-for-byte, including inherited
+# CRLF/tab/trailing-whitespace style. Do not normalize its source merely to
+# satisfy local whitespace policy. Project-owned Extender code remains strict.
+vdp/video/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+vdp/vendor/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
+vdp/video/extender/** whitespace=blank-at-eol,blank-at-eof,space-before-tab

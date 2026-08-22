@@ -54,7 +54,7 @@ sources:
   tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
   root_placeholder: ${CRC_SOURCE}
   manifest_file_count: 51
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:ESP32Time:2.0.6
   owner: ESP32Time
   repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
@@ -64,7 +64,7 @@ sources:
   tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
   root_placeholder: ${ESP32TIME_SOURCE}
   manifest_file_count: 12
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:agon-vdp:v2.16.0
   owner: agon-vdp
   repository: https://github.com/AgonPlatform/agon-vdp
@@ -74,7 +74,7 @@ sources:
   tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
   root_placeholder: ${AGON_VDP_SOURCE}
   manifest_file_count: 53
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:vdp-gl:all-the-plots
   owner: vdp-gl
   repository: https://github.com/AgonPlatform/vdp-gl
@@ -84,23 +84,28 @@ sources:
   tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
   root_placeholder: ${VDP_GL_SOURCE}
   manifest_file_count: 5048
-  presence_class: upstream-reference
+  presence_class: vendored
 inputs:
 - id: input:port-001:code-graph
   path: docs/dependencies/generated/code-graph.yaml
   role: canonical merged dependency graph
   schema_version: 2.0.0
-  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
 - id: input:port-002:base-code-graph
   path: docs/dependencies/generated/base-code-graph.yaml
   role: PORT-001 mechanical and reviewed relationship graph
   schema_version: 1.0.0
-  sha256: 84d7f3d3afadfdce33463b77f7d0b69b9f0abfc42f30298b0d99ed0f4bb04c9c
+  sha256: 532f078d040ad7cefbf269556a456576771fc3a47f6960e657fdef832b90cfde
 - id: input:port-002:setup-004-evidence
   path: docs/tasks/SETUP-004/evidence
   role: accepted source disposition records
   schema_version: 1
   sha256: 16d453fae76dd6e20efae763671e73ea38eb6b23d6d43e8fd4b0c59ea280ba39
+- id: input:port-003:phase-a-build-closure
+  path: docs/tasks/PORT-003/phase-a/evidence/build-closure.yaml
+  role: observed PORT-003 Phase A application compile/link closure
+  schema_version: 1.0.0
+  sha256: e4d68317946a49c84135d60f8709cbdc9d0c4c40e1d218c5f86b9ff761093914
 - id: input:setup-003:claims
   path: docs/dependencies/reviewed/claims.yaml
   role: manually reviewed PORT-001 semantic claims
@@ -125,7 +130,7 @@ inputs:
   path: docs/dependencies/reviewed/source-baselines.yaml
   role: reviewed immutable source baseline
   schema_version: 1
-  sha256: bdc23325b9c6fdf64875a3d2c82170e065c234f20dde1f284153edf0f822c4c4
+  sha256: 4e40e4003795ef108caa2332baf514876e20159c5d3bcdca28ae60bad6767eeb
 - id: input:setup-003:symbols
   path: docs/tasks/SETUP-003/generated/symbols.yaml
   role: Ctags symbol index
@@ -145,7 +150,7 @@ source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
   path: docs/dependencies/generated/code-graph.yaml
   schema_version: 2.0.0
-  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
 title: PORT-003 bitmapped-controller consumers
 seed_nodes:
 - type:vdp-gl:fabgl::BitmappedDisplayController
@@ -774,8 +779,9 @@ nodes:
     source.path: src/canvas.h
     source.sha256: f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/canvas.h
 - id: file:vdp-gl:src/collisiondetector.h
   kind: file
   owner: vdp-gl
@@ -794,8 +800,9 @@ nodes:
     source.path: src/collisiondetector.h
     source.sha256: 37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/collisiondetector.h
 - id: file:vdp-gl:src/devdrivers/mouse.cpp
   kind: file
   owner: vdp-gl
@@ -814,8 +821,9 @@ nodes:
     source.path: src/devdrivers/mouse.cpp
     source.sha256: c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530
     source.role: firmware-source
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/devdrivers/mouse.cpp
 - id: file:vdp-gl:src/devdrivers/mouse.h
   kind: file
   owner: vdp-gl
@@ -834,8 +842,9 @@ nodes:
     source.path: src/devdrivers/mouse.h
     source.sha256: ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/devdrivers/mouse.h
 - id: file:vdp-gl:src/dispdrivers/vga16controller.h
   kind: file
   owner: vdp-gl
@@ -854,8 +863,9 @@ nodes:
     source.path: src/dispdrivers/vga16controller.h
     source.sha256: 7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.h
 - id: file:vdp-gl:src/dispdrivers/vga2controller.h
   kind: file
   owner: vdp-gl
@@ -874,8 +884,9 @@ nodes:
     source.path: src/dispdrivers/vga2controller.h
     source.sha256: d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.h
 - id: file:vdp-gl:src/dispdrivers/vga4controller.h
   kind: file
   owner: vdp-gl
@@ -894,8 +905,9 @@ nodes:
     source.path: src/dispdrivers/vga4controller.h
     source.sha256: 2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.h
 - id: file:vdp-gl:src/dispdrivers/vga64controller.h
   kind: file
   owner: vdp-gl
@@ -914,8 +926,9 @@ nodes:
     source.path: src/dispdrivers/vga64controller.h
     source.sha256: ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.h
 - id: file:vdp-gl:src/dispdrivers/vga8controller.h
   kind: file
   owner: vdp-gl
@@ -934,8 +947,9 @@ nodes:
     source.path: src/dispdrivers/vga8controller.h
     source.sha256: badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.h
 - id: file:vdp-gl:src/dispdrivers/vgabasecontroller.h
   kind: file
   owner: vdp-gl
@@ -954,8 +968,9 @@ nodes:
     source.path: src/dispdrivers/vgabasecontroller.h
     source.sha256: b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.h
 - id: file:vdp-gl:src/dispdrivers/vgacontroller.h
   kind: file
   owner: vdp-gl
@@ -974,8 +989,9 @@ nodes:
     source.path: src/dispdrivers/vgacontroller.h
     source.sha256: 8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vgacontroller.h
 - id: file:vdp-gl:src/dispdrivers/vgapalettedcontroller.h
   kind: file
   owner: vdp-gl
@@ -994,8 +1010,9 @@ nodes:
     source.path: src/dispdrivers/vgapalettedcontroller.h
     source.sha256: d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.h
 - id: file:vdp-gl:src/displaycontroller.cpp
   kind: file
   owner: vdp-gl
@@ -1014,8 +1031,9 @@ nodes:
     source.path: src/displaycontroller.cpp
     source.sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
     source.role: firmware-source
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
 - id: file:vdp-gl:src/displaycontroller.h
   kind: file
   owner: vdp-gl
@@ -1034,8 +1052,9 @@ nodes:
     source.path: src/displaycontroller.h
     source.sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/displaycontroller.h
 - id: file:vdp-gl:src/fabgl.h
   kind: file
   owner: vdp-gl
@@ -1054,8 +1073,9 @@ nodes:
     source.path: src/fabgl.h
     source.sha256: 2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b
     source.role: header
-    source.presence_class: upstream-reference
+    source.presence_class: vendored
     source.identity: all-the-plots
+    source.repository_path: vdp/vendor/vdp-gl/src/fabgl.h
 - id: type:vdp-gl:fabgl::BitmappedDisplayController
   kind: type
   owner: vdp-gl
@@ -1426,6 +1446,12 @@ boundaries:
   stop_rule_id: stop:depth:2
   reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
   continuation_slice: null
+- from: file:vdp-gl:src/displaycontroller.cpp
+  relation: depends-on
+  omitted_to: build-unit:extender:p4-display-contract-canary
+  stop_rule_id: stop:depth:2
+  reason: Traversal stopped by stop:depth:2 while following an incoming relationship.
+  continuation_slice: null
 - from: file:vdp-gl:src/fabgl.h
   relation: includes
   omitted_to: file:agon-vdp:video/agon_audio.h
@@ -1532,5 +1558,5 @@ unresolved: []
 summary:
   node_count: 16
   edge_count: 31
-  boundary_count: 36
+  boundary_count: 37
   unresolved_count: 0

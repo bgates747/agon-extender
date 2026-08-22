@@ -235,3 +235,12 @@ queryable in the YAML projection.
 | `source-region:vdp-gl:src/terminal.cpp:framework-primary-vdp-serial-binding` | excluded | deliberate-exclusion | SETUP-004.1.a:framework-primary-vdp-serial-binding:replace |
 | `source-region:vdp-gl:src/terminal.cpp:peripheral-terminal-adc-services` | excluded | deliberate-exclusion | SETUP-004.1.c:peripheral-terminal-adc-services:omit |
 | `source-region:vdp-gl:src/terminal.cpp:transport-stock-uart-hardware` | excluded | deliberate-exclusion | SETUP-004.1.c:transport-stock-uart-hardware:replace |
+
+## Project-owned replacement boundaries
+
+| Build unit | State | Project path | Task |
+|---|---|---|---|
+| `build-unit:extender:p4-display-contract-canary` | diagnostic-canary | `video/extender/canary/display_contract_canary.cpp` | `PORT-003` |
+| `build-unit:extender:p4-display-controller-contract` | contract-only | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
+| `build-unit:extender:p4-port-adapters` | phase-a-partial | — | `PORT-003` |
+| `build-unit:extender:p4-vdp-gl-port-utility-closure` | phase-a-narrow-port | `video/extender/port/fabutils_port.cpp` | `PORT-003` |

@@ -3,10 +3,11 @@
 
 The PORT-001 graph is intentionally retained as a mechanical intermediate: it
 captures symbols and relationships discovered before source selection became a
-durable project concern.  This generator inventories every immutable source
-tree, removes the obsolete per-node selection scalar, and adds normalized
-profile/subject records driven by build evidence and accepted SETUP-004
-dispositions.  It does not copy or alter upstream source.
+durable project concern. This generator inventories every immutable source
+tree, verifies any declared repository-managed import byte-for-byte, removes
+the obsolete per-node selection scalar, and adds normalized profile/subject
+records driven by build evidence and accepted SETUP-004 dispositions. It does
+not copy or alter source.
 """
 
 from __future__ import annotations
@@ -105,6 +106,36 @@ def source_files(root: Path, commit: str | None) -> list[str]:
         and ".git" not in path.relative_to(root).parts
         and "__pycache__" not in path.relative_to(root).parts
     )
+
+
+def managed_repository_path(
+    repository_root: Path, baseline_source: dict[str, Any], source_path: str
+) -> Path | None:
+    """Resolve one immutable source path to its reviewed managed import.
+
+    Split imports such as agon-vdp must map every source file exactly once.
+    Ambiguous or incomplete mappings are configuration errors, never a reason
+    to silently downgrade provenance.
+    """
+
+    managed = baseline_source.get("managed_import")
+    if not managed:
+        return None
+    matches: list[Path] = []
+    for mapping in managed["mappings"]:
+        prefix = mapping["source_prefix"]
+        excluded = mapping.get("exclude_prefixes", [])
+        if source_path.startswith(prefix) and not any(
+            source_path.startswith(value) for value in excluded
+        ):
+            relative = source_path[len(prefix) :]
+            matches.append(repository_root / mapping["repository_path"] / relative)
+    if len(matches) != 1:
+        raise ValueError(
+            f"{baseline_source['owner']}:{source_path}: expected exactly one managed "
+            f"import mapping, found {len(matches)}"
+        )
+    return matches[0]
 
 
 def file_role(path: str) -> str:
@@ -325,6 +356,12 @@ def main() -> int:
     parser.add_argument("--source-root", action="append", required=True, type=parse_owner_root)
     parser.add_argument("--setup-evidence", type=Path, default=Path("docs/tasks/SETUP-004/evidence"))
     parser.add_argument("--compile-commands", type=Path, default=Path("docs/tasks/SETUP-003/generated/compile-commands.json"))
+    parser.add_argument(
+        "--phase-a-evidence",
+        type=Path,
+        default=Path("docs/tasks/PORT-003/phase-a/evidence/build-closure.yaml"),
+        help="observed PORT-003 Phase A application closure, when present",
+    )
     parser.add_argument("--prior-graph", type=Path, help="previous official-tag graph; newly appearing files default to unresolved")
     parser.add_argument("--output", type=Path, default=Path("docs/dependencies/generated/code-graph.yaml"))
     args = parser.parse_args()
@@ -334,6 +371,7 @@ def main() -> int:
     baseline_path = args.baseline.resolve()
     evidence_dir = args.setup_evidence.resolve()
     compile_commands_path = args.compile_commands.resolve()
+    phase_a_path = args.phase_a_evidence.resolve()
     roots = dict(args.source_root)
     base = load_data(base_path)
     prior = load_data(args.prior_graph.resolve()) if args.prior_graph else None
@@ -380,6 +418,19 @@ def main() -> int:
         },
     ]
     inputs.extend(new_inputs)
+    phase_a = load_data(phase_a_path) if phase_a_path.is_file() else None
+    if phase_a:
+        if not phase_a.get("summary", {}).get("closure_proved"):
+            raise ValueError(f"{phase_a_path}: Phase A closure is not proved")
+        inputs.append(
+            {
+                "id": "input:port-003:phase-a-build-closure",
+                "path": phase_a_path.relative_to(repository_root).as_posix(),
+                "role": "observed PORT-003 Phase A application compile/link closure",
+                "schema_version": phase_a["schema_version"],
+                "sha256": sha256_file(phase_a_path),
+            }
+        )
     if args.prior_graph:
         prior_path = args.prior_graph.resolve()
         inputs.append(
@@ -425,11 +476,32 @@ def main() -> int:
     for owner in sorted(source_by_owner):
         baseline_source = source_by_owner[owner]
         paths = source_files(roots[owner], baseline_source.get("commit"))
+        managed_paths = {
+            path: managed_repository_path(repository_root, baseline_source, path)
+            for path in paths
+        }
+        managed_presence = baseline_source.get("managed_import", {}).get(
+            "presence_class", "upstream-reference"
+        )
+        for path, repository_path in managed_paths.items():
+            if repository_path is None:
+                continue
+            if not repository_path.is_file():
+                raise FileNotFoundError(
+                    f"{owner}:{path}: managed import is missing: {repository_path}"
+                )
+            source_hash = sha256_file(roots[owner] / path)
+            managed_hash = sha256_file(repository_path)
+            if managed_hash != source_hash:
+                raise ValueError(
+                    f"{owner}:{path}: managed import differs from immutable source "
+                    f"({managed_hash} != {source_hash})"
+                )
         exhaustive_paths[owner] = paths
         source = base_sources[owner]
         source["tree_sha256"] = hash_paths(roots[owner], paths)
         source["manifest_file_count"] = len(paths)
-        source["presence_class"] = "upstream-reference"
+        source["presence_class"] = managed_presence
         sources.append(source)
         evidence_key = evidence_id("reviewed", owner, baseline_path.name, 1, "exhaustive-source-manifest")
         manifest_evidence[owner] = add_artifact_evidence(
@@ -446,6 +518,18 @@ def main() -> int:
             previous = old_file_nodes.get(key)
             evidence_ids = merge_evidence_ids(previous.get("evidence_ids", []) if previous else [], [manifest_evidence[owner]])
             role = file_role(path)
+            source_properties = {
+                **(previous.get("properties", {}) if previous else {}),
+                "source.path": path,
+                "source.sha256": sha256_file(roots[owner] / path),
+                "source.role": role,
+                "source.presence_class": managed_presence,
+                "source.identity": baseline_source["identity"],
+            }
+            if managed_paths[path] is not None:
+                source_properties["source.repository_path"] = managed_paths[path].relative_to(
+                    repository_root
+                ).as_posix()
             node = {
                 "id": node_id,
                 "kind": "file",
@@ -453,14 +537,7 @@ def main() -> int:
                 "label": path,
                 "locations": previous.get("locations", []) if previous else [],
                 "evidence_ids": evidence_ids,
-                "properties": {
-                    **(previous.get("properties", {}) if previous else {}),
-                    "source.path": path,
-                    "source.sha256": sha256_file(roots[owner] / path),
-                    "source.role": role,
-                    "source.presence_class": "upstream-reference",
-                    "source.identity": baseline_source["identity"],
-                },
+                "properties": source_properties,
             }
             file_nodes[key] = node
             nodes.append(node)
@@ -604,19 +681,120 @@ def main() -> int:
         "evidence:reviewed:p4-port-adapter-boundary",
         "input:port-002:setup-004-evidence",
         "/records/*/disposition=replace",
-        "Accepted replace dispositions require project-owned P4 adapter implementations; no adapter source is imported by PORT-002.",
+        "Accepted replace dispositions require project-owned P4 adapter implementations.",
     )
+    adapter_evidence_ids = [adapter_evidence_id]
+    phase_a_evidence_id = None
+    if phase_a:
+        phase_a_evidence_id = "evidence:build-profile:port-003-phase-a"
+        evidence.append(
+            {
+                "id": phase_a_evidence_id,
+                "kind": "build-log",
+                "method": "mechanical",
+                "description": (
+                    "Successful PORT-003 Phase A P4 diagnostic compile/link closure; "
+                    "not hardware or rendering qualification."
+                ),
+                "artifact_id": "input:port-003:phase-a-build-closure",
+                "record_pointer": "/application_translation_units",
+            }
+        )
+        adapter_evidence_ids.append(phase_a_evidence_id)
     nodes.append(
         {
             "id": "build-unit:extender:p4-port-adapters",
             "kind": "build-unit",
             "owner": "extender",
-            "label": "Planned project-owned P4 port adapters",
+            "label": "Project-owned P4 port adapters",
             "locations": [],
-            "evidence_ids": [adapter_evidence_id],
-            "properties": {"port.state": "planned", "port.task": "PORT-003"},
+            "evidence_ids": adapter_evidence_ids,
+            "properties": {
+                "port.state": "phase-a-partial" if phase_a else "planned",
+                "port.task": "PORT-003",
+            },
         }
     )
+    if phase_a and phase_a_evidence_id:
+        project_units = [
+            (
+                "build-unit:extender:p4-display-contract-canary",
+                "PORT-003 Phase A display contract canary",
+                "video/extender/canary/display_contract_canary.cpp",
+                "diagnostic-canary",
+            ),
+            (
+                "build-unit:extender:p4-display-controller-contract",
+                "P4 concrete display-controller contract skeleton",
+                "video/extender/display/p4_display_controller.cpp",
+                "contract-only",
+            ),
+            (
+                "build-unit:extender:p4-vdp-gl-port-utility-closure",
+                "P4 vdp-gl utility compatibility closure",
+                "video/extender/port/fabutils_port.cpp",
+                "phase-a-narrow-port",
+            ),
+        ]
+        for unit_id, label, path, state in project_units:
+            nodes.append(
+                {
+                    "id": unit_id,
+                    "kind": "build-unit",
+                    "owner": "extender",
+                    "label": label,
+                    "locations": [],
+                    "evidence_ids": [phase_a_evidence_id],
+                    "properties": {
+                        "project.path": path,
+                        "port.state": state,
+                        "port.task": "PORT-003",
+                    },
+                }
+            )
+        phase_edges = [
+            (
+                "build-unit:extender:p4-display-contract-canary",
+                "depends-on",
+                "build-unit:extender:p4-display-controller-contract",
+            ),
+            (
+                "build-unit:extender:p4-display-contract-canary",
+                "depends-on",
+                "build-unit:extender:p4-vdp-gl-port-utility-closure",
+            ),
+            (
+                "build-unit:extender:p4-display-contract-canary",
+                "depends-on",
+                "file:vdp-gl:src/canvas.cpp",
+            ),
+            (
+                "build-unit:extender:p4-display-contract-canary",
+                "depends-on",
+                "file:vdp-gl:src/displaycontroller.cpp",
+            ),
+            (
+                "build-unit:extender:p4-display-controller-contract",
+                "depends-on",
+                "type:vdp-gl:fabgl::GenericBitmappedDisplayController",
+            ),
+            (
+                "build-unit:extender:p4-vdp-gl-port-utility-closure",
+                "depends-on",
+                "file:vdp-gl:src/fabutils.cpp",
+            ),
+        ]
+        for source_id, relation, target_id in phase_edges:
+            edges.append(
+                {
+                    "id": edge_id(source_id, relation, target_id),
+                    "from": source_id,
+                    "to": target_id,
+                    "relation": relation,
+                    "confidence": "confirmed",
+                    "evidence_ids": [phase_a_evidence_id],
+                }
+            )
 
     build_profiles = [
         {

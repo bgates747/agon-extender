@@ -9,21 +9,45 @@ sources:
     identity: v2.16.0
     commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
     root_placeholder: ${AGON_VDP_SOURCE}
+    managed_import:
+      presence_class: vendored
+      mappings:
+        - source_prefix: video/
+          repository_path: vdp/video/
+        - source_prefix: ""
+          exclude_prefixes:
+            - video/
+          repository_path: vdp/vendor/agon-vdp-release/
   - owner: vdp-gl
     repository: https://github.com/AgonPlatform/vdp-gl
     identity_kind: tag
     identity: all-the-plots
     commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
     root_placeholder: ${VDP_GL_SOURCE}
+    managed_import:
+      presence_class: vendored
+      mappings:
+        - source_prefix: ""
+          repository_path: vdp/vendor/vdp-gl/
   - owner: ESP32Time
     repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
     identity_kind: release
     identity: 2.0.6
     commit: null
     root_placeholder: ${ESP32TIME_SOURCE}
+    managed_import:
+      presence_class: vendored
+      mappings:
+        - source_prefix: ""
+          repository_path: vdp/vendor/ESP32Time/
   - owner: CRC
     repository: https://registry.platformio.org/libraries/robtillaart/CRC
     identity_kind: release
     identity: 1.0.4
     commit: null
     root_placeholder: ${CRC_SOURCE}
+    managed_import:
+      presence_class: vendored
+      mappings:
+        - source_prefix: ""
+          repository_path: vdp/vendor/CRC/

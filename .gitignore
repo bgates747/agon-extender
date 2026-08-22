@@ -124,3 +124,9 @@ Desktop.ini
 .env
 .env.*
 !.env.example
+
+# Reviewed immutable release imports are byte-complete vendor records. Generic
+# build/editor suffix rules above must not silently omit legitimate upstream
+# content such as vdp-gl's generated Doxygen .map files.
+!/vdp/vendor/
+!/vdp/vendor/**

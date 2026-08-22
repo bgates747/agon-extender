@@ -6,7 +6,7 @@ Generated projection; the YAML dependency slice is authoritative.
 
 - Nodes: 16
 - Edges: 31
-- Explicit boundaries: 36
+- Explicit boundaries: 37
 - Unresolved records: 0
 - Node kinds: file=15, type=1
 
@@ -90,6 +90,7 @@ Generated projection; the YAML dependency slice is authoritative.
 | src/dispdrivers/vgacontroller.h | includes | file:vdp-gl:src/dispdrivers/vgatextcontroller.h | stop:depth:2 |
 | src/dispdrivers/vgacontroller.h | includes | file:vdp-gl:src/fabutils.cpp | stop:depth:2 |
 | src/dispdrivers/vgapalettedcontroller.h | includes | file:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp | stop:depth:2 |
+| src/displaycontroller.cpp | depends-on | build-unit:extender:p4-display-contract-canary | stop:depth:2 |
 | src/fabgl.h | includes | file:agon-vdp:video/agon_audio.h | stop:depth:2 |
 | src/fabgl.h | includes | file:agon-vdp:video/agon_fonts.h | stop:depth:2 |
 | src/fabgl.h | includes | file:agon-vdp:video/agon_ps2.h | stop:depth:2 |

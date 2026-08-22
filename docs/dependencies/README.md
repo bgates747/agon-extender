@@ -8,8 +8,15 @@ queries, diagrams, and merge-attention reports are digest-bound projections.
 
 The model distinguishes source presence, observed upstream build selection,
 declared P4 target selection, narrower source-region seams, architectural
-rationale, and upstream merge attention. External release trees are classified
-as `upstream-reference` until an explicit later task imports them.
+rationale, and upstream merge attention. Reviewed managed-import mappings in
+`source-baselines.yaml` classify release trees as `vendored` only after the
+generator verifies every repository copy byte-for-byte against its immutable
+source root. Canonical file nodes retain both the upstream-relative path and
+repository-managed path so merge work can find either representation.
+Observed project-owned port seams are represented as Extender build units with
+machine-evidenced dependencies. The compact source-selection projection lists
+those units separately from immutable upstream file selections so a diagnostic
+canary cannot be mistaken for an exhaustive production source profile.
 
 ## Inputs
 

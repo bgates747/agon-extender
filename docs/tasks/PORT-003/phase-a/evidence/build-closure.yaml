@@ -1,0 +1,65 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_a_build_closure
+generated_by: docs/tasks/PORT-003/phase-a/scripts/validate-phase-a.py
+diagnostic_status: compile/link evidence only; not hardware qualification
+environment: p4-display-contract-canary
+build_invocation: .venv/bin/pio run --project-dir vdp -e p4-display-contract-canary
+inputs:
+  source_selection:
+    path: vdp/pio/source-selection.json
+    sha256: 8eef854a85a74aebc61224368a5a86e4011f593568bfb3c8ecf3a5545928c9a9
+  compile_commands:
+    path: vdp/.pio/build/p4-display-contract-canary/compile_commands.json
+    sha256: 6f778361f2982bfc9036512f517bf9a7a1cf69ecc70e948ff587169042f33227
+  linker_map:
+    path: vdp/.pio/build/p4-display-contract-canary/firmware.map
+    sha256: 5f66dc519354882f1442f492dda3f2a99ded0f4e9ea7d12e7c4474130977eafc
+  normalized_elf_symbols_sha256: 37152f6ca55cc38ac7a1d51864f831abb525c1238a442ff2f4ad38e9680df9b4
+application_translation_units:
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/canary/display_contract_canary.cpp
+  object: video/extender/canary/display_contract_canary.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+required_elf_symbols:
+- claim: project controller factory
+  symbol_fragment: agon::extender::display::makeP4DisplayControllerContractCanary()
+  present: true
+- claim: project concrete controller vtable
+  symbol_fragment: vtable for agon::extender::display::P4DisplayControllerContractCanary
+  present: true
+- claim: vendored Canvas constructor
+  symbol_fragment: fabgl::Canvas::Canvas(fabgl::BitmappedDisplayController*)
+  present: true
+- claim: vendored common controller constructor
+  symbol_fragment: fabgl::BitmappedDisplayController::BitmappedDisplayController()
+  present: true
+- claim: vendored common controller primitive executor
+  symbol_fragment: fabgl::BitmappedDisplayController::execPrimitive(
+  present: true
+- claim: vendored generic controller vtable
+  symbol_fragment: vtable for fabgl::GenericBitmappedDisplayController
+  present: true
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 5
+  project_translation_unit_count: 3
+  vendored_translation_unit_count: 2
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  closure_proved: true

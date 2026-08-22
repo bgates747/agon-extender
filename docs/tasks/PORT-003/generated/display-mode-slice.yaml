@@ -54,7 +54,7 @@ sources:
   tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
   root_placeholder: ${CRC_SOURCE}
   manifest_file_count: 51
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:ESP32Time:2.0.6
   owner: ESP32Time
   repository: https://registry.platformio.org/libraries/fbiego/ESP32Time
@@ -64,7 +64,7 @@ sources:
   tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
   root_placeholder: ${ESP32TIME_SOURCE}
   manifest_file_count: 12
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:agon-vdp:v2.16.0
   owner: agon-vdp
   repository: https://github.com/AgonPlatform/agon-vdp
@@ -74,7 +74,7 @@ sources:
   tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
   root_placeholder: ${AGON_VDP_SOURCE}
   manifest_file_count: 53
-  presence_class: upstream-reference
+  presence_class: vendored
 - id: source:vdp-gl:all-the-plots
   owner: vdp-gl
   repository: https://github.com/AgonPlatform/vdp-gl
@@ -84,23 +84,28 @@ sources:
   tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
   root_placeholder: ${VDP_GL_SOURCE}
   manifest_file_count: 5048
-  presence_class: upstream-reference
+  presence_class: vendored
 inputs:
 - id: input:port-001:code-graph
   path: docs/dependencies/generated/code-graph.yaml
   role: canonical merged dependency graph
   schema_version: 2.0.0
-  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
 - id: input:port-002:base-code-graph
   path: docs/dependencies/generated/base-code-graph.yaml
   role: PORT-001 mechanical and reviewed relationship graph
   schema_version: 1.0.0
-  sha256: 84d7f3d3afadfdce33463b77f7d0b69b9f0abfc42f30298b0d99ed0f4bb04c9c
+  sha256: 532f078d040ad7cefbf269556a456576771fc3a47f6960e657fdef832b90cfde
 - id: input:port-002:setup-004-evidence
   path: docs/tasks/SETUP-004/evidence
   role: accepted source disposition records
   schema_version: 1
   sha256: 16d453fae76dd6e20efae763671e73ea38eb6b23d6d43e8fd4b0c59ea280ba39
+- id: input:port-003:phase-a-build-closure
+  path: docs/tasks/PORT-003/phase-a/evidence/build-closure.yaml
+  role: observed PORT-003 Phase A application compile/link closure
+  schema_version: 1.0.0
+  sha256: e4d68317946a49c84135d60f8709cbdc9d0c4c40e1d218c5f86b9ff761093914
 - id: input:setup-003:claims
   path: docs/dependencies/reviewed/claims.yaml
   role: manually reviewed PORT-001 semantic claims
@@ -125,7 +130,7 @@ inputs:
   path: docs/dependencies/reviewed/source-baselines.yaml
   role: reviewed immutable source baseline
   schema_version: 1
-  sha256: bdc23325b9c6fdf64875a3d2c82170e065c234f20dde1f284153edf0f822c4c4
+  sha256: 4e40e4003795ef108caa2332baf514876e20159c5d3bcdca28ae60bad6767eeb
 - id: input:setup-003:symbols
   path: docs/tasks/SETUP-003/generated/symbols.yaml
   role: Ctags symbol index
@@ -145,7 +150,7 @@ source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
   path: docs/dependencies/generated/code-graph.yaml
   schema_version: 2.0.0
-  sha256: 7dc952744aaac99d81b90de15df54ddb62cc6b88b4f28f4a44c0e788675164e8
+  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
 title: PORT-003 display-mode boundary
 seed_nodes:
 - command:agon-vdp:vdu-22

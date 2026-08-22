@@ -1,0 +1,27 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_a_link_exclusions
+generated_by: docs/tasks/PORT-003/phase-a/scripts/validate-phase-a.py
+diagnostic_status: VDP application closure only; framework components are out of scope
+environment: p4-display-contract-canary
+source_pattern_matches:
+  vendor/vdp-gl/src/VGA*.cpp: []
+  vendor/vdp-gl/src/CVBS*.cpp: []
+  vendor/vdp-gl/src/scene.cpp: []
+  vendor/vdp-gl/src/ps2*.cpp: []
+  vendor/vdp-gl/src/soundgen.cpp: []
+  vendor/vdp-gl/src/network.cpp: []
+  vendor/vdp-gl/src/fabutils.cpp: []
+  video/video.ino: []
+symbol_prefix_matches:
+  fabgl::VGA: []
+  fabgl::CVBS: []
+  fabgl::Scene: []
+  fabgl::PS2: []
+  fabgl::SoundGenerator: []
+  fabgl::FileBrowser: []
+summary:
+  excluded_source_pattern_count: 8
+  excluded_symbol_prefix_count: 6
+  source_match_count: 0
+  symbol_match_count: 0
+  exclusions_proved: true

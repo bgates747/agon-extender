@@ -35,12 +35,26 @@ def build_projection(graph: dict[str, Any]) -> dict[str, Any]:
             }
         )
 
+    project_boundaries = [
+        {
+            "id": node["id"],
+            "label": node["label"],
+            "path": node.get("properties", {}).get("project.path"),
+            "state": node.get("properties", {}).get("port.state"),
+            "task": node.get("properties", {}).get("port.task"),
+            "evidence_ids": node["evidence_ids"],
+        }
+        for node in graph["nodes"]
+        if node["kind"] == "build-unit" and node["owner"] == "extender"
+    ]
+
     return {
         "schema_version": "1.0.0",
         "artifact_kind": "source_selection_projection",
         "source_graph": {"id": graph["id"], "sha256": artifact_hash(graph)},
         "build_profiles": graph["build_profiles"],
         "subjects": subjects,
+        "project_boundaries": sorted(project_boundaries, key=lambda item: item["id"]),
         "summary": {
             profile["id"]: dict(
                 sorted(
@@ -96,6 +110,21 @@ def markdown(projection: dict[str, Any]) -> str:
         causes = ", ".join(item["code"] for item in record["causes"])
         refs = ", ".join(record["disposition_refs"]) or "—"
         lines.append(f"| `{subject['id']}` | {record['status']} | {causes} | {refs} |")
+    lines.extend(
+        [
+            "",
+            "## Project-owned replacement boundaries",
+            "",
+            "| Build unit | State | Project path | Task |",
+            "|---|---|---|---|",
+        ]
+    )
+    for boundary in projection["project_boundaries"]:
+        path = f"`{boundary['path']}`" if boundary["path"] else "—"
+        task = f"`{boundary['task']}`" if boundary["task"] else "—"
+        lines.append(
+            f"| `{boundary['id']}` | {boundary['state'] or '—'} | {path} | {task} |"
+        )
     lines.append("")
     return "\n".join(lines)
 

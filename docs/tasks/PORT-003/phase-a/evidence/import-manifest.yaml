@@ -1,0 +1,64 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_a_import_manifest
+generated_by: docs/tasks/PORT-003/phase-a/scripts/import-baselines.py
+diagnostic_status: source-import verification only
+sources:
+- owner: CRC
+  source_id: source:CRC:1.0.4
+  identity: 1.0.4
+  commit: null
+  expected_tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
+  imported_tree_sha256: d912f879f92a888859d20f06ebb1cc0269e7575c6d8f15cf0f8abcfd54f96253
+  file_count: 51
+  files_written: 0
+  executable_paths: []
+  mapping:
+    source_root: vdp/vendor/CRC/
+  local_modification_status: none
+- owner: ESP32Time
+  source_id: source:ESP32Time:2.0.6
+  identity: 2.0.6
+  commit: null
+  expected_tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
+  imported_tree_sha256: 6be982c7fcdb092acc0b0361df32f4d17907eb0127181ef1872f417621da3c23
+  file_count: 12
+  files_written: 0
+  executable_paths: []
+  mapping:
+    source_root: vdp/vendor/ESP32Time/
+  local_modification_status: none
+- owner: agon-vdp
+  source_id: source:agon-vdp:v2.16.0
+  identity: v2.16.0
+  commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  expected_tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
+  imported_tree_sha256: 716333411c32df53e186e9464a001eec8dc1ef9a4c56416ffe5470c9efe35c24
+  file_count: 53
+  files_written: 0
+  executable_paths: []
+  mapping:
+    video/: vdp/video/
+    other_release_content: vdp/vendor/agon-vdp-release/
+  local_modification_status: none
+- owner: vdp-gl
+  source_id: source:vdp-gl:all-the-plots
+  identity: all-the-plots
+  commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+  expected_tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
+  imported_tree_sha256: a9047ebe3ced8f835607c1636ff9ac6e46e3f36a7399ca71427fe54ce6a9e558
+  file_count: 5048
+  files_written: 0
+  executable_paths:
+  - examples/VGA/PCEmulator/cbios.sh
+  - keywords.txt
+  - library.json
+  - library.properties
+  mapping:
+    source_root: vdp/vendor/vdp-gl/
+  local_modification_status: none
+summary:
+  source_count: 4
+  file_count: 5164
+  files_written: 0
+  all_tree_hashes_match: true
+  vendored_source_modifications: 0

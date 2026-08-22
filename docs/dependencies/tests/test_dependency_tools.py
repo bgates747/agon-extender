@@ -29,6 +29,9 @@ def load_script_module(name: str, filename: str):
 
 builder = load_script_module("port001_builder", "build-code-graph.py")
 selection_builder = load_script_module("port002_selection_builder", "build-source-selection.py")
+selection_projection = load_script_module(
+    "port002_selection_projection", "project-source-selection.py"
+)
 validator = load_script_module("port001_validator", "validate-dependency-artifact.py")
 
 
@@ -86,6 +89,61 @@ class DependencyToolTests(unittest.TestCase):
                 "documentation", "not-applicable", [], True
             ),
         )
+
+    def test_split_managed_import_maps_each_source_path_once(self) -> None:
+        source = {
+            "owner": "agon-vdp",
+            "managed_import": {
+                "mappings": [
+                    {"source_prefix": "video/", "repository_path": "vdp/video/"},
+                    {
+                        "source_prefix": "",
+                        "exclude_prefixes": ["video/"],
+                        "repository_path": "vdp/vendor/agon-vdp-release/",
+                    },
+                ]
+            },
+        }
+        repository = Path("/repository")
+        self.assertEqual(
+            repository / "vdp/video/agon_screen.h",
+            selection_builder.managed_repository_path(
+                repository, source, "video/agon_screen.h"
+            ),
+        )
+        self.assertEqual(
+            repository / "vdp/vendor/agon-vdp-release/platformio.ini",
+            selection_builder.managed_repository_path(
+                repository, source, "platformio.ini"
+            ),
+        )
+
+    def test_projection_keeps_project_owned_build_boundaries_separate(self) -> None:
+        graph = {
+            "id": "graph:test:one",
+            "build_profiles": [],
+            "nodes": [
+                {
+                    "id": "build-unit:extender:canary",
+                    "kind": "build-unit",
+                    "owner": "extender",
+                    "label": "Canary",
+                    "evidence_ids": ["evidence:test:one"],
+                    "properties": {
+                        "project.path": "video/extender/canary.cpp",
+                        "port.state": "diagnostic-canary",
+                        "port.task": "PORT-003",
+                    },
+                }
+            ],
+            "selection_records": [],
+        }
+        projection = selection_projection.build_projection(graph)
+        self.assertEqual(
+            "build-unit:extender:canary",
+            projection["project_boundaries"][0]["id"],
+        )
+        self.assertEqual([], projection["subjects"])
 
     def test_merge_attention_keeps_isolated_unselected_change(self) -> None:
         merge_module = load_script_module("merge_attention", "compare-tagged-releases.py")

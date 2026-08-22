@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Review Gate 1 approved; Phase A authorized
+- Status: In progress — Review Gate 1 approved; Phase A complete
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -220,3 +220,225 @@ personal review, authorized the Agent to commit and push it, and authorized
 continuation into the next implementation gate without another review. The
 same scope-control stipulation applies to that continuation: write a detailed
 task list first and refer to it step by step to prevent drift.
+
+## Phase A — Contract canary
+
+- Status: Complete — Gate A passed
+- Started: 2026-08-22 11:54 EDT
+- Finished: 2026-08-22 12:38 EDT
+
+Phase A is the next gate authorized by the Author. Its sole purpose is to prove
+that the retained vdp-gl Canvas/common-renderer contract and one project-owned
+concrete P4 controller type can enter the pinned P4 build without linking the
+excluded classic VGA physical engine. It is not a functional renderer.
+
+### Detailed execution checklist
+
+Check this list before each action. Record outcomes and deviations against the
+same item; do not substitute later-phase work merely because a nearby source
+file is visible.
+
+1. [x] Freeze the exact import, build, evidence, and stop boundaries under
+   `PORT-003/phase-a/`. Use only the accepted official VDP `v2.16.0`, vdp-gl
+   `all-the-plots`, ESP32Time `2.0.6`, and CRC `1.0.4` baselines already
+   fingerprinted by the canonical dependency graph.
+2. [x] Implement and validate a deterministic initial source-import process.
+   Import official `video/` files unchanged into the upstream-shaped firmware
+   tree while preserving `video/extender/`; import complete vdp-gl, ESP32Time,
+   and CRC release contents under `vdp/vendor/`; exclude VCS administration
+   only; preserve licenses, paths, bytes, and executable modes; and verify file
+   counts and tree hashes before accepting the import.
+3. [x] Update durable dependency presence/provenance so the canonical graph
+   distinguishes repository-vendored dependencies and the imported official
+   firmware from external reference trees. Regenerate deterministically and
+   require zero source-identity or selection drift caused merely by relocation.
+4. [x] Define a dedicated `p4-display-contract-canary` build environment and
+   machine-readable source list. Compile only the canary, project-owned display
+   skeleton, and the smallest evidenced retained vdp-gl closure. Keep the
+   ordinary P4 environment separate and prevent PlatformIO from auto-building
+   the vendored library's broad classic-ESP32 source set.
+5. [x] Add a prominently marked contract-only P4 controller derived from
+   `fabgl::GenericBitmappedDisplayController`. Make every required virtual
+   method concrete, preserve an official-facade-shaped ownership/factory seam,
+   and add compile-time assertions for integer widths, RGB/pixel values,
+   native-format enumerators, and base-class relationships. Unimplemented
+   drawing methods must fail visibly if called; they must not masquerade as a
+   functioning display.
+6. [x] Run bounded diagnostic compile iterations with the pinned PlatformIO
+   environment. For every failure, classify the responsible source and cause
+   before changing anything. Permit only retained Canvas/common-renderer
+   dependencies and narrow P4 architecture adaptations required by this
+   contract canary; record gotchas and inherited upstream assumptions beside
+   the affected code and in Phase A evidence.
+7. [x] Prove the resulting ELF/build graph contains the canary controller,
+   Canvas, and common bitmapped-controller implementation while excluding all
+   classic VGA concrete, VGA text, CVBS, Scene, physical PS/2, audio-output,
+   network, and storage translation units. Record compiled sources, unresolved
+   or discarded symbols, map evidence, and the exact non-qualification build
+   invocation.
+8. [x] Update the dependency graph, source-selection projection,
+   compatibility delta, task record, and development log with the implemented
+   seam and observed build closure. Do not turn diagnostic compilation into a
+   hardware, rendering, timing, or compatibility claim.
+9. [x] Run deterministic regeneration, dependency tests, task-local tests,
+   clean-room rebuild, source-import verification, link-exclusion checks,
+   Markdown/link/whitespace checks, and `git diff --check`. Stop at Gate A only
+   if all criteria below are satisfied; otherwise stop at the first declared
+   blocker with the evidence preserved.
+
+### Phase A execution record
+
+#### 1–3. Boundary, import, and provenance
+
+The task-local Phase A package froze the gate before import or compilation.
+`import-baselines.py` copied only immutable reviewed release bytes and modes,
+preserved the official `video/` layout around the existing `video/extender/`
+namespace, and refuses unexplained dependency files. Its steady-state verifier
+proves 5,164 files across the four accepted baselines, matching all file counts
+and tree hashes with zero local vendored modifications.
+
+Managed-import mappings now make `vendored` a mechanically verified repository
+fact. Every canonical upstream file node carries its upstream-relative path and
+repository-managed path. Regeneration changed presence from external reference
+to vendored without changing any source identity, release, commit, tree hash,
+manifest count, or declared selection.
+
+#### 4–5. Exact build and type boundary
+
+`p4-display-contract-canary` uses a tracked five-translation-unit allowlist:
+three project units plus upstream `canvas.cpp` and `displaycontroller.cpp`.
+Because the Arduino/ESP-IDF hybrid ignores PlatformIO `build_src_filter`, the
+pre-build hook deterministically renders an ignored component `CMakeLists.txt`
+from the same list and adds only the two reviewed vendored units.
+
+`P4DisplayControllerContractCanary` is a concrete
+`GenericBitmappedDisplayController` with an official-facade-shaped factory.
+Static assertions cover integer widths, `RGB888`, native-format enumerators,
+inheritance, and base-pointer ownership. Lifecycle setup is bounded to a 1×1
+contract shape. Every drawing, readback, bitmap, glyph, scroll, and swap method
+fails visibly. A volatile-false probe retains the common primitive executor for
+ELF evidence without executing it.
+
+#### 6. Bounded compile iterations and gotchas
+
+Each failure was classified before correction:
+
+- PlatformIO's global Arduino package name had been left at upstream control
+  build version 2.0.14, while pioarduino 55.03.311 requires core 3.3.11. The P4
+  environment now pins the constituent 3.3.11 package so whichever build ran
+  last cannot silently break the other.
+- The hybrid framework ignored `build_src_filter` and initially compiled
+  official `video.ino`, reaching excluded sound code and the missing classic
+  `soc/sens_struct.h`. The generated component source list is the required
+  hybrid build boundary; no official source was patched.
+- A force-included C++ compatibility header was also injected into framework C
+  units. Architecture helpers are now guarded by both RISC-V and C++ so the
+  canary does not impose C++ standard headers on C compilation.
+- vdp-gl's common headers include the removed classic ESP32 FRC timer register
+  header even though this closure does not use that timer. The project shim is
+  parse-only and aborts if an accidental runtime access occurs.
+- Common vdp-gl code assumes Xtensa coprocessor helpers. The RISC-V canary
+  supplies compile-only no-ops, prominently marked for replacement or reviewed
+  runtime policy before transformed bitmap qualification.
+- Excluding broad `fabutils.cpp` exposed a narrow utility link closure. Exact
+  upstream implementations for timeout conversion, line clipping, rectangle
+  merge/intersection, and `LightMemoryPool` were copied into one provenance-rich
+  project port unit. No vendored file was edited.
+- The first evidence pass found `execPrimitive()` discarded by section garbage
+  collection. The guarded project probe made the gate's requirement real rather
+  than weakening the validator.
+- Official VDP and dependency releases retain upstream CRLF/tab/trailing-
+  whitespace bytes, so an unqualified whitespace check initially reported the
+  immutable imports. A root `.gitattributes` disables only those inherited
+  checks under official `video/` and `vdp/vendor/` paths while restoring Git's
+  normal strict set under `video/extender/`; no imported byte was normalized.
+- The standard `*.map` build-output ignore also matched legitimate vdp-gl
+  Doxygen `.map` release files. A vendor-root exception now makes reviewed
+  `vdp/vendor/` imports byte-complete, and the importer can require every mapped
+  release path in the staged Git index at commit gates.
+- PlatformIO prints the board metadata's generic `400MHz` banner. The accepted
+  pre-v3 configuration remains explicitly 360 MHz in `sdkconfig.defaults`; the
+  banner is not runtime or configuration evidence.
+
+#### 7–8. Closure proof and durable model
+
+The resulting diagnostic ELF is approximately 536 KiB and is not a versioned
+or qualified firmware artifact. Machine evidence proves exactly five VDP
+application objects, all six required project/common-renderer symbol claims,
+and no unexpected application objects. It reports no classic VGA, CVBS, Scene,
+physical PS/2, sound generator, file browser, or other excluded VDP symbols.
+Only normal framework start symbols remain undefined in the final ELF view.
+
+The canonical graph now records three observed Extender build units for the
+canary, concrete controller skeleton, and narrow utility port, with confirmed
+dependencies on the retained upstream files/types. The source-selection guide
+lists these project boundaries separately so they cannot be confused with the
+immutable upstream file-selection profile. The compatibility delta explicitly
+limits this gate to type, compile, and link evidence.
+
+#### 9. Gate A validation
+
+The immutable import verifier passed at steady state with 5,164 matching files
+and zero writes. A true clean removed the complete canary environment and the
+pinned hybrid build recreated it successfully in 70 seconds. The final image
+is 536,596 bytes; reported application usage is 30,780 of 512,000 RAM bytes and
+535,808 of 7,340,032 flash bytes. These are diagnostic linker reports, not
+runtime capacity or performance qualification.
+
+The Phase A validator regenerated twice byte-identically and proved five
+application objects, six required ELF symbol claims, and zero excluded VDP
+source or symbol families. The complete dependency pipeline and PORT-003
+evidence pipeline each regenerated twice byte-identically. Full graph schema,
+referential, source-file, tree, and source-span verification passed. All six
+PORT-002 boundary proofs passed, as did 12 dependency-tool tests, three Phase A
+tests, and version-record validation. Changed Markdown local links, explicit
+white SVG backgrounds, project-owned whitespace, and `git diff --check` passed.
+
+No source-import bytes changed, no vendored source was edited, no firmware was
+flashed, no hardware was exercised, and no artifact identity was assigned.
+Gate A therefore satisfies all acceptance criteria without triggering a stop
+condition.
+
+### Phase A explicit exclusions
+
+- No framebuffer allocation, pixel drawing, readback result, palette, Copper,
+  sprite composition, frame clock, queue executor, buffer swap, or output
+  consumer is implemented.
+- No network/browser, RGB, MIPI-DSI, HDMI, audio, input, storage, update,
+  transport, EDU/VDU routing, MOS, or operating-mode implementation is added.
+- The complete official `video/` source may be imported unchanged, but the
+  canary build does not attempt to compile or link the complete official
+  firmware. Full facade integration remains Phase E.
+- No classic VGA source is patched into compiling on P4, stubbed, or linked.
+- No vendored upstream file is locally edited. A required upstream adaptation
+  must be isolated in project-owned code or recorded as a stop condition.
+- No firmware is flashed or deployed. This is a compile/link diagnostic, not a
+  qualified artifact or test run; it may use the existing unidentified
+  experimental developer-build identity and must not assign a new version or
+  revision without Author approval.
+
+### Gate A acceptance criteria
+
+1. Imported files reproduce all four accepted source baselines exactly at the
+   declared managed paths, with complete provenance and licenses.
+2. A clean pinned P4 diagnostic build produces an ELF containing Canvas,
+   common `BitmappedDisplayController`, and the concrete project canary type.
+3. The source and link manifests prove that none of the excluded physical
+   implementations entered the build.
+4. The skeleton cannot be mistaken for working display firmware: drawing and
+   readback entry points fail visibly, and no sink or frame service exists.
+5. The dependency/source-selection model represents the imported, selected,
+   excluded, and project-owned boundaries without unresolved records or
+   unexplained observed-versus-declared drift.
+6. All deterministic generators and tests pass from the frozen baseline, and
+   all implementation gotchas and deviations are recorded with provenance.
+
+### Phase A stop conditions
+
+Stop without broadening scope if the gate requires editing a vendored file,
+linking an excluded physical driver, implementing a real renderer or another
+subsystem, selecting an output sink, assigning an unapproved artifact identity,
+or making an unresolved SETUP-005 operating-mode choice. Also stop if imported
+bytes do not match the accepted baselines or if the minimum retained closure
+cannot be separated from an excluded subsystem without a new architectural
+decision.
