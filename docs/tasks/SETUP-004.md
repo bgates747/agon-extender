@@ -55,34 +55,38 @@ ADR or an amendment to ADR-0013.
 1. Derive a candidate inventory from compiler evidence, source includes,
    PlatformIO library selection, and targeted source searches. At minimum
    review:
-   - PS/2 keyboard and mouse controllers;
-   - FabGL VGA, composite-video, display-controller, and canvas drivers;
-   - sound generators and physical audio output;
-   - UART, GPIO, ADC, I2C, SPI, timers, interrupts, and ULP facilities;
-   - RTC and peripheral-device drivers;
-   - network, updater, and transfer facilities;
-   - storage and filesystem interfaces; and
-   - Arduino, ESP-IDF, and FreeRTOS hardware abstractions used by those areas.
-2. For each candidate, record:
+   - **1.a** Arduino, ESP-IDF, and FreeRTOS hardware abstractions used by those
+     areas;
+   - **1.b** RTC and peripheral-device drivers;
+   - **1.c** UART, GPIO, ADC, I2C, SPI, timers, interrupts, and ULP facilities;
+   - **1.d** FabGL VGA, composite-video, display-controller, and canvas drivers;
+   - **1.e** sound generators and physical audio output;
+   - **1.f** PS/2 keyboard and mouse controllers;
+   - **1.g** network, updater, and transfer facilities;
+   - **1.h** storage and filesystem interfaces.
+
+   For each candidate, record:
    - owning project and source files;
    - selected translation units and header-defined implementation;
    - direct hardware and architecture dependencies;
    - startup, task, interrupt, callback, and global-state connections;
-   - VDP commands, responses, status packets, or application-visible behavior;
+   - VDP commands, responses, status packets, or application-visible
+     behavior;
    - present physical owner: main board, onboard VDP, Extender, or none;
    - proposed disposition and rationale; and
    - dependencies on other disposition decisions.
-3. Trace each proposed omission far enough to identify compile/link fallout.
+
+   Trace each proposed omission far enough to identify compile/link fallout.
    Distinguish removing an independently selected translation unit from
    severing a header-defined or global-state dependency inside the effective
    VDP translation unit.
-4. Identify facilities that are not needed physically but whose protocol
+2. Identify facilities that are not needed physically but whose protocol
    surface must remain for backward compatibility. Recommend a project-owned
    adapter, inert stub, explicit unsupported response, or continued delegation
    to the onboard VDP as appropriate.
-5. Produce a compact review matrix grouped by subsystem. Keep unresolved
+3. Produce a compact review matrix grouped by subsystem. Keep unresolved
    decisions here rather than in an ADR.
-6. Present the matrix to the Author in manageable groups and record accepted
+4. Present the matrix to the Author in manageable groups and record accepted
    dispositions. Create follow-on implementation tasks only after review.
 
 ## Initial accepted boundary
