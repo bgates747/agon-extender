@@ -62,5 +62,11 @@ network for browser consumption.
   excluded while retaining the selected mixer closure.
 - `SETUP-005-D005` independently governs optional forwarding to the onboard VDP
   for local playback; PORT-004 must not assume that route.
+- QUAL-001 must identify the audio command, acknowledgement, logical-timing,
+  sink-delivery, and accepted analog-output-exception obligations before the
+  detailed implementation contract is frozen.
+- PORT-008 is required before an Agon-fed physical run can qualify official
+  audio commands or response packets. PORT-004's host-side synthesis work need
+  not wait for that transport.
 - Define detailed scheduler, buffering, transport, browser, and qualification
   phases with the Author before coding.

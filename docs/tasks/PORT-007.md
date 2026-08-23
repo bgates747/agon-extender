@@ -61,6 +61,8 @@ classic-ESP32 SDSPI/SPIFFS backend.
   beta.
 - PORT-002 must represent both omitted vdp-gl storage regions as vendored but
   excluded without removing unrelated retained `fabutils.cpp` services.
+- QUAL-001 must retain microSD qualification as a secondary product capability,
+  separate from stock VDP compatibility evidence.
 - Read `HARDWARE.local.md` before any target build, deployment, power, serial,
   or physical qualification operation.
 - Freeze the exact board, firmware, wiring/profile, fixture, procedure, and test

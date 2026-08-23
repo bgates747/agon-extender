@@ -60,6 +60,13 @@ than defining separate VDP implementations.
   identify the selected replacement closure.
 - `SETUP-005-D002` governs operating-mode lifecycle and later qualifies which
   processor owns the facade during transitions.
+- QUAL-001 Review Gate 1 must be accepted before Phase D implementation so
+  palette, Copper, overlay, and later facade decisions update durable
+  compatibility obligations as they are made.
+- PORT-008 supplies the physical command/response transport and official
+  General Poll canary after Phase E. PORT-008 Gate 2 and the applicable
+  QUAL-002 assembled-system scope must pass before PORT-003 Gate G can claim
+  end-to-end Agon compatibility.
 - Define detailed implementation phases and acceptance fixtures with the
   Author before coding. Do not infer pixel-level fidelity merely from a
   successful build or visible image.

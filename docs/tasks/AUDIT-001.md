@@ -2,9 +2,9 @@
 
 ## State
 
-- Status: In progress — audit contract accepted; follow-on ownership planning pending
+- Status: Complete — accepted findings assigned or explicitly deferred
 - Started: 2026-08-22 21:41 EDT
-- Finished: --
+- Finished: 2026-08-22 22:53 EDT
 
 ## Intent
 
@@ -91,7 +91,7 @@ mechanisms that have not been accepted elsewhere.
 | `AUDIT-001-C01` | Requalify the complete eight-bit forward path on the current clean project: all data lines, `CLOCK`, `VALID_N`, `READY_N`, record integrity, backpressure, sustained transfer, and recovery. | **Explicitly planned** by SETUP-004 Work 1.c; no current-project procedure. | Requires a selected transport implementation, committed eZ80 fixture, complete probe coverage or another defensible integrity oracle, and accepted performance bounds. |
 | `AUDIT-001-C02` | Qualify the P4-to-eZ80 UART1 return path at 1,152,000 baud with the selected framing, buffering, error handling, and whatever flow-control behavior the compatibility design requires. | **Explicitly planned** by SETUP-004 Work 1.c; no procedure. | Present wiring has only 115,200-baud inherited evidence. Complete target-speed and flow-control behavior is unqualified; added or revised wiring may be required. |
 | `AUDIT-001-C03` | Qualify safe coexistence and every selected transition between parallel use of PC0/PC1 and UART1 use of the same nets, including no bus contention, released-idle states, timeout recovery, reset, and either endpoint changing modes first. | **Explicitly planned** in the accepted harness/Work 1.c boundary; no current procedure. | The shared-net mux/ownership design is candidate-only. Any changed enable logic, pin ownership, or timing requires a new harness revision. |
-| `AUDIT-001-C04` | Run the official MOS/VDP startup synchronization end to end: MOS issues `VDU 23,0,&80,1`, Extender consumes it through the selected command path, returns the unchanged General Poll response, and the MOS-owned parser observes readiness. | **Implied requirement with an existing official protocol**, but not assigned to a physical procedure. | Becomes meaningful after PORT-003 Phase E plus the missing transport implementation task and the selected MOS UART1 response route. No new handshake protocol is needed. |
+| `AUDIT-001-C04` | Run the official MOS/VDP startup synchronization end to end: MOS issues `VDU 23,0,&80,1`, Extender consumes it through the selected command path, returns the unchanged General Poll response, and the MOS-owned parser observes readiness. | **Implied requirement with an existing official protocol**; PORT-008 owns its procedure and execution. | Becomes meaningful after PORT-003 Phase E, PORT-008's transport candidate, and the selected MOS UART1 response route. No new handshake protocol is needed. |
 | `AUDIT-001-C05` | Exercise representative and boundary-length stock VDU byte streams from MOS/application code through Extender, including fragmented commands, back-to-back commands, buffering, timeout, flow control, and parser resynchronization. | **Implied requirement**; host fixtures are planned, physical coverage is not explicit. | Depends on transport implementation and strict-mode malformed-stream policy. Must compare application-visible behavior with official VDP v2.16.0 rather than define cleaner behavior by accident. |
 | `AUDIT-001-C06` | Verify every retained VDP response class reaches the correct MOS-owned parser/domain with exact packet bytes, completion flags, and sysvar effects where applicable. | **Implied requirement**; no comprehensive physical matrix or procedure exists. | Blocked by `SETUP-005-D003`; stock MOS does not parse the adopted UART1 return path. Requires an accepted MOS-owned route, not direct P4 writes to MOS memory. |
 | `AUDIT-001-C07` | Physically validate documented screen modes, fallback behavior, context reset, buffer swap/wait, frame count, mode information, and representative visible VDU output through the selected Rev 1 presentation sink. | **Explicitly planned** by PORT-003 Phases E and G, but the current plan does not yet define the complete physical visual oracle. | Phase D/E implementation and a selected sink are prerequisites. Network/browser output location differs from stock analog video, so logical/pixel fidelity and delivery behavior must be stated separately. |
@@ -102,8 +102,8 @@ mechanisms that have not been accepted elsewhere.
 | `AUDIT-001-C12` | Verify retained keyboard/mouse-dependent display behavior in EDP-exclusive mode: paged-mode control, control keys, mouse state/cursor operations, variables, and callbacks. | **Blocked by decision/design.** | `SETUP-005-D007` must select the routing mechanism. The current proof-of-concept application relay cannot establish untouched-application compatibility. A software/MOS route is preferred, but the audit cannot rule out a wiring consequence before that decision. |
 | `AUDIT-001-C13` | Verify RTC read/set commands, response packets, MOS sysvars, reset persistence, and any network synchronization without competing clock writers. | **Blocked by decision/design.** | `SETUP-005-D008` must select authority and routing before a valid physical test can be written. No additional signal wiring is presently indicated. |
 | `AUDIT-001-C14` | Qualify legacy, EDP-exclusive, and cooperative mode selection, discovery, entry/exit, reset, failure, recovery, and deterministic fallback with aware and unaware programs. | **Blocked by decision/design.** | `SETUP-005-D001` through `D004` own routing and lifecycle. Selection may be software-only, but no physical selector or extra wiring has been accepted. |
-| `AUDIT-001-C15` | Demonstrate that legacy mode makes a powered or unpowered Extender electrically and logically absent: onboard VDP operation remains normal, no shared line is driven improperly, and either-order power/reset cannot back-power or wedge either board. | **Implied compatibility and safety requirement**; no current-project procedure exists. | `light2-harness-r01` explicitly leaves production isolation and either-order power behavior unqualified. Revised isolation, switching, or power-boundary wiring may be required. |
-| `AUDIT-001-C16` | Test independent Agon, onboard-VDP, and P4 reset/power sequences during idle, command transfer, response transfer, and rendering; prove bounded recovery or the selected visible failure. | **Implied requirement**; current P4-only reset tests do not cover the assembled system. | Reset coordination is not wired or specified. The eventual mode lifecycle may avoid a reset conductor, but that conclusion has not been qualified. |
+| `AUDIT-001-C15` | Demonstrate that legacy mode makes a powered or unpowered Extender electrically and logically absent: onboard VDP operation remains normal, no shared line is driven improperly, and either-order power/reset cannot back-power or wedge either board. | **Implied compatibility and safety requirement**; QUAL-002 owns procedure design and execution. | `light2-harness-r01` explicitly leaves production isolation and either-order power behavior unqualified. Revised isolation, switching, or power-boundary wiring may be required. |
+| `AUDIT-001-C16` | Test independent Agon, onboard-VDP, and P4 reset/power sequences during idle, command transfer, response transfer, and rendering; prove bounded recovery or the selected visible failure. | **Implied requirement** assigned to QUAL-002; current P4-only reset tests do not cover the assembled system. | Reset coordination is not wired or specified. The eventual mode lifecycle may avoid a reset conductor, but that conclusion has not been qualified. |
 | `AUDIT-001-C17` | Exercise malformed, truncated, stalled, and overrun command/response streams in each strict and non-strict mode and record parser recovery, timeout, reset, crash, or diagnostic behavior against the accepted policy. | **Blocked in part by `SETUP-005-D006`;** no physical procedure exists. | Strict modes may intentionally reproduce stock failure behavior. Safer modes may improve it. The procedure cannot assume one policy for all modes. |
 | `AUDIT-001-C18` | Exercise every scoped maintenance/operator carve-out sufficiently to prove its selected mode-specific no-op, rejection, fallback, or stock-observable failure without corrupting later normal VDU traffic beyond the accepted behavior. | **Blocked by `SETUP-005-D006`.** | Working printer, console/terminal, ZDI, transfer-mode, and stock updater services are not v1 compatibility requirements; graceful or faithful disposition still needs evidence after selection. |
 | `AUDIT-001-C19` | Repeat the accepted compatibility matrix on Console8 with its different host GPIO/header arrangement. | **Known future requirement; no wiring design or procedure.** | Requires a separately versioned Console8 harness. `light2-harness-r01` is not authority for Console8. New wiring is definitely required, but no pins should be inferred in this audit. |
@@ -189,22 +189,21 @@ compatibility claims can extend to it.
 
 ## Plan gaps and required follow-on disposition
 
-1. **Transport implementation has no TODO item.** SETUP-004 explicitly requires
-   separate implementation work for the parallel-forward/UART1-return adapter,
-   but the authoritative TODO jumps from display/audio work to EDU input,
-   networking, and storage. That missing task should own `C01`–`C06` and make
-   the existing General Poll the first end-to-end compatibility canary.
-2. **No central compatibility qualification matrix exists.** PORT-003,
+1. **Transport implementation lacked a TODO item.** PORT-008 now owns the
+   parallel-forward/UART1-return adapter, `C01`–`C06`, and the existing General
+   Poll as its first end-to-end compatibility canary.
+2. **No central compatibility qualification matrix exists.** QUAL-001
+   now owns promotion of the permanent matrix. PORT-003,
    PORT-004, PORT-005, and SETUP-005 each own pieces, but no accepted plan maps
    every retained VDU command/response class to host evidence, target evidence,
    physical sink observation, MOS sysvar observation, operating mode, and
    carve-out. Such a matrix should be generated from the accepted VDU inventory
    rather than maintained as an unrelated competing command list.
-3. **System power/reset qualification is unassigned.** Current procedures cover
-   P4-only reset or deliberately disconnect the Agon. No task owns assembled
-   system isolation, either-order power, independent reset, or legacy-absence
-   qualification.
-4. **Full Light 2 fixture coverage is not defined.** Future procedures need a
+3. **System power/reset qualification was unassigned.** QUAL-002 now owns
+   assembled-system isolation, either-order power, independent reset, and
+   legacy-absence qualification.
+4. **Full Light 2 fixture coverage is not defined.** QUAL-002 and each affected
+   transport procedure must define a
    controlled way to observe or independently validate all claimed lines and
    relevant analog/electrical properties without pretending the current
    eight-channel attachment proves more than it sees.
@@ -214,6 +213,22 @@ compatibility claims can extend to it.
 6. **Extended hardware remains deliberately incomplete.** Optional Wi-Fi,
    MIPI outputs, future audio hardware, and post-v1 user GPIO expansion should
    receive tests only after their capability and hardware contracts mature.
+
+## Accepted follow-on ownership register
+
+| Audit scope | Owner | Sequencing disposition |
+|---|---|---|
+| Permanent compatibility and qualification matrix | `QUAL-001` | First follow-on task; Review Gate 1 precedes PORT-003 Phase D implementation. |
+| `C01`–`C06`, `W01`–`W03`, and transport portions of `W05` | `PORT-008` | Physical analysis may begin after QUAL-001 Gate 1; official General Poll waits for PORT-003 Phase E and SETUP-005 D001–D003. |
+| `C15`, `C16`, `W04`, and system-level portions of `W05` | `QUAL-002` | Begins after PORT-008 defines a controlled candidate; gates final assembled-system compatibility claims. |
+| `C07`–`C09` | `PORT-003` | Existing Phases D–G, now gated through QUAL-001, PORT-008, and QUAL-002 where applicable. |
+| `C10` | `PORT-004` | Logical audio work may precede transport; Agon-fed bench evidence waits for PORT-008. |
+| `C11`–`C12` | `PORT-005` and `SETUP-005-D007` | Proof-of-concept host work may proceed; transparent exclusive behavior remains blocked. |
+| `C13`–`C14`, `C17`–`C18` | `SETUP-005`, then affected implementation tasks | Remain explicitly blocked until their mode decisions are accepted. |
+| `C19` | Deferred Console8 harness task | Do not create until the Light 2 transport and compatibility baseline is stable enough to adapt. |
+| `X01`–`X04` | `PORT-006` | Secondary capability evidence; optional Wi-Fi hardware/protocol remains a task-local gate. |
+| `X05` | `PORT-007` | Secondary v1 capability after first beta. |
+| `X06` | Deferred local-display task | Do not create until MIPI capability and hardware contracts are mature. |
 
 ## Review register
 
@@ -234,8 +249,8 @@ compatibility claims can extend to it.
   test procedures.
 - **Required follow-up:** After AUDIT-001 is accepted, first create those
   follow-on tasks and sequence them in the authoritative TODO where they impose
-  the appropriate implementation and qualification gates. Do not create them
-  before this audit's remaining review issue is disposed.
+  the appropriate implementation and qualification gates. QUAL-001, PORT-008,
+  and QUAL-002 now provide those accepted owners.
 
 ### `AUDIT-001-R03` — Durable disposition of the compatibility matrix
 
@@ -252,6 +267,7 @@ compatibility claims can extend to it.
 - **Boundary:** Populate only established facts and accepted decisions. Keep
   unresolved behavior explicitly linked to its owning task rather than
   resolving it speculatively inside the matrix.
+- **Owner:** QUAL-001; its formal task plan was accepted on 2026-08-22.
 
 ## Completion gate
 
@@ -264,3 +280,15 @@ scope, and every accepted gap has either:
 
 Closing this audit does not mean the tests have passed. It means every accepted
 physical qualification obligation has a visible disposition and owner.
+
+## Completion record
+
+On 2026-08-22 the Author accepted the complete inventory, the separation of
+compatibility-critical and secondary qualification, the three-task follow-on
+tranche, its sequencing gates, and the explicit Console8 and MIPI deferrals.
+QUAL-001 owns the durable matrix, PORT-008 owns both P4 and eZ80/MOS transport
+integration, and QUAL-002 owns assembled-system electrical/power/reset
+qualification. Existing tasks own their accepted rows as recorded above.
+
+AUDIT-001 is complete because every finding now has an accepted owner, blocker,
+or deferral. Completion makes no implementation or qualification claim.

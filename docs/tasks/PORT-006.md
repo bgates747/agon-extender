@@ -63,6 +63,9 @@ helper or the defective stock VDP serial updater transaction.
   settled.
 - PORT-002 must represent the omitted upstream network and maintenance sources
   and the selected project-owned closure.
+- QUAL-001 must retain network/browser/update qualification as secondary
+  product-capability evidence that cannot satisfy stock-compatibility rows by
+  itself.
 - Work with the Author to select the ESP8266 host protocol and module firmware
   before implementing that backend; do not infer an AT command set or custom
   module image from the hardware alone.

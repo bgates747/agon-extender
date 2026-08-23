@@ -5,12 +5,12 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Audits
+## Qualification infrastructure
 
-- [ ] **AUDIT-001 — Audit physical bench-test and compatibility wiring coverage**
-  - Started: 2026-08-22 21:41 EDT
+- [ ] **QUAL-001 — Establish the durable compatibility qualification matrix**
+  - Started: --
   - Finished: --
-  - Details: [AUDIT-001](docs/tasks/AUDIT-001.md)
+  - Details: [QUAL-001](docs/tasks/QUAL-001.md)
 
 ## Setup
 
@@ -25,6 +25,11 @@ item is removed.
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
   - Details: [PORT-003](docs/tasks/PORT-003.md)
+
+- [ ] **PORT-008 — Implement and qualify the compatibility transport**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
   - Started: --
@@ -45,6 +50,13 @@ item is removed.
   - Started: --
   - Finished: --
   - Details: [PORT-007](docs/tasks/PORT-007.md)
+
+## System qualification
+
+- [ ] **QUAL-002 — Qualify assembled-system electrical absence, power, and reset behavior**
+  - Started: --
+  - Finished: --
+  - Details: [QUAL-002](docs/tasks/QUAL-002.md)
 
 ## Upstream research
 

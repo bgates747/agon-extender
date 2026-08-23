@@ -54,5 +54,10 @@ forwards selected events explicitly to Extender.
 - The proof of concept does not depend on transparent routing or modified MOS.
 - `SETUP-005-D007` governs any more automatic v1 route and must not be presumed
   by this task.
+- QUAL-001 must identify the mode-specific input, state, callback, cursor,
+  packet, and sysvar obligations before the injection contract is frozen.
+- PORT-008 is required before an EDU-aware Agon application can physically
+  inject events through the selected Extender transport; deterministic host
+  adapter work may precede it.
 - Define the EDU injection command format and acceptance fixtures with the
   Author before coding.

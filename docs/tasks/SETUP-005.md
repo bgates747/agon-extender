@@ -82,6 +82,20 @@ When all eight decisions are accepted and incorporated into ADR-0014, change its
 completeness to `Complete` and remove the resolved items from this task after
 recording their disposition in the development log.
 
+## Qualification and implementation gates
+
+- Every accepted decision must update the corresponding QUAL-001 operating-mode,
+  transport, MOS/sysvar, carve-out, blocker, and qualification fields.
+- `SETUP-005-D001` through `D003` gate PORT-008's transparent routing,
+  response-parser, General Poll, and MOS-integration stages. They do not block
+  bounded physical-link analysis that makes no mode or MOS claim.
+- `SETUP-005-D002` gates QUAL-002's complete legacy-absence, reset, failure, and
+  recovery state matrix.
+- `SETUP-005-D005` gates only optional onboard-VDP audio forwarding; it does not
+  block PORT-004's guaranteed network/browser sink.
+- `SETUP-005-D006` through `D008` continue to block their exact mode-dependent
+  compatibility rows and physical procedures until accepted.
+
 ## Current routing analysis
 
 No implementation direction in this section is accepted yet.
