@@ -1,8 +1,10 @@
 # P4 Frame-Service Qualification — r03
 
-Status: Candidate
+Status: Qualified
 
 Identity: `p4-frame-service-qualification-r03`
+
+Qualified by `PORT-003-2026-08-22-23-58-56Z`.
 
 ## Purpose
 

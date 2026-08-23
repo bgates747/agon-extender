@@ -32,6 +32,9 @@ project-owned implementation, the pristine-vendor boundary, and deferred
 or excluded behavior. `implementation-manifest.yaml` is the machine-readable
 scope authority consumed by Phase C validation and later source-selection
 work. Generated files are never hand-edited.
+`scripts/generate-target-runs.py` derives the target-run index solely from
+authoritative `tests/runs/PORT-003-*/manifest.yaml` records and binds each
+entry to its manifest hash.
 
 The former `port-003-frame-service-canary-r01` candidate and
 `p4-frame-service-qualification-r01` procedure describe the superseded D008
@@ -39,8 +42,11 @@ candidate and must not be used for the corrected source. Replacement
 identities `port-003-frame-service-canary-r02` and
 `p4-frame-service-qualification-r03` were approved for the corrected source
 and controlled live fixture state. Procedure r02 was deprecated before
-physical execution;
-physical qualification still requires their clean committed checkpoint.
+physical execution.
+
+Run `PORT-003-2026-08-22-23-58-56Z` passed the corrected candidate and Gate C
+is complete. The final evidence commit remains the immutable post-run
+checkpoint.
 
 ## Gate boundary
 

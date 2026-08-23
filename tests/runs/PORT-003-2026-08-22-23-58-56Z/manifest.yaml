@@ -1,0 +1,171 @@
+schema_version: 1
+
+run:
+  run_id: PORT-003-2026-08-22-23-58-56Z
+  task_id: PORT-003
+  started_at: 2026-08-22T23:58:56Z
+  ended_at: 2026-08-23T00:06:25Z
+  outcome: passed
+  summary: Corrected sink-free P4 frame service passed r03 target qualification.
+
+procedure:
+  artifact_id: p4-frame-service-qualification
+  identity: p4-frame-service-qualification-r03
+  deviations:
+    - >-
+      The first reset-aware capture retained no bytes because the integrated
+      USB-Serial/JTAG descriptor became stale across reset. Passive and
+      reconnect-aware repeats preserved the ROM prefix and the boot/app
+      continuation separately. No single USB file contains the unavoidable
+      re-enumeration gap before 111 ms; generated image metadata, SDK
+      configuration, device flash-ID evidence, and the continuation log
+      independently establish the required flash geometry and runtime mode.
+      This affects capture packaging but does not weaken any acceptance claim.
+
+artifacts_under_test:
+  - artifact_id: port-003-frame-service-canary
+    identity: port-003-frame-service-canary-r02
+    build_id: port-003-frame-service-canary-r02-b2026-08-22-23-56-16Z
+    variant: olimex-p4-devkit
+    sha256: 4488783763f12a387a08020e862b8daac0a1b060c2ad278640f3f2514b03f2f9
+
+source:
+  commit: ca0538a27bae718ddcfcd45cb0344049e4d97bcb
+  pushed_before_build: true
+  dirty_before_build: false
+
+base_hardware:
+  - role: extender
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    variant: light2
+  breadboard:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+  fixture:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+  probe_map:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+  agon_attached: false
+  green_d0_verified: p4-gpio32-rev-d1-ext2-pin-9
+
+instrumentation:
+  - role: logic-analyzer-attached-load
+    equipment_alias: analyzer-01
+    manufacturer: Saleae-compatible
+    model: Logic-8-channel
+    hardware_revision: null
+    software:
+      name: sigrok-cli
+      version: unrecorded
+    settings:
+      capture_performed: false
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  local_esptool: 5.3.0
+  deployment_esptool: 4.12.0
+
+build:
+  factory_image_bytes: 727008
+  factory_image_sha256: 4488783763f12a387a08020e862b8daac0a1b060c2ad278640f3f2514b03f2f9
+  firmware_bytes: 595936
+  firmware_sha256: 3f45ece664caced58c679660c9abbca89ada20a8f22b0c2678ce030d71235f63
+  bootloader_bytes: 24256
+  bootloader_sha256: a9b876d153445fd517bf4c0c63ddd909c32211b8d7c9bc72787308fab289b323
+  partitions_bytes: 3072
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  ota_data_bytes: 8192
+  ota_data_sha256: f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0
+  elf_sha256: 096c160c6b26508049f225c0abb18fe5028d5128f5246f3db95761feffdc83a7
+  map_sha256: e037747dedf4401fcda706af701e1b32367b10bd4885e5c2ae39ab47300a736b
+  sdkconfig_sha256: c1ba191881ef984d583c6a3c30a53d791ae9425e7e446c3f19b0787cf5d9043b
+  offsets:
+    bootloader: 0x2000
+    partition_table: 0x8000
+    ota_data: 0xf000
+    application: 0x20000
+  embedded_source_identity_verified: true
+  embedded_build_identity_verified: true
+  rejected_identity_markers_absent: true
+  closure:
+    selected_application_translation_units: 9
+    required_symbols: 8
+    excluded_application_families: 0
+    result: pass
+
+deployment:
+  stable_usb_identity_verified: true
+  chip: ESP32-P4 revision 1.3
+  staged_hash_matched: true
+  erase_succeeded: true
+  write_hash_verified: true
+  independent_verify_flash_succeeded: true
+  flash_backup_taken: false
+
+observations:
+  - {requirement: source_identity, observed: port-003-frame-service-canary-r02, result: pass}
+  - {requirement: build_identity, observed: port-003-frame-service-canary-r02-b2026-08-22-23-56-16Z, result: pass}
+  - {requirement: artifact_status, observed: candidate, result: pass}
+  - {requirement: chip_revision, observed: '1.3', result: pass}
+  - {requirement: runtime_flash_io, observed: qio, result: pass}
+  - {requirement: flash_frequency_mhz, observed: 80, result: pass}
+  - {requirement: flash_size_mib, observed: 16, result: pass}
+  - {requirement: cpu_frequency_mhz, observed: 360, result: pass}
+  - {requirement: normal_elapsed_ticks, observed: 600, accepted_range: 550-650, result: pass}
+  - {requirement: independently_polled_notice_samples, observed: 599, minimum: 500, result: pass}
+  - {requirement: maximum_poll_interval_us, observed: 20000, maximum_exclusive: 100000, result: pass}
+  - {requirement: injected_tick_distinct_edges, observed: 64, minimum: 5, result: pass}
+  - {requirement: rollover_final_counter, observed: 61, maximum_exclusive: 1000, result: pass}
+  - {requirement: bounded_unconsumed_drops, observed: 663, result: pass}
+  - {requirement: restart_cycles, observed: 20, result: pass}
+  - {requirement: initial_free_heap_bytes, observed: 34067879, result: informational}
+  - {requirement: final_free_heap_bytes, observed: 34067967, result: pass}
+  - {requirement: negative_reset_error_scan, observed: none, result: pass}
+  - {requirement: final_marker, observed: PORT003_PHASE_C_RESULT-pass-1, result: pass}
+
+evidence:
+  - filename: boot-initial.log
+    media_type: text/plain
+    size_bytes: 0
+    sha256: e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855
+    description: Preserved failed first capture; USB descriptor went stale across reset.
+  - filename: boot-repeat-1.log
+    media_type: text/plain
+    size_bytes: 2604
+    sha256: d58663fdb5a64fdab5a5ed6e221fef258c919771d17d6a29f56f9da63164efad
+    description: Passive post-esptool boot continuation and complete canary result.
+  - filename: boot-repeat-2.log
+    media_type: text/plain
+    size_bytes: 3392
+    sha256: 7d5694f600949867d4f3a3ae8aad0b70b60b3a06049338ade610c3b45010a710
+    description: Reconnect-aware boot continuation from application segment load through pass.
+  - filename: boot-repeat-3.log
+    media_type: text/plain
+    size_bytes: 31
+    sha256: e1c8a53aeaf08aca69d7efa8944f0a3f3ab949c48f171548a0627c811fa5ac76
+    description: TTY-held-open ESP-ROM prefix before USB disconnect.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    erase_log: d326b318c100d39ff7590fe2b3a7e19ddee4a6d47025d94deaad5aac1e9a22f7
+    write_log: 6e629e2d689deae362c15e42323195c96f3f808de3048c0c74dc72ae9bdcb5cb
+    verify_log: a3b1cccad2a96e28099af6a2d996f3cc858110d9e82a36292e4a9d9e31af1a76
+    flash_id_log: db4f7120582fd5beeb3c06b970e380bff4874a4fbb73ec8d893ef2f2ea4b14f1
+
+corrections: []

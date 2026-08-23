@@ -1,0 +1,59 @@
+I (111) esp_image: segment 5: paddr=000ae588 vaddr=4ff15400 size=03234h ( 12852) load
+I (119) boot: Loaded app from partition at offset 0x20000
+I (119) boot: Disabling RNG early entropy source...
+I (123) hex_psram: vendor id    : 0x0d (AP)
+I (123) hex_psram: Latency      : 0x01 (Fixed)
+I (124) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (125) hex_psram: dev id       : 0x03 (generation 4)
+I (126) hex_psram: density      : 0x07 (256 Mbit)
+I (127) hex_psram: good-die     : 0x06 (Pass)
+I (128) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (129) hex_psram: BurstType    : 0x00 ( Wrap)
+I (130) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (131) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (132) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (133) hex_psram: DriveStrength: 0x00 (1/1)
+I (134) MSPI Timing: Enter psram timing tuning
+I (303) esp_psram: Found 32MB PSRAM device
+I (303) esp_psram: Speed: 200MHz
+I (304) hex_psram: psram CS IO is dedicated
+I (305) cpu_start: Multicore app
+I (1213) esp_psram: SPI SRAM memory test OK
+I (1223) cpu_start: Pro cpu start user code
+I (1223) cpu_start: cpu freq: 360000000 Hz
+I (1224) app_init: Application information:
+I (1224) app_init: Project name:     vdp
+I (1224) app_init: App version:      ca0538a
+I (1225) app_init: Compile time:     Aug 22 2026 19:57:11
+I (1225) app_init: ELF file SHA256:  096c160c6...
+I (1226) app_init: ESP-IDF:          5.5.5
+I (1226) efuse_init: Min chip rev:     v1.0
+I (1227) efuse_init: Max chip rev:     v1.99 
+I (1228) efuse_init: Chip rev:         v1.3
+I (1228) heap_init: Initializing. RAM available for dynamic allocation:
+I (1229) heap_init: At 4FF1CF40 len 0001E080 (120 KiB): RETENT_RAM
+I (1229) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1230) heap_init: At 4FF40000 len 00060000 (384 KiB): RAM
+I (1231) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (1231) heap_init: At 30100070 len 00001F90 (7 KiB): SPM
+I (1232) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1233) spi_flash: detected chip: generic
+I (1233) spi_flash: flash io: qio
+I (1235) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1236) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1237) esp_core_dump_flash: Init core dump to flash
+I (1237) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1238) main_task: Started on CPU0
+I (1238) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1239) main_task: Calling app_main()
+I (1245) main_task: Returned from app_main()
+I (1245) frame-service: source_identity=port-003-frame-service-canary-r02
+I (1246) frame-service: build_id=port-003-frame-service-canary-r02-b2026-08-22-23-56-16Z
+I (1246) frame-service: artifact_status=candidate
+I (1246) frame-service: PORT-003 Phase C sink-free qualification starting
+I (11263) frame-service: phase=normal samples=599 min_us=10000 avg_us=16677 max_us=20000
+I (11264) frame-service: phase=normal elapsed=600 edges=600 heap=34076555
+I (12264) frame-service: phase=rollover samples=58 min_us=10000 avg_us=16724 max_us=20000
+I (12265) frame-service: phase=rollover frame=61 edge_delta=64 unconsumed_drops=663
+I (12765) frame-service: phase=teardown restart_cycles=20 initial_heap=34067879 final_heap=34067967
+I (12766) frame-service: PORT003_PHASE_C_RESULT pass=1

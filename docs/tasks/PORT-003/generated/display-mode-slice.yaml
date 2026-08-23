@@ -90,7 +90,7 @@ inputs:
   path: docs/dependencies/generated/code-graph.yaml
   role: canonical merged dependency graph
   schema_version: 2.0.0
-  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
+  sha256: ec315ee4b4300653f6ec9f2145df4110e681926d27577223f27c30f90b7dc12e
 - id: input:port-002:base-code-graph
   path: docs/dependencies/generated/base-code-graph.yaml
   role: PORT-001 mechanical and reviewed relationship graph
@@ -106,6 +106,16 @@ inputs:
   role: observed PORT-003 Phase A application compile/link closure
   schema_version: 1.0.0
   sha256: e4d68317946a49c84135d60f8709cbdc9d0c4c40e1d218c5f86b9ff761093914
+- id: input:port-003:phase-b-build-closure
+  path: docs/tasks/PORT-003/phase-b/evidence/build-closure.yaml
+  role: observed PORT-003 Phase B application compile/link closure
+  schema_version: 1.0.0
+  sha256: 5dcb06d9bfa6b28cf4aab92a124f3bc16f8283bfdfcad60c08c1fb471a44277b
+- id: input:port-003:phase-c-build-closure
+  path: docs/tasks/PORT-003/phase-c/evidence/build-closure.yaml
+  role: observed PORT-003 Phase C application compile/link closure
+  schema_version: 1.0.0
+  sha256: 343f322ff65dcef456adefd8ef008658499662136dd8b287d237b666fb2e5608
 - id: input:setup-003:claims
   path: docs/dependencies/reviewed/claims.yaml
   role: manually reviewed PORT-001 semantic claims
@@ -150,7 +160,7 @@ source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
   path: docs/dependencies/generated/code-graph.yaml
   schema_version: 2.0.0
-  sha256: 45909d7e85e5b96d181c4d21431650ab4e1f47ac142ca287e8b5eacd758174e4
+  sha256: ec315ee4b4300653f6ec9f2145df4110e681926d27577223f27c30f90b7dc12e
 title: PORT-003 display-mode boundary
 seed_nodes:
 - command:agon-vdp:vdu-22

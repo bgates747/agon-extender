@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r09
-updated_at: 2026-08-22T23:47:02Z
+registry_revision: r10
+updated_at: 2026-08-23T00:06:25Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -34,7 +34,7 @@ artifacts:
     kind: experimental_firmware
     identity_scheme: revision
     latest_identity: port-003-frame-service-canary-r02
-    status: candidate
+    status: qualified
     variants:
       - olimex-p4-devkit
     description: Sink-free PORT-003 logical frame-service qualification firmware.
@@ -42,12 +42,13 @@ artifacts:
       - Revision r01 was rejected after corrective review found project-authored queue-completion, swap-notification, cancellation, and tick-coalescing behavior outside the faithful-port directive.
       - Revision r02 restores pinned upstream queue, completion-wait, swap-notification, background-lifecycle, and payload behavior while retaining the necessary P4 logical frame executor.
       - Revision r02 exercises cadence, rollover, one-edge-per-recorded-tick backlog handling, bounded unconsumed-consumer drops, lifecycle restart, and heap stability without a physical output sink.
+      - Revision r02 passed p4-frame-service-qualification-r03 in PORT-003-2026-08-22-23-58-56Z.
 
   - artifact_id: p4-frame-service-qualification
     kind: test_procedure
     identity_scheme: revision
     latest_identity: p4-frame-service-qualification-r03
-    status: candidate
+    status: qualified
     variants: []
     description: Committed build, deployment, and sink-free logical frame-service qualification procedure.
     notes:
@@ -55,6 +56,7 @@ artifacts:
       - Revision r02 qualifies the D009 faithful-port lifecycle and one-edge-per-recorded-tick behavior.
       - Revision r02 was superseded before physical execution because it did not control the already-attached product harness, analyzer fixture, or disconnected-Agon boundary.
       - Revision r03 retains the r02 firmware contract and adds those physical controls plus mandatory pre-flash probe-seat verification.
+      - Revision r03 passed with port-003-frame-service-canary-r02 in PORT-003-2026-08-22-23-58-56Z.
 
   - artifact_id: olimex-p4-devkit-profile
     kind: board_profile

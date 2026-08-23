@@ -4,3 +4,7 @@
 vdp/video/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
 vdp/vendor/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
 vdp/video/extender/** whitespace=blank-at-eol,blank-at-eof,space-before-tab
+
+# Qualification serial captures retain device-native bytes (including CRLF)
+# so their recorded evidence hashes remain meaningful.
+tests/runs/**/boot-*.log binary

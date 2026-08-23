@@ -30,6 +30,10 @@ host_qualification:
   runner: docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
   fixtures: docs/tasks/PORT-003/phase-c/fixtures/frame-traces.yaml
   prohibition: the oracle must not import, invoke, or parse production frame-service output
+target_qualification:
+  run_index_generator: docs/tasks/PORT-003/phase-c/scripts/generate-target-runs.py
+  authoritative_manifests: tests/runs/PORT-003-*/manifest.yaml
+  run_index_test: docs/tasks/PORT-003/phase-c/tests/test_target_run_index.py
 generated_evidence:
   - docs/tasks/PORT-003/phase-c/evidence/frame-lifecycle.yaml
   - docs/tasks/PORT-003/phase-c/evidence/host-frame-results.yaml

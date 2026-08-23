@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: source_selection_projection
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: 1304122e8bcf60be428375e69a5a05ece26a6e1a0dc5dd87ff5d27426cdd5234
+  sha256: ec315ee4b4300653f6ec9f2145df4110e681926d27577223f27c30f90b7dc12e
 build_profiles:
 - id: build-profile:extender:p4-default
   label: Agon Extender ESP32-P4 default target

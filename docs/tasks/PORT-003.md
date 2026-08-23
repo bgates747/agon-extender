@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Phases A–B complete; corrected Phase C pending Author review and candidate re-identification
+- Status: In progress — Phases A–C complete; Phase D pending
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -678,9 +678,9 @@ primitive/readback difference cannot be isolated and measured.
 
 ## Phase C — Logical frame service
 
-- Status: In progress
+- Status: Complete — Gate C passed
 - Started: 2026-08-22 13:49 EDT
-- Finished: --
+- Finished: 2026-08-22 21:17 EDT
 
 The Author explicitly authorized this phase to proceed, including check-in,
 without personal review after Gate B passed. This checklist is the controlling
@@ -760,13 +760,13 @@ in commit `8aecb0e` and is promoted to the independent `UPSTREAM-001` A/B task.
    slow consumers, upstream lifecycle draining, and long bounded runs; reject
    deadlock, stale-plane access, leaks, or growth with elapsed
    frames.
-10. [ ] Add a dedicated Phase C P4 diagnostic/qualification environment and
+10. [x] Add a dedicated Phase C P4 diagnostic/qualification environment and
     prove the exact compile/link closure without deployment. Update the
     dependency graph, source-selection projection, compatibility delta, task
     record, and development log. Once host and clean target gates pass, create
     and push a pre-qualification checkpoint and assign the human-readable
     firmware/build/test identities required by `docs/versions/README.md`.
-11. [ ] Before physical work, reread `HARDWARE.local.md`, verify the named Pi,
+11. [x] Before physical work, reread `HARDWARE.local.md`, verify the named Pi,
     P4 identity, connection, toolchain, and safety boundary, then deploy only
     the committed qualification artifact. No backup of the pre-existing P4
     firmware is required. Measure sink-free cadence, jitter, drift, rollover
@@ -774,11 +774,34 @@ in commit `8aecb0e` and is promoted to the independent `UPSTREAM-001` A/B task.
     and memory bounds at the accepted 360 MHz configuration; preserve serial
     capture and structured run evidence. Stop on identity mismatch, unstable
     power/transport, unexplained reset, or a result requiring contract change.
-12. [ ] Regenerate all Phase C and canonical graph artifacts twice
+12. [x] Regenerate all Phase C and canonical graph artifacts twice
     byte-identically; verify immutable imports and index, schemas/source spans,
     host and target evidence, all permanent tests, links, absolute paths, SVG
     backgrounds, whitespace, and staged diff. Mark Gate C complete and commit
     and push the final evidence only if every criterion below passes.
+
+### Gate C closure record
+
+Gate C passed on 2026-08-22. The Phase C lifecycle, independent traces, host
+results, target closure, canonical dependency graph, and PORT-003 projections
+all regenerated twice byte-identically. The exhaustive source validator
+matched all 5,164 immutable imported files and every recorded source span;
+index verification found no omitted import.
+
+The final suites passed 13 dependency-tool, three Phase A, 17 Phase B, and 11
+Phase C permanent tests, plus 12 ASan/UBSan logical-frame traces, five retained
+controller cases, three stress cases, and the nine-unit/eight-symbol/zero-
+exclusion P4 closure. Run `PORT-003-2026-08-22-23-58-56Z` supplies the passing
+target evidence, and its generated index binds the authoritative manifest by
+SHA-256.
+
+The audit found and corrected one generator-order issue: regenerating target
+closure after the canonical graph left the graph's input fingerprint stale.
+The enforced closure order is now Phase C evidence, canonical dependencies,
+then PORT-003 projections. Current Markdown links pass outside intentionally
+verbatim legacy-evidence excerpts; local identity/path leakage, SVG white
+backgrounds, evidence hashes/sizes, schemas, whitespace, and the complete diff
+also pass.
 
 ### Phase C explicit exclusions
 
@@ -979,9 +1002,9 @@ candidate and are rejected. The Author approved corrected candidate identities
 `port-003-frame-service-canary-r02` and
 `p4-frame-service-qualification-r03` in registry r09. Procedure r03 preserves
 r02's firmware contract while controlling the attached `light2-harness-r01`,
-`la03-p4-probe-fixture-r01`, and disconnected-Agon boundary. Item 10 remains open
-until this coherent candidate is committed and pushed as the pre-qualification
-checkpoint. No physical qualification is authorized by this corrective record.
+`la03-p4-probe-fixture-r01`, and disconnected-Agon boundary. The coherent
+candidate was committed and pushed as `ca0538a`; run
+`PORT-003-2026-08-22-23-58-56Z` subsequently passed physical qualification.
 
 ### Gate C acceptance criteria
 

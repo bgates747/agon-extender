@@ -1,0 +1,21 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_target_runs
+generated_by: docs/tasks/PORT-003/phase-c/scripts/generate-target-runs.py
+runs:
+- run_id: PORT-003-2026-08-22-23-58-56Z
+  manifest: tests/runs/PORT-003-2026-08-22-23-58-56Z/manifest.yaml
+  manifest_sha256: 8f134a9791200e9dafda83d2b04069189e83e0ea4e6cebe1b1972fd6cbf3f58e
+  candidate_identity: port-003-frame-service-canary-r02
+  qualification_procedure: p4-frame-service-qualification-r03
+  source_commit: ca0538a27bae718ddcfcd45cb0344049e4d97bcb
+  outcome: passed
+  procedure_deviation_count: 1
+  observations:
+    elapsed_ticks: 600
+    polled_notice_samples: 599
+    maximum_poll_interval_us: 20000
+    injected_edge_delta: 64
+    rollover_final_counter: 61
+    unconsumed_drops: 663
+    restart_cycles: 20
+    heap_delta_bytes: 88
