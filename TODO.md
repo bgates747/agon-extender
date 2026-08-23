@@ -5,6 +5,13 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Audits
+
+- [ ] **AUDIT-001 — Audit physical bench-test and compatibility wiring coverage**
+  - Started: 2026-08-22 21:41 EDT
+  - Finished: --
+  - Details: [AUDIT-001](docs/tasks/AUDIT-001.md)
+
 ## Setup
 
 - [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
