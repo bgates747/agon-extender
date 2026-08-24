@@ -205,7 +205,15 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   inferred from `light2-harness-r01`. Stock MOS feeds only the onboard VDP's
   UART0 stream through its VDP packet parser. Extender, applications, and a
   resident service must not write MOS-owned sysvars directly; compatible
-  updates require an explicitly selected MOS-owned parser route.
+  updates require an explicitly selected MOS-owned parser route. Full D003
+  disposition is deferred until PORT-008 produces a narrow working Exclusive
+  Extended vertical slice. That prototype may use a fixed-backend development
+  EMOS build, the accepted parallel-forward/UART1-return direction, exact
+  official response packets, and an EMOS-owned experimental parser that alone
+  updates MOS sysvars. It must not claim Dual or Exclusive Compatible behavior,
+  settle the general EDU result domain, or authorize EDP/P4 firmware to write
+  eZ80 memory directly. The prototype is discovery evidence for D003 rather
+  than an implicit architecture decision.
 - [ ] **SETUP-005-D004 — Legacy abstraction boundary:** define which classes of
   non-EDU-aware software can be supported through wrappers or loaders in
   Dual mode and the qualification required for each class.
@@ -261,9 +269,12 @@ recording their disposition in the development log.
 
 - Every accepted decision must update the corresponding QUAL-001 operating-mode,
   transport, MOS/sysvar, carve-out, blocker, and qualification fields.
-- `SETUP-005-D001` through `D003` gate PORT-008's transparent routing,
-  response-parser, General Poll, and MOS-integration stages. They do not block
-  bounded physical-link analysis that makes no mode or MOS claim.
+- `SETUP-005-D001` and `D002` permit PORT-008's bounded Exclusive Extended
+  vertical slice under D003's recorded prototype constraints. Full D003
+  acceptance still gates production response routing, broad General Poll and
+  response-class qualification, Exclusive Compatible integration, Dual's EDU
+  result domain, and any general compatibility claim. Bounded physical-link
+  analysis that makes no mode or MOS claim remains independently permissible.
 - `SETUP-005-D002` gates QUAL-002's complete legacy-absence, reset, failure, and
   recovery state matrix.
 - `SETUP-005-D005` gates only optional onboard-VDP audio forwarding; it does not

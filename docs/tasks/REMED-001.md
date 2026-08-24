@@ -198,7 +198,11 @@ hardware design, deployment, or physical test.
   bypass and prohibited transitions. Analysis and question register:
   [`mode-lifecycle-analysis.md`](REMED-001/mode-lifecycle-analysis.md).
 - [ ] **2.e** Resolve D003 response delivery and MOS parser ownership for both
-  exclusive modes and the separate EDU result domain in Dual mode.
+  exclusive modes and the separate EDU result domain in Dual mode. Defer final
+  disposition until PORT-008 has produced the bounded Exclusive Extended
+  vertical slice authorized by SETUP-005-D003; use its code and evidence to
+  answer the cross-mode questions rather than attempting to settle them from a
+  source survey alone.
 - [ ] **2.f** Resolve D004 support boundaries for non-EDU-aware software in
   Dual mode without implying mirrored VDU traffic or shared canonical state.
 - [ ] **2.g** Resolve D005 audio ownership and whether any mode may explicitly
@@ -221,8 +225,12 @@ hardware design, deployment, or physical test.
   decisions, retain unresolved items in SETUP-005, and review ADR completeness.
 
 **Review Gate A:** The Author accepts all remaining SETUP-005 dispositions and
-the resulting normative four-mode contract before mode-dependent
-implementation or qualification planning is released.
+the resulting normative four-mode contract before production mode-dependent
+implementation or qualification planning is released. PORT-008's bounded
+Exclusive Extended response prototype is the sole current exception: it may
+produce D003 discovery evidence under its fixed-backend, single-EMOS-writer,
+Author-approved prototype gate but cannot make a production or cross-mode
+claim.
 
 ### Work 2.a execution record
 
@@ -505,7 +513,9 @@ electrical proof; protocol/parser tasks own bounded malformed-input evidence.
   v1 contract without demonstrated need and separate Author acceptance.
 
 **Review Gate B:** The Author accepts the reconciled task ownership, task split,
-and sequencing before any newly authorized task begins implementation.
+and sequencing before any newly authorized production task begins
+implementation. PORT-008's existing-task prototype exception remains bounded
+by its own Author gate and cannot silently establish the final task split.
 
 ## Work 4 — Correct the durable qualification model
 

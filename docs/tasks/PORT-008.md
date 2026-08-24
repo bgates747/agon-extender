@@ -64,6 +64,46 @@ product design.
 
 ## Work
 
+### Prototype tranche — Exclusive Extended response vertical slice
+
+Before freezing the complete multi-mode D003 contract, build a narrowly scoped
+Exclusive Extended learning prototype. This is code-led architecture evidence,
+not a production compatibility implementation or permission to infer the
+remaining modes from one successful path. PORT-003 Phase E must first supply
+the retained official facade and parser integration needed by the canary;
+therefore PORT-003 Phases D and E precede this prototype.
+
+1. Use a fixed-backend development EMOS build so ordinary VDU output reaches
+   EDP/P4 firmware through the accepted eight-bit parallel forward direction.
+2. Make EDP/P4 firmware emit an exact official VDP response packet over the
+   accepted UART1 return direction; use General Poll as the first canary and do
+   not invent a disposable command or response protocol.
+3. Route UART1 bytes into one bounded experimental parser owned by EMOS on the
+   eZ80. EMOS alone may update canonical MOS sysvars and completion flags; EDP,
+   applications, and resident services must not write those assets directly.
+4. Exercise enough real code and controlled bench traffic to expose parser
+   boundaries, packet ordering, buffering, pacing, timeout, reset, and failure
+   assumptions. Record observations without generalizing beyond exercised
+   bytes and signals.
+5. Keep the onboard VDP outside the prototype's audio/video output and EDP
+   response path. Peripheral-input integration, concurrent UART0 packets,
+   Exclusive Compatible, Dual, the general EDU result domain, runtime mode
+   transitions, and broad legacy-software qualification remain out of scope.
+6. Stop for Author review of the prototype and its findings. Feed accepted
+   evidence back into REMED-001 Work 2.e and SETUP-005-D003 before designing
+   the complete response architecture.
+
+**Prototype gate:** before implementation or bench operation, present the
+exact fixed-backend EMOS/EDP source boundary, official packet canary, existing
+Exclusive Extended wiring profile, minimum fixture, safety checks, and stop
+conditions for Author approval. This bounded gate does not require the complete
+PORT-008.1 production transport contract or settle its Review Gate 1.
+
+This tranche may perform the minimum official-source review needed to preserve
+wire contracts and memory safety. It must not turn into a survey-only planning
+exercise before the first bounded implementation, nor may experimental code be
+promoted into the product architecture merely because it runs.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and
@@ -78,7 +118,8 @@ product design.
 
 **Review Gate 1:** Author approves the transport contract, physical ownership
 model, test phases, and either the existing harness sufficiency finding or a
-separate hardware-revision proposal before implementation.
+separate hardware-revision proposal before production implementation beyond
+the bounded prototype tranche.
 
 ### PORT-008.2 — Implement the P4 transport boundary
 
@@ -95,8 +136,9 @@ separate hardware-revision proposal before implementation.
 
 ### PORT-008.3 — Implement the eZ80/MOS integration boundary
 
-1. Implement the selected command backend and UART1 response-parser route only
-   after `SETUP-005-D001` through `D003` authorize the relevant mode behavior.
+1. Outside the bounded prototype tranche, implement the selected command
+   backend and UART1 response-parser route only after `SETUP-005-D001` through
+   `D003` authorize the relevant mode behavior.
 2. Reuse MOS's canonical packet/sysvar ownership wherever selected; do not
    create a competing sysvar writer.
 3. Preserve stock UART0/onboard-VDP input handling and legacy fallback according
@@ -140,9 +182,11 @@ before this task can gate integrated compatibility claims.
   before the General Poll and broad VDU bench stages can execute. Physical-link
   feasibility and bounded adapter work may be planned earlier but may not
   substitute for that test.
-- `SETUP-005-D001` through `D003` gate transparent command routing, mode
-  selection, response parsing, and MOS sysvar integration. Work that does not
-  depend on those choices must remain visibly provisional.
+- `SETUP-005-D001` and `D002` authorize only the bounded Exclusive Extended
+  prototype above. D003 remains open and gates production response parsing,
+  generalized MOS sysvar integration, Exclusive Compatible, Dual's separate
+  EDU result domain, and broad compatibility qualification. Prototype findings
+  remain visibly provisional until the Author accepts their D003 disposition.
 - QUAL-002 begins only after a controlled transport candidate exists and gates
   final qualification of assembled-system power/reset behavior.
 - PORT-008 Gate 2 is required before PORT-003 Gate G or later tasks claim
