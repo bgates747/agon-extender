@@ -6,7 +6,7 @@ the authorities below govern current work.
 
 | Repository | Current role | Resulting main | Remote state |
 | --- | --- | --- | --- |
-| `agon-extender` | assembled product and cross-component architecture | this record's commit | public `main` |
+| `agon-extender` | assembled product and cross-component architecture | this record's commit | private `main` |
 | `agon-emos` | maintained EMOS product | `b2a6d81` | private `main` published |
 | `agon-mos` | upstream-oriented MOS fork | `9562b90` | public `main` published |
 | `mos-agondev` | generic AgonDev MOS-family infrastructure | `2cd4128` | public `main` published |
