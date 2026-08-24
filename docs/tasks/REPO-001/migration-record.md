@@ -31,6 +31,9 @@ SHA-256 `ae0432a84be4be2261095d449627af876c9662d40a08ac334981e12d6dda339f`.
    `agon-emos` is private, while the two pre-existing repositories retain their
    public visibility. None has a pull request, release, Actions run, or Actions
    artifact retaining the superseded work.
-7. Ref-visible cleanup is complete. GitHub may retain unreachable objects in
-   provider storage, and the verified local recovery bundles deliberately
-   retain all former refs until the Author accepts Review Gate D.
+7. Ref-visible cleanup is complete and accepted as the required erasure level.
+   GitHub may retain unreachable objects in provider storage, but ordinary
+   branch/history inspection and fresh clones do not expose them.
+8. After Review Gate D acceptance, the temporary recovery bundles, staging
+   repositories, fresh verification clones, and generated migration residue
+   were removed.

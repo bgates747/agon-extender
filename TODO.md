@@ -5,13 +5,6 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Repository organization
-
-- [ ] **REPO-001 — Establish agon-emos and disentangle repository histories**
-  - Started: 2026-08-24 17:11 EDT
-  - Finished: --
-  - Details: [REPO-001](docs/tasks/REPO-001.md)
-
 ## Qualification infrastructure
 
 - [ ] **QUAL-001 — Establish the durable compatibility qualification matrix**

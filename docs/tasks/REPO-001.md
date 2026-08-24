@@ -2,11 +2,11 @@
 
 ## State
 
-- Status: Awaiting Review Gate D — live migration, remote cleanup, and
-  fresh-clone qualification complete; recovery bundles retained
+- Status: Complete — Review Gate D accepted; ref-visible cleanup is the
+  accepted erasure standard
 - Priority: First in the project queue
 - Started: 2026-08-24 17:11 EDT
-- Finished: --
+- Finished: 2026-08-24 17:41 EDT
 
 ## Namespace
 
@@ -61,6 +61,11 @@ reconstruction. Firmware behavior remains outside this migration's authority.
    `unittest` syntax even though `tests/` is not a Python package. Direct-file
    invocation passed all three cases. The failed command was an invocation
    error, not a source regression.
+9. The Author accepted Review Gate D and clarified that unreachable provider
+   objects are acceptable. The governing operational requirement is that
+   ordinary repository, branch, log, and fresh-clone reconnaissance cannot
+   expose misplaced EMOS work or confuse agents about current ownership.
+   Temporary recovery and staging artifacts were then removed.
 
 ## Proposed ownership model
 
