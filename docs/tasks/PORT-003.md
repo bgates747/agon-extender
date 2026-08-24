@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Phases A–C complete; Phase D in progress
+- Status: In progress — Phases A–E complete; Phase F pending
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1373,3 +1373,393 @@ mode policy, or inventing an application-visible command/protocol. Also stop
 if an independently demonstrated palette/Copper/overlay difference cannot be
 isolated and measured, or if target compilation invalidates the accepted
 project-owned seam.
+
+## Phase E — Official mode integration
+
+- Status: Complete — Gate E passed
+- Started: 2026-08-24 06:47 EDT
+- Finished: 2026-08-24 07:46 EDT
+
+The Author authorized this phase to proceed unattended after Phase D was
+committed and pushed at `3599532`. The maintained EMOS source remains
+`a8dc891`, its original returned build milestone is `b12fcab`, and the completed
+PORT-200 qualification tip is `a695599`; all remain downstream context only.
+This phase may prove the official display-facing command lifecycle without
+claiming EMOS parity, a physical transport, or an assembled-system result.
+
+This checklist is the controlling review surrogate. Complete one numbered
+item at a time, then reread `TODO.md`, this task state, and the Phase E gate in
+`qualification-plan.md` before beginning the next item. Stop rather than
+silently absorbing Phase F, PORT-008, PORT-005, a physical output sink, or
+operating-mode policy.
+
+### Detailed execution checklist
+
+1. [x] Freeze the Phase E task-local structure, exact official documentation
+   and source inputs, actor-explicit contracts, oracle order, planned patched
+   paths, exact exclusions, stop rules, and one coherent commit boundary under
+   `PORT-003/phase-e/` before changing production code.
+2. [x] Generate bounded deterministic provenance for the complete official
+   mode table, modeline dimensions/cadence, `agon_screen.h` facade, `VDU 22`
+   fallback sequence, context reset, callback removal/invocation, mode packet,
+   Teletext initialization, cursor visibility, and input-owned cursor-position
+   seam. Fingerprint exact `v2.16.0` source and documentation spans.
+3. [x] Generate independent official-mode and lifecycle fixtures before
+   trusting production output. Cover every documented current, legacy, and
+   double-buffered mode; invalid modes; requested/old/default fallback paths;
+   allocation/service-start failures; scales and rectangular pixels; Teletext;
+   context and callback order; both double-buffer planes; cursor handling; and
+   the exact eight-byte mode-information payload.
+4. [x] Add the narrow project-owned screen-facade adapter. Parse only the
+   dimensions and cadence encoded by the official retained modelines, map the
+   five stock color depths to the retained native formats, configure one stable
+   P4 controller transactionally, and start/restart the P4 logical frame
+   service at the selected cadence. Return explicit facade errors without
+   importing any classic VGA physical controller.
+5. [x] Preserve the official writable 32-bit `frameCounter` source seam without
+   modifying official context code. The P4 frame service and official direct
+   low/high writes must observe one modulo-2^32 value, with deterministic host
+   coverage for writes, reads, advancement, and rollover.
+6. [x] Add only the display-facing processed cursor-position seam required by
+   the official facade and mode lifecycle. It may bind, bound, and reposition
+   the P4 display cursor, but must not add physical PS/2 acquisition, event
+   routing, keyboard behavior, mouse packet generation, or PORT-005 policy.
+7. [x] Apply the accepted narrow `agon_screen.h` patch with a prominent
+   provenance header. Preserve official global names, factory/facade names,
+   complete mode switch, palette/Copper helpers, Canvas ownership, dimensions,
+   scaling, Teletext, waits, swaps, and error codes; change only the concrete
+   controller, configuration, frame-service, and cursor bindings authorized by
+   ADR-0013 and ADR-0015.
+8. [x] Exercise the exact official `VDUStreamProcessor::vdu_mode` implementation
+   and `sendModeInformation` packet construction against controlled host
+   collaborators. Extract the pinned function bodies deterministically for the
+   harness rather than copying or rewriting their behavior into production.
+   Prove clear/wait, Teletext disable, VSYNC-callback removal, fallback,
+   context reset, double-buffer initialization, cursor restoration/reset,
+   mode-change callback, and packet order.
+9. [x] Exercise Teletext mode 7 through the adapted official facade and
+   ordinary retained Canvas path. Prove successful initialization, expected
+   640x480/16-color mode metadata, transition out of Teletext, and controlled
+   initialization failure without adding a text-mode physical driver.
+10. [x] Run the complete Phase E host matrix under ASan/UBSan and explicit
+    allocation accounting. Re-run Phases B–D regressions and prove repeated
+    mode changes, all injected failures, frame-service restarts, fallback,
+    context/callback/packet traces, cursor binding, and teardown leave valid
+    bounded state.
+11. [x] Add a dedicated `p4-official-display` diagnostic environment and exact
+    machine-readable source selection. Compile the adapted official facade,
+    Teletext implementation, P4 controller/frame service, and unchanged
+    retained Canvas/common controller; prove old VGA/CVBS/Scene/PS2, audio,
+    network, storage, updater, output sinks, and physical transport remain
+    excluded. Do not deploy or assign a qualification identity.
+12. [x] Update managed-import patch provenance, canonical dependency/source
+    selection, compatibility delta, implementation manifest, task record, and
+    dated development log. Every patched official byte must name its accepted
+    decision and remain distinguishable from pristine vendored source.
+13. [x] Regenerate Phase E and canonical artifacts twice byte-identically;
+    verify immutable source spans, managed imports, schemas, all permanent and
+    cross-phase tests, changed links, machine-path absence, generated SVG
+    backgrounds, project whitespace, and `git diff --check`.
+14. [x] Audit the staged Phase E boundary against this checklist and Gate E.
+    Commit and push one coherent Phase E result only when every criterion below
+    passes, then stop before PORT-008 as directed by the Author.
+
+### Phase E execution record
+
+1. Scope and contract freeze — complete:
+   - `phase-e/README.md`, `contracts.md`, and the planned implementation
+     manifest freeze the exact upstream identities, official document/source
+     inputs, actor ownership, oracle order, one permitted patched path,
+     exclusions, stop rules, and coherent commit boundary before production
+     code changes;
+   - exact official handler bodies may be extracted only into a temporary host
+     harness, while fixtures remain independently generated and production
+     continues to use the retained upstream files; and
+   - no transport, EMOS parity, input-event implementation, consumer contract,
+     physical sink, deployment, or hardware claim entered the phase.
+2. Official mode and lifecycle provenance — complete:
+   - `extract-mode-provenance.py` fingerprints 15 exact official source
+     functions and five documentation regions covering the facade, complete
+     mode switch, VDU lifecycle, packet, context, frame, Teletext, and cursor
+     seams;
+   - the extractor resolves all retained vdp-gl modelines into 58 current,
+     legacy, and buffered variants spanning the complete 54-mode ID set, with
+     explicit dimensions, depth, cadence, and buffering metadata;
+   - four permanent tests prove mode-set completeness, variant counts, record
+     uniqueness, critical lifecycle coverage, and parser reproduction; and
+   - two complete generations produced byte-identical
+     `mode-provenance.yaml` at SHA-256 `913bcf126cea1454c3576d59f739e154bd867cc2fdf3a7dd91bf09e77a1c3ace`.
+3. Independent mode and lifecycle fixtures — complete:
+   - `generate-mode-fixtures.py` independently transcribes the documented and
+     frozen contract into all 58 mode variants plus seven VDU lifecycle cases;
+   - coverage includes current/legacy modes, every supported buffered mode,
+     60/70/75 Hz cadence, scales, rectangular pixels, Teletext, invalid mode,
+     requested/old/default fallback, allocation/service failure, visible
+     cursor, double-buffer initialization, and exact mode-packet bytes;
+   - the independent table agrees exactly with the separately parsed official
+     source table, while four permanent fixture tests enforce coverage, event
+     order, packet shape, uniqueness, and generator reproduction; and
+   - the first generator draft requested a nonexistent `canonical_json` helper
+     from the dependency library. It now uses explicit sorted compact JSON only
+     for the fixture-set digest and the established canonical YAML writer for
+     output. Two generations produced byte-identical fixtures at SHA-256
+     `d4fd0f87e76477b020d3940a8cf070b1012535d421cb68e42d18cd82542ffce9`.
+4. P4 screen-facade adapter — complete:
+   - `ScreenFacadeAdapter` parses only the quoted width, height, and refresh
+     metadata retained in official modelines, maps all five stock color depths,
+     and configures one stable `P4DisplayController` without selecting VGA
+     electrical timing or a physical sink;
+   - a callback binding names the P4 frame service as cadence owner, stops it
+     before storage replacement, restarts it at the nearest integer-microsecond
+     60/70/75 Hz period, and preserves/restarts the prior valid mode after
+     injected storage or service-start failure whenever one exists;
+   - target-only `screen_facade_p4_binding.cpp` isolates ESP-IDF dependencies
+     from the host-qualifiable state machine, and typed results distinguish
+     invalid depth/modeline, storage, service, and rollback failure; and
+   - the sanitizer-backed fixed harness passes modeline/depth/period parsing,
+     initial and replacement configuration, allocation preservation, service
+     rollback, cadence, buffering, and zero-allocation teardown. The retained
+     vdp-gl headers emit their known host portability warnings; no new warning
+     or classic physical source is required by the adapter.
+5. Writable official frame counter — complete:
+   - public `FrameCounterRegister frameCounter` preserves the exact official
+     `_VGAController->frameCounter` read and assignment expressions without an
+     edit to `context.h`;
+   - the register's atomic load, assignment, and fetch-add all address one
+     unsigned 32-bit value, while the project-owned executor accessor was
+     renamed `readFrameCounter()` to avoid shadowing that upstream field;
+   - the sanitizer harness passes official-style direct assignment/read,
+     low-word replacement, frame-service advancement, and modulo-2^32
+     rollover; and
+   - all 12 Phase C trace fixtures plus its retained-controller and stress
+     regressions pass after the interface rename.
+6. Display cursor-position endpoint — complete:
+   - `CursorPositionAdapter` binds only the active P4 controller and mode
+     bounds, clamps forwarded processed coordinates, and moves the EDP-local
+     retained cursor overlay; it owns no device, events, packets, variables,
+     callbacks, keyboard, transport, or routing;
+   - upstream-shaped `resetMousePositioner()` and the separate position helper
+     let unchanged official lifecycle callers reach this endpoint after the
+     physical `agon_ps2.h` include is removed;
+   - the first implementation attempted to inspect vdp-gl's private cursor
+     member directly. The corrected controller uses its protected retained
+     `mouseCursor()` accessor, preserving the intended inheritance boundary;
+     and
+   - the sanitizer harness passes unbound, bind, position, clamp, mode-resize,
+     invalid-bounds, and teardown cases. PORT-005 remains the sole owner of
+     processed event injection and broader input compatibility.
+7. Narrow official screen-facade patch — complete:
+   - the sole modified official file is `vdp/video/agon_screen.h`, whose header
+     names the pinned upstream source, accepted decisions, exact local patch
+     boundary, retained behavior, and removal condition;
+   - the patch preserves the official globals and entry-point names, complete
+     mode table, `changeMode()`, Canvas construction and scaling, Teletext,
+     waits, swaps, palette restoration, and return-code surface while replacing
+     only the classic controller factory/downcasts, configuration, frame clock,
+     and processed cursor-position binding;
+   - `changeResolution()` commits the public color depth and constructs Canvas
+     only after the transactional P4 facade reports success, leaving the
+     official VDU-owned requested/old/default fallback sequence intact; and
+   - a bounded diff audit found no edit to any other official VDP file. Target
+     compile/link closure remains deliberately unclaimed until checklist item
+     11; this item certifies the authorized source boundary only.
+
+Returned EMOS review checkpoint:
+
+- `mos-agondev` `dev/emos`, `origin/dev/emos`, `origin/main`, and
+  `origin/dev/port-200` all resolve to completed qualification commit
+  `a695599`; its authoritative TODO is clear;
+- PORT-200 adds emulator/ABI qualification, a later physical gate, and
+  prior-art evidence but no maintained EMOS source change after `a8dc891`;
+- EMOS still names physical EDP discovery, transport, wiring, and timing as
+  unresolved and labels `edu.probe` as fake qualification scaffolding, so none
+  may be used as Phase E evidence; and
+- its fixed VDU dispatcher and exclusive-mode route contract are compatible
+  downstream consumers of this EDP-side official display lifecycle. They do
+  not alter the Phase E source boundary, fixtures, gate, or stop conditions.
+8. Exact official VDU mode lifecycle — complete:
+   - `run-official-mode-lifecycle.py` verifies the immutable `v2.16.0` commit
+     and recorded function/file hashes, extracts the exact
+     `VDUStreamProcessor::vdu_mode()` and `sendModeInformation()` bodies into a
+     temporary C++17 harness, and compiles them under ASan/UBSan without copying
+     either function into production;
+   - controlled collaborators expose clear/wait, Teletext disable, callback
+     removal/invocation, requested/old/default attempts, full context reset,
+     double-buffer swap/clear, cursor restoration/position reset, mouse-variable
+     update, exact packet bytes, and final state in actor order;
+   - all seven independent lifecycle cases pass, including invalid mode,
+     allocation/service failure represented at the facade return seam,
+     three-stage fallback, Teletext failure, and visible double-buffer cursor;
+     the generated result is bound to the independent fixture hash; and
+   - comparison against the exact packet function exposed one omitted oracle
+     event: stock invokes `CALLBACK_SENDING_VDPP | PACKET_MODE` immediately
+     before `send_packet()`. The independent generator and permanent tests now
+     record that callback explicitly rather than hiding the correction in the
+     harness. The result artifact SHA-256 is
+     `d4daae5338d915b24a472e56e4220701dd2990870fe71ffef4a65c481e959ac7`.
+9. Retained Teletext and Canvas integration — complete:
+   - `run-teletext-integration.py` compiles the patched official screen facade,
+     real retained `agon_ttxt` implementation/font data, ordinary retained
+     Canvas/common controller, P4 controller/facade, and project display seams
+     into a sanitizer-backed host executable; no classic display, text-driver,
+     PS/2, Scene, audio, network, transport, or sink source is in the closure;
+   - successful mode 7 configures the stable P4 controller and Canvas at
+     640x480 in 16 colors, allocates the official four Teletext work areas,
+     selects the retained font, clears the page, and sets official mode state;
+     the independently proven VDU lifecycle clears Teletext before the same
+     facade transitions to ordinary mode 8 at 320x240 in 64 colors;
+   - a separate fresh process injects failure at the first official Teletext
+     PSRAM request after successful P4/Canvas configuration and observes the
+     retained `-1` result with Teletext inactive. Retained Teletext has no
+     teardown API and owns four process-lifetime global buffers, so LSAN is
+     explicitly unclaimed while ASan/UBSan remain active; and
+   - the inherited `fabgl.h` aggregate had supplied global `RGB888` and
+     `GlyphOptions` aliases while also importing every classic subsystem
+     declaration. The facade now includes only `canvas.h` and names those two
+     required aliases explicitly, making the intended source boundary real.
+     The hash-bound result artifact SHA-256 is
+     `c94c6c9a8fd2a7322ad28e0325fee22b6292077eca8332baea82084d024d7495`.
+10. Complete host mode and regression matrix — complete:
+    - one stable `ScreenFacadeAdapter` and `P4DisplayController` accepts all 58
+      independent current, legacy, and buffered variants in sequence, with
+      exact dimensions, native depth, cadence, buffering, full viewport, 58
+      starts, 57 replacement stops, and zero live allocations at teardown;
+    - the fixed sanitizer harness separately passes modeline/depth rejection,
+      transactional initial/replacement configuration, injected allocation and
+      frame-service failures with prior-mode recovery, frame-counter expressions
+      and rollover, cursor bind/clamp/resize, and allocator teardown;
+    - the exact VDU lifecycle, retained Teletext, all Phase E permanent tests,
+      Phase B native renderer/allocation suite, Phase C 12-trace/controller/stress
+      suite, and Phase D palette/compositor/controller suite all pass under the
+      consolidated runner. Refreshed cross-phase evidence records the expected
+      Phase E interface/header hashes rather than leaving stale evidence; and
+    - `mode-facade-matrix-results.yaml` has SHA-256
+      `f8f590bbaf6eed1bf6519e35ced2f8b5990b9a67479529faccba3ad99506e779`;
+      the eight-gate aggregate `host-mode-results.yaml` has SHA-256
+      `39c39bc9f9c38712abc49991e0a749de2f8b0acdd4f71d08c44ca26f160d9799`.
+11. P4 official-display compile and link closure — complete:
+    - the dedicated `p4-official-display` environment compiles the adapted
+      header-defined official facade and Teletext implementation, 12 exact
+      project translation units, and unchanged retained `canvas.cpp` and
+      `displaycontroller.cpp`; the build succeeds for the pinned ESP32-P4
+      target and produces a diagnostic-only 609,328-byte binary;
+    - deterministic compile-command, linker-map, and ELF validation proves all
+      14 selected units and eight required official/project seams are linked,
+      with no missing or unexpected application objects or compile records;
+    - classic VGA/CVBS/Scene/PS2, physical audio, network, storage, updater,
+      broad `fabutils.cpp`, output-sink, and physical-transport source/symbol
+      families remain absent. The final clean-build closure and exclusion
+      records have SHA-256
+      `8ddc9995ce10bb4ee4f4a7276d3943e560e94332f36995728aa8ac88d3f225a0`
+      and `35fe007959aae88c2dac6182745972d43a112f7306bfa17b49ee82ccb10dee99`;
+      and
+    - the first post-link check incorrectly required an emitted symbol for the
+      intentionally inline cursor wrapper. The linked concrete P4 cursor
+      endpoint was present; the validator now checks that surviving method.
+      The only compile diagnostics are inherited vdp-gl deprecated-ADC
+      warnings. Nothing was assigned an artifact identity, deployed, or
+      physically qualified.
+12. Durable provenance, dependency, and compatibility records — complete:
+    - the reviewed `agon-vdp@v2.16.0` managed import is now classified
+      `vendored-patched`; `video/agon_screen.h` is its only declared differing
+      path and names ADR-0015, the immutable/repository hashes, and the exact
+      repository location. Regeneration rejects an undeclared difference, a
+      missing patch, or a stale byte-identical patch declaration;
+    - the canonical dependency graph now consumes the Phase E build closure
+      and projects the official-display canary, cursor adapter, screen facade,
+      P4 binding, retained controller/frame/presentation seams, official
+      header-defined facade/Teletext, and unchanged Canvas/common units rather
+      than presenting Phase D as the current integration boundary;
+    - `phase-e/compatibility-delta.md` distinguishes the retained VDU-visible
+      mode lifecycle from the unavoidable P4 physical-controller adaptation
+      and from Phase F, PORT-008, EMOS, sink, and hardware deferrals; and
+    - the completed implementation manifest binds production files,
+      generators, evidence, target selection, source hashes, patch decision,
+      returned EMOS context, exclusions, and deferrals. The dated development
+      log records the same factual boundary without promoting compile evidence
+      into a physical claim.
+13. Deterministic final validation — complete:
+    - after a clean `p4-official-display` rebuild, all 20 tracked Phase E,
+      cross-phase, and canonical projection artifacts regenerated twice with
+      byte-identical SHA-256 results. The independent dependency orchestrator
+      also regenerated and validated its complete output pipeline twice
+      byte-identically across all 5,164 managed source files;
+    - the clean P4 build succeeds against pioarduino `55.03.311`, Arduino
+      `3.3.11`, and ESP-IDF `5.5.5`; post-link validation again proves 14 exact
+      application units, eight required symbols, and zero excluded families.
+      The raw unidentified firmware hash changes across clean builds because
+      ESP-IDF embeds build metadata, while its size, compile-command hash,
+      linker-map hash, and normalized symbol hash remain stable. Reproducible
+      release-image identity is not claimed by this diagnostic phase;
+    - all 71 permanent dependency and PORT-003 Phase A–E Python tests pass,
+      along with the eight-gate sanitizer-backed host matrix. The first full
+      pass exposed stale Phase C/D tests that compared immutable provenance to
+      the now-patched repository import; they now read official VDP bytes from
+      the pinned source checkout while the managed-import validator separately
+      proves and authorizes the repository difference; and
+    - schemas and all 17 changed YAML/JSON files parse, exhaustive source and
+      span verification passes, all changed local Markdown links resolve, all
+      generated SVGs retain explicit white backgrounds, and the 62-file change
+      set contains no machine-local paths or trailing whitespace. Project
+      whitespace and `git diff --check` pass.
+14. Gate E boundary audit — complete:
+    - the staged boundary contains only the narrow official-facade patch,
+      project-owned mode/frame/cursor adapters, diagnostic target selection,
+      independent fixtures and evidence, cross-phase interface refreshes,
+      managed patch provenance, canonical dependency projections, and the
+      required task/development records;
+    - each Gate E criterion is independently covered: all mode variants and
+      metadata, requested/old/default fallback and injected failures, exact VDU
+      lifecycle and packet order, retained Teletext, writable frame counter,
+      display-only cursor endpoint, host sanitizers, and clean target closure;
+    - no physical transport, input acquisition or routing, EMOS parity claim,
+      consumer API, output sink, operating-mode policy, firmware identity,
+      deployment, bench action, or hardware result entered the phase; and
+    - Gate E passed at 2026-08-24 07:46 EDT under the Author's unattended
+      authorization. The next boundary is Phase F planning; PORT-008 remains
+      untouched as explicitly directed.
+
+### Phase E gate criteria
+
+1. Every official current, legacy, and supported double-buffered mode produces
+   the documented dimensions, depth, cadence, scaling, rectangular-pixel flag,
+   buffering state, and mode identity through the adapted official facade.
+2. Injected requested-mode, old-mode, default-mode, allocation, and service
+   failures follow the recorded official fallback contract and never leave the
+   facade without a valid explicitly reported state.
+3. The exact official `VDU 22` implementation produces the required context,
+   callback, cursor, double-buffer, and eight-byte mode-packet event order
+   against independent fixtures.
+4. Teletext mode 7 initializes and exits through retained official code over
+   ordinary Canvas, with no physical text controller or PS/2 dependency.
+5. The official direct frame-counter seam and the P4 logical frame service
+   share one writable wrapping value; the cursor seam owns display positioning
+   only and does not absorb PORT-005 behavior.
+6. Host sanitizers, cross-phase regressions, deterministic evidence, managed
+   patch provenance, and clean pinned P4 compile/link closure all pass without
+   deployment, transport, EMOS parity, output-sink, or hardware claims.
+
+### Phase E explicit exclusions
+
+- No edit to official VDU command semantics beyond the accepted concrete
+  display binding; `vdu.h`, context code, callback code, and packet code remain
+  byte-identical to `v2.16.0`.
+- No physical PS/2 keyboard or mouse driver, processed event injection, input
+  packet routing, control-key policy, or PORT-005 implementation.
+- No network/browser, RGB, MIPI-DSI, HDMI, or other physical output consumer,
+  and no Phase F consumer lease/API freeze.
+- No MOS/EMOS parity claim, VDU/EDU routing, UART/parallel transport, General
+  Poll, mode-policy selection, or PORT-008 work.
+- No classic GPIO/I2S/DMA/VSYNC engine, target deployment, bench operation,
+  artifact identity, or hardware qualification.
+
+### Phase E stop conditions
+
+Stop for Author review if the official display lifecycle cannot be retained
+without broad edits outside `agon_screen.h`, if selected code requires a
+classic physical controller or physical input driver, if an application-
+visible command/packet must change, if the frame/sink contract must change, or
+if PORT-005, PORT-008, SETUP-005, MOS/EMOS, or physical-output policy is needed
+to make the gate pass. Also stop if independent fixtures expose a behavior
+difference that cannot be narrowly isolated and recorded, or if target
+compilation invalidates the accepted one-controller facade.

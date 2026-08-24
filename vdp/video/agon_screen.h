@@ -1,15 +1,36 @@
 #ifndef AGON_SCREEN_H
 #define AGON_SCREEN_H
 
+// AGON EXTENDER PATCH — PORT-003 Phase E
+// Upstream: agon-vdp v2.16.0, video/agon_screen.h.
+// Decisions: ADR-0013 decisions 16-18 and ADR-0015.
+// This is the one accepted narrow patch to the official screen facade. It
+// replaces only the classic VGA concrete controller, frame clock, palette /
+// Copper downcasts, and physical mouse-positioner binding with project-owned
+// P4 seams. The official globals, function names, mode table, Canvas behavior,
+// Teletext path, error codes, and VDU-owned fallback remain recognizable and
+// authoritative. Remove only if upstream acquires an equivalent generic
+// bitmapped-controller integration boundary.
+
 #include <memory>
-#include <fabgl.h>
+#include <canvas.h>
+
+// The upstream all-in-one FabGL header exported these names globally. Keep the
+// two aliases used by the retained official VDP/Teletext sources without
+// importing classic physical display, input, scene, or audio declarations.
+using fabgl::GlyphOptions;
+using fabgl::RGB888;
 
 #include "agon.h"								// Agon definitions
 #include "agon_palette.h"						// Colour lookup table
-#include "agon_ps2.h"
+#include "extender/display/cursor_position_adapter.hpp"
+#include "extender/display/p4_frame_service.hpp"
+#include "extender/display/screen_facade_adapter.hpp"
 
 std::unique_ptr<fabgl::Canvas>	canvas;			// The canvas class
-std::unique_ptr<fabgl::VGABaseController>	_VGAController;		// Pointer to the current VGA controller class
+std::unique_ptr<agon::extender::display::P4DisplayController>	_VGAController;		// Upstream-shaped active controller owner
+std::unique_ptr<agon::extender::display::P4FrameService>	_P4FrameService;
+std::unique_ptr<agon::extender::display::ScreenFacadeAdapter>	_screenFacadeAdapter;
 
 #include "agon_ttxt.h"
 
@@ -35,23 +56,21 @@ void setLegacyModes(bool legacy) {
 // Returns:
 // - A singleton instance of a VGAController class
 //
-std::unique_ptr<fabgl::VGABaseController> getVGAController(uint8_t colours) {
-	switch (colours) {
-		case  2: return std::move(std::unique_ptr<fabgl::VGA2Controller>(new fabgl::VGA2Controller()));
-		case  4: return std::move(std::unique_ptr<fabgl::VGA4Controller>(new fabgl::VGA4Controller()));
-		case  8: return std::move(std::unique_ptr<fabgl::VGA8Controller>(new fabgl::VGA8Controller()));
-		case 16: return std::move(std::unique_ptr<fabgl::VGA16Controller>(new fabgl::VGA16Controller()));
-		case 64: return std::move(std::unique_ptr<fabgl::VGA64Controller>(new fabgl::VGA64Controller()));
+std::unique_ptr<agon::extender::display::P4DisplayController> getVGAController(uint8_t colours) {
+	agon::extender::display::NativePixelFormat format;
+	if (!agon::extender::display::nativeFormatForColourDepth(colours, format)) {
+		return nullptr;
 	}
-	return nullptr;
+	return std::unique_ptr<agon::extender::display::P4DisplayController>(
+		new agon::extender::display::P4DisplayController(
+			agon::extender::display::defaultDisplayAllocator()));
 }
 
 // Update the internal FabGL LUT
 //
 void updateRGB2PaletteLUT() {
 	if (_VGAColourDepth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->updateRGB2PaletteLUT();
+		_VGAController->updateRGB2PaletteLUT();
 	}
 }
 
@@ -59,8 +78,7 @@ void updateRGB2PaletteLUT() {
 //
 void createPalette(uint16_t paletteId) {
 	if (_VGAColourDepth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->createPalette(paletteId);
+		_VGAController->createPalette(paletteId);
 	}
 }
 
@@ -68,8 +86,7 @@ void createPalette(uint16_t paletteId) {
 //
 void deletePalette(uint16_t paletteId) {
 	if (_VGAColourDepth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->deletePalette(paletteId);
+		_VGAController->deletePalette(paletteId);
 	}
 }
 
@@ -77,8 +94,7 @@ void deletePalette(uint16_t paletteId) {
 //
 void setItemInPalette(uint16_t paletteId, uint8_t index, RGB888 colour) {
 	if (_VGAColourDepth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->setItemInPalette(paletteId, index, colour);
+		_VGAController->setItemInPalette(paletteId, index, colour.R, colour.G, colour.B);
 	}
 }
 
@@ -86,8 +102,7 @@ void setItemInPalette(uint16_t paletteId, uint8_t index, RGB888 colour) {
 //
 void updateSignalList(uint16_t * signalList, uint16_t count) {
 	if (_VGAColourDepth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->updateSignalList(signalList, count);
+		_VGAController->updateSignalList(signalList, count);
 	}
 }
 
@@ -105,8 +120,7 @@ inline uint8_t getVGAColourDepth() {
 void setPaletteItem(uint8_t l, RGB888 c) {
 	auto depth = getVGAColourDepth();
 	if (l < depth && depth <= 16) {
-		fabgl::VGAPalettedController * controller = (fabgl::VGAPalettedController *)(_VGAController.get());
-		controller->setPaletteItem(l, c);
+		_VGAController->setItemInPalette(0, l, c.R, c.G, c.B);
 	}
 }
 
@@ -184,22 +198,21 @@ void restorePalette() {
 // Update our VGA controller based on number of colours
 // returns true on success, false if the number of colours was invalid
 bool updateVGAController(uint8_t colours) {
-	if (colours == _VGAColourDepth) {
+	agon::extender::display::NativePixelFormat format;
+	if (!agon::extender::display::nativeFormatForColourDepth(colours, format)) {
+		return false;
+	}
+	if (_VGAController) {
 		return true;
 	}
 
-	auto controller = getVGAController(colours);	// Get a new controller
-	if (!controller) {
-		return false;
-	}
-
-	_VGAColourDepth = colours;
-	if (_VGAController) {						// If there is an existing controller running then
-		_VGAController->end();					// end it
-		_VGAController.reset();					// Delete it
-	}
-	_VGAController = std::move(controller);		// Switch to the new controller
-	_VGAController->begin();					// And spin it up
+	_VGAController = getVGAController(colours);	// Create the one P4 controller
+	if (!_VGAController) return false;
+	_VGAController->begin();
+	_P4FrameService.reset(new agon::extender::display::P4FrameService(*_VGAController));
+	_screenFacadeAdapter.reset(new agon::extender::display::ScreenFacadeAdapter(
+		*_VGAController,
+		agon::extender::display::bindFrameService(*_P4FrameService)));
 
 	return true;
 }
@@ -220,11 +233,16 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 
 	canvas.reset();									// Delete the canvas
 
-	if (modeLine) {									// If modeLine is not a null pointer then
-		_VGAController->setResolution(modeLine, -1, -1, doubleBuffered);	// Set the resolution
-	} else {
+	if (!modeLine) {
 		debug_log("changeResolution: modeLine is null\n\r");
+		return 2;
 	}
+	auto configureResult = _screenFacadeAdapter->configure(colours, modeLine, doubleBuffered);
+	if (configureResult != agon::extender::display::FacadeConfigureResult::Ok) {
+		debug_log("changeResolution: P4 configure failed %d\n\r", (int) configureResult);
+		return configureResult == agon::extender::display::FacadeConfigureResult::InvalidColourDepth ? 1 : 2;
+	}
+	_VGAColourDepth = colours;
 
 	_VGAController->enableBackgroundPrimitiveExecution(true);
 	_VGAController->enableBackgroundPrimitiveTimeout(false);
@@ -491,7 +509,7 @@ void switchBuffer() {
 }
 
 inline void setMouseCursorPos(uint16_t x, uint16_t y) {
-	_VGAController->setMouseCursorPos(x, y);
+	setExtenderMouseCursorPos(x, y);
 }
 
 #endif // AGON_SCREEN_H

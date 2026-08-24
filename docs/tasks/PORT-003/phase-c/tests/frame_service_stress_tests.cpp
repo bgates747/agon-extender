@@ -31,7 +31,7 @@ struct Executor final : FrameWorkExecutor {
     frame += elapsed;
     return frame;
   }
-  std::uint32_t frameCounter() const noexcept override { return frame; }
+  std::uint32_t readFrameCounter() const noexcept override { return frame; }
   std::size_t logicalWidth() const noexcept override { return 320; }
   std::size_t logicalHeight() const noexcept override { return 240; }
   NativePixelFormat logicalFormat() const noexcept override {

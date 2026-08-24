@@ -25,7 +25,14 @@ class FrameLifecycleArtifactTests(unittest.TestCase):
         self.assertEqual(len(keys), len(set(keys)))
 
     def test_all_source_and_span_hashes_match(self):
-        roots = {"agon-vdp": ROOT / "vdp", "vdp-gl": ROOT / "vdp/vendor/vdp-gl"}
+        # Provenance records describe immutable upstream bytes, not a managed
+        # repository import that may carry an explicitly registered patch.
+        # Managed-import equivalence and patch declarations are independently
+        # enforced by the canonical dependency validator.
+        roots = {
+            "agon-vdp": ROOT.parents[1] / "agon-vdp",
+            "vdp-gl": ROOT / "vdp/vendor/vdp-gl",
+        }
         for item in self.data["sources"]:
             self.assertEqual(item["sha256"], sha256_file(roots[item["owner"]] / item["path"]))
         for item in self.data["records"]:

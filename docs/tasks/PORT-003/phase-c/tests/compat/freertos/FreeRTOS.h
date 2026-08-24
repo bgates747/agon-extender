@@ -19,6 +19,7 @@ constexpr BaseType_t pdFALSE = 0;
 constexpr BaseType_t pdPASS = 1;
 constexpr TickType_t portMAX_DELAY = UINT32_MAX;
 constexpr int tskNO_AFFINITY = -1;
+constexpr UBaseType_t configMAX_PRIORITIES = 25;
 
 #define pdMS_TO_TICKS(value) (static_cast<TickType_t>(value))
 #define IRAM_ATTR

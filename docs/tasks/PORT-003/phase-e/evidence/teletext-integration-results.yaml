@@ -1,0 +1,61 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_e_teletext_integration_results
+generated_by: docs/tasks/PORT-003/phase-e/scripts/run-teletext-integration.py
+compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+sanitizers:
+- address
+- undefined
+leak_sanitizer: 'disabled: retained Teletext owns process-lifetime global buffers and exposes no teardown API'
+production_and_harness_sources:
+- path: docs/tasks/PORT-003/phase-e/tests/teletext_integration_tests.cpp
+  sha256: b61b0c322952ea6b8f42676872420613607aba0833520d32ca19337be2921838
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 61e302a44e0d3dc47f0632023edd8615c165778f4cdbed96747679691d9931df
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: d1ade811aed8e194a183d467075a11a893d943ba51b145c7a5bd5005b0a65804
+- path: vdp/video/extender/display/screen_facade_adapter.cpp
+  sha256: 0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb
+- path: vdp/video/extender/display/screen_facade_p4_binding.cpp
+  sha256: 8ad984ba31d5edb658385a57327c821dc8fbeb2ce5e3a2197d118db8f9e87309
+- path: vdp/video/extender/display/cursor_position_adapter.cpp
+  sha256: 5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+retained_header_inputs:
+- path: vdp/video/agon_screen.h
+  sha256: 489210b08d2bd1995c95e148b97a46d3978a3c2fc69b91c13cf27804540d6359
+- path: vdp/video/agon_ttxt.h
+  sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
+- path: vdp/video/ttxtfont.h
+  sha256: 8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c
+- path: vdp/video/agon_palette.h
+  sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
+results:
+- id: success
+  status: pass
+  output:
+  - teletext-init-pass
+  - teletext-exit-pass
+  returncode: 0
+  stderr: ''
+- id: failure
+  status: pass
+  output:
+  - teletext-allocation-failure-pass
+  returncode: 0
+  stderr: ''
+summary:
+  passed: 2
+  failed: 0

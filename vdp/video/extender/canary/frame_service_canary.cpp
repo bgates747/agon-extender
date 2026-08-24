@@ -195,7 +195,7 @@ void loop() {
     ESP_LOGI("frame-service",
              "phase=rollover frame=%" PRIu32 " edge_delta=%" PRIu64
              " unconsumed_drops=%" PRIu64,
-             controller.frameCounter(), injected_edges, unconsumed_drops);
+             controller.readFrameCounter(), injected_edges, unconsumed_drops);
 
     bool lifecycle_ok = true;
     for (int cycle = 0; cycle < 20; ++cycle) {
@@ -209,7 +209,7 @@ void loop() {
                   normal_timing_samples >= 500 &&
                   normal_timing_maximum < 100000 &&
                   injected_ticks_accepted && injected_edges >= 5 &&
-                  controller.frameCounter() < 1000 &&
+                  controller.readFrameCounter() < 1000 &&
                   unconsumed_drops != 0 && lifecycle_ok &&
                   final_free_heap + 4096 >= initial_free_heap;
     ESP_LOGI("frame-service",

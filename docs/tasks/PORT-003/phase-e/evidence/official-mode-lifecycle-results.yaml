@@ -1,0 +1,244 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_e_official_mode_lifecycle_results
+generated_by: docs/tasks/PORT-003/phase-e/scripts/run-official-mode-lifecycle.py
+source_identity:
+  identity: v2.16.0
+  commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+source_regions:
+- path: video/vdu.h
+  function: VDUStreamProcessor::vdu_mode
+  start_line: 301
+  end_line: 336
+  sha256: 717c6ed0331d7ddd58b29969a6f0e261251dbdca72448dc5b8fdc4ec8aaec726
+  file_sha256: 24923b53a83d77ebf729795d7ecb7343e6f2fed0e9d748d48fc83c8b75e805cb
+- path: video/vdu_sys.h
+  function: VDUStreamProcessor::sendModeInformation
+  start_line: 534
+  end_line: 549
+  sha256: 738ac3d738829d49008f4e6dd86cedfb3b451c00ba40a79e0a02bdab9f1500d1
+  file_sha256: 29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77
+fixture_sha256: d4fd0f87e76477b020d3940a8cf070b1012535d421cb68e42d18cd82542ffce9
+compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+sanitizers:
+- address
+- undefined
+leak_sanitizer: disabled under managed tracing; harness owns no dynamic test allocation beyond standard-library process lifetime
+cases:
+- id: requested-success
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:8:0
+  - contexts.reset-all
+  - cursor-positioner.reset
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 64
+  - 1
+  - 240
+  - 0
+  - 40
+  - 30
+  - 64
+  - 8
+  final_state:
+    video_mode: 8
+    teletext: 0
+    width: 320
+    height: 240
+    colours: 64
+    double_buffered: 0
+- id: requested-fails-old-succeeds
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:18:2
+  - facade.change-mode:4:0
+  - contexts.reset-all
+  - cursor.show
+  - cursor-positioner.reset
+  - mouse-variables.update
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 128
+  - 2
+  - 240
+  - 0
+  - 80
+  - 30
+  - 16
+  - 4
+  final_state:
+    video_mode: 4
+    teletext: 0
+    width: 640
+    height: 240
+    colours: 16
+    double_buffered: 0
+- id: requested-and-old-fail-default-succeeds
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:18:2
+  - facade.change-mode:4:2
+  - facade.change-mode:1:0
+  - contexts.reset-all
+  - cursor-positioner.reset
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 128
+  - 2
+  - 224
+  - 1
+  - 80
+  - 60
+  - 4
+  - 1
+  final_state:
+    video_mode: 1
+    teletext: 0
+    width: 640
+    height: 480
+    colours: 4
+    double_buffered: 0
+- id: invalid-mode-falls-back
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:31:-1
+  - facade.change-mode:9:0
+  - contexts.reset-all
+  - cursor-positioner.reset
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 64
+  - 1
+  - 240
+  - 0
+  - 40
+  - 30
+  - 16
+  - 9
+  final_state:
+    video_mode: 9
+    teletext: 0
+    width: 320
+    height: 240
+    colours: 16
+    double_buffered: 0
+- id: teletext-init-fails-old-succeeds
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:7:3
+  - facade.change-mode:3:0
+  - contexts.reset-all
+  - cursor-positioner.reset
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 128
+  - 2
+  - 240
+  - 0
+  - 80
+  - 30
+  - 64
+  - 3
+  final_state:
+    video_mode: 3
+    teletext: 0
+    width: 640
+    height: 240
+    colours: 64
+    double_buffered: 0
+- id: double-buffer-success-visible-cursor
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:129:0
+  - contexts.reset-all
+  - display.swap
+  - context.cls
+  - cursor.show
+  - cursor-positioner.reset
+  - mouse-variables.update
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 128
+  - 2
+  - 224
+  - 1
+  - 80
+  - 60
+  - 4
+  - 129
+  final_state:
+    video_mode: 129
+    teletext: 0
+    width: 640
+    height: 480
+    colours: 4
+    double_buffered: 1
+- id: service-start-fails-old-succeeds
+  status: pass
+  events:
+  - context.cls
+  - display.wait-vsync
+  - teletext.disable
+  - callbacks.remove-all-vsync
+  - facade.change-mode:12:2
+  - facade.change-mode:1:0
+  - contexts.reset-all
+  - cursor-positioner.reset
+  - callbacks.call-mode-change
+  - callbacks.call-sending-mode-packet
+  - packet.send-mode
+  mode_packet:
+  - 128
+  - 2
+  - 224
+  - 1
+  - 80
+  - 60
+  - 4
+  - 1
+  final_state:
+    video_mode: 1
+    teletext: 0
+    width: 640
+    height: 480
+    colours: 4
+    double_buffered: 0
+summary:
+  passed: 7
+  failed: 0

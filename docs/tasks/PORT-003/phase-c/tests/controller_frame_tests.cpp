@@ -147,7 +147,7 @@ void testSuspensionAndCounter(Allocator allocator) {
   check(service.recordTicks(3));
   check(service.servicePending() == FrameServiceResult::Serviced);
   check(drawingPixel(controller, 0, 0) == 0);
-  check(controller.frameCounter() == 2);
+  check(controller.readFrameCounter() == 2);
   check(service.pendingTicks() == 2);
   canvas.endUpdate();
   check(service.recordTicks());
@@ -158,10 +158,10 @@ void testSuspensionAndCounter(Allocator allocator) {
   controller.writeFrameCounter(UINT32_MAX);
   check(service.recordTicks(2));
   check(service.servicePending() == FrameServiceResult::Serviced);
-  check(controller.frameCounter() == 0);
+  check(controller.readFrameCounter() == 0);
   check(service.pendingTicks() == 1);
   check(service.servicePending() == FrameServiceResult::Serviced);
-  check(controller.frameCounter() == 1);
+  check(controller.readFrameCounter() == 1);
   service.stop();
   std::cout << "suspension-counter-pass\n";
 }

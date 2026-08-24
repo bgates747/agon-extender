@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: source_selection_projection
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: 1d51cfa090864108f8a460f9ddb235cf713979ca48679527977f6c1a08b54e35
+  sha256: eb37d1e57865f789e0bcea3d785770e7f97e245c9fabb69154d13d8efffa304f
 build_profiles:
 - id: build-profile:extender:p4-default
   label: Agon Extender ESP32-P4 default target
@@ -10,7 +10,7 @@ build_profiles:
   target_board: Olimex ESP32-P4-DevKit
   platform: pioarduino 55.03.311
   framework: Arduino and ESP-IDF hybrid
-  configuration: PORT-003 Phase D sink-free presentation compile/link proved; physical output and official facade remain incomplete
+  configuration: PORT-003 Phase E official display facade and Teletext compile/link proved; physical output and transport remain incomplete
   source_ids:
   - source:CRC:1.0.4
   - source:ESP32Time:2.0.6
@@ -2642,7 +2642,7 @@ subjects:
   path: .github/FUNDING.yml
   parent_file_id: null
   role: build-metadata
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: ab6f6c3b4117e7182bf1a4240b49cf26e4aaaa6cff2fd52d77366d60a0003d9b
   locations: []
   profiles:
@@ -2679,7 +2679,7 @@ subjects:
   path: .github/workflows/build.yml
   parent_file_id: null
   role: build-metadata
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: adf06d726c9ea2710908def1db4204af1ddee85118d0aa5c1fca09eb1d6f63f0
   locations: []
   profiles:
@@ -2716,7 +2716,7 @@ subjects:
   path: .gitignore
   parent_file_id: null
   role: other
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 9d29764243ad12061ba3888d0dd31337d02fe419cf9a3f73ae3c200176c3427b
   locations: []
   profiles:
@@ -2753,7 +2753,7 @@ subjects:
   path: LICENSE
   parent_file_id: null
   role: license
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: fae2cacdc47dc5ed8efbd052201834108167942f0b524b8238327e9fbe13fd25
   locations: []
   profiles:
@@ -2790,7 +2790,7 @@ subjects:
   path: README.md
   parent_file_id: null
   role: documentation
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: ad17677aad5a8b949eec80d6d0e897fb98906989388ce0f89db0f80f6b7b1b9c
   locations: []
   profiles:
@@ -2827,7 +2827,7 @@ subjects:
   path: platformio.ini
   parent_file_id: null
   role: build-metadata
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 26b45e13ac91f81123ea62698f1cebab3e30fac02c33d97ade45835ed831d6ad
   locations: []
   profiles:
@@ -2864,7 +2864,7 @@ subjects:
   path: video/OneWire_direct_gpio.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -2919,7 +2919,7 @@ subjects:
   path: video/agon.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -2971,7 +2971,7 @@ subjects:
   path: video/agon_audio.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3035,7 +3035,7 @@ subjects:
   path: video/agon_fonts.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: e95bf9a7d172797fc57c49d83f031cd899a4a95a6a10f076e72817a5d04a533c
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3085,7 +3085,7 @@ subjects:
   path: video/agon_palette.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3135,7 +3135,7 @@ subjects:
   path: video/agon_ps2.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 76dd5fd87e4be895e9a017d648e6f2de64b3273d98da876235ff9868b6ed66b6
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3191,7 +3191,7 @@ subjects:
   path: video/agon_screen.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3238,7 +3238,7 @@ subjects:
   path: video/agon_ttxt.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3288,7 +3288,7 @@ subjects:
   path: video/audio_channel.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3347,7 +3347,7 @@ subjects:
   path: video/audio_sample.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3402,7 +3402,7 @@ subjects:
   path: video/buffer_stream.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3451,7 +3451,7 @@ subjects:
   path: video/buffers.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3501,7 +3501,7 @@ subjects:
   path: video/compression.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3551,7 +3551,7 @@ subjects:
   path: video/context.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3605,7 +3605,7 @@ subjects:
   path: video/context/cursor.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: e0ced4b531dfef9957411dd30be458c431921c2c2be3e2e5f8a7a4ed863ceb8f
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3655,7 +3655,7 @@ subjects:
   path: video/context/fonts.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 27acda3a7c8e41f0a6b1c8e1f1a611f7ce3e7d9f8796ca023ee71868976e6ad4
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3705,7 +3705,7 @@ subjects:
   path: video/context/graphics.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: eba700bc2b988af484784c4d90ebc8233a008687f1e5d5b65ab61cc7e6433d2a
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3755,7 +3755,7 @@ subjects:
   path: video/context/viewport.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 2f69546602eb5b765719b8186688edece1e38b3b0bb0e276325391887451d5ff
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3805,7 +3805,7 @@ subjects:
   path: video/enhanced_samples_generator.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3860,7 +3860,7 @@ subjects:
   path: video/envelopes/adsr.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3917,7 +3917,7 @@ subjects:
   path: video/envelopes/frequency.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -3972,7 +3972,7 @@ subjects:
   path: video/envelopes/multiphase_adsr.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4029,7 +4029,7 @@ subjects:
   path: video/envelopes/types.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4084,7 +4084,7 @@ subjects:
   path: video/hexload.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4135,7 +4135,7 @@ subjects:
   path: video/mem_helpers.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4185,7 +4185,7 @@ subjects:
   path: video/multi_buffer_stream.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4234,7 +4234,7 @@ subjects:
   path: video/span.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4284,7 +4284,7 @@ subjects:
   path: video/sprites.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: a8a9e7a2039b0bd31645482953477c3060d640c2b4d841da71d81f6ba4e5d7ea
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4334,7 +4334,7 @@ subjects:
   path: video/ttxtfont.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4384,7 +4384,7 @@ subjects:
   path: video/types.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4434,7 +4434,7 @@ subjects:
   path: video/updater.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4487,7 +4487,7 @@ subjects:
   path: video/utils/thread_safe_variant_deque.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4537,7 +4537,7 @@ subjects:
   path: video/vdp_protocol.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4593,7 +4593,7 @@ subjects:
   path: video/vdp_variables.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: d1fefa381cfebff4fcd7446accac30d6649317711a885d3a31bd37572b9c4fa7
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4649,7 +4649,7 @@ subjects:
   path: video/vdu.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 24923b53a83d77ebf729795d7ecb7343e6f2fed0e9d748d48fc83c8b75e805cb
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4703,7 +4703,7 @@ subjects:
   path: video/vdu_audio.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 6a479afd49dbb7111a6b3637cad62f3bfacb8fc8ea514799f89431810ee4ba67
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4758,7 +4758,7 @@ subjects:
   path: video/vdu_buffered.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: b9d9d93295ddc5fb05c802071057e32ed9755837f029ce381340072352c262f0
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4817,7 +4817,7 @@ subjects:
   path: video/vdu_context.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4867,7 +4867,7 @@ subjects:
   path: video/vdu_fonts.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4917,7 +4917,7 @@ subjects:
   path: video/vdu_layers.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -4967,7 +4967,7 @@ subjects:
   path: video/vdu_sprites.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 53b0fe1474ba20565cfc31afae993f88eb44084ab8b3c4181d5261a59db3c1eb
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5020,7 +5020,7 @@ subjects:
   path: video/vdu_stream_processor.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: b714a640a7108aec0a242069c5c96b529347655a0d9133e28cd01092bae84753
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5080,7 +5080,7 @@ subjects:
   path: video/vdu_sys.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5142,7 +5142,7 @@ subjects:
   path: video/version.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5192,7 +5192,7 @@ subjects:
   path: video/video.ino
   parent_file_id: null
   role: firmware-source
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: ce37b9bb557eba621a97ca4d8fb860e2a7af0284ed177a81d0af86391e6a224b
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5317,7 +5317,7 @@ subjects:
   path: video/ymodem.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -5375,7 +5375,7 @@ subjects:
   path: video/zdi.h
   parent_file_id: null
   role: header
-  presence_class: vendored
+  presence_class: vendored-patched
   sha256: 89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e
   locations:
   - source_id: source:agon-vdp:v2.16.0
@@ -195107,52 +195107,66 @@ subjects:
     - SETUP-004.1.c:transport-stock-uart-hardware:replace
     replacement_subject_id: build-unit:extender:p4-port-adapters
 project_boundaries:
+- id: build-unit:extender:p4-cursor-position-adapter
+  label: Display-only processed cursor-position adapter
+  path: video/extender/display/cursor_position_adapter.cpp
+  state: phase-e-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-display-controller
   label: P4 retained-renderer display controller
   path: video/extender/display/p4_display_controller.cpp
-  state: phase-d-qualified-host
+  state: phase-e-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-frame-task-adapter
   label: ESP timer and FreeRTOS frame-service adapter
   path: video/extender/display/p4_frame_service.cpp
-  state: phase-c-target-closure
+  state: phase-e-target-closure
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-logical-frame-service
   label: Sink-independent logical frame state machine
   path: video/extender/display/logical_frame_service.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-native-pixel-codec
   label: P4 native pixel codecs
   path: video/extender/display/native_pixel_codec.cpp
   state: phase-b-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
+- id: build-unit:extender:p4-official-display-canary
+  label: PORT-003 Phase E official-display diagnostic entry
+  path: video/extender/canary/official_display_canary.cpp
+  state: diagnostic-official-display
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-palette-state
   label: P4 palette and Copper state
   path: video/extender/display/palette_state.cpp
   state: phase-d-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-plane-storage
   label: P4 transactional display-plane storage
   path: video/extender/display/plane_storage.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-port-adapters
   label: Project-owned P4 port adapters
   path: null
-  state: phase-d-presentation
+  state: phase-e-official-mode-integration
   task: PORT-003
   evidence_ids:
   - evidence:reviewed:p4-port-adapter-boundary
@@ -195160,27 +195174,35 @@ project_boundaries:
   - evidence:build-profile:port-003-phase-b
   - evidence:build-profile:port-003-phase-c
   - evidence:build-profile:port-003-phase-d
-- id: build-unit:extender:p4-presentation-canary
-  label: PORT-003 Phase D presentation diagnostic entry
-  path: video/extender/canary/presentation_canary.cpp
-  state: diagnostic-presentation
-  task: PORT-003
-  evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-presentation-compositor
   label: Sink-neutral RGB888 presentation compositor
   path: video/extender/display/presentation_compositor.cpp
   state: phase-d-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
+- id: build-unit:extender:p4-screen-facade-adapter
+  label: Transactional official-mode screen facade
+  path: video/extender/display/screen_facade_adapter.cpp
+  state: phase-e-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-e
+- id: build-unit:extender:p4-screen-facade-binding
+  label: P4 frame-service binding for the official screen facade
+  path: video/extender/display/screen_facade_p4_binding.cpp
+  state: phase-e-target-closure
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-e
 - id: build-unit:extender:p4-vdp-gl-port-utility-closure
   label: P4 vdp-gl utility compatibility closure
   path: video/extender/port/fabutils_port.cpp
   state: phase-b-narrow-port
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-d
+  - evidence:build-profile:port-003-phase-e
 summary:
   build-profile:extender:p4-default:
     available-not-selected: 882

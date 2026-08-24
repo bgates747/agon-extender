@@ -1,0 +1,110 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_e_host_mode_results
+generated_by: docs/tasks/PORT-003/phase-e/scripts/run-host-mode-tests.py
+compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+diagnostic_status: host ASan/UBSan and deterministic cross-phase regression; no target or hardware claim
+fixed_harness_sources:
+- path: docs/tasks/PORT-003/phase-e/tests/screen_facade_adapter_tests.cpp
+  sha256: d3f82a07b6026b6cd28336d65dac3cba313c1d5590576ebeeef300cfe98297a5
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 61e302a44e0d3dc47f0632023edd8615c165778f4cdbed96747679691d9931df
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: d1ade811aed8e194a183d467075a11a893d943ba51b145c7a5bd5005b0a65804
+- path: vdp/video/extender/display/screen_facade_adapter.cpp
+  sha256: 0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb
+- path: vdp/video/extender/display/cursor_position_adapter.cpp
+  sha256: 5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+evidence_inputs:
+- path: docs/tasks/PORT-003/phase-e/evidence/mode-facade-matrix-results.yaml
+  sha256: f8f590bbaf6eed1bf6519e35ced2f8b5990b9a67479529faccba3ad99506e779
+- path: docs/tasks/PORT-003/phase-e/evidence/official-mode-lifecycle-results.yaml
+  sha256: d4daae5338d915b24a472e56e4220701dd2990870fe71ffef4a65c481e959ac7
+- path: docs/tasks/PORT-003/phase-e/evidence/teletext-integration-results.yaml
+  sha256: c94c6c9a8fd2a7322ad28e0325fee22b6292077eca8332baea82084d024d7495
+- path: docs/tasks/PORT-003/phase-b/evidence/host-fixture-results.yaml
+  sha256: a67822c3c0dbfc3a8bfc69418c16f713c1e1e5e252470bfc506d268752f7673a
+- path: docs/tasks/PORT-003/phase-b/evidence/allocation-failure-results.yaml
+  sha256: c9595a3d55d557ff8c3341ba65a83d9b146fd80016877eda5615137e5cca122b
+- path: docs/tasks/PORT-003/phase-c/evidence/host-frame-results.yaml
+  sha256: fdfcb70c6899e0f64139ccacaeca9990c4064f32618ac4d35ced3bdb240e8a4e
+- path: docs/tasks/PORT-003/phase-d/evidence/host-presentation-results.yaml
+  sha256: 51ce34c5e1691a368e53b2e779c6c30bc8717fb06fac3f874f642d1f3a5b8645
+results:
+- id: fixed-facade-failure-and-endpoint-harness
+  status: pass
+  output:
+  - modeline-depth-pass
+  - transactional-facade-pass
+  - official-frame-counter-pass
+  - cursor-position-endpoint-pass
+- id: phase-e-all-mode-facade
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-e/scripts/run-mode-facade-matrix.py
+  output:
+  - 'mode facade matrix: 58 repeated configurations passed'
+- id: phase-e-exact-vdu-lifecycle
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-e/scripts/run-official-mode-lifecycle.py
+  output:
+  - 'official mode lifecycle: 7 cases passed'
+- id: phase-e-retained-teletext
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-e/scripts/run-teletext-integration.py
+  output:
+  - 'retained Teletext: init, exit, and allocation failure passed'
+- id: phase-b-native-renderer-regression
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
+  output: []
+- id: phase-c-logical-frame-regression
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
+  output:
+  - passed 12 host frame fixtures
+- id: phase-d-presentation-regression
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-d/scripts/run-host-presentation-tests.py
+  output:
+  - passed 19 fixtures and 3 fixed harnesses
+- id: phase-e-permanent-python-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-e/tests
+  - -p
+  - test_[mot]*.py
+  - -v
+  output: []
+summary:
+  passed: 8
+  failed: 0

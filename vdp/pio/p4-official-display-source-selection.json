@@ -1,0 +1,47 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-official-display",
+  "diagnostic_status": "Phase E adapted official facade and retained Teletext compile/link diagnostic",
+  "generated_build_files": [
+    "video/CMakeLists.txt"
+  ],
+  "project_translation_units": [
+    "video/extender/canary/official_display_canary.cpp",
+    "video/extender/display/cursor_position_adapter.cpp",
+    "video/extender/display/logical_frame_service.cpp",
+    "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/p4_display_controller.cpp",
+    "video/extender/display/p4_frame_service.cpp",
+    "video/extender/display/palette_state.cpp",
+    "video/extender/display/plane_storage.cpp",
+    "video/extender/display/presentation_compositor.cpp",
+    "video/extender/display/screen_facade_adapter.cpp",
+    "video/extender/display/screen_facade_p4_binding.cpp",
+    "video/extender/port/fabutils_port.cpp"
+  ],
+  "vendored_translation_units": [
+    "vendor/vdp-gl/src/canvas.cpp",
+    "vendor/vdp-gl/src/displaycontroller.cpp"
+  ],
+  "header_defined_official_implementation": [
+    "video/agon_screen.h",
+    "video/agon_ttxt.h",
+    "video/agon_palette.h",
+    "video/ttxtfont.h"
+  ],
+  "excluded_source_families": [
+    "vendor/vdp-gl/src/VGA*.cpp",
+    "vendor/vdp-gl/src/CVBS*.cpp",
+    "vendor/vdp-gl/src/scene.cpp",
+    "vendor/vdp-gl/src/ps2*.cpp",
+    "vendor/vdp-gl/src/soundgen.cpp",
+    "vendor/vdp-gl/src/network.cpp",
+    "vendor/vdp-gl/src/fabutils.cpp",
+    "video/agon_ps2.h",
+    "video/vdu_audio.h",
+    "video/vdu_network.h",
+    "video/vdu_storage.h",
+    "video/vdu_updater.h",
+    "video/video.ino"
+  ]
+}

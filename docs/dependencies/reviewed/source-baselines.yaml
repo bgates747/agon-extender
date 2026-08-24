@@ -10,7 +10,10 @@ sources:
     commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
     root_placeholder: ${AGON_VDP_SOURCE}
     managed_import:
-      presence_class: vendored
+      presence_class: vendored-patched
+      patched_paths:
+        - path: video/agon_screen.h
+          decision_ref: docs/decisions/ADR-0015-p4-display-backend-and-frame-service.md#decision
       mappings:
         - source_prefix: video/
           repository_path: vdp/video/

@@ -1,0 +1,111 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_e_build_closure
+generated_by: docs/tasks/PORT-003/phase-e/scripts/validate-phase-e.py
+diagnostic_status: clean P4 compile/link evidence only; no deployment, artifact identity, output sink, transport, or hardware claim
+environment: p4-official-display
+build_invocation: .venv/bin/pio run -d vdp -e p4-official-display
+inputs:
+  source_selection:
+    path: vdp/pio/p4-official-display-source-selection.json
+    sha256: e5f1c39c180c1b7d6eed4bf4b545a8873e37c8f04f88cbdf51385b713e8719c1
+  compile_commands:
+    path: vdp/.pio/build/p4-official-display/compile_commands.json
+    sha256: 13e4ad2f585206c3326af6fdc662b90acaf98c2f5ca120c65307d5ddd6985977
+  linker_map:
+    path: vdp/.pio/build/p4-official-display/firmware.map
+    sha256: 74e6fac3ce8aba681bdd4a445ce645240ca2ba5eac045d51bb68ffb7e8d717ab
+  normalized_elf_symbols_sha256: ec10f7412f53b5de753f7564fafae8e3d03caa111bd4974bb78da71e34b0e031
+firmware:
+  path: vdp/.pio/build/p4-official-display/firmware.bin
+  sha256: 8db588702851d2a3920771f3a1938cfb928b3fd31a87a72f86e8027eb7a74774
+  size_bytes: 609328
+header_defined_official_implementation:
+- path: video/agon_screen.h
+  sha256: 489210b08d2bd1995c95e148b97a46d3978a3c2fc69b91c13cf27804540d6359
+- path: video/agon_ttxt.h
+  sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
+- path: video/agon_palette.h
+  sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
+- path: video/ttxtfont.h
+  sha256: 8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c
+application_translation_units:
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/canary/official_display_canary.cpp
+  object: video/extender/canary/official_display_canary.cpp.o
+  object_loaded: true
+- source: video/extender/display/cursor_position_adapter.cpp
+  object: video/extender/display/cursor_position_adapter.cpp.o
+  object_loaded: true
+- source: video/extender/display/logical_frame_service.cpp
+  object: video/extender/display/logical_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/native_pixel_codec.cpp
+  object: video/extender/display/native_pixel_codec.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_frame_service.cpp
+  object: video/extender/display/p4_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/palette_state.cpp
+  object: video/extender/display/palette_state.cpp.o
+  object_loaded: true
+- source: video/extender/display/plane_storage.cpp
+  object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/display/presentation_compositor.cpp
+  object: video/extender/display/presentation_compositor.cpp.o
+  object_loaded: true
+- source: video/extender/display/screen_facade_adapter.cpp
+  object: video/extender/display/screen_facade_adapter.cpp.o
+  object_loaded: true
+- source: video/extender/display/screen_facade_p4_binding.cpp
+  object: video/extender/display/screen_facade_p4_binding.cpp.o
+  object_loaded: true
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+required_elf_symbols:
+- claim: official complete mode switch
+  symbol_fragment: changeMode(unsigned char)
+  present: true
+- claim: official Teletext initialization
+  symbol_fragment: agon_ttxt::init()
+  present: true
+- claim: project official-mode facade
+  symbol_fragment: agon::extender::display::ScreenFacadeAdapter::configure(
+  present: true
+- claim: P4 timer/task adapter
+  symbol_fragment: agon::extender::display::P4FrameService::start(
+  present: true
+- claim: project concrete controller
+  symbol_fragment: vtable for agon::extender::display::P4DisplayController
+  present: true
+- claim: display cursor endpoint
+  symbol_fragment: agon::extender::display::P4DisplayController::setDisplayCursorPosition(int, int)
+  present: true
+- claim: retained Canvas constructor
+  symbol_fragment: fabgl::Canvas::Canvas(fabgl::BitmappedDisplayController*)
+  present: true
+- claim: retained common primitive executor
+  symbol_fragment: fabgl::BitmappedDisplayController::execPrimitive(
+  present: true
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 14
+  project_translation_unit_count: 12
+  vendored_translation_unit_count: 2
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  closure_proved: true

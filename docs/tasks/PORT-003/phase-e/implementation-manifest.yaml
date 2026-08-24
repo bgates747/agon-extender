@@ -1,0 +1,74 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_e_implementation_manifest
+status: complete
+authority: docs/tasks/PORT-003.md#phase-e--official-mode-integration
+phase_contract: adapted official screen facade and exact VDU 22 display lifecycle over the P4 logical backend; no physical transport, input driver, consumer, or sink
+source_baselines:
+  agon_vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp_gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+returned_downstream_references:
+  frozen_extender_commit: 10f2eb20997f0428f0d756a0819a632cd3b7cedb
+  emos_maintained_source_commit: a8dc891a3668660978fa66d54b3d7638ecc876e2
+  emos_build_qualification_commit: b12fcaba97b1a9d43a5b2e247cc96846febac934
+  emos_port_200_qualification_commit: a695599924b959e86a83a9aef2799e86b968961a
+  role: provisional downstream context only; no Phase E parity or hardware claim
+oracle_precedence:
+  - official documentation and exact pinned source behavior
+  - independent source-derived fixture model
+  - exact official handler body exercised against controlled collaborators
+  - production host output compared against fixtures
+  - diagnostic target compile and link closure
+production:
+  - path: vdp/video/extender/display/screen_facade_adapter.hpp
+    role: transaction and error contract for official mode configuration
+  - path: vdp/video/extender/display/screen_facade_adapter.cpp
+    role: stable-controller mode parsing, storage replacement, cadence, and rollback
+  - path: vdp/video/extender/display/screen_facade_p4_binding.cpp
+    role: target-only binding from the facade to the P4 frame service
+  - path: vdp/video/extender/display/cursor_position_adapter.hpp
+    role: display-only processed cursor-position boundary
+  - path: vdp/video/extender/display/cursor_position_adapter.cpp
+    role: active-mode cursor binding and bounded positioning
+patched_vendor_files:
+  - path: vdp/video/agon_screen.h
+    upstream_path: video/agon_screen.h
+    decision_ref: docs/decisions/ADR-0015-p4-display-backend-and-frame-service.md#decision
+    boundary: concrete P4 controller, facade configuration, frame service, and cursor-position binding only
+    upstream_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    repository_sha256: 489210b08d2bd1995c95e148b97a46d3978a3c2fc69b91c13cf27804540d6359
+host_qualification:
+  provenance_generator: docs/tasks/PORT-003/phase-e/scripts/extract-mode-provenance.py
+  fixture_generator: docs/tasks/PORT-003/phase-e/scripts/generate-mode-fixtures.py
+  aggregate_runner: docs/tasks/PORT-003/phase-e/scripts/run-host-mode-tests.py
+  target_validator: docs/tasks/PORT-003/phase-e/scripts/validate-phase-e.py
+  prohibition: fixture generation must not import production headers, invoke production binaries, or parse production output
+generated_evidence:
+  - docs/tasks/PORT-003/phase-e/evidence/mode-provenance.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/host-mode-results.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/mode-facade-matrix-results.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/official-mode-lifecycle-results.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/teletext-integration-results.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/build-closure.yaml
+  - docs/tasks/PORT-003/phase-e/evidence/link-exclusions.yaml
+target_build:
+  environment: p4-official-display
+  source_selection: vdp/pio/p4-official-display-source-selection.json
+  deploy: forbidden
+  qualification: compile/link closure only
+deferred_to_phase_f:
+  - bounded frame-generation lease and immutable lifetime
+  - durable consumer API and output-format negotiation
+  - physical output consumer and sink-owned buffers
+deferred_to_port_008:
+  - physical command and response transport
+  - EMOS-to-EDP General Poll and official-packet vertical slice
+  - assembled-system mode routing and sysvar qualification
+excluded_families:
+  - classic VGA/CVBS GPIO, I2S, DMA, signal-table, and VSYNC ISR machinery
+  - physical PS2 input and processed input-event implementation
+  - physical audio, network, storage, updater, and output sinks
+  - MOS, EMOS parity, transport, EDU/VDU routing, and operating-mode policy

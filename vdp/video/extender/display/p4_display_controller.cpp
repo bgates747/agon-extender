@@ -46,6 +46,22 @@ void deallocateDisplay(void *, void *allocation) {
 
 }  // namespace
 
+FrameCounterRegister::operator std::uint32_t() const noexcept {
+  return value_.load(std::memory_order_acquire);
+}
+
+FrameCounterRegister &FrameCounterRegister::operator=(
+    std::uint32_t value) noexcept {
+  value_.store(value, std::memory_order_release);
+  return *this;
+}
+
+std::uint32_t FrameCounterRegister::advance(
+    std::uint32_t elapsed_ticks) noexcept {
+  return value_.fetch_add(elapsed_ticks, std::memory_order_acq_rel) +
+         elapsed_ticks;
+}
+
 Allocator defaultDisplayAllocator() noexcept {
   return {nullptr, allocateDisplay, deallocateDisplay};
 }
@@ -162,18 +178,17 @@ std::size_t P4DisplayController::executeFrameWork(
   return executed;
 }
 
-std::uint32_t P4DisplayController::frameCounter() const noexcept {
-  return frame_counter_.load(std::memory_order_acquire);
+std::uint32_t P4DisplayController::readFrameCounter() const noexcept {
+  return frameCounter;
 }
 
 void P4DisplayController::writeFrameCounter(std::uint32_t value) noexcept {
-  frame_counter_.store(value, std::memory_order_release);
+  frameCounter = value;
 }
 
 std::uint32_t P4DisplayController::advanceFrameCounter(
     std::uint32_t elapsed_ticks) noexcept {
-  return frame_counter_.fetch_add(elapsed_ticks, std::memory_order_acq_rel) +
-         elapsed_ticks;
+  return frameCounter.advance(elapsed_ticks);
 }
 
 std::size_t P4DisplayController::logicalWidth() const noexcept {
@@ -214,6 +229,12 @@ void P4DisplayController::updateRGB2PaletteLUT() noexcept {
 bool P4DisplayController::updateSignalList(std::uint16_t const *raw_pairs,
                                            std::size_t entries) noexcept {
   return palettes_.updateSignalList(raw_pairs, entries);
+}
+
+bool P4DisplayController::setDisplayCursorPosition(int x, int y) noexcept {
+  if (mouseCursor() == nullptr) return false;
+  setMouseCursorPos(x, y);
+  return true;
 }
 
 void P4DisplayController::suspendBackgroundPrimitiveExecution() {

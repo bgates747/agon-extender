@@ -17,6 +17,20 @@
 
 namespace agon::extender::display {
 
+// Official context.h reads and assigns `_VGAController->frameCounter`
+// directly. This proxy preserves that exact upstream source expression while
+// giving the P4 frame task atomic modulo-2^32 advancement of the same value.
+class FrameCounterRegister final {
+ public:
+  FrameCounterRegister() noexcept = default;
+  operator std::uint32_t() const noexcept;
+  FrameCounterRegister &operator=(std::uint32_t value) noexcept;
+  std::uint32_t advance(std::uint32_t elapsed_ticks) noexcept;
+
+ private:
+  std::atomic<std::uint32_t> value_{};
+};
+
 class P4DisplayController final : public fabgl::GenericBitmappedDisplayController,
                                   public FrameWorkExecutor {
  public:
@@ -31,7 +45,7 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   void setFrameServiceRunning(bool running) noexcept override;
   std::size_t executeFrameWork(
       std::size_t maximum_primitives) override;
-  std::uint32_t frameCounter() const noexcept override;
+  std::uint32_t readFrameCounter() const noexcept override;
   void writeFrameCounter(std::uint32_t value) noexcept;
   std::uint32_t advanceFrameCounter(
       std::uint32_t elapsed_ticks) noexcept override;
@@ -48,6 +62,9 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   void updateRGB2PaletteLUT() noexcept;
   bool updateSignalList(std::uint16_t const *raw_pairs,
                         std::size_t entries) noexcept;
+  bool setDisplayCursorPosition(int x, int y) noexcept;
+
+  FrameCounterRegister frameCounter;
 
   // This task-local qualification seam borrows visible-plane and upstream
   // overlay state. Its caller must establish quiescence. Phase F, not this
@@ -143,7 +160,6 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
 
   PlaneStorage storage_;
   PaletteState palettes_;
-  std::atomic<std::uint32_t> frame_counter_{};
   std::atomic<std::uint32_t> suspension_depth_{};
   std::atomic<bool> frame_service_running_{};
   std::atomic<bool> executing_frame_work_{};

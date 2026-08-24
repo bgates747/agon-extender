@@ -31,7 +31,7 @@ class FrameWorkExecutor {
   virtual std::size_t executeFrameWork(std::size_t maximum_primitives) = 0;
   virtual std::uint32_t advanceFrameCounter(
       std::uint32_t elapsed_ticks) noexcept = 0;
-  virtual std::uint32_t frameCounter() const noexcept = 0;
+  virtual std::uint32_t readFrameCounter() const noexcept = 0;
   virtual std::size_t logicalWidth() const noexcept = 0;
   virtual std::size_t logicalHeight() const noexcept = 0;
   virtual NativePixelFormat logicalFormat() const noexcept = 0;
