@@ -1,5 +1,7 @@
 # Agon Extender
 
+Cross-project authority is defined in [OWNERSHIP.md](OWNERSHIP.md).
+
 Agon Extender is an experimental hardware and firmware project for extending
 the capabilities of the Agon computer family with an external Espressif ESP32-P4
 coprocessor, by way of the Olimex ESP32-P4-DevKit (rev. D1). The intent is for Extender to operate as a wholly-independent video display processor (VDP) with enhanced performance and extended functionality over the stock VDP, while remaining fully backward-compatible with existing Agon software, but not limited to legacy software capabilities.

@@ -1577,6 +1577,13 @@ Returned EMOS review checkpoint:
 - its fixed VDU dispatcher and exclusive-mode route contract are compatible
   downstream consumers of this EDP-side official display lifecycle. They do
   not alter the Phase E source boundary, fixtures, gate, or stop conditions.
+
+Repository migration note (2026-08-24): the commit identities above remain the
+frozen inputs and evidence reviewed for this completed phase. Current EMOS
+source, product support, tasks, and qualification authority is `agon-emos`
+`main`, reconstructed at `b2a6d81`; current generic port authority is the
+reconstructed `mos-agondev` `main` at `2cd4128`. The former branch names are no
+longer operational dependencies.
 8. Exact official VDU mode lifecycle — complete:
    - `run-official-mode-lifecycle.py` verifies the immutable `v2.16.0` commit
      and recorded function/file hashes, extracts the exact
