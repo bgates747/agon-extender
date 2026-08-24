@@ -1,0 +1,353 @@
+schema_version: 1.0.0
+artifact_kind: qualification_obligations
+obligations:
+  - id: obligation:extender:forward-path-current-project
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:compatibility-transport
+    kind: transport
+    claim: The current clean project preserves all eight forward data lines, CLOCK, VALID_N, READY_N, record integrity, backpressure, sustained transfer, and recovery.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C01]
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:return-uart-target-speed
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:compatibility-transport
+    kind: transport
+    claim: The P4-to-eZ80 UART1 return path preserves selected framing, buffering, error, pacing, and recovery behavior at 1,152,000 baud.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C02]
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:shared-net-safe-ownership
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:compatibility-transport
+    kind: electrical-safety
+    claim: Parallel and UART1 uses of shared PC0 and PC1 transition without contention and recover across idle, timeout, reset, and either endpoint changing ownership first.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C03]
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
+    dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:general-poll-startup-roundtrip
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-23-0-x80
+    kind: mos-state
+    claim: MOS issues the official General Poll, Extender consumes it through the selected command path, and the unchanged response reaches the MOS-owned parser and establishes readiness.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C04]
+    source_refs: [source:audit-001:bench-inventory, source:setup-004:vdu-inventory, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: [PORT-003-PHASE-E, SETUP-005-D003]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:stock-command-stream-boundaries
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:command-stream
+    kind: command-ingress
+    claim: Representative and boundary-length stock VDU streams preserve fragmented, back-to-back, buffered, stalled, malformed, and resynchronization behavior selected for each mode.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C05]
+    source_refs: [source:audit-001:bench-inventory, source:setup-004:vdu-inventory, source:dependencies:code-graph]
+    dependency_node_ids: [file:agon-vdp:video/vdu.h, subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: [SETUP-005-D006]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:response-packet-and-sysvar-fidelity
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:response-and-mos-state
+    kind: response-packet
+    claim: Every retained VDP response class reaches the correct MOS-owned parser with exact packet bytes, completion flags, and applicable sysvar effects.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C06]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: [SETUP-005-D003]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:screen-mode-visible-fidelity
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-22
+    kind: presentation
+    claim: Documented mode selection, fallback, context reset, buffer swap and wait, frame count, mode information, and representative visible output match the accepted behavior at the selected Rev 1 sink.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-003]
+    requirement_refs: [AUDIT-001-C07]
+    source_refs: [source:audit-001:bench-inventory, source:port-003:task, source:dependencies:code-graph]
+    dependency_node_ids: [build-unit:extender:p4-display-controller, subsystem:agon-vdp:graphics-display, command:agon-vdp:vdu-22]
+    blocker_refs: []
+    implementation_state: in-progress
+    qualification_state: planned
+  - id: obligation:extender:composed-display-fidelity
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:display-composition
+    kind: presentation
+    claim: Palette, Copper, sprite, cursor, readback, and composed presentation behavior matches independently known logical and visible results on target hardware.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-003]
+    requirement_refs: [AUDIT-001-C08]
+    source_refs: [source:audit-001:bench-inventory, source:port-003:task, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:graphics-display]
+    blocker_refs: []
+    implementation_state: in-progress
+    qualification_state: planned
+  - id: obligation:extender:real-sink-timing-independence
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:display-composition
+    kind: performance
+    claim: Frame timing, waits, queued drawing, callbacks, and command responsiveness remain within the accepted contract while the real sink is normal, slow, disconnected, and reconnecting.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-003, PORT-006]
+    requirement_refs: [AUDIT-001-C09]
+    source_refs: [source:audit-001:bench-inventory, source:port-003:task, source:procedure:frame-service-r03, source:run:port-003-frame-service]
+    dependency_node_ids: [build-unit:extender:p4-logical-frame-service, build-unit:extender:p4-frame-task-adapter]
+    blocker_refs: []
+    implementation_state: in-progress
+    qualification_state: planned
+  - id: obligation:extender:audio-command-and-delivery-fidelity
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-23-0-x85
+    kind: audio-delivery
+    claim: Retained audio commands preserve acknowledgements, channel status, and logical timing while browser delivery meets its selected latency, jitter, drift, reconnect, and concurrent-video contract.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-004, PORT-006]
+    requirement_refs: [AUDIT-001-C10]
+    source_refs: [source:audit-001:bench-inventory, source:setup-004:vdu-inventory, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:audio]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:canonical-input-packet-path
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:input-integration
+    kind: input-routing
+    claim: Onboard-VDP keyboard and mouse packets reach MOS unchanged where required, and explicitly forwarded processed events update EDP-local behavior without duplicates or competing sysvar writers.
+    mode_ids: [mode:extender:legacy, mode:extender:cooperative]
+    owner_task_ids: [PORT-005]
+    requirement_refs: [AUDIT-001-C11]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:physical-ps2-input]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:exclusive-input-dependent-display-behavior
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:input-integration
+    kind: input-routing
+    claim: EDP-exclusive mode preserves retained paged-mode, control-key, mouse state and cursor, variable, and callback behavior for untouched applications.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [PORT-005, SETUP-005]
+    requirement_refs: [AUDIT-001-C12]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:setup-005:open-decisions]
+    dependency_node_ids: [subsystem:agon-vdp:physical-ps2-input]
+    blocker_refs: [SETUP-005-D007]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:rtc-authority-and-synchronization
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-23-0-x87
+    kind: mos-state
+    claim: RTC read and set commands, responses, MOS sysvars, persistence, and optional network synchronization follow one accepted authority without competing writers.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [SETUP-005]
+    requirement_refs: [AUDIT-001-C13]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:setup-005:open-decisions, source:dependencies:code-graph]
+    dependency_node_ids: [subsystem:agon-vdp:rtc-service]
+    blocker_refs: [SETUP-005-D008]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:operating-mode-lifecycle
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:operating-mode-lifecycle
+    kind: recovery
+    claim: Legacy, EDP-exclusive, and cooperative mode discovery, entry, exit, reset, failure, recovery, and fallback are deterministic for aware and unaware programs.
+    mode_ids: [mode:extender:legacy, mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [SETUP-005]
+    requirement_refs: [AUDIT-001-C14]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:setup-005:open-decisions]
+    dependency_node_ids: []
+    blocker_refs: [SETUP-005-D001, SETUP-005-D002, SETUP-005-D003, SETUP-005-D004]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:legacy-electrical-absence
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:assembled-system
+    kind: electrical-safety
+    claim: A powered or unpowered Extender is electrically and logically absent in legacy mode without improper drive, back-power, wedging, or onboard-VDP disturbance.
+    mode_ids: [mode:extender:legacy]
+    owner_task_ids: [QUAL-002]
+    requirement_refs: [AUDIT-001-C15]
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
+    dependency_node_ids: []
+    blocker_refs: [SETUP-005-D002]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:independent-power-reset-recovery
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:assembled-system
+    kind: recovery
+    claim: Independent Agon, onboard-VDP, and P4 power and reset sequences during idle, transfer, and rendering produce bounded recovery or the accepted visible failure.
+    mode_ids: [mode:extender:legacy, mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [QUAL-002]
+    requirement_refs: [AUDIT-001-C16]
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
+    dependency_node_ids: []
+    blocker_refs: [SETUP-005-D002]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:malformed-stream-mode-policy
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:command-stream
+    kind: recovery
+    claim: Malformed, truncated, stalled, and overrun command and response streams reproduce or improve stock recovery exactly as selected for each strict and non-strict mode.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-008, SETUP-005]
+    requirement_refs: [AUDIT-001-C17]
+    source_refs: [source:audit-001:bench-inventory, source:setup-005:open-decisions]
+    dependency_node_ids: [file:agon-vdp:video/vdu.h, subsystem:agon-vdp:primary-vdp-transport]
+    blocker_refs: [SETUP-005-D006]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:maintenance-carveout-observable-behavior
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:maintenance-carveouts
+    kind: carveout-behavior
+    claim: Every scoped maintenance and operator carve-out exhibits its selected mode-specific no-op, rejection, fallback, or stock-observable failure without unaccepted corruption of later VDU traffic.
+    mode_ids: [mode:extender:legacy, mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [SETUP-005]
+    requirement_refs: [AUDIT-001-C18]
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:setup-005:open-decisions]
+    dependency_node_ids: [subsystem:agon-vdp:debug-zdi-and-file-transfer, subsystem:agon-vdp:firmware-updater, subsystem:agon-vdp:terminal-mode]
+    blocker_refs: [SETUP-005-D006]
+    implementation_state: excluded
+    qualification_state: blocked
+  - id: obligation:extender:console8-platform-coverage
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:platform-coverage
+    kind: platform-coverage
+    claim: The accepted compatibility matrix is repeated on Console8 using a separately reviewed and versioned host harness.
+    mode_ids: [mode:extender:legacy, mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: []
+    requirement_refs: [AUDIT-001-C19]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: unassigned
+    qualification_state: planned
+  - id: obligation:extender:wired-ethernet-backend
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:wired-ethernet
+    kind: secondary-capability
+    claim: Wired Ethernet meets selected link, addressing, DNS, throughput, reconnect, congestion, concurrency, and failure contracts.
+    mode_ids: []
+    owner_task_ids: [PORT-006]
+    requirement_refs: [AUDIT-001-X01]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:browser-video-backend
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:browser-video
+    kind: secondary-capability
+    claim: Browser video remains bounded under normal, slow, disconnected, reconnecting, and concurrent-audio conditions without changing logical VDP progress.
+    mode_ids: []
+    owner_task_ids: [PORT-003, PORT-006]
+    requirement_refs: [AUDIT-001-X02]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: [build-unit:extender:p4-logical-frame-service]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:network-update-recovery
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:network-update
+    kind: secondary-capability
+    claim: Network update authentication, integrity, interruption, power-loss, rollback, restart, and recovery meet the accepted update contract.
+    mode_ids: []
+    owner_task_ids: [PORT-006]
+    requirement_refs: [AUDIT-001-X03]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:optional-wifi-backend
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:optional-wifi
+    kind: secondary-capability
+    claim: The optional MOD-WIFI-ESP8266 header and backend meet selected electrical, module-protocol, reconnect, throughput, and coexistence contracts.
+    mode_ids: []
+    owner_task_ids: [PORT-006]
+    requirement_refs: [AUDIT-001-X04]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:microsd-storage-backend
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:microsd-storage
+    kind: secondary-capability
+    claim: DevKit microSD mount, throughput, concurrency, removal, reinsertion, full-media, malformed-filesystem, interrupted-write, and recovery behavior meet the accepted storage contract.
+    mode_ids: []
+    owner_task_ids: [PORT-007]
+    requirement_refs: [AUDIT-001-X05]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+  - id: obligation:extender:local-mipi-output
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:local-mipi-output
+    kind: secondary-capability
+    claim: Selected MIPI-DSI LCD and MIPI-HDMI output configurations meet their future accepted hardware and presentation contracts.
+    mode_ids: []
+    owner_task_ids: []
+    requirement_refs: [AUDIT-001-X06]
+    source_refs: [source:audit-001:bench-inventory]
+    dependency_node_ids: []
+    blocker_refs: []
+    implementation_state: unassigned
+    qualification_state: unknown

@@ -1,0 +1,55 @@
+schema_version: 1.0.0
+artifact_kind: qualification_sources
+sources:
+  - id: source:adr-0014:operating-modes
+    kind: decision-record
+    ref: docs/decisions/ADR-0014-edu-operating-modes-and-service-architecture.md
+    authority: authoritative
+  - id: source:audit-001:bench-inventory
+    kind: task-record
+    ref: docs/tasks/AUDIT-001.md
+    authority: authoritative
+  - id: source:dependencies:code-graph
+    kind: dependency-model
+    ref: docs/dependencies/generated/code-graph.yaml
+    authority: authoritative
+  - id: source:fixture:la03-r01
+    kind: fixture-profile
+    ref: hardware/fixtures/la03-p4-probe-fixture-r01/profile.yaml
+    authority: authoritative
+  - id: source:harness:light2-r01
+    kind: hardware-profile
+    ref: hardware/designs/light2-harness-r01/profile.yaml
+    authority: authoritative
+  - id: source:legacy:prx-06
+    kind: legacy-evidence
+    ref: hardware/designs/light2-harness-r01/legacy-evidence/prx-06-results.md
+    authority: supporting
+  - id: source:legacy:rev-02
+    kind: legacy-evidence
+    ref: hardware/designs/light2-harness-r01/legacy-evidence/rev-02-results.md
+    authority: supporting
+  - id: source:port-003:task
+    kind: task-record
+    ref: docs/tasks/PORT-003.md
+    authority: authoritative
+  - id: source:procedure:frame-service-r03
+    kind: procedure
+    ref: docs/procedures/p4-frame-service-qualification-r03.md
+    authority: authoritative
+  - id: source:run:port-003-frame-service
+    kind: run-manifest
+    ref: tests/runs/PORT-003-2026-08-22-23-58-56Z/manifest.yaml
+    authority: authoritative
+  - id: source:setup-004:dispositions
+    kind: task-record
+    ref: docs/tasks/SETUP-004/disposition-matrix.md
+    authority: authoritative
+  - id: source:setup-004:vdu-inventory
+    kind: accepted-inventory
+    ref: docs/tasks/SETUP-004/VDU-inventory.md
+    authority: authoritative
+  - id: source:setup-005:open-decisions
+    kind: task-record
+    ref: docs/tasks/SETUP-005.md
+    authority: authoritative

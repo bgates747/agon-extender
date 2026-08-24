@@ -1,0 +1,33 @@
+schema_version: 1.0.0
+artifact_kind: qualification_capabilities
+capabilities:
+  - id: capability:extender:browser-video
+    title: Browser video transport and presentation
+    scope: secondary-capability
+    owner_task_ids: [PORT-003, PORT-006]
+    source_refs: [source:audit-001:bench-inventory]
+  - id: capability:extender:local-mipi-output
+    title: MIPI-DSI LCD and MIPI-HDMI output
+    scope: secondary-capability
+    owner_task_ids: []
+    source_refs: [source:audit-001:bench-inventory]
+  - id: capability:extender:microsd-storage
+    title: P4 DevKit microSD storage service
+    scope: secondary-capability
+    owner_task_ids: [PORT-007]
+    source_refs: [source:audit-001:bench-inventory]
+  - id: capability:extender:network-update
+    title: Network firmware update service
+    scope: secondary-capability
+    owner_task_ids: [PORT-006]
+    source_refs: [source:audit-001:bench-inventory]
+  - id: capability:extender:optional-wifi
+    title: Optional MOD-WIFI-ESP8266 backend
+    scope: secondary-capability
+    owner_task_ids: [PORT-006]
+    source_refs: [source:audit-001:bench-inventory]
+  - id: capability:extender:wired-ethernet
+    title: P4 DevKit wired Ethernet backend
+    scope: secondary-capability
+    owner_task_ids: [PORT-006]
+    source_refs: [source:audit-001:bench-inventory]

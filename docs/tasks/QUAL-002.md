@@ -50,6 +50,15 @@ production isolation requirements.
    treated as simultaneous proof of unobserved signals or analog safety.
 8. Keep Console8 outside the Light 2 result; it requires its own harness and
    later qualification.
+9. Prove the accepted pull-discovery policy: EDP/P4 firmware and carrier wiring
+   produce no proactive presence traffic or unsafe P4-to-eZ80 signal while
+   Legacy is committed or a transaction is uncommitted; EMOS explicitly arms
+   the receiver and initiates discovery.
+10. Prove the accepted pre-activation fail-safe design boundary for every
+    supported power, reset, mode, and GPIO-ownership state: hardware-safe
+    defaults keep P4-to-Agon drivers disabled independently of P4 firmware and
+    prevent contention or back-powering. Do not generalize this evidence into a
+    non-bricking guarantee for external code that bypasses EMOS.
 
 ## Work
 
@@ -63,16 +72,29 @@ production isolation requirements.
    excluded from testing until protective design changes exist.
 4. Link each state to QUAL-001 compatibility obligations and PORT-008 transport
    states.
+5. Include commands issued before, during, and after P4 boot, plus stale EDP
+   traffic after P4 reset, and identify the EMOS, EDP/P4 firmware, eZ80
+   peripheral, interface-circuit, and physical-wiring owner for each expected
+   state.
+6. Include bounded pre-activation malformed-pattern and supported
+   direction-change cases produced through accepted fixtures and procedures.
+   Identify direct register/GPIO bypass as unsupported and outside any
+   non-bricking claim rather than attempting exhaustive adversarial proof.
 
 ### QUAL-002.2 — Audit the candidate hardware and measurement boundary
 
 1. Review schematic-level paths, pull resistors, series resistance, transceiver
    enables, default pin states, common ground, independent rails, USB power,
    and possible phantom-power paths.
-2. Determine which claims require a logic analyzer, oscilloscope, meter,
+2. Determine which hardware element owns safe P4-to-eZ80 isolation before EDP
+   firmware runs and whether any P4 ROM/boot path can drive product wiring.
+3. Determine whether the P4 can safely observe pre-activation host activity
+   while its Agon-facing drivers remain disabled. A warning path is optional
+   and must not weaken isolation merely to make such activity observable.
+4. Determine which claims require a logic analyzer, oscilloscope, meter,
    current-limited supply, endpoint integrity check, or multiple controlled
    captures.
-3. Produce a no-change sufficiency finding or a bounded proposal for new
+5. Produce a no-change sufficiency finding or a bounded proposal for new
    harness/fixture revisions. Do not alter the live bench during this work.
 
 **Review Gate 1:** Author approves the supported state matrix, safety analysis,
@@ -145,6 +167,9 @@ current bench state before execution.
 3. Legacy electrical/logical absence, either-order power, independent reset,
    transfer interruption, and recovery claims are supported without
    unexplained observation gaps.
-4. Required hardware revisions are qualified rather than edited in place.
-5. QUAL-001, artifact registry, procedures, run manifests, task records, and
+4. Late P4 power-on, explicit EMOS discovery while P4 is still booting,
+   bounded readiness, no unsolicited boot/reset traffic, and no-mainboard-reset
+   Legacy-to-Dual activation have accepted evidence.
+5. Required hardware revisions are qualified rather than edited in place.
+6. QUAL-001, artifact registry, procedures, run manifests, task records, and
    development log agree on the exact scope and remaining deferrals.

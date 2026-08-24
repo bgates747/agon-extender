@@ -1,0 +1,1868 @@
+schema_version: 1.0.0
+artifact_kind: qualification_interfaces
+interfaces:
+- id: interface:agon-vdp:vdu-0
+  selector: VDU 0
+  title: Null (no operation)
+  category: base-vdu
+  display_order: 0
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-1
+  selector: VDU 1
+  title: Send next character to the printer
+  category: base-vdu
+  display_order: 1
+  disposition: unsupported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-2
+  selector: VDU 2
+  title: Enable printer output
+  category: base-vdu
+  display_order: 2
+  disposition: unsupported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-3
+  selector: VDU 3
+  title: Disable printer output
+  category: base-vdu
+  display_order: 3
+  disposition: unsupported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-4
+  selector: VDU 4
+  title: Write text at the text cursor
+  category: base-vdu
+  display_order: 4
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-5
+  selector: VDU 5
+  title: Write text at the graphics cursor
+  category: base-vdu
+  display_order: 5
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-6
+  selector: VDU 6
+  title: Enable screen processing
+  category: base-vdu
+  display_order: 6
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-7
+  selector: VDU 7
+  title: Make a short beep (BEL)
+  category: base-vdu
+  display_order: 7
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-8
+  selector: VDU 8
+  title: Move cursor back one character
+  category: base-vdu
+  display_order: 8
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-9
+  selector: VDU 9
+  title: Move cursor forward one character
+  category: base-vdu
+  display_order: 9
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-10
+  selector: VDU 10
+  title: Move cursor down one line
+  category: base-vdu
+  display_order: 10
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-11
+  selector: VDU 11
+  title: Move cursor up one line
+  category: base-vdu
+  display_order: 11
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-12
+  selector: VDU 12
+  title: Clear the text area (`CLS`)
+  category: base-vdu
+  display_order: 12
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-13
+  selector: VDU 13
+  title: Carriage return
+  category: base-vdu
+  display_order: 13
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-14
+  selector: VDU 14
+  title: Enable paged mode
+  category: base-vdu
+  display_order: 14
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-15
+  selector: VDU 15
+  title: Disable paged mode
+  category: base-vdu
+  display_order: 15
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-16
+  selector: VDU 16
+  title: Clear the graphics area (`CLG`)
+  category: base-vdu
+  display_order: 16
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-17
+  selector: VDU 17, colour
+  title: Set text colour (`COLOUR`)
+  category: base-vdu
+  display_order: 17
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-18
+  selector: VDU 18, mode, colour
+  title: Set graphics colour (`GCOL`)
+  category: base-vdu
+  display_order: 18
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-19
+  selector: VDU 19, logical, physical, red, green, blue
+  title: Define a logical colour
+  category: base-vdu
+  display_order: 19
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-20
+  selector: VDU 20
+  title: Reset palette, colours, and drawing modes
+  category: base-vdu
+  display_order: 20
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-21
+  selector: VDU 21
+  title: Disable screen processing
+  category: base-vdu
+  display_order: 21
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-22
+  selector: VDU 22, mode
+  title: Select screen mode (`MODE`)
+  category: base-vdu
+  display_order: 22
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23
+  selector: VDU 23, char, b1...b8
+  title: Redefine a display character
+  category: base-vdu
+  display_order: 23
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-24
+  selector: VDU 24, left; bottom; right; top;
+  title: Set graphics viewport
+  category: base-vdu
+  display_order: 24
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25
+  selector: VDU 25, mode, x; y;
+  title: Execute a PLOT command
+  category: base-vdu
+  display_order: 25
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-26
+  selector: VDU 26
+  title: Reset graphics and text viewports
+  category: base-vdu
+  display_order: 26
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-27
+  selector: VDU 27, char
+  title: Output a character to the screen
+  category: base-vdu
+  display_order: 27
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-28
+  selector: VDU 28, left, bottom, right, top
+  title: Set text viewport
+  category: base-vdu
+  display_order: 28
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-29
+  selector: VDU 29, x; y;
+  title: Set graphics origin
+  category: base-vdu
+  display_order: 29
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-30
+  selector: VDU 30
+  title: Home the text cursor
+  category: base-vdu
+  display_order: 30
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-31
+  selector: VDU 31, x, y
+  title: Move text cursor to a text position (`TAB`)
+  category: base-vdu
+  display_order: 31
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-127
+  selector: VDU 127
+  title: Backspace
+  category: base-vdu
+  display_order: 32
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:character-data-32-126-128-255
+  selector: bytes 32–126, 128–255
+  title: Display character data
+  category: base-vdu
+  display_order: 33
+  disposition: supported
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-1
+  selector: VDU 23, 1, n
+  title: Control the cursor
+  category: direct-vdu-23
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-6
+  selector: VDU 23, 6, n1...n8
+  title: Set dotted-line pattern
+  category: direct-vdu-23
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-7
+  selector: VDU 23, 7, extent, direction, movement
+  title: Scroll
+  category: direct-vdu-23
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-16
+  selector: VDU 23, 16, setting, mask
+  title: Define cursor movement behaviour
+  category: direct-vdu-23
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-23
+  selector: VDU 23, 23, thickness
+  title: Set line thickness
+  category: direct-vdu-23
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27
+  selector: VDU 23, 27, command, <params>
+  title: Execute bitmap or sprite command
+  category: direct-vdu-23
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-28
+  selector: VDU 23, 28, [command]
+  title: Enter Intel HEX or YMODEM transfer mode
+  category: direct-vdu-23
+  display_order: 6
+  disposition: unsupported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x0a
+  selector: VDU 23, 0, &0A, n
+  title: Set text-cursor start line and appearance
+  category: system
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x0b
+  selector: VDU 23, 0, &0B, n
+  title: Set text-cursor end line
+  category: system
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x80
+  selector: VDU 23, 0, &80, n
+  title: General poll; echo `n` to confirm Extender is alive
+  category: system
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x81
+  selector: VDU 23, 0, &81, locale
+  title: Set keyboard locale
+  category: system
+  display_order: 3
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x82
+  selector: VDU 23, 0, &82
+  title: Request text-cursor position
+  category: system
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x83
+  selector: VDU 23, 0, &83, x; y;
+  title: Read character at a text position
+  category: system
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x84
+  selector: VDU 23, 0, &84, x; y;
+  title: Read pixel colour at a graphics position
+  category: system
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85
+  selector: VDU 23, 0, &85, channel, command, <params>
+  title: Execute audio command
+  category: system
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x86
+  selector: VDU 23, 0, &86
+  title: Fetch screen dimensions and mode information
+  category: system
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x87
+  selector: VDU 23, 0, &87, <params>
+  title: RTC ownership and MOS synchronization unresolved
+  category: system
+  display_order: 9
+  disposition: unresolved
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x88
+  selector: VDU 23, 0, &88, delay; rate; led
+  title: Control keyboard repeat and LEDs
+  category: system
+  display_order: 10
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89
+  selector: VDU 23, 0, &89, command, <params>
+  title: Control the mouse
+  category: system
+  display_order: 11
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x8a
+  selector: VDU 23, 0, &8A, n
+  title: Set cursor start column
+  category: system
+  display_order: 12
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x8b
+  selector: VDU 23, 0, &8B, n
+  title: Set cursor end column
+  category: system
+  display_order: 13
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x8c
+  selector: VDU 23, 0, &8C, x; y;
+  title: Move cursor by a relative pixel offset
+  category: system
+  display_order: 14
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x90
+  selector: VDU 23, 0, &90, char, b1...b8
+  title: Redefine any system-font character
+  category: system
+  display_order: 15
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x91
+  selector: VDU 23, 0, &91
+  title: Restore all system-font characters
+  category: system
+  display_order: 16
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x92
+  selector: VDU 23, 0, &92, char, bitmapId;
+  title: Map a character to a bitmap
+  category: system
+  display_order: 17
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x93
+  selector: VDU 23, 0, &93, x; y;
+  title: Read character at a graphics position
+  category: system
+  display_order: 18
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x94
+  selector: VDU 23, 0, &94, n
+  title: Read a colour-palette entry
+  category: system
+  display_order: 19
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95
+  selector: VDU 23, 0, &95, command, <params>
+  title: Manage fonts
+  category: system
+  display_order: 20
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x96
+  selector: VDU 23, 0, &96, flags, bufferId;
+  title: Set an affine transform matrix
+  category: system
+  display_order: 21
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x98
+  selector: VDU 23, 0, &98, n
+  title: Enable or disable control keys
+  category: system
+  display_order: 22
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x99
+  selector: VDU 23, 0, &99, virtualKey
+  title: Request current keyboard data for a key
+  category: system
+  display_order: 23
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9a
+  selector: VDU 23, 0, &9A
+  title: Temporarily enable paged mode
+  category: system
+  display_order: 24
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9b
+  selector: VDU 23, 0, &9B, bufferId;
+  title: Print a buffer to the screen
+  category: system
+  display_order: 25
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9c
+  selector: VDU 23, 0, &9C
+  title: Set text viewport using graphics coordinates
+  category: system
+  display_order: 26
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9d
+  selector: VDU 23, 0, &9D
+  title: Set graphics viewport using graphics coordinates
+  category: system
+  display_order: 27
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9e
+  selector: VDU 23, 0, &9E
+  title: Set graphics origin using graphics coordinates
+  category: system
+  display_order: 28
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x9f
+  selector: VDU 23, 0, &9F
+  title: Move graphics origin and viewports
+  category: system
+  display_order: 29
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0
+  selector: VDU 23, 0, &A0, bufferId;, command, <params>
+  title: Execute buffered command
+  category: system
+  display_order: 30
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa1
+  selector: VDU 23, 0, &A1
+  title: Receive and install a VDP firmware update
+  category: system
+  display_order: 31
+  disposition: unsupported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc0
+  selector: VDU 23, 0, &C0, n
+  title: Enable or disable logical screen scaling
+  category: system
+  display_order: 32
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc1
+  selector: VDU 23, 0, &C1, n
+  title: Enable or disable legacy modes
+  category: system
+  display_order: 33
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2
+  selector: VDU 23, 0, &C2, command, <params>
+  title: Execute tile-engine command
+  category: system
+  display_order: 34
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc3
+  selector: VDU 23, 0, &C3
+  title: Swap screen buffer and/or wait for VSYNC
+  category: system
+  display_order: 35
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4
+  selector: VDU 23, 0, &C4, command, <params>
+  title: Execute Copper command
+  category: system
+  display_order: 36
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8
+  selector: VDU 23, 0, &C8, command, <params>
+  title: Manage graphics contexts
+  category: system
+  display_order: 37
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xca
+  selector: VDU 23, 0, &CA
+  title: Flush current drawing commands
+  category: system
+  display_order: 38
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xf2
+  selector: VDU 23, 0, &F2, n
+  title: Set dot-dash pattern length
+  category: system
+  display_order: 39
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xf8
+  selector: VDU 23, 0, &F8, variableId; value;
+  title: Set a VDP variable
+  category: system
+  display_order: 40
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xf9
+  selector: VDU 23, 0, &F9, variableId;
+  title: Clear a VDP variable
+  category: system
+  display_order: 41
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xfe
+  selector: VDU 23, 0, &FE, n
+  title: Select console mode
+  category: system
+  display_order: 42
+  disposition: unsupported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xff
+  selector: VDU 23, 0, &FF
+  title: Enter or resume terminal mode
+  category: system
+  display_order: 43
+  disposition: unsupported
+  parent_interface_id: interface:agon-vdp:vdu-23
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-0
+  selector: '..., 0'
+  title: Enable mouse
+  category: mouse
+  display_order: 0
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-1
+  selector: '..., 1'
+  title: Disable mouse
+  category: mouse
+  display_order: 1
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-2
+  selector: '..., 2'
+  title: Reset mouse
+  category: mouse
+  display_order: 2
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-3
+  selector: '..., 3, cursorId;'
+  title: Select mouse cursor
+  category: mouse
+  display_order: 3
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-4
+  selector: '..., 4, x; y;'
+  title: Set mouse position
+  category: mouse
+  display_order: 4
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-5
+  selector: '..., 5, x1; y1; x2; y2;'
+  title: Set reserved mouse area
+  category: mouse
+  display_order: 5
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-6
+  selector: '..., 6, sampleRate'
+  title: Set mouse sample rate
+  category: mouse
+  display_order: 6
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-7
+  selector: '..., 7, resolution'
+  title: Set mouse resolution
+  category: mouse
+  display_order: 7
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-8
+  selector: '..., 8, scaling'
+  title: Set mouse scaling
+  category: mouse
+  display_order: 8
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-9
+  selector: '..., 9, acceleration;'
+  title: Set mouse acceleration
+  category: mouse
+  display_order: 9
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x89-10
+  selector: '..., 10, acceleration; highByte'
+  title: Set mouse-wheel acceleration
+  category: mouse
+  display_order: 10
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x89
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-0
+  selector: '..., channel, 0, volume, frequency; duration;'
+  title: Play note
+  category: audio
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-1
+  selector: '..., channel, 1'
+  title: Read channel status
+  category: audio
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-2
+  selector: '..., channel, 2, volume'
+  title: Set channel volume
+  category: audio
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-3
+  selector: '..., channel, 3, frequency;'
+  title: Set channel frequency
+  category: audio
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-4
+  selector: '..., channel, 4, waveformOrSample, <params>'
+  title: Set waveform or sample
+  category: audio
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-5
+  selector: '..., channelOrSample, 5, command, <params>'
+  title: Manage samples
+  category: audio
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-6
+  selector: '..., channel, 6, type, <params>'
+  title: Set volume envelope
+  category: audio
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-7
+  selector: '..., channel, 7, type, <params>'
+  title: Set frequency envelope
+  category: audio
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-8
+  selector: '..., channel, 8'
+  title: Enable channel
+  category: audio
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-9
+  selector: '..., channel, 9'
+  title: Disable channel
+  category: audio
+  display_order: 9
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-10
+  selector: '..., channel, 10'
+  title: Reset channel
+  category: audio
+  display_order: 10
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-11
+  selector: '..., channel, 11, position; highByte'
+  title: Seek playback position
+  category: audio
+  display_order: 11
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-12
+  selector: '..., channel, 12, duration; highByte'
+  title: Set duration
+  category: audio
+  display_order: 12
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-13
+  selector: '..., channel, 13, sampleRate;'
+  title: Set sample rate
+  category: audio
+  display_order: 13
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x85-14
+  selector: '..., channel, 14, parameter, value'
+  title: Set waveform parameters
+  category: audio
+  display_order: 14
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x85
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-0
+  selector: '..., 0, bitmap'
+  title: Select 8-bit bitmap ID
+  category: bitmap-sprite
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-1-load-bitmap-data
+  selector: '..., 1, width; height; <data>'
+  title: Load bitmap data
+  category: bitmap-sprite
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-1-capture-screen-data-into-a-bitmap
+  selector: '..., 1, bitmap, 0, 0;'
+  title: Capture screen data into a bitmap
+  category: bitmap-sprite
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-2
+  selector: '..., 2, width; height; colour'
+  title: Create solid-colour bitmap
+  category: bitmap-sprite
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-3
+  selector: '..., 3, x; y;'
+  title: Draw current bitmap
+  category: bitmap-sprite
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x20
+  selector: '..., &20, bufferId;'
+  title: Select bitmap by 16-bit buffer ID
+  category: bitmap-sprite
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x21-create-bitmap-from-selected-buffer
+  selector: '..., &21, width; height; format'
+  title: Create bitmap from selected buffer
+  category: bitmap-sprite
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x21-create-bitmap-from-rgba8888-buffer
+  selector: '..., &21, bitmapId; 0;'
+  title: Create bitmap from RGBA8888 buffer
+  category: bitmap-sprite
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-4
+  selector: '..., 4, sprite'
+  title: Select sprite
+  category: bitmap-sprite
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-5
+  selector: '..., 5'
+  title: Clear current sprite frames
+  category: bitmap-sprite
+  display_order: 9
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-6
+  selector: '..., 6, bitmap'
+  title: Add 8-bit bitmap to current sprite
+  category: bitmap-sprite
+  display_order: 10
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-7
+  selector: '..., 7, count'
+  title: Activate sprites
+  category: bitmap-sprite
+  display_order: 11
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-8
+  selector: '..., 8'
+  title: Select next sprite frame
+  category: bitmap-sprite
+  display_order: 12
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-9
+  selector: '..., 9'
+  title: Select previous sprite frame
+  category: bitmap-sprite
+  display_order: 13
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-10
+  selector: '..., 10, frame'
+  title: Select sprite frame
+  category: bitmap-sprite
+  display_order: 14
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-11
+  selector: '..., 11'
+  title: Show current sprite
+  category: bitmap-sprite
+  display_order: 15
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-12
+  selector: '..., 12'
+  title: Hide current sprite
+  category: bitmap-sprite
+  display_order: 16
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-13
+  selector: '..., 13, x; y;'
+  title: Move sprite to position
+  category: bitmap-sprite
+  display_order: 17
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-14
+  selector: '..., 14, x; y;'
+  title: Move sprite by offset
+  category: bitmap-sprite
+  display_order: 18
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-15
+  selector: '..., 15'
+  title: Update sprites
+  category: bitmap-sprite
+  display_order: 19
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-16
+  selector: '..., 16'
+  title: Reset bitmaps and sprites
+  category: bitmap-sprite
+  display_order: 20
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-17
+  selector: '..., 17'
+  title: Reset sprites only
+  category: bitmap-sprite
+  display_order: 21
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-18
+  selector: '..., 18, mode'
+  title: Set sprite GCOL paint mode
+  category: bitmap-sprite
+  display_order: 22
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-19
+  selector: '..., 19'
+  title: Use hardware sprite
+  category: bitmap-sprite
+  display_order: 23
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-20
+  selector: '..., 20'
+  title: Use software sprite
+  category: bitmap-sprite
+  display_order: 24
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-21
+  selector: '..., 21, bitmap'
+  title: Replace current sprite frame
+  category: bitmap-sprite
+  display_order: 25
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x26
+  selector: '..., &26, bufferId;'
+  title: Add 16-bit bitmap to current sprite
+  category: bitmap-sprite
+  display_order: 26
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x35
+  selector: '..., &35, bufferId;'
+  title: Replace current frame with 16-bit bitmap
+  category: bitmap-sprite
+  display_order: 27
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-27-x40
+  selector: '..., &40, hotX, hotY'
+  title: Define mouse cursor bitmap
+  category: bitmap-sprite
+  display_order: 28
+  disposition: mode-dependent
+  parent_interface_id: interface:agon-vdp:vdu-23-27
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-0
+  selector: '..., 0, bufferId; flags'
+  title: Select font
+  category: font
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-1
+  selector: '..., 1, bufferId; width, height, ascent, flags'
+  title: Create font from buffer
+  category: font
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-2
+  selector: '..., 2, bufferId; field, value;'
+  title: Set or adjust font property
+  category: font
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-3
+  selector: '..., 3, bufferId; <params>'
+  title: Reserved font command
+  category: font
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-4
+  selector: '..., 4, bufferId;'
+  title: Delete font
+  category: font
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-x95-5
+  selector: '..., 5, bufferId;'
+  title: Copy system font to buffer
+  category: font
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-x95
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-0
+  selector: '..., 0, contextId'
+  title: Select context stack
+  category: context
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-1
+  selector: '..., 1, contextId'
+  title: Delete context stack
+  category: context
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-2
+  selector: '..., 2, flags'
+  title: Reset context state
+  category: context
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-3
+  selector: '..., 3'
+  title: Save context
+  category: context
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-4
+  selector: '..., 4'
+  title: Restore context
+  category: context
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-5
+  selector: '..., 5, contextId'
+  title: Save and select a context copy
+  category: context
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-6
+  selector: '..., 6'
+  title: Restore all context state
+  category: context
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc8-7
+  selector: '..., 7'
+  title: Clear context stack
+  category: context
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc8
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4-0
+  selector: '..., 0, paletteId;'
+  title: Create palette
+  category: copper
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc4
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4-1
+  selector: '..., 1, paletteId;'
+  title: Delete palette
+  category: copper
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc4
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4-2
+  selector: '..., 2, paletteId; index, red, green, blue'
+  title: Set palette entry
+  category: copper
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc4
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4-3
+  selector: '..., 3, bufferId;'
+  title: Set or update signal list
+  category: copper
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc4
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc4-4
+  selector: '..., 4'
+  title: Reset signal list
+  category: copper
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc4
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-0
+  selector: '..., 0, tileBank, 0, 0, 0'
+  title: Initialize or reset tile bank
+  category: tile
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-1
+  selector: '..., 1, tileBank, tileId, <data>'
+  title: Load tile into bank
+  category: tile
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-6
+  selector: '..., 6, tileBank, tileId, <position-and-attributes>'
+  title: Draw tile
+  category: tile
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-7
+  selector: '..., 7, tileBank'
+  title: Delete tile bank
+  category: tile
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-16
+  selector: '..., 16, 0, tileMapSize, 0, 0'
+  title: Initialize or reset tile map
+  category: tile
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-17
+  selector: '..., 17, 0, x, y, tileId, attributes'
+  title: Set tile properties
+  category: tile
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-23
+  selector: '..., 23, 0'
+  title: Delete tile map
+  category: tile
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-24
+  selector: '..., 24, 0, tileLayerSize, 0, 0'
+  title: Initialize or reset tile layer
+  category: tile
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-26
+  selector: '..., 26, 0, x, y, xOffset, yOffset'
+  title: Set tile-layer scroll
+  category: tile
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-28
+  selector: '..., 28, 0'
+  title: Update tile layer
+  category: tile
+  display_order: 9
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-29
+  selector: '..., 29, 0'
+  title: Draw tile layer
+  category: tile
+  display_order: 10
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xc2-30
+  selector: '..., 30, 0'
+  title: Update and draw tile layer
+  category: tile
+  display_order: 11
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xc2
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-0
+  selector: '..., 0, length; <data>'
+  title: Write block
+  category: buffered
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-1
+  selector: '..., 1'
+  title: Call buffer
+  category: buffered
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-2
+  selector: '..., 2'
+  title: Clear buffer
+  category: buffered
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-3
+  selector: '..., 3, length;'
+  title: Create writable buffer
+  category: buffered
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-4
+  selector: '..., 4'
+  title: Redirect output stream
+  category: buffered
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-5
+  selector: '..., 5, operation, <params>'
+  title: Adjust buffer contents
+  category: buffered
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-6
+  selector: '..., 6, operation, <condition>'
+  title: Conditionally call buffer
+  category: buffered
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-7
+  selector: '..., 7'
+  title: Jump to buffer
+  category: buffered
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-9
+  selector: '..., 9, offset, <params>'
+  title: Jump to buffer offset
+  category: buffered
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-10
+  selector: '..., 10, offset, <condition>'
+  title: Conditionally jump to offset
+  category: buffered
+  display_order: 9
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-11
+  selector: '..., 11, offset, <params>'
+  title: Call buffer at offset
+  category: buffered
+  display_order: 10
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-12
+  selector: '..., 12, offset, <condition>'
+  title: Conditionally call buffer at offset
+  category: buffered
+  display_order: 11
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-13
+  selector: '..., 13, <sourceBufferIds>'
+  title: Copy blocks into one buffer
+  category: buffered
+  display_order: 12
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-14
+  selector: '..., 14'
+  title: Consolidate blocks
+  category: buffered
+  display_order: 13
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-15-22
+  selector: '..., 15–22, <params>'
+  title: Split or spread blocks and buffers
+  category: buffered
+  display_order: 14
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-23
+  selector: '..., 23'
+  title: Reverse block order
+  category: buffered
+  display_order: 15
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-24
+  selector: '..., 24, <params>'
+  title: Reverse data within blocks
+  category: buffered
+  display_order: 16
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-25-26
+  selector: '..., 25–26, <sourceBufferIds>'
+  title: Copy blocks by reference or consolidated
+  category: buffered
+  display_order: 17
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-32-34
+  selector: '..., 32–34, <matrix-params>'
+  title: Create or manipulate transform matrices
+  category: buffered
+  display_order: 18
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-40
+  selector: '..., 40, <params>'
+  title: Create transformed bitmap
+  category: buffered
+  display_order: 19
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-41
+  selector: '..., 41, <params>'
+  title: Transform buffer data
+  category: buffered
+  display_order: 20
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-48
+  selector: '..., 48, <params>'
+  title: Read VDP variable into buffer
+  category: buffered
+  display_order: 21
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-64
+  selector: '..., 64, sourceBufferId;'
+  title: Compress buffer
+  category: buffered
+  display_order: 22
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-65
+  selector: '..., 65, sourceBufferId;'
+  title: Decompress buffer
+  category: buffered
+  display_order: 23
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-72
+  selector: '..., 72, <params>'
+  title: Expand bitmap
+  category: buffered
+  display_order: 24
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-80
+  selector: '..., 80, eventType;'
+  title: Register callback buffer
+  category: buffered
+  display_order: 25
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-81
+  selector: '..., 81, eventType;'
+  title: Remove callback buffer
+  category: buffered
+  display_order: 26
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-23-0-xa0-128
+  selector: '..., 128'
+  title: Emit buffer information to the local diagnostic console
+  category: buffered
+  display_order: 27
+  disposition: unsupported
+  parent_interface_id: interface:agon-vdp:vdu-23-0-xa0
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x00-x3f
+  selector: mode &00–&3F
+  title: Draw lines and move graphics cursor
+  category: plot
+  display_order: 0
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x48-x4f-x58-x5f-x68-x6f-x78-x7f
+  selector: mode &48–&4F, &58–&5F, &68–&6F, &78–&7F
+  title: Draw line fills
+  category: plot
+  display_order: 1
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x50-x57
+  selector: mode &50–&57
+  title: Draw filled triangles
+  category: plot
+  display_order: 2
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x60-x67
+  selector: mode &60–&67
+  title: Draw filled rectangles
+  category: plot
+  display_order: 3
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x70-x77
+  selector: mode &70–&77
+  title: Draw filled parallelograms
+  category: plot
+  display_order: 4
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x80-x8f
+  selector: mode &80–&8F
+  title: Perform flood fills
+  category: plot
+  display_order: 5
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-x90-x9f
+  selector: mode &90–&9F
+  title: Draw circles
+  category: plot
+  display_order: 6
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-xa0-xb7
+  selector: mode &A0–&B7
+  title: Draw arcs, segments, and sectors
+  category: plot
+  display_order: 7
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-xb8-xbf
+  selector: mode &B8–&BF
+  title: Copy or move rectangles
+  category: plot
+  display_order: 8
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-xc0-xcf
+  selector: mode &C0–&CF
+  title: Draw ellipses
+  category: plot
+  display_order: 9
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-xd8-xdf
+  selector: mode &D8–&DF
+  title: Fill paths (experimental)
+  category: plot
+  display_order: 10
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory
+- id: interface:agon-vdp:vdu-25-mode-xe8-xef
+  selector: mode &E8–&EF
+  title: Plot bitmaps
+  category: plot
+  display_order: 11
+  disposition: supported
+  parent_interface_id: interface:agon-vdp:vdu-25
+  source_refs:
+  - source:setup-004:vdu-inventory

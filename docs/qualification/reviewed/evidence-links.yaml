@@ -1,0 +1,23 @@
+schema_version: 1.0.0
+artifact_kind: qualification_evidence_links
+evidence_links:
+  - id: evidence-link:extender:forward-path-legacy-prx-06
+    obligation_id: obligation:extender:forward-path-current-project
+    evidence_id: evidence:legacy:prx-06
+    relationship: partially-supports
+    claim: Supports the inherited forward wiring and throughput baseline only; it does not exercise current-project firmware or fixtures.
+  - id: evidence-link:extender:frame-service-real-sink-boundary
+    obligation_id: obligation:extender:real-sink-timing-independence
+    evidence_id: evidence:run:PORT-003-2026-08-22-23-58-56Z
+    relationship: partially-supports
+    claim: Supports logical frame cadence and sink-independent progress only; no Agon command source or real presentation sink was present.
+  - id: evidence-link:extender:screen-mode-frame-service-boundary
+    obligation_id: obligation:extender:screen-mode-visible-fidelity
+    evidence_id: evidence:run:PORT-003-2026-08-22-23-58-56Z
+    relationship: partially-supports
+    claim: Supports logical frame-service behavior only; it does not exercise VDU 22, the official facade, or a physical sink.
+  - id: evidence-link:extender:shared-net-legacy-rev-02
+    obligation_id: obligation:extender:shared-net-safe-ownership
+    evidence_id: evidence:legacy:rev-02
+    relationship: partially-supports
+    claim: Supports bounded break-before-make behavior at 115,200 baud only; it does not qualify the target speed or selected product protocol.

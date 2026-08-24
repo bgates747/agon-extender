@@ -1,0 +1,261 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agon-extender.invalid/schema/compatibility-matrix-v1.json",
+  "title": "Agon Extender compatibility qualification matrix",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "artifact_kind",
+    "id",
+    "generated",
+    "sources",
+    "modes",
+    "interfaces",
+    "capabilities",
+    "qualification_domains",
+    "mode_expectations",
+    "obligations",
+    "evidence",
+    "evidence_links"
+  ],
+  "properties": {
+    "schema_version": { "const": "1.0.0" },
+    "artifact_kind": { "const": "compatibility_qualification_matrix" },
+    "id": { "const": "matrix:extender:compatibility" },
+    "generated": { "$ref": "#/$defs/generated" },
+    "sources": { "type": "array", "items": { "$ref": "#/$defs/source" } },
+    "modes": { "type": "array", "items": { "$ref": "#/$defs/mode" } },
+    "interfaces": { "type": "array", "items": { "$ref": "#/$defs/interface" } },
+    "capabilities": { "type": "array", "items": { "$ref": "#/$defs/capability" } },
+    "qualification_domains": { "type": "array", "items": { "$ref": "#/$defs/qualificationDomain" } },
+    "mode_expectations": { "type": "array", "items": { "$ref": "#/$defs/modeExpectation" } },
+    "obligations": { "type": "array", "items": { "$ref": "#/$defs/obligation" } },
+    "evidence": { "type": "array", "items": { "$ref": "#/$defs/evidence" } },
+    "evidence_links": { "type": "array", "items": { "$ref": "#/$defs/evidenceLink" } }
+  },
+  "$defs": {
+    "id": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9-]*(?::[A-Za-z0-9][A-Za-z0-9._/-]*)+$"
+    },
+    "idArray": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/id" },
+      "uniqueItems": true
+    },
+    "referenceArray": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "uniqueItems": true
+    },
+    "generated": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["generator", "input_sha256"],
+      "properties": {
+        "generator": { "const": "docs/qualification/scripts/build-compatibility-matrix.py" },
+        "input_sha256": {
+          "type": "object",
+          "minProperties": 1,
+          "additionalProperties": {
+            "type": "string",
+            "pattern": "^[0-9a-f]{64}$"
+          }
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "kind", "ref", "authority"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "enum": [
+            "accepted-inventory",
+            "decision-record",
+            "task-record",
+            "dependency-model",
+            "official-documentation",
+            "official-source",
+            "procedure",
+            "run-manifest",
+            "hardware-profile",
+            "fixture-profile",
+            "legacy-evidence"
+          ]
+        },
+        "ref": { "type": "string", "minLength": 1 },
+        "authority": { "enum": ["authoritative", "supporting"] }
+      }
+    },
+    "mode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "label", "decision_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "label": { "type": "string", "minLength": 1 },
+        "decision_refs": { "$ref": "#/$defs/referenceArray" }
+      }
+    },
+    "interface": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "selector", "title", "category", "display_order", "disposition", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "selector": { "type": "string", "minLength": 1 },
+        "title": { "type": "string", "minLength": 1 },
+        "category": {
+          "enum": [
+            "base-vdu",
+            "direct-vdu-23",
+            "system",
+            "mouse",
+            "audio",
+            "bitmap-sprite",
+            "font",
+            "context",
+            "copper",
+            "tile",
+            "buffered",
+            "plot"
+          ]
+        },
+        "display_order": { "type": "integer", "minimum": 0 },
+        "disposition": {
+          "enum": ["supported", "accepted-noop", "mode-dependent", "unsupported", "unresolved"]
+        },
+        "parent_interface_id": { "$ref": "#/$defs/id" },
+        "source_refs": { "$ref": "#/$defs/referenceArray" }
+      }
+    },
+    "capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "scope", "owner_task_ids", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1 },
+        "scope": { "const": "secondary-capability" },
+        "owner_task_ids": { "$ref": "#/$defs/referenceArray" },
+        "source_refs": { "$ref": "#/$defs/referenceArray" }
+      }
+    },
+    "qualificationDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "title", "scope", "source_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "title": { "type": "string", "minLength": 1 },
+        "scope": { "const": "compatibility-critical" },
+        "source_refs": { "$ref": "#/$defs/referenceArray" }
+      }
+    },
+    "modeExpectation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "interface_id", "mode_id", "expectation", "owner_task_ids", "blocker_refs"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "interface_id": { "$ref": "#/$defs/id" },
+        "mode_id": { "$ref": "#/$defs/id" },
+        "expectation": {
+          "enum": ["stock-vdp", "extender-required", "accepted-noop", "unsupported", "not-applicable", "unresolved"]
+        },
+        "owner_task_ids": { "$ref": "#/$defs/referenceArray" },
+        "blocker_refs": { "$ref": "#/$defs/referenceArray" }
+      }
+    },
+    "obligation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "scope",
+        "subject_kind",
+        "subject_id",
+        "kind",
+        "claim",
+        "mode_ids",
+        "owner_task_ids",
+        "requirement_refs",
+        "source_refs",
+        "dependency_node_ids",
+        "blocker_refs",
+        "implementation_state",
+        "qualification_state"
+      ],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["compatibility-critical", "secondary-capability"] },
+        "subject_kind": { "enum": ["interface", "capability", "domain"] },
+        "subject_id": { "$ref": "#/$defs/id" },
+        "kind": {
+          "enum": [
+            "source-fidelity",
+            "implementation",
+            "command-ingress",
+            "response-packet",
+            "mos-state",
+            "logical-behavior",
+            "presentation",
+            "audio-delivery",
+            "input-routing",
+            "transport",
+            "electrical-safety",
+            "recovery",
+            "performance",
+            "carveout-behavior",
+            "platform-coverage",
+            "secondary-capability"
+          ]
+        },
+        "claim": { "type": "string", "minLength": 1 },
+        "mode_ids": { "$ref": "#/$defs/idArray" },
+        "owner_task_ids": { "$ref": "#/$defs/referenceArray" },
+        "requirement_refs": { "$ref": "#/$defs/referenceArray" },
+        "source_refs": { "$ref": "#/$defs/referenceArray" },
+        "dependency_node_ids": { "$ref": "#/$defs/idArray" },
+        "blocker_refs": { "$ref": "#/$defs/referenceArray" },
+        "implementation_state": {
+          "enum": ["unassigned", "not-started", "in-progress", "implemented", "excluded", "not-applicable"]
+        },
+        "qualification_state": {
+          "enum": ["unknown", "not-required", "blocked", "planned", "candidate", "qualified", "rejected"]
+        },
+        "qualification_basis": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "scope", "kind", "ref", "lifecycle", "description"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "scope": { "enum": ["compatibility-critical", "secondary-capability"] },
+        "kind": {
+          "enum": ["source-analysis", "author-decision", "host-test", "target-test", "procedure", "bench-run", "visual-observation", "audio-observation"]
+        },
+        "ref": { "type": "string", "minLength": 1 },
+        "lifecycle": { "enum": ["candidate", "accepted", "rejected", "superseded"] },
+        "description": { "type": "string", "minLength": 1 }
+      }
+    },
+    "evidenceLink": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "obligation_id", "evidence_id", "relationship", "claim"],
+      "properties": {
+        "id": { "$ref": "#/$defs/id" },
+        "obligation_id": { "$ref": "#/$defs/id" },
+        "evidence_id": { "$ref": "#/$defs/id" },
+        "relationship": { "enum": ["supports", "partially-supports", "contradicts", "supersedes"] },
+        "claim": { "type": "string", "minLength": 1 }
+      }
+    }
+  }
+}

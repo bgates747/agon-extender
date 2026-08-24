@@ -1,0 +1,12 @@
+schema_version: 1.0.0
+artifact_kind: qualification_modes
+modes:
+  - id: mode:extender:cooperative
+    label: Extended cooperative mode
+    decision_refs: [ADR-0014]
+  - id: mode:extender:edp-exclusive
+    label: EDP-exclusive compatibility mode
+    decision_refs: [ADR-0014]
+  - id: mode:extender:legacy
+    label: Legacy mode
+    decision_refs: [ADR-0014]

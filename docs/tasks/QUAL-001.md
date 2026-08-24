@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: Not started — plan approved by the Author on 2026-08-22
-- Started: --
+- Status: In progress — Works 1–3 complete; Review Gate 2 paused by operating-mode audit
+- Started: 2026-08-22 22:59 EDT
 - Finished: --
 
 ## Intent
@@ -72,6 +72,66 @@ Markdown must never become a second source of truth.
 rules, schema, lifecycle, and one small representative fixture before creating
 the complete matrix.
 
+#### QUAL-001.1 execution record
+
+Work 1 produced the task-local
+[Review Gate 1 proposal](QUAL-001/PROPOSAL.md), proposed
+[JSON Schema](QUAL-001/schema/compatibility-matrix.schema.json), and
+[representative YAML fixture](QUAL-001/fixtures/review-gate-1.yaml). No file
+under the proposed durable `docs/qualification/` boundary was created, and no
+VDU disposition, task ownership, operating-mode decision, implementation,
+procedure, wiring, or qualification state was changed.
+
+The proposal recommends:
+
+1. reviewed normalized YAML inputs for interfaces, secondary capabilities,
+   mode expectations, and obligations;
+2. one deterministic generated canonical join with Markdown as projections;
+3. a one-time Gate 2 promotion that imports the accepted VDU inventory exactly
+   before replacing its independently edited Markdown role;
+4. typed selector-derived interface IDs and separate claim-oriented obligation
+   IDs;
+5. independent interface-disposition, mode-expectation, implementation,
+   qualification, and evidence axes; and
+6. repository-native JSON Schema plus semantic validation rather than a
+   database service.
+
+The fixture contains four VDU interfaces, one secondary capability, one
+cross-cutting qualification domain, five mode expectations, six qualification
+obligations, two accepted evidence records, and two deliberately partial
+evidence links. The repository `.venv` validated
+the JSON Schema as Draft 2020-12, validated the fixture with zero schema errors,
+and passed proposal-level uniqueness, tuple-uniqueness, referential-integrity,
+blocked-state, subject/scope, and evidence-link invariants.
+
+#### Review Gate 1 register
+
+| ID | Proposed decision | Recommendation | Status |
+|---|---|---|---|
+| `QUAL-001-RG1-01` | Use normalized YAML collections and a generated canonical join rather than a hand-maintained flat matrix. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-02` | At Gate 2, promote the exactly imported VDU inventory into YAML authority and retire its independently edited Markdown role. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-03` | Use typed selector-derived interface IDs and separately stable obligation IDs. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-04` | Keep disposition, mode expectation, implementation state, qualification state, and evidence lifecycle independent. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-05` | Keep compatibility-critical and secondary capability qualification strictly separate. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-06` | Use repository-native YAML, JSON Schema, and semantic validators without a database service. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-07` | Accept the proposed durable layout and lifecycle as the boundary for Work 2. | Accept | Accepted 2026-08-22 |
+| `QUAL-001-RG1-08` | Add normalized qualification domains as subjects for cross-cutting compatibility obligations. | Accept | Accepted 2026-08-22 |
+
+Do not begin QUAL-001.2 until all eight Review Gate 1 items are disposed by the
+Author.
+
+All eight items were accepted by the Author on 2026-08-22. Review Gate 1 is
+closed, and the approved Work 2 boundary may be implemented.
+
+Work 2 preflight exposed compatibility obligations whose subjects span several
+commands or have no command selector: shared compatibility transport,
+operating-mode lifecycle, and assembled-system electrical behavior. Assigning
+these claims to an arbitrary interface would falsely narrow them, while
+classifying them as product capabilities would violate the accepted separation
+between compatibility-critical and secondary work. RG1-08 therefore adds
+stable `domain:extender:*` subjects solely to group such cross-cutting claims;
+domains do not define commands, protocols, wiring, or architectural decisions.
+
 ### QUAL-001.2 — Build deterministic infrastructure
 
 1. Create the approved role-named directory and authority files.
@@ -81,6 +141,31 @@ the complete matrix.
    generated files.
 4. Produce explicit white-background SVG only where a graph materially helps;
    the primary human interface should remain compact tables and focused views.
+
+#### QUAL-001.2 execution record
+
+The approved role-named infrastructure now lives under
+[`docs/qualification/`](../qualification/README.md). Nine reviewed semantic
+collections feed one digest-bound canonical YAML join and deterministic compact
+Markdown projections. The implemented model includes the RG1-08 domain subject
+without changing the accepted interface, capability, mode, obligation, or
+evidence roles. Sources, modes, evidence, and evidence links received their own
+reviewed files because they were already normalized principal collections in
+the approved model; the proposal's abbreviated tree had omitted their
+filenames.
+
+The permanent scripts build, render, validate, and check byte-identical
+regeneration. JSON Schema Draft 2020-12 enforces record structure and closed
+vocabularies. Semantic validation enforces global and tuple uniqueness,
+complete interface/mode coverage, parent/subject/source/task/decision/dependency
+referential integrity, blocker and qualification-evidence invariants, scope
+separation, repository-local paths, and the exact pre-Gate-2 inventory import.
+Ten tests exercise the valid model and deliberate duplicate, missing-coverage,
+dangling-reference, blocker, evidence-scope, and false-qualification failures.
+
+No graph was generated because the primary relationships are clearer as tables
+and bounded task/mode views. The one-time import and initial mode seeding tools
+live under `docs/tasks/QUAL-001/scripts/`, not the permanent recurring tooling.
 
 ### QUAL-001.3 — Populate the accepted baseline
 
@@ -94,8 +179,70 @@ the complete matrix.
 5. Preserve a separate view of secondary product-capability tests from
    AUDIT-001 without allowing them to satisfy compatibility-critical rows.
 
+#### QUAL-001.3 execution record
+
+The candidate reviewed baseline imports all **211** marked SETUP-004 entries
+exactly: 185 supported, 17 retained mode-dependent, eight unsupported, one
+unresolved, and no accepted no-op entries. Each has one immutable candidate ID,
+and the validator rejects any selector, title, category, disposition, parent,
+source, omission, addition, or identity difference from the accepted inventory.
+The generated category-ordered VDU view is a candidate replacement projection;
+the task-local inventory remains authoritative until this gate is accepted.
+
+The superseded candidate contains 633 explicit interface/mode tuples:
+
+- legacy mode routes all 211 VDU interfaces to the stock VDP;
+- cooperative mode routes all 211 ordinary VDU interfaces to the stock VDP,
+  consistent with ADR-0014's separate EDU path; and
+- EDP-exclusive mode requires Extender for 185 supported entries, marks eight
+  accepted carve-outs unsupported, and leaves 18 input/RTC entries unresolved
+  under their exact SETUP-005 blockers.
+
+This paragraph records the generated three-mode candidate as reviewed at the
+time. It is not the accepted operating-mode vocabulary. The 2026-08-23 audit
+and Author disposition replace it with Legacy, Exclusive Compatible, Exclusive
+Extended, and Dual; corrected reviewed data will contain 844 tuples.
+
+All 25 AUDIT-001 requirements are represented once as qualification
+obligations: 19 compatibility-critical `C` requirements and six separate
+secondary `X` capabilities. Fourteen are planned, ten are blocked by exact
+SETUP-005 or PORT-003 gates, and deferred local MIPI output remains unknown and
+unassigned. Established PORT-003 implementation state, PORT-004 through
+PORT-008 and QUAL-002 ownership, source-selection nodes, the accepted harness
+and fixture, three evidence records, and four deliberately partial evidence
+links are attached. Nothing is marked qualified; inherited evidence and the
+current frame-service run support only their stated narrow claims.
+
+The baseline does not resolve SETUP-005, invent a transport or wiring contract,
+promote inherited evidence, or alter a SETUP-004 disposition.
+
 **Review Gate 2:** stop for Author review of coverage, classifications,
 blockers, and generated views before making the matrix a gate for other tasks.
+
+#### Review Gate 2 register
+
+| ID | Candidate decision | Recommendation | Status |
+|---|---|---|---|
+| `QUAL-001-RG2-01` | Accept the exact 211-interface import and its stable identities. | Accept | Accepted 2026-08-23 |
+| `QUAL-001-RG2-02` | Accept the complete legacy, EDP-exclusive, and cooperative mode classifications and owners. | Accept | Withdrawn 2026-08-23 — superseded by the four-mode taxonomy |
+| `QUAL-001-RG2-02R` | Accept corrected Legacy, Exclusive Compatible, Exclusive Extended, and Dual classifications and owners. | Accept after regeneration and review | Open |
+| `QUAL-001-RG2-03` | Accept the 19 compatibility-critical and six secondary AUDIT-001 obligation classifications. | Accept | Open |
+| `QUAL-001-RG2-04` | Accept the current implementation, qualification, blocker, and deferral states as the initial baseline. | Accept | Open |
+| `QUAL-001-RG2-05` | Accept the evidence records and deliberately partial claim links without qualifying any obligation. | Accept | Open |
+| `QUAL-001-RG2-06` | Accept the canonical YAML, compact generated inventory/matrix, and bounded task/mode/blocker views. | Accept | Open |
+| `QUAL-001-RG2-07` | Promote reviewed YAML to interface authority and retire independent editing of SETUP-004's task-local inventory during Work 4. | Accept | Open |
+
+RG2-02 and all subsequent Review Gate 2 dispositions are paused by
+[`AUDIT-2026-08-23-001`](../decisions/AUDIT-2026-08-23-001-operating-mode-semantics.md).
+The audit confirms that the candidate three-mode cross product omits a distinct
+P4-exclusive stock-UART mode. The Author subsequently accepted Legacy,
+Exclusive Compatible, Exclusive Extended, and Dual as the four formal modes,
+with stable IDs recorded in SETUP-005 and ADR-0014. Remaining mode boundaries
+must be resolved before the reviewed records are corrected and this gate
+resumes.
+
+Do not begin QUAL-001.4 or change the SETUP-004 inventory's authority until all
+active Review Gate 2 items are disposed by the Author.
 
 ### QUAL-001.4 — Integrate the maintenance contract
 

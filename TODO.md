@@ -8,9 +8,16 @@ item is removed.
 ## Qualification infrastructure
 
 - [ ] **QUAL-001 — Establish the durable compatibility qualification matrix**
-  - Started: --
+  - Started: 2026-08-22 22:59 EDT
   - Finished: --
   - Details: [QUAL-001](docs/tasks/QUAL-001.md)
+
+## Audit remediation
+
+- [ ] **REMED-001 — Reconcile the repository with the four-mode operating architecture**
+  - Started: 2026-08-23 17:02 EDT
+  - Finished: --
+  - Details: [REMED-001](docs/tasks/REMED-001.md)
 
 ## Setup
 
@@ -64,3 +71,36 @@ item is removed.
   - Started: --
   - Finished: --
   - Details: [UPSTREAM-001](docs/tasks/UPSTREAM-001.md)
+
+## MOS architecture
+
+- [ ] **MOS-001 — Develop a MOS Modules-aligned cooperative service architecture**
+  - Started: --
+  - Finished: --
+  - Details: [MOS-001](docs/tasks/MOS-001.md)
+
+## Operating-mode lifecycle
+
+- [ ] **MODE-001 — Develop state-preserving operating-mode transitions**
+  - Started: --
+  - Finished: --
+  - Details: [MODE-001](docs/tasks/MODE-001.md)
+
+- [ ] **MODE-002 — Evaluate automatic mode-request retry protection**
+  - Started: --
+  - Finished: --
+  - Details: [MODE-002](docs/tasks/MODE-002.md)
+
+## Failure diagnostics
+
+- [ ] **DIAG-001 — Implement recoverable failure reporting and crash records**
+  - Started: --
+  - Finished: --
+  - Details: [DIAG-001](docs/tasks/DIAG-001.md)
+
+## Interprocessor links
+
+- [ ] **LINK-001 — Research a direct onboard-VDP/EDP high-speed link**
+  - Started: --
+  - Finished: --
+  - Details: [LINK-001](docs/tasks/LINK-001.md)

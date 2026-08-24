@@ -151,6 +151,28 @@ before this task can gate integrated compatibility claims.
   authorized by this task plan; each candidate procedure and physical run
   requires the established review and deployment gates.
 
+## Stock-UART hardware boundary
+
+The Author clarified during
+[`AUDIT-2026-08-23-001`](../decisions/AUDIT-2026-08-23-001-operating-mode-semantics.md)
+that `light2-harness-r01` is not a candidate implementation of Exclusive
+Compatible mode's stock-UART transport. It was designed for the predecessor's enhanced
+parallel-forward/reverse-UART architecture and must not be incrementally tested
+or relabeled into stock physical or firmware conformance.
+
+Exclusive Compatible mode requires hardware-independent firmware work first.
+That work must freeze the endpoint, signaling, flow-control, timing, reset,
+failure, and recovery requirements through deterministic tests without waiting
+for a physical design. Once those firmware demands are mature enough to drive
+circuitry, create a separate tracked hardware design-review task, produce a new
+versioned design, and qualify it through its own approved procedures. No
+stock-UART bench test against `light2-harness-r01` is authorized or useful.
+
+The final task split remains under SETUP-005. This boundary does not change
+PORT-008's currently approved Exclusive Extended split-link work; it
+prevents that work and its harness from being mistaken for the newly identified
+stock-UART profile.
+
 ## Explicit exclusions
 
 - No reverse high-speed parallel bus.

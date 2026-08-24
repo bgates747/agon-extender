@@ -3,16 +3,17 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-08-22
+- Last amended: 2026-08-23
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
 ## Context
 
 Extender needs an application-facing command path distinct from the stock VDU
-path. Some operations can be performed synchronously by code linked into the
-calling application, but persistent or asynchronous facilities may require an
-eZ80-side program that remains resident after its installer or original caller
+path. Applications may link an EDU client binding for convenient synchronous
+calls, but Extender requires EMOS to own activation, transport, lifecycle, and
+shared state. Persistent or asynchronous facilities may additionally require
+eZ80-side code that remains resident after its installer or original caller
 exits.
 
 Potential resident responsibilities include persistent Extender session and
@@ -36,15 +37,14 @@ different device state. Full binary compatibility therefore requires exclusive
 ownership of the stock-compatible command and response path, while simultaneous
 use of both processors requires separate state domains.
 
-The intended EDP-exclusive compatibility behavior is asymmetric rather than a
-complete removal of the onboard VDP. All applications, whether EDU-aware or
-not, use the EDP for audio and video output. The onboard VDP remains the
-physical keyboard and mouse controller, but Extender becomes the logical
-compatibility gateway for its input. MOS must observe one coherent stream of
-stock-compatible responses and input events and update its canonical sysvars
-accordingly. Extender controls that logical stream; MOS should continue to own
-and mechanically update its own sysvars wherever the selected routing mechanism
-permits reuse of the stock parser.
+The two P4-exclusive operating modes share one asymmetric ownership model. All
+applications, whether EDU-aware or not, use the EDP for audio and video output.
+The onboard VDP remains the physical keyboard and mouse controller, but
+Extender becomes the logical compatibility gateway for its input. MOS must
+observe one coherent stream of stock-compatible responses and input events and
+update its canonical sysvars accordingly. Extender controls that logical
+stream; MOS should continue to own and mechanically update its own sysvars
+wherever the selected routing mechanism permits reuse of the stock parser.
 
 Untouched legacy applications reach VDU output through fixed low-ROM restart
 handlers. A normal resident service cannot replace those handlers through MOS's
@@ -77,64 +77,72 @@ that processor.
    the ESP32-P4 processor and firmware that execute Extender display and service
    operations.
 3. Define EDU as a stable, versioned application-facing API whose contract is
-   independent of whether its implementation is linked into an application or
-   supplied by a resident program.
-4. Make the resident EDU service an explicit, opt-in facility. Its absence must
-   not alter stock MOS, onboard VDP, or ordinary VDU behavior.
-5. Require applications to discover and explicitly open the EDU service before
-   using it. Absence or incompatibility must be reported cleanly rather than
-   causing implicit interception or partial activation.
-6. Permit a directly linked EDU implementation for synchronous foreground
-   operations. Applications may use that implementation when residency is not
-   required.
-7. Use the resident implementation for capabilities that require persistent
-   ownership, asynchronous reception, interrupt servicing, shared transport
-   state, queues, or work that survives the initiating call or program.
-8. Keep application-visible EDU operations consistent across linked and
-   resident implementations. At minimum, the eventual API must cover service
-   discovery, session open and close, block transfer, and reception or polling.
-9. Do not let an optional resident EDU service opportunistically hook or replace
-   `RST.LIL 10h` or `RST.LIL 18h`. Any transparent legacy routing used by
-   exclusive compatibility mode must be an explicit system-mode facility with
-   defined activation, fallback, and ownership rather than an incidental TSR
-   side effect.
-10. Keep transport and resident-program mechanics behind the EDU API. A future
-   official MOS integration may provide another backend without requiring EDU
-   applications to adopt a different application protocol.
-11. Define **EDP-exclusive compatibility mode** as selection of the EDP as the
-    authoritative audio/video processor and compatibility interface. The EDP
-    owns stock-compatible command processing and supplies the corresponding
-    response stream through the selected routing mechanism. MOS retains
+   independent of the application language or linked client binding. Every
+   binding invokes EMOS; application code does not become a substitute
+   transport or lifecycle owner.
+4. Make optional resident EDU facilities explicit and opt-in. Their absence
+   must not alter EMOS Legacy behavior, the onboard VDP, or ordinary VDU.
+5. Require applications to discover and explicitly open EDU through EMOS before
+   using it. Missing EMOS support, absence, or incompatibility must be reported
+   cleanly rather than causing implicit interception or partial activation.
+6. Permit directly linked EDU client code only as an application-facing EMOS
+   binding for synchronous foreground operations. It may not activate EDP,
+   claim transport hardware, install a private persistent receiver, or operate
+   Extender independently of EMOS.
+7. Make EMOS own persistent activation, interrupt servicing, shared transport
+   state, queues, and lifecycle. Optional resident facilities may provide
+   capabilities or work that survive an initiating call or program, but remain
+   subordinate to EMOS ownership and arbitration.
+8. Keep application-visible EDU operations consistent across linked bindings
+   and optional resident facilities. At minimum, the eventual EMOS API must
+   cover service discovery, session open and close, block transfer, and
+   reception or polling.
+9. Make EMOS the only supported authority that may redirect ordinary VDU,
+   claim Extender transport hardware, or change committed mode. No application,
+   linked client, TSR, MOS Module, or resident service may do so except through
+   an explicit documented EMOS operation. This is a supported-software contract,
+   not a security claim against deliberate unrestricted eZ80 register or GPIO
+   manipulation.
+10. Keep transport and resident-program mechanics behind the EMOS-owned EDU
+    API. A future upstream MOS or MOS Modules integration may replace internal
+    ownership machinery without requiring EDU applications to adopt a
+    different application protocol.
+11. Define **Exclusive Compatible mode** as selection of the EDP as the
+    authoritative audio/video processor and compatibility interface over the
+    stock VDP UART transport contract. The EDP owns stock-compatible command
+    processing and supplies the corresponding response stream. MOS retains
     ownership of canonical VDP sysvar storage, completion flags, and the
     mechanism that updates them; neither the EDP nor an application or resident
     service may write that MOS-owned state directly.
-12. Permit EDP-exclusive mode to claim complete compatibility for the declared
-    normal application-facing surface only after ordinary legacy VDU traffic
-    and responses can be routed transparently. Explicitly exclude the v1
-    maintenance/operator carve-outs named in the Context from that claim.
-13. Define **extended cooperative mode** as simultaneous, explicitly addressed
+12. Permit Exclusive Compatible and Exclusive Extended modes to claim complete
+    compatibility for the declared normal application-facing surface only
+    after ordinary legacy VDU traffic and responses can be routed
+    transparently. Explicitly exclude the v1 maintenance/operator carve-outs
+    named in the Context from that claim unless a later accepted decision
+    restores them.
+13. Define **Dual mode** as simultaneous, explicitly addressed
     use of the onboard VDP through VDU and the EDP through EDU. The processors
-    may perform coordinated work, but their command and response channels remain
-    distinguishable.
+    may perform coordinated work, but their command and response channels
+    remain distinguishable.
 14. Give VDU and the onboard VDP exclusive ownership of canonical MOS VDP
-    sysvars in extended cooperative mode. EDU must retain EDP results in
-    EDU-owned registers, structures, flags, queues, or resident-service state
-    and must not impersonate a MOS VDP response.
-15. Do not guarantee arbitrary unmodified legacy software in extended
-    cooperative mode. Project-owned wrappers and abstraction layers may operate
-    one or both processors on behalf of software that is not itself EDU-aware,
-    but each supported compatibility profile requires explicit qualification.
+    sysvars in Dual mode. EDU must retain EDP results in EDU-owned registers,
+    structures, flags, queues, or resident-service state and must not
+    impersonate a MOS VDP response.
+15. Do not guarantee arbitrary unmodified legacy software in Dual mode.
+    Project-owned wrappers and abstraction layers may operate one or both
+    processors on behalf of software that is not itself EDU-aware, but each
+    supported compatibility profile requires explicit qualification.
 16. Do not support uncontrolled duplication of one ordinary VDU stream to both
     processors. Divergent state and competing return packets make such a shared
     VDU mode unsafe and outside the supported architecture.
-17. Require baseline extended cooperative mode to operate with stock MOS. An
-    EDU-aware application may communicate with the EDP through linked client
-    code or the optional resident EDU service without requiring MOS to know that
-    Extender exists.
-18. Treat Extender-enabled MOS as a prerequisite only for capabilities that
-    require system-wide integration, including any accepted implementation of
-    transparent legacy VDU routing that depends on MOS. Modified MOS is not a
-    general prerequisite for EDU-aware software or cooperative use.
+17. Require EMOS for every active Extender mode, including Dual. EMOS alone
+    activates EDP, owns the EDU transport and result/event ingress, arbitrates
+    clients, and commits the EDP-service plane. A linked client is only an EMOS
+    API binding.
+18. Limit stock MOS to Legacy operation. If EMOS is absent, Extender is outside
+    the supported system and an Extender-specific command or API may fail as
+    unavailable without changing stock behavior. Direct application ownership
+    of Extender hardware under stock MOS is explicitly out of scope.
 19. Do not implement the upstream local USB/UART maintenance and operator
     facilities in Extender v1, including printer output, console/terminal
     modes, ZDI, Intel HEX, YMODEM, firmware updating, and buffered-command debug
@@ -142,15 +150,15 @@ that processor.
     preserves stock-observable behavior, including undesirable failures, while
     non-strict operation should improve failure and recovery. Exact behavior
     and the strict-mode boundary remain in the linked task rather than this ADR.
-20. Define **legacy mode** as the stock-machine mode in which Extender is
+20. Define **Legacy mode** as the stock-machine mode in which Extender is
     electrically and logically absent from the Agon interface even when it is
     connected and powered. The onboard VDP owns ordinary VDU, responses,
     sysvars, input, and maintenance facilities without Extender interception.
-21. In extended cooperative mode, ordinary VDU continues to reach the onboard
-    VDP, so its maintenance facilities may remain available through that stock
-    path. Their availability does not make them Extender-supported features.
-22. Retain the stock RTC command and state surface for strict EDP-exclusive
-    compatibility with as much fidelity as practical: `VDU 23,0,&87`, its
+21. In Dual mode, ordinary VDU continues to reach the onboard VDP, so its
+    maintenance facilities may remain available through that stock path. Their
+    availability does not make them Extender-supported features.
+22. Retain the stock RTC command and state surface in both exclusive modes with
+    as much fidelity as practical: `VDU 23,0,&87`, its
     six-byte packed payload and eight-octet response frame, RTC-backed VDP
     variables, and packet callbacks. Canonical RTC sysvar effects require the
     selected response to reach a MOS-owned parser; this decision grants the EDP
@@ -166,6 +174,47 @@ that processor.
 24. Keep physical keyboard and mouse ownership on the onboard VDP through v1.
     V1 adds no P4-owned peripheral hardware beyond facilities already present
     on the selected P4 DevKit; any additional input hardware is post-v1 work.
+25. Define **Exclusive Extended mode** as selection of the EDP as the same
+    exclusive compatibility authority established for Exclusive Compatible
+    mode, but with the eight-bit parallel Agon-to-EDP command path and the
+    enhanced UART return contract. Transport enhancement does not reduce the
+    EDP's logical reach into MOS-owned parser effects, completion flags,
+    sysvars, restart routing, input integration, or related eZ80 state. Exact
+    enhanced reverse capabilities remain open in SETUP-005.
+26. Make **Exclusive Compatible mode**, **Exclusive Extended mode**, and
+    **Dual mode** the formal names. “Compatible” and “Extended” are permitted
+    short forms only where operating-mode context is unambiguous; “Exclusive”
+    remains part of each exclusive mode's official name. Retain **Legacy mode**
+    for the state in which an attached Extender is inactive and
+    indistinguishable from absence.
+27. Distinguish an application's entry point from the selected destination.
+    `RST.LIL 10h`, `RST.LIL 18h`, and their C-runtime output paths remain VDU
+    calls in every mode. EMOS routes those calls to the onboard VDP in Legacy
+    and Dual, to the EDP stock-compatible backend in Exclusive Compatible, and
+    to the EDP enhanced backend in Exclusive Extended. An explicit EDU call is
+    a separate application interface and result domain even when both call
+    classes ultimately reach the EDP.
+28. Permit EDU-aware applications to combine conventional VDU calls with
+    explicit EDU calls. This is a mixed-API application pattern, not another
+    operating mode. In Dual the two call classes address different processors;
+    in either exclusive mode they may address different interfaces of the same
+    EDP.
+29. Permit an application to require Exclusive Extended and deliberately use
+    conventional VDU restart calls for its high-frequency compatible output,
+    avoiding an EDU envelope around every transfer. Such software is
+    intentionally mode-dependent and must verify or request the required mode
+    before issuing output that would be unsafe or meaningless if EMOS routed it
+    to the onboard VDP.
+30. Treat direct Extender hardware access without an active EMOS transaction as
+    unsupported caveat-emptor experimentation. Project carrier hardware must
+    use fail-safe disabled P4-to-Agon driver defaults independently of P4
+    firmware, and project EDP firmware must expose only a bounded EMOS
+    activation exchange before commit—never ordinary VDU, EDU, update, or
+    persistent-write operations. These are normative design protections for
+    project-produced hardware and software, not a guarantee that arbitrary
+    external eZ80 code violating the EMOS contract cannot corrupt, damage, or
+    brick either system. Any best-effort warning uses only an Extender-owned
+    out-of-band display or log and never drives the unactivated Agon interface.
 
 ## Rationale
 
@@ -189,14 +238,14 @@ that processor.
    without races or ambiguity over which device produced a response.
 8. Compatibility wrappers provide a migration path for existing applications
    without making unsafe dual ownership part of the machine-level contract.
-9. Stock-MOS cooperative operation gives Extender a useful deployment path
-   independent of the harder transparent-compatibility problem and avoids
-   imposing a firmware replacement on applications that already use EDU
-   explicitly.
+9. Requiring EMOS for every active Extender mode provides one durable owner for
+   transport, discovery, sessions, result/event ingress, and recovery rather
+   than treating a foreground application's private hardware access as a
+   supported system mode.
 10. Keeping diagnostics out of protocol return paths prevents console text from
     corrupting packet framing or being mistaken for application data.
 11. A truly inert legacy mode provides an unconditional stock fallback for
-    software and maintenance workflows outside the EDP-exclusive compatibility
+    software and maintenance workflows outside the exclusive compatibility
     surface.
 12. Explicit carve-outs make the compatibility claim testable and avoid
     importing high-risk operator transports that are not needed by normal
@@ -206,24 +255,26 @@ that processor.
 
 1. EDU-capable programs use an explicit API rather than assuming that ordinary
    VDU output can be redirected to Extender.
-2. Features requiring background or cross-program state depend on installation
-   of a compatible resident service; foreground-only features may not.
+2. Every EDU feature depends on EMOS. Features requiring optional background or
+   cross-program facilities may additionally depend on installation of a
+   compatible resident service; foreground-only features need not.
 3. Resident implementation work must establish safe memory ownership, service
    discovery, version negotiation, installation lifecycle, interrupt ownership
    and restoration, register preservation, reentrancy behavior, and interaction
    with application memory maps before it can be considered qualified.
 4. A resident service consumes eZ80 memory and must remain optional for programs
    that do not need its facilities.
-5. Future official MOS integration can replace or supplement the resident
-   backend while retaining the EDU application contract.
+5. Future upstream MOS or MOS Modules integration can replace or supplement
+   EMOS's internal resident-service machinery while retaining the EDU
+   application contract.
 6. Exclusive EDP compatibility cannot be delivered for untouched binaries until
    a transparent route exists for the fixed stock VDU restart paths and for EDP
    responses expected by MOS.
-7. Extended cooperative applications must distinguish VDU state from EDU state
+7. Dual-mode applications must distinguish VDU state from EDU state
    even when an abstraction layer presents them through one higher-level API.
 8. A compatibility claim must identify the operating mode and selected display
    authority; “compatible” without that context is insufficient.
-9. In EDP-exclusive compatibility mode, input-device configuration still needs
+9. In both exclusive modes, input-device configuration still needs
    a controlled route to the onboard VDP even though ordinary audio/video output
    is consumed by the EDP. The onboard VDP remains the initial physical input
    owner and its packets to MOS remain canonical; `SETUP-005-D007` owns the
@@ -232,15 +283,15 @@ that processor.
 10. Reusing MOS's normal packet parser would preserve sysvar semantics better
     than having the EDP or a resident service write MOS-owned memory directly;
     direct writes by either are outside the accepted ownership model.
-11. Documentation, releases, and compatibility metadata must distinguish
-    stock-MOS cooperative operation from features that require an
-    Extender-enabled MOS build.
+11. Documentation, releases, and compatibility metadata must state that every
+    active Extender mode requires a compatible EMOS build; stock MOS supports
+    only Legacy, in which Extender is inactive.
 12. The P4 port must not inherit upstream `DBGSerial` or its UART0 mapping.
     Unsupported command paths must not block waiting for an absent external
     serial peer, corrupt parser framing, or enter a partially active mode.
 13. Compatibility metadata must name the maintenance/operator carve-out when
-    claiming EDP-exclusive compatibility. Legacy mode remains the fallback for
-    those facilities.
+    claiming compatibility in either exclusive mode. Legacy mode remains the
+    fallback for those facilities.
 14. The proof-of-concept input profile is intentionally application-mediated.
     It validates EDP-local input behavior without claiming transparent legacy
     compatibility or pre-deciding the v1 routing mechanism.

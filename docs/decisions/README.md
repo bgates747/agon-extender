@@ -46,3 +46,23 @@ duplicate open questions or actionable checklists.
 
 When the final tracked question is resolved, incorporate the accepted result,
 change completeness to `Complete`, and update the task and development log.
+
+## Design audit records
+
+Files named `AUDIT-YYYY-MM-DD-NNN-<subject>.md` record a bounded review of
+current architecture, tasks, implementation, generated data, and evidence.
+They identify contradictions, omissions, stale assumptions, and affected
+authorities without making new architecture authoritative merely by finding a
+problem.
+
+Every audit begins with `Status`, `Date`, `Trigger`, `Scope`, and `Owning task`.
+Findings use stable IDs and record severity, observed state, required
+disposition, and affected artifacts. Status is `In progress` while coverage is
+being gathered and `Complete` when the declared scope has been reviewed and
+every finding has an owner or explicit deferral.
+
+Accepted architectural corrections are promoted into the applicable ADR and
+normative architecture document. Actionable work remains in the owning tracked
+task and `TODO.md`; generated outputs are regenerated from their corrected
+authorities. An audit is evidence and a correction map, never a competing
+architecture specification or task list.

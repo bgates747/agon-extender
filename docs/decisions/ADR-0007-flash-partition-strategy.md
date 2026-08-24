@@ -3,6 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
+- Last amended: 2026-08-24
 - Qualification: Exact offsets require toolchain validation
 
 ## Context
@@ -29,6 +30,13 @@ Do not create a permanent factory application partition.
 Allocate the required leading data area for NVS configuration, OTA selection
 metadata, and crash diagnostics. Reserve the approximately 1.9 MiB remainder as
 a data partition without yet selecting a filesystem or application-level use.
+
+Make a bounded durable crash-log area in onboard SPI flash a hard v1
+requirement. It must not depend on an installed microSD card. The current
+dedicated `coredump` partition is the implementation candidate; DIAG-001 must
+validate its capacity, record format, integrity and interrupted-write behavior,
+wear limits, and coexistence with native ESP-IDF crash evidence before that
+choice is frozen. Failure to persist a report must not block recovery.
 
 Freeze exact offsets and the precise diagnostic/reserved split only after the
 pinned hybrid toolchain generates a valid table and confirms its bootloader,
@@ -66,6 +74,8 @@ timeout and VDP health criterion remain implementation decisions.
    are unusable.
 5. Reserving the remaining capacity avoids prematurely selecting an internal
    filesystem when large persistent assets belong on the board's SD card.
+6. Onboard flash remains available when the mainboard or optional P4 microSD is
+   unavailable, making it the minimum credible durable failure sink.
 
 ## Consequences
 

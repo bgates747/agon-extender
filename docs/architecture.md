@@ -189,53 +189,119 @@ names the processor and its firmware. The terms intentionally parallel Agon's
 existing VDU and VDP terminology.
 
 Extender-aware programs address the P4 through an explicit, stable, versioned
-EDU API. The API is independent of its eZ80-side implementation: synchronous
-foreground operations may use code linked into an application, while
-persistent or asynchronous facilities may use an explicitly installed resident
-service.
+EDU API owned by EMOS. Synchronous foreground applications may link a client
+binding, but that binding invokes EMOS and does not own the transport,
+activation, receiver, or lifecycle. Persistent or asynchronous capabilities may
+use an explicitly installed resident facility subordinate to EMOS arbitration.
 
-The resident service is optional. Its presence does not intercept or redirect
-the stock `RST.LIL 10h` or `RST.LIL 18h` VDU paths, and applications must
-discover and open it deliberately. It may own persistent transport state,
-interrupt-driven reception, queues, and background work on behalf of clients.
-A future official MOS integration may supply another backend without changing
-the application-facing EDU contract. See
+Optional resident facilities do not independently intercept or redirect
+`RST.LIL 10h` or `RST.LIL 18h`; the EMOS mode dispatcher alone owns those VDU
+paths. Applications must discover and open EDU deliberately through EMOS. EMOS
+owns persistent transport state, interrupt-driven reception, queues, client
+arbitration, and mode lifecycle. A future upstream MOS Modules integration may
+replace that internal machinery without changing the application-facing EDU
+contract. See
 [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
 
-In **exclusive compatibility mode**, exactly one display processor owns the
-stock-compatible command path, responses, completion flags, and canonical MOS
-VDP sysvars. EDP-exclusive mode may claim compatibility only for the declared
-normal application-facing surface; Extender v1 explicitly excludes local
-printer/USB serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug
-facilities. Transparent EDP selection remains unresolved until the fixed legacy
-VDU restart paths and return traffic can be routed safely.
+In **Exclusive Compatible mode**, the EDP is the sole compatibility display
+processor and uses the stock VDP UART transport contract. It owns the
+stock-compatible command and response stream while MOS retains canonical VDP
+sysvar storage, completion flags, and the mechanism that updates them. The
+hardware implementation is deliberately not derived from the existing enhanced
+split-link harness: firmware requirements must mature first, followed by a new
+hardware design review, design, and qualification.
 
-In **extended cooperative mode**, the onboard VDP remains authoritative for VDU
-and MOS VDP sysvars while the EDP is addressed through EDU and retains results
-in an EDU-owned state domain. Applications and project-owned abstraction layers
-may coordinate both processors, but uncontrolled duplication of a VDU stream or
+In **Exclusive Extended mode**, the EDP has the same exclusive compatibility
+authority and logical MOS/eZ80 integration reach, but commands use the
+eight-bit forward parallel path and responses use the enhanced UART return
+contract. Transport enhancement does not weaken the compatibility ownership
+model. Exact enhanced reverse capabilities remain unresolved.
+
+Both exclusive modes may claim compatibility only for the declared normal
+application-facing surface; Extender v1 explicitly excludes local printer/USB
+serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug facilities
+unless a later accepted decision restores them. Transparent EDP selection
+remains unresolved until the fixed legacy VDU restart paths and return traffic
+can be routed safely.
+
+In **Dual mode**, the onboard VDP remains authoritative for VDU and MOS VDP
+sysvars while the EDP is addressed through EDU and retains results in an
+EDU-owned state domain. Applications and project-owned abstraction layers may
+coordinate both processors, but uncontrolled duplication of a VDU stream or
 competing writes to canonical sysvars is unsupported.
 
-Baseline extended cooperative mode supports stock MOS: EDU-aware applications
-reach the EDP through linked client code or the optional resident EDU service,
-and MOS need not know that Extender exists. An Extender-enabled MOS is required
-only by features that need system-wide integration, such as a MOS-based
-implementation of transparent legacy VDU routing; it is not a prerequisite for
-ordinary cooperative EDU use.
+EMOS is the only supported software authority for ordinary VDU routing,
+Extender transport ownership, and committed mode. Applications, linked EDU
+bindings, TSR-like programs, future MOS Modules, and optional resident services
+request those operations through EMOS and do not install independent hooks or
+claim UART/GPIO ownership. The proof-of-concept and v1 contract enforce this
+across supported software; they do not attempt adversarial isolation from
+deliberate eZ80 machine code with unrestricted register and GPIO access. Such
+direct manipulation is unsupported caveat emptor. Project hardware and
+software still use fail-safe defaults and bounded activation, but make no
+non-bricking guarantee for external code that violates this normative contract.
 
-In **legacy mode**, Extender is electrically and logically absent from the Agon
+EMOS is also the sole authoritative source of the current formal operating-mode
+name. It derives that name only from committed VDU-route and EDP-service state.
+EDP/P4 firmware and applications may report their local condition, requested or
+pending targets, readiness, transport state, and failures, but may not describe
+an uncommitted, failed, or partial combination as Legacy, Dual, Exclusive
+Compatible, or Exclusive Extended.
+
+Application entry point and operating-mode destination are separate concerns.
+`RST.LIL 10h`, `RST.LIL 18h`, and the corresponding C-runtime output paths are
+always conventional VDU calls. EMOS routes them to the onboard VDP in Legacy
+and Dual, to the EDP stock-compatible backend in Exclusive Compatible, and to
+the EDP enhanced backend in Exclusive Extended. Explicit EDU calls remain a
+separate versioned interface with a separate result domain, even in an
+exclusive mode where both interfaces reach the EDP.
+
+An EDU-aware application may therefore combine VDU and EDU calls without
+creating another operating mode. In Dual this intentionally coordinates two
+processors; in either exclusive mode it uses two interfaces to the EDP. An
+application may also require Exclusive Extended and use conventional VDU
+restart calls as its efficient compatible-output path rather than wrapping
+every transfer in an EDU invocation. Such a mode-dependent application must
+verify or request Exclusive Extended before issuing output that would be unsafe
+or meaningless if routed to the onboard VDP.
+
+Every active Extender mode requires EMOS. In Dual, EMOS keeps ordinary VDU on
+the onboard VDP while separately activating and arbitrating EDU access to the
+EDP. Stock MOS supports only Legacy: Extender remains inactive, and an unknown
+Extender command or API may fail normally. Direct linked-client ownership of
+UART1, parallel GPIO, interrupt vectors, or EDP lifecycle under stock MOS is
+outside the supported architecture.
+
+Project hardware and firmware apply fail-safe pre-activation design: carrier
+hardware keeps P4-to-Agon drivers disabled through hardware defaults rather
+than relying only on P4 firmware, and the EDP accepts only a bounded EMOS
+activation exchange before exposing ordinary VDU, EDU, update, or persistent
+write operations. These rules govern every project-produced design, build,
+example, and test. They are not a privilege boundary or warranty for arbitrary
+external code that directly manipulates shared GPIO, UART, interrupt, flash, or
+routing resources in violation of the EMOS contract; such code may corrupt,
+damage, or brick either system. If EDP safely observes unmanaged activity, it
+may warn through an Extender-owned display or log only and must not respond over
+unactivated Agon-facing wiring.
+
+In **Legacy mode**, Extender is electrically and logically absent from the Agon
 interface even when connected and powered. The onboard VDP owns all stock
 behavior, including maintenance/operator facilities omitted by Extender. In
-extended cooperative mode those facilities may likewise remain available
-through ordinary VDU to the onboard VDP; they are not implemented by Extender.
+Dual mode those facilities may likewise remain available through ordinary VDU
+to the onboard VDP; they are not implemented by Extender.
+
+The formal operating-mode names are **Legacy mode**, **Exclusive Compatible
+mode**, **Exclusive Extended mode**, and **Dual mode**. “Compatible” and
+“Extended” are accepted short forms in unambiguous operating-mode context, but
+“Exclusive” remains part of both official exclusive-mode names.
 
 Extender v1 does not inherit the stock VDP's UART0 `DBGSerial` mapping or local
-operator facilities. In EDP-exclusive mode, attempts to invoke those paths must
-follow stock VDP command consumption and observable failure behavior as closely
-as practical. Strict compatibility modes preserve even undesirable observable
-stock behavior; other modes should provide improved deterministic failure and
-recovery. The exact strict-mode boundary and command-level semantics are tracked
-under SETUP-005-D006.
+operator facilities. In either exclusive mode, attempts to invoke those paths
+must follow stock VDP command consumption and observable failure behavior as
+closely as practical. Strict compatibility modes preserve even undesirable
+observable stock behavior; other modes should provide improved deterministic
+failure and recovery. The exact strict-mode boundary and command-level
+semantics are tracked under SETUP-005-D006.
 
 ## Firmware build model
 
@@ -337,6 +403,15 @@ no separately maintained factory application. Required NVS, OTA metadata, and
 crash diagnostics use the leading data area, and the approximately 1.9 MiB
 remainder stays reserved until a durable use is approved. See
 [ADR-0007](decisions/ADR-0007-flash-partition-strategy.md).
+
+V1 requires a bounded durable crash-log sink in the P4's onboard flash so
+mainboard failure evidence never depends on an optional microSD card. The
+dedicated `coredump` partition is the initial candidate and must be validated
+for the versioned Extender record, native ESP-IDF crash evidence, integrity,
+interrupted writes, and wear limits. P4 microSD may provide richer optional
+history or exports. Browser or local video may present a surviving
+human-readable report but is not durable by itself. Diagnostic persistence must
+never delay safe recovery.
 
 PlatformIO owns hybrid project orchestration. The project begins without
 project-authored CMake files; a tracked `CMakeLists.txt` is added only when a

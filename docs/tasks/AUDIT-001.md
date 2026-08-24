@@ -20,6 +20,14 @@ versioning, and Author-approval process.
 
 ## Scope and compatibility boundary
 
+> **Operating-mode supersession (2026-08-23):** This completed audit recorded
+> the then-current three-mode planning vocabulary. ADR-0014 now defines Legacy,
+> Exclusive Compatible, Exclusive Extended, and Dual modes. In the inventories
+> below, “EDP-exclusive” identifies obligations that must be reassigned across
+> the two accepted exclusive modes, “cooperative” means Dual, and Legacy remains
+> the inactive/bypass state. QUAL-001 owns the corrected machine-readable
+> classification; historical findings and requirement IDs remain stable.
+
 Primary scope is physical behavior required by the accepted compatibility
 surface in [SETUP-004's VDU inventory](SETUP-004/VDU-inventory.md), interpreted
 through the operating modes and carve-outs in

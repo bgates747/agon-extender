@@ -1,0 +1,39 @@
+schema_version: 1.0.0
+artifact_kind: qualification_qualification_domains
+qualification_domains:
+  - id: domain:extender:assembled-system
+    title: Assembled-system electrical, power, and reset behavior
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01]
+  - id: domain:extender:command-stream
+    title: Cross-command byte-stream parsing and recovery
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory]
+  - id: domain:extender:compatibility-transport
+    title: Shared compatibility transport
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01]
+  - id: domain:extender:display-composition
+    title: Cross-command display composition and presentation
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory]
+  - id: domain:extender:input-integration
+    title: Peripheral input ownership and display-local integration
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes]
+  - id: domain:extender:maintenance-carveouts
+    title: Maintenance and operator carve-out behavior
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes]
+  - id: domain:extender:operating-mode-lifecycle
+    title: Operating-mode selection, lifecycle, and recovery
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes]
+  - id: domain:extender:platform-coverage
+    title: Host-platform compatibility coverage
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory]
+  - id: domain:extender:response-and-mos-state
+    title: Cross-command response and MOS-state fidelity
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes]

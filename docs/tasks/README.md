@@ -25,3 +25,17 @@ A durable construct may synthesize accepted work from several task silos. The
 promotion task must identify the contributing authorities, remove competing
 machine-readable sources of truth, update routine references, and preserve
 traceability without copying task history into the production interface.
+
+## Actor-explicit proposals
+
+Every proposed contract, decision, task, procedure, and failure path must name
+the actor performing each material action. Identify the applicable eZ80/MOS
+component, onboard VDP/Pico-D4 firmware, EDP/P4 firmware, hardware circuit,
+physical wiring, host tool, resident service, application, or operator rather
+than assigning behavior vaguely to “the system” or “firmware.”
+
+For communication, name the sender, receiver, transport owner, and physical
+wiring where known. Distinguish the actor requesting an action from the actor
+authorizing, executing, recording, observing, and recovering it. If ownership
+is genuinely unresolved, say so explicitly and assign the decision to a
+tracked task.

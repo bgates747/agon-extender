@@ -45,6 +45,15 @@ existing VDP's functionality and compatibility while taking advantage of the
 P4 to deliver higher performance and add new capabilities beyond those of the
 original hardware and firmware.
 
+All supported Extender operation requires the project-provided Extender MOS
+(EMOS). EMOS exclusively owns Extender activation, operating-mode changes,
+ordinary VDU routing, and the Agon-facing transport hardware. Applications and
+extensions must use the documented EMOS interfaces and must not manipulate
+those GPIO, UART, interrupt, or routing resources directly. This is a normative
+software and integration contract, not a hardware privilege boundary: code
+that bypasses EMOS is unsupported, may corrupt or brick either system, and is
+used entirely at the operator's risk.
+
 ## Extended Capabilities
 
 Core extended functionality will be provided directly by the ESP32-P4-DevKit

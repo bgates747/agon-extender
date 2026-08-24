@@ -1,0 +1,201 @@
+schema_version: 1.0.0-proposal
+artifact_kind: compatibility_qualification_fixture
+id: fixture:qual-001:review-gate-1
+
+sources:
+  - id: source:setup-004:vdu-inventory
+    kind: accepted-inventory
+    ref: docs/tasks/SETUP-004/VDU-inventory.md
+    authority: authoritative
+  - id: source:audit-001:bench-inventory
+    kind: task-record
+    ref: docs/tasks/AUDIT-001.md
+    authority: authoritative
+  - id: source:adr-0014:operating-modes
+    kind: decision-record
+    ref: docs/decisions/ADR-0014-edu-operating-modes-and-service-architecture.md
+    authority: authoritative
+
+modes:
+  - id: mode:extender:legacy
+    label: Legacy mode
+    decision_refs: [ADR-0014]
+  - id: mode:extender:edp-exclusive
+    label: EDP-exclusive compatibility mode
+    decision_refs: [ADR-0014]
+  - id: mode:extender:cooperative
+    label: Extended cooperative mode
+    decision_refs: [ADR-0014]
+
+interfaces:
+  - id: interface:agon-vdp:vdu-1
+    selector: VDU 1
+    title: Send next character to the printer
+    category: base-vdu
+    display_order: 1
+    disposition: unsupported
+    source_refs: [source:setup-004:vdu-inventory]
+  - id: interface:agon-vdp:vdu-22
+    selector: VDU 22, mode
+    title: Select screen mode
+    category: base-vdu
+    display_order: 22
+    disposition: supported
+    source_refs: [source:setup-004:vdu-inventory]
+  - id: interface:agon-vdp:vdu-23-0-x80
+    selector: VDU 23, 0, &80, n
+    title: General poll
+    category: system
+    display_order: 2
+    disposition: supported
+    source_refs: [source:setup-004:vdu-inventory]
+  - id: interface:agon-vdp:vdu-23-0-x87
+    selector: VDU 23, 0, &87, <params>
+    title: Control the RTC
+    category: system
+    display_order: 8
+    disposition: unresolved
+    source_refs: [source:setup-004:vdu-inventory]
+
+capabilities:
+  - id: capability:extender:wired-ethernet
+    title: P4 DevKit wired Ethernet backend
+    scope: secondary-capability
+    owner_task_ids: [PORT-006]
+    source_refs: [source:audit-001:bench-inventory]
+
+qualification_domains:
+  - id: domain:extender:compatibility-transport
+    title: Shared compatibility transport
+    scope: compatibility-critical
+    source_refs: [source:audit-001:bench-inventory]
+
+mode_expectations:
+  - id: mode-expectation:agon-vdp:vdu-1:legacy
+    interface_id: interface:agon-vdp:vdu-1
+    mode_id: mode:extender:legacy
+    expectation: stock-vdp
+    owner_task_ids: []
+    blocker_refs: []
+  - id: mode-expectation:agon-vdp:vdu-1:edp-exclusive
+    interface_id: interface:agon-vdp:vdu-1
+    mode_id: mode:extender:edp-exclusive
+    expectation: unresolved
+    owner_task_ids: [SETUP-005]
+    blocker_refs: [SETUP-005-D006]
+  - id: mode-expectation:agon-vdp:vdu-23-0-x80:edp-exclusive
+    interface_id: interface:agon-vdp:vdu-23-0-x80
+    mode_id: mode:extender:edp-exclusive
+    expectation: extender-required
+    owner_task_ids: [PORT-008]
+    blocker_refs: [SETUP-005-D003, PORT-003-PHASE-E]
+  - id: mode-expectation:agon-vdp:vdu-23-0-x87:edp-exclusive
+    interface_id: interface:agon-vdp:vdu-23-0-x87
+    mode_id: mode:extender:edp-exclusive
+    expectation: unresolved
+    owner_task_ids: [SETUP-005]
+    blocker_refs: [SETUP-005-D008]
+  - id: mode-expectation:agon-vdp:vdu-23-0-x87:cooperative
+    interface_id: interface:agon-vdp:vdu-23-0-x87
+    mode_id: mode:extender:cooperative
+    expectation: unresolved
+    owner_task_ids: [SETUP-005]
+    blocker_refs: [SETUP-005-D008]
+
+obligations:
+  - id: obligation:extender:compatibility-transport-wire-contract
+    scope: compatibility-critical
+    subject_kind: domain
+    subject_id: domain:extender:compatibility-transport
+    kind: transport
+    claim: Compatibility traffic preserves the accepted stock wire contract across the selected transport path.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-007, PORT-008]
+    requirement_refs: [AUDIT-001-C01, AUDIT-001-C02, AUDIT-001-C03]
+    blocker_refs: [SETUP-005-D003]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:vdu-1-carveout-behavior
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-1
+    kind: carveout-behavior
+    claim: EDP-exclusive mode consumes or fails this carved-out command with the behavior selected for strict compatibility.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [SETUP-005]
+    requirement_refs: [AUDIT-001-C18]
+    blocker_refs: [SETUP-005-D006]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:vdu-22-official-mode-lifecycle
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-22
+    kind: logical-behavior
+    claim: Extender preserves official mode selection, fallback, context reset, mode information, buffering, and visible output behavior.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [PORT-003]
+    requirement_refs: [AUDIT-001-C07]
+    blocker_refs: [PORT-003-PHASE-D, PORT-003-PHASE-E]
+    implementation_state: in-progress
+    qualification_state: planned
+  - id: obligation:extender:vdu-23-0-x80-startup-roundtrip
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-23-0-x80
+    kind: mos-state
+    claim: MOS sends the official General Poll and receives the unchanged response through its selected parser, completing startup synchronization.
+    mode_ids: [mode:extender:edp-exclusive]
+    owner_task_ids: [PORT-008]
+    requirement_refs: [AUDIT-001-C04]
+    blocker_refs: [SETUP-005-D003, PORT-003-PHASE-E]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:vdu-23-0-x87-rtc-authority
+    scope: compatibility-critical
+    subject_kind: interface
+    subject_id: interface:agon-vdp:vdu-23-0-x87
+    kind: mos-state
+    claim: RTC commands and responses follow the accepted clock-authority and MOS-sysvar policy without competing writers.
+    mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
+    owner_task_ids: [SETUP-005]
+    requirement_refs: [AUDIT-001-C13]
+    blocker_refs: [SETUP-005-D008]
+    implementation_state: not-started
+    qualification_state: blocked
+  - id: obligation:extender:wired-ethernet-backend
+    scope: secondary-capability
+    subject_kind: capability
+    subject_id: capability:extender:wired-ethernet
+    kind: secondary-capability
+    claim: The P4 DevKit wired Ethernet backend meets its selected link, addressing, throughput, reconnect, concurrency, and failure contract.
+    mode_ids: []
+    owner_task_ids: [PORT-006]
+    requirement_refs: [AUDIT-001-X01]
+    blocker_refs: []
+    implementation_state: not-started
+    qualification_state: planned
+
+evidence:
+  - id: evidence:run:PORT-003-2026-08-22-23-58-56Z
+    kind: bench-run
+    ref: tests/runs/PORT-003-2026-08-22-23-58-56Z/manifest.yaml
+    lifecycle: accepted
+    description: Qualified sink-independent logical frame service with the Agon disconnected.
+  - id: evidence:legacy:prx-06
+    kind: bench-run
+    ref: hardware/designs/light2-harness-r01/legacy-evidence/prx-06-results.md
+    lifecycle: accepted
+    description: Inherited forward-bus integrity and throughput evidence; not current-project transport qualification.
+
+evidence_links:
+  - id: evidence-link:extender:vdu-22-frame-service
+    obligation_id: obligation:extender:vdu-22-official-mode-lifecycle
+    evidence_id: evidence:run:PORT-003-2026-08-22-23-58-56Z
+    relationship: partially-supports
+    claim: Supports logical frame cadence only; it does not exercise VDU 22, the official facade, an Agon, or a physical sink.
+  - id: evidence-link:extender:general-poll-forward-wiring
+    obligation_id: obligation:extender:vdu-23-0-x80-startup-roundtrip
+    evidence_id: evidence:legacy:prx-06
+    relationship: partially-supports
+    claim: Supports the inherited forward wiring baseline only; it does not exercise the official General Poll or current-project firmware.
