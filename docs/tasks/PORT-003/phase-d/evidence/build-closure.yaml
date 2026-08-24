@@ -1,0 +1,96 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_d_build_closure
+generated_by: docs/tasks/PORT-003/phase-d/scripts/validate-phase-d.py
+diagnostic_status: clean P4 compile/link evidence only; not deployment, artifact identity, physical qualification, or output-sink qualification
+environment: p4-presentation
+build_invocation: .venv/bin/pio run -d vdp -e p4-presentation
+inputs:
+  source_selection:
+    path: vdp/pio/p4-presentation-source-selection.json
+    sha256: b93f98f000dfbfecd882eafec44940504e1d45ad512b33e2e1e0b8df255493c7
+  compile_commands:
+    path: vdp/.pio/build/p4-presentation/compile_commands.json
+    sha256: d89022f8b01f8ffc209cd39dea4d0f07a30f9157fe4d5cc4a4c0138a8af417c2
+  linker_map:
+    path: vdp/.pio/build/p4-presentation/firmware.map
+    sha256: 64a61c6cc6170f745c1a78054ed6b05970848a1a62a6fe0d6a5b3c79cd9fa0c1
+  normalized_elf_symbols_sha256: 0d178b9f5d63dee8df349f6fc9f8874ac4d0a583c7250524618e8516e787ea66
+firmware:
+  path: vdp/.pio/build/p4-presentation/firmware.bin
+  sha256: e07ae8b78690850409d2419733a95513c84e344ecccf11efc14f8af2c4edb327
+  size_bytes: 594608
+application_translation_units:
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/canary/presentation_canary.cpp
+  object: video/extender/canary/presentation_canary.cpp.o
+  object_loaded: true
+- source: video/extender/display/logical_frame_service.cpp
+  object: video/extender/display/logical_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/native_pixel_codec.cpp
+  object: video/extender/display/native_pixel_codec.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+- source: video/extender/display/p4_frame_service.cpp
+  object: video/extender/display/p4_frame_service.cpp.o
+  object_loaded: true
+- source: video/extender/display/palette_state.cpp
+  object: video/extender/display/palette_state.cpp.o
+  object_loaded: true
+- source: video/extender/display/plane_storage.cpp
+  object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/display/presentation_compositor.cpp
+  object: video/extender/display/presentation_compositor.cpp.o
+  object_loaded: true
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+required_elf_symbols:
+- claim: P4 timer/task adapter
+  symbol_fragment: agon::extender::display::P4FrameService::start(
+  present: true
+- claim: logical frame state machine
+  symbol_fragment: agon::extender::display::LogicalFrameService::servicePending()
+  present: true
+- claim: logical plane exchange
+  symbol_fragment: agon::extender::display::PlaneStorage::swapPlanes()
+  present: true
+- claim: palette allocation
+  symbol_fragment: agon::extender::display::PaletteState::createPalette(
+  present: true
+- claim: Copper signal-list update
+  symbol_fragment: agon::extender::display::PaletteState::updateSignalList(
+  present: true
+- claim: pure base compositor
+  symbol_fragment: agon::extender::display::PresentationCompositor::composeBase(
+  present: true
+- claim: quiescent controller composition
+  symbol_fragment: agon::extender::display::P4DisplayController::composeVisibleRegionQuiescent(
+  present: true
+- claim: retained Canvas submission
+  symbol_fragment: fabgl::Canvas::noOp()
+  present: true
+- claim: retained common primitive executor
+  symbol_fragment: fabgl::BitmappedDisplayController::execPrimitive(
+  present: true
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 11
+  project_translation_unit_count: 9
+  vendored_translation_unit_count: 2
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  closure_proved: true

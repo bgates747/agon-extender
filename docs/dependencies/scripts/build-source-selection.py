@@ -374,6 +374,12 @@ def main() -> int:
         default=Path("docs/tasks/PORT-003/phase-c/evidence/build-closure.yaml"),
         help="observed PORT-003 Phase C application closure, when present",
     )
+    parser.add_argument(
+        "--phase-d-evidence",
+        type=Path,
+        default=Path("docs/tasks/PORT-003/phase-d/evidence/build-closure.yaml"),
+        help="observed PORT-003 Phase D application closure, when present",
+    )
     parser.add_argument("--prior-graph", type=Path, help="previous official-tag graph; newly appearing files default to unresolved")
     parser.add_argument("--output", type=Path, default=Path("docs/dependencies/generated/code-graph.yaml"))
     args = parser.parse_args()
@@ -386,6 +392,7 @@ def main() -> int:
     phase_a_path = args.phase_a_evidence.resolve()
     phase_b_path = args.phase_b_evidence.resolve()
     phase_c_path = args.phase_c_evidence.resolve()
+    phase_d_path = args.phase_d_evidence.resolve()
     roots = dict(args.source_root)
     base = load_data(base_path)
     prior = load_data(args.prior_graph.resolve()) if args.prior_graph else None
@@ -469,6 +476,19 @@ def main() -> int:
                 "role": "observed PORT-003 Phase C application compile/link closure",
                 "schema_version": phase_c["schema_version"],
                 "sha256": sha256_file(phase_c_path),
+            }
+        )
+    phase_d = load_data(phase_d_path) if phase_d_path.is_file() else None
+    if phase_d:
+        if not phase_d.get("summary", {}).get("closure_proved"):
+            raise ValueError(f"{phase_d_path}: Phase D closure is not proved")
+        inputs.append(
+            {
+                "id": "input:port-003:phase-d-build-closure",
+                "path": phase_d_path.relative_to(repository_root).as_posix(),
+                "role": "observed PORT-003 Phase D application compile/link closure",
+                "schema_version": phase_d["schema_version"],
+                "sha256": sha256_file(phase_d_path),
             }
         )
     if args.prior_graph:
@@ -797,6 +817,23 @@ def main() -> int:
             }
         )
         adapter_evidence_ids.append(phase_c_evidence_id)
+    phase_d_evidence_id = None
+    if phase_d:
+        phase_d_evidence_id = "evidence:build-profile:port-003-phase-d"
+        evidence.append(
+            {
+                "id": phase_d_evidence_id,
+                "kind": "build-log",
+                "method": "mechanical",
+                "description": (
+                    "Successful PORT-003 Phase D sink-free palette, Copper, and "
+                    "presentation P4 compile/link closure; not physical qualification."
+                ),
+                "artifact_id": "input:port-003:phase-d-build-closure",
+                "record_pointer": "/application_translation_units",
+            }
+        )
+        adapter_evidence_ids.append(phase_d_evidence_id)
     nodes.append(
         {
             "id": "build-unit:extender:p4-port-adapters",
@@ -806,13 +843,49 @@ def main() -> int:
             "locations": [],
             "evidence_ids": adapter_evidence_ids,
             "properties": {
-                "port.state": "phase-c-logical-frame-service" if phase_c else ("phase-b-synchronous-renderer" if phase_b else ("phase-a-partial" if phase_a else "planned")),
+                "port.state": (
+                    "phase-d-presentation" if phase_d else
+                    "phase-c-logical-frame-service" if phase_c else
+                    "phase-b-synchronous-renderer" if phase_b else
+                    "phase-a-partial" if phase_a else "planned"
+                ),
                 "port.task": "PORT-003",
             },
         }
     )
-    active_evidence_id = phase_c_evidence_id or phase_b_evidence_id or phase_a_evidence_id
-    if phase_c and phase_c_evidence_id:
+    active_evidence_id = (
+        phase_d_evidence_id or phase_c_evidence_id or phase_b_evidence_id
+        or phase_a_evidence_id
+    )
+    if phase_d and phase_d_evidence_id:
+        project_units = [
+            ("build-unit:extender:p4-presentation-canary", "PORT-003 Phase D presentation diagnostic entry", "video/extender/canary/presentation_canary.cpp", "diagnostic-presentation"),
+            ("build-unit:extender:p4-logical-frame-service", "Sink-independent logical frame state machine", "video/extender/display/logical_frame_service.cpp", "phase-c-qualified-host"),
+            ("build-unit:extender:p4-frame-task-adapter", "ESP timer and FreeRTOS frame-service adapter", "video/extender/display/p4_frame_service.cpp", "phase-c-target-closure"),
+            ("build-unit:extender:p4-display-controller", "P4 retained-renderer display controller", "video/extender/display/p4_display_controller.cpp", "phase-d-qualified-host"),
+            ("build-unit:extender:p4-native-pixel-codec", "P4 native pixel codecs", "video/extender/display/native_pixel_codec.cpp", "phase-b-qualified-host"),
+            ("build-unit:extender:p4-palette-state", "P4 palette and Copper state", "video/extender/display/palette_state.cpp", "phase-d-qualified-host"),
+            ("build-unit:extender:p4-plane-storage", "P4 transactional display-plane storage", "video/extender/display/plane_storage.cpp", "phase-c-qualified-host"),
+            ("build-unit:extender:p4-presentation-compositor", "Sink-neutral RGB888 presentation compositor", "video/extender/display/presentation_compositor.cpp", "phase-d-qualified-host"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "P4 vdp-gl utility compatibility closure", "video/extender/port/fabutils_port.cpp", "phase-b-narrow-port"),
+        ]
+        phase_edges = [
+            ("build-unit:extender:p4-presentation-canary", "depends-on", "build-unit:extender:p4-frame-task-adapter"),
+            ("build-unit:extender:p4-presentation-canary", "depends-on", "build-unit:extender:p4-display-controller"),
+            ("build-unit:extender:p4-frame-task-adapter", "depends-on", "build-unit:extender:p4-logical-frame-service"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-logical-frame-service"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-native-pixel-codec"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-palette-state"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-plane-storage"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-presentation-compositor"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "build-unit:extender:p4-vdp-gl-port-utility-closure"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/canvas.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "file:vdp-gl:src/displaycontroller.cpp"),
+            ("build-unit:extender:p4-display-controller", "depends-on", "type:vdp-gl:fabgl::GenericBitmappedDisplayController"),
+            ("build-unit:extender:p4-presentation-compositor", "depends-on", "build-unit:extender:p4-native-pixel-codec"),
+            ("build-unit:extender:p4-vdp-gl-port-utility-closure", "depends-on", "file:vdp-gl:src/fabutils.cpp"),
+        ]
+    elif phase_c and phase_c_evidence_id:
         project_units = [
             ("build-unit:extender:p4-frame-service-canary", "PORT-003 Phase C frame-service diagnostic entry", "video/extender/canary/frame_service_canary.cpp", "diagnostic-frame-service"),
             ("build-unit:extender:p4-logical-frame-service", "Sink-independent logical frame state machine", "video/extender/display/logical_frame_service.cpp", "phase-c-qualified-host"),
@@ -934,9 +1007,18 @@ def main() -> int:
             "platform": "pioarduino 55.03.311",
             "framework": "Arduino and ESP-IDF hybrid",
             "configuration": (
-                "PORT-003 Phase C sink-free logical frame-service compile/link proved; physical output and official facade remain incomplete"
-                if phase_c else ("PORT-003 Phase B synchronous renderer compile/link proved; broader firmware integration remains incomplete"
-                if phase_b else "declared source-selection target; firmware build not yet implemented")
+                "PORT-003 Phase D sink-free presentation compile/link proved; "
+                "physical output and official facade remain incomplete"
+                if phase_d else (
+                    "PORT-003 Phase C sink-free logical frame-service compile/link "
+                    "proved; physical output and official facade remain incomplete"
+                    if phase_c else (
+                        "PORT-003 Phase B synchronous renderer compile/link proved; "
+                        "broader firmware integration remains incomplete"
+                        if phase_b else
+                        "declared source-selection target; firmware build not yet implemented"
+                    )
+                )
             ),
             "source_ids": sorted(source["id"] for source in sources),
             "evidence_ids": [disposition_evidence],

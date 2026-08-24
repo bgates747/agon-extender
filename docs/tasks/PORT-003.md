@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Phases A–C complete; Phase D pending
+- Status: In progress — Phases A–C complete; Phase D in progress
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1047,3 +1047,329 @@ engine by a narrow evidenced seam, if clean target compilation invalidates the
 host architecture, or if physical qualification reveals a material cadence,
 completion, reset, memory, or concurrency failure that cannot be isolated
 without changing the accepted contract.
+
+## Phase D — Palette, Copper, and overlays
+
+- Status: Complete — Gate D passed
+- Started: 2026-08-24 05:44 EDT
+- Finished: 2026-08-24 06:42 EDT
+
+The Author authorized this phase to proceed unattended after the returned EMOS
+implementation froze Extender commit `10f2eb2`. The maintained EMOS source
+commit `a8dc891` and build/qualification commit `b12fcab` are provisional
+downstream references, not Phase D implementation inputs. PORT-201 and
+PORT-203 evidence is required only for later claims that depend on broad EMOS
+parity or physical EMOS/EDP transport; this mode-neutral presentation phase
+makes neither claim.
+
+This checklist is the controlling review surrogate. Complete one numbered
+item at a time, then reread `TODO.md`, this task state, and the Phase D gate
+before beginning the next item. Stop rather than silently absorbing Phase E,
+Phase F, transport, output-sink, or operating-mode work.
+
+### Detailed execution checklist
+
+1. [x] Freeze the Phase D task-local structure, exact scope, contracts, oracle
+   order, planned production seams, evidence families, exclusions, stop rules,
+   and commit boundary under `PORT-003/phase-d/` before changing production
+   code. Record the Author's unattended authorization and required post-item
+   TODO reread.
+2. [x] Generate a bounded deterministic provenance inventory for palette
+   allocation/mutation, RGB222 quantization, Copper signal-list resolution,
+   logical readback, software sprites, hardware sprites, text cursor, and mouse
+   cursor. Fingerprint exact official VDP/vdp-gl `v2.16.0`/`all-the-plots`
+   source spans and separate retained observable behavior from excluded VGA
+   signal tables, DMA scanout, and ISR mechanics.
+3. [x] Generate independent palette, Copper, logical-readback, and overlay
+   fixtures before trusting production output. Cover every native depth,
+   single/double buffering, duplicate colors, index wrapping, implicit palette
+   creation, allocation failure, all-delete, unknown/deleted signal-list IDs,
+   short/long/zero-row lists, clipping, alpha, XOR, and overlay order. Golden
+   results must come from the written contract or source-derived model, never
+   from the implementation under test.
+4. [x] Implement allocator-injected project-owned palette/Copper state. Preserve
+   the stock 16-bit palette-ID domain, palette-0 protection, copy-on-create,
+   RGB222 output quantization, explicit lookup rebuild, unknown/deleted-ID
+   fallback, final-span extension, and mode-reset behavior. Keep palette 0's
+   drawing LUT distinct from secondary presentation palettes.
+5. [x] Implement one pure row/region presentation compositor over explicit
+   logical-plane, mode, palette/Copper, and overlay inputs. Emit RGB888 without
+   modifying logical storage. Keep the compositor independent of FabGL
+   controller inheritance, frame timing, transport, network, panel, and sink
+   ownership.
+6. [x] Integrate palette and compositor seams narrowly into
+   `P4DisplayController`. Preserve ordinary `readScreen()` and native-save
+   behavior as palette-0 logical views. Preserve unchanged common software
+   sprite drawing, and compose text cursor, ascending hardware sprites, and
+   mouse cursor after Copper conversion using exact upstream clipping,
+   transparency, overwrite, and RGBA2222-XOR rules.
+7. [x] Define and test the Phase D quiescent composition boundary. Palette,
+   Copper, and overlay inputs must be coherent for one composition call, but no
+   sink may receive a mutable framebuffer pointer or enter the frame-service
+   task. Do not freeze a consumer lease, callback, output format family, or
+   long-lived storage contract; Phase F owns that handoff.
+8. [x] Run the complete host matrix under ASan/UBSan and explicit allocation
+   accounting. Prove palette/readback independence, Copper-only presentation
+   changes, software-versus-hardware sprite placement, cursor ordering,
+   clipping, single/double visible-plane selection, reset, repeated mutation,
+   and all injected allocation failures without leaks or stale state.
+9. [x] Add a dedicated `p4-presentation` diagnostic environment and exact
+   machine-readable source selection. Compile the Phase C frame service plus
+   Phase D state/compositor and unchanged retained Canvas/common controller;
+   prove the build excludes classic VGA/CVBS/Scene/PS2, physical audio,
+   network, storage, official facade, and every physical output sink. Do not
+   deploy or assign a qualification identity.
+10. [x] Update canonical dependency/provenance records, source-selection
+    projections, compatibility delta, architecture-facing task evidence, and
+    the dated development log. Record every unavoidable replacement and any
+    inherited upstream defect or unsafe implementation detail beside the code
+    and in task evidence without claiming a behavior improvement.
+11. [x] Regenerate every Phase D and canonical artifact twice byte-identically;
+    verify all immutable imports, source spans, schemas, permanent tests,
+    changed links, machine-path absence, white SVG backgrounds, project-owned
+    whitespace, and `git diff --check`.
+12. [x] Audit the staged Phase D boundary against this checklist and Gate D.
+    Commit and push one coherent Phase D result only when every criterion below
+    passes. Then reread the authoritative TODO/task documents before planning
+    Phase E.
+
+### Phase D execution record
+
+1. Scope and contract freeze — complete:
+   - `phase-d/README.md`, `contracts.md`, and
+     `implementation-manifest.yaml` define the bounded role-named package,
+     planned production seams, independent-oracle rule, output-sink/lease
+     deferrals, exact exclusions, and one coherent Phase D commit boundary;
+   - the synchronous controller composition seam is explicitly quiescent
+     qualification machinery, not the Phase F consumer API; and
+   - the returned EMOS commits are recorded only as provisional downstream
+     context, with no parity, transport, or hardware claim entering this phase.
+2. Presentation provenance — complete:
+   - `extract-presentation-provenance.py` deterministically fingerprints 47
+     exact callable/source-region records across 11 official VDP/vdp-gl files
+     plus the canonical Copper documentation hash;
+   - records distinguish retained facade/common/readback behavior, adapted
+     palette and overlay algorithms, project-owned allocation/composition
+     replacements, and five excluded classic physical-engine regions;
+   - four permanent tests verify tuple uniqueness, every file/span hash,
+     critical retained/adapted/excluded records, and the logical-versus-
+     presentation split; and
+   - the first invocation used the system Python, which lacks the project's
+     pinned YAML dependency. The accepted process uses `.venv/bin/python`.
+     The generator derives the canonical `agon-docs` sibling location from the
+     workspace root and records only repository-relative documentation paths,
+     keeping machine topology out of generated evidence.
+3. Independent presentation fixtures — complete:
+   - the pure Python source-derived model generates nine palette-state cases,
+     eight composition cases, and two allocation-failure cases across all five
+     native depths and both buffering states;
+   - fixtures cover copied/implicit palettes, wrapped entries, explicit LUT
+     rebuild, unknown/deleted IDs, all-delete, empty/zero-row/short/extended
+     Copper lists, direct RGB222, visible-plane selection, alpha, XOR, clipping,
+     software exclusion, and text/hardware/mouse ordering;
+   - five generator tests prove case/hash uniqueness, complete format and
+     buffering coverage, required edge cases, overlay dimensions, and oracle
+     independence; all nine Phase D tests pass and a second generation is
+     byte-identical; and
+   - the model records upstream's explicit integer-truncated HSV-distance LUT
+     rule rather than retaining Phase B's temporary full-double helper. Exact
+     default-palette arithmetic produces the same selected entries, but the
+     integer boundary remains part of mutable-palette compatibility and is now
+     tested as such.
+4. Palette and Copper state — complete:
+   - new project-owned `PaletteState` uses one embedded primary palette and
+     reset span plus allocator-injected secondary nodes and multi-span lists;
+     it preserves all 16-bit IDs without imposing a project capacity limit;
+   - copy-on-create/recreate, wrapped writes, implicit creation, RGB222
+     quantization, explicit integer-distance LUT rebuild, palette-0 protection,
+     robust all-delete, unknown-ID resolution, delete fallback, zero-row/final
+     span behavior, and allocation-preserving updates are implemented without
+     classic signal maps;
+   - fixed RGB222 modes reject palette/Copper mutation and convert drawing
+     colors directly; successful controller reconfiguration can reset the
+     complete palette state without another allocation boundary; and
+   - the standalone ASan/UBSan C++ test passes exact defaults, the retained
+     integer-HSV tie decision, lifecycle, signal, late-create, deletion,
+     fixed-mode, and both injected allocation failures with zero live
+     allocations at teardown.
+5. Pure presentation compositor — complete:
+   - new project-owned `PresentationCompositor` consumes only explicit native
+     plane, mode, palette/Copper, region, overlay, and caller-owned RGB888
+     views; it owns no framebuffer, task, timing, transport, controller, sink,
+     or output-device lifetime;
+   - base conversion leaves logical bytes untouched and applies Copper
+     palettes by absolute display row, while independently ordered overlay
+     calls preserve clipping, alpha, overwrite, and RGBA2222-XOR rules;
+   - dimensions, arithmetic, enum values, source extents, destination extents,
+     native stride, and native storage are checked before access, including
+     adversarial coordinate and overflow paths; and
+   - the standalone ASan/UBSan test passes Copper conversion, exact stock
+     palette order, clipped transparency, XOR-after-Copper behavior, and
+     invalid-region/invalid-format rejection. LeakSanitizer itself cannot run
+     under the execution harness's ptrace boundary; project allocator leaks
+     remain covered explicitly and the final host matrix will repeat that
+     accounting.
+6. Retained-controller integration — complete:
+   - `P4DisplayController` now owns `PaletteState`, resets it only after a
+     successful transactional mode allocation, and exposes the narrow palette,
+     LUT, and Copper mutation seams required by the later official facade;
+   - drawing conversion, `readScreen()`, and native-save conversion use only
+     palette 0, while composed presentation borrows the visible plane and
+     applies text cursor, ascending hardware sprites, and mouse cursor in exact
+     retained order; unsupported hardware-overlay bitmap formats remain
+     ignored as they are upstream;
+   - common software-sprite save/draw/restore code remains unedited and outside
+     the compositor; no classic controller, sink, frame callback, transport,
+     or facade was introduced; and
+   - ASan/UBSan retained-controller tests pass the complete Phase C queue/frame
+     regression plus Copper/readback separation, secondary-palette
+     independence, and text/hardware/mouse ordering through the integrated
+     controller seam.
+7. Quiescent composition boundary — complete:
+   - the synchronous controller seam accepts composition only with the frame
+     service stopped or controller background execution disabled/suspended;
+     an active unsuspended service returns `NotQuiescent` before frame state is
+     borrowed;
+   - the actor contract requires the caller to retain that state and own all
+     palette, bitmap, sprite, and cursor mutation until the call returns; only
+     copied RGB888 values leave the boundary;
+   - a sanitizer-backed integration test proves stopped, rejected-running, and
+     explicitly suspended-running cases; and
+   - this is intentionally a Phase D misuse detector, not a sink callback,
+     mutable frame lease, long-lived pointer, output-format family, or Phase F
+     consumer contract.
+8. Complete host presentation matrix — complete:
+   - `run-host-presentation-tests.py` generates a temporary C++ fixture driver,
+     compiles production palette/codec/compositor code under ASan/UBSan, and
+     compares all nine palette cases, eight composition cases, and two
+     allocation-failure cases with the independent YAML oracle;
+   - three fixed harnesses additionally prove controller integration,
+     quiescence, exact overlay order, software-versus-hardware placement,
+     drawing-versus-visible double-buffer selection, and explicit allocation
+     teardown; Phase B's complete native/primitive suite and Phase C's 12
+     logical-frame fixtures also pass after their retained-controller source
+     closures were updated;
+   - cross-phase regression caught an uncommitted P8/P16 default-palette error:
+     the first Phase D implementation and oracle both packed red/blue in the
+     wrong lanes. Official controller defaults and the independent Phase B
+     suite identified the shared error; both Phase D sources were corrected
+     before evidence was accepted; and
+   - the same audit corrected two fixture-schema ambiguities: Copper row
+     expectations now retain their queried rows, and double-buffer logical
+     readback is explicitly generated from the drawing plane while composed
+     presentation is generated from the visible plane. All project-managed
+     allocations return to zero; LSAN remains unavailable under managed
+     tracing and is not claimed.
+9. P4 compile and link closure — complete:
+   - the dedicated `p4-presentation` environment compiles and links the Phase C
+     frame service, Phase D palette/compositor/controller seams, retained
+     Canvas/common controller, and a compile-only presentation canary as 11
+     exact machine-readable translation units;
+   - deterministic ELF/map validation proves all nine required retained and
+     project-owned seams are linked, while classic VGA/CVBS/Scene/PS2, physical
+     audio, network, storage, official facade, and output-sink source/symbol
+     families remain absent;
+   - PlatformIO initially retained its globally installed Arduino 2.0.14
+     framework package despite the project's Arduino 3.3.11 platform pin. A
+     package URL install reported success without replacing the shared package;
+     explicitly uninstalling that global package allowed the project build to
+     install and use its pinned framework. This is a PlatformIO package-cache
+     behavior, not a source workaround; and
+   - the resulting binary is evidence from a sink-free compile/link diagnostic
+     only. It was not assigned an artifact identity, deployed, or physically
+     qualified.
+10. Durable dependency and compatibility records — complete:
+    - the canonical dependency graph now consumes the Phase D build closure,
+      projects the presentation canary, palette state, compositor, controller,
+      frame service, and unchanged retained/vendored units as explicit build
+      units, and carries those relationships into the task-facing slices;
+    - `phase-d/compatibility-delta.md` separates retained observable behavior
+      from the unavoidable project-owned VGA-physical replacements and from
+      Phase E/F, sink, transport, MOS/EMOS, and physical-qualification deferrals;
+    - the completed implementation manifest, source selections, generated
+      provenance, and dated development log record no vendored patch and make
+      the diagnostic-only evidence boundary explicit; and
+    - the current pioarduino package layout splits Arduino sources from the
+      architecture libraries. The task evidence generator correctly requires
+      `framework-arduinoespressif32-libs` as its P4 capability root; passing the
+      similarly named Arduino source package fails immediately on the first
+      missing ESP-IDF capability header and does not produce accepted evidence.
+11. Deterministic final validation — complete:
+    - Phase D provenance, independent fixtures, host results, and build/link
+      evidence each regenerated twice with identical SHA-256 results; the
+      canonical dependency and PORT-003 task projections each passed their
+      built-in two-pass byte-identity checks;
+    - all 53 permanent PORT-003 Phase A–D and dependency-tool Python tests pass;
+      the Phase D host run passes 19 generated fixtures and three fixed C++
+      harnesses under ASan/UBSan, including the complete Phase B native/render
+      and Phase C logical-frame regressions;
+    - because the shared controller now depends on Phase D palette/compositor
+      units, the Phase B and C source selections, P4 builds, ELF/map validators,
+      and tracked closure evidence were rebuilt rather than left describing
+      stale pre-Phase-D link sets. They prove 9 and 11 exact application units,
+      respectively, with all required symbols and zero excluded families;
+    - all six Phase D YAML records parse, canonical graph schemas and source
+      imports validate, all changed local Markdown targets exist, generated
+      SVGs retain explicit white backgrounds, and no machine-local path or
+      vendored-source edit entered the change; and
+    - project whitespace and `git diff --check` pass. No target was deployed,
+      no physical run was performed, and no Phase E/F or transport contract was
+      selected.
+12. Gate D audit — complete:
+    - the final boundary contains only Phase D palette/Copper/composition code,
+      its compile-only canary and exact source selections, deterministic
+      fixtures/evidence/generators/tests, the required Phase B/C closure refresh,
+      canonical dependency projections, task records, and the dated log;
+    - all six Gate D criteria are independently evidenced: palette-0 logical
+      fidelity, Copper presentation behavior, software/hardware overlay split,
+      drawing/visible plane separation, bounded allocation failure, and clean
+      pinned P4 compile/link closure;
+    - every explicit exclusion and stop condition remains intact. In
+      particular, no vendored byte, official facade/parser, transport, EMOS,
+      operating-mode policy, physical sink, consumer lease, deployment, bench
+      operation, artifact identity, or hardware claim entered the phase; and
+    - Gate D passed at 2026-08-24 06:42 EDT under the Author's unattended
+      authorization. Phase E remains a separate post-commit planning boundary.
+
+### Phase D gate criteria
+
+1. Palette-0 drawing quantization and logical readback match independent
+   expectations at all five native depths; secondary palettes never rewrite
+   logical bytes.
+2. Copper composition matches documented row-count/palette-ID behavior,
+   including fallback and reset, while fixed 64-color presentation remains
+   direct RGB222.
+3. Software sprites remain in unchanged common framebuffer handling, while
+   hardware sprites and both cursors appear only in composed presentation in
+   exact stock order and color-operation semantics.
+4. Single- and double-buffer tests distinguish drawing and visible planes and
+   prove composed output independently from logical readback.
+5. Allocation failures and repeated palette/signal-list changes leave valid,
+   bounded state with no vendored source edit or classic physical dependency.
+6. A clean pinned P4 diagnostic build and deterministic host evidence prove
+   the declared closure without deployment, output-sink, transport, EMOS
+   parity, or hardware-qualification claims.
+
+### Phase D explicit exclusions
+
+- No edit to immutable official VDP or vendored dependency bytes.
+- No `agon_screen.h` facade, official mode table/fallback, context, callback,
+  Teletext, VDU parser, MOS, EMOS, or operating-mode integration; those remain
+  Phase E, PORT-008, or SETUP-005 work.
+- No network/browser, RGB, MIPI-DSI, HDMI, or other physical output consumer.
+- No frame-consumer API freeze, long-lived framebuffer lease, sink-owned
+  buffer, or assertion that a Phase D quiescent composition call is the Phase F
+  production handoff.
+- No classic GPIO/I2S/DMA/VSYNC code, physical deployment, bench operation,
+  artifact identity, or target runtime qualification.
+
+### Phase D stop conditions
+
+Stop for Author review if preserving observable behavior requires editing
+vendored source, linking a classic physical controller, changing native bytes
+or logical readback, letting composition or a sink block logical frame time,
+freezing the Phase F consumer contract, choosing a Phase E facade or SETUP-005
+mode policy, or inventing an application-visible command/protocol. Also stop
+if an independently demonstrated palette/Copper/overlay difference cannot be
+isolated and measured, or if target compilation invalidates the accepted
+project-owned seam.

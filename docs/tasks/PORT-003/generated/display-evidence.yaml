@@ -3,7 +3,7 @@ artifact_kind: port_003_display_evidence
 generated_by: docs/tasks/PORT-003/scripts/generate-display-evidence.py
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: ec315ee4b4300653f6ec9f2145df4110e681926d27577223f27c30f90b7dc12e
+  sha256: 1d51cfa090864108f8a460f9ddb235cf713979ca48679527977f6c1a08b54e35
 build_profile: build-profile:extender:p4-default
 source_roots:
 - owner: agon-vdp

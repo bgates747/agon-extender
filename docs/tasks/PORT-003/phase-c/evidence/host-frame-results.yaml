@@ -20,8 +20,12 @@ retained_controller_sources:
   sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
 - path: vdp/video/extender/display/plane_storage.cpp
   sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
 - path: vdp/video/extender/display/p4_display_controller.cpp
-  sha256: 48b675ef0a217cb137451e5fa49057a3299a7472d3cb4c8c0f2e23cb70257bf6
+  sha256: b4ec47823836a67df66e5bbd572caf15b10302d202e76e260ec5a022037816dd
 - path: vdp/video/extender/port/fabutils_port.cpp
   sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
 - path: vdp/vendor/vdp-gl/src/canvas.cpp

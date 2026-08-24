@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: source_selection_projection
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: ec315ee4b4300653f6ec9f2145df4110e681926d27577223f27c30f90b7dc12e
+  sha256: 1d51cfa090864108f8a460f9ddb235cf713979ca48679527977f6c1a08b54e35
 build_profiles:
 - id: build-profile:extender:p4-default
   label: Agon Extender ESP32-P4 default target
@@ -10,7 +10,7 @@ build_profiles:
   target_board: Olimex ESP32-P4-DevKit
   platform: pioarduino 55.03.311
   framework: Arduino and ESP-IDF hybrid
-  configuration: PORT-003 Phase C sink-free logical frame-service compile/link proved; physical output and official facade remain incomplete
+  configuration: PORT-003 Phase D sink-free presentation compile/link proved; physical output and official facade remain incomplete
   source_ids:
   - source:CRC:1.0.4
   - source:ESP32Time:2.0.6
@@ -195110,62 +195110,77 @@ project_boundaries:
 - id: build-unit:extender:p4-display-controller
   label: P4 retained-renderer display controller
   path: video/extender/display/p4_display_controller.cpp
-  state: phase-c-qualified-host
+  state: phase-d-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
-- id: build-unit:extender:p4-frame-service-canary
-  label: PORT-003 Phase C frame-service diagnostic entry
-  path: video/extender/canary/frame_service_canary.cpp
-  state: diagnostic-frame-service
-  task: PORT-003
-  evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-frame-task-adapter
   label: ESP timer and FreeRTOS frame-service adapter
   path: video/extender/display/p4_frame_service.cpp
   state: phase-c-target-closure
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-logical-frame-service
   label: Sink-independent logical frame state machine
   path: video/extender/display/logical_frame_service.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-native-pixel-codec
   label: P4 native pixel codecs
   path: video/extender/display/native_pixel_codec.cpp
   state: phase-b-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
+- id: build-unit:extender:p4-palette-state
+  label: P4 palette and Copper state
+  path: video/extender/display/palette_state.cpp
+  state: phase-d-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-plane-storage
   label: P4 transactional display-plane storage
   path: video/extender/display/plane_storage.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-port-adapters
   label: Project-owned P4 port adapters
   path: null
-  state: phase-c-logical-frame-service
+  state: phase-d-presentation
   task: PORT-003
   evidence_ids:
   - evidence:reviewed:p4-port-adapter-boundary
   - evidence:build-profile:port-003-phase-a
   - evidence:build-profile:port-003-phase-b
   - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
+- id: build-unit:extender:p4-presentation-canary
+  label: PORT-003 Phase D presentation diagnostic entry
+  path: video/extender/canary/presentation_canary.cpp
+  state: diagnostic-presentation
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-d
+- id: build-unit:extender:p4-presentation-compositor
+  label: Sink-neutral RGB888 presentation compositor
+  path: video/extender/display/presentation_compositor.cpp
+  state: phase-d-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-d
 - id: build-unit:extender:p4-vdp-gl-port-utility-closure
   label: P4 vdp-gl utility compatibility closure
   path: video/extender/port/fabutils_port.cpp
   state: phase-b-narrow-port
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-c
+  - evidence:build-profile:port-003-phase-d
 summary:
   build-profile:extender:p4-default:
     available-not-selected: 882

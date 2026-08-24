@@ -5,10 +5,9 @@
 // uses the project bounds-safe codec; no classic VGA controller is compiled.
 #include "extender/display/p4_display_controller.hpp"
 
-#include <array>
 #include <climits>
-#include <cmath>
 #include <cstdlib>
+#include <limits>
 
 #if defined(ESP_PLATFORM)
 #include "esp_heap_caps.h"
@@ -26,78 +25,6 @@ namespace {
   (void)operation;
 #endif
   std::abort();
-}
-
-void rgb222ToHsv(int red, int green, int blue, double &hue,
-                 double &saturation, double &value) noexcept {
-  // Adapted from vdp-gl all-the-plots src/fabutils.cpp:443-463. Keeping this
-  // tiny pure calculation local avoids selecting broad classic fabutils.cpp.
-  double r = red / 3.0;
-  double g = green / 3.0;
-  double b = blue / 3.0;
-  double maximum = std::fmax(std::fmax(r, g), b);
-  double minimum = std::fmin(std::fmin(r, g), b);
-  double difference = maximum - minimum;
-  if (maximum == minimum)
-    hue = 0;
-  else if (maximum == r)
-    hue = std::fmod(60.0 * ((g - b) / difference) + 360.0, 360.0);
-  else if (maximum == g)
-    hue = std::fmod(60.0 * ((b - r) / difference) + 120.0, 360.0);
-  else
-    hue = std::fmod(60.0 * ((r - g) / difference) + 240.0, 360.0);
-  saturation = maximum == 0 ? 0 : (difference / maximum) * 100.0;
-  value = maximum * 100.0;
-}
-
-struct RGB222Value {
-  std::uint8_t red;
-  std::uint8_t green;
-  std::uint8_t blue;
-};
-
-constexpr std::array<RGB222Value, 16> kPalette16{{
-    {0, 0, 0}, {2, 0, 0}, {0, 2, 0}, {2, 2, 0},
-    {0, 0, 2}, {2, 0, 2}, {0, 2, 2}, {2, 2, 2},
-    {1, 1, 1}, {3, 0, 0}, {0, 3, 0}, {3, 3, 0},
-    {0, 0, 3}, {3, 0, 3}, {0, 3, 3}, {3, 3, 3},
-}};
-constexpr std::array<RGB222Value, 8> kPalette8{{
-    {0, 0, 0}, {2, 0, 0}, {0, 2, 0}, {0, 0, 2},
-    {3, 0, 0}, {0, 3, 0}, {0, 0, 3}, {3, 3, 3},
-}};
-constexpr std::array<RGB222Value, 4> kPalette4{{
-    {0, 0, 0}, {0, 0, 3}, {0, 3, 0}, {3, 3, 3},
-}};
-constexpr std::array<RGB222Value, 2> kPalette2{{{0, 0, 0}, {3, 3, 3}}};
-
-template <std::size_t Size>
-std::uint8_t nearestPalette(std::array<RGB222Value, Size> const &palette,
-                            std::uint8_t packed) noexcept {
-  double h1 = 0, s1 = 0, v1 = 0;
-  rgb222ToHsv(packed & 3, (packed >> 2) & 3, (packed >> 4) & 3, h1, s1, v1);
-  std::uint8_t best = 0;
-  double best_distance = 1.0e30;
-  for (std::size_t index = 0; index < palette.size(); ++index) {
-    double h2 = 0, s2 = 0, v2 = 0;
-    rgb222ToHsv(palette[index].red, palette[index].green,
-                palette[index].blue, h2, s2, v2);
-    double dh = h1 - h2, ds = s1 - s2, dv = v1 - v2;
-    double distance = dh * dh + ds * ds + dv * dv;
-    if (distance <= best_distance) {
-      best = static_cast<std::uint8_t>(index);
-      best_distance = distance;
-      if (distance == 0) break;
-    }
-  }
-  return best;
-}
-
-template <std::size_t Size>
-fabgl::RGB888 paletteColor(std::array<RGB222Value, Size> const &palette,
-                           std::uint8_t index) noexcept {
-  RGB222Value value = palette[index % palette.size()];
-  return fabgl::RGB888(value.red * 85, value.green * 85, value.blue * 85);
 }
 
 void *allocateDisplay(void *, std::size_t size) {
@@ -124,7 +51,7 @@ Allocator defaultDisplayAllocator() noexcept {
 }
 
 P4DisplayController::P4DisplayController(Allocator allocator) noexcept
-    : storage_(allocator) {}
+    : storage_(allocator), palettes_(allocator) {}
 
 ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexcept {
   if (frame_service_running_.load(std::memory_order_acquire)) {
@@ -135,6 +62,7 @@ ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexc
   }
   ConfigureResult result = storage_.configure(mode);
   if (result != ConfigureResult::Ok) return result;
+  palettes_.reset(mode.format);
   setScreenSize(static_cast<int>(mode.width), static_cast<int>(mode.height));
   m_viewPortWidth = static_cast<int>(mode.width);
   m_viewPortHeight = static_cast<int>(mode.height);
@@ -265,6 +193,29 @@ bool P4DisplayController::logicalDoubleBuffered() const noexcept {
   return storage_.configured() && storage_.mode().double_buffered;
 }
 
+bool P4DisplayController::createPalette(std::uint16_t palette_id) noexcept {
+  return palettes_.createPalette(palette_id);
+}
+
+void P4DisplayController::deletePalette(std::uint16_t palette_id) noexcept {
+  palettes_.deletePalette(palette_id);
+}
+
+bool P4DisplayController::setItemInPalette(
+    std::uint16_t palette_id, std::uint8_t index, std::uint8_t red,
+    std::uint8_t green, std::uint8_t blue) noexcept {
+  return palettes_.setItemInPalette(palette_id, index, red, green, blue);
+}
+
+void P4DisplayController::updateRGB2PaletteLUT() noexcept {
+  palettes_.updateRGB2PaletteLUT();
+}
+
+bool P4DisplayController::updateSignalList(std::uint16_t const *raw_pairs,
+                                           std::size_t entries) noexcept {
+  return palettes_.updateSignalList(raw_pairs, entries);
+}
+
 void P4DisplayController::suspendBackgroundPrimitiveExecution() {
   suspension_depth_.fetch_add(1, std::memory_order_acq_rel);
   while (executing_frame_work_.load(std::memory_order_acquire)) taskYIELD();
@@ -312,29 +263,13 @@ void P4DisplayController::writeLogical(std::uint8_t *destination, int x,
 
 std::uint8_t P4DisplayController::colorToLogical(
     fabgl::RGB888 const &color) const noexcept {
-  std::uint8_t packed = static_cast<std::uint8_t>(
-      (color.R >> 6) | ((color.G >> 6) << 2) | ((color.B >> 6) << 4));
-  switch (storage_.mode().format) {
-    case NativePixelFormat::PALETTE2: return nearestPalette(kPalette2, packed);
-    case NativePixelFormat::PALETTE4: return nearestPalette(kPalette4, packed);
-    case NativePixelFormat::PALETTE8: return nearestPalette(kPalette8, packed);
-    case NativePixelFormat::PALETTE16: return nearestPalette(kPalette16, packed);
-    case NativePixelFormat::SBGR2222: return packed;
-  }
-  return 0;
+  return palettes_.drawingIndex(color.R, color.G, color.B);
 }
 
 fabgl::RGB888 P4DisplayController::logicalToColor(std::uint8_t value) const noexcept {
-  switch (storage_.mode().format) {
-    case NativePixelFormat::PALETTE2: return paletteColor(kPalette2, value);
-    case NativePixelFormat::PALETTE4: return paletteColor(kPalette4, value);
-    case NativePixelFormat::PALETTE8: return paletteColor(kPalette8, value);
-    case NativePixelFormat::PALETTE16: return paletteColor(kPalette16, value);
-    case NativePixelFormat::SBGR2222:
-      return fabgl::RGB888((value & 3) * 85, ((value >> 2) & 3) * 85,
-                           ((value >> 4) & 3) * 85);
-  }
-  return {};
+  std::uint8_t packed = palettes_.palette0Color(value);
+  return fabgl::RGB888((packed & 3) * 85, ((packed >> 2) & 3) * 85,
+                       ((packed >> 4) & 3) * 85);
 }
 
 void P4DisplayController::writePainted(std::uint8_t *destination, int x,
@@ -529,6 +464,91 @@ void P4DisplayController::readScreen(fabgl::Rect const &rect,
     for (int x = rect.X1; x <= rect.X2; ++x, ++destination)
       *destination = logicalToColor(readLogical(source, x));
   }
+}
+
+CompositionResult P4DisplayController::composeSprite(
+    fabgl::Sprite *sprite, PresentationRegion const &region,
+    PresentationRGB888 *destination,
+    std::size_t destination_pixels) noexcept {
+  if (sprite == nullptr) return CompositionResult::Ok;
+  fabgl::Bitmap const *bitmap = sprite->getFrame();
+  if (bitmap == nullptr) return CompositionResult::Ok;
+  if (bitmap->width <= 0 || bitmap->height <= 0 || bitmap->data == nullptr)
+    return CompositionResult::InvalidOverlay;
+
+  OverlayPixelFormat format;
+  std::size_t bytes_per_pixel = 0;
+  switch (bitmap->format) {
+    case fabgl::PixelFormat::RGBA2222:
+      format = OverlayPixelFormat::RGBA2222;
+      bytes_per_pixel = 1;
+      break;
+    case fabgl::PixelFormat::RGBA8888:
+      format = OverlayPixelFormat::RGBA8888;
+      bytes_per_pixel = 4;
+      break;
+    default:
+      // Exact upstream physical-overlay behavior: unsupported hardware bitmap
+      // formats are ignored rather than entering the software sprite path.
+      return CompositionResult::Ok;
+  }
+
+  std::size_t width = static_cast<std::size_t>(bitmap->width);
+  std::size_t height = static_cast<std::size_t>(bitmap->height);
+  if (height > std::numeric_limits<std::size_t>::max() / width ||
+      width * height >
+          std::numeric_limits<std::size_t>::max() / bytes_per_pixel)
+    return CompositionResult::SizeOverflow;
+  OverlayView overlay{
+      sprite->x,
+      sprite->y,
+      width,
+      height,
+      format,
+      sprite->paintOptions.mode == fabgl::PaintMode::XOR
+          ? OverlayPaint::Xor
+          : OverlayPaint::Overwrite,
+      bitmap->data,
+      width * height * bytes_per_pixel,
+  };
+  return PresentationCompositor::applyOverlay(
+      region, destination, destination_pixels, overlay);
+}
+
+CompositionResult P4DisplayController::composeVisibleRegionQuiescent(
+    PresentationRegion const &region, PresentationRGB888 *destination,
+    std::size_t destination_pixels) noexcept {
+  if (!storage_.configured()) return CompositionResult::InvalidMode;
+  // Phase D deliberately permits this borrowed-state seam only while logical
+  // execution is stopped or explicitly suspended by its caller. This check is
+  // a misuse detector, not the future frame-consumer lifetime contract: the
+  // caller must retain its suspension and own all overlay mutation until this
+  // synchronous call returns.
+  if (executing_frame_work_.load(std::memory_order_acquire) ||
+      (frame_service_running_.load(std::memory_order_acquire) &&
+       suspension_depth_.load(std::memory_order_acquire) == 0))
+    return CompositionResult::NotQuiescent;
+  CompositionResult result = PresentationCompositor::composeBase(
+      static_cast<PlaneStorage const &>(storage_).visiblePlane(),
+      storage_.mode(), palettes_, region, destination, destination_pixels);
+  if (result != CompositionResult::Ok) return result;
+
+  fabgl::Sprite *text = textCursor();
+  if (text != nullptr && text->visible) {
+    result = composeSprite(text, region, destination, destination_pixels);
+    if (result != CompositionResult::Ok) return result;
+  }
+  for (int index = 0; index < spritesCount(); ++index) {
+    fabgl::Sprite *sprite = getSprite(index);
+    if (sprite->hardware && sprite->visible && sprite->allowDraw) {
+      result = composeSprite(sprite, region, destination, destination_pixels);
+      if (result != CompositionResult::Ok) return result;
+    }
+  }
+  fabgl::Sprite *mouse = mouseCursor();
+  if (mouse != nullptr && mouse->visible)
+    return composeSprite(mouse, region, destination, destination_pixels);
+  return CompositionResult::Ok;
 }
 
 int P4DisplayController::getBitmapSavePixelSize() { return 1; }

@@ -1,8 +1,8 @@
 // PORT-003 Phase B synchronous logical display controller.
 //
 // This class binds retained vdp-gl common renderer templates to project-owned
-// P4-neutral storage. It deliberately has no frame service, output sink,
-// mutable palette/Copper compositor, or physical display-driver inheritance.
+// P4-neutral storage and the project-owned presentation compositor. It
+// deliberately has no output sink or physical display-driver inheritance.
 #pragma once
 
 #include <atomic>
@@ -11,7 +11,9 @@
 
 #include "displaycontroller.h"
 #include "extender/display/logical_frame_service.hpp"
+#include "extender/display/palette_state.hpp"
 #include "extender/display/plane_storage.hpp"
+#include "extender/display/presentation_compositor.hpp"
 
 namespace agon::extender::display {
 
@@ -37,6 +39,22 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   std::size_t logicalHeight() const noexcept override;
   NativePixelFormat logicalFormat() const noexcept override;
   bool logicalDoubleBuffered() const noexcept override;
+
+  bool createPalette(std::uint16_t palette_id) noexcept;
+  void deletePalette(std::uint16_t palette_id) noexcept;
+  bool setItemInPalette(std::uint16_t palette_id, std::uint8_t index,
+                        std::uint8_t red, std::uint8_t green,
+                        std::uint8_t blue) noexcept;
+  void updateRGB2PaletteLUT() noexcept;
+  bool updateSignalList(std::uint16_t const *raw_pairs,
+                        std::size_t entries) noexcept;
+
+  // This task-local qualification seam borrows visible-plane and upstream
+  // overlay state. Its caller must establish quiescence. Phase F, not this
+  // method, owns the eventual frame-consumer handoff and lifetime contract.
+  CompositionResult composeVisibleRegionQuiescent(
+      PresentationRegion const &region, PresentationRGB888 *destination,
+      std::size_t destination_pixels) noexcept;
 
   void begin() override;
   void setResolution(char const *modeline, int view_port_width = -1,
@@ -118,8 +136,13 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   void rawFillRow(int y, int x1, int x2, std::uint8_t value) noexcept;
   void rawCopyRow(int x1, int x2, int source_y, int destination_y) noexcept;
   std::uint8_t nativeSavePixel(std::uint8_t logical) const noexcept;
+  CompositionResult composeSprite(
+      fabgl::Sprite *sprite, PresentationRegion const &region,
+      PresentationRGB888 *destination,
+      std::size_t destination_pixels) noexcept;
 
   PlaneStorage storage_;
+  PaletteState palettes_;
   std::atomic<std::uint32_t> frame_counter_{};
   std::atomic<std::uint32_t> suspension_depth_{};
   std::atomic<bool> frame_service_running_{};

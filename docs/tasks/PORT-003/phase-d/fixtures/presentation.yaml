@@ -1,0 +1,2719 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_d_independent_presentation_fixtures
+generated_by: docs/tasks/PORT-003/phase-d/scripts/generate-presentation-fixtures.py
+generator_version: 1.0.0
+source_profile: agon-vdp-v2.16.0-vdp-gl-all-the-plots
+oracle_class: reviewed source-derived model independent of production code and output
+palette_cases:
+- id: defaults-palette2
+  format: PALETTE2
+  operations: []
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 0
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+  content_sha256: 9f3d49da0e6a46860293242d25718a2033fb42e01d3ab2e0a3546e3ad8251ac5
+- id: defaults-palette4
+  format: PALETTE4
+  operations: []
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 48
+      - 12
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 0
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 0
+    - 3
+    - 3
+    - 2
+    - 2
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 2
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 2
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 3
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 2
+    - 2
+    - 3
+  content_sha256: a26dd458f5ebc0e038944fdba75f5514634597f3bf47be9685fd382368726ec6
+- id: defaults-palette8
+  format: PALETTE8
+  operations: []
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 1
+    - 1
+    - 4
+    - 2
+    - 2
+    - 1
+    - 4
+    - 2
+    - 2
+    - 2
+    - 4
+    - 5
+    - 5
+    - 5
+    - 5
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 0
+    - 1
+    - 4
+    - 2
+    - 2
+    - 2
+    - 4
+    - 5
+    - 5
+    - 5
+    - 5
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 3
+    - 7
+    - 7
+    - 5
+    - 5
+    - 5
+    - 7
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 7
+  content_sha256: 18faf68c2263827b123e9360e94c969b3aec77da7b7ba88867057c66f6d7041c
+- id: defaults-palette16
+  format: PALETTE16
+  operations: []
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 2
+      - 8
+      - 10
+      - 32
+      - 34
+      - 40
+      - 42
+      - 21
+      - 3
+      - 12
+      - 15
+      - 48
+      - 51
+      - 60
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 1
+    - 1
+    - 9
+    - 2
+    - 3
+    - 3
+    - 9
+    - 2
+    - 3
+    - 3
+    - 11
+    - 10
+    - 10
+    - 11
+    - 11
+    - 4
+    - 5
+    - 5
+    - 13
+    - 6
+    - 8
+    - 7
+    - 9
+    - 6
+    - 2
+    - 3
+    - 11
+    - 10
+    - 10
+    - 11
+    - 11
+    - 4
+    - 5
+    - 5
+    - 13
+    - 6
+    - 4
+    - 5
+    - 13
+    - 6
+    - 6
+    - 7
+    - 15
+    - 14
+    - 14
+    - 10
+    - 11
+    - 12
+    - 12
+    - 13
+    - 13
+    - 12
+    - 12
+    - 13
+    - 13
+    - 14
+    - 14
+    - 12
+    - 13
+    - 14
+    - 14
+    - 14
+    - 15
+  content_sha256: 205e7481a140b5e3b19a0035f24ba3b5ecc0fde05234038493355a86e1cf7abd
+- id: defaults-sbgr2222
+  format: SBGR2222
+  operations: []
+  expected:
+    palettes: {}
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut: []
+  content_sha256: 40f8719652815396653c34d10d4e12d54e30b59c554c23fe2587011344faaf92
+- id: palette4-copy-wrap-implicit-and-explicit-lut
+  format: PALETTE4
+  operations:
+  - op: set
+    palette_id: 0
+    index: 5
+    rgb:
+    - 255
+    - 0
+    - 255
+  - op: create
+    palette_id: 42
+  - op: set
+    palette_id: 0
+    index: 1
+    rgb:
+    - 0
+    - 0
+    - 255
+  - op: set
+    palette_id: 7
+    index: 6
+    rgb:
+    - 255
+    - 255
+    - 0
+  - op: update_lut
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 48
+      - 12
+      - 63
+      '7':
+      - 0
+      - 48
+      - 15
+      - 63
+      '42':
+      - 0
+      - 51
+      - 12
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 0
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 2
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 0
+    - 3
+    - 3
+    - 2
+    - 2
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 2
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 2
+    - 3
+    - 3
+    - 2
+    - 2
+    - 2
+    - 3
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 2
+    - 2
+    - 2
+    - 3
+  content_sha256: 393c477f6bd306fd469c5cb6721f346db8bf329b7156d98db0d90ec82a861307
+- id: palette8-delete-referenced-and-all
+  format: PALETTE8
+  operations:
+  - op: create
+    palette_id: 10
+  - op: create
+    palette_id: 20
+  - op: signals
+    pairs:
+    - - 2
+      - 10
+    - - 2
+      - 20
+  - op: delete
+    palette_id: 10
+  - op: delete
+    palette_id: 65535
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+    signals:
+    - end_row: 2
+      palette_id: 0
+    - end_row: 4
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 1
+    - 1
+    - 4
+    - 2
+    - 2
+    - 1
+    - 4
+    - 2
+    - 2
+    - 2
+    - 4
+    - 5
+    - 5
+    - 5
+    - 5
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 0
+    - 1
+    - 4
+    - 2
+    - 2
+    - 2
+    - 4
+    - 5
+    - 5
+    - 5
+    - 5
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 3
+    - 3
+    - 6
+    - 3
+    - 3
+    - 7
+    - 7
+    - 5
+    - 5
+    - 5
+    - 7
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 6
+    - 7
+    row_queries:
+    - 0
+    - 1
+    - 2
+    - 99
+    row_palettes:
+    - - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+    - - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+    - - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+    - - 0
+      - 2
+      - 8
+      - 32
+      - 3
+      - 12
+      - 48
+      - 63
+  content_sha256: 11c854dcc7ce130bdca108960a842dbe0aa0abbd907f9405997abe50f1837456
+- id: palette2-unknown-zero-row-and-late-create
+  format: PALETTE2
+  operations:
+  - op: create
+    palette_id: 5
+  - op: signals
+    pairs:
+    - - 0
+      - 5
+    - - 2
+      - 99
+    - - 1
+      - 5
+  - op: create
+    palette_id: 99
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 63
+      '5':
+      - 0
+      - 63
+      '99':
+      - 0
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 5
+    - end_row: 2
+      palette_id: 0
+    - end_row: 3
+      palette_id: 5
+    drawing_lut:
+    - 0
+    - 0
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 0
+    - 0
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    - 1
+    row_queries:
+    - 0
+    - 1
+    - 2
+    - 3
+    - 100
+    row_palettes:
+    - - 0
+      - 63
+    - - 0
+      - 63
+    - - 0
+      - 63
+    - - 0
+      - 63
+    - - 0
+      - 63
+  content_sha256: f84a26d87ec3654d4cd47dee52960711da87b28cd6171c596b1cdd8d3153c5db
+- id: palette16-reset-and-empty-update
+  format: PALETTE16
+  operations:
+  - op: create
+    palette_id: 9
+  - op: signals
+    pairs:
+    - - 3
+      - 9
+    - - 4
+      - 0
+  - op: signals
+    pairs: []
+  - op: reset_signals
+  expected:
+    palettes:
+      '0':
+      - 0
+      - 2
+      - 8
+      - 10
+      - 32
+      - 34
+      - 40
+      - 42
+      - 21
+      - 3
+      - 12
+      - 15
+      - 48
+      - 51
+      - 60
+      - 63
+      '9':
+      - 0
+      - 2
+      - 8
+      - 10
+      - 32
+      - 34
+      - 40
+      - 42
+      - 21
+      - 3
+      - 12
+      - 15
+      - 48
+      - 51
+      - 60
+      - 63
+    signals:
+    - end_row: 0
+      palette_id: 0
+    drawing_lut:
+    - 0
+    - 1
+    - 1
+    - 9
+    - 2
+    - 3
+    - 3
+    - 9
+    - 2
+    - 3
+    - 3
+    - 11
+    - 10
+    - 10
+    - 11
+    - 11
+    - 4
+    - 5
+    - 5
+    - 13
+    - 6
+    - 8
+    - 7
+    - 9
+    - 6
+    - 2
+    - 3
+    - 11
+    - 10
+    - 10
+    - 11
+    - 11
+    - 4
+    - 5
+    - 5
+    - 13
+    - 6
+    - 4
+    - 5
+    - 13
+    - 6
+    - 6
+    - 7
+    - 15
+    - 14
+    - 14
+    - 10
+    - 11
+    - 12
+    - 12
+    - 13
+    - 13
+    - 12
+    - 12
+    - 13
+    - 13
+    - 14
+    - 14
+    - 12
+    - 13
+    - 14
+    - 14
+    - 14
+    - 15
+    row_queries:
+    - 0
+    - 999
+    row_palettes:
+    - - 0
+      - 2
+      - 8
+      - 10
+      - 32
+      - 34
+      - 40
+      - 42
+      - 21
+      - 3
+      - 12
+      - 15
+      - 48
+      - 51
+      - 60
+      - 63
+    - - 0
+      - 2
+      - 8
+      - 10
+      - 32
+      - 34
+      - 40
+      - 42
+      - 21
+      - 3
+      - 12
+      - 15
+      - 48
+      - 51
+      - 60
+      - 63
+  content_sha256: 3761f0a3de1c16eabbc6436144ed6ab46868d864553228ad788f1de96130cc84
+composition_cases:
+- id: base-palette2
+  format: PALETTE2
+  width: 7
+  height: 3
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  drawing_pixels:
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  - - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+  - - 0
+    - 1
+    - 0
+    - 1
+    - 0
+    - 1
+    - 0
+  visible_native_bytes:
+  - 84
+  - 170
+  - 84
+  drawing_native_bytes:
+  - 84
+  - 170
+  - 84
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  - - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  - - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  content_sha256: 1e51dfddc5e8559a91718a2bfac94c21652da6b217532116c278b1088f0ad1b5
+- id: base-palette4
+  format: PALETTE4
+  width: 7
+  height: 3
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 3
+    - 2
+    - 1
+    - 0
+    - 3
+    - 2
+  - - 1
+    - 0
+    - 3
+    - 2
+    - 1
+    - 0
+    - 3
+  - - 2
+    - 1
+    - 0
+    - 3
+    - 2
+    - 1
+    - 0
+  drawing_pixels:
+  - - 0
+    - 3
+    - 2
+    - 1
+    - 0
+    - 3
+    - 2
+  - - 1
+    - 0
+    - 3
+    - 2
+    - 1
+    - 0
+    - 3
+  - - 2
+    - 1
+    - 0
+    - 3
+    - 2
+    - 1
+    - 0
+  visible_native_bytes:
+  - 57
+  - 56
+  - 78
+  - 76
+  - 147
+  - 144
+  drawing_native_bytes:
+  - 57
+  - 56
+  - 78
+  - 76
+  - 147
+  - 144
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+  content_sha256: 3934b6c446ab7e4d20c43aa189c84a4eedd8331f6f0085f0ff20711031fe7e9b
+- id: base-palette8
+  format: PALETTE8
+  width: 7
+  height: 3
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 3
+    - 6
+    - 1
+    - 4
+    - 7
+    - 2
+  - - 5
+    - 0
+    - 3
+    - 6
+    - 1
+    - 4
+    - 7
+  - - 2
+    - 5
+    - 0
+    - 3
+    - 6
+    - 1
+    - 4
+  drawing_pixels:
+  - - 0
+    - 3
+    - 6
+    - 1
+    - 4
+    - 7
+    - 2
+  - - 5
+    - 0
+    - 3
+    - 6
+    - 1
+    - 4
+    - 7
+  - - 2
+    - 5
+    - 0
+    - 3
+    - 6
+    - 1
+    - 4
+  visible_native_bytes:
+  - 15
+  - 25
+  - 208
+  - 161
+  - 227
+  - 56
+  - 84
+  - 60
+  - 96
+  drawing_native_bytes:
+  - 15
+  - 25
+  - 208
+  - 161
+  - 227
+  - 56
+  - 84
+  - 60
+  - 96
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 170
+      - 0
+  - - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 170
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 170
+      - 0
+  - - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 170
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 0
+      - 0
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+  content_sha256: cf869df348bf7b3d157b4cdf06c0bb28362e7f26e57b3b47168b3fff44d66c19
+- id: base-palette16
+  format: PALETTE16
+  width: 7
+  height: 3
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 3
+    - 6
+    - 9
+    - 12
+    - 15
+    - 2
+  - - 5
+    - 8
+    - 11
+    - 14
+    - 1
+    - 4
+    - 7
+  - - 10
+    - 13
+    - 0
+    - 3
+    - 6
+    - 9
+    - 12
+  drawing_pixels:
+  - - 0
+    - 3
+    - 6
+    - 9
+    - 12
+    - 15
+    - 2
+  - - 5
+    - 8
+    - 11
+    - 14
+    - 1
+    - 4
+    - 7
+  - - 10
+    - 13
+    - 0
+    - 3
+    - 6
+    - 9
+    - 12
+  visible_native_bytes:
+  - 3
+  - 105
+  - 207
+  - 32
+  - 88
+  - 190
+  - 20
+  - 112
+  - 173
+  - 3
+  - 105
+  - 192
+  drawing_native_bytes:
+  - 3
+  - 105
+  - 207
+  - 32
+  - 88
+  - 190
+  - 20
+  - 112
+  - 173
+  - 3
+  - 105
+  - 192
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 170
+      - 170
+      - 0
+    - - 0
+      - 170
+      - 170
+    - - 255
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 170
+      - 0
+  - - - 170
+      - 0
+      - 170
+    - - 85
+      - 85
+      - 85
+    - - 255
+      - 255
+      - 0
+    - - 0
+      - 255
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 170
+      - 170
+      - 170
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 170
+      - 170
+      - 0
+    - - 0
+      - 170
+      - 170
+    - - 255
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 170
+      - 170
+      - 0
+    - - 0
+      - 170
+      - 170
+    - - 255
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 170
+      - 0
+  - - - 170
+      - 0
+      - 170
+    - - 85
+      - 85
+      - 85
+    - - 255
+      - 255
+      - 0
+    - - 0
+      - 255
+      - 255
+    - - 170
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 170
+    - - 170
+      - 170
+      - 170
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 0
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 170
+      - 170
+      - 0
+    - - 0
+      - 170
+      - 170
+    - - 255
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  content_sha256: 57d453d88ace7b59ddc497c6d8484c61cc972d0bb7c512cd506c56a259a43bba
+- id: base-sbgr2222
+  format: SBGR2222
+  width: 7
+  height: 3
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 3
+    - 6
+    - 9
+    - 12
+    - 15
+    - 18
+  - - 5
+    - 8
+    - 11
+    - 14
+    - 17
+    - 20
+    - 23
+  - - 10
+    - 13
+    - 16
+    - 19
+    - 22
+    - 25
+    - 28
+  drawing_pixels:
+  - - 0
+    - 3
+    - 6
+    - 9
+    - 12
+    - 15
+    - 18
+  - - 5
+    - 8
+    - 11
+    - 14
+    - 17
+    - 20
+    - 23
+  - - 10
+    - 13
+    - 16
+    - 19
+    - 22
+    - 25
+    - 28
+  visible_native_bytes:
+  - 0
+  - 3
+  - 6
+  - 9
+  - 12
+  - 15
+  - 18
+  - 5
+  - 8
+  - 11
+  - 14
+  - 17
+  - 20
+  - 23
+  - 10
+  - 13
+  - 16
+  - 19
+  - 22
+  - 25
+  - 28
+  drawing_native_bytes:
+  - 0
+  - 3
+  - 6
+  - 9
+  - 12
+  - 15
+  - 18
+  - 5
+  - 8
+  - 11
+  - 14
+  - 17
+  - 20
+  - 23
+  - 10
+  - 13
+  - 16
+  - 19
+  - 22
+  - 25
+  - 28
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 170
+      - 85
+      - 0
+    - - 85
+      - 170
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 0
+    - - 170
+      - 0
+      - 85
+  - - - 85
+      - 85
+      - 0
+    - - 0
+      - 170
+      - 0
+    - - 255
+      - 170
+      - 0
+    - - 170
+      - 255
+      - 0
+    - - 85
+      - 0
+      - 85
+    - - 0
+      - 85
+      - 85
+    - - 255
+      - 85
+      - 85
+  - - - 170
+      - 170
+      - 0
+    - - 85
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 85
+    - - 255
+      - 0
+      - 85
+    - - 170
+      - 85
+      - 85
+    - - 85
+      - 170
+      - 85
+    - - 0
+      - 255
+      - 85
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 170
+      - 85
+      - 0
+    - - 85
+      - 170
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 0
+    - - 170
+      - 0
+      - 85
+  - - - 85
+      - 85
+      - 0
+    - - 0
+      - 170
+      - 0
+    - - 255
+      - 170
+      - 0
+    - - 170
+      - 255
+      - 0
+    - - 85
+      - 0
+      - 85
+    - - 0
+      - 85
+      - 85
+    - - 255
+      - 85
+      - 85
+  - - - 170
+      - 170
+      - 0
+    - - 85
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 85
+    - - 255
+      - 0
+      - 85
+    - - 170
+      - 85
+      - 85
+    - - 85
+      - 170
+      - 85
+    - - 0
+      - 255
+      - 85
+  content_sha256: 33cf0db0cd0f8f5f62033b49f5a96bc95da36406636e1d39bde96d8ae5984b3a
+- id: copper-row-boundaries
+  format: PALETTE4
+  width: 6
+  height: 6
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  drawing_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 3
+    - 0
+    - 1
+    - 2
+    - 3
+    - 0
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 1
+    - 2
+    - 3
+    - 0
+    - 1
+    - 2
+  visible_native_bytes:
+  - 27
+  - 16
+  - 108
+  - 96
+  - 177
+  - 176
+  - 198
+  - 192
+  - 27
+  - 16
+  - 108
+  - 96
+  drawing_native_bytes:
+  - 27
+  - 16
+  - 108
+  - 96
+  - 177
+  - 176
+  - 198
+  - 192
+  - 27
+  - 16
+  - 108
+  - 96
+  palette_operations:
+  - op: create
+    palette_id: 10
+  - op: set
+    palette_id: 10
+    index: 1
+    rgb:
+    - 255
+    - 0
+    - 255
+  - op: create
+    palette_id: 20
+  - op: set
+    palette_id: 20
+    index: 2
+    rgb:
+    - 0
+    - 255
+    - 255
+  - op: signals
+    pairs:
+    - - 2
+      - 0
+    - - 2
+      - 10
+    - - 0
+      - 99
+    - - 1
+      - 20
+  overlays: []
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 255
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 255
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 255
+  content_sha256: 6383346dc688ef7d0d4e827877bd39e094777b5e4ba858139b838e488575bc4d
+- id: overlay-order-alpha-xor-clipping
+  format: PALETTE4
+  width: 6
+  height: 4
+  double_buffered: false
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  drawing_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  - - 0
+    - 1
+    - 2
+    - 3
+    - 0
+    - 1
+  - - 2
+    - 3
+    - 0
+    - 1
+    - 2
+    - 3
+  visible_native_bytes:
+  - 27
+  - 16
+  - 177
+  - 176
+  - 27
+  - 16
+  - 177
+  - 176
+  drawing_native_bytes:
+  - 27
+  - 16
+  - 177
+  - 176
+  - 27
+  - 16
+  - 177
+  - 176
+  palette_operations:
+  - op: create
+    palette_id: 10
+  - op: set
+    palette_id: 10
+    index: 1
+    rgb:
+    - 255
+    - 255
+    - 0
+  - op: signals
+    pairs:
+    - - 1
+      - 0
+    - - 1
+      - 10
+  overlays:
+  - role: software
+    index: 0
+    x: 0
+    y: 0
+    width: 2
+    height: 1
+    format: RGBA2222
+    paint: Set
+    visible: true
+    allow_draw: true
+    data:
+    - 240
+    - 240
+  - role: hardware
+    index: 1
+    x: 1
+    y: 0
+    width: 3
+    height: 2
+    format: RGBA2222
+    paint: Set
+    visible: true
+    allow_draw: true
+    data:
+    - 240
+    - 0
+    - 204
+    - 195
+    - 255
+    - 192
+  - role: text
+    x: 0
+    y: 0
+    width: 3
+    height: 1
+    format: RGBA2222
+    paint: XOR
+    visible: true
+    allow_draw: true
+    data:
+    - 195
+    - 204
+    - 0
+  - role: hardware
+    index: 0
+    x: -1
+    y: 1
+    width: 3
+    height: 2
+    format: RGBA8888
+    paint: Set
+    visible: true
+    allow_draw: true
+    data:
+    - 255
+    - 0
+    - 0
+    - 255
+    - 0
+    - 255
+    - 0
+    - 255
+    - 0
+    - 0
+    - 255
+    - 0
+    - 255
+    - 255
+    - 0
+    - 255
+    - 255
+    - 0
+    - 255
+    - 255
+    - 0
+    - 255
+    - 255
+    - 255
+  - role: hardware
+    index: 2
+    x: 0
+    y: 0
+    width: 1
+    height: 1
+    format: RGBA2222
+    paint: Set
+    visible: true
+    allow_draw: false
+    data:
+    - 255
+  - role: mouse
+    x: 2
+    y: 1
+    width: 3
+    height: 2
+    format: RGBA2222
+    paint: Set
+    visible: true
+    allow_draw: true
+    data:
+    - 207
+    - 0
+    - 240
+    - 195
+    - 204
+    - 255
+  expected_readback_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+  - - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+  expected_composed_rgb:
+  - - - 255
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 255
+      - 255
+      - 255
+  - - - 255
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 255
+    - - 255
+      - 0
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 255
+      - 255
+      - 0
+  - - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 0
+    - - 255
+      - 255
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 255
+      - 255
+  content_sha256: 5543e9de8add8dc0537bd641796abe826c670f7e1da8d7f499ccb26a1b759282
+- id: double-buffer-visible-plane
+  format: PALETTE8
+  width: 4
+  height: 2
+  double_buffered: true
+  selected_plane: visible
+  visible_pixels:
+  - - 0
+    - 1
+    - 2
+    - 3
+  - - 4
+    - 5
+    - 6
+    - 7
+  drawing_pixels:
+  - - 7
+    - 6
+    - 5
+    - 4
+  - - 3
+    - 2
+    - 1
+    - 0
+  visible_native_bytes:
+  - 5
+  - 48
+  - 151
+  - 112
+  drawing_native_bytes:
+  - 250
+  - 192
+  - 104
+  - 128
+  palette_operations: []
+  overlays: []
+  expected_readback_rgb:
+  - - - 255
+      - 255
+      - 255
+    - - 0
+      - 0
+      - 255
+    - - 0
+      - 255
+      - 0
+    - - 255
+      - 0
+      - 0
+  - - - 0
+      - 0
+      - 170
+    - - 0
+      - 170
+      - 0
+    - - 170
+      - 0
+      - 0
+    - - 0
+      - 0
+      - 0
+  expected_composed_rgb:
+  - - - 0
+      - 0
+      - 0
+    - - 170
+      - 0
+      - 0
+    - - 0
+      - 170
+      - 0
+    - - 0
+      - 0
+      - 170
+  - - - 255
+      - 0
+      - 0
+    - - 0
+      - 255
+      - 0
+    - - 0
+      - 0
+      - 255
+    - - 255
+      - 255
+      - 255
+  content_sha256: 2aeca5a2d9e207300afc60ca14017ac73e4a05c423717e4f2d6cdd5c4405fe90
+allocation_cases:
+- id: secondary-palette-allocation-failure
+  format: PALETTE4
+  failure_on_allocation: 1
+  operation:
+    op: create
+    palette_id: 77
+  expected_result: false
+  expected_palettes:
+    '0':
+    - 0
+    - 48
+    - 12
+    - 63
+  expected_live_allocations: 0
+  content_sha256: b0e95b6719f36f32cbbe5575b65a91f865ac831425b3e3d30fac5b73aadd3ae0
+- id: signal-list-allocation-failure
+  format: PALETTE4
+  precondition:
+    op: signals
+    pairs:
+    - - 2
+      - 0
+  failure_on_allocation: 1
+  operation:
+    op: signals
+    pairs:
+    - - 1
+      - 0
+    - - 1
+      - 0
+  expected_result: false
+  expected_signals:
+  - end_row: 2
+    palette_id: 0
+  expected_live_allocations: 0
+  content_sha256: 665e22c6ecd417f409134bc7582927b67bb227ff4e6ff579496cbc51afcf577d
+summary:
+  palette_case_count: 9
+  composition_case_count: 8
+  allocation_case_count: 2
+  formats:
+  - PALETTE16
+  - PALETTE2
+  - PALETTE4
+  - PALETTE8
+  - SBGR2222

@@ -9,9 +9,11 @@
     "video/extender/canary/frame_service_canary.cpp",
     "video/extender/display/logical_frame_service.cpp",
     "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/palette_state.cpp",
     "video/extender/display/p4_display_controller.cpp",
     "video/extender/display/p4_frame_service.cpp",
     "video/extender/display/plane_storage.cpp",
+    "video/extender/display/presentation_compositor.cpp",
     "video/extender/port/fabutils_port.cpp"
   ],
   "vendored_translation_units": [

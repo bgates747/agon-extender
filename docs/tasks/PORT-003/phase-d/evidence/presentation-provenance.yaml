@@ -1,0 +1,722 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_d_presentation_provenance
+generated_by: docs/tasks/PORT-003/phase-d/scripts/extract-presentation-provenance.py
+diagnostic_status: source-derived design evidence; not runtime qualification
+documentation:
+- path: docs/vdp/Copper-API.md
+  sha256: 6a430a0778aef13443d5488a086b3f93bc56a1b8ebf5deab55e2c72255c15286
+sources:
+- owner: agon-vdp
+  path: video/agon_palette.h
+  sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
+- owner: agon-vdp
+  path: video/agon_screen.h
+  sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+- owner: agon-vdp
+  path: video/vdu_sys.h
+  sha256: 29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77
+- owner: vdp-gl
+  path: src/dispdrivers/vga16controller.cpp
+  sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+- owner: vdp-gl
+  path: src/dispdrivers/vga2controller.cpp
+  sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+- owner: vdp-gl
+  path: src/dispdrivers/vga4controller.cpp
+  sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+- owner: vdp-gl
+  path: src/dispdrivers/vga64controller.cpp
+  sha256: 8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b
+- owner: vdp-gl
+  path: src/dispdrivers/vga8controller.cpp
+  sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+- owner: vdp-gl
+  path: src/dispdrivers/vgapalettedcontroller.cpp
+  sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+- owner: vdp-gl
+  path: src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+- owner: vdp-gl
+  path: src/displaycontroller.h
+  sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+records:
+- id: presentation-provenance:agon-vdp:video/agon_palette.h:14:official-palette-defaults-and-rgb222-table
+  owner: agon-vdp
+  kind: source-region
+  symbol: official-palette-defaults-and-rgb222-table
+  disposition: retain-facade-data
+  rationale: Official mode palettes and the 64-color RGB222 lookup remain authoritative.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_palette.h
+    start_line: 14
+    end_line: 69
+    symbol: official-palette-defaults-and-rgb222-table
+    file_sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
+    span_sha256: b95d957d8b5292458386d8e11a1c6c55696246eee959971e910fe5cf31f82bcf
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:105:setPaletteItem
+  owner: agon-vdp
+  kind: callable
+  symbol: setPaletteItem
+  disposition: retain-facade-contract
+  rationale: Ordinary palette mutation targets palette 0.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 105
+    end_line: 111
+    symbol: setPaletteItem
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 5d269c28dddb3619fd2994be6a7e6998e7acb51445d94b8bf109d236b807055f
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:115:getPaletteIndex
+  owner: agon-vdp
+  kind: callable
+  symbol: getPaletteIndex
+  disposition: retain-facade-contract
+  rationale: Official reverse lookup returns the first matching logical entry.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 115
+    end_line: 122
+    symbol: getPaletteIndex
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: bb93f964e44a0a5d900e429d2b129ed255da39f069a7ae9bdd35201fa4719919
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:134:setLogicalPalette
+  owner: agon-vdp
+  kind: callable
+  symbol: setLogicalPalette
+  disposition: retain-facade-contract
+  rationale: VDU 19 updates the public physical palette and explicitly rebuilds drawing lookup.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 134
+    end_line: 156
+    symbol: setLogicalPalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 904e90b50de8b0d9260f60da585da59fe7c44cb03d10576bcbd2c8e33f14c90e
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:163:resetPalette
+  owner: agon-vdp
+  kind: callable
+  symbol: resetPalette
+  disposition: retain-facade-contract
+  rationale: Palette reset populates the active logical depth and rebuilds drawing lookup.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 163
+    end_line: 170
+    symbol: resetPalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 4ccd51de7cc8f866dc7807c03778098f91d563c5ec8e90cd4c4512eddaad2759
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:172:restorePalette
+  owner: agon-vdp
+  kind: callable
+  symbol: restorePalette
+  disposition: retain-facade-contract
+  rationale: Mode integration restores official per-depth defaults outside Teletext.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 172
+    end_line: 182
+    symbol: restorePalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 9d8fa04d72806c9db82b363fd1148b56ce775e43ced0dbfb03a84398702874ee
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:51:updateRGB2PaletteLUT
+  owner: agon-vdp
+  kind: callable
+  symbol: updateRGB2PaletteLUT
+  disposition: retain-facade-contract
+  rationale: The official facade explicitly rebuilds palette-0 drawing quantization.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 51
+    end_line: 56
+    symbol: updateRGB2PaletteLUT
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 56ce5d33670abdea4b2a1ed39523b300a282a53af85383601a2e588abce973d1
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:60:createPalette
+  owner: agon-vdp
+  kind: callable
+  symbol: createPalette
+  disposition: retain-facade-contract
+  rationale: The official facade gates secondary palette creation by color depth.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 60
+    end_line: 65
+    symbol: createPalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 9adc274dc23f2f3ab9363153242d48518ab9c3f656d175193b462005cafe9680
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:69:deletePalette
+  owner: agon-vdp
+  kind: callable
+  symbol: deletePalette
+  disposition: retain-facade-contract
+  rationale: The official facade gates secondary palette deletion by color depth.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 69
+    end_line: 74
+    symbol: deletePalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: b99ec8c0afdb5d1bffe26884fd705d360ff4277192fdc2ceb4bb5223b77342fc
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:78:setItemInPalette
+  owner: agon-vdp
+  kind: callable
+  symbol: setItemInPalette
+  disposition: retain-facade-contract
+  rationale: The official facade exposes palette-ID entry mutation.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 78
+    end_line: 83
+    symbol: setItemInPalette
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 2556e7f31923ac27d56cb2fbf4b6009b34e832f7744866c50423dacd3bd3a726
+- id: presentation-provenance:agon-vdp:video/agon_screen.h:87:updateSignalList
+  owner: agon-vdp
+  kind: callable
+  symbol: updateSignalList
+  disposition: retain-facade-contract
+  rationale: The official facade exposes Copper row/palette selection.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/agon_screen.h
+    start_line: 87
+    end_line: 92
+    symbol: updateSignalList
+    file_sha256: 648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343
+    span_sha256: 96d89acd399a201204aef61f73f34accabf6c007643b3aadd7011ffdbdc6715b
+- id: presentation-provenance:agon-vdp:video/vdu_sys.h:728:vdu_sys_copper
+  owner: agon-vdp
+  kind: callable
+  symbol: vdu_sys_copper
+  disposition: retain-parser-contract
+  rationale: Official Copper commands consume palette IDs, entries, and buffer-backed signal lists.
+  span:
+    source_id: source:agon-vdp:v2.16.0
+    path: video/vdu_sys.h
+    start_line: 728
+    end_line: 770
+    symbol: vdu_sys_copper
+    file_sha256: 29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77
+    span_sha256: e446150d2ce1c60ddab81399680abd2f3454881ea48412d13602f5da04aa7fbd
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga16controller.cpp:124:setupDefaultPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: setupDefaultPalette
+  disposition: retain-depth-default
+  rationale: Sixteen-color controller default.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.cpp
+    start_line: 124
+    end_line: 130
+    symbol: setupDefaultPalette
+    file_sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+    span_sha256: b4b3a45ac2e4320d37fae7913d17a94359520c2b951f54e5e4ce032f5e12de4a
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga16controller.cpp:133:vga16-packed-signal-table
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga16-packed-signal-table
+  disposition: exclude-physical-engine
+  rationale: Packed sync/output signal tables are replaced by RGB888 composition.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.cpp
+    start_line: 133
+    end_line: 142
+    symbol: vga16-packed-signal-table
+    file_sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+    span_sha256: 4ae24c2165b753cf2395481e99d4b809600f52670f6139bcab1766058b7154de
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga16controller.cpp:587:readScreen
+  owner: vdp-gl
+  kind: callable
+  symbol: readScreen
+  disposition: retain-readback-contract
+  rationale: Paletted readback resolves logical bytes through palette 0, not Copper scanout.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga16controller.cpp
+    start_line: 587
+    end_line: 596
+    symbol: readScreen
+    file_sha256: 2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60
+    span_sha256: ab209bd31e3d69fb70d72f881c81f0e11f6b2f6f944c774074a991849d74bce3
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga2controller.cpp:106:setupDefaultPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: setupDefaultPalette
+  disposition: retain-depth-default
+  rationale: Two-color controller default.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.cpp
+    start_line: 106
+    end_line: 110
+    symbol: setupDefaultPalette
+    file_sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+    span_sha256: fd5c101a2acdfa37ebc6bd0e5c43deae9fd3475de89b59de57d3369deae26fdc
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga2controller.cpp:113:vga2-packed-signal-table
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga2-packed-signal-table
+  disposition: exclude-physical-engine
+  rationale: Packed sync/output signal tables are replaced by RGB888 composition.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.cpp
+    start_line: 113
+    end_line: 125
+    symbol: vga2-packed-signal-table
+    file_sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+    span_sha256: 31e142dea3f24a4e7f716a12bc569dc609dd603697cf5cf47103d7db54c4b494
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga2controller.cpp:563:readScreen
+  owner: vdp-gl
+  kind: callable
+  symbol: readScreen
+  disposition: retain-readback-contract
+  rationale: Paletted readback resolves logical bytes through palette 0, not Copper scanout.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga2controller.cpp
+    start_line: 563
+    end_line: 572
+    symbol: readScreen
+    file_sha256: bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c
+    span_sha256: a6f8f1ecc1c75ff49387916adb6b067fed05e5ead98a7b3a4afc757d2c3eb17c
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga4controller.cpp:132:setupDefaultPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: setupDefaultPalette
+  disposition: retain-depth-default
+  rationale: Four-color controller default.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.cpp
+    start_line: 132
+    end_line: 138
+    symbol: setupDefaultPalette
+    file_sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+    span_sha256: 9ef0ae6c325c87307761ca6f98315a2fb36120769c20488981a0a3d25688a16a
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga4controller.cpp:141:vga4-packed-signal-table
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga4-packed-signal-table
+  disposition: exclude-physical-engine
+  rationale: Packed sync/output signal tables are replaced by RGB888 composition.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.cpp
+    start_line: 141
+    end_line: 153
+    symbol: vga4-packed-signal-table
+    file_sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+    span_sha256: b38d22b2e6171042e901cb89a95fbdef74dcaf53859e3c11b805233b36683555
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga4controller.cpp:593:readScreen
+  owner: vdp-gl
+  kind: callable
+  symbol: readScreen
+  disposition: retain-readback-contract
+  rationale: Paletted readback resolves logical bytes through palette 0, not Copper scanout.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga4controller.cpp
+    start_line: 593
+    end_line: 602
+    symbol: readScreen
+    file_sha256: bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51
+    span_sha256: 91402d6d97dd46727134ee06fa5e8ee2a3c967b37b431ad609309ee837bd5e65
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga64controller.cpp:552:readScreen
+  owner: vdp-gl
+  kind: callable
+  symbol: readScreen
+  disposition: retain-readback-contract
+  rationale: Fixed 64-color readback expands direct RGB222 logical values.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga64controller.cpp
+    start_line: 552
+    end_line: 561
+    symbol: readScreen
+    file_sha256: 8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b
+    span_sha256: 4de0d7337baa4f97be135a2f202459bcf9c500cf98477d024ab719bf7fbe1456
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga8controller.cpp:139:setupDefaultPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: setupDefaultPalette
+  disposition: retain-depth-default
+  rationale: Eight-color controller default.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.cpp
+    start_line: 139
+    end_line: 149
+    symbol: setupDefaultPalette
+    file_sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+    span_sha256: 70edf04d652ae6be44db9bf34d22a2909e4245a04a39d50e6356babef3bba631
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga8controller.cpp:152:vga8-packed-signal-table
+  owner: vdp-gl
+  kind: source-region
+  symbol: vga8-packed-signal-table
+  disposition: exclude-physical-engine
+  rationale: Packed sync/output signal tables are replaced by RGB888 composition.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.cpp
+    start_line: 152
+    end_line: 163
+    symbol: vga8-packed-signal-table
+    file_sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+    span_sha256: 951291bf062e040fee701dd18f5ffdd86c2828cc440815c01e39d2fd7bcd432f
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vga8controller.cpp:540:readScreen
+  owner: vdp-gl
+  kind: callable
+  symbol: readScreen
+  disposition: retain-readback-contract
+  rationale: Paletted readback resolves logical bytes through palette 0, not Copper scanout.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vga8controller.cpp
+    start_line: 540
+    end_line: 549
+    symbol: readScreen
+    file_sha256: fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98
+    span_sha256: c7e19fbb86e53b321df26970fe42e44b822563f44ea8a91dee727bebb3c42e4b
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:142:setResolution
+  owner: vdp-gl
+  kind: callable
+  symbol: setResolution
+  disposition: split-observable-from-physical
+  rationale: Palette/list reset is retained; VGA viewport, DMA, GPIO, and ISR startup are excluded.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 142
+    end_line: 174
+    symbol: setResolution
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 6fecc11f1ff521dee92b97d3c857100df86979928b95e682820d4428157ebfb0
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:177:dma-row-signal-selection
+  owner: vdp-gl
+  kind: source-region
+  symbol: dma-row-signal-selection
+  disposition: exclude-physical-engine
+  rationale: DMA row setup and scan buffers are classic VGA implementation only.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 177
+    end_line: 190
+    symbol: dma-row-signal-selection
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: a18da33d1bb30d7c29eaa9311713b38c0a47e6ce97f366e83066957879da6e3f
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:192:getPaletteSize
+  owner: vdp-gl
+  kind: callable
+  symbol: getPaletteSize
+  disposition: retain-algorithm
+  rationale: Native format selects the 2/4/8/16 palette size.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 192
+    end_line: 206
+    symbol: getPaletteSize
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 25d76a85d7d2bd9bf20ec0290f3aaab4cdd4bd02da73a00a343da751c2779f4e
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:208:setPaletteItem
+  owner: vdp-gl
+  kind: callable
+  symbol: setPaletteItem
+  disposition: retain-algorithm
+  rationale: Default palette mutation delegates to palette ID 0.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 208
+    end_line: 211
+    symbol: setPaletteItem
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 895c46a8502292f48844952e9dff606e4a9c5d3bcd46286666a9c17b4b2f4d0f
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:214:setItemInPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: setItemInPalette
+  disposition: retain-algorithm
+  rationale: Missing palettes are created, indices wrap, and output is RGB222-quantized.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 214
+    end_line: 227
+    symbol: setItemInPalette
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: d340cd5f13b35bb1d0a0d665ec3ec9b3c86e667ad041d693d0c2305a90cde03b
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:232:updateRGB2PaletteLUT
+  owner: vdp-gl
+  kind: callable
+  symbol: updateRGB2PaletteLUT
+  disposition: retain-algorithm
+  rationale: Drawing quantization uses HSV distance and its exact tie rule.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 232
+    end_line: 258
+    symbol: updateRGB2PaletteLUT
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 4124ad5811bd72317d522ed2dc680fd6dc6eec9d2a8f596ab4a42a176ca822ec
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:261:createPalette
+  owner: vdp-gl
+  kind: callable
+  symbol: createPalette
+  disposition: retain-algorithm
+  rationale: Secondary creation copies palette 0 and may fail allocation.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 261
+    end_line: 282
+    symbol: createPalette
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 45c1dae6967bf875320b8c2fd25217d60c55b489a6e32d1e6cf201fa31497b28
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:285:deletePalette
+  owner: vdp-gl
+  kind: callable
+  symbol: deletePalette
+  disposition: retain-observable-intent
+  rationale: ID 0 is protected, 65535 means all secondary palettes, and active spans fall back to palette 0.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 285
+    end_line: 309
+    symbol: deletePalette
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: ec0c999c6ec467925f17c3a6c5ef1d2dc8d1780831368f9817a9df0eb04c1723
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:321:updateSignalList
+  owner: vdp-gl
+  kind: callable
+  symbol: updateSignalList
+  disposition: retain-algorithm
+  rationale: Row counts accumulate and unknown IDs resolve to palette 0.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 321
+    end_line: 358
+    symbol: updateSignalList
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 3895029998b57ca06eefd9e4e314ba18df06dffac102badb0f404f5b8b5bb256
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:361:createSignalList
+  owner: vdp-gl
+  kind: callable
+  symbol: createSignalList
+  disposition: retain-algorithm
+  rationale: Additional row spans retain cumulative boundaries and resolved palettes.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 361
+    end_line: 382
+    symbol: createSignalList
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: ab4e3c2417f2edda93b96b42b9e55c244744bf634b251d8ab1b331710e23c311
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:385:getSignalsForScanline
+  owner: vdp-gl
+  kind: callable
+  symbol: getSignalsForScanline
+  disposition: retain-algorithm
+  rationale: The last span extends through all later scanlines.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 385
+    end_line: 393
+    symbol: getSignalsForScanline
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 262edf7c929c30b3450b8afdef530d0ff0da2a63b07ee3dd07e9b17c2b963530
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:405:decorateScanLinePixels
+  owner: vdp-gl
+  kind: callable
+  symbol: decorateScanLinePixels
+  disposition: replace-platform-compositor
+  rationale: The visible-row decoration point is retained through the central compositor, not DMA scanout.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 405
+    end_line: 407
+    symbol: decorateScanLinePixels
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 437275be2820da200c82b021cabc5a029af4d5d960229fd1b81b6b14697564af
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:409:rawDrawSpriteScanline
+  owner: vdp-gl
+  kind: callable
+  symbol: rawDrawSpriteScanline
+  disposition: adapt-overlay-algorithm
+  rationale: Retain clipping, alpha, RGB222 conversion, overwrite, and XOR without VGA signal bytes.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 409
+    end_line: 478
+    symbol: rawDrawSpriteScanline
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 33516ecf670136a1e773e0d720ae8bd50c41de07453b3f7cefb971a122a0bac9
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:480:drawSpriteScanLine
+  owner: vdp-gl
+  kind: callable
+  symbol: drawSpriteScanLine
+  disposition: adapt-overlay-algorithm
+  rationale: Retain text/sprite/mouse order and hardware filtering.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 480
+    end_line: 499
+    symbol: drawSpriteScanLine
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: 462f4426b6ebb18fee5221c81120ba29270aa3092ef23647967010ff5b7ad8a6
+- id: presentation-provenance:vdp-gl:src/dispdrivers/vgapalettedcontroller.cpp:63:palette-construction-and-destruction
+  owner: vdp-gl
+  kind: source-region
+  symbol: palette-construction-and-destruction
+  disposition: replace-allocation-mechanism
+  rationale: Project-owned allocator state replaces internal-memory signal tables while preserving observable lifetime.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/dispdrivers/vgapalettedcontroller.cpp
+    start_line: 63
+    end_line: 92
+    symbol: palette-construction-and-destruction
+    file_sha256: 5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49
+    span_sha256: cab1a214ad58b265bff85795d19272b7d3ee3056ef2628e4103b60db9b22efe8
+- id: presentation-provenance:vdp-gl:src/displaycontroller.cpp:652:setSprites
+  owner: vdp-gl
+  kind: callable
+  symbol: setSprites
+  disposition: retain-common-contract
+  rationale: Unchanged common code allocates software-sprite backgrounds and excludes hardware sprites from that storage.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 652
+    end_line: 684
+    symbol: setSprites
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: 82ba2999a457190e013dbbf2de0468cc1116498696bd1d3fbeb852c52550b82e
+- id: presentation-provenance:vdp-gl:src/displaycontroller.cpp:700:hideSprites
+  owner: vdp-gl
+  kind: callable
+  symbol: hideSprites
+  disposition: retain-common-contract
+  rationale: Unchanged common code restores software-sprite backgrounds in single-buffer modes.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 700
+    end_line: 723
+    symbol: hideSprites
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: 138d12d54499c4b321367624178652334c2001ccbde862172b5e739ca8a233f7
+- id: presentation-provenance:vdp-gl:src/displaycontroller.cpp:726:showSprites
+  owner: vdp-gl
+  kind: callable
+  symbol: showSprites
+  disposition: retain-common-contract
+  rationale: Unchanged common code draws only non-hardware sprites into logical storage.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 726
+    end_line: 758
+    symbol: showSprites
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: c0eff4cd46ed0da21ed6aed527b5808c19d48c9971bb182f85a13c6b58036f62
+- id: presentation-provenance:vdp-gl:src/displaycontroller.cpp:762:setMouseCursor
+  owner: vdp-gl
+  kind: callable
+  symbol: setMouseCursor
+  disposition: retain-common-contract
+  rationale: The retained controller owns mouse cursor frame, hotspot, and visibility state.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 762
+    end_line: 777
+    symbol: setMouseCursor
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: c5fbd577227c40281b441cdba9ecf096d470c23573ff80a522bddad2397b184c
+- id: presentation-provenance:vdp-gl:src/displaycontroller.cpp:786:setMouseCursorPos
+  owner: vdp-gl
+  kind: callable
+  symbol: setMouseCursorPos
+  disposition: retain-common-contract
+  rationale: The retained controller applies the selected mouse hotspot to cursor position.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.cpp
+    start_line: 786
+    end_line: 789
+    symbol: setMouseCursorPos
+    file_sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+    span_sha256: 7c906ac294aacba5fd2af9f20b674183af7a16b4663f2eccdbf93b86b6c779df
+- id: presentation-provenance:vdp-gl:src/displaycontroller.h:1047:text-cursor-binding
+  owner: vdp-gl
+  kind: source-region
+  symbol: text-cursor-binding
+  disposition: retain-common-contract
+  rationale: The retained controller stores the optional hardware text cursor sprite.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 1047
+    end_line: 1051
+    symbol: text-cursor-binding
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: 5748cb34e4330680de1914d6cf2836088468368542434826a751d61adef2b25a
+- id: presentation-provenance:vdp-gl:src/displaycontroller.h:651:sprite-state-contract
+  owner: vdp-gl
+  kind: source-region
+  symbol: sprite-state-contract
+  disposition: retain-common-contract
+  rationale: Sprite position, frame, visibility, hardware flag, and paint mode feed retained common or composed paths.
+  span:
+    source_id: source:vdp-gl:all-the-plots
+    path: src/displaycontroller.h
+    start_line: 651
+    end_line: 688
+    symbol: sprite-state-contract
+    file_sha256: 603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23
+    span_sha256: c9904f13b70a591dd195f984fd09a7a32807ce034509368ebaa8baf737a47459
+findings:
+  logical_presentation_split: palette 0 owns drawing lookup and logical readback; Copper selects presentation palettes only
+  software_hardware_split: unchanged common code draws software sprites into logical storage; scanout code overlays hardware sprites and cursors
+  overlay_order: text cursor, ascending hardware sprites, then mouse cursor
+  excluded_mechanism: classic packed signal maps, DMA rows, GPIO/I2S, and scanline ISR are not retained
+summary:
+  record_count: 47
+  source_file_count: 11
+  counts_by_disposition:
+    adapt-overlay-algorithm: 2
+    exclude-physical-engine: 5
+    replace-allocation-mechanism: 1
+    replace-platform-compositor: 1
+    retain-algorithm: 8
+    retain-common-contract: 7
+    retain-depth-default: 4
+    retain-facade-contract: 10
+    retain-facade-data: 1
+    retain-observable-intent: 1
+    retain-parser-contract: 1
+    retain-readback-contract: 5
+    split-observable-from-physical: 1

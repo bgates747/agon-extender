@@ -108,6 +108,8 @@ def main() -> int:
             ROOT / "vdp/video/extender/display/logical_frame_service.cpp",
             ROOT / "vdp/video/extender/display/native_pixel_codec.cpp",
             ROOT / "vdp/video/extender/display/plane_storage.cpp",
+            ROOT / "vdp/video/extender/display/palette_state.cpp",
+            ROOT / "vdp/video/extender/display/presentation_compositor.cpp",
             ROOT / "vdp/video/extender/display/p4_display_controller.cpp",
             ROOT / "vdp/video/extender/port/fabutils_port.cpp",
             ROOT / "vdp/vendor/vdp-gl/src/canvas.cpp",

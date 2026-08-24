@@ -7,18 +7,18 @@ build_invocation: .venv/bin/pio run -d vdp -e p4-frame-service
 inputs:
   source_selection:
     path: vdp/pio/p4-frame-service-source-selection.json
-    sha256: 7f6a5605387e4ff701134302f6270d8dec3d2d4beb2bf698e48a71fd36be790f
+    sha256: 78307254dff875d91bb2041cb6c999b3677040930e52051070f662bbc58f97fd
   compile_commands:
     path: vdp/.pio/build/p4-frame-service/compile_commands.json
-    sha256: 4eaf5aae9989355ba69fe26be89027c58e617cd77d4a1c8d5266fb8390049f0b
+    sha256: 5c3db55ba304b9720c4940842455137aa0072f1998543789e826d2433324f4d9
   linker_map:
     path: vdp/.pio/build/p4-frame-service/firmware.map
-    sha256: e037747dedf4401fcda706af701e1b32367b10bd4885e5c2ae39ab47300a736b
-  normalized_elf_symbols_sha256: c3ff04fac570b0bc6e172fb251b3f95a8ffbe64d3ce5433e7f0cb4b2a8ccde34
+    sha256: 3cd724ccf10fbff309143b2cc4c09b9cf72c130112e96c4de37d84a403dfe7a2
+  normalized_elf_symbols_sha256: dfefa764d74f174369a399278b8b166ef96c6953d5c22a7732f0dd6cf1481fa4
 firmware:
   path: vdp/.pio/build/p4-frame-service/firmware.bin
-  sha256: 3f45ece664caced58c679660c9abbca89ada20a8f22b0c2678ce030d71235f63
-  size_bytes: 595936
+  sha256: 2f2cb8ddc966b8b849d70bad5eb773d31445c2cf8019ae12c8b4a06c20779e5b
+  size_bytes: 594976
 application_translation_units:
 - source: vendor/vdp-gl/src/canvas.cpp
   object: selected-vdp-gl/canvas.o
@@ -41,8 +41,14 @@ application_translation_units:
 - source: video/extender/display/p4_frame_service.cpp
   object: video/extender/display/p4_frame_service.cpp.o
   object_loaded: true
+- source: video/extender/display/palette_state.cpp
+  object: video/extender/display/palette_state.cpp.o
+  object_loaded: true
 - source: video/extender/display/plane_storage.cpp
   object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/display/presentation_compositor.cpp
+  object: video/extender/display/presentation_compositor.cpp.o
   object_loaded: true
 - source: video/extender/port/fabutils_port.cpp
   object: video/extender/port/fabutils_port.cpp.o
@@ -77,8 +83,8 @@ undefined_elf_symbols:
 - U start_app
 - U start_app_other_cores
 summary:
-  selected_translation_unit_count: 9
-  project_translation_unit_count: 7
+  selected_translation_unit_count: 11
+  project_translation_unit_count: 9
   vendored_translation_unit_count: 2
   missing_objects: []
   unexpected_application_objects: []

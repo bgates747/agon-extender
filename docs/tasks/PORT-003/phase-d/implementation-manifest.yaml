@@ -1,0 +1,64 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_d_implementation_manifest
+status: complete
+authority: docs/tasks/PORT-003.md#phase-d--palette-copper-and-overlays
+phase_contract: mutable palette and Copper state plus quiescent logical-to-RGB888 composition with stock hardware overlays; no facade, consumer lease, sink, or transport
+source_baselines:
+  agon_vdp:
+    identity: v2.16.0
+    commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+  vdp_gl:
+    identity: all-the-plots
+    commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+returned_downstream_references:
+  frozen_extender_commit: 10f2eb20997f0428f0d756a0819a632cd3b7cedb
+  emos_maintained_source_commit: a8dc891a3668660978fa66d54b3d7638ecc876e2
+  emos_build_qualification_commit: b12fcaba97b1a9d43a5b2e247cc96846febac934
+  role: provisional downstream context only; no Phase D parity or hardware claim
+oracle_precedence:
+  - official documentation and exact source-derived behavior
+  - independent written-contract fixture model
+  - production host output compared against independent fixtures
+  - diagnostic target compile and link closure
+production:
+  - path: vdp/video/extender/display/palette_state.hpp
+    role: allocator-injected palette, drawing LUT, and Copper state contract
+  - path: vdp/video/extender/display/palette_state.cpp
+    role: stock-compatible palette mutation, quantization, and signal-list resolution
+  - path: vdp/video/extender/display/presentation_compositor.hpp
+    role: pure plane/region/RGB888 and overlay composition contract
+  - path: vdp/video/extender/display/presentation_compositor.cpp
+    role: central sink-neutral Copper and hardware-overlay algorithm
+  - path: vdp/video/extender/display/p4_display_controller.hpp
+    role: narrow retained-controller integration surface
+  - path: vdp/video/extender/display/p4_display_controller.cpp
+    role: palette-0 renderer binding and quiescent overlay enumeration
+host_qualification:
+  provenance_generator: docs/tasks/PORT-003/phase-d/scripts/extract-presentation-provenance.py
+  fixture_generator: docs/tasks/PORT-003/phase-d/scripts/generate-presentation-fixtures.py
+  runner: docs/tasks/PORT-003/phase-d/scripts/run-host-presentation-tests.py
+  validator: docs/tasks/PORT-003/phase-d/scripts/validate-phase-d.py
+  prohibition: fixture generation must not import production headers, invoke production binaries, or parse production output
+generated_evidence:
+  - docs/tasks/PORT-003/phase-d/evidence/presentation-provenance.yaml
+  - docs/tasks/PORT-003/phase-d/evidence/host-presentation-results.yaml
+  - docs/tasks/PORT-003/phase-d/evidence/build-closure.yaml
+  - docs/tasks/PORT-003/phase-d/evidence/link-exclusions.yaml
+target_build:
+  environment: p4-presentation
+  source_selection: vdp/pio/p4-presentation-source-selection.json
+  deploy: forbidden
+  qualification: compile/link closure only
+patched_vendor_files: []
+deferred_to_phase_e:
+  - official agon_screen.h controller binding and mode table
+  - official palette restore, mode fallback, contexts, callbacks, and Teletext
+  - VDU parser integration
+deferred_to_phase_f:
+  - bounded frame-generation lease and immutable lifetime
+  - durable consumer API and output-format negotiation
+  - sink-owned buffers and drop/backpressure qualification
+excluded_families:
+  - classic VGA/CVBS GPIO, I2S, DMA, signal-table, and VSYNC ISR machinery
+  - physical PS2 input, audio, network, storage, updater, and output sinks
+  - MOS, EMOS, transport, EDU/VDU routing, and operating-mode policy

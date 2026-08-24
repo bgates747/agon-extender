@@ -240,11 +240,13 @@ queryable in the YAML projection.
 
 | Build unit | State | Project path | Task |
 |---|---|---|---|
-| `build-unit:extender:p4-display-controller` | phase-c-qualified-host | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
-| `build-unit:extender:p4-frame-service-canary` | diagnostic-frame-service | `video/extender/canary/frame_service_canary.cpp` | `PORT-003` |
+| `build-unit:extender:p4-display-controller` | phase-d-qualified-host | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
 | `build-unit:extender:p4-frame-task-adapter` | phase-c-target-closure | `video/extender/display/p4_frame_service.cpp` | `PORT-003` |
 | `build-unit:extender:p4-logical-frame-service` | phase-c-qualified-host | `video/extender/display/logical_frame_service.cpp` | `PORT-003` |
 | `build-unit:extender:p4-native-pixel-codec` | phase-b-qualified-host | `video/extender/display/native_pixel_codec.cpp` | `PORT-003` |
+| `build-unit:extender:p4-palette-state` | phase-d-qualified-host | `video/extender/display/palette_state.cpp` | `PORT-003` |
 | `build-unit:extender:p4-plane-storage` | phase-c-qualified-host | `video/extender/display/plane_storage.cpp` | `PORT-003` |
-| `build-unit:extender:p4-port-adapters` | phase-c-logical-frame-service | — | `PORT-003` |
+| `build-unit:extender:p4-port-adapters` | phase-d-presentation | — | `PORT-003` |
+| `build-unit:extender:p4-presentation-canary` | diagnostic-presentation | `video/extender/canary/presentation_canary.cpp` | `PORT-003` |
+| `build-unit:extender:p4-presentation-compositor` | phase-d-qualified-host | `video/extender/display/presentation_compositor.cpp` | `PORT-003` |
 | `build-unit:extender:p4-vdp-gl-port-utility-closure` | phase-b-narrow-port | `video/extender/port/fabutils_port.cpp` | `PORT-003` |

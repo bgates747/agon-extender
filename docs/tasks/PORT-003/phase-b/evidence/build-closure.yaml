@@ -7,14 +7,14 @@ build_invocation: .venv/bin/pio run -d vdp -e p4-display-renderer
 inputs:
   source_selection:
     path: vdp/pio/source-selection.json
-    sha256: f994a3b6be69406b8b8117fc730dbd1b917f8892623114c0ccf4baca205c096a
+    sha256: c5e16c8a691d6c0fb7f0913c22f170e9bed29d4a3225df2de8883c0554e22142
   compile_commands:
     path: vdp/.pio/build/p4-display-renderer/compile_commands.json
-    sha256: 94bcbec39c4c53b5073e14c77b89bcd3a4db3db2b53780d14156db692bfca9e9
+    sha256: af042367d482f7dacd2dfa0bdc818d706b65f76fc8a94143382d9dbcbf4d6d37
   linker_map:
     path: vdp/.pio/build/p4-display-renderer/firmware.map
-    sha256: 32ba666f336a552f996788fb7ce062d1fc17441b2f1f43774800fc69b1f53e7b
-  normalized_elf_symbols_sha256: 64a7ff00e5322950553f47f8bcc37b099a65807fe75c27c7c0c175239cd6347f
+    sha256: 88db231a01e020d519fb68f0bf3ec9e3ba2871ee9fc5d48387c11945b0b92f5f
+  normalized_elf_symbols_sha256: e579267ae2431b14aa7b482700f01b4441d18a4d71d1a9d586b4465234754c06
 application_translation_units:
 - source: vendor/vdp-gl/src/canvas.cpp
   object: selected-vdp-gl/canvas.o
@@ -31,8 +31,14 @@ application_translation_units:
 - source: video/extender/display/p4_display_controller.cpp
   object: video/extender/display/p4_display_controller.cpp.o
   object_loaded: true
+- source: video/extender/display/palette_state.cpp
+  object: video/extender/display/palette_state.cpp.o
+  object_loaded: true
 - source: video/extender/display/plane_storage.cpp
   object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+- source: video/extender/display/presentation_compositor.cpp
+  object: video/extender/display/presentation_compositor.cpp.o
   object_loaded: true
 - source: video/extender/port/fabutils_port.cpp
   object: video/extender/port/fabutils_port.cpp.o
@@ -61,8 +67,8 @@ undefined_elf_symbols:
 - U start_app
 - U start_app_other_cores
 summary:
-  selected_translation_unit_count: 7
-  project_translation_unit_count: 5
+  selected_translation_unit_count: 9
+  project_translation_unit_count: 7
   vendored_translation_unit_count: 2
   missing_objects: []
   unexpected_application_objects: []
