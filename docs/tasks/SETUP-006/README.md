@@ -20,6 +20,10 @@ review records may remain here after promotion.
    accepted naming review provenance, legacy aliases, ownership domains,
    containment, and logical-versus-physical boundaries. The maintained names
    have been promoted to `hardware/objects/objects.yaml`.
+4. [`SETUP-006.3-fritzing/`](SETUP-006.3-fritzing/) — accepted canonical
+   mechanical and diagrammatic breadboard scaffold for subsequent wiring
+   design. It is intentionally unwired and remains task-local until the
+   electrical design establishes its permanent artifact boundary.
 
 ## Promoted output
 

@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — SETUP-006.2 ready for acceptance and commit
+- Status: In progress — SETUP-006.3 canonical scaffold accepted; electrical design pending
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -313,15 +313,76 @@ or ERP identities.
 7. [x] Resolve `SETUP-006-Q001` as `SETUP-006-D002`, register the approved
    `hardware-object-registry-r01` draft identity, and bind validation to the
    central artifact record.
-8. [ ] Present the complete SETUP-006.2 change set for Author acceptance and
-   commit.
+8. [x] Present the complete SETUP-006.2 change set for Author acceptance and
+   commit. The Author committed and pushed the accepted result as `0becfd5`.
+
+### SETUP-006.3 — Establish the Fritzing breadboard wiring-diagram scaffold
+
+1. [x] Record the current physical arrangement as two BusBoard BB630 terminal
+   areas from a BB1460 kit with both BB100R distribution strips installed: one
+   at the top edge and one shared between the terminal areas. Treat this as a
+   mechanical observation pending physical review, not an electrically
+   qualified assembly definition.
+2. [x] Create a deterministic, project-local Fritzing generator rather than
+   relying on hand placement in the Fritzing GUI.
+3. [x] Generate a custom composite breadboard part with a 63-column, 0.1-inch
+   terminal grid and both top-edge and shared central distribution strips.
+   Center each strip's two contact rows and place its polarity-color legends
+   outside those rows rather than through their centers. Preserve the accepted
+   left-to-right column orientation and place blue/GND above red/hot on both
+   strips without rotating the established drawing. Put outer column indices
+   immediately above and below the Agon headers, remove the unnecessary BB630
+   center-groove titles, and add diagram-only column-index series in both
+   grooves as drafting orientation aids.
+4. [x] Generate an Olimex ESP32-P4-DevKit Rev D1 part from the official board
+   dimensions and 20-pin EXT1/EXT2 header geometry.
+5. [x] Place P4 EXT1 and EXT2 across the shared strip with header pin 1 at
+   breadboard column 1, USB Serial/JTAG overhanging that end, and two free
+   terminal holes on either side of each header row.
+6. [x] Package the sketch and custom parts into a portable `.fzz`; package the
+   accepted P4 and accepted composite breadboard independently as My
+   Parts-compatible `.fzpz` files; render a review preview; and validate
+   archive, XML, connector, pitch, placement, and regeneration invariants.
+7. [x] Keep P4 signal interconnects explicitly unassigned until the firmware-
+   driven electrical design review selects the required nets, conditioning,
+   protections, and test points. This does not prohibit reproducing the
+   recovered Agon-side harness contacts as evidence.
+8. [x] Add two separate color-coded Agon 1x16 harness headers to the same
+   generated sketch: even pins 2–32 on the top row beginning at column 6 and
+   odd pins 1–31 on the bottom row beginning at column 4. Explicitly exclude
+   pins 33 and 34 from both headers, and defer their separate power wiring.
+   Keep both header parts label-free. Add two independent movable label-bank
+   parts, one containing exactly 16 odd-pin labels and one containing exactly
+   16 even-pin labels. Use matching colors, exact 0.1-inch breadboard-hole
+   pitch, 0.5-inch label depth, and left-justified `number name` text. Bake the
+   required clockwise rotation into each SVG rather than storing a Fritzing
+   instance transform. Place each bank outside and aligned with its matching
+   1x16 header, following the Author's `_usermod` review evidence.
+   Identify only official physical Agon names and immutable eZ80 mux roles,
+   including `PD4 / RTS1`, `PD5 / CTS1`, `PC0 / RXD1`, and `PC2 / TXD1`;
+   never embed mutable Extender harness-function mappings in these labels.
+   Use one plain SVG text node per label: Fritzing 1.0.1 visibly mangles
+   adjacent `<tspan>` elements even when standard SVG renderers do not.
+   Include one invisible, unconnected, explicitly non-electrical connector as
+   a loader workaround: Fritzing 1.0.1 substitutes another bundled part's
+   artwork when a normal custom part has no connectors. Give each label bank a
+   unique Fritzing module identity and advance it whenever changing integration
+   metadata.
+9. [x] Present the generated scaffold and all assumptions for Author review.
+   The Author accepted and froze it on 2026-08-25 as the canonical mechanical
+   and diagrammatic base for subsequent SETUP-006 wiring design. It remains
+   task-local until the electrical design establishes the correct permanent
+   artifact boundary; acceptance does not qualify or preserve the legacy
+   harness wiring.
 
 ## Stop condition
 
 SETUP-006.1.1 is accepted and frozen in commit `b38b445`. SETUP-006.1.2 is
 accepted review provenance, and SETUP-006.2 has promoted its names into
 `hardware-object-registry-r01`. The Author resolved the registry-identity gate
-as `SETUP-006-D002`; SETUP-006.2 now stops at its final acceptance and commit
-boundary. Do not rename existing files, change a hardware profile, advance
-another artifact revision, synchronize ERP records, or modify physical wiring
-without the applicable Author approval.
+as `SETUP-006-D002`. SETUP-006.3 is accepted as the canonical unwired
+breadboard scaffold. SETUP-006 remains open because the firmware-driven
+electrical design, connectivity, construction definition, and qualification
+are not established. Do not rename existing files, change a hardware profile,
+advance another artifact revision, synchronize ERP records, or modify physical
+wiring without the applicable Author approval.
