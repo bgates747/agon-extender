@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agon-extender.invalid/schema/hardware-objects-v1.json",
+  "title": "Agon Extender hardware object authority",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "authority",
+    "artifact_id",
+    "identity",
+    "status",
+    "objects"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "authority": {
+      "const": "hardware-object-roles"
+    },
+    "artifact_id": {
+      "const": "hardware-object-registry"
+    },
+    "identity": {
+      "type": "string",
+      "pattern": "^hardware-object-registry-r(?:0[1-9]|[1-9][0-9]+)$"
+    },
+    "status": {
+      "enum": [
+        "draft",
+        "experimental",
+        "candidate",
+        "qualified",
+        "released",
+        "deprecated",
+        "rejected"
+      ]
+    },
+    "objects": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/object"
+      }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "object": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "object_id",
+        "label",
+        "domain",
+        "object_class",
+        "description",
+        "parent_object_id",
+        "aliases",
+        "related_artifact_ids"
+      ],
+      "properties": {
+        "object_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "label": {
+          "type": "string",
+          "minLength": 1
+        },
+        "domain": {
+          "enum": [
+            "bench",
+            "bench-support",
+            "context",
+            "measurement",
+            "product",
+            "product-prototype",
+            "proposed-product"
+          ]
+        },
+        "object_class": {
+          "$ref": "#/$defs/slug"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "parent_object_id": {
+          "oneOf": [
+            {
+              "$ref": "#/$defs/slug"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "aliases": {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "minLength": 1
+          },
+          "uniqueItems": true
+        },
+        "related_artifact_ids": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/slug"
+          },
+          "uniqueItems": true
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,529 @@
+# Durable hardware role vocabulary. Electrical connectivity belongs to
+# revisioned design and fixture profiles, not this file.
+schema_version: 1
+authority: hardware-object-roles
+artifact_id: hardware-object-registry
+identity: hardware-object-registry-r01
+status: draft
+
+objects:
+  - object_id: agon-carrier-interface-receptacle
+    label: Agon carrier interface receptacle
+    domain: proposed-product
+    object_class: connector
+    description: Proposed right-angle receptacle connecting the Agon expansion interface to a future carrier assembly.
+    parent_object_id: light2-extender-carrier-assembly
+    aliases:
+      - Agon right-angle receptacle
+      - Samtec SSW-117-02-T-D-RA
+    related_artifact_ids: []
+
+  - object_id: agon-expansion-interface-harness
+    label: Agon expansion interface harness
+    domain: product-prototype
+    object_class: connector-assembly
+    description: Agon-side connector and conductor assembly joining the expansion header to the solderless Extender prototype.
+    parent_object_id: light2-extender-solderless-assembly
+    aliases:
+      - Agon expansion header harness
+      - Agon-side harness
+      - two ribbon harnesses
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: agon-light2-host
+    label: Agon Light 2 host
+    domain: context
+    object_class: host-assembly
+    description: Agon Light 2 main-board endpoint used by the Light 2 Extender design variant.
+    parent_object_id: null
+    aliases:
+      - Agon Light 2
+      - Light 2
+      - main board
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: agon-logic-reference-circuit
+    label: Agon logic reference circuit
+    domain: product
+    object_class: reference-bias-circuit
+    description: Agon-derived 3.3 V logic reference used by interface buffering and state-defining bias components without powering the P4.
+    parent_object_id: null
+    aliases:
+      - Agon pin 34 reference
+      - 3.3 V reference
+      - U1 bias rail
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: agon-onboard-vdp-endpoint
+    label: Agon onboard VDP endpoint
+    domain: context
+    object_class: firmware-hardware-endpoint
+    description: Stock ESP32-PICO-D4 VDP endpoint installed on the Agon main board.
+    parent_object_id: agon-light2-host
+    aliases:
+      - onboard VDP
+      - stock VDP
+      - ESP32-PICO-D4
+      - Pico-D4
+    related_artifact_ids: []
+
+  - object_id: agon-p4-signal-reference
+    label: Agon-P4 signal reference
+    domain: product
+    object_class: signal-reference-connection
+    description: Common signal-ground connection required between the Agon and P4 communication endpoints.
+    parent_object_id: null
+    aliases:
+      - common signal ground
+      - Agon pin 33 ground
+      - P4 EXT1 pin 2 ground
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: agon-to-p4-ext1-wire-bank
+    label: Agon-to-P4 EXT1 wire bank
+    domain: product-prototype
+    object_class: wire-bank
+    description: Physical conductor bank routing the documented even-row Agon signals to P4 EXT1.
+    parent_object_id: light2-extender-solderless-assembly
+    aliases:
+      - even Agon row
+      - board-left wire bank
+      - EXT1 routing bank
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: agon-to-p4-ext2-wire-bank
+    label: Agon-to-P4 EXT2 wire bank
+    domain: product-prototype
+    object_class: wire-bank
+    description: Physical conductor bank routing the documented odd-row Agon signals to P4 EXT2.
+    parent_object_id: light2-extender-solderless-assembly
+    aliases:
+      - odd Agon row
+      - board-right wire bank
+      - EXT2 routing bank
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: analyzer-even-data-ribbon
+    label: Analyzer even-data ribbon
+    domain: measurement
+    object_class: lead-subassembly
+    description: Reusable analyzer ribbon carrying the D0, D2, D4, and D6 channel-color leads.
+    parent_object_id: transport-logic-analyzer-harness
+    aliases:
+      - even analyzer ribbon
+      - D0 D2 D4 D6 ribbon
+    related_artifact_ids:
+      - la03-p4-probe-fixture
+
+  - object_id: analyzer-odd-data-ribbon
+    label: Analyzer odd-data ribbon
+    domain: measurement
+    object_class: lead-subassembly
+    description: Reusable analyzer ribbon carrying the D1, D3, D5, and D7 channel-color leads.
+    parent_object_id: transport-logic-analyzer-harness
+    aliases:
+      - odd analyzer ribbon
+      - D1 D3 D5 D7 ribbon
+    related_artifact_ids:
+      - la03-p4-probe-fixture
+
+  - object_id: analyzer-signal-reference-lead
+    label: Analyzer signal-reference lead
+    domain: measurement
+    object_class: reference-path
+    description: Dedicated analyzer ground-reference lead, distinct from the product signal-reference circuit even when attached to it.
+    parent_object_id: transport-logic-analyzer-harness
+    aliases:
+      - analyzer ground
+      - qualified black ground lead
+      - analyzer reference
+    related_artifact_ids:
+      - la03-p4-probe-fixture
+
+  - object_id: buffer-disabled-spare-channel
+    label: Buffer disabled spare channel
+    domain: product
+    object_class: disabled-subcircuit
+    description: Unused interface-buffer channel held disabled with its input grounded and output reserved for test access.
+    parent_object_id: null
+    aliases:
+      - U1 channel 3
+      - spare buffer channel
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: carrier-test-access-field
+    label: Carrier test-access field
+    domain: proposed-product
+    object_class: construction-feature
+    description: Proposed labeled carrier pads for signal, enable, reset, reference, and measurement access.
+    parent_object_id: light2-extender-carrier-assembly
+    aliases:
+      - test pads
+      - analyzer landing area
+      - ground test points
+    related_artifact_ids: []
+
+  - object_id: extender-bench-control-host
+    label: Extender bench-control host
+    domain: bench
+    object_class: equipment
+    description: Raspberry Pi 5 host used for deployment, capture, logic analysis, and authorized bench control.
+    parent_object_id: null
+    aliases:
+      - Pi 5
+      - Raspberry Pi 5
+      - bench Pi
+      - deployment host
+    related_artifact_ids: []
+
+  - object_id: extender-bench-logic-analyzer
+    label: Extender bench logic analyzer
+    domain: measurement
+    object_class: equipment
+    description: Eight-channel Saleae-compatible USB logic analyzer used for Extender bench measurements.
+    parent_object_id: null
+    aliases:
+      - logic sniffer
+      - USB logic analyzer
+      - Saleae-compatible analyzer
+    related_artifact_ids:
+      - la03-p4-probe-fixture
+
+  - object_id: extender-p4-development-board
+    label: Extender P4 development board
+    domain: context
+    object_class: development-assembly
+    description: Olimex ESP32-P4-DevKit Rev D1 serving as the current EDP development board.
+    parent_object_id: null
+    aliases:
+      - P4 DevKit
+      - Olimex board
+      - EDP board
+      - Olimex ESP32-P4-DevKit Rev D1
+    related_artifact_ids:
+      - olimex-p4-devkit-profile
+
+  - object_id: forward-buffer-enable-circuit
+    label: Forward buffer-enable circuit
+    domain: product
+    object_class: ownership-control
+    description: State-defining pull-up and fan-out circuit controlling the active-Low forward buffer-enable net.
+    parent_object_id: null
+    aliases:
+      - FWD_OE_N circuit
+      - forward enable
+      - GPIO15 enable
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: forward-parallel-clock-circuit
+    label: Forward parallel clock circuit
+    domain: product
+    object_class: timing-path
+    description: Physical Agon-to-P4 CLOCK conductor and its state-defining conditioning.
+    parent_object_id: null
+    aliases:
+      - CLOCK path
+      - PD5 to GPIO14
+    related_artifact_ids:
+      - forward-parallel-transport
+      - light2-harness
+
+  - object_id: forward-parallel-data-circuit
+    label: Forward parallel data circuit
+    domain: product
+    object_class: circuit-group
+    description: Physical eight-bit Agon-to-P4 data circuit carrying D0 through D7 independently of the logical transport protocol.
+    parent_object_id: null
+    aliases:
+      - eight-bit forward bus
+      - parallel D0 through D7
+      - forward data conductors
+    related_artifact_ids:
+      - forward-parallel-transport
+      - light2-harness
+
+  - object_id: forward-parallel-direct-data-channels
+    label: Forward parallel direct-data channels
+    domain: product
+    object_class: repeated-subcircuit-group
+    description: Six direct series-conditioned Agon-to-P4 data channels carrying D2 through D7.
+    parent_object_id: forward-parallel-data-circuit
+    aliases:
+      - direct D2 through D7 paths
+      - six series-conditioned channels
+    related_artifact_ids:
+      - forward-parallel-transport
+      - light2-harness
+
+  - object_id: forward-parallel-ready-circuit
+    label: Forward parallel ready circuit
+    domain: product
+    object_class: admission-path
+    description: Physical P4-to-Agon active-Low open-drain READY_N admission path and conditioning.
+    parent_object_id: null
+    aliases:
+      - READY_N path
+      - PD4 to GPIO20
+      - admission path
+    related_artifact_ids:
+      - forward-parallel-transport
+      - light2-harness
+
+  - object_id: forward-parallel-valid-circuit
+    label: Forward parallel valid circuit
+    domain: product
+    object_class: qualification-path
+    description: Physical Agon-to-P4 active-Low VALID_N record-qualification path and conditioning.
+    parent_object_id: null
+    aliases:
+      - VALID_N path
+      - PD7 to GPIO13
+      - record-valid path
+    related_artifact_ids:
+      - forward-parallel-transport
+      - light2-harness
+
+  - object_id: gpio-reset-pulldown-circuit
+    label: GPIO reset pull-down circuit
+    domain: bench
+    object_class: reset-subcircuit
+    description: GPIO-driven transistor and passive circuit intended to pull an attached active-Low reset net to ground.
+    parent_object_id: reusable-open-collector-reset-module
+    aliases:
+      - 2N2222 reset circuit
+      - transistor reset actuator
+      - open-collector reset circuit
+    related_artifact_ids: []
+
+  - object_id: independent-power-domain-boundary
+    label: Independent power-domain boundary
+    domain: product
+    object_class: electrical-boundary
+    description: Electrical separation constraint preventing independently powered Agon and P4 supply outputs from being joined or back-powered.
+    parent_object_id: null
+    aliases:
+      - separated power rails
+      - no joined 3.3 V outputs
+      - back-power boundary
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: interface-buffer-supply-decoupling
+    label: Interface-buffer supply decoupling
+    domain: product
+    object_class: ic-support-circuit
+    description: Interface-buffer supply, ground, and local bypass-capacitor circuit.
+    parent_object_id: null
+    aliases:
+      - U1 power and decoupling
+      - U1 supply circuit
+      - 100 nF bypass
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: light2-extender-carrier-assembly
+    label: Light 2 Extender carrier assembly
+    domain: proposed-product
+    object_class: carrier-assembly
+    description: Proposed soldered carrier implementing the Light 2 Extender interface independently of the solderless prototype.
+    parent_object_id: null
+    aliases:
+      - carrier
+      - carrier-breakout board
+      - soldered perfboard
+      - carrier PCB
+    related_artifact_ids: []
+
+  - object_id: light2-extender-solderless-assembly
+    label: Light 2 Extender solderless assembly
+    domain: product-prototype
+    object_class: assembly
+    description: Physical solderless-breadboard realization of the current Light 2 Extender prototype wiring.
+    parent_object_id: null
+    aliases:
+      - existing breadboard circuitry
+      - current breadboard
+      - r01 breadboard
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: p4-agon-reset-attachment
+    label: P4-to-Agon reset attachment
+    domain: proposed-product
+    object_class: reset-path
+    description: Never-realized candidate allowing P4 hardware to actuate the Agon reset net; not a selected v1 capability.
+    parent_object_id: null
+    aliases:
+      - P4-to-Agon reset
+      - Agon reset-actuator control
+    related_artifact_ids: []
+
+  - object_id: p4-carrier-socket-set
+    label: P4 carrier socket set
+    domain: proposed-product
+    object_class: connector-set
+    description: Proposed removable socket set mounting the P4 DevKit to a future carrier assembly.
+    parent_object_id: light2-extender-carrier-assembly
+    aliases:
+      - P4 female headers
+      - P4 sockets
+      - removable DevKit headers
+    related_artifact_ids: []
+
+  - object_id: p4-header-interface-harness
+    label: P4 header interface harness
+    domain: product-prototype
+    object_class: connector-assembly
+    description: P4-side connector and conductor assembly joining EXT1 and EXT2 to the solderless Extender prototype.
+    parent_object_id: light2-extender-solderless-assembly
+    aliases:
+      - P4 EXT1 and EXT2 attachments
+      - P4 header harness
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: p4-transport-probe-attachment
+    label: P4 transport probe attachment
+    domain: measurement
+    object_class: attachment-profile
+    description: Logic-analyzer endpoint assignment attaching the reusable probe harness to P4 transport signals.
+    parent_object_id: transport-logic-analyzer-harness
+    aliases:
+      - LA-03 P4 probe map
+      - P4 endpoint assignment
+    related_artifact_ids:
+      - la03-p4-probe-fixture
+
+  - object_id: p4-usb-host-connection
+    label: P4 USB host connection
+    domain: bench-support
+    object_class: power-diagnostics-path
+    description: USB Serial/JTAG host connection carrying P4 development power, flashing, and diagnostic traffic.
+    parent_object_id: null
+    aliases:
+      - P4 USB Serial/JTAG
+      - VBUS power
+      - flash cable
+      - diagnostic connection
+    related_artifact_ids:
+      - olimex-p4-devkit-profile
+
+  - object_id: pc0-forward-buffer-channel
+    label: PC0 forward buffer channel
+    domain: product
+    object_class: buffer-subcircuit
+    description: Buffered Agon-to-P4 PC0 channel serving the D0 physical path and candidate UART receive use.
+    parent_object_id: forward-parallel-data-circuit
+    aliases:
+      - U1 channel 4
+      - PC0 D0
+      - forward UART receive path
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: pc1-forward-buffer-channel
+    label: PC1 forward buffer channel
+    domain: product
+    object_class: buffer-subcircuit
+    description: Buffered Agon-to-P4 PC1 channel serving the D1 physical path.
+    parent_object_id: forward-parallel-data-circuit
+    aliases:
+      - U1 channel 1
+      - PC1 D1 forward path
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: pc1-reverse-buffer-channel
+    label: PC1 reverse buffer channel
+    domain: product
+    object_class: buffer-subcircuit
+    description: Buffered P4-to-Agon PC1 physical path whose inclusion does not select or qualify a return protocol.
+    parent_object_id: null
+    aliases:
+      - U1 channel 2
+      - reverse UART
+      - P4-to-Agon PC1 path
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: pi-reset-control-lead-set
+    label: Pi reset-control lead set
+    domain: bench
+    object_class: control-lead-set
+    description: Pi GPIO17 and ground lead pair controlling the reusable open-collector reset module.
+    parent_object_id: reusable-open-collector-reset-module
+    aliases:
+      - A-side leads
+      - Pi header attachment
+      - GPIO17 and ground pair
+    related_artifact_ids: []
+
+  - object_id: pi5-agon-reset-attachment
+    label: Pi 5-to-Agon reset attachment
+    domain: bench
+    object_class: attachment
+    description: Bench attachment allowing the Pi 5 to actuate Agon reset for unattended recovery; its exact Agon terminal remains unresolved.
+    parent_object_id: reusable-open-collector-reset-module
+    aliases:
+      - Pi-to-Agon reset
+      - unattended Agon reset
+      - Agon-bound reset pair
+    related_artifact_ids: []
+
+  - object_id: pi5-p4-reset-attachment
+    label: Pi 5-to-P4 reset attachment
+    domain: bench
+    object_class: attachment
+    description: Legacy-documented alternate attachment allowing Pi GPIO17 to actuate P4 ESP_EN.
+    parent_object_id: reusable-open-collector-reset-module
+    aliases:
+      - Pi-to-P4 reset
+      - P4 ESP_EN actuator
+      - legacy B1 B2 assignment
+    related_artifact_ids: []
+
+  - object_id: reusable-open-collector-reset-module
+    label: Reusable open-collector reset module
+    domain: bench
+    object_class: support-module
+    description: Movable GPIO-controlled transistor module intended for endpoint-specific active-Low reset attachments.
+    parent_object_id: null
+    aliases:
+      - reset breakout
+      - reset-actuator module
+      - movable 2N2222 module
+    related_artifact_ids: []
+
+  - object_id: reverse-buffer-enable-circuit
+    label: Reverse buffer-enable circuit
+    domain: product
+    object_class: ownership-control
+    description: State-defining pull-up and control circuit for the active-Low reverse buffer-enable net.
+    parent_object_id: null
+    aliases:
+      - REV_OE_N circuit
+      - reverse enable
+      - GPIO21 enable
+    related_artifact_ids:
+      - light2-harness
+
+  - object_id: transport-logic-analyzer-harness
+    label: Transport logic-analyzer harness
+    domain: measurement
+    object_class: fixture-assembly
+    description: Reusable logic-analyzer lead assembly whose endpoint assignment is selected by a fixture revision.
+    parent_object_id: null
+    aliases:
+      - logic-analyzer harness
+      - analyzer leads
+      - probe harness
+    related_artifact_ids:
+      - la03-p4-probe-fixture

@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — SETUP-006.1 accepted; durable promotion pending
+- Status: In progress — SETUP-006.2 ready for acceptance and commit
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -258,6 +258,18 @@ retain legacy terminology only as searchable aliases; and use mechanically
 unique lowercase slugs without treating those slugs as revisions, part numbers,
 or ERP identities.
 
+## Decision register
+
+### Accepted
+
+1. `SETUP-006-D001` — Use the accepted SETUP-006.1 role names and naming rules
+   as project terminology, preserving existing artifact IDs and keeping role
+   names distinct from revisions, specimens, parts, and ERP identities.
+2. `SETUP-006-D002` — Register the durable authority as artifact ID
+   `hardware-object-registry`, first identity `hardware-object-registry-r01`,
+   revision identity scheme, and `draft` lifecycle status. The Author accepted
+   the recommended resolution of `SETUP-006-Q001` at 2026-08-24 21:34 EDT.
+
 ## Work
 
 ### SETUP-006.1 — Name every circuit and physical subassembly
@@ -280,10 +292,36 @@ or ERP identities.
    next work item. The Author accepted the proposed naming set at 2026-08-24
    21:08 EDT.
 
+### SETUP-006.2 — Establish the durable hardware-object authority
+
+1. [x] Define the authority boundary: global object data owns names, classes,
+   aliases, and containment, while revisioned design and fixture profiles own
+   pins, nets, components, electrical connectivity, and qualification scope.
+2. [x] Promote all 41 accepted role names to
+   `hardware/objects/objects.yaml` without retaining temporary `I001` task keys
+   as production identifiers.
+3. [x] Add a JSON Schema and durable README describing the data contract,
+   change control, versioning boundary, ERP boundary, and validation command.
+4. [x] Add the routine `scripts/validate-hardware-objects.py` validator for
+   schema conformance, deterministic ordering, canonical uniqueness, alias
+   hygiene, parent existence and acyclicity, and registered artifact links.
+5. [x] Add six regression tests covering the accepted authority and negative
+   duplicate, alias, parent, cycle, and artifact-reference cases.
+6. [x] Confirm the 41 promoted IDs exactly match the accepted naming register;
+   run the object validator, its regression suite, and the existing version-
+   record validator successfully.
+7. [x] Resolve `SETUP-006-Q001` as `SETUP-006-D002`, register the approved
+   `hardware-object-registry-r01` draft identity, and bind validation to the
+   central artifact record.
+8. [ ] Present the complete SETUP-006.2 change set for Author acceptance and
+   commit.
+
 ## Stop condition
 
 SETUP-006.1.1 is accepted and frozen in commit `b38b445`. SETUP-006.1.2 is
-accepted as the project naming set but remains task-local pending durable
-promotion. Stop before promoting the names, renaming files, changing a hardware
-profile, assigning artifact revisions, synchronizing ERP records, or modifying
-physical wiring.
+accepted review provenance, and SETUP-006.2 has promoted its names into
+`hardware-object-registry-r01`. The Author resolved the registry-identity gate
+as `SETUP-006-D002`; SETUP-006.2 now stops at its final acceptance and commit
+boundary. Do not rename existing files, change a hardware profile, advance
+another artifact revision, synchronize ERP records, or modify physical wiring
+without the applicable Author approval.

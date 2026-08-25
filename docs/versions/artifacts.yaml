@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r10
-updated_at: 2026-08-23T00:06:25Z
+registry_revision: r11
+updated_at: 2026-08-25T01:34:56Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -91,6 +91,17 @@ artifacts:
       - Revision r02 deliberately omits flash backup because the prior firmware is reproducible from the legacy project.
       - Revision r03 changes the required CPU observation to the proven-safe 360 MHz setting.
       - Revision r03 passed all four boot captures in SETUP-001-2026-08-20-22-31-26Z.
+
+  - artifact_id: hardware-object-registry
+    kind: hardware_object_registry
+    identity_scheme: revision
+    latest_identity: hardware-object-registry-r01
+    status: draft
+    variants: []
+    description: Durable role vocabulary for hardware objects, aliases, classes, and containment.
+    notes:
+      - Revision r01 promotes the 41 role names accepted in SETUP-006.1.
+      - Pins, nets, components, and connectivity remain in revisioned hardware design and fixture profiles.
 
   - artifact_id: light2-harness
     kind: wiring_harness

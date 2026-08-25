@@ -4,6 +4,11 @@ Tracked hardware profiles, wiring definitions, and design evidence live here.
 Every controlled design follows the identity and revision rules in
 [`docs/versions/README.md`](../docs/versions/README.md).
 
+The durable role vocabulary for hardware objects is maintained under
+[`objects/`](objects/README.md). It owns names, classes, aliases, and containment
+only. Pins, nets, components, and electrical connectivity remain authoritative
+inside the applicable revisioned design or fixture profile.
+
 The current first design target is
 [`light2-harness-r01`](designs/light2-harness-r01/README.md). Its YAML profile
 and accompanying README are normative. Vendored predecessor documents preserve

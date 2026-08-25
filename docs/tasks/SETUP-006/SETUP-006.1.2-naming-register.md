@@ -2,12 +2,11 @@
 
 ## Status and authority
 
-The Author accepted this naming set at 2026-08-24 21:08 EDT. This register is
-the task-local staging authority for one unique role-descriptive name per object
-in the accepted SETUP-006.1.1 discovery inventory until those names are
-promoted into a durable role-named hardware-object authority. It is not an
-artifact registry, ERP import, part-number system, file-rename plan, or
-authorization to change wiring.
+The Author accepted this naming set at 2026-08-24 21:08 EDT. SETUP-006.2
+subsequently promoted it into `hardware/objects/objects.yaml`. This task-local
+register now preserves review provenance and explanatory context; it is no
+longer the maintained object authority. It is not an artifact registry, ERP
+import, part-number system, file-rename plan, or authorization to change wiring.
 
 The `I001` keys remain temporary links to the accepted discovery rows. Accepted
 role names are lowercase slugs so exact uniqueness can be checked mechanically.
@@ -32,7 +31,7 @@ record keys, or physical labels merely by virtue of acceptance.
 
 ## Context hardware and endpoints
 
-| Key | Proposed role name | Domain / class | Parent or boundary | Searchable aliases and notes |
+| Key | Accepted role name | Domain / class | Parent or boundary | Searchable aliases and notes |
 |---|---|---|---|---|
 | `I001` | `agon-light2-host` | Context / host assembly | Development bench | Agon Light 2, Light 2, main board, host. The manufacturer product name remains authoritative. |
 | `I002` | `agon-onboard-vdp-endpoint` | Context / firmware-hardware endpoint | `agon-light2-host` | onboard VDP, stock VDP, Pico-D4, ESP32-PICO-D4. This endpoint is not an Extender-designed circuit. |
@@ -42,7 +41,7 @@ record keys, or physical labels merely by virtue of acceptance.
 
 ## Harness, carrier, and connector assemblies
 
-| Key | Proposed role name | Domain / class | Parent or boundary | Searchable aliases and notes |
+| Key | Accepted role name | Domain / class | Parent or boundary | Searchable aliases and notes |
 |---|---|---|---|---|
 | `I010` | `light2-extender-solderless-assembly` | Product prototype / assembly | Light 2 Extender prototype | existing breadboard circuitry, current breadboard, r01 breadboard, `light2-harness-r01` implementation. This is an assembly instance, not the harness design lineage itself. |
 | `I011` | `agon-expansion-interface-harness` | Product prototype / connector assembly | `light2-extender-solderless-assembly` | Agon expansion header, Agon-side harness, two ribbon harnesses, individual Agon wires. Exact construction remains unresolved. |
@@ -56,7 +55,7 @@ record keys, or physical labels merely by virtue of acceptance.
 
 ## Product-candidate signal and conditioning circuits
 
-| Key | Proposed role name | Domain / class | Parent or boundary | Searchable aliases and notes |
+| Key | Accepted role name | Domain / class | Parent or boundary | Searchable aliases and notes |
 |---|---|---|---|---|
 | `I020` | `forward-parallel-data-circuit` | Product / circuit group | `light2-harness` | eight-bit forward bus, parallel D0..D7, forward data conductors. This is the physical data circuit, not the `forward-parallel-transport` protocol. |
 | `I021` | `forward-parallel-direct-data-channels` | Product / repeated subcircuit group | `forward-parallel-data-circuit` | direct D2..D7 paths, six series-conditioned channels. Individual net names remain D2 through D7. |
@@ -77,7 +76,7 @@ record keys, or physical labels merely by virtue of acceptance.
 
 ## Measurement and bench-support objects
 
-| Key | Proposed role name | Domain / class | Parent or boundary | Searchable aliases and notes |
+| Key | Accepted role name | Domain / class | Parent or boundary | Searchable aliases and notes |
 |---|---|---|---|---|
 | `I040` | `transport-logic-analyzer-harness` | Measurement / fixture assembly | Development bench | logic-analyzer harness, analyzer leads, probe harness. This is the reusable lead assembly, not an endpoint map. |
 | `I041` | `analyzer-even-data-ribbon` | Measurement / lead subassembly | `transport-logic-analyzer-harness` | even analyzer ribbon, D0/D2/D4/D6 ribbon. Colors remain channel attributes, not names. |
@@ -109,8 +108,8 @@ an unresolved protocol contract.
 
 ## Review findings
 
-1. All 41 accepted discovery rows have one proposed role name.
-2. Proposed role names are unique within this register.
+1. All 41 accepted discovery rows have one accepted role name.
+2. Accepted role names are unique within this register.
 3. Approved artifact IDs `light2-harness`, `forward-parallel-transport`, and
    `la03-p4-probe-fixture` are preserved rather than silently renamed.
 4. The reset module, its transistor circuit, its Pi control leads, two realized
@@ -122,7 +121,8 @@ an unresolved protocol contract.
 
 ## Accepted disposition
 
-Acceptance permits a later explicit work item to promote these role names into
-a durable structured hardware-object authority and prepare corresponding file
-and diagram changes. It does not itself approve an artifact revision, physical
-wiring change, profile change, ERP synchronization, or hardware test.
+SETUP-006.2 promoted these role names into the maintained structured authority
+under `hardware/objects/`. That promotion does not approve a physical wiring
+change, profile change, ERP synchronization, or hardware test. The durable
+registry's own human-readable artifact identity remains subject to
+`SETUP-006-Q001`.

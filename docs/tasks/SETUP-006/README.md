@@ -17,6 +17,13 @@ review records may remain here after promotion.
    — exact operator-reported placement, geometry, colors, and suspected wiring
    problem, recovered alternate configurations, and bounded visual trace.
 3. [`SETUP-006.1.2-naming-register.md`](SETUP-006.1.2-naming-register.md) —
-   accepted task-local role names, legacy aliases, ownership domains,
-   containment, and logical-versus-physical boundaries pending durable
-   promotion.
+   accepted naming review provenance, legacy aliases, ownership domains,
+   containment, and logical-versus-physical boundaries. The maintained names
+   have been promoted to `hardware/objects/objects.yaml`.
+
+## Promoted output
+
+The maintained hardware role vocabulary, schema, and authority boundary now
+live under `hardware/objects/`. Its routine validator is
+`scripts/validate-hardware-objects.py`. SETUP-006 task files remain discovery
+and review provenance and must not become a competing maintained authority.
