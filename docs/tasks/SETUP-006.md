@@ -375,6 +375,38 @@ or ERP identities.
    artifact boundary; acceptance does not qualify or preserve the legacy
    harness wiring.
 
+### SETUP-006.4 — Establish the firmware-driven electrical requirements
+
+1. [x] Define the scope, authorities, outputs, and stop boundary in
+   [`SETUP-006.4-wiring-design/README.md`](SETUP-006/SETUP-006.4-wiring-design/README.md).
+   The immediate candidate is the Exclusive Extended beta transport. Exclusive
+   Compatible stock UART remains a separate firmware-led hardware design.
+2. [x] Inventory every Agon/P4 transport signal required by the bounded beta,
+   including direction, actor, idle and reset ownership, exact firmware use,
+   and application-visible contract.
+3. [x] Audit each candidate P4 pin against the Olimex Rev D1 schematic and the
+   board's Ethernet, microSD, USB, MIPI, user-control, and expansion functions.
+4. [x] Determine the required direction control, buffering, pull resistors,
+   series resistance, power/reference boundary, reset behavior, protection,
+   and test points without changing the physical bench.
+5. [x] Produce a candidate pin/net allocation, explicit reservations and
+   deferrals, qualification dependencies, and numbered unresolved questions.
+6. [x] Correct the SETUP-006.3 P4 part's swapped GPIO16/GPIO17 labels under a
+   new Fritzing module identity and regenerate the canonical scaffold without
+   modifying the Author's active wiring draft. Reconcile that draft only after
+   the Author finishes editing or explicitly authorizes the operation.
+7. [x] Preserve the Author's completed wiring draft unchanged and derive the
+   deterministic `draft_v1` review copy. Replace its embedded P4 `r04` part
+   with corrected `r05`; migrate the upside-down composite breadboard to a new
+   part identity with reversed A--J connector names and visible row letters;
+   and place the documented current `SN74HC125N` U1 across the upper groove
+   rotated 180 degrees in the landscape view, spanning columns 30--36 with pin
+   1 at the upper-right corner at F36. Do not treat the diagrammatic U1
+   artwork as package or PCB geometry.
+8. [ ] Present the electrical result, `draft_v1`, and numbered questions to the Author
+   before changing the authoritative
+   harness or authorizing bench work.
+
 ## Stop condition
 
 SETUP-006.1.1 is accepted and frozen in commit `b38b445`. SETUP-006.1.2 is

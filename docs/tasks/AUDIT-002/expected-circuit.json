@@ -1,0 +1,227 @@
+{
+  "schema_version": 1,
+  "scope": "Documented controlled-power predecessor circuit represented by the SETUP-006 draft_v1 review drawing",
+  "authorities": [
+    {
+      "path": "hardware/designs/light2-harness-r01/legacy-evidence/carrier-breakout-design.md",
+      "claims": [
+        "Agon and P4 signal pin map",
+        "U1 pin map and channel ownership",
+        "series and bias resistor values",
+        "bypass capacitor value and endpoints",
+        "Agon pin 33 ground, Agon pin 34 3.3 V, and P4 EXT1 pin 2 ground",
+        "prohibition on joining independently powered positive rails"
+      ]
+    },
+    {
+      "path": "agon-extender-legacy:src/modules/agm/agm_module.c",
+      "claims": [
+        "P4 D0-D7 GPIO order",
+        "P4 READY_N, CLOCK, and VALID_N GPIO assignments"
+      ]
+    },
+    {
+      "path": "agon-extender-legacy:src/modules/agm/reverse_uart.c",
+      "claims": [
+        "P4 UART GPIO22 receive and GPIO12 transmit roles",
+        "P4 GPIO15 FWD_OE_N and GPIO21 REV_OE_N assignments"
+      ]
+    },
+    {
+      "path": "agon-extender-legacy:agon/prx06_sender/src/prx06_wire.asm",
+      "claims": [
+        "eZ80 Port C data bus and Port D READY_N, CLOCK, and VALID_N bit assignments"
+      ]
+    },
+    {
+      "path": "agon-extender-legacy:tests/procedures/la-02-u1.md",
+      "claims": [
+        "qualified U1 probe identities"
+      ]
+    },
+    {
+      "path": "agon-extender-legacy:tests/procedures/la-03-p4.md",
+      "claims": [
+        "qualified P4 endpoint identities"
+      ]
+    }
+  ],
+  "components": {
+    "C1": {
+      "kind": "capacitor",
+      "value": "100nF"
+    },
+    "R1": { "kind": "resistor", "value": "220" },
+    "R2": { "kind": "resistor", "value": "220" },
+    "R3": { "kind": "resistor", "value": "220" },
+    "R4": { "kind": "resistor", "value": "220" },
+    "R5": { "kind": "resistor", "value": "220" },
+    "R6": { "kind": "resistor", "value": "220" },
+    "R7": { "kind": "resistor", "value": "220" },
+    "R8": { "kind": "resistor", "value": "10000" },
+    "R9": { "kind": "resistor", "value": "220" },
+    "R10": { "kind": "resistor", "value": "10000" },
+    "R11": { "kind": "resistor", "value": "220" },
+    "R12": { "kind": "resistor", "value": "10000" },
+    "R13": { "kind": "resistor", "value": "10000" },
+    "R14": { "kind": "resistor", "value": "10000" },
+    "R15": { "kind": "resistor", "value": "10000" },
+    "U1": { "kind": "logic_ic" }
+  },
+  "named_nets": {
+    "AGON_3V3": [
+      "AgonPin34ThreeV3_1.agon-pin34",
+      "U1.connector13",
+      "C1.connector1",
+      "R8.connector1",
+      "R10.connector1",
+      "R12.connector0",
+      "R14.connector1",
+      "R15.connector0",
+      "BB1460TwoRail1.top-rail-red1",
+      "BB1460TwoRail1.center-rail-red1"
+    ],
+    "GND": [
+      "AgonPin33Ground1.agon-pin33",
+      "P4DevKit1.ext1-pin2",
+      "U1.connector6",
+      "U1.connector8",
+      "C1.connector0",
+      "R13.connector0",
+      "BB1460TwoRail1.top-rail-blue1",
+      "BB1460TwoRail1.center-rail-blue1"
+    ],
+    "D0_AGON": [
+      "AgonOddHeader1.agon-odd-pin17",
+      "U1.connector11"
+    ],
+    "D0_P4": [
+      "U1.connector10",
+      "R11.connector1"
+    ],
+    "D0_ENDPOINT": [
+      "R11.connector0",
+      "P4DevKit1.ext2-pin11"
+    ],
+    "D1_AGON": [
+      "AgonEvenHeader1.agon-even-pin18",
+      "U1.connector1",
+      "R7.connector0"
+    ],
+    "D1_REVERSE_OUTPUT": [
+      "U1.connector5",
+      "R7.connector1"
+    ],
+    "D1_FORWARD_OUTPUT": [
+      "U1.connector2",
+      "R9.connector0"
+    ],
+    "D1_P4": [
+      "R9.connector1",
+      "U1.connector4",
+      "P4DevKit1.ext1-pin13"
+    ],
+    "D2_AGON": [
+      "AgonOddHeader1.agon-odd-pin19",
+      "R6.connector0"
+    ],
+    "D2_P4": [
+      "R6.connector1",
+      "P4DevKit1.ext2-pin10"
+    ],
+    "D3_AGON": [
+      "AgonEvenHeader1.agon-even-pin20",
+      "R3.connector1"
+    ],
+    "D3_P4": [
+      "R3.connector0",
+      "P4DevKit1.ext1-pin12"
+    ],
+    "D4_AGON": [
+      "AgonOddHeader1.agon-odd-pin21",
+      "R5.connector0"
+    ],
+    "D4_P4": [
+      "R5.connector1",
+      "P4DevKit1.ext2-pin9"
+    ],
+    "D5_AGON": [
+      "AgonEvenHeader1.agon-even-pin22",
+      "R2.connector1"
+    ],
+    "D5_P4": [
+      "R2.connector0",
+      "P4DevKit1.ext1-pin11"
+    ],
+    "D6_AGON": [
+      "AgonOddHeader1.agon-odd-pin23",
+      "R4.connector0"
+    ],
+    "D6_P4": [
+      "R4.connector1",
+      "P4DevKit1.ext2-pin8"
+    ],
+    "D7_AGON": [
+      "AgonEvenHeader1.agon-even-pin24",
+      "R1.connector1"
+    ],
+    "D7_P4": [
+      "R1.connector0",
+      "P4DevKit1.ext1-pin10"
+    ],
+    "READY_N": [
+      "AgonOddHeader1.agon-odd-pin13",
+      "P4DevKit1.ext2-pin13",
+      "R14.connector0"
+    ],
+    "CLOCK": [
+      "AgonEvenHeader1.agon-even-pin14",
+      "P4DevKit1.ext1-pin15",
+      "R13.connector1"
+    ],
+    "VALID_N": [
+      "AgonEvenHeader1.agon-even-pin16",
+      "P4DevKit1.ext1-pin14",
+      "R15.connector1"
+    ],
+    "FWD_OE_N": [
+      "P4DevKit1.ext1-pin16",
+      "U1.connector0",
+      "U1.connector12",
+      "R10.connector0"
+    ],
+    "REV_OE_N": [
+      "P4DevKit1.ext2-pin12",
+      "U1.connector3",
+      "R8.connector0"
+    ],
+    "UNUSED_CHANNEL_3_ENABLE": [
+      "U1.connector9",
+      "R12.connector1"
+    ]
+  },
+  "isolated_endpoints": [
+    "U1.connector7"
+  ],
+  "different_net_pairs": [
+    ["AGON_3V3", "GND"],
+    ["AGON_3V3", "D0_AGON"],
+    ["AGON_3V3", "D0_P4"],
+    ["AGON_3V3", "D0_ENDPOINT"],
+    ["AGON_3V3", "D1_AGON"],
+    ["AGON_3V3", "D1_REVERSE_OUTPUT"],
+    ["AGON_3V3", "D1_FORWARD_OUTPUT"],
+    ["AGON_3V3", "D1_P4"],
+    ["GND", "CLOCK"],
+    ["FWD_OE_N", "REV_OE_N"]
+  ],
+  "forbidden_same_net_endpoints": [
+    ["AgonPin34ThreeV3_1.agon-pin34", "P4DevKit1.ext1-pin1"],
+    ["AgonPin34ThreeV3_1.agon-pin34", "P4DevKit1.ext2-pin1"]
+  ],
+  "structural_requirements": {
+    "dangling_passive_pins": 0,
+    "nonreciprocal_connections": 0,
+    "occupied_hole_collisions": 0
+  }
+}

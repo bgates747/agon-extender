@@ -1571,9 +1571,9 @@
       <ns0:rect id="ext1-pin16pin" x="153.15" y="10.95" width="3.3" height="3.3" fill="#d4b04c" stroke="#684f14" stroke-width="0.45" />
       <ns0:text x="154.8" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 154.8 17.8)">16 GPIO15</ns0:text>
       <ns0:rect id="ext1-pin17pin" x="160.35" y="10.95" width="3.3" height="3.3" fill="#d4b04c" stroke="#684f14" stroke-width="0.45" />
-      <ns0:text x="162" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 162 17.8)">17 GPIO17</ns0:text>
+      <ns0:text x="162" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 162 17.8)">17 GPIO16</ns0:text>
       <ns0:rect id="ext1-pin18pin" x="167.55" y="10.95" width="3.3" height="3.3" fill="#d4b04c" stroke="#684f14" stroke-width="0.45" />
-      <ns0:text x="169.2" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 169.2 17.8)">18 GPIO16</ns0:text>
+      <ns0:text x="169.2" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 169.2 17.8)">18 GPIO17</ns0:text>
       <ns0:rect id="ext1-pin19pin" x="174.75" y="10.95" width="3.3" height="3.3" fill="#d4b04c" stroke="#684f14" stroke-width="0.45" />
       <ns0:text x="176.4" y="17.8" font-size="2.65" text-anchor="start" fill="#fff" transform="rotate(90 176.4 17.8)">19 GPIO18</ns0:text>
       <ns0:rect id="ext1-pin20pin" x="181.95" y="10.95" width="3.3" height="3.3" fill="#d4b04c" stroke="#684f14" stroke-width="0.45" />

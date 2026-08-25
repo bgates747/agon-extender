@@ -1,0 +1,372 @@
+{
+  "check_count": 60,
+  "checks": [
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N125",
+      "passed": true,
+      "subject": "AGON_3V3"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N023",
+      "passed": true,
+      "subject": "GND"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N003",
+      "passed": true,
+      "subject": "D0_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N147",
+      "passed": true,
+      "subject": "D0_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N066",
+      "passed": true,
+      "subject": "D0_ENDPOINT"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N184",
+      "passed": true,
+      "subject": "D1_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N201",
+      "passed": true,
+      "subject": "D1_REVERSE_OUTPUT"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N202",
+      "passed": true,
+      "subject": "D1_FORWARD_OUTPUT"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N130",
+      "passed": true,
+      "subject": "D1_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N002",
+      "passed": true,
+      "subject": "D2_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N065",
+      "passed": true,
+      "subject": "D2_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N183",
+      "passed": true,
+      "subject": "D3_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N129",
+      "passed": true,
+      "subject": "D3_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N063",
+      "passed": true,
+      "subject": "D4_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N124",
+      "passed": true,
+      "subject": "D4_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N182",
+      "passed": true,
+      "subject": "D5_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N128",
+      "passed": true,
+      "subject": "D5_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N062",
+      "passed": true,
+      "subject": "D6_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N123",
+      "passed": true,
+      "subject": "D6_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N181",
+      "passed": true,
+      "subject": "D7_AGON"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N127",
+      "passed": true,
+      "subject": "D7_P4"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N005",
+      "passed": true,
+      "subject": "READY_N"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N132",
+      "passed": true,
+      "subject": "CLOCK"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N131",
+      "passed": true,
+      "subject": "VALID_N"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N133",
+      "passed": true,
+      "subject": "FWD_OE_N"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N067",
+      "passed": true,
+      "subject": "REV_OE_N"
+    },
+    {
+      "category": "named_net",
+      "detail": "all endpoints on N146",
+      "passed": true,
+      "subject": "UNUSED_CHANNEL_3_ENABLE"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "C1"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R1"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R2"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R3"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R4"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R5"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R6"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R7"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R8"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R9"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R10"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R11"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R12"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R13"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R14"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "R15"
+    },
+    {
+      "category": "component",
+      "detail": "identity and value match",
+      "passed": true,
+      "subject": "U1"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, GND=N023",
+      "passed": true,
+      "subject": "AGON_3V3 != GND"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D0_AGON=N003",
+      "passed": true,
+      "subject": "AGON_3V3 != D0_AGON"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D0_P4=N147",
+      "passed": true,
+      "subject": "AGON_3V3 != D0_P4"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D0_ENDPOINT=N066",
+      "passed": true,
+      "subject": "AGON_3V3 != D0_ENDPOINT"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D1_AGON=N184",
+      "passed": true,
+      "subject": "AGON_3V3 != D1_AGON"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D1_REVERSE_OUTPUT=N201",
+      "passed": true,
+      "subject": "AGON_3V3 != D1_REVERSE_OUTPUT"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D1_FORWARD_OUTPUT=N202",
+      "passed": true,
+      "subject": "AGON_3V3 != D1_FORWARD_OUTPUT"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "AGON_3V3=N125, D1_P4=N130",
+      "passed": true,
+      "subject": "AGON_3V3 != D1_P4"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "GND=N023, CLOCK=N132",
+      "passed": true,
+      "subject": "GND != CLOCK"
+    },
+    {
+      "category": "named_net_separation",
+      "detail": "FWD_OE_N=N133, REV_OE_N=N067",
+      "passed": true,
+      "subject": "FWD_OE_N != REV_OE_N"
+    },
+    {
+      "category": "endpoint_separation",
+      "detail": "left=N125, right=N126",
+      "passed": true,
+      "subject": "AgonPin34ThreeV3_1.agon-pin34 != P4DevKit1.ext1-pin1"
+    },
+    {
+      "category": "endpoint_separation",
+      "detail": "left=N125, right=N064",
+      "passed": true,
+      "subject": "AgonPin34ThreeV3_1.agon-pin34 != P4DevKit1.ext2-pin1"
+    },
+    {
+      "category": "isolation",
+      "detail": "non-board members on N145: U1.connector7",
+      "passed": true,
+      "subject": "U1.connector7"
+    },
+    {
+      "category": "structure",
+      "detail": "expected 0, found 0",
+      "passed": true,
+      "subject": "dangling_passive_pins"
+    },
+    {
+      "category": "structure",
+      "detail": "expected 0, found 0",
+      "passed": true,
+      "subject": "nonreciprocal_connections"
+    },
+    {
+      "category": "structure",
+      "detail": "expected 0, found 0",
+      "passed": true,
+      "subject": "occupied_hole_collisions"
+    }
+  ],
+  "connectivity": "tasks/AUDIT-002/generated/connectivity.json",
+  "connectivity_input_sha256": "b337326248d4669e3624d07bb336077c7eb252cc0a1333ecec198def22f142a9",
+  "failure_count": 0,
+  "manifest": "tasks/AUDIT-002/expected-circuit.json",
+  "manifest_sha256": "44c564777dbd630274fd0c3b5f66327330f51bcc8242c43e48520e0321c9d376",
+  "passed": true,
+  "schema_version": 1
+}

@@ -189,7 +189,7 @@ AGON_PIN_DATA = {
 }
 
 BOARD_MODULE_ID = "agon-extender-bb1460-two-rail-scaffold-fritzing-r04"
-P4_MODULE_ID = "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r04"
+P4_MODULE_ID = "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r05"
 AGON_HEADER_MODULE_IDS = {
     "even": "agon-light2-even-16-contact-header-fritzing-r02",
     "odd": "agon-light2-odd-16-contact-header-fritzing-r02",
@@ -444,7 +444,7 @@ P4_PIN_NAMES = {
         "+3.3V", "GND", "GPIO2 / USER_LED", "GPIO3 / SD_DET",
         "GPIO4 / SPI_SCK", "GPIO5 / SPI_CS", "GPIO6", "GPIO7 / I2C_SDA",
         "GPIO8 / I2C_SCL", "GPIO9", "GPIO10", "GPIO11", "GPIO12",
-        "GPIO13", "GPIO14", "GPIO15", "GPIO17", "GPIO16", "GPIO18", "GPIO19",
+        "GPIO13", "GPIO14", "GPIO15", "GPIO16", "GPIO17", "GPIO18", "GPIO19",
     ),
     "EXT2": (
         "+5V", "GND", "GPIO54 / SPI_RX", "GPIO53 / SPI_TX", "GPIO48",

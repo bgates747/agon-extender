@@ -24,6 +24,10 @@ review records may remain here after promotion.
    mechanical and diagrammatic breadboard scaffold for subsequent wiring
    design. It is intentionally unwired and remains task-local until the
    electrical design establishes its permanent artifact boundary.
+5. [`SETUP-006.4-wiring-design/`](SETUP-006.4-wiring-design/) — firmware-led
+   electrical review, immutable completed Author draft, and deterministic
+   `draft_v1` review derivative containing the corrected P4 part, corrected
+   upside-down breadboard row vocabulary, and initial U1 placement.
 
 ## Promoted output
 

@@ -152,6 +152,11 @@ details that the generator must preserve:
     application's unstable rotation and snap calculations.
     These geometry changes advanced both bank module identities from `r01` to
     `r02` so Fritzing cannot reuse the earlier cached vertical artwork.
+12. The SETUP-006.4 schematic audit found that P4 part `r04` transposed the
+    printed GPIO16 and GPIO17 names. Official Rev D1 connectivity is EXT1-17 =
+    GPIO16 and EXT1-18 = GPIO17. P4 part `r05` corrects those labels without
+    changing connector IDs, coordinates, or any other geometry. The module
+    identity advanced so Fritzing cannot reuse cached `r04` artwork.
 
 These are Fritzing-format workarounds, not physical dimensions or electrical
 design decisions. Locally saved `*_usermod.fzz` files are review evidence and
@@ -203,7 +208,7 @@ are ignored rather than treated as generated authority.
 
 1. In Fritzing, open the **My Parts** bin.
 2. Use the bin menu's **Import…** command and select
-   `generated/agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r04.fzpz`.
+   `generated/agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r05.fzpz`.
 3. Repeat the import for
    `generated/agon-extender-bb1460-two-rail-scaffold-fritzing-r04.fzpz`.
 4. Confirm that the labeled Olimex P4 D1 and composite breadboard appear as

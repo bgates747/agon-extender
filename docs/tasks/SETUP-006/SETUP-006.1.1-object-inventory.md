@@ -127,10 +127,14 @@ names here.
 ## Components and alternatives that are not separate circuits
 
 1. The documented current bench population is an on-hand `SN74HC125N` U1.
-   A purchased pin-compatible `SN74LV125AN` is an intended partial-power-down-
-   safe replacement, but changing the installed component affects electrical
-   behavior and requires revision and qualification. These are population
-   alternatives for one circuit, not two circuit identities.
+   At least four pin-compatible `SN74LV125AN` parts are operator-confirmed on
+   order, consistent with the checked quantity in the separately maintained
+   `agon-hardware/extender` shopping record. Receipt and physical count are not
+   yet confirmed, and allocation remains unresolved because some or all may be
+   spoken for by that lower-priority project. The LV part is the intended
+   partial-power-down-safe replacement, but changing the installed component
+   affects electrical behavior and requires revision and qualification. These
+   are population alternatives for one circuit, not two circuit identities.
 2. The individual 220-ohm and 10-kilohm resistors and the 100 nF bypass
    capacitor will eventually require component/BOM identities. At this
    discovery level, repeated passives are recorded as parts of their owning
