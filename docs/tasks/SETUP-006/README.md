@@ -1,0 +1,18 @@
+# SETUP-006 working directory
+
+This directory is the bounded working area for SETUP-006 inventories, source
+extracts, provisional structured data, diagram generators, draft diagrams, and
+review evidence. It is not a permanent hardware authority.
+
+Accepted recurring definitions will be promoted or synthesized into a
+role-named location under `hardware/`. Historical evidence and task-specific
+review records may remain here after promotion.
+
+## Current contents
+
+1. [`SETUP-006.1.1-object-inventory.md`](SETUP-006.1.1-object-inventory.md) —
+   bounded discovery inventory using temporary row keys, before durable object
+   names or a permanent schema are selected.
+2. [`SETUP-006.1.1-reset-breakout-observation.md`](SETUP-006.1.1-reset-breakout-observation.md)
+   — exact operator-reported placement, geometry, colors, and suspected wiring
+   problem without inferred electrical assignments.

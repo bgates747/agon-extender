@@ -1,0 +1,247 @@
+# SETUP-006 — Establish the Light 2 Extender wiring target
+
+## State
+
+- Status: In progress — SETUP-006.1.1 accepted; SETUP-006.1.2 authorized
+- Started: 2026-08-24 19:09 EDT
+- Finished: --
+
+## Intent
+
+Develop one coherent, human-buildable electrical wiring target for the Agon
+Light 2 and Olimex ESP32-P4-DevKit prototype while preserving exact provenance,
+machine-readable connectivity, construction guidance, and reviewable diagrams.
+Build the task incrementally as firmware requirements and electrical decisions
+become concrete rather than attempting to design the complete carrier in
+advance.
+
+This task begins from the currently adopted `light2-harness-r01`, its vendored
+legacy evidence, and the corresponding read-only legacy repository. Existing
+files are evidence and inputs, not proof that their terminology, presentation,
+mode scope, electrical design, or qualification claims are suitable for the
+current product.
+
+## Working boundary
+
+Provisional inventories, naming records, source extracts, diagram generators,
+draft diagrams, and review evidence belong under `docs/tasks/SETUP-006/` while
+their permanent roles and maintained file structure are being discovered.
+Accepted recurring hardware definitions will later be promoted or synthesized
+into a role-named location under `hardware/`; the task directory will retain
+bounded decision and development evidence.
+
+This task does not by itself authorize moving a wire, changing a component,
+advancing a harness revision, powering hardware, connecting the Agon, flashing
+firmware, or executing a physical test. Those actions require their applicable
+versioning, design-review, procedure, and qualification gates.
+
+## Authority and inputs
+
+1. `hardware/designs/light2-harness-r01/profile.yaml` and its current README.
+2. The files under `hardware/designs/light2-harness-r01/legacy-evidence/`,
+   especially `wiring-diagram.svg` and `carrier-breakout-design.md`.
+3. The read-only legacy project's `design/README.md`, which contains the
+   generically named Markdown companion text for `wiring-diagram.svg`.
+4. The read-only legacy project's `design/reset-actuator-module.md`, which is
+   the only recovered design-intent record for a Pi-controlled P4 `ESP_EN`
+   configuration of the reusable reset breakout. It does not document the
+   photographed Pi-to-Agon configuration, and its referenced SVG is missing.
+5. The accepted operating-mode and hardware boundaries in REMED-001,
+   SETUP-005, PORT-008, QUAL-002, and the operating-mode audit.
+6. `docs/versions/README.md` for controlled wiring, profile, fixture, diagram,
+   procedure, and physical-assembly identities.
+7. The ignored `HARDWARE.local.md` only when current bench state is material;
+   machine-local details must not enter tracked outputs.
+
+## Prelude research — design documentation and ERP structure
+
+Research performed before SETUP-006.1 found no single tutorial or standard
+that simultaneously covers practical hardware documentation, object naming,
+repository organization, configuration control, manufacturing data, and Odoo
+integration. The useful sources divide into complementary roles.
+
+### Practical hardware-documentation structure
+
+The [Open.Make Hardware Documentation
+Guide](https://open-make.github.io/Hardware-template-guide/) and its incremental
+and full repository templates are the closest general tutorial for the current
+project stage. The guide organizes documentation across ideation,
+specification, concept development, prototyping, replication, hardware
+production, project history, and user guidance. It explicitly addresses
+projects that already have a prototype and recommends growing documentation
+with the design rather than imposing a complete final structure at the outset.
+
+The guide is a strong source for deciding what information belongs in the
+repository and when it becomes useful. It is not, by itself, a formal naming,
+configuration-item, or ERP-integration system.
+
+### Functional, physical, and location naming
+
+[IEC 81346-1](https://www.iso.org/cms/%20render/live/en/sites/isoorg/contents/data/standard/08/22/82229.html?browse=tc)
+defines general structuring and reference-designation principles for technical
+objects. Its most useful concept for this task is keeping separate views of an
+object:
+
+1. **Function** — what the object does.
+2. **Product** — what physical item implements the function.
+3. **Location** — where the physical item is installed now.
+4. **Type** — the reusable class or design from which an instance is realized.
+
+That separation prevents a transient name such as “breadboard 2” from becoming
+the identity of a circuit whose function survives movement to perfboard, a
+carrier PCB, or another host variant. The complete standard is paid and much
+heavier than this project presently needs. SETUP-006 may adopt a documented,
+simplified subset of its principles but must not claim IEC 81346 compliance
+without reviewing and implementing the applicable standard.
+
+Related formal references include IEC 81346-2 object classes, IEC 81355
+information classification, IEC 82045 document management, IEC 61175 signal
+designations, and IEC 61666 terminal identification. These are possible later
+references, not selected task requirements.
+
+### Configuration identification and control
+
+The freely available [NASA Configuration Management
+Standard](https://standards.nasa.gov/standard/NASA/NASA-STD-0005) provides a
+clear model for:
+
+1. selecting configuration items;
+2. assigning unique identifiers to products, components, and documents;
+3. keeping product/configuration-item identity distinct from document and
+   drawing identity;
+4. relating revisions to products and controlled baselines;
+5. configuration control and status accounting; and
+6. verification and configuration audits.
+
+NASA marks this edition inactive for new NASA designs, so it is a conceptual
+and procedural reference rather than a current compliance target. Its
+configuration-identification model is nevertheless directly relevant to the
+project's existing artifact, revision, baseline, build, and run vocabulary.
+
+ASME Y14.100 and its related Y14.24, Y14.34, Y14.35, and Y14.41 standards cover
+engineering drawings, drawing types, associated lists, revisions, and digital
+product definition. They are paid, drawing-oriented standards and are likely
+excessive for the current breadboard stage. They may become useful when a
+production carrier or formal manufacturing drawing package exists.
+
+The Open Compute Project design-package guidance is a useful manufacturing
+handoff checklist: a complete package should include original editable design
+files, schematics, layouts, bills of material, manufacturing files, and
+associated source code in a form sufficient for another competent party to
+manufacture or modify the product. It provides package-completeness guidance,
+not the project's object-naming system.
+
+### Assembly documentation and bills of material as code
+
+[GitBuilding](https://gitbuilding.io/usage/getting-started/) extends Markdown
+with structured part, quantity, tool, supplier, specification, and assembly
+links. It can generate bills of material from assembly instructions rather
+than maintaining those documents independently. Its
+[complex-project model](https://gitbuilding.io/usage/complex-projects) supports
+reusable subassemblies and product variants while sharing common instruction
+pages.
+
+GitBuilding may eventually serve either as a project tool or as prior art for
+project-owned deterministic generators. No native GitBuilding-to-Odoo
+integration was found during this research. Its structured YAML/Markdown data
+could, however, feed deterministic Odoo CSV exports without making generated
+CSV another source of truth.
+
+### Odoo object mapping
+
+Odoo 19 documentation supports the following preliminary mapping:
+
+1. A purchased or manufactured part is an Odoo **Product**. Its **Internal
+   Reference** is the practical place for a stable, unique project part number;
+   Odoo's [product-import
+   guide](https://www.odoo.com/documentation/19.0/applications/sales/sales/products_prices/products/import.html)
+   recommends unique internal references.
+2. An assembly or subassembly is a product with a possibly multilevel **Bill
+   of Materials**. A BoM can include components, quantities, manufacturing
+   operations, and instructions. See the [BoM setup
+   guide](https://www.odoo.com/documentation/master/applications/inventory_and_mrp/manufacturing/basic_setup/bill_configuration.html).
+3. The PLM application uses **Engineering Change Orders** to create, review,
+   compare, approve, and apply revised products and BoMs without changing the
+   production BoM prematurely. See [engineering change
+   orders](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/plm/manage_changes/engineering_change_orders.html).
+4. Odoo PLM can attach CAD files, PDFs, diagrams, images, specifications, and
+   assembly documents to a BoM and carry changed files through an ECO. See
+   [PLM version
+   control](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/plm/manage_changes/version_control.html).
+5. Physical inventory instances can be tracked by **lot** or unique **serial
+   number**, retaining movement and traceability history. See [product
+   tracking](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/inventory/product_management/product_tracking.html).
+6. The electronics bench can be represented as an Odoo **Work Center**, with
+   manufacturing operations, schedules, capacity, costs, and assigned
+   equipment. See [work
+   centers](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/manufacturing/advanced_configuration/using_work_centers.html).
+7. Reusable Pi hosts, logic analyzers, microscopes, meters, programmers, and
+   other tools can be Odoo **Maintenance Equipment** assigned to a work center,
+   with model, vendor reference, serial number, location, maintenance, cost,
+   and warranty data. See [maintenance
+   equipment](https://www.odoo.com/documentation/19.0/applications/inventory_and_mrp/maintenance/add_new_equipment.html).
+8. Odoo can import records from CSV or XLSX and preserve stable relationships
+   through **External IDs**. Generated Odoo exchange data should use stable
+   external IDs distinct from human-facing internal part references.
+
+An electrical net, signal, logical protocol, or abstract circuit function is
+not automatically an Odoo stocked product. Only procurable, manufacturable,
+maintained, serialized, or operationally scheduled objects should be mapped to
+the corresponding ERP object merely because the ERP can store arbitrary
+records.
+
+### Provisional direction for SETUP-006
+
+The recommended architecture is an ERP-neutral, machine-readable authority in
+Git from which project documents, diagrams, checks, bills of material, and
+Odoo import/update records can be generated. Odoo would manage procurement,
+inventory, physical lots and serials, released manufacturing BoMs, ECOs, work
+centers, and maintained bench equipment. Odoo would not be the sole authority
+for electrical connectivity, signal behavior, qualification evidence, or
+unreleased design work.
+
+The naming inventory should evaluate fields for:
+
+1. stable project object identity;
+2. concise descriptive name;
+3. object class, such as function, circuit, subcircuit, assembly, fixture,
+   equipment, component, connector, terminal, signal, net, or document;
+4. parent or containing object;
+5. function, product/type, and present location as separate relationships;
+6. revision and lifecycle state where applicable;
+7. searchable legacy aliases;
+8. Odoo External ID where synchronization is selected;
+9. Odoo Internal Reference where the object is a product or maintained part;
+   and
+10. links to specifications, diagrams, BoMs, procedures, evidence, and
+    qualification state.
+
+These are research conclusions and candidate fields, not accepted naming
+rules, a frozen schema, an Odoo implementation, or authority to begin the
+SETUP-006.1 inventory.
+
+## Work
+
+### SETUP-006.1 — Name every circuit and physical subassembly
+
+1. [x] Inventory every distinct circuit, subcircuit, breakout breadboard,
+   carrier section, connector assembly, conditioning path, power/reference
+   boundary, and measurement-only attachment represented by the current bench
+   and source documents. The bounded discovery result is
+   [`SETUP-006.1.1-object-inventory.md`](SETUP-006/SETUP-006.1.1-object-inventory.md).
+2. [ ] Assign each item one unique, concise, role-descriptive name that remains
+   meaningful independently of its present breadboard location or historical
+   experiment number.
+3. [ ] Record aliases and ambiguous legacy names so existing evidence remains
+   searchable without allowing those names to remain competing authority.
+4. [ ] Distinguish logical buses and protocols from the physical circuits that
+   carry them, and distinguish product wiring from test fixtures and probes.
+5. [ ] Present the naming inventory to the Author for review before renaming
+   files, revising diagrams, changing hardware profiles, or proceeding to the
+   next work item.
+
+## Stop condition
+
+SETUP-006.1.1 is accepted. The Author authorized SETUP-006.1.2 after this
+discovery baseline is committed. Do not rename files, change a hardware
+profile, or modify physical wiring while preparing the naming register.

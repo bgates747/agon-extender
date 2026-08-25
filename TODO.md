@@ -5,6 +5,13 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Active
+
+- [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
+  - Started: 2026-08-24 19:09 EDT
+  - Finished: --
+  - Details: [SETUP-006](docs/tasks/SETUP-006.md)
+
 ## Qualification infrastructure
 
 - [ ] **QUAL-001 — Establish the durable compatibility qualification matrix**
