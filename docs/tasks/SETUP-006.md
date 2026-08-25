@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — SETUP-006.1.1 accepted; SETUP-006.1.2 authorized
+- Status: In progress — SETUP-006.1 accepted; durable promotion pending
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -220,6 +220,44 @@ These are research conclusions and candidate fields, not accepted naming
 rules, a frozen schema, an Odoo implementation, or authority to begin the
 SETUP-006.1 inventory.
 
+### Applied naming-scheme synthesis
+
+The accepted SETUP-006.1 naming scheme applies the research through the
+following bounded influences and project rules:
+
+1. IEC 81346 supplies the conceptual separation of function, physical product,
+   present location, and reusable type. The project borrows that separation but
+   does not claim IEC 81346 compliance.
+2. NASA configuration-management guidance supplies the separation between
+   stable object identity, document or drawing identity, revision, lifecycle
+   status, physical specimen, baseline, and qualification evidence.
+3. `docs/versions/README.md` supplies the project's authoritative distinction
+   among software versions, physical and documentary revisions, builds, runs,
+   variants, fixtures, profiles, and specimens. A role name embeds none of
+   those changing identities.
+4. Open.Make guidance supplies the incremental workflow: document the existing
+   prototype first, retain task-local discovery while structure is uncertain,
+   and promote accepted recurring definitions when their permanent role is
+   understood.
+5. GitBuilding and Open Compute Project guidance supply the emphasis on
+   reusable assemblies, reproducible construction information, structured
+   parts and instructions, and complete eventual manufacturing handoff.
+6. Odoo's Product, Internal Reference, BoM, ECO, attachment, lot/serial,
+   equipment, work-center, and External ID models constrain future ERP mapping.
+   Git remains authoritative for electrical connectivity, qualification, and
+   unreleased design; role names do not masquerade as Odoo record keys.
+7. Existing Extender authorities take precedence over newly coined terms.
+   Approved IDs such as `light2-harness`, `forward-parallel-transport`, and
+   `la03-p4-probe-fixture` remain intact.
+
+The resulting operational rules are to name durable roles rather than
+temporary coordinates; separate product, bench, measurement, and proposed
+domains; separate reusable modules from endpoint-specific attachments; keep
+physical circuits distinct from protocols, modes, nets, and firmware behavior;
+retain legacy terminology only as searchable aliases; and use mechanically
+unique lowercase slugs without treating those slugs as revisions, part numbers,
+or ERP identities.
+
 ## Work
 
 ### SETUP-006.1 — Name every circuit and physical subassembly
@@ -229,19 +267,23 @@ SETUP-006.1 inventory.
    boundary, and measurement-only attachment represented by the current bench
    and source documents. The bounded discovery result is
    [`SETUP-006.1.1-object-inventory.md`](SETUP-006/SETUP-006.1.1-object-inventory.md).
-2. [ ] Assign each item one unique, concise, role-descriptive name that remains
+2. [x] Assign each item one unique, concise, role-descriptive name that remains
    meaningful independently of its present breadboard location or historical
-   experiment number.
-3. [ ] Record aliases and ambiguous legacy names so existing evidence remains
+   experiment number. Proposals are in
+   [`SETUP-006.1.2-naming-register.md`](SETUP-006/SETUP-006.1.2-naming-register.md).
+3. [x] Record aliases and ambiguous legacy names so existing evidence remains
    searchable without allowing those names to remain competing authority.
-4. [ ] Distinguish logical buses and protocols from the physical circuits that
+4. [x] Distinguish logical buses and protocols from the physical circuits that
    carry them, and distinguish product wiring from test fixtures and probes.
-5. [ ] Present the naming inventory to the Author for review before renaming
+5. [x] Present the naming inventory to the Author for review before renaming
    files, revising diagrams, changing hardware profiles, or proceeding to the
-   next work item.
+   next work item. The Author accepted the proposed naming set at 2026-08-24
+   21:08 EDT.
 
 ## Stop condition
 
-SETUP-006.1.1 is accepted. The Author authorized SETUP-006.1.2 after this
-discovery baseline is committed. Do not rename files, change a hardware
-profile, or modify physical wiring while preparing the naming register.
+SETUP-006.1.1 is accepted and frozen in commit `b38b445`. SETUP-006.1.2 is
+accepted as the project naming set but remains task-local pending durable
+promotion. Stop before promoting the names, renaming files, changing a hardware
+profile, assigning artifact revisions, synchronizing ERP records, or modifying
+physical wiring.

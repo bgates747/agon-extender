@@ -15,4 +15,8 @@ review records may remain here after promotion.
    names or a permanent schema are selected.
 2. [`SETUP-006.1.1-reset-breakout-observation.md`](SETUP-006.1.1-reset-breakout-observation.md)
    — exact operator-reported placement, geometry, colors, and suspected wiring
-   problem without inferred electrical assignments.
+   problem, recovered alternate configurations, and bounded visual trace.
+3. [`SETUP-006.1.2-naming-register.md`](SETUP-006.1.2-naming-register.md) —
+   accepted task-local role names, legacy aliases, ownership domains,
+   containment, and logical-versus-physical boundaries pending durable
+   promotion.
