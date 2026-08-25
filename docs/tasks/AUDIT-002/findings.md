@@ -9,10 +9,16 @@ contract. This is a drawing-level result only: it neither verifies the current
 bench assembly nor approves this topology as the new beta or production
 design.
 
-The preserved Author draft remains unchanged at SHA-256
-`9dbd85b7d971cb787df117a9ddc81e4bc05feaa53c2a7e5ae47e5af6db71c541`.
-The corrected generated derivative is SHA-256
+At audit acceptance, the preserved Author draft was SHA-256
+`9dbd85b7d971cb787df117a9ddc81e4bc05feaa53c2a7e5ae47e5af6db71c541`
+and the corrected generated derivative was
 `b337326248d4669e3624d07bb336077c7eb252cc0a1333ecec198def22f142a9`.
+CA-2026-08-25-001 later corrected only embedded Agon UART1 part metadata and
+artwork. Their current hashes are respectively
+`df8b899c41b2b186af5c298a30e70178c5fad94f0430a14f7f100407172c3b54`
+and `e3b5a44bb1c795dc120c21c77ffd0e3855eb2a6d0772b7781700ce1d59a836c0`.
+The regenerated connectivity graph retains 49 instances, 234 conductive nets,
+and all 60 passing expected-circuit checks.
 
 ## Evidence reconciliation
 
@@ -100,8 +106,10 @@ The detailed results are in `generated/connectivity.md` and
 
 The Author saved
 `light2-extender-breadboard-wiring-draft_v2.fzz` after making cosmetic edits.
-Its SHA-256 is
+Its accepted pre-CA SHA-256 was
 `207a59b795b472db7881b68eadeb7a55464ab13a51690bfa1de8f1476e8564cb`.
+After the bounded CA-2026-08-25-001 embedded-part correction, its SHA-256 is
+`51a69f6e7200fd46f2a2e2d15e047478e6f4080328f625bd35d648464c64136c`.
 
 The follow-up electrical review found:
 

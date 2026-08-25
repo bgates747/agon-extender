@@ -75,6 +75,11 @@ complete defect list, corrections, validation evidence, v2 equivalence result,
 and claim boundary are recorded in `AUDIT-002/findings.md`. The Author accepted
 the result and closed the audit at 2026-08-25 15:00 EDT.
 
+CA-2026-08-25-001 subsequently corrected only embedded Agon UART1 part
+identities, connector descriptions, and label artwork. Regenerated AUDIT-002
+evidence still passes all 60 checks with the same 234-net partition; the CA
+does not reopen or enlarge this audit's electrical claim.
+
 ## Stop condition
 
 Stop after producing a deterministic corrected review draft, machine-readable

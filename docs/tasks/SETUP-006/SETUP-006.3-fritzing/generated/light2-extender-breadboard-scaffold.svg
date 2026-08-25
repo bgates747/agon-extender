@@ -1681,13 +1681,13 @@
         <ns0:rect x="0.2" y="36.2" width="35.6" height="6.8" rx="1" fill="#7b1fa2" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="41.1" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">11 ESP37</ns0:text>
         <ns0:rect x="0.2" y="43.4" width="35.6" height="6.8" rx="1" fill="#1976d2" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="48.3" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">13 PD4 / RTS1</ns0:text>
+        <ns0:text x="2.3" y="48.3" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">13 PD4</ns0:text>
         <ns0:rect x="0.2" y="50.6" width="35.6" height="6.8" rx="1" fill="#388e3c" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="55.5" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">15 PD6</ns0:text>
         <ns0:rect x="0.2" y="57.8" width="35.6" height="6.8" rx="1" fill="#fbc02d" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="62.7" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#111111">17 PC0 / RXD1</ns0:text>
+        <ns0:text x="2.3" y="62.7" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#111111">17 PC0 / TXD1</ns0:text>
         <ns0:rect x="0.2" y="65" width="35.6" height="6.8" rx="1" fill="#f57c00" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="69.9" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#111111">19 PC2 / TXD1</ns0:text>
+        <ns0:text x="2.3" y="69.9" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#111111">19 PC2 / RTS1</ns0:text>
         <ns0:rect x="0.2" y="72.2" width="35.6" height="6.8" rx="1" fill="#d32f2f" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="77.1" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">21 PC4</ns0:text>
         <ns0:rect x="0.2" y="79.4" width="35.6" height="6.8" rx="1" fill="#6d4c41" stroke="#333333" stroke-width="0.55" />
@@ -1720,13 +1720,13 @@
         <ns0:rect x="0.2" y="36.2" width="35.6" height="6.8" rx="1" fill="#6d4c41" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="41.1" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">12 ESP38</ns0:text>
         <ns0:rect x="0.2" y="43.4" width="35.6" height="6.8" rx="1" fill="#111111" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="48.3" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">14 PD5 / CTS1</ns0:text>
+        <ns0:text x="2.3" y="48.3" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">14 PD5</ns0:text>
         <ns0:rect x="0.2" y="50.6" width="35.6" height="6.8" rx="1" fill="#ffffff" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="55.5" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#111111">16 PD7</ns0:text>
         <ns0:rect x="0.2" y="57.8" width="35.6" height="6.8" rx="1" fill="#808080" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="62.7" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">18 PC1</ns0:text>
+        <ns0:text x="2.3" y="62.7" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">18 PC1 / RXD1</ns0:text>
         <ns0:rect x="0.2" y="65" width="35.6" height="6.8" rx="1" fill="#7b1fa2" stroke="#333333" stroke-width="0.55" />
-        <ns0:text x="2.3" y="69.9" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">20 PC3</ns0:text>
+        <ns0:text x="2.3" y="69.9" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">20 PC3 / CTS1</ns0:text>
         <ns0:rect x="0.2" y="72.2" width="35.6" height="6.8" rx="1" fill="#1976d2" stroke="#333333" stroke-width="0.55" />
         <ns0:text x="2.3" y="77.1" font-family="DejaVu Sans, sans-serif" font-size="4" text-anchor="start" fill="#ffffff">22 PC5</ns0:text>
         <ns0:rect x="0.2" y="79.4" width="35.6" height="6.8" rx="1" fill="#388e3c" stroke="#333333" stroke-width="0.55" />

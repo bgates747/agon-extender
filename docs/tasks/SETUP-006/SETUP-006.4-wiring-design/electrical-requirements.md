@@ -4,7 +4,8 @@
 
 - State: task-local review candidate
 - Physical assembly: unchanged
-- Author's completed Fritzing source draft: preserved unchanged
+- Author's completed Fritzing source draft: wiring and geometry preserved;
+  embedded UART1 labels corrected by CA-2026-08-25-001
 - Fritzing `draft_v1` derivative: generated for Author review
 - Immediate target: Exclusive Extended beta transport
 - Separate deferred target: Exclusive Compatible stock UART
@@ -148,9 +149,11 @@ The SETUP-006.4 audit found that P4 part `r04` listed GPIO17 at EXT1-17 and
 GPIO16 at EXT1-18. The official Rev D1 schematic establishes the opposite:
 EXT1-17 is GPIO16 and EXT1-18 is GPIO17. Connector geometry was unaffected.
 The generator and canonical scaffold use corrected P4 part `r05`. The Author's
-completed source draft remains frozen with embedded `r04` as provenance. At
-the Author's direction, generated `draft_v1` embeds `r05` and therefore prints
-the corrected names without rewriting the completed source.
+completed source draft retains embedded P4 `r04` as provenance. At the Author's
+direction, generated `draft_v1` embeds `r05` and therefore prints the corrected
+P4 names. CA-2026-08-25-001 separately corrected the source draft's embedded
+Agon UART1 header and label-bank parts without changing its P4 part, wiring, or
+geometry.
 
 ## Electrical ownership and conditioning candidate
 
@@ -300,6 +303,21 @@ This table is a review proposal, not authority to wire the bench.
    firmware builds, EMOS build, procedure, fixture, and run IDs.
 
 ## Questions for Author disposition
+
+Discussion of Q001 exposed a prerequisite GPIO-budget and compatibility issue.
+The active reasoning and unresolved alternatives are preserved in
+`gpio-ownership-and-passthrough-discussion.md`. Q001 is paused until that
+discussion establishes an acceptable P4 user reserve and future-feature
+budget; none of its provisional directions is an accepted allocation.
+
+0. **Q000 — GPIO budget and passthrough boundary:** The first beta dedicates
+   the eleven eZ80 extended-transport pins while that transport is active and
+   omits passthrough switching and event virtualization. Establish the
+   permanent P4 user-GPIO reserve, optional Wi-Fi and future-link reservations,
+   exact beta direct-GPIO compatibility carve-out, and practical provisions
+   that avoid needlessly foreclosing a possible v1 mode-switched replicated
+   eZ80 header before consuming another convenience pin or fixing the carrier
+   layout.
 
 1. **Q001 — Dedicated P4 UART TX:** Accept GPIO16 as return TX, leaving GPIO12
    permanently as PARLIO D1 input? Recommendation: yes; this removes needless

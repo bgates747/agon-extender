@@ -269,6 +269,14 @@ or ERP identities.
    `hardware-object-registry`, first identity `hardware-object-registry-r01`,
    revision identity scheme, and `draft` lifecycle status. The Author accepted
    the recommended resolution of `SETUP-006-Q001` at 2026-08-24 21:34 EDT.
+3. `SETUP-006-D003` — For the first beta carrier, trade availability of the
+   eleven eZ80 transport GPIOs for circuit simplicity: dedicate them to the
+   Exclusive Extended transport while it is active and omit passthrough
+   switching, event capture, signal replay, and GPIO virtualization. Preserve
+   the possibility of a v1 multiplexed design in requirements, net naming, and
+   layout review, but do not burden beta with unselected circuitry or claim
+   electrical transparency. The Author accepted this beta scoping rule on
+   2026-08-25.
 
 ## Work
 
@@ -358,9 +366,10 @@ or ERP identities.
    required clockwise rotation into each SVG rather than storing a Fritzing
    instance transform. Place each bank outside and aligned with its matching
    1x16 header, following the Author's `_usermod` review evidence.
-   Identify only official physical Agon names and immutable eZ80 mux roles,
-   including `PD4 / RTS1`, `PD5 / CTS1`, `PC0 / RXD1`, and `PC2 / TXD1`;
-   never embed mutable Extender harness-function mappings in these labels.
+   Identify only official physical Agon names and immutable eZ80 mux roles:
+   `PC0 / TXD1`, `PC1 / RXD1`, `PC2 / RTS1`, and `PC3 / CTS1` on Agon pins
+   17--20 respectively. Pins 13 and 14 remain `PD4` and `PD5`. Never embed
+   mutable Extender harness-function mappings in these labels.
    Use one plain SVG text node per label: Fritzing 1.0.1 visibly mangles
    adjacent `<tspan>` elements even when standard SVG renderers do not.
    Include one invisible, unconnected, explicitly non-electrical connector as
@@ -374,6 +383,11 @@ or ERP identities.
    task-local until the electrical design establishes the correct permanent
    artifact boundary; acceptance does not qualify or preserve the legacy
    harness wiring.
+10. [x] Execute `CA-2026-08-25-001`: correct the four misassigned Agon UART1
+    pin labels in the authoritative generator, every current generated or
+    derived Fritzing artifact, and every affected current document; refresh
+    hash-bound audit evidence; prove that physical connectivity is unchanged;
+    and stop with an exact corrected-file manifest before commit.
 
 ### SETUP-006.4 — Establish the firmware-driven electrical requirements
 

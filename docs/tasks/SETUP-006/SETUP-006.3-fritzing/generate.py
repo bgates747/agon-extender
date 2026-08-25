@@ -157,10 +157,10 @@ AGON_PIN_DATA = {
         (8, "ESP27", "#f57c00", "#111111"),
         (10, "ESP36", "#d32f2f", "#ffffff"),
         (12, "ESP38", "#6d4c41", "#ffffff"),
-        (14, "PD5 / CTS1", "#111111", "#ffffff"),
+        (14, "PD5", "#111111", "#ffffff"),
         (16, "PD7", "#ffffff", "#111111"),
-        (18, "PC1", "#808080", "#ffffff"),
-        (20, "PC3", "#7b1fa2", "#ffffff"),
+        (18, "PC1 / RXD1", "#808080", "#ffffff"),
+        (20, "PC3 / CTS1", "#7b1fa2", "#ffffff"),
         (22, "PC5", "#1976d2", "#ffffff"),
         (24, "PC7", "#388e3c", "#ffffff"),
         (26, "PB5", "#fbc02d", "#111111"),
@@ -175,10 +175,10 @@ AGON_PIN_DATA = {
         (7, "ESP35", "#ffffff", "#111111"),
         (9, "ESP26", "#808080", "#ffffff"),
         (11, "ESP37", "#7b1fa2", "#ffffff"),
-        (13, "PD4 / RTS1", "#1976d2", "#ffffff"),
+        (13, "PD4", "#1976d2", "#ffffff"),
         (15, "PD6", "#388e3c", "#ffffff"),
-        (17, "PC0 / RXD1", "#fbc02d", "#111111"),
-        (19, "PC2 / TXD1", "#f57c00", "#111111"),
+        (17, "PC0 / TXD1", "#fbc02d", "#111111"),
+        (19, "PC2 / RTS1", "#f57c00", "#111111"),
         (21, "PC4", "#d32f2f", "#ffffff"),
         (23, "PC6", "#6d4c41", "#ffffff"),
         (25, "CS", "#111111", "#ffffff"),
@@ -191,14 +191,14 @@ AGON_PIN_DATA = {
 BOARD_MODULE_ID = "agon-extender-bb1460-two-rail-scaffold-fritzing-r04"
 P4_MODULE_ID = "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r05"
 AGON_HEADER_MODULE_IDS = {
-    "even": "agon-light2-even-16-contact-header-fritzing-r02",
-    "odd": "agon-light2-odd-16-contact-header-fritzing-r02",
+    "even": "agon-light2-even-16-contact-header-fritzing-r03",
+    "odd": "agon-light2-odd-16-contact-header-fritzing-r03",
 }
 AGON_LABEL_CELL_WIDTH = 0.5 * SVG_DPI
 AGON_LABEL_BANK_LENGTH = 16 * PITCH
 AGON_LABEL_BANK_MODULE_IDS = {
-    "odd": "agon-light2-odd-pin-label-bank-fritzing-r02",
-    "even": "agon-light2-even-pin-label-bank-fritzing-r02",
+    "odd": "agon-light2-odd-pin-label-bank-fritzing-r03",
+    "even": "agon-light2-even-pin-label-bank-fritzing-r03",
 }
 AGON_LABEL_BANK_SCENE_X = {
     "odd": BOARD_SCENE_X
@@ -640,7 +640,7 @@ def agon_header_fzp(bank: str) -> bytes:
             "fritzingVersion": "1.0.1",
         },
     )
-    ET.SubElement(module, "version").text = "2"
+    ET.SubElement(module, "version").text = "3"
     ET.SubElement(module, "author").text = "Agon Extender Project"
     ET.SubElement(module, "title").text = f"Agon Light 2 {bank} 16-contact header"
     ET.SubElement(module, "label").text = f"AGON-{bank.upper()}"
@@ -719,7 +719,7 @@ def agon_label_bank_fzp(bank: str) -> bytes:
             "fritzingVersion": "1.0.1",
         },
     )
-    ET.SubElement(module, "version").text = "2"
+    ET.SubElement(module, "version").text = "3"
     ET.SubElement(module, "author").text = "Agon Extender Project"
     ET.SubElement(module, "title").text = f"Agon Light 2 {bank} pin-label bank"
     ET.SubElement(module, "label").text = f"AGON {bank.upper()} PIN LABELS"
@@ -1305,13 +1305,15 @@ def validate(
             )
     assert abs(PITCH / SVG_DPI - 0.1) < 0.001
 
-    immutable_mux_names = {
-        13: "PD4 / RTS1",
-        14: "PD5 / CTS1",
-        17: "PC0 / RXD1",
-        19: "PC2 / TXD1",
+    immutable_pin_names = {
+        13: "PD4",
+        14: "PD5",
+        17: "PC0 / TXD1",
+        18: "PC1 / RXD1",
+        19: "PC2 / RTS1",
+        20: "PC3 / CTS1",
     }
-    for pin, expected_name in immutable_mux_names.items():
+    for pin, expected_name in immutable_pin_names.items():
         assert all_pin_data[pin][0] == expected_name
     forbidden_extender_mappings = ("READY_N", "VALID_N", " / D", "CLOCK")
     assert all(

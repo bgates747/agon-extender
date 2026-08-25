@@ -43,10 +43,13 @@ from the predecessor harness merely because that harness exists on the bench.
 ## Files
 
 1. `light2-extender-breadboard-wiring-draft.fzz` is the Author's completed
-   source diagram copied from the accepted SETUP-006.3 scaffold. Its frozen
+   source diagram copied from the accepted SETUP-006.3 scaffold. Its current
    SHA-256 is
-   `9dbd85b7d971cb787df117a9ddc81e4bc05feaa53c2a7e5ae47e5af6db71c541`.
-   Preserve it unchanged as the input to the first review derivative.
+   `df8b899c41b2b186af5c298a30e70178c5fad94f0430a14f7f100407172c3b54`.
+   CA-2026-08-25-001 replaced only its embedded defective UART1 label metadata
+   and artwork; the pre-correction hash remains in the CA and AUDIT-002
+   history. Preserve the corrected source unchanged as the input to the first
+   review derivative.
 2. `light2-extender-breadboard-wiring-draft_v1.fzz` is the generated review
    copy. It embeds corrected P4 part `r05`, advances the composite breadboard
    part to `r05` with its A--J row vocabulary reversed to match the physical
@@ -73,6 +76,14 @@ from the predecessor harness merely because that harness exists on the bench.
 5. `electrical-requirements.md` is the review record and candidate allocation.
    Facts, proposals, unresolved questions, and qualification requirements must
    remain visibly distinct.
+6. `gpio-ownership-and-passthrough-discussion.md` preserves the Q001 follow-on
+   discussion about total GPIO demand, consumer expansion, direct-eZ80-GPIO
+   compatibility, and possible mode-switched replication of transport-owned
+   expansion pins. It records the accepted beta simplification boundary while
+   leaving v1 multiplexing and the final pin allocation unresolved.
+7. `../SETUP-006.3-fritzing/correct-uart1-labels.py` is the bounded
+   CA-2026-08-25-001 migration and validation tool for the embedded Agon header
+   and label-bank parts in all three current wiring drafts.
 
 Regenerate or verify the derivative from the repository root with:
 

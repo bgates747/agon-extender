@@ -363,7 +363,7 @@
     }
   ],
   "connectivity": "tasks/AUDIT-002/generated/connectivity.json",
-  "connectivity_input_sha256": "b337326248d4669e3624d07bb336077c7eb252cc0a1333ecec198def22f142a9",
+  "connectivity_input_sha256": "e3b5a44bb1c795dc120c21c77ffd0e3855eb2a6d0772b7781700ce1d59a836c0",
   "failure_count": 0,
   "manifest": "tasks/AUDIT-002/expected-circuit.json",
   "manifest_sha256": "44c564777dbd630274fd0c3b5f66327330f51bcc8242c43e48520e0321c9d376",

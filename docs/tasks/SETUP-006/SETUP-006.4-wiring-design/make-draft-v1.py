@@ -43,7 +43,7 @@ P4_PACKAGE = (
     / "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r05.fzpz"
 )
 
-SOURCE_SHA256 = "9dbd85b7d971cb787df117a9ddc81e4bc05feaa53c2a7e5ae47e5af6db71c541"
+SOURCE_SHA256 = "df8b899c41b2b186af5c298a30e70178c5fad94f0430a14f7f100407172c3b54"
 
 P4_R04 = "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r04"
 P4_R05 = "agon-extender-olimex-esp32-p4-devkit-rev-d1-fritzing-r05"

@@ -10539,7 +10539,7 @@
     "occupied_hole_collisions": []
   },
   "input": "tasks/SETUP-006/SETUP-006.4-wiring-design/light2-extender-breadboard-wiring-draft_v1.fzz",
-  "input_sha256": "b337326248d4669e3624d07bb336077c7eb252cc0a1333ecec198def22f142a9",
+  "input_sha256": "e3b5a44bb1c795dc120c21c77ffd0e3855eb2a6d0772b7781700ce1d59a836c0",
   "instance_count": 49,
   "instances": [
     {
@@ -10559,28 +10559,28 @@
     {
       "kind": "connector",
       "model_index": "3",
-      "module_id": "agon-light2-even-16-contact-header-fritzing-r02",
+      "module_id": "agon-light2-even-16-contact-header-fritzing-r03",
       "properties": {},
       "title": "AgonEvenHeader1"
     },
     {
       "kind": "connector",
       "model_index": "4",
-      "module_id": "agon-light2-odd-16-contact-header-fritzing-r02",
+      "module_id": "agon-light2-odd-16-contact-header-fritzing-r03",
       "properties": {},
       "title": "AgonOddHeader1"
     },
     {
       "kind": "other",
       "model_index": "5",
-      "module_id": "agon-light2-odd-pin-label-bank-fritzing-r02",
+      "module_id": "agon-light2-odd-pin-label-bank-fritzing-r03",
       "properties": {},
       "title": "AgonOddPinLabelBank1"
     },
     {
       "kind": "other",
       "model_index": "6",
-      "module_id": "agon-light2-even-pin-label-bank-fritzing-r02",
+      "module_id": "agon-light2-even-pin-label-bank-fritzing-r03",
       "properties": {},
       "title": "AgonEvenPinLabelBank1"
     },
@@ -11056,7 +11056,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -11145,7 +11145,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -11213,7 +11213,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N004"
@@ -11337,7 +11337,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -11419,7 +11419,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N006"
@@ -11466,7 +11466,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N007"
@@ -11513,7 +11513,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N008"
@@ -11560,7 +11560,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N009"
@@ -11607,7 +11607,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N010"
@@ -11654,7 +11654,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N011"
@@ -13547,7 +13547,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N034"
@@ -13994,7 +13994,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N045"
@@ -14441,7 +14441,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N056"
@@ -14648,7 +14648,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N061"
@@ -14695,7 +14695,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -14749,7 +14749,7 @@
           "instance": "AgonOddHeader1",
           "kind": "connector",
           "model_index": "4",
-          "module_id": "agon-light2-odd-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-odd-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -18834,7 +18834,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -18993,7 +18993,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -21282,7 +21282,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector1",
@@ -21336,7 +21336,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector1",
@@ -21390,7 +21390,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector1",
@@ -21479,7 +21479,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         },
         {
           "connector": "connector0",
@@ -21554,7 +21554,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N185"
@@ -21601,7 +21601,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N186"
@@ -21648,7 +21648,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N187"
@@ -21695,7 +21695,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N188"
@@ -21782,7 +21782,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N190"
@@ -21829,7 +21829,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N191"
@@ -23224,7 +23224,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N225"
@@ -23431,7 +23431,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N230"
@@ -23478,7 +23478,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N231"
@@ -23525,7 +23525,7 @@
           "instance": "AgonEvenHeader1",
           "kind": "connector",
           "model_index": "3",
-          "module_id": "agon-light2-even-16-contact-header-fritzing-r02"
+          "module_id": "agon-light2-even-16-contact-header-fritzing-r03"
         }
       ],
       "net_id": "N232"
@@ -23537,7 +23537,7 @@
           "instance": "AgonOddPinLabelBank1",
           "kind": "other",
           "model_index": "5",
-          "module_id": "agon-light2-odd-pin-label-bank-fritzing-r02"
+          "module_id": "agon-light2-odd-pin-label-bank-fritzing-r03"
         }
       ],
       "net_id": "N233"
@@ -23549,7 +23549,7 @@
           "instance": "AgonEvenPinLabelBank1",
           "kind": "other",
           "model_index": "6",
-          "module_id": "agon-light2-even-pin-label-bank-fritzing-r02"
+          "module_id": "agon-light2-even-pin-label-bank-fritzing-r03"
         }
       ],
       "net_id": "N234"

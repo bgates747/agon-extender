@@ -51,8 +51,8 @@ in a diagrammatic breadboard view:
     into the SVGs so the strips initially align horizontally outside their
     corresponding headers without a Fritzing instance transform. Labels
     identify only official physical Agon pin names and immutable eZ80 mux
-    roles—most notably `13 PD4 / RTS1`,
-    `14 PD5 / CTS1`, `17 PC0 / RXD1`, and `19 PC2 / TXD1`. Mutable Extender
+    roles: `17 PC0 / TXD1`, `18 PC1 / RXD1`, `19 PC2 / RTS1`, and
+    `20 PC3 / CTS1`. Pins 13 and 14 remain `PD4` and `PD5`. Mutable Extender
     functions such as `READY_N`, `VALID_N`, and parallel-data assignments
     belong in the wiring and design records.
 13. Column indices increase from left to right. The outer index series sit
@@ -157,6 +157,12 @@ details that the generator must preserve:
     GPIO16 and EXT1-18 = GPIO17. P4 part `r05` corrects those labels without
     changing connector IDs, coordinates, or any other geometry. The module
     identity advanced so Fritzing cannot reuse cached `r04` artwork.
+13. CA-2026-08-25-001 found that the first Agon label-bank generator
+    transcribed the official UART1 alternate functions onto the wrong Port C
+    and Port D pins. Both 16-contact header parts and both movable label-bank
+    parts advance from Fritzing revision `r02` to `r03`. The new identities
+    prevent cached defective connector descriptions or artwork from surviving
+    after the corrected scaffold is imported.
 
 These are Fritzing-format workarounds, not physical dimensions or electrical
 design decisions. Locally saved `*_usermod.fzz` files are review evidence and
@@ -191,7 +197,7 @@ are ignored rather than treated as generated authority.
    board-right P4 EXT2.
 10. Official `agon-docs` files `docs/GPIO.md` and
     `docs/images/iopinsAL2.png`: physical header names and the immutable UART1
-    mux roles `RTS1`, `CTS1`, `RXD1`, and `TXD1`.
+    assignments `PC0/TXD1`, `PC1/RXD1`, `PC2/RTS1`, and `PC3/CTS1`.
 
 ## Intended outputs
 
