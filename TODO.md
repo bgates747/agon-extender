@@ -40,6 +40,11 @@ item is removed.
 
 ## Porting
 
+- [ ] **PORT-006 — Implement the Extender network foundation and update service**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-006](docs/tasks/PORT-006.md)
+
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: --
   - Finished: --
@@ -54,11 +59,6 @@ item is removed.
   - Started: --
   - Finished: --
   - Details: [PORT-005](docs/tasks/PORT-005.md)
-
-- [ ] **PORT-006 — Implement the Extender network foundation and update service**
-  - Started: --
-  - Finished: --
-  - Details: [PORT-006](docs/tasks/PORT-006.md)
 
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**
   - Started: --

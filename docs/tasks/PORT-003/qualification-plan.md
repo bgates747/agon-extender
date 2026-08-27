@@ -167,13 +167,22 @@ swaps, and official VDU display fixtures pass.
 
 ### Phase F — Consumer contract handoff
 
-- Freeze the project-owned frame-consumer interface after mock qualification.
-- Provide the null/mock reference consumer and integration documentation.
-- Hand network/browser delivery and later physical sinks their separately
-  owned implementation tasks.
+- Freeze the project-owned immutable RGB888 snapshot-pool and lease interface
+  after independent state-model and mock qualification.
+- Assemble the bootable retained VDP port with a disconnected Arduino `Stream`
+  ingress, preserving the official parser/lifecycle while keeping PORT-008's
+  physical transport outside this phase.
+- Implement the primary browser-video sink: P4-owned embedded assets, the
+  accepted legacy visual language, dynamic-size `EVF1`, bounded browser credit,
+  and PORT-006's narrow wired Ethernet/HTTP service.
+- Qualify null, slow, disconnected, reconnecting, and one-client browser cases
+  without allowing network code to own logical time or mutable framebuffer
+  state.
 
-Gate F: a slow or failed consumer demonstrably cannot change official VDP
-frame progress, queue completion, memory bounds, or command responsiveness.
+Gate F: the retained P4 target boots and directly serves browser video, while a
+slow or failed consumer demonstrably cannot change official VDP frame progress,
+queue completion, memory bounds, or command responsiveness. Transport from the
+Agon remains a separate PORT-008 gate.
 
 ### Phase G — Integrated P4 qualification
 

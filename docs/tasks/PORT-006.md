@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Not started — registered from SETUP-004 Work 1.g
+- Status: Not started — initial browser-video tranche accepted; awaits Phase F implementation
 - Started: --
 - Finished: --
 
@@ -17,6 +17,22 @@ contract.
 Provide common services required by browser video/audio, status and management,
 and safe network firmware updates without inheriting the dormant vdp-gl ICMP
 helper or the defective stock VDP serial updater transaction.
+
+The Author selected the P4/EDP itself as the HTTP and browser-video endpoint.
+The P4 serves its own browser assets and media endpoint through the DevKit's
+onboard Ethernet; no Pi or external web server is a product runtime dependency.
+The accepted first-tranche boundary assigns Ethernet, addressing, HTTP,
+connection lifecycle, and generic bounded network backpressure to PORT-006.
+PORT-003 owns framebuffer handoff, video framing and encoding, browser assets,
+presentation code, and video-specific diagnostics. PORT-006 treats video as
+opaque bytes; PORT-003 does not control Ethernet hardware. OTA, optional Wi-Fi,
+management, and unrelated network services remain outside this tranche.
+
+The first bench tranche uses ordinary DHCP. The router's existing MAC-based
+reservation is expected to supply the stable bench address, but firmware does
+not embed it and reports link and lease state through USB serial diagnostics.
+Friendly-name discovery, persisted user configuration, and multi-device naming
+are deferred beyond the first forward test.
 
 ## Authority and inputs
 
@@ -71,3 +87,37 @@ helper or the defective stock VDP serial updater transaction.
   module image from the hardware alone.
 - Define the service, security, buffering, and qualification design before
   writing production network or updater code.
+
+## Initial browser-video tranche
+
+This accepted tranche is the only PORT-006 work on the immediate critical
+path. It supports PORT-003 Phase F without prematurely absorbing the remainder
+of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
+
+1. [ ] Freeze the opaque network-service API, DHCP/link lifecycle, one-client
+   WebSocket credit boundary, diagnostics, failure behavior, exact ESP-IDF
+   authorities, and exclusions before implementation.
+2. [ ] Reconcile the legacy hardware-qualified Ethernet/HTTP proof with the
+   pinned current Olimex board, ESP-IDF 5.5.5, and P4 build. Reuse current
+   maintained facilities and exact board facts; do not copy example-only
+   configuration machinery into product code without review.
+3. [ ] Implement ordinary DHCP and observed link/lease reporting for the
+   onboard Ethernet. The router reservation may produce the stable bench
+   address, but no address enters firmware.
+4. [ ] Implement embedded static-asset HTTP routes and one video WebSocket
+   connection. Accept and transport opaque immutable buffers through a bounded
+   interface; do not include pixel or VDP semantics in PORT-006.
+5. [ ] Implement one outstanding client credit, send completion, disconnect
+   cleanup, second-client refusal, and bounded error reporting. Never call
+   PORT-003 from an Ethernet callback while holding network-internal locks.
+6. [ ] Run host/state tests where separable and pinned-P4 compile/link tests.
+   Confirm absent browser, failed DHCP, link loss, malformed client messages,
+   slow sends, reconnect, and repeated server lifecycle cannot create an
+   unbounded queue or block logical VDP execution.
+7. [ ] After the joint predeployment gate is approved, qualify DHCP, direct P4
+   asset serving, one WebSocket client, disconnect/reconnect, and USB serial
+   diagnostics on the named bench. Do not expose the test service to the public
+   internet or claim production security.
+8. [ ] Return accepted evidence to PORT-003 Gate F, then pause PORT-006. Wi-Fi,
+   audio transport, OTA, status/management, authentication, discovery, and
+   broader qualification remain in this task for later tranches.

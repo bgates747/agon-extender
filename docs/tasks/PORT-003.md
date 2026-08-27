@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — Phases A–E complete; Phase F pending
+- Status: In progress — Phases A–E complete; Phase F plan accepted
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1770,3 +1770,225 @@ if PORT-005, PORT-008, SETUP-005, MOS/EMOS, or physical-output policy is needed
 to make the gate pass. Also stop if independent fixtures expose a behavior
 difference that cannot be narrowly isolated and recorded, or if target
 compilation invalidates the accepted one-controller facade.
+
+## Phase F — Browser video handoff and bootable port
+
+### Accepted direction
+
+1. Ethernet/browser presentation is the sole planned video-output path for the
+   foreseeable future and is the primary product sink, not a diagnostic
+   substitute for another display.
+2. Reuse the look and feel of the most recent legacy presentation interface at
+   `agon-extender-legacy@f33b9dd:web/presentation/`: its dark centered shell,
+   pixel-sharp 4:3 canvas, compact connection controls, and frame-statistics
+   grid are the visual reference.
+3. Do not import stale legacy architecture by implication. Reconcile its
+   physical-scanout terminology, frame protocol, WebGL presenter, buffering
+   behavior, and server implementation with the current retained VDP port,
+   logical framebuffer, and bounded latest-state consumer contract before
+   selecting or reusing code.
+4. Phase F must produce part of the actual retained VDP port. It may not use a
+   throwaway renderer, invented VDU vocabulary, or disposable transport merely
+   to obtain visible output.
+5. EDP firmware on the P4 serves the browser assets and video endpoint directly
+   over the DevKit's onboard Ethernet. A Pi or other external web server is not
+   part of the product runtime. Bench hosts may deploy, observe, and qualify
+   the firmware without becoming a required media relay.
+
+The accepted direction, ownership split, first frame delivery, network
+bootstrap, command fixture, actor path, and activation rules are recorded
+below. The detailed checklist and proposed contracts still require one complete
+Author review before coding.
+
+### Accepted ownership boundary
+
+1. PORT-006 owns P4 Ethernet initialization and link state, IP configuration,
+   HTTP serving, browser connection lifecycle, and generic bounded network
+   buffering and backpressure.
+2. PORT-003 owns framebuffer snapshot and consumer handoff, browser-video frame
+   semantics and encoding, HTML/CSS/JavaScript presentation assets, WebGL or
+   Canvas presentation, and video-specific counters and diagnostics.
+3. PORT-006 transports opaque bytes without interpreting pixels. PORT-003 does
+   not initialize or control Ethernet hardware.
+4. The first supporting PORT-006 tranche is limited to the browser-video
+   foundation. OTA, optional Wi-Fi, management, and unrelated network services
+   remain outside Phase F.
+
+### Accepted initial frame-delivery contract
+
+1. Deliver full, uncompressed, presentation-ready RGB888 frames over a
+   WebSocket for the first port. Screen dimensions and stride are runtime frame
+   metadata rather than a hard-coded 320-by-240 assumption.
+2. Derive the versioned frame header from the legacy `EVF1` contract, subject
+   to exact validation against current types and byte-order requirements. Do
+   not inherit the legacy server's fixed dimensions or one-frame-only behavior.
+3. Use explicit browser demand and bounded latest-frame semantics. A browser
+   that is slow, disconnected, or not requesting another frame cannot queue
+   unbounded surfaces, retain mutable logical storage, or delay VDP execution
+   and logical frame progression.
+4. The P4 composes final presentation pixels. Browser code must not reimplement
+   logical palette expansion, Copper effects, sprites, cursor composition, or
+   other VDP semantics.
+5. Pixel-exact full frames and deliberately bounded cadence are sufficient for
+   the first visible forward-command test. Compression, dirty rectangles,
+   codecs, and production-rate optimization follow measured evidence and are
+   not Phase F prerequisites.
+
+### Accepted first-bench network bootstrap
+
+1. EDP/P4 firmware uses ordinary DHCP over the DevKit's onboard Ethernet.
+2. The bench router's existing reservation for the DevKit MAC is expected to
+   return the stable bench address; firmware does not hard-code that address.
+3. EDP/P4 firmware reports link and acquired-lease information through its USB
+   serial diagnostics so reservation or network failures remain observable.
+4. Friendly-name discovery, persistent user network settings, and multi-device
+   naming are deferred beyond the first forward test.
+
+### Accepted first visible-command fixture
+
+1. Use only official retained VDP commands and ordinary printable bytes.
+2. Select a conventional bitmap mode, clear the screen, set text color, print
+   a recognizable banner, reposition the text cursor, and print a second
+   string.
+3. Set graphics color, draw several lines and a filled rectangle, then change
+   and visibly use one palette entry.
+4. Derive exact command bytes from official documentation and freeze both
+   expected pixels and a human-recognizable expected image before bench use.
+5. Treat this as a representative first fixture, not a claim that unexercised
+   retained VDP commands are qualified.
+
+### Accepted first-fixture actor path
+
+1. An ordinary eZ80 test application emits the fixture through the standard
+   MOS/VDU call surface.
+2. A fixed-purpose EMOS development build owns the routing decision and sends
+   the unchanged official byte stream over the parallel wiring.
+3. The eZ80 application does not manipulate transport GPIO or depend on a new
+   application-visible protocol.
+4. EDP/P4 firmware admits the bytes into the retained VDP parser, updates the
+   logical framebuffer, and makes the presentation surface available to the
+   P4-owned browser endpoint.
+5. This fixed routing proves a vertical slice; it does not implement or qualify
+   the eventual runtime operating-mode transition machinery.
+
+### Accepted first-run activation
+
+1. Agon and EMOS boot normally in Legacy mode; no test build may force the
+   parallel route during startup.
+2. EDP/P4 boots independently, acquires its DHCP lease, and serves the browser
+   endpoint. The operator confirms that readiness before requesting a route.
+3. The operator explicitly requests Exclusive Extended through the existing
+   EMOS mode-command framework.
+4. A qualification-only EMOS forward adapter prepares the eZ80 GPIO and
+   transport route and commits it only under this controlled operator action.
+5. Reverse UART remains disabled, so this adapter cannot prove the eventual
+   EDP handshake or qualify the complete runtime transition. Its diagnostics
+   and evidence must describe that limitation explicitly.
+
+### Detailed Phase F execution checklist
+
+This checklist is the accepted scope fence. After every completed item, reread
+`TODO.md`, this Phase F section, the Phase F contracts, and the active item
+before proceeding.
+
+1. [x] Freeze the accepted scope, exact authorities, legacy evidence commit,
+   ownership boundaries, exclusions, proposed contracts, fixture rules,
+   implementation order, and stop conditions. Create the task-local Phase F
+   package and do not edit product code during this item.
+2. [ ] Generate a bounded source/provenance inventory for the official parser
+   and sketch lifecycle, current P4 display/frame APIs, legacy browser assets
+   and `EVF1` protocol, pinned ESP-IDF Ethernet/HTTP facilities, and the current
+   EMOS mode/adapter seams. Fingerprint exact inputs; do not perform another
+   whole-firmware survey.
+3. [ ] Define the bootable retained-port closure. Preserve the official
+   `VDUStreamProcessor`, VDU handlers, contexts, buffers, screen facade,
+   Teletext, and Arduino/FreeRTOS lifecycle while replacing only already
+   accepted P4-inapplicable bindings. Keep audio, physical input, updater,
+   terminal/ZDI hardware, and return packets explicit rather than allowing
+   missing symbols to choose behavior accidentally.
+4. [ ] Freeze and independently model a fixed-capacity immutable presentation
+   snapshot pool. The proposed first contract uses three PSRAM-backed slots
+   sized for the largest retained 1024-by-768 RGB888 surface: at most one
+   producer slot, one latest published slot, and one leased network slot. The
+   producer never waits for a slot; pressure records a dropped presentation.
+   No consumer receives a mutable logical-plane pointer.
+5. [ ] Freeze the `EVF1` wire contract and browser credit state machine before
+   implementation. Validate every field and arithmetic bound, support all
+   retained dimensions and packed RGB888 stride, allow one outstanding browser
+   frame request, send only an immutable complete snapshot, and release its
+   lease after the network send completes or the client disconnects.
+6. [ ] Freeze the narrow PORT-006 service contract: DHCP with observed lease,
+   onboard Ethernet link lifecycle, embedded static assets, HTTP routes, one
+   first-tranche video WebSocket client, opaque bounded sends, disconnect
+   cleanup, and USB serial diagnostics. No Pi relay, Wi-Fi, OTA, management,
+   authentication claim, internet exposure, or unrelated service enters this
+   bench tranche.
+7. [ ] Build independent fixtures before production code: snapshot-pool state
+   traces, mode/reconfigure/failure cases through 1024-by-768, exact `EVF1`
+   byte vectors, malformed-frame rejection, browser credit/reconnect traces,
+   deterministic presentation hashes, and the accepted visible VDU-command
+   fixture. Expected values come from written contracts, official docs/source,
+   or separately reviewed legacy bytes—not the implementation under test.
+8. [ ] Implement the project-owned immutable snapshot publisher and lease API.
+   Composition occurs only at a controller-owned quiescent frame boundary and
+   never calls network code. Limit first-bench snapshot production to a
+   documented conservative cadence; logical frame time continues independently
+   when no slot or browser is available.
+9. [ ] Adapt the legacy browser presentation into current project-owned assets.
+   Preserve its accepted visual language, strict frame parser, pixelated 4:3
+   presentation, local browser test pattern, connection state, and statistics.
+   Replace stale physical-scanout wording, fixed dimensions, and one-frame
+   behavior; issue the next credit only after the prior frame is accepted for
+   browser presentation.
+10. [ ] Implement the narrow PORT-006 wired service and bind its opaque send
+    interface to PORT-003's leased snapshots. Keep Ethernet/HTTP code under the
+    network owner and pixel/frame semantics under the display owner. A slow or
+    failed send may consume its one lease and cause later presentation drops,
+    but it cannot block the frame service or VDU command path.
+11. [ ] Assemble a bootable P4 target from the retained official VDP lifecycle,
+    completed P4 display facade, snapshot publisher, browser sink, and a
+    disconnected project transport ingress implementing the required Arduino
+    `Stream` contract. PORT-008 later supplies the parallel ingress. Preserve
+    upstream startup and General Poll behavior; do not invent startup bytes or
+    mark a missing return transport as qualified.
+12. [ ] Run deterministic host tests under sanitizers plus browser-side parser
+    and state-machine tests. Exercise null, fast, slow, disconnecting, and
+    reconnecting consumers; slot exhaustion; mode changes; allocation failure;
+    malformed frames; sequence rollover; repeated start/stop; and sustained
+    bounded operation. Re-run all Phase A--E and dependency regressions.
+13. [ ] Add and validate the exact P4 build closure. Prove the retained parser,
+    official facade, P4 controller/frame/snapshot code, browser assets, and
+    narrow wired service are linked, while classic VGA/CVBS, PS/2 acquisition,
+    physical audio, updater, Wi-Fi, storage, and the parallel/return transports
+    remain absent until their owning tasks select them.
+14. [ ] Regenerate provenance, dependency, source-selection, compatibility,
+    and qualification artifacts twice byte-identically. Audit all changed
+    source, generated evidence, links, schemas, paths, comments, and exclusions.
+    Present the committed-artifact identities and exact P4-only deployment
+    procedure for separate Author approval.
+15. [ ] Only after that approval, deploy the identified P4-only build and prove
+    DHCP, direct asset serving, browser self-test, startup framebuffer delivery,
+    disconnect/reconnect, bounded drops, memory bounds, and serial diagnostics.
+    This does not connect the Agon or claim VDU transport.
+16. [ ] Stop for Author review of Gate F. If accepted, hand the same bootable
+    firmware target to PORT-008, which adds the parallel `Stream` ingress and
+    runs the explicit-EMOS official-command fixture. Do not begin return UART,
+    production electrical tuning, or broad compatibility qualification.
+
+### Phase F gate
+
+Gate F passes only when the retained VDP target boots on P4, the P4 directly
+serves the accepted browser interface, immutable RGB888 snapshots cover every
+retained mode size, and null/slow/disconnected network behavior cannot change
+official logical frame progress, command responsiveness, queue completion, or
+bounded memory. Gate F alone makes no Agon transport, return-packet, mode-
+transition, production-throughput, internet-security, or electrical claim.
+
+### Phase F stop conditions
+
+Stop for Author review if implementation requires changing official VDU bytes
+or semantics, patching retained lifecycle merely for robustness, handing a
+mutable logical buffer to network code, waiting for a slow consumer on the VDU
+or frame-service path, retaining a classic physical driver, expanding the
+narrow PORT-006 tranche, inventing a transport command, exceeding bounded
+memory, or weakening Legacy-at-boot and explicit EMOS activation rules.

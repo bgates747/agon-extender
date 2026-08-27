@@ -89,6 +89,24 @@ therefore PORT-003 Phases D and E precede this prototype.
    release, or production-circuit claim.
    The installed 220-ohm series values are accepted only as the experimental
    wiring state for this run; production selection remains deferred.
+   The accepted visible fixture uses only official VDP commands: select a
+   conventional bitmap mode, clear it, set text color, print a recognizable
+   banner, reposition the text cursor, print a second string, set graphics
+   color, draw lines and a filled rectangle, then change and visibly use one
+   palette entry. Freeze exact bytes and expected pixels from official
+   documentation before bench execution.
+   The fixture originates in an ordinary eZ80 application through the normal
+   MOS/VDU call surface. A fixed-purpose EMOS development build owns routing
+   those unchanged bytes onto the parallel transport; the application neither
+   manipulates transport GPIO nor uses a new application protocol.
+   Agon and EMOS still boot in Legacy mode. After EDP/P4 has acquired its DHCP
+   lease and the operator has confirmed the P4-served browser endpoint, the
+   operator explicitly requests Exclusive Extended through the existing EMOS
+   mode-command framework. A qualification-only forward adapter prepares and
+   commits the route under that controlled authorization. With reverse UART
+   disabled it cannot prove the eventual EDP handshake or a fully qualified
+   runtime transition; it must report that limitation and cannot enable itself
+   automatically at boot.
 2. Stop for Author review of the forward-only command, display, and physical-
    transfer evidence before enabling any P4-to-eZ80 product traffic.
 3. Make EDP/P4 firmware emit an exact official VDP response packet over the
