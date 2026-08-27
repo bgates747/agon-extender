@@ -14,10 +14,15 @@ path. Preserve the official VDP application-visible byte-stream and VDP
 protocol-packet contracts while replacing the stock PICO-D4 UART hardware
 binding with the selected Extender wiring and MOS/eZ80 integration.
 
-The first end-to-end compatibility canary is the existing official General Poll
-startup exchange. This task must not invent a second discovery handshake or
-promote the predecessor's experimental fixed-frame UART protocol into the
-product design.
+This task exercises the actual retained VDP port; it must not substitute a
+throwaway receiver, invented command vocabulary, or disposable protocol merely
+to make the wiring move bytes. The first bidirectional end-to-end compatibility
+canary is the existing official General Poll startup exchange. Before adding
+that UART return path,
+the task performs a forward-only visible-command tranche over the existing
+controlled-power predecessor circuit. Neither tranche may invent a second
+discovery handshake or promote the predecessor's experimental fixed-frame UART
+protocol into the product design.
 
 ## Authority and inputs
 
@@ -73,31 +78,44 @@ remaining modes from one successful path. PORT-003 Phase E must first supply
 the retained official facade and parser integration needed by the canary;
 therefore PORT-003 Phases D and E precede this prototype.
 
-1. Use a fixed-backend development EMOS build so ordinary VDU output reaches
-   EDP/P4 firmware through the accepted eight-bit parallel forward direction.
-2. Make EDP/P4 firmware emit an exact official VDP response packet over the
+1. Begin with a forward-only learning stage in the actual retained VDP port.
+   Use a fixed-backend development EMOS build so ordinary official command
+   bytes reach EDP/P4 firmware through
+   the eight-bit parallel direction, then visibly execute a representative set
+   of simple display commands. Use the existing controlled-power predecessor
+   circuit only under its strict power discipline, keep the UART-return driver
+   disabled, and treat the direct GPIO20/open-drain READY_N path as predecessor
+   test wiring only. Qualify no either-order-power, powered-off, isolated-
+   release, or production-circuit claim.
+   The installed 220-ohm series values are accepted only as the experimental
+   wiring state for this run; production selection remains deferred.
+2. Stop for Author review of the forward-only command, display, and physical-
+   transfer evidence before enabling any P4-to-eZ80 product traffic.
+3. Make EDP/P4 firmware emit an exact official VDP response packet over the
    accepted UART1 return direction; use General Poll as the first canary and do
    not invent a disposable command or response protocol.
-3. Route UART1 bytes into one bounded experimental parser owned by EMOS on the
+4. Route UART1 bytes into one bounded experimental parser owned by EMOS on the
    eZ80. EMOS alone may update canonical MOS sysvars and completion flags; EDP,
    applications, and resident services must not write those assets directly.
-4. Exercise enough real code and controlled bench traffic to expose parser
+5. Exercise enough real code and controlled bench traffic to expose parser
    boundaries, packet ordering, buffering, pacing, timeout, reset, and failure
    assumptions. Record observations without generalizing beyond exercised
    bytes and signals.
-5. Keep the onboard VDP outside the prototype's audio/video output and EDP
+6. Keep the onboard VDP outside the prototype's audio/video output and EDP
    response path. Peripheral-input integration, concurrent UART0 packets,
    Exclusive Compatible, Dual, the general EDU result domain, runtime mode
    transitions, and broad legacy-software qualification remain out of scope.
-6. Stop for Author review of the prototype and its findings. Feed accepted
+7. Stop for Author review of the bidirectional prototype and its findings. Feed accepted
    evidence back into REMED-001 Work 2.e and SETUP-005-D003 before designing
    the complete response architecture.
 
 **Prototype gate:** before implementation or bench operation, present the
-exact fixed-backend EMOS/EDP source boundary, official packet canary, existing
-Exclusive Extended wiring profile, minimum fixture, safety checks, and stop
-conditions for Author approval. This bounded gate does not require the complete
-PORT-008.1 production transport contract or settle its Review Gate 1.
+exact fixed-backend EMOS/EDP source boundary, initial visible command set,
+later official packet canary, existing Exclusive Extended wiring profile,
+minimum fixture, strict controlled-power safety checks, disabled-return proof,
+and stop conditions for Author approval. This bounded gate does not require
+the complete PORT-008.1 production transport contract or settle its Review
+Gate 1.
 
 This tranche may perform the minimum official-source review needed to preserve
 wire contracts and memory safety. It must not turn into a survey-only planning

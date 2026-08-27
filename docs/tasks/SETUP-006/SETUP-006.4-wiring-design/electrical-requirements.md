@@ -73,7 +73,7 @@ cannot assume that stock UART0 electrical flow control exists on UART1.
 |---|---|---|---|---|---|
 | `EE-D0` | Forward data bit 0 | PC0, header 17 | GPIO22, EXT2-11 | EMOS/eZ80 to EDP/P4 | Sampled only inside an admitted valid epoch; application-byte bit order remains exact. |
 | `EE-D1` | Forward data bit 1 | PC1, header 18 | GPIO12, EXT1-13 | EMOS/eZ80 to EDP/P4 | Forward data outside the UART-return ownership epoch; PC1 becomes eZ80 UART1 RX for return. |
-| `EE-D2` | Forward data bit 2 | PC2, header 19 | GPIO23, EXT2-10 | EMOS/eZ80 to EDP/P4 | Same as `EE-D0`; exact Rev D1 board must have DNP link R31 absent. |
+| `EE-D2` | Forward data bit 2 | PC2, header 19 | GPIO23, EXT2-10 | EMOS/eZ80 to EDP/P4 | Same as `EE-D0`; Olimex marks optional Ethernet-clock link R31 DNP, and Author inspection confirmed its footprint unpopulated on the current Rev D1 bench board. |
 | `EE-D3` | Forward data bit 3 | PC3, header 20 | GPIO11, EXT1-12 | EMOS/eZ80 to EDP/P4 | Same as `EE-D0`; PC3's UART1-CTS role does not itself throttle P4 return traffic. |
 | `EE-D4` | Forward data bit 4 | PC4, header 21 | GPIO32, EXT2-9 | EMOS/eZ80 to EDP/P4 | Same as `EE-D0`. |
 | `EE-D5` | Forward data bit 5 | PC5, header 22 | GPIO10, EXT1-11 | EMOS/eZ80 to EDP/P4 | Same as `EE-D0`. |
@@ -121,7 +121,7 @@ not merely the GPIO alternate-function names printed beside the chip pins.
 
 | Facility | Physical P4 resources on Rev D1 | Effect on current enhanced map |
 |---|---|---|
-| Ethernet | PHY uses GPIO28-GPIO31, GPIO34, GPIO35, and GPIO49-GPIO52 for its selected RMII data, control, clock, reset, MDC, and MDIO nets. GPIO23 can be connected to RMII clock only through DNP resistor R31. | No populated-net conflict with GPIO9-GPIO17, GPIO20-GPIO23, GPIO32, or GPIO33. Confirm R31 is absent on the exact DevKit before qualifying GPIO23. GPIO32/33's printed EMAC alternatives are not wired to the onboard PHY. |
+| Ethernet | PHY uses GPIO28-GPIO31, GPIO34, GPIO35, and GPIO49-GPIO52 for its selected RMII data, control, clock, reset, MDC, and MDIO nets. GPIO23 can be connected to RMII clock only through DNP resistor R31. | No populated-net conflict with GPIO9-GPIO17, GPIO20-GPIO23, GPIO32, or GPIO33. The Author confirmed the current Rev D1 bench board has soldered but unbridged R31 pads and no component. GPIO32/33's printed EMAC alternatives are not wired to the onboard PHY. |
 | Onboard microSD | SD1 data/clock/command and power use GPIO39-45. Card detect reaches GPIO3. | No conflict. Preserve GPIO3 and the internal GPIO39-45 assignments for PORT-007. The header pins labeled SPI are not the onboard microSD bus. |
 | MIPI DSI/CSI | Data and clock use dedicated MIPI pins. Both connectors share control I2C on GPIO7/GPIO8; CSI also has optional control nets. | No conflict. Preserve GPIO7/GPIO8 and the MIPI connectors for later local display/camera work. |
 | pUEXT / MOD-WIFI | pUEXT exposes power, UART0 on GPIO37/GPIO38, I2C on GPIO7/GPIO8, and SPI on GPIO4/GPIO5/GPIO53/GPIO54. | No conflict. Preserve all eight pUEXT signal GPIOs so the planned MOD-WIFI-ESP8266 attachment remains possible without redesigning the enhanced bus. |
@@ -133,8 +133,9 @@ not merely the GPIO alternate-function names printed beside the chip pins.
 
 1. The predecessor's D0-D7, CLOCK, VALID_N, READY_N, FWD_OE_N, and REV_OE_N
    P4 assignments have no identified populated peripheral collision on Rev D1.
-2. GPIO23 remains conditional on physical confirmation that DNP option R31 is
-   unpopulated.
+2. GPIO23 is retained. Olimex marks optional Ethernet-clock link R31 DNP, and
+   the Author visually confirmed the current Rev D1 board has no component
+   bridging its two underside pads.
 3. A dedicated return-UART TX on GPIO16 would avoid changing GPIO12 between
    PARLIO input and UART output. This is the recommended fresh-design
    candidate and deliberately departs from the predecessor experiment.
@@ -270,7 +271,7 @@ This table is a review proposal, not authority to wire the bench.
 |---|---|---|---|---|
 | D0 | 17 / PC0 | EXT2-11 / GPIO22 | P4-powered `Ioff` buffer + 220 ohm | retain |
 | D1 | 18 / PC1 | EXT1-13 / GPIO12 | P4-powered `Ioff` buffer + 220 ohm | retain |
-| D2 | 19 / PC2 | EXT2-10 / GPIO23 | P4-powered `Ioff` buffer + 220 ohm | retain after R31 check |
+| D2 | 19 / PC2 | EXT2-10 / GPIO23 | P4-powered `Ioff` buffer + 220 ohm | retain; R31 absence verified |
 | D3 | 20 / PC3 | EXT1-12 / GPIO11 | P4-powered `Ioff` buffer + 220 ohm | retain |
 | D4 | 21 / PC4 | EXT2-9 / GPIO32 | P4-powered `Ioff` buffer + 220 ohm | retain |
 | D5 | 22 / PC5 | EXT1-11 / GPIO10 | P4-powered `Ioff` buffer + 220 ohm | retain |
@@ -302,42 +303,53 @@ This table is a review proposal, not authority to wire the bench.
    manufacturer/orderable part, resistor values, wire lengths, board specimen,
    firmware builds, EMOS build, procedure, fixture, and run IDs.
 
-## Questions for Author disposition
+## Decision and question register
 
 Discussion of Q001 exposed a prerequisite GPIO-budget and compatibility issue.
 The active reasoning and unresolved alternatives are preserved in
-`gpio-ownership-and-passthrough-discussion.md`. Q001 is paused until that
-discussion establishes an acceptable P4 user reserve and future-feature
-budget; none of its provisional directions is an accepted allocation.
+`gpio-ownership-and-passthrough-discussion.md`. The Author accepted the bounded
+beta dispositions for Q000--Q002 on 2026-08-25. Permanent v1 GPIO replication,
+passthrough, event retention, and qualification-fixture questions are
+explicitly deferred. Q003, Q004, and Q006 are deferred behind actual ported-
+firmware forward evidence; Q005 is accepted and physically verified.
 
-0. **Q000 — GPIO budget and passthrough boundary:** The first beta dedicates
-   the eleven eZ80 extended-transport pins while that transport is active and
-   omits passthrough switching and event virtualization. Establish the
-   permanent P4 user-GPIO reserve, optional Wi-Fi and future-link reservations,
-   exact beta direct-GPIO compatibility carve-out, and practical provisions
-   that avoid needlessly foreclosing a possible v1 mode-switched replicated
-   eZ80 header before consuming another convenience pin or fixing the carrier
-   layout.
+0. **Q000 — Accepted for beta; permanent v1 policy deferred:** Provisionally
+   preserve GPIO6, GPIO18, GPIO19, and GPIO46--GPIO48 as the six uncommitted
+   exposed user candidates, subject to capability verification. Reserve
+   GPIO37/GPIO38 for the optional MOD-WIFI-ESP8266 UART. Reserve no beta pins
+   for the post-v1 VDP/EDP link. Put only labeled test points, not a replicated
+   user header, on the eleven transport-owned eZ80 contacts. Beta retains the
+   accepted direct-GPIO compatibility carve-out; v1 passthrough and permanent
+   user-reserve guarantees are deferred.
 
-1. **Q001 — Dedicated P4 UART TX:** Accept GPIO16 as return TX, leaving GPIO12
-   permanently as PARLIO D1 input? Recommendation: yes; this removes needless
-   P4 pin-mux and electrical turnaround while preserving the Agon PC1 contract.
-2. **Q002 — Return pacing wire:** For the first General Poll beta, omit
-   `UART_ALLOW_N` but reserve PD6/GPIO17 and physical routing space until
-   PORT-008 measures whether EMOS buffering is sufficient? Recommendation: yes;
-   do not invent a flow-control wire before the receiver needs it.
-3. **Q003 — Buffer architecture:** Accept separate P4-powered forward and
-   Agon-powered return buffer banks with `Ioff`, replacing the one-package HC125
-   experiment? Recommendation: yes; it is the cleanest either-order-power
-   boundary identified in this review.
-4. **Q004 — READY_N isolation:** Replace direct P4 open-drain GPIO wiring with
-   a discrete isolated open-collector/drain stage? Recommendation: yes; safe
-   release must not depend solely on P4 GPIO initialization.
-5. **Q005 — Pin-map caveat:** Retain GPIO23 for D2 only after inspecting the
-   exact Rev D1 board to confirm R31 is unpopulated? Recommendation: yes; the
-   official schematic marks it DNP, but specimen verification is cheap.
-6. **Q006 — Series resistance:** Carry 220 ohms as the beta candidate on each
-   push-pull forward signal and UART return, subject to scope qualification at
-   target speed? Recommendation: yes; existing forward evidence is favorable
-   and the value remains explicitly provisional for UART. READY_N's open-
-   collector stage requires its own edge and current analysis.
+1. **Q001 — Accepted:** Use GPIO16 as dedicated return TX and leave GPIO12
+   permanently as PARLIO D1 input. This removes needless P4 pin-mux and
+   electrical turnaround while preserving the Agon PC1 contract.
+2. **Q002 — Accepted for beta:** Omit `UART_ALLOW_N` from the first General
+   Poll beta. Keep PD6/GPIO17 unassigned and preserve practical routing space
+   until PORT-008 measures whether bounded EMOS buffering is sufficient.
+3. **Q003 — Deferred pending forward-only evidence:** Do not select the
+   production-safe split-power buffer architecture yet. First use the existing
+   controlled-power predecessor circuit to prove new EMOS/eZ80-to-EDP/P4
+   firmware transfers over the parallel bus and visibly execute representative
+   simple official display commands. The UART-return driver remains disabled
+   during this learning tranche. Success proves command delivery, parser
+   integration, pin use, and visible execution only; it does not qualify the
+   reverse path, either-order power, `Ioff`, or a production beta circuit.
+4. **Q004 — Deferred pending forward-only evidence:** Retain the direct
+   GPIO20/open-drain READY_N connection only for the controlled-power
+   predecessor experiment. Exercise admission and backpressure there before
+   selecting the beta isolation stage. A successful transfer does not approve
+   direct production wiring or qualify reset, powered-off, back-power, or
+   hardware-safe-release behavior; the NPN/NMOS isolation proposal remains a
+   candidate for later disposition.
+5. **Q005 — Accepted and verified:** Retain GPIO23 as D2. Olimex marks optional
+   R31 DNP, and the Author visually inspected the underside of the current Rev
+   D1 bench board on 2026-08-25. The footprint carries solder on its pads but no
+   resistor or other component bridges them.
+6. **Q006 — Deferred pending ported-firmware forward evidence:** Do not tune or
+   freeze production series resistance before an actual retained VDP port has
+   exercised the present controlled-power wiring and a concrete beta circuit
+   is proposed. Carry the predecessor's 220-ohm values only as experimental
+   evidence for that bounded run. Later scope evidence at the intended rate
+   will inform the production choices.

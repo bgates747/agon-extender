@@ -429,48 +429,47 @@ The Author accepted the following first-beta scoping rule on 2026-08-25:
    circuit.
 5. Keep the P4 user-GPIO reserve problem separate: reclaiming eZ80 expansion
    pins would not return any P4 GPIO consumed by Extender features.
-6. Expose genuinely uncommitted P4 GPIOs for beta experimentation only after
-   the complete pin budget is accepted.
+6. Provisionally preserve GPIO6, GPIO18, GPIO19, and GPIO46--GPIO48 as the six
+   uncommitted exposed beta user candidates, subject to capability
+   verification. Reserve GPIO37/GPIO38 for optional MOD-WIFI-ESP8266 UART use,
+   make no beta pin reservation for the post-v1 VDP/EDP link, and expose the
+   eleven transport-owned eZ80 contacts only as labeled test points.
 
 This accepts a beta scope, not a v1 passthrough architecture. Transaction-
-scoped leasing and event retention remain candidate mechanisms for later
-evaluation.
+scoped leasing, event retention, a replicated eZ80 user header, permanent v1
+user-GPIO guarantees, and direct-link pin reservations are deferred.
 
-## Questions requiring disposition
+## Question dispositions
 
-1. What permanently uncommitted P4 GPIO reserve must v1 expose to users: six,
-   four, or another number?
-2. Which pins are reserved for MOD-WIFI-ESP8266, and does its realized header
-   leave the pUEXT SPI quartet independently usable?
-3. How many pins must LINK-001 reserve now for a possible VDP/EDP link: four
-   for SPI, five including handshake, six including reset, or none before
-   architecture selection?
-4. Does the completed budget permit Q001's dedicated GPIO16 return TX while
-   retaining the accepted user reserve and contingency margin?
-5. Is the replicated eZ80 header a hard v1 requirement or a post-v1 feature?
-6. Which eZ80 contacts should be replicated: only the eleven extended-
-   transport pins, all otherwise accessible expansion GPIOs, or the complete
-   physical expansion-header interface?
-7. What exact mode truth table and hardware-failure default govern the
-   passthrough switches?
-8. What exact v1 user/operator contract governs attached external circuitry
-   during a transaction-scoped lease?
-9. If v1 implements passthrough, must it preserve only steady input/output
-   levels, sticky edge occurrence, edge counts, or an ordered timestamped
-   event stream during an EMOS transport lease?
-10. If v1 captures events, are they physically replayed, exposed only through
-    an aware EMOS API, converted into delayed eZ80 interrupts, or handled by
-    another mechanism?
-11. Does v1 require transaction-scoped GPIO virtualization, or does the direct-
-    GPIO compatibility carve-out remain after beta?
-12. Does the beta carrier expose transport-owned eZ80 signals only as labeled
-    test points, or also on a replicated connector whose restrictions are
-    conspicuously documented?
-13. Which known public GPIO applications become explicit qualification
-    fixtures for Legacy and Exclusive Compatible electrical-passivity claims:
-    static Port C output, standard joystick polling, UART1, interrupts, or a
-    selected subset?
+1. **Deferred:** The permanent v1 user-GPIO guarantee—six, four, or another
+   count—will be selected during v1 carrier architecture. Beta provisionally
+   preserves six candidates without making a permanent compatibility promise.
+2. **Partly resolved; remainder deferred:** Beta reserves GPIO37/GPIO38 for the
+   optional MOD-WIFI-ESP8266 UART. The exact dedicated-header contract and
+   whether pUEXT SPI remains independently usable are deferred.
+3. **Deferred:** LINK-001 receives no beta GPIO reservation. SPI, handshake,
+   reset, and pin-count choices remain with the post-v1 link architecture.
+4. **Resolved:** The bounded beta budget permits dedicated GPIO16 return TX;
+   GPIO12 remains PARLIO D1 input.
+5. **Deferred:** A replicated eZ80 user header is not a beta feature. Its v1 or
+   post-v1 status remains open.
+6. **Deferred:** The eventual scope of any replicated eZ80 header remains open.
+7. **Deferred:** Passthrough-switch mode truth tables and hardware-failure
+   defaults belong to the later passthrough architecture.
+8. **Deferred:** The v1 user/operator contract for attached circuitry during
+   transaction-scoped leases remains open.
+9. **Deferred:** Level, edge, count, FIFO, and timestamp-retention guarantees
+   remain open; beta implements none of them.
+10. **Deferred:** Physical replay, aware EMOS delivery, delayed interrupts, and
+    other captured-event delivery models remain open.
+11. **Deferred:** Transaction-scoped GPIO virtualization is not a beta feature;
+    whether v1 implements it or retains the carve-out remains open.
+12. **Resolved for beta:** Transport-owned eZ80 signals receive labeled test
+    points only, not a replicated user connector.
+13. **Deferred:** Selection of public GPIO applications as formal Legacy and
+    Exclusive Compatible qualification fixtures belongs to qualification
+    planning.
 14. Resolved by CA-2026-08-25-001: the canonical scaffold and every current
     derivative now use `PC0/TxD1`, `PC1/RxD1`, `PC2/RTS1`, and `PC3/CTS1` on
     Agon Light 2 header pins 17 through 20 respectively. The CA's regenerated
-    and electrical evidence passes and awaits commit review.
+    and electrical evidence passed and was committed after Author approval.

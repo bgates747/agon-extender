@@ -7,10 +7,10 @@ item is removed.
 
 ## Active
 
-- [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
-  - Started: 2026-08-24 19:09 EDT
+- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
+  - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Details: [SETUP-006](docs/tasks/SETUP-006.md)
+  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 ## Qualification infrastructure
 
@@ -28,17 +28,17 @@ item is removed.
 
 ## Setup
 
+- [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
+  - Started: 2026-08-24 19:09 EDT
+  - Finished: --
+  - Details: [SETUP-006](docs/tasks/SETUP-006.md)
+
 - [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
   - Started: 2026-08-21 00:49 EDT
   - Finished: --
   - Details: [SETUP-005](docs/tasks/SETUP-005.md)
 
 ## Porting
-
-- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: 2026-08-22 10:14 EDT
-  - Finished: --
-  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: --

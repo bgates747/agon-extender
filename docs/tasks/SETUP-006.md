@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: In progress — SETUP-006.3 canonical scaffold accepted; electrical design pending
+- Status: Paused — production electrical design deferred behind ported-firmware forward evidence
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -277,6 +277,49 @@ or ERP identities.
    layout review, but do not burden beta with unselected circuitry or claim
    electrical transparency. The Author accepted this beta scoping rule on
    2026-08-25.
+4. `SETUP-006-D004` — For the first beta carrier, provisionally preserve the
+   six presently uncommitted exposed P4 candidates GPIO6, GPIO18, GPIO19, and
+   GPIO46--GPIO48 for user experimentation, subject to electrical and
+   capability verification; reserve GPIO37/GPIO38 for the optional
+   MOD-WIFI-ESP8266 UART; make no beta pin reservation for the post-v1
+   VDP/EDP link; and expose the eleven transport-owned eZ80 contacts only as
+   labeled test points rather than a replicated user header. Permanent v1
+   reserve and passthrough policy is deferred.
+5. `SETUP-006-D005` — Use P4 GPIO16/EXT1-17 as the dedicated return-UART TX for
+   the Exclusive Extended beta and keep GPIO12/EXT1-13 permanently assigned to
+   PARLIO D1 input. This removes P4 direction and pin-mux turnaround without
+   changing the Agon PC1 ownership contract.
+6. `SETUP-006-D006` — Omit `EE-UART-ALLOW-N` from the first General Poll beta.
+   Keep PD6/GPIO17 unassigned and preserve practical routing space until
+   PORT-008 establishes whether bounded EMOS buffering needs a physical return-
+   pacing signal.
+7. `SETUP-006-D007` — Retain P4 GPIO23/EXT2-10 as forward data bit D2. The
+   Olimex Rev D1 design marks optional Ethernet-clock link R31 DNP, and the
+   Author visually inspected the underside of the current Rev D1 bench board
+   on 2026-08-25: the footprint has soldered pads but no bridging component.
+
+### Deferred
+
+1. `SETUP-006.4-Q003` — Defer selection of the production-safe split-power
+   buffer architecture until new EDP and EMOS firmware has proved the existing
+   controlled-power predecessor circuit as a forward-only learning path. The
+   evidence gate must transfer real official command bytes over the parallel
+   bus and visibly execute a representative set of simple display commands.
+   Keep the UART-return driver disabled and make no claim about reverse
+   transport, either-order power, partial-power-down isolation, or the eventual
+   beta buffer topology from that experiment.
+2. `SETUP-006.4-Q004` — Defer selection of a production READY_N isolation
+   stage until the forward-only tranche has exercised admission and
+   backpressure through the existing controlled-power predecessor circuit.
+   That experiment may use the present direct GPIO20 open-drain connection only
+   under its strict power discipline. It cannot approve direct READY_N wiring
+   for beta or prove reset, powered-off, back-power, or hardware-safe-release
+   behavior.
+3. `SETUP-006.4-Q006` — Defer production series-resistance selection until an
+   actual retained VDP port has exercised the present controlled-power wiring
+   in the forward direction and a concrete beta circuit is proposed. The
+   predecessor's 220-ohm values remain experimental evidence, not a frozen
+   production choice.
 
 ## Work
 
@@ -417,14 +460,17 @@ or ERP identities.
    rotated 180 degrees in the landscape view, spanning columns 30--36 with pin
    1 at the upper-right corner at F36. Do not treat the diagrammatic U1
    artwork as package or PCB geometry.
-8. [ ] Present the electrical result, `draft_v1`, and numbered questions to the Author
-   before changing the authoritative
-   harness or authorizing bench work.
+8. [x] Present the electrical result, `draft_v1`, and numbered questions to the
+   Author before changing the authoritative harness or authorizing bench work.
+   Q000--Q002 and Q005 were resolved; Q003, Q004, and Q006 were deferred behind
+   ported-firmware forward evidence. No harness change or bench operation was
+   authorized by this review.
 
 ## Stop condition
 
-SETUP-006.1.1 is accepted and frozen in commit `b38b445`. SETUP-006.1.2 is
-accepted review provenance, and SETUP-006.2 has promoted its names into
+SETUP-006 is paused while the critical path returns to the retained VDP port
+and its bounded forward test. SETUP-006.1.1 is accepted and frozen in commit
+`b38b445`. SETUP-006.1.2 is accepted review provenance, and SETUP-006.2 has promoted its names into
 `hardware-object-registry-r01`. The Author resolved the registry-identity gate
 as `SETUP-006-D002`. SETUP-006.3 is accepted as the canonical unwired
 breadboard scaffold. SETUP-006 remains open because the firmware-driven
