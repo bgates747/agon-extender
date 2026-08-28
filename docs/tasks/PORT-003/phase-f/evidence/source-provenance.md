@@ -23,6 +23,7 @@ This is a Phase F entry-point inventory, not a whole-tree graph.
 | arduino-ethernet | `arduino-esp32` | `libraries/Network/src/NetworkEvents.h` | pinned Arduino integration authority | `a724ad9f1c4e4034f616e99205489b87f58bdbd8e305735bc5c671e3b46819fb` |
 | arduino-stream | `arduino-esp32` | `cores/esp32/Print.h` | pinned Arduino integration authority | `de14357219b20be15634d1ce5a28da22e0bf101b9afd2b0277b41f91a81f49d0` |
 | arduino-stream | `arduino-esp32` | `cores/esp32/Stream.h` | pinned Arduino integration authority | `b7e4835a173c28b4e7eae09072536c304b45c3d47e00f77c4094ac83bde8391e` |
+| arduino-stream | `arduino-esp32` | `cores/esp32/esp32-hal-misc.c` | pinned Arduino integration authority | `0f6057685866ce45208f1d1e5b9e81164aca1d580678b7be8c97227dacc970d9` |
 | browser-video | `agon-extender` | `vdp/video/extender/web/app.js` | current implementation and build boundary | `2b0102ed0085fe711d9f309b1f020bb84e2a428464cde7e794ae3bf8b6bc81f9` |
 | browser-video | `agon-extender` | `vdp/video/extender/web/browser_video_provider.cpp` | current implementation and build boundary | `5393ee9f21489f142d72d1e2b5fc8b3fc489e1fe309963163e8383990bddf7ca` |
 | browser-video | `agon-extender` | `vdp/video/extender/web/browser_video_provider.hpp` | current implementation and build boundary | `cd0f8cd106bf3fad8b722547c9eef9cec965c05fafbf752b242b8d020d9cd334` |
@@ -32,10 +33,10 @@ This is a Phase F entry-point inventory, not a whole-tree graph.
 | browser-video | `agon-extender` | `vdp/video/extender/web/index.html` | current implementation and build boundary | `0739c2957509bbcf00da2983eeeb18d476c7e1cc03f4acea0811d4f812b84c47` |
 | browser-video | `agon-extender` | `vdp/video/extender/web/style.css` | current implementation and build boundary | `c234e810f5db82dbd8a34af69f0aef1ba8a843d9b9b5e95bdc612d64a62c487c` |
 | browser-video | `agon-extender` | `vdp/video/extender/web/webgl2_presenter.js` | current implementation and build boundary | `f188fef646fc14d4bf14b7c93828fbe3548e00284f0c3e81a2980e382d9da17a` |
-| build-boundary | `agon-extender` | `vdp/pio/p4-browser-vdp-identity.json` | current implementation and build boundary | `4703c5bb4b349eef46fb76fe87dcc5fd45d0e8c4e887842b3eb6e3c8c6b71d3f` |
-| build-boundary | `agon-extender` | `vdp/pio/p4-browser-vdp-source-selection.json` | current implementation and build boundary | `6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e` |
+| build-boundary | `agon-extender` | `vdp/pio/p4-browser-vdp-identity.json` | current implementation and build boundary | `856c6f4069172fc8f8f888b2252259af80cc406cffe7604cb1fa1e6c6cc3c49a` |
+| build-boundary | `agon-extender` | `vdp/pio/p4-browser-vdp-source-selection.json` | current implementation and build boundary | `8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d` |
 | build-boundary | `agon-extender` | `vdp/pio/select_sources.py` | current implementation and build boundary | `96a0e2947baa2bb80f06cb395b6089ba12012172c7043713ec49c98e0703e491` |
-| build-boundary | `agon-extender` | `vdp/platformio.ini` | current implementation and build boundary | `0edfdb212cc46709599a8695781b0fdad56e262e6460ee4a3f5f9e2245b75353` |
+| build-boundary | `agon-extender` | `vdp/platformio.ini` | current implementation and build boundary | `895e806d823dc020c413d16b22371917e181ad8ab4fa0c5139395fb75279cff5` |
 | build-boundary | `agon-extender` | `vdp/sdkconfig.defaults` | current implementation and build boundary | `3c2774f51ae4755140cb43f0a5e30925662d21990ea245354973ef4e397afc34` |
 | emos-mode-adapter | `agon-emos` | `docs/emos-v1-contract.md` | current EMOS mode and adapter boundary | `3da8a6934c29d723084da5fccaf30e90fe24b335cd114aae00cb0ce34ff81c9d` |
 | emos-mode-adapter | `agon-emos` | `projects/emos/emos_module.py` | current EMOS mode and adapter boundary | `924f3e5ba8fe2b99064c2498c686d3919fa0b7cea0a0f88fe10420e6ebdef1e7` |
@@ -50,6 +51,8 @@ This is a Phase F entry-point inventory, not a whole-tree graph.
 | idf-http-websocket | `esp-idf` | `components/esp_http_server/include/esp_http_server.h` | pinned maintained framework authority | `949711577c6e7ebfca73cd2dbc25193c83f14c83fccce61124c4399029acd59d` |
 | idf-http-websocket | `esp-idf` | `components/esp_http_server/src/httpd_ws.c` | pinned maintained framework authority | `154140abc17f7699d43d9c0bb83e5bb8aec7ed7f0e00dc71568318c03d345585` |
 | idf-http-websocket | `esp-idf` | `examples/protocols/http_server/ws_echo_server/main/ws_echo_server.c` | pinned maintained framework authority | `c3e92a68bf6e0b850cfe8df6aa14594687750dd1b19a9e3067d51b52d7ff5669` |
+| idf-task-watchdog | `esp-idf` | `components/esp_system/include/esp_task_wdt.h` | pinned maintained framework authority | `a5c22abf8b35a4d85a81e2df163c0dbb5e0c596085e5c450e3ad869520ef040e` |
+| idf-task-watchdog | `esp-idf` | `components/esp_system/task_wdt/task_wdt.c` | pinned maintained framework authority | `c7d2269e6b0e26a804a57ccc579a8b906ba8a8f3ce80e28f19b5c31b977a566e` |
 | legacy-browser | `agon-extender-legacy` | `web/presentation/README.md` | bounded legacy reuse evidence | `cddb3780221fe5d46509c90b946aea4b0faf90bba2ab9c276371ca3ecba0894c` |
 | legacy-browser | `agon-extender-legacy` | `web/presentation/app.js` | bounded legacy reuse evidence | `6c25b7a7d8eec0ea70f65938bb9e0e66086e481c37709899178fb96882e37d45` |
 | legacy-browser | `agon-extender-legacy` | `web/presentation/frame_protocol.js` | bounded legacy reuse evidence | `f4c435118a5337625e3e7afac42eb66175ede0b88bb5a63c3e8138167d29471b` |
@@ -85,13 +88,15 @@ This is a Phase F entry-point inventory, not a whole-tree graph.
 | official-port | `agon-extender` | `vdp/video/vdu_sprites.h` | current implementation and build boundary | `f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b` |
 | official-port | `agon-extender` | `vdp/video/vdu_stream_processor.h` | current implementation and build boundary | `6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f` |
 | official-port | `agon-extender` | `vdp/video/vdu_sys.h` | current implementation and build boundary | `1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5` |
-| official-port | `agon-extender` | `vdp/video/video.ino` | current implementation and build boundary | `03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13` |
+| official-port | `agon-extender` | `vdp/video/video.ino` | current implementation and build boundary | `0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/audio/unavailable_audio_adapter.hpp` | current implementation and build boundary | `d610a6cc457bd917054da4f281cd63fa910c3f2a4ed57baec669b137afeb3e3e` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/boot/p4_browser_vdp.cpp` | current implementation and build boundary | `7f5624c4c44eb3fb161429447430a1536b5a91edfe5a380a5ef889b18f277239` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/compat/p4_vdp_gl.hpp` | current implementation and build boundary | `9832c9d0c48572a352a979723f2d650604965a0bc51107f2cb7dd35dcda78a30` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/input/unavailable_input_adapter.hpp` | current implementation and build boundary | `9630e5c383a2c0b417d4049a1af153d767a3820daf3e3b778993130e78db7b35` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/maintenance/unavailable_maintenance_adapter.hpp` | current implementation and build boundary | `e86c4943f4981a6997724f05451f710aab77e207a3da3a1fc9ef136c7317f9d2` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/port/fabutils_port.cpp` | current implementation and build boundary | `e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536` |
+| p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/port/p4_task_watchdog.cpp` | current implementation and build boundary | `4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64` |
+| p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/port/p4_task_watchdog.hpp` | current implementation and build boundary | `81fa605957c052343246cca5d5cdec8ca89050453d228277efa7e27dbb138986` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/transport/disconnected_stream.cpp` | current implementation and build boundary | `79a5a16ad5986d168fed2001e32eb1360a7f68215588eed0825c7f2bd606ada3` |
 | p4-boot-and-bindings | `agon-extender` | `vdp/video/extender/transport/disconnected_stream.hpp` | current implementation and build boundary | `07cf2b6efd6332712b09a0e0b92d388069e69f7a7df1a9c3a44c5377cc3efa17` |
 | p4-display | `agon-extender` | `vdp/video/extender/display/cursor_position_adapter.cpp` | current implementation and build boundary | `5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155` |
@@ -127,5 +132,5 @@ This is a Phase F entry-point inventory, not a whole-tree graph.
 1. Official VDP parser and boot code remains the behavior authority; Phase F adds no command vocabulary.
 2. Current P4 display code publishes metadata only and exposes only a quiescent borrowed-state compositor; immutable pixel leases are genuinely new Phase F work.
 3. Legacy `EVF1` and WebGL code is bounded reuse evidence. Its fixed 320-by-240 server and one-frame request behavior are not current authority.
-4. ESP-IDF/Arduino framework files establish maintained Ethernet, DHCP, HTTP/WebSocket, and `Stream` seams; example initialization remains evidence rather than product source.
+4. ESP-IDF/Arduino framework files establish the hook-aware task-watchdog path plus maintained Ethernet, DHCP, HTTP/WebSocket, and `Stream` seams; example initialization remains evidence rather than product source.
 5. EMOS already owns mode and route state, but the physical forward adapter is absent and remains PORT-008 work.

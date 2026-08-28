@@ -5,7 +5,7 @@ scope: bounded parser, display, browser, network, and EMOS entry points
 authorities:
 - repository: agon-extender
   ref: working-tree
-  base_commit: 1b7d9397fcd452e684a9edcf8125a0e00138939f
+  base_commit: c99e57d942021c78a96d1e987a75b5adc7ac2d22
   state: modified
   purpose: current bounded Phase F source closure
 - repository: agon-docs
@@ -75,6 +75,14 @@ records:
   role: pinned Arduino integration authority
   bytes: 6391
   sha256: b7e4835a173c28b4e7eae09072536c304b45c3d47e00f77c4094ac83bde8391e
+- id: arduino-esp32:cores/esp32/esp32-hal-misc.c
+  group: arduino-stream
+  repository: arduino-esp32
+  ref: 3.3.11
+  path: cores/esp32/esp32-hal-misc.c
+  role: pinned Arduino integration authority
+  bytes: 14571
+  sha256: 0f6057685866ce45208f1d1e5b9e81164aca1d580678b7be8c97227dacc970d9
 - id: agon-extender:vdp/video/extender/web/app.js
   group: browser-video
   repository: agon-extender
@@ -154,15 +162,15 @@ records:
   path: vdp/pio/p4-browser-vdp-identity.json
   role: current implementation and build boundary
   bytes: 161
-  sha256: 4703c5bb4b349eef46fb76fe87dcc5fd45d0e8c4e887842b3eb6e3c8c6b71d3f
+  sha256: 856c6f4069172fc8f8f888b2252259af80cc406cffe7604cb1fa1e6c6cc3c49a
 - id: agon-extender:vdp/pio/p4-browser-vdp-source-selection.json
   group: build-boundary
   repository: agon-extender
   ref: working-tree
   path: vdp/pio/p4-browser-vdp-source-selection.json
   role: current implementation and build boundary
-  bytes: 2551
-  sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+  bytes: 2599
+  sha256: 8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d
 - id: agon-extender:vdp/pio/select_sources.py
   group: build-boundary
   repository: agon-extender
@@ -177,8 +185,8 @@ records:
   ref: working-tree
   path: vdp/platformio.ini
   role: current implementation and build boundary
-  bytes: 7784
-  sha256: 0edfdb212cc46709599a8695781b0fdad56e262e6460ee4a3f5f9e2245b75353
+  bytes: 7826
+  sha256: 895e806d823dc020c413d16b22371917e181ad8ab4fa0c5139395fb75279cff5
 - id: agon-extender:vdp/sdkconfig.defaults
   group: build-boundary
   repository: agon-extender
@@ -291,6 +299,22 @@ records:
   role: pinned maintained framework authority
   bytes: 9423
   sha256: c3e92a68bf6e0b850cfe8df6aa14594687750dd1b19a9e3067d51b52d7ff5669
+- id: esp-idf:components/esp_system/include/esp_task_wdt.h
+  group: idf-task-watchdog
+  repository: esp-idf
+  ref: 3.50505.0
+  path: components/esp_system/include/esp_task_wdt.h
+  role: pinned maintained framework authority
+  bytes: 8581
+  sha256: a5c22abf8b35a4d85a81e2df163c0dbb5e0c596085e5c450e3ad869520ef040e
+- id: esp-idf:components/esp_system/task_wdt/task_wdt.c
+  group: idf-task-watchdog
+  repository: esp-idf
+  ref: 3.50505.0
+  path: components/esp_system/task_wdt/task_wdt.c
+  role: pinned maintained framework authority
+  bytes: 29228
+  sha256: c7d2269e6b0e26a804a57ccc579a8b906ba8a8f3ce80e28f19b5c31b977a566e
 - id: agon-extender-legacy:web/presentation/README.md
   group: legacy-browser
   repository: agon-extender-legacy
@@ -577,8 +601,8 @@ records:
   ref: working-tree
   path: vdp/video/video.ino
   role: current implementation and build boundary
-  bytes: 17751
-  sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+  bytes: 18358
+  sha256: 0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0
 - id: agon-extender:vdp/video/extender/audio/unavailable_audio_adapter.hpp
   group: p4-boot-and-bindings
   repository: agon-extender
@@ -627,6 +651,22 @@ records:
   role: current implementation and build boundary
   bytes: 6483
   sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+- id: agon-extender:vdp/video/extender/port/p4_task_watchdog.cpp
+  group: p4-boot-and-bindings
+  repository: agon-extender
+  ref: working-tree
+  path: vdp/video/extender/port/p4_task_watchdog.cpp
+  role: current implementation and build boundary
+  bytes: 1279
+  sha256: 4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64
+- id: agon-extender:vdp/video/extender/port/p4_task_watchdog.hpp
+  group: p4-boot-and-bindings
+  repository: agon-extender
+  ref: working-tree
+  path: vdp/video/extender/port/p4_task_watchdog.hpp
+  role: current implementation and build boundary
+  bytes: 947
+  sha256: 81fa605957c052343246cca5d5cdec8ca89050453d228277efa7e27dbb138986
 - id: agon-extender:vdp/video/extender/transport/disconnected_stream.cpp
   group: p4-boot-and-bindings
   repository: agon-extender

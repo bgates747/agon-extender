@@ -23,11 +23,11 @@ lifecycle:
     operation: Allocate the fixed presentation snapshot pool before the display controller can publish.
     failure: Report over USB diagnostics and continue retained display execution without browser frames.
   - id: setup-watchdogs
-    source: video/video.ino setup disableCore0WDT and disableCore1WDT
-    disposition: retain
+    source: video/video.ino setup plus video/extender/port/p4_task_watchdog.cpp
+    disposition: replace-binding
     actor: P4 setup task
-    operation: Preserve the official conditional watchdog setup under VDP_USE_WDT.
-    failure: Build failure is a stop condition; do not silently change watchdog policy.
+    operation: Preserve the official no-IDLE-watchdog intent and 400-millisecond delay through ESP-IDF's hook-aware reconfiguration path; leave the official non-P4 calls unchanged.
+    failure: Report over USB diagnostics and stop P4 startup rather than continue with stale IDLE hooks or silently change watchdog policy.
   - id: setup-debug
     source: video/video.ino DBGSerial initialization
     disposition: replace-binding

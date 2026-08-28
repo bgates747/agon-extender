@@ -107,6 +107,20 @@ def main() -> int:
     with tempfile.TemporaryDirectory(prefix="port-003-phase-f-host-") as directory:
         temporary = Path(directory)
         results.append(compile_and_run(
+            temporary / "p4-task-watchdog-tests",
+            [
+                "vdp/video/extender/port/p4_task_watchdog.cpp",
+                "docs/tasks/PORT-003/phase-f/tests/p4_task_watchdog_tests.cpp",
+            ],
+            "phase-f-p4-task-watchdog",
+            [
+                "-Wall", "-Wextra", "-Werror", "-pedantic",
+                "-DCONFIG_ESP_TASK_WDT_TIMEOUT_S=5",
+                "-I", str(ROOT / "docs/tasks/PORT-003/phase-f/tests/compat"),
+                "-I", str(VIDEO),
+            ],
+        ))
+        results.append(compile_and_run(
             temporary / "snapshot-pool-tests",
             [
                 "vdp/video/extender/display/presentation_snapshot_pool.cpp",
@@ -180,6 +194,7 @@ def main() -> int:
         "python": sys.version.splitlines()[0],
         "compiler": compiler,
         "coverage": {
+            "p4_watchdog_hook_aware_reconfiguration": ["phase-f-p4-task-watchdog"],
             "null_or_disconnected_consumer": ["phase-f-snapshot-pool", "phase-f-network-provider"],
             "fast_consumer": ["phase-f-network-provider"],
             "slow_consumer_and_latest_collapse": ["phase-f-snapshot-pool", "phase-f-network-provider"],

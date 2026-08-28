@@ -3,7 +3,7 @@
 ## State
 
 - Status: In progress — Phases A–E and Phase F items 1–14 complete;
-  first item-15 run failed at the clean-runtime gate
+  corrected item-15 candidate pending clean commit and repeat run
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -2244,7 +2244,7 @@ before proceeding.
     candidate commit and build identity, and a new item-15 run are required
     before Gate F can be reviewed.
 
-### Item-15 corrective decision pending Author review
+### Item-15 corrective decision and implementation
 
 | ID | State | Decision requested |
 |---|---|---|
@@ -2294,6 +2294,23 @@ Rejected alternatives:
 
 The Author accepted `PORT-003-D010` and authorized continued implementation on
 2026-08-28.
+
+The correction adds one P4-owned adapter at
+`video/extender/port/p4_task_watchdog.hpp/.cpp` and one narrow conditional in
+the retained `video.ino`. The adapter reconfigures the initialized ESP-IDF task
+watchdog with its pinned five-second timeout, current non-panic policy, and no
+IDLE-core subscriptions. Failure is reported and returns from P4 setup; the
+non-P4 branch remains byte-for-byte equivalent to the two official Arduino
+calls and delays.
+
+The corrected unversioned P4 build passes 17 host gates and proves 24 selected
+translation units, five embedded assets, 16 required symbols, C++17, and every
+declared exclusion. The bounded provenance now contains 109 records, including
+the exact Arduino helper and ESP-IDF reconfiguration implementation. Phase F
+and global dependency regeneration were byte-identical on repeat. Artifact
+registry `r13` rejects v0.1.0 and selects approved v0.1.1 as the candidate.
+These remain predeployment findings until the correction is committed, rebuilt
+with an exact build ID, and rerun under item 15.
 
 ### Phase F gate
 

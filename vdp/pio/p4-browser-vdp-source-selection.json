@@ -22,6 +22,7 @@
     "video/extender/network/opaque_message.cpp",
     "video/extender/network/wired_network_service.cpp",
     "video/extender/port/fabutils_port.cpp",
+    "video/extender/port/p4_task_watchdog.cpp",
     "video/extender/transport/disconnected_stream.cpp",
     "video/extender/web/browser_video_provider.cpp",
     "video/extender/web/embedded_assets.cpp",

@@ -7,28 +7,28 @@ build_invocation: scripts/vdp-pio.sh run -e p4-browser-vdp
 inputs:
   source_selection:
     path: vdp/pio/p4-browser-vdp-source-selection.json
-    sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+    sha256: 8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d
   generated_application_cmake:
     path: vdp/video/CMakeLists.txt
-    sha256: e50fb8ca1a666cc2533e0eb222635656c8868d204559615205d3366adf5533d8
+    sha256: ef6896c18b346d48022bbd42d45aeb5aa23a7ee21adeda49d763dac4287f1380
   compile_commands:
     path: vdp/.pio/build/p4-browser-vdp/compile_commands.json
-    sha256: 13cab20ce6b4634a690799aeb1106468d58afaa27ebe8732fd3e8bacd7b206c5
+    sha256: 40f347561bc942141f73803655cca22d84069cfd69dfeffc2dbee9f026dfd246
   linker_map:
     path: vdp/.pio/build/p4-browser-vdp/firmware.map
-    sha256: 3161c45bf587513f8800d4c4b201a78cf96ac3cb29b2d7635ba38307427f2708
-  normalized_elf_symbols_sha256: 55f5b559d353cd9644053e7fd833b90303b7b31c35928eba134e540dd21ba7b0
+    sha256: b90b5f821b8c505adb9c31fb8acccb08d8bade493b630a19026cd1fdf1064f82
+  normalized_elf_symbols_sha256: ae560f49b09a024debe0ab1a5794499ed3115ca640b1a733a61227dd7b002a54
 firmware:
   path: vdp/.pio/build/p4-browser-vdp/firmware.bin
-  sha256: 4b066beb87a8b0c0b8c5ff242f29fcdb5b18b10c014a550dc3a75332cb809b3e
-  size_bytes: 1223776
+  sha256: be4b32f44889b5758a409eedfee4eddeb14e07322d0b6a95b1d1e22485590a0a
+  size_bytes: 1224256
 factory_firmware:
   path: vdp/.pio/build/p4-browser-vdp/firmware.factory.bin
-  sha256: 18b68685aab367ebb9cd41ea8b74053c1703ff84b1295123873cd59690274f02
-  size_bytes: 1354848
+  sha256: 7438f2193ef13e548034784976ff42f5b4e6e3bc302a91a8d77cb5c15080b2ea
+  size_bytes: 1355328
 header_defined_official_implementation:
 - path: video/video.ino
-  sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+  sha256: 0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0
 - path: video/vdu_stream_processor.h
   sha256: 6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f
 - path: video/vdu.h
@@ -201,6 +201,14 @@ application_translation_units:
     - -std=gnu++2b
     - -std=gnu++17
     effective_standard: -std=gnu++17
+- source: video/extender/port/p4_task_watchdog.cpp
+  object: video/extender/port/p4_task_watchdog.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
 - source: video/extender/transport/disconnected_stream.cpp
   object: video/extender/transport/disconnected_stream.cpp.o
   object_loaded: true
@@ -287,6 +295,9 @@ required_elf_symbols:
 - claim: deliberately disconnected ingress
   symbol_fragment: agon::extender::transport::DisconnectedStream::available()
   present: true
+- claim: P4 watchdog adapter
+  symbol_fragment: agon::extender::port::disableRetainedVdpIdleWatchdogs()
+  present: true
 embedded_asset_symbols:
 - source: video/extender/web/index.html
   endpoint: start
@@ -343,6 +354,15 @@ diagnostic_strings:
   present: true
 - fragment: free_8bit=%u minimum_8bit=%u free_psram=%u minimum_psram=%u
   present: true
+- fragment: retained VDP IDLE watchdog subscriptions disabled
+  present: true
+- fragment: retained VDP watchdog setup failed
+  present: true
+watchdog_source_boundary:
+  p4_adapter_branch_present: true
+  stock_core0_call_count: 1
+  stock_core1_call_count: 1
+  proved: true
 identity:
   deployable_identity_required: false
   checks:
@@ -364,8 +384,8 @@ undefined_elf_symbols:
 - U start_app
 - U start_app_other_cores
 summary:
-  selected_translation_unit_count: 23
-  project_translation_unit_count: 20
+  selected_translation_unit_count: 24
+  project_translation_unit_count: 21
   vendored_translation_unit_count: 3
   embedded_asset_count: 5
   missing_objects: []
@@ -378,6 +398,7 @@ summary:
   generated_cmake_pins_cxx17: true
   image_identifies_arduino_3_3_11: true
   runtime_diagnostic_strings_present: true
+  watchdog_source_boundary_proved: true
   semantic_version_strings_in_image:
   - 3.3.11
   - 5.5.5

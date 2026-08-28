@@ -1,21 +1,23 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r12
-updated_at: 2026-08-28T01:43:55Z
+registry_revision: r13
+updated_at: 2026-08-28T15:03:30Z
 
 artifacts:
   - artifact_id: extender-vdp
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: extender-vdp-v0.1.0
+    latest_identity: extender-vdp-v0.1.1
     status: candidate
     variants:
       - olimex-p4-devkit
     description: Production Extender VDP firmware lineage.
     notes:
       - Version v0.1.0 freezes the first bootable retained-VDP P4 browser-video target for P4-only qualification.
-      - This candidate has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
+      - Version v0.1.0 was rejected by PORT-003-2026-08-28-14-46-06Z after its retained watchdog calls left ESP-IDF IDLE hooks feeding unregistered tasks.
+      - Version v0.1.1 preserves the retained no-IDLE-watchdog intent through ESP-IDF's hook-aware reconfiguration path.
+      - The v0.1.1 candidate has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
 
   - artifact_id: p4-browser-video-qualification
     kind: test_procedure

@@ -4,10 +4,10 @@ Status: Candidate — execution requires separate PORT-003 item 15 authorization
 
 Identity: `p4-browser-video-qualification-r01`
 
-Firmware identity: `extender-vdp-v0.1.0`, status `candidate`, variant
+Firmware identity: `extender-vdp-v0.1.1`, status `candidate`, variant
 `olimex-p4-devkit`
 
-Registry revision: `r12`
+Registry revision: `r13`
 
 ## Purpose and claim boundary
 
@@ -24,11 +24,12 @@ assembled-system electrical behavior.
 
 ## Approval and controlled inputs
 
-The Author approved these candidate controls on 2026-08-27:
+The Author approved the original candidate controls on 2026-08-27 and the
+source-only corrective candidate on 2026-08-28:
 
-1. firmware identity `extender-vdp-v0.1.0`;
+1. firmware identity `extender-vdp-v0.1.1`;
 2. procedure artifact `p4-browser-video-qualification` and revision `r01`;
-3. artifact-registry revision `r12`.
+3. artifact-registry revision `r13`.
 
 Before this procedure may run, the Author must separately approve:
 
@@ -38,7 +39,7 @@ Before this procedure may run, the Author must separately approve:
 
 The approved procedure must control:
 
-1. `extender-vdp-v0.1.0`, status `candidate`, variant `olimex-p4-devkit`;
+1. `extender-vdp-v0.1.1`, status `candidate`, variant `olimex-p4-devkit`;
 2. `olimex-p4-devkit-profile-r03`;
 3. `p4-ota-partition-layout-r01`;
 4. the P4-only physical boundary recorded below;
@@ -54,18 +55,18 @@ lease from that authority without copying them into this document.
 ## Candidate freeze and identified build
 
 1. Require committed `vdp/pio/p4-browser-vdp-identity.json` to select
-   `extender-vdp-v0.1.0` with status `candidate`; require artifact-registry
-   revision `r12` and this exact candidate procedure revision.
+   `extender-vdp-v0.1.1` with status `candidate`; require artifact-registry
+   revision `r13` and this exact candidate procedure revision.
 2. Regenerate Phase F provenance, dependency, implementation-manifest, host,
    browser, build-selection, and closure artifacts. Commit all candidate
    inputs and generated evidence, push them, and confirm a clean worktree.
 3. Assign UTC build ID
-   `extender-vdp-v0.1.0-bYYYY-MM-DD-HH-MM-SSZ`. Do not reuse the timestamp of
+   `extender-vdp-v0.1.1-bYYYY-MM-DD-HH-MM-SSZ`. Do not reuse the timestamp of
    the current unversioned predeployment image.
 4. Clean and build `p4-browser-vdp` with that exact
    `AGON_EXTENDER_BUILD_ID`. Do not run PlatformIO `compiledb` afterward.
 5. Run `validate-phase-f-build.py` with all three exact expected identity
-   arguments. Require 23 selected application units, five embedded assets,
+   arguments. Require 24 selected application units, five embedded assets,
    C++17 at the actual application-component boundary, every required symbol
    and diagnostic string, no rejected identity marker, and every declared
    exclusion.

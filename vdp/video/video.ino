@@ -96,6 +96,7 @@ ESP32Time		rtc(0);							// The RTC
 #include "version.h"							// Version information
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/input/unavailable_input_adapter.hpp"
+#include "extender/port/p4_task_watchdog.hpp"
 #else
 #include "agon_ps2.h"							// Keyboard support
 #include "agon_audio.h"							// Audio support
@@ -133,8 +134,21 @@ TaskHandle_t		Core0Task;					// Core 0 task handle
 
 void setup() {
 	#ifndef VDP_USE_WDT
+		#ifdef AGON_EXTENDER_P4_BOOT
+		// Official VDP v2.16.0 disables each classic-ESP32 IDLE watchdog
+		// below. Arduino-ESP32 3.3.11 removes those P4 tasks but leaves
+		// ESP-IDF 5.5.5's feed hooks active, producing a continuous error
+		// flood. Use the hook-aware public ESP-IDF path on P4, retain the
+		// original total delay, and fail closed if reconfiguration fails.
+		if (!agon::extender::port::disableRetainedVdpIdleWatchdogs()) {
+			ESP_LOGE("extender_boot", "retained VDP watchdog setup failed");
+			return;
+		}
+		delay(200); delay(200);
+		#else
 		disableCore0WDT(); delay(200);				// Disable the watchdog timers
 		disableCore1WDT(); delay(200);
+		#endif
 	#endif
 	#ifdef AGON_EXTENDER_P4_BOOT
 		// Stock UART0 GPIO 3/1 is inapplicable on the DevKit. ESP-IDF logging is

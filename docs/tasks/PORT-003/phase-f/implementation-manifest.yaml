@@ -5,11 +5,11 @@ authority: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-po
 phase_contract: bootable retained VDP with immutable RGB888 browser handoff and direct P4 wired service; no VDU ingress, return transport, or hardware claim
 source_state:
   ref: working-tree
-  base_commit: 1b7d9397fcd452e684a9edcf8125a0e00138939f
+  base_commit: c99e57d942021c78a96d1e987a75b5adc7ac2d22
   state: modified
   candidate_commit: null
 identity:
-  source_identity: extender-vdp-v0.1.0
+  source_identity: extender-vdp-v0.1.1
   build_id: null
   artifact_status: candidate
   procedure_identity: p4-browser-video-qualification-r01
@@ -32,7 +32,7 @@ source_baselines:
   commit: null
 source_selection:
   path: vdp/pio/p4-browser-vdp-source-selection.json
-  sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+  sha256: 8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d
   environment: p4-browser-vdp
   project_translation_units:
   - video/extender/boot/p4_browser_vdp.cpp
@@ -51,6 +51,7 @@ source_selection:
   - video/extender/network/opaque_message.cpp
   - video/extender/network/wired_network_service.cpp
   - video/extender/port/fabutils_port.cpp
+  - video/extender/port/p4_task_watchdog.cpp
   - video/extender/transport/disconnected_stream.cpp
   - video/extender/web/browser_video_provider.cpp
   - video/extender/web/embedded_assets.cpp
@@ -112,16 +113,16 @@ bounded_sources:
   build-boundary:
   - path: vdp/pio/p4-browser-vdp-identity.json
     bytes: 161
-    sha256: 4703c5bb4b349eef46fb76fe87dcc5fd45d0e8c4e887842b3eb6e3c8c6b71d3f
+    sha256: 856c6f4069172fc8f8f888b2252259af80cc406cffe7604cb1fa1e6c6cc3c49a
   - path: vdp/pio/p4-browser-vdp-source-selection.json
-    bytes: 2551
-    sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+    bytes: 2599
+    sha256: 8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d
   - path: vdp/pio/select_sources.py
     bytes: 4274
     sha256: 96a0e2947baa2bb80f06cb395b6089ba12012172c7043713ec49c98e0703e491
   - path: vdp/platformio.ini
-    bytes: 7784
-    sha256: 0edfdb212cc46709599a8695781b0fdad56e262e6460ee4a3f5f9e2245b75353
+    bytes: 7826
+    sha256: 895e806d823dc020c413d16b22371917e181ad8ab4fa0c5139395fb75279cff5
   - path: vdp/sdkconfig.defaults
     bytes: 3079
     sha256: 3c2774f51ae4755140cb43f0a5e30925662d21990ea245354973ef4e397afc34
@@ -187,8 +188,8 @@ bounded_sources:
     bytes: 25614
     sha256: 1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5
   - path: vdp/video/video.ino
-    bytes: 17751
-    sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+    bytes: 18358
+    sha256: 0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0
   p4-boot-and-bindings:
   - path: vdp/video/extender/audio/unavailable_audio_adapter.hpp
     bytes: 680
@@ -208,6 +209,12 @@ bounded_sources:
   - path: vdp/video/extender/port/fabutils_port.cpp
     bytes: 6483
     sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+  - path: vdp/video/extender/port/p4_task_watchdog.cpp
+    bytes: 1279
+    sha256: 4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64
+  - path: vdp/video/extender/port/p4_task_watchdog.hpp
+    bytes: 947
+    sha256: 81fa605957c052343246cca5d5cdec8ca89050453d228277efa7e27dbb138986
   - path: vdp/video/extender/transport/disconnected_stream.cpp
     bytes: 776
     sha256: 79a5a16ad5986d168fed2001e32eb1360a7f68215588eed0825c7f2bd606ada3
@@ -357,14 +364,14 @@ patched_vendor_files:
 - path: vdp/video/video.ino
   upstream_path: video/video.ino
   decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
-  repository_sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+  repository_sha256: 0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0
 contracts_and_fixtures:
 - path: docs/tasks/PORT-003/phase-f/contracts.md
   bytes: 6186
   sha256: f1c18ffe145144f977da1aac7db12202e7a5fb84de095ce7656eb7acbe8c0832
 - path: docs/tasks/PORT-003/phase-f/boot-closure.yaml
-  bytes: 9686
-  sha256: 8132e6bb37511718970843fc5fb1dd486f1aec6a76701eac4b1417066e5d8803
+  bytes: 9855
+  sha256: 96d01a69fbe367c41e9749db0cfd9d66e6482e7781e4d353d3400082b4e9b639
 - path: docs/tasks/PORT-003/phase-f/network-service-contract.yaml
   bytes: 6665
   sha256: 91726d07a5da70368f180be7148a021addd08b27e754646fcd35a50773598a44
@@ -381,18 +388,18 @@ contracts_and_fixtures:
   bytes: 18407
   sha256: 6758d77e649273f43413d583c973f3526f0d881e920fd03651b38f4fdac4df1c
 - path: docs/tasks/PORT-003/phase-f/compatibility-delta.md
-  bytes: 4814
-  sha256: aca2a85dbd19d5587d093df2ffc6275f6e64ab0daa39575e71ba8edf72bcd692
+  bytes: 5221
+  sha256: 875c655fc35e912279459597a593118a055c7db6c441006f0d1b2a7a7c3ee49b
 - path: docs/procedures/p4-browser-video-qualification-r01.md
-  bytes: 9712
-  sha256: 9e092bd41033447983411e20f01209c34504d42b10c938d36c5a2601603ee6b3
+  bytes: 9774
+  sha256: a700931b2c74f27c17ffa420140b9bcc5c3a2e27cc76892a489dfc5ead74138e
 generated_evidence:
 - path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.yaml
-  bytes: 34056
-  sha256: 7fe3619a79f138d16a382d2eb26f6826e1bf9e3d25a6af991d204698008d8c85
+  bytes: 35633
+  sha256: 0da3b2db1fe141bfe3df9b12fbb41ad9da95696d4cc4ff655d067cd89575d985
 - path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.md
-  bytes: 21369
-  sha256: f7926ee6b6b7a4c1ed68589d0460bf93057f9dea0ca8115a537a71b6f684644c
+  bytes: 22377
+  sha256: def0e6a8652ca287ce60b3ac52cab399b41183c85d0f2d6644b71524f17454a2
 - path: docs/tasks/PORT-003/phase-f/evidence/snapshot-model-check.yaml
   bytes: 816
   sha256: bbfff8e101e3f255cea77a0611051cd4c7890d40b2f27d09b22b491c9faa3950
@@ -409,11 +416,11 @@ generated_evidence:
   bytes: 1146
   sha256: c616c7a96b05698021140932fb0c6d2bebf5defc8c6237f725781301aa56997f
 - path: docs/tasks/PORT-003/phase-f/evidence/host-regression-results.yaml
-  bytes: 6594
-  sha256: 0c57f33020c21bdcef12f7ce98952c8fe0345c89b12c7cf6b95e4325efe57f77
+  bytes: 7054
+  sha256: 86f277bdbdaa67f35afd8ea7d9ff6a4c236ad57719d81b1ec930429756ad949e
 - path: docs/tasks/PORT-003/phase-f/evidence/build-closure.yaml
-  bytes: 12892
-  sha256: 4de4c2bdd0853769286d47f463f297614615a48e1d60a487b0fb5117d5a274d7
+  bytes: 13552
+  sha256: 4f4539f08bd78e78b2112d89760459859c24e29ce1fbaf259a599fc52b61259b
 - path: docs/tasks/PORT-003/phase-f/evidence/link-exclusions.yaml
   bytes: 2528
   sha256: abf095865c0b44a07ee411331feb7d60d0058e083e26917e5f2ef93b9290ec6b
@@ -423,31 +430,31 @@ dependency_artifacts:
   sha256: eba84528b427096d820757e272b5680bcbb6c9b043161bfa27d24e96a4f7d906
 - path: docs/dependencies/generated/code-graph.yaml
   bytes: 31867386
-  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
+  sha256: ae26a7136624413f78ce563bef2f163348897d15668f74d87c8d31a5591f2db3
 - path: docs/dependencies/generated/source-selection.yaml
   bytes: 8204048
-  sha256: e1fc953b64f3bce006ddab8dc80bbd5f090d5e3351e11bcfabe6a7ab7d157cb5
+  sha256: 8c6a5969c4e364bb5da66eeb96d3676db614eb8027fdcd2e9995f3d0f10a3dea
 - path: docs/dependencies/generated/source-selection.md
   bytes: 38839
   sha256: d96f38cb87d7b4b01f94f104a110c2ae28c138be18a00f3d4f6e4b215bf9ee02
 - path: docs/dependencies/generated/port-002-proof.yaml
   bytes: 3485
-  sha256: e8e5117f12f7dab8500488fad41126996eb737805724979899aeaa5a9bbe330f
+  sha256: 923f3560f4e5c4a52a7e9737c1bd5eeff72451ba5cad6f6948871fc3cc1454df
 predeployment_build:
   environment: p4-browser-vdp
   identity_state: unversioned-do-not-deploy
   rejected_identity_marker_present: true
   firmware:
     path: vdp/.pio/build/p4-browser-vdp/firmware.bin
-    sha256: 4b066beb87a8b0c0b8c5ff242f29fcdb5b18b10c014a550dc3a75332cb809b3e
-    size_bytes: 1223776
+    sha256: be4b32f44889b5758a409eedfee4eddeb14e07322d0b6a95b1d1e22485590a0a
+    size_bytes: 1224256
   factory_firmware:
     path: vdp/.pio/build/p4-browser-vdp/firmware.factory.bin
-    sha256: 18b68685aab367ebb9cd41ea8b74053c1703ff84b1295123873cd59690274f02
-    size_bytes: 1354848
-  selected_translation_unit_count: 23
+    sha256: 7438f2193ef13e548034784976ff42f5b4e6e3bc302a91a8d77cb5c15080b2ea
+    size_bytes: 1355328
+  selected_translation_unit_count: 24
   embedded_asset_count: 5
-  host_regression_passed: 16
+  host_regression_passed: 17
   host_regression_failed: 0
   exclusions_proved: true
   deploy: forbidden-until-identified-committed-rebuild-and-author-approval

@@ -24,12 +24,10 @@ import yaml
 
 ROOT = Path(__file__).resolve().parents[5]
 ENVIRONMENT = "p4-browser-vdp"
-SOURCE_IDENTITY = "extender-vdp-v0.1.0"
 ARTIFACT_STATUS = "candidate"
 VARIANT = "olimex-p4-devkit"
-BUILD_ID = re.compile(
-    r"^extender-vdp-v0\.1\.0-b"
-    r"(\d{4})-(\d{2})-(\d{2})-(\d{2})-(\d{2})-(\d{2})Z$"
+BUILD_TIMESTAMP = re.compile(
+    r"^(\d{4})-(\d{2})-(\d{2})-(\d{2})-(\d{2})-(\d{2})Z$"
 )
 
 
@@ -100,9 +98,20 @@ def main() -> int:
     parser.add_argument("--output-dir", type=Path, required=True)
     args = parser.parse_args()
 
-    match = BUILD_ID.fullmatch(args.build_id)
+    identity = json.loads(
+        (ROOT / f"vdp/pio/{ENVIRONMENT}-identity.json").read_text(encoding="utf-8")
+    )
+    source_identity = identity.get("source_identity")
+    if not isinstance(source_identity, str):
+        raise ValueError("committed identity has no source_identity")
+    build_prefix = f"{source_identity}-b"
+    match = (
+        BUILD_TIMESTAMP.fullmatch(args.build_id.removeprefix(build_prefix))
+        if args.build_id.startswith(build_prefix)
+        else None
+    )
     if match is None:
-        parser.error("build ID does not match the approved extender-vdp-v0.1.0 form")
+        parser.error(f"build ID does not match the committed {source_identity} form")
     created_at = (
         f"{match[1]}-{match[2]}-{match[3]}T"
         f"{match[4]}:{match[5]}:{match[6]}Z"
@@ -116,13 +125,10 @@ def main() -> int:
     if status:
         raise ValueError("identified build staging requires a clean worktree")
 
-    identity = json.loads(
-        (ROOT / f"vdp/pio/{ENVIRONMENT}-identity.json").read_text(encoding="utf-8")
-    )
     expected_identity = {
         "schema_version": 1,
         "artifact_id": "extender-vdp",
-        "source_identity": SOURCE_IDENTITY,
+        "source_identity": source_identity,
         "status": ARTIFACT_STATUS,
         "variant": VARIANT,
     }
@@ -132,7 +138,7 @@ def main() -> int:
     closure = load_yaml(args.closure)
     exclusions = load_yaml(args.exclusions)
     expected_checks = {
-        "source_identity": SOURCE_IDENTITY,
+        "source_identity": source_identity,
         "build_id": args.build_id,
         "artifact_status": ARTIFACT_STATUS,
     }
@@ -266,7 +272,7 @@ def main() -> int:
         "build": {
             "build_id": args.build_id,
             "artifact_id": "extender-vdp",
-            "source_identity": SOURCE_IDENTITY,
+            "source_identity": source_identity,
             "variant": VARIANT,
             "created_at": created_at,
             "status": ARTIFACT_STATUS,

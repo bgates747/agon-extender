@@ -43,6 +43,12 @@ intact:
    service only after display/parser initialization. Network failure reports
    through USB Serial/JTAG diagnostics and does not disable retained logical
    VDP execution.
+8. Official VDP's no-watchdog startup intent and total 400-millisecond delay
+   are retained, but the P4 target replaces Arduino's two per-core helpers with
+   ESP-IDF's hook-aware task-watchdog reconfiguration. This removes both IDLE
+   subscriptions and their feed hooks while keeping the watchdog service
+   available for later explicit subscribers. The stock build keeps the
+   official calls unchanged.
 
 These substitutions touch fifteen upstream-shaped files. Their paths and
 byte-level differences from `agon-vdp@v2.16.0` are declared as
@@ -85,4 +91,3 @@ a new VDU command and does not qualify any eZ80-to-P4 transport.
    behavior, DHCP service, browser delivery from hardware, memory behavior on
    the P4, or production throughput. Those claims begin only with the separately
    approved P4-only deployment procedure.
-

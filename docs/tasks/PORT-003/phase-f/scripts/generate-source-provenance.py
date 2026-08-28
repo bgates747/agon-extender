@@ -75,6 +75,8 @@ PROJECT_SOURCES = {
         "vdp/video/extender/transport/disconnected_stream.hpp",
         "vdp/video/extender/transport/disconnected_stream.cpp",
         "vdp/video/extender/port/fabutils_port.cpp",
+        "vdp/video/extender/port/p4_task_watchdog.hpp",
+        "vdp/video/extender/port/p4_task_watchdog.cpp",
     ],
     "browser-video": [
         "vdp/video/extender/web/browser_video_provider.hpp",
@@ -130,6 +132,10 @@ LEGACY_SOURCES = {
 }
 
 IDF_SOURCES = {
+    "idf-task-watchdog": [
+        "components/esp_system/include/esp_task_wdt.h",
+        "components/esp_system/task_wdt/task_wdt.c",
+    ],
     "idf-ethernet": [
         "components/esp_eth/include/esp_eth.h",
         "components/esp_netif/include/esp_netif.h",
@@ -149,6 +155,7 @@ ARDUINO_SOURCES = {
     "arduino-stream": [
         "cores/esp32/Stream.h",
         "cores/esp32/Print.h",
+        "cores/esp32/esp32-hal-misc.c",
     ],
     "arduino-ethernet": [
         "libraries/Ethernet/src/ETH.h",
@@ -268,7 +275,7 @@ def render_markdown(document: dict[str, Any]) -> str:
             "1. Official VDP parser and boot code remains the behavior authority; Phase F adds no command vocabulary.",
             "2. Current P4 display code publishes metadata only and exposes only a quiescent borrowed-state compositor; immutable pixel leases are genuinely new Phase F work.",
             "3. Legacy `EVF1` and WebGL code is bounded reuse evidence. Its fixed 320-by-240 server and one-frame request behavior are not current authority.",
-            "4. ESP-IDF/Arduino framework files establish maintained Ethernet, DHCP, HTTP/WebSocket, and `Stream` seams; example initialization remains evidence rather than product source.",
+            "4. ESP-IDF/Arduino framework files establish the hook-aware task-watchdog path plus maintained Ethernet, DHCP, HTTP/WebSocket, and `Stream` seams; example initialization remains evidence rather than product source.",
             "5. EMOS already owns mode and route state, but the physical forward adapter is absent and remains PORT-008 work.",
             "",
         ]

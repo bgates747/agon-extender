@@ -13,7 +13,7 @@ Generated from `boot-closure.yaml` by `scripts/render-boot-closure.py`; do not e
 | ID | Disposition | Actor | Phase F operation | Failure rule |
 |---|---|---|---|---|
 | `setup-presentation-storage` | add | P4 setup task | Allocate the fixed presentation snapshot pool before the display controller can publish. | Report over USB diagnostics and continue retained display execution without browser frames. |
-| `setup-watchdogs` | retain | P4 setup task | Preserve the official conditional watchdog setup under VDP_USE_WDT. | Build failure is a stop condition; do not silently change watchdog policy. |
+| `setup-watchdogs` | replace-binding | P4 setup task | Preserve the official no-IDLE-watchdog intent and 400-millisecond delay through ESP-IDF's hook-aware reconfiguration path; leave the official non-P4 calls unchanged. | Report over USB diagnostics and stop P4 startup rather than continue with stale IDLE hooks or silently change watchdog policy. |
 | `setup-debug` | replace-binding | P4 setup task | Use the DevKit USB diagnostics path without assigning stock UART0 GPIO 3 and GPIO 1. | Diagnostic failure cannot disable retained VDP execution. |
 | `setup-display` | retain-adapted | P4 setup task | Preserve call order and official mode fallback through the accepted P4 screen facade. | Preserve official mode failure/fallback; snapshot publication remains independently optional. |
 | `setup-ingress` | replace-binding | P4 setup task | Construct the unchanged processor on a disconnected project-owned Arduino Stream for Gate F. | Reads remain empty; writes are discarded and counted; no fabricated startup or response byte exists. |

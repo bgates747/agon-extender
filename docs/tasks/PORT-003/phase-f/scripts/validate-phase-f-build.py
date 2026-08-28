@@ -42,6 +42,7 @@ REQUIRED_SYMBOLS = {
     "EVF1 snapshot bridge": "agon::extender::web::BrowserVideoProvider::tryAcquireAfter(",
     "wired network owner": "agon::extender::network::WiredNetworkService::start()",
     "deliberately disconnected ingress": "agon::extender::transport::DisconnectedStream::available()",
+    "P4 watchdog adapter": "agon::extender::port::disableRetainedVdpIdleWatchdogs()",
 }
 EXCLUDED_SYMBOL_FRAGMENTS = [
     "fabgl::VGA",
@@ -88,7 +89,20 @@ REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS = [
     "state=%u clients=%u refused=%u credits=%u protocol=%u",
     "acquired=%u no_new=%u invalid=%u sent=%u failed=%u",
     "free_8bit=%u minimum_8bit=%u free_psram=%u minimum_psram=%u",
+    "retained VDP IDLE watchdog subscriptions disabled",
+    "retained VDP watchdog setup failed",
 ]
+WATCHDOG_SOURCE_BOUNDARY = re.compile(
+    r"#ifndef\s+VDP_USE_WDT\s+"
+    r"#ifdef\s+AGON_EXTENDER_P4_BOOT\s+"
+    r".*?disableRetainedVdpIdleWatchdogs\(\).*?"
+    r"delay\(200\);\s+delay\(200\);\s+"
+    r"#else\s+"
+    r"disableCore0WDT\(\);\s+delay\(200\);.*?"
+    r"disableCore1WDT\(\);\s+delay\(200\);\s+"
+    r"#endif\s+#endif",
+    re.DOTALL,
+)
 
 
 def relative(path: Path) -> str:
@@ -313,6 +327,17 @@ def main() -> int:
         }
         for fragment in REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS
     ]
+    video_source = (ROOT / "vdp/video/video.ino").read_text(encoding="utf-8")
+    watchdog_source_boundary = {
+        "p4_adapter_branch_present": bool(WATCHDOG_SOURCE_BOUNDARY.search(video_source)),
+        "stock_core0_call_count": video_source.count("disableCore0WDT();"),
+        "stock_core1_call_count": video_source.count("disableCore1WDT();"),
+    }
+    watchdog_source_boundary["proved"] = (
+        watchdog_source_boundary["p4_adapter_branch_present"]
+        and watchdog_source_boundary["stock_core0_call_count"] == 1
+        and watchdog_source_boundary["stock_core1_call_count"] == 1
+    )
     identity_checks = {
         name: {
             "expected": value,
@@ -340,6 +365,7 @@ def main() -> int:
         or not cmake_standard_pinned
         or not arduino_3_3_11_identified
         or any(not check["present"] for check in diagnostic_string_checks)
+        or not watchdog_source_boundary["proved"]
         or not requested_identity_validation_ok
     )
     exclusions_ok = not (
@@ -410,6 +436,7 @@ def main() -> int:
         "required_elf_symbols": symbol_checks,
         "embedded_asset_symbols": embedded_symbol_checks,
         "diagnostic_strings": diagnostic_string_checks,
+        "watchdog_source_boundary": watchdog_source_boundary,
         "identity": {
             "deployable_identity_required": deployable_identity_required,
             "checks": identity_checks,
@@ -440,6 +467,7 @@ def main() -> int:
             "runtime_diagnostic_strings_present": all(
                 check["present"] for check in diagnostic_string_checks
             ),
+            "watchdog_source_boundary_proved": watchdog_source_boundary["proved"],
             "semantic_version_strings_in_image": arduino_version_strings,
             "closure_proved": closure_ok,
         },

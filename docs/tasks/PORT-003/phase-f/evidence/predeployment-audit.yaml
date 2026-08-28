@@ -4,530 +4,154 @@ generated_by: docs/tasks/PORT-003/phase-f/scripts/audit-predeployment.py
 status: pass
 claim_boundary: approved identity and procedure with uncommitted candidate inputs; no committed candidate, identified build, target runtime, or hardware claim
 source_state:
-  base_commit: 1b7d9397fcd452e684a9edcf8125a0e00138939f
+  base_commit: c99e57d942021c78a96d1e987a75b5adc7ac2d22
   worktree: modified
   index: clean
   deployment_allowed: false
 changed_files:
 - status: ' M'
-  path: TODO.md
-  bytes: 3190
-  sha256: 8b0c9d1f42687f1f10a5a2b65d31f9a2a3d32c3a7f4e034d077bcf98f38b88d7
-- status: ' M'
   path: docs/dependencies/generated/code-graph.yaml
   bytes: 31867386
-  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
+  sha256: ae26a7136624413f78ce563bef2f163348897d15668f74d87c8d31a5591f2db3
 - status: ' M'
   path: docs/dependencies/generated/commands/vdu-22.yaml
   bytes: 383611
-  sha256: 24900de27137698e720dad7540441b6c7e0240f296f3adef1fe118c6e41ddce1
+  sha256: 7b89b5d72aa456f67b88bb49b5bc5f7bfdaf45aeded506f654f217466c845ac4
 - status: ' M'
   path: docs/dependencies/generated/port-002-proof.yaml
   bytes: 3485
-  sha256: e8e5117f12f7dab8500488fad41126996eb737805724979899aeaa5a9bbe330f
-- status: ' M'
-  path: docs/dependencies/generated/source-selection.md
-  bytes: 38839
-  sha256: d96f38cb87d7b4b01f94f104a110c2ae28c138be18a00f3d4f6e4b215bf9ee02
+  sha256: 923f3560f4e5c4a52a7e9737c1bd5eeff72451ba5cad6f6948871fc3cc1454df
 - status: ' M'
   path: docs/dependencies/generated/source-selection.yaml
   bytes: 8204048
-  sha256: e1fc953b64f3bce006ddab8dc80bbd5f090d5e3351e11bcfabe6a7ab7d157cb5
+  sha256: 8c6a5969c4e364bb5da66eeb96d3676db614eb8027fdcd2e9995f3d0f10a3dea
 - status: ' M'
-  path: docs/dependencies/reviewed/source-baselines.yaml
-  bytes: 3783
-  sha256: eba84528b427096d820757e272b5680bcbb6c9b043161bfa27d24e96a4f7d906
+  path: docs/development/2026-08-28.md
+  bytes: 3723
+  sha256: b67040ee06966d46e0b25e4494a5c155ebf1b514b35bc1546e187a8e2ad68182
 - status: ' M'
-  path: docs/dependencies/scripts/build-source-selection.py
-  bytes: 68957
-  sha256: f152b57f517335e627b9b3c48f6a995cc90c78398f6ee57bf82ff498387bb259
-- status: ' M'
-  path: docs/development/2026-08-27.md
-  bytes: 19128
-  sha256: c6f7d911c69e48ace7e4c596a47b4a5ad3a2f0a96105af16011c712a237bda5e
-- status: ??
   path: docs/procedures/p4-browser-video-qualification-r01.md
-  bytes: 9712
-  sha256: 9e092bd41033447983411e20f01209c34504d42b10c938d36c5a2601603ee6b3
+  bytes: 9774
+  sha256: a700931b2c74f27c17ffa420140b9bcc5c3a2e27cc76892a489dfc5ead74138e
 - status: ' M'
   path: docs/tasks/PORT-003.md
-  bytes: 138327
-  sha256: 11e2911c3fb41f7a98919d5bae78ad31b49154e18bdba59c3e102a7157834dca
+  bytes: 144142
+  sha256: dbc3fa1b7fcf988f6f5faf2a4a790dc4c3302110aa200f074b98b617755fcd05
 - status: ' M'
-  path: docs/tasks/PORT-003/phase-b/evidence/host-fixture-results.yaml
-  bytes: 2681
-  sha256: b454cfe723d727882ebb9005b86ab85d64b010e7d812921d0e8b7c173f0dff45
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
-  bytes: 13787
-  sha256: 22ce6b4a0228633cd563cb79fbc96b200820222e843161f4a028412a3b7fb7e1
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-c/evidence/host-frame-results.yaml
-  bytes: 3065
-  sha256: 7e228a22e8d41104f1444341519ba47bac4f4ee1bfe427d83703cc64b95a1f5b
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
-  bytes: 10837
-  sha256: e87f163d3af51602eadcbcb0c9b0211ad6dd83750bdd717089811adc153ac26d
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-d/scripts/run-host-presentation-tests.py
-  bytes: 20603
-  sha256: 7d31cc129fca84997156a28bd6d7646e0c849a54a76dfb4c5b110b2263e69b20
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/evidence/host-mode-results.yaml
-  bytes: 4786
-  sha256: 463e3b82c6fa2da697c80cd4f5328c41b6eb9a3750eae10c6987fd70eff50a73
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/evidence/mode-facade-matrix-results.yaml
-  bytes: 18903
-  sha256: e325f46eee4c2296dfe3e5850cd7d2be232542ac4214874e61b6720ec89be09f
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/evidence/teletext-integration-results.yaml
-  bytes: 2970
-  sha256: 74300295b10ec9550dafdc6426c2cb33bdb664e5308e871f2826dedb9bbf07af
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/scripts/run-host-mode-tests.py
-  bytes: 6973
-  sha256: 6bbee677e553a59227615e589e9d10d989229745ccc9ba876380cd6f93f64512
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/scripts/run-mode-facade-matrix.py
-  bytes: 8892
-  sha256: 98e47c6c6b565fd282c85545e7d2d225b6c5d3585c71cf00fc6cdd644515cb97
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-e/scripts/run-teletext-integration.py
-  bytes: 5483
-  sha256: 0234726eecbc11610da5ee34a8f7ac432d973a8c4c29cfdcbf53b0fc2f29b1fb
-- status: ' M'
-  path: docs/tasks/PORT-003/phase-f/README.md
-  bytes: 10421
-  sha256: 4ee1513172a002d3d602d67a5e9ae04ee9c9f4123a7908ddc838ec93b4becb94
-- status: ??
   path: docs/tasks/PORT-003/phase-f/boot-closure.md
-  bytes: 6404
-  sha256: e75ec975ee334f2015c29fef76cc905c99c3e1d9aa8af1f81add4f4cbb291209
-- status: ??
+  bytes: 6563
+  sha256: dd106d771f6b90fb2d2d96d7b8325f1c264279431a19aa26a8d81e073f145721
+- status: ' M'
   path: docs/tasks/PORT-003/phase-f/boot-closure.yaml
-  bytes: 9686
-  sha256: 8132e6bb37511718970843fc5fb1dd486f1aec6a76701eac4b1417066e5d8803
-- status: ??
+  bytes: 9855
+  sha256: 96d01a69fbe367c41e9749db0cfd9d66e6482e7781e4d353d3400082b4e9b639
+- status: ' M'
   path: docs/tasks/PORT-003/phase-f/compatibility-delta.md
-  bytes: 4814
-  sha256: aca2a85dbd19d5587d093df2ffc6275f6e64ab0daa39575e71ba8edf72bcd692
+  bytes: 5221
+  sha256: 875c655fc35e912279459597a593118a055c7db6c441006f0d1b2a7a7c3ee49b
 - status: ' M'
-  path: docs/tasks/PORT-003/phase-f/contracts.md
-  bytes: 6186
-  sha256: f1c18ffe145144f977da1aac7db12202e7a5fb84de095ce7656eb7acbe8c0832
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/browser-test-results.yaml
-  bytes: 1146
-  sha256: c616c7a96b05698021140932fb0c6d2bebf5defc8c6237f725781301aa56997f
-- status: ??
   path: docs/tasks/PORT-003/phase-f/evidence/build-closure.yaml
-  bytes: 12892
-  sha256: 4de4c2bdd0853769286d47f463f297614615a48e1d60a487b0fb5117d5a274d7
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/evf1-contract-check.yaml
-  bytes: 1054
-  sha256: 2ac78e9a9e8597d012b522a85ef6b089defc1d9a51eea731801e6fe49e503204
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/host-regression-results.yaml
-  bytes: 6594
-  sha256: 0c57f33020c21bdcef12f7ce98952c8fe0345c89b12c7cf6b95e4325efe57f77
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/independent-fixtures-check.yaml
-  bytes: 1247
-  sha256: d84a9baa41f54cef4cf5ead0be954660daf21073823c07b9bd6a35c63b17d3ea
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/link-exclusions.yaml
-  bytes: 2528
-  sha256: abf095865c0b44a07ee411331feb7d60d0058e083e26917e5f2ef93b9290ec6b
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/network-contract-check.yaml
-  bytes: 277
-  sha256: 1751df1c78ea83aa4bd891161fcddbcf076b1e33b554974dadb9b3249b2b0487
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/snapshot-model-check.yaml
-  bytes: 816
-  sha256: bbfff8e101e3f255cea77a0611051cd4c7890d40b2f27d09b22b491c9faa3950
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.md
-  bytes: 21369
-  sha256: f7926ee6b6b7a4c1ed68589d0460bf93057f9dea0ca8115a537a71b6f684644c
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.yaml
-  bytes: 34056
-  sha256: 7fe3619a79f138d16a382d2eb26f6826e1bf9e3d25a6af991d204698008d8c85
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/fixtures/evf1-contract.yaml
-  bytes: 5219
-  sha256: 7693c967eb25f8bd8c3018d19faccae39d01f0b15239938bb24806186f8ae109
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/fixtures/independent-fixtures.yaml
-  bytes: 20622
-  sha256: e3362d44c3d2494f880f673dd98155e0ba4ee7ceb1f82880ddefa5a767dbdca7
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/fixtures/snapshot-pool-model.yaml
-  bytes: 3141
-  sha256: e5eeebc2e75a17de3cc8a62984fe06224b27b25a510ab29ad9daf027fee4bacb
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/fixtures/visible-vdu-command-expected.svg
-  bytes: 18407
-  sha256: 6758d77e649273f43413d583c973f3526f0d881e920fd03651b38f4fdac4df1c
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/implementation-manifest.yaml
-  bytes: 21617
-  sha256: 29ee59e1d4dbef035df33aa4291da6a765ab4c8e19333cd394a8d3c56e0150ca
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/network-service-contract.yaml
-  bytes: 6665
-  sha256: 91726d07a5da70368f180be7148a021addd08b27e754646fcd35a50773598a44
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/audit-predeployment.py
-  bytes: 17133
-  sha256: c48fc1438fe3311a1603d7f48b21ebf128a293f6baccc5afa383e6d2a4f14cfc
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/check-evf1-contract.py
-  bytes: 3498
-  sha256: 855087ce71a918a2fa59cac5d00729a68e6f78e2d36b538babef8de140e17694
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/check-independent-fixtures.py
-  bytes: 7447
-  sha256: 5600909430262340e331e28bef92370f931478f7c688b477b4d2eef29de9a1f7
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/check-network-contract.py
-  bytes: 2611
-  sha256: 870013bb5d24857d9806035e974e127d1a9fb6dae823556dcf8166f78c0ac558
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/check-p4-browser-runtime.py
-  bytes: 10137
-  sha256: 67f892b7b1c9dddece18f94a92dd64e5690fddead1b63deec4a4344e544e122d
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/check-snapshot-model.py
-  bytes: 7672
-  sha256: 431df8e7dc3e52739eff018b8dfded901482a8f47dae5ee573469243096336b3
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/generate-implementation-manifest.py
-  bytes: 9609
-  sha256: 9c3547cdecf13b5a9dfa854c7d43b20209a1332ec8b94f288ed00bf2aad49fbc
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/generate-independent-fixtures.py
-  bytes: 21844
-  sha256: 47b066d6048001a94757ae2bc4ccfa9712d7e5702123f4811710ea7d90e043be
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/generate-source-provenance.py
-  bytes: 14530
-  sha256: b5c5e2aad7aa53e18ee69462bd90dac4218564c6b0096fe160c1d18a99423692
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/render-boot-closure.py
-  bytes: 2992
-  sha256: c7a401cde1134a7bcad2b34fa0a5b886ea158aca29f1aaadf08704ba3f5a62b3
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/run-browser-tests.py
-  bytes: 6113
-  sha256: 46e4621fc7405ece4775c926f6bce7acf817dc69ba9a1fb361dfc08b35fe84cb
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/run-host-regressions.py
-  bytes: 8811
-  sha256: d9872317f31a7d5ee7a7395f030bd95d1c76718e2642aae85d6a37075d809dd7
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/run-network-host-tests.py
-  bytes: 1511
-  sha256: 086340208e14589864074c7ccfab702223d79874e6f8ada0fc00409a6c5081b4
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/stage-identified-build.py
-  bytes: 11312
-  sha256: 503c03a87f8a7a6b33603bfbbab79c93efec933d701b8626b6c70315bd86bd2c
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/scripts/validate-phase-f-build.py
-  bytes: 20609
-  sha256: 21481209d04d64a9644c99e3a4cc19b35b3d3626abf6d2b39454bc1f94da4275
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/browser_protocol_tests.html
-  bytes: 613
-  sha256: 532f357984fce44c22c538f246e77d9edf7ed7491afd21befabffe19c68524b7
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/browser_protocol_tests.mjs
-  bytes: 6284
-  sha256: a026ff92be420a3f5a42b70595b94d8b3363fecdd47f60384da9032b26ca66e2
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/network_service_tests.cpp
-  bytes: 11163
-  sha256: 4299f96675423a95d853b6a0def617c84fa2086d05dd95e3c43e3a38bba43296
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/snapshot_controller_tests.cpp
-  bytes: 3233
-  sha256: f5bd3dd778afe3d88793c5e8822f5eca594ce59c238638c310200b9eedf6cefe
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/snapshot_pool_tests.cpp
-  bytes: 10398
-  sha256: 9937345c934ca875ed9fcfd33eb2cce047b844cb813b371c3c0d1dd0455b1ec4
-- status: ??
-  path: docs/tasks/PORT-003/phase-f/tests/test_p4_browser_runtime.py
-  bytes: 6587
-  sha256: 18152aaad57aafdfb260e2a4f1c81acd98ebbbc9df0835e9341e0b190033052f
+  bytes: 13552
+  sha256: 4f4539f08bd78e78b2112d89760459859c24e29ce1fbaf259a599fc52b61259b
 - status: ' M'
-  path: docs/tasks/PORT-006.md
-  bytes: 10846
-  sha256: 3b0b168666aa856a4a4688a10f7205b7b9565b03d1b65f32f015b7f88fb0ef0e
+  path: docs/tasks/PORT-003/phase-f/evidence/host-regression-results.yaml
+  bytes: 7054
+  sha256: 86f277bdbdaa67f35afd8ea7d9ff6a4c236ad57719d81b1ec930429756ad949e
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.md
+  bytes: 22377
+  sha256: def0e6a8652ca287ce60b3ac52cab399b41183c85d0f2d6644b71524f17454a2
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.yaml
+  bytes: 35633
+  sha256: 0da3b2db1fe141bfe3df9b12fbb41ad9da95696d4cc4ff655d067cd89575d985
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/implementation-manifest.yaml
+  bytes: 21957
+  sha256: 55a02a033cb031073f422b1f1e17cc401b6137fcc52af139e28e8857d0b42bff
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/audit-predeployment.py
+  bytes: 17380
+  sha256: 3571710124c7c11bc7211574770cede87e3760a15a5c2a4051f1fa2d0ed4fe4b
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/generate-implementation-manifest.py
+  bytes: 9739
+  sha256: 9f2bc87e30ecd3a7fd508f54fc34f731e708454f55926be3687057798a358fe7
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/generate-source-provenance.py
+  bytes: 14864
+  sha256: f032ed060aa7701cabfcc1cbe29f6692cfdb67ea2086e784c1383050d5dac06f
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/run-host-regressions.py
+  bytes: 9463
+  sha256: fbe7987f18be40100dbc43cd27d00507123565eff6219e29a7735d799734d59e
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/stage-identified-build.py
+  bytes: 11577
+  sha256: 9a8835355ab15cacb7ea9573ce03bae8720e49fac7a2cce69e191e8d7e24a160
+- status: ' M'
+  path: docs/tasks/PORT-003/phase-f/scripts/validate-phase-f-build.py
+  bytes: 21947
+  sha256: baa524b9cd34181776ef4c3efab918acf2626eb1ed45e180d3b18273e19863d2
+- status: ??
+  path: docs/tasks/PORT-003/phase-f/tests/compat/esp_log.h
+  bytes: 112
+  sha256: fef035c40f529660aa4bd56a766db9851c722002d98da341853ef031e4caf750
+- status: ??
+  path: docs/tasks/PORT-003/phase-f/tests/compat/esp_task_wdt.h
+  bytes: 332
+  sha256: 5802f878dc0a538a7c946a9a42c04412f1b288f92bdd88402a47c2ae5039ebc5
+- status: ??
+  path: docs/tasks/PORT-003/phase-f/tests/p4_task_watchdog_tests.cpp
+  bytes: 736
+  sha256: 8f2eea6274b9b661ffc623acc9f399fec56cdc6b92755a504a2dbbb6fd316796
 - status: ' M'
   path: docs/versions/artifacts.yaml
-  bytes: 8340
-  sha256: 63c3d85e2b6da20b7d8745f4e50f4786aa14fba273b10c84b1a3a8c72d7ecda3
+  bytes: 8622
+  sha256: b32e13c00c98b6115dfbe32c475326ca0767c695ca284050534ab36d8e5b1e94
 - status: ' M'
-  path: scripts/vdp-pio.sh
-  bytes: 1923
-  sha256: 94a1e1c19b0e2d54617f503095eba5bc713a49e0fc32010bf126c45b2fe47b4a
-- status: ??
   path: vdp/pio/p4-browser-vdp-identity.json
   bytes: 161
-  sha256: 4703c5bb4b349eef46fb76fe87dcc5fd45d0e8c4e887842b3eb6e3c8c6b71d3f
-- status: ??
+  sha256: 856c6f4069172fc8f8f888b2252259af80cc406cffe7604cb1fa1e6c6cc3c49a
+- status: ' M'
   path: vdp/pio/p4-browser-vdp-source-selection.json
-  bytes: 2551
-  sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
-- status: ' M'
-  path: vdp/pio/p4-frame-service-source-selection.json
-  bytes: 1218
-  sha256: e73fdbed798266ae2878cf6e06f4563be97b5ee078b893fd945724eafe11056d
-- status: ??
-  path: vdp/pio/p4-network-service-source-selection.json
-  bytes: 1263
-  sha256: 496d85d549adfc88e08d8a7a724cd4a200768dff55f7cc4753fac7efc72cfa83
-- status: ' M'
-  path: vdp/pio/p4-official-display-source-selection.json
-  bytes: 1695
-  sha256: 44ee284d8a1ec7e47ca0bb711889c919e47333afb3d159d002609a27209ff191
-- status: ' M'
-  path: vdp/pio/p4-presentation-source-selection.json
-  bytes: 1222
-  sha256: 07236a11d4a9d5c9d7c799d090509b6e04d8853dae59473302afd86dd65ef25e
-- status: ' M'
-  path: vdp/pio/select_sources.py
-  bytes: 4274
-  sha256: 96a0e2947baa2bb80f06cb395b6089ba12012172c7043713ec49c98e0703e491
-- status: ' M'
-  path: vdp/pio/source-selection.json
-  bytes: 1111
-  sha256: b8a0fb102a01ebbb591a84f4b102d35a2a3013c697049372780777c13283e12f
+  bytes: 2599
+  sha256: 8e563673fb6ca270a74a3132ddb84810fb6fb2949a16d0efebcc289797340c2d
 - status: ' M'
   path: vdp/platformio.ini
-  bytes: 7784
-  sha256: 0edfdb212cc46709599a8695781b0fdad56e262e6460ee4a3f5f9e2245b75353
-- status: ' M'
-  path: vdp/sdkconfig.defaults
-  bytes: 3079
-  sha256: 3c2774f51ae4755140cb43f0a5e30925662d21990ea245354973ef4e397afc34
-- status: ' M'
-  path: vdp/video/agon_fonts.h
-  bytes: 22423
-  sha256: b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63
-- status: ' M'
-  path: vdp/video/agon_screen.h
-  bytes: 14848
-  sha256: abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a
-- status: ' M'
-  path: vdp/video/context.h
-  bytes: 40871
-  sha256: 960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232
-- status: ' M'
-  path: vdp/video/context/cursor.h
-  bytes: 19298
-  sha256: 87d25957388c6fb1d090f7016f47345646b34e3d773ffc49897fbd6e6d05fcce
-- status: ' M'
-  path: vdp/video/context/fonts.h
-  bytes: 6209
-  sha256: ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3
-- status: ' M'
-  path: vdp/video/context/graphics.h
-  bytes: 28043
-  sha256: 2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5
-- status: ' M'
-  path: vdp/video/context/viewport.h
-  bytes: 5587
-  sha256: 1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd
+  bytes: 7826
+  sha256: 895e806d823dc020c413d16b22371917e181ad8ab4fa0c5139395fb75279cff5
 - status: ??
-  path: vdp/video/extender/audio/unavailable_audio_adapter.hpp
-  bytes: 680
-  sha256: d610a6cc457bd917054da4f281cd63fa910c3f2a4ed57baec669b137afeb3e3e
+  path: vdp/video/extender/port/p4_task_watchdog.cpp
+  bytes: 1279
+  sha256: 4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64
 - status: ??
-  path: vdp/video/extender/boot/p4_browser_vdp.cpp
-  bytes: 858
-  sha256: 7f5624c4c44eb3fb161429447430a1536b5a91edfe5a380a5ef889b18f277239
-- status: ??
-  path: vdp/video/extender/canary/network_service_canary.cpp
-  bytes: 1550
-  sha256: aa300021bb5f1833d23fa0bc370519525986d80171ca3a0b2cffb410a7aae546
-- status: ??
-  path: vdp/video/extender/compat/p4_vdp_gl.hpp
-  bytes: 1436
-  sha256: 9832c9d0c48572a352a979723f2d650604965a0bc51107f2cb7dd35dcda78a30
-- status: ' M'
-  path: vdp/video/extender/display/logical_frame_service.cpp
-  bytes: 7666
-  sha256: 8defa3b3463503646341b360ad407b8aa28368fc3a841f4c0c02c20e3e323406
-- status: ' M'
-  path: vdp/video/extender/display/logical_frame_service.hpp
-  bytes: 4252
-  sha256: 9acdaef50447ed9f4ebb60aadfaf93983b3a5cddb75a036c30fb51a9b37ed46f
-- status: ' M'
-  path: vdp/video/extender/display/p4_display_controller.cpp
-  bytes: 30791
-  sha256: 9b6a555169920554e3c7eb7f8929a6d3cfc4f233aa85ce0162caf4c3573ea6b5
-- status: ' M'
-  path: vdp/video/extender/display/p4_display_controller.hpp
-  bytes: 9329
-  sha256: 63f1a4816f953b4c3d5c2877c704df18085d46b9b6722207a82a9022bedc62e6
-- status: ' M'
-  path: vdp/video/extender/display/p4_frame_service.cpp
-  bytes: 4673
-  sha256: af621edde8ba56212356dbeff6152aa265f87236f8cf058ea9a12cef3801490a
-- status: ??
-  path: vdp/video/extender/display/presentation_snapshot_pool.cpp
-  bytes: 10282
-  sha256: ad59ec1dfd88862bc11010ea0df277117c494c2d4fd9d05b4f6117e5bb673a24
-- status: ??
-  path: vdp/video/extender/display/presentation_snapshot_pool.hpp
-  bytes: 6174
-  sha256: 72aa71b93ae94809b3c990b10ffd547cd2288c649b9b1c95de929d8582c37098
-- status: ??
-  path: vdp/video/extender/input/unavailable_input_adapter.hpp
-  bytes: 4977
-  sha256: 9630e5c383a2c0b417d4049a1af153d767a3820daf3e3b778993130e78db7b35
-- status: ??
-  path: vdp/video/extender/maintenance/unavailable_maintenance_adapter.hpp
-  bytes: 593
-  sha256: e86c4943f4981a6997724f05451f710aab77e207a3da3a1fc9ef136c7317f9d2
-- status: ??
-  path: vdp/video/extender/network/browser_video_service_core.cpp
-  bytes: 5048
-  sha256: e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08
-- status: ??
-  path: vdp/video/extender/network/browser_video_service_core.hpp
-  bytes: 2516
-  sha256: d7a74d1b4d0b401122edc52f3f0444bee57e9cd0af0a628073b5fb3d098a576e
-- status: ??
-  path: vdp/video/extender/network/opaque_message.cpp
-  bytes: 2819
-  sha256: 02c318042167bf6fe7711b82c2a85c4ffe6d38679ec9d51d0e9ada925c4e7cc3
-- status: ??
-  path: vdp/video/extender/network/opaque_message.hpp
-  bytes: 2276
-  sha256: 416c32cc55feafcfdac187a0f111a384ecc769d3f7161c9cec4c4737e8f6d704
-- status: ??
-  path: vdp/video/extender/network/wired_network_service.cpp
-  bytes: 15483
-  sha256: bb08c334310bbbb31a9c3e0c95891e8185f784c7415a1d53451b1335bba0572d
-- status: ??
-  path: vdp/video/extender/network/wired_network_service.hpp
-  bytes: 3356
-  sha256: 5d3d812d13825a81833d0aed32f720fc55ac608e797e18c46782cc570b71307e
-- status: ' M'
-  path: vdp/video/extender/port/fabutils_port.cpp
-  bytes: 6483
-  sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
-- status: ??
-  path: vdp/video/extender/transport/disconnected_stream.cpp
-  bytes: 776
-  sha256: 79a5a16ad5986d168fed2001e32eb1360a7f68215588eed0825c7f2bd606ada3
-- status: ??
-  path: vdp/video/extender/transport/disconnected_stream.hpp
-  bytes: 1251
-  sha256: 07cf2b6efd6332712b09a0e0b92d388069e69f7a7df1a9c3a44c5377cc3efa17
-- status: ??
-  path: vdp/video/extender/web/README.md
-  bytes: 1006
-  sha256: fadacf88bbfff5c24d12de406c6e567c9667d417aa6e7d63c4f03c64cac99527
-- status: ??
-  path: vdp/video/extender/web/app.js
-  bytes: 5263
-  sha256: 2b0102ed0085fe711d9f309b1f020bb84e2a428464cde7e794ae3bf8b6bc81f9
-- status: ??
-  path: vdp/video/extender/web/browser_video_provider.cpp
-  bytes: 5296
-  sha256: 5393ee9f21489f142d72d1e2b5fc8b3fc489e1fe309963163e8383990bddf7ca
-- status: ??
-  path: vdp/video/extender/web/browser_video_provider.hpp
-  bytes: 1898
-  sha256: cd0f8cd106bf3fad8b722547c9eef9cec965c05fafbf752b242b8d020d9cd334
-- status: ??
-  path: vdp/video/extender/web/embedded_assets.cpp
-  bytes: 2285
-  sha256: aeae43bd98f08fe97043e6d276ac5d74cce65ba707faae9a189440575cf9ae89
-- status: ??
-  path: vdp/video/extender/web/embedded_assets.hpp
-  bytes: 332
-  sha256: 78ca2ab8db397d794728f2e310faae1fed13f8c79b11599f758f8cbc24045d1e
-- status: ??
-  path: vdp/video/extender/web/frame_protocol.js
-  bytes: 6021
-  sha256: aa1e6dc02a05f74e6d357303b31db8dbc1e41bd70dabe3879f9deafb35f3a24d
-- status: ??
-  path: vdp/video/extender/web/index.html
-  bytes: 1399
-  sha256: 0739c2957509bbcf00da2983eeeb18d476c7e1cc03f4acea0811d4f812b84c47
-- status: ??
-  path: vdp/video/extender/web/protocol.md
-  bytes: 1833
-  sha256: 1549bbc302df4265fc27a8125ffaf0c3c4dc2b3bafffa57f5e2e41d44611d510
-- status: ??
-  path: vdp/video/extender/web/style.css
-  bytes: 1386
-  sha256: c234e810f5db82dbd8a34af69f0aef1ba8a843d9b9b5e95bdc612d64a62c487c
-- status: ??
-  path: vdp/video/extender/web/webgl2_presenter.js
-  bytes: 4296
-  sha256: f188fef646fc14d4bf14b7c93828fbe3548e00284f0c3e81a2980e382d9da17a
-- status: ' M'
-  path: vdp/video/sprites.h
-  bytes: 6451
-  sha256: 6f42bcfa7989e7e7a82aaba5326f44f8b38ffa09cb79f3d0d304492136cdf9d6
-- status: ' M'
-  path: vdp/video/vdp_variables.h
-  bytes: 15146
-  sha256: 45b095035ed9e57bf4227e63e2cc6af9c9395b915bca3daa8ef99b56ec837eac
-- status: ' M'
-  path: vdp/video/vdu.h
-  bytes: 10973
-  sha256: d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926
-- status: ' M'
-  path: vdp/video/vdu_buffered.h
-  bytes: 100689
-  sha256: dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd
-- status: ' M'
-  path: vdp/video/vdu_sprites.h
-  bytes: 12200
-  sha256: f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b
-- status: ' M'
-  path: vdp/video/vdu_stream_processor.h
-  bytes: 26652
-  sha256: 6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f
-- status: ' M'
-  path: vdp/video/vdu_sys.h
-  bytes: 25614
-  sha256: 1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5
+  path: vdp/video/extender/port/p4_task_watchdog.hpp
+  bytes: 947
+  sha256: 81fa605957c052343246cca5d5cdec8ca89050453d228277efa7e27dbb138986
 - status: ' M'
   path: vdp/video/video.ino
-  bytes: 17751
-  sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+  bytes: 18358
+  sha256: 0299d54954d10ed2c2bfe1f14a090a9b361707a032f3e25198eed91dc633a0e0
 validation:
-  changed_file_count: 125
-  yaml_documents_parsed: 26
-  json_documents_parsed: 7
-  local_markdown_links_resolved: 35
-  python_files_compiled: 24
+  changed_file_count: 31
+  yaml_documents_parsed: 10
+  json_documents_parsed: 2
+  local_markdown_links_resolved: 11
+  python_files_compiled: 6
   shell_scripts_parsed: 1
   manifest_fingerprints_verified: 24
-  project_provenance_fingerprints_verified: 70
+  project_provenance_fingerprints_verified: 72
   patched_upstream_files_verified: 15
   source_selection_matches_linked_closure: true
   embedded_assets_match_linked_closure: true
-  host_regression_gates_passed: 16
+  host_regression_gates_passed: 17
   dependency_proofs_passed: 6
   link_exclusions_proved: true
   compatibility_boundary_present: true
   identity_fail_safe_present: true
   approved_candidate_identity_frozen: true
-  artifact_registry_revision: r12
+  artifact_registry_revision: r13
   candidate_procedure_remains_separately_gated: true
   private_machine_values_absent: true
   git_diff_check_passed: true
@@ -547,39 +171,9 @@ patched_upstream_paths:
 - video/vdu_stream_processor.h
 - video/vdu_sys.h
 - video/video.ino
+currently_changed_patched_upstream_paths:
+- video/video.ino
 local_links:
-- document: TODO.md
-  target: docs/tasks/PORT-003.md
-- document: TODO.md
-  target: docs/tasks/QUAL-001.md
-- document: TODO.md
-  target: docs/tasks/REMED-001.md
-- document: TODO.md
-  target: docs/tasks/SETUP-006.md
-- document: TODO.md
-  target: docs/tasks/SETUP-005.md
-- document: TODO.md
-  target: docs/tasks/PORT-006.md
-- document: TODO.md
-  target: docs/tasks/PORT-008.md
-- document: TODO.md
-  target: docs/tasks/PORT-004.md
-- document: TODO.md
-  target: docs/tasks/PORT-005.md
-- document: TODO.md
-  target: docs/tasks/PORT-007.md
-- document: TODO.md
-  target: docs/tasks/QUAL-002.md
-- document: TODO.md
-  target: docs/tasks/UPSTREAM-001.md
-- document: TODO.md
-  target: docs/tasks/MODE-001.md
-- document: TODO.md
-  target: docs/tasks/MODE-002.md
-- document: TODO.md
-  target: docs/tasks/DIAG-001.md
-- document: TODO.md
-  target: docs/tasks/LINK-001.md
 - document: docs/tasks/PORT-003.md
   target: SETUP-004.md#work-1d-execution-record
 - document: docs/tasks/PORT-003.md
@@ -602,20 +196,4 @@ local_links:
   target: PORT-003/PROPOSAL.md
 - document: docs/tasks/PORT-003.md
   target: PORT-003/qualification-plan.md
-- document: docs/tasks/PORT-003/phase-f/README.md
-  target: ../../PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
-- document: docs/tasks/PORT-006.md
-  target: SETUP-004.md#work-1g-execution-record
-- document: docs/tasks/PORT-006.md
-  target: ../decisions/ADR-0013-vdp-survey-integration-boundaries.md
-- document: docs/tasks/PORT-006.md
-  target: ../decisions/ADR-0007-flash-partition-strategy.md
-- document: docs/tasks/PORT-006.md
-  target: ../architecture.md
-- document: docs/tasks/PORT-006.md
-  target: PORT-003.md
-- document: docs/tasks/PORT-006.md
-  target: PORT-004.md
-- document: docs/tasks/PORT-006.md
-  target: PORT-002.md
 result: pass

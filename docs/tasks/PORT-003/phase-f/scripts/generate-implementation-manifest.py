@@ -111,6 +111,9 @@ def main() -> int:
     import json
 
     selection = json.loads((ROOT / selection_path).read_text(encoding="utf-8"))
+    identity = json.loads(
+        (ROOT / "vdp/pio/p4-browser-vdp-identity.json").read_text(encoding="utf-8")
+    )
     if selection.get("environment") != "p4-browser-vdp":
         raise ValueError("source selection describes another environment")
 
@@ -164,9 +167,9 @@ def main() -> int:
             "candidate_commit": None,
         },
         "identity": {
-            "source_identity": "extender-vdp-v0.1.0",
+            "source_identity": identity["source_identity"],
             "build_id": None,
-            "artifact_status": "candidate",
+            "artifact_status": identity["status"],
             "procedure_identity": "p4-browser-video-qualification-r01",
             "candidate_inputs_approved": True,
             "identified_build_pending": True,
