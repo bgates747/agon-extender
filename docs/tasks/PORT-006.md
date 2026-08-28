@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: In progress — initial browser-video contract frozen under PORT-003 Phase F
+- Status: In progress — browser-video bench path accepted and paused; initial-
+  tranche resilience item 6 remains open
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
 
@@ -114,11 +115,11 @@ of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
    Confirm absent browser, failed DHCP, link loss, malformed client messages,
    slow sends, reconnect, and repeated server lifecycle cannot create an
    unbounded queue or block logical VDP execution.
-7. [ ] After the joint predeployment gate is approved, qualify DHCP, direct P4
+7. [x] After the joint predeployment gate is approved, qualify DHCP, direct P4
    asset serving, one WebSocket client, disconnect/reconnect, and USB serial
    diagnostics on the named bench. Do not expose the test service to the public
    internet or claim production security.
-8. [ ] Return accepted evidence to PORT-003 Gate F, then pause PORT-006. Wi-Fi,
+8. [x] Return accepted evidence to PORT-003 Gate F, then pause PORT-006. Wi-Fi,
    audio transport, OTA, status/management, authentication, discovery, and
    broader qualification remain in this task for later tranches.
 
@@ -181,3 +182,17 @@ of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
    the tracked source manifest's `embedded_text_files` through ESP-IDF's native
    application-component `EMBED_TXTFILES` facility. This keeps one tracked
    owner and avoids a hand-maintained linker workaround.
+6. Item 6 remains open. Sanitized service-core tests and the pinned P4
+   compile/link closure cover bounded malformed-client, slow-send,
+   disconnect/reconnect, repeated-client, and absent-client behavior. Explicit
+   failed-DHCP and physical link-loss recovery have not yet been exercised, so
+   no broader PORT-006 resilience claim is made.
+7. Item 7 passed in run `PORT-003-2026-08-28-15-28-59Z`. The exact P4 image
+   acquired DHCP, served all committed assets and EVF1 frames directly,
+   handled disconnect/reconnect, emitted continuing USB diagnostics, and
+   remained stable through one warm-up and five measured client cycles on the
+   trusted bench LAN.
+8. The Author accepted that evidence at PORT-003 Gate F on 2026-08-28. The
+   initial browser-video path is returned and PORT-006 pauses here. Item 6 and
+   the later Wi-Fi, audio, OTA, management, authentication, discovery, and
+   broader network tranches remain open.

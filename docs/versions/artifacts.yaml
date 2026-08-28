@@ -1,15 +1,15 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r13
-updated_at: 2026-08-28T15:03:30Z
+registry_revision: r14
+updated_at: 2026-08-28T15:50:39Z
 
 artifacts:
   - artifact_id: extender-vdp
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: extender-vdp-v0.1.1
-    status: candidate
+    status: qualified
     variants:
       - olimex-p4-devkit
     description: Production Extender VDP firmware lineage.
@@ -17,17 +17,19 @@ artifacts:
       - Version v0.1.0 freezes the first bootable retained-VDP P4 browser-video target for P4-only qualification.
       - Version v0.1.0 was rejected by PORT-003-2026-08-28-14-46-06Z after its retained watchdog calls left ESP-IDF IDLE hooks feeding unregistered tasks.
       - Version v0.1.1 preserves the retained no-IDLE-watchdog intent through ESP-IDF's hook-aware reconfiguration path.
-      - The v0.1.1 candidate has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
+      - Version v0.1.1 passed p4-browser-video-qualification-r01 in PORT-003-2026-08-28-15-28-59Z.
+      - Its qualified scope has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
 
   - artifact_id: p4-browser-video-qualification
     kind: test_procedure
     identity_scheme: revision
     latest_identity: p4-browser-video-qualification-r01
-    status: candidate
+    status: qualified
     variants: []
     description: P4-only boot, wired Ethernet, browser-video, lifecycle, and memory-stability qualification procedure.
     notes:
       - Revision r01 keeps the Agon physically disconnected and does not qualify VDU ingress, return UART, EMOS routing, or assembled-system electrical behavior.
+      - Revision r01 passed with extender-vdp-v0.1.1 in PORT-003-2026-08-28-15-28-59Z.
 
   - artifact_id: setup-001-canary
     kind: experimental_firmware

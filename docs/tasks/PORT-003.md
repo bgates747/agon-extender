@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: In progress — Phases A–E and Phase F items 1–14 complete;
-  Phase F item 15 passed; Gate F pending Author review
+- Status: In progress — Gate F accepted; Phase G awaits PORT-008 Gate 2 and
+  applicable QUAL-002 qualification
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1971,7 +1971,7 @@ before proceeding.
     DHCP, direct asset serving, browser self-test, startup framebuffer delivery,
     disconnect/reconnect, bounded drops, memory bounds, and serial diagnostics.
     This does not connect the Agon or claim VDU transport.
-16. [ ] Stop for Author review of Gate F. If accepted, hand the same bootable
+16. [x] Stop for Author review of Gate F. If accepted, hand the same bootable
     firmware target to PORT-008, which adds the parallel `Stream` ingress and
     runs the explicit-EMOS official-command fixture. Do not begin return UART,
     production electrical tuning, or broad compatibility qualification.
@@ -2332,8 +2332,14 @@ composition, protocol, send, queue, and socket failure counts remained zero,
 free 8-bit heap ended 232 bytes above its post-warm-up baseline, and free PSRAM
 was unchanged. Continued frame and asset service passed. Raw bench-sensitive
 evidence and screenshots are preserved under hashes in the tracked run
-manifest. Item 15 passes within its explicit P4-only claim boundary; item 16
-now requires the mandated Author review of Gate F.
+manifest. Item 15 passes within its explicit P4-only claim boundary.
+
+The Author accepted Gate F on 2026-08-28, completing Phase F. The exact
+qualified P4-only target is handed to PORT-008 as its retained parser, display,
+frame-service, and browser-output starting point. PORT-008 remains not started;
+the handoff does not authorize transport implementation or enlarge this run's
+claim boundary. PORT-003 remains open for Phase G after PORT-008 Gate 2 and the
+applicable QUAL-002 assembled-system qualification pass.
 
 ### Phase F gate
 

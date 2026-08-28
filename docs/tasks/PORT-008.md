@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: Not started — plan approved by the Author on 2026-08-22
+- Status: Not started — qualified PORT-003 Gate F target handed off; prototype
+  gate remains pending
 - Started: --
 - Finished: --
 
@@ -37,6 +38,9 @@ protocol into the product design.
 - [ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md),
   [SETUP-005](SETUP-005.md), and the durable QUAL-001 matrix when established.
 - [Versioning and qualified-run policy](../versions/README.md).
+- PORT-003 Gate F run `PORT-003-2026-08-28-15-28-59Z`, which qualifies
+  `extender-vdp-v0.1.1` only as a P4-retained-parser/display/browser target and
+  makes no transport or Agon-integration claim.
 
 ## Required outcomes
 
@@ -74,9 +78,10 @@ protocol into the product design.
 Before freezing the complete multi-mode D003 contract, build a narrowly scoped
 Exclusive Extended learning prototype. This is code-led architecture evidence,
 not a production compatibility implementation or permission to infer the
-remaining modes from one successful path. PORT-003 Phase E must first supply
-the retained official facade and parser integration needed by the canary;
-therefore PORT-003 Phases D and E precede this prototype.
+remaining modes from one successful path. Accepted PORT-003 Gate F supplies
+the retained official facade, parser integration, and browser-visible output
+needed by the canary. The prototype must preserve that qualified source
+boundary while replacing only the deliberately disconnected ingress binding.
 
 1. Begin with a forward-only learning stage in the actual retained VDP port.
    Use a fixed-backend development EMOS build so ordinary official command
@@ -214,10 +219,10 @@ before this task can gate integrated compatibility claims.
 - QUAL-001 Review Gate 1 must be accepted before contract implementation, and
   its baseline matrix must exist before PORT-008 qualification evidence is
   recorded.
-- PORT-003 Phase E must provide the retained official VDU/parser/mode lifecycle
-  before the General Poll and broad VDU bench stages can execute. Physical-link
-  feasibility and bounded adapter work may be planned earlier but may not
-  substitute for that test.
+- PORT-003 Gate F provides the qualified retained VDU/parser/mode lifecycle and
+  browser-output target. It does not qualify physical ingress, General Poll,
+  EMOS routing, or any Agon integration; PORT-008 must establish those claims
+  through its own approved prototype and qualification gates.
 - `SETUP-005-D001` and `D002` authorize only the bounded Exclusive Extended
   prototype above. D003 remains open and gates production response parsing,
   generalized MOS sysvar integration, Exclusive Compatible, Dual's separate
