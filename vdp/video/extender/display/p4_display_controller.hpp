@@ -14,6 +14,7 @@
 #include "extender/display/palette_state.hpp"
 #include "extender/display/plane_storage.hpp"
 #include "extender/display/presentation_compositor.hpp"
+#include "extender/display/presentation_snapshot_pool.hpp"
 
 namespace agon::extender::display {
 
@@ -34,7 +35,8 @@ class FrameCounterRegister final {
 class P4DisplayController final : public fabgl::GenericBitmappedDisplayController,
                                   public FrameWorkExecutor {
  public:
-  explicit P4DisplayController(Allocator allocator) noexcept;
+  explicit P4DisplayController(Allocator allocator,
+                               Allocator snapshot_allocator = {}) noexcept;
 
   ConfigureResult configure(ModeDescriptor const &mode) noexcept;
   ConstPlaneView drawingPlane() const noexcept;
@@ -42,6 +44,8 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   std::uint8_t drawingPlaneIdentity() const noexcept;
   std::uint8_t visiblePlaneIdentity() const noexcept override;
 
+  void setLogicalFramePeriodMicroseconds(
+      std::uint64_t period_microseconds) noexcept override;
   void setFrameServiceRunning(bool running) noexcept override;
   std::size_t executeFrameWork(
       std::size_t maximum_primitives) override;
@@ -72,6 +76,8 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   CompositionResult composeVisibleRegionQuiescent(
       PresentationRegion const &region, PresentationRGB888 *destination,
       std::size_t destination_pixels) noexcept;
+  PresentationSnapshotPool &snapshotPool() noexcept;
+  PresentationSnapshotPool const &snapshotPool() const noexcept;
 
   void begin() override;
   void setResolution(char const *modeline, int view_port_width = -1,
@@ -157,15 +163,23 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
       fabgl::Sprite *sprite, PresentationRegion const &region,
       PresentationRGB888 *destination,
       std::size_t destination_pixels) noexcept;
+  CompositionResult composeVisibleRegionAtBoundary(
+      PresentationRegion const &region, PresentationRGB888 *destination,
+      std::size_t destination_pixels) noexcept;
+  void publishSnapshotAtBoundary() noexcept;
 
   PlaneStorage storage_;
   PaletteState palettes_;
+  PresentationSnapshotPool snapshots_;
   std::atomic<std::uint32_t> suspension_depth_{};
   std::atomic<bool> frame_service_running_{};
   std::atomic<bool> executing_frame_work_{};
+  std::uint64_t logical_frame_period_us_{};
+  std::uint64_t snapshot_clock_us_{};
 };
 
 Allocator defaultDisplayAllocator() noexcept;
+Allocator defaultSnapshotAllocator() noexcept;
 std::unique_ptr<fabgl::BitmappedDisplayController> makeP4DisplayController();
 
 }  // namespace agon::extender::display

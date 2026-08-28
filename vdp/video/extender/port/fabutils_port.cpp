@@ -20,6 +20,10 @@
 
 namespace fabgl {
 
+// Upstream fabutils.cpp normally owns this common scheduling hint, but the P4
+// closure deliberately selects only the reviewed utility subset in this file.
+int CoreUsage::s_busiestCore = 0;
+
 uint32_t msToTicks(int milliseconds) {
   return milliseconds < 0 ? portMAX_DELAY : pdMS_TO_TICKS(milliseconds);
 }

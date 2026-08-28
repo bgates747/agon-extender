@@ -1,7 +1,11 @@
 #ifndef CONTEXT_VIEWPORT_H
 #define CONTEXT_VIEWPORT_H
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
 #include "agon.h"
 

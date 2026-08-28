@@ -1,0 +1,384 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_build_closure
+generated_by: docs/tasks/PORT-003/phase-f/scripts/validate-phase-f-build.py
+diagnostic_status: clean P4 compile/link evidence only; no deployment, VDU ingress, return transport, or hardware claim
+environment: p4-browser-vdp
+build_invocation: scripts/vdp-pio.sh run -e p4-browser-vdp
+inputs:
+  source_selection:
+    path: vdp/pio/p4-browser-vdp-source-selection.json
+    sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+  generated_application_cmake:
+    path: vdp/video/CMakeLists.txt
+    sha256: e50fb8ca1a666cc2533e0eb222635656c8868d204559615205d3366adf5533d8
+  compile_commands:
+    path: vdp/.pio/build/p4-browser-vdp/compile_commands.json
+    sha256: 13cab20ce6b4634a690799aeb1106468d58afaa27ebe8732fd3e8bacd7b206c5
+  linker_map:
+    path: vdp/.pio/build/p4-browser-vdp/firmware.map
+    sha256: 3161c45bf587513f8800d4c4b201a78cf96ac3cb29b2d7635ba38307427f2708
+  normalized_elf_symbols_sha256: 55f5b559d353cd9644053e7fd833b90303b7b31c35928eba134e540dd21ba7b0
+firmware:
+  path: vdp/.pio/build/p4-browser-vdp/firmware.bin
+  sha256: 4b066beb87a8b0c0b8c5ff242f29fcdb5b18b10c014a550dc3a75332cb809b3e
+  size_bytes: 1223776
+factory_firmware:
+  path: vdp/.pio/build/p4-browser-vdp/firmware.factory.bin
+  sha256: 18b68685aab367ebb9cd41ea8b74053c1703ff84b1295123873cd59690274f02
+  size_bytes: 1354848
+header_defined_official_implementation:
+- path: video/video.ino
+  sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+- path: video/vdu_stream_processor.h
+  sha256: 6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f
+- path: video/vdu.h
+  sha256: d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926
+- path: video/vdu_sys.h
+  sha256: 1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5
+- path: video/vdu_buffered.h
+  sha256: dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd
+- path: video/vdu_context.h
+  sha256: d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863
+- path: video/vdu_fonts.h
+  sha256: a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df
+- path: video/vdu_sprites.h
+  sha256: f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b
+- path: video/vdu_layers.h
+  sha256: 2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca
+- path: video/context.h
+  sha256: 960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232
+- path: video/buffers.h
+  sha256: f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751
+- path: video/agon_screen.h
+  sha256: abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a
+- path: video/agon_ttxt.h
+  sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
+- path: video/vdp_variables.h
+  sha256: 45b095035ed9e57bf4227e63e2cc6af9c9395b915bca3daa8ef99b56ec837eac
+application_translation_units:
+- source: vendor/ESP32Time/ESP32Time.cpp
+  object: vendor/ESP32Time/ESP32Time.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: vendor/vdp-gl/src/canvas.cpp
+  object: selected-vdp-gl/canvas.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/codepages.cpp
+  object: selected-vdp-gl/codepages.o
+  object_loaded: true
+- source: vendor/vdp-gl/src/displaycontroller.cpp
+  object: selected-vdp-gl/displaycontroller.o
+  object_loaded: true
+- source: video/extender/boot/p4_browser_vdp.cpp
+  object: video/extender/boot/p4_browser_vdp.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/cursor_position_adapter.cpp
+  object: video/extender/display/cursor_position_adapter.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/logical_frame_service.cpp
+  object: video/extender/display/logical_frame_service.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/native_pixel_codec.cpp
+  object: video/extender/display/native_pixel_codec.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/p4_display_controller.cpp
+  object: video/extender/display/p4_display_controller.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/p4_frame_service.cpp
+  object: video/extender/display/p4_frame_service.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/palette_state.cpp
+  object: video/extender/display/palette_state.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/plane_storage.cpp
+  object: video/extender/display/plane_storage.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/presentation_compositor.cpp
+  object: video/extender/display/presentation_compositor.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/presentation_snapshot_pool.cpp
+  object: video/extender/display/presentation_snapshot_pool.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/screen_facade_adapter.cpp
+  object: video/extender/display/screen_facade_adapter.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/display/screen_facade_p4_binding.cpp
+  object: video/extender/display/screen_facade_p4_binding.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/network/browser_video_service_core.cpp
+  object: video/extender/network/browser_video_service_core.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/network/opaque_message.cpp
+  object: video/extender/network/opaque_message.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/network/wired_network_service.cpp
+  object: video/extender/network/wired_network_service.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/port/fabutils_port.cpp
+  object: video/extender/port/fabutils_port.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/transport/disconnected_stream.cpp
+  object: video/extender/transport/disconnected_stream.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/web/browser_video_provider.cpp
+  object: video/extender/web/browser_video_provider.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+- source: video/extender/web/embedded_assets.cpp
+  object: video/extender/web/embedded_assets.cpp.o
+  object_loaded: true
+  compiler:
+    standards:
+    - -std=gnu++2b
+    - -std=gnu++17
+    effective_standard: -std=gnu++17
+embedded_assets:
+- source: video/extender/web/index.html
+  object: index.html.S.o
+  object_loaded: true
+- source: video/extender/web/style.css
+  object: style.css.S.o
+  object_loaded: true
+- source: video/extender/web/app.js
+  object: app.js.S.o
+  object_loaded: true
+- source: video/extender/web/frame_protocol.js
+  object: frame_protocol.js.S.o
+  object_loaded: true
+- source: video/extender/web/webgl2_presenter.js
+  object: webgl2_presenter.js.S.o
+  object_loaded: true
+required_elf_symbols:
+- claim: Arduino setup lifecycle
+  symbol_fragment: setup()
+  present: true
+- claim: Arduino loop lifecycle
+  symbol_fragment: loop()
+  present: true
+- claim: official process task
+  symbol_fragment: processLoop(void*)
+  present: true
+- claim: official stream parser
+  symbol_fragment: VDUStreamProcessor::processNext()
+  present: true
+- claim: official General Poll startup gate
+  symbol_fragment: VDUStreamProcessor::sendGeneralPoll()
+  present: true
+- claim: official complete mode switch
+  symbol_fragment: changeMode(unsigned char)
+  present: true
+- claim: official Teletext initialization
+  symbol_fragment: agon_ttxt::init()
+  present: true
+- claim: project official-mode facade
+  symbol_fragment: agon::extender::display::ScreenFacadeAdapter::configure(
+  present: true
+- claim: P4 timer/task adapter
+  symbol_fragment: agon::extender::display::P4FrameService::start(
+  present: true
+- claim: project concrete controller
+  symbol_fragment: vtable for agon::extender::display::P4DisplayController
+  present: true
+- claim: immutable snapshot producer
+  symbol_fragment: agon::extender::display::PresentationSnapshotPool::tryBegin(
+  present: true
+- claim: immutable snapshot consumer
+  symbol_fragment: agon::extender::display::PresentationSnapshotPool::tryAcquireLatest(
+  present: true
+- claim: EVF1 snapshot bridge
+  symbol_fragment: agon::extender::web::BrowserVideoProvider::tryAcquireAfter(
+  present: true
+- claim: wired network owner
+  symbol_fragment: agon::extender::network::WiredNetworkService::start()
+  present: true
+- claim: deliberately disconnected ingress
+  symbol_fragment: agon::extender::transport::DisconnectedStream::available()
+  present: true
+embedded_asset_symbols:
+- source: video/extender/web/index.html
+  endpoint: start
+  symbol_fragment: _binary_index_html_start
+  present: true
+- source: video/extender/web/index.html
+  endpoint: end
+  symbol_fragment: _binary_index_html_end
+  present: true
+- source: video/extender/web/style.css
+  endpoint: start
+  symbol_fragment: _binary_style_css_start
+  present: true
+- source: video/extender/web/style.css
+  endpoint: end
+  symbol_fragment: _binary_style_css_end
+  present: true
+- source: video/extender/web/app.js
+  endpoint: start
+  symbol_fragment: _binary_app_js_start
+  present: true
+- source: video/extender/web/app.js
+  endpoint: end
+  symbol_fragment: _binary_app_js_end
+  present: true
+- source: video/extender/web/frame_protocol.js
+  endpoint: start
+  symbol_fragment: _binary_frame_protocol_js_start
+  present: true
+- source: video/extender/web/frame_protocol.js
+  endpoint: end
+  symbol_fragment: _binary_frame_protocol_js_end
+  present: true
+- source: video/extender/web/webgl2_presenter.js
+  endpoint: start
+  symbol_fragment: _binary_webgl2_presenter_js_start
+  present: true
+- source: video/extender/web/webgl2_presenter.js
+  endpoint: end
+  symbol_fragment: _binary_webgl2_presenter_js_end
+  present: true
+diagnostic_strings:
+- fragment: source_identity=%s
+  present: true
+- fragment: build_id=%s
+  present: true
+- fragment: artifact_status=%s
+  present: true
+- fragment: enabled=%u alloc_fail=%u cadence=%u transition=%u
+  present: true
+- fragment: state=%u clients=%u refused=%u credits=%u protocol=%u
+  present: true
+- fragment: acquired=%u no_new=%u invalid=%u sent=%u failed=%u
+  present: true
+- fragment: free_8bit=%u minimum_8bit=%u free_psram=%u minimum_psram=%u
+  present: true
+identity:
+  deployable_identity_required: false
+  checks:
+    source_identity:
+      expected: null
+      present: false
+    build_id:
+      expected: null
+      present: false
+    artifact_status:
+      expected: null
+      present: false
+  rejected_marker_present: true
+  identity_state: unversioned-do-not-deploy
+  requested_identity_validation_ok: true
+  deployable_identity_proved: false
+undefined_elf_symbols:
+- U __cxx_fatal_exception
+- U start_app
+- U start_app_other_cores
+summary:
+  selected_translation_unit_count: 23
+  project_translation_unit_count: 20
+  vendored_translation_unit_count: 3
+  embedded_asset_count: 5
+  missing_objects: []
+  unexpected_application_objects: []
+  missing_project_compile_records: []
+  unexpected_project_compile_records: []
+  compiler_standard_mismatches: {}
+  missing_embedded_objects: []
+  unexpected_embedded_objects: []
+  generated_cmake_pins_cxx17: true
+  image_identifies_arduino_3_3_11: true
+  runtime_diagnostic_strings_present: true
+  semantic_version_strings_in_image:
+  - 3.3.11
+  - 5.5.5
+  closure_proved: true

@@ -240,16 +240,23 @@ queryable in the YAML projection.
 
 | Build unit | State | Project path | Task |
 |---|---|---|---|
+| `build-unit:extender:p4-browser-vdp-boot` | phase-f-target-closure | `video/extender/boot/p4_browser_vdp.cpp` | `PORT-003` |
+| `build-unit:extender:p4-browser-video-provider` | phase-f-qualified-host | `video/extender/web/browser_video_provider.cpp` | `PORT-003` |
+| `build-unit:extender:p4-browser-video-service-core` | phase-f-qualified-host | `video/extender/network/browser_video_service_core.cpp` | `PORT-003` |
 | `build-unit:extender:p4-cursor-position-adapter` | phase-e-qualified-host | `video/extender/display/cursor_position_adapter.cpp` | `PORT-003` |
-| `build-unit:extender:p4-display-controller` | phase-e-qualified-host | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
-| `build-unit:extender:p4-frame-task-adapter` | phase-e-target-closure | `video/extender/display/p4_frame_service.cpp` | `PORT-003` |
+| `build-unit:extender:p4-disconnected-stream` | phase-f-explicit-nonclaim | `video/extender/transport/disconnected_stream.cpp` | `PORT-003` |
+| `build-unit:extender:p4-display-controller` | phase-f-qualified-host | `video/extender/display/p4_display_controller.cpp` | `PORT-003` |
+| `build-unit:extender:p4-embedded-browser-assets` | phase-f-target-closure | `video/extender/web/embedded_assets.cpp` | `PORT-003` |
+| `build-unit:extender:p4-frame-task-adapter` | phase-f-target-closure | `video/extender/display/p4_frame_service.cpp` | `PORT-003` |
 | `build-unit:extender:p4-logical-frame-service` | phase-c-qualified-host | `video/extender/display/logical_frame_service.cpp` | `PORT-003` |
 | `build-unit:extender:p4-native-pixel-codec` | phase-b-qualified-host | `video/extender/display/native_pixel_codec.cpp` | `PORT-003` |
-| `build-unit:extender:p4-official-display-canary` | diagnostic-official-display | `video/extender/canary/official_display_canary.cpp` | `PORT-003` |
+| `build-unit:extender:p4-opaque-network-message` | phase-f-qualified-host | `video/extender/network/opaque_message.cpp` | `PORT-003` |
 | `build-unit:extender:p4-palette-state` | phase-d-qualified-host | `video/extender/display/palette_state.cpp` | `PORT-003` |
 | `build-unit:extender:p4-plane-storage` | phase-c-qualified-host | `video/extender/display/plane_storage.cpp` | `PORT-003` |
-| `build-unit:extender:p4-port-adapters` | phase-e-official-mode-integration | — | `PORT-003` |
+| `build-unit:extender:p4-port-adapters` | phase-f-browser-video-handoff | — | `PORT-003` |
 | `build-unit:extender:p4-presentation-compositor` | phase-d-qualified-host | `video/extender/display/presentation_compositor.cpp` | `PORT-003` |
+| `build-unit:extender:p4-presentation-snapshot-pool` | phase-f-qualified-host | `video/extender/display/presentation_snapshot_pool.cpp` | `PORT-003` |
 | `build-unit:extender:p4-screen-facade-adapter` | phase-e-qualified-host | `video/extender/display/screen_facade_adapter.cpp` | `PORT-003` |
-| `build-unit:extender:p4-screen-facade-binding` | phase-e-target-closure | `video/extender/display/screen_facade_p4_binding.cpp` | `PORT-003` |
+| `build-unit:extender:p4-screen-facade-binding` | phase-f-target-closure | `video/extender/display/screen_facade_p4_binding.cpp` | `PORT-003` |
 | `build-unit:extender:p4-vdp-gl-port-utility-closure` | phase-b-narrow-port | `video/extender/port/fabutils_port.cpp` | `PORT-003` |
+| `build-unit:extender:p4-wired-network-service` | phase-f-target-closure | `video/extender/network/wired_network_service.cpp` | `PORT-003` |

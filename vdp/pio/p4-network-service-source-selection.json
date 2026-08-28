@@ -1,0 +1,35 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-network-service",
+  "diagnostic_status": "PORT-006 first-tranche wired service and PORT-003 opaque-provider compile/link diagnostic",
+  "generated_build_files": [
+    "video/CMakeLists.txt"
+  ],
+  "project_translation_units": [
+    "video/extender/canary/network_service_canary.cpp",
+    "video/extender/display/presentation_snapshot_pool.cpp",
+    "video/extender/network/browser_video_service_core.cpp",
+    "video/extender/network/opaque_message.cpp",
+    "video/extender/network/wired_network_service.cpp",
+    "video/extender/web/browser_video_provider.cpp",
+    "video/extender/web/embedded_assets.cpp"
+  ],
+  "embedded_text_files": [
+    "video/extender/web/index.html",
+    "video/extender/web/style.css",
+    "video/extender/web/app.js",
+    "video/extender/web/frame_protocol.js",
+    "video/extender/web/webgl2_presenter.js"
+  ],
+  "vendored_translation_units": [],
+  "header_defined_official_implementation": [],
+  "excluded_source_families": [
+    "vendor/vdp-gl/src/*.cpp",
+    "video/agon_*.h",
+    "video/vdu_*.h",
+    "video/video.ino",
+    "video/extender/display/p4_display_controller.cpp",
+    "video/extender/display/p4_frame_service.cpp",
+    "video/extender/port/fabutils_port.cpp"
+  ]
+}

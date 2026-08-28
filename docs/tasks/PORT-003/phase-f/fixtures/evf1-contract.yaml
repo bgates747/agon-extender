@@ -1,0 +1,110 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_evf1_and_credit_contract
+status: frozen
+oracle: independent task contract; production headers, JavaScript, and binaries are forbidden inputs
+wire:
+  magic: EVF1
+  version: 1
+  header_bytes: 32
+  byte_order: little-endian
+  pixel_format:
+    value: 1
+    name: RGB888
+    byte_order: red, green, blue
+  flags:
+    full_frame: 1
+    present_boundary: 2
+    known_mask: 3
+    required_mask: 1
+    emitted_mask: 3
+  limits:
+    maximum_width: 1024
+    maximum_height: 768
+    maximum_payload_bytes: 2359296
+  fields:
+    - {name: magic, offset: 0, size: 4, type: ascii}
+    - {name: version, offset: 4, size: 1, type: u8}
+    - {name: header_bytes, offset: 5, size: 1, type: u8}
+    - {name: pixel_format, offset: 6, size: 1, type: u8}
+    - {name: flags, offset: 7, size: 1, type: u8}
+    - {name: sequence, offset: 8, size: 4, type: u32}
+    - {name: width, offset: 12, size: 2, type: u16}
+    - {name: height, offset: 14, size: 2, type: u16}
+    - {name: stride_bytes, offset: 16, size: 4, type: u32}
+    - {name: payload_bytes, offset: 20, size: 4, type: u32}
+    - {name: present_period_us, offset: 24, size: 4, type: u32}
+    - {name: reserved, offset: 28, size: 4, type: u32}
+  validation:
+    - Message type is binary and total bytes equal header_bytes plus payload_bytes.
+    - Magic, version, header_bytes, and pixel_format equal the frozen values.
+    - Unknown flag bits are rejected and full_frame is required.
+    - Width and height are nonzero and do not exceed 1024 by 768.
+    - Stride is at least width times three.
+    - Payload equals stride times height using checked arithmetic and does not exceed 2,359,296 bytes.
+    - Reserved is zero.
+  production_profile:
+    stride: width * 3
+    flags: full_frame plus present_boundary
+    sequence: low 32 bits of the snapshot's 64-bit generation
+    one_websocket_message: header followed by complete payload; ESP-IDF fragmentation is permitted
+
+request:
+  websocket_path: /video
+  type: text
+  bytes: frame
+  exact_length: 5
+  meaning: one credit for the newest snapshot later than this connection's last successful send
+  invalid_request_close: {code: 1002, reason: protocol error}
+  second_client_close: {code: 1013, reason: video client busy}
+  internal_failure_close: {code: 1011, reason: video service failure}
+
+server_credit:
+  owner: PORT-006 network worker
+  states: [disconnected, idle, credit_pending, sending]
+  initial: disconnected
+  transitions:
+    - {from: disconnected, event: accept_first_client, to: idle, action: reset connection generation}
+    - {from: idle, event: valid_frame_request, to: credit_pending, action: try newest lease}
+    - {from: credit_pending, event: newer_snapshot_available, to: sending, action: acquire exactly one immutable lease}
+    - {from: sending, event: send_success, to: idle, action: record generation and release lease}
+    - {from: sending, event: send_failure, to: disconnected, action: release lease and close}
+    - {from: credit_pending, event: disconnect, to: disconnected, action: clear credit}
+    - {from: sending, event: disconnect, to: disconnected, action: release lease}
+  forbidden:
+    - A second credit while credit_pending or sending closes that client as a protocol error.
+    - The network worker never holds the snapshot-pool transition guard while sending bytes.
+    - No connection owns more than one credit or lease.
+    - No server queue stores frame payloads or mutable framebuffer pointers.
+
+browser_credit:
+  owner: browser JavaScript
+  states: [disconnected, waiting_for_frame, pending_present]
+  initial: disconnected
+  transitions:
+    - {from: disconnected, event: websocket_open, to: waiting_for_frame, action: send one frame request}
+    - {from: waiting_for_frame, event: valid_complete_frame, to: pending_present, action: retain one parsed frame}
+    - {from: pending_present, event: animation_presented, to: waiting_for_frame, action: send one frame request}
+    - {from: waiting_for_frame, event: invalid_frame, to: disconnected, action: close with protocol error}
+    - {from: pending_present, event: disconnect, to: disconnected, action: discard pending frame}
+  forbidden:
+    - Browser code may not send the next credit before presenting the preceding accepted frame.
+    - Browser code may not queue more than one parsed frame.
+    - Browser code may not reinterpret palette, Copper, sprite, cursor, or VDP logical state.
+
+scenarios:
+  - id: no-frame-yet
+    server_events: [accept_first_client, valid_frame_request]
+    expected_server_state: credit_pending
+  - id: one-frame-round-trip
+    server_events: [accept_first_client, valid_frame_request, newer_snapshot_available, send_success]
+    expected_server_state: idle
+    browser_events: [websocket_open, valid_complete_frame, animation_presented]
+    expected_browser_state: waiting_for_frame
+  - id: disconnect-during-send
+    server_events: [accept_first_client, valid_frame_request, newer_snapshot_available, disconnect]
+    expected_server_state: disconnected
+    expected_release: true
+  - id: slow-browser
+    browser_events: [websocket_open, valid_complete_frame]
+    expected_browser_state: pending_present
+    expected_additional_credit: false

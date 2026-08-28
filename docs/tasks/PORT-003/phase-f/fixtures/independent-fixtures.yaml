@@ -1,0 +1,859 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_independent_fixtures
+generated_by: docs/tasks/PORT-003/phase-f/scripts/generate-independent-fixtures.py
+oracle_independence: imports no production C++ header, source, binary, or browser JavaScript
+authorities:
+- id: agon-docs:VDU-Commands.md
+  sha256: 7c78638f0b52efb4189c94636ce9c304d275c4b81751667a82c6d65e22bfafc3
+  bytes: 40794
+- id: agon-docs:Screen-Modes.md
+  sha256: c943727090b872f50e9c6a5298db96a8b6e369aef35e0577204e19532bc55a55
+  bytes: 8058
+- id: agon-docs:PLOT-Commands.md
+  sha256: 5f365c3bdb42f34386db49d2a38fb9203315fb3c687ee5f968e05743f3aa0661
+  bytes: 18038
+- id: retained-vdp:video/agon_fonts.h
+  sha256: b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63
+  bytes: 22423
+- id: retained-vdp:video/agon_palette.h
+  sha256: f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7
+  bytes: 3298
+- id: retained-vdp:video/vdu.h
+  sha256: d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926
+  bytes: 10973
+- id: retained-vdp:video/context/graphics.h
+  sha256: 2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5
+  bytes: 28043
+snapshot_pool:
+  allocation_cases:
+  - id: all-three-slots
+    successful_allocations: 3
+    expected_enabled: true
+    expected_live_slots: 3
+  - id: fail-first-slot
+    successful_allocations: 0
+    expected_enabled: false
+    expected_live_slots: 0
+  - id: fail-second-slot
+    successful_allocations: 1
+    expected_enabled: false
+    expected_live_slots: 0
+  - id: fail-third-slot
+    successful_allocations: 2
+    expected_enabled: false
+    expected_live_slots: 0
+  documented_mode_profiles:
+  - mode: 0
+    width: 640
+    height: 480
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 921600
+  - mode: 1
+    width: 640
+    height: 480
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 921600
+  - mode: 2
+    width: 640
+    height: 480
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 921600
+  - mode: 3
+    width: 640
+    height: 240
+    colours: 64
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 4
+    width: 640
+    height: 240
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 5
+    width: 640
+    height: 240
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 6
+    width: 640
+    height: 240
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 8
+    width: 320
+    height: 240
+    colours: 64
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 9
+    width: 320
+    height: 240
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 10
+    width: 320
+    height: 240
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 11
+    width: 320
+    height: 240
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 12
+    width: 320
+    height: 200
+    colours: 64
+    refresh_hz: 70
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 13
+    width: 320
+    height: 200
+    colours: 16
+    refresh_hz: 70
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 14
+    width: 320
+    height: 200
+    colours: 4
+    refresh_hz: 70
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 15
+    width: 320
+    height: 200
+    colours: 2
+    refresh_hz: 70
+    double_buffered: false
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 16
+    width: 800
+    height: 600
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 2400
+    snapshot_payload_bytes: 1440000
+  - mode: 17
+    width: 800
+    height: 600
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 2400
+    snapshot_payload_bytes: 1440000
+  - mode: 18
+    width: 1024
+    height: 768
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 3072
+    snapshot_payload_bytes: 2359296
+  - mode: 19
+    width: 1024
+    height: 768
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 3072
+    snapshot_payload_bytes: 2359296
+  - mode: 20
+    width: 512
+    height: 384
+    colours: 64
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 21
+    width: 512
+    height: 384
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 22
+    width: 512
+    height: 384
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 23
+    width: 512
+    height: 384
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 24
+    width: 640
+    height: 512
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 983040
+  - mode: 25
+    width: 640
+    height: 512
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 983040
+  - mode: 26
+    width: 640
+    height: 512
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 983040
+  - mode: 27
+    width: 640
+    height: 256
+    colours: 64
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 28
+    width: 640
+    height: 256
+    colours: 16
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 29
+    width: 640
+    height: 256
+    colours: 4
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 30
+    width: 640
+    height: 256
+    colours: 2
+    refresh_hz: 60
+    double_buffered: false
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 129
+    width: 640
+    height: 480
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 921600
+  - mode: 130
+    width: 640
+    height: 480
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 921600
+  - mode: 132
+    width: 640
+    height: 240
+    colours: 16
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 133
+    width: 640
+    height: 240
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 134
+    width: 640
+    height: 240
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 460800
+  - mode: 136
+    width: 320
+    height: 240
+    colours: 64
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 137
+    width: 320
+    height: 240
+    colours: 16
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 138
+    width: 320
+    height: 240
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 139
+    width: 320
+    height: 240
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 230400
+  - mode: 140
+    width: 320
+    height: 200
+    colours: 64
+    refresh_hz: 70
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 141
+    width: 320
+    height: 200
+    colours: 16
+    refresh_hz: 70
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 142
+    width: 320
+    height: 200
+    colours: 4
+    refresh_hz: 70
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 143
+    width: 320
+    height: 200
+    colours: 2
+    refresh_hz: 70
+    double_buffered: true
+    snapshot_stride_bytes: 960
+    snapshot_payload_bytes: 192000
+  - mode: 145
+    width: 800
+    height: 600
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 2400
+    snapshot_payload_bytes: 1440000
+  - mode: 146
+    width: 1024
+    height: 768
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 3072
+    snapshot_payload_bytes: 2359296
+  - mode: 149
+    width: 512
+    height: 384
+    colours: 16
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 150
+    width: 512
+    height: 384
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 151
+    width: 512
+    height: 384
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1536
+    snapshot_payload_bytes: 589824
+  - mode: 153
+    width: 640
+    height: 512
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 983040
+  - mode: 154
+    width: 640
+    height: 512
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 983040
+  - mode: 156
+    width: 640
+    height: 256
+    colours: 16
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 157
+    width: 640
+    height: 256
+    colours: 4
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  - mode: 158
+    width: 640
+    height: 256
+    colours: 2
+    refresh_hz: 60
+    double_buffered: true
+    snapshot_stride_bytes: 1920
+    snapshot_payload_bytes: 491520
+  reconfigure_cases:
+  - id: minimum-to-maximum
+    from:
+    - 320
+    - 200
+    to:
+    - 1024
+    - 768
+    expected_reallocation: false
+    expected_payload_bytes: 2359296
+  - id: maximum-to-fixture
+    from:
+    - 1024
+    - 768
+    to:
+    - 320
+    - 240
+    expected_reallocation: false
+    expected_payload_bytes: 230400
+  - id: same-mode
+    from:
+    - 320
+    - 240
+    to:
+    - 320
+    - 240
+    expected_reallocation: false
+    expected_payload_bytes: 230400
+  metadata_rejection_cases:
+  - id: zero-width
+    width: 0
+    height: 240
+    expected: reject-before-publish
+  - id: zero-height
+    width: 320
+    height: 0
+    expected: reject-before-publish
+  - id: width-limit
+    width: 1025
+    height: 1
+    expected: reject-before-publish
+  - id: height-limit
+    width: 1
+    height: 769
+    expected: reject-before-publish
+  - id: maximum
+    width: 1024
+    height: 768
+    expected: publish
+    payload_bytes: 2359296
+evf1:
+  validation_order:
+  - message-type
+  - truncated-header
+  - magic
+  - version
+  - header-bytes
+  - pixel-format
+  - unknown-flags
+  - full-frame-required
+  - zero-dimension
+  - dimension-limit
+  - stride-too-small
+  - payload-limit
+  - payload-arithmetic
+  - reserved
+  - message-length
+  payload_formula: R=(x+sequence)&255; G=(2*y)&255; B=((x^y)+3*sequence)&255; row-major
+  valid_vectors:
+  - id: one-pixel
+    width: 1
+    height: 1
+    sequence: 0
+    stride_bytes: 3
+    payload_bytes: 3
+    present_period_us: 0
+    header_hex: '4556463101200103000000000100010003000000030000000000000000000000'
+    payload_sha256: 709e80c88487a2411e1ee4dfb9f22a861492d20c4765150c0c794abd70f8147c
+    message_sha256: 868eb247baa13c14d74193eb7c385fca5a06e5fd3443ffb04481b4d8e948b1db
+    message_hex: '4556463101200103000000000100010003000000030000000000000000000000000000'
+  - id: compact-exact-message
+    width: 2
+    height: 2
+    sequence: 7
+    stride_bytes: 6
+    payload_bytes: 12
+    present_period_us: 16667
+    header_hex: 45564631012001030700000002000200060000000c0000001b41000000000000
+    payload_sha256: f4adc9c3678f89c15bb9ae8dd0a7f22f49ca1632cb70ff2cab696e43ca5a50a9
+    message_sha256: c2ec39ef3e5e58d9ce5fe192c39281d464458c6b674e67dc6095bade22980e70
+    message_hex: 45564631012001030700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: accepted-fixture-size
+    width: 320
+    height: 240
+    sequence: 4294967295
+    stride_bytes: 960
+    payload_bytes: 230400
+    present_period_us: 16667
+    header_hex: 4556463101200103ffffffff4001f000c0030000008403001b41000000000000
+    payload_sha256: e16cf4ffe77e1c3b79a3bc4b4a8b88dc3bc560ec82dabfec746cee780df235f3
+    message_sha256: 60b2cf20405a3a538dc011315541eb09a8c285a6b1ec7cfa66b48494551f5310
+  - id: maximum-retained-surface
+    width: 1024
+    height: 768
+    sequence: 0
+    stride_bytes: 3072
+    payload_bytes: 2359296
+    present_period_us: 16667
+    header_hex: 45564631012001030000000000040003000c0000000024001b41000000000000
+    payload_sha256: 5a7e9cad0ff0ded33f3a779c77a8b9f8c1788d860a1e8f5e445c95b5ebcf9d5f
+    message_sha256: 715e7d261326137944b84bc2e42c0f3579de22604516b6cb314fd7b166893c0e
+  malformed_vectors:
+  - id: text-message
+    expected_rejection: message-type
+    message_hex: 45564631012001030700000002000200060000000c0000001b41000000000000070015080016070216080215
+    message_type: text
+  - id: truncated-header
+    expected_rejection: truncated-header
+    message_hex: 45564631012001030700000002000200060000000c0000001b410000000000
+  - id: bad-magic
+    expected_rejection: magic
+    message_hex: 45564630012001030700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: bad-version
+    expected_rejection: version
+    message_hex: 45564631022001030700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: bad-header-size
+    expected_rejection: header-bytes
+    message_hex: 45564631011f01030700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: bad-pixel-format
+    expected_rejection: pixel-format
+    message_hex: 45564631012002030700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: unknown-flags
+    expected_rejection: unknown-flags
+    message_hex: 45564631012001070700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: missing-full-frame
+    expected_rejection: full-frame-required
+    message_hex: 45564631012001020700000002000200060000000c0000001b41000000000000070015080016070216080215
+  - id: zero-width
+    expected_rejection: zero-dimension
+    message_hex: 45564631012001030700000000000200060000000c0000001b41000000000000070015080016070216080215
+  - id: zero-height
+    expected_rejection: zero-dimension
+    message_hex: 45564631012001030700000002000000060000000c0000001b41000000000000070015080016070216080215
+  - id: width-limit
+    expected_rejection: dimension-limit
+    message_hex: 45564631012001030700000001040200030c0000061800001b41000000000000070015080016070216080215
+  - id: height-limit
+    expected_rejection: dimension-limit
+    message_hex: 4556463101200103070000000200010306000000061200001b41000000000000070015080016070216080215
+  - id: short-stride
+    expected_rejection: stride-too-small
+    message_hex: 45564631012001030700000002000200050000000a0000001b41000000000000070015080016070216080215
+  - id: payload-arithmetic
+    expected_rejection: payload-arithmetic
+    message_hex: 45564631012001030700000002000200060000000b0000001b41000000000000070015080016070216080215
+  - id: reserved-nonzero
+    expected_rejection: reserved
+    message_hex: 45564631012001030700000002000200060000000c0000001b41000001000000070015080016070216080215
+  - id: truncated-payload
+    expected_rejection: message-length
+    message_hex: 45564631012001030700000002000200060000000c0000001b410000000000000700150800160702160802
+  - id: trailing-byte
+    expected_rejection: message-length
+    message_hex: 45564631012001030700000002000200060000000c0000001b4100000000000007001508001607021608021500
+  - id: payload-limit
+    expected_rejection: payload-limit
+    header_hex: 45564631012001030700000000040003010c0000000324001b41000000000000
+    payload_recipe: zero bytes; exact count is declared_payload_bytes
+    declared_payload_bytes: 2360064
+    payload_sha256: b9be9c31bf928fee21a2842c63ca988975bead8cc14eb2260b6fa84d9d2f30ca
+    message_sha256: 91208dfe7e87fd55a5fd183676de5985930e9e1ac7c66ccf71fbf5a7218c3e88
+credit_and_reconnect_traces:
+- id: present-before-next-credit
+  events:
+  - open
+  - credit
+  - lease-generation-1
+  - send-complete
+  - parse
+  - animation-present
+  - credit
+  expected_credits_sent: 2
+  expected_frames_presented: 1
+  maximum_server_leases: 1
+  maximum_browser_pending_frames: 1
+- id: disconnect-during-send
+  events:
+  - open
+  - credit
+  - lease-generation-4
+  - disconnect
+  - release-generation-4
+  expected_server_state: disconnected
+  expected_live_leases: 0
+- id: reconnect-receives-retained-latest
+  events:
+  - open
+  - credit
+  - lease-generation-8
+  - disconnect
+  - release-generation-8-as-latest
+  - open
+  - credit
+  - lease-generation-8
+  expected_connection_generation_reset: true
+  expected_reacquired_generation: 8
+  maximum_server_leases: 1
+- id: slow-browser-collapses-intermediate-generations
+  events:
+  - credit
+  - lease-generation-10
+  - send-complete
+  - parse
+  - publish-11
+  - publish-12
+  - animation-present
+  - credit
+  - lease-generation-12
+  expected_next_generation: 12
+  expected_sequence_gap: 1
+  expected_queued_frames: 0
+- id: second-client-refused
+  events:
+  - first-client-open
+  - second-client-open
+  expected_second_client_close_code: 1013
+  expected_active_clients: 1
+- id: duplicate-credit-is-protocol-error
+  events:
+  - open
+  - credit
+  - credit
+  expected_close_code: 1002
+  expected_live_leases: 0
+visible_vdu_command:
+  id: accepted-visible-vdu-command
+  authority: official retained VDU byte vocabulary
+  mode: 9
+  width: 320
+  height: 240
+  pixel_format: packed RGB888
+  cursor: disabled before visible drawing
+  command_bytes_decimal:
+  - 22
+  - 9
+  - 23
+  - 1
+  - 0
+  - 12
+  - 17
+  - 15
+  - 69
+  - 88
+  - 84
+  - 69
+  - 78
+  - 68
+  - 69
+  - 82
+  - 31
+  - 4
+  - 2
+  - 17
+  - 14
+  - 80
+  - 52
+  - 32
+  - 86
+  - 68
+  - 80
+  - 23
+  - 0
+  - 192
+  - 0
+  - 18
+  - 0
+  - 9
+  - 25
+  - 4
+  - 16
+  - 0
+  - 80
+  - 0
+  - 25
+  - 5
+  - 150
+  - 0
+  - 80
+  - 0
+  - 25
+  - 4
+  - 16
+  - 0
+  - 80
+  - 0
+  - 25
+  - 5
+  - 16
+  - 0
+  - 160
+  - 0
+  - 25
+  - 4
+  - 16
+  - 0
+  - 160
+  - 0
+  - 25
+  - 5
+  - 150
+  - 0
+  - 160
+  - 0
+  - 18
+  - 0
+  - 10
+  - 25
+  - 4
+  - 180
+  - 0
+  - 90
+  - 0
+  - 25
+  - 101
+  - 4
+  - 1
+  - 150
+  - 0
+  - 19
+  - 3
+  - 56
+  - 0
+  - 0
+  - 0
+  - 18
+  - 0
+  - 3
+  - 25
+  - 4
+  - 180
+  - 0
+  - 170
+  - 0
+  - 25
+  - 101
+  - 4
+  - 1
+  - 210
+  - 0
+  command_bytes_hex: 16091701000c110f455854454e4445521f0402110e5034205644501700c00012000919041000500019059600500019041000500019051000a00019041000a00019059600a00012000a1904b4005a001965040196001303380000001200031904b400aa0019650401d200
+  command_stream_sha256: b5d2757ebf1bdaf0132b8a2a6683e749aa57aeb265ad23a25368451860f65595
+  expected_rgb888_sha256: d368967667b3eee2315e2bb86129e7f423d904abd203c93dd0810906d08783d8
+  expected_rgb888_bytes: 230400
+  expected_histogram:
+  - rgb: '#000000'
+    pixels: 67855
+  - rgb: '#00ff00'
+    pixels: 4941
+  - rgb: '#00ffff'
+    pixels: 125
+  - rgb: '#ff0000'
+    pixels: 349
+  - rgb: '#ffaa00'
+    pixels: 3321
+  - rgb: '#ffffff'
+    pixels: 209
+  landmarks:
+  - description: white EXTENDER text
+    x: 0
+    y: 0
+  - description: cyan P4 VDP text
+    x: 32
+    y: 16
+  - description: red three-sided line
+    x1: 16
+    y1: 80
+    x2: 150
+    y2: 160
+  - description: green filled rectangle
+    x1: 180
+    y1: 90
+    x2: 260
+    y2: 150
+  - description: palette-remapped orange rectangle
+    x1: 180
+    y1: 170
+    x2: 260
+    y2: 210
+  expected_image: visible-vdu-command-expected.svg
+result: pass

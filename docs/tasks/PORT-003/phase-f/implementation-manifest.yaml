@@ -1,0 +1,469 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_implementation_manifest
+status: candidate-freeze
+authority: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+phase_contract: bootable retained VDP with immutable RGB888 browser handoff and direct P4 wired service; no VDU ingress, return transport, or hardware claim
+source_state:
+  ref: working-tree
+  base_commit: 1b7d9397fcd452e684a9edcf8125a0e00138939f
+  state: modified
+  candidate_commit: null
+identity:
+  source_identity: extender-vdp-v0.1.0
+  build_id: null
+  artifact_status: candidate
+  procedure_identity: p4-browser-video-qualification-r01
+  candidate_inputs_approved: true
+  identified_build_pending: true
+  hardware_authorization_required: true
+  deployment_allowed: false
+source_baselines:
+- owner: agon-vdp
+  identity: v2.16.0
+  commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+- owner: vdp-gl
+  identity: all-the-plots
+  commit: ac2dd5986daf496c43ae8e7fe41836274aec54a0
+- owner: ESP32Time
+  identity: 2.0.6
+  commit: null
+- owner: CRC
+  identity: 1.0.4
+  commit: null
+source_selection:
+  path: vdp/pio/p4-browser-vdp-source-selection.json
+  sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+  environment: p4-browser-vdp
+  project_translation_units:
+  - video/extender/boot/p4_browser_vdp.cpp
+  - video/extender/display/cursor_position_adapter.cpp
+  - video/extender/display/logical_frame_service.cpp
+  - video/extender/display/native_pixel_codec.cpp
+  - video/extender/display/p4_display_controller.cpp
+  - video/extender/display/p4_frame_service.cpp
+  - video/extender/display/palette_state.cpp
+  - video/extender/display/plane_storage.cpp
+  - video/extender/display/presentation_compositor.cpp
+  - video/extender/display/presentation_snapshot_pool.cpp
+  - video/extender/display/screen_facade_adapter.cpp
+  - video/extender/display/screen_facade_p4_binding.cpp
+  - video/extender/network/browser_video_service_core.cpp
+  - video/extender/network/opaque_message.cpp
+  - video/extender/network/wired_network_service.cpp
+  - video/extender/port/fabutils_port.cpp
+  - video/extender/transport/disconnected_stream.cpp
+  - video/extender/web/browser_video_provider.cpp
+  - video/extender/web/embedded_assets.cpp
+  - vendor/ESP32Time/ESP32Time.cpp
+  vendored_translation_units:
+  - vendor/vdp-gl/src/canvas.cpp
+  - vendor/vdp-gl/src/codepages.cpp
+  - vendor/vdp-gl/src/displaycontroller.cpp
+  embedded_text_files:
+  - video/extender/web/index.html
+  - video/extender/web/style.css
+  - video/extender/web/app.js
+  - video/extender/web/frame_protocol.js
+  - video/extender/web/webgl2_presenter.js
+  header_defined_official_implementation:
+  - video/video.ino
+  - video/vdu_stream_processor.h
+  - video/vdu.h
+  - video/vdu_sys.h
+  - video/vdu_buffered.h
+  - video/vdu_context.h
+  - video/vdu_fonts.h
+  - video/vdu_sprites.h
+  - video/vdu_layers.h
+  - video/context.h
+  - video/buffers.h
+  - video/agon_screen.h
+  - video/agon_ttxt.h
+  - video/vdp_variables.h
+bounded_sources:
+  browser-video:
+  - path: vdp/video/extender/web/app.js
+    bytes: 5263
+    sha256: 2b0102ed0085fe711d9f309b1f020bb84e2a428464cde7e794ae3bf8b6bc81f9
+  - path: vdp/video/extender/web/browser_video_provider.cpp
+    bytes: 5296
+    sha256: 5393ee9f21489f142d72d1e2b5fc8b3fc489e1fe309963163e8383990bddf7ca
+  - path: vdp/video/extender/web/browser_video_provider.hpp
+    bytes: 1898
+    sha256: cd0f8cd106bf3fad8b722547c9eef9cec965c05fafbf752b242b8d020d9cd334
+  - path: vdp/video/extender/web/embedded_assets.cpp
+    bytes: 2285
+    sha256: aeae43bd98f08fe97043e6d276ac5d74cce65ba707faae9a189440575cf9ae89
+  - path: vdp/video/extender/web/embedded_assets.hpp
+    bytes: 332
+    sha256: 78ca2ab8db397d794728f2e310faae1fed13f8c79b11599f758f8cbc24045d1e
+  - path: vdp/video/extender/web/frame_protocol.js
+    bytes: 6021
+    sha256: aa1e6dc02a05f74e6d357303b31db8dbc1e41bd70dabe3879f9deafb35f3a24d
+  - path: vdp/video/extender/web/index.html
+    bytes: 1399
+    sha256: 0739c2957509bbcf00da2983eeeb18d476c7e1cc03f4acea0811d4f812b84c47
+  - path: vdp/video/extender/web/style.css
+    bytes: 1386
+    sha256: c234e810f5db82dbd8a34af69f0aef1ba8a843d9b9b5e95bdc612d64a62c487c
+  - path: vdp/video/extender/web/webgl2_presenter.js
+    bytes: 4296
+    sha256: f188fef646fc14d4bf14b7c93828fbe3548e00284f0c3e81a2980e382d9da17a
+  build-boundary:
+  - path: vdp/pio/p4-browser-vdp-identity.json
+    bytes: 161
+    sha256: 4703c5bb4b349eef46fb76fe87dcc5fd45d0e8c4e887842b3eb6e3c8c6b71d3f
+  - path: vdp/pio/p4-browser-vdp-source-selection.json
+    bytes: 2551
+    sha256: 6e36e7ac706fa2a4a09abb3b78b1e1b833b266dda9ffd77cb9dbfa5e1eaf2d8e
+  - path: vdp/pio/select_sources.py
+    bytes: 4274
+    sha256: 96a0e2947baa2bb80f06cb395b6089ba12012172c7043713ec49c98e0703e491
+  - path: vdp/platformio.ini
+    bytes: 7784
+    sha256: 0edfdb212cc46709599a8695781b0fdad56e262e6460ee4a3f5f9e2245b75353
+  - path: vdp/sdkconfig.defaults
+    bytes: 3079
+    sha256: 3c2774f51ae4755140cb43f0a5e30925662d21990ea245354973ef4e397afc34
+  official-port:
+  - path: vdp/video/agon.h
+    bytes: 32195
+    sha256: 9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4
+  - path: vdp/video/agon_fonts.h
+    bytes: 22423
+    sha256: b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63
+  - path: vdp/video/agon_screen.h
+    bytes: 14848
+    sha256: abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a
+  - path: vdp/video/agon_ttxt.h
+    bytes: 21329
+    sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
+  - path: vdp/video/buffers.h
+    bytes: 10387
+    sha256: f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751
+  - path: vdp/video/context.h
+    bytes: 40871
+    sha256: 960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232
+  - path: vdp/video/context/cursor.h
+    bytes: 19298
+    sha256: 87d25957388c6fb1d090f7016f47345646b34e3d773ffc49897fbd6e6d05fcce
+  - path: vdp/video/context/fonts.h
+    bytes: 6209
+    sha256: ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3
+  - path: vdp/video/context/graphics.h
+    bytes: 28043
+    sha256: 2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5
+  - path: vdp/video/context/viewport.h
+    bytes: 5587
+    sha256: 1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd
+  - path: vdp/video/sprites.h
+    bytes: 6451
+    sha256: 6f42bcfa7989e7e7a82aaba5326f44f8b38ffa09cb79f3d0d304492136cdf9d6
+  - path: vdp/video/vdp_variables.h
+    bytes: 15146
+    sha256: 45b095035ed9e57bf4227e63e2cc6af9c9395b915bca3daa8ef99b56ec837eac
+  - path: vdp/video/vdu.h
+    bytes: 10973
+    sha256: d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926
+  - path: vdp/video/vdu_buffered.h
+    bytes: 100689
+    sha256: dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd
+  - path: vdp/video/vdu_context.h
+    bytes: 6193
+    sha256: d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863
+  - path: vdp/video/vdu_fonts.h
+    bytes: 4474
+    sha256: a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df
+  - path: vdp/video/vdu_layers.h
+    bytes: 66730
+    sha256: 2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca
+  - path: vdp/video/vdu_sprites.h
+    bytes: 12200
+    sha256: f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b
+  - path: vdp/video/vdu_stream_processor.h
+    bytes: 26652
+    sha256: 6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f
+  - path: vdp/video/vdu_sys.h
+    bytes: 25614
+    sha256: 1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5
+  - path: vdp/video/video.ino
+    bytes: 17751
+    sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+  p4-boot-and-bindings:
+  - path: vdp/video/extender/audio/unavailable_audio_adapter.hpp
+    bytes: 680
+    sha256: d610a6cc457bd917054da4f281cd63fa910c3f2a4ed57baec669b137afeb3e3e
+  - path: vdp/video/extender/boot/p4_browser_vdp.cpp
+    bytes: 858
+    sha256: 7f5624c4c44eb3fb161429447430a1536b5a91edfe5a380a5ef889b18f277239
+  - path: vdp/video/extender/compat/p4_vdp_gl.hpp
+    bytes: 1436
+    sha256: 9832c9d0c48572a352a979723f2d650604965a0bc51107f2cb7dd35dcda78a30
+  - path: vdp/video/extender/input/unavailable_input_adapter.hpp
+    bytes: 4977
+    sha256: 9630e5c383a2c0b417d4049a1af153d767a3820daf3e3b778993130e78db7b35
+  - path: vdp/video/extender/maintenance/unavailable_maintenance_adapter.hpp
+    bytes: 593
+    sha256: e86c4943f4981a6997724f05451f710aab77e207a3da3a1fc9ef136c7317f9d2
+  - path: vdp/video/extender/port/fabutils_port.cpp
+    bytes: 6483
+    sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+  - path: vdp/video/extender/transport/disconnected_stream.cpp
+    bytes: 776
+    sha256: 79a5a16ad5986d168fed2001e32eb1360a7f68215588eed0825c7f2bd606ada3
+  - path: vdp/video/extender/transport/disconnected_stream.hpp
+    bytes: 1251
+    sha256: 07cf2b6efd6332712b09a0e0b92d388069e69f7a7df1a9c3a44c5377cc3efa17
+  p4-display:
+  - path: vdp/video/extender/display/cursor_position_adapter.cpp
+    bytes: 1594
+    sha256: 5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155
+  - path: vdp/video/extender/display/cursor_position_adapter.hpp
+    bytes: 1810
+    sha256: b9eff7588d635e87c9d1f73a74a8eb5d7515edb4c9f072fc12bf450c9450acb4
+  - path: vdp/video/extender/display/logical_frame_service.cpp
+    bytes: 7666
+    sha256: 8defa3b3463503646341b360ad407b8aa28368fc3a841f4c0c02c20e3e323406
+  - path: vdp/video/extender/display/logical_frame_service.hpp
+    bytes: 4252
+    sha256: 9acdaef50447ed9f4ebb60aadfaf93983b3a5cddb75a036c30fb51a9b37ed46f
+  - path: vdp/video/extender/display/native_pixel_codec.cpp
+    bytes: 7074
+    sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+  - path: vdp/video/extender/display/native_pixel_codec.hpp
+    bytes: 2359
+    sha256: b613bcae014620d15fc91d00edf271d39484461151ee1f9a2b8ef90d8f2a14c5
+  - path: vdp/video/extender/display/p4_display_controller.cpp
+    bytes: 30791
+    sha256: 9b6a555169920554e3c7eb7f8929a6d3cfc4f233aa85ce0162caf4c3573ea6b5
+  - path: vdp/video/extender/display/p4_display_controller.hpp
+    bytes: 9329
+    sha256: 63f1a4816f953b4c3d5c2877c704df18085d46b9b6722207a82a9022bedc62e6
+  - path: vdp/video/extender/display/p4_frame_service.cpp
+    bytes: 4673
+    sha256: af621edde8ba56212356dbeff6152aa265f87236f8cf058ea9a12cef3801490a
+  - path: vdp/video/extender/display/p4_frame_service.hpp
+    bytes: 2033
+    sha256: fef0fcfecb3ee182bb110dab858b91f201f995427f4a11e5be21934311b5e626
+  - path: vdp/video/extender/display/palette_state.cpp
+    bytes: 10888
+    sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+  - path: vdp/video/extender/display/palette_state.hpp
+    bytes: 3083
+    sha256: cda22f17973cc5a4fa6bc273cdb5236a23fa744ccc737a6fd7a97a640e3fc1cf
+  - path: vdp/video/extender/display/plane_storage.cpp
+    bytes: 5729
+    sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+  - path: vdp/video/extender/display/plane_storage.hpp
+    bytes: 2246
+    sha256: a07df1398849149c44dec2d0386f49f4f02a0f5ba0a17f256fec515bbe667aa3
+  - path: vdp/video/extender/display/presentation_compositor.cpp
+    bytes: 8397
+    sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+  - path: vdp/video/extender/display/presentation_compositor.hpp
+    bytes: 1933
+    sha256: 664f9dde8269b0d4e5322dfd273c0ca24faf0fc9c9d5124809824ddf2a9e6c2d
+  - path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+    bytes: 10282
+    sha256: ad59ec1dfd88862bc11010ea0df277117c494c2d4fd9d05b4f6117e5bb673a24
+  - path: vdp/video/extender/display/presentation_snapshot_pool.hpp
+    bytes: 6174
+    sha256: 72aa71b93ae94809b3c990b10ffd547cd2288c649b9b1c95de929d8582c37098
+  - path: vdp/video/extender/display/screen_facade_adapter.cpp
+    bytes: 4414
+    sha256: 0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb
+  - path: vdp/video/extender/display/screen_facade_adapter.hpp
+    bytes: 2174
+    sha256: cf7be4e0581472e2c618f82f406b164fd2c279b1b97648d9b930e1c4b0eb5620
+  - path: vdp/video/extender/display/screen_facade_p4_binding.cpp
+    bytes: 987
+    sha256: 8ad984ba31d5edb658385a57327c821dc8fbeb2ce5e3a2197d118db8f9e87309
+  wired-network:
+  - path: vdp/video/extender/network/browser_video_service_core.cpp
+    bytes: 5048
+    sha256: e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08
+  - path: vdp/video/extender/network/browser_video_service_core.hpp
+    bytes: 2516
+    sha256: d7a74d1b4d0b401122edc52f3f0444bee57e9cd0af0a628073b5fb3d098a576e
+  - path: vdp/video/extender/network/opaque_message.cpp
+    bytes: 2819
+    sha256: 02c318042167bf6fe7711b82c2a85c4ffe6d38679ec9d51d0e9ada925c4e7cc3
+  - path: vdp/video/extender/network/opaque_message.hpp
+    bytes: 2276
+    sha256: 416c32cc55feafcfdac187a0f111a384ecc769d3f7161c9cec4c4737e8f6d704
+  - path: vdp/video/extender/network/wired_network_service.cpp
+    bytes: 15483
+    sha256: bb08c334310bbbb31a9c3e0c95891e8185f784c7415a1d53451b1335bba0572d
+  - path: vdp/video/extender/network/wired_network_service.hpp
+    bytes: 3356
+    sha256: 5d3d812d13825a81833d0aed32f720fc55ac608e797e18c46782cc570b71307e
+patched_vendor_files:
+- path: vdp/video/agon_fonts.h
+  upstream_path: video/agon_fonts.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63
+- path: vdp/video/agon_screen.h
+  upstream_path: video/agon_screen.h
+  decision_ref: docs/decisions/ADR-0015-p4-display-backend-and-frame-service.md#decision
+  repository_sha256: abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a
+- path: vdp/video/context.h
+  upstream_path: video/context.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232
+- path: vdp/video/context/cursor.h
+  upstream_path: video/context/cursor.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 87d25957388c6fb1d090f7016f47345646b34e3d773ffc49897fbd6e6d05fcce
+- path: vdp/video/context/fonts.h
+  upstream_path: video/context/fonts.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3
+- path: vdp/video/context/graphics.h
+  upstream_path: video/context/graphics.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5
+- path: vdp/video/context/viewport.h
+  upstream_path: video/context/viewport.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd
+- path: vdp/video/sprites.h
+  upstream_path: video/sprites.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 6f42bcfa7989e7e7a82aaba5326f44f8b38ffa09cb79f3d0d304492136cdf9d6
+- path: vdp/video/vdp_variables.h
+  upstream_path: video/vdp_variables.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 45b095035ed9e57bf4227e63e2cc6af9c9395b915bca3daa8ef99b56ec837eac
+- path: vdp/video/vdu.h
+  upstream_path: video/vdu.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926
+- path: vdp/video/vdu_buffered.h
+  upstream_path: video/vdu_buffered.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd
+- path: vdp/video/vdu_sprites.h
+  upstream_path: video/vdu_sprites.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b
+- path: vdp/video/vdu_stream_processor.h
+  upstream_path: video/vdu_stream_processor.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 6c5ca33a6bc645a2210720c99be27a27bdd90821527493f0d0ce75864a20bc1f
+- path: vdp/video/vdu_sys.h
+  upstream_path: video/vdu_sys.h
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 1787069c364d4456ac6c4638ef7e0906b9bb3260928ad79654e2383e99fd65c5
+- path: vdp/video/video.ino
+  upstream_path: video/video.ino
+  decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+  repository_sha256: 03661db6aa5f908efea416d7b447201fac97951518448dc2bba68b626fd72d13
+contracts_and_fixtures:
+- path: docs/tasks/PORT-003/phase-f/contracts.md
+  bytes: 6186
+  sha256: f1c18ffe145144f977da1aac7db12202e7a5fb84de095ce7656eb7acbe8c0832
+- path: docs/tasks/PORT-003/phase-f/boot-closure.yaml
+  bytes: 9686
+  sha256: 8132e6bb37511718970843fc5fb1dd486f1aec6a76701eac4b1417066e5d8803
+- path: docs/tasks/PORT-003/phase-f/network-service-contract.yaml
+  bytes: 6665
+  sha256: 91726d07a5da70368f180be7148a021addd08b27e754646fcd35a50773598a44
+- path: docs/tasks/PORT-003/phase-f/fixtures/snapshot-pool-model.yaml
+  bytes: 3141
+  sha256: e5eeebc2e75a17de3cc8a62984fe06224b27b25a510ab29ad9daf027fee4bacb
+- path: docs/tasks/PORT-003/phase-f/fixtures/evf1-contract.yaml
+  bytes: 5219
+  sha256: 7693c967eb25f8bd8c3018d19faccae39d01f0b15239938bb24806186f8ae109
+- path: docs/tasks/PORT-003/phase-f/fixtures/independent-fixtures.yaml
+  bytes: 20622
+  sha256: e3362d44c3d2494f880f673dd98155e0ba4ee7ceb1f82880ddefa5a767dbdca7
+- path: docs/tasks/PORT-003/phase-f/fixtures/visible-vdu-command-expected.svg
+  bytes: 18407
+  sha256: 6758d77e649273f43413d583c973f3526f0d881e920fd03651b38f4fdac4df1c
+- path: docs/tasks/PORT-003/phase-f/compatibility-delta.md
+  bytes: 4814
+  sha256: aca2a85dbd19d5587d093df2ffc6275f6e64ab0daa39575e71ba8edf72bcd692
+- path: docs/procedures/p4-browser-video-qualification-r01.md
+  bytes: 9712
+  sha256: 9e092bd41033447983411e20f01209c34504d42b10c938d36c5a2601603ee6b3
+generated_evidence:
+- path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.yaml
+  bytes: 34056
+  sha256: 7fe3619a79f138d16a382d2eb26f6826e1bf9e3d25a6af991d204698008d8c85
+- path: docs/tasks/PORT-003/phase-f/evidence/source-provenance.md
+  bytes: 21369
+  sha256: f7926ee6b6b7a4c1ed68589d0460bf93057f9dea0ca8115a537a71b6f684644c
+- path: docs/tasks/PORT-003/phase-f/evidence/snapshot-model-check.yaml
+  bytes: 816
+  sha256: bbfff8e101e3f255cea77a0611051cd4c7890d40b2f27d09b22b491c9faa3950
+- path: docs/tasks/PORT-003/phase-f/evidence/evf1-contract-check.yaml
+  bytes: 1054
+  sha256: 2ac78e9a9e8597d012b522a85ef6b089defc1d9a51eea731801e6fe49e503204
+- path: docs/tasks/PORT-003/phase-f/evidence/network-contract-check.yaml
+  bytes: 277
+  sha256: 1751df1c78ea83aa4bd891161fcddbcf076b1e33b554974dadb9b3249b2b0487
+- path: docs/tasks/PORT-003/phase-f/evidence/independent-fixtures-check.yaml
+  bytes: 1247
+  sha256: d84a9baa41f54cef4cf5ead0be954660daf21073823c07b9bd6a35c63b17d3ea
+- path: docs/tasks/PORT-003/phase-f/evidence/browser-test-results.yaml
+  bytes: 1146
+  sha256: c616c7a96b05698021140932fb0c6d2bebf5defc8c6237f725781301aa56997f
+- path: docs/tasks/PORT-003/phase-f/evidence/host-regression-results.yaml
+  bytes: 6594
+  sha256: 0c57f33020c21bdcef12f7ce98952c8fe0345c89b12c7cf6b95e4325efe57f77
+- path: docs/tasks/PORT-003/phase-f/evidence/build-closure.yaml
+  bytes: 12892
+  sha256: 4de4c2bdd0853769286d47f463f297614615a48e1d60a487b0fb5117d5a274d7
+- path: docs/tasks/PORT-003/phase-f/evidence/link-exclusions.yaml
+  bytes: 2528
+  sha256: abf095865c0b44a07ee411331feb7d60d0058e083e26917e5f2ef93b9290ec6b
+dependency_artifacts:
+- path: docs/dependencies/reviewed/source-baselines.yaml
+  bytes: 3783
+  sha256: eba84528b427096d820757e272b5680bcbb6c9b043161bfa27d24e96a4f7d906
+- path: docs/dependencies/generated/code-graph.yaml
+  bytes: 31867386
+  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
+- path: docs/dependencies/generated/source-selection.yaml
+  bytes: 8204048
+  sha256: e1fc953b64f3bce006ddab8dc80bbd5f090d5e3351e11bcfabe6a7ab7d157cb5
+- path: docs/dependencies/generated/source-selection.md
+  bytes: 38839
+  sha256: d96f38cb87d7b4b01f94f104a110c2ae28c138be18a00f3d4f6e4b215bf9ee02
+- path: docs/dependencies/generated/port-002-proof.yaml
+  bytes: 3485
+  sha256: e8e5117f12f7dab8500488fad41126996eb737805724979899aeaa5a9bbe330f
+predeployment_build:
+  environment: p4-browser-vdp
+  identity_state: unversioned-do-not-deploy
+  rejected_identity_marker_present: true
+  firmware:
+    path: vdp/.pio/build/p4-browser-vdp/firmware.bin
+    sha256: 4b066beb87a8b0c0b8c5ff242f29fcdb5b18b10c014a550dc3a75332cb809b3e
+    size_bytes: 1223776
+  factory_firmware:
+    path: vdp/.pio/build/p4-browser-vdp/firmware.factory.bin
+    sha256: 18b68685aab367ebb9cd41ea8b74053c1703ff84b1295123873cd59690274f02
+    size_bytes: 1354848
+  selected_translation_unit_count: 23
+  embedded_asset_count: 5
+  host_regression_passed: 16
+  host_regression_failed: 0
+  exclusions_proved: true
+  deploy: forbidden-until-identified-committed-rebuild-and-author-approval
+deferred_owners:
+  PORT-008:
+  - parallel VDU ingress
+  - return UART
+  - EMOS command fixture
+  PORT-004:
+  - audio scheduler
+  - network audio sink
+  PORT-005:
+  - processed input source
+  PORT-006:
+  - services beyond the narrow browser-video foundation
+  PORT-007:
+  - P4 microSD storage
+  MODE-001:
+  - runtime operating-mode transitions

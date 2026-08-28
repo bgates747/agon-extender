@@ -10,7 +10,7 @@ production_and_harness_sources:
 - path: docs/tasks/PORT-003/phase-e/tests/teletext_integration_tests.cpp
   sha256: b61b0c322952ea6b8f42676872420613607aba0833520d32ca19337be2921838
 - path: vdp/video/extender/display/logical_frame_service.cpp
-  sha256: 61e302a44e0d3dc47f0632023edd8615c165778f4cdbed96747679691d9931df
+  sha256: 8defa3b3463503646341b360ad407b8aa28368fc3a841f4c0c02c20e3e323406
 - path: vdp/video/extender/display/native_pixel_codec.cpp
   sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
 - path: vdp/video/extender/display/plane_storage.cpp
@@ -19,8 +19,10 @@ production_and_harness_sources:
   sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
 - path: vdp/video/extender/display/presentation_compositor.cpp
   sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+- path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+  sha256: ad59ec1dfd88862bc11010ea0df277117c494c2d4fd9d05b4f6117e5bb673a24
 - path: vdp/video/extender/display/p4_display_controller.cpp
-  sha256: d1ade811aed8e194a183d467075a11a893d943ba51b145c7a5bd5005b0a65804
+  sha256: 9b6a555169920554e3c7eb7f8929a6d3cfc4f233aa85ce0162caf4c3573ea6b5
 - path: vdp/video/extender/display/screen_facade_adapter.cpp
   sha256: 0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb
 - path: vdp/video/extender/display/screen_facade_p4_binding.cpp
@@ -28,14 +30,14 @@ production_and_harness_sources:
 - path: vdp/video/extender/display/cursor_position_adapter.cpp
   sha256: 5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155
 - path: vdp/video/extender/port/fabutils_port.cpp
-  sha256: 70b27b41b65ebe9a538f18285ed7127bd5f04362787a08a3f9031b32b13a0d72
+  sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
 - path: vdp/vendor/vdp-gl/src/canvas.cpp
   sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
 - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
   sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
 retained_header_inputs:
 - path: vdp/video/agon_screen.h
-  sha256: 489210b08d2bd1995c95e148b97a46d3978a3c2fc69b91c13cf27804540d6359
+  sha256: abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a
 - path: vdp/video/agon_ttxt.h
   sha256: d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9
 - path: vdp/video/ttxtfont.h

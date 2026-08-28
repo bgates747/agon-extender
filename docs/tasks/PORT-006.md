@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: Not started — initial browser-video tranche accepted; awaits Phase F implementation
-- Started: --
+- Status: In progress — initial browser-video contract frozen under PORT-003 Phase F
+- Started: 2026-08-27 19:13 EDT
 - Finished: --
 
 ## Intent
@@ -94,20 +94,20 @@ This accepted tranche is the only PORT-006 work on the immediate critical
 path. It supports PORT-003 Phase F without prematurely absorbing the remainder
 of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
 
-1. [ ] Freeze the opaque network-service API, DHCP/link lifecycle, one-client
+1. [x] Freeze the opaque network-service API, DHCP/link lifecycle, one-client
    WebSocket credit boundary, diagnostics, failure behavior, exact ESP-IDF
    authorities, and exclusions before implementation.
-2. [ ] Reconcile the legacy hardware-qualified Ethernet/HTTP proof with the
+2. [x] Reconcile the legacy hardware-qualified Ethernet/HTTP proof with the
    pinned current Olimex board, ESP-IDF 5.5.5, and P4 build. Reuse current
    maintained facilities and exact board facts; do not copy example-only
    configuration machinery into product code without review.
-3. [ ] Implement ordinary DHCP and observed link/lease reporting for the
+3. [x] Implement ordinary DHCP and observed link/lease reporting for the
    onboard Ethernet. The router reservation may produce the stable bench
    address, but no address enters firmware.
-4. [ ] Implement embedded static-asset HTTP routes and one video WebSocket
+4. [x] Implement embedded static-asset HTTP routes and one video WebSocket
    connection. Accept and transport opaque immutable buffers through a bounded
    interface; do not include pixel or VDP semantics in PORT-006.
-5. [ ] Implement one outstanding client credit, send completion, disconnect
+5. [x] Implement one outstanding client credit, send completion, disconnect
    cleanup, second-client refusal, and bounded error reporting. Never call
    PORT-003 from an Ethernet callback while holding network-internal locks.
 6. [ ] Run host/state tests where separable and pinned-P4 compile/link tests.
@@ -121,3 +121,63 @@ of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
 8. [ ] Return accepted evidence to PORT-003 Gate F, then pause PORT-006. Wi-Fi,
    audio transport, OTA, status/management, authentication, discovery, and
    broader qualification remain in this task for later tranches.
+
+### Initial-tranche execution record
+
+1. Item 1 is frozen in
+   `docs/tasks/PORT-003/phase-f/network-service-contract.yaml`, beside the joint
+   implementation that consumes it. The contract selects the maintained
+   Arduino-ESP32 3.3.11 `ETH`/`Network` wrapper for explicit IP101/RMII startup
+   and DHCP events, ESP-IDF 5.5.5 `esp_http_server` for HTTP/WebSocket work, and
+   a fixed two-segment opaque lease API. It records the DevKit's ten active
+   Ethernet GPIO roles, six embedded routes, one client and credit, exact
+   actor/task ownership, reconnect cleanup, USB diagnostics, and trusted-bench-
+   LAN security boundary. The deterministic validator passes without exposing
+   machine-local values.
+2. Item 2 reconciled the legacy `NET-00` and `NET-01` evidence rather than
+   importing their examples. Those runs physically qualified the same Olimex
+   Rev D1 IP101GRR path with ESP-IDF 5.5.5: explicit PHY address 1, MDC GPIO31,
+   MDIO GPIO52, reset GPIO51, external RMII clock input, DHCP, ping, and direct
+   HTTP all passed. The later legacy AGM/browser service proved feasibility but
+   retained fixed addressing, fixed video dimensions, mutable globals, and
+   example-specific ownership that do not satisfy the current contract.
+   Current code therefore uses the maintained Arduino-ESP32 3.3.11 `ETH` event
+   wrapper and ESP-IDF 5.5.5 HTTP server directly, with current project-owned
+   lifecycle and bounded ownership.
+3. Item 3 added `wired_network_service.hpp/.cpp`. The P4 setup owner starts a
+   dedicated PORT-006 worker, registers a bounded Arduino network-event
+   callback, and explicitly starts the onboard IP101/RMII wiring. Arduino's
+   event task only records coalesced state and wakes the worker. The worker
+   queries current `ETH` state, starts or stops HTTP idempotently, and reports
+   observed link, IPv4 lease, netmask, gateway, and DNS through ESP logging.
+   No address, reservation, or machine-local network value is compiled in.
+4. Item 4 added six direct ESP-IDF HTTP routes: five immutable browser assets
+   embedded by the application component and one WebSocket endpoint. The
+   generic network code accepts a fixed two-segment opaque lease and never
+   parses EVF1. `browser_video_provider.hpp/.cpp` is the sole PORT-003 bridge;
+   it owns one snapshot lease and emits the exact 32-byte header plus immutable
+   RGB888 payload.
+5. Item 5 added `browser_video_service_core.hpp/.cpp` and the target adapter.
+   One post-handshake client, one exact `frame` credit, one lease, and one
+   queued HTTP-task send are the complete bounded state. A second client is
+   refused with WebSocket 1013; malformed or duplicate credit closes with
+   1002. Completion and socket-close paths release leases as sent, failed, or
+   disconnected. Provider acquisition and release callbacks occur outside the
+   short state mutex, and Ethernet callbacks never call the provider.
+
+   Sanitized host tests pass second-client refusal, duplicate credit, pending
+   credit with no new generation, exact header/payload segmentation, send
+   completion, failure, disconnect, reconnect, and metrics. The
+   `p4-network-service` diagnostic compiles and links against the pinned 360
+   MHz P4 profile, Arduino-ESP32 3.3.11, and ESP-IDF 5.5.5. Its ELF contains all
+   five embedded asset bounds and the network/provider service symbols. This
+   diagnostic publishes no frames and is not a bootable retained-VDP image.
+
+   Target integration exposed two build-system gotchas. PlatformIO had rebuilt
+   its private environment while leaving a stale Arduino 2.0.14 package; the
+   normal pinned environment package installation restored 3.3.11. Also,
+   PlatformIO's generic text-embedding hook generated but did not link asset
+   objects in this Arduino/ESP-IDF hybrid. `pio/select_sources.py` now renders
+   the tracked source manifest's `embedded_text_files` through ESP-IDF's native
+   application-component `EMBED_TXTFILES` facility. This keeps one tracked
+   owner and avoids a hand-maintained linker workaround.

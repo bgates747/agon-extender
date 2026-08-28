@@ -41,7 +41,7 @@ item is removed.
 ## Porting
 
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**
-  - Started: --
+  - Started: 2026-08-27 19:13 EDT
   - Finished: --
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 

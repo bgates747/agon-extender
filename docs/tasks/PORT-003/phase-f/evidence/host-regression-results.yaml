@@ -1,0 +1,227 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_host_regression_results
+generated_by: docs/tasks/PORT-003/phase-f/scripts/run-host-regressions.py
+diagnostic_status: host sanitizer, real-browser, contract, and Phase A-E regressions; no target runtime or hardware claim
+python: 3.14.6 (main, Jun 23 2026, 15:18:23) [Clang 22.1.3 ]
+compiler: g++ (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0
+coverage:
+  null_or_disconnected_consumer:
+  - phase-f-snapshot-pool
+  - phase-f-network-provider
+  fast_consumer:
+  - phase-f-network-provider
+  slow_consumer_and_latest_collapse:
+  - phase-f-snapshot-pool
+  - phase-f-network-provider
+  slot_exhaustion_and_allocation_failure:
+  - phase-f-snapshot-pool
+  mode_changes_through_1024x768:
+  - phase-f-snapshot-controller
+  - phase-a-through-e-host-matrix
+  malformed_frames:
+  - phase-f-real-browser
+  - phase-f-independent-fixtures
+  sequence_rollover:
+  - phase-f-real-browser
+  - phase-f-independent-fixtures
+  repeated_start_stop:
+  - phase-f-network-provider
+  - phase-a-through-e-host-matrix
+  sustained_bounded_operation:
+  - phase-f-snapshot-pool
+  - phase-f-network-provider
+results:
+- id: phase-f-snapshot-pool
+  status: pass
+  command:
+  - <temporary-host-binary>
+  output:
+  - snapshot-pool=pass
+  sources:
+  - path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+    sha256: ad59ec1dfd88862bc11010ea0df277117c494c2d4fd9d05b4f6117e5bb673a24
+  - path: docs/tasks/PORT-003/phase-f/tests/snapshot_pool_tests.cpp
+    sha256: 9937345c934ca875ed9fcfd33eb2cce047b844cb813b371c3c0d1dd0455b1ec4
+- id: phase-f-snapshot-controller
+  status: pass
+  command:
+  - <temporary-host-binary>
+  output:
+  - snapshot-controller=pass
+  sources:
+  - path: docs/tasks/PORT-003/phase-f/tests/snapshot_controller_tests.cpp
+    sha256: f5bd3dd778afe3d88793c5e8822f5eca594ce59c238638c310200b9eedf6cefe
+  - path: vdp/video/extender/display/logical_frame_service.cpp
+    sha256: 8defa3b3463503646341b360ad407b8aa28368fc3a841f4c0c02c20e3e323406
+  - path: vdp/video/extender/display/native_pixel_codec.cpp
+    sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+  - path: vdp/video/extender/display/plane_storage.cpp
+    sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+  - path: vdp/video/extender/display/palette_state.cpp
+    sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+  - path: vdp/video/extender/display/presentation_compositor.cpp
+    sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+  - path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+    sha256: ad59ec1dfd88862bc11010ea0df277117c494c2d4fd9d05b4f6117e5bb673a24
+  - path: vdp/video/extender/display/p4_display_controller.cpp
+    sha256: 9b6a555169920554e3c7eb7f8929a6d3cfc4f233aa85ce0162caf4c3573ea6b5
+  - path: vdp/video/extender/port/fabutils_port.cpp
+    sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+  - path: vdp/vendor/vdp-gl/src/canvas.cpp
+    sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+  - path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+    sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+- id: phase-f-network-provider
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/run-network-host-tests.py
+  - --project-root
+  - <project-root>
+  output:
+  - network-service=pass
+- id: phase-f-real-browser
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/run-browser-tests.py
+  output:
+  - 'Phase F browser tests: 78 checks passed in Mozilla Firefox 154.0.1'
+- id: phase-f-independent-snapshot-model
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/check-snapshot-model.py
+  - --input
+  - docs/tasks/PORT-003/phase-f/fixtures/snapshot-pool-model.yaml
+  - --output
+  - docs/tasks/PORT-003/phase-f/evidence/snapshot-model-check.yaml
+  - --depth
+  - '12'
+  output: []
+- id: phase-f-independent-evf1-contract
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/check-evf1-contract.py
+  - --input
+  - docs/tasks/PORT-003/phase-f/fixtures/evf1-contract.yaml
+  - --output
+  - docs/tasks/PORT-003/phase-f/evidence/evf1-contract-check.yaml
+  output: []
+- id: phase-f-independent-network-contract
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/check-network-contract.py
+  - --input
+  - docs/tasks/PORT-003/phase-f/network-service-contract.yaml
+  - --output
+  - docs/tasks/PORT-003/phase-f/evidence/network-contract-check.yaml
+  output: []
+- id: phase-f-independent-fixtures
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-f/scripts/check-independent-fixtures.py
+  - --input
+  - docs/tasks/PORT-003/phase-f/fixtures/independent-fixtures.yaml
+  - --expected-svg
+  - docs/tasks/PORT-003/phase-f/fixtures/visible-vdu-command-expected.svg
+  - --output
+  - docs/tasks/PORT-003/phase-f/evidence/independent-fixtures-check.yaml
+  output: []
+- id: phase-a-through-e-host-matrix
+  status: pass
+  command:
+  - .venv/bin/python
+  - docs/tasks/PORT-003/phase-e/scripts/run-host-mode-tests.py
+  output:
+  - 'Phase E host matrix: 8 gates passed'
+- id: phase-f-qualification-tool-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-f/tests
+  - -v
+  output: []
+  test_count: 2
+- id: dependency-tool-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/dependencies/tests
+  - -v
+  output: []
+  test_count: 13
+- id: phase-a-permanent-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-a/tests
+  - -v
+  output: []
+  test_count: 3
+- id: phase-b-permanent-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-b/tests
+  - -v
+  output: []
+  test_count: 17
+- id: phase-c-permanent-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-c/tests
+  - -v
+  output: []
+  test_count: 11
+- id: phase-d-permanent-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-d/tests
+  - -v
+  output: []
+  test_count: 9
+- id: phase-e-permanent-tests
+  status: pass
+  command:
+  - .venv/bin/python
+  - -m
+  - unittest
+  - discover
+  - -s
+  - docs/tasks/PORT-003/phase-e/tests
+  - -v
+  output: []
+  test_count: 18
+summary:
+  passed: 16
+  failed: 0

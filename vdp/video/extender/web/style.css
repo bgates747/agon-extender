@@ -1,0 +1,99 @@
+:root {
+  color-scheme: dark;
+  font-family: system-ui, sans-serif;
+}
+
+* { box-sizing: border-box; }
+
+html, body {
+  margin: 0;
+  min-height: 100%;
+  background: #111;
+  color: #ddd;
+}
+
+body {
+  display: grid;
+  place-items: center;
+  padding: 1.5rem;
+}
+
+main {
+  width: min(96vw, 1000px);
+}
+
+header {
+  display: flex;
+  align-items: baseline;
+  gap: 1rem;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 1.35rem;
+}
+
+header p {
+  margin: 0;
+  color: #999;
+}
+
+.screen-shell {
+  margin-top: 1rem;
+  display: grid;
+  place-items: center;
+  min-height: 300px;
+  overflow: hidden;
+  background: #050505;
+  border: 1px solid #444;
+}
+
+canvas {
+  width: min(92vw, 960px);
+  height: auto;
+  aspect-ratio: 4 / 3;
+  image-rendering: pixelated;
+  background: #000;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: .75rem;
+  margin-top: 1rem;
+}
+
+button {
+  font: inherit;
+  padding: .45rem .8rem;
+}
+
+#state { color: #aaa; }
+
+.stats {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: .5rem 1rem;
+  margin: 1rem 0 0;
+}
+
+.stats div {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  border-bottom: 1px solid #333;
+}
+
+dt { color: #999; }
+dd { margin: 0; font-variant-numeric: tabular-nums; }
+
+.note {
+  color: #999;
+  font-size: .9rem;
+  line-height: 1.4;
+}
+
+@media (max-width: 650px) {
+  .stats { grid-template-columns: 1fr 1fr; }
+}

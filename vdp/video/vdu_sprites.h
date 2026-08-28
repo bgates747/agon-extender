@@ -1,10 +1,18 @@
 #ifndef _VDU_SPRITES_H_
 #define _VDU_SPRITES_H_
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 #include <cmath>
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 #include "buffers.h"
 #include "sprites.h"
 #include "types.h"

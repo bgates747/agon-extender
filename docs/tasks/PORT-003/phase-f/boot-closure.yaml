@@ -1,0 +1,206 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_boot_closure
+status: frozen
+authority: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+upstream:
+  project: agon-vdp
+  release: v2.16.0
+  commit: c7ac293d2aa81ddfa693390549bcd909069c8fc3
+target:
+  board: olimex_esp32_p4_devkit
+  environment: p4-browser-vdp
+  lifecycle_model: Arduino setup/loop with ESP-IDF services
+claims:
+  - The image is the retained official VDP parser and lifecycle with bounded P4 bindings, not a demonstration parser.
+  - Phase F qualifies display and browser presentation only; an included command body is not thereby qualified.
+  - PORT-008 replaces the disconnected Stream with physical parallel ingress without changing parser ownership.
+
+lifecycle:
+  - id: setup-presentation-storage
+    source: project extension before official changeMode
+    disposition: add
+    actor: P4 setup task
+    operation: Allocate the fixed presentation snapshot pool before the display controller can publish.
+    failure: Report over USB diagnostics and continue retained display execution without browser frames.
+  - id: setup-watchdogs
+    source: video/video.ino setup disableCore0WDT and disableCore1WDT
+    disposition: retain
+    actor: P4 setup task
+    operation: Preserve the official conditional watchdog setup under VDP_USE_WDT.
+    failure: Build failure is a stop condition; do not silently change watchdog policy.
+  - id: setup-debug
+    source: video/video.ino DBGSerial initialization
+    disposition: replace-binding
+    actor: P4 setup task
+    operation: Use the DevKit USB diagnostics path without assigning stock UART0 GPIO 3 and GPIO 1.
+    failure: Diagnostic failure cannot disable retained VDP execution.
+  - id: setup-display
+    source: video/video.ino changeMode and copy_font
+    disposition: retain-adapted
+    actor: P4 setup task
+    operation: Preserve call order and official mode fallback through the accepted P4 screen facade.
+    failure: Preserve official mode failure/fallback; snapshot publication remains independently optional.
+  - id: setup-ingress
+    source: video/video.ino setupVDPProtocol and VDUStreamProcessor construction
+    disposition: replace-binding
+    actor: P4 setup task
+    operation: Construct the unchanged processor on a disconnected project-owned Arduino Stream for Gate F.
+    failure: Reads remain empty; writes are discarded and counted; no fabricated startup or response byte exists.
+  - id: setup-process-task
+    source: video/video.ino xTaskCreatePinnedToCore processLoop
+    disposition: retain-profiled
+    actor: P4 setup task
+    operation: Preserve the official process task, stack size, priority, and selected core unless P4 evidence forces a reviewed profile change.
+    failure: Task creation failure is reported and makes Gate F fail.
+  - id: setup-audio
+    source: video/video.ino initAudio
+    disposition: defer-binding
+    actor: P4 setup task
+    operation: Do not initialize or link the classic physical SoundGenerator; select the PORT-004 logical scheduler when available.
+    failure: Phase F exposes no audio qualification and may not make an audio command reachable through physical ingress.
+  - id: setup-boot-screen
+    source: video/video.ino boot_screen
+    disposition: retain
+    actor: P4 setup task
+    operation: Render the official version banner through the retained parser after processor construction.
+    failure: A missing browser does not alter boot-screen rendering or logical state.
+  - id: setup-network
+    source: project extension after official boot_screen
+    disposition: add
+    actor: PORT-006 P4 network service
+    operation: Start onboard Ethernet, DHCP, HTTP, and the video WebSocket after retained display startup.
+    failure: Report link or service failure over USB diagnostics; do not stop parser or logical frame service.
+  - id: loop-idle
+    source: video/video.ino loop
+    disposition: retain
+    actor: Arduino loop task
+    operation: Preserve the official idle loop; network work runs in its owning ESP-IDF tasks.
+    failure: none
+  - id: process-input-acquisition
+    source: video/video.ino processLoop setupKeyboardAndMouse and VDUStreamProcessor handleKeyboardAndMouse
+    disposition: replace-binding
+    actor: P4 process task
+    operation: Bind to the PORT-005 processed-event seam; the Phase F adapter owns no physical device and yields no events.
+    failure: No physical PS/2 source, input task, or fabricated event may enter the image.
+  - id: process-startup-handshake
+    source: video/vdu_sys.h VDUStreamProcessor wait_eZ80
+    disposition: retain
+    actor: P4 process task
+    operation: Preserve General Poll parsing and the initialised gate; disconnected Gate F ingress waits indefinitely without blocking display or network tasks.
+    failure: Do not synthesize General Poll or mark the EDP initialized.
+  - id: process-terminal
+    source: video/video.ino processTerminal
+    disposition: omit-adapter
+    actor: P4 process task
+    operation: Keep normal parser dispatch active and make the accepted unsupported terminal/console path explicit without constructing FabGL Terminal.
+    failure: Exact application-visible handling remains outside Gate F and must not be described as compatible.
+  - id: process-vdu
+    source: video/video.ino VDUStreamProcessor processNext
+    disposition: retain
+    actor: P4 process task
+    operation: Preserve the official parser call and byte vocabulary after startup initialization.
+    failure: Parser or command-semantic rewrites are a Phase F stop condition.
+
+subsystems:
+  - id: official-parser
+    disposition: retain
+    owner: agon-vdp
+    paths:
+      - video/vdu_stream_processor.h
+      - video/vdu.h
+      - video/vdu_sys.h
+      - video/vdu_buffered.h
+      - video/vdu_context.h
+      - video/vdu_fonts.h
+      - video/vdu_sprites.h
+      - video/vdu_layers.h
+    phase_f_binding: Compile the official header-defined command closure; use only bounded target guards/adapters named below.
+    later_owner: null
+  - id: contexts-buffers-and-screen
+    disposition: retain-adapted
+    owner: agon-vdp plus PORT-003
+    paths:
+      - video/context.h
+      - video/buffers.h
+      - video/agon_screen.h
+      - video/agon_ttxt.h
+    phase_f_binding: Preserve official state and behavior over the already accepted P4 facade and logical controller.
+    later_owner: null
+  - id: rtc
+    disposition: retain
+    owner: agon-vdp
+    paths:
+      - video/vdp_variables.h
+      - vendor/ESP32Time/ESP32Time.cpp
+    phase_f_binding: Retain ESP32Time and the official RTC packet/state surface; Gate F does not qualify return delivery or clock authority.
+    later_owner: operating-mode qualification
+  - id: transport
+    disposition: replace-binding
+    owner: PORT-008
+    paths:
+      - video/vdp_protocol.h
+      - video/extender/transport/disconnected_stream.hpp
+      - video/extender/transport/disconnected_stream.cpp
+    phase_f_binding: A disconnected Stream proves boot closure and counts discarded writes; it supplies no bytes.
+    later_owner: PORT-008 parallel ingress and later reverse UART
+  - id: input
+    disposition: replace-binding
+    owner: PORT-005
+    paths:
+      - video/agon_ps2.h
+      - video/extender/input/unavailable_input_adapter.hpp
+    phase_f_binding: Compile a no-device processed-input seam sufficient for parser linkage and display-local cursor state; acquire no hardware input.
+    later_owner: PORT-005
+  - id: audio
+    disposition: defer-binding
+    owner: PORT-004
+    paths:
+      - video/agon_audio.h
+      - video/vdu_audio.h
+      - vendor/vdp-gl/src/devdrivers/soundgen.cpp
+    phase_f_binding: Keep vendored parser/runtime source visible but do not select classic physical soundgen or claim audio behavior in Gate F.
+    later_owner: PORT-004 logical scheduler and network sink
+  - id: updater
+    disposition: omit
+    owner: none in Extender v1
+    paths:
+      - video/updater.h
+    phase_f_binding: Exclude ESP OTA command handling from the selected parser build under the accepted maintenance carveout.
+    later_owner: PORT-006 owns project network update independently
+  - id: transfers
+    disposition: omit
+    owner: none in Extender v1
+    paths:
+      - video/hexload.h
+      - video/ymodem.h
+    phase_f_binding: Exclude Intel HEX and YMODEM maintenance handlers; do not retain their UART0 or PSRAM behavior accidentally.
+    later_owner: null
+  - id: terminal-console-zdi
+    disposition: omit
+    owner: none in Extender v1
+    paths:
+      - video/zdi.h
+      - video/OneWire_direct_gpio.h
+    phase_f_binding: Exclude Terminal construction, ZDI GPIO access, printer capture, and console forwarding under the accepted maintenance carveout.
+    later_owner: null
+  - id: debug-diagnostics
+    disposition: replace-binding
+    owner: P4 platform and PORT-006
+    paths:
+      - video/video.ino
+    phase_f_binding: Preserve disabled official debug calls while routing mandatory Extender link/lease/failure diagnostics through USB without stock UART pin assignments.
+    later_owner: DIAG-001 for durable crash records
+  - id: wifi
+    disposition: omit
+    owner: PORT-006 if later selected
+    paths:
+      - video/video.ino
+    phase_f_binding: Remove the unused upstream WiFi include; wired Ethernet only.
+    later_owner: optional MOD-WIFI-ESP8266 work outside Phase F
+
+nonclaims:
+  - No audio behavior or output.
+  - No keyboard or mouse acquisition, forwarding, or packet behavior.
+  - No updater, terminal, console, printer, ZDI, Intel HEX, or YMODEM compatibility.
+  - No parallel ingress, reverse UART, General Poll exchange, EMOS mode transition, or sysvar qualification.
+  - No physical hardware or deployment qualification.

@@ -3,7 +3,11 @@
 
 #include <algorithm>
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
 #include "agon.h"
 #include "agon_fonts.h"

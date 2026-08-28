@@ -88,12 +88,12 @@ inputs:
   path: docs/dependencies/generated/code-graph.yaml
   role: canonical merged dependency graph
   schema_version: 2.0.0
-  sha256: eb37d1e57865f789e0bcea3d785770e7f97e245c9fabb69154d13d8efffa304f
+  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
 - id: input:port-002:base-code-graph
   path: docs/dependencies/generated/base-code-graph.yaml
   role: PORT-001 mechanical and reviewed relationship graph
   schema_version: 1.0.0
-  sha256: 98c229529caff3297e168cbbbf2311902cd954ed6ef296ef96397af1d8638dc2
+  sha256: 015c00b691d3a91da5ea8003430a407e6c6ecbd1df5cc129eb88ead26c6f9825
 - id: input:port-002:setup-004-evidence
   path: docs/tasks/SETUP-004/evidence
   role: accepted source disposition records
@@ -124,6 +124,11 @@ inputs:
   role: observed PORT-003 Phase E application compile/link closure
   schema_version: 1.0.0
   sha256: 8ddc9995ce10bb4ee4f4a7276d3943e560e94332f36995728aa8ac88d3f225a0
+- id: input:port-003:phase-f-build-closure
+  path: docs/tasks/PORT-003/phase-f/evidence/build-closure.yaml
+  role: observed PORT-003 Phase F bootable browser-video application closure
+  schema_version: 1.0.0
+  sha256: 4de4c2bdd0853769286d47f463f297614615a48e1d60a487b0fb5117d5a274d7
 - id: input:setup-003:claims
   path: docs/dependencies/reviewed/claims.yaml
   role: manually reviewed PORT-001 semantic claims
@@ -148,7 +153,7 @@ inputs:
   path: docs/dependencies/reviewed/source-baselines.yaml
   role: reviewed immutable source baseline
   schema_version: 1
-  sha256: 65acf3ae6a59144d96c6173f1b39896ccd0bfd69a6b778339976f3b20e1b1561
+  sha256: eba84528b427096d820757e272b5680bcbb6c9b043161bfa27d24e96a4f7d906
 - id: input:setup-003:symbols
   path: docs/tasks/SETUP-003/generated/symbols.yaml
   role: Ctags symbol index
@@ -168,7 +173,7 @@ source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
   path: docs/dependencies/generated/code-graph.yaml
   schema_version: 2.0.0
-  sha256: eb37d1e57865f789e0bcea3d785770e7f97e245c9fabb69154d13d8efffa304f
+  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
 title: VDU 22 screen-mode selection — proof dependency slice
 seed_nodes:
 - command:agon-vdp:vdu-22

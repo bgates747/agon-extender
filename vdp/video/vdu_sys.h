@@ -4,21 +4,37 @@
 #include <algorithm>
 #include <vector>
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
 #include "agon.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 #include "agon_screen.h"
 #include "vdp_variables.h"
+#ifndef AGON_EXTENDER_P4_BOOT
 #include "vdu_audio.h"
+#endif
 #include "vdu_buffered.h"
 #include "vdu_context.h"
 #include "vdu_fonts.h"
 #include "vdu_sprites.h"
+#ifndef AGON_EXTENDER_P4_BOOT
 #include "updater.h"
+#endif
 #include "vdu_stream_processor.h"
 #include "vdu_layers.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/maintenance/unavailable_maintenance_adapter.hpp"
+#else
 #include "ymodem.h"
+#endif
 
 extern void startTerminal();					// Start the terminal
 extern void setConsoleMode(bool mode);			// Set console mode

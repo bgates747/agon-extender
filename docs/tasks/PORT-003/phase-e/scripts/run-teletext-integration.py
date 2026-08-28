@@ -22,6 +22,7 @@ SOURCES = [
     "vdp/video/extender/display/plane_storage.cpp",
     "vdp/video/extender/display/palette_state.cpp",
     "vdp/video/extender/display/presentation_compositor.cpp",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp",
     "vdp/video/extender/display/p4_display_controller.cpp",
     "vdp/video/extender/display/screen_facade_adapter.cpp",
     "vdp/video/extender/display/screen_facade_p4_binding.cpp",

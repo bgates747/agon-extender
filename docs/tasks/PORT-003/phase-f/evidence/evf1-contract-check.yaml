@@ -1,0 +1,36 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_evf1_contract_check
+generated_by: docs/tasks/PORT-003/phase-f/scripts/check-evf1-contract.py
+oracle_independence: no production source, JavaScript, header, or binary imported
+header_bytes_covered: 32
+scenario_results:
+- id: no-frame-yet
+  server_state: credit_pending
+  server_actions:
+  - reset connection generation
+  - try newest lease
+- id: one-frame-round-trip
+  server_state: idle
+  server_actions:
+  - reset connection generation
+  - try newest lease
+  - acquire exactly one immutable lease
+  - record generation and release lease
+  browser_state: waiting_for_frame
+  browser_actions:
+  - send one frame request
+  - retain one parsed frame
+  - send one frame request
+- id: disconnect-during-send
+  server_state: disconnected
+  server_actions:
+  - reset connection generation
+  - try newest lease
+  - acquire exactly one immutable lease
+  - release lease
+- id: slow-browser
+  browser_state: pending_present
+  browser_actions:
+  - send one frame request
+  - retain one parsed frame
+result: pass

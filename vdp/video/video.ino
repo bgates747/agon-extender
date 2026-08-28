@@ -46,9 +46,24 @@
 // 17/09/2023:					+ Added ZDI mode
 
 #include <HardwareSerial.h>
+#ifndef AGON_EXTENDER_P4_BOOT
 #include <WiFi.h>
+#endif
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 #include <ESP32Time.h>
+#ifdef AGON_EXTENDER_P4_BOOT
+#include <esp_log.h>
+#include <esp_heap_caps.h>
+#if !defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
+    !defined(AGON_EXTENDER_BUILD_ID) || \
+    !defined(AGON_EXTENDER_ARTIFACT_STATUS)
+#error "The P4 boot target requires explicit build-identity definitions"
+#endif
+#endif
 
 // Serial Debug Mode: 1 = enable
 // Always enabled on the emulator, to support --verbose mode
@@ -79,20 +94,40 @@ bool			controlKeys = true;				// Control keys enabled
 ESP32Time		rtc(0);							// The RTC
 
 #include "version.h"							// Version information
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"							// Keyboard support
 #include "agon_audio.h"							// Audio support
+#endif
 #include "agon_screen.h"						// Screen support
 #include "agon_ttxt.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/network/wired_network_service.hpp"
+#include "extender/transport/disconnected_stream.hpp"
+#include "extender/web/browser_video_provider.hpp"
+#else
 #include "vdp_protocol.h"						// VDP Protocol
+#endif
 #include "vdu_stream_processor.h"
+#ifndef AGON_EXTENDER_P4_BOOT
 #include "hexload.h"
+#endif
 
+#ifndef AGON_EXTENDER_P4_BOOT
 std::unique_ptr<fabgl::Terminal>	Terminal;	// Used for Terminal emulation mode (for CP/M, etc)
+#endif
 VDUStreamProcessor *	processor;				// VDU Stream Processor
 
-#ifndef USERSPACE
+#if !defined(USERSPACE) && !defined(AGON_EXTENDER_P4_BOOT)
 #include "zdi.h"								// ZDI debugging console
 #endif /* !USERSPACE */
+
+#ifdef AGON_EXTENDER_P4_BOOT
+agon::extender::transport::DisconnectedStream disconnectedVDPStream;
+std::unique_ptr<agon::extender::web::BrowserVideoProvider>	browserVideoProvider;
+std::unique_ptr<agon::extender::network::WiredNetworkService>	wiredNetworkService;
+#endif
 
 TaskHandle_t		Core0Task;					// Core 0 task handle
 
@@ -101,12 +136,27 @@ void setup() {
 		disableCore0WDT(); delay(200);				// Disable the watchdog timers
 		disableCore1WDT(); delay(200);
 	#endif
-	DBGSerial.begin(SERIALBAUDRATE, SERIAL_8N1, 3, 1);
+	#ifdef AGON_EXTENDER_P4_BOOT
+		// Stock UART0 GPIO 3/1 is inapplicable on the DevKit. ESP-IDF logging is
+		// routed to the sdkconfig-selected USB Serial/JTAG console instead.
+		ESP_LOGI("extender_identity", "source_identity=%s",
+			AGON_EXTENDER_SOURCE_IDENTITY);
+		ESP_LOGI("extender_identity", "build_id=%s", AGON_EXTENDER_BUILD_ID);
+		ESP_LOGI("extender_identity", "artifact_status=%s",
+			AGON_EXTENDER_ARTIFACT_STATUS);
+		ESP_LOGI("extender_boot", "retained VDP setup starting");
+	#else
+		DBGSerial.begin(SERIALBAUDRATE, SERIAL_8N1, 3, 1);
+	#endif
 	changeMode(startup_screen_mode);
 	copy_font();
-	setupVDPProtocol();
-	processor = new VDUStreamProcessor(&VDPSerial);
-	xTaskCreatePinnedToCore(
+	#ifdef AGON_EXTENDER_P4_BOOT
+		processor = new VDUStreamProcessor(&disconnectedVDPStream);
+	#else
+		setupVDPProtocol();
+		processor = new VDUStreamProcessor(&VDPSerial);
+	#endif
+	auto processTaskResult = xTaskCreatePinnedToCore(
 		processLoop,
 		"processLoop",
 		4096,		// Stack size - highwater mark checks show this generally still leaves about 2000 words free
@@ -115,8 +165,30 @@ void setup() {
 		&Core0Task,
 		0			// Core 0
 	);
-	initAudio();
+	#ifdef AGON_EXTENDER_P4_BOOT
+		if (processTaskResult != pdPASS) {
+			ESP_LOGE("extender_boot", "retained process task creation failed");
+		}
+	#else
+		(void)processTaskResult;
+		initAudio();
+	#endif
 	boot_screen();
+	#ifdef AGON_EXTENDER_P4_BOOT
+		if (_VGAController == nullptr) {
+			ESP_LOGE("extender_boot", "browser service has no display controller");
+		} else {
+			browserVideoProvider.reset(
+				new agon::extender::web::BrowserVideoProvider(
+					_VGAController->snapshotPool()));
+			wiredNetworkService.reset(
+				new agon::extender::network::WiredNetworkService(
+					*browserVideoProvider));
+			if (!wiredNetworkService->start()) {
+				ESP_LOGE("extender_boot", "wired browser service start failed");
+			}
+		}
+	#endif
 	debug_log("Setup ran on core %d, busy core is %d\n\r", xPortGetCoreID(), CoreUsage::busiestCore());
 }
 
@@ -125,6 +197,70 @@ void setup() {
 void loop() {
 	while (true) {
 		delay(1000);
+		#ifdef AGON_EXTENDER_P4_BOOT
+			// Phase F target qualification reads only thread-safe, sink-owned
+			// counters here. Do not sample LogicalFrameService::metrics() while
+			// its task is running: that interface is intentionally post-stop.
+			static uint8_t diagnosticSeconds = 0;
+			if (++diagnosticSeconds >= 10) {
+				diagnosticSeconds = 0;
+				if (_VGAController != nullptr) {
+					auto const snapshot = _VGAController->snapshotPool().metrics();
+					ESP_LOGI("extender_snapshot",
+						"enabled=%u alloc_fail=%u cadence=%u transition=%u "
+						"producer_busy=%u no_slot=%u compose_fail=%u "
+						"published=%u no_new=%u",
+						static_cast<unsigned>(snapshot.enabled),
+						static_cast<unsigned>(snapshot.allocation_failures),
+						static_cast<unsigned>(snapshot.cadence_skips),
+						static_cast<unsigned>(snapshot.transition_busy),
+						static_cast<unsigned>(snapshot.producer_busy),
+						static_cast<unsigned>(snapshot.producer_no_slot),
+						static_cast<unsigned>(snapshot.composition_failures),
+						static_cast<unsigned>(snapshot.publications),
+						static_cast<unsigned>(snapshot.consumer_no_new));
+				}
+				if (wiredNetworkService != nullptr) {
+					auto const network = wiredNetworkService->metrics();
+					ESP_LOGI("extender_network",
+						"state=%u clients=%u refused=%u credits=%u protocol=%u "
+						"sent=%u send_fail=%u disconnect_release=%u http=%u/%u "
+						"http_fail=%u queued=%u queue_fail=%u socket_fail=%u",
+						static_cast<unsigned>(wiredNetworkService->state()),
+						static_cast<unsigned>(network.video.clients_accepted),
+						static_cast<unsigned>(network.video.clients_refused),
+						static_cast<unsigned>(network.video.credits_accepted),
+						static_cast<unsigned>(network.video.protocol_errors),
+						static_cast<unsigned>(network.video.sends_completed),
+						static_cast<unsigned>(network.video.sends_failed),
+						static_cast<unsigned>(network.video.disconnect_releases),
+						static_cast<unsigned>(network.http_starts),
+						static_cast<unsigned>(network.http_stops),
+						static_cast<unsigned>(network.http_start_failures),
+						static_cast<unsigned>(network.queued_sends),
+						static_cast<unsigned>(network.queue_failures),
+						static_cast<unsigned>(network.socket_send_failures));
+				}
+				if (browserVideoProvider != nullptr) {
+					auto const provider = browserVideoProvider->metrics();
+					ESP_LOGI("extender_provider",
+						"acquired=%u no_new=%u invalid=%u sent=%u failed=%u "
+						"disconnected=%u",
+						static_cast<unsigned>(provider.acquired),
+						static_cast<unsigned>(provider.no_new_message),
+						static_cast<unsigned>(provider.invalid_snapshot),
+						static_cast<unsigned>(provider.released_sent),
+						static_cast<unsigned>(provider.released_failed),
+						static_cast<unsigned>(provider.released_disconnected));
+				}
+				ESP_LOGI("extender_heap",
+					"free_8bit=%u minimum_8bit=%u free_psram=%u minimum_psram=%u",
+					static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_8BIT)),
+					static_cast<unsigned>(heap_caps_get_minimum_free_size(MALLOC_CAP_8BIT)),
+					static_cast<unsigned>(heap_caps_get_free_size(MALLOC_CAP_SPIRAM)),
+					static_cast<unsigned>(heap_caps_get_minimum_free_size(MALLOC_CAP_SPIRAM)));
+			}
+		#endif
 	};
 }
 
@@ -201,7 +337,11 @@ void force_debug_log(const char *format, ...) {
 		va_start(ap, format);
 		char buf[size + 1];
 		vsnprintf(buf, size, format, ap);
-		DBGSerial.print(buf);
+		#ifdef AGON_EXTENDER_P4_BOOT
+			ESP_LOGI("extender_vdp", "%s", buf);
+		#else
+			DBGSerial.print(buf);
+		#endif
 	}
 	va_end(ap);
 }
@@ -211,12 +351,21 @@ void force_debug_log(const char *format, ...) {
 // - mode: 0 = off, 1 = on
 //
 void setConsoleMode(bool mode) {
+	#ifdef AGON_EXTENDER_P4_BOOT
+		(void)mode;
+		consoleMode = false;
+	#else
 	consoleMode = mode;
+	#endif
 }
 
 // Terminal mode state machine transition calls
 //
 void startTerminal() {
+	#ifdef AGON_EXTENDER_P4_BOOT
+		terminalState = TerminalState::Disabled;
+		return;
+	#else
 	switch (terminalState) {
 		case TerminalState::Disabled: {
 			terminalState = TerminalState::Enabling;
@@ -228,9 +377,14 @@ void startTerminal() {
 			terminalState = TerminalState::Resuming;
 		} break;
 	}
+	#endif
 }
 
 void stopTerminal() {
+	#ifdef AGON_EXTENDER_P4_BOOT
+		terminalState = TerminalState::Disabled;
+		return;
+	#else
 	switch (terminalState) {
 		case TerminalState::Enabled:
 		case TerminalState::Resuming: 
@@ -242,9 +396,14 @@ void stopTerminal() {
 			terminalState = TerminalState::Disabled;
 		} break;
 	}
+	#endif
 }
 
 void suspendTerminal() {
+	#ifdef AGON_EXTENDER_P4_BOOT
+		terminalState = TerminalState::Disabled;
+		return;
+	#else
 	switch (terminalState) {
 		case TerminalState::Enabled:
 		case TerminalState::Resuming: {
@@ -257,11 +416,15 @@ void suspendTerminal() {
 			terminalState = TerminalState::Suspending;
 		} break;
 	}
+	#endif
 }
 
 // Process terminal state machine
 //
 bool processTerminal() {
+	#ifdef AGON_EXTENDER_P4_BOOT
+		return false;
+	#else
 	switch (terminalState) {
 		case TerminalState::Disabled: {
 			// Terminal is not currently active, so pass on to VDU system
@@ -341,6 +504,7 @@ bool processTerminal() {
 		} break;
 	}
 	return true;
+	#endif
 }
 
 void print(char const * text) {

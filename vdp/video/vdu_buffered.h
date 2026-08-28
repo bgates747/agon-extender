@@ -11,7 +11,12 @@
 #include <fabutils.h>
 
 #include "agon.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/audio/unavailable_audio_adapter.hpp"
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 #include "agon_fonts.h"
 #include "buffers.h"
 #include "buffer_stream.h"

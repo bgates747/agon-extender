@@ -1,0 +1,125 @@
+schema_version: 1.0.0
+artifact_kind: port_006_initial_browser_video_service_contract
+status: frozen
+authority:
+  task: docs/tasks/PORT-006.md#initial-browser-video-tranche
+  consumer: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+framework:
+  arduino_esp32: 3.3.11
+  esp_idf: 5.5.5
+  split:
+    ethernet_and_dhcp: Arduino ETH/Network wrapper over ESP-IDF esp_eth and esp_netif
+    http_and_websocket: ESP-IDF esp_http_server
+hardware:
+  board: Olimex ESP32-P4-DevKit Rev D1
+  phy: IP101GRI through Arduino ETH_PHY_IP101 alias
+  phy_address: 1
+  mdc_gpio: 31
+  mdio_gpio: 52
+  reset_gpio: 51
+  rmii:
+    tx_enable_gpio: 49
+    tx0_gpio: 34
+    tx1_gpio: 35
+    rx0_gpio: 29
+    rx1_enable_gpio: 30
+    crs_dv_gpio: 28
+    external_clock_gpio: 50
+    clock_mode: EMAC_CLK_EXT_IN
+  gpio23_optional_clock_link: R31 is DNP and observed unpopulated on the current board
+startup_call: ETH.begin(ETH_PHY_IP101, 1, 31, 52, 51, EMAC_CLK_EXT_IN)
+
+lifecycle:
+  actors:
+    arduino_network_event_task: Receives Ethernet and IP events; updates bounded service state and diagnostics only.
+    port_006_worker_task: Polls pending credit, acquires opaque messages outside network locks, and queues one send to the HTTP task.
+    esp_idf_http_task: Owns HTTP handlers and synchronous socket writes; releases the opaque lease after completion or failure.
+    port_003_provider: Owns frame header, immutable payload, generation token, and release callback; knows no socket or Ethernet object.
+  states: [stopped, starting, link_down, link_up_no_lease, leased_serving, faulted]
+  transitions:
+    - {from: stopped, event: start, to: starting, actor: P4 setup task, action: register network callback then call explicit ETH.begin}
+    - {from: starting, event: eth_started, to: link_down, actor: Arduino network event task, action: report interface start}
+    - {from: link_down, event: eth_connected, to: link_up_no_lease, actor: Arduino network event task, action: report physical link}
+    - {from: link_up_no_lease, event: eth_got_ip, to: leased_serving, actor: PORT-006 worker task, action: record observed DHCP data and start HTTP server}
+    - {from: leased_serving, event: eth_lost_ip, to: link_up_no_lease, actor: PORT-006 worker task, action: stop HTTP server and close client}
+    - {from: leased_serving, event: eth_disconnected, to: link_down, actor: PORT-006 worker task, action: stop HTTP server and close client}
+    - {from: link_up_no_lease, event: eth_disconnected, to: link_down, actor: Arduino network event task, action: report link loss}
+    - {from: link_down, event: eth_got_ip, to: leased_serving, actor: PORT-006 worker task, action: record observed DHCP data and start HTTP server}
+    - {from: leased_serving, event: stop, to: stopped, actor: P4 setup or recovery task, action: stop HTTP then Ethernet and release resources}
+  rules:
+    - DHCP is automatic; no IPv4 address, gateway, netmask, or DNS server is compiled into firmware.
+    - The router reservation may return the bench address but is not a firmware dependency or claim.
+    - Ethernet callbacks never call PORT-003, acquire frame leases, send WebSocket payloads, or hold a network lock across another owner.
+    - Link loss, DHCP loss, server failure, and reconnect cannot stop retained VDP or logical frame service tasks.
+    - Repeated link and lease events are idempotent and cannot create a second HTTP server or worker.
+
+opaque_message_api:
+  provider_method: tryAcquireAfter(last_successful_token, lease)
+  result: acquired, no_new_message, unavailable, or invalid
+  lease:
+    token_bits: 64
+    maximum_segments: 2
+    segment_0: immutable protocol bytes owned by PORT-003
+    segment_1: immutable payload bytes owned by PORT-003
+    maximum_total_bytes: 2359328
+    release: mandatory exactly once with sent, failed, or disconnected disposition
+  rules:
+    - PORT-006 treats every segment and token as opaque and does not parse EVF1 or pixels.
+    - PORT-006 holds at most one lease and one queued HTTP work item.
+    - PORT-006 does not copy, retain, concatenate, compress, or queue payloads.
+    - PORT-006 never holds its state guard while calling acquire or release.
+    - PORT-003 never calls Ethernet or HTTP code from its frame-service path.
+
+http:
+  listen: ordinary HTTP on the DHCP interface
+  routes:
+    - {path: /, method: GET, media_type: 'text/html; charset=utf-8', owner: PORT-003 asset}
+    - {path: /style.css, method: GET, media_type: 'text/css; charset=utf-8', owner: PORT-003 asset}
+    - {path: /app.js, method: GET, media_type: 'text/javascript; charset=utf-8', owner: PORT-003 asset}
+    - {path: /frame_protocol.js, method: GET, media_type: 'text/javascript; charset=utf-8', owner: PORT-003 asset}
+    - {path: /webgl2_presenter.js, method: GET, media_type: 'text/javascript; charset=utf-8', owner: PORT-003 asset}
+    - {path: /video, method: GET, media_type: WebSocket, owner: PORT-006 connection with PORT-003 opaque provider}
+  asset_policy:
+    storage: firmware-embedded immutable bytes
+    cache_control: no-store for first bench
+    filesystem: none
+  websocket:
+    video_clients: 1
+    credits_per_client: 1
+    send_execution: queued once to ESP-IDF HTTP task, then synchronous fragmented WebSocket writes
+    lease_release: after final continuation write returns, or immediately on any failure/disconnect
+
+diagnostics:
+  sink: ESP-IDF logging over configured USB Serial/JTAG console
+  periodic_actor: P4 Arduino loop task
+  periodic_interval_seconds: 10
+  required_events:
+    - exact source identity, build identity, and artifact status at startup
+    - network service start result
+    - PHY/link connected and disconnected
+    - DHCP IPv4 address, netmask, gateway, and DNS when available
+    - HTTP start and stop result
+    - video client accept, refusal, protocol close, and disconnect
+    - send failure and lease cleanup
+    - bounded snapshot, credit, send, and disconnect counters every ten seconds
+    - current and minimum free 8-bit and PSRAM heap every ten seconds
+  prohibited_data:
+    - machine-local SSH paths or credentials
+    - router administration details
+    - hard-coded bench addresses
+
+security_boundary:
+  intended_exposure: trusted private bench LAN only
+  authentication: none in this tranche
+  tls: none in this tranche
+  internet_exposure: prohibited and unclaimed
+  production_security: unclaimed
+exclusions:
+  - Wi-Fi and MOD-WIFI-ESP8266
+  - OTA and firmware management
+  - audio and file services
+  - mDNS or friendly discovery
+  - persistent network configuration
+  - TLS, authentication, authorization, and internet exposure
+  - multiple video clients
+  - Pi or other runtime relay

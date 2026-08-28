@@ -14,6 +14,7 @@
     "video/extender/display/palette_state.cpp",
     "video/extender/display/plane_storage.cpp",
     "video/extender/display/presentation_compositor.cpp",
+    "video/extender/display/presentation_snapshot_pool.cpp",
     "video/extender/port/fabutils_port.cpp"
   ],
   "vendored_translation_units": [

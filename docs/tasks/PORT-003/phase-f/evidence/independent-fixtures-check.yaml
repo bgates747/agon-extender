@@ -1,0 +1,43 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_independent_fixture_check
+generated_by: docs/tasks/PORT-003/phase-f/scripts/check-independent-fixtures.py
+oracle_independence: no production C++, JavaScript, header, or binary imported
+authority_records: 7
+documented_modes_checked: 53
+allocation_cases_checked: 4
+reconfigure_cases_checked: 3
+valid_evf1_vectors_checked:
+- one-pixel
+- compact-exact-message
+- accepted-fixture-size
+- maximum-retained-surface
+malformed_evf1_vectors_checked:
+- text-message
+- truncated-header
+- bad-magic
+- bad-version
+- bad-header-size
+- bad-pixel-format
+- unknown-flags
+- missing-full-frame
+- zero-width
+- zero-height
+- width-limit
+- height-limit
+- short-stride
+- payload-arithmetic
+- reserved-nonzero
+- truncated-payload
+- trailing-byte
+- payload-limit
+credit_reconnect_traces_checked:
+- disconnect-during-send
+- duplicate-credit-is-protocol-error
+- present-before-next-credit
+- reconnect-receives-retained-latest
+- second-client-refused
+- slow-browser-collapses-intermediate-generations
+visible_command_bytes: 106
+visible_rgb888_sha256: d368967667b3eee2315e2bb86129e7f423d904abd203c93dd0810906d08783d8
+visible_expected_svg_sha256: 6758d77e649273f43413d583c973f3526f0d881e920fd03651b38f4fdac4df1c
+result: pass

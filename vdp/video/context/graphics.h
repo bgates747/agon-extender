@@ -4,10 +4,18 @@
 #include <algorithm>
 #include <vector>
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
 #include "agon.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 #include "agon_screen.h"
 #include "agon_palette.h"
 #include "agon_ttxt.h"

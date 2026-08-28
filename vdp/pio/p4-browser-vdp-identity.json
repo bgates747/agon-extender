@@ -1,0 +1,7 @@
+{
+  "schema_version": 1,
+  "artifact_id": "extender-vdp",
+  "source_identity": "extender-vdp-v0.1.0",
+  "status": "candidate",
+  "variant": "olimex-p4-devkit"
+}

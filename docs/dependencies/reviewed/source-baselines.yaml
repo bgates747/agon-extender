@@ -12,8 +12,36 @@ sources:
     managed_import:
       presence_class: vendored-patched
       patched_paths:
+        - path: video/agon_fonts.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
         - path: video/agon_screen.h
           decision_ref: docs/decisions/ADR-0015-p4-display-backend-and-frame-service.md#decision
+        - path: video/context.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/context/cursor.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/context/fonts.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/context/graphics.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/context/viewport.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/sprites.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdp_variables.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdu.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdu_buffered.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdu_sprites.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdu_stream_processor.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/vdu_sys.h
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
+        - path: video/video.ino
+          decision_ref: docs/tasks/PORT-003.md#phase-f--browser-video-handoff-and-bootable-port
       mappings:
         - source_prefix: video/
           repository_path: vdp/video/

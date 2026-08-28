@@ -22,8 +22,11 @@ The Author accepted these contracts with the complete Phase F plan on
 ## Immutable snapshot pool
 
 1. Provision three fixed-capacity PSRAM slots, each able to hold packed RGB888
-   for the largest retained 1024-by-768 mode. Assert pixel size and overflow
-   bounds at build and runtime boundaries.
+   for the largest retained 1024-by-768 mode. Each slot is 2,359,296 bytes;
+   total pixel storage is 7,077,888 bytes. Assert pixel size and overflow
+   bounds at build and runtime boundaries. Initialization is all-or-nothing;
+   failure releases partial storage and disables publication without disabling
+   retained VDP execution.
 2. A slot is exactly one of free, producer-owned, latest-published, or leased.
    State transitions are bounded and tuple-unique; no unbounded allocation or
    queue exists.
@@ -35,28 +38,45 @@ The Author accepted these contracts with the complete Phase F plan on
 5. The network owner may lease only a complete published slot. The slot remains
    immutable until synchronous/asynchronous send completion or disconnect
    cleanup releases it. Consumers never receive a logical-plane pointer.
-6. Snapshot production uses a conservative first-bench cadence independent of
-   the 60/70/75 Hz logical clock. The exact cap is configuration metadata and a
-   measured beta parameter, not an application-visible VDP behavior.
+6. Releasing a lease restores it as latest when no newer publication exists;
+   otherwise release returns it to free. The network owner tracks its last
+   accepted 64-bit generation and cannot reacquire that same frame by granting
+   another credit. A reconnecting client may acquire the retained latest frame.
+7. Produced v1 snapshots are tightly packed: stride is exactly `width * 3`,
+   with red, green, and blue bytes in that order and no row padding.
+8. Snapshot production uses a 200,000-microsecond first-bench minimum interval
+   independent of the 60/70/75 Hz logical clock. Cadence skips occur before
+   slot acquisition and are not pool-pressure drops. The cap is configuration
+   metadata and a measured beta parameter, not application-visible VDP
+   behavior.
 
 ## EVF1 and browser credit
 
 1. One binary WebSocket message contains the 32-byte `EVF1` little-endian
    header followed by one complete packed RGB888 surface.
-2. Version 1 requires known magic/version/header length/pixel format/flags,
-   nonzero dimensions, `stride >= width * 3`, exact payload arithmetic, zero
-   reserved field, and no trailing or truncated bytes.
-3. Width and height cover every retained mode through 1024 by 768. Neither the
-   server nor browser assumes 320 by 240.
+2. Version 1 requires `EVF1`, version 1, exactly 32 header bytes, RGB888 format
+   1, no unknown flag bits, the full-frame flag, nonzero dimensions no larger
+   than 1024 by 768, `stride >= width * 3`, checked exact payload arithmetic no
+   larger than 2,359,296 bytes, a zero reserved field, and no trailing or
+   truncated bytes.
+3. The producer emits packed stride `width * 3`, both full-frame and
+   present-boundary flags, and the low 32 bits of the snapshot's 64-bit
+   generation as the wrapping wire sequence. Neither endpoint assumes 320 by
+   240.
 4. The first tranche accepts one video WebSocket client and one outstanding
    frame credit. A second video client receives a clear bounded refusal; this
    is not a permanent product-client-count decision.
-5. The browser grants the next credit only after validating and handing the
-   previous complete frame to its presentation loop. A pending credit selects
-   the newest later snapshot; intermediate generations may be dropped and
-   counted.
+5. One exact five-byte text message, `frame`, grants one credit. The browser
+   grants the next credit only after validating and actually presenting the
+   previous complete frame in its animation loop. A pending credit selects the
+   newest later snapshot; intermediate generations may be dropped and counted.
 6. Malformed browser requests or frame data terminate or reject only that
    connection. They do not alter VDP state.
+7. Server state is disconnected, idle, credit-pending, or sending. Browser
+   state is disconnected, waiting-for-frame, or pending-present. A second
+   credit while one is pending or sending is a protocol error. A send or
+   disconnect releases its lease; no pool transition guard is held while the
+   ESP-IDF HTTP task sends bytes.
 
 ## Browser interface
 

@@ -27,6 +27,12 @@ struct FrameNotice {
 class FrameWorkExecutor {
  public:
   virtual ~FrameWorkExecutor() = default;
+  // Optional sink-neutral timing metadata. Executors without a presentation
+  // producer retain the original no-op behavior.
+  virtual void setLogicalFramePeriodMicroseconds(
+      std::uint64_t period_microseconds) noexcept {
+    (void)period_microseconds;
+  }
   virtual void setFrameServiceRunning(bool running) noexcept = 0;
   virtual std::size_t executeFrameWork(std::size_t maximum_primitives) = 0;
   virtual std::uint32_t advanceFrameCounter(
@@ -63,6 +69,7 @@ class LogicalFrameService final {
   bool start() noexcept;
   void stop() noexcept;
   bool running() const noexcept;
+  void setFramePeriodMicroseconds(std::uint64_t period_microseconds) noexcept;
 
   // Timer/host notification boundary. This is allocation-free and lock-free
   // when the target's 32-bit atomic implementation is lock-free. Each pending

@@ -1,0 +1,41 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_snapshot_model_check
+generated_by: docs/tasks/PORT-003/phase-f/scripts/check-snapshot-model.py
+oracle_independence: no production source, header, or binary imported
+exhaustive_depth: 12
+normalized_states_checked: 71
+valid_transitions_checked: 217
+scenario_results:
+- id: publish-lease-release
+  states:
+  - latest
+  - free
+  - free
+  generation: 1
+  producer_no_slot: 0
+  producer_busy: 0
+- id: slow-consumer-new-latest
+  states:
+  - free
+  - latest
+  - free
+  generation: 2
+  producer_no_slot: 0
+  producer_busy: 0
+- id: producer-pressure
+  states:
+  - leased
+  - latest
+  - producer
+  generation: 2
+  producer_no_slot: 1
+  producer_busy: 1
+- id: cancel
+  states:
+  - free
+  - free
+  - free
+  generation: 0
+  producer_no_slot: 0
+  producer_busy: 0
+result: pass

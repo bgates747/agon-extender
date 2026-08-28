@@ -15,6 +15,7 @@
     "video/extender/display/palette_state.cpp",
     "video/extender/display/plane_storage.cpp",
     "video/extender/display/presentation_compositor.cpp",
+    "video/extender/display/presentation_snapshot_pool.cpp",
     "video/extender/display/screen_facade_adapter.cpp",
     "video/extender/display/screen_facade_p4_binding.cpp",
     "video/extender/port/fabutils_port.cpp"

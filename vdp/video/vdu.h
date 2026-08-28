@@ -4,7 +4,11 @@
 #include <HardwareSerial.h>
 
 #include "agon.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/audio/unavailable_audio_adapter.hpp"
+#else
 #include "vdu_audio.h"
+#endif
 #include "vdu_sys.h"
 
 extern bool consoleMode;

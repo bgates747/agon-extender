@@ -7,7 +7,11 @@
 #include <variant>
 
 #include <Stream.h>
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
 #include "agon.h"
 #include "buffers.h"
@@ -702,6 +706,10 @@ void VDUStreamProcessor::flushEcho() {
 }
 
 void VDUStreamProcessor::handleKeyboardAndMouse() {
+#ifdef AGON_EXTENDER_P4_BOOT
+	// PORT-005 owns the eventual processed-event source. Gate F has none.
+	return;
+#else
 	MouseDelta delta;
 	fabgl::VirtualKeyItem kbItem;
 
@@ -765,9 +773,14 @@ void VDUStreamProcessor::handleKeyboardAndMouse() {
 		// Send any pending event packets to MOS
 		processEventQueue();
 	}
+#endif
 }
 
 void VDUStreamProcessor::updateMouseVars(MouseDelta *delta) {
+#ifdef AGON_EXTENDER_P4_BOOT
+	// No physical mouse state exists in the Phase F no-device binding.
+	(void)delta;
+#else
 	auto mStatus = getMouse()->status();
 	setVDPVariable(VDPVAR_MOUSE_XPOS, mStatus.X);
 	setVDPVariable(VDPVAR_MOUSE_YPOS, mStatus.Y);
@@ -780,6 +793,7 @@ void VDUStreamProcessor::updateMouseVars(MouseDelta *delta) {
 		setVDPVariable(VDPVAR_MOUSE_DELTAX, delta->deltaX);
 		setVDPVariable(VDPVAR_MOUSE_DELTAY, delta->deltaY);
 	}
+#endif
 }
 
 #include "vdu.h"

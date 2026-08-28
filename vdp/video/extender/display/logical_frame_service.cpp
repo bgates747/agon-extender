@@ -35,6 +35,11 @@ bool LogicalFrameService::running() const noexcept {
   return running_.load(std::memory_order_acquire);
 }
 
+void LogicalFrameService::setFramePeriodMicroseconds(
+    std::uint64_t period_microseconds) noexcept {
+  executor_.setLogicalFramePeriodMicroseconds(period_microseconds);
+}
+
 bool LogicalFrameService::recordTicks(std::uint32_t elapsed_ticks) noexcept {
   if (elapsed_ticks == 0 || !running()) return false;
   std::uint32_t pending = pending_ticks_.load(std::memory_order_acquire);

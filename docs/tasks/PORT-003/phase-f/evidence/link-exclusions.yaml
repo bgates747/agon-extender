@@ -1,0 +1,76 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_link_exclusions
+generated_by: docs/tasks/PORT-003/phase-f/scripts/validate-phase-f-build.py
+diagnostic_status: project-selected application closure; broad framework archive compilation is recorded separately and is not an Extender feature claim
+environment: p4-browser-vdp
+source_pattern_matches:
+  vendor/vdp-gl/src/VGA*.cpp: []
+  vendor/vdp-gl/src/CVBS*.cpp: []
+  vendor/vdp-gl/src/scene.cpp: []
+  vendor/vdp-gl/src/ps2*.cpp: []
+  vendor/vdp-gl/src/soundgen.cpp: []
+  vendor/vdp-gl/src/network.cpp: []
+  video/agon_ps2.h: []
+  video/agon_audio.h: []
+  video/vdu_audio.h: []
+  video/vdp_protocol.h: []
+  video/updater.h: []
+  video/hexload.h: []
+  video/ymodem.h: []
+  video/zdi.h: []
+symbol_fragment_matches:
+  fabgl::VGA: []
+  fabgl::CVBS: []
+  fabgl::Scene: []
+  fabgl::PS2: []
+  fabgl::SoundGenerator: []
+  fabgl::FileBrowser: []
+  fabgl::Terminal: []
+  YModem: []
+  YMODEM: []
+  agon::extender::transport::Parallel: []
+  agon::extender::transport::Return: []
+  agon::extender::transport::Uart: []
+storage_symbol_fragment_matches:
+  'fs::FS::': []
+  'fs::File::': []
+  'SDClass::': []
+  'SDFS::': []
+  'SPIFFSFS::': []
+  'LittleFSFS::': []
+wifi:
+  selected_project_source_references: {}
+  operational_symbol_matches:
+    WiFiSTAClass::begin(: []
+    WiFiSTAClass::connect(: []
+    WiFiAPClass::softAP(: []
+    WiFiScanClass::scanNetworks(: []
+    WiFiGenericClass::mode(: []
+    WiFiGenericClass::enableSTA(: []
+    WiFiGenericClass::enableAP(: []
+  allowed_framework_residue:
+  - WiFi
+  - WiFiClass::~WiFiClass()
+  - WiFiGenericClass::WiFiGenericClass()
+  - _GLOBAL__sub_I__ZN9WiFiClass9printDiagER5Print
+  observed_framework_residue:
+  - WiFi
+  - WiFiClass::~WiFiClass()
+  - WiFiGenericClass::WiFiGenericClass()
+  - _GLOBAL__sub_I__ZN9WiFiClass9printDiagER5Print
+  missing_allowed_residue: []
+  unexpected_residue: []
+  classification: Arduino Ethernet dependency packaging contributes an unused global WiFi object constructor/destructor; no project source selects Wi-Fi and no operational Wi-Fi API is linked
+framework_boundary:
+  classification: Arduino/ESP-IDF and managed-component archives are dependencies, not project-selected application translation units
+  application_object_prefixes:
+  - selected-vdp-gl/
+  - video/
+  - vendor/
+  absolute hardware-register symbols_are_not_storage_api_evidence: true
+summary:
+  source_match_count: 0
+  symbol_match_count: 0
+  storage_symbol_match_count: 0
+  wifi_operational_symbol_match_count: 0
+  exclusions_proved: true

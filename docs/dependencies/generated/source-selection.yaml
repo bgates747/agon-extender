@@ -2,7 +2,7 @@ schema_version: 1.0.0
 artifact_kind: source_selection_projection
 source_graph:
   id: graph:agon-extender:vdp-source-selection-v2
-  sha256: eb37d1e57865f789e0bcea3d785770e7f97e245c9fabb69154d13d8efffa304f
+  sha256: 1c8afd52354c7946afb7c3a0554e9e4a7ac3f82030093844d67c8c6acf0f67ab
 build_profiles:
 - id: build-profile:extender:p4-default
   label: Agon Extender ESP32-P4 default target
@@ -10,7 +10,7 @@ build_profiles:
   target_board: Olimex ESP32-P4-DevKit
   platform: pioarduino 55.03.311
   framework: Arduino and ESP-IDF hybrid
-  configuration: PORT-003 Phase E official display facade and Teletext compile/link proved; physical output and transport remain incomplete
+  configuration: PORT-003 Phase F retained VDP lifecycle, immutable browser snapshots, and wired browser service compile/link proved; VDU ingress, return transport, and physical runtime remain incomplete
   source_ids:
   - source:CRC:1.0.4
   - source:ESP32Time:2.0.6
@@ -195107,66 +195107,101 @@ subjects:
     - SETUP-004.1.c:transport-stock-uart-hardware:replace
     replacement_subject_id: build-unit:extender:p4-port-adapters
 project_boundaries:
+- id: build-unit:extender:p4-browser-vdp-boot
+  label: Phase F retained VDP and browser-video boot bridge
+  path: video/extender/boot/p4_browser_vdp.cpp
+  state: phase-f-target-closure
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-browser-video-provider
+  label: Snapshot-to-EVF1 opaque-message bridge
+  path: video/extender/web/browser_video_provider.cpp
+  state: phase-f-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-browser-video-service-core
+  label: Platform-neutral bounded browser-video connection core
+  path: video/extender/network/browser_video_service_core.cpp
+  state: phase-f-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-cursor-position-adapter
   label: Display-only processed cursor-position adapter
   path: video/extender/display/cursor_position_adapter.cpp
   state: phase-e-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-disconnected-stream
+  label: Disconnected Arduino Stream ingress placeholder
+  path: video/extender/transport/disconnected_stream.cpp
+  state: phase-f-explicit-nonclaim
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-display-controller
   label: P4 retained-renderer display controller
   path: video/extender/display/p4_display_controller.cpp
-  state: phase-e-qualified-host
+  state: phase-f-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-embedded-browser-assets
+  label: Embedded browser interface asset bindings
+  path: video/extender/web/embedded_assets.cpp
+  state: phase-f-target-closure
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-frame-task-adapter
   label: ESP timer and FreeRTOS frame-service adapter
   path: video/extender/display/p4_frame_service.cpp
-  state: phase-e-target-closure
+  state: phase-f-target-closure
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-logical-frame-service
   label: Sink-independent logical frame state machine
   path: video/extender/display/logical_frame_service.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-native-pixel-codec
   label: P4 native pixel codecs
   path: video/extender/display/native_pixel_codec.cpp
   state: phase-b-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
-- id: build-unit:extender:p4-official-display-canary
-  label: PORT-003 Phase E official-display diagnostic entry
-  path: video/extender/canary/official_display_canary.cpp
-  state: diagnostic-official-display
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-opaque-network-message
+  label: Opaque bounded two-segment network message lease
+  path: video/extender/network/opaque_message.cpp
+  state: phase-f-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-palette-state
   label: P4 palette and Copper state
   path: video/extender/display/palette_state.cpp
   state: phase-d-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-plane-storage
   label: P4 transactional display-plane storage
   path: video/extender/display/plane_storage.cpp
   state: phase-c-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-port-adapters
   label: Project-owned P4 port adapters
   path: null
-  state: phase-e-official-mode-integration
+  state: phase-f-browser-video-handoff
   task: PORT-003
   evidence_ids:
   - evidence:reviewed:p4-port-adapter-boundary
@@ -195175,34 +195210,49 @@ project_boundaries:
   - evidence:build-profile:port-003-phase-c
   - evidence:build-profile:port-003-phase-d
   - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-presentation-compositor
   label: Sink-neutral RGB888 presentation compositor
   path: video/extender/display/presentation_compositor.cpp
   state: phase-d-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-presentation-snapshot-pool
+  label: Fixed-capacity immutable RGB888 presentation snapshot pool
+  path: video/extender/display/presentation_snapshot_pool.cpp
+  state: phase-f-qualified-host
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-screen-facade-adapter
   label: Transactional official-mode screen facade
   path: video/extender/display/screen_facade_adapter.cpp
   state: phase-e-qualified-host
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-screen-facade-binding
   label: P4 frame-service binding for the official screen facade
   path: video/extender/display/screen_facade_p4_binding.cpp
-  state: phase-e-target-closure
+  state: phase-f-target-closure
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
 - id: build-unit:extender:p4-vdp-gl-port-utility-closure
   label: P4 vdp-gl utility compatibility closure
   path: video/extender/port/fabutils_port.cpp
   state: phase-b-narrow-port
   task: PORT-003
   evidence_ids:
-  - evidence:build-profile:port-003-phase-e
+  - evidence:build-profile:port-003-phase-f
+- id: build-unit:extender:p4-wired-network-service
+  label: P4 Ethernet, HTTP, and WebSocket service adapter
+  path: video/extender/network/wired_network_service.cpp
+  state: phase-f-target-closure
+  task: PORT-003
+  evidence_ids:
+  - evidence:build-profile:port-003-phase-f
 summary:
   build-profile:extender:p4-default:
     available-not-selected: 882

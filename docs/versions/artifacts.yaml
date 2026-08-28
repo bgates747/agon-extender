@@ -1,18 +1,31 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r11
-updated_at: 2026-08-25T01:34:56Z
+registry_revision: r12
+updated_at: 2026-08-28T01:43:55Z
 
 artifacts:
   - artifact_id: extender-vdp
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: null
-    status: draft
+    latest_identity: extender-vdp-v0.1.0
+    status: candidate
     variants:
       - olimex-p4-devkit
     description: Production Extender VDP firmware lineage.
+    notes:
+      - Version v0.1.0 freezes the first bootable retained-VDP P4 browser-video target for P4-only qualification.
+      - This candidate has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
+
+  - artifact_id: p4-browser-video-qualification
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: p4-browser-video-qualification-r01
+    status: candidate
+    variants: []
+    description: P4-only boot, wired Ethernet, browser-video, lifecycle, and memory-stability qualification procedure.
+    notes:
+      - Revision r01 keeps the Agon physically disconnected and does not qualify VDU ingress, return UART, EMOS routing, or assembled-system electrical behavior.
 
   - artifact_id: setup-001-canary
     kind: experimental_firmware

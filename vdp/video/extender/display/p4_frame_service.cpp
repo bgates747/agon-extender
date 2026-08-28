@@ -20,6 +20,8 @@ P4FrameServiceStartResult P4FrameService::start(
     return P4FrameServiceStartResult::InvalidConfiguration;
   }
 
+  logical_service_.setFramePeriodMicroseconds(config.period_microseconds);
+
   task_stopped_ = xSemaphoreCreateBinary();
   if (task_stopped_ == nullptr) {
     return P4FrameServiceStartResult::SemaphoreAllocationFailed;

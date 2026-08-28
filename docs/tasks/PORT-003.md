@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: In progress — Phases A–E complete; Phase F plan accepted
+- Status: In progress — Phases A–E and Phase F items 1–14 complete;
+  predeployment identity/procedure approval pending
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1895,73 +1896,73 @@ before proceeding.
    ownership boundaries, exclusions, proposed contracts, fixture rules,
    implementation order, and stop conditions. Create the task-local Phase F
    package and do not edit product code during this item.
-2. [ ] Generate a bounded source/provenance inventory for the official parser
+2. [x] Generate a bounded source/provenance inventory for the official parser
    and sketch lifecycle, current P4 display/frame APIs, legacy browser assets
    and `EVF1` protocol, pinned ESP-IDF Ethernet/HTTP facilities, and the current
    EMOS mode/adapter seams. Fingerprint exact inputs; do not perform another
    whole-firmware survey.
-3. [ ] Define the bootable retained-port closure. Preserve the official
+3. [x] Define the bootable retained-port closure. Preserve the official
    `VDUStreamProcessor`, VDU handlers, contexts, buffers, screen facade,
    Teletext, and Arduino/FreeRTOS lifecycle while replacing only already
    accepted P4-inapplicable bindings. Keep audio, physical input, updater,
    terminal/ZDI hardware, and return packets explicit rather than allowing
    missing symbols to choose behavior accidentally.
-4. [ ] Freeze and independently model a fixed-capacity immutable presentation
+4. [x] Freeze and independently model a fixed-capacity immutable presentation
    snapshot pool. The proposed first contract uses three PSRAM-backed slots
    sized for the largest retained 1024-by-768 RGB888 surface: at most one
    producer slot, one latest published slot, and one leased network slot. The
    producer never waits for a slot; pressure records a dropped presentation.
    No consumer receives a mutable logical-plane pointer.
-5. [ ] Freeze the `EVF1` wire contract and browser credit state machine before
+5. [x] Freeze the `EVF1` wire contract and browser credit state machine before
    implementation. Validate every field and arithmetic bound, support all
    retained dimensions and packed RGB888 stride, allow one outstanding browser
    frame request, send only an immutable complete snapshot, and release its
    lease after the network send completes or the client disconnects.
-6. [ ] Freeze the narrow PORT-006 service contract: DHCP with observed lease,
+6. [x] Freeze the narrow PORT-006 service contract: DHCP with observed lease,
    onboard Ethernet link lifecycle, embedded static assets, HTTP routes, one
    first-tranche video WebSocket client, opaque bounded sends, disconnect
    cleanup, and USB serial diagnostics. No Pi relay, Wi-Fi, OTA, management,
    authentication claim, internet exposure, or unrelated service enters this
    bench tranche.
-7. [ ] Build independent fixtures before production code: snapshot-pool state
+7. [x] Build independent fixtures before production code: snapshot-pool state
    traces, mode/reconfigure/failure cases through 1024-by-768, exact `EVF1`
    byte vectors, malformed-frame rejection, browser credit/reconnect traces,
    deterministic presentation hashes, and the accepted visible VDU-command
    fixture. Expected values come from written contracts, official docs/source,
    or separately reviewed legacy bytes—not the implementation under test.
-8. [ ] Implement the project-owned immutable snapshot publisher and lease API.
+8. [x] Implement the project-owned immutable snapshot publisher and lease API.
    Composition occurs only at a controller-owned quiescent frame boundary and
    never calls network code. Limit first-bench snapshot production to a
    documented conservative cadence; logical frame time continues independently
    when no slot or browser is available.
-9. [ ] Adapt the legacy browser presentation into current project-owned assets.
+9. [x] Adapt the legacy browser presentation into current project-owned assets.
    Preserve its accepted visual language, strict frame parser, pixelated 4:3
    presentation, local browser test pattern, connection state, and statistics.
    Replace stale physical-scanout wording, fixed dimensions, and one-frame
    behavior; issue the next credit only after the prior frame is accepted for
    browser presentation.
-10. [ ] Implement the narrow PORT-006 wired service and bind its opaque send
+10. [x] Implement the narrow PORT-006 wired service and bind its opaque send
     interface to PORT-003's leased snapshots. Keep Ethernet/HTTP code under the
     network owner and pixel/frame semantics under the display owner. A slow or
     failed send may consume its one lease and cause later presentation drops,
     but it cannot block the frame service or VDU command path.
-11. [ ] Assemble a bootable P4 target from the retained official VDP lifecycle,
+11. [x] Assemble a bootable P4 target from the retained official VDP lifecycle,
     completed P4 display facade, snapshot publisher, browser sink, and a
     disconnected project transport ingress implementing the required Arduino
     `Stream` contract. PORT-008 later supplies the parallel ingress. Preserve
     upstream startup and General Poll behavior; do not invent startup bytes or
     mark a missing return transport as qualified.
-12. [ ] Run deterministic host tests under sanitizers plus browser-side parser
+12. [x] Run deterministic host tests under sanitizers plus browser-side parser
     and state-machine tests. Exercise null, fast, slow, disconnecting, and
     reconnecting consumers; slot exhaustion; mode changes; allocation failure;
     malformed frames; sequence rollover; repeated start/stop; and sustained
     bounded operation. Re-run all Phase A--E and dependency regressions.
-13. [ ] Add and validate the exact P4 build closure. Prove the retained parser,
+13. [x] Add and validate the exact P4 build closure. Prove the retained parser,
     official facade, P4 controller/frame/snapshot code, browser assets, and
     narrow wired service are linked, while classic VGA/CVBS, PS/2 acquisition,
     physical audio, updater, Wi-Fi, storage, and the parallel/return transports
     remain absent until their owning tasks select them.
-14. [ ] Regenerate provenance, dependency, source-selection, compatibility,
+14. [x] Regenerate provenance, dependency, source-selection, compatibility,
     and qualification artifacts twice byte-identically. Audit all changed
     source, generated evidence, links, schemas, paths, comments, and exclusions.
     Present the committed-artifact identities and exact P4-only deployment
@@ -1974,6 +1975,242 @@ before proceeding.
     firmware target to PORT-008, which adds the parallel `Stream` ingress and
     runs the explicit-EMOS official-command fixture. Do not begin return UART,
     production electrical tuning, or broad compatibility qualification.
+
+### Phase F execution record
+
+1. Item 2 generated a bounded inventory at
+   `docs/tasks/PORT-003/phase-f/evidence/source-provenance.yaml` with a matching
+   Markdown review rendering. It fingerprints the exact retained VDP, P4
+   display, legacy browser, ESP-IDF/Arduino networking, official-documentation,
+   build-boundary, and EMOS seam inputs without recording machine-local paths.
+   Final item-14 regeneration contains 103 records and matched both tracked
+   outputs byte-for-byte. The inventory
+   confirms that immutable presentation leases are new PORT-003 work, while the
+   physical EMOS forward adapter remains PORT-008 work.
+2. Item 3 froze `phase-f/boot-closure.yaml` and its deterministic Markdown
+   rendering. The closure retains the official parser, setup/loop shape,
+   process task, General Poll startup gate, screen/context/buffer state,
+   Teletext, RTC surface, and official boot banner. It names each unavoidable
+   P4 binding explicitly: disconnected `Stream`, USB diagnostics, no-device
+   processed-input seam, deferred PORT-004 audio binding, accepted maintenance
+   exclusions, and post-boot PORT-006 startup. Missing physical subsystems are
+   nonclaims rather than linker-selected behavior. The renderer validates
+   tuple-unique IDs and the presence of every retained or vendored input and
+   reproduced its output byte-identically.
+3. Item 4 froze `phase-f/fixtures/snapshot-pool-model.yaml`: three fixed
+   2,359,296-byte PSRAM slots, 7,077,888 pixel bytes total, tightly packed
+   RGB888, 64-bit internal generations, explicit free/producer/latest/leased
+   transitions, reconnect-safe release behavior, and a 200,000-microsecond
+   first-bench production interval. The independent Python oracle imports no
+   production code; its four named scenarios and depth-12 exploration of 71
+   normalized states and 217 valid transitions pass byte-deterministically.
+4. Item 5 froze `phase-f/fixtures/evf1-contract.yaml`. EVF1 v1 is an exact
+   32-byte little-endian header plus a bounded complete RGB888 payload; current
+   producers emit packed stride, both known flags, and the low 32 bits of the
+   snapshot generation. The exact text `frame` grants one credit. Server and
+   browser transition tables prohibit a second outstanding credit, hold only
+   one immutable lease/frame, release on send failure or disconnect, and issue
+   the next credit only after browser animation presentation. The independent
+   checker covers every header byte and passes four lifecycle scenarios without
+   importing production C++ or JavaScript.
+5. Item 6 froze `phase-f/network-service-contract.yaml`. Arduino-ESP32 3.3.11
+   owns explicit IP101/RMII initialization and DHCP events; ESP-IDF 5.5.5 owns
+   HTTP/WebSocket tasks and socket writes. The contract records all ten onboard
+   Ethernet GPIO roles, a six-route embedded-asset surface, idempotent
+   link/lease/server transitions, USB diagnostics, private-LAN-only exposure,
+   and a two-segment 2,359,328-byte maximum opaque lease. PORT-006 holds one
+   credit, one lease, and one queued send without parsing EVF1 or calling
+   PORT-003 under network locks. Its deterministic checker passes all unique
+   pin, transition, route, size, and exposure constraints.
+6. Item 7 generated `phase-f/fixtures/independent-fixtures.yaml` and the
+   human-reviewable `visible-vdu-command-expected.svg` without importing
+   production C++ or browser JavaScript. Seven exact authority fingerprints
+   support 53 documented mode profiles through 1024 by 768, four all-or-nothing
+   allocation outcomes, three no-reallocation mode changes, four valid EVF1
+   vectors, 18 malformed-frame rejections, and six browser credit/reconnect
+   traces. The accepted 106-byte official VDU stream selects mode 9, disables
+   the cursor, draws two colored text strings, three axial lines, two filled
+   rectangles, and visibly remaps one palette entry. Its independently rendered
+   230,400-byte RGB888 expectation hashes to
+   `d368967667b3eee2315e2bb86129e7f423d904abd203c93dd0810906d08783d8`.
+   Independent regeneration was byte-identical, and the separate consistency
+   checker passes every vector and fixture family.
+7. Item 8 added `presentation_snapshot_pool.hpp/.cpp` and bound it to the end
+   of `P4DisplayController::executeFrameWork()`, after retained primitive and
+   sprite work but before the controller releases its frame-boundary ownership.
+   Three PSRAM-only maximum-size slots are allocated all-or-nothing on P4; an
+   allocation failure leaves the display controller available and publication
+   disabled. The frame-task producer tries the short transition guard once,
+   composes into one private mutable slot, and publishes an immutable complete
+   generation or defers one bounded transition without waiting. The network
+   side receives a move-only immutable lease and never holds the transition
+   guard while using bytes. A retained latest generation survives disconnect
+   and may be acquired by a new connection.
+
+   Standalone and controller-integrated sanitizer checks pass allocation
+   failure at slots one through three, cancellation, cadence, held-lease/new-
+   latest behavior, reconnect, 1024-by-768 mode change, packed metadata, and
+   palette-expanded bytes. Existing controller presentation checks also pass.
+   A compile-only `p4-official-display` attempt stopped before compiling source:
+   PlatformIO rebuilt its private Python environment after a 3.12/3.14 mismatch
+   and then reported a missing Arduino framework directory. This is recorded as
+   a local build-tool regression for the item 13 build gate; no firmware change
+   was made around it.
+8. Item 9 added the project-owned browser assets under
+   `vdp/video/extender/web/`. They preserve the accepted legacy dark shell,
+   pixelated 4:3 canvas, compact controls, statistics, WebGL2 upload path, and
+   local test-pattern facility while replacing physical-scanout terminology,
+   fixed dimensions, permissive parsing, and one-frame-only flow. The browser
+   validates every frozen EVF1 field and bound, holds one pending complete
+   frame, and emits the next exact `frame` credit only after its animation loop
+   invokes the presenter. Mode changes recreate the immutable WebGL texture;
+   padded rows use one reusable staging buffer.
+
+   A framework-free browser-native test imports the production parser, credit
+   state, and WebGL presenter. Firefox headless passed 25 checks covering the
+   independent compact vector, demo formula, representative malformed input,
+   initial/presentation/reconnect credit, duplicate-frame rejection, and actual
+   WebGL pixel readback. The local test pattern also traversed parser and
+   presenter and reported a 320-by-240 surface, one received frame, and one
+   presented frame. Node.js is absent from this host; the broader item 12
+   browser runner must remain browser-native or explicitly provision its own
+   declared runtime.
+9. Item 10 implemented the narrow PORT-006 service in
+   `video/extender/network/` and the sole EVF1/snapshot bridge in
+   `video/extender/web/browser_video_provider.hpp/.cpp`. The network owner uses
+   explicit IP101/RMII startup, ordinary DHCP, coalesced link/lease events, a
+   dedicated worker, direct ESP-IDF HTTP/WebSocket service, six embedded
+   routes, one post-handshake client, one exact credit, one opaque two-segment
+   lease, and one queued HTTP-task send. Provider acquisition, send, and
+   release happen outside short network state locks; Ethernet callbacks only
+   record events and wake the worker. Disconnect and failed sends release the
+   immutable snapshot without blocking the frame producer.
+
+   The bridge validates packed RGB888 snapshot metadata and constructs the
+   exact EVF1 header while holding one move-only immutable snapshot lease.
+   Sanitized host tests pass all bounded credit, generation, completion,
+   failure, disconnect, reconnect, and payload cases. The
+   `p4-network-service` diagnostic compiles and links at the pinned 360 MHz P4
+   profile with Arduino-ESP32 3.3.11 and ESP-IDF 5.5.5; its ELF contains the
+   network/provider symbols and all five embedded browser assets. It publishes
+   no frame and makes no boot, DHCP, or hardware claim.
+
+   The target build found and documented two environment/build-boundary
+   problems rather than hiding them in firmware. A stale Arduino 2.0.14 package
+   left by PlatformIO's Python-environment rebuild was replaced through the
+   pinned package install. PlatformIO's generic text-embedding hook generated
+   assembly but omitted its objects from this hybrid application's final link,
+   so the source-selection manifest now owns `embedded_text_files` and the
+   generator emits ESP-IDF-native application-component `EMBED_TXTFILES`.
+10. Item 11 assembled `p4-browser-vdp`, the first bootable retained-VDP P4
+    target. A deliberately exceptional Arduino/ESP-IDF bridge compiles the
+    retained `video.ino` setup, loop, process task, parser, contexts, buffers,
+    Teletext, RTC surface, boot banner, and General Poll gate without copying
+    their ownership into a second lifecycle. The target binds the P4 display,
+    immutable snapshot publisher, browser-video provider, and wired service
+    after the retained boot screen.
+
+    Every unavailable binding is explicit. A disconnected Arduino `Stream`
+    preserves parser construction while supplying no VDU bytes or qualified
+    return path; no-device input, deferred audio, and unavailable-maintenance
+    adapters close only the already accepted Phase F exclusions. A narrow
+    vdp-gl compatibility include retains Canvas, codepage, font, and common
+    display facilities without pulling classic Terminal, PS/2, or sound
+    hardware into the P4 image. USB Serial/JTAG diagnostics replace the
+    inapplicable stock UART0 debug-pin binding. The unchanged General Poll wait
+    remains blocked until PORT-008 supplies real ingress.
+
+    The pinned `p4-browser-vdp` environment compiled and linked successfully at
+    360 MHz and produced an ESP32-P4 application image plus a combined factory
+    image. PlatformIO reported 46,084 of 512,000 bytes RAM, 1,217,592 of
+    7,340,032 bytes application flash, and a 1,218,439-byte total image before
+    binary padding. This is predeployment build evidence only: item 13 still
+    owns exact linked-symbol/exclusion proof, and no boot, Ethernet, browser,
+    transport, or hardware claim has yet been made.
+11. Item 12 added one reproducible nonphysical regression orchestrator and
+    passed all 16 of its gates. ASan/UBSan harnesses exercised allocation
+    failure, bounds, cancellation, mode changes through 1024 by 768, null and
+    disconnected consumers, a held slow lease, slot pressure, 4,096 sustained
+    snapshot publications, immutable held bytes, latest-state collapse, and
+    exact three-allocation teardown. The network/provider harness exercised
+    exact EVF1 bytes, fast sends, failed sends, disconnect during send,
+    reconnect, duplicate credit, 256 repeated client start/stop cycles, 2,048
+    fast frame transactions, and 1,023 publications behind one held send.
+
+    A real Firefox 154.0.1 run imported the production parser, credit state,
+    and WebGL presenter and passed 78 checks. It consumed all four independent
+    valid vectors and all 18 malformed vectors, including sequence
+    `0xffffffff` followed by zero, maximum retained dimensions, WebGL pixel
+    readback, presentation-gated credit, duplicate-frame rejection, and
+    reconnect. Four independent Phase F contract/fixture oracles, the eight-
+    gate Phase A--E host matrix, 13 dependency-tool tests, and all 58 permanent
+    Phase A--E tests also passed.
+
+    The complete orchestrator, browser evidence, and refreshed Phase E host
+    evidence reproduced byte-for-byte on a second run. A hermetic localhost
+    fixture additionally proves that the hardware qualification client checks
+    exact embedded assets, reassembles fragmented EVF1, detects a no-credit
+    quiet interval, and reconnects without recording its endpoint. Temporary
+    compiler paths are normalized out of tracked evidence, and the coverage map names
+    which gate proves each item-12 stress family. These remain host claims;
+    target closure and runtime behavior belong to items 13 and 15.
+12. Item 13 added a fail-closed post-link closure validator and passed it twice
+    byte-identically. The final map proves all 23 selected application units,
+    all five embedded browser objects, the retained Arduino lifecycle and VDU
+    parser, General Poll, complete mode switch, Teletext, P4 facade/controller/
+    frame/snapshot owners, EVF1 provider, wired service, and deliberately
+    disconnected ingress. Every project-owned hybrid-CMake compile record ends
+    in `-std=gnu++17`; the generated component pins that effective standard;
+    and the ELF identifies Arduino 3.3.11 and ESP-IDF 5.5.5.
+
+    The paired exclusion artifact proves no selected or linked classic
+    VGA/CVBS, Scene, PS/2, physical audio, Terminal/FileBrowser, updater,
+    storage API, parallel ingress, or return-UART implementation. Arduino's
+    Ethernet dependency causes its archive build to compile broad framework
+    code and leaves only the known global Wi-Fi constructor/destructor residue
+    in the final image; no selected project source references Wi-Fi and no
+    operational Wi-Fi API is linked. Framework archive breadth is therefore
+    recorded separately from the exact Extender application closure.
+
+    Exact-package qualification uncovered two build-tool hazards. PlatformIO's
+    global package store alternated this P4 target's Arduino 3.3.11 archive
+    with another checkout's Arduino 2.x package, so the tracked project now
+    isolates tool packages under ignored `vdp/.pio/packages`. Also, running
+    PlatformIO's `compiledb` target cleared the linker map while retaining a
+    stale ELF/bin; the validator rejected that incoherent state. Closure proof
+    therefore follows one complete build and never an intervening `compiledb`
+    invocation. The final predeployment rebuild uses 46,500 bytes RAM and
+    1,222,912 bytes application flash. Its application image is 1,223,776
+    bytes with SHA-256
+    `4b066beb87a8b0c0b8c5ff242f29fcdb5b18b10c014a550dc3a75332cb809b3e`;
+    this remains predeployment evidence and not yet an approved identity.
+13. Item 14 regenerated every Phase F fixture, model result, browser result,
+    host result, build closure, source-provenance record, global dependency
+    graph, source-selection view, and implementation manifest twice
+    byte-identically. The final nonphysical gate passes 16 host suites, the
+    linked target proves 23 selected units, five embedded assets, 15 required
+    symbols and all declared exclusions, and the dependency system reproduces
+    12,115 nodes, 11,875 edges, 10,375 selection records, and 5,164 manifest
+    files.
+
+    The fail-closed predeployment audit parses every changed YAML and JSON
+    document, resolves local links, compiles changed Python, checks the shell
+    wrapper, rejects machine-private values, verifies 23 manifest fingerprints
+    and 69 current-project provenance fingerprints, reconciles source selection
+    to the linked closure, and compares all 15 declared upstream-shaped patches
+    with official VDP v2.16.0. It records 122 candidate files and passes
+    `git diff --check`. Source review found no new VDU byte or command
+    reinterpretation; the only new external protocol is the accepted EVF1
+    browser-output contract.
+
+    The reviewed image deliberately contains `UNVERSIONED-DO-NOT-DEPLOY` and
+    proves no deployable identity. On 2026-08-27 the Author approved firmware
+    `extender-vdp-v0.1.0` (`candidate`, `olimex-p4-devkit`), procedure
+    `p4-browser-video-qualification-r01`, and artifact-registry revision
+    `r12`. These controls are frozen and committed before a new exact UTC build
+    identity is generated from the clean commit. The reviewed unversioned image
+    is never flashed. Item 15 remains separately authorization-gated and keeps
+    the Agon physically disconnected.
 
 ### Phase F gate
 

@@ -36,6 +36,17 @@ void *allocateDisplay(void *, std::size_t size) {
 #endif
 }
 
+void *allocateSnapshot(void *, std::size_t size) {
+#if defined(ESP_PLATFORM)
+  // Phase F requires all three maximum-size immutable slots in PSRAM. Unlike
+  // logical display storage, this optional service must not consume internal
+  // RAM as a fallback when PSRAM capacity is unavailable.
+  return heap_caps_malloc(size, MALLOC_CAP_SPIRAM | MALLOC_CAP_8BIT);
+#else
+  return std::malloc(size);
+#endif
+}
+
 void deallocateDisplay(void *, void *allocation) {
 #if defined(ESP_PLATFORM)
   heap_caps_free(allocation);
@@ -66,8 +77,13 @@ Allocator defaultDisplayAllocator() noexcept {
   return {nullptr, allocateDisplay, deallocateDisplay};
 }
 
-P4DisplayController::P4DisplayController(Allocator allocator) noexcept
-    : storage_(allocator), palettes_(allocator) {}
+Allocator defaultSnapshotAllocator() noexcept {
+  return {nullptr, allocateSnapshot, deallocateDisplay};
+}
+
+P4DisplayController::P4DisplayController(
+    Allocator allocator, Allocator snapshot_allocator) noexcept
+    : storage_(allocator), palettes_(allocator), snapshots_(snapshot_allocator) {}
 
 ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexcept {
   if (frame_service_running_.load(std::memory_order_acquire)) {
@@ -159,6 +175,11 @@ void P4DisplayController::setFrameServiceRunning(bool running) noexcept {
   frame_service_running_.store(running, std::memory_order_release);
 }
 
+void P4DisplayController::setLogicalFramePeriodMicroseconds(
+    std::uint64_t period_microseconds) noexcept {
+  logical_frame_period_us_ = period_microseconds;
+}
+
 std::size_t P4DisplayController::executeFrameWork(
     std::size_t maximum_primitives) {
   if (maximum_primitives == 0 ||
@@ -174,6 +195,7 @@ std::size_t P4DisplayController::executeFrameWork(
     ++executed;
   }
   showSprites(update);
+  publishSnapshotAtBoundary();
   executing_frame_work_.store(false, std::memory_order_release);
   return executed;
 }
@@ -549,6 +571,13 @@ CompositionResult P4DisplayController::composeVisibleRegionQuiescent(
       (frame_service_running_.load(std::memory_order_acquire) &&
        suspension_depth_.load(std::memory_order_acquire) == 0))
     return CompositionResult::NotQuiescent;
+  return composeVisibleRegionAtBoundary(region, destination,
+                                        destination_pixels);
+}
+
+CompositionResult P4DisplayController::composeVisibleRegionAtBoundary(
+    PresentationRegion const &region, PresentationRGB888 *destination,
+    std::size_t destination_pixels) noexcept {
   CompositionResult result = PresentationCompositor::composeBase(
       static_cast<PlaneStorage const &>(storage_).visiblePlane(),
       storage_.mode(), palettes_, region, destination, destination_pixels);
@@ -570,6 +599,32 @@ CompositionResult P4DisplayController::composeVisibleRegionQuiescent(
   if (mouse != nullptr && mouse->visible)
     return composeSprite(mouse, region, destination, destination_pixels);
   return CompositionResult::Ok;
+}
+
+void P4DisplayController::publishSnapshotAtBoundary() noexcept {
+  if (!snapshots_.enabled() || logical_frame_period_us_ == 0 ||
+      !storage_.configured())
+    return;
+  snapshot_clock_us_ += logical_frame_period_us_;
+  MutableSnapshotView destination{};
+  std::size_t width = storage_.mode().width;
+  std::size_t height = storage_.mode().height;
+  if (snapshots_.tryBegin(width, height, snapshot_clock_us_, destination) !=
+      SnapshotBeginResult::Ok)
+    return;
+  PresentationRegion full{0, 0, width, height};
+  CompositionResult result = composeVisibleRegionAtBoundary(
+      full, destination.pixels, destination.pixel_capacity);
+  snapshots_.finish(result, logical_frame_period_us_);
+}
+
+PresentationSnapshotPool &P4DisplayController::snapshotPool() noexcept {
+  return snapshots_;
+}
+
+PresentationSnapshotPool const &P4DisplayController::snapshotPool() const
+    noexcept {
+  return snapshots_;
 }
 
 int P4DisplayController::getBitmapSavePixelSize() { return 1; }

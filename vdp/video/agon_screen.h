@@ -63,7 +63,8 @@ std::unique_ptr<agon::extender::display::P4DisplayController> getVGAController(u
 	}
 	return std::unique_ptr<agon::extender::display::P4DisplayController>(
 		new agon::extender::display::P4DisplayController(
-			agon::extender::display::defaultDisplayAllocator()));
+			agon::extender::display::defaultDisplayAllocator(),
+			agon::extender::display::defaultSnapshotAllocator()));
 }
 
 // Update the internal FabGL LUT

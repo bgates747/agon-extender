@@ -1,0 +1,27 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_browser_test_results
+generated_by: docs/tasks/PORT-003/phase-f/scripts/run-browser-tests.py
+diagnostic_status: real-browser host qualification; no network-device or hardware claim
+browser: Mozilla Firefox 154.0.1
+inputs:
+- path: docs/tasks/PORT-003/phase-f/fixtures/independent-fixtures.yaml
+  sha256: e3362d44c3d2494f880f673dd98155e0ba4ee7ceb1f82880ddefa5a767dbdca7
+- path: docs/tasks/PORT-003/phase-f/tests/browser_protocol_tests.html
+  sha256: 532f357984fce44c22c538f246e77d9edf7ed7491afd21befabffe19c68524b7
+- path: docs/tasks/PORT-003/phase-f/tests/browser_protocol_tests.mjs
+  sha256: a026ff92be420a3f5a42b70595b94d8b3363fecdd47f60384da9032b26ca66e2
+- path: vdp/video/extender/web/frame_protocol.js
+  sha256: aa1e6dc02a05f74e6d357303b31db8dbc1e41bd70dabe3879f9deafb35f3a24d
+- path: vdp/video/extender/web/webgl2_presenter.js
+  sha256: f188fef646fc14d4bf14b7c93828fbe3548e00284f0c3e81a2980e382d9da17a
+fixture_counts:
+  valid_vectors: 4
+  malformed_vectors: 18
+result:
+  status: pass
+  checks: 78
+  detail: 'PASS: 78 browser protocol checks'
+summary:
+  passed: 1
+  failed: 0
+  checks: 78

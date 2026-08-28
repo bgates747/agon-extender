@@ -6,9 +6,16 @@
 #include <ESP32Time.h>
 
 #include "agon.h"
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#include "extender/transport/disconnected_stream.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 #include "vdu_stream_processor.h"
+#ifndef AGON_EXTENDER_P4_BOOT
 #include "vdp_protocol.h"
+#endif
 
 std::unordered_map<uint16_t, uint16_t> featureFlags;	// Feature/Test flags
 extern VDUStreamProcessor *processor;

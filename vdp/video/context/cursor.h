@@ -1,9 +1,17 @@
 #ifndef CONTEXT_CURSOR_H
 #define CONTEXT_CURSOR_H
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/compat/p4_vdp_gl.hpp"
+#else
 #include <fabgl.h>
+#endif
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/input/unavailable_input_adapter.hpp"
+#else
 #include "agon_ps2.h"
+#endif
 
 // Definitions for the functions we're implementing here
 #include "context.h"

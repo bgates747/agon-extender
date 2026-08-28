@@ -1,0 +1,82 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_f_snapshot_pool_model
+status: frozen
+oracle: independent task model; production headers and binaries are forbidden inputs
+capacity:
+  slot_count: 3
+  maximum_width: 1024
+  maximum_height: 768
+  bytes_per_pixel: 3
+  maximum_stride_bytes: 3072
+  bytes_per_slot: 2359296
+  total_pixel_bytes: 7077888
+pixel_layout:
+  format: RGB888
+  order: red, green, blue
+  stride_rule: width * 3
+  row_padding: forbidden in produced v1 snapshots
+states:
+  - free
+  - producer
+  - latest
+  - leased
+limits:
+  producer: 1
+  latest: 1
+  leased: 1
+generation:
+  internal_bits: 64
+  first_published: 1
+  wire_sequence: low 32 bits of internal generation
+operations:
+  begin_produce:
+    precondition: no producer exists
+    success: lowest-index free slot becomes producer
+    pressure: when no free slot exists, record producer_no_slot and do not wait
+  publish:
+    precondition: exactly one producer exists and metadata and composition are valid
+    success: release any old latest, increment generation, and atomically make the producer latest
+    pressure: none
+  cancel:
+    precondition: exactly one producer exists
+    success: producer becomes free without incrementing generation
+  acquire_latest:
+    precondition: no lease exists and latest generation is newer than the consumer generation
+    success: latest becomes leased and its immutable view is returned
+    pressure: record consumer_no_new and return no lease
+  release:
+    precondition: exactly one lease exists
+    success: leased slot becomes latest if no newer latest exists, otherwise it becomes free
+invariants:
+  - Every slot has exactly one state.
+  - At most one producer, latest, and leased slot exists.
+  - A consumer can lease only a complete published generation.
+  - A leased slot is immutable until release.
+  - If latest and leased both exist, latest has the newer generation.
+  - Producer pressure never waits and never changes logical VDP time.
+  - Consumer pressure never queues snapshots.
+  - Mode change never reallocates slots because all slots hold the largest retained surface.
+  - Failed initialization disables publication without disabling retained VDP execution.
+cadence:
+  first_bench_minimum_interval_us: 200000
+  owner: PORT-003 snapshot producer
+  rule: cadence skips occur before begin_produce and do not count as pool pressure
+scenarios:
+  - id: publish-lease-release
+    operations: [begin_produce, publish, acquire_latest, release]
+    expected_states: [latest, free, free]
+    expected_generation: 1
+  - id: slow-consumer-new-latest
+    operations: [begin_produce, publish, acquire_latest, begin_produce, publish, release]
+    expected_states: [free, latest, free]
+    expected_generation: 2
+  - id: producer-pressure
+    operations: [begin_produce, begin_produce, publish, acquire_latest, begin_produce, publish, begin_produce, begin_produce]
+    expected_states: [leased, latest, producer]
+    expected_generation: 2
+    expected_producer_no_slot: 1
+    expected_producer_busy: 1
+  - id: cancel
+    operations: [begin_produce, cancel]
+    expected_states: [free, free, free]
+    expected_generation: 0
