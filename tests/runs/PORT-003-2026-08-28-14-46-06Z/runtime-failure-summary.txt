@@ -1,0 +1,50 @@
+PORT-003-2026-08-28-14-46-06Z runtime failure summary
+
+Candidate source commit:
+  39b45df18622d872eb729644a56b2f92297da6cf
+Candidate build:
+  extender-vdp-v0.1.0-b2026-08-28-01-57-52Z
+Factory image SHA-256:
+  760c1b0adb465033aded33af097913983ee0f92b385425b92c148fa3566daf32
+
+Deployment result:
+  Erase, exact-image write, esptool write verification, and independent
+  verify_flash all succeeded on the ESP32-P4 revision 1.3 specimen.
+
+Runtime stop condition:
+  The first passive USB Serial/JTAG capture contained 7,780 exact instances of
+  the following error in 7,784 lines (475,136 bytes):
+
+    E (11946) task_wdt: esp_task_wdt_reset(707): task not found
+
+  The same error continued through timestamp 19722 ms at approximately one
+  message per millisecond. This violates the procedure's clean-runtime
+  requirement and makes subsequent timing, Ethernet, browser, reconnect, and
+  memory evidence unreliable. Required runtime checks 2 through 10 were not
+  attempted.
+
+  Complete bench-retained serial capture SHA-256:
+    9e457c0789a8d6cb36b81bf9d2f68ddd1a6e9a16eca66c8f2da5ff1b5b1358ca
+
+Observed periodic diagnostics amid the flood:
+  I (13968) extender_snapshot: enabled=1 alloc_fail=0 cadence=671 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=61 no_new=0
+  I (13969) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+  I (13970) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+
+Bounded diagnosis:
+  1. The linked processLoop(void*) contains no esp_task_wdt_reset() call, so
+     VDP_USE_WDT was not selected in the retained parser task.
+  2. The linked setup() retains official VDP v2.16.0's calls to
+     disableCore0WDT() and disableCore1WDT().
+  3. Arduino-ESP32 3.3.11 implements those functions by removing each IDLE
+     task from the ESP-IDF task watchdog. It does not deregister ESP-IDF's
+     per-core IDLE hook.
+  4. ESP-IDF 5.5.5's still-registered non-SMP idle_hook_cb() calls
+     esp_task_wdt_reset() from the now-unregistered IDLE task, producing the
+     observed task-not-found flood whenever that core idles.
+  5. ESP-IDF's own reconfiguration path removes both the IDLE subscription and
+     its hook. The official VDP calls therefore express a valid retained
+     intention but use a framework binding that is not valid for this pinned
+     P4 Arduino/ESP-IDF combination.
+
+No firmware correction was made during or after this failed run.

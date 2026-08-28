@@ -3,7 +3,7 @@
 ## State
 
 - Status: In progress — Phases A–E and Phase F items 1–14 complete;
-  predeployment identity/procedure approval pending
+  first item-15 run failed at the clean-runtime gate
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -2211,6 +2211,89 @@ before proceeding.
     identity is generated from the clean commit. The reviewed unversioned image
     is never flashed. Item 15 remains separately authorization-gated and keeps
     the Agon physically disconnected.
+14. The Author approved exact candidate commit
+    `39b45df18622d872eb729644a56b2f92297da6cf`, build
+    `extender-vdp-v0.1.0-b2026-08-28-01-57-52Z`, and Phase F item 15. Run
+    `PORT-003-2026-08-28-14-46-06Z` used the required disconnected-Agon state,
+    inactive reset breakout, passive analyzer load, and verified GPIO32 green
+    probe. Read-only preflight identified ESP32-P4 revision 1.3 and 16 MiB
+    flash. Remote staging matched the approved factory-image hash; erase,
+    write verification, and independent flash verification all passed.
+
+    The first passive runtime capture then failed the procedure's clean-runtime
+    requirement. It contained 7,780 exact
+    `esp_task_wdt_reset(707): task not found` errors in 7,784 lines, at roughly
+    one error per millisecond. Required runtime checks 2 through 10 were not
+    attempted because the flood could distort timing, network, reconnect, and
+    memory evidence. The failed run, complete remote-log hashes, compact
+    tracked evidence, and a bounded source diagnosis are preserved under
+    `tests/runs/PORT-003-2026-08-28-14-46-06Z/`.
+
+    Linked-code inspection proves that the retained parser task does not call
+    `esp_task_wdt_reset()`: `VDP_USE_WDT` is absent. The caller producing the
+    flood is ESP-IDF 5.5.5's still-registered per-core IDLE hook. Official VDP
+    v2.16.0's retained startup calls `disableCore0WDT()` and
+    `disableCore1WDT()`; Arduino-ESP32 3.3.11 implements those APIs by removing
+    the IDLE tasks from the watchdog without deregistering ESP-IDF's IDLE
+    hooks. Each hook subsequently feeds from an unregistered task. ESP-IDF's
+    own reconfiguration path removes both subscription and hook.
+
+    This is a P4 framework-binding incompatibility in retained startup intent,
+    not an EVF1, browser, network-service, or new VDP-wire-contract defect. No
+    correction was made. A reviewed P4-only binding correction, new immutable
+    candidate commit and build identity, and a new item-15 run are required
+    before Gate F can be reviewed.
+
+### Item-15 corrective decision pending Author review
+
+| ID | State | Decision requested |
+|---|---|---|
+| `PORT-003-D010` | Accepted | Preserve the retained no-watchdog startup intent on P4 through ESP-IDF's supported task-watchdog reconfiguration path. |
+
+Accepted implementation direction for `PORT-003-D010`:
+
+1. The P4 boot adapter, running in the Arduino `loopTask` during `setup()`,
+   calls `esp_task_wdt_reconfigure()` once with the pinned five-second timeout,
+   current non-panic policy, and an empty IDLE-core mask. ESP-IDF then removes
+   both IDLE-task subscriptions and both IDLE hooks atomically through its own
+   supported path while leaving the task-watchdog service available for a
+   future explicit subscriber.
+2. A narrow `AGON_EXTENDER_P4_BOOT` branch in retained `video.ino` selects that
+   adapter and preserves the two existing 200-millisecond startup delays. The
+   stock build continues calling `disableCore0WDT()` and
+   `disableCore1WDT()` exactly as official VDP v2.16.0 does. The exceptional
+   branch receives an inline provenance comment and enters the upstream-patch
+   manifest.
+3. Any unexpected reconfiguration result is a P4 startup failure reported by
+   USB Serial/JTAG diagnostics; the P4 firmware must not continue into a known
+   error-flooding state.
+4. Deterministic checks prove the stock branch is unchanged, the P4 link calls
+   `esp_task_wdt_reconfigure()`, neither Arduino `disableCore*WDT()` function is
+   called from the linked P4 `setup()`, and no VDU, EVF1, network, transport,
+   or framebuffer contract changes.
+5. Mark failed `extender-vdp-v0.1.0` rejected, advance the artifact registry
+   to `r13`, assign corrected patch identity
+   `extender-vdp-v0.1.1` as a candidate, implement and commit the correction,
+   generate a new exact build ID, and repeat
+   `p4-browser-video-qualification-r01` from the beginning under a new run ID.
+
+Rejected alternatives:
+
+1. Calling `esp_task_wdt_deinit()` would also remove the hooks but unnecessarily
+   removes the complete watchdog service, making later explicit task
+   subscription require reinitialization.
+2. Disabling task-watchdog initialization in `sdkconfig.defaults` changes the
+   whole target's startup policy and makes retained or future calls fail because
+   no service exists.
+3. Directly calling `esp_task_wdt_delete()` or suppressing the error log repeats
+   the failed Arduino binding or hides its symptom without removing the stale
+   hooks.
+4. Patching the pinned Arduino or ESP-IDF package creates a project-local
+   framework fork for a correction that can remain at the existing P4 port
+   seam.
+
+The Author accepted `PORT-003-D010` and authorized continued implementation on
+2026-08-28.
 
 ### Phase F gate
 

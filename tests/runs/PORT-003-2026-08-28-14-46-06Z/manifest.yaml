@@ -1,0 +1,173 @@
+schema_version: 1
+
+run:
+  run_id: PORT-003-2026-08-28-14-46-06Z
+  task_id: PORT-003
+  started_at: 2026-08-28T14:46:06Z
+  ended_at: 2026-08-28T14:54:39Z
+  outcome: fail
+  summary: >-
+    Exact-image deployment and flash verification passed, but the first
+    runtime capture exposed a continuous task-watchdog task-not-found error
+    flood. Execution stopped before Ethernet and browser checks.
+
+procedure:
+  artifact_id: p4-browser-video-qualification
+  identity: p4-browser-video-qualification-r01
+  deviations:
+    - >-
+      Required runtime checks 2 through 10 were not attempted after check 1
+      failed its clean-runtime requirement. This is fail-closed termination,
+      not a weakened qualification claim.
+    - >-
+      An initial staging command lost its local run-directory variable before
+      transfer and failed without creating the destination or touching the
+      board. Staging was repeated with the explicit run path and verified
+      hashes before any hardware mutation.
+
+artifacts_under_test:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.1.0
+    build_id: extender-vdp-v0.1.0-b2026-08-28-01-57-52Z
+    variant: olimex-p4-devkit
+    sha256: 760c1b0adb465033aded33af097913983ee0f92b385425b92c148fa3566daf32
+
+source:
+  commit: 39b45df18622d872eb729644a56b2f92297da6cf
+  pushed_before_build: true
+  dirty_before_build: false
+
+base_hardware:
+  - role: extender
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    variant: light2
+    attached_to_agon: false
+  breadboard:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    attached_to_p4: true
+  fixture:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+  probe_map:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+  agon_attached: false
+  reset_breakout_attached: false
+  green_d0_verified: p4-gpio32-rev-d1-ext2-pin-9
+
+instrumentation:
+  - role: logic-analyzer-attached-load
+    equipment_alias: analyzer-01
+    manufacturer: Saleae-compatible
+    model: Logic-8-channel
+    hardware_revision: null
+    software:
+      name: sigrok-cli
+      version: unrecorded
+    settings:
+      capture_performed: false
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  local_esptool: 5.3.0
+  deployment_esptool: 4.12.0
+
+build:
+  manifest_sha256: 87284a5a4d68af0093d4f2b716775dae97558b68e8cbad9ffcffeaf968329155
+  factory_image_bytes: 1354912
+  factory_image_sha256: 760c1b0adb465033aded33af097913983ee0f92b385425b92c148fa3566daf32
+  firmware_bytes: 1223840
+  firmware_sha256: 7aac741b82450c61f2c3966e6a005788a392c31f82f775892a914863dd1fcb61
+  bootloader_bytes: 24448
+  bootloader_sha256: 8121e0e952f259b62a1e887654d9b34bcd08f1f7a2a07634b204ff15867c9821
+  partitions_bytes: 3072
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  ota_data_bytes: 8192
+  ota_data_sha256: f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0
+  elf_sha256: d492532925cad50359769fb7287507da828fd4e22df7d1fdf1725227c2e3d14b
+  map_sha256: 0cbf4677c04e0dc87f1abcaf3a1f6d755c11360ee6d23df80ea8aaf51aa7bf02
+  sdkconfig_sha256: af5ca30f47ae86ceec1242d5b93c7c645d8bd46b95115605bf1e0968486a3638
+  offsets:
+    bootloader: 0x2000
+    partition_table: 0x8000
+    ota_data: 0xf000
+    application: 0x20000
+  embedded_source_identity_verified: true
+  embedded_build_identity_verified: true
+  rejected_identity_markers_absent: true
+  closure:
+    selected_application_translation_units: 23
+    embedded_assets: 5
+    required_symbols: 15
+    excluded_application_families: 0
+    result: pass
+
+preflight:
+  author_authorized_candidate_and_item_15: true
+  local_commit_clean_and_pushed: true
+  stable_usb_identity_verified: true
+  unique_serial_endpoint_verified: true
+  logic_analyzer_present: true
+  agon_physically_disconnected_by_operator: true
+  reset_breakout_disconnected_by_operator: true
+  green_probe_gpio32_verified_by_operator: true
+  chip_revision_verified: true
+  staged_hash_matched: true
+
+deployment:
+  erase_succeeded: true
+  write_hash_verified: true
+  independent_verify_flash_succeeded: true
+  flash_backup_taken: false
+
+compatibility_checked:
+  requirements:
+    - p4-only-browser-video-phase-f
+  result: fail
+
+observations:
+  - {requirement: chip_revision, observed: '1.3', result: pass}
+  - {requirement: flash_size_mib, observed: 16, result: pass}
+  - {requirement: exact_factory_image, observed: sha256-match, result: pass}
+  - {requirement: independent_flash_verification, observed: digest-match, result: pass}
+  - {requirement: clean_runtime, observed: '7780 task-not-found errors in 7784 captured lines', result: fail}
+  - {requirement: exact_startup_identity, observed: not-captured-before-passive-attachment, result: not-evaluated}
+  - {requirement: snapshot_diagnostics, observed: 'enabled=1 alloc_fail=0 published=61', result: informational}
+  - {requirement: network_diagnostics, observed: 'state=4 clients=0 http=1/0', result: informational}
+  - {requirement: runtime_checks_2_through_10, observed: stopped-after-check-1-failure, result: not-evaluated}
+
+evidence:
+  - filename: runtime-failure-summary.txt
+    media_type: text/plain
+    size_bytes: 2529
+    sha256: 28fd266a4f024846bfe47bec3d6a79377d9d081299eeb1bd0d187725b8b4bf8f
+    description: >-
+      Compact tracked failure evidence, representative diagnostics, raw-log
+      integrity identity, and bounded source diagnosis.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    device_resolution: a12edc628fd27889dc476db5670b60c653dfbe80c415df158e7a31c375b0cb90
+    chip_id_log: d5d5709c6f426249b8ee362054deba6250861fec4599c90af6ab9fcc46d16d14
+    flash_id_log: fd47a9a056883e2a3fb5639bd2d10bb36b62d9d653430ee116364f3b7928d678
+    erase_log: 30b8790b3d3ef38f76222b54073f149de0f2b49939141c8ea69b3f4a21b66fb3
+    write_log: 1e0e5e4f2d164c48636761caf4fa272eed93d7b5fdf60d47ca5c1e25dea14813
+    verify_log: 054dd6095772e5b142b124bbbc70e205735afdebe20c0fbb934d7bc88b6f33b3
+    serial_passive_log: 9e457c0789a8d6cb36b81bf9d2f68ddd1a6e9a16eca66c8f2da5ff1b5b1358ca
+
+corrections: []
