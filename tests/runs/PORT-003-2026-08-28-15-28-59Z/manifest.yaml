@@ -1,0 +1,233 @@
+schema_version: 1
+
+run:
+  run_id: PORT-003-2026-08-28-15-28-59Z
+  task_id: PORT-003
+  started_at: 2026-08-28T15:28:59Z
+  ended_at: 2026-08-28T15:40:01Z
+  outcome: pass
+  summary: >-
+    The corrected retained-VDP target passed exact-image deployment, clean
+    startup, DHCP and direct asset service, real-browser demo and live-frame
+    presentation, reconnect, bounded counters, and heap-stability checks.
+
+procedure:
+  artifact_id: p4-browser-video-qualification
+  identity: p4-browser-video-qualification-r01
+  deviations:
+    - >-
+      The first remote flash wrapper was malformed by command-shell quoting and
+      exited before esptool received a valid device or performed a mutation.
+      The operation was repeated with a literal fail-closed remote script.
+    - >-
+      The first post-flash serial attempt began with buffered partial boot
+      output and did not reset the P4 as intended. It remains preserved as a
+      separate raw segment. A subsequent esptool reset plus immediate
+      reconnect captured application startup and identity without
+      joining the two segments.
+
+artifacts_under_test:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.1.1
+    build_id: extender-vdp-v0.1.1-b2026-08-28-15-26-31Z
+    variant: olimex-p4-devkit
+    sha256: 85fe9a328dfdac524d61a157a7237edd5c1d332337444c901eab42ae8f66aabd
+
+source:
+  commit: 43cffd181058fa264cb9f9f78bc36eee17773746
+  pushed_before_build: true
+  dirty_before_build: false
+
+base_hardware:
+  - role: extender
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    variant: light2
+    attached_to_agon: false
+  breadboard:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    attached_to_p4: true
+  fixture:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+  agon_attached: false
+  reset_breakout_attached: false
+  green_d0_verified: p4-gpio32-rev-d1-ext2-pin-9
+
+instrumentation:
+  - role: logic-analyzer-attached-load
+    equipment_alias: analyzer-01
+    manufacturer: Saleae-compatible
+    model: Logic-8-channel
+    capture_performed: false
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  local_esptool: 5.3.0
+  deployment_esptool: 4.12.0
+  browser: Mozilla Firefox 154.0.1
+  browser_driver: Selenium 4.48.0
+
+build:
+  manifest_sha256: d3e5b8c21928502f37ca52a9c2903845b272aee5829e318ed744849e7404fad7
+  factory_image_bytes: 1355344
+  factory_image_sha256: 85fe9a328dfdac524d61a157a7237edd5c1d332337444c901eab42ae8f66aabd
+  firmware_bytes: 1224272
+  firmware_sha256: 2f80d38dd71941a2f5d557e0bc2fd7ab6eaf73f0d6a0e9686f6e63383f1c7586
+  bootloader_bytes: 24448
+  bootloader_sha256: ef72af2a5ecc0d0d169a60b12cc86ab3cb62b16feb50efe8c2b8a7076c3f809c
+  partitions_bytes: 3072
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  ota_data_bytes: 8192
+  ota_data_sha256: f94c5d786a7a8fab06ac5d10e33bf37711a6697636dc037559ea19cc410a17f0
+  elf_sha256: 390bc09d08d7c605916dcea3ea363ab5af064b78280ddeb5db0b3e89d3b9bbbe
+  map_sha256: 92f1182cbfdae079276cf29550cf2211a24e5df25dcb64798aec84748f911458
+  sdkconfig_sha256: af5ca30f47ae86ceec1242d5b93c7c645d8bd46b95115605bf1e0968486a3638
+  offsets:
+    bootloader: 0x2000
+    partition_table: 0x8000
+    ota_data: 0xf000
+    application: 0x20000
+  closure:
+    selected_application_translation_units: 24
+    embedded_assets: 5
+    required_symbols: 16
+    watchdog_source_boundary_proved: true
+    excluded_application_families: 0
+    result: pass
+
+preflight:
+  author_authorized_candidate_and_item_15: true
+  stable_usb_identity_unique: true
+  p4_revision: '1.3'
+  flash_size_bytes: 16777216
+  agon_physically_disconnected: true
+  reset_breakout_disconnected: true
+  passive_analyzer_present: true
+  green_probe_verified_by_author: true
+
+deployment:
+  local_remote_artifact_hashes_match: true
+  flash_erased: true
+  factory_image_written_at: 0x0
+  write_hash_verified: true
+  independent_flash_verify: true
+
+runtime:
+  exact_identity_present: true
+  cpu_frequency_hz: 360000000
+  flash_mode: qio
+  configured_flash_frequency_mhz: 80
+  psram_bytes: 33554432
+  psram_frequency_mhz: 200
+  watchdog_binding_message_present: true
+  watchdog_error_flood_absent: true
+  panic_or_reset_loop_absent: true
+  retained_boot_present: true
+  snapshot_pool_enabled: true
+  dhcp_lease_observed: true
+  direct_http_service_ready: true
+  disconnected_ingress_wait_state_observed: true
+
+browser_and_network:
+  committed_assets_matched: 5
+  evf1_valid: true
+  no_unsolicited_frame_without_credit: true
+  reconnect_frame_valid: true
+  demo_surface: 320x240-rgb888
+  live_surface: 640x480-rgb888
+  live_stride_bytes: 1920
+  live_present_period_us: 16667
+  retained_startup_banner_visually_confirmed: true
+  real_webgl2_browser: true
+
+lifecycle:
+  accepted_connections: 7
+  disconnected_connections: 7
+  complete_snapshot_intervals: 10
+  complete_network_intervals: 11
+  complete_provider_intervals: 11
+  complete_heap_intervals: 11
+  post_warmup_quiet_intervals: 3
+  measured_cycles_after_warmup: 5
+  snapshot_allocation_failures: 0
+  composition_failures: 0
+  protocol_failures: 0
+  send_failures: 0
+  queue_failures: 0
+  socket_failures: 0
+  final_published_snapshots: 1262
+  post_warmup_free_8bit_delta_bytes: 232
+  post_warmup_free_psram_delta_bytes: 0
+  allowed_heap_decline_bytes: 65536
+  counters_monotonic: true
+  continued_service_passed: true
+
+compatibility_checked:
+  requirements:
+    - p4-only-browser-video-phase-f
+  result: pass
+
+observations:
+  - {requirement: identity_and_platform, observed: exact-candidate-and-required-platform, result: pass}
+  - {requirement: retained_boot, observed: retained-vdp-and-periodic-diagnostics, result: pass}
+  - {requirement: dhcp_and_server, observed: lease-and-direct-http-ready, result: pass}
+  - {requirement: direct_assets, observed: five-assets-and-evf1-exact, result: pass}
+  - {requirement: browser_self_test, observed: firefox-webgl2-320x240-rgb888, result: pass}
+  - {requirement: startup_framebuffer, observed: retained-banner-640x480-rgb888, result: pass}
+  - {requirement: disconnect_reconnect, observed: warmup-plus-five-measured-cycles, result: pass}
+  - {requirement: bounded_counters, observed: monotonic-and-zero-failure-counts, result: pass}
+  - {requirement: memory_stability, observed: '8bit-delta=+232; psram-delta=0', result: pass}
+  - {requirement: continued_service, observed: assets-frames-and-diagnostics-continued, result: pass}
+
+evidence:
+  - filename: qualification-summary.txt
+    media_type: text/plain
+    size_bytes: 1392
+    sha256: dc3dc990d600250739eadabade5815e4781bb6bde4956217676970a20bb90a4e
+    description: >-
+      Compact tracked outcome, exact candidate identities, bounded lifecycle
+      results, and explicit claim exclusions.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  endpoint_recorded_in_tracked_evidence: false
+  hashes:
+    flash_log: b4eb5d1c21984cf56539c323a1207a45943cec93df093c361caab95c2e9e2326
+    application_startup_serial: cbcf8ee06260abd6ca9310240ffa9fbf9530a1188af60c60ffa683b84d2c831d
+    lifecycle_serial: 746a29a2a32a2145a1d9625928b085c836bdaf38a6600c682c3bc3a27e404ada
+    direct_live_check: b0fdade0761f31aa8b20c6f917fd06705ea6d1c1cd5343f158470906a8f74e47
+    browser_demo_screenshot: 6bee0402cfd43a640efdb301c7b44d76fbc0a5f2f18193590de1c56bf3b6fade
+    browser_live_screenshot: e16e863db0b5f168929aa3ab74a16d66fa1df002674cd5011d71cc6431e05dbd
+    browser_live_check: 6afd7e3ac52465c1bc9e3725b69059f116347d913aa7b9be866537b6cda12eef
+    lifecycle_cycles: 6d0ae197ce695b1cd5b34b63bed654f85e5fafd75d4323affa3784d613e03f6b
+    lifecycle_diagnostics: 672ea27810b32183ba4ee54a8ab8c61a8c9a7dd6c5a36cbd5c33073e4d0c86f4
+
+corrections: []
+
+claim_boundary:
+  passed:
+    - P4 retained-VDP boot and exact identity
+    - direct wired Ethernet asset and EVF1 service
+    - real-browser demo and retained startup-frame presentation
+    - bounded reconnect counters and heap stability
+  not_claimed:
+    - Agon or EMOS integration
+    - parallel VDU ingress
+    - return UART
+    - operating-mode transition
+    - audio, input, storage, updater, or internet exposure
+    - assembled-system electrical behavior

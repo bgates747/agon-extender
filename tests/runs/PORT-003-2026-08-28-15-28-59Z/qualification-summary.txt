@@ -1,0 +1,26 @@
+PORT-003 Phase F item 15: PASS
+
+Candidate: extender-vdp-v0.1.1
+Build: extender-vdp-v0.1.1-b2026-08-28-15-26-31Z
+Commit: 43cffd181058fa264cb9f9f78bc36eee17773746
+Procedure: p4-browser-video-qualification-r01
+
+The exact factory image was erased, written, hash-verified, and independently
+verified on the ESP32-P4 Rev 1.3 specimen. Startup reported QIO, 360 MHz CPU,
+32 MiB PSRAM, the exact candidate/build identity, the corrected watchdog
+binding, retained VDP setup, DHCP, and direct HTTP service. No watchdog flood,
+panic, assertion, Guru Meditation, or reset loop appeared.
+
+All five served assets matched committed bytes. EVF1 delivery, no-credit
+quiet behavior, and reconnect passed. Firefox/WebGL2 displayed the 320x240
+local test pattern and the P4-composed 640x480 retained VDP startup banner.
+
+One warm-up and five measured reconnect cycles completed. Seven observed
+clients all disconnected; failure counters stayed zero; counters were
+monotonic; 8-bit heap ended 232 bytes above the post-warm-up baseline and
+PSRAM heap was unchanged. Service continued after the cycle tranche.
+
+The Agon and reset breakout remained physically disconnected. This run makes
+no transport, EMOS, operating-mode, audio, input, storage, updater, internet,
+or assembled-system electrical claim. Raw logs, screenshots, and structured
+checks remain preserved on the bench host under hashes in manifest.yaml.

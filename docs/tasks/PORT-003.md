@@ -3,7 +3,7 @@
 ## State
 
 - Status: In progress — Phases A–E and Phase F items 1–14 complete;
-  corrected item-15 candidate pending clean commit and repeat run
+  Phase F item 15 passed; Gate F pending Author review
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -1967,7 +1967,7 @@ before proceeding.
     source, generated evidence, links, schemas, paths, comments, and exclusions.
     Present the committed-artifact identities and exact P4-only deployment
     procedure for separate Author approval.
-15. [ ] Only after that approval, deploy the identified P4-only build and prove
+15. [x] Only after that approval, deploy the identified P4-only build and prove
     DHCP, direct asset serving, browser self-test, startup framebuffer delivery,
     disconnect/reconnect, bounded drops, memory bounds, and serial diagnostics.
     This does not connect the Agon or claim VDU transport.
@@ -2311,6 +2311,29 @@ and global dependency regeneration were byte-identical on repeat. Artifact
 registry `r13` rejects v0.1.0 and selects approved v0.1.1 as the candidate.
 These remain predeployment findings until the correction is committed, rebuilt
 with an exact build ID, and rerun under item 15.
+
+Run `PORT-003-2026-08-28-15-28-59Z` exercised corrected candidate commit
+`43cffd181058fa264cb9f9f78bc36eee17773746` as identified build
+`extender-vdp-v0.1.1-b2026-08-28-15-26-31Z`. Stable-device preflight, exact
+remote staging, flash erase/write verification, and independent flash
+verification passed with the Agon and reset breakout disconnected.
+
+The application-startup capture proves ESP32-P4 revision 1.3, QIO, 360 MHz CPU,
+32 MiB PSRAM, the exact identity, the corrected hook-aware watchdog binding,
+retained VDP setup, DHCP, and direct HTTP readiness. No watchdog flood, panic,
+assertion, Guru Meditation, or reset loop occurred. All five served assets,
+EVF1 delivery, no-credit quiet behavior, reconnect, Firefox/WebGL2 demo, and
+the P4-composed retained startup banner passed.
+
+One warm-up and five additional reconnect cycles produced 10 complete
+snapshot and 11 complete network/provider/heap intervals. Seven observed
+connections all disconnected, counters remained monotonic, all allocation,
+composition, protocol, send, queue, and socket failure counts remained zero,
+free 8-bit heap ended 232 bytes above its post-warm-up baseline, and free PSRAM
+was unchanged. Continued frame and asset service passed. Raw bench-sensitive
+evidence and screenshots are preserved under hashes in the tracked run
+manifest. Item 15 passes within its explicit P4-only claim boundary; item 16
+now requires the mandated Author review of Gate F.
 
 ### Phase F gate
 
