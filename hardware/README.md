@@ -9,11 +9,20 @@ The durable role vocabulary for hardware objects is maintained under
 only. Pins, nets, components, and electrical connectivity remain authoritative
 inside the applicable revisioned design or fixture profile.
 
-The current first design target is
-[`light2-harness-r01`](designs/light2-harness-r01/README.md). Its YAML profile
-and accompanying README are normative. Vendored predecessor documents preserve
-provenance and test evidence; diagrams are advisory when they disagree with
-the text or profile.
+The frozen current design target is
+[`light2-harness-r02`](designs/light2-harness-r02/README.md). Its
+placement-independent connectivity YAML is the electrical authority. The
+revision also provides a checked design BOM in maintained YAML plus generated
+Markdown and flat CSV views. The
+predecessor [`light2-harness-r01`](designs/light2-harness-r01/README.md)
+remains unchanged for the preserved first forward-transport prototype and its
+evidence.
+
+Revisioned physical breadboard configurations live under
+[`assemblies/`](assemblies/README.md). The preserved first prototype is
+`light2-extender-solderless-assembly-r01`; the new r02 electrical design is
+assigned to `light2-extender-solderless-assembly-r02`, whose exact construction
+map remains unfinished.
 
 The current logic-analyzer attachment target is
 [`la03-p4-probe-fixture-r01`](fixtures/la03-p4-probe-fixture-r01/README.md).

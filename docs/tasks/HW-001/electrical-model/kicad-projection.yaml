@@ -1,0 +1,15 @@
+# Spatial/symbol projection for the illustrative topology example only.
+# This file is not electrical authority and contains no product circuit data.
+schema_version: 1
+source_model: examples/topology-example.yaml
+tool: kicad7
+top_name: topology-example
+title: HW-001 generic topology example — illustrative, not an Extender circuit
+components:
+  - {ref: C1, library: Device, symbol: C_Polarized}
+  - {ref: D1, library: Device, symbol: LED}
+  - {ref: J1, library: Connector_Generic, symbol: Conn_01x03}
+  - {ref: J2, library: Connector_Generic, symbol: Conn_01x02}
+  - {ref: R1, library: Device, symbol: R}
+  - {ref: R2, library: Device, symbol: R}
+  - {ref: U1, library: 74xGxx, symbol: 74LVC1G125}

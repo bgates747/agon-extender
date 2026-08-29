@@ -2,7 +2,9 @@
 
 ## State
 
-- Status: Paused — production electrical design deferred behind ported-firmware forward evidence
+- Status: Paused — naming/scaffold work retained; current electrical design
+  promoted to HW-001 and `light2-harness-r02`; exact r02 construction mapping
+  remains open
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -298,28 +300,18 @@ or ERP identities.
    Author visually inspected the underside of the current Rev D1 bench board
    on 2026-08-25: the footprint has soldered pads but no bridging component.
 
-### Deferred
+`SETUP-006-D005` and `SETUP-006-D006` apply only to the predecessor-circuit
+General Poll experiment. They do not override the common four-wire UART and
+control allocation frozen in `light2-harness-r02`.
 
-1. `SETUP-006.4-Q003` — Defer selection of the production-safe split-power
-   buffer architecture until new EDP and EMOS firmware has proved the existing
-   controlled-power predecessor circuit as a forward-only learning path. The
-   evidence gate must transfer real official command bytes over the parallel
-   bus and visibly execute a representative set of simple display commands.
-   Keep the UART-return driver disabled and make no claim about reverse
-   transport, either-order power, partial-power-down isolation, or the eventual
-   beta buffer topology from that experiment.
-2. `SETUP-006.4-Q004` — Defer selection of a production READY_N isolation
-   stage until the forward-only tranche has exercised admission and
-   backpressure through the existing controlled-power predecessor circuit.
-   That experiment may use the present direct GPIO20 open-drain connection only
-   under its strict power discipline. It cannot approve direct READY_N wiring
-   for beta or prove reset, powered-off, back-power, or hardware-safe-release
-   behavior.
-3. `SETUP-006.4-Q006` — Defer production series-resistance selection until an
-   actual retained VDP port has exercised the present controlled-power wiring
-   in the forward direction and a concrete beta circuit is proposed. The
-   predecessor's 220-ohm values remain experimental evidence, not a frozen
-   production choice.
+### Promoted hardware decisions
+
+SETUP-006.4's split-power buffering, READY control, and series-population
+questions were promoted into HW-001 once the firmware-led requirements became
+concrete. `HW-001-D004` through `HW-001-D008` now own their disposition:
+`light2-harness-r02` freezes the four-chip candidate and R1--R13 at 220 ohms,
+while reset recovery, Legacy electrical absence, and physical qualification
+remain open under HW-001 and QUAL-002.
 
 ## Work
 
@@ -436,8 +428,9 @@ or ERP identities.
 
 1. [x] Define the scope, authorities, outputs, and stop boundary in
    [`SETUP-006.4-wiring-design/README.md`](SETUP-006/SETUP-006.4-wiring-design/README.md).
-   The immediate candidate is the Exclusive Extended beta transport. Exclusive
-   Compatible stock UART remains a separate firmware-led hardware design.
+   The immediate candidate was the Exclusive Extended beta transport. HW-001
+   now owns the separate firmware-led design of the common V1 four-signal UART
+   and forward-parallel circuit; its proposal does not revise this harness.
 2. [x] Inventory every Agon/P4 transport signal required by the bounded beta,
    including direction, actor, idle and reset ownership, exact firmware use,
    and application-visible contract.

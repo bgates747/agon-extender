@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<export version="E">
+  <design>
+    <source>docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch</source>
+    <date>Fri Aug 28 13:49:31 2026</date>
+    <tool>Eeschema 7.0.11+dfsg-1build4</tool>
+    <sheet number="1" name="/" tstamps="/">
+      <title_block>
+        <title>HW-001 generic topology example — illustrative, not an Extender circuit</title>
+        <company/>
+        <rev/>
+        <date>2026-08-28</date>
+        <source>topology-example.kicad_sch</source>
+        <comment number="1" value="Generated with SKiDL"/>
+        <comment number="2" value=""/>
+        <comment number="3" value=""/>
+        <comment number="4" value=""/>
+        <comment number="5" value=""/>
+        <comment number="6" value=""/>
+        <comment number="7" value=""/>
+        <comment number="8" value=""/>
+        <comment number="9" value=""/>
+      </title_block>
+    </sheet>
+  </design>
+  <components>
+    <comp ref="C1">
+      <value>10 uF</value>
+      <libsource lib="Device" part="C_Polarized" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>b514d237-c153-5f6d-afe2-53badf97a864</tstamps>
+    </comp>
+    <comp ref="D1">
+      <value>LED</value>
+      <libsource lib="Device" part="LED" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>730dc923-5f42-5190-a58b-2dbed3a5d5b0</tstamps>
+    </comp>
+    <comp ref="J1">
+      <value>Conn_01x03</value>
+      <libsource lib="Connector_Generic" part="Conn_01x03" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>d7608689-a7d2-514c-aa16-0f8bde5cf213</tstamps>
+    </comp>
+    <comp ref="J2">
+      <value>Conn_01x02</value>
+      <libsource lib="Connector_Generic" part="Conn_01x02" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>5e0b731b-c654-5cf6-8847-00f2f042255c</tstamps>
+    </comp>
+    <comp ref="R1">
+      <value>220 ohm</value>
+      <libsource lib="Device" part="R" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>91628e47-8f83-5ba1-abed-4cb134d83eea</tstamps>
+    </comp>
+    <comp ref="R2">
+      <value>1 kohm</value>
+      <libsource lib="Device" part="R" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>91c587b0-c855-58aa-84a9-2ba4ce88549e</tstamps>
+    </comp>
+    <comp ref="U1">
+      <value>74LVC1G125</value>
+      <datasheet>https://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf</datasheet>
+      <libsource lib="74xGxx" part="74LVC1G125" description=""/>
+      <property name="Description" value=""/>
+      <property name="Sheetname" value=""/>
+      <property name="Sheetfile" value="docs/tasks/HW-001/electrical-model/generated/topology-example.kicad_sch"/>
+      <sheetpath names="/" tstamps="/"/>
+      <tstamps>f8fce87b-acde-5341-b554-4e93a034d648</tstamps>
+    </comp>
+  </components>
+  <libparts>
+    <libpart lib="74xGxx" part="74LVC1G125">
+      <docs>https://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf</docs>
+      <fields>
+        <field name="Reference">U</field>
+        <field name="Value">74LVC1G125</field>
+        <field name="Datasheet">https://www.ti.com/lit/ds/symlink/sn74lvc1g125.pdf</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="input"/>
+        <pin num="2" name="" type="input"/>
+        <pin num="3" name="GND" type="power_in"/>
+        <pin num="4" name="" type="tri_state"/>
+        <pin num="5" name="VCC" type="power_in"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x02">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x02</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Connector_Generic" part="Conn_01x03">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">J</field>
+        <field name="Value">Conn_01x03</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="Pin_1" type="passive"/>
+        <pin num="2" name="Pin_2" type="passive"/>
+        <pin num="3" name="Pin_3" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="C_Polarized">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">C</field>
+        <field name="Value">C_Polarized</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="LED">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">D</field>
+        <field name="Value">LED</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="K" type="passive"/>
+        <pin num="2" name="A" type="passive"/>
+      </pins>
+    </libpart>
+    <libpart lib="Device" part="R">
+      <docs>~</docs>
+      <fields>
+        <field name="Reference">R</field>
+        <field name="Value">R</field>
+        <field name="Datasheet">~</field>
+      </fields>
+      <pins>
+        <pin num="1" name="" type="passive"/>
+        <pin num="2" name="" type="passive"/>
+      </pins>
+    </libpart>
+  </libparts>
+  <libraries>
+    <library logical="74xGxx">
+      <uri>/usr/share/kicad/symbols//74xGxx.kicad_sym</uri>
+    </library>
+    <library logical="Connector_Generic">
+      <uri>/usr/share/kicad/symbols//Connector_Generic.kicad_sym</uri>
+    </library>
+    <library logical="Device">
+      <uri>/usr/share/kicad/symbols//Device.kicad_sym</uri>
+    </library>
+  </libraries>
+  <nets>
+    <net code="1" name="ground">
+      <node ref="C1" pin="2" pintype="passive"/>
+      <node ref="D1" pin="1" pinfunction="K" pintype="passive"/>
+      <node ref="J1" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="J2" pin="2" pinfunction="Pin_2" pintype="passive"/>
+      <node ref="U1" pin="3" pinfunction="GND" pintype="power_in"/>
+    </net>
+    <net code="2" name="indicator-limited">
+      <node ref="D1" pin="2" pinfunction="A" pintype="passive"/>
+      <node ref="R2" pin="2" pintype="passive"/>
+    </net>
+    <net code="3" name="input-protected">
+      <node ref="R1" pin="2" pintype="passive"/>
+      <node ref="U1" pin="2" pintype="input"/>
+    </net>
+    <net code="4" name="input-raw">
+      <node ref="J1" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="R1" pin="1" pintype="passive"/>
+    </net>
+    <net code="5" name="output-buffered">
+      <node ref="J2" pin="1" pinfunction="Pin_1" pintype="passive"/>
+      <node ref="U1" pin="4" pintype="tri_state"/>
+    </net>
+    <net code="6" name="supply">
+      <node ref="C1" pin="1" pintype="passive"/>
+      <node ref="J1" pin="3" pinfunction="Pin_3" pintype="passive"/>
+      <node ref="R2" pin="1" pintype="passive"/>
+      <node ref="U1" pin="5" pinfunction="VCC" pintype="power_in"/>
+    </net>
+    <net code="7" name="unconnected-(U1-Pad1)">
+      <node ref="U1" pin="1" pintype="input+no_connect"/>
+    </net>
+  </nets>
+</export>

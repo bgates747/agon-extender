@@ -1,5 +1,11 @@
 # SETUP-006.4 wiring-design review
 
+> **Historical task evidence:** This directory predates the common-UART design
+> review. Its predecessor-circuit drawings and Exclusive Extended beta
+> allocations do not override `light2-harness-r02`, the current frozen
+> electrical authority. Use it only for provenance and the preserved r01
+> forward-test assembly unless a current task cites a specific retained fact.
+
 ## Purpose
 
 This directory contains the task-local electrical-requirements review, the

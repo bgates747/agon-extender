@@ -1,0 +1,20 @@
+schema_version: 1
+artifact_id: light2-extender-solderless-assembly
+identity: light2-extender-solderless-assembly-r01
+kind: solderless_assembly
+variant: light2
+status: candidate
+selected_design:
+  artifact_id: light2-harness
+  exact: light2-harness-r01
+realization: preserved-first-prototype
+intended_use:
+  - bounded forward-transport development
+  - qualification only when an exact committed procedure selects this assembly
+limitations:
+  - does not implement light2-harness-r02
+  - does not qualify the V1 common four-signal UART circuit
+authority_refs:
+  - hardware/designs/light2-harness-r01/profile.yaml
+  - hardware/designs/light2-harness-r01/README.md
+  - hardware/designs/light2-harness-r01/legacy-evidence/carrier-breakout-design.md

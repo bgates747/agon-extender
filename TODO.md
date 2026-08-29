@@ -38,6 +38,13 @@ item is removed.
   - Finished: --
   - Details: [SETUP-005](docs/tasks/SETUP-005.md)
 
+## Hardware design
+
+- [ ] **HW-001 — Design and qualify the V1 UART and forward-parallel interface**
+  - Started: 2026-08-28 13:06 EDT
+  - Finished: --
+  - Details: [HW-001](docs/tasks/HW-001.md)
+
 ## Porting
 
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**

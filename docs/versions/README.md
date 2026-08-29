@@ -184,6 +184,13 @@ and revision in their defining document or machine-readable file. Physical
 labels are strongly recommended once an assembly leaves a transient
 breadboard state.
 
+A hardware profile may freeze multiple tracked inputs with an `integrity`
+mapping containing `algorithm: sha256` and a nonempty `files` mapping. File
+names are relative to the profile directory, the declared authority must be
+included, and every recorded digest is validated. This protects companion
+inputs such as a controlled BOM without making them competing electrical
+authorities.
+
 ## Manifest rules
 
 Manifests use UTF-8 YAML, schema version `1`, two-space indentation, lowercase

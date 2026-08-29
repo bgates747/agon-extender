@@ -1,0 +1,113 @@
+# Illustrative schema exercise only. This is not an Extender circuit or wiring plan.
+schema_version: 1
+model:
+  model_id: hw-001-topology-example
+  title: Generic protected buffer topology example
+  status: illustrative
+  authority: false
+  scope: Demonstrate components, stable terminals, nets, polarity, and intentional no-connects.
+  notes: Values and topology are illustrative and make no product design claim.
+components:
+  - ref: C1
+    kind: capacitor
+    orientation: polarized
+    terminal_scope: complete
+    value: 10 uF
+    terminals:
+      - {pin: "1", name: POS, electrical_type: passive, polarity_role: positive}
+      - {pin: "2", name: NEG, electrical_type: passive, polarity_role: negative}
+  - ref: D1
+    kind: diode
+    orientation: polarized
+    terminal_scope: complete
+    description: Generic power indicator
+    terminals:
+      - {pin: "1", name: K, electrical_type: passive, polarity_role: cathode}
+      - {pin: "2", name: A, electrical_type: passive, polarity_role: anode}
+  - ref: J1
+    kind: connector
+    orientation: keyed
+    terminal_scope: complete
+    description: Generic source connector
+    terminals:
+      - {pin: "1", name: INPUT, electrical_type: passive}
+      - {pin: "2", name: GND, electrical_type: passive}
+      - {pin: "3", name: VCC, electrical_type: passive}
+  - ref: J2
+    kind: connector
+    orientation: keyed
+    terminal_scope: complete
+    description: Generic destination connector
+    terminals:
+      - {pin: "1", name: OUTPUT, electrical_type: passive}
+      - {pin: "2", name: GND, electrical_type: passive}
+  - ref: R1
+    kind: resistor
+    orientation: symmetric
+    terminal_scope: complete
+    value: 220 ohm
+    terminals:
+      - {pin: "1", electrical_type: passive, interchangeable_group: resistor-ends}
+      - {pin: "2", electrical_type: passive, interchangeable_group: resistor-ends}
+  - ref: R2
+    kind: resistor
+    orientation: symmetric
+    terminal_scope: complete
+    value: 1 kohm
+    terminals:
+      - {pin: "1", electrical_type: passive, interchangeable_group: resistor-ends}
+      - {pin: "2", electrical_type: passive, interchangeable_group: resistor-ends}
+  - ref: U1
+    kind: integrated-circuit
+    orientation: keyed
+    terminal_scope: complete
+    part_number: 74LVC1G125
+    description: Generic single tri-state buffer
+    terminals:
+      - {pin: "1", name: OE_N, electrical_type: input}
+      - {pin: "2", name: A, electrical_type: input}
+      - {pin: "3", name: GND, electrical_type: power-input}
+      - {pin: "4", name: Y, electrical_type: tri-state}
+      - {pin: "5", name: VCC, electrical_type: power-input}
+nets:
+  - net_id: ground
+    class: ground
+    power_domain: null
+    members:
+      - {component: C1, pin: "2"}
+      - {component: D1, pin: "1"}
+      - {component: J1, pin: "2"}
+      - {component: J2, pin: "2"}
+      - {component: U1, pin: "3"}
+  - net_id: indicator-limited
+    class: signal
+    members:
+      - {component: D1, pin: "2"}
+      - {component: R2, pin: "2"}
+  - net_id: input-protected
+    class: signal
+    members:
+      - {component: R1, pin: "2"}
+      - {component: U1, pin: "2"}
+  - net_id: input-raw
+    class: signal
+    members:
+      - {component: J1, pin: "1"}
+      - {component: R1, pin: "1"}
+  - net_id: output-buffered
+    class: signal
+    members:
+      - {component: J2, pin: "1"}
+      - {component: U1, pin: "4"}
+  - net_id: supply
+    class: power
+    power_domain: example-domain
+    members:
+      - {component: C1, pin: "1"}
+      - {component: J1, pin: "3"}
+      - {component: R2, pin: "1"}
+      - {component: U1, pin: "5"}
+unconnected:
+  - component: U1
+    pin: "1"
+    reason: Enable behavior is intentionally outside this topology example.

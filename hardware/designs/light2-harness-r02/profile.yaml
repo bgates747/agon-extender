@@ -1,0 +1,77 @@
+# Controlled profile for the frozen light2-harness-r02 candidate.
+schema_version: 1
+artifact_id: light2-harness
+identity: light2-harness-r02
+kind: wiring_harness
+variant: light2
+status: candidate
+authority: connectivity.yaml
+integrity:
+  algorithm: sha256
+  files:
+    connectivity.yaml: 560ab589c9f0bbf63ecc17e747eff15208fb672723489c3b4755d7d9fea6b79c
+    bom.yaml: dc9f7b3fc227c8a6a7e6c389c188779aa2e46bedca7450612dc17c1a31d6e81c
+precedence:
+  - connectivity.yaml
+  - bom.yaml
+  - README.md
+  - docs/decisions/ADR-0016-v1-transport-electrical-core.md
+  - docs/tasks/HW-001/v1-uart-parallel-circuit-proposal.md
+
+approval:
+  approved_by: Author
+  approved_at: 2026-08-29T22:32:03Z
+  bom_approved_at: 2026-08-29T23:05:52Z
+  task: HW-001
+  decisions:
+    - HW-001-D001
+    - HW-001-D002
+    - HW-001-D003
+    - HW-001-D004
+    - HW-001-D005
+    - HW-001-D006
+    - HW-001-D007
+    - HW-001-D008
+    - HW-001-D009
+
+lineage:
+  predecessor: light2-harness-r01
+  initial_assembly_target: light2-extender-solderless-assembly-r02
+
+hardware:
+  host:
+    product: Agon Light 2
+    revision: null
+  extender:
+    product: Olimex ESP32-P4-DevKit
+    revision: Rev D1
+
+frozen_properties:
+  connectivity: connectivity.yaml
+  design_bom: bom.yaml
+  series_population:
+    refs: R1-R13
+    resistance_ohm: 220
+  positive_power_domains:
+    - AGON_3V3
+    - P4_3V3
+  positive_rails_joined: false
+  common_signal_ground: true
+
+qualification_scope:
+  current_status: frozen-candidate-unqualified
+  open_requirements:
+    - eZ80-only reset recovery
+    - Legacy electrical absence
+    - UART operation at 1,152,000 baud
+    - complete RTS/CTS behavior
+    - EMOS/EDP break-before-make epoch protocol
+    - continuity and passive qualification
+    - either-order-power and contention qualification
+    - exact r02 breadboard construction mapping
+
+change_control:
+  editorial_only_changes_may_preserve_revision: true
+  electrical_or_interpretive_changes_require_new_revision: true
+  fitted_bom_or_procurement_constraint_changes_require_new_revision: true
+  inventory_or_conforming_supplier_changes_preserve_revision: true

@@ -1,0 +1,162 @@
+# Maintained BOM input for one light2-harness-r02 circuit build.
+schema_version: 1
+bom:
+  bom_id: light2-harness-r02-design-bom
+  source_design:
+    artifact_id: light2-harness
+    exact: light2-harness-r02
+    connectivity: connectivity.yaml
+  status: candidate
+  authority: false
+  build_quantity: 1
+  approval:
+    approved_by: Author
+    approved_at: 2026-08-29T23:05:52Z
+    task: HW-001
+    decision: HW-001-D009
+  scope: Fitted electrical components required to realize the frozen r02 circuit core.
+  notes:
+    - Connectivity, nominal values, and reference assignments remain authoritative in connectivity.yaml.
+    - This BOM adds procurement identities, package constraints, and the accepted one-percent resistor tolerance.
+    - Required quantities do not include spares or attrition allowance.
+  exclusions:
+    - solderless breadboards and power rails
+    - IC sockets
+    - ribbon cable, hookup wire, and jumpers
+    - physical headers, receptacles, and strain relief
+    - test points, probe clips, and qualification instrumentation
+    - production PCB, enclosure, and mounting hardware
+  source_refs:
+    - hardware/designs/light2-harness-r02/connectivity.yaml
+    - docs/tasks/HW-001/v1-uart-parallel-circuit-proposal.md
+    - docs/decisions/ADR-0016-v1-transport-electrical-core.md
+
+line_items:
+  - line_id: ic-sn74lvc244an
+    product_name: TI SN74LVC244AN octal buffer
+    category: integrated-circuit
+    quantity: 2
+    uom: each
+    refs: [U1, U2]
+    manufacturer: Texas Instruments
+    manufacturer_part_number: SN74LVC244AN
+    value: SN74LVC244AN
+    package: PDIP-20
+    procurement_spec: Exact part number; N suffix is the through-hole PDIP package.
+    role: Agon-powered forward UART, parallel-data, CLOCK, and VALID_N buffering.
+    source_match:
+      kind: integrated-circuit
+      part_number: SN74LVC244AN
+      value: SN74LVC244AN
+
+  - line_id: ic-sn74lv125an
+    product_name: TI SN74LV125AN quad buffer
+    category: integrated-circuit
+    quantity: 2
+    uom: each
+    refs: [U3, U4]
+    manufacturer: Texas Instruments
+    manufacturer_part_number: SN74LV125AN
+    value: SN74LV125AN
+    package: PDIP-14
+    procurement_spec: Exact part number; N suffix is the through-hole PDIP package.
+    role: Agon-powered UART return and P4-powered low-only isolated controls.
+    source_match:
+      kind: integrated-circuit
+      part_number: SN74LV125AN
+      value: SN74LV125AN
+
+  - line_id: resistor-220r-1pct
+    product_name: 220 ohm 1% through-hole resistor
+    category: resistor
+    quantity: 13
+    uom: each
+    refs: [R1, R2, R3, R4, R5, R6, R7, R8, R9, R10, R11, R12, R13]
+    manufacturer: null
+    manufacturer_part_number: null
+    value: 220 ohm
+    package: axial through-hole
+    procurement_spec: 220 ohm, 1% tolerance or better; breadboard-compatible lead size.
+    role: Replaceable source-series protection and damping on every driven transport output.
+    source_match:
+      kind: resistor
+      value: 220 ohm
+
+  - line_id: resistor-47k-1pct
+    product_name: 47 kilohm 1% through-hole resistor
+    category: resistor
+    quantity: 8
+    uom: each
+    refs: [R14, R15, R16, R17, R18, R19, R20, R21]
+    manufacturer: null
+    manufacturer_part_number: null
+    value: 47 kohm
+    package: axial through-hole
+    procurement_spec: 47 kilohm, 1% tolerance or better; breadboard-compatible lead size.
+    role: P4 data and shared-UART inactive-state bias.
+    source_match:
+      kind: resistor
+      value: 47 kohm
+
+  - line_id: resistor-10k-1pct
+    product_name: 10 kilohm 1% through-hole resistor
+    category: resistor
+    quantity: 10
+    uom: each
+    refs: [R22, R23, R24, R25, R26, R27, R28, R29, R30, R31]
+    manufacturer: null
+    manufacturer_part_number: null
+    value: 10 kohm
+    package: axial through-hole
+    procurement_spec: 10 kilohm, 1% tolerance or better; breadboard-compatible lead size.
+    role: CLOCK, VALID_N, READY_N, output-enable, and P4 control default-state bias.
+    source_match:
+      kind: resistor
+      value: 10 kohm
+
+  - line_id: capacitor-100nf-ceramic
+    product_name: 100 nF ceramic bypass capacitor
+    category: capacitor
+    quantity: 4
+    uom: each
+    refs: [C1, C2, C3, C4]
+    manufacturer: null
+    manufacturer_part_number: null
+    value: 100 nF
+    package: radial through-hole
+    procurement_spec: Nonpolar ceramic, at least 6.3 V rating, breadboard-compatible lead spacing.
+    role: One local supply bypass capacitor at each logic IC.
+    source_match:
+      kind: capacitor
+      value: 100 nF
+
+  - line_id: capacitor-1uf-ceramic
+    product_name: 1 uF ceramic bulk capacitor
+    category: capacitor
+    quantity: 2
+    uom: each
+    refs: [C5, C6]
+    manufacturer: null
+    manufacturer_part_number: null
+    value: 1 uF
+    package: radial through-hole
+    procurement_spec: Nonpolar ceramic, at least 6.3 V rating, breadboard-compatible lead spacing.
+    role: One local bulk capacitor for each independent 3.3 V power domain.
+    source_match:
+      kind: capacitor
+      value: 1 uF
+
+supplied_equipment:
+  - equipment_id: agon-light-2-host
+    product_name: Agon Light 2
+    quantity: 1
+    uom: each
+    represented_by_refs: [J1]
+    disposition: External host equipment; not consumed by the Extender circuit build.
+
+  - equipment_id: olimex-esp32-p4-devkit
+    product_name: Olimex ESP32-P4-DevKit Rev D1
+    quantity: 1
+    uom: each
+    represented_by_refs: [J2, J3]
+    disposition: Extender processor board; its EXT1 and EXT2 interfaces are represented by J2 and J3.

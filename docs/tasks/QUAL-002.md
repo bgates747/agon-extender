@@ -21,8 +21,11 @@ production isolation requirements.
 ## Authority and inputs
 
 - [AUDIT-001](AUDIT-001.md).
+- [`light2-harness-r02`](../../hardware/designs/light2-harness-r02/README.md)
+  and its `light2-extender-solderless-assembly-r02` construction target.
 - [`light2-harness-r01`](../../hardware/designs/light2-harness-r01/README.md)
-  and [`la03-p4-probe-fixture-r01`](../../hardware/fixtures/la03-p4-probe-fixture-r01/README.md).
+  only as the preserved predecessor baseline, plus
+  [`la03-p4-probe-fixture-r01`](../../hardware/fixtures/la03-p4-probe-fixture-r01/README.md).
 - PORT-008's accepted transport ownership states and controlled candidate.
 - `SETUP-005-D002` mode lifecycle, reset, failure, and recovery decision.
 - [Versioning and qualified-run policy](../versions/README.md).
@@ -42,7 +45,7 @@ production isolation requirements.
    return transfer, and rendering.
 5. Verify deterministic recovery or the accepted visible failure without
    requiring unsafe manual intervention.
-6. Determine whether `light2-harness-r01` is sufficient. If isolation,
+6. Determine whether `light2-harness-r02` is sufficient. If isolation,
    switching, biasing, protection, reset, connector, or measurement wiring must
    change, stop and create an Author-approved new revision before testing it.
 7. Define fixture/probe revisions and multiple-capture or endpoint-oracle

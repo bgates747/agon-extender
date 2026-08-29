@@ -1,0 +1,1730 @@
+# AUTHORITATIVE light2-harness-r02 connectivity; generated deterministically; electrical changes require a new revision.
+schema_version: 1
+model:
+  model_id: light2-harness-r02
+  title: Light 2 common UART and forward-parallel transport r02
+  status: candidate
+  authority: true
+  scope: Authoritative placement-independent connectivity for the Agon Light 2 and Olimex ESP32-P4-DevKit
+    Rev D1 controlled prototype transport.
+  source_refs:
+  - ADR-0016
+  - HW-001-D001
+  - HW-001-D002
+  - HW-001-D003
+  - HW-001-D004
+  - HW-001-D005
+  - HW-001-D006
+  - HW-001-D007
+  - HW-001-D008
+  - v1-uart-parallel-circuit-proposal.md
+  notes: R1-R13 are frozen at 220 ohms for this candidate. The revision does not claim qualification of
+    eZ80-only reset recovery, Legacy electrical absence, 1.152 Mbaud UART operation, or flow control.
+components:
+- ref: C1
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 100 nF
+  description: U1 local bypass
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: C2
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 100 nF
+  description: U2 local bypass
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: C3
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 100 nF
+  description: U3 local bypass
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: C4
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 100 nF
+  description: U4 local bypass
+  power_domain: p4-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: C5
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 1 uF
+  description: Agon-domain local bulk
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: C6
+  kind: capacitor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 1 uF
+  description: P4-domain local bulk
+  power_domain: p4-domain
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: capacitor-ends
+- ref: J1
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Agon Light 2 GPIO 2x17
+  description: Agon Light 2 main GPIO header
+  terminals:
+  - pin: '1'
+    name: UNUSED_1
+    electrical_type: passive
+  - pin: '2'
+    name: UNUSED_2
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: UNUSED_8
+    electrical_type: passive
+  - pin: '9'
+    name: UNUSED_9
+    electrical_type: passive
+  - pin: '10'
+    name: UNUSED_10
+    electrical_type: passive
+  - pin: '11'
+    name: UNUSED_11
+    electrical_type: passive
+  - pin: '12'
+    name: UNUSED_12
+    electrical_type: passive
+  - pin: '13'
+    name: PD4_READY_N
+    electrical_type: passive
+  - pin: '14'
+    name: PD5_CLOCK
+    electrical_type: passive
+  - pin: '15'
+    name: UNUSED_15
+    electrical_type: passive
+  - pin: '16'
+    name: PD7_VALID_N
+    electrical_type: passive
+  - pin: '17'
+    name: PC0_TXD1_D0
+    electrical_type: passive
+  - pin: '18'
+    name: PC1_RXD1_D1
+    electrical_type: passive
+  - pin: '19'
+    name: PC2_RTS1_D2
+    electrical_type: passive
+  - pin: '20'
+    name: PC3_CTS1_D3
+    electrical_type: passive
+  - pin: '21'
+    name: PC4_D4
+    electrical_type: passive
+  - pin: '22'
+    name: PC5_D5
+    electrical_type: passive
+  - pin: '23'
+    name: PC6_D6
+    electrical_type: passive
+  - pin: '24'
+    name: PC7_D7
+    electrical_type: passive
+  - pin: '25'
+    name: UNUSED_25
+    electrical_type: passive
+  - pin: '26'
+    name: UNUSED_26
+    electrical_type: passive
+  - pin: '27'
+    name: UNUSED_27
+    electrical_type: passive
+  - pin: '28'
+    name: UNUSED_28
+    electrical_type: passive
+  - pin: '29'
+    name: UNUSED_29
+    electrical_type: passive
+  - pin: '30'
+    name: UNUSED_30
+    electrical_type: passive
+  - pin: '31'
+    name: UNUSED_31
+    electrical_type: passive
+  - pin: '32'
+    name: UNUSED_32
+    electrical_type: passive
+  - pin: '33'
+    name: GND
+    electrical_type: passive
+  - pin: '34'
+    name: AGON_3V3
+    electrical_type: passive
+- ref: J2
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Olimex P4 EXT1
+  description: Olimex ESP32-P4-DevKit Rev D1 EXT1
+  terminals:
+  - pin: '1'
+    name: P4_3V3
+    electrical_type: passive
+  - pin: '2'
+    name: GND
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: UNUSED_8
+    electrical_type: passive
+  - pin: '9'
+    name: UNUSED_9
+    electrical_type: passive
+  - pin: '10'
+    name: GPIO9_D7
+    electrical_type: passive
+  - pin: '11'
+    name: GPIO10_D5
+    electrical_type: passive
+  - pin: '12'
+    name: GPIO11_D3_UART_RTS
+    electrical_type: passive
+  - pin: '13'
+    name: GPIO12_D1_UART_TX
+    electrical_type: passive
+  - pin: '14'
+    name: GPIO13_VALID_N
+    electrical_type: passive
+  - pin: '15'
+    name: GPIO14_CLOCK
+    electrical_type: passive
+  - pin: '16'
+    name: GPIO15_UART_FWD_CTL_N
+    electrical_type: passive
+  - pin: '17'
+    name: UNUSED_17
+    electrical_type: passive
+  - pin: '18'
+    name: GPIO17_PAR_FWD_CTL_N
+    electrical_type: passive
+  - pin: '19'
+    name: UNUSED_19
+    electrical_type: passive
+  - pin: '20'
+    name: UNUSED_20
+    electrical_type: passive
+- ref: J3
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Olimex P4 EXT2
+  description: Olimex ESP32-P4-DevKit Rev D1 EXT2
+  terminals:
+  - pin: '1'
+    name: P4_5V_UNUSED
+    electrical_type: passive
+  - pin: '2'
+    name: GND
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: GPIO33_D6
+    electrical_type: passive
+  - pin: '9'
+    name: GPIO32_D4
+    electrical_type: passive
+  - pin: '10'
+    name: GPIO23_D2_UART_CTS
+    electrical_type: passive
+  - pin: '11'
+    name: GPIO22_D0_UART_RX
+    electrical_type: passive
+  - pin: '12'
+    name: GPIO21_UART_RETURN_CTL_N
+    electrical_type: passive
+  - pin: '13'
+    name: GPIO20_READY_CTL_N
+    electrical_type: passive
+  - pin: '14'
+    name: UNUSED_14
+    electrical_type: passive
+  - pin: '15'
+    name: GND
+    electrical_type: passive
+  - pin: '16'
+    name: UNUSED_16
+    electrical_type: passive
+  - pin: '17'
+    name: UNUSED_17
+    electrical_type: passive
+  - pin: '18'
+    name: GND
+    electrical_type: passive
+  - pin: '19'
+    name: UNUSED_19
+    electrical_type: passive
+  - pin: '20'
+    name: UNUSED_20
+    electrical_type: passive
+- ref: R1
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D0/UART RX source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R2
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D1 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R3
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D2/UART CTS source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R4
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D3 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R5
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D4 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R6
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D5 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R7
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D6 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R8
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: D7 source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R9
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: CLOCK source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R10
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: VALID_N source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R11
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: UART TX source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R12
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: UART RTS source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R13
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: READY_N source-series candidate
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R14
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO22 D0/UART RX inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R15
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO12 D1/UART TX inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R16
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO23 D2/UART CTS inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R17
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO11 D3/UART RTS inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R18
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO32 D4 inactive pull-down
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R19
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO10 D5 inactive pull-down
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R20
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO33 D6 inactive pull-down
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R21
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 47 kohm
+  description: GPIO9 D7 inactive pull-down
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R22
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: GPIO14 CLOCK inactive pull-down
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R23
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: GPIO13 VALID_N inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R24
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: Agon PD4 READY_N inactive pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R25
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: UART forward OE Agon-domain pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R26
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: Parallel forward OE Agon-domain pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R27
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: UART return OE Agon-domain pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R28
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: P4 GPIO15 U4 control pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R29
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: P4 GPIO17 U4 control pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R30
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: P4 GPIO21 U4 control pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R31
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 10 kohm
+  description: P4 GPIO20 U4 control pull-up
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: U1
+  kind: integrated-circuit
+  orientation: keyed
+  terminal_scope: complete
+  part_number: SN74LVC244AN
+  value: SN74LVC244AN
+  description: Shared UART-forward and lower parallel/timing buffer
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: 1OE_N
+    electrical_type: input
+  - pin: '2'
+    name: 1A1
+    electrical_type: input
+  - pin: '3'
+    name: 2Y4
+    electrical_type: tri-state
+  - pin: '4'
+    name: 1A2
+    electrical_type: input
+  - pin: '5'
+    name: 2Y3
+    electrical_type: tri-state
+  - pin: '6'
+    name: 1A3
+    electrical_type: input
+  - pin: '7'
+    name: 2Y2
+    electrical_type: tri-state
+  - pin: '8'
+    name: 1A4
+    electrical_type: input
+  - pin: '9'
+    name: 2Y1
+    electrical_type: tri-state
+  - pin: '10'
+    name: GND
+    electrical_type: power-input
+  - pin: '11'
+    name: 2A1
+    electrical_type: input
+  - pin: '12'
+    name: 1Y4
+    electrical_type: tri-state
+  - pin: '13'
+    name: 2A2
+    electrical_type: input
+  - pin: '14'
+    name: 1Y3
+    electrical_type: tri-state
+  - pin: '15'
+    name: 2A3
+    electrical_type: input
+  - pin: '16'
+    name: 1Y2
+    electrical_type: tri-state
+  - pin: '17'
+    name: 2A4
+    electrical_type: input
+  - pin: '18'
+    name: 1Y1
+    electrical_type: tri-state
+  - pin: '19'
+    name: 2OE_N
+    electrical_type: input
+  - pin: '20'
+    name: VCC
+    electrical_type: power-input
+- ref: U2
+  kind: integrated-circuit
+  orientation: keyed
+  terminal_scope: complete
+  part_number: SN74LVC244AN
+  value: SN74LVC244AN
+  description: Upper parallel-data buffer
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: 1OE_N
+    electrical_type: input
+  - pin: '2'
+    name: 1A1
+    electrical_type: input
+  - pin: '3'
+    name: 2Y4
+    electrical_type: tri-state
+  - pin: '4'
+    name: 1A2
+    electrical_type: input
+  - pin: '5'
+    name: 2Y3
+    electrical_type: tri-state
+  - pin: '6'
+    name: 1A3
+    electrical_type: input
+  - pin: '7'
+    name: 2Y2
+    electrical_type: tri-state
+  - pin: '8'
+    name: 1A4
+    electrical_type: input
+  - pin: '9'
+    name: 2Y1
+    electrical_type: tri-state
+  - pin: '10'
+    name: GND
+    electrical_type: power-input
+  - pin: '11'
+    name: 2A1
+    electrical_type: input
+  - pin: '12'
+    name: 1Y4
+    electrical_type: tri-state
+  - pin: '13'
+    name: 2A2
+    electrical_type: input
+  - pin: '14'
+    name: 1Y3
+    electrical_type: tri-state
+  - pin: '15'
+    name: 2A3
+    electrical_type: input
+  - pin: '16'
+    name: 1Y2
+    electrical_type: tri-state
+  - pin: '17'
+    name: 2A4
+    electrical_type: input
+  - pin: '18'
+    name: 1Y1
+    electrical_type: tri-state
+  - pin: '19'
+    name: 2OE_N
+    electrical_type: input
+  - pin: '20'
+    name: VCC
+    electrical_type: power-input
+- ref: U3
+  kind: integrated-circuit
+  orientation: keyed
+  terminal_scope: complete
+  part_number: SN74LV125AN
+  value: SN74LV125AN
+  description: Agon-powered UART return buffer
+  power_domain: agon-domain
+  terminals:
+  - pin: '1'
+    name: 1OE_N
+    electrical_type: input
+  - pin: '2'
+    name: 1A
+    electrical_type: input
+  - pin: '3'
+    name: 1Y
+    electrical_type: tri-state
+  - pin: '4'
+    name: 2OE_N
+    electrical_type: input
+  - pin: '5'
+    name: 2A
+    electrical_type: input
+  - pin: '6'
+    name: 2Y
+    electrical_type: tri-state
+  - pin: '7'
+    name: GND
+    electrical_type: power-input
+  - pin: '8'
+    name: 3Y
+    electrical_type: tri-state
+  - pin: '9'
+    name: 3A
+    electrical_type: input
+  - pin: '10'
+    name: 3OE_N
+    electrical_type: input
+  - pin: '11'
+    name: 4Y
+    electrical_type: tri-state
+  - pin: '12'
+    name: 4A
+    electrical_type: input
+  - pin: '13'
+    name: 4OE_N
+    electrical_type: input
+  - pin: '14'
+    name: VCC
+    electrical_type: power-input
+- ref: U4
+  kind: integrated-circuit
+  orientation: keyed
+  terminal_scope: complete
+  part_number: SN74LV125AN
+  value: SN74LV125AN
+  description: P4-powered low-only isolated controls
+  power_domain: p4-domain
+  terminals:
+  - pin: '1'
+    name: 1OE_N
+    electrical_type: input
+  - pin: '2'
+    name: 1A
+    electrical_type: input
+  - pin: '3'
+    name: 1Y
+    electrical_type: tri-state
+  - pin: '4'
+    name: 2OE_N
+    electrical_type: input
+  - pin: '5'
+    name: 2A
+    electrical_type: input
+  - pin: '6'
+    name: 2Y
+    electrical_type: tri-state
+  - pin: '7'
+    name: GND
+    electrical_type: power-input
+  - pin: '8'
+    name: 3Y
+    electrical_type: tri-state
+  - pin: '9'
+    name: 3A
+    electrical_type: input
+  - pin: '10'
+    name: 3OE_N
+    electrical_type: input
+  - pin: '11'
+    name: 4Y
+    electrical_type: tri-state
+  - pin: '12'
+    name: 4A
+    electrical_type: input
+  - pin: '13'
+    name: 4OE_N
+    electrical_type: input
+  - pin: '14'
+    name: VCC
+    electrical_type: power-input
+nets:
+- net_id: agon-3v3
+  class: power
+  members:
+  - component: C1
+    pin: '1'
+  - component: C2
+    pin: '1'
+  - component: C3
+    pin: '1'
+  - component: C5
+    pin: '1'
+  - component: J1
+    pin: '34'
+  - component: R24
+    pin: '1'
+  - component: R25
+    pin: '1'
+  - component: R26
+    pin: '1'
+  - component: R27
+    pin: '1'
+  - component: U1
+    pin: '20'
+  - component: U2
+    pin: '19'
+  - component: U2
+    pin: '20'
+  - component: U3
+    pin: '10'
+  - component: U3
+    pin: '13'
+  - component: U3
+    pin: '14'
+  description: Agon-sourced 3.3 V logic domain
+  power_domain: agon-domain
+- net_id: agon-pc0-d0-uart-tx
+  class: signal
+  members:
+  - component: J1
+    pin: '17'
+  - component: U1
+    pin: '2'
+  description: eZ80 PC0 source for D0 and UART1 TXD1
+- net_id: agon-pc1-d1-uart-rx
+  class: signal
+  members:
+  - component: J1
+    pin: '18'
+  - component: R11
+    pin: '2'
+  - component: U1
+    pin: '17'
+  description: Shared eZ80 PC1 parallel D1 output or UART1 RXD1 input
+- net_id: agon-pc2-d2-uart-rts
+  class: signal
+  members:
+  - component: J1
+    pin: '19'
+  - component: U1
+    pin: '4'
+  description: eZ80 PC2 source for D2 and UART1 RTS1
+- net_id: agon-pc3-d3-uart-cts
+  class: signal
+  members:
+  - component: J1
+    pin: '20'
+  - component: R12
+    pin: '2'
+  - component: U1
+    pin: '15'
+  description: Shared eZ80 PC3 parallel D3 output or UART1 CTS1 input
+- net_id: agon-pc4-d4
+  class: signal
+  members:
+  - component: J1
+    pin: '21'
+  - component: U2
+    pin: '2'
+  description: eZ80 PC4 parallel D4 source
+- net_id: agon-pc5-d5
+  class: signal
+  members:
+  - component: J1
+    pin: '22'
+  - component: U2
+    pin: '4'
+  description: eZ80 PC5 parallel D5 source
+- net_id: agon-pc6-d6
+  class: signal
+  members:
+  - component: J1
+    pin: '23'
+  - component: U2
+    pin: '6'
+  description: eZ80 PC6 parallel D6 source
+- net_id: agon-pc7-d7
+  class: signal
+  members:
+  - component: J1
+    pin: '24'
+  - component: U2
+    pin: '8'
+  description: eZ80 PC7 parallel D7 source
+- net_id: agon-pd4-ready-n
+  class: control
+  members:
+  - component: J1
+    pin: '13'
+  - component: R13
+    pin: '2'
+  - component: R24
+    pin: '2'
+  description: Active-low Extender-to-Agon parallel admission
+- net_id: agon-pd5-clock
+  class: control
+  members:
+  - component: J1
+    pin: '14'
+  - component: U1
+    pin: '13'
+  description: eZ80 parallel sampling clock source
+- net_id: agon-pd7-valid-n
+  class: control
+  members:
+  - component: J1
+    pin: '16'
+  - component: U1
+    pin: '11'
+  description: eZ80 active-low parallel record validity source
+- net_id: ground
+  class: ground
+  members:
+  - component: C1
+    pin: '2'
+  - component: C2
+    pin: '2'
+  - component: C3
+    pin: '2'
+  - component: C4
+    pin: '2'
+  - component: C5
+    pin: '2'
+  - component: C6
+    pin: '2'
+  - component: J1
+    pin: '33'
+  - component: J2
+    pin: '2'
+  - component: J3
+    pin: '2'
+  - component: J3
+    pin: '15'
+  - component: J3
+    pin: '18'
+  - component: R18
+    pin: '2'
+  - component: R19
+    pin: '2'
+  - component: R20
+    pin: '2'
+  - component: R21
+    pin: '2'
+  - component: R22
+    pin: '2'
+  - component: U1
+    pin: '6'
+  - component: U1
+    pin: '8'
+  - component: U1
+    pin: '10'
+  - component: U2
+    pin: '10'
+  - component: U2
+    pin: '11'
+  - component: U2
+    pin: '13'
+  - component: U2
+    pin: '15'
+  - component: U2
+    pin: '17'
+  - component: U3
+    pin: '7'
+  - component: U3
+    pin: '9'
+  - component: U3
+    pin: '12'
+  - component: U4
+    pin: '2'
+  - component: U4
+    pin: '5'
+  - component: U4
+    pin: '7'
+  - component: U4
+    pin: '9'
+  - component: U4
+    pin: '12'
+  description: Common signal return; positive supply rails remain separate
+  power_domain: null
+- net_id: p4-3v3
+  class: power
+  members:
+  - component: C4
+    pin: '1'
+  - component: C6
+    pin: '1'
+  - component: J2
+    pin: '1'
+  - component: R14
+    pin: '1'
+  - component: R15
+    pin: '1'
+  - component: R16
+    pin: '1'
+  - component: R17
+    pin: '1'
+  - component: R23
+    pin: '1'
+  - component: R28
+    pin: '1'
+  - component: R29
+    pin: '1'
+  - component: R30
+    pin: '1'
+  - component: R31
+    pin: '1'
+  - component: U4
+    pin: '14'
+  description: P4-sourced 3.3 V logic domain
+  power_domain: p4-domain
+- net_id: p4-gpio10-d5
+  class: signal
+  members:
+  - component: J2
+    pin: '11'
+  - component: R6
+    pin: '2'
+  - component: R19
+    pin: '1'
+  description: Protected P4 endpoint for p4-gpio10-d5
+- net_id: p4-gpio10-d5-driver
+  class: signal
+  members:
+  - component: R6
+    pin: '1'
+  - component: U2
+    pin: '16'
+  description: Buffered source side of p4-gpio10-d5
+- net_id: p4-gpio11-d3-uart-rts
+  class: signal
+  members:
+  - component: J2
+    pin: '12'
+  - component: R4
+    pin: '2'
+  - component: R17
+    pin: '2'
+  - component: U3
+    pin: '5'
+  description: Protected P4 endpoint for p4-gpio11-d3-uart-rts
+- net_id: p4-gpio11-d3-uart-rts-driver
+  class: signal
+  members:
+  - component: R4
+    pin: '1'
+  - component: U1
+    pin: '5'
+  description: Buffered source side of p4-gpio11-d3-uart-rts
+- net_id: p4-gpio12-d1-uart-tx
+  class: signal
+  members:
+  - component: J2
+    pin: '13'
+  - component: R2
+    pin: '2'
+  - component: R15
+    pin: '2'
+  - component: U3
+    pin: '2'
+  description: Protected P4 endpoint for p4-gpio12-d1-uart-tx
+- net_id: p4-gpio12-d1-uart-tx-driver
+  class: signal
+  members:
+  - component: R2
+    pin: '1'
+  - component: U1
+    pin: '3'
+  description: Buffered source side of p4-gpio12-d1-uart-tx
+- net_id: p4-gpio13-valid-n
+  class: control
+  members:
+  - component: J2
+    pin: '14'
+  - component: R10
+    pin: '2'
+  - component: R23
+    pin: '2'
+  description: Protected P4 endpoint for p4-gpio13-valid-n
+- net_id: p4-gpio13-valid-n-driver
+  class: control
+  members:
+  - component: R10
+    pin: '1'
+  - component: U1
+    pin: '9'
+  description: Buffered source side of p4-gpio13-valid-n
+- net_id: p4-gpio14-clock
+  class: control
+  members:
+  - component: J2
+    pin: '15'
+  - component: R9
+    pin: '2'
+  - component: R22
+    pin: '1'
+  description: Protected P4 endpoint for p4-gpio14-clock
+- net_id: p4-gpio14-clock-driver
+  class: control
+  members:
+  - component: R9
+    pin: '1'
+  - component: U1
+    pin: '7'
+  description: Buffered source side of p4-gpio14-clock
+- net_id: p4-gpio15-uart-forward-control-n
+  class: control
+  members:
+  - component: J2
+    pin: '16'
+  - component: R28
+    pin: '2'
+  - component: U4
+    pin: '1'
+  description: P4-domain pulled-up control p4-gpio15-uart-forward-control-n
+- net_id: p4-gpio17-parallel-forward-control-n
+  class: control
+  members:
+  - component: J2
+    pin: '18'
+  - component: R29
+    pin: '2'
+  - component: U4
+    pin: '4'
+  description: P4-domain pulled-up control p4-gpio17-parallel-forward-control-n
+- net_id: p4-gpio20-ready-control-n
+  class: control
+  members:
+  - component: J3
+    pin: '13'
+  - component: R31
+    pin: '2'
+  - component: U4
+    pin: '13'
+  description: P4-domain pulled-up control p4-gpio20-ready-control-n
+- net_id: p4-gpio21-uart-return-control-n
+  class: control
+  members:
+  - component: J3
+    pin: '12'
+  - component: R30
+    pin: '2'
+  - component: U4
+    pin: '10'
+  description: P4-domain pulled-up control p4-gpio21-uart-return-control-n
+- net_id: p4-gpio22-d0-uart-rx
+  class: signal
+  members:
+  - component: J3
+    pin: '11'
+  - component: R1
+    pin: '2'
+  - component: R14
+    pin: '2'
+  description: Protected P4 endpoint for p4-gpio22-d0-uart-rx
+- net_id: p4-gpio22-d0-uart-rx-driver
+  class: signal
+  members:
+  - component: R1
+    pin: '1'
+  - component: U1
+    pin: '18'
+  description: Buffered source side of p4-gpio22-d0-uart-rx
+- net_id: p4-gpio23-d2-uart-cts
+  class: signal
+  members:
+  - component: J3
+    pin: '10'
+  - component: R3
+    pin: '2'
+  - component: R16
+    pin: '2'
+  description: Protected P4 endpoint for p4-gpio23-d2-uart-cts
+- net_id: p4-gpio23-d2-uart-cts-driver
+  class: signal
+  members:
+  - component: R3
+    pin: '1'
+  - component: U1
+    pin: '16'
+  description: Buffered source side of p4-gpio23-d2-uart-cts
+- net_id: p4-gpio32-d4
+  class: signal
+  members:
+  - component: J3
+    pin: '9'
+  - component: R5
+    pin: '2'
+  - component: R18
+    pin: '1'
+  description: Protected P4 endpoint for p4-gpio32-d4
+- net_id: p4-gpio32-d4-driver
+  class: signal
+  members:
+  - component: R5
+    pin: '1'
+  - component: U2
+    pin: '18'
+  description: Buffered source side of p4-gpio32-d4
+- net_id: p4-gpio33-d6
+  class: signal
+  members:
+  - component: J3
+    pin: '8'
+  - component: R7
+    pin: '2'
+  - component: R20
+    pin: '1'
+  description: Protected P4 endpoint for p4-gpio33-d6
+- net_id: p4-gpio33-d6-driver
+  class: signal
+  members:
+  - component: R7
+    pin: '1'
+  - component: U2
+    pin: '14'
+  description: Buffered source side of p4-gpio33-d6
+- net_id: p4-gpio9-d7
+  class: signal
+  members:
+  - component: J2
+    pin: '10'
+  - component: R8
+    pin: '2'
+  - component: R21
+    pin: '1'
+  description: Protected P4 endpoint for p4-gpio9-d7
+- net_id: p4-gpio9-d7-driver
+  class: signal
+  members:
+  - component: R8
+    pin: '1'
+  - component: U2
+    pin: '12'
+  description: Buffered source side of p4-gpio9-d7
+- net_id: p4-uart-rts-driver
+  class: control
+  members:
+  - component: R12
+    pin: '1'
+  - component: U3
+    pin: '6'
+  description: Buffered P4 UART2 RTS source before series resistance
+- net_id: p4-uart-tx-driver
+  class: signal
+  members:
+  - component: R11
+    pin: '1'
+  - component: U3
+    pin: '3'
+  description: Buffered P4 UART2 TX source before series resistance
+- net_id: parallel-forward-oe-n
+  class: control
+  members:
+  - component: R26
+    pin: '2'
+  - component: U1
+    pin: '19'
+  - component: U2
+    pin: '1'
+  - component: U4
+    pin: '6'
+  description: Agon-domain active-low enable for parallel-forward banks
+- net_id: ready-n-driver
+  class: control
+  members:
+  - component: R13
+    pin: '1'
+  - component: U4
+    pin: '11'
+  description: Low-only READY_N source before series resistance
+- net_id: uart-forward-oe-n
+  class: control
+  members:
+  - component: R25
+    pin: '2'
+  - component: U1
+    pin: '1'
+  - component: U4
+    pin: '3'
+  description: Agon-domain active-low enable for UART-forward U1 bank
+- net_id: uart-return-oe-n
+  class: control
+  members:
+  - component: R27
+    pin: '2'
+  - component: U3
+    pin: '1'
+  - component: U3
+    pin: '4'
+  - component: U4
+    pin: '8'
+  description: Agon-domain active-low enable for UART return drivers
+unconnected:
+- component: J1
+  pin: '1'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '2'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '3'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '4'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '5'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '6'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '7'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '8'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '9'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '10'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '11'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '12'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '15'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '25'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '26'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '27'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '28'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '29'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '30'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '31'
+  reason: Header contact outside this bounded transport circuit
+- component: J1
+  pin: '32'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '3'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '4'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '5'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '6'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '7'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '8'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '9'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '17'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '19'
+  reason: Header contact outside this bounded transport circuit
+- component: J2
+  pin: '20'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '1'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '3'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '4'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '5'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '6'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '7'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '14'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '16'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '17'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '19'
+  reason: Header contact outside this bounded transport circuit
+- component: J3
+  pin: '20'
+  reason: Header contact outside this bounded transport circuit
+- component: U1
+  pin: '12'
+  reason: Disabled unused buffer output
+- component: U1
+  pin: '14'
+  reason: Disabled unused buffer output
+- component: U2
+  pin: '3'
+  reason: Disabled unused buffer output
+- component: U2
+  pin: '5'
+  reason: Disabled unused buffer output
+- component: U2
+  pin: '7'
+  reason: Disabled unused buffer output
+- component: U2
+  pin: '9'
+  reason: Disabled unused buffer output
+- component: U3
+  pin: '8'
+  reason: Disabled unused buffer output
+- component: U3
+  pin: '11'
+  reason: Disabled unused buffer output

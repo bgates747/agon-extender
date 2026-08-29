@@ -1,5 +1,10 @@
 # SETUP-006.4 electrical requirements and candidate allocation
 
+> **Historical task evidence:** HW-001 superseded this provisional allocation
+> with the common-UART `light2-harness-r02` candidate. This file remains useful
+> for predecessor evidence and requirement provenance but is not current wiring
+> authority.
+
 ## Status and interpretation
 
 - State: task-local review candidate

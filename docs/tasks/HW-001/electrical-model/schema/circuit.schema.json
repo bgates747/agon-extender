@@ -1,0 +1,310 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "urn:agon-extender:hw-001:circuit-schema-v1",
+  "title": "Agon Extender placement-independent electrical connectivity",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "model",
+    "components",
+    "nets",
+    "unconnected"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": 1
+    },
+    "model": {
+      "$ref": "#/$defs/model"
+    },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/component"
+      }
+    },
+    "nets": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/net"
+      }
+    },
+    "unconnected": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/unconnected"
+      }
+    }
+  },
+  "$defs": {
+    "slug": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "component_ref": {
+      "type": "string",
+      "pattern": "^[A-Z][A-Z0-9_-]*$"
+    },
+    "pin": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[A-Za-z0-9_+/-]+$"
+    },
+    "nullable_slug": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/slug"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "model": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "model_id",
+        "title",
+        "status",
+        "authority",
+        "scope"
+      ],
+      "properties": {
+        "model_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "title": {
+          "type": "string",
+          "minLength": 1
+        },
+        "status": {
+          "enum": [
+            "illustrative",
+            "draft",
+            "experimental",
+            "candidate",
+            "qualified",
+            "released",
+            "deprecated",
+            "rejected"
+          ]
+        },
+        "authority": {
+          "type": "boolean"
+        },
+        "scope": {
+          "type": "string",
+          "minLength": 1
+        },
+        "source_refs": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1
+          }
+        },
+        "notes": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "ref",
+        "kind",
+        "orientation",
+        "terminal_scope",
+        "terminals"
+      ],
+      "properties": {
+        "ref": {
+          "$ref": "#/$defs/component_ref"
+        },
+        "kind": {
+          "enum": [
+            "board",
+            "capacitor",
+            "connector",
+            "diode",
+            "integrated-circuit",
+            "module",
+            "resistor",
+            "test-point",
+            "transistor",
+            "other"
+          ]
+        },
+        "orientation": {
+          "enum": [
+            "symmetric",
+            "polarized",
+            "keyed"
+          ]
+        },
+        "terminal_scope": {
+          "enum": [
+            "complete",
+            "in-scope"
+          ]
+        },
+        "part_number": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        },
+        "power_domain": {
+          "$ref": "#/$defs/nullable_slug"
+        },
+        "terminals": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/terminal"
+          }
+        }
+      }
+    },
+    "terminal": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "pin",
+        "electrical_type"
+      ],
+      "properties": {
+        "pin": {
+          "$ref": "#/$defs/pin"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "role": {
+          "type": "string",
+          "minLength": 1
+        },
+        "electrical_type": {
+          "enum": [
+            "input",
+            "output",
+            "bidirectional",
+            "tri-state",
+            "passive",
+            "power-input",
+            "power-output",
+            "open-collector",
+            "open-drain",
+            "unspecified"
+          ]
+        },
+        "polarity_role": {
+          "enum": [
+            "positive",
+            "negative",
+            "anode",
+            "cathode"
+          ]
+        },
+        "interchangeable_group": {
+          "$ref": "#/$defs/slug"
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "endpoint": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component",
+        "pin"
+      ],
+      "properties": {
+        "component": {
+          "$ref": "#/$defs/component_ref"
+        },
+        "pin": {
+          "$ref": "#/$defs/pin"
+        }
+      }
+    },
+    "net": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "net_id",
+        "class",
+        "members"
+      ],
+      "properties": {
+        "net_id": {
+          "$ref": "#/$defs/slug"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "class": {
+          "enum": [
+            "signal",
+            "control",
+            "power",
+            "ground",
+            "reference"
+          ]
+        },
+        "power_domain": {
+          "$ref": "#/$defs/nullable_slug"
+        },
+        "members": {
+          "type": "array",
+          "minItems": 2,
+          "items": {
+            "$ref": "#/$defs/endpoint"
+          }
+        },
+        "description": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "unconnected": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "component",
+        "pin",
+        "reason"
+      ],
+      "properties": {
+        "component": {
+          "$ref": "#/$defs/component_ref"
+        },
+        "pin": {
+          "$ref": "#/$defs/pin"
+        },
+        "reason": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  }
+}

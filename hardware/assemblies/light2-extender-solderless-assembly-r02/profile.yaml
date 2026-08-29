@@ -1,0 +1,27 @@
+schema_version: 1
+artifact_id: light2-extender-solderless-assembly
+identity: light2-extender-solderless-assembly-r02
+kind: solderless_assembly
+variant: light2
+status: draft
+selected_design:
+  artifact_id: light2-harness
+  exact: light2-harness-r02
+construction_inputs:
+  electrical_authority: hardware/designs/light2-harness-r02/connectivity.yaml
+  design_bom: hardware/designs/light2-harness-r02/bom.yaml
+realization: under-construction
+construction_authority: null
+intended_use:
+  - controlled prototype construction
+  - qualification after the exact construction map and procedures are frozen
+open_requirements:
+  - exact breadboard component placement
+  - exact conductor and connector mapping
+  - continuity and passive inspection record
+  - qualified procedure and run evidence
+authority_refs:
+  - hardware/designs/light2-harness-r02/profile.yaml
+  - hardware/designs/light2-harness-r02/connectivity.yaml
+  - hardware/designs/light2-harness-r02/bom.yaml
+  - docs/tasks/HW-001.md

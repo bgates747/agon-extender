@@ -6,3 +6,7 @@ PyYAML==6.0.3
 # draft 2020-12. Project validators add referential and deterministic-order
 # checks that JSON Schema cannot express across collections.
 jsonschema==4.25.1
+
+# HW-001 uses SKiDL only as a task-local projection spike from the canonical
+# placement-independent electrical model into an editable KiCad schematic.
+skidl==2.3.0

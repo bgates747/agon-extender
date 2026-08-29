@@ -165,20 +165,28 @@ that storage capability without defining its physical backend.
 
 ## Hardware design target
 
-The authoritative first Agon Light 2 wiring target is
-[`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md). It
-adopts the predecessor project's physically exercised eight-bit forward-bus
-pin map, installed-view routing geometry, series resistance, and control-signal
-biasing. Its tracked YAML profile is the normative pin authority; vendored text
-is provenance and supporting evidence, while the inherited SVGs are advisory.
+[`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md) is the
+authoritative predecessor harness and bounded forward-prototype target. It
+preserves the physically exercised eight-bit forward-bus pin map, installed-
+view routing geometry, series resistance, and control-signal evidence. It is
+not the V1 common-UART electrical design and must not be promoted by relabeling
+or incremental modification.
 
-The predecessor's 115,200-baud reverse-UART fixture exercised the same buffered
-PC0/PC1 circuit selected as the first physical target for the official legacy
-UART contract. The lower rate deliberately prioritized wiring and directional
-correctness over speed margin; it does not qualify operation at the required
-1,152,000 baud. Complete legacy flow control, target-speed operation,
-production isolation, either-order power behavior, final carrier construction,
-and Console8 adaptation remain unqualified.
+[`light2-harness-r02`](../hardware/designs/light2-harness-r02/README.md) is the
+frozen controlled-beta candidate and provisional V1 transport core. It uses two
+Agon-powered `SN74LVC244AN` forward buffers, one Agon-powered `SN74LV125AN`
+UART-return buffer, and one P4-powered `SN74LV125AN` as four low-only isolated
+control sinks. It provides one common eZ80 UART1 TX/RX/RTS/CTS circuit for both
+exclusive modes and retains one-way `D0..D7`, `CLOCK`, `VALID_N`, and
+`READY_N` for Exclusive Extended. Positive 3.3 V rails remain separate and all
+cross-board drivers default disabled. R1--R13 are frozen at 220 ohms for this
+candidate. See
+[ADR-0016](decisions/ADR-0016-v1-transport-electrical-core.md).
+
+This selection does not qualify target-speed UART, reset recovery, Legacy
+electrical absence, construction, or Console8 adaptation. HW-001 owns those
+remaining design and evidence gates before the topology can become a released
+V1 hardware artifact.
 
 ## EDU operating modes and application interface
 
@@ -207,15 +215,17 @@ In **Exclusive Compatible mode**, the EDP is the sole compatibility display
 processor and uses the stock VDP UART transport contract. It owns the
 stock-compatible command and response stream while MOS retains canonical VDP
 sysvar storage, completion flags, and the mechanism that updates them. The
-hardware implementation is deliberately not derived from the existing enhanced
-split-link harness: firmware requirements must mature first, followed by a new
-hardware design review, design, and qualification.
+selected hardware core provides all four eZ80 UART1 signals independently of
+the predecessor split-link harness; its exact firmware behavior and physical
+qualification remain under HW-001 and PORT-008.
 
 In **Exclusive Extended mode**, the EDP has the same exclusive compatibility
-authority and logical MOS/eZ80 integration reach, but commands use the
-eight-bit forward parallel path and responses use the enhanced UART return
-contract. Transport enhancement does not weaken the compatibility ownership
-model. Exact enhanced reverse capabilities remain unresolved.
+authority and logical MOS/eZ80 integration reach. Commands may use the
+eight-bit forward parallel path; response, control, and fallback traffic uses
+the same common four-signal UART circuit as Exclusive Compatible during
+separately owned UART epochs. Transport enhancement does not weaken the
+compatibility ownership model. Exact enhanced reverse capabilities remain
+unresolved.
 
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB

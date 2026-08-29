@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r14
-updated_at: 2026-08-28T15:50:39Z
+registry_revision: r15
+updated_at: 2026-08-29T22:32:03Z
 
 artifacts:
   - artifact_id: extender-vdp
@@ -123,7 +123,7 @@ artifacts:
   - artifact_id: light2-harness
     kind: wiring_harness
     identity_scheme: revision
-    latest_identity: light2-harness-r01
+    latest_identity: light2-harness-r02
     status: candidate
     variants:
       - light2
@@ -133,6 +133,21 @@ artifacts:
       - Its forward mapping has inherited qualification evidence; the clean-project combination remains a candidate.
       - The buffered PC0/PC1 UART circuit is the selected first wiring target; predecessor tests deliberately qualified correctness at 115.2 kbaud.
       - Operation at the required 1.152 Mbaud legacy rate, required flow-control behavior, production isolation, power behavior, and final carrier construction remain unqualified.
+      - Revision r02 freezes the four-chip common-UART and forward-parallel controlled-prototype circuit with 220-ohm series population on all thirteen driven outputs.
+      - Revision r02 is an unqualified candidate; eZ80-only reset recovery, Legacy electrical absence, target-rate UART and flow control, transport epochs, and physical qualification remain open.
+
+  - artifact_id: light2-extender-solderless-assembly
+    kind: solderless_assembly
+    identity_scheme: revision
+    latest_identity: light2-extender-solderless-assembly-r02
+    status: draft
+    variants:
+      - light2
+    description: Revisioned solderless-breadboard implementation of a selected Light 2 Extender harness design.
+    notes:
+      - Revision r01 identifies the preserved first prototype implementing light2-harness-r01 for bounded forward-transport work.
+      - Revision r02 selects light2-harness-r02 but remains draft until its exact breadboard construction mapping is frozen.
+      - Matching assembly and harness revision numbers are explicit selections, not an implied compatibility rule.
 
   - artifact_id: console8-harness
     kind: wiring_harness
