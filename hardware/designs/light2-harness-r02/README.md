@@ -8,9 +8,29 @@ eight-bit forward-parallel transport used by Exclusive Extended.
 The placement-independent [`connectivity.yaml`](connectivity.yaml) is the sole
 electrical authority. It fixes every component instance, component value,
 terminal, net, intentional no-connect, pin assignment, power domain, bias, and
-series element. Task-local KiCad schematics, XML netlists, SVG signal views,
-and future construction drawings are checked projections; their geometry does
-not override the connectivity model.
+series element. [`schematic.kicad_sch`](schematic.kicad_sch) is the maintained
+authoritative human electrical drawing. Its checked
+[`schematic.xml`](schematic.xml) and explicit-white
+[`schematic.svg`](schematic.svg) projections make that drawing machine- and
+human-reviewable. The schematic and task-local signal atlas remain checked
+projections; their geometry does not override the connectivity model.
+
+The Author accepted the maintained schematic on 2026-08-30 after manually
+arranging the complete circuit and clarifying each local bypass-capacitor
+assignment. KiCad's exported endpoint partition exactly matches every r02 net
+and intentional no-connect. Regenerate and validate the maintained projections
+from the repository root with:
+
+```text
+.venv/bin/python \
+  hardware/designs/light2-harness-r02/generate_schematic_views.py --write
+.venv/bin/python \
+  hardware/designs/light2-harness-r02/generate_schematic_views.py
+```
+
+The first command deliberately replaces the checked XML and SVG after exact
+topology validation. The second fails if either generated view is stale, if
+the schematic changes connectivity, or if intentional no-connects differ.
 
 ## Identity and lineage
 

@@ -11,9 +11,11 @@ integrity:
   files:
     connectivity.yaml: 560ab589c9f0bbf63ecc17e747eff15208fb672723489c3b4755d7d9fea6b79c
     bom.yaml: dc9f7b3fc227c8a6a7e6c389c188779aa2e46bedca7450612dc17c1a31d6e81c
+    schematic.kicad_sch: 39af5b2d4c1b575a04eb898ea6d84b0467238c70bca4e4bfacefa346580052e3
 precedence:
   - connectivity.yaml
   - bom.yaml
+  - schematic.kicad_sch
   - README.md
   - docs/decisions/ADR-0016-v1-transport-electrical-core.md
   - docs/tasks/HW-001/v1-uart-parallel-circuit-proposal.md

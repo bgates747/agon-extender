@@ -13,6 +13,11 @@ human-view projection family so drawings remain easy to locate.
 4. `signal-views/` contains canonical placement, the complete 1--19 signal,
    mux, control, and infrastructure atlas, and the neutral KiCad helpers needed
    to generate and validate that family.
+5. The accepted complete human drawing has been promoted out of this task
+   workspace to `hardware/designs/light2-harness-r02/schematic.kicad_sch`.
+   Its XML and explicit-white SVG projections and dedicated checker live beside
+   it. Experimental whole-circuit layouts and transformation scripts were
+   removed after promotion.
 
 The view-family directory owns its generated KiCad, XML, and SVG outputs and
 documents its regeneration and validation commands.
