@@ -105,6 +105,13 @@ item is removed.
   - Finished: --
   - Details: [DIAG-001](docs/tasks/DIAG-001.md)
 
+## Remote interaction
+
+- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
+  - Started: --
+  - Finished: --
+  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
+
 ## Interprocessor links
 
 - [ ] **LINK-001 — Research a direct onboard-VDP/EDP high-speed link**

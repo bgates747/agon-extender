@@ -2,7 +2,8 @@
 
 ## State
 
-- Status: Not started — post-v1 aspiration; no product guarantee
+- Status: Not started — scope reopened by REMOTE-001; no bus or product-version
+  commitment
 - Started: --
 - Finished: --
 
@@ -23,6 +24,12 @@ the onboard VDP and EDP. Rev 1 contains no direct VDP-to-EDP communication link.
 The Author identified a possible later bidirectional high-speed link—probably
 SPI—as a v2 aspiration. Neither the feature nor SPI is presently selected or
 guaranteed.
+
+On 2026-08-28, REMOTE-001 added concrete browser-keyboard, remote-terminal, and
+agent-control use cases after the current bench keyboard path became
+inoperative. Those needs justify revisiting schedule and product scope; they do
+not themselves select SPI, reserve pins, authorize wiring, or amend the current
+Rev 1 architecture.
 
 One explicit v2 aspirational use case is direct transfer of compatible display
 state and buffers between onboard VDP and EDP during a state-preserving mode
@@ -81,7 +88,7 @@ making the stock machine dependent on Extender.
    safety qualification, logic-analyzer procedures, throughput/latency tests,
    fault injection, and complete mode interaction coverage.
 
-## Rev 1 exclusion
+## Current Rev 1 boundary pending review
 
 - Rev 1 has no direct electrical or protocol connection between onboard VDP and
   EDP.
@@ -91,11 +98,14 @@ making the stock machine dependent on Extender.
 - No current firmware or hardware task may reserve pins, add framing, or alter
   stock onboard-VDP firmware on the assumption that LINK-001 will be accepted.
 - Absence of the future link is normal, not a degraded Rev 1 condition.
+- Advancing the link into beta or v1 for REMOTE-001 requires an explicit
+  architecture amendment; until then, the bullets above remain normative.
 
 ## Dependencies and gates
 
-- Complete and qualify the Rev 1 MOS/eZ80 relay before evaluating its measured
-  limitations.
+- Measure the Rev 1 MOS/eZ80 relay where practical before claiming that a
+  direct link is required. REMOTE-001 may justify earlier evaluation for a
+  browser-input fallback, but not a bus or wiring selection without review.
 - Revisit current upstream onboard-VDP firmware, P4 capabilities, carrier pin
   budget, MOS Modules status, and board revisions when this task starts.
 - No protocol, onboard-VDP firmware fork, pin assignment, circuit, or product

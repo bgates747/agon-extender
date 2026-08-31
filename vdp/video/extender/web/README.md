@@ -4,6 +4,11 @@ These project-owned assets implement the primary EDP video presentation path.
 EDP/P4 serves them directly from firmware through PORT-006; no Pi, filesystem,
 or external web server is a product runtime dependency.
 
+The current first-tranche firmware serves plain HTTP and WebSocket only on the
+trusted bench LAN. Open `http://<observed-dhcp-address>/`; `https://` is not
+implemented. TLS, authentication, and wider network exposure remain explicitly
+deferred.
+
 `frame_protocol.js` is the strict browser authority for EVF1 v1 and its
 one-credit browser state machine. `webgl2_presenter.js` uploads only final
 P4-composed RGB888 pixels. It does not reproduce palette, Copper, sprite,

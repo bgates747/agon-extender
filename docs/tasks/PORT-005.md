@@ -59,5 +59,12 @@ forwards selected events explicitly to Extender.
 - PORT-008 is required before an EDU-aware Agon application can physically
   inject events through the selected Extender transport; deterministic host
   adapter work may precede it.
+- REMOTE-001 owns browser-originated keyboard events, remote sessions, and any
+  direct EDP/onboard-VDP delivery path. PORT-005 continues to own only the
+  EDP-local processed-input adapter consumed after an accepted source delivers
+  an event.
+- Active bench constraint BC-001 means no current eZ80 fixture may depend on
+  interactive hardware keyboard input; affected fixtures must cold-boot via
+  `/autoexec.txt` until the Author clears it.
 - Define the EDU injection command format and acceptance fixtures with the
   Author before coding.

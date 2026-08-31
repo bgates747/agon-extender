@@ -249,6 +249,10 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   between them, including bootstrap, input, configuration, and any accepted
   delegation. A possible bidirectional high-speed direct link, probably SPI,
   is a post-v1 aspiration owned by LINK-001 rather than a current requirement.
+  REMOTE-001 now supplies concrete browser-keyboard, remote-terminal, and
+  agent-control reasons to revisit that schedule. The current Rev 1 exclusion
+  remains authoritative until D007 and the architecture receive an explicit
+  reviewed amendment; task creation alone does not select or authorize a link.
   Rev 1 also adds no P4-owned keyboard, mouse, or other peripheral hardware
   beyond facilities already present on the selected P4 DevKit; any such
   expansion is post-v1.
