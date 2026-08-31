@@ -3,8 +3,8 @@
 ## State
 
 - Status: In progress — r01 P4 and fixed-purpose EMOS forward path implemented
-  and non-physically qualified; deployable identities, procedure, and bench
-  evidence pending
+  and non-physically qualified; candidate identities and procedure assigned;
+  clean identified builds and physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -277,6 +277,42 @@ promoted into the product architecture merely because it runs.
    only from those commits; and obtain separate bench authorization before the
    forward-only visible-command run. Stop for Author review of that physical
    evidence before enabling P4-to-eZ80 traffic.
+
+#### 2026-08-31 — Forward qualification candidate preparation
+
+1. **Approved identities.** The Author approved `extender-vdp-v0.2.0`,
+   `agon-emos-v0.1.0`, `agon-transport-fixture-r01`,
+   `port-008-forward-qualification-r01`, and baseline
+   `port-008-forward-r01`. Independent UTC build IDs remain unassigned until
+   clean committed builds begin; the run ID remains unassigned until the Agon
+   cold boot that starts the physical run.
+2. **EMOS freeze.** The exact source identity and fail-closed ordinary-build
+   behavior are frozen in `agon-emos` commit `59c3102`. The Author graphically
+   approved that emulator-coupled change; all 51 repository tests passed under
+   the selected worktree. The fixed-purpose `port008-forward` profile remains
+   a qualification-only EMOS configuration.
+3. **P4 candidate input.** `p4-forward-vdp-identity.json` assigns the approved
+   source identity to the existing forward-ingress environment. A task-local
+   validator reuses the complete PORT-003 Phase-F closure and changes only its
+   ingress assertions: `ForwardParallelStream`, the exact r01 startup
+   diagnostic, discard-only return, and absence of `DisconnectedStream`.
+4. **Staging and oracle tooling.** The task-local stager reuses the proven
+   clean-worktree, identity, and factory-segment checks while emitting the
+   narrower PORT-008 claim. The frame-capture tool reuses the established EVF1
+   parser, saves the raw RGB888 payload, and requires the frozen 230,400-byte
+   SHA-256 oracle without recording the private endpoint.
+5. **Keyboardless installation.** Official unmodified `agon-flash` v1.9 already
+   provides `-f`; no custom flash-utility build is required. The temporary
+   two-line autoexec renames `/emos.bin` before invoking `flash ... -f`, so the
+   utility's automatic reset reaches a failing rename rather than flashing a
+   second time. This one-shot media arrangement, not the flash utility, is the
+   BC-001 bench workaround.
+6. **Physical gate remains closed.** The candidate baseline and procedure
+   freeze the controlled r01 wiring, two distinct SD-card states, exact hashes,
+   P4-first boot order, stop conditions, and bounded claim. No mounted card,
+   firmware, wiring, power state, reset, or harness traffic may be changed
+   until clean build manifests and read-only preflight are presented and the
+   Author separately authorizes those physical actions.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 

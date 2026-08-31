@@ -1,0 +1,64 @@
+schema_version: 1
+
+baseline:
+  baseline_id: port-008-forward
+  revision: r01
+  status: candidate
+  description: Frozen forward-only visible-command candidate on the preserved Light 2 r01 breadboard.
+  compatibility_scope: Ordinary VDU bytes routed by fixed-purpose EMOS over r01 parallel GPIO into the retained VDP parser and rendered through P4 browser video.
+
+artifacts:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.2.0
+    build_id: null
+    variant: olimex-p4-devkit
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: null
+    variant: port008-forward
+  - artifact_id: agon-transport-fixture
+    identity: agon-transport-fixture-r01
+    build_id: null
+    variant: light2
+  - artifact_id: light2-harness
+    identity: light2-harness-r01
+    build_id: null
+    variant: light2
+  - artifact_id: light2-extender-solderless-assembly
+    identity: light2-extender-solderless-assembly-r01
+    build_id: null
+    variant: light2
+  - artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+    build_id: null
+    variant: null
+
+external_dependencies:
+  - name: mos-agondev
+    identity: 5079d4c36c5e8be766ac641959e5fb99a5c06a2f
+    role: AgonDev translation, build, link, and qualification infrastructure
+  - name: agon-flash
+    identity: v1.9-e670b5bd910dfe372c29aa9e896e6c24cc8530ec
+    role: Official keyboardless MOS installation utility invoked with its force flag
+
+compatibility:
+  requires:
+    - olimex-p4-devkit-profile-r03
+    - p4-ota-partition-layout-r01
+    - active bench constraint BC-001
+  known_incompatible: []
+  unqualified:
+    - P4-to-eZ80 return transport and official response packets
+    - Either-order power, powered-off isolation, and r02/V1 circuit behavior
+    - Exclusive Compatible, Dual, and broad legacy-application compatibility
+    - Canonical MOS sysvar and completion-flag effects from EDP responses
+
+qualification:
+  procedure:
+    artifact_id: port-008-forward-qualification
+    identity: port-008-forward-qualification-r01
+  run_ids: []
+
+notes:
+  - Exact UTC build IDs and the PORT-008 run ID are assigned after candidate inputs are committed and clean builds begin.
+  - A passing run may qualify only this bounded baseline scope; it cannot qualify the production transport or light2-harness-r02.

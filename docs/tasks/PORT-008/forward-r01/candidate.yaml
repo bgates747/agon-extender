@@ -1,0 +1,55 @@
+schema_version: 1
+candidate: port-008-forward-r01
+status: candidate-input
+
+approved_identities:
+  p4_firmware: extender-vdp-v0.2.0
+  emos_firmware: agon-emos-v0.1.0
+  agon_fixture: agon-transport-fixture-r01
+  procedure: port-008-forward-qualification-r01
+  baseline: port-008-forward-r01
+
+source_authority:
+  agon_extender:
+    commit: null
+    reason: Captured from clean HEAD by the identified-build manifest after this candidate input is committed.
+  agon_emos:
+    commit: 59c3102d8d92fab973fa8f97973c5bbf2b288da6
+    profile: port/port008-forward.mk
+  mos_agondev:
+    commit: 5079d4c36c5e8be766ac641959e5fb99a5c06a2f
+  agon_flash:
+    tag: v1.9
+    commit: e670b5bd910dfe372c29aa9e896e6c24cc8530ec
+
+fixture:
+  source: agon-emos/projects/port008-forward/fixture.json
+  output_filename: P8VDU.BIN
+  output_bytes: 118
+  output_sha256: 3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a
+  vdu_payload_bytes: 106
+  vdu_payload_sha256: b5d2757ebf1bdaf0132b8a2a6683e749aa57aeb265ad23a25368451860f65595
+  expected_rgb888_bytes: 230400
+  expected_rgb888_sha256: d368967667b3eee2315e2bb86129e7f423d904abd203c93dd0810906d08783d8
+
+media_contract:
+  installation_autoexec:
+    - rename emos.bin emos-installed.bin
+    - flash mos emos-installed.bin -f
+  test_autoexec:
+    - EMOS MODE EXTENDED
+    - P8VDU.BIN
+  line_endings: crlf
+
+claim_boundary:
+  proves:
+    - Keyboardless installation of the exact fixed-purpose EMOS candidate
+    - Explicit EMOS-owned transition from Legacy to Exclusive Extended
+    - Ordered transfer of the frozen ordinary VDU byte stream over light2-harness-r01
+    - Retained VDP parsing and exact browser-visible RGB888 output
+  does_not_prove:
+    - Reverse UART or any P4-to-eZ80 response
+    - General Poll response identity, MOS sysvars, or completion flags
+    - Production light2-harness-r02 behavior
+    - Either-order power or powered-off electrical safety
+    - Exclusive Compatible, Dual, or broad software compatibility

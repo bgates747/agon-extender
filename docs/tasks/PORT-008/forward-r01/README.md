@@ -1,0 +1,64 @@
+# PORT-008 forward-only r01 qualification package
+
+This directory owns the deterministic build and evidence glue for the first
+physical EMOS-to-EDP forward test. The task scope and decisions remain in
+[`../../PORT-008.md`](../../PORT-008.md); the controlled execution is
+[`../../../procedures/port-008-forward-qualification-r01.md`](../../../procedures/port-008-forward-qualification-r01.md).
+
+## Authorities
+
+1. `candidate.yaml` freezes the Author-approved artifact identities, external
+   commits, fixture hashes, two-stage keyboardless media contract, and bounded
+   claim.
+2. `vdp/pio/p4-forward-vdp-identity.json` supplies the committed P4 source
+   identity. The build system supplies a new UTC build ID.
+3. `agon-emos` commit `59c3102` supplies both the fixed-purpose EMOS profile and
+   deterministic ordinary-VDU fixture. The profile is explicitly a PORT-008
+   qualification workaround, not a production EMOS configuration.
+4. `port-008-forward-r01` names the candidate combination; exact produced build
+   IDs remain null until clean builds exist.
+5. MOS installation uses the official unmodified `agon-flash` v1.9 utility.
+   Its standard `-f` switch is the complete keyboardless authorization
+   mechanism; no custom or special flasher build is required.
+
+## Generated outputs
+
+Generated firmware, fixture binaries, closure evidence, media trees, and run
+records are ignored build products. Scripts in `scripts/` must reject dirty or
+mismatched source worktrees, rejected identity markers, changed fixture bytes,
+and an existing destination rather than silently overwriting evidence.
+
+The P4 validator deliberately extends the already-qualified PORT-003 Phase-F
+closure validator. It changes the environment-specific expectation from the
+disconnected Stream to `ForwardParallelStream`, requires the r01 startup and
+discard-only diagnostic strings, and continues to enforce the same retained
+VDP/browser closure and exclusions.
+
+The task-local scripts have these bounded roles:
+
+1. `validate-forward-build.py` reuses the PORT-003 closure audit while replacing
+   only its ingress-specific assertions.
+2. `stage-forward-build.py` reuses the clean-worktree and factory-segment
+   stager while emitting a PORT-008 claim boundary.
+3. `capture-visible-frame.py` requests one established EVF1 browser frame,
+   preserves its raw RGB888 payload, and compares it to the frozen exact hash.
+   It neither sends VDU/EDU traffic nor records the supplied private endpoint.
+
+## Media stages
+
+The physical SD card has two deliberately distinct states:
+
+1. **Install EMOS.** Root `/autoexec.txt` first renames `/emos.bin` and then
+   invokes official `agon-flash` v1.9 with `-f`. The rename is a one-shot guard:
+   after the utility resets the Agon, the first line fails and MOS stops before
+   another flash. The utility and `-f` behavior are standard; using a temporary
+   autoexec file is the BC-001 bench workaround, not a production installation
+   interface.
+2. **Run the fixture.** After power-down and host-side hash verification,
+   `/autoexec.txt` is replaced with the accepted two-line mode request and
+   fixture invocation. The P4 and browser must be ready before the Agon cold
+   boot begins.
+
+Neither stage may be installed until the Author reviews the generated build
+manifests, exact card target, preflight, and procedure and separately authorizes
+that physical mutation.
