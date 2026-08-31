@@ -12,8 +12,8 @@ series element. [`schematic.kicad_sch`](schematic.kicad_sch) is the maintained
 authoritative human electrical drawing. Its checked
 [`schematic.xml`](schematic.xml) and explicit-white
 [`schematic.svg`](schematic.svg) projections make that drawing machine- and
-human-reviewable. The schematic and task-local signal atlas remain checked
-projections; their geometry does not override the connectivity model.
+human-reviewable. The schematic remains a checked projection; its geometry
+does not override the connectivity model.
 
 The Author accepted the maintained schematic on 2026-08-30 after manually
 arranging the complete circuit and clarifying each local bypass-capacitor

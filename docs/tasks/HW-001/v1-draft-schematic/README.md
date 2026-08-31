@@ -1,23 +1,20 @@
 # HW-001 V1 draft schematic workspace
 
-This directory keeps the task-local KiCad projection inputs and separates each
-human-view projection family so drawings remain easy to locate.
+This directory retains the task-local KiCad bootstrap inputs used to establish
+the frozen r02 model and its maintained human schematic.
 
 1. `hardware/designs/light2-harness-r02/connectivity.yaml` is the frozen
    placement-independent electrical authority.
-2. `kicad-projection.yaml` and `HW001_Draft.kicad_sym` are shared task-local
-   projection inputs consumed by every view family.
+2. `kicad-projection.yaml` and `HW001_Draft.kicad_sym` preserve the checked
+   projection metadata and custom logic symbols used during schematic design.
 3. `generate_draft_inputs.py --check` deterministically reproduces and checks
    the frozen authority and projection metadata. Its explicit
    `--write-authority` mode must never be used to revise r02 in place.
-4. `signal-views/` contains canonical placement, the complete 1--19 signal,
-   mux, control, and infrastructure atlas, and the neutral KiCad helpers needed
-   to generate and validate that family.
-5. The accepted complete human drawing has been promoted out of this task
+4. The accepted complete human drawing has been promoted out of this task
    workspace to `hardware/designs/light2-harness-r02/schematic.kicad_sch`.
    Its XML and explicit-white SVG projections and dedicated checker live beside
    it. Experimental whole-circuit layouts and transformation scripts were
    removed after promotion.
-
-The view-family directory owns its generated KiCad, XML, and SVG outputs and
-documents its regeneration and validation commands.
+5. The task-local signal atlas was removed after promotion because its component
+   placement was obsolete and the maintained complete schematic superseded its
+   review function. It remains recoverable from prior Git history.
