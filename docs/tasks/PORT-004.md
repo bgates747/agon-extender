@@ -16,6 +16,16 @@ network for browser consumption.
 
 ## Authority and inputs
 
+- [`tomm/userspace-vdp-gl`](https://github.com/tomm/userspace-vdp-gl), a
+  userspace-oriented VDP-GL/FabGL fork. Before designing or implementing the
+  P4 audio seam, inspect its `src/devdrivers/soundgen.h` and
+  `src/devdrivers/soundgen.cpp` alongside the corresponding files in the
+  selected tagged official VDP-GL source. Treat it as prior art, not upstream
+  authority: identify reusable separation of waveform generation, channel
+  mixing, sample pulling, and host/SDL output from classic-ESP32 DAC,
+  sigma-delta, DMA, timer, and ISR machinery. The repository was first
+  inspected at commit `2c12e77a0d00f8989c884525479ee6d37340751a`; refresh and
+  pin the selected revision when PORT-004 starts.
 - [SETUP-004 Work 1.e](SETUP-004.md#work-1e-execution-record) and its generated
   audio inventory.
 - [ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md),
@@ -54,6 +64,10 @@ network for browser consumption.
 
 ## Dependencies and gates
 
+- Complete and record the mandatory `userspace-vdp-gl` comparison above before
+  freezing PORT-004's detailed implementation design. Do not independently
+  recreate a waveform/mixer extraction already demonstrated there unless the
+  official VDP compatibility contract requires a documented divergence.
 - Complete SETUP-004 before implementation so network and remaining source
   boundaries are settled.
 - Work 1.g determines the retained network/transfer substrate and must be

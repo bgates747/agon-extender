@@ -53,7 +53,7 @@ item is removed.
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
-  - Started: --
+  - Started: 2026-08-29 19:12 EDT
   - Finished: --
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
