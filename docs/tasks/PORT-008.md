@@ -2,8 +2,9 @@
 
 ## State
 
-- Status: In progress — r01 P4 forward Stream adapter compile-valid; fixed-backend
-  EMOS, cold-boot fixture, identity, procedure, and bench evidence pending
+- Status: In progress — r01 P4 and fixed-purpose EMOS forward path implemented
+  and non-physically qualified; deployable identities, procedure, and bench
+  evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -217,6 +218,65 @@ promoted into the product architecture merely because it runs.
     accepted 106-byte visible fixture and mode invocation to run from root
     `/autoexec.txt`. Those changes, artifact identities, a committed physical
     procedure, and bench authorization remain pending.
+
+#### 2026-08-30 — EMOS forward adapter and fixture checkpoint
+
+1. **Immutable source identities.** P4 ingress remains frozen at
+   `agon-extender` commit `c03656c`. The eZ80 sender, mode adapter, VDU routing,
+   fixture generator, deterministic checks, and approved emulator evidence are
+   frozen in `agon-emos` commit `08fec48`. Reusable product-profile,
+   configured-source runtime-audit, named-worktree, and graphical-launcher
+   support is frozen in `mos-agondev` commit `5079d4c`.
+2. **Ordinary application surface.** `RST 10h`, `RST 18h`, and C `putch` retain
+   raw ordinary VDU bytes. Standard bounded `RST 18h` maps one application
+   block to one physical record without an application envelope; delimiter
+   mode and single-character calls use one-byte records. Legacy continues to
+   use the onboard VDP's UART0 path.
+3. **Fixed-purpose physical sender.** The profile-selected EMOS adapter uses
+   the preserved r01 Port C data bus and Port D READY/CLOCK/VALID signals. It
+   snapshots and restores affected GPIO registers and interrupt-enable state,
+   admits and completes each record through bounded active-low READY waits,
+   writes data before each falling clock edge, rejects empty, reentrant, and
+   over-4096-byte records, and contains no reverse-UART call.
+4. **Mode authority and startup release.** Only an EMOS-owned Exclusive
+   Extended request may prepare this adapter. Preparation acquires the GPIOs
+   and sends exact official General Poll request bytes `23, 0, 0x80, 1`; route
+   commitment follows successful physical completion. Failed preparation
+   restores the GPIO snapshot and leaves the public mode in Legacy. Exclusive
+   Compatible and Dual are unavailable through this physical adapter.
+5. **Cold-boot fixture.** `agon-emos/projects/port008-forward/fixture.json`
+   freezes the accepted 106-byte ordinary VDU command at SHA-256
+   `b5d2757ebf1bdaf0132b8a2a6683e749aa57aeb265ad23a25368451860f65595`.
+   Its generated 118-byte `P8VDU.BIN` includes a 12-byte `RST.LIL 18h` wrapper
+   and measured SHA-256
+   `3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a`.
+   The eventual SD-card procedure uses `/emos.bin`, `/P8VDU.BIN`, and an
+   `/autoexec.txt` containing `EMOS MODE EXTENDED` followed by `P8VDU.BIN`.
+6. **Build and deterministic evidence.** The fixed-purpose EMOS image measured
+   113,935 bytes at SHA-256
+   `1675baf089ecd1420b59a546e5316519ec7b20e7000a3fe3f2c4493604984f9b`.
+   These measurements are not deployable identities. Source tests and linked
+   disassembly verify the GPIO mapping, register preservation, General Poll,
+   record bound, data/clock ordering, forward-only boundary, and fixture. The
+   no-macro ordinary profile also builds with the physical adapter unavailable.
+7. **Non-physical qualification.** All 50 `agon-emos` tests and the complete
+   configured `mos-agondev` gate passed, including translation, compilation,
+   restricted runtime closure, linking, headless boot, stock shell parity, VDP
+   regressions, and target ABI/FatFS contracts. The Author then approved the
+   graphical emulator gate after observing provider discovery; Legacy to fake
+   Dual and back to Legacy; keyboard entry; root and `/bin` directory access;
+   `help echo`; `time`; `credits`; `mem`; and a responsive prompt.
+8. **Bounded claim.** This checkpoint proves source integration and emulator
+   compatibility only. It does not prove r01 electrical transfer, visible P4
+   browser output from the fixture, General Poll response identity, canonical
+   MOS response/sysvar effects, reverse UART, either-order power behavior, or
+   any r02/V1 circuit property. One `RST 18h` block above 4096 bytes is
+   currently rejected rather than split.
+9. **Next gate.** Assign reviewed deployable EMOS, P4, fixture, procedure, and
+   run identities; freeze the exact controlled-power r01 procedure; stage media
+   only from those commits; and obtain separate bench authorization before the
+   forward-only visible-command run. Stop for Author review of that physical
+   evidence before enabling P4-to-eZ80 traffic.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 

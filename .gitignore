@@ -105,6 +105,7 @@ gmon.out
 *.swp
 *.swo
 *~
+*.lck
 
 # Operating-system metadata
 .DS_Store
