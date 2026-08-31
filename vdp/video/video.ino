@@ -105,7 +105,11 @@ ESP32Time		rtc(0);							// The RTC
 #include "agon_ttxt.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/network/wired_network_service.hpp"
+#ifdef AGON_EXTENDER_PORT008_FORWARD
+#include "extender/transport/forward_parallel_stream.hpp"
+#else
 #include "extender/transport/disconnected_stream.hpp"
+#endif
 #include "extender/web/browser_video_provider.hpp"
 #else
 #include "vdp_protocol.h"						// VDP Protocol
@@ -125,7 +129,11 @@ VDUStreamProcessor *	processor;				// VDU Stream Processor
 #endif /* !USERSPACE */
 
 #ifdef AGON_EXTENDER_P4_BOOT
+#ifdef AGON_EXTENDER_PORT008_FORWARD
+agon::extender::transport::ForwardParallelStream forwardVDPStream;
+#else
 agon::extender::transport::DisconnectedStream disconnectedVDPStream;
+#endif
 std::unique_ptr<agon::extender::web::BrowserVideoProvider>	browserVideoProvider;
 std::unique_ptr<agon::extender::network::WiredNetworkService>	wiredNetworkService;
 #endif
@@ -165,7 +173,15 @@ void setup() {
 	changeMode(startup_screen_mode);
 	copy_font();
 	#ifdef AGON_EXTENDER_P4_BOOT
+		#ifdef AGON_EXTENDER_PORT008_FORWARD
+		if (!forwardVDPStream.begin()) {
+			ESP_LOGE("extender_boot", "forward transport start failed");
+			return;
+		}
+		processor = new VDUStreamProcessor(&forwardVDPStream);
+		#else
 		processor = new VDUStreamProcessor(&disconnectedVDPStream);
+		#endif
 	#else
 		setupVDPProtocol();
 		processor = new VDUStreamProcessor(&VDPSerial);

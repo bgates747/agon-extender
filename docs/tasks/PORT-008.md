@@ -2,9 +2,9 @@
 
 ## State
 
-- Status: Not started — qualified PORT-003 Gate F target handed off; prototype
-  gate remains pending
-- Started: --
+- Status: In progress — r01 P4 forward Stream adapter compile-valid; fixed-backend
+  EMOS, cold-boot fixture, identity, procedure, and bench evidence pending
+- Started: 2026-08-29 19:12 EDT
 - Finished: --
 
 ## Intent
@@ -32,9 +32,21 @@ protocol into the product design.
 - [SETUP-004 Work 1.c](SETUP-004.md#work-1c-execution-record) and its accepted
   low-level peripheral disposition.
 - [`light2-harness-r01`](../../hardware/designs/light2-harness-r01/README.md)
-  and [`la03-p4-probe-fixture-r01`](../../hardware/fixtures/la03-p4-probe-fixture-r01/README.md).
+  and `light2-extender-solderless-assembly-r01` for the bounded preserved
+  forward-only prototype tranche.
+- [`light2-harness-r02`](../../hardware/designs/light2-harness-r02/README.md)
+  and `light2-extender-solderless-assembly-r02` for the frozen common-UART and
+  forward-parallel target.
+- [`la03-p4-probe-fixture-r01`](../../hardware/fixtures/la03-p4-probe-fixture-r01/README.md).
 - Official VDP v2.16.0 Stream/parser/packet behavior and official MOS startup
   General Poll behavior.
+- [HW-001](HW-001.md), which owns the selected common V1 four-signal UART and
+  one-way forward-parallel electrical core. Review Gate 2 froze
+  `light2-harness-r02`; exact r02 breadboard construction and powered bench
+  qualification remain open.
+- [ADR-0016](../decisions/ADR-0016-v1-transport-electrical-core.md), which
+  accepts the four-chip transport topology without closing HW-001's remaining
+  design and qualification gates.
 - [ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md),
   [SETUP-005](SETUP-005.md), and the durable QUAL-001 matrix when established.
 - [Versioning and qualified-run policy](../versions/README.md).
@@ -145,12 +157,74 @@ wire contracts and memory safety. It must not turn into a survey-only planning
 exercise before the first bounded implementation, nor may experimental code be
 promoted into the product architecture merely because it runs.
 
+### Prototype execution record
+
+#### 2026-08-29 — P4 forward boundary checkpoint
+
+1. **Authorization and stopping boundary.** The Author previously approved the
+   prototype plan and authorized implementation, then directed work to resume
+   on the preserved `light2-extender-solderless-assembly-r01` while the new r02
+   board is constructed separately. This checkpoint stops after compile-valid
+   P4 ingress. It makes no EMOS, fixture, deployment, electrical, or visible-
+   output claim.
+2. **Official application contract.** Official Agon documentation states that
+   VDP input is an unframed byte stream and that `RST 10h` and `RST 18h` send
+   raw binary VDU bytes. The retained `VDUStreamProcessor` still owns command
+   parsing. The new adapter supplies only its existing Arduino `Stream` input;
+   it does not add an application command, envelope, length, padding byte, or
+   parser.
+3. **Physical record boundary.** ESP-IDF 5.5.5's
+   `parlio_rx_level_delimiter_config_t` explicitly defines
+   `eof_data_len = 0` as receive completion when the enable signal becomes
+   inactive. The r01 receiver therefore uses active-low `VALID_N` deassertion
+   to terminate a variable-length physical record. This removes the suspected
+   need for a below-stream length prefix. Physical record boundaries disappear
+   at the Stream queue and do not change VDU byte semantics.
+4. **Selected r01 binding.** `ForwardParallelStream` uses the authoritative r01
+   mapping D0--D7 = P4 GPIO 22, 12, 23, 11, 32, 10, 33, 9; external CLOCK =
+   GPIO14 sampled on its falling edge; active-low VALID = GPIO13; and active-
+   low open-drain READY = GPIO20. It retains the predecessor's ESP-IDF PARLIO
+   idiom but not its canary, fixed-size record, or application framing.
+5. **Backpressure and failure behavior.** One receiver task arms a 4096-byte
+   DMA record only when the 8192-byte FreeRTOS stream buffer has room for the
+   complete maximum record. GPIO20 asserts READY only after DMA is armed and
+   releases it immediately after completion. Any receive error, zero/oversize
+   completion, READY release failure, or impossible short enqueue stops the
+   receiver with READY released instead of exposing a truncated VDU stream.
+6. **Return exclusion.** Every retained VDP write into this Stream is discarded
+   and counted. `setVDPProtocolDuplex` remains an explicit no-op. The new build
+   selects no UART output source and makes no P4-to-eZ80 claim.
+7. **Build boundary.** New PlatformIO environment `p4-forward-vdp` inherits the
+   accepted `p4-browser-vdp` closure, replaces only
+   `disconnected_stream.cpp` with `forward_parallel_stream.cpp`, and defines
+   `AGON_EXTENDER_PORT008_FORWARD`. Its machine-readable source selection
+   retains the same official header-defined implementation and vdp-gl closure.
+8. **Compile evidence.** `scripts/vdp-pio.sh run -e p4-forward-vdp` completed
+   successfully in 56.25 seconds after correcting two compile-visible API
+   details: C++17 requires ESP-IDF structure designators in declaration order,
+   and `gpio_num_t` requires `GPIO_NUM_NC` rather than integer `-1`. The first
+   attempt also rebuilt PlatformIO's private environment because it retained
+   Python 3.12 while the project invoked Python 3.14. The final image used
+   47,224 bytes of reported RAM and 1,247,354 bytes of flash.
+9. **Fail-closed identity.** No firmware revision or build identity was
+   assigned without Author approval. The linked image contains
+   `UNVERSIONED-DO-NOT-DEPLOY`; it must not be staged, flashed, or cited as a
+   candidate artifact.
+10. **Next implementation boundary.** A fixed-purpose development EMOS adapter
+    must route unchanged ordinary VDU bytes through the r01 sender and must
+    arrange the official General Poll request needed to release the retained
+    VDP startup wait while reverse writes remain disabled. BC-001 requires the
+    accepted 106-byte visible fixture and mode invocation to run from root
+    `/autoexec.txt`. Those changes, artifact identities, a committed physical
+    procedure, and bench authorization remain pending.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and
    General Poll contracts from the pinned VDP/MOS sources and documentation.
-2. Reconcile those contracts with `light2-harness-r01`, inherited PARLIO and
-   115,200-baud evidence, selected P4 peripherals, and QUAL-001 rows.
+2. Reconcile those contracts with `light2-harness-r02`, using r01 PARLIO and
+   115,200-baud results only as predecessor evidence, plus the selected P4
+   peripherals and QUAL-001 rows.
 3. Produce a pin-conflict, ownership-state, flow-control, buffering, and
    failure-state analysis without changing hardware.
 4. Identify whether the candidate wiring is sufficient. Any required wire,
@@ -216,6 +290,10 @@ before this task can gate integrated compatibility claims.
 
 ## Dependencies and sequencing gates
 
+- Active bench constraint BC-001 requires every eZ80 text fixture to be
+  cold-boot executable through the Agon SD card's root `/autoexec.txt`, with no
+  interactive keyboard prerequisite. Record the exact invocation and a
+  non-keyboard evidence path before each affected run.
 - QUAL-001 Review Gate 1 must be accepted before contract implementation, and
   its baseline matrix must exist before PORT-008 qualification evidence is
   recorded.
@@ -248,10 +326,11 @@ or relabeled into stock physical or firmware conformance.
 Exclusive Compatible mode requires hardware-independent firmware work first.
 That work must freeze the endpoint, signaling, flow-control, timing, reset,
 failure, and recovery requirements through deterministic tests without waiting
-for a physical design. Once those firmware demands are mature enough to drive
-circuitry, create a separate tracked hardware design-review task, produce a new
-versioned design, and qualify it through its own approved procedures. No
-stock-UART bench test against `light2-harness-r01` is authorized or useful.
+for physical qualification. The separate HW-001 design-review task now owns
+the frozen `light2-harness-r02` common UART/parallel candidate and records the
+firmware dependencies it cannot settle electrically. No stock-UART bench test
+against `light2-harness-r01` is authorized or useful. Construction of the r02
+assembly is permitted, but powered tests remain procedure-gated.
 
 The final task split remains under SETUP-005. This boundary does not change
 PORT-008's currently approved Exclusive Extended split-link work; it
