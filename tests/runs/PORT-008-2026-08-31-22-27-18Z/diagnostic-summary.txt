@@ -1,0 +1,24 @@
+PORT-008 coherent UART-divisor capture
+
+Run: PORT-008-2026-08-31-22-27-18Z
+Outcome: PASS for the bounded root-cause discriminator; not qualification evidence.
+
+After a manual Agon reset restored the original stock-VDP/failed-EMOS startup
+state, the same identity-gated P4 observer halted the eZ80 at PC 0009EA in
+_wait_timer0. The General Poll completion byte remained zero, UART0 had no
+received byte, and the target state reproduced the first capture.
+
+The coherent one-shot read UART0's baud-rate divisor before any P4 reboot or
+change of halt epoch. LCR was 03 and the divisor was 000B; the diagnostic
+restored LCR and AF/MB before continuing. At the Agon's 18.432 MHz system clock,
+the official 1,152,000-baud VDP link requires divisor 0001. Divisor 11 produces
+approximately 104,727 baud and cannot communicate with the stock VDP.
+
+The observed value exactly matches an AgonDev portability defect in the
+inherited UART expression. Its 16 * 1,152,000 product was evaluated at native
+24-bit width before assignment to UINT32, wrapping 0x01194000 to 0x00194000;
+18,432,000 / 1,654,784 truncates to 11. This identifies the immediate physical
+boot blocker without attributing it to intended stock MOS behavior.
+
+The remotely retained raw serial transcript is 3,061 bytes with SHA-256:
+9bc319b1e8ccd576b830bf5b9e308f0400350e9fb5ea2847c593a5b58c96b31a

@@ -1,0 +1,138 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-08-31-23-11-18Z
+  task_id: PORT-008
+  started_at: 2026-08-31T23:11:18Z
+  ended_at: 2026-08-31T23:12:22Z
+  outcome: pass
+  summary: >-
+    The temporary P4 recovery programmed and verified the corrected dirty-source
+    EMOS image. The Author's subsequent physical screen review passed provider
+    discovery, service calls, fake Dual, final Legacy, and prompt return.
+
+procedure:
+  artifact_id: port-008-p4-zdi-mos-recovery
+  identity: null
+  deviations:
+    - >-
+      A P4 task-watchdog diagnostic appeared during the long bit-banged RAM
+      readback. Neither core reset; the RAM CRC, agent acknowledgement, and
+      programmed-flash CRC all subsequently passed.
+
+artifacts_under_test:
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: null
+    variant: unversioned-dirty-uart-divisor-correction
+    sha256: bf7633f9853e812d806a6528450d268db68541b12df0dcb47b4f68b15a130478
+  - artifact_id: port-008-p4-zdi-mos-recovery
+    identity: null
+    build_id: null
+    variant: temporary-one-shot
+    sha256: 741135661f1f3ce46ddf0f7593c6144195f9e56b7d1e44d8ef69bbc8e0d0d7e6
+  - artifact_id: stock-vdp
+    identity: v2.14.1-dressing-gown
+    build_id: null
+    variant: agon-light-2-onboard-esp32
+    sha256: null
+
+source:
+  agon_extender_commit: b6907ea39fad8fc6b0c7e2d029d01ccef36caa40
+  agon_extender_dirty_before_build: true
+  agon_emos_commit: 59c31026e1229395d9a9ba44f71cda7b8e78b9f3
+  agon_emos_dirty_before_build: true
+  agon_recovery_commit: 95d68464afd049945e1dfd780c1c07621d565450
+
+base_hardware:
+  - role: target-mainboard
+    manufacturer: Olimex
+    model: Agon Light 2
+    manufacturer_revision: null
+    profile:
+      artifact_id: null
+      identity: null
+    specimen_alias: agon-bench-01
+  - role: external-zdi-programmer
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: null
+    identity: null
+    variant: normal-extender-harness-disconnected
+  fixture:
+    artifact_id: port-008-external-zdi-fixture
+    identity: null
+    wiring:
+      - p4-gpio46-to-agon-zdi-tck
+      - p4-gpio47-to-agon-zdi-tdi
+      - common-ground
+      - no-power-rail-connection
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  deployment_esptool: 4.12.0
+
+build:
+  factory_image_bytes: 569632
+  factory_image_sha256: 741135661f1f3ce46ddf0f7593c6144195f9e56b7d1e44d8ef69bbc8e0d0d7e6
+  firmware_bytes: 438560
+  firmware_sha256: 7243f3111b980a60a29fa2c1dd134bc7b94b29206ef7baafc4ec9388df4179fd
+  bootloader_sha256: e72f94400ec6005bcc901d32fec772264b11f4ec76c7bf6900103202b11a69c6
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  embedded_emos_crc32: f202107f
+  embedded_flash_agent_sha256: ca44786969dc2dd1b0fa51e6b80f530b7241317dc27bf8efac3ca7d56bddee06
+
+compatibility_checked:
+  requirements:
+    - corrected-emos-physical-boot
+    - provider-discovery-and-bounded-service-smoke
+    - legacy-dual-legacy-transition
+  result: pass
+
+observations:
+  - {requirement: zdi_identity, observed: 'three probes product=0007 revision=AA', result: pass}
+  - {requirement: emos_ram_upload, observed: '114069 bytes CRC32 F202107F', result: pass}
+  - {requirement: flash_agent_upload, observed: '90 bytes; completion acknowledged', result: pass}
+  - {requirement: programmed_flash, observed: '114069 bytes CRC32 F202107F', result: pass}
+  - {requirement: physical_boot, observed: 'VDP 2.14.1 and MOS 3.0.2 banners; prompt returned', result: pass}
+  - {requirement: emos_smoke, observed: 'three providers; two calls; fake Dual; final Legacy generation 2', result: pass}
+
+evidence:
+  - filename: diagnostic-summary.txt
+    media_type: text/plain
+    size_bytes: 1224
+    sha256: 83d860db610dda364650c3e82b009e369c3e311d28e9147dd589c7cc13712609
+    description: Tracked interpretation and bounded claim for recovery and screen review.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    raw_p4_console_transcript: edaaa7b0ec3d53f67187fd90eee9cefa9261c1807c749c8fa8cbf28e22e60186
+  raw_p4_console_transcript_bytes: 5521
+
+corrections:
+  - >-
+    The physical onboard VDP identified itself as v2.14.1 Dressing Gown. This
+    corrects the earlier draft assumption of v2.16.0 for all three physical
+    diagnostic runs without changing PORT-008's official v2.16.0 source baseline.
+
+claim_boundary:
+  passed:
+    - Exact corrected EMOS programmed and read back through external ZDI
+    - Corrected dirty-source EMOS physical boot over the onboard VDP UART
+    - Bounded provider, service, fake-Dual, and Legacy-recovery smoke behavior
+  not_claimed:
+    - Qualified or released EMOS candidate identity
+    - Full physical QUAL-001 procedure
+    - Extender parallel or real reverse transport
+    - Compatibility qualification against VDP v2.16.0

@@ -1,0 +1,137 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-08-31-22-27-18Z
+  task_id: PORT-008
+  started_at: 2026-08-31T22:27:18Z
+  ended_at: 2026-08-31T22:27:32Z
+  outcome: pass
+  summary: >-
+    A coherent second P4 external-ZDI capture reproduced the original failed
+    EMOS startup and read UART0's divisor as 0x000B in the same halt epoch.
+    That value exactly matches a 24-bit intermediate overflow in the AgonDev
+    build and identifies the immediate physical boot blocker. This passes the
+    bounded root-cause discriminator but is not qualification evidence.
+
+procedure:
+  artifact_id: port-008-emos-hardware-failure-diagnostic
+  identity: null
+  deviations:
+    - >-
+      P4 USB Serial/JTAG accepted diagnostic output but not the intended
+      lowercase-c input. A build-time, delayed, identity-gated one-shot
+      auto-capture replaced the interactive trigger.
+
+artifacts_under_test:
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: null
+    variant: port008-forward
+    sha256: null
+  - artifact_id: stock-vdp
+    identity: v2.14.1-dressing-gown
+    build_id: null
+    variant: agon-light-2-onboard-esp32
+    sha256: null
+  - artifact_id: port-008-p4-zdi-probe
+    identity: null
+    build_id: null
+    variant: temporary-exploratory-coherent-divisor-capture
+    sha256: cb4b5128e3c89c95f69eba3cea88c480a54a1f3ee4722314ff533e039386d846
+
+source:
+  agon_extender_commit: b6907ea
+  agon_extender_dirty_before_build: true
+  agon_emos_commit: 59c31026e1229395d9a9ba44f71cda7b8e78b9f3
+
+base_hardware:
+  - role: target-mainboard
+    manufacturer: Olimex
+    model: Agon Light 2
+    manufacturer_revision: null
+    profile:
+      artifact_id: null
+      identity: null
+    specimen_alias: agon-bench-01
+  - role: external-zdi-observer
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: null
+    identity: null
+    variant: normal-extender-harness-disconnected
+  fixture:
+    artifact_id: port-008-external-zdi-fixture
+    identity: null
+    wiring:
+      - p4-gpio46-to-agon-zdi-tck
+      - p4-gpio47-to-agon-zdi-tdi
+      - common-ground
+      - no-power-rail-connection
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  deployment_esptool: 4.12.0
+
+build:
+  factory_image_bytes: 454528
+  factory_image_sha256: cb4b5128e3c89c95f69eba3cea88c480a54a1f3ee4722314ff533e039386d846
+  firmware_bytes: 323456
+  firmware_sha256: a821a52bd527b46c37405d4db7e70cdac1c7d96a2925359b100f49f4236272b6
+  bootloader_sha256: 0ac6eb5518f6a06fc0fad9d7aa5f7723314b3b988b912bfeb4deb2d6e2276db4
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+
+compatibility_checked:
+  requirements:
+    - identify-immediate-emos-hardware-boot-blocker
+  result: pass
+
+observations:
+  - {requirement: zdi_identity, observed: 'product=0007 revision=AA idle-high', result: pass}
+  - {requirement: original_failure_preserved, observed: stock-vdp-banner-without-mos-banner-or-cursor, result: pass}
+  - {requirement: execution_location, observed: 'PC=0009EA in _wait_timer0; stack returns through _wait_ESP32', result: pass}
+  - {requirement: general_poll_completion, observed: 'gp=00', result: fail}
+  - {requirement: timer_progress, observed: 'timer0-control=04 data=0000', result: pass}
+  - {requirement: uart_receive, observed: 'UART0 IIR=C1 LSR=60; no received byte', result: fail}
+  - {requirement: uart_divisor, observed: 'LCR=03 divisor=000B; state restored', result: fail}
+  - {requirement: root_cause_match, observed: '24-bit wrapped baud product deterministically yields divisor 11', result: pass}
+
+evidence:
+  - filename: diagnostic-summary.txt
+    media_type: text/plain
+    size_bytes: 1351
+    sha256: 28b36f6b012fcacb6bc42a3f0d8e0b82359ab45dd4ba3d9d38f2bed6d3bc7364
+    description: >-
+      Tracked interpretation and bounded claim for the remotely retained raw
+      P4 serial transcript.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    raw_serial_transcript: 9bc319b1e8ccd576b830bf5b9e308f0400350e9fb5ea2847c593a5b58c96b31a
+  raw_serial_transcript_bytes: 3061
+
+corrections:
+  - >-
+    The source portability correction and its machine checks are maintained in
+    agon-emos under QUAL-001; this run records diagnosis, not the corrected
+    candidate or requalification.
+
+claim_boundary:
+  passed:
+    - Reproduction of the original failed EMOS startup with stock VDP running
+    - Coherent read and restoration of UART0 divisor state
+    - Exact correlation of divisor 11 with the AgonDev 24-bit overflow
+  not_claimed:
+    - Emulator acceptance of the source correction
+    - Corrected EMOS physical boot or hardware qualification
+    - UART electrical quality or complete assembled-system qualification

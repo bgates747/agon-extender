@@ -1,0 +1,25 @@
+PORT-008 external-ZDI failed-state capture
+
+Run: PORT-008-2026-08-31-21-55-19Z
+Outcome: PASS for the bounded capture objective; not qualification evidence.
+
+The P4 observed the original hardware failure while the Agon's onboard ESP32
+continued running stock VDP v2.14.1 Dressing Gown. Three ZDI identity reads returned product
+0007, revision AA, and the eZ80 was initially running.
+
+The one-shot capture halted the eZ80 at PC 0009EA. The exact candidate map and
+machine code place this at the first Timer 0 counter read in _wait_timer0; the
+stack returns through _wait_ESP32 and then MOS startup. The captured timer had
+reached zero, so this is not evidence of a Timer 0 deadlock. It is one sample
+from EMOS repeatedly waiting because the General Poll completion byte gp
+remained zero.
+
+UART0 was enabled with hardware flow control and 8N1 framing. CTS was active,
+the transmitter was empty, and no receive byte was pending. The snapshot does
+not prove whether the General Poll request appeared correctly on the wire,
+whether stock VDP received it, or whether a response failed electrically or in
+eZ80 UART configuration. A coherent follow-up capture must read the UART
+divisor in the same halt epoch and physical signal evidence remains necessary.
+
+The remotely retained raw serial transcript is 2,995 bytes with SHA-256:
+94d1ea7f4a1353651ce079a87c0e0c63613eff5091835f23edc3596ce2348ec1

@@ -1297,15 +1297,15 @@
     (uuid ffc0ecf3-4c35-5b08-996d-e402c542d7f7)
   )
 
-  (text "J1.13 PD4_READY_N" (at 59.055 101.6 0)
+  (text "J1.13 PD4_READY_N" (at 58.42 102.87 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid 004ac5f0-7bf5-522c-8404-f9dbd21c8c69)
   )
-  (text "J1.24 PC7_D7" (at 59.055 295.91 0)
+  (text "J1.24 PC7_D7" (at 57.785 297.18 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid 01cafd8a-9750-53a2-a31f-dffae8787939)
   )
-  (text "J2.14 GPIO13_VALID_N" (at 536.575 290.83 0)
+  (text "J2.14 GPIO13_VALID_N" (at 535.94 290.83 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 187c7a13-4494-53ca-bf3f-d7f8d4679712)
   )
@@ -1313,7 +1313,7 @@
     (effects (font (size 1 1)) (justify left))
     (uuid 19f545a7-f47b-5493-9ef7-ce052439ae3d)
   )
-  (text "J2.18 GPIO17_PAR_FWD_CTL_N" (at 536.575 300.99 0)
+  (text "J2.18 GPIO17_PAR_FWD_CTL_N" (at 535.94 300.99 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 1ee51577-638b-5bab-a862-60e79379582b)
   )
@@ -1321,11 +1321,11 @@
     (effects (font (size 1 1)) (justify left))
     (uuid 332427c7-8b7b-50a1-b1aa-b644c3a2505f)
   )
-  (text "J2.16 GPIO15_UART_FWD_CTL_N" (at 536.575 295.91 0)
+  (text "J2.16 GPIO15_UART_FWD_CTL_N" (at 535.94 295.91 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 3c6f42b0-7b60-5a1f-bebd-2ffe6f6a0ca6)
   )
-  (text "J1.19 PC2_RTS1_D2" (at 59.055 109.22 0)
+  (text "J1.19 PC2_RTS1_D2" (at 58.42 110.49 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid 441c6586-60f0-5141-b883-fd974af959cb)
   )
@@ -1333,19 +1333,19 @@
     (effects (font (size 1 1)) (justify left))
     (uuid 50293046-2ad8-5e0c-a63a-6e7b24fd5bf7)
   )
-  (text "J2.11 GPIO10_D5" (at 536.575 283.21 0)
+  (text "J2.11 GPIO10_D5" (at 535.94 283.21 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 593d9065-0132-54ef-84ed-84ac594c1a9b)
   )
-  (text "J2.12 GPIO11_D3_UART_RTS" (at 536.575 285.75 0)
+  (text "J2.12 GPIO11_D3_UART_RTS" (at 535.94 285.75 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 621e746a-999b-5b43-95ae-f7753b89225a)
   )
-  (text "J2.10 GPIO9_D7" (at 536.575 280.67 0)
+  (text "J2.10 GPIO9_D7" (at 535.94 280.67 0)
     (effects (font (size 1 1)) (justify left))
     (uuid 6e454121-9757-5a6f-ac7f-8827d490ba53)
   )
-  (text "J1.22 PC5_D5" (at 59.055 293.37 0)
+  (text "J1.22 PC5_D5" (at 57.785 294.64 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid 72e4e582-52be-5388-873a-51e2b7af2fee)
   )
@@ -1353,7 +1353,7 @@
     (effects (font (size 1 1)) (justify left))
     (uuid 7767a098-ce1a-5395-ac86-3f32f9d1f6a7)
   )
-  (text "J1.18 PC1_RXD1_D1" (at 59.055 288.29 0)
+  (text "J1.18 PC1_RXD1_D1" (at 57.785 289.56 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid 84e20cde-a1c8-5688-9b88-cc423924b0df)
   )
@@ -1361,27 +1361,27 @@
     (effects (font (size 1 1)) (justify left))
     (uuid 8def9019-4c75-508c-88c1-02c312daf83e)
   )
-  (text "J1.23 PC6_D6" (at 59.055 114.3 0)
+  (text "J1.23 PC6_D6" (at 58.42 115.57 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid a5a4bfa0-3ae9-5720-9d85-afdeb7cebfb7)
   )
-  (text "J2.15 GPIO14_CLOCK" (at 536.575 293.37 0)
+  (text "J2.15 GPIO14_CLOCK" (at 535.94 293.37 0)
     (effects (font (size 1 1)) (justify left))
     (uuid b27642ff-e115-5ab5-9b44-9f19a12ccba6)
   )
-  (text "J1.20 PC3_CTS1_D3" (at 59.055 290.83 0)
+  (text "J1.20 PC3_CTS1_D3" (at 57.785 292.1 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid d31ba2a4-89e4-5cd8-9ddd-ed0033c12fb2)
   )
-  (text "J1.16 PD7_VALID_N" (at 59.055 285.75 0)
+  (text "J1.16 PD7_VALID_N" (at 57.785 287.02 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid db1fc595-0eb6-5800-8128-c70f31c0dd49)
   )
-  (text "J1.14 PD5_CLOCK" (at 59.055 283.21 0)
+  (text "J1.14 PD5_CLOCK" (at 57.785 284.48 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid e83ef708-e8a5-55d3-86cd-956080fbf807)
   )
-  (text "J2.13 GPIO12_D1_UART_TX" (at 536.575 288.29 0)
+  (text "J2.13 GPIO12_D1_UART_TX" (at 535.94 288.29 0)
     (effects (font (size 1 1)) (justify left))
     (uuid e8f4801e-60dd-5088-8b33-13bc0c5b40c3)
   )
@@ -1389,11 +1389,11 @@
     (effects (font (size 1 1)) (justify left))
     (uuid ee749f4b-a5b3-5a61-bcd7-3cf0a681926b)
   )
-  (text "J1.17 PC0_TXD1_D0" (at 59.055 106.68 0)
+  (text "J1.17 PC0_TXD1_D0" (at 58.42 107.95 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid f4449098-c1c1-5814-bdc1-084b330afbc8)
   )
-  (text "J1.21 PC4_D4" (at 59.055 111.76 0)
+  (text "J1.21 PC4_D4" (at 58.42 113.03 0)
     (effects (font (size 1 1)) (justify right bottom))
     (uuid f7a4a6d3-139d-5415-bebc-3b5e7ae0be9f)
   )
@@ -1840,7 +1840,7 @@
     (pin "1" (uuid 380a2ca1-abfb-5e77-98ea-ee1fbdac0130))
     (pin "2" (uuid a1bb1f92-b41f-5c77-85d6-ad217a86b454))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R19") (unit 1)
         )
@@ -1869,7 +1869,7 @@
     (pin "1" (uuid 058fe2bd-b743-54fe-b828-21d8ad63bf51))
     (pin "2" (uuid 2b78b583-1fa7-5b6b-92b6-9ff861bee53e))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R16") (unit 1)
         )
@@ -1898,7 +1898,7 @@
     (pin "1" (uuid 50ef290a-6592-5d6a-9162-cf7257480bcb))
     (pin "2" (uuid 3c0911b1-0b24-57d8-acd4-6a031e880cc3))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R11") (unit 1)
         )
@@ -1927,7 +1927,7 @@
     (pin "1" (uuid 4d4c1c5b-692e-59de-9028-2843d3bbe5c4))
     (pin "2" (uuid de2fa573-3b40-5db6-af17-da870997dd16))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R15") (unit 1)
         )
@@ -1956,7 +1956,7 @@
     (pin "1" (uuid 82138cf6-376f-5bde-beed-e3339a9101d6))
     (pin "2" (uuid fb48e4d4-3661-50b6-9417-88c9227ef8bc))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R23") (unit 1)
         )
@@ -1985,7 +1985,7 @@
     (pin "1" (uuid bda5b5ee-f359-5bb5-b14a-3b9a71a6e11d))
     (pin "2" (uuid 5b059346-aecf-56d6-86a8-f480167928a7))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C5") (unit 1)
         )
@@ -2014,7 +2014,7 @@
     (pin "1" (uuid 6d264e4d-887b-5ac9-91da-5c35f1b00575))
     (pin "2" (uuid 74b8f149-9e4d-58b3-9efa-934da8dc69ae))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C3") (unit 1)
         )
@@ -2043,7 +2043,7 @@
     (pin "1" (uuid 177b5537-3134-5432-b29d-81f51348a8b1))
     (pin "2" (uuid 2f4d1c3c-f1a9-5868-b235-5453e7f575c4))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R5") (unit 1)
         )
@@ -2072,7 +2072,7 @@
     (pin "1" (uuid a2cddd2b-9346-5275-85a5-d2af4288b325))
     (pin "2" (uuid 86f1dbe9-4430-53dd-a2a8-16bfd1396600))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R13") (unit 1)
         )
@@ -2101,7 +2101,7 @@
     (pin "1" (uuid e6aa098a-84db-5933-87cb-5ca4c81b080a))
     (pin "2" (uuid 6b2ea7ea-ab11-5668-ae5c-b524145d80b2))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R26") (unit 1)
         )
@@ -2130,7 +2130,7 @@
     (pin "1" (uuid d0a9a67b-e551-53dd-9bf1-620f759fb75b))
     (pin "2" (uuid b4c5768e-342e-5a0e-ac62-c89cb2a5ba3b))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R6") (unit 1)
         )
@@ -2159,7 +2159,7 @@
     (pin "1" (uuid 01f2dbc7-b28c-5c32-8c86-bb4ec67c0742))
     (pin "2" (uuid 3a36c2d6-60b4-5cd0-9bfb-1b97c00b23a7))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R25") (unit 1)
         )
@@ -2188,7 +2188,7 @@
     (pin "1" (uuid d046c447-0ef1-5266-af50-2c35a76d442c))
     (pin "2" (uuid 2fab3473-8625-58e7-9f85-226bcb6eccdd))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R7") (unit 1)
         )
@@ -2217,7 +2217,7 @@
     (pin "1" (uuid 8a81a41b-8b1c-58a3-b940-21da34812e6c))
     (pin "2" (uuid ea57768e-6615-5df7-94e0-2e1d7f7aa604))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R17") (unit 1)
         )
@@ -2246,7 +2246,7 @@
     (pin "1" (uuid 23d2afcc-4476-5fd2-9893-5953e4510a82))
     (pin "2" (uuid 4455f5a6-410c-5381-968c-c29caefaf990))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C2") (unit 1)
         )
@@ -2293,7 +2293,7 @@
     (pin "8" (uuid 5c252e6e-76a8-5ea8-98b1-68be87893bed))
     (pin "9" (uuid 46308305-9339-5969-946c-2f310e948b42))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "J2") (unit 1)
         )
@@ -2322,7 +2322,7 @@
     (pin "1" (uuid 380ee053-dfa7-5f18-8aad-706bd1598d13))
     (pin "2" (uuid 9c4708db-e097-526c-8d2a-8d7123bbe63f))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R28") (unit 1)
         )
@@ -2351,7 +2351,7 @@
     (pin "1" (uuid 66732787-467a-5ddd-ab6e-59fec284b8b5))
     (pin "2" (uuid ea5e6478-1d04-597c-98bc-2153a2b5151e))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R31") (unit 1)
         )
@@ -2380,7 +2380,7 @@
     (pin "1" (uuid 9a0522cf-3df9-5333-9bc3-84b0ab072509))
     (pin "2" (uuid e5ffdc3f-981f-5d72-b071-4df70fa67bfe))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R20") (unit 1)
         )
@@ -2409,7 +2409,7 @@
     (pin "1" (uuid 602bf6b6-e5d9-59af-a9f9-8f452dd40bf8))
     (pin "2" (uuid d0737647-b688-5793-9367-2884f1b30219))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C4") (unit 1)
         )
@@ -2438,7 +2438,7 @@
     (pin "1" (uuid 9e3af617-6ae7-5a5c-8d07-26f1a26fad8a))
     (pin "2" (uuid 4c40e343-1c22-53ba-ae71-b08981d3dbaa))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R24") (unit 1)
         )
@@ -2485,7 +2485,7 @@
     (pin "8" (uuid 52c90e98-074a-50b0-9d3a-cd90edce8838))
     (pin "9" (uuid 3c4492d6-f4f4-5cd5-aaec-6dce2f9def8d))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "U2") (unit 1)
         )
@@ -2514,7 +2514,7 @@
     (pin "1" (uuid e2e64c1a-c128-5517-a012-f70c543ed4f4))
     (pin "2" (uuid 5dcb5d8f-bff3-5f8a-ab1e-db7a48511a2d))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R27") (unit 1)
         )
@@ -2543,7 +2543,7 @@
     (pin "1" (uuid ddf5311a-2479-592c-a014-e4cda2c8fe72))
     (pin "2" (uuid 4673c68e-d6b4-5f38-937b-5f6c1a06ffd9))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R3") (unit 1)
         )
@@ -2572,7 +2572,7 @@
     (pin "1" (uuid a6935952-da4d-541a-895a-668252bfbd0d))
     (pin "2" (uuid af1579b0-1060-540f-a855-b50b54978d21))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R1") (unit 1)
         )
@@ -2601,7 +2601,7 @@
     (pin "1" (uuid d35ad559-b677-5643-a89c-af29d787f459))
     (pin "2" (uuid 195394c9-7ce9-58ed-99fb-76306ffc3957))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R2") (unit 1)
         )
@@ -2630,7 +2630,7 @@
     (pin "1" (uuid 276aae4e-723a-5218-a252-d55733d5a0d0))
     (pin "2" (uuid 13e24040-5b83-5741-ac84-6ba465cc33ee))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R29") (unit 1)
         )
@@ -2659,7 +2659,7 @@
     (pin "1" (uuid 7c876a79-a9f6-5218-b323-12aeb697ecf6))
     (pin "2" (uuid 230dc11d-d2d8-5e34-a604-d8beb8665631))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R10") (unit 1)
         )
@@ -2688,7 +2688,7 @@
     (pin "1" (uuid 2bd36c99-cae2-51d3-876b-f249bdbd20b2))
     (pin "2" (uuid 919f6b1e-59ed-577d-bc32-8d1d33f59428))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R12") (unit 1)
         )
@@ -2717,7 +2717,7 @@
     (pin "1" (uuid c8f5c74e-7ed2-53be-ba16-a78b7ed162bb))
     (pin "2" (uuid 7528b6ca-cf7d-5abb-9c37-e751504e44cc))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R4") (unit 1)
         )
@@ -2746,7 +2746,7 @@
     (pin "1" (uuid e1a4c21b-f216-5578-ac47-b60ed62e0579))
     (pin "2" (uuid 9367712e-6889-50dc-b4cc-69369d4fcdd1))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C6") (unit 1)
         )
@@ -2775,7 +2775,7 @@
     (pin "1" (uuid 3d46e82f-61d2-5ce1-895f-09161968670c))
     (pin "2" (uuid 09d12c2e-2818-5c78-8a59-c12c6759fb5e))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R9") (unit 1)
         )
@@ -2819,7 +2819,7 @@
     (pin "8" (uuid 11313587-6729-5a7a-8da7-7a8f312a7174))
     (pin "9" (uuid 071824ab-42fa-5ea7-8c4b-26382cdd58f0))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "JO1") (unit 1)
         )
@@ -2860,7 +2860,7 @@
     (pin "8" (uuid 5bed281c-960a-50cc-9544-be3b2715ac7d))
     (pin "9" (uuid e48a9319-d0ca-5fd8-9f6b-e9e467afaabc))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "U4") (unit 1)
         )
@@ -2889,7 +2889,7 @@
     (pin "1" (uuid 4eaacbec-bda5-5de7-b256-211acd2fa654))
     (pin "2" (uuid ccb8ddea-67d0-502e-ad49-e98c963ccac0))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "C1") (unit 1)
         )
@@ -2918,7 +2918,7 @@
     (pin "1" (uuid 9325521d-5acb-5222-a77d-fa0bd2e0cb76))
     (pin "2" (uuid 98be0745-47e3-5fd7-ae18-1d13fc4f0ac0))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R21") (unit 1)
         )
@@ -2959,7 +2959,7 @@
     (pin "8" (uuid 68e3f2d9-cac5-57dd-8258-afe060d1d9c5))
     (pin "9" (uuid 5f35ecfc-48f1-53f6-90c0-ffa5a9ea2f03))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "U3") (unit 1)
         )
@@ -2988,7 +2988,7 @@
     (pin "1" (uuid 66bf0ddc-0d07-5ab4-9b1a-b6c88a2a6092))
     (pin "2" (uuid 13b8a5b7-2a37-5e72-89d5-20ef4de569d7))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R22") (unit 1)
         )
@@ -3017,7 +3017,7 @@
     (pin "1" (uuid 7b3da1d8-166b-542a-a4c8-54baeabfb74b))
     (pin "2" (uuid 5bd29019-12e7-5254-9c4b-c38428e3ba44))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R8") (unit 1)
         )
@@ -3046,7 +3046,7 @@
     (pin "1" (uuid 64157bfc-15e9-5b8f-9e3a-de2599354d71))
     (pin "2" (uuid cc01d317-802a-5cfe-87e6-ff838ec3272c))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R18") (unit 1)
         )
@@ -3090,7 +3090,7 @@
     (pin "8" (uuid 7a419d94-6782-5e3b-89fd-fd9498dfbdb0))
     (pin "9" (uuid 12ecd0c6-90bc-5d16-964b-67a7e49b907f))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "JE1") (unit 1)
         )
@@ -3119,7 +3119,7 @@
     (pin "1" (uuid 5905f336-3d0e-5a82-8305-123093e5a832))
     (pin "2" (uuid c8f36c65-f02a-5e2a-8585-940c823fb42a))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R30") (unit 1)
         )
@@ -3166,7 +3166,7 @@
     (pin "8" (uuid 2b98a9a6-9fc9-5869-9ba7-951925e21c74))
     (pin "9" (uuid 6b90f38b-ddaa-567e-bf45-3040df64ce40))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "U1") (unit 1)
         )
@@ -3195,7 +3195,7 @@
     (pin "1" (uuid 42683369-ff8c-51cf-8375-51f9ccdc68b7))
     (pin "2" (uuid 62219e86-cb30-5fca-a514-13cafee61e58))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "R14") (unit 1)
         )
@@ -3242,7 +3242,7 @@
     (pin "8" (uuid d5beb170-0f09-5d22-977c-a83e6e62674c))
     (pin "9" (uuid c369788c-23de-5328-a000-962d77050320))
     (instances
-      (project "light2-harness-r02"
+      (project "schematic"
         (path "/e5f00a6d-bfc5-5bc2-979f-fced1e77e234"
           (reference "J3") (unit 1)
         )

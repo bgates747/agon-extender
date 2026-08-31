@@ -14,7 +14,7 @@ source_authority:
     commit: null
     reason: Captured from clean HEAD by the identified-build manifest after this candidate input is committed.
   agon_emos:
-    commit: 59c3102d8d92fab973fa8f97973c5bbf2b288da6
+    commit: 59c31026e1229395d9a9ba44f71cda7b8e78b9f3
     profile: port/port008-forward.mk
   mos_agondev:
     commit: 5079d4c36c5e8be766ac641959e5fb99a5c06a2f

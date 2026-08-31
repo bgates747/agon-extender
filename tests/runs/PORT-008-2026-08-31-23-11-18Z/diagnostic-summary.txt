@@ -1,0 +1,20 @@
+PORT-008 one-shot P4-to-ZDI EMOS recovery passed its bounded objective.
+
+The identified P4 factory image passed remote SHA-256 verification before
+deployment. Three ZDI probes identified eZ80 product 0007 revision AA. The P4
+uploaded corrected EMOS and the upstream 90-byte flash agent to RAM, verified
+both uploads, executed the agent, received its completion acknowledgement, and
+read back all 114069 programmed bytes at CRC32 F202107F. The eZ80 remained
+halted until the Author physically reset it.
+
+The P4 emitted a task-watchdog diagnostic during the long bit-banged RAM
+readback, but neither core reset and recovery proceeded to its explicit PASS.
+This is a temporary recovery-tooling gotcha, not evidence against the eZ80
+payload or programmed-flash verification.
+
+The subsequent physical screen displayed VDP v2.14.1 Dressing Gown and MOS
+3.0.2 Arthur. The keyboardless smoke fixture discovered three providers,
+completed both service calls, transitioned Legacy to fake Dual and back to
+Legacy generation 2, and returned to the MOS prompt without diagnostics or
+reset. This proves the dirty corrective build's physical boot and bounded EMOS
+service behavior; it does not qualify the UNVERSIONED-DO-NOT-DEPLOY image.

@@ -1,0 +1,134 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-08-31-21-55-19Z
+  task_id: PORT-008
+  started_at: 2026-08-31T21:55:19Z
+  ended_at: 2026-08-31T21:56:08Z
+  outcome: pass
+  summary: >-
+    A temporary P4 external-ZDI observer captured the original
+    VDP-banner/no-MOS-banner failure with the stock onboard VDP still running.
+    The eZ80 was executing EMOS's General Poll wait path, gp remained zero,
+    Timer 0 had reached zero, and UART0 had no received byte. This passes the
+    bounded capture objective but does not identify the electrical or software
+    root cause and is not qualification evidence.
+
+procedure:
+  artifact_id: port-008-emos-hardware-failure-diagnostic
+  identity: null
+  deviations:
+    - >-
+      P4 USB Serial/JTAG accepted diagnostic output but not the intended
+      lowercase-c input. A build-time, delayed, identity-gated one-shot
+      auto-capture replaced the interactive trigger.
+
+artifacts_under_test:
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: null
+    variant: port008-forward
+    sha256: null
+  - artifact_id: stock-vdp
+    identity: v2.14.1-dressing-gown
+    build_id: null
+    variant: agon-light-2-onboard-esp32
+    sha256: null
+  - artifact_id: port-008-p4-zdi-probe
+    identity: null
+    build_id: null
+    variant: temporary-exploratory
+    sha256: 11f1cb95cf27189536c03c828e7599e5ec6b2cae8f643dde93f6175b508ff69e
+
+source:
+  agon_extender_commit: b6907ea
+  agon_extender_dirty_before_build: true
+  agon_emos_commit: 59c31026e1229395d9a9ba44f71cda7b8e78b9f3
+
+base_hardware:
+  - role: target-mainboard
+    manufacturer: Olimex
+    model: Agon Light 2
+    manufacturer_revision: null
+    profile:
+      artifact_id: null
+      identity: null
+    specimen_alias: agon-bench-01
+  - role: external-zdi-observer
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: null
+    identity: null
+    variant: normal-extender-harness-disconnected
+  fixture:
+    artifact_id: port-008-external-zdi-fixture
+    identity: null
+    wiring:
+      - p4-gpio46-to-agon-zdi-tck
+      - p4-gpio47-to-agon-zdi-tdi
+      - common-ground
+      - no-power-rail-connection
+
+toolchain:
+  platform: pioarduino-55.03.311
+  arduino: 3.3.11
+  esp_idf: 5.5.5
+  deployment_esptool: 4.12.0
+
+build:
+  factory_image_bytes: 451104
+  factory_image_sha256: 11f1cb95cf27189536c03c828e7599e5ec6b2cae8f643dde93f6175b508ff69e
+  firmware_bytes: 320032
+  firmware_sha256: 04ebd67cb2801e52ff6721df958e81a0f3e245ed30147dbeb006dc42e2a84b2a
+  bootloader_sha256: 117e8908d37e147dfa177759055f9ce7c2538088f3a3a9d02c480ca9f4795838
+  partitions_sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+
+compatibility_checked:
+  requirements:
+    - capture-original-emos-hardware-failure-with-stock-vdp-running
+  result: pass
+
+observations:
+  - {requirement: zdi_identity, observed: 'product=0007 revision=AA idle-high', result: pass}
+  - {requirement: original_failure_preserved, observed: stock-vdp-banner-without-mos-banner-or-cursor, result: pass}
+  - {requirement: execution_location, observed: 'PC=0009EA in _wait_timer0; stack returns through _wait_ESP32', result: pass}
+  - {requirement: general_poll_completion, observed: 'gp=00', result: fail}
+  - {requirement: timer_progress, observed: 'timer0-control=84 data=0000', result: pass}
+  - {requirement: uart_receive, observed: 'UART0 IIR=C1 LSR=60; no received byte', result: fail}
+  - {requirement: uart_configuration_snapshot, observed: 'LCR=03 MCR=02 MSR=10 serialFlags=03', result: partial}
+
+evidence:
+  - filename: diagnostic-summary.txt
+    media_type: text/plain
+    size_bytes: 1374
+    sha256: 56143f5672c6d99131f1f2d83e1f374d903ab445f8da54a3f9848cc81156a8c3
+    description: >-
+      Tracked interpretation and bounded claim for the remotely retained raw
+      P4 serial transcript.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    raw_serial_transcript: 94d1ea7f4a1353651ce079a87c0e0c63613eff5091835f23edc3596ce2348ec1
+  raw_serial_transcript_bytes: 2995
+
+corrections: []
+
+claim_boundary:
+  passed:
+    - P4-to-eZ80 ZDI identity and bounded failed-state capture
+    - Preservation of the stock onboard VDP during observation
+    - Correlation of the stopped PC and stack with EMOS General Poll waiting
+  not_claimed:
+    - Root cause of the absent General Poll response
+    - Exact UART0 baud divisor
+    - UART0 electrical activity or signal integrity
+    - EMOS, stock VDP, P4 diagnostic, harness, or assembled-system qualification

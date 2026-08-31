@@ -314,6 +314,73 @@ promoted into the product architecture merely because it runs.
    until clean build manifests and read-only preflight are presented and the
    Author separately authorizes those physical actions.
 
+#### 2026-08-31 — Original EMOS hardware-failure capture
+
+1. **Failure preserved.** After restoring stock VDP v2.14.1 Dressing Gown on the onboard
+   ESP32, the physical Agon again displayed the VDP banner without a MOS banner
+   or flashing cursor. The normal Extender harness was disconnected. An
+   external P4 used only GPIO46-to-ZDI-TCK, GPIO47-to-ZDI-TDI, and common
+   ground, leaving both boards' power rails separate.
+2. **Bounded observer.** A temporary `p4-zdi-probe` environment ports the
+   proven `agon-recovery` ZDI operations to P4 GPIO and the USB Serial/JTAG
+   console. It contains no target flash, reset, RAM-write, resume, product
+   transport, or production command surface. Failed USB console input required
+   an identity-gated delayed one-shot capture; all three product reads had to
+   be `0007` and the eZ80 had to be running before the halt.
+3. **Captured execution.** Run `PORT-008-2026-08-31-21-55-19Z` halted at
+   `PC=0x0009EA`. Candidate map, code bytes, and stack place execution in
+   `_wait_timer0`, called by `_wait_ESP32` during MOS startup. `gp=0` confirms
+   that the official General Poll response had not completed.
+4. **Timer finding.** Timer 0 control/data were `0x84`/`0x0000`. The sampled
+   timeout had expired and was about to return, so the visible failure is not
+   a Timer 0 deadlock; EMOS was repeatedly timing out while waiting for `gp`.
+5. **UART finding.** `serialFlags=0x03`, `LCR=0x03`, `MCR=0x02`, `LSR=0x60`,
+   and `MSR=0x10` show enabled 8N1 UART0 with hardware flow control, accepted
+   CTS, an empty transmitter, and no received byte. This does not establish
+   whether the request reached stock VDP or whether the missing response is an
+   electrical, VDP-side, baud/configuration, or receive-path defect.
+6. **Coherent discriminator.** Rebooting the P4 after the first halt changed
+   the ZDI context, and a strict supplement refused to touch UART state at the
+   changed PC. After a manual target reset, run
+   `PORT-008-2026-08-31-22-27-18Z` reproduced the stopped execution state and
+   read UART0 divisor `0x000B` inside the same halt epoch, restoring LCR and
+   AF/MB before continuing.
+7. **Identity correction.** The candidate YAML contained a mistyped,
+   nonexistent long `agon-emos` object name. It now records the actual clean
+   source commit `59c31026e1229395d9a9ba44f71cda7b8e78b9f3`; all existing
+   short `59c3102` references already named that commit unambiguously.
+8. **Root cause.** At 18.432 MHz, 1,152,000 baud requires divisor 1. In the
+   AgonDev build, the inherited `16 * baudRate` expression was evaluated at
+   native 24-bit width before assignment to `UINT32`; the wrapped product
+   makes the subsequent division return 11 exactly. This is a source
+   portability defect exposed by AgonDev, not intended stock MOS behavior.
+   `agon-emos` QUAL-001 owns the narrow widening correction, deterministic
+   linked regression, emulator acceptance, and replacement physical candidate.
+9. **Corrective emulator gate.** The widened UART0/UART1 source passed all
+   machine checks and the Author's graphical emulator review. The normal MOS
+   prompt appeared, EMOS reported its expected identity and three providers,
+   service calls completed, and Legacy to Dual to Legacy transitions worked.
+   The correction is still uncommitted and no replacement hardware candidate
+   has been identified, built from clean source, or authorized for deployment.
+10. **Recovery candidate prepared.** The failed installed EMOS cannot run the
+    SD-card flash utility. A temporary P4-to-ZDI recovery image therefore embeds
+    the exact corrected 114,069-byte EMOS image and upstream `agon-recovery`
+    flash agent. Deterministic payload regeneration, isolated source closure,
+    image validation, live P4 USB-identity preflight, and remote staging pass.
+    Its factory-image SHA-256 is
+    `741135661f1f3ce46ddf0f7593c6144195f9e56b7d1e44d8ef69bbc8e0d0d7e6`.
+11. **Physical correction passed.** Run
+    `PORT-008-2026-08-31-23-11-18Z` used that one-shot image to program and
+    read back the exact corrected EMOS payload. The Author then cold-booted
+    physical VDP v2.14.1/MOS 3.0.2 and graphically confirmed provider
+    discovery, both service calls, fake Dual, final Legacy generation 2, and
+    return to the prompt. The onboard ESP32 was then directly flashed from the
+    clean official VDP v2.16.0 tag and its writes verified by esptool. After an
+    Agon reset, the same keyboardless fixture passed unchanged against VDP
+    v2.16.0. This closes the dirty-source boot-blocker diagnostic against the
+    task's official VDP baseline; it does not qualify or release the
+    unversioned EMOS build.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and

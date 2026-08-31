@@ -1,0 +1,20 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-zdi-mos-recovery",
+  "diagnostic_status": "PORT-008 temporary one-shot P4-to-ZDI MOS recovery; never product firmware",
+  "generated_build_files": [
+    "video/CMakeLists.txt"
+  ],
+  "project_translation_units": [
+    "video/extender/diagnostic/p4_zdi_mos_recovery.cpp"
+  ],
+  "vendored_translation_units": [],
+  "excluded_source_families": [
+    "video/video.ino",
+    "video/extender/boot/**",
+    "video/extender/transport/**",
+    "video/extender/display/**",
+    "video/extender/network/**",
+    "vendor/vdp-gl/src/**"
+  ]
+}
