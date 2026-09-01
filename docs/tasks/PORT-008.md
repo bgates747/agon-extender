@@ -3,8 +3,9 @@
 ## State
 
 - Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
-  implemented and non-physically qualified; candidate identities and procedure
-  assigned; clean identified builds and forward-only physical evidence pending
+  implemented and non-physically qualified; clean identified candidate packages
+  prepared; exact SD-card preflight, physical inspection, separate deployment
+  authorization, and forward-only physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -394,6 +395,50 @@ promoted into the product architecture merely because it runs.
    identified fixed-purpose EMOS build, deterministic fixture regeneration,
    and read-only deployment preflight. No flash, SD-card write, reset, power,
    or harness operation is authorized by this refreeze.
+
+#### 2026-09-01 UTC — Identified candidate build and read-only preflight
+
+1. **Clean authorities.** The candidate input was committed and pushed as
+   `agon-extender` commit `acf9ded5c7936fe61c6377f367ac8c96c3984b78`.
+   Clean `agon-emos` commit
+   `0e24b06abdb322fdb4e681a21242ccfebfc8ea65` and clean `mos-agondev`
+   commit `29cd336f472164156de330cf77c69a4eda450527` supplied the fixed-purpose
+   EMOS source and AgonDev build system. The prepared MOS tree contains 126
+   tracked files and records the exact clean EMOS source commit.
+2. **P4 candidate.** Clean build
+   `extender-vdp-v0.2.0-b2026-09-01-00-20-07Z` passed the task-local linked
+   closure validator: 24 selected translation units, five assets, 18 required
+   symbols, C++17, and all exclusions. Its application image is 1,248,288
+   bytes at SHA-256
+   `a243e7b2fada7f1f166fa6e7be3a2aa718d606688f1046c88af02f8aaff05ee0`;
+   its complete factory image is 1,379,360 bytes at SHA-256
+   `bdb9553e87ff73f2d8f5f3cdbe45192618b8c493fe75460eb35bbbe1af225dad`.
+   Factory-segment equality and embedded source/build/status identity passed.
+3. **EMOS candidate and fixture.** Clean fixed-purpose build
+   `agon-emos-v0.1.0-b2026-09-01-00-20-07Z` passed provenance, final-image
+   identity, UART-divisor, linked sender-order, General Poll, and exact fixture
+   gates. Its 114,082-byte binary has SHA-256
+   `8c356f95cb901edcf675e8add5567316a324e5c43559f3034c54218f3998f231`.
+   Regenerated `P8VDU.BIN` remains 118 bytes at SHA-256
+   `3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a`,
+   containing the frozen 106-byte VDU payload unchanged.
+4. **Software qualification.** All 54 `agon-emos` tests and all 106
+   `mos-agondev` tests passed. The ignored build-ID-specific packages contain
+   adjacent manifests, hashes, P4 closure/exclusion evidence, EMOS ELF/HEX/map
+   outputs, and the exact fixture. All three controlled repositories remained
+   clean after generation and validation.
+5. **Read-only bench preflight.** The dedicated Pi was reachable; the stable
+   P4 USB identity resolved to one serial endpoint; the logic analyzer,
+   Espressif flash tool, Python, and established remote staging root were
+   present. No removable SD medium was inserted: both visible reader endpoints
+   reported zero-byte empty devices. The procedure therefore stopped before
+   selecting a card, reading card files, staging media, or taking any physical
+   action.
+6. **Closed physical boundary.** No firmware was copied or flashed; no SD-card
+   file was read or written; and no reset, power, wiring, probe, or harness
+   traffic operation occurred. The next gate requires the Author to identify
+   the exact inserted Agon card, followed by the powered-off r01 assembly and
+   probe inspection and separate authorization of physical mutation.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 

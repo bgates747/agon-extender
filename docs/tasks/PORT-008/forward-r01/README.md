@@ -17,8 +17,13 @@ physical EMOS-to-EDP forward test. The task scope and decisions remain in
    `29cd336` supplies the product-linked final-image gate which rejects the
    previously observed UART-divisor failure. The profile is explicitly a
    PORT-008 qualification workaround, not a production EMOS configuration.
-4. `port-008-forward-r01` names the candidate combination; exact produced build
-   IDs remain null until clean builds exist.
+4. `port-008-forward-r01` names the candidate combination. The first clean
+   identified packages are P4 build
+   `extender-vdp-v0.2.0-b2026-09-01-00-20-07Z` and EMOS build
+   `agon-emos-v0.1.0-b2026-09-01-00-20-07Z`, both built from
+   `agon-extender` commit `acf9ded`. Their full commits, hashes, outputs, and
+   not-run physical status live in the generated adjacent manifests rather
+   than being copied back into the candidate-input YAML.
 5. MOS installation uses the official unmodified `agon-flash` v1.9 utility.
    Its standard `-f` switch is the complete keyboardless authorization
    mechanism; no custom or special flasher build is required.
