@@ -4,8 +4,9 @@
 
 - Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
   implemented and non-physically qualified; clean identified candidate packages
-  prepared; exact SD-card preflight, physical inspection, separate deployment
-  authorization, and forward-only physical evidence pending
+  prepared; exact SD card identified and read-only preflighted; existing media
+  collision, physical inspection, separate deployment authorization, and
+  forward-only physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -439,6 +440,36 @@ promoted into the product architecture merely because it runs.
    traffic operation occurred. The next gate requires the Author to identify
    the exact inserted Agon card, followed by the powered-off r01 assembly and
    probe inspection and separate authorization of physical mutation.
+
+#### 2026-09-01 UTC — Exact SD-card read-only preflight
+
+1. **Unambiguous medium.** After the Author inserted the intended card, exactly
+   one nonempty removable medium was visible: a 29.7 GB FAT volume labeled
+   `AGON`. The other reader endpoint remained empty. This satisfies the
+   procedure's Author-identification and no-guessing requirement for this
+   mounted-card epoch.
+2. **Boot-file state.** Root `/!boot.obey` and `/autoexec.obey` are absent.
+   Existing `/autoexec.txt` is a 205-byte CRLF EMOS smoke fixture at SHA-256
+   `e6ba3cdc87bb22461d7de131c95a44b680b33304821e9091adfb5066fda597e0`.
+   It must be copied into the eventual run-specific recoverable backup before
+   any authorized replacement.
+3. **Official flasher.** `/mos/flash.bin` is 15,624 bytes at SHA-256
+   `480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57`.
+   A fresh download of the
+   [official v1.9 release asset](https://github.com/AgonPlatform/agon-flash/releases/tag/v1.9)
+   matched it byte for byte.
+4. **Candidate-name check.** Root `/emos.bin` and `/P8VDU.BIN` are absent.
+   Root `/emos-installed.bin` is the known prior 114,069-byte unversioned
+   diagnostic EMOS at SHA-256
+   `bf7633f9853e812d806a6528450d268db68541b12df0dcb47b4f68b15a130478`.
+   It is related evidence rather than an unknown collision, but it still
+   occupies the one-shot rename destination and must be preserved or relocated
+   before Stage A can be staged.
+5. **Stop boundary.** This check only read card metadata and file bytes. It did
+   not copy, rename, replace, delete, unmount, or otherwise modify the card.
+   Media backup and collision resolution belong to the separately authorized
+   staging action; powered-off r01 wiring and probe inspection remains the
+   other prerequisite to deployment.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
