@@ -4,9 +4,9 @@
 
 - Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
   implemented and non-physically qualified; clean identified candidate packages
-  prepared; exact SD card identified and read-only preflighted; existing media
-  collision, physical inspection, separate deployment authorization, and
-  forward-only physical evidence pending
+  prepared; exact SD card preflighted and Stage A media staged; physical
+  inspection, firmware installation authorization/execution, and forward-only
+  physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -470,6 +470,37 @@ promoted into the product architecture merely because it runs.
    Media backup and collision resolution belong to the separately authorized
    staging action; powered-off r01 wiring and probe inspection remains the
    other prerequisite to deployment.
+
+#### 2026-09-01 UTC — Stage A media staging
+
+1. **Authorization and revalidation.** The Author explicitly authorized writing
+   the identified card and undertook to verify the physical connections. Before
+   mutation, the host revalidated the unique mounted medium, existing
+   autoexec, diagnostic EMOS, official flasher, empty candidate names, and
+   identified candidate hash.
+2. **Recoverable backup.** The existing autoexec and 114,069-byte diagnostic
+   EMOS were copied and hash-verified under ignored task-local media-stage
+   timestamp `2026-09-01-00-47-33Z`. The same files remain recoverable on the
+   card as `/autoexec.pre-port008-20260901-004733.txt` and
+   `/emos-installed-unversioned-bf7633f9.bin`; neither was overwritten or
+   deleted.
+3. **Exact Stage A state.** Root `/emos.bin` is the 114,082-byte identified
+   candidate at SHA-256
+   `8c356f95cb901edcf675e8add5567316a324e5c43559f3034c54218f3998f231`.
+   Root `/autoexec.txt` is the exact 69-byte CRLF installation script at
+   SHA-256
+   `9109e37f557efc53302e53e62b28ca64ee0e6984aa6e387d69997f49fa86130e`:
+
+   ```text
+   rename emos.bin emos-installed.bin
+   flash mos emos-installed.bin -f
+   ```
+
+4. **Verification and stop.** Temporary card-side copies were hash-checked
+   before their final renames; all final and preserved files were checked
+   again after a filesystem sync. The card was then safely unmounted. No
+   firmware was flashed and no board, harness, reset, probe, or power state was
+   changed. No physical run ID has been assigned.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
