@@ -24,9 +24,9 @@ r01 return sink remains discard-only throughout.
 ## Controlled inputs
 
 1. P4 firmware `extender-vdp-v0.2.0`, candidate, Olimex P4 DevKit variant.
-2. EMOS `agon-emos-v0.1.0`, candidate, built from `agon-emos` commit `59c3102`
-   with `port/port008-forward.mk`. This is a fixed-purpose qualification
-   workaround and is not a production EMOS configuration.
+2. EMOS `agon-emos-v0.1.0`, candidate, built from corrected `agon-emos` commit
+   `0e24b06` with `port/port008-forward.mk`. This is a fixed-purpose
+   qualification workaround and is not a production EMOS configuration.
 3. Fixture `agon-transport-fixture-r01`, generated from the same EMOS commit.
 4. `light2-harness-r01` and
    `light2-extender-solderless-assembly-r01` only.
@@ -49,11 +49,12 @@ r01 return sink remains discard-only throughout.
    Phase-F closure, `ForwardParallelStream`, r01 pin diagnostic, discard-only
    return diagnostic, no disconnected Stream, no rejected identity marker,
    and a staged factory image whose segments equal the standalone outputs.
-4. Build EMOS through `mos-agondev` commit `5079d4c` with the fixed-purpose
-   profile and exact EMOS build ID. Require all repository tests, linked sender
-   checks, exact General Poll bytes, exact r01 GPIO constants, register and
-   interrupt-state preservation, bounded READY waits, data-before-falling-edge
-   order, no reverse-UART call, and exact identity strings.
+4. Build EMOS through `mos-agondev` commit `29cd336` with the fixed-purpose
+   profile and exact EMOS build ID. Require all repository tests, the
+   product-linked UART-divisor gate, linked sender checks, exact General Poll
+   bytes, exact r01 GPIO constants, register and interrupt-state preservation,
+   bounded READY waits, data-before-falling-edge order, no reverse-UART call,
+   and exact identity strings.
 5. Generate and verify `P8VDU.BIN`. Require 118 bytes, SHA-256
    `3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a`,
    and its 106-byte payload hash

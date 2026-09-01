@@ -12,9 +12,11 @@ physical EMOS-to-EDP forward test. The task scope and decisions remain in
    claim.
 2. `vdp/pio/p4-forward-vdp-identity.json` supplies the committed P4 source
    identity. The build system supplies a new UTC build ID.
-3. `agon-emos` commit `59c3102` supplies both the fixed-purpose EMOS profile and
-   deterministic ordinary-VDU fixture. The profile is explicitly a PORT-008
-   qualification workaround, not a production EMOS configuration.
+3. `agon-emos` commit `0e24b06` supplies the corrected fixed-purpose EMOS
+   profile and deterministic ordinary-VDU fixture. `mos-agondev` commit
+   `29cd336` supplies the product-linked final-image gate which rejects the
+   previously observed UART-divisor failure. The profile is explicitly a
+   PORT-008 qualification workaround, not a production EMOS configuration.
 4. `port-008-forward-r01` names the candidate combination; exact produced build
    IDs remain null until clean builds exist.
 5. MOS installation uses the official unmodified `agon-flash` v1.9 utility.
@@ -40,7 +42,11 @@ The task-local scripts have these bounded roles:
    only its ingress-specific assertions.
 2. `stage-forward-build.py` reuses the clean-worktree and factory-segment
    stager while emitting a PORT-008 claim boundary.
-3. `capture-visible-frame.py` requests one established EVF1 browser frame,
+3. `stage-emos-build.py` verifies the selected clean EMOS and `mos-agondev`
+   commits, prepared-source provenance, embedded deployable identity, fixture
+   bytes, and candidate authority before copying EMOS and fixture outputs into
+   an ignored build-ID-specific package with adjacent manifests.
+4. `capture-visible-frame.py` requests one established EVF1 browser frame,
    preserves its raw RGB888 payload, and compares it to the frozen exact hash.
    It neither sends VDU/EDU traffic nor records the supplied private endpoint.
 

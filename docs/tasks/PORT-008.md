@@ -2,9 +2,9 @@
 
 ## State
 
-- Status: In progress — r01 P4 and fixed-purpose EMOS forward path implemented
-  and non-physically qualified; candidate identities and procedure assigned;
-  clean identified builds and physical evidence pending
+- Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
+  implemented and non-physically qualified; candidate identities and procedure
+  assigned; clean identified builds and forward-only physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -380,6 +380,20 @@ promoted into the product architecture merely because it runs.
     v2.16.0. This closes the dirty-source boot-blocker diagnostic against the
     task's official VDP baseline; it does not qualify or release the
     unversioned EMOS build.
+
+#### 2026-08-31 — Corrected candidate refreeze
+
+1. The UART-width correction, its physical diagnosis, and the product-owned
+   linked-image guard are frozen in `agon-emos` commit `0e24b06` and
+   `mos-agondev` commit `29cd336`. The Author approved and pushed both commits.
+2. The forward-r01 candidate now selects those corrected authorities while
+   retaining `agon-emos-v0.1.0`, the fixed-purpose `port008-forward` profile,
+   and the unchanged fixture and frame-oracle bytes. The failed dirty-source
+   recovery image remains diagnostic evidence and is not a candidate input.
+3. The next controlled boundary is a clean identified P4 build, clean
+   identified fixed-purpose EMOS build, deterministic fixture regeneration,
+   and read-only deployment preflight. No flash, SD-card write, reset, power,
+   or harness operation is authorized by this refreeze.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
