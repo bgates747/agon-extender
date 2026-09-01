@@ -34,6 +34,12 @@ endpoint.
 
 ## Current LA-03 target
 
+![LA-03 r01 probe placement, Ethernet-up P4 orientation](probe-map.svg)
+
+The figure uses the canonical Olimex orientation: Ethernet is up, USB
+Serial/JTAG is down, EXT1 is on the board's left, and EXT2 is on its right.
+Physical probe-wire colors are authoritative; PulseView display colors are not.
+
 | Channel | Color | P4 endpoint | Net |
 |---|---|---|---|
 | `D0` | green | GPIO32 / EXT2 pin 9 | parallel `D4` |
