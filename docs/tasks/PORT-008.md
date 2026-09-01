@@ -502,6 +502,24 @@ promoted into the product architecture merely because it runs.
    firmware was flashed and no board, harness, reset, probe, or power state was
    changed. No physical run ID has been assigned.
 
+#### 2026-09-01 UTC — Stage A physical installation
+
+1. **Author-observed result.** The Author installed the staged card and reports
+   that official `agon-flash` completed the EMOS update, reset the Agon
+   automatically, and reached the expected autoexec error on the following
+   boot.
+2. **One-shot guard.** This observation is consistent with the first autoexec
+   line having renamed `/emos.bin` to `/emos-installed.bin` before flashing.
+   On the automatic second boot, the same rename cannot find `/emos.bin`, so
+   MOS stops before the flash command and does not program the image again.
+3. **Qualification boundary.** The installed candidate replaces the previous
+   unversioned 114,069-byte diagnostic image because only the clean identified
+   114,082-byte fixed-purpose build is eligible for this run. The observation
+   does not yet replace the required host-side verification that
+   `/emos-installed.bin` has the candidate hash and `/emos.bin` is absent.
+   Stage B remains unstaged, no forward-transfer run ID has been assigned, and
+   no forward-path claim is made.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and
