@@ -1,0 +1,54 @@
+PORT-008 exact linked EMOS clock-write evidence
+
+Artifact:
+  MOS.bin size: 114085 bytes
+  MOS.bin SHA-256: 8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b
+  MOS.elf SHA-256: d0b584f3ef9df4fc980847ff5704b56c63b95fe27596df79a45e057f9f492571
+  objdump: AgonDev ez80-none-elf-objdump (machine-local path omitted)
+
+The linked prepare routine forces PD5/CLOCK high in each high-state byte and
+low in each low-state byte. It also configures PD5 and PD7 as outputs while
+leaving PD4/READY_N as input:
+
+  1667: and a,0xdf
+  1669: or a,0xa0
+  166b: ld (0xbc2fe),a     ; idle_high: CLOCK=1, VALID_N=1
+  166f: and a,0xdf
+  1671: ld (0xbc2fd),a     ; idle_low:  CLOCK=0, VALID_N=1
+  1675: ld a,(0xbc2fe)
+  1679: and a,0x7f
+  167b: ld (0xbc300),a     ; active_high: CLOCK=1, VALID_N=0
+  167f: and a,0xdf
+  1681: ld (0xbc2ff),a     ; active_low:  CLOCK=0, VALID_N=0
+  1694: or a,0x10
+  1696: and a,0x5f
+  1698: out0 (0xa3),a      ; PD_DDR: PD4 input, PD5/PD7 output
+
+The linked admission loop writes the forced high and low idle bytes before it
+samples READY_N:
+
+  176a: ld a,(0xbc2fe)
+  176e: out0 (0xa2),a
+  1771: ld a,(0xbc2fd)
+  1775: out0 (0xa2),a
+  1778: in0 a,(0xa2)
+  177b: and a,0x10
+
+After admission, the exact linked byte loop asserts VALID_N with CLOCK high,
+writes each data byte, emits a falling CLOCK edge, then raises CLOCK:
+
+  17a0: ld a,(0xbc300)
+  17a4: out0 (0xa2),a
+  17a7: ld a,(hl)
+  17a8: out0 (0x9e),a
+  17ab: ld a,(0xbc2ff)
+  17af: out0 (0xa2),a
+  17b2: ld a,(0xbc300)
+  17b6: out0 (0xa2),a
+
+This proves that the exact linked artifact contains the intended Port D clock
+writes and masks. It does not prove that the eZ80 pad changed level or that the
+r01 conductor delivered the level to P4 GPIO14. The third-run capture sampled
+no CLOCK edge, so the next discriminator belongs at the physical eZ80 PD5
+source and P4 GPIO14 destination rather than in another speculative sender
+rewrite.

@@ -1,0 +1,266 @@
+diff --git a/projects/port008-forward/verify.py b/projects/port008-forward/verify.py
+index 7bc4c0a..9882b30 100644
+--- a/projects/port008-forward/verify.py
++++ b/projects/port008-forward/verify.py
+@@ -47,6 +47,8 @@ def validate_source(root: Path) -> None:
+         "PORT008_VALID_BIT\tEQU\t80h",
+         "PORT008_OUTPUT_DDR\tEQU\t5Fh",
+         "CP\t10h",
++        "LD\tA, (_port008_length + 2)",
++        "_port008_length:\tDS\t3",
+         "_port008_general_poll:\tDB\t23, 0, 80h, 1",
+     ):
+         require(serial, expression, "serial adapter")
+@@ -60,9 +62,20 @@ def validate_source(root: Path) -> None:
+         "READY admission loop",
+     )
+     ordered(
+-        serial[serial.index("PORT008_byte_loop:") : serial.index("PORT008_wait_release:")],
+-        ("OUT0\t(PC_DR), A", "(_port008_active_high)", "OUT0\t(PD_DR), A", "(_port008_active_low)", "OUT0\t(PD_DR), A"),
+-        "falling-edge byte loop",
++        serial[serial.index("PORT008_admitted:") : serial.index("PORT008_wait_release:")],
++        (
++            "(_port008_active_high)",
++            "OUT0\t(PD_DR), A",
++            "PORT008_byte_loop:",
++            "OUT0\t(PC_DR), A",
++            "(_port008_active_low)",
++            "OUT0\t(PD_DR), A",
++            "(_port008_active_high)",
++            "OUT0\t(PD_DR), A",
++            "(_port008_idle_high)",
++            "OUT0\t(PD_DR), A",
++        ),
++        "qualified falling-edge byte loop",
+     )
+     require(vectors, "_rst_18_handler_0:\tCALL\tEMOS_vdu_WRITE", "RST 18 block path")
+     require(vectors, "CALL\tEMOS_vdu_PUTCH", "RST 18 delimiter path")
+@@ -116,6 +129,13 @@ def validate_sender_disassembly(disassembly: str) -> None:
+         "linked READY-admission loop",
+     )
+ 
++    admitted = disassembly_block(disassembly, "PORT008_admitted")
++    if admitted.count("out0 (0xa2),a") != 1:
++        raise Port008Error(
++            "linked sender must assert VALID_N with CLOCK high exactly once "
++            "before the byte loop"
++        )
++
+     byte_loop = disassembly_block(disassembly, "PORT008_byte_loop")
+     ordered(
+         byte_loop,
+@@ -127,13 +147,15 @@ def validate_sender_disassembly(disassembly: str) -> None:
+             "inc hl",
+             "dec bc",
+         ),
+-        "linked falling-edge byte loop",
++        "linked qualified falling-edge byte loop",
+     )
+     per_byte = byte_loop[: byte_loop.index("inc hl")]
+     if per_byte.count("out0 (0x9e),a") != 1:
+         raise Port008Error("linked byte loop must write Port C exactly once")
+     if per_byte.count("out0 (0xa2),a") != 2:
+-        raise Port008Error("linked byte loop must make exactly two Port D writes")
++        raise Port008Error(
++            "linked byte loop must make one falling and one rising Port D write"
++        )
+ 
+     release = disassembly_block(disassembly, "PORT008_wait_release")
+     ordered(
+@@ -155,6 +177,27 @@ def validate_sender_disassembly(disassembly: str) -> None:
+     )
+ 
+ 
++def validate_sender_storage(symbols: dict[str, int], disassembly: str) -> None:
++    """Bind ADL BC memory operands to a non-overlapping three-byte object."""
++    length = symbols.get("_port008_length")
++    idle_low = symbols.get("_port008_idle_low")
++    if length is None or idle_low is None:
++        raise Port008Error("linked EMOS image lacks PORT-008 length-state symbols")
++    if idle_low - length != 3:
++        raise Port008Error(
++            "_port008_length must occupy three bytes before _port008_idle_low"
++        )
++    ordered(
++        disassembly,
++        (
++            f"ld (0x{length:x}),bc",
++            f"ld a,(0x{length + 2:x})",
++            f"ld bc,(0x{length:x})",
++        ),
++        "linked 24-bit length storage and reload",
++    )
++
++
+ def validate_linked_sender(
+     binary: Path, elf: Path, nm: Path, objdump: Path
+ ) -> None:
+@@ -168,6 +211,8 @@ def validate_linked_sender(
+         "PORT008_byte_loop",
+         "PORT008_wait_release",
+         "_port008_general_poll",
++        "_port008_length",
++        "_port008_idle_low",
+     )
+     missing = [name for name in required if name not in symbols]
+     if missing:
+@@ -179,6 +224,7 @@ def validate_linked_sender(
+         [objdump, "-d", elf], check=True, text=True, stdout=subprocess.PIPE
+     ).stdout
+     validate_sender_disassembly(disassembly)
++    validate_sender_storage(symbols, disassembly)
+ 
+ 
+ def validate_binary(manifest: Path, binary: Path, elf: Path, nm: Path) -> None:
+diff --git a/src/serial.asm b/src/serial.asm
+index 260864c..1348f04 100644
+--- a/src/serial.asm
++++ b/src/serial.asm
+@@ -465,12 +465,20 @@ PORT008_send:		LD	A, (_port008_acquired)
+ 			OR	A, A
+ 			JP	NZ, PORT008_unavailable
+ PORT008_size_valid:
+-			LD	A, (_port008_busy)
+-			OR	A, A
+-			JP	NZ, PORT008_unavailable
+-			LD	(_port008_pointer), HL
+-			LD	(_port008_length), BC
+-			LD	A, I				; Preserve IEF2 like predecessor
++			LD	A, (_port008_busy)
++			OR	A, A
++			JP	NZ, PORT008_unavailable
++			LD	(_port008_pointer), HL
++			LD	(_port008_length), BC
++			; ADL-mode LD (nn),BC stores all 24 bits. The prototype
++			; contract is deliberately capped below 64 KiB, so reject a
++			; nonzero BCU after saving into correctly sized private state.
++			; Keeping the storage and check explicit prevents a two-byte BSS
++			; declaration from silently corrupting the following control byte.
++			LD	A, (_port008_length + 2)
++			OR	A, A
++			JP	NZ, PORT008_unavailable
++			LD	A, I				; Preserve IEF2 like predecessor
+ 			JP	PO, PORT008_iff_was_off
+ 			LD	A, 1
+ 			JR	PORT008_save_iff
+@@ -504,23 +512,32 @@ PORT008_wait_ready:
+ 			LD	A, 1
+ 			JR	PORT008_finish
+ 
+-PORT008_admitted:
+-			LD	HL, (_port008_pointer)
+-			LD	BC, (_port008_length)
+-PORT008_byte_loop:
+-			LD	A, (HL)
+-			OUT0	(PC_DR), A
+-			LD	A, (_port008_active_high)
+-			OUT0	(PD_DR), A
+-			LD	A, (_port008_active_low)
+-			OUT0	(PD_DR), A			; Falling-edge sample
+-			INC	HL
+-			DEC	BC
+-			LD	A, B
+-			OR	C
+-			JR	NZ, PORT008_byte_loop
+-			LD	A, (_port008_idle_low)		; VALID inactive
+-			OUT0	(PD_DR), A
++PORT008_admitted:
++			LD	HL, (_port008_pointer)
++			LD	BC, (_port008_length)
++			; Preserve the physically qualified PRX-06 sender cadence. VALID_N
++			; becomes active while CLOCK is high, and each byte's load and Port C
++			; write provide setup time before the falling sample edge. Raising
++			; CLOCK again after every byte provides the high phase and hold time.
++			; Do not collapse these writes into adjacent high/low writes: the first
++			; hardware PORT-008 retry did so and produced sub-125 ns observed high
++			; phases which the P4 PARLIO receiver could not complete reliably.
++			LD	A, (_port008_active_high)
++			OUT0	(PD_DR), A
++PORT008_byte_loop:
++			LD	A, (HL)
++			OUT0	(PC_DR), A
++			LD	A, (_port008_active_low)
++			OUT0	(PD_DR), A			; Falling-edge sample
++			LD	A, (_port008_active_high)
++			OUT0	(PD_DR), A
++			INC	HL
++			DEC	BC
++			LD	A, B
++			OR	C
++			JR	NZ, PORT008_byte_loop
++			LD	A, (_port008_idle_high)		; VALID inactive, CLOCK high
++			OUT0	(PD_DR), A
+ 			LD	A, PORT008_WAIT_RELEASE
+ 			LD	(_port008_wait_windows), A
+ 			LD	BC, 0
+@@ -613,7 +630,7 @@ _port008_saved_iff:	DS	1
+ _port008_wait_windows:	DS	1
+ _port008_byte:		DS	1
+ _port008_pointer:	DS	3
+-_port008_length:	DS	2
++_port008_length:	DS	3			; ADL BC load/store width; BCU must be zero
+ _port008_idle_low:	DS	1
+ _port008_idle_high:	DS	1
+ _port008_active_low:	DS	1
+diff --git a/tests/test_port008_forward.py b/tests/test_port008_forward.py
+index b5c2d4e..d35672a 100644
+--- a/tests/test_port008_forward.py
++++ b/tests/test_port008_forward.py
+@@ -62,12 +62,18 @@ class Port008ForwardTests(unittest.TestCase):
+         self.assertIn("EMOS identity: %s, build %s, status %s", core)
+         self.assertGreaterEqual(core.count("UNVERSIONED-DO-NOT-DEPLOY"), 3)
+ 
+-    def test_linked_sender_requires_compiled_falling_edge_order(self) -> None:
++    def test_linked_sender_requires_compiled_qualified_clock_cadence(self) -> None:
+         disassembly = """
+ 00000100 <PORT008_send>:
+  100: 78                 ld a,b
+  101: fe 10              cp a,0x10
+  103: 79                 ld a,c
++ 105: ed 43 00 02 00     ld (0x200),bc
++ 10a: 3a 02 02 00        ld a,(0x202)
++ 10e: ed 4b 00 02 00     ld bc,(0x200)
++
++0000010f <PORT008_admitted>:
++ 10f: ed 39 a2           out0 (0xa2),a
+ 
+ 00000110 <PORT008_wait_ready>:
+  110: ed 39 a2           out0 (0xa2),a
+@@ -94,6 +100,37 @@ class Port008ForwardTests(unittest.TestCase):
+             verify.validate_sender_disassembly(
+                 disassembly.replace("out0 (0x9e),a", "out0 (0xa2),a", 1)
+             )
++        with self.assertRaises(verify.Port008Error):
++            verify.validate_sender_disassembly(
++                disassembly.replace(
++                    "0000010f <PORT008_admitted>:\n"
++                    " 10f: ed 39 a2           out0 (0xa2),a\n\n",
++                    "0000010f <PORT008_admitted>:\n"
++                    " 10f: 00                 nop\n\n",
++                )
++            )
++
++    def test_linked_sender_requires_three_byte_adl_length_state(self) -> None:
++        disassembly = """
++00000100 <PORT008_send>:
++ 100: ed 43 00 02 00     ld (0x200),bc
++ 105: 3a 02 02 00        ld a,(0x202)
++ 109: ed 4b 00 02 00     ld bc,(0x200)
++"""
++        verify.validate_sender_storage(
++            {"_port008_length": 0x200, "_port008_idle_low": 0x203},
++            disassembly,
++        )
++        with self.assertRaises(verify.Port008Error):
++            verify.validate_sender_storage(
++                {"_port008_length": 0x200, "_port008_idle_low": 0x202},
++                disassembly,
++            )
++        with self.assertRaises(verify.Port008Error):
++            verify.validate_sender_storage(
++                {"_port008_length": 0x200, "_port008_idle_low": 0x203},
++                disassembly.replace("ld a,(0x202)", "ld a,(0x203)"),
++            )
+ 
+ 
+ if __name__ == "__main__":

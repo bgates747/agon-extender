@@ -136,3 +136,29 @@ retained-before-reset, and unavailable evidence.
 4. Failure reporting cannot block or recursively defeat recovery.
 5. Deterministic fault-injection tests prove rendering, persistence, retrieval,
    truncation, interrupted-write recovery, wear bounds, and fallback behavior.
+6. Accepted REMED-002 finding F020 has an approved confidentiality and
+   retention contract before any memory-bearing evidence is captured or
+   exported.
+
+## Accepted REMED-002 finding
+
+[REMED-002](REMED-002.md) assigns DIAG-001
+`INTEGRITY-AUDIT-F020`. Detailed evidence remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+Before implementing stack, task, panic, coredump, or other memory-bearing
+capture, present one actor-explicit policy decision covering:
+
+1. [ ] which eZ80/EMOS and P4/EDP evidence classes may contain credentials,
+   session tokens, private application data, update material, or other secrets;
+2. [ ] what each capture owner must omit, bound, or redact before persistence
+   and export;
+3. [ ] which actor authenticates local or network retrieval and which operator
+   actions authorize disclosure in a bug report;
+4. [ ] retention duration, storage encryption or protection where required,
+   overwrite/wear behavior, explicit erase, and reset/factory-reset behavior;
+5. [ ] deterministic tests for unauthorized retrieval, truncation, redaction,
+   expiry, erase, corrupt records, and partial writes.
+
+Native ESP-IDF memory capture is expected behavior, not the defect. The task
+must supply the project confidentiality policy before enabling that capability.

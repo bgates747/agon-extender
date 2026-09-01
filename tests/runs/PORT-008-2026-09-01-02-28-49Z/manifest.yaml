@@ -1,0 +1,156 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-09-01-02-28-49Z
+  task_id: PORT-008
+  started_at: 2026-09-01T02:28:49Z
+  ended_at: 2026-09-01T02:28:58Z
+  outcome: fail
+  summary: >-
+    The cadence-corrected EMOS image still failed EMOS MODE EXTENDED. The
+    capture contained no sampled CLOCK edge, READY_N remained asserted, and
+    MOS reported an autoexec line-1 error followed by Internal error.
+
+procedure:
+  artifact_id: port-008-forward-qualification
+  identity: port-008-forward-qualification-r01
+  deviations:
+    - >-
+      The Author authorized dirty-source, visibly UNVERSIONED-DO-NOT-DEPLOY
+      corrective artifacts for bounded hardware diagnosis rather than a
+      decision-bearing qualification run.
+    - >-
+      The browser page was open but its Connect control had not been pressed.
+      This prevented a visible WebSocket frame observation but could not gate
+      P4 parallel ingress or the EMOS mode transaction that failed on line 1.
+    - >-
+      No P4 serial observer was attached during the run because prior late
+      USB Serial/JTAG attachment reset the P4. HTTP status 200 was the bounded
+      P4 preflight evidence.
+
+artifacts_under_test:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.2.0
+    build_id: UNVERSIONED-DO-NOT-DEPLOY
+    variant: p4-forward-vdp-corrective
+    factory_sha256: 37f1dd65d76666d0fa46a05defb47544a93dc31bd9d31ef0283cf692bde2c967
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: UNVERSIONED-DO-NOT-DEPLOY
+    variant: port008-forward-adl-and-cadence-corrective
+    sha256: 8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b
+  - artifact_id: agon-transport-fixture
+    identity: agon-transport-fixture-r01
+    build_id: null
+    variant: light2
+    sha256: 3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a
+
+source:
+  agon_extender_commit: 45c45d5ef02285a737969a11b29dcc011aa4ef9b
+  agon_extender_tracked_dirty: true
+  agon_emos_commit: 0e24b06abdb322fdb4e681a21242ccfebfc8ea65
+  agon_emos_tracked_dirty: true
+  mos_agondev_commit: 29cd336f472164156de330cf77c69a4eda450527
+
+connections:
+  harness: light2-harness-r01
+  breadboard: light2-extender-solderless-assembly-r01
+  probe_map: la03-p4-probe-fixture-r01
+
+instrumentation:
+  role: digital-logic-analyzer
+  model: Saleae Logic-compatible eight-channel analyzer
+  software: sigrok-cli 0.5.2
+  sample_rate_hz: 8000000
+  samples: 4000000
+  pretrigger_percent: 10
+  trigger: D3 falling
+
+observations:
+  - requirement: p4-http-readiness
+    observed: Plain HTTP returned status 200 before run start.
+    result: pass
+  - requirement: mode-request
+    observed: MOS reported autoexec line 1 error followed by Internal error.
+    result: fail
+  - requirement: general-poll-clocks
+    observed: No CLOCK edge was sampled during the 500 ms capture.
+    result: fail
+  - requirement: valid-record-boundary
+    observed: >-
+      Two incomplete VALID_N low spans were sampled: 0.375 us and 0.125 us.
+    result: fail
+  - requirement: ready-release
+    observed: READY_N remained low throughout the capture.
+    result: fail
+  - requirement: direction-contention
+    observed: FWD_OE_N remained low and REV_OE_N remained high; no overlap occurred.
+    result: pass
+  - requirement: legacy-electrical-inertness
+    observed: >-
+      P4 asserted READY_N before EMOS processed the explicit mode request, so
+      the attached Extender was not electrically indistinguishable from absence.
+    result: fail
+  - requirement: visible-fixture
+    observed: >-
+      P8VDU.BIN did not execute because autoexec stopped at line 1; browser
+      WebSocket delivery was also not armed.
+    result: not-reached
+
+evidence:
+  - filename: logic.sr
+    sha256: ec875eda37ec5e28d5d8867592aa3b0abd44cf6b98238e2adec6242e3a78f033
+  - filename: analysis.json
+    sha256: 177377932f0bf94addeba85498d866070217da5c226552e78e7f744d4ea9f7f5
+  - filename: analyze-forward-capture-audit-copy.py
+    sha256: 64d8d9f08eff0dca2bb27e48ab24b61c9a96ae225c37b7d38d4935da27cbaf7e
+    description: Exact known-limited F014 analyzer bytes that produced analysis.json.
+  - filename: diagnostic-summary.txt
+    sha256: c65253cf137c783bb63a2827ebb7e833095c84d50b3df8f17566a457950c63b6
+    description: Third-run findings and Legacy-startup source audit.
+  - filename: linked-clock-write-evidence.txt
+    sha256: f5ac7a69b4f164fb96fa78d2d81f43a8537db143265ee80c3f36a8d058e65414
+    description: Exact linked instruction and forced PD5 state evidence.
+  - filename: preflight.txt
+    sha256: c5b0c38ae98a5d32f1f5adc30a610ae9d0543266e860c8575b889d2c0cb525f7
+    description: Sanitized HTTP preflight fact.
+  - filename: correction-2026-09-01-evidence-hygiene.md
+    sha256: c5248a85d8778f55962110209ed017f44bec59538548caed26a885e8223f91de
+    description: Dated correction for path sanitization and analyzer preservation.
+
+corrections:
+  - recorded_at: 2026-09-01T13:14:05-04:00
+    authority: Author-authorized evidence hygiene
+    note: >-
+      Removed a machine-local tool path, preserved the exact known-limited
+      analyzer bytes, and removed only undeclared acquisition scratch without
+      changing the failed run's observations or claims.
+    detail: correction-2026-09-01-evidence-hygiene.md
+
+legacy_startup_audit:
+  established:
+    - Stock VDP synchronization, MOS banner, SD mount, and sysvar setup precede emos_init.
+    - emos_init selects Legacy, onboard VDP route 0, and inactive EDU state.
+    - EMOS acquires Port C and Port D only after the explicit EMOS MODE EXTENDED command.
+    - A failed prepare restores the saved GPIO state and does not commit the VDU route.
+    - P4 reverse output remained disabled during the capture.
+  defect:
+    - >-
+      P4 arms its receiver and asserts READY_N during P4 startup rather than in
+      response to a bounded EMOS activation request.
+
+claim_boundary:
+  established:
+    - EMOS did not silently reroute ordinary Legacy startup through PORT-008.
+    - Browser WebSocket connection state does not control P4 parallel ingress.
+    - The cadence-corrected sender did not produce a complete sampled record.
+    - The present P4 pre-activation READY_N behavior violates strict Legacy electrical absence.
+  failed:
+    - General Poll record completion
+    - READY_N release
+    - Exclusive Extended route commitment
+    - Visible fixture execution
+  not_claimed:
+    - Cause of the missing physical CLOCK transitions
+    - Safety or correctness of an unapproved replacement activation handshake
+    - Browser frame, reverse UART, sysvar, r02/V1, or broad compatibility behavior

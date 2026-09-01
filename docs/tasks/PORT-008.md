@@ -2,11 +2,15 @@
 
 ## State
 
-- Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
-  implemented and non-physically qualified; clean identified candidate packages
-  prepared; exact identified EMOS installed and Stage B media staged; physical
-  wiring/probe confirmation, forward-run authorization/execution, and
-  forward-only physical evidence pending
+- Status: In progress — three r01 physical attempts failed during the explicit
+  `EMOS MODE EXTENDED` preparation transaction. A subsequent two-point
+  diagnostic sampled no source-side or destination-side clock transition, but
+  the intended READY-isolated fixture was not physically established and the
+  run cannot select a discriminator branch. A
+  source-and-capture audit preserves Legacy VDU routing but finds that P4
+  asserts `READY_N` before EMOS activation, contrary to strict Legacy
+  electrical absence. Review of the source-side result and an Author-approved
+  activation correction gate the next retry.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -550,6 +554,230 @@ promoted into the product architecture merely because it runs.
    traffic occurred, and no physical run ID was assigned. The Author's r01
    wiring and probe confirmation remains the next gate.
 
+#### 2026-09-01 UTC — P4 deployment and startup preflight
+
+1. **Exact deployment.** After the Author reported the P4 ready to flash, the
+   Pi resolved the expected stable USB identity and ESP32-P4 revision 1.3. It
+   erased flash, wrote the exact 1,379,360-byte
+   `extender-vdp-v0.2.0-b2026-09-01-00-20-07Z` factory image at offset zero,
+   verified the write-time hash, and independently passed `verify_flash`. The
+   factory-image SHA-256 remained
+   `bdb9553e87ff73f2d8f5f3cdbe45192618b8c493fe75460eb35bbbe1af225dad`.
+2. **Controlled startup capture.** A normal USB-UART reset with the stable
+   serial endpoint held open preserved the ESP-ROM prefix and complete
+   application startup. The capture reports P4 revision 1.3, QIO at 80 MHz,
+   16 MiB flash, 360 MHz CPU, source `extender-vdp-v0.2.0`, the exact build ID,
+   candidate status, and the selected r01 forward pin map. The successful
+   receiver-start return follows hardware configuration and `READY_N` release
+   in `ForwardParallelStream::begin()`; electrical idle remains an analyzer
+   observation for the run rather than a claim from this software log.
+3. **Network preflight.** The P4 obtained the router-reserved DHCP address and
+   reported `HTTP browser service ready`; a Pi-side plain-HTTP request returned
+   status 200 with the expected no-store HTML response. The Author then opened
+   the live web page and confirmed that it was up. The captures contain no
+   panic, assertion, failed transport setup, restart loop, or unexpected reset
+   marker.
+4. **Evidence and stop.** Raw flash, verify, reset-control, ROM, and startup
+   logs are retained in the ignored build-specific `p4-deployment` directory
+   and on the Pi staging host. No Agon cold boot or forward traffic occurred,
+   and no run ID was assigned. Physical r01 harness and LA-03 probe
+   verification remains the final gate before run start.
+
+#### 2026-09-01 UTC — First forward-run failure and root cause
+
+1. **Controlled start and observed failure.** After the Author confirmed the
+   complete r01 harness and LA-03 probe attachment, run
+   `PORT-008-2026-09-01-01-29-06Z` began with the P4 browser endpoint live.
+   The Author cold-booted the Agon. MOS reported an error executing
+   `/autoexec.txt` line 1 followed by `Internal error`. Line 1 was
+   `EMOS MODE EXTENDED`; EMOS therefore did not commit the route and
+   `P8VDU.BIN` did not execute. The run is failed, and no frame or visible VDU
+   claim is available.
+2. **Preserved electrical evidence.** The 8 MHz, 4,000,000-sample capture
+   contains one bounded 135.900 ms active-low `VALID_N` window, `READY_N` low
+   throughout 500 ms, and no sampled `CLOCK` edge. The no-edge observation
+   does not rule out pulses shorter than the 125 ns sample interval. It also
+   records `FWD_OE_N` and `REV_OE_N` simultaneously low for 1,086,412 samples,
+   or 135.8015 ms. That violates r01 ownership independently of the software
+   timeout; this run does not assign its physical cause.
+3. **Confirmed EMOS defect.** In ADL mode, linked instructions
+   `LD (_port008_length), BC` at `0x00173C` and
+   `LD BC, (_port008_length)` at `0x001792` transfer 24 bits. The exact
+   candidate reserves `_port008_length` at `0x0BC2FA` with `DS 2`, while
+   `_port008_idle_low` begins at `0x0BC2FC`. Saving the four-byte General Poll
+   length therefore writes zero-valued `BCU` over the saved inactive-VALID
+   control byte. The release-wait loop reasserts `VALID_N`; P4 does not finish
+   and release `READY_N`; and EMOS reaches completion timeout 2. The command
+   surface exposes that value as FatFS `FR_INT_ERR`, which MOS renders as
+   `Internal error`. This mechanism accounts for the screen result and sampled
+   transaction duration.
+4. **Why non-physical qualification missed it.** Fab has no model of this
+   external Port C/Port D-to-P4 path, and runtime qualification exercised the
+   fake adapter rather than `EMOS MODE EXTENDED` through the fixed-purpose
+   adapter. The physical-profile linked check verified constants, General Poll
+   bytes, control-flow ordering, and GPIO-write ordering, but not BSS symbol
+   spans against 24-bit load/store operands. Its synthetic disassembly test
+   omitted the length store and reload.
+5. **Independent P4 gap.** The r01 authority assigns P4 GPIO15 to `FWD_OE_N`
+   and GPIO21 to `REV_OE_N`, requires both high at reset/fault, and forbids both
+   low. `ForwardParallelStream` configures data, `CLOCK`, `VALID_N`, and
+   `READY_N`, but not GPIO15 or GPIO21. The source omission and the captured
+   overlap are facts; whether that omission, wiring, probe attachment, or
+   another electrical interaction produced the observed levels remains open.
+6. **Observer deviation.** HTTP returned 200 before the run observer opened
+   the USB Serial/JTAG endpoint; opening it produced a fresh P4 ROM/application
+   boot. The receiver and HTTP service returned before the captured
+   transaction. Any rerun must follow the existing procedure literally:
+   deliberately open and retain serial through P4 startup, then wait for
+   receiver and HTTP readiness before authorizing the Agon boot. Do not attach
+   the observer late.
+7. **Durable evidence.** The run directory contains the raw Sigrok archive, a
+   task-specific deterministic forward-only analysis, sanitized P4 log,
+   preflight and analyzer logs, manifest, and full diagnostic summary. Raw
+   sensitive console evidence remains on the bench host and is represented by
+   hash only in the tracked manifest.
+8. **Closed retry boundary.** No candidate source was changed and no retry was
+   attempted. A new run requires an EMOS width correction with linked
+   symbol-span regression, an actor-explicit P4 direction-enable lifecycle and
+   deterministic checks, new build IDs from clean committed inputs, renewed
+   harness/probe confirmation, and separate Author authorization.
+
+#### 2026-09-01 UTC — Experimental corrective retry and second failure
+
+1. **Authorized experimental correction.** The Author approved a bounded
+   hardware review before new semantic identities were assigned. The EMOS
+   sender now reserves all three ADL bytes used by `LD (nn),BC`, rejects a
+   nonzero upper byte, and has a linked symbol-span regression. The P4 now owns
+   GPIO15 `FWD_OE_N` and GPIO21 `REV_OE_N`, preloads and releases both high,
+   and selects forward only after releasing reverse. Both products remained
+   visibly `UNVERSIONED-DO-NOT-DEPLOY`.
+2. **Corrective startup.** The exact P4 factory image at SHA-256
+   `37f1dd65d76666d0fa46a05defb47544a93dc31bd9d31ef0283cf692bde2c967`
+   passed chip identification, erase, write verification, independent flash
+   verification, controlled reset, revision/clock/flash checks, corrected
+   direction diagnostics, DHCP, and HTTP 200. The exact first corrective EMOS
+   image at SHA-256
+   `7984048405e327e7e3fc6e1dc227d697b0bc7a032bcbeff631b4ecead48275c1`
+   passed its complete build gates and was installed by the official one-shot
+   keyboardless process.
+3. **Second physical result.** Run `PORT-008-2026-09-01-02-10-50Z` again
+   stopped at `EMOS MODE EXTENDED`; MOS printed the line-1 error and
+   `Internal error`. The 8 MHz capture now sampled three falling clock edges
+   during the initial 0.375 us `VALID_N` assertion. `READY_N` remained low, so
+   the P4 receive did not complete and EMOS reached its completion timeout.
+   The long first-run direction overlap did not recur; one isolated 125 ns
+   reverse-enable-low sample remains a failed observation without an assigned
+   physical cause.
+4. **Second EMOS defect.** The proven legacy PRX-06 sender asserts `VALID_N`
+   with `CLOCK` high before its byte loop, writes each byte while the clock is
+   high, emits one falling sample edge, and raises the clock after every byte.
+   The EMOS loop instead placed adjacent clock-high and clock-low Port D writes
+   after each data write. That created sub-125 ns observed high phases and did
+   not preserve the qualified PARLIO cadence. The existing validator checked
+   only data-before-two-control-writes ordering and could not distinguish the
+   malformed loop.
+5. **Cadence correction prepared.** EMOS now mirrors the proven PRX-06 loop and
+   leaves `VALID_N` inactive with `CLOCK` high. Source and synthetic tests
+   require the pre-loop assertion and per-byte falling/rising phases; the
+   linked-image verifier confirms the emitted instruction shape. The complete
+   firmware build, UART linked check, PORT-008 linked check, and all 55 EMOS
+   tests pass. The 114,085-byte unversioned image has SHA-256
+   `8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b`.
+   It was subsequently installed and failed the third physical attempt below.
+
+#### 2026-09-01 UTC — Third failure and Legacy-startup safety audit
+
+The containment record is
+[`CA-2026-09-01-001`](../decisions/CA-2026-09-01-001-port008-preactivation-ready.md).
+
+1. **Cadence-corrected attempt.** Run `PORT-008-2026-09-01-02-28-49Z`
+   used the unversioned 114,085-byte EMOS image containing both the ADL storage
+   correction and the PRX-06 cadence correction. P4 HTTP returned 200 before
+   the Author cold-booted the Agon. MOS again stopped at
+   `EMOS MODE EXTENDED` with an autoexec line-1 error and `Internal error`;
+   the route did not commit and `P8VDU.BIN` did not execute.
+2. **Electrical result.** The 8 MHz, 500 ms capture sampled no `CLOCK` edge,
+   two incomplete `VALID_N` low spans of 0.375 us and 0.125 us, and
+   continuously asserted `READY_N`. `FWD_OE_N` remained low and `REV_OE_N`
+   remained high, so no direction-enable overlap occurred. The run does not
+   assign the missing-clock cause among eZ80 state, r01 wiring/conditioning,
+   P4 observation, probe attachment, or another physical interaction.
+   Exact linked-image disassembly independently proves that the flashed
+   114,085-byte EMOS artifact forces PD5 high/low state bytes, configures PD5
+   as an output, writes high/low in the admission loop, and writes one
+   falling/rising pair per byte. It does not prove the eZ80 pad or downstream
+   conductor changed level. The next useful discriminator is therefore a
+   same-attempt observation at the eZ80 PD5 source and P4 GPIO14 destination,
+   not another speculative sender rewrite.
+3. **Legacy EMOS route audit.** EMOS does not acquire the prototype GPIO during
+   ordinary boot. Stock VDP synchronization, display-state reads, MOS banner,
+   SD mount, and sysvar initialization precede `emos_init()`. That function
+   selects Legacy, onboard VDP route zero, and inactive EDU. Only the explicit
+   autoexec command calls `emos_port008_prepare()`. Failure invokes recovery,
+   restores the saved Port C/Port D registers, and leaves the committed VDU
+   backend on the onboard UART route.
+4. **P4 pre-activation defect.** The P4 receiver starts independently and
+   asserts open-drain `READY_N` as soon as PARLIO is armed. The third capture
+   proves that state existed before the explicit EMOS request. Reverse
+   P4-to-Agon output remained disabled, so this is not evidence of VDU-route
+   hijacking or direction contention; it nevertheless violates the normative
+   Legacy requirement that Extender be electrically indistinguishable from
+   absence.
+5. **Browser observation boundary.** The browser page was open but Connect had
+   not been pressed. Connect owns only WebSocket establishment and frame
+   credit; it does not start P4 parallel ingress and cannot explain the
+   line-1 mode failure. A future visible-output run must nevertheless connect
+   the browser before Agon cold boot so an emitted frame can be observed.
+6. **Unapproved correction gate.** No replacement activation protocol is
+   selected by this diagnosis. Before another firmware change or physical
+   retry, the Author must review a bounded actor-explicit activation design
+   that keeps every P4-to-Agon signal released in Legacy, permits only a
+   deliberate EMOS request before commit, and fails back to Legacy. The
+   missing physical `CLOCK` cause remains a separate required diagnosis.
+7. **Prepared physical discriminator.** The subsequently authorized
+   [READY-isolated two-point CLOCK diagnostic](PORT-008/forward-r01/proposed-clock-discriminator.md)
+   changes no firmware or SD content. It observes eZ80 PD5 and P4 GPIO14 in
+   one attempt while the disconnected sender-side `READY_N` remains pulled
+   high, forcing EMOS to time out and recover without sending a record or
+   committing the route. The attempted run did not actually establish that
+   temporary electrical state; its corrected disposition is recorded below.
+
+#### 2026-09-01 UTC — READY-isolated two-point CLOCK diagnostic
+
+1. **Authorized execution.** The Author approved procedure
+   `port-008-clock-discriminator-r01`, temporary fixture
+   `port-008-ready-isolated-fixture-r01`, and probe map
+   `la03-clock-discriminator-r01`. The existing firmware and SD-card content
+   remained unchanged. A post-run Author correction established that only the
+   probes moved: the actual `READY_N` conductor remained connected to P4
+   GPIO20 throughout, so the authorized temporary fixture was not realized.
+2. **Trigger correction.** A read-only analyzer check proved that stopping
+   `sigrok-cli` before a D4 edge preserves no archive. Because absent D4 is a
+   required discriminator outcome, the Author approved a D6 rising power-on
+   trigger with 240,000,000 samples at 24 MHz and 10 percent pretrigger.
+3. **Screen result.** Run `PORT-008-2026-09-01-15-01-14Z` stopped on autoexec
+   line 1 with `Error accessing SD card`. The fixed adapter's READY-admission
+   timeout returns value 1 through MOS's FatFS result domain, where value 1 is
+   rendered as `FR_DISK_ERR`; this is the expected transport timeout, not
+   evidence of an SD read failure. The route did not commit and `P8VDU.BIN`
+   did not execute.
+4. **CLOCK result.** Source probe D4 at Agon header pin 14 / eZ80 PD5 remained
+   low for all 240,000,000 samples. Destination probe D5 at P4 GPIO14 had no
+   post-trigger edge, and D4/D5 matched for every post-trigger sample. No P4-
+   only observation failure can explain this attempt's missing source clock.
+5. **Validity limit.** D6 contained three post-trigger low spans totaling 14
+   samples—0.083 us, 0.417 us, and 0.083 us. D3 contained two brief low spans,
+   including the same 0.417 us interval, without a bounded record. Those lows
+   were observed on the still-connected live net, not an isolated sender-side
+   node. The defining electrical precondition was absent, so the run is
+   invalid for this discriminator regardless of those levels.
+6. **Bounded disposition.** Preserve only the direct sampled observation that
+   D4 never went high and D5 had no post-trigger edge. Do not infer the sender
+   branch that would have executed under isolated READY, and do not change the
+   P4 receiver or eZ80 sender on this evidence alone. The separate
+   pre-activation READY defect remains contained by `CA-2026-09-01-001`; no
+   corrective firmware or wiring is authorized by this diagnostic.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and
@@ -692,3 +920,58 @@ stock-UART profile.
    have no unexplained qualification gap.
 6. Source selection, dependencies, compatibility matrix, procedures, artifacts,
    runs, and development log agree.
+7. Every accepted PORT-008 action from REMED-002 has passed its task-local
+   validation or has an explicit Author-accepted deferral that prevents its
+   prototype evidence from supporting a product claim.
+
+## Accepted REMED-002 findings and retained risk
+
+The Author accepted the PORT-008 dispositions in
+[REMED-002](REMED-002.md). Detailed evidence and provenance remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md),
+and the pre-activation physical hold remains owned by
+[`CA-2026-09-01-001`](../decisions/CA-2026-09-01-001-port008-preactivation-ready.md).
+Nothing in this intake authorizes another firmware change, flash, powered
+transfer, protocol decision, or promotion of the fixed-purpose adapters.
+
+1. [ ] **F004 reachability split:** With PORT-003, PORT-004, and SETUP-005,
+   ensure that every audio or updater command reachable through physical
+   ingress consumes or safely rejects its complete grammar before the retained
+   parser resumes.
+2. [ ] **F005:** Replace the infinite external-clock completion wait with a
+   bounded timeout/abort contract that releases READY and all direction outputs
+   after stopped CLOCK, stuck VALID, timeout, reset, or cancellation.
+3. [ ] **F007 consumer:** Stage forward builds only through PORT-003's corrected
+   cryptographic build-to-source authority and add an A/B rejection fixture;
+   do not maintain a weaker PORT-008 provenance path.
+4. [ ] **F008 consumer:** Do not cite `light2-harness-r02` as a frozen input
+   until HW-001 reconciles its maintained schematic digest, generated view,
+   and version record.
+5. [ ] **F013:** Make receiver startup transactional: represent started state
+   explicitly, unwind every partially allocated/configured resource in reverse
+   order, restore released outputs, and prove deterministic retry after each
+   injected failure.
+6. [ ] **F014:** Make every analyzer return nonzero for invalid or insufficient
+   evidence, validate each procedure precondition and claimed timing/data
+   property, and freeze the exact accepted script hash with the run.
+7. [ ] **F015:** Reconcile the baseline, candidate, procedure, and linked EMOS
+   build source identities under the versioning policy before another package
+   or run is named.
+8. [ ] **R001:** Establish the ESP-IDF callback-to-task ordering guarantee or
+   use explicit lock-free synchronization for published receive state before
+   claiming portability.
+9. [ ] Preserve `PORT008-PROV-P001`'s permanent EMOS divisor correction and
+   require its clean build identity and qualification evidence.
+10. [ ] Preserve the durable width, sender-cadence, fail-safe direction, and
+    activation invariants from `PORT008-PROV-P002` through `P005` without
+    promoting the exact prototype adapters. Keep `P006` as closed historical
+    diagnostic provenance.
+11. [ ] Close the pre-activation corrective action only after the Author
+    accepts an EMOS-requested activation design, deterministic checks prove
+    fail-closed Legacy and transition behavior, a separately authorized run
+    proves all P4-to-Agon outputs released before activation, and General Poll
+    completes without an unexplained CLOCK or READY gap.
+
+Every existing capture or build claim materially dependent on F007, F014, or
+F015 must receive an explicit retained, rerun, superseded, or withdrawn
+disposition before it is reused.

@@ -471,3 +471,23 @@ electrical design, connectivity, construction definition, and qualification
 are not established. Do not rename existing files, change a hardware profile,
 advance another artifact revision, synchronize ERP records, or modify physical
 wiring without the applicable Author approval.
+
+## Accepted REMED-002 finding
+
+[REMED-002](REMED-002.md) assigns SETUP-006 the historical-provenance portion
+of `INTEGRITY-AUDIT-F021`. The detailed audit evidence remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] Amend the stop-state and routine references so no reader can mistake
+   SETUP-006's earlier open construction language for the current promoted r02
+   construction authority.
+2. [ ] Retain task-local drafts, Fritzing records, pin research, and deferred
+   questions as historical design provenance without duplicating HW-001's
+   current construction map.
+3. [ ] Route revision-independent hardware-object applicability metadata to
+   the separately accepted promotion owner instead of assigning it implicitly
+   to this completed research tranche.
+
+HW-001 owns current construction mapping; PORT-007 owns consumption of the
+accepted fixed-function SD1 audit. No hardware artifact or wiring change is
+authorized by this reconciliation item.

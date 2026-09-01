@@ -342,3 +342,30 @@ tradeoffs, prerequisites, and downstream effects. Do not implement MOS changes,
 resident-service behavior, transport routing, mode transitions, or onboard-VDP
 delegation until the corresponding decision is accepted and promoted into
 ADR-0014.
+
+## Accepted REMED-002 findings
+
+The Author accepted SETUP-005's portions of F004, F009, and F018 through
+[REMED-002](REMED-002.md). The audit evidence and provenance remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+These actions do not decide D003--D008 or authorize EMOS/EDP implementation.
+
+1. [ ] **F004 policy split:** Under D006, decide the actor-explicit behavior for
+   a complete but unsupported audio or updater command in each reachable mode,
+   including full-byte consumption, bounded failure reporting, and whether the
+   command is prohibited before transport activation. PORT-003 and PORT-004
+   own parser and audio implementation contracts.
+2. [ ] **F009:** Promote every already accepted D002 lifecycle, transition,
+   reset, discovery, recovery, and EMOS-ownership rule into ADR-0014 and
+   `docs/architecture.md` before any downstream task consumes D002 as a
+   satisfied implementation gate. Record the promotion in the development log.
+3. [ ] **F018:** Resolve the disruptive beta transition carrier separately:
+   name which processor restarts, where the requested target survives, which
+   actor reissues or consumes it, when EMOS commits the target, and how failed
+   or absent retained state returns to Legacy. If accepted, assign the EMOS
+   implementation and cross-project qualification to a separately approved
+   task rather than MODE-001 or MODE-002 by implication.
+
+F009 is correction of normative authority, not a reopening of accepted D002
+content. F018 remains an unresolved architecture question and must be presented
+one decision at a time under this task's normal review gate.

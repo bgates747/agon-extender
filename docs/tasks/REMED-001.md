@@ -658,3 +658,26 @@ mode-dependent qualification uses it as authority.
    authority.
 7. The Author accepts the final conformance report and explicitly releases the
    remediation freeze.
+
+## Accepted REMED-002 coordination
+
+The Author accepted REMED-001's split responsibilities for F009, F016, and
+F018 in [REMED-002](REMED-002.md). The underlying evidence remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+This intake does not release or replace the current four-mode freeze.
+
+1. [ ] **F009:** Treat promotion of accepted SETUP-005-D002 lifecycle content
+   into ADR-0014 and `docs/architecture.md` as a prerequisite, not deferred
+   cleanup, before downstream implementation consumes that decision.
+2. [ ] **F016:** Require QUAL-002's local state and dependencies to name this
+   freeze and the corrected four-mode release gates; its earlier plan approval
+   cannot imply permission for mode-dependent physical qualification.
+3. [ ] **F018:** Coordinate SETUP-005's actor-explicit decision for the beta
+   restart carrier, retained target ownership, EMOS commit point, and Legacy
+   fallback. Do not assign implementation to MODE-001 or MODE-002 implicitly;
+   create a separately approved implementation/qualification task if the
+   contract is accepted.
+
+REMED-001 owns mode conformance and freeze release. REMED-002 owns the audit
+disposition and cross-finding closure register; neither document substitutes
+for SETUP-005's architecture decisions.

@@ -1,0 +1,141 @@
+{
+  "schema_version": 1,
+  "analyzer": "port-008-forward-capture-v1",
+  "capture": {
+    "filename": "logic.sr",
+    "sha256": "28703a420283395df689745807670b8571c80d6fdf5d492041440fd82a12b66e",
+    "sample_rate_hz": 8000000,
+    "sample_count": 4000000,
+    "duration_ms": 500.0
+  },
+  "probe_map": {
+    "identity": "la03-p4-probe-fixture-r01",
+    "signals": {
+      "parallel_d4": "D0",
+      "parallel_d1": "D1",
+      "parallel_d0": "D2",
+      "valid_n": "D3",
+      "rev_oe_n": "D4",
+      "clock": "D5",
+      "ready_n": "D6",
+      "fwd_oe_n": "D7"
+    }
+  },
+  "result": "fail",
+  "findings": [
+    {
+      "severity": "info",
+      "code": "COMPLETE_VALID_WINDOW_OBSERVED",
+      "message": "One bounded active-low VALID_N window was sampled."
+    },
+    {
+      "severity": "error",
+      "code": "GENERAL_POLL_CLOCK_EVIDENCE_MISSING",
+      "message": "The four-byte preparation poll requires four sampled falling CLOCK edges while VALID_N is active; observed 0. This is an evidence failure, not proof that sub-sample pulses did not occur."
+    },
+    {
+      "severity": "error",
+      "code": "READY_NOT_RELEASED",
+      "message": "P4 READY_N remained asserted at the capture boundary."
+    },
+    {
+      "severity": "error",
+      "code": "FORBIDDEN_DIRECTION_OVERLAP",
+      "message": "FWD_OE_N and REV_OE_N were simultaneously active-low for 1086412 sampled cycles."
+    }
+  ],
+  "metrics": {
+    "lines": {
+      "parallel_d4": {
+        "probe": "D0",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 0
+      },
+      "parallel_d1": {
+        "probe": "D1",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      },
+      "parallel_d0": {
+        "probe": "D2",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      },
+      "valid_n": {
+        "probe": "D3",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      },
+      "rev_oe_n": {
+        "probe": "D4",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      },
+      "clock": {
+        "probe": "D5",
+        "initial": 0,
+        "final": 0,
+        "edge_count": 0
+      },
+      "ready_n": {
+        "probe": "D6",
+        "initial": 0,
+        "final": 0,
+        "edge_count": 0
+      },
+      "fwd_oe_n": {
+        "probe": "D7",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      }
+    },
+    "valid_low_spans": [
+      {
+        "start_sample": 400000,
+        "end_sample_exclusive": 1487200,
+        "samples": 1087200,
+        "duration_us": 135900.0
+      }
+    ],
+    "ready_low_spans": [
+      {
+        "start_sample": 0,
+        "end_sample_exclusive": 4000000,
+        "samples": 4000000,
+        "duration_us": 500000.0
+      }
+    ],
+    "fwd_oe_low_spans": [
+      {
+        "start_sample": 400000,
+        "end_sample_exclusive": 1487200,
+        "samples": 1087200,
+        "duration_us": 135900.0
+      }
+    ],
+    "rev_oe_low_spans": [
+      {
+        "start_sample": 400774,
+        "end_sample_exclusive": 1487186,
+        "samples": 1086412,
+        "duration_us": 135801.5
+      }
+    ],
+    "direction_overlap_low_spans": [
+      {
+        "start_sample": 400774,
+        "end_sample_exclusive": 1487186,
+        "samples": 1086412,
+        "duration_us": 135801.5
+      }
+    ],
+    "clock_falling_edges": 0,
+    "clock_falling_edges_while_valid": 0
+  }
+}

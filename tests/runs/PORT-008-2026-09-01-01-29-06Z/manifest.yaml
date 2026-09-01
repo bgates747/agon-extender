@@ -1,0 +1,217 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-09-01-01-29-06Z
+  task_id: PORT-008
+  started_at: 2026-09-01T01:29:06Z
+  ended_at: 2026-09-01T01:30:19Z
+  outcome: fail
+  summary: >-
+    EMOS MODE EXTENDED timed out while preparing the four-byte General Poll
+    record. MOS reported an autoexec line-1 error and Internal error; the
+    visible fixture did not execute.
+
+procedure:
+  artifact_id: port-008-forward-qualification
+  identity: port-008-forward-qualification-r01
+  deviations:
+    - >-
+      The P4 USB Serial/JTAG observer was opened after an HTTP 200 preflight and
+      caused a fresh P4 boot. The receiver and HTTP service returned before the
+      captured transaction, but the intended observer-from-boot sequence was
+      not followed.
+
+artifacts_under_test:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.2.0
+    build_id: extender-vdp-v0.2.0-b2026-09-01-00-20-07Z
+    variant: olimex-p4-devkit
+    sha256: bdb9553e87ff73f2d8f5f3cdbe45192618b8c493fe75460eb35bbbe1af225dad
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: agon-emos-v0.1.0-b2026-09-01-00-20-07Z
+    variant: port008-forward
+    sha256: 8c356f95cb901edcf675e8add5567316a324e5c43559f3034c54218f3998f231
+  - artifact_id: agon-transport-fixture
+    identity: agon-transport-fixture-r01
+    build_id: null
+    variant: light2
+    sha256: 3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a
+
+source:
+  agon_extender_commit: acf9ded5c7936fe61c6377f367ac8c96c3984b78
+  agon_extender_dirty_before_build: false
+  agon_emos_commit: 0e24b06abdb322fdb4e681a21242ccfebfc8ea65
+  agon_emos_dirty_before_build: false
+  mos_agondev_commit: 29cd336f472164156de330cf77c69a4eda450527
+
+base_hardware:
+  - role: target-mainboard
+    manufacturer: Olimex
+    model: Agon Light 2
+    manufacturer_revision: null
+    profile:
+      artifact_id: null
+      identity: null
+    specimen_alias: agon-bench-01
+  - role: extender-processor
+    manufacturer: Olimex
+    model: ESP32-P4-DevKit
+    manufacturer_revision: Rev D1
+    profile:
+      artifact_id: olimex-p4-devkit-profile
+      identity: olimex-p4-devkit-profile-r03
+    specimen_alias: p4-bench-01
+
+connections:
+  harness:
+    artifact_id: light2-harness
+    identity: light2-harness-r01
+    variant: light2
+  breadboard:
+    artifact_id: light2-extender-solderless-assembly
+    identity: light2-extender-solderless-assembly-r01
+  fixture:
+    artifact_id: agon-transport-fixture
+    identity: agon-transport-fixture-r01
+  probe_map:
+    artifact_id: la03-p4-probe-fixture
+    identity: la03-p4-probe-fixture-r01
+
+instrumentation:
+  - role: digital-logic-analyzer
+    equipment_alias: extender-bench-logic-analyzer
+    manufacturer: null
+    model: Saleae Logic-compatible eight-channel analyzer
+    hardware_revision: null
+    software:
+      name: sigrok-cli
+      version: 0.5.2
+    settings:
+      sample_rate_hz: 8000000
+      samples: 4000000
+      pretrigger_percent: 10
+      trigger: D3 falling
+
+external_dependencies:
+  - name: onboard-vdp
+    identity: v2.16.0-bistromathics
+    role: Agon boot display before EMOS route transition
+  - name: mos-base
+    identity: v3.0.2-arthur
+    role: official EMOS base behavior
+
+compatibility_checked:
+  requirements:
+    - explicit-emos-exclusive-extended-preparation
+    - four-byte-general-poll-forward-record
+    - released-idle-direction-ownership
+    - visible-vdu-fixture
+  result: fail
+
+observations:
+  - requirement: physical-setup
+    observed: Author confirmed the r01 harness and all LA-03 probes wired before run start.
+    result: pass
+  - requirement: p4-readiness
+    observed: >-
+      P4 receiver startup and HTTP-ready diagnostics followed the observer-induced
+      reboot; HTTP had also returned 200 immediately before the observer opened.
+    result: pass-with-procedure-deviation
+  - requirement: mode-request
+    observed: MOS reported autoexec line 1 error followed by Internal error.
+    result: fail
+  - requirement: valid-window
+    observed: One bounded active-low interval, 1087200 samples or 135.900 ms.
+    result: fail
+  - requirement: ready-release
+    observed: READY_N remained low for all 4000000 samples or 500 ms.
+    result: fail
+  - requirement: general-poll-clocks
+    observed: Zero falling CLOCK edges sampled at 8 MHz; sub-sample pulses are unresolved.
+    result: fail
+  - requirement: direction-ownership
+    observed: >-
+      FWD_OE_N and REV_OE_N overlapped low for 1086412 samples or 135.8015 ms.
+    result: fail
+  - requirement: visible-fixture
+    observed: P8VDU.BIN did not execute because autoexec stopped at line 1.
+    result: not-reached
+
+evidence:
+  - filename: logic.sr
+    media_type: application/zip
+    size_bytes: 9692
+    sha256: 28703a420283395df689745807670b8571c80d6fdf5d492041440fd82a12b66e
+    description: Raw eight-channel Sigrok capture.
+  - filename: analysis.json
+    media_type: application/json
+    size_bytes: 3375
+    sha256: 805e4ceb134f414856a00aac1ee50aaaea070c22f675f0bc268c334189c9105b
+    description: Deterministic forward-only analyzer output.
+  - filename: analyze-forward-capture-audit-copy.py
+    media_type: text/x-python
+    size_bytes: 8478
+    sha256: 64d8d9f08eff0dca2bb27e48ab24b61c9a96ae225c37b7d38d4935da27cbaf7e
+    description: Exact known-limited F014 analyzer bytes that produced analysis.json.
+  - filename: diagnostic-summary.txt
+    media_type: text/plain
+    size_bytes: 3800
+    sha256: 11054ec3437e1af5f68a5d81075ff9ec6d04c4e62473da8b9a7d38ca878546af
+    description: Root cause, test-gap accounting, and bounded corrective requirements.
+  - filename: p4-console.log
+    media_type: text/plain
+    size_bytes: 8505
+    sha256: 48e7ee2d8691db09f95bc3df5cdd04607edec9cf3fb346c81dda3f0fd2cd2a28
+    description: Sanitized P4 startup and service diagnostics after the observer-induced reset.
+  - filename: preflight.log
+    media_type: text/plain
+    size_bytes: 283
+    sha256: e3b2209c1401b0afbf1603a4755796fc824f46ac561e46dd2cf1ab6507316ea1
+    description: Sanitized analyzer, stable-alias, and HTTP preflight output.
+  - filename: correction-2026-09-01-evidence-hygiene.md
+    media_type: text/markdown
+    size_bytes: 1029
+    sha256: ea017a1eb9b8205ae45d82a000e6991822fac8dc76b2d7a2de602de6b216478d
+    description: Dated correction for path sanitization and analyzer preservation.
+  - filename: sigrok.log
+    media_type: text/plain
+    size_bytes: 34
+    sha256: ef756c6dcf0ee93ec4c931a0bb1db95a2478c303f5904833a0cad7a35d7265cf
+    description: >-
+      Sigrok post-trigger sample notice; the archive includes the separate 10
+      percent pretrigger region for 4000000 total samples.
+  - filename: run-id.txt
+    media_type: text/plain
+    size_bytes: 30
+    sha256: f36d6b5bc728fbcd0fd86444d8e870ec39af6fe0e4ba4ff34e0cd70e291d3680
+    description: Exact run identifier.
+
+remote_sensitive_evidence:
+  retained_on_bench_only: true
+  hashes:
+    raw_p4_console_log: 42f9ab75164e229521beff78b934a58aeddb2df092555a2044ae689308cd5849
+
+corrections:
+  - recorded_at: 2026-09-01T13:14:05-04:00
+    authority: Author-authorized evidence hygiene
+    note: >-
+      Removed machine-local serial and analyzer USB paths from the tracked
+      transcript and preserved the exact known-limited analyzer bytes without
+      changing the failed run's observations or claims.
+    detail: correction-2026-09-01-evidence-hygiene.md
+
+claim_boundary:
+  established:
+    - The first EMOS physical preparation request reached the r01 GPIO sender.
+    - The exact deployed EMOS linked image contains a 24-bit-store/two-byte-storage overlap.
+    - The overlap explains the completion timeout and MOS Internal error result.
+  failed:
+    - General Poll record completion
+    - Released-idle and direction-ownership requirements
+    - Exclusive Extended route commitment
+    - Visible fixture execution
+  not_claimed:
+    - Absence of physical CLOCK pulses shorter than the analyzer sample interval
+    - Cause of the sampled direction-enable overlap
+    - Any browser-frame, reverse-UART, sysvar, r02/V1, or broad compatibility behavior

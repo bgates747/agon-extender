@@ -1,0 +1,45 @@
+PORT-008 READY-isolated CLOCK discriminator summary
+
+Run PORT-008-2026-09-01-15-01-14Z used the unchanged installed P4, EMOS,
+fixture, and SD-card contents from the preceding failed attempt. With both
+boards off, the Author disconnected READY_N at P4 GPIO20, left the Agon-side
+PD4 node and pull-up intact, and installed probe map
+la03-clock-discriminator-r01. P4 USB identity, analyzer identity, 24 MHz
+support, and HTTP status 200 passed before the Agon cold boot.
+
+The analyzer used a D6 rising power-on trigger because sigrok-cli preserves no
+archive when an expected D4 trigger never occurs. The Author explicitly
+authorized this correction. The resulting archive contains 240,000,000
+samples at 24 MHz: one second before and nine seconds after the D6 trigger.
+
+MOS reported an error executing autoexec.txt at line 1 followed by "Error
+accessing SD card." Line 1 was EMOS MODE EXTENDED. In this fixed-purpose EMOS
+adapter, PORT008_send returns status 1 when sender-side READY_N never admits a
+record; MOS renders that value using FatFS result text, where value 1 is
+FR_DISK_ERR. The message is therefore the expected READY-admission timeout
+rendered through a misleading shared result domain, not evidence that MOS
+failed to read the card. The route did not commit and P8VDU.BIN did not run.
+
+D4 at Agon header pin 14 / eZ80 PD5 remained sampled low for all 240,000,000
+samples. D5 at P4 GPIO14 remained low throughout the post-trigger interval;
+its only high sample occurred immediately before the power-on trigger. D4 and
+D5 were identical for every post-trigger sample. This establishes that no
+source-side or destination-side CLOCK transition was sampled during the mode
+attempt. It rules out a P4-only observation failure as an explanation for this
+attempt but does not by itself distinguish eZ80 pad configuration, source
+probe contact, or another source-side electrical condition.
+
+The run does not cleanly satisfy the discriminator's strict isolation rule.
+D6 sampled three post-trigger low spans totaling 14 samples: 0.083 us,
+0.417 us, and 0.083 us. D3 also contained two short post-trigger low spans,
+including the same 0.417 us interval; neither signal formed a bounded transfer
+record. These sub-microsecond observations may be switching or sampling
+glitches, but this record assigns no cause and does not waive the rule that
+sender-side READY_N remain high. The run is therefore classified invalid for
+selecting a final discriminator branch while preserving the stronger sampled
+fact that D4 never went high during the full ten-second capture.
+
+D7 / FWD_OE_N remained low for the complete capture. The temporary map did not
+observe REV_OE_N, data values, a response path, or browser frames. This run
+makes no transport-completion, mode-commit, wiring-qualification, P4 receiver,
+or corrective-design claim.

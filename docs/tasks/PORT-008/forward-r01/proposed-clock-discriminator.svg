@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  Test-local rendering of the proposed PORT-008 CLOCK discriminator.
+  It follows the established LA-03 P4 probe-map visual convention.
+  Ethernet is UP, matching the Olimex canonical board orientation.
+  Physical probe-wire colors are authoritative; PulseView colors are not.
+-->
+<svg xmlns="http://www.w3.org/2000/svg" width="1600" height="1260" viewBox="0 0 1600 1260" role="img" aria-labelledby="title desc">
+  <title id="title">PORT-008 CLOCK discriminator probe placement</title>
+  <desc id="desc">Proposed but unrealized temporary fixture: Ethernet-up P4 view showing orange D3 on GPIO13 VALID_N, red D5 on GPIO14 destination CLOCK, brown D7 on GPIO15 forward output enable, proposed P4 GPIO20 READY_N disconnection, purple D4 on Agon header pin 14 source CLOCK, gray D6 on Agon header pin 13, and black analyzer ground retained. The actual run left READY_N connected.</desc>
+  <defs>
+    <style>
+      .title { font: 700 34px sans-serif; fill: #111; }
+      .subtitle { font: 20px sans-serif; fill: #333; }
+      .board-label { font: 700 25px sans-serif; fill: #fff; }
+      .board-small { font: 18px sans-serif; fill: #fff; }
+      .header-label { font: 700 21px sans-serif; fill: #fff; }
+      .pin-number { font: 700 17px monospace; fill: #fff; }
+      .callout-light { font: 700 18px sans-serif; fill: #fff; }
+      .callout-dark { font: 700 18px sans-serif; fill: #111; }
+      .note { font: 700 19px sans-serif; fill: #fff; }
+      .fine { font: 17px sans-serif; fill: #333; }
+      .wire { fill: none; stroke-width: 5; stroke-linecap: round; }
+      .pin { fill: #d6a72b; stroke: #5f4300; stroke-width: 2; }
+      .selected { stroke: #111; stroke-width: 3; }
+      .open { fill: #fff; stroke: #b00020; stroke-width: 4; }
+    </style>
+  </defs>
+
+  <rect x="0" y="0" width="1600" height="1260" fill="#fff"/>
+  <text id="title-text" x="800" y="48" text-anchor="middle" class="title">PORT-008 — CLOCK discriminator probe placement</text>
+  <text x="800" y="78" text-anchor="middle" class="subtitle">Canonical P4 orientation: Ethernet UP · USB Serial/JTAG DOWN</text>
+
+  <!-- Olimex ESP32-P4-DevKit, simplified physical orientation. -->
+  <rect x="550" y="140" width="500" height="760" rx="24" fill="#bd2026" stroke="#661015" stroke-width="6"/>
+  <rect x="688" y="92" width="224" height="105" rx="10" fill="#c9ced3" stroke="#565b60" stroke-width="5"/>
+  <text x="800" y="127" text-anchor="middle" style="font:700 21px sans-serif;fill:#222">ETHERNET</text>
+  <text x="800" y="154" text-anchor="middle" style="font:700 18px sans-serif;fill:#222">UP</text>
+
+  <rect x="680" y="856" width="240" height="92" rx="12" fill="#c9ced3" stroke="#565b60" stroke-width="5"/>
+  <text x="800" y="890" text-anchor="middle" style="font:700 18px sans-serif;fill:#222">USB SERIAL/JTAG</text>
+  <text x="800" y="918" text-anchor="middle" style="font:700 18px sans-serif;fill:#222">DOWN</text>
+
+  <rect x="650" y="315" width="300" height="300" rx="20" fill="#8b171c" stroke="#fff" stroke-width="3" opacity="0.82"/>
+  <text x="800" y="432" text-anchor="middle" class="board-label">OLIMEX</text>
+  <text x="800" y="470" text-anchor="middle" class="board-label">ESP32-P4-DevKit</text>
+  <text x="800" y="508" text-anchor="middle" class="board-small">Rev D1 header orientation</text>
+  <text x="800" y="548" text-anchor="middle" class="board-small">Temporary CLOCK diagnostic</text>
+
+  <!-- The two physical P4 header banks are parallel and side by side. -->
+  <rect x="557" y="176" width="36" height="636" rx="12" fill="#202020" stroke="#050505" stroke-width="3"/>
+  <rect x="1007" y="176" width="36" height="636" rx="12" fill="#202020" stroke="#050505" stroke-width="3"/>
+  <text x="575" y="165" text-anchor="middle" class="header-label" fill="#222">EXT1</text>
+  <text x="1025" y="165" text-anchor="middle" class="header-label" fill="#222">EXT2</text>
+
+  <!-- EXT1, board left. Pin 20 is at the Ethernet end; pin 1 is at USB. -->
+  <g aria-label="EXT1 pins">
+    <circle cx="575" cy="190" r="8" class="pin"/><circle cx="575" cy="222" r="8" class="pin"/>
+    <circle cx="575" cy="254" r="8" class="pin"/><circle cx="575" cy="286" r="8" class="pin"/>
+    <circle cx="575" cy="318" r="9" fill="#6d4c41" class="selected"/>
+    <circle cx="575" cy="350" r="9" fill="#d32f2f" class="selected"/>
+    <circle cx="575" cy="382" r="9" fill="#f57c00" class="selected"/>
+    <circle cx="575" cy="414" r="8" class="pin"/>
+    <circle cx="575" cy="446" r="8" class="pin"/><circle cx="575" cy="478" r="8" class="pin"/>
+    <circle cx="575" cy="510" r="8" class="pin"/><circle cx="575" cy="542" r="8" class="pin"/>
+    <circle cx="575" cy="574" r="8" class="pin"/><circle cx="575" cy="606" r="8" class="pin"/>
+    <circle cx="575" cy="638" r="8" class="pin"/><circle cx="575" cy="670" r="8" class="pin"/>
+    <circle cx="575" cy="702" r="8" class="pin"/><circle cx="575" cy="734" r="8" class="pin"/>
+    <circle cx="575" cy="766" r="8" class="pin"/><circle cx="575" cy="798" r="8" class="pin"/>
+    <text x="600" y="196" class="pin-number">20</text>
+    <text x="600" y="324" class="pin-number">16</text>
+    <text x="600" y="356" class="pin-number">15</text>
+    <text x="600" y="388" class="pin-number">14</text>
+    <text x="600" y="420" class="pin-number">13</text>
+    <text x="600" y="804" class="pin-number">1</text>
+  </g>
+
+  <!-- EXT2, board right. Pin 20 is at the Ethernet end; pin 1 is at USB. -->
+  <g aria-label="EXT2 pins">
+    <circle cx="1025" cy="190" r="8" class="pin"/><circle cx="1025" cy="222" r="8" class="pin"/>
+    <circle cx="1025" cy="254" r="8" class="pin"/><circle cx="1025" cy="286" r="8" class="pin"/>
+    <circle cx="1025" cy="318" r="8" class="pin"/><circle cx="1025" cy="350" r="8" class="pin"/>
+    <circle cx="1025" cy="382" r="8" class="pin"/>
+    <circle cx="1025" cy="414" r="9" class="open"/>
+    <circle cx="1025" cy="446" r="8" class="pin"/>
+    <circle cx="1025" cy="478" r="8" class="pin"/><circle cx="1025" cy="510" r="8" class="pin"/>
+    <circle cx="1025" cy="542" r="8" class="pin"/><circle cx="1025" cy="574" r="8" class="pin"/>
+    <circle cx="1025" cy="606" r="8" class="pin"/><circle cx="1025" cy="638" r="8" class="pin"/>
+    <circle cx="1025" cy="670" r="8" class="pin"/><circle cx="1025" cy="702" r="8" class="pin"/>
+    <circle cx="1025" cy="734" r="8" class="pin"/><circle cx="1025" cy="766" r="8" class="pin"/>
+    <circle cx="1025" cy="798" r="8" class="pin"/>
+    <text x="1000" y="196" text-anchor="end" class="pin-number">20</text>
+    <text x="1000" y="420" text-anchor="end" class="pin-number">13</text>
+    <text x="1000" y="452" text-anchor="end" class="pin-number">12</text>
+    <text x="1000" y="484" text-anchor="end" class="pin-number">11</text>
+    <text x="1000" y="516" text-anchor="end" class="pin-number">10</text>
+    <text x="1000" y="548" text-anchor="end" class="pin-number">9</text>
+    <text x="1000" y="804" text-anchor="end" class="pin-number">1</text>
+    <line x1="1016" y1="405" x2="1034" y2="423" stroke="#b00020" stroke-width="5" stroke-linecap="round"/>
+    <line x1="1034" y1="405" x2="1016" y2="423" stroke="#b00020" stroke-width="5" stroke-linecap="round"/>
+  </g>
+
+  <!-- P4 endpoint callouts. -->
+  <path d="M575 318 H462" class="wire" stroke="#6d4c41"/>
+  <rect x="40" y="303" width="422" height="30" rx="8" fill="#6d4c41" stroke="#111" stroke-width="2"/>
+  <text x="56" y="324" class="callout-light">D7 BROWN · GPIO15 · pin 16 · FWD_OE_N</text>
+
+  <path d="M575 350 H462" class="wire" stroke="#d32f2f"/>
+  <rect x="40" y="335" width="422" height="30" rx="8" fill="#d32f2f" stroke="#111" stroke-width="2"/>
+  <text x="56" y="356" class="callout-light">D5 RED · GPIO14 · pin 15 · CLOCK destination</text>
+
+  <path d="M575 382 H462" class="wire" stroke="#f57c00"/>
+  <rect x="40" y="367" width="422" height="30" rx="8" fill="#f57c00" stroke="#111" stroke-width="2"/>
+  <text x="56" y="388" class="callout-dark">D3 ORANGE · GPIO13 · pin 14 · VALID_N</text>
+
+  <path d="M1025 414 H1138" class="wire" stroke="#b00020" stroke-dasharray="10 10"/>
+  <rect x="1138" y="399" width="422" height="30" rx="8" fill="#fff" stroke="#b00020" stroke-width="3"/>
+  <text x="1154" y="420" style="font:700 18px sans-serif;fill:#8b0000">READY_N OPEN · GPIO20 · pin 13 · no probe</text>
+
+  <!-- Agon-side source probes. Pins 13 and 14 are opposite sides of one 2x17 row. -->
+  <rect x="220" y="970" width="1160" height="170" rx="18" fill="#222b45" stroke="#111" stroke-width="5"/>
+  <text x="800" y="1008" text-anchor="middle" style="font:700 24px sans-serif;fill:#fff">AGON LIGHT 2 · eZ80 HEADER</text>
+  <circle cx="525" cy="1047" r="10" fill="#808080" class="selected"/>
+  <circle cx="1075" cy="1047" r="10" fill="#7b1fa2" class="selected"/>
+  <text x="525" y="1076" text-anchor="middle" style="font:700 17px monospace;fill:#fff">pin 13 · PD4</text>
+  <text x="1075" y="1076" text-anchor="middle" style="font:700 17px monospace;fill:#fff">pin 14 · PD5</text>
+  <rect x="260" y="1091" width="520" height="32" rx="8" fill="#808080" stroke="#111" stroke-width="2"/>
+  <text x="520" y="1113" text-anchor="middle" class="callout-light">D6 GRAY · isolated READY_N · MUST STAY HIGH</text>
+  <rect x="820" y="1091" width="520" height="32" rx="8" fill="#7b1fa2" stroke="#111" stroke-width="2"/>
+  <text x="1080" y="1113" text-anchor="middle" class="callout-light">D4 PURPLE · CLOCK source</text>
+
+  <rect x="210" y="1165" width="1180" height="52" rx="10" fill="#111"/>
+  <text x="800" y="1198" text-anchor="middle" class="note">BLACK GND — retain the qualified P4 signal-ground point · move probes only with both boards OFF</text>
+  <text x="800" y="1245" text-anchor="middle" class="fine">PROPOSED ONLY — not realized in the run: actual READY_N remained connected to P4 GPIO20.</text>
+</svg>

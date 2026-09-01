@@ -290,3 +290,29 @@ QUAL-001.
    obligations.
 6. The dated development log records promotion, and AUDIT-001 can cite the
    durable construct instead of acting as its permanent runtime home.
+7. The validator rejects every adversarial authority, evidence, owner,
+   blocker, and digest mutation required by accepted REMED-002 finding F006,
+   and affected earlier qualification claims have been re-evaluated.
+
+## Accepted REMED-002 finding
+
+[REMED-002](REMED-002.md) assigns QUAL-001
+`INTEGRITY-AUDIT-F006`. The detailed demonstrations and provenance remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+Review Gate 2 remains paused.
+
+1. [ ] Require exact, not prefix-plus-suffix, resolution of task, ADR,
+   corrective-action, and other authority identifiers.
+2. [ ] Validate every owner, decision, blocker, dependency, and evidence field
+   that can support a qualification or deferral claim.
+3. [ ] Resolve evidence references to existing in-repository paths and validate
+   their declared record type and required identity where applicable.
+4. [ ] Recompute and compare stored reviewed/generated input hashes rather than
+   accepting schema-valid stale digests.
+5. [ ] Add negative tests for dangling identifiers, nonexistent evidence,
+   forged digests, stale generated inputs, and unsupported qualified states.
+6. [ ] Re-evaluate any promoted record materially supported by the defective
+   paths and mark it retained, regenerated, superseded, or withdrawn.
+
+This is repository validation semantics; `jsonschema` is not the defect and a
+schema-only pass cannot close this finding.

@@ -1,0 +1,192 @@
+{
+  "schema_version": 1,
+  "analyzer": "port-008-clock-discriminator-v1",
+  "capture": {
+    "filename": "logic.sr",
+    "sha256": "9ec2f5da3a681f3fb131f5bbc2987a48c687868447a61e11247a87c4356a67d1",
+    "sample_rate_hz": 24000000,
+    "sample_count": 240000000,
+    "duration_ms": 10000.0,
+    "pretrigger_percent": 10,
+    "trigger": "D6 rising",
+    "trigger_sample": 24000000
+  },
+  "probe_map": {
+    "identity": "la03-clock-discriminator-r01",
+    "signals": {
+      "valid_n": "D3",
+      "source_clock": "D4",
+      "destination_clock": "D5",
+      "isolated_ready_n": "D6",
+      "fwd_oe_n": "D7"
+    }
+  },
+  "result": "invalid",
+  "findings": [
+    {
+      "severity": "error",
+      "code": "ISOLATED_READY_GLITCHED_LOW",
+      "message": "D6 sampled low after the trigger; the strict READY-isolation invariant is not cleanly satisfied."
+    },
+    {
+      "severity": "error",
+      "code": "SOURCE_CLOCK_ABSENT",
+      "message": "No eZ80-side D4 CLOCK edge was sampled after power-on."
+    },
+    {
+      "severity": "info",
+      "code": "DESTINATION_CLOCK_ABSENT",
+      "message": "No P4-side D5 CLOCK edge was sampled after power-on."
+    },
+    {
+      "severity": "warning",
+      "code": "VALID_GLITCHED_LOW",
+      "message": "D3 contained brief low samples but no bounded transfer record."
+    }
+  ],
+  "metrics": {
+    "lines": {
+      "valid_n": {
+        "probe": "D3",
+        "initial": 1,
+        "final": 1,
+        "high_samples": 239999978,
+        "low_samples": 22,
+        "edge_count": 6,
+        "post_trigger_edge_count": 4,
+        "edge_head": [
+          23999917,
+          23999927,
+          31166263,
+          31166265,
+          42308964,
+          42308974
+        ],
+        "edge_tail": [
+          23999917,
+          23999927,
+          31166263,
+          31166265,
+          42308964,
+          42308974
+        ]
+      },
+      "source_clock": {
+        "probe": "D4",
+        "initial": 0,
+        "final": 0,
+        "high_samples": 0,
+        "low_samples": 240000000,
+        "edge_count": 0,
+        "post_trigger_edge_count": 0,
+        "edge_head": [],
+        "edge_tail": []
+      },
+      "destination_clock": {
+        "probe": "D5",
+        "initial": 0,
+        "final": 0,
+        "high_samples": 1,
+        "low_samples": 239999999,
+        "edge_count": 2,
+        "post_trigger_edge_count": 0,
+        "edge_head": [
+          23999915,
+          23999916
+        ],
+        "edge_tail": [
+          23999915,
+          23999916
+        ]
+      },
+      "isolated_ready_n": {
+        "probe": "D6",
+        "initial": 1,
+        "final": 1,
+        "high_samples": 239999903,
+        "low_samples": 97,
+        "edge_count": 8,
+        "post_trigger_edge_count": 7,
+        "edge_head": [
+          23999917,
+          24000000,
+          24000023,
+          24000025,
+          42308964,
+          42308974,
+          42308981,
+          42308983
+        ],
+        "edge_tail": [
+          23999917,
+          24000000,
+          24000023,
+          24000025,
+          42308964,
+          42308974,
+          42308981,
+          42308983
+        ]
+      },
+      "fwd_oe_n": {
+        "probe": "D7",
+        "initial": 0,
+        "final": 0,
+        "high_samples": 0,
+        "low_samples": 240000000,
+        "edge_count": 0,
+        "post_trigger_edge_count": 0,
+        "edge_head": [],
+        "edge_tail": []
+      }
+    },
+    "post_trigger_ready_low_spans": [
+      {
+        "start_sample": 24000023,
+        "end_sample_exclusive": 24000025,
+        "samples": 2,
+        "duration_us": 0.083
+      },
+      {
+        "start_sample": 42308964,
+        "end_sample_exclusive": 42308974,
+        "samples": 10,
+        "duration_us": 0.417
+      },
+      {
+        "start_sample": 42308981,
+        "end_sample_exclusive": 42308983,
+        "samples": 2,
+        "duration_us": 0.083
+      }
+    ],
+    "post_trigger_valid_low_spans": [
+      {
+        "start_sample": 31166263,
+        "end_sample_exclusive": 31166265,
+        "samples": 2,
+        "duration_us": 0.083
+      },
+      {
+        "start_sample": 42308964,
+        "end_sample_exclusive": 42308974,
+        "samples": 10,
+        "duration_us": 0.417
+      }
+    ],
+    "post_trigger_source_clock_edges": 0,
+    "post_trigger_destination_clock_edges": 0,
+    "clock_mismatch_high_samples_total": 1,
+    "clock_mismatch_high_samples_post_trigger": 0,
+    "clock_mismatch_post_trigger_edges": 0,
+    "clock_match_post_trigger": true
+  },
+  "bounded_interpretation": {
+    "established": [
+      "No D4 source-side CLOCK transition was sampled during the ten-second capture.",
+      "No D5 destination-side CLOCK transition was sampled after the Agon power-on trigger.",
+      "D4 and D5 remained logically equal throughout the post-trigger interval."
+    ],
+    "limitation": "Brief post-trigger D6 low spans violate the diagnostic's strict READY-high validity rule, so this run cannot cleanly select a final discriminator branch."
+  }
+}

@@ -1,0 +1,13 @@
+started_at=2026-09-01T02:10:50Z
+p4_source_identity=extender-vdp-v0.2.0
+p4_build_id=UNVERSIONED-DO-NOT-DEPLOY
+p4_artifact_status=candidate
+p4_receiver=FWD_OE_N_low_REV_OE_N_high_return_discard_only
+p4_http_status=200
+analyzer=fx2lafw_Saleae_Logic_8_channel
+samplerate_hz=8000000
+samples=4000000
+capture_ratio_percent=10
+trigger=D3_falling_VALID_N_start
+physical_setup=Author_confirmed_r01_harness_and_LA03_probes
+serial_observer_bytes=0

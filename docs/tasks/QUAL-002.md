@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Not started — plan approved by the Author on 2026-08-22
+- Status: Not started — plan approved; blocked by REMED-001 and REMED-002 gates
 - Started: --
 - Finished: --
 
@@ -144,6 +144,11 @@ current bench state before execution.
   a controlled transport candidate must exist before active-transfer tests.
 - `SETUP-005-D002` must define legacy absence, reset, failure, and recovery
   semantics before the full mode matrix can be approved.
+- REMED-001's four-mode conformance freeze must explicitly release the
+  applicable mode-dependent scope before any physical qualification begins.
+- Accepted REMED-002 findings F008 and F016 prohibit consuming
+  `light2-harness-r02` as a frozen input or treating this task's older plan
+  approval as an execution release until the reconciliation below passes.
 - QUAL-002 Gate 2 is required before any physical power-order, reset-order,
   connection-change, or fault-injection run.
 - A passing QUAL-002 scope is required before PORT-008 Gate 2, PORT-003 Gate G,
@@ -176,3 +181,20 @@ current bench state before execution.
 5. Required hardware revisions are qualified rather than edited in place.
 6. QUAL-001, artifact registry, procedures, run manifests, task records, and
    development log agree on the exact scope and remaining deferrals.
+
+## Accepted REMED-002 findings
+
+[REMED-002](REMED-002.md) assigns QUAL-002 the consumer gate for
+`INTEGRITY-AUDIT-F008` and the task-status correction for
+`INTEGRITY-AUDIT-F016`. Evidence remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] Consume `light2-harness-r02` only after HW-001 proves that its maintained
+   schematic, profile digest, generated projection, assembly mapping, and
+   version identity agree.
+2. [ ] Make every future plan, procedure, and run gate name the applicable
+   REMED-001 freeze release and corrected four-mode authority explicitly.
+3. [ ] Treat the 2026-08-22 plan approval as approval of scope only, never as
+   authorization for bench access, a physical run, or mode-dependent evidence.
+4. [ ] Reconcile any earlier candidate record that relied on the mismatched r02
+   identity before carrying it into a qualified run.

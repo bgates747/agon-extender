@@ -84,3 +84,21 @@ network for browser consumption.
   not wait for that transport.
 - Define detailed scheduler, buffering, transport, browser, and qualification
   phases with the Author before coding.
+
+## Accepted REMED-002 finding
+
+[REMED-002](REMED-002.md) assigns PORT-004 the retained-audio portion of
+`INTEGRITY-AUDIT-F004`; the detailed evidence and provenance remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] Define the complete official audio-command grammar and the behavior of
+   every supported, deferred, and rejected subcommand before making the P4
+   parser physically reachable.
+2. [ ] Ensure a deferred audio implementation still consumes or safely rejects
+   every command-dependent argument before top-level VDU parsing resumes.
+3. [ ] Add deterministic framing tests with a valid command immediately after
+   each variable-length, unsupported, malformed, and truncated audio command.
+
+PORT-003 owns the safe retained-parser binding. PORT-008 and SETUP-005 own the
+transport-reachability and mode-policy portions. This finding does not select
+an audio sink or authorize implementation.

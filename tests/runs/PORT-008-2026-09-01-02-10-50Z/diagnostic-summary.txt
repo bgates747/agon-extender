@@ -1,0 +1,50 @@
+PORT-008 second forward-run diagnostic summary
+
+Run PORT-008-2026-09-01-02-10-50Z used the experimental unversioned
+corrections for the first run's ADL storage overlap and P4 direction-enable
+ownership. The P4 completed its controlled startup, selected FWD_OE_N low and
+REV_OE_N high, returned HTTP 200, and the Author confirmed the r01 harness and
+LA-03 probes before the Agon cold boot.
+
+The Agon again reported an error executing autoexec.txt line 1 followed by
+Internal error. Line 1 was EMOS MODE EXTENDED. The route was not committed and
+P8VDU.BIN did not execute.
+
+The 8 MHz capture contains the first physical General Poll attempt. It sampled
+three falling CLOCK edges during the initial 0.375 us VALID_N assertion.
+READY_N remained low at the capture end, so the P4 receive did not complete and
+EMOS reached its completion timeout. FWD_OE_N remained low as selected.
+REV_OE_N was low for one 125 ns sample; that isolated sample is retained as an
+analyzer failure but is not evidence of the long direction contention seen in
+the first run.
+
+Source comparison found a second independent EMOS defect. The hardware-proven
+legacy PRX-06 zero-delay sender asserts VALID_N while CLOCK is high before the
+byte loop. It loads and writes each data byte during that high phase, drives
+the falling sample edge, and raises CLOCK after every byte. The PORT-008 EMOS
+sender instead changed the data, wrote CLOCK high, and immediately wrote it
+low. The resulting high phases were shorter than the analyzer's 125 ns sample
+period and did not provide the qualified PARLIO clock cadence. The observed
+three rather than four sampled edges and unreleased READY_N are consistent
+with that implementation deviation.
+
+The original validator checked only that a Port C data write preceded two Port
+D writes. It did not require a pre-loop VALID_N/CLOCK-high write, distinguish
+the falling and rising clock phases, or require that data loading separate the
+high and falling writes. The malformed linked image therefore passed.
+
+The pending correction now mirrors the proven PRX-06 sequence: assert VALID_N
+with CLOCK high once before the loop; write one byte while CLOCK remains high;
+drive one falling and one rising Port D write per byte; and leave the record at
+VALID_N inactive with CLOCK high. Source and synthetic regressions require that
+shape, and the linked-image verifier confirms it in the emitted instructions.
+The complete EMOS build and all 55 repository tests pass. The resulting
+114,085-byte unversioned image has SHA-256
+8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b.
+It has not yet been installed or physically tested.
+
+This failed run establishes that the first ADL storage correction allowed the
+four-byte sender to reach its physical byte loop and that P4 direction control
+removed the first run's long overlap. It does not establish a complete General
+Poll record, READY release, route commitment, visible fixture execution, or a
+browser-frame result.

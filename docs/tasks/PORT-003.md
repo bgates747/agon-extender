@@ -2358,3 +2358,44 @@ mutable logical buffer to network code, waiting for a slow consumer on the VDU
 or frame-service path, retaining a classic physical driver, expanding the
 narrow PORT-006 tranche, inventing a transport command, exceeding bounded
 memory, or weakening Legacy-at-boot and explicit EMOS activation rules.
+
+## Accepted REMED-002 findings
+
+The Author accepted the initial dispositions in
+[REMED-002](REMED-002.md). The audit record
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md)
+owns the evidence and provenance for these stable findings. PORT-003 owns the
+following actions; this intake authorizes planning, not source changes or Gate G.
+
+1. [ ] **F001:** Replace the frame-work suspension check/wait/mark sequence
+   with one explicit exclusion and lifetime contract. Add a deterministic
+   two-task fixture that forces the escaped-frame interleaving and proves that
+   synchronous mutation cannot overlap background primitive execution,
+   snapshot composition, or sprite storage replacement.
+2. [ ] **F002:** Put parser-driven palette and Copper mutation and frame-task
+   publication under the accepted lifetime contract. Add concurrent
+   palette/Copper/sprite mutation fixtures that exercise replacement and
+   deletion while a browser snapshot would otherwise retain the old storage.
+3. [ ] **F003 coverage split:** Add browser-frame regression coverage for the
+   PORT-006 short-write remedy, including immutable snapshot ownership through
+   complete send, congestion failure, disconnect, and retry. PORT-006 owns the
+   ESP-IDF transport correction.
+4. [ ] **F004 split:** Define and test a reachable parser binding in which
+   every unsupported audio or updater command consumes or safely rejects its
+   complete official grammar before top-level VDU parsing resumes. PORT-004
+   owns retained audio semantics; PORT-008 and SETUP-005 own reachability and
+   mode-policy integration.
+5. [ ] **F007 durable owner:** Replace staging-time clean-HEAD inference with a
+   cryptographic build-to-source binding that rejects objects or firmware
+   produced from another commit. PORT-008 must consume this corrected staging
+   authority rather than implement a divergent weaker copy.
+6. [ ] **F011:** Make every Phase B, C, and D sanitizer runner fail on UBSan
+   diagnostics, select an explicit non-recovering policy where appropriate,
+   and include a negative fixture that would previously have exited zero.
+7. [ ] **F017:** Define Phase G scope, fixtures, prerequisites, stop
+   conditions, and acceptance criteria for Author review before any Gate G
+   implementation or qualification begins.
+
+These actions reopen no accepted Phase A--F claim by themselves. Evidence that
+depends on a defective sanitizer or staging path must be explicitly retained,
+rerun, superseded, or withdrawn before it supports later promotion.

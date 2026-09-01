@@ -1,0 +1,58 @@
+PORT-008 forward-only run failed before the visible fixture executed.
+
+The Author cold-booted the Agon after the P4 browser endpoint and analyzer were
+ready. MOS reported an error executing /autoexec.txt line 1, followed by
+"Internal error." Line 1 was EMOS MODE EXTENDED, so EMOS never committed the
+Exclusive Extended route and line 2, P8VDU.BIN, did not run. No browser-frame
+claim is available from this run.
+
+The 8 MHz analyzer capture contains 4,000,000 samples. It sampled one bounded
+135.900 ms active-low VALID_N window, READY_N low throughout the complete
+500 ms capture, no CLOCK edge, and a forbidden 135.8015 ms interval with both
+FWD_OE_N and REV_OE_N low. The absence of a sampled CLOCK edge does not prove
+that no pulse shorter than the 125 ns sample interval occurred. The direction-
+enable overlap is independently disqualifying under light2-harness-r01, but its
+physical cause is not assigned by this run.
+
+The EMOS failure mechanism is proven in the exact deployed linked image. In
+ADL mode, LD (_port008_length),BC and LD BC,(_port008_length) transfer all
+24 bits of BC. Source reserved only two bytes for _port008_length at 0x0BC2FA;
+the next symbol, _port008_idle_low, begins at 0x0BC2FC. The store at linked
+address 0x00173C therefore overwrites _port008_idle_low with BCU. For this
+four-byte General Poll, BCU is zero, replacing the saved inactive-VALID control
+byte with zero. EMOS consequently reasserts VALID_N in its release-wait loop,
+the P4 does not complete and release READY_N, and EMOS reaches its completion
+timeout. PORT008_send returns 2; the command path interprets 2 as FatFS
+FR_INT_ERR, whose MOS message is "Internal error." This exactly accounts for
+the screen report and the long active transaction sampled by the analyzer.
+
+Existing checks missed the defect for two distinct reasons. Fab does not model
+this external Port C/Port D-to-P4 transport, and the graphical/runtime gate
+exercised EMOS's fake adapter rather than EMOS MODE EXTENDED through the
+fixed-purpose physical adapter. The physical-profile build and linked checker
+did run, but they verified GPIO constants, control-flow order, General Poll
+bytes, and linked instruction order. They did not compare BSS symbol spans
+with the 24-bit operands used by linked LD instructions. The synthetic
+disassembly unit fixture omitted the length store and reload entirely.
+
+The P4 candidate has a separate unresolved defect or wiring-observation gap.
+The r01 authority assigns GPIO15 to FWD_OE_N and GPIO21 to REV_OE_N and forbids
+both being low. ForwardParallelStream configures the data, CLOCK, VALID_N, and
+READY_N pins but does not configure GPIO15 or GPIO21. The capture sampled both
+active during the failed transaction. Source omission and sampled overlap are
+facts; whether the observed levels were caused by that omission, wiring,
+probe attachment, or another electrical interaction remains unresolved.
+
+The run also deviated from the intended observer sequence. HTTP returned 200
+before capture, then opening the P4 USB Serial/JTAG endpoint produced a fresh
+P4 ROM/application boot. The P4 again reached receiver startup and HTTP-ready
+before the captured transaction, but a rerun must deliberately open and hold
+the observer through a controlled P4 startup, then wait for receiver and HTTP
+readiness before authorizing the Agon boot. A late observer open is forbidden.
+
+No firmware correction or retry belongs to this run. Before another physical
+attempt, EMOS needs width-correct length storage plus a linked symbol-span
+regression; P4 firmware needs an actor-explicit, fail-safe r01 direction-enable
+lifecycle plus deterministic checks; and both corrected images need new build
+IDs from clean committed inputs. The exact harness/probe state must then be
+reconfirmed and a new run ID assigned.

@@ -1,0 +1,119 @@
+Core0 Saved PC:0x4002c26c
+Core1 Saved PC:0x4ff082e4
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1888
+load:0x4ff29ed0,len:0xfe8
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29ed0
+I (10) boot: ESP-IDF 5.5.5 2nd stage bootloader
+I (10) boot: compile time Aug 31 2026 20:21:39
+I (11) boot: Multicore bootloader
+I (13) boot: chip revision: v1.3
+I (13) boot: efuse block revision: v0.3
+I (14) qio_mode: Enabling QIO for flash chip WinBond
+I (15) boot.esp32p4: SPI Speed      : 80MHz
+I (16) boot.esp32p4: SPI Mode       : QIO
+I (17) boot.esp32p4: SPI Flash Size : 16MB
+I (17) boot: Enabling RNG early entropy source...
+I (18) boot: Partition Table:
+I (19) boot: ## Label            Usage          Type ST Offset   Length
+I (20) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (21) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (22) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (23) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (24) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (25) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (26) boot: End of partition table
+I (27) esp_image: segment 0: paddr=00020020 vaddr=400e0020 size=3d6c4h (251588) map
+I (61) esp_image: segment 1: paddr=0005d6ec vaddr=30100000 size=00090h (   144) load
+I (62) esp_image: segment 2: paddr=0005d784 vaddr=4ff00000 size=02894h ( 10388) load
+I (66) esp_image: segment 3: paddr=00060020 vaddr=40000020 size=d6c98h (879768) map
+I (176) esp_image: segment 4: paddr=00136cc0 vaddr=4ff02894 size=16514h ( 91412) load
+I (191) esp_image: segment 5: paddr=0014d1dc vaddr=4ff18e00 size=03a10h ( 14864) load
+I (195) esp_image: segment 6: paddr=00150bf4 vaddr=50108080 size=00004h (     4) load
+I (201) boot: Loaded app from partition at offset 0x20000
+I (202) boot: Disabling RNG early entropy source...
+I (206) hex_psram: vendor id    : 0x0d (AP)
+I (206) hex_psram: Latency      : 0x01 (Fixed)
+I (207) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (208) hex_psram: dev id       : 0x03 (generation 4)
+I (209) hex_psram: density      : 0x07 (256 Mbit)
+I (210) hex_psram: good-die     : 0x06 (Pass)
+I (211) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (212) hex_psram: BurstType    : 0x00 ( Wrap)
+I (213) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (214) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (215) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (216) hex_psram: DriveStrength: 0x00 (1/1)
+I (217) MSPI Timing: Enter psram timing tuning
+I (386) esp_psram: Found 32MB PSRAM device
+I (386) esp_psram: Speed: 200MHz
+I (387) hex_psram: psram CS IO is dedicated
+I (387) cpu_start: Multicore app
+I (1295) esp_psram: SPI SRAM memory test OK
+I (1305) cpu_start: Pro cpu start user code
+I (1305) cpu_start: cpu freq: 360000000 Hz
+I (1306) app_init: Application information:
+I (1306) app_init: Project name:     vdp
+I (1307) app_init: App version:      acf9ded
+I (1307) app_init: Compile time:     Aug 31 2026 20:21:00
+I (1308) app_init: ELF file SHA256:  693377109...
+I (1308) app_init: ESP-IDF:          5.5.5
+I (1308) efuse_init: Min chip rev:     v1.0
+I (1309) efuse_init: Max chip rev:     v1.99 
+I (1310) efuse_init: Chip rev:         v1.3
+I (1310) heap_init: Initializing. RAM available for dynamic allocation:
+I (1311) heap_init: At 4FF24680 len 00016940 (90 KiB): RETENT_RAM
+I (1312) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1313) heap_init: At 4FF40000 len 00060000 (384 KiB): RAM
+I (1313) heap_init: At 50108084 len 00007F7C (31 KiB): RTCRAM
+I (1314) heap_init: At 30100090 len 00001F70 (7 KiB): SPM
+I (1314) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1315) spi_flash: detected chip: generic
+I (1316) spi_flash: flash io: qio
+I (1317) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1318) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1319) esp_core_dump_flash: Init core dump to flash
+I (1319) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1320) main_task: Started on CPU0
+I (1320) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1321) main_task: Calling app_main()
+I (1326) main_task: Returned from app_main()
+I (1327) extender_watchdog: retained VDP IDLE watchdog subscriptions disabled
+I (1727) extender_identity: source_identity=extender-vdp-v0.2.0
+I (1727) extender_identity: build_id=extender-vdp-v0.2.0-b2026-09-01-00-20-07Z
+I (1728) extender_identity: artifact_status=candidate
+I (1728) extender_boot: retained VDP setup starting
+I (1747) extender_forward: r01 receiver started D=22,12,23,11,32,10,33,9 CLK=14 VALID_N=13 READY_N=20 return=discard-only
+I (1791) esp_eth.netif.netif_glue: <redacted-device-mac>
+I (1791) esp_eth.netif.netif_glue: ethernet attached to netif
+I (3843) extender_net: wired service starting with DHCP
+I (3870) extender_net: Ethernet interface started
+I (3871) extender_net: Ethernet link connected
+I (5470) esp_netif_handlers: eth0 ip: <redacted-private-ip>, mask: <redacted-private-netmask>, gw: <redacted-private-gateway>
+I (5471) extender_net: DHCP ip=<redacted-private-ip> netmask=<redacted-private-netmask> gateway=<redacted-private-gateway> dns=<redacted-private-dns>
+I (5473) extender_net: HTTP browser service ready
+I (13843) extender_snapshot: enabled=1 alloc_fail=0 cadence=660 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=60 no_new=0
+I (13844) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (13845) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (13845) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480
+I (23846) extender_snapshot: enabled=1 alloc_fail=0 cadence=1210 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=110 no_new=0
+I (23847) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (23848) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (23848) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480
+I (33849) extender_snapshot: enabled=1 alloc_fail=0 cadence=1760 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=160 no_new=0
+I (33850) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (33851) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (33851) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480
+I (43870) extender_snapshot: enabled=1 alloc_fail=0 cadence=2310 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=210 no_new=0
+I (43871) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (43872) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (43872) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480
+I (53872) extender_snapshot: enabled=1 alloc_fail=0 cadence=2866 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=261 no_new=0
+I (53873) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (53874) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (53874) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480
+I (63875) extender_snapshot: enabled=1 alloc_fail=0 cadence=3417 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=311 no_new=0
+I (63876) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (63876) extender_provider: acquired=0 no_new=0 invalid=0 sent=0 failed=0 disconnected=0
+I (63877) extender_heap: free_8bit=26719839 minimum_8bit=26682772 free_psram=26317480 minimum_psram=26317480

@@ -122,3 +122,22 @@ making the stock machine dependent on Extender.
 4. The product/version commitment is explicit.
 5. Any implementation is split into separately reviewed firmware, hardware,
    and qualification tasks.
+
+## Accepted REMED-002 ownership correction
+
+[REMED-002](REMED-002.md) accepts `INTEGRITY-AUDIT-F010` and preserves
+LINK-001 as a research and architecture-comparison task. Detailed evidence
+remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] Measure and compare candidate links only within the research boundary
+   above; do not absorb REMOTE-001 endpoint implementation, wiring, firmware,
+   protocol, or qualification work.
+2. [ ] Return use-case conclusions and candidate tradeoffs to REMOTE-001 and
+   the Author with explicit prerequisites and downstream task splits.
+3. [ ] If a link is accepted, require separately approved processor-firmware,
+   hardware, protocol, and qualification owners before any production artifact
+   changes.
+
+REMOTE-001 owns remote use cases, sessions, authorization, and product
+semantics. This correction selects no bus and changes no Rev 1 boundary.

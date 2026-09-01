@@ -1,0 +1,5 @@
+http_status=200
+p4_usb_identity=matched
+logic_analyzer=matched
+sample_rate_24mhz=supported
+

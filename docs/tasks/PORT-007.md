@@ -69,3 +69,20 @@ classic-ESP32 SDSPI/SPIFFS backend.
   identities under `docs/versions/README.md` before qualified hardware runs.
 - Review the mounted-card format and destructive-operation policy with the
   Author before implementing formatting or recovery that can alter media.
+
+## Accepted REMED-002 dependency
+
+[REMED-002](REMED-002.md) assigns PORT-007 the storage-consumer portion of
+`INTEGRITY-AUDIT-F021`. Before freezing an SDMMC pin or internal-LDO selection:
+
+1. [ ] Consume the existing fixed-function SD1 pin audit and cite its exact
+   maintained hardware authority instead of rederiving the same board facts.
+2. [ ] Resolve any conflict between SD1, Ethernet, USB, MIPI, user controls,
+   Extender transport roles, and predecessor-specific hardware-object entries
+   through HW-001 or the future hardware-object promotion owner.
+3. [ ] Require revision applicability on any hardware-object record consumed
+   as board-resource authority.
+
+HW-001 owns current r02 construction mapping; SETUP-006 retains historical
+design provenance. The audit evidence remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).

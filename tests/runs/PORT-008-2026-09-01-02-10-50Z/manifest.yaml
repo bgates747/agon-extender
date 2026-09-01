@@ -1,0 +1,133 @@
+schema_version: 1
+
+run:
+  run_id: PORT-008-2026-09-01-02-10-50Z
+  task_id: PORT-008
+  started_at: 2026-09-01T02:10:50Z
+  ended_at: 2026-09-01T02:11:13Z
+  outcome: fail
+  summary: >-
+    EMOS reached the corrected physical sender, but its unqualified adjacent
+    CLOCK-high/CLOCK-low cadence did not complete the four-byte General Poll.
+    MOS reported an autoexec line-1 error and Internal error.
+
+procedure:
+  artifact_id: port-008-forward-qualification
+  identity: port-008-forward-qualification-r01
+  deviations:
+    - >-
+      The Author authorized dirty-source, visibly UNVERSIONED-DO-NOT-DEPLOY
+      corrective artifacts for a bounded hardware review instead of assigning
+      new semantic candidate identities before the first defects were closed.
+    - >-
+      A separately captured controlled P4 startup and HTTP 200 preflight
+      established readiness. The no-reset serial observer held during this run
+      captured zero bytes and supplies no runtime diagnostic evidence.
+
+artifacts_under_test:
+  - artifact_id: extender-vdp
+    identity: extender-vdp-v0.2.0
+    build_id: UNVERSIONED-DO-NOT-DEPLOY
+    variant: p4-forward-vdp-corrective
+    factory_sha256: 37f1dd65d76666d0fa46a05defb47544a93dc31bd9d31ef0283cf692bde2c967
+  - artifact_id: agon-emos
+    identity: agon-emos-v0.1.0
+    build_id: UNVERSIONED-DO-NOT-DEPLOY
+    variant: port008-forward-adl-corrective
+    sha256: 7984048405e327e7e3fc6e1dc227d697b0bc7a032bcbeff631b4ecead48275c1
+  - artifact_id: agon-transport-fixture
+    identity: agon-transport-fixture-r01
+    build_id: null
+    variant: light2
+    sha256: 3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a
+
+source:
+  agon_extender_commit: 45c45d5ef02285a737969a11b29dcc011aa4ef9b
+  agon_extender_tracked_dirty: true
+  agon_emos_commit: 0e24b06abdb322fdb4e681a21242ccfebfc8ea65
+  agon_emos_tracked_dirty: true
+  mos_agondev_commit: 29cd336f472164156de330cf77c69a4eda450527
+
+connections:
+  harness: light2-harness-r01
+  breadboard: light2-extender-solderless-assembly-r01
+  probe_map: la03-p4-probe-fixture-r01
+
+instrumentation:
+  role: digital-logic-analyzer
+  model: Saleae Logic-compatible eight-channel analyzer
+  software: sigrok-cli 0.5.2
+  sample_rate_hz: 8000000
+  samples: 4000000
+  pretrigger_percent: 10
+  trigger: D3 falling
+
+observations:
+  - requirement: p4-readiness
+    observed: Corrected receiver startup and plain HTTP status 200 before run start.
+    result: pass
+  - requirement: mode-request
+    observed: MOS reported autoexec line 1 error followed by Internal error.
+    result: fail
+  - requirement: general-poll-clocks
+    observed: Three sampled falling edges while the first VALID_N window was low.
+    result: fail
+  - requirement: ready-release
+    observed: READY_N remained low at the 500 ms capture boundary.
+    result: fail
+  - requirement: direction-ownership
+    observed: >-
+      FWD_OE_N remained selected low; REV_OE_N was low for one 125 ns sample,
+      with no recurrence of the first run's long overlap.
+    result: fail
+  - requirement: visible-fixture
+    observed: P8VDU.BIN did not execute because autoexec stopped at line 1.
+    result: not-reached
+
+evidence:
+  - filename: logic.sr
+    sha256: 1dd3ce98cd29826f9ecb06d27d22ec24ebb143e1f5cda9e6b9b2e83e6dffe090
+  - filename: analysis.json
+    sha256: 4edb2b62d7b02c86f4e41d90e83bf003b3aa498fb7e137f2c8b5203807274c99
+  - filename: analyze-forward-capture-audit-copy.py
+    sha256: 64d8d9f08eff0dca2bb27e48ab24b61c9a96ae225c37b7d38d4935da27cbaf7e
+    description: Exact known-limited F014 analyzer bytes that produced analysis.json.
+  - filename: diagnostic-summary.txt
+    sha256: 24a8822a7cb7ed20422bf0822848410bdf68d9c22710f93fe5cd6198a465c894
+    description: Root cause, validator gap, and bounded pending correction.
+  - filename: preflight.log
+    sha256: 4b152f35561787a8b6511518a2cf87b47b3e34cee8fe5bb3d66a8365987818e9
+    description: Sanitized P4, analyzer, and physical preflight facts.
+  - filename: correction-2026-09-01-evidence-hygiene.md
+    sha256: e494aac3a014cd8de01866ba6f1fd91c9dd39739a6a27e3d4ad76e381bfd299e
+    description: Dated correction preserving exact analyzer bytes.
+
+corrections:
+  - recorded_at: 2026-09-01T13:14:05-04:00
+    authority: Author-authorized evidence hygiene
+    note: >-
+      Preserved the exact known-limited analyzer bytes and removed only
+      undeclared acquisition scratch without changing the failed run.
+    detail: correction-2026-09-01-evidence-hygiene.md
+
+pending_correction:
+  actor: EMOS eZ80 GPIO sender
+  disposition: built-not-installed
+  sha256: 8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b
+  change: >-
+    Mirror the physically qualified PRX-06 pre-loop VALID_N assertion and
+    falling/rising clock cadence; enforce it in source and linked-image checks.
+
+claim_boundary:
+  established:
+    - The corrected ADL storage permits execution to reach the physical byte loop.
+    - P4 direction ownership prevents the first run's long enable overlap.
+    - The deployed sender cadence differs materially from the proven PRX-06 loop.
+  failed:
+    - General Poll record completion
+    - READY_N release
+    - Exclusive Extended route commitment
+    - Visible fixture execution
+  not_claimed:
+    - Exact unsampled physical pulse count or width below 125 ns
+    - Browser frame, reverse UART, sysvar, r02/V1, or broad compatibility behavior

@@ -1,0 +1,48 @@
+PORT-008 third forward-run and Legacy-startup diagnostic summary
+
+Run PORT-008-2026-09-01-02-28-49Z used the unversioned EMOS image containing
+both the corrected three-byte ADL length state and the physically qualified
+PRX-06 clock cadence. The P4 returned HTTP status 200 before the run. The
+Author cold-booted the Agon, and MOS again reported an error executing
+autoexec.txt line 1 followed by Internal error. Line 1 was EMOS MODE EXTENDED;
+the route was not committed and P8VDU.BIN did not execute.
+
+The 8 MHz, 500 ms capture contains no sampled CLOCK edge. It contains two
+incomplete VALID_N low spans of 0.375 us and 0.125 us. READY_N remained low
+throughout. FWD_OE_N remained low and REV_OE_N remained high, so the first
+run's direction-enable overlap did not recur. The result does not identify
+whether the missing CLOCK is caused by eZ80 output state, r01 wiring or
+conditioning, P4-side observation, probe attachment, or another physical
+interaction.
+
+The browser page's Connect control had not been pressed. That prevents an EVF1
+frame from being delivered to the browser because Connect opens the WebSocket
+and supplies frame credit. It cannot account for the line-1 failure: the P4
+parallel receiver and retained VDU processor start before the browser service,
+and the EMOS mode transaction failed before P8VDU.BIN could emit visible VDU.
+
+A source audit does not show EMOS silently interrupting or rerouting ordinary
+Legacy startup. MOS initializes UART0, synchronizes with the stock VDP, reads
+display state, prints its boot banner, mounts the SD card, and initializes
+sysvars before calling emos_init. emos_init selects Legacy, onboard VDP route
+zero, and inactive EDU state. It does not acquire the parallel GPIO. Only the
+explicit EMOS MODE EXTENDED command calls the PORT-008 prepare path. A failed
+prepare restores the saved Port C and Port D register state and does not
+publish the new VDU route.
+
+The audit did find a distinct P4 pre-activation defect. The P4 starts the
+forward receiver during its own setup and asserts open-drain READY_N as soon as
+PARLIO is armed. This occurs before EMOS requests an active Extender mode, and
+the capture confirms READY_N low throughout. The reverse P4-to-Agon driver
+remained disabled, so the capture contains no direction contention or evidence
+that ordinary VDU was rerouted. Nevertheless, driving READY_N in Legacy mode
+contradicts the normative requirement that Extender be electrically and
+logically indistinguishable from absence.
+
+No replacement handshake is approved by this record. Before another physical
+retry, the Author must review a bounded activation design that keeps every
+P4-to-Agon signal released in Legacy, admits only an explicit EMOS activation
+exchange, and cannot commit the VDU route until both actors confirm readiness.
+The missing CLOCK cause remains a separate diagnostic requirement. A future
+run expecting visible browser output must also establish the WebSocket
+connection before the Agon cold boot.

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "analyzer": "port-008-forward-capture-v1",
+  "capture": {
+    "filename": "logic.sr",
+    "sha256": "1dd3ce98cd29826f9ecb06d27d22ec24ebb143e1f5cda9e6b9b2e83e6dffe090",
+    "sample_rate_hz": 8000000,
+    "sample_count": 4000000,
+    "duration_ms": 500.0
+  },
+  "probe_map": {
+    "identity": "la03-p4-probe-fixture-r01",
+    "signals": {
+      "parallel_d4": "D0",
+      "parallel_d1": "D1",
+      "parallel_d0": "D2",
+      "valid_n": "D3",
+      "rev_oe_n": "D4",
+      "clock": "D5",
+      "ready_n": "D6",
+      "fwd_oe_n": "D7"
+    }
+  },
+  "result": "fail",
+  "findings": [
+    {
+      "severity": "error",
+      "code": "VALID_WINDOW_INCOMPLETE",
+      "message": "The capture does not contain exactly one bounded VALID_N window."
+    },
+    {
+      "severity": "error",
+      "code": "GENERAL_POLL_CLOCK_EVIDENCE_MISSING",
+      "message": "The four-byte preparation poll requires four sampled falling CLOCK edges while VALID_N is active; observed 3. This is an evidence failure, not proof that sub-sample pulses did not occur."
+    },
+    {
+      "severity": "error",
+      "code": "READY_NOT_RELEASED",
+      "message": "P4 READY_N remained asserted at the capture boundary."
+    },
+    {
+      "severity": "error",
+      "code": "FORBIDDEN_DIRECTION_OVERLAP",
+      "message": "FWD_OE_N and REV_OE_N were simultaneously active-low for 1 sampled cycles."
+    }
+  ],
+  "metrics": {
+    "lines": {
+      "parallel_d4": {
+        "probe": "D0",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 8
+      },
+      "parallel_d1": {
+        "probe": "D1",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 76
+      },
+      "parallel_d0": {
+        "probe": "D2",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 44
+      },
+      "valid_n": {
+        "probe": "D3",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 44
+      },
+      "rev_oe_n": {
+        "probe": "D4",
+        "initial": 1,
+        "final": 1,
+        "edge_count": 2
+      },
+      "clock": {
+        "probe": "D5",
+        "initial": 0,
+        "final": 0,
+        "edge_count": 6
+      },
+      "ready_n": {
+        "probe": "D6",
+        "initial": 0,
+        "final": 0,
+        "edge_count": 2
+      },
+      "fwd_oe_n": {
+        "probe": "D7",
+        "initial": 0,
+        "final": 0,
+        "edge_count": 0
+      }
+    },
+    "valid_low_spans": [
+      {
+        "start_sample": 400000,
+        "end_sample_exclusive": 400003,
+        "samples": 3,
+        "duration_us": 0.375
+      },
+      {
+        "start_sample": 2362637,
+        "end_sample_exclusive": 2362638,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 2680206,
+        "end_sample_exclusive": 2680207,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 2686558,
+        "end_sample_exclusive": 2686559,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3037498,
+        "end_sample_exclusive": 3037499,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3307445,
+        "end_sample_exclusive": 3307451,
+        "samples": 6,
+        "duration_us": 0.75
+      },
+      {
+        "start_sample": 3307472,
+        "end_sample_exclusive": 3307473,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3307474,
+        "end_sample_exclusive": 3307481,
+        "samples": 7,
+        "duration_us": 0.875
+      },
+      {
+        "start_sample": 3314003,
+        "end_sample_exclusive": 3314011,
+        "samples": 8,
+        "duration_us": 1.0
+      },
+      {
+        "start_sample": 3314024,
+        "end_sample_exclusive": 3314025,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3314053,
+        "end_sample_exclusive": 3314061,
+        "samples": 8,
+        "duration_us": 1.0
+      },
+      {
+        "start_sample": 3318872,
+        "end_sample_exclusive": 3318873,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3318874,
+        "end_sample_exclusive": 3318875,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3330264,
+        "end_sample_exclusive": 3330265,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3334110,
+        "end_sample_exclusive": 3334111,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3437555,
+        "end_sample_exclusive": 3437556,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3437620,
+        "end_sample_exclusive": 3437621,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3449978,
+        "end_sample_exclusive": 3449979,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3481183,
+        "end_sample_exclusive": 3481184,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3489274,
+        "end_sample_exclusive": 3489275,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3502182,
+        "end_sample_exclusive": 3502183,
+        "samples": 1,
+        "duration_us": 0.125
+      },
+      {
+        "start_sample": 3502422,
+        "end_sample_exclusive": 3502423,
+        "samples": 1,
+        "duration_us": 0.125
+      }
+    ],
+    "ready_low_spans": [
+      {
+        "start_sample": 0,
+        "end_sample_exclusive": 3314002,
+        "samples": 3314002,
+        "duration_us": 414250.25
+      },
+      {
+        "start_sample": 3314003,
+        "end_sample_exclusive": 4000000,
+        "samples": 685997,
+        "duration_us": 85749.625
+      }
+    ],
+    "fwd_oe_low_spans": [
+      {
+        "start_sample": 0,
+        "end_sample_exclusive": 4000000,
+        "samples": 4000000,
+        "duration_us": 500000.0
+      }
+    ],
+    "rev_oe_low_spans": [
+      {
+        "start_sample": 3307472,
+        "end_sample_exclusive": 3307473,
+        "samples": 1,
+        "duration_us": 0.125
+      }
+    ],
+    "direction_overlap_low_spans": [
+      {
+        "start_sample": 3307472,
+        "end_sample_exclusive": 3307473,
+        "samples": 1,
+        "duration_us": 0.125
+      }
+    ],
+    "clock_falling_edges": 3,
+    "clock_falling_edges_while_valid": 3
+  }
+}

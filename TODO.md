@@ -26,6 +26,11 @@ item is removed.
   - Finished: --
   - Details: [REMED-001](docs/tasks/REMED-001.md)
 
+- [ ] **REMED-002 — Remediate open-task implementation and evidence-integrity findings**
+  - Started: 2026-09-01 12:52 EDT
+  - Finished: --
+  - Details: [REMED-002](docs/tasks/REMED-002.md)
+
 ## Setup
 
 - [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**

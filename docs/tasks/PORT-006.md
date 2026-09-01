@@ -196,3 +196,31 @@ of PORT-006. The Author accepted the joint Phase F plan on 2026-08-27.
    initial browser-video path is returned and PORT-006 pauses here. Item 6 and
    the later Wi-Fi, audio, OTA, management, authentication, discovery, and
    broader network tranches remain open.
+
+## Accepted REMED-002 findings
+
+The Author accepted the PORT-006 dispositions in
+[REMED-002](REMED-002.md). The detailed evidence and upstream/local provenance
+remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] **F003:** Prevent a positive short TCP write from being accepted as a
+   complete WebSocket frame. Use a defensive adapter or a pinned, re-audited
+   upstream correction; preserve the immutable snapshot lease until the entire
+   declared frame is transmitted or the connection is failed. Fault-inject
+   short writes, congestion, disconnect, and retry. PORT-003 owns the
+   browser-frame regression half of this split.
+2. [ ] **F012:** Retain the live ESP-IDF HTTP server handle and callback
+   ownership across failed stop and URI-registration rollback paths. Define
+   retry and destruction behavior and fault-inject every partial-start and
+   failed-stop path, including prevention of duplicate server instances and
+   callbacks into a destroyed service.
+3. [ ] **R003 dependency:** Before REMOTE-001 enables remote input or commands,
+   define the authentication, Origin, cross-site WebSocket, privileged-service
+   exposure, session-presence, and revocation contract. Do not reinterpret the
+   accepted trusted-bench-LAN browser boundary as a remote-control security
+   claim.
+
+An upstream ESP-IDF origin for F003 or documentation inconsistency for F012
+does not defer the local product containment. Any upstream-report task split is
+pending REMED-002-D002.

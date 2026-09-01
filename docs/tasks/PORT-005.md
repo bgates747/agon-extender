@@ -68,3 +68,21 @@ forwards selected events explicitly to Extender.
   `/autoexec.txt` until the Author clears it.
 - Define the EDU injection command format and acceptance fixtures with the
   Author before coding.
+
+## Retained REMED-002 risk
+
+[REMED-002](REMED-002.md) retains `INTEGRITY-AUDIT-R002` as a prospective
+PORT-005 design risk, not a current defect. The upstream
+`thread_safe_variant_deque` coalesces state notifications by event type and
+later packet generation reads mutable VDP state; that behavior is intentional
+for its original use.
+
+1. [ ] Before selecting an injection queue, add fixtures that reject collapsed,
+   reordered, or state-substituted key-down, key-up, modifier, mouse-button,
+   movement, wheel, and repeat transitions.
+2. [ ] Reuse the retained queue only if an explicit ordered-event contract and
+   those fixtures prove it suitable; otherwise give injected input a distinct
+   ordered representation.
+
+The supporting analysis remains in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).

@@ -1,0 +1,240 @@
+diff --git a/docs/tasks/PORT-008/forward-r01/scripts/validate-forward-build.py b/docs/tasks/PORT-008/forward-r01/scripts/validate-forward-build.py
+index 6cac9c6..b325a37 100644
+--- a/docs/tasks/PORT-008/forward-r01/scripts/validate-forward-build.py
++++ b/docs/tasks/PORT-008/forward-r01/scripts/validate-forward-build.py
+@@ -27,6 +27,80 @@ PHASE_F_VALIDATOR = (
+ ENVIRONMENT = "p4-forward-vdp"
+ 
+ 
++def extract_function(source: str, signature: str) -> str:
++    start = source.find(signature)
++    if start < 0:
++        raise ValueError(f"forward source lacks function {signature}")
++    opening = source.find("{", start)
++    if opening < 0:
++        raise ValueError(f"forward source lacks body for {signature}")
++    depth = 0
++    for index in range(opening, len(source)):
++        if source[index] == "{":
++            depth += 1
++        elif source[index] == "}":
++            depth -= 1
++            if depth == 0:
++                return source[start : index + 1]
++    raise ValueError(f"forward source has unterminated body for {signature}")
++
++
++def require_ordered(source: str, fragments: tuple[str, ...], context: str) -> None:
++    cursor = 0
++    for fragment in fragments:
++        position = source.find(fragment, cursor)
++        if position < 0:
++            raise ValueError(f"{context}: missing or misordered {fragment!r}")
++        cursor = position + len(fragment)
++
++
++def validate_direction_enable_source() -> None:
++    source_path = (
++        ROOT / "vdp/video/extender/transport/forward_parallel_stream.cpp"
++    )
++    source = source_path.read_text(encoding="utf-8")
++    for fragment in (
++        "kForwardEnablePin = GPIO_NUM_15",
++        "kReverseEnablePin = GPIO_NUM_21",
++    ):
++        if fragment not in source:
++            raise ValueError(f"forward direction ownership missing {fragment!r}")
++
++    require_ordered(
++        extract_function(source, "ForwardParallelStream::releaseDirections()"),
++        (
++            "gpio_set_level(kForwardEnablePin, 1)",
++            "gpio_set_level(kReverseEnablePin, 1)",
++        ),
++        "fail-safe direction release",
++    )
++    require_ordered(
++        extract_function(
++            source, "ForwardParallelStream::selectForwardDirection()"
++        ),
++        (
++            "gpio_set_level(kReverseEnablePin, 1)",
++            "gpio_set_level(kForwardEnablePin, 0)",
++        ),
++        "break-before-make forward selection",
++    )
++    require_ordered(
++        extract_function(source, "ForwardParallelStream::configureHardware()"),
++        ("configureDirectionControl()", "parlio_rx_unit_config_t"),
++        "direction control before PARLIO setup",
++    )
++    require_ordered(
++        extract_function(source, "ForwardParallelStream::begin()"),
++        ("configureHardware()", "selectForwardDirection()", "xTaskCreate("),
++        "forward startup lifecycle",
++    )
++    receiver = extract_function(source, "ForwardParallelStream::receiverTask()")
++    if receiver.count("releaseDirections()") < 2:
++        raise ValueError(
++            "receiver fatal paths must release direction enables before stopping"
++        )
++
++
+ def load_phase_f_validator() -> Any:
+     spec = importlib.util.spec_from_file_location(
+         "port003_phase_f_build_validator", PHASE_F_VALIDATOR
+@@ -88,6 +162,8 @@ def main() -> int:
+     parser.add_argument("--exclusions-output", type=Path, required=True)
+     args = parser.parse_args()
+ 
++    validate_direction_enable_source()
++
+     phase_f = load_phase_f_validator()
+     phase_f.ENVIRONMENT = ENVIRONMENT
+     phase_f.REQUIRED_SYMBOLS = dict(phase_f.REQUIRED_SYMBOLS)
+@@ -112,7 +188,8 @@ def main() -> int:
+     phase_f.REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS = [
+         *phase_f.REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS,
+         "r01 receiver started D=22,12,23,11,32,10,33,9 CLK=14",
+-        "VALID_N=13 READY_N=20 return=discard-only",
++        "VALID_N=13 READY_N=20 FWD_OE_N=15:low REV_OE_N=21:high",
++        "return=discard-only",
+     ]
+ 
+     delegated_argv = [
+diff --git a/vdp/video/extender/transport/forward_parallel_stream.cpp b/vdp/video/extender/transport/forward_parallel_stream.cpp
+index e335c3f..31f37b1 100644
+--- a/vdp/video/extender/transport/forward_parallel_stream.cpp
++++ b/vdp/video/extender/transport/forward_parallel_stream.cpp
+@@ -19,6 +19,8 @@ constexpr char kTag[] = "extender_forward";
+ constexpr gpio_num_t kReadyPin = GPIO_NUM_20;
+ constexpr gpio_num_t kClockPin = GPIO_NUM_14;
+ constexpr gpio_num_t kValidPin = GPIO_NUM_13;
++constexpr gpio_num_t kForwardEnablePin = GPIO_NUM_15;
++constexpr gpio_num_t kReverseEnablePin = GPIO_NUM_21;
+ constexpr gpio_num_t kDataPins[] = {
+     GPIO_NUM_22, GPIO_NUM_12, GPIO_NUM_23, GPIO_NUM_11,
+     GPIO_NUM_32, GPIO_NUM_10, GPIO_NUM_33, GPIO_NUM_9,
+@@ -46,7 +48,44 @@ bool ForwardParallelStream::releaseReady() {
+   return gpio_set_level(kReadyPin, 1) == ESP_OK;
+ }
+ 
++bool ForwardParallelStream::releaseDirections() {
++  // Both enables are active-low. Release the forward driver first, then the
++  // reverse driver, and attempt both writes even if one GPIO operation fails.
++  // The r01 wiring forbids both enables low under every software condition.
++  bool const forward_released =
++      gpio_set_level(kForwardEnablePin, 1) == ESP_OK;
++  bool const reverse_released =
++      gpio_set_level(kReverseEnablePin, 1) == ESP_OK;
++  return forward_released && reverse_released;
++}
++
++bool ForwardParallelStream::configureDirectionControl() {
++  // This source-level ownership was missing from the first physical candidate:
++  // GPIO15/GPIO21 were left to external electrical state, and the logic trace
++  // observed both active-low enables asserted. Preload both output latches to
++  // the fail-safe released state before changing either pin to an output.
++  if (!releaseDirections()) return false;
++  gpio_config_t const direction_config = {
++      .pin_bit_mask = (UINT64_C(1) << kForwardEnablePin) |
++                      (UINT64_C(1) << kReverseEnablePin),
++      .mode = GPIO_MODE_OUTPUT,
++      .pull_up_en = GPIO_PULLUP_DISABLE,
++      .pull_down_en = GPIO_PULLDOWN_DISABLE,
++      .intr_type = GPIO_INTR_DISABLE,
++  };
++  return gpio_config(&direction_config) == ESP_OK && releaseDirections();
++}
++
++bool ForwardParallelStream::selectForwardDirection() {
++  // Break before make: the reverse P4-to-Agon driver must be released before
++  // the forward Agon-to-P4 receiver path is enabled.
++  if (gpio_set_level(kReverseEnablePin, 1) != ESP_OK) return false;
++  return gpio_set_level(kForwardEnablePin, 0) == ESP_OK;
++}
++
+ bool ForwardParallelStream::configureHardware() {
++  if (!configureDirectionControl()) return false;
++
+   // Preload the released output latch before enabling open-drain output so
+   // boot cannot briefly advertise readiness before PARLIO DMA is armed.
+   if (gpio_set_level(kReadyPin, 1) != ESP_OK) return false;
+@@ -117,18 +156,30 @@ bool ForwardParallelStream::begin() {
+   stream_buffer_ = xStreamBufferCreate(kStreamCapacityBytes, 1);
+   if (stream_buffer_ == nullptr || !configureHardware()) {
+     (void)releaseReady();
+-    ESP_LOGE(kTag, "forward transport setup failed; READY_N released");
++    (void)releaseDirections();
++    ESP_LOGE(kTag,
++             "forward transport setup failed; READY_N and drivers released");
++    return false;
++  }
++  if (!selectForwardDirection()) {
++    (void)releaseReady();
++    (void)releaseDirections();
++    ESP_LOGE(kTag,
++             "forward direction selection failed; READY_N and drivers released");
+     return false;
+   }
+   if (xTaskCreate(receiverTaskEntry, "forwardRx", 4096, this, 4,
+                   &receiver_task_) != pdPASS) {
+     (void)releaseReady();
+-    ESP_LOGE(kTag, "forward receiver task creation failed; READY_N released");
++    (void)releaseDirections();
++    ESP_LOGE(kTag,
++             "forward receiver task creation failed; READY_N and drivers released");
+     return false;
+   }
+   ESP_LOGI(kTag,
+            "r01 receiver started D=22,12,23,11,32,10,33,9 CLK=14 "
+-           "VALID_N=13 READY_N=20 return=discard-only");
++           "VALID_N=13 READY_N=20 FWD_OE_N=15:low REV_OE_N=21:high "
++           "return=discard-only");
+   return true;
+ }
+ 
+@@ -162,11 +213,13 @@ void ForwardParallelStream::receiverTask() {
+     if (result != ESP_OK || !released || receive_state_.received == 0 ||
+         receive_state_.received > kMaximumRecordBytes) {
+       receive_failures_.fetch_add(1, std::memory_order_relaxed);
++      (void)releaseDirections();
+       ESP_LOGE(kTag, "receive failed error=%s bytes=%u released=%u",
+                esp_err_to_name(result),
+                static_cast<unsigned>(receive_state_.received),
+                static_cast<unsigned>(released));
+       vTaskDelete(nullptr);
++      return;
+     }
+ 
+     std::size_t const written = xStreamBufferSend(
+@@ -175,10 +228,13 @@ void ForwardParallelStream::receiverTask() {
+       // The pre-arm space gate and single producer make this unreachable. Stop
+       // instead of exposing a truncated VDU command to the retained parser.
+       receive_failures_.fetch_add(1, std::memory_order_relaxed);
++      (void)releaseReady();
++      (void)releaseDirections();
+       ESP_LOGE(kTag, "stream enqueue truncated expected=%u actual=%u",
+                static_cast<unsigned>(receive_state_.received),
+                static_cast<unsigned>(written));
+       vTaskDelete(nullptr);
++      return;
+     }
+     records_received_.fetch_add(1, std::memory_order_relaxed);
+     bytes_received_.fetch_add(written, std::memory_order_relaxed);
+diff --git a/vdp/video/extender/transport/forward_parallel_stream.hpp b/vdp/video/extender/transport/forward_parallel_stream.hpp
+index ec9114c..290f004 100644
+--- a/vdp/video/extender/transport/forward_parallel_stream.hpp
++++ b/vdp/video/extender/transport/forward_parallel_stream.hpp
+@@ -49,8 +49,11 @@ class ForwardParallelStream final : public Stream {
+                                     void *user_data);
+   static void receiverTaskEntry(void *parameter);
+   void receiverTask();
++  bool configureDirectionControl();
+   bool configureHardware();
++  bool releaseDirections();
+   bool releaseReady();
++  bool selectForwardDirection();
+ 
+   static constexpr std::size_t kMaximumRecordBytes = 4096;
+   static constexpr std::size_t kStreamCapacityBytes = 8192;

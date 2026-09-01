@@ -163,3 +163,32 @@ accepted bus or wiring design.
 2. No direct-link or remote-control code is authorized by creating this task.
 3. The present workaround remains cold-boot `/autoexec.txt`; REMOTE-001 does
    not gate PORT-008's forward-only visible-command prototype.
+
+## Accepted REMED-002 findings and retained risk
+
+[REMED-002](REMED-002.md) assigns REMOTE-001 the product-semantics portions of
+F010 and F019 and retains R003 in this task. Detailed evidence and provenance
+remain in
+[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+1. [ ] **F010:** Keep remote use cases, session semantics, authorization, and
+   product requirements here. LINK-001 may research candidate direct links but
+   owns no firmware, protocol, pins, circuit, or product commitment. If the
+   Author accepts implementation, create separately approved endpoint,
+   hardware, and qualification tasks before changing artifacts.
+2. [ ] **F019:** Preserve authenticated remote-origin provenance until EMOS
+   authorizes the requested operation. Do not convert privileged remote intent
+   into an indistinguishable ordinary keyboard packet unless the Author first
+   accepts a narrowly constrained terminal authority that cannot escape its
+   session policy.
+3. [ ] Define whether remote terminal input or a structured EMOS operation API
+   owns shell commands, reset, flash/update, mode transition, filesystem, and
+   other privileged requests; name the authenticating, authorizing, executing,
+   observing, and revoking actor for each class.
+4. [ ] **R003:** Before enabling browser input or commands beyond the accepted
+   trusted bench LAN, consume PORT-006's authentication, Origin, cross-site
+   WebSocket, exposure, session-presence, and revocation contract and add
+   negative security fixtures.
+
+No link, browser-input path, EMOS service, or network exposure is authorized by
+this intake.

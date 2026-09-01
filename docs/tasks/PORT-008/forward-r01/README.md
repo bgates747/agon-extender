@@ -30,10 +30,17 @@ physical EMOS-to-EDP forward test. The task scope and decisions remain in
 
 ## Generated outputs
 
-Generated firmware, fixture binaries, closure evidence, media trees, and run
-records are ignored build products. Scripts in `scripts/` must reject dirty or
-mismatched source worktrees, rejected identity markers, changed fixture bytes,
-and an existing destination rather than silently overwriting evidence.
+Generated firmware, fixture binaries, closure evidence, and media trees are
+ignored build products. Completed run manifests and bounded evidence belong in
+tracked `tests/runs/<RUN-ID>/` directories. Scripts in `scripts/` must reject
+dirty or mismatched source worktrees, rejected identity markers, changed
+fixture bytes, and an existing destination rather than silently overwriting
+evidence.
+
+The task-local [post-run source snapshots](evidence/README.md) preserve the
+exact current dirty deltas from `agon-extender` and `agon-emos` as historical
+patch evidence. They are not maintained source, clean run provenance, or
+permission to build, deploy, or promote the prototype.
 
 The P4 validator deliberately extends the already-qualified PORT-003 Phase-F
 closure validator. It changes the environment-specific expectation from the
@@ -54,6 +61,28 @@ The task-local scripts have these bounded roles:
 4. `capture-visible-frame.py` requests one established EVF1 browser frame,
    preserves its raw RGB888 payload, and compares it to the frozen exact hash.
    It neither sends VDU/EDU traffic nor records the supplied private endpoint.
+5. `analyze-forward-capture.py` parses the Sigrok archive with the committed
+   LA-03 mapping and applies only this procedure's forward-record, READY,
+   CLOCK, and direction-ownership checks. It deliberately does not apply the
+   predecessor bidirectional fixed-frame semantics. Its no-edge findings are
+   bounded to the capture sample rate.
+
+The browser's HTML load and its video connection are separate gates. A plain
+HTTP 200 proves only that the page is served. Pressing Connect opens the
+WebSocket and supplies frame credit. It does not arm the physical parallel
+receiver, but it must occur before an Agon run whenever visible browser output
+is part of the expected evidence.
+
+## Normal wiring and probe reference
+
+`normal-forward-wiring-and-probes.svg` is the task-local human reference for
+the normal r01 forward wiring and canonical LA-03 probe placement.
+It is generated from the retained `light2-harness-r01` legacy wiring drawing by
+`scripts/generate-normal-forward-wiring-and-probes.py`, while its probe markers
+follow `la03-p4-probe-fixture-r01`. The drawing shows the ordinary signal path,
+including Agon PD4 to P4 GPIO20 for `READY_N`; like its source drawing, it does
+not depict the intervening logic device and therefore does not replace the
+electrical authority for that circuit.
 
 ## Media stages
 
