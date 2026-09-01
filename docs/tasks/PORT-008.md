@@ -4,9 +4,9 @@
 
 - Status: In progress — r01 P4 and corrected fixed-purpose EMOS forward path
   implemented and non-physically qualified; clean identified candidate packages
-  prepared; exact SD card preflighted and Stage A media staged; physical
-  inspection, firmware installation authorization/execution, and forward-only
-  physical evidence pending
+  prepared; exact identified EMOS installed and Stage B media staged; physical
+  wiring/probe confirmation, forward-run authorization/execution, and
+  forward-only physical evidence pending
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -519,6 +519,36 @@ promoted into the product architecture merely because it runs.
    `/emos-installed.bin` has the candidate hash and `/emos.bin` is absent.
    Stage B remains unstaged, no forward-transfer run ID has been assigned, and
    no forward-path claim is made.
+
+#### 2026-09-01 UTC — Stage B media staging
+
+1. **Post-install verification.** With the card returned to the host,
+   `/emos.bin` was absent and `/emos-installed.bin` was exactly 114,082 bytes at
+   candidate SHA-256
+   `8c356f95cb901edcf675e8add5567316a324e5c43559f3034c54218f3998f231`.
+   The 69-byte Stage A autoexec also retained its exact hash. This completes
+   the host-side Stage A verification deferred above.
+2. **Recoverable transition.** The post-install EMOS and Stage A autoexec were
+   copied into the ignored timestamped media backup and verified. The Stage A
+   autoexec also remains on-card as
+   `/autoexec.stage-a-port008-20260901.txt` rather than being overwritten.
+3. **Exact Stage B state.** Root `/P8VDU.BIN` is the frozen 118-byte fixture at
+   SHA-256
+   `3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a`.
+   Root `/autoexec.txt` is the exact 31-byte CRLF fixture invocation at
+   SHA-256
+   `69d5b80f46513cf15041dff2bbf19c2993726bf5754db96bf8ac7f71a673c18d`:
+
+   ```text
+   EMOS MODE EXTENDED
+   P8VDU.BIN
+   ```
+
+4. **Verification and stop.** Both Stage B files were copied through temporary
+   card-side names, hash-checked before final rename, checked again after
+   filesystem sync, and safely unmounted. No board was booted, no transport
+   traffic occurred, and no physical run ID was assigned. The Author's r01
+   wiring and probe confirmation remains the next gate.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
