@@ -1,3 +1,8 @@
+/*
+ * REJECTED/SUPERSEDED PORT-008 r01 predecessor implementation.
+ * The source remains only to interpret historical evidence; its PlatformIO
+ * source selection rejects new builds. Do not reuse it as a product path.
+ */
 #include "extender/transport/forward_parallel_stream.hpp"
 
 #include <cstring>
@@ -19,6 +24,8 @@ constexpr char kTag[] = "extender_forward";
 constexpr gpio_num_t kReadyPin = GPIO_NUM_20;
 constexpr gpio_num_t kClockPin = GPIO_NUM_14;
 constexpr gpio_num_t kValidPin = GPIO_NUM_13;
+constexpr gpio_num_t kForwardEnablePin = GPIO_NUM_15;
+constexpr gpio_num_t kReverseEnablePin = GPIO_NUM_21;
 constexpr gpio_num_t kDataPins[] = {
     GPIO_NUM_22, GPIO_NUM_12, GPIO_NUM_23, GPIO_NUM_11,
     GPIO_NUM_32, GPIO_NUM_10, GPIO_NUM_33, GPIO_NUM_9,
@@ -46,7 +53,44 @@ bool ForwardParallelStream::releaseReady() {
   return gpio_set_level(kReadyPin, 1) == ESP_OK;
 }
 
+bool ForwardParallelStream::releaseDirections() {
+  // Both enables are active-low. Release the forward driver first, then the
+  // reverse driver, and attempt both writes even if one GPIO operation fails.
+  // The r01 wiring forbids both enables low under every software condition.
+  bool const forward_released =
+      gpio_set_level(kForwardEnablePin, 1) == ESP_OK;
+  bool const reverse_released =
+      gpio_set_level(kReverseEnablePin, 1) == ESP_OK;
+  return forward_released && reverse_released;
+}
+
+bool ForwardParallelStream::configureDirectionControl() {
+  // This source-level ownership was missing from the first physical candidate:
+  // GPIO15/GPIO21 were left to external electrical state, and the logic trace
+  // observed both active-low enables asserted. Preload both output latches to
+  // the fail-safe released state before changing either pin to an output.
+  if (!releaseDirections()) return false;
+  gpio_config_t const direction_config = {
+      .pin_bit_mask = (UINT64_C(1) << kForwardEnablePin) |
+                      (UINT64_C(1) << kReverseEnablePin),
+      .mode = GPIO_MODE_OUTPUT,
+      .pull_up_en = GPIO_PULLUP_DISABLE,
+      .pull_down_en = GPIO_PULLDOWN_DISABLE,
+      .intr_type = GPIO_INTR_DISABLE,
+  };
+  return gpio_config(&direction_config) == ESP_OK && releaseDirections();
+}
+
+bool ForwardParallelStream::selectForwardDirection() {
+  // Break before make: the reverse P4-to-Agon driver must be released before
+  // the forward Agon-to-P4 receiver path is enabled.
+  if (gpio_set_level(kReverseEnablePin, 1) != ESP_OK) return false;
+  return gpio_set_level(kForwardEnablePin, 0) == ESP_OK;
+}
+
 bool ForwardParallelStream::configureHardware() {
+  if (!configureDirectionControl()) return false;
+
   // Preload the released output latch before enabling open-drain output so
   // boot cannot briefly advertise readiness before PARLIO DMA is armed.
   if (gpio_set_level(kReadyPin, 1) != ESP_OK) return false;
@@ -117,18 +161,30 @@ bool ForwardParallelStream::begin() {
   stream_buffer_ = xStreamBufferCreate(kStreamCapacityBytes, 1);
   if (stream_buffer_ == nullptr || !configureHardware()) {
     (void)releaseReady();
-    ESP_LOGE(kTag, "forward transport setup failed; READY_N released");
+    (void)releaseDirections();
+    ESP_LOGE(kTag,
+             "forward transport setup failed; READY_N and drivers released");
+    return false;
+  }
+  if (!selectForwardDirection()) {
+    (void)releaseReady();
+    (void)releaseDirections();
+    ESP_LOGE(kTag,
+             "forward direction selection failed; READY_N and drivers released");
     return false;
   }
   if (xTaskCreate(receiverTaskEntry, "forwardRx", 4096, this, 4,
                   &receiver_task_) != pdPASS) {
     (void)releaseReady();
-    ESP_LOGE(kTag, "forward receiver task creation failed; READY_N released");
+    (void)releaseDirections();
+    ESP_LOGE(kTag,
+             "forward receiver task creation failed; READY_N and drivers released");
     return false;
   }
   ESP_LOGI(kTag,
            "r01 receiver started D=22,12,23,11,32,10,33,9 CLK=14 "
-           "VALID_N=13 READY_N=20 return=discard-only");
+           "VALID_N=13 READY_N=20 FWD_OE_N=15:low REV_OE_N=21:high "
+           "return=discard-only");
   return true;
 }
 
@@ -162,11 +218,13 @@ void ForwardParallelStream::receiverTask() {
     if (result != ESP_OK || !released || receive_state_.received == 0 ||
         receive_state_.received > kMaximumRecordBytes) {
       receive_failures_.fetch_add(1, std::memory_order_relaxed);
+      (void)releaseDirections();
       ESP_LOGE(kTag, "receive failed error=%s bytes=%u released=%u",
                esp_err_to_name(result),
                static_cast<unsigned>(receive_state_.received),
                static_cast<unsigned>(released));
       vTaskDelete(nullptr);
+      return;
     }
 
     std::size_t const written = xStreamBufferSend(
@@ -175,10 +233,13 @@ void ForwardParallelStream::receiverTask() {
       // The pre-arm space gate and single producer make this unreachable. Stop
       // instead of exposing a truncated VDU command to the retained parser.
       receive_failures_.fetch_add(1, std::memory_order_relaxed);
+      (void)releaseReady();
+      (void)releaseDirections();
       ESP_LOGE(kTag, "stream enqueue truncated expected=%u actual=%u",
                static_cast<unsigned>(receive_state_.received),
                static_cast<unsigned>(written));
       vTaskDelete(nullptr);
+      return;
     }
     records_received_.fetch_add(1, std::memory_order_relaxed);
     bytes_received_.fetch_add(written, std::memory_order_relaxed);

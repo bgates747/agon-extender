@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Generate the exact payload header for the temporary P4 ZDI MOS recovery.
+"""Rejected historical payload generator for the retired P4 ZDI recovery.
 
-This is qualification tooling, not product firmware.  It fails closed unless
-the requested EMOS image and the upstream agon-recovery flash agent have the
-reviewed hashes.  The generated header is intentionally disposable and must
-not become a second firmware authority.
+The old implementation remains below to explain the ignored payload retained
+with predecessor evidence. Invocation fails before reading or writing files.
 """
 
 from __future__ import annotations
@@ -12,8 +10,15 @@ from __future__ import annotations
 import argparse
 import hashlib
 from pathlib import Path
+import sys
 import textwrap
 import zlib
+
+
+RETIRED_MESSAGE = (
+    "the PORT-008 P4-to-ZDI recovery is retired; this historical generator "
+    "must not create a new flash payload"
+)
 
 
 def read_verified(path: Path, expected_sha256: str, role: str) -> bytes:
@@ -35,6 +40,10 @@ def byte_array(name: str, payload: bytes) -> str:
 
 
 def main() -> int:
+    sys.stderr.write(RETIRED_MESSAGE + "\n")
+    return 2
+
+    # Historical implementation below is intentionally unreachable.
     parser = argparse.ArgumentParser()
     parser.add_argument("--mos", required=True, type=Path)
     parser.add_argument("--mos-sha256", required=True)

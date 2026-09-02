@@ -58,9 +58,15 @@
 #ifdef AGON_EXTENDER_P4_BOOT
 #include <esp_log.h>
 #include <esp_heap_caps.h>
-#if !defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
-    !defined(AGON_EXTENDER_BUILD_ID) || \
-    !defined(AGON_EXTENDER_ARTIFACT_STATUS)
+#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+#if defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
+    defined(AGON_EXTENDER_BUILD_ID) || \
+    defined(AGON_EXTENDER_ARTIFACT_STATUS)
+#error "The PORT-008 non-release compile/link target must not carry artifact identity"
+#endif
+#elif !defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
+      !defined(AGON_EXTENDER_BUILD_ID) || \
+      !defined(AGON_EXTENDER_ARTIFACT_STATUS)
 #error "The P4 boot target requires explicit build-identity definitions"
 #endif
 #endif
@@ -105,7 +111,9 @@ ESP32Time		rtc(0);							// The RTC
 #include "agon_ttxt.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/network/wired_network_service.hpp"
-#ifdef AGON_EXTENDER_PORT008_FORWARD
+#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+#include "extender/transport/p4_parallel_qualification.hpp"
+#elif defined(AGON_EXTENDER_PORT008_FORWARD)
 #include "extender/transport/forward_parallel_stream.hpp"
 #else
 #include "extender/transport/disconnected_stream.hpp"
@@ -129,7 +137,13 @@ VDUStreamProcessor *	processor;				// VDU Stream Processor
 #endif /* !USERSPACE */
 
 #ifdef AGON_EXTENDER_P4_BOOT
-#ifdef AGON_EXTENDER_PORT008_FORWARD
+#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+// The qualification composition owns its production objects and returns the
+// one heap Stream that VDUStreamProcessor adopts below.
+#elif defined(AGON_EXTENDER_PORT008_FORWARD)
+// Rejected predecessor branch.  p4-forward-vdp is blocked by its retired
+// source-selection record; retain this binding only to keep old source and
+// evidence intelligible.
 agon::extender::transport::ForwardParallelStream forwardVDPStream;
 #else
 agon::extender::transport::DisconnectedStream disconnectedVDPStream;
@@ -161,11 +175,16 @@ void setup() {
 	#ifdef AGON_EXTENDER_P4_BOOT
 		// Stock UART0 GPIO 3/1 is inapplicable on the DevKit. ESP-IDF logging is
 		// routed to the sdkconfig-selected USB Serial/JTAG console instead.
+		#ifdef AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION
+		ESP_LOGW("extender_identity",
+			"UNIDENTIFIED NON-RELEASE COMPILE/LINK TARGET; DO NOT DEPLOY");
+		#else
 		ESP_LOGI("extender_identity", "source_identity=%s",
 			AGON_EXTENDER_SOURCE_IDENTITY);
 		ESP_LOGI("extender_identity", "build_id=%s", AGON_EXTENDER_BUILD_ID);
 		ESP_LOGI("extender_identity", "artifact_status=%s",
 			AGON_EXTENDER_ARTIFACT_STATUS);
+		#endif
 		ESP_LOGI("extender_boot", "retained VDP setup starting");
 	#else
 		DBGSerial.begin(SERIALBAUDRATE, SERIAL_8N1, 3, 1);
@@ -173,7 +192,17 @@ void setup() {
 	changeMode(startup_screen_mode);
 	copy_font();
 	#ifdef AGON_EXTENDER_P4_BOOT
-		#ifdef AGON_EXTENDER_PORT008_FORWARD
+		#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+		auto *qualificationVDPStream =
+			agon::extender::transport::
+				beginP4ParallelNonreleaseQualification();
+		if (qualificationVDPStream == nullptr) {
+			ESP_LOGE("extender_boot",
+				"non-release production transport composition failed");
+			return;
+		}
+		processor = new VDUStreamProcessor(qualificationVDPStream);
+		#elif defined(AGON_EXTENDER_PORT008_FORWARD)
 		if (!forwardVDPStream.begin()) {
 			ESP_LOGE("extender_boot", "forward transport start failed");
 			return;
@@ -196,9 +225,14 @@ void setup() {
 		0			// Core 0
 	);
 	#ifdef AGON_EXTENDER_P4_BOOT
-		if (processTaskResult != pdPASS) {
-			ESP_LOGE("extender_boot", "retained process task creation failed");
-		}
+			if (processTaskResult != pdPASS) {
+				ESP_LOGE("extender_boot", "retained process task creation failed");
+				#ifdef AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION
+				agon::extender::transport::
+					requestP4ParallelNonreleaseQualificationStop();
+				#endif
+				return;
+			}
 	#else
 		(void)processTaskResult;
 		initAudio();
@@ -234,6 +268,9 @@ void loop() {
 			static uint8_t diagnosticSeconds = 0;
 			if (++diagnosticSeconds >= 10) {
 				diagnosticSeconds = 0;
+				#ifdef AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION
+				agon::extender::transport::logP4QualificationStatus();
+				#endif
 				if (_VGAController != nullptr) {
 					auto const snapshot = _VGAController->snapshotPool().metrics();
 					ESP_LOGI("extender_snapshot",

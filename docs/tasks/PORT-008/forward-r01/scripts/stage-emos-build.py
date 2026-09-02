@@ -1,11 +1,9 @@
 #!/usr/bin/env python3
-"""Stage one clean, identified PORT-008 EMOS and fixture package.
+"""Rejected historical PORT-008 EMOS/fixture package stager.
 
-The generic MOS port and EMOS repository own compilation and linked-image
-checks. This task-local stager adds the candidate authority, clean-source,
-identity, fixed-fixture, and immutable-output checks required before physical
-deployment. It copies files only into a new ignored directory and never writes
-an SD card or communicates with bench hardware.
+The fixed-purpose predecessor profile and candidate identity are retired.  The
+implementation is retained below only to explain old packages; invoking this
+file fails before parsing arguments, reading a candidate, or writing.
 """
 
 from __future__ import annotations
@@ -17,6 +15,7 @@ from pathlib import Path
 import re
 import shutil
 import subprocess
+import sys
 from typing import Any
 
 import yaml
@@ -27,6 +26,10 @@ CANDIDATE = ROOT / "docs/tasks/PORT-008/forward-r01/candidate.yaml"
 SOURCE_IDENTITY = "agon-emos-v0.1.0"
 ARTIFACT_STATUS = "candidate"
 PROFILE = "port/port008-forward.mk"
+RETIRED_MESSAGE = (
+    "port-008-forward-r01 is rejected and superseded; this historical EMOS "
+    "stager must not create new candidate packages"
+)
 BUILD_ID = re.compile(
     rf"^{re.escape(SOURCE_IDENTITY)}-b(\d{{4}})-(\d{{2}})-(\d{{2}})-"
     r"(\d{2})-(\d{2})-(\d{2})Z$"
@@ -71,6 +74,10 @@ def copy_output(source: Path, destination: Path, role: str) -> dict[str, Any]:
 
 
 def main() -> int:
+    sys.stderr.write(RETIRED_MESSAGE + "\n")
+    return 2
+
+    # Historical implementation below is intentionally unreachable.
     parser = argparse.ArgumentParser()
     parser.add_argument("--build-id", required=True)
     parser.add_argument("--extender-commit", required=True)

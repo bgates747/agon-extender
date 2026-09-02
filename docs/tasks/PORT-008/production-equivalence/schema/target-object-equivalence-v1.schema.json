@@ -1,0 +1,267 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agon-extender.invalid/schema/port-008-preliminary-object-similarity-v1.json",
+  "title": "PORT-008 preliminary compile-output and final-symbol similarity manifest",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_kind",
+    "evidence_class",
+    "input_trust_model",
+    "target",
+    "inspection_tools",
+    "builds",
+    "production_units"
+  ],
+  "properties": {
+    "schema_version": {"const": 1},
+    "evidence_kind": {"const": "port-008-preliminary-object-similarity"},
+    "evidence_class": {
+      "const": "preliminary-compile-output-final-symbol-similarity"
+    },
+    "input_trust_model": {
+      "const": "trusted-local-reviewed-inputs",
+      "description": "The validator executes manifest-selected tools and compile commands and is not a sandbox."
+    },
+    "target": {
+      "$ref": "#/$defs/target",
+      "description": "Manifest-declared target identity; schema validation does not authenticate it."
+    },
+    "inspection_tools": {
+      "type": "object",
+      "description": "Trusted manifest-selected executables; recorded hashes do not establish external authority.",
+      "additionalProperties": false,
+      "required": ["nm", "objdump"],
+      "properties": {
+        "nm": {"$ref": "#/$defs/tool"},
+        "objdump": {"$ref": "#/$defs/tool"}
+      }
+    },
+    "builds": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["qualification", "release"],
+      "properties": {
+        "qualification": {
+          "allOf": [
+            {"$ref": "#/$defs/build"},
+            {
+              "properties": {
+                "composition_class": {"const": "qualification-only"}
+              }
+            }
+          ]
+        },
+        "release": {
+          "allOf": [
+            {"$ref": "#/$defs/build"},
+            {
+              "properties": {
+                "composition_class": {"const": "production-release"}
+              }
+            }
+          ]
+        }
+      }
+    },
+    "production_units": {
+      "type": "array",
+      "minItems": 1,
+      "items": {"$ref": "#/$defs/unit"}
+    }
+  },
+  "$defs": {
+    "sha256": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$"
+    },
+    "relative_path": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$))(?!.*\\\\).+$"
+    },
+    "identifier": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9]*(?:-[a-z0-9]+)*$"
+    },
+    "symbol": {
+      "type": "string",
+      "minLength": 1,
+      "pattern": "^[^\\s<>]+$"
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "artifact_id",
+        "compiler_triple",
+        "object_architecture",
+        "host_native"
+      ],
+      "properties": {
+        "artifact_id": {"$ref": "#/$defs/identifier"},
+        "compiler_triple": {"type": "string", "minLength": 1},
+        "object_architecture": {"type": "string", "minLength": 1},
+        "host_native": {"const": false}
+      }
+    },
+    "tool": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "executable_sha256", "version_output_sha256"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\]+$"},
+        "executable_sha256": {"$ref": "#/$defs/sha256"},
+        "version_output_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "file": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["path", "sha256"],
+      "properties": {
+        "path": {"$ref": "#/$defs/relative_path"},
+        "sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "build_id",
+        "composition_class",
+        "source_commit",
+        "dirty",
+        "build_root",
+        "compile_database",
+        "linked_image"
+      ],
+      "properties": {
+        "build_id": {
+          "type": "string",
+          "minLength": 1,
+          "description": "Manifest attestation; not resolved against the project version registry by this checker."
+        },
+        "composition_class": {
+          "enum": ["qualification-only", "production-release"],
+          "description": "Manifest attestation; final-link composition is not proved by this checker."
+        },
+        "source_commit": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{40}(?:[0-9a-f]{24})?$",
+          "description": "Manifest attestation; the checker does not inspect a Git repository."
+        },
+        "dirty": {
+          "const": false,
+          "description": "Manifest attestation; the checker does not run a Git cleanliness check."
+        },
+        "build_root": {"$ref": "#/$defs/relative_path"},
+        "compile_database": {"$ref": "#/$defs/file"},
+        "linked_image": {"$ref": "#/$defs/file"}
+      }
+    },
+    "compiler": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "executable_sha256", "version_output_sha256"],
+      "properties": {
+        "name": {"type": "string", "minLength": 1, "pattern": "^[^/\\\\]+$"},
+        "executable_sha256": {"$ref": "#/$defs/sha256"},
+        "version_output_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "object_artifact": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "path", "container_sha256", "member", "payload_sha256"],
+          "properties": {
+            "kind": {"const": "object"},
+            "path": {"$ref": "#/$defs/relative_path"},
+            "container_sha256": {"$ref": "#/$defs/sha256"},
+            "member": {"type": "null"},
+            "payload_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind", "path", "container_sha256", "member", "payload_sha256"],
+          "properties": {
+            "kind": {"const": "archive-member"},
+            "path": {"$ref": "#/$defs/relative_path"},
+            "container_sha256": {"$ref": "#/$defs/sha256"},
+            "member": {"type": "string", "minLength": 1},
+            "payload_sha256": {"$ref": "#/$defs/sha256"}
+          }
+        }
+      ]
+    },
+    "unit_build": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "producer_kind",
+        "source",
+        "compile_output",
+        "compiler",
+        "normalized_compile_command_sha256",
+        "normalized_defines_sha256",
+        "normalized_flags_sha256",
+        "artifact",
+        "linked_symbol_records_sha256",
+        "normalized_linked_disassembly_sha256",
+        "normalized_object_disassembly_sha256"
+      ],
+      "properties": {
+        "producer_kind": {
+          "const": "compiler-driver",
+          "description": "Schema v1 does not support direct assembler producer commands."
+        },
+        "source": {"$ref": "#/$defs/file"},
+        "compile_output": {"$ref": "#/$defs/file"},
+        "compiler": {"$ref": "#/$defs/compiler"},
+        "normalized_compile_command_sha256": {"$ref": "#/$defs/sha256"},
+        "normalized_defines_sha256": {"$ref": "#/$defs/sha256"},
+        "normalized_flags_sha256": {"$ref": "#/$defs/sha256"},
+        "artifact": {"$ref": "#/$defs/object_artifact"},
+        "linked_symbol_records_sha256": {"$ref": "#/$defs/sha256"},
+        "normalized_linked_disassembly_sha256": {"$ref": "#/$defs/sha256"},
+        "normalized_object_disassembly_sha256": {"$ref": "#/$defs/sha256"}
+      }
+    },
+    "symbol_pair": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["object_name", "linked_name"],
+      "properties": {
+        "object_name": {"$ref": "#/$defs/symbol"},
+        "linked_name": {"$ref": "#/$defs/symbol"}
+      }
+    },
+    "unit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "symbols", "builds"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "symbols": {
+          "type": "array",
+          "minItems": 1,
+          "items": {"$ref": "#/$defs/symbol_pair"}
+        },
+        "builds": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["qualification", "release"],
+          "properties": {
+            "qualification": {"$ref": "#/$defs/unit_build"},
+            "release": {"$ref": "#/$defs/unit_build"}
+          }
+        }
+      }
+    }
+  }
+}

@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
-"""Capture and verify the exact PORT-008 browser-visible RGB888 frame.
+"""Rejected historical live capture for the r01 forward candidate.
 
-This is read-only qualification tooling for an already-running P4. It sends
-only the established browser-frame credit over WebSocket; it does not send a
-VDU/EDU command or touch transport GPIO. The supplied endpoint is deliberately
-omitted from durable output.
+The oracle remains useful when reading old evidence, but this live entry point
+must not append evidence to the rejected qualification lineage.
 """
 
 from __future__ import annotations
@@ -14,6 +12,7 @@ import hashlib
 import importlib.util
 import json
 from pathlib import Path
+import sys
 from typing import Any
 
 
@@ -23,6 +22,10 @@ PHASE_F_LIVE_CHECK = (
 )
 EXPECTED_BYTES = 230400
 EXPECTED_SHA256 = "d368967667b3eee2315e2bb86129e7f423d904abd203c93dd0810906d08783d8"
+RETIRED_MESSAGE = (
+    "port-008-forward-r01 is rejected and superseded; this historical live "
+    "capture must not create new evidence"
+)
 
 
 def load_live_checker() -> Any:
@@ -37,6 +40,10 @@ def load_live_checker() -> Any:
 
 
 def main() -> int:
+    sys.stderr.write(RETIRED_MESSAGE + "\n")
+    return 2
+
+    # Historical implementation below is intentionally unreachable.
     parser = argparse.ArgumentParser()
     parser.add_argument("--host", required=True)
     parser.add_argument("--port", type=int, default=80)

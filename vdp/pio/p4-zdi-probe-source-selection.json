@@ -1,7 +1,8 @@
 {
   "schema_version": "1.0.0",
   "environment": "p4-zdi-probe",
-  "diagnostic_status": "PORT-008 temporary external ZDI failed-state probe; never production firmware",
+  "retired": true,
+  "diagnostic_status": "RETIRED historical PORT-008 external ZDI failed-state probe; rejected for new builds and never production firmware",
   "generated_build_files": [
     "video/CMakeLists.txt"
   ],

@@ -1,5 +1,6 @@
 /*
- * PORT-008 TEMPORARY P4-TO-ZDI MOS RECOVERY — NOT PRODUCT FIRMWARE.
+ * RETIRED PORT-008 P4-TO-ZDI MOS RECOVERY — HISTORICAL SOURCE ONLY.
+ * Its PlatformIO selector rejects new builds. Do not deploy or reuse it.
  *
  * This one-shot image exists only because the failed EMOS cannot execute the
  * SD-card flash utility and the target Agon's keyboard hardware is unavailable.

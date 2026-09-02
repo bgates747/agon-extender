@@ -1,6 +1,10 @@
-// PORT-008 r01 forward-only transport adapter.
+// REJECTED/SUPERSEDED PORT-008 r01 forward-only transport adapter.
 //
-// This file exists because the ESP32-P4 does not provide the stock VDP's
+// Historical evidence only: no current source selection may compile or deploy
+// this boot-active, discard-success predecessor.  The maintained production
+// data plane is p4_parallel_data_plane plus extender_vdp_stream.
+//
+// This file originally existed because the ESP32-P4 does not provide the stock VDP's
 // HardwareSerial binding. It preserves the upstream Arduino Stream boundary:
 // bytes admitted by the r01 parallel circuit are presented unchanged to the
 // retained VDUStreamProcessor. The reverse side intentionally remains a
@@ -49,8 +53,11 @@ class ForwardParallelStream final : public Stream {
                                     void *user_data);
   static void receiverTaskEntry(void *parameter);
   void receiverTask();
+  bool configureDirectionControl();
   bool configureHardware();
+  bool releaseDirections();
   bool releaseReady();
+  bool selectForwardDirection();
 
   static constexpr std::size_t kMaximumRecordBytes = 4096;
   static constexpr std::size_t kStreamCapacityBytes = 8192;

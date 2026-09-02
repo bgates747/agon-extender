@@ -1,12 +1,9 @@
 #!/usr/bin/env python3
-"""Extend the qualified Phase-F link audit for PORT-008 forward ingress.
+"""Rejected historical validator for the r01 forward-ingress candidate.
 
-The retained display/browser closure is still governed by PORT-003 Phase F.
-This thin adapter deliberately reuses that validator and changes only the
-environment-specific ingress requirements: the r01 ForwardParallelStream must
-be linked, its pin/return diagnostic must be embedded, and the disconnected
-Stream must be absent.  Keeping this delta explicit prevents a forked copy of
-the large closure policy from drifting away from its authority.
+Its implementation is retained to interpret old evidence, but it describes the
+superseded ForwardParallelStream composition.  Invocation now fails before it
+can validate or rewrite a record as though that composition were current.
 """
 
 from __future__ import annotations
@@ -25,6 +22,84 @@ PHASE_F_VALIDATOR = (
     ROOT / "docs/tasks/PORT-003/phase-f/scripts/validate-phase-f-build.py"
 )
 ENVIRONMENT = "p4-forward-vdp"
+RETIRED_MESSAGE = (
+    "p4-forward-vdp is rejected and superseded; this historical validator "
+    "cannot produce current build evidence"
+)
+
+
+def extract_function(source: str, signature: str) -> str:
+    start = source.find(signature)
+    if start < 0:
+        raise ValueError(f"forward source lacks function {signature}")
+    opening = source.find("{", start)
+    if opening < 0:
+        raise ValueError(f"forward source lacks body for {signature}")
+    depth = 0
+    for index in range(opening, len(source)):
+        if source[index] == "{":
+            depth += 1
+        elif source[index] == "}":
+            depth -= 1
+            if depth == 0:
+                return source[start : index + 1]
+    raise ValueError(f"forward source has unterminated body for {signature}")
+
+
+def require_ordered(source: str, fragments: tuple[str, ...], context: str) -> None:
+    cursor = 0
+    for fragment in fragments:
+        position = source.find(fragment, cursor)
+        if position < 0:
+            raise ValueError(f"{context}: missing or misordered {fragment!r}")
+        cursor = position + len(fragment)
+
+
+def validate_direction_enable_source() -> None:
+    source_path = (
+        ROOT / "vdp/video/extender/transport/forward_parallel_stream.cpp"
+    )
+    source = source_path.read_text(encoding="utf-8")
+    for fragment in (
+        "kForwardEnablePin = GPIO_NUM_15",
+        "kReverseEnablePin = GPIO_NUM_21",
+    ):
+        if fragment not in source:
+            raise ValueError(f"forward direction ownership missing {fragment!r}")
+
+    require_ordered(
+        extract_function(source, "ForwardParallelStream::releaseDirections()"),
+        (
+            "gpio_set_level(kForwardEnablePin, 1)",
+            "gpio_set_level(kReverseEnablePin, 1)",
+        ),
+        "fail-safe direction release",
+    )
+    require_ordered(
+        extract_function(
+            source, "ForwardParallelStream::selectForwardDirection()"
+        ),
+        (
+            "gpio_set_level(kReverseEnablePin, 1)",
+            "gpio_set_level(kForwardEnablePin, 0)",
+        ),
+        "break-before-make forward selection",
+    )
+    require_ordered(
+        extract_function(source, "ForwardParallelStream::configureHardware()"),
+        ("configureDirectionControl()", "parlio_rx_unit_config_t"),
+        "direction control before PARLIO setup",
+    )
+    require_ordered(
+        extract_function(source, "ForwardParallelStream::begin()"),
+        ("configureHardware()", "selectForwardDirection()", "xTaskCreate("),
+        "forward startup lifecycle",
+    )
+    receiver = extract_function(source, "ForwardParallelStream::receiverTask()")
+    if receiver.count("releaseDirections()") < 2:
+        raise ValueError(
+            "receiver fatal paths must release direction enables before stopping"
+        )
 
 
 def load_phase_f_validator() -> Any:
@@ -67,6 +142,10 @@ def rewrite_record(path: Path, *, artifact_kind: str) -> None:
 
 
 def main() -> int:
+    sys.stderr.write(RETIRED_MESSAGE + "\n")
+    return 2
+
+    # Historical implementation below is intentionally unreachable.
     parser = argparse.ArgumentParser()
     parser.add_argument(
         "--build-dir",
@@ -87,6 +166,8 @@ def main() -> int:
     parser.add_argument("--closure-output", type=Path, required=True)
     parser.add_argument("--exclusions-output", type=Path, required=True)
     args = parser.parse_args()
+
+    validate_direction_enable_source()
 
     phase_f = load_phase_f_validator()
     phase_f.ENVIRONMENT = ENVIRONMENT
@@ -112,7 +193,8 @@ def main() -> int:
     phase_f.REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS = [
         *phase_f.REQUIRED_DIAGNOSTIC_STRING_FRAGMENTS,
         "r01 receiver started D=22,12,23,11,32,10,33,9 CLK=14",
-        "VALID_N=13 READY_N=20 return=discard-only",
+        "VALID_N=13 READY_N=20 FWD_OE_N=15:low REV_OE_N=21:high",
+        "return=discard-only",
     ]
 
     delegated_argv = [

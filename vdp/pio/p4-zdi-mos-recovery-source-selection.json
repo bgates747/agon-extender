@@ -1,7 +1,8 @@
 {
   "schema_version": "1.0.0",
   "environment": "p4-zdi-mos-recovery",
-  "diagnostic_status": "PORT-008 temporary one-shot P4-to-ZDI MOS recovery; never product firmware",
+  "retired": true,
+  "diagnostic_status": "RETIRED historical PORT-008 one-shot P4-to-ZDI MOS recovery; rejected for new builds and never product firmware",
   "generated_build_files": [
     "video/CMakeLists.txt"
   ],

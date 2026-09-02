@@ -1,5 +1,6 @@
 /*
- * PORT-008 TEMPORARY HARDWARE-FAILURE DIAGNOSTIC — NOT PRODUCT FIRMWARE.
+ * RETIRED PORT-008 HARDWARE-FAILURE DIAGNOSTIC — HISTORICAL SOURCE ONLY.
+ * Its PlatformIO selector rejects new builds. Do not deploy or reuse it.
  *
  * This image makes an electrically isolated Olimex ESP32-P4-DevKit an
  * external ZDI observer for an Agon Light 2. It exists because running the

@@ -1,10 +1,9 @@
 #!/usr/bin/env python3
-"""Stage one clean, identified PORT-008 P4 forward candidate.
+"""Rejected historical PORT-008 P4 forward-candidate stager.
 
-PORT-003 owns the factory-image consistency and provenance implementation.
-This adapter selects the forward environment and replaces the Phase-F-only
-claim with the narrower PORT-008 candidate configuration.  It never flashes
-hardware.
+The r01 ForwardParallelStream candidate was superseded by the maintained
+production data plane.  The implementation is retained below only to explain
+old packages; invoking this file fails before parsing arguments or writing.
 """
 
 from __future__ import annotations
@@ -23,6 +22,10 @@ PHASE_F_STAGER = (
     ROOT / "docs/tasks/PORT-003/phase-f/scripts/stage-identified-build.py"
 )
 ENVIRONMENT = "p4-forward-vdp"
+RETIRED_MESSAGE = (
+    "port-008-forward-r01 is rejected and superseded; this historical "
+    "stager must not create new candidate packages"
+)
 
 
 def load_phase_f_stager() -> Any:
@@ -37,6 +40,10 @@ def load_phase_f_stager() -> Any:
 
 
 def main() -> int:
+    sys.stderr.write(RETIRED_MESSAGE + "\n")
+    return 2
+
+    # Historical implementation below is intentionally unreachable.
     parser = argparse.ArgumentParser()
     parser.add_argument("--build-id", required=True)
     parser.add_argument("--commit", required=True)

@@ -28,6 +28,9 @@
     "video/extender/web/embedded_assets.cpp",
     "vendor/ESP32Time/ESP32Time.cpp"
   ],
+  "forbidden_project_translation_units": [
+    "video/extender/transport/p4_parallel_qualification.cpp"
+  ],
   "vendored_translation_units": [
     "vendor/vdp-gl/src/canvas.cpp",
     "vendor/vdp-gl/src/codepages.cpp",

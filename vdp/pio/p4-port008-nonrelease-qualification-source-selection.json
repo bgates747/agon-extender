@@ -1,10 +1,12 @@
 {
   "schema_version": "1.0.0",
-  "environment": "p4-forward-vdp",
-  "retired": true,
-  "diagnostic_status": "REJECTED AND SUPERSEDED PORT-008 r01 predecessor; historical source inventory only",
+  "environment": "p4-port008-nonrelease-qualification",
+  "diagnostic_status": "UNIDENTIFIED PORT-008-D002 NON-RELEASE COMPILE-LINK-ONLY qualification composition",
   "generated_build_files": [
     "video/CMakeLists.txt"
+  ],
+  "component_compile_definitions": [
+    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION=1"
   ],
   "project_translation_units": [
     "video/extender/boot/p4_browser_vdp.cpp",
@@ -24,13 +26,17 @@
     "video/extender/network/wired_network_service.cpp",
     "video/extender/port/fabutils_port.cpp",
     "video/extender/port/p4_task_watchdog.cpp",
-    "video/extender/transport/forward_parallel_stream.cpp",
+    "video/extender/transport/p4_parallel_data_plane.cpp",
+    "video/extender/transport/extender_vdp_stream.cpp",
+    "video/extender/transport/p4_parallel_target.cpp",
+    "video/extender/transport/p4_parallel_qualification.cpp",
     "video/extender/web/browser_video_provider.cpp",
     "video/extender/web/embedded_assets.cpp",
     "vendor/ESP32Time/ESP32Time.cpp"
   ],
   "forbidden_project_translation_units": [
-    "video/extender/transport/p4_parallel_qualification.cpp"
+    "video/extender/transport/disconnected_stream.cpp",
+    "video/extender/transport/forward_parallel_stream.cpp"
   ],
   "vendored_translation_units": [
     "vendor/vdp-gl/src/canvas.cpp",
@@ -62,6 +68,8 @@
   ],
   "excluded_source_families": [
     "video/extender/transport/disconnected_stream.cpp",
+    "video/extender/transport/forward_parallel_stream.cpp",
+    "video/extender/transport/*uart*",
     "vendor/vdp-gl/src/VGA*.cpp",
     "vendor/vdp-gl/src/CVBS*.cpp",
     "vendor/vdp-gl/src/scene.cpp",
