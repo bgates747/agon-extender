@@ -124,6 +124,8 @@ recorders, and P031 in the new product comparison gate. They are included
 here so the upstream/local and permanent/prototype boundaries are complete
 rather than silently excluding code that had already been corrected,
 contained, or found discrepant.
+The first real rehearsal subsequently exposed P032 in the active P4 recorder
+installation boundary.
 
 | Recorded defect | Provenance classification | Maintained-surface status |
 |---|---|---|
@@ -158,6 +160,7 @@ contained, or found discrepant.
 | `PORT008-PROV-P029` — the first generic actual-step recorder/build-interface draft admitted cross-unit or cross-session ambiguity | Created while implementing new project `mos-agondev` evidence infrastructure; official MOS has no actual-step recorder | Corrected before retained evidence in generic commits `7e00798` and `64bbf34`; the earlier rehearsal is invalid and was not retained |
 | `PORT008-PROV-P030` — the first P4 actual-step recorder draft underbound executed argv, runtime roots, response forms, and dispatched subtools | Created while implementing project P4 evidence tooling; the Espressif multi-call dispatchers are intentional upstream behavior, but failure to authenticate the selected backends was local | Corrected before the recorder's first commit with direct execution, exact response/runtime/root records, dispatcher/backend binding, and adversarial tests; a clean real capture remains required |
 | `PORT008-PROV-P031` — the first product-gate draft admitted incomplete command, lineage, path, role, and linked-instruction comparisons | Created while implementing project Work 2.e comparison tooling; official MOS and VDP provide no corresponding gate | Corrected before any eligible evidence; command fingerprints deliberately remain empty until a clean rehearsal and therefore the gate still fails closed |
+| `PORT008-PROV-P032` — the active P4 recorder assumed Python `__file__` exists in a SCons extra-script namespace | Created in project Work 2.e PlatformIO integration; official VDP has no actual-step recorder or extra-script hook | First real rehearsal stopped before evidence creation; corrected by resolving the committed hook from SCons `PROJECT_DIR`, with a no-`__file__` active-install regression; new clean capture pending |
 
 1. Official MOS v3.0.2 at commit
    `8336409351ee5314e02801a7b72a4f1bb5282519` contains the uncast
@@ -425,6 +428,14 @@ contained, or found discrepant.
     defect is `PORT008-PROV-P031`. Its fingerprint slots remain deliberately
     null until clean rehearsal, which makes validation ineligible rather than
     permissive.
+31. The first clean live PlatformIO recorder installation failed before
+    evidence creation because the project hook referenced Python's
+    `__file__`, which SCons does not inject when it executes an extra script.
+    Official VDP has no corresponding recorder. The hook now derives the
+    committed project-relative file from SCons `PROJECT_DIR`, and a regression
+    invokes active installation after removing the module global. This local
+    integration defect is `PORT008-PROV-P032`; only a new clean capture at the
+    corrective commit can authenticate production steps.
 
 None of these classifications promotes the fixed-purpose PORT-008 adapters or
 temporary recovery image into production. For P002 through P006, EMOS's mode
@@ -444,8 +455,10 @@ qualification-profile identity integration rather than official MOS behavior.
 P027 is likewise P4 qualification identity integration; P028 is EMOS wrapper
 tooling; and P029 through P031 are generic recorder, P4 recorder, and product-
 gate infrastructure created and corrected before any eligible Work 2.e
-evidence. Their corrections are prerequisites for fresh target provenance, not
-evidence that any pre-correction build was authentic.
+evidence. P032 is a later local P4 recorder-installation defect caught by the
+first clean live rehearsal before evidence creation. Their corrections are
+prerequisites for fresh target provenance, not evidence that any
+pre-correction build was authentic.
 
 After Author disposition, the exact then-current dirty P4 and EMOS deltas were
 preserved as historical binary patches under
@@ -1306,6 +1319,17 @@ selected backend. The corrected recorders and gate pass adversarial host tests,
 but command fingerprints, clean captures, approved identities, and a P4 release
 consumer remain open, so no pre-correction rehearsal or current unversioned
 record is production-equivalence evidence.
+
+P032 was then exposed by the first clean PlatformIO rehearsal rather than by a
+synthetic producer session. The project-owned P4 actual-step hook referenced
+Python's `__file__`, while PlatformIO/SCons executes its extra scripts with
+`exec()` and does not provide that module global. Official VDP has no
+actual-step recorder, so this is a local Work 2.e integration defect rather
+than inherited VDP behavior. The invocation stopped before creating its
+evidence root. The hook now derives its exact committed path from SCons'
+`PROJECT_DIR`, and an active-install regression deletes `__file__` before
+installation. Only a new clean capture at the corrective commit can supply
+evidence.
 
 PORT-008 and INTEG-002 still own authenticated source/tool and final-link object
 provenance, target-runtime behavior, retained-parser fault injection,

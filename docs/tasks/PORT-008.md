@@ -1153,6 +1153,16 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
     also fail before eligibility. Its command fingerprints intentionally
     remain null until clean rehearsal, so current validation is ineligible
     rather than permissive.
+22. The first clean PlatformIO rehearsal exposed `PORT008-PROV-P032`: the
+    project-owned P4 capture hook tried to identify itself through Python's
+    `__file__` global, but PlatformIO/SCons executes an extra script with
+    `exec()` and supplies no such global. Official VDP has no actual-step
+    recorder or corresponding hook. The capture therefore stopped before an
+    evidence directory was created. The hook now resolves the exact committed
+    `pio/capture_p4_actual_steps.py` boundary from SCons' authoritative
+    `PROJECT_DIR`, and a host regression executes the active-install path with
+    `__file__` deliberately absent. A new committed clean capture is still
+    required; the stopped invocation authenticates nothing.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
@@ -1389,7 +1399,10 @@ later accepted D002 boundary authorizes only the software replacement work
     recorder/gate defects, retain adversarial regressions, invalidate every
     early rehearsal, and keep null command fingerprints fail-closed until a
     clean rehearsal supplies reviewable candidates.
-19. [ ] Close the pre-activation corrective action only after the Author
+19. [x] Record and correct `PORT008-PROV-P032` as a local P4 recorder-
+    installation defect, retain a no-`__file__` active-install regression, and
+    reject the stopped invocation as evidence.
+20. [ ] Close the pre-activation corrective action only after the Author
     accepts an EMOS-requested activation design, deterministic checks prove
     fail-closed Legacy and transition behavior, and General Poll completes
     without an unexplained CLOCK or READY gap. Because D001 is rejected, a

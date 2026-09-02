@@ -450,6 +450,91 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
         with mock.patch.dict(os.environ, {}, clear=True):
             self.assertIsNone(capture.install(InertEnvironment()))
 
+    def test_active_install_does_not_require_module_file_global(self) -> None:
+        evidence = self.evidence()
+
+        class FakeSession:
+            output_root = evidence.output
+
+            def spawn(self, *arguments):  # pragma: no cover - not invoked
+                del arguments
+
+            def finalize(self):  # pragma: no cover - not invoked
+                return None
+
+        class ActiveEnvironment:
+            def __init__(self) -> None:
+                self.spawn = object()
+                self.replacements: dict[str, object] = {}
+                self.preactions: list[tuple[str, object]] = []
+
+            def subst(self, value):
+                values = {
+                    "$PIOENV": capture.ENVIRONMENT,
+                    "$PROJECT_DIR": str(evidence.project),
+                    "$BUILD_DIR": str(evidence.build),
+                }
+                return values.get(value, value)
+
+            def IsCleanTarget(self):
+                return False
+
+            def __getitem__(self, key):
+                if key != "SPAWN":
+                    raise KeyError(key)
+                return self.spawn
+
+            def Replace(self, **values):
+                self.replacements.update(values)
+
+            def AddPreAction(self, target, action):
+                self.preactions.append((target, action))
+
+            def VerboseAction(self, action, message):
+                return action, message
+
+        fake_environment = ActiveEnvironment()
+        fake_platformio = SimpleNamespace(__version__="synthetic-platformio")
+        fake_scons = SimpleNamespace(__version__="synthetic-scons")
+        module_file = capture.__dict__.pop("__file__")
+        try:
+            with (
+                mock.patch.dict(
+                    os.environ,
+                    {capture.OUTPUT_VARIABLE: str(evidence.output)},
+                    clear=True,
+                ),
+                mock.patch.dict(
+                    sys.modules,
+                    {"platformio": fake_platformio, "SCons": fake_scons},
+                ),
+                mock.patch.object(
+                    capture,
+                    "_capture_runtime_identity",
+                    return_value={"policy": "synthetic-runtime"},
+                ),
+                mock.patch.object(
+                    capture,
+                    "_persistent_tempfile_class",
+                    return_value=object(),
+                ),
+                mock.patch.object(
+                    capture,
+                    "CaptureSession",
+                    return_value=FakeSession(),
+                ) as session_class,
+            ):
+                self.assertIsNotNone(capture.install(fake_environment))
+        finally:
+            capture.__dict__["__file__"] = module_file
+
+        self.assertEqual(
+            evidence.hook,
+            session_class.call_args.kwargs["hook_path"],
+        )
+        self.assertIn("SPAWN", fake_environment.replacements)
+        self.assertEqual(1, len(fake_environment.preactions))
+
     def test_platformio_wires_hook_only_into_qualification_environment(
         self,
     ) -> None:

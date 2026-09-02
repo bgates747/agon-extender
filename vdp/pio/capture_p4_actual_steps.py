@@ -2488,6 +2488,11 @@ def install(env: Any) -> CaptureSession | None:
     sys.dont_write_bytecode = True
     project_root = Path(env.subst("$PROJECT_DIR")).resolve(strict=True)
     build_root = Path(env.subst("$BUILD_DIR")).resolve(strict=True)
+    # PlatformIO/SCons executes extra scripts with exec(), not as imported
+    # Python modules, so __file__ is not part of that execution namespace.
+    # The qualification hook is a committed project-relative build boundary;
+    # resolve that exact path from SCons' authoritative PROJECT_DIR instead.
+    hook_path = project_root / "pio/capture_p4_actual_steps.py"
     session = CaptureSession(
         project_root=project_root,
         build_root=build_root,
@@ -2496,7 +2501,7 @@ def install(env: Any) -> CaptureSession | None:
             project_root
             / "pio/p4-port008-nonrelease-qualification-source-selection.json"
         ),
-        hook_path=Path(__file__),
+        hook_path=hook_path,
         platformio_version=platformio.__version__,
         scons_version=SCons.__version__,
         capture_runtime=_capture_runtime_identity(platformio, SCons),

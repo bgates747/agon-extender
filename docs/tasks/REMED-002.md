@@ -6,8 +6,8 @@
   and broad hardening deferred under D004/D012; REMED-002-D003 resolved in
   favor of replacement production data-plane objects; the P4 and EMOS
   forward-data-plane compositions are software-integrated and local defects
-  P008--P031 are recorded at the bounded host/source/build level, with P008--
-  P031 corrected in source/tooling before fresh target evidence,
+  P008--P032 are recorded at the bounded host/source/build level, with P008--
+  P032 corrected in source/tooling before fresh target evidence,
   while owner-task target-runtime, provenance, activation, return, artifact,
   and physical remediation remains pending
 - Started: 2026-09-01 12:52 EDT
@@ -190,6 +190,7 @@ PORT-008 recorded before the audit. They do not create duplicate findings.
 | `PORT008-PROV-P029` — generic recorder/build-interface draft admitted cross-unit/session and response ambiguity | Local pre-baseline `mos-agondev` evidence-tool defect; official MOS has no actual-step recorder | Require literal source scoping, unique sessions, exact recorder/session/kind producer chains, non-nested response records, and authenticated driver-selected assembler inputs | Corrected before retained evidence in `7e00798`/`64bbf34`; stale rehearsal invalidated |
 | `PORT008-PROV-P030` — P4 recorder draft underbound actual argv/environment/runtime roots and dispatched backends | Local pre-baseline P4 evidence-tool defect; Espressif dispatch is intentional upstream behavior, while omitted backend authentication was local | Directly execute the round-tripped vector, bind deterministic environment/runtime/topology, generated inputs, and dispatcher/backend identities, and reject unsafe header/response paths | Corrected with host regressions before first commit; clean real capture pending |
 | `PORT008-PROV-P031` — product gate draft admitted incomplete command/lineage/path/role/registry/identity/linked-instruction comparison | Local pre-baseline Work 2.e evidence-gate defect; no upstream MOS/VDP counterpart exists | Revalidate raw captures, freeze complete normalized commands, bind role and unique registry lineage, require calendar-valid build IDs and independently terminated identities, prove exact objects/direct contribution/owned symbols/linked instructions, and state closure limits | Corrected with adversarial host regressions; null fingerprints keep the gate ineligible pending clean rehearsal |
+| `PORT008-PROV-P032` — active P4 recorder assumed the SCons extra-script namespace defines Python `__file__` | Local Work 2.e PlatformIO integration defect; official VDP has no actual-step recorder or extra-script hook | Resolve the committed hook from SCons `PROJECT_DIR`, exercise active installation with `__file__` absent, and reject the stopped invocation as evidence | Corrected after the first real rehearsal stopped before evidence creation; new committed clean capture pending |
 
 ## Decision register
 
