@@ -63,6 +63,12 @@ SYMBOL_DISPOSITIONS = {
     "❓": "unresolved",
 }
 
+SUPERSEDED_MATRIX_NOTICE = """# SUPERSEDED REVIEW GATE 2 CANDIDATE DATA.
+# The embedded three-mode cross product is not current architecture or command-
+# scope authority. See ADR-0014, SETUP-005, SETUP-004/VDU-inventory.md, and
+# QUAL-001-RG2-02R.
+"""
+
 
 def sha256_bytes(data: bytes) -> str:
     return hashlib.sha256(data).hexdigest()
@@ -80,6 +86,12 @@ def dump_yaml(data: Any) -> str:
         sort_keys=False,
         width=1000,
     )
+
+
+def dump_generated_matrix_yaml(data: Any) -> str:
+    """Serialize the retained candidate matrix with its mandatory warning."""
+
+    return SUPERSEDED_MATRIX_NOTICE + dump_yaml(data)
 
 
 def _slug(value: str) -> str:

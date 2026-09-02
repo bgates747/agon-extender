@@ -1,3 +1,5 @@
+# SUPERSEDED REVIEW GATE 2 CANDIDATE DATA: this three-mode cross product is not
+# current architecture. Preserve it only for deterministic RG2-02 provenance.
 schema_version: 1.0.0
 artifact_kind: qualification_mode_expectations
 mode_expectations:

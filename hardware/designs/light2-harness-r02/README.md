@@ -15,6 +15,12 @@ authoritative human electrical drawing. Its checked
 human-reviewable. The schematic remains a checked projection; its geometry
 does not override the connectivity model.
 
+[`signal-views/`](signal-views/README.md) contains deterministic focused
+projections for individual data lanes, control signals, power domains, ground,
+and startup biasing. Those views retain the maintained schematic's component
+placement but show only one bounded function at a time; they are review aids,
+not additional electrical authorities.
+
 The Author accepted the maintained schematic on 2026-08-30 after manually
 arranging the complete circuit and clarifying each local bypass-capacitor
 assignment. KiCad's exported endpoint partition exactly matches every r02 net

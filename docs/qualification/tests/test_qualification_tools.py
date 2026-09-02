@@ -9,6 +9,9 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
 SCRIPTS = ROOT / "docs" / "qualification" / "scripts"
+QUALIFICATION = ROOT / "docs" / "qualification"
+GENERATED = QUALIFICATION / "generated"
+REVIEWED = QUALIFICATION / "reviewed"
 sys.path.insert(0, str(SCRIPTS))
 
 from qualification_model import build_matrix, dump_yaml, parse_vdu_inventory, validate_matrix  # noqa: E402
@@ -85,6 +88,19 @@ class QualificationModelTests(unittest.TestCase):
             check=False,
         )
         self.assertEqual(0, result.returncode, result.stdout + result.stderr)
+
+    def test_superseded_mode_candidate_is_visible_in_direct_outputs(self) -> None:
+        notice = "SUPERSEDED REVIEW GATE 2 CANDIDATE DATA"
+        self.assertIn(
+            notice,
+            (GENERATED / "compatibility-matrix.yaml").read_text(encoding="utf-8"),
+        )
+        for path in sorted(GENERATED.rglob("*.md")):
+            with self.subTest(path=path.relative_to(ROOT)):
+                self.assertIn("Superseded Review Gate 2 candidate data", path.read_text())
+        for name in ("modes.yaml", "mode-expectations.yaml"):
+            with self.subTest(name=name):
+                self.assertIn(notice, (REVIEWED / name).read_text(encoding="utf-8"))
 
 
 if __name__ == "__main__":

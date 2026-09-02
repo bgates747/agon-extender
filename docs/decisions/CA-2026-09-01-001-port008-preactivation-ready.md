@@ -1,7 +1,8 @@
 # CA-2026-09-01-001 — PORT-008 pre-activation READY_N containment
 
 - Document type: Corrective action
-- Status: Open — defect contained; correction not yet authorized
+- Status: Open — predecessor retired and replacement data plane integrated;
+  production activation correction unresolved
 - Date opened: 2026-09-01
 - Affected task: PORT-008 prototype tranche
 - Affected source baseline: `agon-extender` commit `45c45d5` plus tracked-dirty corrective work
@@ -35,17 +36,17 @@ wiring into a production safety claim.
 
 ### EMOS does not silently reroute ordinary startup
 
-The current EMOS main path initializes UART0, synchronizes with the onboard
-VDP, reads display state, prints the MOS banner, mounts the SD card, and sets up
-MOS sysvars before calling `emos_init()`. That initializer selects Legacy,
-onboard VDP route zero, and inactive EDU state. It does not call the PORT-008
-GPIO acquisition routine.
+The failed-run EMOS candidate's main path initialized UART0, synchronized with
+the onboard VDP, read display state, printed the MOS banner, mounted the SD
+card, and set up MOS sysvars before calling `emos_init()`. That initializer
+selected Legacy, onboard VDP route zero, and inactive EDU state. It did not call
+the predecessor PORT-008 GPIO acquisition routine.
 
-The semantic VDU dispatcher snapshots route zero and invokes the retained
-UART0 path. Only the explicit `EMOS MODE EXTENDED` command reaches
-`emos_port008_prepare()`. If preparation fails, EMOS restores the saved Port C
-and Port D registers and does not publish the new route. The observed line-1
-failure is therefore an explicitly requested transition failure, not evidence
+That candidate's semantic VDU dispatcher snapshot route zero and invoked the
+retained UART0 path. Only the explicit `EMOS MODE EXTENDED` command reached
+`emos_port008_prepare()`. On preparation failure, EMOS restored the saved Port
+C and Port D registers and did not publish the new route. The observed line-1
+failure was therefore an explicitly requested transition failure, not evidence
 that EMOS redirected the preceding stock startup.
 
 ### Browser connection is an observation gate only
@@ -78,9 +79,9 @@ not an EMOS routing defect.
 
 PORT-008 commit `c03656c87ff10d39d52ba59a9fbbf914a0bb1d73` changed the P4
 boot path to call `forwardVDPStream.begin()` unconditionally. The receiver arms
-PARLIO and asserts `READY_N` without an EMOS activation request. The current
-uncommitted direction-control correction also selects the forward buffer in
-that same boot call, so it does not repair the activation boundary.
+PARLIO and asserts `READY_N` without an EMOS activation request. The then-
+uncommitted direction-control correction also selected the forward buffer in
+that same boot call, so it did not repair the activation boundary.
 
 Official Agon VDP starts the onboard UART for its one-VDP machine and has no
 Extender Legacy-mode contract. The separate predecessor receiver configured
@@ -95,8 +96,8 @@ through explicit Exclusive Extended preparation and restores the saved eZ80
 GPIO state on failure. The verified EMOS Legacy path must remain unchanged
 while PORT-008 corrects P4 readiness and direction ownership.
 
-The current `ForwardParallelStream` is bounded prototype code, not accepted
-permanent EDP transport infrastructure. Any promoted transport must put P4
+The failed-run `ForwardParallelStream` is bounded predecessor code, not
+accepted permanent EDP transport infrastructure. Any promoted transport must put P4
 readiness and driver selection behind an accepted EMOS-owned activation
 transaction and fail back to electrically absent Legacy state.
 
@@ -134,10 +135,13 @@ transport run visually unobservable.
 
 ## Immediate containment
 
-1. Do not perform another PORT-008 firmware change, flash, or powered transfer
-   retry under the current proactive-READY behavior.
-2. Do not commit or promote the tracked-dirty corrective candidates as a
-   qualified transport implementation.
+1. Do not flash or perform another powered transfer retry with the predecessor
+   proactive-READY behavior. D002 separately authorizes software-only
+   replacement work, not deployment or a physical retry.
+2. Do not commit or promote the tracked-dirty predecessor corrective
+   candidates as a qualified transport implementation. The replacement source
+   is now committed, but its recorded builds predate that freeze and it still
+   has no release or qualification identity.
 3. Treat the exact third-run capture, manifest, diagnostic summary, and linked
    disassembly as failed-run evidence only.
 4. Keep ordinary Legacy VDU routing on the onboard UART path; do not undo that
@@ -152,6 +156,48 @@ The task now contains a proposed READY-isolated, two-point CLOCK diagnostic.
 It is review material only and does not relax containment or authorize a
 physical change.
 
+## Design-status update
+
+PORT-008's 2026-09-01 design-only pass found that the accepted r02
+Legacy/uncommitted truth-table row releases every Agon-to-P4 forward enable as
+well as UART return and READY. EDP therefore has no path on which to hear the
+explicit EMOS request required before a P4 response. Proactive READY is not a
+solution because it reverses the accepted request ownership.
+
+The Author rejected `PORT-008-D001` on 2026-09-01. EDP/P4 firmware will not
+assert a receive-only common-UART forward enable in Legacy, and EMOS will not
+gain the proposed dedicated no-CTS bootstrap sender. No ADR, architecture,
+hardware-profile, or corrective-action condition is reconciled to that rejected
+alternative. The current all-controls-released rule remains binding, and
+production activation requires an intended-circuit request path.
+
+The Author separately accepted `PORT-008-D002`'s current-circuit development
+boundary. R01 may later exercise new production forward-parallel data-plane
+objects through a separately identified fixed-backend qualification
+composition. That composition supplies an already-active epoch as a test
+precondition; it does not establish Legacy behavior or production activation
+and does not close this corrective action. Its source work, artifact identities,
+procedure, and physical operation require their own gates. The detailed
+boundary is recorded in PORT-008's task-local production-equivalence audit.
+
+## Production-replacement update
+
+Later Author-authorized PORT-008 Work 2 retired the rejected
+`extender-vdp-v0.2.0`/`p4-forward-vdp` composition and the predecessor EMOS
+sender/profile from maintained selection; both remain historical evidence.
+The replacement ordinary dispatcher now reaches a common production parallel
+route, and the separately identified fixed composition supplies only the
+procedural precondition that its operator or top level has already prepared an
+active peer epoch. The replacement P4 data-plane owner asserts readiness only
+inside that supplied epoch; neither side implements or claims the production
+activation request.
+
+This replacement removes the predecessor behavior from the software
+composition under test but does not close this corrective action. The accepted
+production activation carrier, fail-closed Legacy transition, response path,
+controlled physical evidence, and General Poll completion required below all
+remain open.
+
 ## Resolution conditions
 
 This corrective action may close only after the Author approves a bounded
@@ -160,3 +206,10 @@ transition behavior, a controlled physical run proves every P4-to-Agon signal
 released before explicit activation, and the official General Poll completes
 without an unexplained clock or READY gap. Commit approval remains a separate
 Author gate.
+
+“Every P4-to-Agon signal” includes all four P4/U4-originated Agon-domain control
+sinks—`UART_FWD_OE_N`, `PAR_FWD_OE_N`, `UART_RETURN_OE_N`, and `READY_N`—plus
+the P4 UART TX/RTS return drivers. Because D001 is rejected, no Dormant-listen
+exception exists. A fixed-backend data-plane run may provide bounded component
+evidence under a separately approved qualification claim, but cannot satisfy
+or weaken this production-activation resolution condition.

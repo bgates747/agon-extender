@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-08-23
+- Last amended: 2026-09-01
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -50,9 +50,11 @@ Untouched legacy applications reach VDU output through fixed low-ROM restart
 handlers. A normal resident service cannot replace those handlers through MOS's
 documented interrupt-vector API. Hardware interposition could provide complete
 transport control but would impose board modification or additional switching
-hardware. A narrow MOS change could instead preserve the restart entry points
-and select a different transport in the routines behind them. The routing
-mechanism is not yet accepted and remains in the linked open-decision tracker.
+hardware. The accepted EMOS direction instead preserves the restart entry
+points and selects one committed backend through the routines behind them.
+Exact response delivery, parser integration, transition-carrier mechanics,
+remaining activation/lifecycle implementation, and qualification remain in the
+linked open-decision tracker.
 
 Not every VDU command that produces output participates in the VDP response
 protocol. Buffered command 128 is an operator diagnostic: official VDP
@@ -132,9 +134,12 @@ that processor.
     Project-owned wrappers and abstraction layers may operate one or both
     processors on behalf of software that is not itself EDU-aware, but each
     supported compatibility profile requires explicit qualification.
-16. Do not support uncontrolled duplication of one ordinary VDU stream to both
-    processors. Divergent state and competing return packets make such a shared
-    VDU mode unsafe and outside the supported architecture.
+16. Never mirror ordinary application VDU traffic to both processors. Legacy
+    and Dual route it only to the onboard VDP; both exclusive modes route it
+    only to the EDP. Targeted private input/bootstrap control, recovery
+    diagnostics, and separately identified qualification traffic are not
+    mirrored application output. Divergent state and competing return packets
+    make ordinary-VDU duplication unsafe and outside the supported architecture.
 17. Require EMOS for every active Extender mode, including Dual. EMOS alone
     activates EDP, owns the EDU transport and result/event ingress, arbitrates
     clients, and commits the EDP-service plane. A linked client is only an EMOS
@@ -215,6 +220,99 @@ that processor.
     external eZ80 code violating the EMOS contract cannot corrupt, damage, or
     brick either system. Any best-effort warning uses only an Extender-owned
     out-of-band display or log and never drives the unactivated Agon interface.
+31. Model formal mode as the committed combination of two EMOS-owned planes:
+    ordinary-VDU routing and EDP service. The only valid combinations are
+    onboard/inactive for Legacy, onboard/active for Dual,
+    EDP-compatible/active for Exclusive Compatible, and EDP-extended/active
+    for Exclusive Extended. An exclusive route with inactive EDP service is
+    invalid. Adding a third independent state dimension requires a separate
+    architectural decision. EMOS alone derives and names formal mode from the
+    two committed planes; EDP firmware and applications may report only local,
+    requested, pending, readiness, transport, or failure state.
+32. Make each explicit activation request one bounded
+    prepare/readiness/commit/recover transaction owned by the EMOS coordinator.
+    EMOS validates prerequisites and initializes the complete target before
+    publishing either committed plane, makes at most one transition attempt per
+    request, and returns or reports a bounded prerequisite failure through an
+    available accepted caller or diagnostic path. Any pre-commit failure
+    restores the current stable mode and unchanged routing without partial
+    publication. This coherence rule does not depend on preservation of the
+    initiating program or other processor state.
+33. Make Legacy the transition hub. Cold boot first reaches fully operational
+    Legacy and contacts EDP only after an explicit late `autoexec.txt` or manual
+    request. A successful explicit presence/version probe activates EDP and
+    commits Dual; failure leaves Legacy. Exclusive entry also starts from
+    Legacy. Live Legacy-to-Dual and Dual-to-Legacy transitions are contracted,
+    but no direct transition between two non-Legacy modes is contracted; EMOS
+    first commits Legacy before attempting a different non-Legacy destination.
+34. Use pull discovery for Extender v1 and define no proactive EDP presence
+    signal. EMOS selects a reviewed transport/wiring profile, arms the eZ80
+    receiver, issues the activation request, validates EDP identity, protocol,
+    and capabilities, and alone commits mode. The exchange proves protocol
+    readiness, not electrical qualification. Asynchronous EDP traffic is
+    permitted only through a negotiated, armed post-activation receiver; P4
+    reset revokes that permission and EMOS quarantines stale traffic.
+35. Keep one fixed set of EMOS reset-vector and C-runtime output handlers that
+    call one semantic VDU dispatcher. Each invocation retains one snapshot of
+    the committed backend; a mode change switches only that backend and never
+    replaces the vector table. Before changing that backend, the EMOS coordinator
+    blocks new invocations, waits for active calls and owned response work to
+    finish or be abandoned, reinitializes affected parser state, and commits
+    atomically. The beta adds no second semantic VDU parser and does not
+    preserve a multi-call partial command across a disruptive transition.
+36. Use a disruptive controlled restart for every ordinary-VDU route change in
+    the proof-of-concept and beta, and retain it as an acceptable v1 fallback.
+    Preservation of the loaded eZ80 program, data, and resident processor state
+    is an aspirational v1 target and a firm v2 requirement under MODE-001; it
+    never implies migration of display assets between processors. The exact
+    actor and carrier for a disruptive restart remain an open decision rather
+    than being inferred here.
+37. Latch successful explicit EDP activation as system state: foreground exit
+    or zero known callers does not deactivate EDP. Normal return to Legacy is
+    an explicit EMOS-coordinated shutdown and may refuse or time out when
+    registered work cannot quiesce. A separately explicit forced shutdown may
+    invalidate work only after warning.
+38. Do not make persisted preferred mode a v1 contract. A fixed-backend build
+    still requires explicit activation after Legacy startup. Represent a
+    conditionally pending mode across reset only if a selected implementation
+    actually carries an attempt across that reset. Retained cross-boot circuit
+    breaking is a regression-driven conditional v1 target under MODE-002, not
+    a beta requirement. Exact lifecycle-state storage and session/shutdown APIs
+    remain open in SETUP-005.
+39. Treat reset of an affected component as invalidating that component's
+    sessions, parsers, pending work, readiness, and authority even if its RAM
+    bytes or another processor survive; invalidation need not erase storage.
+    eZ80/MOS reset and whole-system reset return through Legacy. P4 reset in
+    Dual causes EMOS to invalidate EDU work and commit Legacy while ordinary
+    VDU continues through the onboard VDP.
+40. After a detected EDP failure in Dual, EMOS invalidates EDU work and commits
+    Legacy while onboard VDU remains available. In an exclusive mode, an EDP
+    or transport failure blocks ordinary VDU and permits only bounded
+    reinitialization before disruptive recovery to Legacy. Recovery must not
+    claim that application, display, audio, buffer, or other EDP-visible state
+    survived. EMOS may use the onboard VDP for a best-effort recovery report
+    only after disclaiming that continuity.
+41. Record requested, conditionally pending, committed, failure, and fallback
+    information in the EMOS lifecycle state. Structured failure reporting is
+    advisable during beta and mandatory for v1: it supplies best-effort
+    descriptive display output plus durable machine-readable consequences and
+    safely obtainable processor context. Reporting must not depend solely on a
+    failed component when another accepted sink survives and must not delay
+    safe recovery.
+42. Require v1 to provide a bounded durable crash-log sink in P4 onboard flash,
+    independent of optional microSD. The existing `coredump` partition is only
+    the initial candidate; DIAG-001 owns its integrity, interrupted-write, wear,
+    native-crash, retrieval, and evidence-scope decisions and qualification.
+43. Treat EMOS as one complete backward-compatible replacement for stock MOS,
+    not a side-by-side companion. Its dispatcher alone owns ordinary VDU
+    routing, and its lifecycle/EDU machinery alone owns EDP activation and
+    Extender transport through supported project interfaces.
+44. Before valid activation, supported pre-activation logic patterns or GPIO
+    direction changes may be ignored or fail safely, but EDP must not expose
+    ordinary VDU, EDU, updater, or persistent-write operations. Carrier
+    hardware and EDP firmware remain quiescent while Legacy is committed or a
+    transaction is uncommitted. QUAL-002 owns electrical and power/reset proof;
+    the protocol and parser owners prove bounded handling.
 
 ## Rationale
 

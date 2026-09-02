@@ -1,6 +1,11 @@
+# REJECTED/SUPERSEDED HISTORICAL INPUT. Do not select, stage, deploy, or use
+# this frozen predecessor record as current qualification authority.
 schema_version: 1
 candidate: port-008-forward-r01
-status: candidate-input
+status: rejected
+historical_status: candidate-input
+retired: true
+superseded_by: PORT-008 production-equivalence implementation
 
 approved_identities:
   p4_firmware: extender-vdp-v0.2.0

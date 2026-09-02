@@ -1,6 +1,13 @@
 # PORT-008 EMOS hardware-failure diagnostic
 
-## Purpose and present boundary
+> **Retired historical record — do not execute.** This diagnostic and its
+> one-shot recovery variant completed their bounded predecessor roles. Their
+> PlatformIO source selections and payload generator now fail closed. The
+> source, hashes, and observations below remain only to interpret preserved
+> run evidence; they are not current build, deployment, wiring, or recovery
+> instructions.
+
+## Historical purpose and boundary
 
 The first physical `agon-emos-v0.1.0` candidate displayed the stock VDP banner
 but did not reach the MOS banner or prompt. Running a modified `agon-recovery`

@@ -2,7 +2,10 @@
 
 ## State
 
-- Status: In progress — remediation freeze active; plan awaiting Author review
+- Status: In progress — Work 1 and the accepted D001/D002/F009 architecture
+  promotions are complete; the remediation freeze remains active for open
+  SETUP-005 decisions, task reconciliation, and four-mode qualification
+  replacement work
 - Started: 2026-08-23 17:02 EDT
 - Finished: --
 
@@ -61,8 +64,9 @@ until this task closes or explicitly releases a bounded artifact:
 
 This is a governance freeze, not a byte-for-byte source snapshot or release.
 No commit, tag, version promotion, or generated-data promotion is authorized by
-the freeze itself. The present uncommitted review set remains subject to Author
-review.
+the governance freeze itself. The later source-freeze commits preserve the
+review set but do not release this freeze, assign a version, or promote any
+generated evidence.
 
 ## Authority and dependencies
 
@@ -152,10 +156,11 @@ manifest, raw evidence, or bench-local file is changed or untracked.
    correction, and the remediation plan. Commit boundaries must be proposed
    only after the Author reviews this freeze and the semantic disposition of
    the superseded candidate.
-3. **Deterministic does not mean current.** The qualification generator and all
-   ten tests pass against the 211-interface, three-mode, 633-tuple candidate.
-   That proves internal consistency only; the accepted four-mode architecture
-   requires 844 tuples and corrected obligations.
+3. **Deterministic does not mean current.** At this Work 1 checkpoint, the
+   qualification generator and its then-current ten tests passed against the
+   211-interface, three-mode, 633-tuple candidate. The suite later expanded,
+   but that still proves internal consistency only; the accepted four-mode
+   architecture requires 844 tuples and corrected obligations.
 4. **Normative wording is partly ahead of open decisions.** Names, IDs, the
    common exclusive ownership direction, Dual's separate state domain, and the
    firmware-first stock-UART hardware boundary are accepted. Exact strict-mode
@@ -666,7 +671,7 @@ F018 in [REMED-002](REMED-002.md). The underlying evidence remains in
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
 This intake does not release or replace the current four-mode freeze.
 
-1. [ ] **F009:** Treat promotion of accepted SETUP-005-D002 lifecycle content
+1. [x] **F009:** Treat promotion of accepted SETUP-005-D002 lifecycle content
    into ADR-0014 and `docs/architecture.md` as a prerequisite, not deferred
    cleanup, before downstream implementation consumes that decision.
 2. [ ] **F016:** Require QUAL-002's local state and dependencies to name this
@@ -677,6 +682,11 @@ This intake does not release or replace the current four-mode freeze.
    fallback. Do not assign implementation to MODE-001 or MODE-002 implicitly;
    create a separately approved implementation/qualification task if the
    contract is accepted.
+
+F009 completed on 2026-09-01. ADR-0014 and `docs/architecture.md` now contain
+the full accepted D002 lifecycle contract and correct the stale unresolved-
+dispatcher and controlled-mirroring statements. D003--D008, F016, F018, and
+the four-mode conformance freeze remain open.
 
 REMED-001 owns mode conformance and freeze release. REMED-002 owns the audit
 disposition and cross-finding closure register; neither document substitutes

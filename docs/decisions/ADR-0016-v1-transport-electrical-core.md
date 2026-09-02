@@ -76,8 +76,12 @@ not the electrical basis for selecting the topology.
    either processor remains gated by the applicable bench and qualification
    procedure. The preserved r01 breadboard is not silently revised.
 4. V1 qualification still depends on resolving reset behavior, Legacy
-   electrical absence, the exact EMOS/EDP epoch protocol, and the required
-   physical evidence under HW-001.
+   electrical absence, the exact EMOS/EDP epoch protocol, a production
+   activation-request path, and the required physical evidence under HW-001.
+   Following the Author's rejection of PORT-008-D001, the frozen r02
+   all-controls-released state cannot by itself carry the EMOS-originated first
+   request; r02 remains a controlled-beta core while HW-001 tracks the
+   intended-circuit consequence.
 5. Editorial changes that cannot affect construction, interpretation,
    behavior, or test results may preserve r02. Any electrical change requires
    a new harness revision; any physical construction change that may affect

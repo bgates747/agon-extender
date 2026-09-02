@@ -1,11 +1,17 @@
 # PORT-008 forward-only r01 qualification package
 
-This directory owns the deterministic build and evidence glue for the first
+Status: **rejected/superseded predecessor evidence only**. Do not build, stage,
+deploy, or execute this package as a current qualification authority. Its
+scripts and frozen inputs remain solely to interpret the historical candidate
+and its preserved evidence; INTEG-002 and PORT-008 own the replacement common
+production path and non-release qualification compositions.
+
+This directory historically owned the deterministic build and evidence glue for the first
 physical EMOS-to-EDP forward test. The task scope and decisions remain in
 [`../../PORT-008.md`](../../PORT-008.md); the controlled execution is
 [`../../../procedures/port-008-forward-qualification-r01.md`](../../../procedures/port-008-forward-qualification-r01.md).
 
-## Authorities
+## Historical authorities
 
 1. `candidate.yaml` freezes the Author-approved artifact identities, external
    commits, fixture hashes, two-stage keyboardless media contract, and bounded
@@ -38,30 +44,32 @@ fixture bytes, and an existing destination rather than silently overwriting
 evidence.
 
 The task-local [post-run source snapshots](evidence/README.md) preserve the
-exact current dirty deltas from `agon-extender` and `agon-emos` as historical
+exact then-current dirty deltas from `agon-extender` and `agon-emos` as historical
 patch evidence. They are not maintained source, clean run provenance, or
 permission to build, deploy, or promote the prototype.
 
-The P4 validator deliberately extends the already-qualified PORT-003 Phase-F
-closure validator. It changes the environment-specific expectation from the
-disconnected Stream to `ForwardParallelStream`, requires the r01 startup and
-discard-only diagnostic strings, and continues to enforce the same retained
-VDP/browser closure and exclusions.
+Historically, the P4 validator extended the already-qualified PORT-003 Phase-F
+closure validator. It changed the environment-specific expectation from the
+disconnected Stream to `ForwardParallelStream`, required the r01 startup and
+discard-only diagnostic strings, and continued to enforce the same retained
+VDP/browser closure and exclusions. It no longer emits current evidence.
 
-The task-local scripts have these bounded roles:
+The task-local scripts had these bounded roles. The two stagers, validator,
+and live capture now fail closed before argument processing; only the offline
+analyzers remain usable to interpret preserved evidence:
 
-1. `validate-forward-build.py` reuses the PORT-003 closure audit while replacing
+1. `validate-forward-build.py` reused the PORT-003 closure audit while replacing
    only its ingress-specific assertions.
-2. `stage-forward-build.py` reuses the clean-worktree and factory-segment
+2. `stage-forward-build.py` reused the clean-worktree and factory-segment
    stager while emitting a PORT-008 claim boundary.
-3. `stage-emos-build.py` verifies the selected clean EMOS and `mos-agondev`
+3. `stage-emos-build.py` verified the selected clean EMOS and `mos-agondev`
    commits, prepared-source provenance, embedded deployable identity, fixture
    bytes, and candidate authority before copying EMOS and fixture outputs into
    an ignored build-ID-specific package with adjacent manifests.
-4. `capture-visible-frame.py` requests one established EVF1 browser frame,
-   preserves its raw RGB888 payload, and compares it to the frozen exact hash.
+4. `capture-visible-frame.py` requested one established EVF1 browser frame,
+   preserved its raw RGB888 payload, and compared it to the frozen exact hash.
    It neither sends VDU/EDU traffic nor records the supplied private endpoint.
-5. `analyze-forward-capture.py` parses the Sigrok archive with the committed
+5. `analyze-forward-capture.py` parses the preserved Sigrok archive with the committed
    LA-03 mapping and applies only this procedure's forward-record, READY,
    CLOCK, and direction-ownership checks. It deliberately does not apply the
    predecessor bidirectional fixed-frame semantics. Its no-edge findings are

@@ -355,7 +355,7 @@ These actions do not decide D003--D008 or authorize EMOS/EDP implementation.
    including full-byte consumption, bounded failure reporting, and whether the
    command is prohibited before transport activation. PORT-003 and PORT-004
    own parser and audio implementation contracts.
-2. [ ] **F009:** Promote every already accepted D002 lifecycle, transition,
+2. [x] **F009:** Promote every already accepted D002 lifecycle, transition,
    reset, discovery, recovery, and EMOS-ownership rule into ADR-0014 and
    `docs/architecture.md` before any downstream task consumes D002 as a
    satisfied implementation gate. Record the promotion in the development log.
@@ -369,3 +369,14 @@ These actions do not decide D003--D008 or authorize EMOS/EDP implementation.
 F009 is correction of normative authority, not a reopening of accepted D002
 content. F018 remains an unresolved architecture question and must be presented
 one decision at a time under this task's normal review gate.
+
+### F009 promotion record
+
+On 2026-09-01, ADR-0014 and `docs/architecture.md` received the complete
+accepted D002 mode-state, transaction, transition, dispatcher, discovery,
+activation, shutdown, reset, failure, recovery, and diagnostic-lifecycle
+contract. The promotion also corrected two stale durable statements: the EMOS
+committed-backend dispatcher is accepted rather than unresolved, and ordinary
+application VDU is never mirrored even under controlled ownership. D003--D008
+remain open, and the promotion deliberately leaves F018's disruptive-restart
+actor and carrier unresolved.

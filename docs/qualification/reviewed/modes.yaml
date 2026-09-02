@@ -1,3 +1,5 @@
+# SUPERSEDED REVIEW GATE 2 CANDIDATE DATA: these three mode records are not the
+# current four-mode architecture. See ADR-0014, SETUP-005, and QUAL-001-RG2-02R.
 schema_version: 1.0.0
 artifact_kind: qualification_modes
 modes:

@@ -142,13 +142,15 @@ current bench state before execution.
 - QUAL-001 must define the relevant compatibility and evidence identities.
 - PORT-008 Review Gate 1 must define transport ownership and candidate wiring;
   a controlled transport candidate must exist before active-transfer tests.
-- `SETUP-005-D002` must define legacy absence, reset, failure, and recovery
-  semantics before the full mode matrix can be approved.
+- Accepted `SETUP-005-D002` supplies the lifecycle foundation. REMED-001's
+  four-mode freeze, open SETUP-005 decisions, HW-001-Q003/Q007/Q010, and this
+  task's corrected execution gates still block approval of the full physical
+  mode matrix.
 - REMED-001's four-mode conformance freeze must explicitly release the
   applicable mode-dependent scope before any physical qualification begins.
-- Accepted REMED-002 findings F008 and F016 prohibit consuming
-  `light2-harness-r02` as a frozen input or treating this task's older plan
-  approval as an execution release until the reconciliation below passes.
+- REMED-002 F008's frozen-input identity block was reconciled on 2026-09-01.
+  F016 still prohibits treating this task's older plan approval as an
+  execution release, and all electrical/physical gates remain independent.
 - QUAL-002 Gate 2 is required before any physical power-order, reset-order,
   connection-change, or fault-injection run.
 - A passing QUAL-002 scope is required before PORT-008 Gate 2, PORT-003 Gate G,
@@ -191,10 +193,13 @@ current bench state before execution.
 
 1. [ ] Consume `light2-harness-r02` only after HW-001 proves that its maintained
    schematic, profile digest, generated projection, assembly mapping, and
-   version identity agree.
+   version identity agree. HW-001's F008 reconciliation satisfies the
+   schematic/profile/projection identity condition, but the F021 construction-
+   mapping gate remains open; neither condition is electrical qualification.
 2. [ ] Make every future plan, procedure, and run gate name the applicable
    REMED-001 freeze release and corrected four-mode authority explicitly.
 3. [ ] Treat the 2026-08-22 plan approval as approval of scope only, never as
    authorization for bench access, a physical run, or mode-dependent evidence.
-4. [ ] Reconcile any earlier candidate record that relied on the mismatched r02
-   identity before carrying it into a qualified run.
+4. [x] Reconcile any earlier candidate record that relied on the mismatched r02
+   identity before carrying it into a qualified run. No tracked run cited r02,
+   so no run evidence required migration.

@@ -230,19 +230,25 @@ unresolved.
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB
 serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug facilities
-unless a later accepted decision restores them. Transparent EDP selection
-remains unresolved until the fixed legacy VDU restart paths and return traffic
-can be routed safely.
+unless a later accepted decision restores them. EMOS's fixed VDU dispatcher and
+committed-backend selection are accepted; exact response delivery, parser
+integration, activation-carrier and lifecycle implementation, and qualification
+remain unresolved.
 
 In **Dual mode**, the onboard VDP remains authoritative for VDU and MOS VDP
 sysvars while the EDP is addressed through EDU and retains results in an
 EDU-owned state domain. Applications and project-owned abstraction layers may
-coordinate both processors, but uncontrolled duplication of a VDU stream or
-competing writes to canonical sysvars is unsupported.
+coordinate both processors, but ordinary application VDU is never mirrored:
+Legacy and Dual route it only to the onboard VDP, and both exclusive modes
+route it only to the EDP. Targeted private input/bootstrap control, recovery
+diagnostics, and separately identified qualification traffic are not mirrored
+application output. Competing writes to canonical sysvars remain unsupported.
 
-EMOS is the only supported software authority for ordinary VDU routing,
-Extender transport ownership, and committed mode. Applications, linked EDU
-bindings, TSR-like programs, future MOS Modules, and optional resident services
+EMOS is one complete backward-compatible replacement for stock MOS, not a
+side-by-side companion. It is the only supported software authority for
+ordinary VDU routing, Extender transport ownership, and committed mode.
+Applications, linked EDU bindings, TSR-like programs, future MOS Modules, and
+optional resident services
 request those operations through EMOS and do not install independent hooks or
 claim UART/GPIO ownership. The proof-of-concept and v1 contract enforce this
 across supported software; they do not attempt adversarial isolation from
@@ -257,6 +263,94 @@ EDP/P4 firmware and applications may report their local condition, requested or
 pending targets, readiness, transport state, and failures, but may not describe
 an uncommitted, failed, or partial combination as Legacy, Dual, Exclusive
 Compatible, or Exclusive Extended.
+
+### Mode lifecycle, transition, and recovery
+
+Formal mode is the committed combination of two EMOS-owned logical planes:
+ordinary-VDU routing and EDP service. Only these combinations are valid:
+
+| Formal mode | Committed VDU route | Committed EDP service |
+|---|---|---|
+| Legacy | onboard VDP | inactive |
+| Dual | onboard VDP | active |
+| Exclusive Compatible | EDP compatible | active |
+| Exclusive Extended | EDP extended | active |
+
+An exclusive route with inactive EDP service is invalid. A third independent
+state dimension requires a separate architecture decision. EMOS alone derives
+and names formal mode from the two committed planes; requested, conditionally
+pending, failure, and fallback information belongs to lifecycle state rather
+than to a fifth formal mode.
+
+Cold boot first reaches fully operational Legacy. Each explicit late
+`autoexec.txt` or manual request permits the EMOS coordinator to make at most
+one prepare/readiness/commit/recover attempt. EMOS validates every prerequisite
+and initializes the complete target before publishing either plane. On a
+missing or incompatible prerequisite, EMOS returns or reports a bounded failure
+through an available accepted caller or diagnostic path. Any pre-commit failure
+restores the current stable mode with routing unchanged and no partial
+publication; this routing-coherence guarantee does not depend on preserving the
+initiating program or other processor state. A successful presence/version
+probe activates EDP and commits Dual; a failed probe leaves Legacy. Exclusive
+entry likewise begins in Legacy. Legacy is the mandatory transition hub: EMOS
+commits Legacy before attempting a different non-Legacy destination, and no
+direct non-Legacy-to-non-Legacy transition is contracted. Live Legacy-to-Dual
+and Dual-to-Legacy activation is accepted; an ordinary-VDU route change may
+instead use the disruptive transition described below.
+
+Extender v1 uses pull discovery and defines no proactive EDP presence signal.
+EMOS selects a reviewed transport/wiring profile, arms the eZ80 receiver, sends
+the request, validates the EDP identity, protocol, and capabilities, and alone
+commits mode. That handshake establishes protocol readiness; QUAL-002 remains
+the authority for electrical and power/reset qualification. EDP asynchronous
+traffic requires a negotiated and armed post-activation receiver. P4 reset
+revokes that permission, and EMOS quarantines stale traffic.
+
+EMOS uses one fixed set of reset-vector and C-runtime output handlers and one
+semantic VDU dispatcher. Each active invocation retains a snapshot of one
+committed backend. To change that backend, the EMOS coordinator blocks new
+invocations, waits for active calls and owned response work to finish or be
+abandoned, reinitializes affected parser state, and commits atomically. The beta
+adds no second semantic VDU parser and does not preserve multi-call partial
+commands across a disruptive transition.
+
+The proof-of-concept and beta use a disruptive controlled restart for every
+ordinary-VDU route change; that mechanism remains an acceptable v1 fallback.
+Preserving loaded eZ80 program, data, and resident processor state is an
+aspirational v1 target and a firm v2 requirement under MODE-001; preservation
+never implies migration of display assets between processors. The exact restart
+actor and carrier remain open under SETUP-005 F018. A fixed-backend build still
+activates explicitly after Legacy startup, and persisted preferred mode is not
+a v1 contract. A pending state carried across reset exists only if a selected
+implementation requires it; retained cross-boot circuit breaking remains
+conditional under MODE-002. Exact lifecycle-state storage and session/shutdown
+APIs remain open in SETUP-005.
+
+A successful explicit activation remains latched system state when the
+foreground caller exits or no known callers remain. Normal return to Legacy is
+an explicit coordinated EMOS shutdown and may refuse or time out if registered
+work cannot quiesce. A separately explicit forced shutdown may invalidate work
+after warning.
+
+Reset invalidates the affected component's sessions, parsers, pending work,
+readiness, and authority even if RAM bytes or another processor survive;
+invalidation does not require erasure. eZ80/MOS and whole-system resets return
+through Legacy. P4 reset or detected EDP failure in Dual invalidates EDU work
+and causes EMOS to commit Legacy while ordinary VDU continues through the
+onboard VDP. In an exclusive mode, EDP or transport failure blocks ordinary
+VDU, permits only bounded reinitialization, and then disruptively recovers to
+Legacy without claiming preservation of application, display, audio, buffer,
+or other EDP-visible state. EMOS recovery may use the onboard VDP for a
+best-effort diagnostic only after disclaiming that continuity.
+
+EMOS lifecycle records retain requested, conditionally pending, committed,
+failure, and fallback information. Structured failure reporting is advisable
+during beta and mandatory for v1. It provides best-effort descriptive display
+output plus durable machine-readable consequences and safely obtainable
+processor context, never relies solely on a failed component when another
+accepted sink survives, and never delays safe recovery. The durable P4-flash
+crash-log requirement and provisional `coredump` sink are defined below; exact
+record behavior and qualification remain with DIAG-001.
 
 Application entry point and operating-mode destination are separate concerns.
 `RST.LIL 10h`, `RST.LIL 18h`, and the corresponding C-runtime output paths are
@@ -286,7 +380,9 @@ Project hardware and firmware apply fail-safe pre-activation design: carrier
 hardware keeps P4-to-Agon drivers disabled through hardware defaults rather
 than relying only on P4 firmware, and the EDP accepts only a bounded EMOS
 activation exchange before exposing ordinary VDU, EDU, update, or persistent
-write operations. These rules govern every project-produced design, build,
+write operations. Supported pre-activation logic patterns or GPIO-direction
+changes may be ignored or fail safely without opening another operation. These
+rules govern every project-produced design, build,
 example, and test. They are not a privilege boundary or warranty for arbitrary
 external code that directly manipulates shared GPIO, UART, interrupt, flash, or
 routing resources in violation of the EMOS contract; such code may corrupt,

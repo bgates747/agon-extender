@@ -22,3 +22,14 @@ commit or release tag.
 Do not repair or edit a candidate during a qualified run. Preserve the failed
 evidence, commit the correction, assign a new build and run ID, and rerun. Dirty
 working-tree tests are exploratory and cannot qualify an artifact.
+
+## Current disposition notices
+
+All retained `PORT-008-2026-08-31-*` and `PORT-008-2026-09-01-*` directories
+present in this repository are historical predecessor/diagnostic evidence.
+Their individual outcomes and bounded observations remain immutable, but the
+associated r01 forward candidate, fixed-purpose EMOS profile, P4
+`ForwardParallelStream`, and temporary ZDI compositions are rejected or
+superseded and cannot be selected as current build, deployment, procedure, or
+qualification authority. PORT-008's production-equivalence record owns the
+replacement status and open gates.

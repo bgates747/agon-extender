@@ -6,14 +6,14 @@ obligations:
     subject_kind: domain
     subject_id: domain:extender:compatibility-transport
     kind: transport
-    claim: The current clean project preserves all eight forward data lines, CLOCK, VALID_N, READY_N, record integrity, backpressure, sustained transfer, and recovery.
+    claim: The production forward path preserves all eight data lines, CLOCK, VALID_N, READY_N, record integrity, backpressure, sustained transfer, and recovery.
     mode_ids: [mode:extender:edp-exclusive, mode:extender:cooperative]
     owner_task_ids: [PORT-008]
     requirement_refs: [AUDIT-001-C01]
     source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:dependencies:code-graph]
     dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
     blocker_refs: []
-    implementation_state: not-started
+    implementation_state: in-progress
     qualification_state: planned
   - id: obligation:extender:return-uart-target-speed
     scope: compatibility-critical
@@ -41,7 +41,7 @@ obligations:
     source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
     dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
     blocker_refs: []
-    implementation_state: not-started
+    implementation_state: in-progress
     qualification_state: planned
   - id: obligation:extender:general-poll-startup-roundtrip
     scope: compatibility-critical
@@ -54,8 +54,8 @@ obligations:
     requirement_refs: [AUDIT-001-C04]
     source_refs: [source:audit-001:bench-inventory, source:setup-004:vdu-inventory, source:dependencies:code-graph]
     dependency_node_ids: [subsystem:agon-vdp:primary-vdp-transport]
-    blocker_refs: [PORT-003-PHASE-E, SETUP-005-D003]
-    implementation_state: not-started
+    blocker_refs: [SETUP-005-D003, HW-001-Q010]
+    implementation_state: in-progress
     qualification_state: blocked
   - id: obligation:extender:stock-command-stream-boundaries
     scope: compatibility-critical
@@ -194,7 +194,7 @@ obligations:
     requirement_refs: [AUDIT-001-C14]
     source_refs: [source:audit-001:bench-inventory, source:adr-0014:operating-modes, source:setup-005:open-decisions]
     dependency_node_ids: []
-    blocker_refs: [SETUP-005-D001, SETUP-005-D002, SETUP-005-D003, SETUP-005-D004]
+    blocker_refs: [SETUP-005-D003, SETUP-005-D004, REMED-001]
     implementation_state: not-started
     qualification_state: blocked
   - id: obligation:extender:legacy-electrical-absence
@@ -208,7 +208,7 @@ obligations:
     requirement_refs: [AUDIT-001-C15]
     source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
     dependency_node_ids: []
-    blocker_refs: [SETUP-005-D002]
+    blocker_refs: [REMED-001, REMED-002, HW-001-Q007]
     implementation_state: not-started
     qualification_state: blocked
   - id: obligation:extender:independent-power-reset-recovery
@@ -222,7 +222,7 @@ obligations:
     requirement_refs: [AUDIT-001-C16]
     source_refs: [source:audit-001:bench-inventory, source:harness:light2-r01, source:fixture:la03-r01]
     dependency_node_ids: []
-    blocker_refs: [SETUP-005-D002]
+    blocker_refs: [REMED-001, REMED-002, HW-001-Q003, HW-001-Q010]
     implementation_state: not-started
     qualification_state: blocked
   - id: obligation:extender:malformed-stream-mode-policy

@@ -12,6 +12,10 @@ fence. Nothing here authorizes production implementation.
 - `platform-feasibility.md` — pinned P4 framework facilities, constraints, and
   unqualified assumptions relevant to the accepted boundary.
 - `qualification-plan.md` — deterministic host fixtures and later target tests.
+- `concurrency/` — REMED-002 Work 2.a source audit and rejected D011 hardening
+  candidate, retained as research. Accepted D012 defers upstream corrections
+  and isolating regression design until reproducible Extender-specific
+  activation is shown.
 - `scripts/` — task-local deterministic evidence generators.
 - `generated/` — machine-readable evidence plus reproducible compact views and
   diagrams. Generated files identify their generator and must not be edited by

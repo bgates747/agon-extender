@@ -3,8 +3,8 @@ schema_version: 1
 baseline:
   baseline_id: port-008-forward
   revision: r01
-  status: candidate
-  description: Frozen forward-only visible-command candidate on the preserved Light 2 r01 breadboard.
+  status: rejected
+  description: Rejected and superseded forward-only predecessor baseline retained for historical evidence interpretation only.
   compatibility_scope: Ordinary VDU bytes routed by fixed-purpose EMOS over r01 parallel GPIO into the retained VDP parser and rendered through P4 browser video.
 
 artifacts:
@@ -60,5 +60,5 @@ qualification:
   run_ids: []
 
 notes:
-  - Exact UTC build IDs and the PORT-008 run ID are assigned after candidate inputs are committed and clean builds begin.
-  - A passing run may qualify only this bounded baseline scope; it cannot qualify the production transport or light2-harness-r02.
+  - Do not select, stage, deploy, or qualify this baseline; its procedure and both transport adapters were superseded on 2026-09-01.
+  - Existing manifests and run evidence remain historical records and do not qualify the replacement production transport.

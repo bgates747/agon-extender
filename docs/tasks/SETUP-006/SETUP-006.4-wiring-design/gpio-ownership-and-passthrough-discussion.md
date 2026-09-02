@@ -1,8 +1,14 @@
 # GPIO ownership, reserve, and eZ80 passthrough discussion
 
+> **Historical predecessor analysis:** This discussion records the superseded
+> Exclusive Extended beta allocation. It is not present wiring or firmware
+> authority; `light2-harness-r02`, HW-001, and PORT-008 own the maintained
+> common-UART design and production transport boundaries.
+
 ## State
 
-- Status: Beta boundary accepted; v1 architecture and pin budget unresolved
+- Status: Historical — beta boundary was accepted; its allocation was later
+  superseded by the common-UART design
 - Prompt: SETUP-006.4 Q001 review
 - Scope: GPIO budget, user expansion, mode-dependent ownership, and possible
   replication of eZ80 expansion pins consumed by Exclusive Extended transport
@@ -23,10 +29,10 @@ The Author withheld approval pending a complete GPIO budget. Consuming GPIO16
 cannot be judged only against the immediate transport: the product must retain
 room for planned or plausible facilities and for user-owned connections.
 
-## Present eZ80 transport consumption
+## Then-proposed eZ80 transport consumption
 
-Exclusive Extended currently requires eleven eZ80 GPIOs and eleven matching
-P4 transport endpoints:
+The predecessor Exclusive Extended proposal required eleven eZ80 GPIOs and
+eleven matching P4 transport endpoints:
 
 1. `PC0` through `PC7`: eight forward parallel data bits.
 2. `PD4`: `READY_N`.
@@ -37,8 +43,8 @@ The proposed but unselected `UART_ALLOW_N` return-pacing signal would consume
 `PD6` and raise the eZ80 total to twelve. Return UART reuses eZ80 `PC1`; it does
 not consume another eZ80 pin.
 
-The P4 also needs controls that do not have matching eZ80 conductors. The
-current candidate uses GPIO15 for `FWD_OE_N` and GPIO21 for `REV_ENABLE`.
+The predecessor P4 candidate also needed controls without matching eZ80
+conductors. It used GPIO15 for `FWD_OE_N` and GPIO21 for `REV_ENABLE`.
 Q001 would add dedicated GPIO16 return TX, and `UART_ALLOW_N` would provisionally
 add GPIO17. The resulting P4 allocation is fourteen GPIOs without pacing or
 fifteen with it.
@@ -54,8 +60,8 @@ fifteen with it.
    GPIO. A practical direct onboard-VDP/EDP link may also need an interrupt or
    ready line, making five reserved GPIOs prudent; a dedicated reset would make
    six. LINK-001 owns that post-v1 aspiration and has not selected SPI.
-3. The current P4 review identifies GPIO6, GPIO18, GPIO19, and GPIO46 through
-   GPIO48 as uncommitted exposed candidates. The pUEXT SPI pins GPIO4, GPIO5,
+3. The then-current P4 review identified GPIO6, GPIO18, GPIO19, and GPIO46
+   through GPIO48 as uncommitted exposed candidates. The pUEXT SPI pins GPIO4, GPIO5,
    GPIO53, and GPIO54 may appear attractive for a future SPI link, but they
    cannot be counted twice until the complete Wi-Fi header/module connection
    proves those pins remain electrically and mechanically available.
@@ -159,11 +165,11 @@ reads `PC3` as CTS.
 
 This review exposed an unrelated but material documentation defect in the
 accepted Fritzing scaffold. CA-2026-08-25-001 traced it to the first pristine-
-project generator commit and corrected the current source and derived files.
-The current scaffold assigns `PC0/TXD1`, `PC1/RXD1`, `PC2/RTS1`, and
+project generator commit and corrected the retained source and derived files.
+The corrected retained scaffold assigns `PC0/TXD1`, `PC1/RXD1`, `PC2/RTS1`, and
 `PC3/CTS1` to header pins 17 through 20 respectively; pins 13 and 14 remain
 `PD4` and `PD5`. The CA preserves the defective assignments and originating
-commit as historical evidence without leaving them in current pin-function
+commit as historical evidence without leaving them in maintained pin-function
 authorities.
 
 ### Observed applications and experiments

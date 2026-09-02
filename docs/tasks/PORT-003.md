@@ -2,8 +2,10 @@
 
 ## State
 
-- Status: In progress — Gate F accepted; Phase G awaits PORT-008 Gate 2 and
-  applicable QUAL-002 qualification
+- Status: In progress — Gate F accepted; Work 2.a source findings are recorded
+  and broad D011 hardening is rejected; Phase G awaits applicable REMED-002
+  gates, Work 4.d's Gate G definition, PORT-008 Gate 2, and applicable QUAL-002
+  qualification
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
@@ -974,7 +976,7 @@ cancellation claims are not current product architecture.
       `p4-frame-service-qualification-r01`; registry `r06` and the committed
       qualification procedure define their exact scope.
 
-### Corrective execution record — current candidate
+### Corrective execution record — maintained corrected candidate
 
 On 2026-08-22 the Author approved `CA-2026-08-22-001` and superseded D008 with
 D009. The corrective implementation:
@@ -2359,23 +2361,23 @@ or frame-service path, retaining a classic physical driver, expanding the
 narrow PORT-006 tranche, inventing a transport command, exceeding bounded
 memory, or weakening Legacy-at-boot and explicit EMOS activation rules.
 
-## Accepted REMED-002 findings
+## REMED-002 findings and current dispositions
 
 The Author accepted the initial dispositions in
 [REMED-002](REMED-002.md). The audit record
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md)
-owns the evidence and provenance for these stable findings. PORT-003 owns the
-following actions; this intake authorizes planning, not source changes or Gate G.
+owns the evidence and provenance for these stable findings. The initial D001
+register was later narrowed for upstream-origin findings by REMED-002-D004 and
+PORT-003-D012. PORT-003 owns the following current actions and records; this
+intake authorizes neither source changes nor Gate G.
 
-1. [ ] **F001:** Replace the frame-work suspension check/wait/mark sequence
-   with one explicit exclusion and lifetime contract. Add a deterministic
-   two-task fixture that forces the escaped-frame interleaving and proves that
-   synchronous mutation cannot overlap background primitive execution,
-   snapshot composition, or sprite storage replacement.
-2. [ ] **F002:** Put parser-driven palette and Copper mutation and frame-task
-   publication under the accepted lifetime contract. Add concurrent
-   palette/Copper/sprite mutation fixtures that exercise replacement and
-   deletion while a browser snapshot would otherwise retain the old storage.
+1. [x] **F001 disposition:** Preserve the upstream/local source analysis.
+   Correction and isolating regression design are deferred until deterministic
+   evidence shows distinct Extender activation or obstruction of a selected
+   Extender function.
+2. [x] **F002 disposition:** Preserve the palette/Copper/buffer-mutation and
+   P4-reader analysis. Correction and isolating regression design are deferred
+   under the same D012 trigger threshold.
 3. [ ] **F003 coverage split:** Add browser-frame regression coverage for the
    PORT-006 short-write remedy, including immutable snapshot ownership through
    complete send, congestion failure, disconnect, and retry. PORT-006 owns the
@@ -2399,3 +2401,44 @@ following actions; this intake authorizes planning, not source changes or Gate G
 These actions reopen no accepted Phase A--F claim by themselves. Evidence that
 depends on a defective sanitizer or staging path must be explicitly retained,
 rerun, superseded, or withdrawn before it supports later promotion.
+
+## REMED-002 Work 2.a design gate
+
+The design-only pass is recorded in
+[`PORT-003/concurrency/README.md`](PORT-003/concurrency/README.md). It records
+F001 and F002 source analysis through official VDP `v2.16.0`, pinned vdp-gl
+`all-the-plots`, and the current P4 implementation, plus the F022 and H001
+upstream observations. No production source, fixture identity, procedure,
+firmware, qualification claim, or physical state changed in that pass.
+
+The analysis remains useful, but its proposed D011 correction package is not
+the current product direction. The Author rejected broad retained-renderer
+hardening on 2026-09-01. ADR-0015's strict-compatible baseline and minimal-
+upstream-delta rule remain authoritative, and ADR-0015 is again complete.
+
+The retained observations are:
+
+1. `PORT-003-W2A-H001`: retained `LightMemoryPool` allocation and frame-side
+   release share unsynchronized metadata.
+2. `PORT-003-W2A-H002`, promoted to `INTEGRITY-AUDIT-F022`: retained primitives
+   queue raw bitmap/tile/copy-destination pointers and oversized official
+   Context paths, while official code can later invalidate or reuse the owner.
+   Generic direct glyph, glyph-buffer, and Canvas path APIs retain their
+   upstream caller-lifetime obligation.
+
+These observations are recorded, not selected for correction. They do not
+block the current work to establish EMOS-to-EDP forward transport over the
+parallel GPIO interface. A later task pass may design isolating regression
+tests, but no such fixture work is active now.
+
+### Work 2.a decision register
+
+| ID | State | Decision |
+|---|---|---|
+| `PORT-003-D011` | Rejected by the Author, 2026-09-01 | Do not adopt the proposed comprehensive frame-state/lifetime hardening package; it changes too much retained behavior without evidence that selected Extender functionality manifests the upstream failures differently from regular VDP operation. Preserve the design as research only. |
+| `PORT-003-D012` | Accepted by the Author, 2026-09-01 | Record upstream defects, but make a local correction only after deterministic evidence shows that a project-owned Extender transport, scheduler, presentation reader, or other selected function reproducibly triggers the failure in a way regular official VDP operation does not, or that the defect blocks the selected Extender function. Prefer a project-owned boundary and require separate approval before editing retained common code. Current priority is the bounded forward-parallel transport, not general firmware hardening. |
+
+D012 resolves ADR-0015's open completeness question. F001, F002, F022, and
+H001 remain recorded follow-up observations. If a future isolating regression
+meets D012's trigger threshold, PORT-003 must return with the smallest proposed
+containment and exact upstream-delta impact before source changes.

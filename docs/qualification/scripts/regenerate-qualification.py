@@ -9,7 +9,13 @@ import importlib.util
 import tempfile
 from pathlib import Path
 
-from qualification_model import GENERATED, REVIEWED, build_matrix, dump_yaml, validate_matrix
+from qualification_model import (
+    GENERATED,
+    REVIEWED,
+    build_matrix,
+    dump_generated_matrix_yaml,
+    validate_matrix,
+)
 
 
 def _renderer():
@@ -28,7 +34,9 @@ def _generate(output: Path) -> None:
     if errors:
         raise ValueError("\n".join(errors))
     output.mkdir(parents=True, exist_ok=True)
-    (output / "compatibility-matrix.yaml").write_text(dump_yaml(matrix), encoding="utf-8")
+    (output / "compatibility-matrix.yaml").write_text(
+        dump_generated_matrix_yaml(matrix), encoding="utf-8"
+    )
     _renderer()(matrix, output)
 
 

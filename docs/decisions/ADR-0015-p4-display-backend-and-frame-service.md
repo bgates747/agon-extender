@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-22
-- Last amended: 2026-08-22
+- Last amended: 2026-09-01
 - Related task: PORT-003
 
 ## Context
@@ -85,6 +85,16 @@ creating separate VDP renderers or clocks.
     semantics merely to improve them. The rejected correction candidate is
     preserved under `UPSTREAM-001` for A/B regression testing and a possible
     upstream contribution.
+11. Record inherited source defects and plausible P4 amplification without
+    treating either as authority for local hardening. Correct retained upstream
+    behavior only when deterministic evidence shows that a project-owned
+    Extender transport, scheduler, presentation reader, or other selected
+    function reproducibly activates the failure in a way regular official VDP
+    operation does not, or when the defect prevents that selected Extender
+    function from working. Prefer containment in project-owned code; require a
+    separate decision before patching retained common code. Source reasoning or
+    a theoretically possible interleaving alone does not block forward-
+    transport establishment.
 
 ## Rationale
 
@@ -126,6 +136,10 @@ path.
    code. The former patch remains recoverable from its recorded commit and
    tracked upstream-research task rather than residing in the product source
    selection.
+10. Upstream-origin F001, F002, and F022 observations remain recorded for
+    future isolating regression design. They do not authorize present product
+    changes or independently block the bounded forward-parallel transport work
+    unless the trigger threshold in decision item 11 is met.
 
 ## Corrective amendment
 

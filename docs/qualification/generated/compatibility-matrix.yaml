@@ -1,3 +1,7 @@
+# SUPERSEDED REVIEW GATE 2 CANDIDATE DATA.
+# The embedded three-mode cross product is not current architecture or command-
+# scope authority. See ADR-0014, SETUP-005, SETUP-004/VDU-inventory.md, and
+# QUAL-001-RG2-02R.
 schema_version: 1.0.0
 artifact_kind: compatibility_qualification_matrix
 id: matrix:extender:compatibility
@@ -8,9 +12,9 @@ generated:
     reviewed/evidence-links.yaml: a93c1bc35e0a1bdf92736d9bbcf6a0ace2cbebaf93ecfe3abe782ae3cc14f9ec
     reviewed/evidence.yaml: 757c9661cb5fd1e204419fd532cbbb930ee1829b108751b0822ca32a3c2f465b
     reviewed/interfaces.yaml: e58b93620f3fae5b603a788f4197713beb0dde64794b9b631d2c31047176f578
-    reviewed/mode-expectations.yaml: 6d0e6c06f9253f59b5f0c5f5f0f96c8c81d8c306c26218b979d2ff07b2d26e6f
-    reviewed/modes.yaml: 45bc2c2c337db7f49f4b072d35e76d935d27c122850e51c201c56d71b01c9724
-    reviewed/obligations.yaml: 682e11eff565eaf4247e72a2b890c9eccda19ab1ecb2e5b3e16cf8d52c6f66ae
+    reviewed/mode-expectations.yaml: 24ee57e8f1131bd84f8ab12badf3e719316ab06902baae424bbe333829cb1273
+    reviewed/modes.yaml: 340915d6d5958a2752876ec136181179c90f5abbb85045849d4a7c826e970e2b
+    reviewed/obligations.yaml: c3303bb5c06155d40ade6fc8f9ac66cc3fb5e5ade99fcf5e9d4a241f6ab2bb80
     reviewed/qualification-domains.yaml: 29d3fbe81fa1bea5bae2f22f56b48019bb1baa3a2348469766120d547f2c9672
     reviewed/sources.yaml: f86845fb17c0f347631ccf08bcff68443ff5604f3a0a5fcf6f6c8b820660a9a5
 sources:
@@ -6229,7 +6233,7 @@ obligations:
   subject_kind: domain
   subject_id: domain:extender:compatibility-transport
   kind: transport
-  claim: The current clean project preserves all eight forward data lines, CLOCK, VALID_N, READY_N, record integrity, backpressure, sustained transfer, and recovery.
+  claim: The production forward path preserves all eight data lines, CLOCK, VALID_N, READY_N, record integrity, backpressure, sustained transfer, and recovery.
   mode_ids:
   - mode:extender:edp-exclusive
   - mode:extender:cooperative
@@ -6244,7 +6248,7 @@ obligations:
   dependency_node_ids:
   - subsystem:agon-vdp:primary-vdp-transport
   blocker_refs: []
-  implementation_state: not-started
+  implementation_state: in-progress
   qualification_state: planned
 - id: obligation:extender:general-poll-startup-roundtrip
   scope: compatibility-critical
@@ -6265,9 +6269,9 @@ obligations:
   dependency_node_ids:
   - subsystem:agon-vdp:primary-vdp-transport
   blocker_refs:
-  - PORT-003-PHASE-E
   - SETUP-005-D003
-  implementation_state: not-started
+  - HW-001-Q010
+  implementation_state: in-progress
   qualification_state: blocked
 - id: obligation:extender:independent-power-reset-recovery
   scope: compatibility-critical
@@ -6289,7 +6293,10 @@ obligations:
   - source:fixture:la03-r01
   dependency_node_ids: []
   blocker_refs:
-  - SETUP-005-D002
+  - REMED-001
+  - REMED-002
+  - HW-001-Q003
+  - HW-001-Q010
   implementation_state: not-started
   qualification_state: blocked
 - id: obligation:extender:legacy-electrical-absence
@@ -6310,7 +6317,9 @@ obligations:
   - source:fixture:la03-r01
   dependency_node_ids: []
   blocker_refs:
-  - SETUP-005-D002
+  - REMED-001
+  - REMED-002
+  - HW-001-Q007
   implementation_state: not-started
   qualification_state: blocked
 - id: obligation:extender:local-mipi-output
@@ -6433,10 +6442,9 @@ obligations:
   - source:setup-005:open-decisions
   dependency_node_ids: []
   blocker_refs:
-  - SETUP-005-D001
-  - SETUP-005-D002
   - SETUP-005-D003
   - SETUP-005-D004
+  - REMED-001
   implementation_state: not-started
   qualification_state: blocked
 - id: obligation:extender:optional-wifi-backend
@@ -6593,7 +6601,7 @@ obligations:
   dependency_node_ids:
   - subsystem:agon-vdp:primary-vdp-transport
   blocker_refs: []
-  implementation_state: not-started
+  implementation_state: in-progress
   qualification_state: planned
 - id: obligation:extender:stock-command-stream-boundaries
   scope: compatibility-critical

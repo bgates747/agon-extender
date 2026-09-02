@@ -2,15 +2,22 @@
 
 ## State
 
-- Status: In progress — three r01 physical attempts failed during the explicit
-  `EMOS MODE EXTENDED` preparation transaction. A subsequent two-point
-  diagnostic sampled no source-side or destination-side clock transition, but
-  the intended READY-isolated fixture was not physically established and the
-  run cannot select a discriminator branch. A
-  source-and-capture audit preserves Legacy VDU routing but finds that P4
-  asserts `READY_N` before EMOS activation, contrary to strict Legacy
-  electrical absence. Review of the source-side result and an Author-approved
-  activation correction gate the next retry.
+- Status: In progress — the three r01 physical attempts failed and the later
+  two-point diagnostic did not establish its intended READY-isolated fixture.
+  The pre-activation corrective action therefore remains open, and the missing
+  r01 CLOCK observation remains unresolved. The Author rejected
+  `PORT-008-D001`: no receive-only Legacy listener or dedicated no-CTS
+  bootstrap sender will become the production path. `PORT-008-D002` instead
+  accepts a production-equivalence boundary: replace rather than repair the
+  exact prototype adapters, exercise only the production forward-parallel data
+  plane on r01 through an identified fixed-backend qualification composition,
+  and defer activation, UART return, response/sysvar, and electrical claims to
+  the intended circuit. The P4 production data plane and the EMOS ordinary and
+  fixed software compositions are now integrated and source-frozen in
+  `e134f3d` and EMOS `b823e0e`. Their recorded pre-freeze build results are
+  implementation evidence only. Production-object provenance, target-
+  runtime behavior, activation, UART return and response integration, artifact
+  identity, deployment, and physical work retain their existing gates.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -90,9 +97,41 @@ protocol into the product design.
 9. Keep diagnostics off the protocol return stream and preserve legacy mode's
    requirement that Extender be logically and electrically absent.
 
+## Decision register
+
+| Decision | Question | Recommendation | State | Downstream effect |
+|---|---|---|---|---|
+| `PORT-008-D001` | How can EDP hear the explicit EMOS activation request when r02 currently disables every Agon-to-P4 path in Legacy and uncommitted state? | Former proposal: assert only the common-UART Agon-to-P4 enable as a receive-only listener and use a dedicated no-CTS EMOS bootstrap sender. | Rejected by the Author, 2026-09-01 | Do not implement or reconcile the listener exception. The all-controls-released Legacy rule and corrective action remain binding; production activation requires an intended-circuit solution. |
+| `PORT-008-D002` | Which current-circuit work can execute intended production code without promoting an r01 workaround? | Implement new epoch-preconditioned production forward-parallel objects and invoke them through a separately identified fixed-backend qualification composition; add no r01 behavior to the product and make no activation, UART, return, or r02 electrical claim. | Accepted by the Author, 2026-09-01 | Resolves `REMED-002-D003` in favor of replacement rather than repair/promotion of the prototype adapters. Production data-plane implementation and host tests may be separately authorized; physical and artifact gates remain. |
+
+The rejected alternative and source trace remain in the task-local
+[activation bootstrap design](PORT-008/activation/README.md). The accepted
+current-circuit boundary, exact hardware/code matrix, permissible tests, and
+stop gates are in the
+[production-equivalence audit](PORT-008/production-equivalence/README.md).
+
+The activation questions remain deferred until `HW-001-Q010` supplies an
+accepted intended-circuit request path. They do not block the bounded production
+forward-parallel data-plane work selected by D002:
+
+1. `PORT-008-Q001` — activation grammar, version, integrity, transaction
+   identity/replay behavior, deadlines, retries, bounded decoding, and the
+   exact sender behavior required by the selected request carrier;
+2. `PORT-008-Q002` — request, P4 readiness response, EMOS confirmation,
+   transport-epoch, and EMOS-only formal-mode commit ordering;
+3. `PORT-008-Q003` — bounded response staging and fail-back for General Poll
+   as the first post-commit ordinary-VDU canary under current authority; and
+4. `PORT-008-Q004` — coordinated shutdown, P4 reset, eZ80-only reset, stale
+   epoch rejection, parser invalidation, and clean retry.
+
 ## Work
 
-### Prototype tranche — Exclusive Extended response vertical slice
+### Historical/contained prototype tranche — Exclusive Extended response vertical slice
+
+The imperative text in this tranche is retained as historical design and run
+provenance. It does not authorize another r01 implementation, flash, fixture
+change, or powered retry; the later corrective-action and activation stop gates
+control all further execution.
 
 Before freezing the complete multi-mode D003 contract, build a narrowly scoped
 Exclusive Extended learning prototype. This is code-led architecture evidence,
@@ -164,7 +203,12 @@ wire contracts and memory safety. It must not turn into a survey-only planning
 exercise before the first bounded implementation, nor may experimental code be
 promoted into the product architecture merely because it runs.
 
-### Prototype execution record
+### Historical prototype execution record — rejected/superseded
+
+The dated entries in this section preserve the predecessor investigation and
+candidate lineage. They do not describe a current build, selectable profile,
+procedure, or qualification authority; the Immediate Work 2 chain below owns
+the replacement status.
 
 #### 2026-08-29 — P4 forward boundary checkpoint
 
@@ -733,7 +777,11 @@ The containment record is
    retry, the Author must review a bounded actor-explicit activation design
    that keeps every P4-to-Agon signal released in Legacy, permits only a
    deliberate EMOS request before commit, and fails back to Legacy. The
-   missing physical `CLOCK` cause remains a separate required diagnosis.
+   missing physical `CLOCK` cause remains a separate required diagnosis. The
+   later proposed D001 Dormant-listen row intentionally conflicts with this
+   original literal net set. That sentence recorded the decision condition at
+   diagnosis time; the Author subsequently rejected D001, and `HW-001-Q010`
+   now owns the intended-circuit request-path requirement.
 7. **Prepared physical discriminator.** The subsequently authorized
    [READY-isolated two-point CLOCK diagnostic](PORT-008/forward-r01/proposed-clock-discriminator.md)
    changes no firmware or SD content. It observes eZ80 PD5 and P4 GPIO14 in
@@ -778,6 +826,248 @@ The containment record is
    pre-activation READY defect remains contained by `CA-2026-09-01-001`; no
    corrective firmware or wiring is authorized by this diagnostic.
 
+#### 2026-09-01 — Activation design-only pass
+
+1. The accepted r02 truth table releases both Agon-to-P4 forward enables, the
+   P4-to-Agon UART-return enable, and `READY_N` while Legacy is committed or a
+   transaction is uncommitted. The accepted pull-discovery rule nevertheless
+   requires EDP to receive an explicit EMOS request before driving a response.
+   No request can cross the accepted no-path row; proactive READY merely
+   reverses ownership and remains prohibited.
+2. `PORT-008-D001` proposed at this pass the minimum firmware-capable
+   correction: for
+   controlled beta only, P4 asserts the common-UART Agon-to-P4 enable as a
+   bounded input-only activation listener while UART return, parallel forward,
+   and READY remain released. P4 initializes the UART receive side and decoder
+   before asserting that enable and releases it before teardown. Because the
+   disabled UART-return bank also disconnects P4 RTS from `PC3/CTS1`, the first
+   request requires a bounded dedicated EMOS sender that does not wait on CTS.
+   Enabling U1 adds no incremental PC0/PC2 input load, but exposes those levels
+   to P4 and actively sinks one Agon-domain control, changing the corrective-
+   action condition and accepted truth-table/quiescence wording. It therefore
+   requires Author review plus corrective-action and architecture/hardware
+   reconciliation and does not close `HW-001-Q007` or qualify strict V1 Legacy
+   absence.
+3. Keeping the no-path row instead requires a new hardware arm/request path.
+   A complete parallel listener would expose more pins and cannot return
+   identity/capability data without another epoch; network, browser, timed, and
+   operator-side arming violate EMOS pull-discovery ownership.
+4. The task-local activation record preserves the constrained state envelope,
+   deterministic host/source oracles, later physical-evidence boundary, and
+   four downstream questions covering control grammar, EMOS-only commit
+   ordering, post-commit General Poll failure handling, and reset/shutdown.
+   They were unselected at the conclusion of this pass; the Author disposition
+   below supersedes its recommendation.
+5. The former recommendation would have moved decision-bearing activation work
+   to the current common-UART/r02 topology. Because it changed accepted truth-
+   table interpretation and test behavior, acceptance would have required new
+   artifact identities and same-turn CA/ADR/architecture/HW-001 reconciliation.
+   Existing r01 adapters and failures remain predecessor evidence or bounded
+   diagnostic inputs only. The missing physical r01 CLOCK cause remains a
+   separate required diagnosis or explicit withdrawal gate before PORT-008 can
+   close; this pass did not authorize that physical work. No source, protocol
+   version, hardware profile, fixture, procedure, build, deployment, or powered
+   state changed. Files outside that historical pass's then-authorized scope
+   remained untouched; this is not a current audit exclusion.
+
+#### 2026-09-01 — Author disposition and production-equivalence audit
+
+1. The Author rejected D001. EDP/P4 firmware will not assert a receive-only
+   common-UART forward enable in Legacy, and EMOS will not gain a dedicated
+   no-CTS bootstrap sender for that workaround. Accepted Legacy and corrective-
+   action conditions remain unchanged. An intended-circuit solution must make
+   an EMOS-originated request observable without turning the beta exception
+   into production behavior.
+2. The Author accepted D002's development boundary. R01 and r02 share the exact
+   forward data, CLOCK, VALID, READY endpoint pins and logical polarities. In a
+   stable active-parallel epoch, the intended GPIO15-low, GPIO17-low,
+   GPIO21-released tuple also functions on r01 because GPIO17 is unconnected
+   and GPIO15 enables the r01 D0/D1 forward buffer. Production sender, PARLIO,
+   Stream, parser, display, and browser components can therefore execute
+   unchanged on r01 from that epoch boundary inward.
+3. R01 cannot execute the intended full-duplex UART state safely: the r02
+   GPIO15-low/GPIO21-low UART tuple would enable opposing r01 PC1 drivers.
+   Activation, UART return, RTS/CTS, General Poll confirmation, MOS response
+   state, mode transitions, break-before-make electrical behavior, reset,
+   power, isolation, and r02 timing must not be claimed from r01.
+4. The fixed-backend qualification caller/profile may supply only the active-
+   epoch precondition. It must be separately identified and excluded from
+   release; it may add no application command, wire grammar, r01 product
+   branch, discard-success production output, or supported EMOS bypass.
+5. At disposition time, no complete P4 or EMOS PORT-008 adapter was promoted.
+   The selected code
+   boundary separates P4 epoch-control, bounded transactional PARLIO ingress,
+   composite duplex Stream, UART return, and activation roles; EMOS receives a
+   new epoch-preconditioned record engine below its existing semantic
+   dispatcher. The detailed task-local audit owns the object boundary, exact
+   test matrix, evidence gates, and must-wait list.
+6. The audit also records an inherited RST 18 return-value discrepancy:
+   official documentation says bounded mode returns the last byte, while
+   official MOS and current EMOS return zero after success. The production
+   factoring must not silently change de-facto behavior; no upstream correction
+   or broad regression work is selected now.
+7. No source, protocol, hardware artifact, fixture, procedure, build,
+   deployment, or physical state changed. Files outside that disposition-time
+   evidence set were not used as authority or modified. This is a historical
+   scope statement, not a current audit exclusion.
+
+### Immediate Work 2 execution chain — production forward data plane
+
+The Author authorized execution on 2026-09-01. This chain implements D002 and
+is the immediate PORT-008 work queue. It replaces the exact prototype adapters;
+it does not repair or promote them.
+
+1. [x] **2.a — Freeze the executable boundary.** Use the task-local
+   production-equivalence audit as the design input. Keep the active parallel
+   epoch as an explicit precondition; exclude activation, UART return delivery,
+   response/sysvar integration, physical deployment, and intended-circuit
+   electrical qualification.
+2. [x] **2.b — Implement the production P4 data plane.** EDP/P4 code must
+   separate shared-pad/control ownership, transactional PARLIO ingress,
+   flattened byte queueing, the retained parser-facing Stream, and an
+   out-of-band output-fault latch. Host fakes exercise the same maintained
+   classes; production code contains no r01 or test-success conditional.
+3. [x] **2.c — Implement the production EMOS data plane.** EMOS/eZ80 code must
+   separate local parallel-epoch pin ownership from the record hot loop, split
+   arbitrary bounded RST 18 streams below the physical-record limit without a
+   wire envelope, bound READY waits, preserve raw byte and ABI behavior, and
+   avoid whole-record interrupt exclusion. EMOS task `INTEG-002` owns the
+   repository-local implementation.
+4. [x] **2.d — Build the non-release fixed-backend composition.** A
+   qualification-only P4 top level and EMOS profile may procedurally assert the
+   externally prepared peer/active-epoch precondition; EMOS does not detect or
+   validate that condition. They must call the production entry points, emit no
+   activation or precommit General Poll, add no supported application bypass,
+   and remain excluded from release manifests.
+5. [ ] **2.e — Prove production-object identity.** Record target compiler,
+   relevant flags/defines, compile commands, object/archive-member digests,
+   linked symbols, and normalized disassembly. Qualification and eventual
+   release compositions must consume byte-identical production target objects;
+   host-native builds are same-source behavioral evidence only.
+6. [ ] **2.f — Validate and hand off.** Run deterministic P4 host tests, EMOS
+   source/emulator/link checks, target compile/link checks that require no
+   hardware, fail-closed evidence-tool tests, local-link/privacy/diff checks,
+   and an adversarial boundary review. Record exact remaining blockers and do
+   not assign deployment identities or perform a physical operation.
+
+**Immediate Work 2 stop gate:** Stop before any flash, SD mutation, wiring or
+probe change, reset, power operation, or decision-bearing physical run. Also
+stop before selecting production activation grammar/carrier, enabling UART
+return on r01, or representing captured P4 output as delivered MOS traffic.
+
+#### 2026-09-01 software-only execution status
+
+1. Work 2.b is implemented. The maintained P4 boundary now consists of
+   `P4EpochHardware`, transactional `P4ParlioIngress`, `P4ParallelDataPlane`,
+   an allocation-free flattened SPSC queue, `ExtenderVdpStream`, and a shared
+   first-fault/cancellation channel. The ESP32-P4 target adapter owns the exact
+   data, CLOCK, VALID, READY, forward-bank, return-bank, and shared-UART pads.
+   It removes the GPIO12/GPIO11 UART output owners before asserting either
+   parallel-forward enable, arms PARLIO before READY, uses release/acquire
+   callback publication, bounds task waits, and unwinds direction before
+   receiver teardown. None of these maintained objects contains an r01 or
+   test-success branch.
+2. The non-release P4 half of Work 2.d also exists. Environment
+   `p4-port008-nonrelease-qualification` links those production objects into
+   the real retained `VDUStreamProcessor`, display, frame, snapshot, network,
+   and browser closure. Its fixed caller supplies only a live parallel epoch;
+   its output binding visibly captures accepted bytes, latches every output
+   failure, owns no UART, and is explicitly forbidden by the ordinary browser
+   and forward source manifests. This is a compile/link composition, not an
+   approved artifact or physical-run identity.
+3. The sanitizer host suite passes 25 cases and the complete task-local Python
+   discovery passes 46 tests. Coverage includes every byte value, physical-
+   record flattening, maximum-record reservation, overlong-record rejection,
+   partial-start cleanup/retry, active-record timeout versus indefinite idle,
+   cancellation/record-admission arbitration, one-byte advertised-read
+   preservation, stale-epoch rejection, output-fault cancellation, owner
+   cleanup-before-revocation, false-live boot rejection, and concurrent SPSC
+   publication. The ESP32-P4 composition builds and links with
+   the four intended transport objects and excludes the prototype and
+   disconnected Stream objects. The target build is API/source-closure
+   evidence only; real GPIO, stopped-CLOCK, stuck-VALID, timing, and peripheral
+   reset behavior still require a separately authorized target-runtime run.
+4. Work 2.c is implemented in EMOS under `INTEG-002`. The production epoch
+   owner, raw 4096-byte-chunking record engine, target GPIO helpers, bounded
+   elapsed-time and stalled-clock waits, interrupt-safe lifecycle, and private
+   semantic-route lease are integrated with the ordinary RST 10, bounded and
+   delimiter RST 18, and C-runtime dispatcher paths. Backend zero retains the
+   onboard UART path; backend two reaches only the common production parallel
+   route. `open_UART1()` now reserves the same lifecycle lock before its first
+   flag, Port C, or UART mutation and releases it only after publishing UART1
+   active, so a UART transition and a parallel epoch cannot both win.
+5. Work 2.e remains open. The task-local checker now deliberately reports only
+   preliminary compile-output/final-symbol similarity. It always reports
+   `equivalence_proved: false`; it does not prove linker contribution, Git
+   cleanliness/commit provenance, target/tool authority, or the direct eZ80
+   assembler object. A genuine linker-provenance gate and an eventual release
+   composition are still required.
+6. Work 2.f remains open. Lower-level output-fault tests do not replace the
+   required real retained-parser General Poll and Mode Information failure
+   injection at every emitted byte. No flash, SD mutation, emulator behavior
+   run, deployment identity, wiring/probe change, reset, power operation, or
+   physical transfer occurred in this pass.
+7. A fresh v10 isolated clean-scope snapshot contains 146 files and reports
+   prepared-source identity
+   `0e24b06abdb322fdb4e681a21242ccfebfc8ea65+tracked-dirty`. The complete EMOS
+   host suite passes 64 tests. The ordinary image is 116,520 bytes at SHA-256
+   `a4c2d3f87286dd32e7b2e3a7b30786ae4156208e2440ba096c733f76256d09a4`;
+   its ELF SHA-256 is
+   `8315db0fd2f519a16d35d4b668d74ed9b6d52e65cee0c1ca947acf9b64f88373`
+   and its map SHA-256 is
+   `75a5a45de6099c1e12596752000defde76e5b46efb30705988792f5218179357`.
+   The non-release fixed image is 116,966 bytes at SHA-256
+   `4f0c0db7d419c6a0f17fe9d07dd3bd2107fb110371fa0a44b444c1e3417d2e66`;
+   its ELF SHA-256 is
+   `7186c10373f6f642eedc0949fb443cd5dd7b6eedeed43a44b86f877c78bb382d`
+   and its map SHA-256 is
+   `539375306a4f830ec300131e033b556df519fd0cee9819bff63364f4ffbcc341`.
+   All five common production objects are byte-identical across the profiles.
+   The linked gates establish exact ordinary-entry-to-dispatcher and
+   dispatcher-to-production-route call edges, exact fixed-coordinator-to-
+   wrapper and wrapper-to-common-route call edges, predecessor exclusion,
+   UART1 guard presence, normal-profile exclusion of fixed-only symbols, and
+   the fixed profile's non-release identity. The linked bridge check also fixes
+   the bounded RST 18 argument and success/failure epilogue instruction shape;
+   extracted production-code host tests cover coordinator commit, recovery-
+   failure retention/retry, and public error mapping. These gates do not
+   establish clean source/tool authority, authenticated final-link object
+   provenance, release identity, runtime route selection, target execution,
+   activation or response behavior, emulator behavior, or electrical behavior.
+8. An adversarial build exposed and corrected a local EMOS wrapper defect: an
+   explicitly selected `MOS_WORKTREE` was not forwarded to the generic
+   firmware targets. Regression coverage now requires every EMOS build and
+   qualification wrapper to pass the selected worktree. This is project build
+   tooling, not an official MOS defect.
+9. An incremental P4 configure/build can leave `firmware.map` containing a
+   CMake compiler-probe link when the application ELF is already current. The
+   bounded target-closure validator fails closed on that file. The recorded
+   software result was regenerated by a clean application relink and then
+   revalidated; build success alone is not map or object-provenance evidence.
+10. The production factoring and adversarial reconciliation exposed the
+    additional local EMOS defects `PORT008-PROV-P009` through `P016`: three
+    lifecycle-publication races, verifier claim overstatement, the UART1/
+    parallel Port C serialization gap, an initially profile-optional UART1
+    guard, discarded adapter-recovery failure, and leakage of private parallel
+    statuses into the public command-error domain. All were introduced by
+    project production/integration work rather than official MOS. P012's final
+    verifier checks and P015/P016's transaction/error-domain corrections pass
+    in the v10 suite and linked builds. The integrity audit owns their exact
+    provenance and evidence boundaries.
+11. The final P4 adversarial pass exposed the additional project-created
+    `PORT008-PROV-P017` through `P021`. The first target wait treated a quiet
+    epoch as a failed record; the Stream could turn an advertised byte into
+    synthetic `0xFF` after a concurrent fault; fault publication and record
+    admission lacked one total order; the non-release owner could revoke its
+    lease after failed cleanup; and retained process-task creation failure
+    continued into boot/network publication. None has an upstream
+    implementation counterpart. The corrected boundary keeps one armed
+    advertised transaction through idle, preserves exactly one advertised
+    read, uses a nonblocking sequentially consistent admission edge with
+    quarantine/post-commit checks, retries cleanup before revocation, and
+    returns before false-live publication. Host/source/compile evidence passes;
+    target-runtime and retained-parser execution remain open.
+
 ### PORT-008.1 — Freeze transport and wiring contracts
 
 1. Extract the exact official Stream, UART, packet, timeout, flow-control, and
@@ -808,6 +1098,11 @@ the bounded prototype tranche.
    timeout, error, recovery, packet transparency, and ownership state.
 5. Update source selection, dependency graphs, compatibility matrix rows, and
    provenance-rich inline comments for every unavoidable hardware substitution.
+6. For the fixed-backend qualification build, freeze target compiler,
+   flags/defines, compile commands, and production-object digests. Require the
+   intended release compositions to consume byte-identical production target
+   objects and compare linked symbols/normalized disassembly; host-native
+   builds prove behavior but not target-object identity.
 
 ### PORT-008.3 — Implement the eZ80/MOS integration boundary
 
@@ -861,11 +1156,14 @@ before this task can gate integrated compatibility claims.
   browser-output target. It does not qualify physical ingress, General Poll,
   EMOS routing, or any Agon integration; PORT-008 must establish those claims
   through its own approved prototype and qualification gates.
-- `SETUP-005-D001` and `D002` authorize only the bounded Exclusive Extended
-  prototype above. D003 remains open and gates production response parsing,
-  generalized MOS sysvar integration, Exclusive Compatible, Dual's separate
-  EDU result domain, and broad compatibility qualification. Prototype findings
-  remain visibly provisional until the Author accepts their D003 disposition.
+- `SETUP-005-D001` and `D002` historically authorized only the bounded
+  Exclusive Extended prototype above. `PORT-008-D002` now supersedes its
+  implementation disposition with new production data-plane objects and a
+  non-release fixed-backend qualification composition. SETUP-005-D003 remains
+  open and gates production response parsing, generalized MOS sysvar
+  integration, Exclusive Compatible, Dual's separate EDU result domain, and
+  broad compatibility qualification. Prototype findings remain visibly
+  provisional until the Author accepts their D003 disposition.
 - QUAL-002 begins only after a controlled transport candidate exists and gates
   final qualification of assembled-system power/reset behavior.
 - PORT-008 Gate 2 is required before PORT-003 Gate G or later tasks claim
@@ -892,10 +1190,12 @@ firmware dependencies it cannot settle electrically. No stock-UART bench test
 against `light2-harness-r01` is authorized or useful. Construction of the r02
 assembly is permitted, but powered tests remain procedure-gated.
 
-The final task split remains under SETUP-005. This boundary does not change
-PORT-008's currently approved Exclusive Extended split-link work; it
-prevents that work and its harness from being mistaken for the newly identified
-stock-UART profile.
+The final task split remains under SETUP-005. Historically, this boundary did
+not change PORT-008's then-approved Exclusive Extended split-link prototype; it
+prevented that work and its harness from being mistaken for the newly
+identified stock-UART profile. D002 now supersedes the prototype's
+implementation disposition: retain it as evidence and implement the production
+forward data plane behind the accepted fixed-backend qualification boundary.
 
 ## Explicit exclusions
 
@@ -931,8 +1231,12 @@ The Author accepted the PORT-008 dispositions in
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md),
 and the pre-activation physical hold remains owned by
 [`CA-2026-09-01-001`](../decisions/CA-2026-09-01-001-port008-preactivation-ready.md).
-Nothing in this intake authorizes another firmware change, flash, powered
-transfer, protocol decision, or promotion of the fixed-purpose adapters.
+The original intake did not authorize a firmware change, flash, powered
+transfer, protocol decision, or promotion of the fixed-purpose adapters. The
+later accepted D002 boundary authorizes only the software replacement work
+   recorded above; it does not authorize a flash, powered transfer, protocol
+   decision, or promotion of either predecessor or the source-frozen but
+   unidentified replacement.
 
 1. [ ] **F004 reachability split:** With PORT-003, PORT-004, and SETUP-005,
    ensure that every audio or updater command reachable through physical
@@ -944,9 +1248,10 @@ transfer, protocol decision, or promotion of the fixed-purpose adapters.
 3. [ ] **F007 consumer:** Stage forward builds only through PORT-003's corrected
    cryptographic build-to-source authority and add an A/B rejection fixture;
    do not maintain a weaker PORT-008 provenance path.
-4. [ ] **F008 consumer:** Do not cite `light2-harness-r02` as a frozen input
-   until HW-001 reconciles its maintained schematic digest, generated view,
-   and version record.
+4. [x] **F008 consumer:** HW-001 reconciled the maintained r02 schematic
+   digest, generated complete/focused views, and version record on 2026-09-01.
+   This closes only the frozen-input identity defect; r02 remains unqualified
+   and every construction, activation, return, and physical gate stays open.
 5. [ ] **F013:** Make receiver startup transactional: represent started state
    explicitly, unwind every partially allocated/configured resource in reverse
    order, restore released outputs, and prove deterministic retry after each
@@ -965,12 +1270,24 @@ transfer, protocol decision, or promotion of the fixed-purpose adapters.
 10. [ ] Preserve the durable width, sender-cadence, fail-safe direction, and
     activation invariants from `PORT008-PROV-P002` through `P005` without
     promoting the exact prototype adapters. Keep `P006` as closed historical
-    diagnostic provenance.
-11. [ ] Close the pre-activation corrective action only after the Author
+    diagnostic provenance. Record `P007`'s upstream RST 18 documentation/source
+    mismatch without changing current de-facto behavior unless the accepted
+    Extender-specific trigger is met.
+11. [x] Record `PORT008-PROV-P008` through `P016` as local EMOS integration or
+    evidence-tool defects, retain their focused regressions, and do not treat
+    their pre-freeze build results or later source commit as target-object
+    provenance or release evidence.
+12. [x] Record `PORT008-PROV-P017` through `P021` as local P4 target,
+    data-plane, Stream, qualification-owner, or guarded boot-integration
+    defects; retain their focused regressions without treating host/source/
+    compile checks as target-runtime qualification.
+13. [ ] Close the pre-activation corrective action only after the Author
     accepts an EMOS-requested activation design, deterministic checks prove
-    fail-closed Legacy and transition behavior, a separately authorized run
-    proves all P4-to-Agon outputs released before activation, and General Poll
-    completes without an unexplained CLOCK or READY gap.
+    fail-closed Legacy and transition behavior, and General Poll completes
+    without an unexplained CLOCK or READY gap. Because D001 is rejected, a
+    separately authorized run must prove all four P4/U4 controls and P4 UART
+    TX/RTS return drivers released before the request; no Dormant-listen
+    exception is available.
 
 Every existing capture or build claim materially dependent on F007, F014, or
 F015 must receive an explicit retained, rerun, superseded, or withdrawn

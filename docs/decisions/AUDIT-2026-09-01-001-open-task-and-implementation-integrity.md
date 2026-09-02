@@ -1,12 +1,13 @@
 # AUDIT-2026-09-01-001 — Open-task and implementation integrity
 
-- Status: Complete — findings await Author disposition
+- Status: Complete — findings dispositioned or explicitly deferred
 - Date: 2026-09-01
 - Trigger: Author-requested adversarial review of every open task and related code
 - Scope: All 18 open tasks and their directly related architecture,
   implementation, validators, procedures, evidence, and version records
 - Owning task: AUDIT-003
 - Provenance extension: 2026-09-01
+- Work 2.a extension: 2026-09-01
 
 ## Purpose and authority boundary
 
@@ -19,9 +20,9 @@ expose.
 The audit identifies observed defects and proposes disposition owners. It does
 not amend architecture, accept a mechanism, modify a task's scope, authorize
 implementation, promote evidence, qualify hardware, or permit a physical run.
-Each finding is explicitly deferred pending Author disposition. Accepted work
-must be promoted into the named task, applicable ADR or normative architecture,
-and current development log before implementation begins.
+At review time each finding was deferred pending Author disposition. Subsequent
+accepted work or explicit deferral is recorded in the named task, applicable
+ADR or normative architecture, and current development log.
 
 ## Reviewed snapshot
 
@@ -48,9 +49,9 @@ and current development log before implementation begins.
 - **Prospective risk:** no current implementation defect is proved, but the
   named task must test or resolve the risk before selecting a design.
 
-Every finding below is **deferred pending Author disposition**. “Proposed
-owner” identifies where accepted actionable work should live; it does not
-silently add work to that task.
+At audit creation every finding below was deferred pending Author disposition.
+Later dispositions are recorded beside affected findings and in REMED-002;
+“proposed owner” never silently adds work to a task.
 
 ## Code-defect provenance extension
 
@@ -66,21 +67,24 @@ unpinned future release.
 
 | Finding | Provenance classification | Maintained-surface status |
 |---|---|---|
-| F001 | Present in upstream `vdp-gl`; independently reimplemented and extended by EDP | P4 display-controller code is product-directed |
-| F002 | Present in upstream `vdp-gl`; independently reimplemented and amplified by EDP | P4 palette, Copper, and browser publication are product-directed |
+| F001 | Present in upstream `vdp-gl`; independently reimplemented and extended by EDP | Recorded; no local correction without deterministic D012 trigger evidence |
+| F002 | Present in upstream `vdp-gl`; independently reimplemented with plausible EDP amplification | Recorded; no local correction without deterministic D012 trigger evidence |
+| F022 | Present in official VDP v2.16.0 together with pinned vdp-gl's raw queued operands | Recorded upstream behavior; correction and regression design deferred under D012 |
 | F003 | Present in upstream ESP-IDF; exposed by EDP's documented API use | Wired EDP browser service is product-directed |
 | F004 | Absent upstream; created by making disconnected-only EDP stubs reachable | Audio stub is temporary; an omitted updater must still be framing-safe |
-| F005 | Created during PORT-008 porting; upstream PARLIO behaves as documented | Current forward receiver is prototype-only |
+| F005 | Created during PORT-008 porting; upstream PARLIO behaves as documented | Rejected predecessor only; replacement now distinguishes indefinite idle from a bounded active-record stall after P017, target-runtime proof open |
 | F006 | Created in the project qualification validator | Durable project tooling, not product firmware |
 | F007 | Created in the project build stager | Durable project tooling, not product firmware |
 | F011 | Created in project test runners by misusing intentional UBSan recovery | Qualification tooling, not product firmware |
 | F012 | EDP loses ownership on a legitimate but incompletely documented ESP-IDF failure | Wired EDP browser service is product-directed |
-| F013 | Created during PORT-008 porting; regression from the predecessor receiver | Current forward receiver is prototype-only |
+| F013 | Created during PORT-008 porting; regression from the predecessor receiver | Rejected predecessor only; transactional replacement and qualification-owner cleanup were corrected through P020/P021, target-runtime proof open |
 | F014 | Created in uncommitted PORT-008 analyzers | Prototype evidence tooling only |
-| Existing pre-activation corrective action | Created by P4 boot integration; absent from EMOS and official upstream | Current forward receiver is prototype-only |
+| Existing pre-activation corrective action | Created by P4 boot integration; absent from EMOS and official upstream | Rejected predecessor retired; production activation correction open |
 
-For the twelve rows above, F001--F003 are proved upstream defects with local
-EDP exposure or reimplementation. F004, F005, F012, F013, and the
+For the thirteen rows above, F001--F003 and F022 are source-proved upstream
+defects with local EDP exposure or reimplementation. That provenance does not
+prove a distinct Extender runtime manifestation for F001, F002, or F022. F004,
+F005, F012, F013, and the
 pre-activation READY defect are project-created runtime or integration
 defects. F006, F007, F011, and F014 are project-created tool defects. F012 also
 exposes an ESP-IDF documentation inconsistency, but EDP's loss of the live
@@ -100,22 +104,44 @@ the updater's mode-dependent payload. Those contracts make F004 a framing
 defect when its empty handlers become reachable; unsupported feature scope
 does not permit leaving command bytes in the shared parser stream.
 
-### Provenance of previously recorded PORT-008 code defects
+### PORT-008 provenance observations
 
 The main matrix covers defects newly established by this audit plus the open
-pre-activation corrective action. PORT-008 already recorded the following
-defects during its physical investigations. They are included here so the
-upstream/local and permanent/prototype boundaries are complete rather than
-silently excluding code that had already been corrected or contained.
+pre-activation corrective action. PORT-008 recorded P001 through P006 during
+its physical investigations, found P007 during the later production-
+equivalence source trace, found P008 while building the replacement EMOS
+objects, found P009 through P014 during adversarial production factoring and
+dispatcher/UART integration, and found P015/P016 in the final coordinator
+transaction review. The later P4 adversarial pass found P017 through P021 in
+the new target/data-plane, retained-Stream, qualification-owner, and boot
+integration. They are included here so the upstream/
+local and permanent/prototype boundaries are complete rather than silently
+excluding code that had already been corrected, contained, or found
+discrepant.
 
 | Recorded defect | Provenance classification | Maintained-surface status |
 |---|---|---|
 | `PORT008-PROV-P001` — EMOS UART divisor overflow | Latent official MOS v3.0.2 source portability defect exposed by AgonDev | Corrected permanently in EMOS |
-| `PORT008-PROV-P002` — EMOS `_port008_length` storage overlap | Created by the EMOS PORT-008 adapter | Exact adapter is prototype-only; width invariant is durable |
-| `PORT008-PROV-P003` — EMOS PORT-008 clock cadence | Created by the EMOS adapter; regression from qualified predecessor timing | Exact adapter is prototype-only; timing rule is durable |
-| `PORT008-PROV-P004` — P4 direction-enable omission | Created by the EDP PORT-008 adapter; regression from predecessor ownership | Current adapter is prototype-only; fail-safe ownership is durable |
-| `PORT008-PROV-P005` — P4 pre-activation READY | Created by EDP boot integration | Current adapter is prototype-only; EMOS-owned activation is durable |
+| `PORT008-PROV-P002` — EMOS `_port008_length` storage overlap | Created by the EMOS PORT-008 adapter | Exact adapter is retired from production closure; replacement preserves exact-width bounded counts and chunking |
+| `PORT008-PROV-P003` — EMOS PORT-008 clock cadence | Created by the EMOS adapter; regression from qualified predecessor timing | Exact adapter is retired from production closure; replacement preserves the durable cadence rule |
+| `PORT008-PROV-P004` — P4 direction-enable omission | Created by the EDP PORT-008 adapter; regression from predecessor ownership | Replacement target owner implements fail-safe direction and teardown; predecessor remains prototype evidence |
+| `PORT008-PROV-P005` — P4 pre-activation READY | Created by EDP boot integration | Fixed data-plane composition gates readiness on its supplied active epoch; production activation and corrective action remain open |
 | `PORT008-PROV-P006` — P4 ZDI recovery refusal path | Created in a local temporary wrapper and corrected before its first commit | Diagnostic-only; never product EDP or EMOS |
+| `PORT008-PROV-P007` — bounded RST 18 return-value mismatch | Present between official Agon documentation and official MOS source; not created by Extender | Record and defer; do not silently change de-facto success behavior while factoring the production parallel engine |
+| `PORT008-PROV-P008` — EMOS selected-worktree forwarding omission | Created in the EMOS repository build wrapper; generic `mos-agondev` honored the input it actually received | Corrected in durable EMOS build tooling with regression coverage |
+| `PORT008-PROV-P009` — epoch commit erased a concurrent writer fault | Created in the project-owned EMOS parallel epoch implementation; no official-MOS counterpart exists | Corrected with atomic begin/commit and contention regression |
+| `PORT008-PROV-P010` — epoch commit overwrote a concurrent leave | Created in the project-owned EMOS parallel epoch implementation; no official-MOS counterpart exists | Corrected by invalidating in-progress entry and failing commit closed |
+| `PORT008-PROV-P011` — rejected writer unlocked before publishing failure | Created in the project-owned EMOS lease/writer implementation; no official-MOS counterpart exists | Corrected with failure-before-unlock ordering and regression |
+| `PORT008-PROV-P012` — linked verifier claim overstatement | Created in project EMOS evidence tooling; official MOS has no parallel linked verifier | Corrected by bounding success claims, checking exact fixed-coordinator call edges and bridge ABI shapes, and retaining false-green tests |
+| `PORT008-PROV-P013` — UART1 open raced a parallel Port C epoch | Created when EMOS added a second Port C owner without serializing the inherited UART1 API; stock MOS has no competing parallel epoch | Corrected with one shared atomic reservation held across UART1 transition publication |
+| `PORT008-PROV-P014` — UART1 guard was initially profile-optional | Created in EMOS build/profile integration; the controlling macro and parallel owner have no upstream counterpart | Corrected by making the guard unconditional and adding native-ZDS/AgonDev parity checks |
+| `PORT008-PROV-P015` — failed adapter recovery could be discarded or followed by an ownership switch | Created in the project-owned EMOS mode coordinator; official MOS has no Extender adapter lifecycle | Corrected by propagating recovery failure, retaining old ownership, and retrying retained cleanup on a repeated Legacy request |
+| `PORT008-PROV-P016` — private parallel statuses escaped into the public command-error domain | Created when EMOS integration exposed project-private lifecycle statuses to a public MOS/FatFS error consumer; official `mos_error()` is correct for its supported domain | Corrected by retaining the raw diagnostic internally and mapping the public result to `EMOS_UNAVAILABLE` |
+| `PORT008-PROV-P017` — an idle target receive period was treated as a fatal record timeout | Created in the project-owned P4 target adapter; upstream PARLIO supplies primitives but no Extender record/READY policy | Corrected by keeping one armed advertised transaction through idle and starting the fatal deadline only after active `VALID_N` |
+| `PORT008-PROV-P018` — a fault between `available()` and `read()` could inject synthetic `0xFF` | Created by the project `ExtenderVdpStream` adapter violating the retained upstream parser's advertised-read expectation; the parser's cached-read behavior is inherited | Corrected with a one-byte advertised-read permit and fail-closed gating of every later byte |
+| `PORT008-PROV-P019` — fault publication raced record admission and success reporting | Created in the project-owned P4 data-plane composition; no upstream equivalent exists | Corrected with one nonblocking sequentially consistent admission edge, quarantine of a pre-fault winner, and post-commit fault/cancel/lease checks |
+| `PORT008-PROV-P020` — the qualification owner revoked its lease after an unverified cleanup attempt | Created in the project non-release qualification composition; no upstream equivalent exists | Corrected by retaining ownership and retrying idempotent teardown until success before lease revocation |
+| `PORT008-PROV-P021` — retained process-task creation failure continued into a false-live boot | Created in the project P4 boot integration; official VDP has no corresponding Extender qualification branch | Corrected by requesting transport stop and returning before boot-screen or network startup |
 
 1. Official MOS v3.0.2 at commit
    `8336409351ee5314e02801a7b72a4f1bb5282519` contains the uncast
@@ -130,33 +156,155 @@ silently excluding code that had already been corrected or contained.
 2. EMOS commit `08fec4851f8917215a83168ca4e73b54a7d3dcbd`
    introduced both ADL three-byte `BC` memory operations and a two-byte
    `_port008_length` object. Official MOS and the predecessor receiver contain
-   no such object. Committed EMOS still contains the defect; the Author's
-   current uncommitted EMOS work expands the object, rejects nonzero `BCU`, and
-   adds a linked symbol-span check.
+   no such object. At the original review boundary, committed EMOS still
+   contained the defect and the Author's then-current prototype correction
+   expanded the object, rejected nonzero `BCU`, and added a linked symbol-span
+   check. The later production composition removes the exact adapter and uses
+   an exact 16-bit bounded interface with record chunking.
 3. The same EMOS adapter commit emitted adjacent clock-high/clock-low writes
    and left CLOCK low after a record. The qualified predecessor sender instead
    establishes VALID with CLOCK high, changes data during setup, and emits
-   falling then rising phases for every byte. Committed EMOS still contains the
-   deviation; the current uncommitted EMOS work restores that cadence and
-   strengthens its source and linked checks. Official MOS has no parallel
-   sender.
+   falling then rising phases for every byte. At the original review boundary,
+   committed EMOS still contained the deviation and the then-current prototype
+   correction restored that cadence. The later production engine preserves the
+   cadence while removing the exact adapter from its source/link closure.
+   Official MOS has no parallel sender.
 4. EDP commit `c03656c87ff10d39d52ba59a9fbbf914a0bb1d73`
    introduced `ForwardParallelStream` without GPIO15/GPIO21 direction-control
    ownership even though the predecessor had explicit fail-safe release and
-   break-before-make selection. The Author's current uncommitted EDP work adds
-   those controls. It does not resolve the separate boot-time activation
-   defect recorded by the corrective action.
+   break-before-make selection. The Author's then-current prototype correction
+   added those controls; the later replacement target owner now owns direction
+   and deterministic teardown in the production data-plane composition. This
+   does not resolve the separate production-activation defect recorded by the
+   corrective action.
 5. The temporary P4-to-ZDI recovery wrapper initially routed identity refusal
    through a helper that halted the eZ80. Official `agon-recovery` remains
    passive on failed identity and is not the origin. The wrapper separated
    passive refusal from post-halt failure before the source first entered Git
    in commit `ff1814733375476e6ab0af090c11a558fa5423c7`; consequently no
    committed faulty revision exists.
+6. Official `agon-docs` commit
+   `f9806bd3cbff6ed5d1c08bef1d51fed11764b86b` says bounded RST 18 returns the
+   last displayed byte in A. Official MOS
+   `5f67b1ca77eb7a77d3b37cc7b029db51f0d1548e` loads A from B, ORs C after the
+   final decrement, and therefore returns zero on successful length-mode
+   completion. EMOS's current onboard path and production parallel bridge also
+   return zero on success. This is an upstream documentation/source divergence,
+   not a defect introduced by the port. No distinct Extender manifestation is
+   established.
+   Under `PORT-003-D012` and `REMED-002-D004`, correction and broad regression
+   design are deferred; the parallel-engine factoring must avoid changing the
+   current de-facto result accidentally.
+7. The EMOS repository `Makefile` accepted a `MOS_WORKTREE` selection but its
+   firmware and qualification targets did not forward that value to the
+   generic `mos-agondev` wrapper. The first isolated fixed-profile build
+   therefore consulted the generic wrapper's default source tree instead of
+   the caller-selected prepared tree. `mos-agondev` used its received inputs as
+   designed; the omission was created in EMOS integration tooling. Every EMOS
+   build and qualification target now forwards the selection explicitly, and
+   repository-local tests require that propagation. The failed first attempt
+   supplied no artifact or qualification evidence.
+8. The first project-owned epoch commit could publish success after an
+   interrupting writer had recorded a lifecycle fault, erasing that fault. No
+   official MOS source implements this epoch, lease, or parallel writer. EMOS
+   now begins and commits entry through IFF-preserving atomic helpers; commit
+   observes contention and fails closed. This is `PORT008-PROV-P009`.
+9. The same initial entry path could overwrite an interrupting leave request
+   when the suspended entry resumed. This is likewise local to the new EMOS
+   epoch implementation. Leave now invalidates the in-progress entry, and the
+   atomic commit refuses publication. This is `PORT008-PROV-P010`.
+10. An initial rejected stale or nested writer released its lifecycle lock
+    before publishing the deferred failure. A newly admitted caller could
+    therefore observe a false-clean interval. Official MOS has no corresponding
+    lease/writer path. EMOS now publishes the failure before unlock and retains
+    an adversarial ordering regression. This is `PORT008-PROV-P011`.
+11. Initial linked-image verifiers described source/object origin, linker
+    contribution, or semantic reachability more broadly than their actual
+    symbol and instruction checks established. Those tools are project-owned;
+    official MOS supplies no parallel verifier. Their checks and success text
+    now distinguish exact structural dispatcher, fixed-coordinator, bridge-ABI,
+    and guard properties from unproved provenance, target-runtime selection,
+    and physical behavior. False-green tests cover the exact newly claimed
+    shapes. This is `PORT008-PROV-P012`.
+12. Official MOS `open_UART1()` legitimately changes PC0/PC1 mux and UART state
+    without a parallel-epoch guard because stock MOS has no second Port C owner.
+    The race appeared only when EMOS added project-owned parallel ownership
+    without initially serializing the inherited API. EMOS now uses the same
+    atomic lifecycle reservation for UART1 open and epoch admission, holds it
+    across every serial-flag, Port C, and UART mutation, and releases it only
+    after publishing UART1 active. This local integration defect is
+    `PORT008-PROV-P013`, not an upstream MOS defect.
+13. The first UART1 correction was conditional on a macro supplied by the
+    AgonDev profiles even though the maintained native ZDS project also linked
+    the production parallel objects. Native builds could therefore omit the
+    guard. The macro and competing parallel owner are both project additions;
+    official MOS has no equivalent profile split. EMOS made the guard
+    unconditional and added native-ZDS/AgonDev parity regression coverage.
+    This is `PORT008-PROV-P014`.
+14. The initial fixed-profile coordinator discarded a failed adapter-recovery
+    result after entry failure, overwrote the raw recovery diagnostic with the
+    earlier prepare/ready result, and could change selected-adapter ownership
+    after recovery failed. A failed cleanup could also leave the logical mode
+    at Legacy while a repeated Legacy request returned false no-op success.
+    Official MOS has no Extender adapter lifecycle or equivalent transaction.
+    EMOS now propagates recovery failure, retains the old mode, backend, and
+    adapter ownership, and retries retained fixed-route cleanup on a repeated
+    Legacy request. This is the local `PORT008-PROV-P015` defect.
+15. The initial coordinator returned private parallel lifecycle statuses in
+    the `0xE0..0xE8` range through the public EMOS command path. The inherited
+    `mos_error()` consumer supports the official MOS/FatFS result domain and
+    therefore could not print those project-private values. Upstream MOS is
+    correct for its domain and has no parallel lifecycle status. EMOS now
+    retains the exact private failure in `lastStatus` while mapping the public
+    result to printable `EMOS_UNAVAILABLE`. This is the local
+    `PORT008-PROV-P016` integration defect.
+16. The first target adapter applied its five-second completion timeout even
+    while no sender had asserted `VALID_N`. An authorized but quiet epoch could
+    therefore fault and stop without any record, and a periodic release/re-arm
+    response would race the EMOS sender after it observed `READY_N`. The target
+    now keeps the same armed PARLIO transaction and asserted readiness through
+    idle, polls cancellation in bounded slices, and begins the fatal deadline
+    only when active `VALID_N` proves a record started. This policy belongs to
+    Extender, not upstream PARLIO, so this is local `PORT008-PROV-P017`.
+17. The retained upstream parser caches `Stream::available()` and later casts
+    `Stream::read()` to `uint8_t`. The first project Stream adapter rechecked
+    the fault latch in `read()`, so a concurrent output fault could change an
+    already-advertised byte into `-1`, which the inherited parser consumed as
+    synthetic `0xFF`. The local adapter now permits exactly that advertised
+    byte and blocks later bytes. This contract violation, not the inherited
+    parser behavior, is `PORT008-PROV-P018`.
+18. Initial record commit checked health and lease state separately from its
+    queue-head publication. A concurrent output fault could therefore admit a
+    record or allow the service call to report success after cancellation. The
+    project data plane now uses one sequentially consistent cancellation edge:
+    a record whose admission check wins first may finish publication but is
+    quarantined, while cancellation that wins first prevents admission. Final
+    health, lease, and cancellation checks forbid post-fault success. This is
+    local `PORT008-PROV-P019`; the nonblocking edge also avoids a parser/service
+    priority-inversion spin.
+19. The first non-release qualification owner ignored
+    `P4ParallelDataPlane::stop()` failure and revoked its fixed epoch
+    immediately. That could abandon
+    target resources while falsely relinquishing authority. The sole owner now
+    retries idempotent teardown and preserves the lease until cleanup succeeds
+    on every startup and service exit. This qualification-only integration
+    defect is `PORT008-PROV-P020`, not an upstream firmware defect.
+20. On retained process-task creation failure, the P4 top level requested
+    cancellation but continued to the boot screen and network service. The
+    resulting device could look live without a parser consumer. The branch now
+    requests qualification stop and returns before those publications. This
+    project boot-integration defect is `PORT008-PROV-P021`.
 
 None of these classifications promotes the fixed-purpose PORT-008 adapters or
-temporary recovery image into production. EMOS's mode coordinator and ordinary
-Legacy route remain separate permanent code and were not the source of the
-PORT-008 adapter, P4 readiness, or recovery-wrapper defects.
+temporary recovery image into production. For P002 through P006, EMOS's mode
+coordinator and ordinary Legacy route were not the source of the adapter, P4
+readiness, or temporary recovery-wrapper defects. P009 through P016 separately
+identify defects introduced and corrected while building or integrating the
+new permanent EMOS production boundary; P015 is specifically in that
+coordinator's new fixed-adapter transaction. P017 through P021 identify later
+P4 production-data-plane or qualification/boot integration defects. P017--P019
+are in maintained production objects; P020 is confined to the explicitly
+non-release composition; P021 is in its guarded boot branch.
 
 After Author disposition, the exact then-current dirty P4 and EMOS deltas were
 preserved as historical binary patches under
@@ -196,7 +344,11 @@ the second failed run is not reconstructed by the later combined snapshot.
   composition, which upstream does not have.
 - Product boundary: `P4DisplayController` is intended EDP code. A future
   upstream `vdp-gl` fix cannot repair this independent implementation.
-- Proposed owner: PORT-003.
+- Current disposition: Recorded under PORT-003-D012. Do not correct or design
+  the isolating regression now; reopen only if deterministic comparison shows
+  that selected Extender scheduling or presentation activates the failure in a
+  way regular VDP operation does not, or the finding blocks a selected
+  Extender function.
 
 ### `INTEGRITY-AUDIT-F002` — Palette and Copper mutation race frame publication
 
@@ -205,10 +357,20 @@ the second failed run is not reconstructed by the later combined snapshot.
   directly through `agon_screen.h`. The P4 controller forwards those calls to
   `PaletteState` without exclusion, while the independent frame task reads the
   same state during browser snapshot composition.
+- Work 2.a extension: Official counted buffer adjustment may modify backing
+  used by an active bitmap or sprite one inline operand at a time. Current
+  `bufferAdjust()` retains a target span while it calls `readByte_t()`, so a P4
+  exclusion scope around the current loop would either span blocking ingress or
+  leave the independent frame reader racing each applied byte. The proposed
+  D011 rule reads one operand without a lease, re-resolves the target, and
+  commits that decoded unit under a bounded lease, retaining official partial-
+  prefix timeout behavior.
 - Consequence: Secondary-palette deletion and Copper-array replacement can free
   memory while the frame task dereferences it. This is a C++ data race with a
   plausible use-after-free, not merely a torn-colour presentation risk.
 - Evidence: `vdp/video/agon_screen.h:70-108` and `:121-125`;
+  `vdp/video/vdu_buffered.h:946-1041` and official
+  `agon-docs/docs/vdp/Buffered-Commands-API.md:77,245-258`;
   `vdp/video/extender/display/p4_display_controller.cpp:233-253` and
   `:578-618`; `vdp/video/extender/display/palette_state.cpp:129-176` and
   `:205-268`; `vdp/video/video.ino:189-201`;
@@ -228,8 +390,62 @@ the second failed run is not reconstructed by the later combined snapshot.
   retained byte-identical code.
 - Product boundary: The P4 palette/Copper implementation and browser publisher
   are intended EDP surfaces and require a local correction regardless of any
-  upstream report.
-- Proposed owner: PORT-003.
+  upstream report if the D012 trigger threshold is met.
+- Current disposition: Record the plausible local amplification, but defer
+  correction and isolating regression design. Source reasoning alone does not
+  establish a current forward-transport blocker.
+
+### `INTEGRITY-AUDIT-F022` — Queued renderer operands and persistent users outlive their owners
+
+- Severity: High
+- Observed state: Pinned vdp-gl byte-copies raw `Bitmap const *`, transformed-
+  bitmap pointers, and `CopyToBitmap` destinations into its primitive FIFO.
+  Its dynamic-payload helper copies transform matrices, but copies path points
+  only below `FABGLIB_PRIMITIVES_DYNBUFFERS_SIZE`; official
+  `Context::plotPath()` submits the vector and immediately clears it. Official
+  VDP also submits temporary `.get()` bitmap pointers and tile-layer member
+  bitmaps, then permits buffer, bitmap, cursor, or tile backing to be cleared
+  before the queued primitive executes. The generic glyph, glyph-buffer, and
+  direct Canvas path interfaces are borrowed APIs whose lifetime remains the
+  direct caller's obligation; no current `vdp/video` caller of
+  `renderGlyphsBuffer()` was found. Font backing remains in PORT-003's compiled
+  lifetime inventory rather than this finding's definite provenance.
+- Definite retained failures: `clearBitmap()` erases bitmap ownership before it
+  clears registered sprite frames. The all-buffer command destroys backing
+  streams and clears the bitmap map without first resetting sprites, despite
+  `resetBitmaps()` documenting that prerequisite. A queued draw or
+  `CopyToBitmap` can therefore dereference a destroyed descriptor/backing on a
+  later frame, an oversized official Context path can read cleared/reused vector
+  storage, and an active sprite can retain a dangling frame pointer after all-
+  buffer clear even without a concurrent parser mutation.
+- Consequence: Legal sequential command ordering can produce use-after-free,
+  invalid writes through a stale `CopyToBitmap` destination, or persistent
+  dangling sprite/cursor state. F001's escaped-frame interleaving widens
+  the window but is not required for the defect.
+- Evidence: `vdp/vendor/vdp-gl/src/displaycontroller.h:392-400,473-489,558-577,738-760`;
+  `vdp/vendor/vdp-gl/src/canvas.cpp:442-456,604-619,657-675`;
+  `vdp/vendor/vdp-gl/src/displaycontroller.cpp:525-580,887-922,1616-1755`;
+  `vdp/video/context/graphics.h:345-366,865-896`;
+  `vdp/video/sprites.h:32-42,74-88,238-249`;
+  `vdp/video/vdu_buffered.h:390-425`;
+  and `vdp/video/vdu_layers.h:1092-1096,1127-1137`.
+- Coverage gap: Existing renderer and presentation fixtures either draw
+  synchronously or keep descriptors/backing alive. None forces a raw operand
+  to remain queued across individual/all-buffer deletion, oversized managed
+  path clear, or tile backing free, then execute the later consumer and a post-
+  delete frame under the required memory-safety runner.
+- Provenance: The cited vendored controller files match official VDP v2.16.0's
+  pinned vdp-gl `all-the-plots` checkout, and the official parser deletion,
+  sprite, context, and tile-layer paths have the same order at commit
+  `c7ac293d2aa81ddfa693390549bcd909069c8fc3`. EDP retained this composition;
+  the P4 port did not create it. EDP's independent frame task and full overlay
+  publication amplify the reachable interleavings.
+- Current disposition: Record the inherited behavior and defer both correction
+  and isolating regression design under PORT-003-D012. Reopen only if a future
+  deterministic comparison demonstrates distinct Extender activation or the
+  behavior prevents a selected Extender function. Rejected D011's synchronous
+  drain and ownership alternatives remain research, not implementation
+  requirements.
 
 ### `INTEGRITY-AUDIT-F003` — Positive short TCP writes are accepted as complete WebSocket frames
 
@@ -317,10 +533,11 @@ the second failed run is not reconstructed by the later combined snapshot.
   ESP-IDF behaves according to its documented caller-selected timeout. The
   separate predecessor receiver at `agon-extender-legacy` commit
   `df54cf6a7a23cd40e98076856f68cff0559d1c77` already accepted a bounded
-  timeout and released READY afterward, so the current behavior is a porting
+  timeout and released READY afterward, so the audited behavior is a porting
   regression rather than inherited PARLIO behavior.
-- Product boundary: The current r01 forward receiver is prototype code, not an
-  accepted permanent EDP transport.
+- Product boundary: The audited r01 forward receiver was prototype code and is
+  now rejected/retired. The replacement implements bounded completion, while
+  target-runtime proof remains open.
 - Proposed owner: PORT-008.
 
 ### `INTEGRITY-AUDIT-F006` — Qualification validation accepts nonexistent authority and evidence
@@ -394,6 +611,12 @@ the second failed run is not reconstructed by the later combined snapshot.
   KiCad are behaving correctly.
 - Proposed owner: HW-001, with version-record reconciliation consumed by
   PORT-008 and QUAL-002.
+- Resolution, 2026-09-01: The Author's stale-work directive selected the
+  already-committed `f866660c...` schematic as the maintained r02 authority.
+  HW-001 refreshed its profile digest, complete SVG/XML projection, and 19
+  explicitly non-authoritative focused views. Version, topology, projection,
+  BOM, and focused-view validators pass. F008 is closed as artifact-control
+  drift; construction, electrical behavior, and qualification remain open.
 
 ### `INTEGRITY-AUDIT-F009` — Accepted mode-lifecycle decisions remain outside normative authority
 
@@ -417,6 +640,14 @@ the second failed run is not reconstructed by the later combined snapshot.
   project documentation-governance defect, not an official MOS or VDP defect.
 - Proposed owners: SETUP-005 and REMED-001; accepted content belongs in
   ADR-0014 and `docs/architecture.md`.
+- Disposition: Remediated 2026-09-01. ADR-0014 and `docs/architecture.md` now
+  contain the complete accepted D002 lifecycle contract, including the
+  two-plane state map, Legacy-hub transaction graph, dispatcher quiescence,
+  pull discovery, shutdown, reset/failure recovery, and diagnostic-lifecycle
+  rules. The promotion also removes the stale unresolved-dispatcher and
+  controlled-ordinary-VDU-mirroring claims. SETUP-005, REMED-001, and
+  REMED-002 record F009/Work 4.a complete without resolving D003--D008, F016,
+  or F018.
 
 ### `INTEGRITY-AUDIT-F010` — REMOTE-001 and LINK-001 conflict on direct-link ownership
 
@@ -497,8 +728,8 @@ the second failed run is not reconstructed by the later combined snapshot.
   direction, or task failures return without deleting partial resources.
 - Consequence: A second `begin()` returns true even if no receiver task exists,
   concealing a failed transport and leaking partially created resources.
-- Present boundary: Current boot abandons startup after the first failure, but
-  PORT-008 explicitly requires retry and recovery behavior.
+- Audit-snapshot boundary: The predecessor boot abandoned startup after the
+  first failure, while PORT-008 required retry and recovery behavior.
 - Evidence: `vdp/video/extender/transport/forward_parallel_stream.cpp:134-178`.
 - Provenance: PORT-008 commit
   `c03656c87ff10d39d52ba59a9fbbf914a0bb1d73` introduced the sentinel and
@@ -508,14 +739,15 @@ the second failed run is not reconstructed by the later combined snapshot.
   `df54cf6a7a23cd40e98076856f68cff0559d1c77` already unwound its PARLIO unit,
   delimiter, DMA storage, and READY state, so this is a direct porting
   regression.
-- Product boundary: The current r01 receiver is prototype-only. Any promoted
-  transport needs transactional initialization and deterministic retry tests.
+- Product boundary: The audited r01 receiver is rejected/retired. Its
+  replacement has transactional initialization and deterministic host retry
+  tests; target-runtime proof remains open.
 - Proposed owner: PORT-008.
 
 ### `INTEGRITY-AUDIT-F014` — PORT-008 capture analyzers can report invalid evidence as usable
 
 - Severity: Medium
-- Observed state A: The current clock-discriminator script does not invalidate
+- Observed state A: The predecessor clock-discriminator script does not invalidate
   all procedure-required bad probe states, writes a bounded interpretation that
   is hard-coded to no D4 edges, no D5 edges, and equal clock counts, and exits
   zero even when its result is `invalid`.
@@ -549,7 +781,7 @@ the second failed run is not reconstructed by the later combined snapshot.
 
 - Severity: Medium
 - Observed state: `docs/versions/baselines/port-008-forward-r01.yaml` selects
-  `mos-agondev` commit `5079d4c...`; the corrected candidate and current
+  `mos-agondev` commit `5079d4c...`; the corrected candidate and then-current
   procedure select `29cd336...`.
 - Consequence: The named baseline does not identify the source used by the
   corrected candidate package and cannot be relied upon as its complete
@@ -720,13 +952,13 @@ the second failed run is not reconstructed by the later combined snapshot.
 
 ## Already recorded blockers and non-findings
 
-1. P4 startup currently selects the forward direction and admits READY before
-   an EMOS session or committed-mode transition. This violates Legacy absence
-   but is already recorded in
+1. The rejected predecessor P4 startup selected the forward direction and
+   admitted READY before an EMOS session or committed-mode transition. That
+   violated Legacy absence and is already recorded in
    `CA-2026-09-01-001-port008-preactivation-ready`; it is not assigned a second
-   finding ID here. The current uncommitted forward-build validator also
-   requires the prohibited startup order and must follow that corrective
-   action's disposition.
+   finding ID here. Its retired forward-build validator required the prohibited
+   startup order and remains historical evidence under that corrective action's
+   disposition.
 2. HW-001 already records the r02 eZ80-only-reset stale-enable hazard, imperfect
    Legacy electrical absence, floating-input concerns, unqualified target-speed
    UART, and unqualified power/reset behavior. Passing topology checks do not
@@ -740,9 +972,10 @@ the second failed run is not reconstructed by the later combined snapshot.
    prospective design risks are recorded.
 5. UPSTREAM-001's preserved commits exist, described diff spans match, and the
    current vendored source remains pristine relative to the named parent. No
-   new defect was found in that task's existing lifecycle patch set. F001 and
-   F002 are separate upstream vdp-gl findings and are not silently added to
-   UPSTREAM-001 pending Author disposition.
+   new defect was found in that task's existing lifecycle patch set. F001,
+   F002, and F022 are separate upstream-composition findings and are not
+   silently added to UPSTREAM-001; D012 records and defers them unless a future
+   Extender-specific trigger or separately authorized upstream study appears.
 6. Intel HEX/YMODEM feedback semantics, no-authentication browser exposure, and
    other explicitly accepted exclusions remain open decisions rather than
    accidental compatibility claims.
@@ -752,11 +985,11 @@ the second failed run is not reconstructed by the later combined snapshot.
 | Area | State | Result |
 |---|---|---|
 | Open TODO and task-detail correspondence | Reviewed | All 18 open TODO IDs have task records and valid local links. |
-| Display, frame service, palette, Copper, sprites, and snapshots | Reviewed | F001 and F002; existing fixtures pass but omit decisive concurrency. |
+| Display, frame service, palette, Copper, sprites, and snapshots | Reviewed | F001, F002, and F022; existing fixtures omit decisive concurrency and queued-operand lifetime. |
 | Retained parser, deferred audio, maintenance adapters, and source selection | Reviewed | F004; HEX/YMODEM distinction retained. |
 | Browser/network frame provider and ESP-IDF HTTP adapter | Reviewed | F003 and F012; abstract host tests pass. |
-| Forward-parallel receiver and current diagnostic tooling | Reviewed | F005, F013, F014, and R001; preactivation defect remains under the existing corrective action. |
-| Build closure, staging, version records, and r02 artifacts | Reviewed | F007, F008, and F015. |
+| Forward-parallel predecessor and historical diagnostic tooling | Reviewed | F005, F013, F014, and R001; preactivation defect remains under the existing corrective action. |
+| Build closure, staging, version records, and r02 artifacts | Reviewed | F007 and F015 remain; F008 was reconciled on 2026-09-01. |
 | Qualification model, generators, reviewed data, and tests | Reviewed | F006 and F011; superseded candidate regenerates deterministically. |
 | Operating-mode architecture, remediation, and system qualification | Reviewed | F009, F016, F018, and F021. |
 | Audio, input, storage, diagnostics, remote interaction, and direct link tasks | Reviewed | F010, F019, F020, F021, R002, and R003; unstarted code was not presumed. |
@@ -791,30 +1024,57 @@ the second failed run is not reconstructed by the later combined snapshot.
 11. The local Markdown-link resolver passed for all four amended durable
     documents, and a targeted trailing-whitespace scan passed. No product test
     was rerun because the extension changed audit documentation only.
+12. The PORT-003 Work 2.a design extension resolved 45 local links across its
+    seven amended durable documents; targeted trailing-whitespace and private-
+    value scans and `git diff --check` passed. The pass performed source
+    inspection only: it did not build, run a sanitizer/fault fixture, deploy,
+    or operate physical hardware.
+13. The Author's D011/D012 scope disposition was propagated through the same
+    seven durable documents. Forty-five local links, targeted whitespace and
+    private-value scans, and `git diff --check` passed. No product source,
+    fixture, build, deployment, or physical state changed.
+14. Three read-only adversarial consistency passes verified the F009/D002
+    normative promotion and the PORT-008 activation design. They confirmed D002
+    coverage and corrected the listener's CTS bootstrap, Safe/fault versus
+    Dormant-listen states, cross-domain corrective-action net set, EMOS-only
+    commit ownership, post-commit General Poll boundary, finite
+    resynchronization oracle, artifact-identity gate, F008 scope, and retained
+    r01 diagnosis. The local resolver passed 111 links across the 14 amended
+    documents; targeted whitespace/private-value scans and `git diff --check`
+    passed. No product test was run because this pass changed documentation and
+    proposed design only.
+15. The later F008 reconciliation reran the version-record validator, complete
+    schematic topology/projection check, 41-component BOM check, 44-net/50-no-
+    connect authority check, 41-object hardware registry check, and all 19
+    focused-view checks successfully. Items 5 and 6 preserve the original
+    failure observation; they are not the current validator state.
 
 ## Disposition order recommended for Author review
 
 This order is advisory and does not authorize work:
 
-1. Contain runtime corruption and hardware-ownership risks: F001--F005, F012,
-   plus the existing preactivation corrective action.
-2. Repair evidence trust before accepting more qualification: F006--F008,
-   F011, F014, and F015.
-3. Reconcile accepted architecture and task ownership: F009, F010, F016, and
-   F018.
+1. Contain demonstrated local runtime and hardware-ownership risks: F003--F005,
+   F012, plus the existing preactivation corrective action.
+2. Repair evidence trust before accepting more qualification: F006, F007,
+   F011, F014, and F015. F008 was reconciled on 2026-09-01.
+3. Reconcile accepted architecture and task ownership: F010, F016, and F018.
+   F009's normative promotion completed on 2026-09-01.
 4. Resolve the remaining prototype lifecycle defect: F013.
 5. Complete future implementation gates: F017 and F019--F021, then retain
-   R001--R003 in their named task designs.
+   R001--R003 in their named task designs. Retain F001, F002, and F022 as
+   upstream research observations until D012 trigger evidence exists.
 
 ## Audit conclusion
 
 The repository's existing success-path validation is substantial and mostly
-reproducible, but it does not presently justify advancing the forward P4
-candidate or PORT-003 Gate G. Definite task-concurrency, parser-framing,
-WebSocket transmission, clock-recovery, qualification-reference, provenance,
-and configuration-control defects remain. Accepted operating-mode decisions
-and cross-task ownership also remain inconsistent with their normative or
-local authorities.
+reproducible. Demonstrated parser-framing, WebSocket transmission, clock-
+recovery, qualification-reference, provenance, configuration-control, and
+preactivation defects still constrain their named gates. F001, F002, and F022
+remain source-level upstream observations with plausible EDP exposure, but
+under the later D012 disposition they do not independently block bounded
+forward-parallel transport work or require present hardening. F009's accepted
+operating-mode content is now in normative authority; remaining cross-task
+ownership and mode-conformance work stays with its named tasks.
 
 The audit does not require one new monolithic remediation owner. Every finding
 can be dispositioned into an existing open task, ADR, or normative authority.
@@ -822,9 +1082,43 @@ Keeping this record under `docs/decisions/` preserves the reviewed snapshot and
 stable finding IDs without making it a competing task list or architecture
 specification.
 
-The provenance extension changes attribution, not containment: upstream
-presence does not authorize retaining F001--F003, and project origin does not
-promote any prototype adapter. Permanent EDP display and network surfaces need
-local corrections; the exact PORT-008 sender/receiver implementations remain
-prototype-only; and the committed EMOS UART-width fix is the sole reviewed
+The provenance extension distinguishes source origin from current action.
+F003's demonstrated EDP exposure still requires local correction; F001, F002,
+and F022 remain recorded under D012 without present correction until distinct
+Extender activation is demonstrated. Project origin does not promote any
+prototype adapter. The exact PORT-008 sender/receiver implementations remain
+prototype-only, and the committed EMOS UART-width fix is the sole reviewed
 permanent EMOS correction in the historical provenance set.
+
+### 2026-09-01 post-audit implementation addendum
+
+The final sentence above is snapshot-specific: the UART-width correction was
+the sole committed permanent EMOS correction reviewed in the original
+provenance set. Later the same day, Author-authorized PORT-008 Work 2 added
+replacement P4/EMOS production objects, subsequently source-frozen in Extender
+commit `e134f3d` and EMOS commit `b823e0e`. The v10 EMOS software
+reconciliation corrected P008 through P016 and establishes exact ordinary-entry-
+to-dispatcher and dispatcher-to-common-route call edges, excludes predecessor
+symbols from normal and fixed closures, establishes exact fixed-coordinator-to-
+wrapper and wrapper-to-common-route call edges, and serializes UART1 open with
+parallel Port C ownership. Its linked bridge check fixes the bounded RST 18
+argument and success/failure epilogue instruction shape; extracted production-
+code tests exercise coordinator commit, recovery-failure retention/retry, and
+private-to-public error mapping. Those additions and source commits do not
+retroactively change the audit snapshot, promote the prototype adapters, or
+create a frozen firmware artifact.
+
+A subsequent P4 adversarial pass corrected P017 through P021: idle no longer
+expires as a failed record; an already-advertised parser byte cannot become a
+synthetic sentinel; cancellation has a nonblocking total order with record
+admission and quarantines any pre-fault winner; the qualification owner retains
+its lease through successful cleanup; and retained process-task creation
+failure returns before boot/network publication. These are project-created P4
+integration defects with no upstream implementation counterpart. Their host,
+source-contract, compile/link, and closure checks do not close the still-open
+target-runtime and retained-parser execution gates.
+
+PORT-008 and INTEG-002 still own authenticated source/tool and final-link object
+provenance, target-runtime behavior, retained-parser fault injection,
+production activation and response integration, artifact identity, deployment,
+and physical qualification.

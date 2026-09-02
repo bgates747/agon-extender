@@ -1,15 +1,15 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r16
-updated_at: 2026-08-31T18:48:24Z
+registry_revision: r17
+updated_at: 2026-09-01T23:17:54Z
 
 artifacts:
   - artifact_id: extender-vdp
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: extender-vdp-v0.2.0
-    status: candidate
+    status: rejected
     variants:
       - olimex-p4-devkit
     description: Production Extender VDP firmware lineage.
@@ -20,31 +20,32 @@ artifacts:
       - Version v0.1.1 passed p4-browser-video-qualification-r01 in PORT-003-2026-08-28-15-28-59Z.
       - Its qualified scope has deliberately disconnected VDU ingress and return transport and makes no Agon integration claim.
       - Version v0.2.0 adds the bounded light2-harness-r01 forward-parallel ingress while retaining browser video and discard-only return behavior.
-      - Version v0.2.0 is a PORT-008 physical-test candidate; it has no reverse-UART, General Poll response, sysvar, or r02/V1 electrical qualification claim.
+      - Version v0.2.0 was rejected and superseded on 2026-09-01; its boot-active forward adapter and discard-success return path are predecessor evidence only and must not be selected.
+      - Production-integration source is frozen in Extender commit e134f3d, but no approved artifact identity or post-freeze qualified build exists and it is not represented here as a deployable candidate.
 
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: agon-emos-v0.1.0
-    status: candidate
+    status: rejected
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
-      - Version v0.1.0 is frozen in the separate agon-emos repository.
-      - The port008-forward build profile is a clearly identified fixed-purpose qualification workaround, not a production EMOS utility or release configuration.
-      - This candidate routes ordinary VDU bytes over light2-harness-r01 only after an explicit Exclusive Extended request and implements no reverse transport.
+      - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
+      - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
+      - Production-integration source is frozen in EMOS commit b823e0e, but no approved artifact identity or post-freeze qualified build exists; ordinary builds identify themselves as UNVERSIONED-DO-NOT-DEPLOY.
 
   - artifact_id: port-008-forward-qualification
     kind: test_procedure
     identity_scheme: revision
     latest_identity: port-008-forward-qualification-r01
-    status: candidate
+    status: rejected
     variants: []
     description: Controlled cold-boot installation and visible forward-only EMOS-to-EDP qualification procedure.
     notes:
-      - Revision r01 uses the preserved r01 breadboard under controlled power ordering and makes no r02/V1 electrical claim.
-      - Revision r01 requires keyboardless autoexec operation under BC-001 and stops before any return-UART work.
+      - Revision r01 is retained only to interpret the rejected predecessor candidate and historical run evidence; do not execute it.
+      - INTEG-002 and PORT-008 superseded its boot-active P4 adapter, fixed-purpose EMOS sender, precommit General Poll, and discard-success return assumptions.
 
   - artifact_id: p4-browser-video-qualification
     kind: test_procedure

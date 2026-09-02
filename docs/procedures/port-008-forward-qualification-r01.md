@@ -1,12 +1,20 @@
 # PORT-008 forward-only qualification procedure
 
-Status: Candidate — physical execution requires separate Author authorization
+Status: Rejected and superseded — historical procedure; do not execute
 
 Identity: `port-008-forward-qualification-r01`
 
-Baseline: `port-008-forward-r01`, status `candidate`
+Baseline: `port-008-forward-r01`, status `rejected`
 
-Registry revision: `r16`
+Registry revision: `r17`
+
+This procedure froze the rejected r01 predecessor composition. INTEG-002 and
+PORT-008 replaced its boot-active P4 adapter, fixed-purpose EMOS sender,
+precommit General Poll, and discard-success return path with the common
+production data plane and explicitly non-release qualification compositions.
+The remaining body is preserved only to interpret historical builds and run
+evidence. It is not a current build, staging, deployment, wiring, or
+qualification instruction.
 
 ## Purpose and claim boundary
 

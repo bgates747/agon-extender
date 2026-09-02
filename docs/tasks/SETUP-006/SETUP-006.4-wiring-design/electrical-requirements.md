@@ -15,9 +15,9 @@
 - Immediate target: Exclusive Extended beta transport
 - Separate deferred target: Exclusive Compatible stock UART
 
-This review turns current firmware and mode requirements into electrical design
-inputs. It does not approve a harness revision, claim that the assembled bench
-matches the candidate, or authorize a physical test.
+This review turned the then-current firmware and mode requirements into
+electrical design inputs. It does not approve a harness revision, claim that
+the assembled bench matches the candidate, or authorize a physical test.
 
 The generated `draft_v1` has separately been corrected and machine-audited as
 a complete drawing of the controlled-power predecessor circuit under
@@ -25,7 +25,7 @@ AUDIT-002. It is evidence and a construction reference for that circuit, not a
 claim that the fresh-design allocation below has already been drawn or
 accepted.
 
-The current `light2-harness-r01` pin map and predecessor runs are strong
+The predecessor `light2-harness-r01` pin map and its runs are strong
 evidence for the enhanced forward bus. They are not proof of assembled-system
 safety and are not a stock-VDP UART design. The latter requires a later design
 review after EMOS and EDP freeze its physical requirements.
@@ -230,9 +230,9 @@ Implement READY_N as a physical open-collector or open-drain stage rather than
 depending on a P4 push-pull pin configured in software to behave as open drain.
 Pull the Agon-side net High to the Agon 3.3 V rail. The P4 control side must
 default inactive when P4 power or firmware is absent and must not receive
-Agon-side pull-up current when P4 is off. A small NPN or NMOS stage is the
-present candidate; part, bias values, polarity, and transition margin remain a
-schematic-level selection.
+Agon-side pull-up current when P4 is off. A small NPN or NMOS stage was the
+then-current candidate; part, bias values, polarity, and transition margin
+remained a schematic-level selection.
 
 ### Reset, power-order, and failure states
 
