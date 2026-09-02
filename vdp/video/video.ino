@@ -58,16 +58,17 @@
 #ifdef AGON_EXTENDER_P4_BOOT
 #include <esp_log.h>
 #include <esp_heap_caps.h>
-#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
-#if defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
-    defined(AGON_EXTENDER_BUILD_ID) || \
-    defined(AGON_EXTENDER_ARTIFACT_STATUS)
-#error "The PORT-008 non-release compile/link target must not carry artifact identity"
-#endif
-#elif !defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
+#if !defined(AGON_EXTENDER_SOURCE_IDENTITY) || \
       !defined(AGON_EXTENDER_BUILD_ID) || \
       !defined(AGON_EXTENDER_ARTIFACT_STATUS)
 #error "The P4 boot target requires explicit build-identity definitions"
+#endif
+#ifdef AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION
+#ifndef AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY
+#error "The P4 qualification target requires an explicit composition identity"
+#endif
+#elif defined(AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY)
+#error "Ordinary P4 boot targets must not carry a qualification composition identity"
 #endif
 #endif
 
@@ -176,15 +177,16 @@ void setup() {
 		// Stock UART0 GPIO 3/1 is inapplicable on the DevKit. ESP-IDF logging is
 		// routed to the sdkconfig-selected USB Serial/JTAG console instead.
 		#ifdef AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION
-		ESP_LOGW("extender_identity",
-			"UNIDENTIFIED NON-RELEASE COMPILE/LINK TARGET; DO NOT DEPLOY");
-		#else
+			ESP_LOGW("extender_identity",
+				"NON-RELEASE COMPILE/LINK QUALIFICATION TARGET; DO NOT DEPLOY");
+			ESP_LOGW("extender_identity", "qualification_composition=%s",
+				AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY);
+			#endif
 		ESP_LOGI("extender_identity", "source_identity=%s",
 			AGON_EXTENDER_SOURCE_IDENTITY);
 		ESP_LOGI("extender_identity", "build_id=%s", AGON_EXTENDER_BUILD_ID);
 		ESP_LOGI("extender_identity", "artifact_status=%s",
 			AGON_EXTENDER_ARTIFACT_STATUS);
-		#endif
 		ESP_LOGI("extender_boot", "retained VDP setup starting");
 	#else
 		DBGSerial.begin(SERIALBAUDRATE, SERIAL_8N1, 3, 1);

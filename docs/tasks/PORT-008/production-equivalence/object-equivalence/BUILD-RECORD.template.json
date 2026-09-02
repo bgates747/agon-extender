@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "port-008-production-object-build",
+  "policy_sha256": null,
+  "target": null,
+  "role": null,
+  "identity": {
+    "artifact_id": null,
+    "variant": null,
+    "source_identity": null,
+    "build_id": null,
+    "lifecycle_status": null,
+    "composition_artifact_id": null,
+    "composition_identity": null
+  },
+  "repositories": [
+    {
+      "id": null,
+      "root": null,
+      "commit": null,
+      "dirty": null
+    }
+  ],
+  "capture": {
+    "format": null,
+    "unit_records": {},
+    "link_record": null,
+    "record": null
+  }
+}

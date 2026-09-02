@@ -7,13 +7,18 @@ The durable limitation and removal test live in retained-parser/README.md.
 
 from __future__ import annotations
 
+import json
 from pathlib import Path
 import re
 import unittest
 
 
 ROOT = Path(__file__).resolve().parents[5]
+VDP = ROOT / "vdp"
 VIDEO = ROOT / "vdp/video"
+QUALIFICATION_DEFINITION = (
+    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION"
+)
 
 
 def function_region(source: str, signature: str) -> str:
@@ -43,6 +48,94 @@ class RetainedParserSourceContractTests(unittest.TestCase):
         cls.qualification = (
             VIDEO / "extender/transport/p4_parallel_qualification.cpp"
         ).read_text()
+        cls.qualification_bridge = (
+            VIDEO / "extender/boot/p4_parallel_qualification_vdp.cpp"
+        ).read_text()
+        cls.platformio = (VDP / "platformio.ini").read_text()
+        cls.source_hook = (VDP / "pio/select_sources.py").read_text()
+        cls.qualification_selection = json.loads(
+            (
+                VDP
+                / "pio/p4-port008-nonrelease-qualification-source-selection.json"
+            ).read_text()
+        )
+        cls.ordinary_selections = tuple(
+            json.loads((VDP / "pio" / filename).read_text())
+            for filename in (
+                "p4-browser-vdp-source-selection.json",
+                "p4-forward-vdp-source-selection.json",
+            )
+        )
+        cls.production_transport_sources = tuple(
+            (
+                VIDEO / "extender/transport" / filename
+            ).read_text()
+            for filename in (
+                "p4_parallel_data_plane.cpp",
+                "extender_vdp_stream.cpp",
+                "p4_parallel_target.cpp",
+            )
+        )
+
+    def test_nonrelease_definition_is_qualification_translation_unit_local(
+        self,
+    ) -> None:
+        definition = f"#define {QUALIFICATION_DEFINITION} 1"
+        retained_bridge_include = '#include "p4_browser_vdp.cpp"'
+        qualification_header_include = (
+            '#include "extender/transport/p4_parallel_qualification.hpp"'
+        )
+        self.assertEqual(1, self.qualification_bridge.count(definition))
+        self.assertLess(
+            self.qualification_bridge.index(definition),
+            self.qualification_bridge.index(retained_bridge_include),
+        )
+        self.assertEqual(1, self.qualification.count(definition))
+        self.assertLess(
+            self.qualification.index(definition),
+            self.qualification.index(qualification_header_include),
+        )
+        for source in self.production_transport_sources:
+            self.assertNotIn(QUALIFICATION_DEFINITION, source)
+
+    def test_nonrelease_source_selection_uses_qualification_bridge(self) -> None:
+        qualification_bridge = (
+            "video/extender/boot/p4_parallel_qualification_vdp.cpp"
+        )
+        ordinary_bridge = "video/extender/boot/p4_browser_vdp.cpp"
+        selected = self.qualification_selection["project_translation_units"]
+        forbidden = self.qualification_selection[
+            "forbidden_project_translation_units"
+        ]
+        self.assertNotIn(
+            "component_compile_definitions", self.qualification_selection
+        )
+        self.assertIn(qualification_bridge, selected)
+        self.assertNotIn(ordinary_bridge, selected)
+        self.assertIn(ordinary_bridge, forbidden)
+        for selection in self.ordinary_selections:
+            self.assertNotIn(
+                qualification_bridge, selection["project_translation_units"]
+            )
+            self.assertIn(
+                qualification_bridge,
+                selection["forbidden_project_translation_units"],
+            )
+
+    def test_nonrelease_definition_is_not_a_component_build_flag(self) -> None:
+        section_start = self.platformio.index(
+            "[env:p4-port008-nonrelease-qualification]"
+        )
+        section_end = self.platformio.index("\n[env:", section_start + 1)
+        qualification_section = self.platformio[section_start:section_end]
+        self.assertNotIn(QUALIFICATION_DEFINITION, qualification_section)
+        self.assertIn(
+            "qualification_local_definition", self.source_hook
+        )
+        self.assertIn(
+            "must be defined only by",
+            self.source_hook,
+        )
 
     def test_parser_adopts_the_raw_stream_pointer(self) -> None:
         constructor = function_region(

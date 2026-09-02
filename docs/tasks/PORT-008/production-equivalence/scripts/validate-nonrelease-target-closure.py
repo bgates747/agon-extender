@@ -40,22 +40,28 @@ ORDINARY_MANIFESTS = {
     "p4-browser-vdp": "p4-browser-vdp-source-selection.json",
     "p4-forward-vdp": "p4-forward-vdp-source-selection.json",
 }
-QUALIFICATION_DEFINITION = (
-    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION=1"
+QUALIFICATION_DEFINITION_NAME = (
+    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION"
 )
+QUALIFICATION_DEFINITION = f"{QUALIFICATION_DEFINITION_NAME}=1"
 
-REQUIRED_TRANSLATION_UNITS = (
+PRODUCTION_TRANSLATION_UNITS = (
     "video/extender/transport/p4_parallel_data_plane.cpp",
     "video/extender/transport/extender_vdp_stream.cpp",
     "video/extender/transport/p4_parallel_target.cpp",
+)
+QUALIFICATION_ONLY_TRANSLATION_UNITS = (
+    "video/extender/boot/p4_parallel_qualification_vdp.cpp",
     "video/extender/transport/p4_parallel_qualification.cpp",
 )
+REQUIRED_TRANSLATION_UNITS = (
+    *PRODUCTION_TRANSLATION_UNITS,
+    *QUALIFICATION_ONLY_TRANSLATION_UNITS,
+)
 FORBIDDEN_TRANSLATION_UNITS = (
+    "video/extender/boot/p4_browser_vdp.cpp",
     "video/extender/transport/forward_parallel_stream.cpp",
     "video/extender/transport/disconnected_stream.cpp",
-)
-QUALIFICATION_TRANSLATION_UNIT = (
-    "video/extender/transport/p4_parallel_qualification.cpp"
 )
 
 REQUIRED_LINKED_SYMBOLS = (
@@ -227,7 +233,7 @@ def validate_source_selections(
             "qualification source-selection manifest does not explicitly "
             "forbid: " + ", ".join(sorted(unguarded))
         )
-    definitions = qualification.get("component_compile_definitions")
+    definitions = qualification.get("component_compile_definitions", [])
     if not isinstance(definitions, list) or any(
         not isinstance(item, str) for item in definitions
     ):
@@ -235,10 +241,16 @@ def validate_source_selections(
             "qualification source-selection manifest."
             "component_compile_definitions must be a string array"
         )
-    if definitions.count(QUALIFICATION_DEFINITION) != 1:
+    global_qualification_definitions = [
+        definition
+        for definition in definitions
+        if definition.partition("=")[0] == QUALIFICATION_DEFINITION_NAME
+    ]
+    if global_qualification_definitions:
         raise ClosureError(
-            "qualification source-selection manifest must define exactly "
-            f"one {QUALIFICATION_DEFINITION!r}"
+            f"{QUALIFICATION_DEFINITION_NAME} must be translation-unit-local; "
+            "the qualification source-selection manifest must not define it "
+            "component-wide"
         )
 
     ordinary_results: dict[str, str] = {}
@@ -267,15 +279,23 @@ def validate_source_selections(
                 f"{ordinary_environment} source-selection manifest",
             )
         )
-        if QUALIFICATION_TRANSLATION_UNIT in ordinary_selected:
+        selected_qualification = (
+            set(QUALIFICATION_ONLY_TRANSLATION_UNITS) & ordinary_selected
+        )
+        if selected_qualification:
             raise ClosureError(
                 f"{ordinary_environment} selects qualification-only "
-                f"translation unit {QUALIFICATION_TRANSLATION_UNIT}"
+                "translation units: "
+                + ", ".join(sorted(selected_qualification))
             )
-        if QUALIFICATION_TRANSLATION_UNIT not in ordinary_forbidden:
+        unguarded_qualification = (
+            set(QUALIFICATION_ONLY_TRANSLATION_UNITS) - ordinary_forbidden
+        )
+        if unguarded_qualification:
             raise ClosureError(
                 f"{ordinary_environment} does not explicitly forbid "
-                f"{QUALIFICATION_TRANSLATION_UNIT}"
+                "qualification-only translation units: "
+                + ", ".join(sorted(unguarded_qualification))
             )
         ordinary_results[ordinary_environment] = sha256_file(ordinary_path)
 
@@ -381,7 +401,7 @@ def validate_map_direct_inputs(
         )
         if object_reference.search(text):
             raise ClosureError(
-                "link map references forbidden prototype/disconnected "
+                "link map references forbidden project "
                 f"object {object_name}"
             )
     return tuple(accepted), object_hashes

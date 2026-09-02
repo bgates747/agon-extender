@@ -5,11 +5,12 @@
   "generated_build_files": [
     "video/CMakeLists.txt"
   ],
-  "component_compile_definitions": [
-    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION=1"
-  ],
+  "translation_unit_local_build_identity": {
+    "consumer": "video/extender/boot/p4_parallel_qualification_vdp.cpp",
+    "generated_header": ".pio/build-identities/p4-port008-nonrelease-qualification/build_identity.hpp"
+  },
   "project_translation_units": [
-    "video/extender/boot/p4_browser_vdp.cpp",
+    "video/extender/boot/p4_parallel_qualification_vdp.cpp",
     "video/extender/display/cursor_position_adapter.cpp",
     "video/extender/display/logical_frame_service.cpp",
     "video/extender/display/native_pixel_codec.cpp",
@@ -35,6 +36,7 @@
     "vendor/ESP32Time/ESP32Time.cpp"
   ],
   "forbidden_project_translation_units": [
+    "video/extender/boot/p4_browser_vdp.cpp",
     "video/extender/transport/disconnected_stream.cpp",
     "video/extender/transport/forward_parallel_stream.cpp"
   ],

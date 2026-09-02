@@ -114,10 +114,16 @@ objects, found P009 through P014 during adversarial production factoring and
 dispatcher/UART integration, and found P015/P016 in the final coordinator
 transaction review. The later P4 adversarial pass found P017 through P021 in
 the new target/data-plane, retained-Stream, qualification-owner, and boot
-integration. They are included here so the upstream/
-local and permanent/prototype boundaries are complete rather than silently
-excluding code that had already been corrected, contained, or found
-discrepant.
+integration. The Work 2.e provenance audit then found P022 in generic
+`mos-agondev` root orchestration, P023 in the P4 qualification build boundary,
+P024 in the EMOS profile-flag boundary, P025 in the P4 build-identity boundary,
+and P026 in the EMOS fixed-composition identity boundary. The same pass then
+found P027 in the P4 qualification-composition identity boundary, P028 in the
+EMOS toolchain wrapper, P029/P030 in the new generic and P4 actual-step
+recorders, and P031 in the new product comparison gate. They are included
+here so the upstream/local and permanent/prototype boundaries are complete
+rather than silently excluding code that had already been corrected,
+contained, or found discrepant.
 
 | Recorded defect | Provenance classification | Maintained-surface status |
 |---|---|---|
@@ -142,6 +148,16 @@ discrepant.
 | `PORT008-PROV-P019` — fault publication raced record admission and success reporting | Created in the project-owned P4 data-plane composition; no upstream equivalent exists | Corrected with one nonblocking sequentially consistent admission edge, quarantine of a pre-fault winner, and post-commit fault/cancel/lease checks |
 | `PORT008-PROV-P020` — the qualification owner revoked its lease after an unverified cleanup attempt | Created in the project non-release qualification composition; no upstream equivalent exists | Corrected by retaining ownership and retrying idempotent teardown until success before lease revocation |
 | `PORT008-PROV-P021` — retained process-task creation failure continued into a false-live boot | Created in the project P4 boot integration; official VDP has no corresponding Extender qualification branch | Corrected by requesting transport stop and returning before boot-screen or network startup |
+| `PORT008-PROV-P022` — selected EMOS source/prepared-tree preflight authenticated the default stock pair | Created in generic project `mos-agondev` root orchestration; official MOS has no prepared-copy or product-profile build boundary | Corrected by binding the explicit maintained source and prepared tree before compilation and rejecting redirected assembly output paths |
+| `PORT008-PROV-P023` — a qualification-only P4 definition contaminated production-object compile commands | Created in the project PlatformIO qualification profile; official VDP has no Extender qualification macro or composition | Corrected by moving the definition into two qualification-only translation units and rejecting its reintroduction through global build flags; fresh target provenance remains required |
+| `PORT008-PROV-P024` — EMOS role definitions were applied to every C translation unit | Created in the project EMOS/generic-build profile integration; official MOS has no EMOS identity or fixed-qualification role | Corrected by applying the role definitions only to `src/emos.c`; fresh ordinary/fixed target provenance remains required |
+| `PORT008-PROV-P025` — P4 identity values were applied to every translation unit | Created in the project P4 identity injector; official VDP has no Extender source/build/status identity layer | Corrected by making only the boot identity owner consume varying identity bytes while common production commands remain role-independent; fresh target provenance remains required |
+| `PORT008-PROV-P026` — the EMOS fixed profile substituted a composition label for firmware identity | Created in the project EMOS fixed-qualification profile; official MOS has neither EMOS firmware identity nor an Extender qualification composition | Corrected by supplying the same EMOS firmware lineage independently from the separately revisioned non-release composition; Author-approved identities and fresh target provenance remain required |
+| `PORT008-PROV-P027` — the P4 fixed composition had no independently revisioned qualification identity | Created in the project P4 qualification/identity integration; official VDP has no Extender fixed composition | Corrected by making the boot identity owner carry a separate qualification-composition identity and diagnostic; Author approval and fresh target evidence remain required |
+| `PORT008-PROV-P028` — the EMOS wrapper did not forward its selected target toolchain to the producer | Created in the project EMOS/generic-build wrapper; official MOS has no AgonDev wrapper | Corrected by forwarding the exact absolute toolchain through every recursive build/qualification target and retaining regression coverage; fresh target evidence remains required |
+| `PORT008-PROV-P029` — the first generic actual-step recorder/build-interface draft admitted cross-unit or cross-session ambiguity | Created while implementing new project `mos-agondev` evidence infrastructure; official MOS has no actual-step recorder | Corrected before retained evidence in generic commits `7e00798` and `64bbf34`; the earlier rehearsal is invalid and was not retained |
+| `PORT008-PROV-P030` — the first P4 actual-step recorder draft underbound executed argv, runtime roots, response forms, and dispatched subtools | Created while implementing project P4 evidence tooling; the Espressif multi-call dispatchers are intentional upstream behavior, but failure to authenticate the selected backends was local | Corrected before the recorder's first commit with direct execution, exact response/runtime/root records, dispatcher/backend binding, and adversarial tests; a clean real capture remains required |
+| `PORT008-PROV-P031` — the first product-gate draft admitted incomplete command, lineage, path, role, and linked-instruction comparisons | Created while implementing project Work 2.e comparison tooling; official MOS and VDP provide no corresponding gate | Corrected before any eligible evidence; command fingerprints deliberately remain empty until a clean rehearsal and therefore the gate still fails closed |
 
 1. Official MOS v3.0.2 at commit
    `8336409351ee5314e02801a7b72a4f1bb5282519` contains the uncast
@@ -294,6 +310,121 @@ discrepant.
     resulting device could look live without a parser consumer. The branch now
     requests qualification stop and returns before those publications. This
     project boot-integration defect is `PORT008-PROV-P021`.
+21. The EMOS wrapper eventually forwarded its selected prepared tree, but the
+    generic `mos-agondev` root `worktree-check` still authenticated only the
+    default stock source/tree pair. Later object recipes compiled the selected
+    EMOS tree, so the successful preflight did not bind maintained source to
+    compiled input. Generic commit `7e00798` makes both paths explicit, checks
+    the exact pair before compilation, rejects symlinked assembly output roots
+    and parents, and behaviorally verifies linked-object provider authority.
+    This local evidence-orchestration defect is `PORT008-PROV-P022`; it is
+    absent from official MOS and prevents promotion of pre-correction v10.
+22. The non-release P4 PlatformIO environment originally supplied
+    `AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION` as a component-wide build
+    definition. The three production translation units therefore received a
+    qualification-only command input even though none intentionally consumed
+    it. Official VDP has no Extender profile or corresponding macro. The
+    project now defines the role only inside a qualification boot wrapper and
+    qualification owner translation unit, selects those files only for that
+    composition, and makes the selector reject global reintroduction. This
+    local build-profile defect is `PORT008-PROV-P023`; a fresh captured target
+    build must still prove exact production-object command and byte equality.
+23. The ordinary and fixed EMOS profiles originally supplied identity and
+    fixed-role definitions through component-wide `CPPFLAGS_EXTRA`, although
+    only `src/emos.c` consumes them. The five production equality units
+    therefore carried role-specific command inputs and relied on those unused
+    definitions not changing their object bytes. Official MOS has no EMOS
+    profile or fixed qualification role. Generic `mos-agondev` now scopes
+    profile definitions to one selected C source, and both EMOS profiles
+    select `src/emos.c`. This project integration defect is
+    `PORT008-PROV-P024`; fresh ordinary/fixed capture must establish equality.
+24. The project P4 identity injector supplied source identity, build ID, and
+    lifecycle status through component-wide compiler definitions, although the
+    retained boot sketch is their only production consumer. Qualification and
+    release builds necessarily have different build IDs, so the three common
+    production units could never have identical recorded commands after real
+    identities were assigned. Official VDP has no Extender identity injector
+    or corresponding role boundary. This local build-identity defect is
+    `PORT008-PROV-P025`; the varying identity input must be scoped to the boot
+    identity owner and then proved by fresh target capture, not ignored during
+    comparison.
+25. The fixed EMOS profile used `PORT008-D002-FIXED-QUALIFICATION` as its
+    firmware source identity and `NONRELEASE-DO-NOT-DEPLOY` as its build ID,
+    rather than identifying an `agon-emos` firmware build and the independently
+    revisioned qualification composition. It therefore could not authenticate
+    as a qualification consumer of the same EMOS lineage as the ordinary
+    composition. Official MOS has neither identity layer. The fixed profile
+    now consumes the ordinary EMOS firmware identity tuple plus a separate
+    `port-008-forward-qualification` composition identity, both scoped to
+    `src/emos.c`, and reports the latter explicitly as non-release. This local
+    profile defect is `PORT008-PROV-P026`; both identities remain unversioned
+    until the Author approves successors and fresh target records are made.
+26. The P4 fixed qualification composition initially had only the common
+    firmware source/build/status tuple. It lacked the independently revisioned
+    composition identity needed to distinguish the non-release caller from an
+    eventual release consumer. Official VDP has no Extender fixed composition
+    or corresponding identity. The qualification boot owner now consumes and
+    reports `AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY`, while ordinary
+    boot owners reject that value and common production units consume neither
+    identity layer. This local identity-integration defect is
+    `PORT008-PROV-P027`; its successor revision remains Author-unapproved.
+27. The EMOS wrapper exposed `AGONDEV_TOOLCHAIN` and used it for linked-image
+    inspection, but its recursive generic firmware/fixed/qualification targets
+    did not forward that selection as `TOOLCHAIN`. A caller could therefore
+    build with the generic default and inspect with a different requested
+    toolchain. Official MOS has no AgonDev wrapper. Generic provenance would
+    have recorded the producer that actually ran, so this was not a passing
+    authenticated-record forgery; it was a silently ignored controlled input
+    and split producer/inspector authority. All three targets now forward the
+    exact absolute root with regression coverage. This local wrapper defect is
+    `PORT008-PROV-P028`.
+28. Adversarial review of the first generic actual-step implementation found
+    that a `%` source selector became a Make pattern and could apply supposedly
+    source-local definitions to every object; a constant session marker and
+    incomplete producer-record binding admitted cross-invocation association;
+    nested response indirection was not in the recorded grammar; and the
+    compiler driver's selected assembler/effective invocation was not fully
+    bound. These mechanisms were all new `mos-agondev` project infrastructure,
+    not official MOS behavior. Commits `7e00798` and `64bbf34` require a
+    literal selected source, unique recorder session, same-recorder/session/
+    kind producer chain, one-level non-nested response policy, exact external
+    assembler selection, and sanitized driver probes. This grouped local
+    pre-baseline recorder defect is `PORT008-PROV-P029`; the earlier rehearsal
+    was explicitly invalidated and no retained evidence depends on it.
+29. Adversarial review of the first P4 recorder draft found rendered shell text
+    being treated as actual argv, insufficient child-environment and root
+    authority, incomplete SCons response/TEMPFILE grammar, unsafe generated-
+    identity-header traversal, incomplete generated-source inventory, and no
+    authentication of the backend selected by Espressif assembler/inspection
+    dispatchers. The dispatch executables themselves are intentional upstream
+    toolchain behavior; the failure to record the selected backends was in the
+    project recorder. The corrected recorder directly executes the decoded
+    compiler/link vector, binds the sanitized environment and runtime trees,
+    round-trips the pinned response grammar, writes the identity header through
+    anchored no-follow descriptors, inventories generated CMake input, records
+    both the assembler dispatcher and `as-xespv2p1` selection, and makes the
+    gate invoke pinned `objdump-xespv2p1` directly. This grouped local
+    pre-baseline evidence defect is `PORT008-PROV-P030`; a clean real
+    PlatformIO capture must still confirm the live action shapes.
+30. The first product-gate draft could accept or miscompare evidence because
+    it lacked frozen complete command fingerprints, did not bind all Git/
+    registry/prepared/coordinator lineage, mishandled the per-session nonce
+    across roles, omitted normalized linked-instruction comparison, accepted
+    substring-only identity matches plus incomplete role/undefine/response
+    forms, and did not reject every symlinked
+    authority ancestor or root-graph contradiction. It also overstated capture
+    runtime and implicit link closure. Official MOS/VDP provide no such gate;
+    these were defects in newly written project evidence tooling. The gate now
+    revalidates each raw capture independently, requires distinct sessions and
+    build IDs, exact role and lineage inputs, policy-owned normalized compile/
+    link fingerprints, exact object bytes, direct nonzero map contribution,
+    independently terminated identity strings, owned symbols, and normalized
+    linked instructions; it also rejects duplicate registry artifact IDs and
+    non-calendar UTC build timestamps while stating its host
+    runtime and implicit-link limits. This grouped local pre-baseline gate
+    defect is `PORT008-PROV-P031`. Its fingerprint slots remain deliberately
+    null until clean rehearsal, which makes validation ineligible rather than
+    permissive.
 
 None of these classifications promotes the fixed-purpose PORT-008 adapters or
 temporary recovery image into production. For P002 through P006, EMOS's mode
@@ -305,6 +436,16 @@ coordinator's new fixed-adapter transaction. P017 through P021 identify later
 P4 production-data-plane or qualification/boot integration defects. P017--P019
 are in maintained production objects; P020 is confined to the explicitly
 non-release composition; P021 is in its guarded boot branch.
+P022 is generic project build infrastructure rather than EMOS product code;
+P023 is P4 qualification-composition tooling; P024 spans generic build tooling
+and EMOS product profiles without changing EMOS runtime semantics; P025 is P4
+identity/build tooling rather than retained VDP behavior; and P026 is EMOS
+qualification-profile identity integration rather than official MOS behavior.
+P027 is likewise P4 qualification identity integration; P028 is EMOS wrapper
+tooling; and P029 through P031 are generic recorder, P4 recorder, and product-
+gate infrastructure created and corrected before any eligible Work 2.e
+evidence. Their corrections are prerequisites for fresh target provenance, not
+evidence that any pre-correction build was authentic.
 
 After Author disposition, the exact then-current dirty P4 and EMOS deltas were
 preserved as historical binary patches under
@@ -1117,6 +1258,54 @@ failure returns before boot/network publication. These are project-created P4
 integration defects with no upstream implementation counterpart. Their host,
 source-contract, compile/link, and closure checks do not close the still-open
 target-runtime and retained-parser execution gates.
+
+The Work 2.e build-provenance audit then found P022. EMOS had begun forwarding
+its selected prepared tree, but generic `mos-agondev` authenticated the default
+stock maintained-source/prepared-tree pair before compiling the different
+selected tree. Generic commit `7e00798` now checks the exact caller pair,
+rejects symlink-redirection of assembly outputs before object recipes, and
+behaviorally derives profile provider authority from linked target objects.
+This correction is project build infrastructure, not an official-MOS change,
+and it requires fresh evidence rather than promoting v10.
+
+The same pass found P023 through P025. The P4 qualification environment had
+globally supplied its non-release role definition to the three production
+translation units; the EMOS ordinary and fixed profiles had globally supplied
+different identity/role definitions to five production equality units. Both
+defects were introduced by project build/profile integration and have no
+official VDP or MOS counterpart. Qualification-only P4 wrappers and
+source-scoped EMOS profile flags now remove those role inputs from the common
+production-object commands. Only fresh fail-closed target records can prove
+that the commands, objects, and linked contribution are now equivalent.
+
+P025 separately records that the P4 identity injector supplied varying
+source/build/status definitions component-wide even though only the boot sketch
+uses them. That local project mechanism has no official-VDP counterpart and
+would prevent exact common-command equality once qualification and release
+build IDs exist. Work 2.e must scope the identity input to its boot owner and
+must bind the compiled values back to the approved build record.
+
+P026 records the corresponding EMOS identity-role error: the fixed profile
+used a qualification label where the common EMOS firmware source identity
+belonged and had no separate procedure revision input. The profile now keeps
+the firmware and non-release composition identities independent and confines
+both to `src/emos.c`. This is a project profile correction, not an official-MOS
+change, and remains unbuilt under approved successor identities.
+
+P027/P028 record the remaining product-wrapper identity defects: the P4 fixed
+composition lacked its own revision and the EMOS wrapper did not forward its
+selected producer toolchain. Both were project integration errors with no
+official VDP/MOS counterpart and both now have focused source regressions.
+
+P029 through P031 group the pre-baseline false-authentication paths discovered
+while implementing the generic recorder, P4 recorder, and product gate. All
+were created in new project evidence tooling, not inherited firmware. The only
+upstream behavior implicated is Espressif's intentional assembler/objdump
+dispatcher mechanism; the local defect was failing to authenticate the actual
+selected backend. The corrected recorders and gate pass adversarial host tests,
+but command fingerprints, clean captures, approved identities, and a P4 release
+consumer remain open, so no pre-correction rehearsal or current unversioned
+record is production-equivalence evidence.
 
 PORT-008 and INTEG-002 still own authenticated source/tool and final-link object
 provenance, target-runtime behavior, retained-parser fault injection,

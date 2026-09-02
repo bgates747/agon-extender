@@ -996,12 +996,15 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
    route. `open_UART1()` now reserves the same lifecycle lock before its first
    flag, Port C, or UART mutation and releases it only after publishing UART1
    active, so a UART transition and a parallel epoch cannot both win.
-5. Work 2.e remains open. The task-local checker now deliberately reports only
-   preliminary compile-output/final-symbol similarity. It always reports
-   `equivalence_proved: false`; it does not prove linker contribution, Git
-   cleanliness/commit provenance, target/tool authority, or the direct eZ80
-   assembler object. A genuine linker-provenance gate and an eventual release
-   composition are still required.
+5. Work 2.e remains open. The retained schema-v1 checker reports only
+   preliminary compile-output/final-symbol similarity and always sets
+   `equivalence_proved: false`. The new product gate and EMOS/P4 actual-step
+   recorders now implement the clean Git/source/tool, producer, final-link,
+   contribution, symbol, disassembly, role, identity, and cross-composition
+   boundary. They remain ineligible until clean rehearsal freezes every
+   command fingerprint and fresh records use approved identities. A production
+   P4 release consumer still does not exist, so P4 qualification/release
+   equivalence cannot yet be claimed.
 6. Work 2.f remains open. Lower-level output-fault tests do not replace the
    required real retained-parser General Poll and Mode Information failure
    injection at every emitted byte. No flash, SD mutation, emulator behavior
@@ -1067,6 +1070,89 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
     quarantine/post-commit checks, retries cleanup before revocation, and
     returns before false-live publication. Host/source/compile evidence passes;
     target-runtime and retained-parser execution remain open.
+12. The Work 2.e audit exposed `PORT008-PROV-P022`: EMOS forwarded its selected
+    prepared tree, but the generic `mos-agondev` root preflight authenticated
+    the default stock source/tree pair before compiling that different EMOS
+    tree. This project build-orchestration defect has no official-MOS
+    counterpart. Generic `mos-agondev` commit `7e00798` binds the caller's
+    maintained source and prepared tree, rejects assembly-output symlink
+    redirection before object recipes, and derives profile provider authority
+    from linked target objects. EMOS forwards both inputs. A fresh identified
+    target build remains required; the correction does not promote v10.
+13. The same audit exposed `PORT008-PROV-P023`: the non-release P4 PlatformIO
+    environment supplied its qualification role through global build flags,
+    so the three production translation units carried a qualification-only
+    command input. This was introduced by project qualification integration;
+    official VDP has no counterpart. The role is now defined only in two
+    qualification-only translation units, source selection rejects global
+    reintroduction, and a fresh target capture remains required.
+14. The audit also exposed `PORT008-PROV-P024`: ordinary and fixed EMOS
+    profiles supplied different identity/role definitions component-wide even
+    though only `src/emos.c` consumes them. This project profile defect has no
+    official-MOS counterpart. Generic `mos-agondev` now scopes those flags to
+    the selected source and both EMOS profiles select only `src/emos.c`; fresh
+    ordinary/fixed records must prove equality of the five common production
+    units.
+15. The audit then exposed `PORT008-PROV-P025`: the project P4 identity
+    injector supplied source identity, build ID, and lifecycle status through
+    component-wide definitions although only the boot sketch consumes them.
+    Qualification and release build IDs differ by construction, so exact
+    common-unit command equality would otherwise be impossible. Official VDP
+    has no Extender identity layer. Work 2.e must scope varying identity bytes
+    to the boot owner and prove that the captured/linked identity matches the
+    approved build record; the comparison gate must not waive the difference.
+16. The fixed EMOS profile exposed `PORT008-PROV-P026`: it substituted the
+    qualification label for the EMOS firmware source/build identity and had no
+    independently revisioned composition input. This was created by project
+    profile integration; official MOS has neither layer. The profiles now
+    share the `agon-emos` source identity and lifecycle lineage while every
+    produced ordinary or fixed image requires its own immutable build ID. The
+    fixed image additionally carries the separately revisioned
+    `port-008-forward-qualification` identity. Those inputs are scoped to
+    `src/emos.c`, and the procedure identity is reported as non-release.
+    Approved successor identities and fresh target records are still required.
+17. `PORT008-PROV-P027` records the corresponding P4 composition-identity
+    omission. The fixed P4 caller originally had no independently revisioned
+    `port-008-forward-qualification` input. Official VDP has no such
+    composition. The boot identity owner now alone consumes and reports that
+    qualification identity; ordinary environments reject it and common
+    production units remain neutral. Author approval and fresh target evidence
+    remain open.
+18. `PORT008-PROV-P028` records a local EMOS wrapper defect: the wrapper used
+    `AGONDEV_TOOLCHAIN` for linked-image inspection but failed to pass the
+    selected root to recursive generic producer targets. Official MOS has no
+    AgonDev wrapper. Firmware, fixed, and qualification targets now forward the
+    exact absolute root and a focused regression covers all three. This does
+    not authenticate a pre-correction build.
+19. `PORT008-PROV-P029` groups false-authentication paths caught before the
+    new generic recorder's retained baseline: Make-pattern source scoping,
+    non-unique session association, incomplete producer-record binding, nested
+    response indirection, and incomplete driver-selected assembler authority.
+    All arose in new `mos-agondev` evidence infrastructure rather than official
+    MOS. Generic commits `7e00798` and `64bbf34` correct them; the early
+    rehearsal is invalid and was not retained.
+20. `PORT008-PROV-P030` groups pre-baseline P4 recorder defects: rendered shell
+    text was initially treated as actual argv, the child environment/runtime
+    roots and SCons response grammar were incomplete, generated identity/input
+    paths were underprotected, and the backend selected by Espressif's
+    intentional assembler/inspection dispatchers was not authenticated. These
+    were local evidence-tool defects, not upstream compiler defects. Direct
+    execution, exact round trips, rooted runtime/input inventories, anchored
+    header writes, and explicit dispatcher/backend identities now fail closed;
+    a clean real PlatformIO capture remains required.
+21. `PORT008-PROV-P031` groups pre-baseline defects in the product gate's
+    command, role, lineage, root/symlink, session, identity, and linked-
+    instruction comparisons plus early closure overstatement. A longer build
+    ID could initially satisfy the source-identity substring check. Official
+    MOS/VDP provide no
+    counterpart. The corrected gate revalidates raw records and requires exact
+    policy-owned commands, distinct sessions/builds, matching controlled
+    lineage, exact objects, direct nonzero contribution, independently
+    terminated identities, owned symbols, and normalized linked instructions.
+    Duplicate registry IDs and digit-shaped but impossible UTC build timestamps
+    also fail before eligibility. Its command fingerprints intentionally
+    remain null until clean rehearsal, so current validation is ineligible
+    rather than permissive.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
@@ -1281,7 +1367,29 @@ later accepted D002 boundary authorizes only the software replacement work
     data-plane, Stream, qualification-owner, or guarded boot-integration
     defects; retain their focused regressions without treating host/source/
     compile checks as target-runtime qualification.
-13. [ ] Close the pre-activation corrective action only after the Author
+13. [x] Record `PORT008-PROV-P022` as a local generic-build orchestration
+    defect, retain selected-source/tree and assembly-output-path regressions,
+    and require fresh post-correction evidence rather than promoting v10.
+14. [x] Record `PORT008-PROV-P023` and `P024` as local P4 qualification-profile
+    and EMOS/generic-build profile defects, confine role flags to
+    qualification-only or role-owning sources, and require fresh captured
+    commands and objects rather than relying on unused-definition assumptions.
+15. [x] Correct `PORT008-PROV-P025` by scoping P4 source/build/status identity
+    bytes to the boot identity owner, binding the captured values to the
+    approved build record, and retaining exact common-unit command comparison.
+16. [x] Correct `PORT008-PROV-P026` by sharing the EMOS source identity and
+    lifecycle lineage while requiring a distinct immutable build ID for each
+    produced image, separating the non-release qualification-composition
+    revision, scoping those values to `src/emos.c`, and retaining fresh
+    identified-build and record gates.
+17. [x] Record and correct `PORT008-PROV-P027`/`P028` in the P4 composition
+    identity and EMOS recursive toolchain boundaries; retain Author identity
+    and fresh-capture gates.
+18. [x] Record `PORT008-PROV-P029` through `P031` as local pre-baseline
+    recorder/gate defects, retain adversarial regressions, invalidate every
+    early rehearsal, and keep null command fingerprints fail-closed until a
+    clean rehearsal supplies reviewable candidates.
+19. [ ] Close the pre-activation corrective action only after the Author
     accepts an EMOS-requested activation design, deterministic checks prove
     fail-closed Legacy and transition behavior, and General Poll completes
     without an unexplained CLOCK or READY gap. Because D001 is rejected, a

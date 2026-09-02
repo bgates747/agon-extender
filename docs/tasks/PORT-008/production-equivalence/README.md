@@ -112,23 +112,23 @@ and
 
 ### Current evidence-tool limitation
 
-The task-local script whose historical filename is
-`validate-target-object-equivalence.py` is only a preliminary compile-output and
-final-symbol similarity checker. It verifies supplied compiler outputs and
-artifact payload bytes and compares selected final-image symbol/disassembly
-records, but it does not prove that either linker consumed the supplied object
-or archive member. It also does not verify the manifest's Git cleanliness or
-commit claims, and it does not authenticate the manifest-declared target or
-manifest-selected tools. Every successful report therefore records
-`equivalence_proved: false` and lists those missing claims.
+The genuine Work 2.e gate is now specified and implemented under
+[`object-equivalence/`](object-equivalence/README.md). It consumes generic EMOS
+and P4 raw actual-step records, authenticates clean source/capture/tool
+authority, owns the complete role/unit/symbol sets in tracked policy, binds
+each required object to the final link and nonzero map contribution, and
+compares independently captured qualification/release objects plus normalized
+linked instructions. The product gate remains unexercised on target evidence;
+no approved successor firmware/procedure identities exist, and no production
+P4 release consumer exists. Work 2.e therefore remains open and no production
+equivalence report exists.
 
-The checker executes manifest-selected programs and compile arguments and is
-not a sandbox. Its manifest, tools, source tree, compile database, and response
-files must be trusted and locally reviewed before use. Schema v1 supports only
-compiler-driver commands. It explicitly rejects the direct
-`ez80-none-elf-as` command used for EMOS assembly objects, so it cannot support
-a complete eZ80 production-object manifest. These limitations keep Work 2.e
-open; no preliminary report is D002 object-consumption evidence.
+The historical `validate-target-object-equivalence.py` remains only a
+preliminary compile-output/final-symbol similarity checker. It does not prove
+actual linker consumption, Git/source/tool authority, or the EMOS assembly
+boundary. It is explicitly superseded for Work 2.e claims, but retained to
+interpret preliminary records. No preliminary report is D002
+object-consumption evidence.
 
 ## Electrical equivalence matrix
 
@@ -449,11 +449,13 @@ later data-plane qualification on the intended circuit:
    the observed forward consumer. It says nothing about production activation,
    UART return, formal-mode commit, or electrical equivalence.
 
-The present preliminary similarity checker verifies only a subset of item 3's
-inputs. A full gate must replay or otherwise authenticate the final link and
-map each declared final symbol to the exact supplied object or archive member;
-it must also bind Git and target/tool authority. Until then, item 3 remains a
-gate rather than an achieved evidence claim.
+The Work 2.e product gate under `object-equivalence/` now implements item 3's
+required final-link replay, direct map contribution, symbol-origin, Git,
+source, tool, identity, and cross-role comparison checks. Its tracked intended-
+command fingerprints still await a clean rehearsal, and no eligible target
+capture has passed it. Item 3 therefore remains a gate rather than an achieved
+evidence claim. The preliminary similarity checker remains historical input
+only and is superseded for this claim.
 
 This is test scaffolding, but it is not a circuit bodge: it supplies a missing
 external precondition at a stable product interface and leaves every
@@ -468,9 +470,11 @@ data-plane component under test unchanged.
    non-release P4 top level links these objects into the real retained parser,
    display, frame, snapshot, wired-network, and browser source closure while
    capturing generated output visibly instead of claiming UART delivery.
-2. The P4 sanitizer binary passes 25 behavioral and fault cases. The complete
-   task-local Python suite passes 46 tests, including four fail-closed
-   predecessor/ZDI retirement guards. The non-release ESP32-P4 target
+2. At this earlier software-only checkpoint, the P4 sanitizer binary passed 25
+   behavioral and fault cases and the then-current task-local Python suite
+   passed 46 tests, including four fail-closed predecessor/ZDI retirement
+   guards. These counts are historical, not the current Work 2.e gate-suite
+   result. The non-release ESP32-P4 target
    composition builds successfully: reported total image size is 1,252,995
    bytes, the padded application binary is 1,253,024 bytes, application flash
    use is 1,252,148 of 7,340,032 bytes, and RAM use is 63,984 of 512,000 bytes.

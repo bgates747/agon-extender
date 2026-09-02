@@ -1,0 +1,682 @@
+{
+  "schema_version": 1,
+  "evidence_kind": "port-008-production-object-policy",
+  "identity_registry": {
+    "root": "AUTHORITY",
+    "path": "docs/versions/artifacts.yaml",
+    "eligible_statuses": [
+      "candidate",
+      "qualified",
+      "released"
+    ]
+  },
+  "targets": {
+    "emos": {
+      "artifact_id": "agon-emos",
+      "artifact_kind": "firmware",
+      "variant": "port008-forward",
+      "capture_format": "mos-agondev-actual-target-step-v1",
+      "capture_evidence_kind": "mos-agondev-actual-target-step",
+      "object_architecture": "ez80-adl",
+      "final_image_suffix": "/bin/MOS.elf",
+      "link_map_suffix": "/bin/MOS.map",
+      "build_relative": "projects/mos-port",
+      "final_linker_script": "ld/mos.ld",
+      "required_roots": [
+        "AUTHORITY",
+        "SOURCE",
+        "BUILD_TOOL",
+        "PYTHON_ENV",
+        "PREPARED",
+        "BUILD",
+        "TOOLCHAIN",
+        "PROVENANCE"
+      ],
+      "root_policy": {
+        "AUTHORITY": {"allow_symlink": false},
+        "SOURCE": {"allow_symlink": false},
+        "BUILD_TOOL": {"allow_symlink": false},
+        "PYTHON_ENV": {"allow_symlink": true},
+        "PREPARED": {"allow_symlink": false},
+        "BUILD": {"allow_symlink": false},
+        "TOOLCHAIN": {"allow_symlink": true},
+        "PROVENANCE": {"allow_symlink": false}
+      },
+      "repositories": [
+        {"id": "authority", "root": "AUTHORITY"},
+        {"id": "product-source", "root": "SOURCE"},
+        {"id": "build-tool", "root": "BUILD_TOOL"}
+      ],
+      "environment_policy": {
+        "policy": "sanitized-deterministic-v1",
+        "exact_variables": {
+          "LANG": "C",
+          "LC_ALL": "C",
+          "PATH": "/usr/bin:/bin"
+        },
+        "exact_cleared_variables": [
+          "CPATH",
+          "C_INCLUDE_PATH",
+          "CPLUS_INCLUDE_PATH",
+          "OBJC_INCLUDE_PATH",
+          "LIBRARY_PATH",
+          "COMPILER_PATH",
+          "GCC_EXEC_PREFIX",
+          "DEPENDENCIES_OUTPUT",
+          "SUNPRO_DEPENDENCIES",
+          "SOURCE_DATE_EPOCH"
+        ],
+        "source_date_epoch": {"disposition": "cleared", "value": null}
+      },
+      "recorder": {
+        "root": "BUILD_TOOL",
+        "path": "projects/mos-port/tools/record_target_step.py",
+        "session_path": ".mos-agondev-provenance-session.json"
+      },
+      "prepared_source": {
+        "root": "PREPARED",
+        "metadata": ".mos-agondev-worktree.json",
+        "source_repository": "product-source",
+        "checker_repository": "build-tool",
+        "checker": "scripts/prepare_mos_worktree.py"
+      },
+      "tools": {
+        "python": {
+          "path": "${PYTHON_ENV}/bin/python",
+          "sha256": "255e900f44ce87c630e83b637a79435f9ae7778dd72f6e2a2f18a486e501d016"
+        },
+        "compiler": {
+          "path": "${TOOLCHAIN}/bin/ez80-none-elf-clang",
+          "sha256": "34670dda66966bc83b59bafe97bbe84fd7ca20ad15728eb3f3753097d22dc51d"
+        },
+        "assembler": {
+          "path": "${TOOLCHAIN}/bin/ez80-none-elf-as",
+          "sha256": "00dec630d1c386521887e6af0bb1b2045f66ae6f181f84491269f020a0342bdb"
+        },
+        "linker": {
+          "path": "${TOOLCHAIN}/bin/ez80-none-elf-ld",
+          "sha256": "2f4321d67956d8389bc28661b8684f8e054ee3b4e9eb890245f6c9afa33434cf"
+        },
+        "nm": {
+          "path": "${TOOLCHAIN}/bin/ez80-none-elf-nm",
+          "sha256": "6ce3cc98f8b17f590be5362db5af2919536b0bf905381ef275212f19433666ed"
+        },
+        "objdump": {
+          "path": "${TOOLCHAIN}/bin/ez80-none-elf-objdump",
+          "sha256": "a9a89d31a727e50895fcfc3c6f532907dd875b870e3660429ef8fa07992ceadf"
+        }
+      },
+      "release_consumer": {
+        "status": "ordinary-composition-present",
+        "note": "The ordinary EMOS composition can provide the release-side object role after an approved firmware identity is embedded."
+      },
+      "units": [
+        {
+          "id": "emos-parallel-owner",
+          "classification": "equality",
+          "source_root": "PREPARED",
+          "source": "src/emos_parallel.c",
+          "object_suffix": "/obj/src/emos_parallel.o",
+          "producer_kind": "c-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_emos_parallel_init", "map_name": "_emos_parallel_init", "types": ["T"]},
+            {"name": "_emos_parallel_epoch_enter", "map_name": "_emos_parallel_epoch_enter", "types": ["T"]},
+            {"name": "_emos_parallel_epoch_leave", "map_name": "_emos_parallel_epoch_leave", "types": ["T"]},
+            {"name": "_emos_parallel_write_stream", "map_name": "_emos_parallel_write_stream", "types": ["T"]},
+            {"name": "_emos_parallel_write_byte", "map_name": "_emos_parallel_write_byte", "types": ["T"]},
+            {"name": "_emos_parallel_last_fault", "map_name": "_emos_parallel_last_fault", "types": ["T"]},
+            {"name": "_emos_parallel_epoch_owned", "map_name": "_emos_parallel_epoch_owned", "types": ["T"]},
+            {"name": "_emos_parallel_route_enter", "map_name": "_emos_parallel_route_enter", "types": ["T"]},
+            {"name": "_emos_parallel_route_leave", "map_name": "_emos_parallel_route_leave", "types": ["T"]},
+            {"name": "_emos_parallel_route_write_stream", "map_name": "_emos_parallel_route_write_stream", "types": ["T"]},
+            {"name": "_emos_parallel_route_write_byte", "map_name": "_emos_parallel_route_write_byte", "types": ["T"]},
+            {"name": "_emos_parallel_route_owned", "map_name": "_emos_parallel_route_owned", "types": ["T"]},
+            {"name": "_emos_parallel_uart1_guard_acquire", "map_name": "_emos_parallel_uart1_guard_acquire", "types": ["T"]},
+            {"name": "_emos_parallel_uart1_guard_release", "map_name": "_emos_parallel_uart1_guard_release", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-parallel-engine",
+          "classification": "equality",
+          "source_root": "PREPARED",
+          "source": "src/emos_parallel_engine.c",
+          "object_suffix": "/obj/src/emos_parallel_engine.o",
+          "producer_kind": "c-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_emos_parallel_engine_configure", "map_name": "_emos_parallel_engine_configure", "types": ["T"]},
+            {"name": "_emos_parallel_engine_open", "map_name": "_emos_parallel_engine_open", "types": ["T"]},
+            {"name": "_emos_parallel_engine_close", "map_name": "_emos_parallel_engine_close", "types": ["T"]},
+            {"name": "_emos_parallel_engine_write", "map_name": "_emos_parallel_engine_write", "types": ["T"]},
+            {"name": "_emos_parallel_engine_fault", "map_name": "_emos_parallel_engine_fault", "types": ["T"]},
+            {"name": "_emos_parallel_generation_next", "map_name": "_emos_parallel_generation_next", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-uart-owner",
+          "classification": "equality",
+          "source_root": "PREPARED",
+          "source": "src/uart.c",
+          "object_suffix": "/obj/src/uart.o",
+          "producer_kind": "c-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_init_UART0", "map_name": "_init_UART0", "types": ["T"]},
+            {"name": "_init_UART1", "map_name": "_init_UART1", "types": ["T"]},
+            {"name": "_open_UART0", "map_name": "_open_UART0", "types": ["T"]},
+            {"name": "_open_UART1", "map_name": "_open_UART1", "types": ["T"]},
+            {"name": "_close_UART1", "map_name": "_close_UART1", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-parallel-io",
+          "classification": "equality",
+          "source_root": "BUILD",
+          "source": "generated/src/emos_parallel_io.asm",
+          "maintained_source_root": "PREPARED",
+          "maintained_source": "src/emos_parallel_io.asm",
+          "generator": {
+            "manifest_root": "BUILD",
+            "manifest": "generated/manifest.json",
+            "manifest_schema": 2,
+            "tool_root": "BUILD_TOOL",
+            "tool": "projects/mos-port/tools/zds2gas.py",
+            "wrapper_root": "BUILD_TOOL",
+            "wrapper": "projects/mos-port/tools/assemble_zds.py"
+          },
+          "object_suffix": "/obj/asm/src/emos_parallel_io.o",
+          "producer_kind": "wrapped-assembly",
+          "producer_tool": "assembler",
+          "symbols": [
+            {"name": "_emos_parallel_io_write_control", "map_name": "_emos_parallel_io_write_control", "types": ["T"]},
+            {"name": "_emos_parallel_io_configure", "map_name": "_emos_parallel_io_configure", "types": ["T"]},
+            {"name": "_emos_parallel_io_try_lock", "map_name": "_emos_parallel_io_try_lock", "types": ["T"]},
+            {"name": "_emos_parallel_io_try_begin_entry", "map_name": "_emos_parallel_io_try_begin_entry", "types": ["T"]},
+            {"name": "_emos_parallel_io_try_reserve_portc", "map_name": "_emos_parallel_io_try_reserve_portc", "types": ["T"]},
+            {"name": "_emos_parallel_io_read_clock", "map_name": "_emos_parallel_io_read_clock", "types": ["T"]},
+            {"name": "_emos_parallel_io_commit_epoch", "map_name": "_emos_parallel_io_commit_epoch", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-vdu-serial-bridge",
+          "classification": "equality",
+          "source_root": "BUILD",
+          "source": "generated/src/serial.asm",
+          "maintained_source_root": "PREPARED",
+          "maintained_source": "src/serial.asm",
+          "generator": {
+            "manifest_root": "BUILD",
+            "manifest": "generated/manifest.json",
+            "manifest_schema": 2,
+            "tool_root": "BUILD_TOOL",
+            "tool": "projects/mos-port/tools/zds2gas.py",
+            "wrapper_root": "BUILD_TOOL",
+            "wrapper": "projects/mos-port/tools/assemble_zds.py"
+          },
+          "object_suffix": "/obj/asm/src/serial.o",
+          "producer_kind": "wrapped-assembly",
+          "producer_tool": "assembler",
+          "symbols": [
+            {"name": "EMOS_vdu_PUTCH", "map_name": "EMOS_vdu_PUTCH", "types": ["T"]},
+            {"name": "EMOS_vdu_WRITE", "map_name": "EMOS_vdu_WRITE", "types": ["T"]},
+            {"name": "EMOS_vdu_parallel_PUTCH", "map_name": "EMOS_vdu_parallel_PUTCH", "types": ["T"]},
+            {"name": "EMOS_vdu_parallel_WRITE", "map_name": "EMOS_vdu_parallel_WRITE", "types": ["T"]},
+            {"name": "UART0_serial_PUTCH", "map_name": "UART0_serial_PUTCH", "types": ["T"]},
+            {"name": "UART1_serial_PUTCH", "map_name": "UART1_serial_PUTCH", "types": ["T"]},
+            {"name": "_putch", "map_name": "_putch", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-mode-coordinator",
+          "classification": "composition-dependent",
+          "source_root": "PREPARED",
+          "source": "src/emos.c",
+          "object_suffix": "/obj/src/emos.o",
+          "producer_kind": "c-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_emos_init", "map_name": "_emos_init", "types": ["T"]},
+            {"name": "_emos_request_mode", "map_name": "_emos_request_mode", "types": ["T"]}
+          ]
+        },
+        {
+          "id": "emos-fixed-backend",
+          "classification": "qualification-only",
+          "source_root": "PREPARED",
+          "source": "src/emos_parallel_fixed_backend.c",
+          "object_suffix": "/obj/src/emos_parallel_fixed_backend.o",
+          "producer_kind": "c-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_emos_parallel_fixed_enter", "map_name": "_emos_parallel_fixed_enter", "types": ["T"]},
+            {"name": "_emos_parallel_fixed_ready", "map_name": "_emos_parallel_fixed_ready", "types": ["T"]},
+            {"name": "_emos_parallel_fixed_leave", "map_name": "_emos_parallel_fixed_leave", "types": ["T"]}
+          ]
+        }
+      ],
+      "command_normalization": "root-paths-and-build-identity-defines-v1",
+      "command_policy_status": "awaiting-clean-rehearsal",
+      "roles": {
+        "qualification": {
+          "required_units": [
+            "emos-parallel-owner",
+            "emos-parallel-engine",
+            "emos-uart-owner",
+            "emos-parallel-io",
+            "emos-vdu-serial-bridge",
+            "emos-mode-coordinator",
+            "emos-fixed-backend"
+          ],
+          "forbidden_units": [],
+          "forbidden_symbols": [],
+          "requires_separate_composition_identity": true,
+          "expected_composition_artifact_id": "port-008-forward-qualification",
+          "expected_composition_artifact_kind": "test_procedure",
+          "source_selection": null,
+          "unit_command_sha256": {
+            "emos-parallel-owner": null,
+            "emos-parallel-engine": null,
+            "emos-uart-owner": null,
+            "emos-parallel-io": null,
+            "emos-vdu-serial-bridge": null,
+            "emos-mode-coordinator": null,
+            "emos-fixed-backend": null
+          },
+          "final_link_command_sha256": null
+        },
+        "release": {
+          "required_units": [
+            "emos-parallel-owner",
+            "emos-parallel-engine",
+            "emos-uart-owner",
+            "emos-parallel-io",
+            "emos-vdu-serial-bridge",
+            "emos-mode-coordinator"
+          ],
+          "forbidden_units": [
+            "emos-fixed-backend"
+          ],
+          "forbidden_symbols": [
+            "_emos_parallel_fixed_enter",
+            "_emos_parallel_fixed_ready",
+            "_emos_parallel_fixed_leave"
+          ],
+          "requires_separate_composition_identity": false,
+          "expected_composition_artifact_id": null,
+          "expected_composition_artifact_kind": null,
+          "source_selection": null,
+          "unit_command_sha256": {
+            "emos-parallel-owner": null,
+            "emos-parallel-engine": null,
+            "emos-uart-owner": null,
+            "emos-parallel-io": null,
+            "emos-vdu-serial-bridge": null,
+            "emos-mode-coordinator": null
+          },
+          "final_link_command_sha256": null
+        }
+      },
+      "equality_compile_commands_must_match": true
+    },
+    "p4": {
+      "artifact_id": "extender-vdp",
+      "artifact_kind": "firmware",
+      "variant": "olimex-p4-devkit",
+      "capture_format": "p4-platformio-scons-actual-step-provenance-v1",
+      "capture_evidence_kind": "p4-platformio-scons-actual-step-provenance",
+      "object_architecture": "riscv:rv32",
+      "target_machine": "riscv32-esp-elf",
+      "assembler_selector_arguments": [
+        "-march=rv32imafc_zicsr_zifencei_xesppie"
+      ],
+      "project_relative": "vdp",
+      "venv_relative": ".venv",
+      "pio_packages_relative": ".pio/packages",
+      "toolchain_package_relative": "toolchain-riscv32-esp",
+      "final_image_suffix": "/firmware.elf",
+      "link_map_suffix": "/firmware.map",
+      "required_roots": [
+        "AUTHORITY",
+        "SOURCE",
+        "PROJECT",
+        "BUILD",
+        "TOOLCHAIN",
+        "VENV_RUNTIME",
+        "PIO_PACKAGES",
+        "PYTHON_RUNTIME",
+        "PROVENANCE"
+      ],
+      "root_policy": {
+        "AUTHORITY": {"allow_symlink": false},
+        "SOURCE": {"allow_symlink": false},
+        "PROJECT": {"allow_symlink": false},
+        "BUILD": {"allow_symlink": false},
+        "TOOLCHAIN": {"allow_symlink": false},
+        "VENV_RUNTIME": {"allow_symlink": false},
+        "PIO_PACKAGES": {"allow_symlink": false},
+        "PYTHON_RUNTIME": {"allow_symlink": false},
+        "PROVENANCE": {"allow_symlink": false}
+      },
+      "repositories": [
+        {"id": "authority", "root": "AUTHORITY"},
+        {"id": "product-source", "root": "SOURCE"}
+      ],
+      "environment_policy": {
+        "policy": "sanitized-deterministic-v1",
+        "exact_variable_names": ["PATH", "LANG", "LC_ALL", "TZ", "TMPDIR", "PWD"],
+        "exact_values": {
+          "LANG": "C",
+          "LC_ALL": "C",
+          "TZ": "UTC",
+          "TMPDIR": "${PROVENANCE}/tmp",
+          "PWD": "${PROJECT}"
+        },
+        "path_allowed_roots": ["TOOLCHAIN", "VENV_RUNTIME", "PIO_PACKAGES"],
+        "path_allowed_system_directories": [
+          "/usr/local/sbin",
+          "/usr/local/bin",
+          "/usr/sbin",
+          "/usr/bin",
+          "/sbin",
+          "/bin"
+        ],
+        "path_required_directory": "${TOOLCHAIN}/bin",
+        "exact_cleared_variables": [
+          "C_INCLUDE_PATH",
+          "COMPILER_PATH",
+          "CPATH",
+          "CPLUS_INCLUDE_PATH",
+          "GCC_EXEC_PREFIX",
+          "LIBRARY_PATH",
+          "LD_LIBRARY_PATH",
+          "OBJC_INCLUDE_PATH",
+          "SDKROOT",
+          "SOURCE_DATE_EPOCH"
+        ],
+        "source_date_epoch": {"disposition": "cleared", "value": null}
+      },
+      "capture_boundary_files": [
+        "platformio.ini",
+        "pio/select_sources.py",
+        "pio/build_identity.py",
+        "pio/capture_p4_actual_steps.py"
+      ],
+      "external_project_compile_prefixes": [
+        ".pio/libdeps",
+        "managed_components"
+      ],
+      "capture_runtime_policy": {
+        "launcher_path": "${VENV_RUNTIME}/lib/python3.14/site-packages/platformio/__main__.py",
+        "launcher_sha256": "b1424d1575c40ffc286a8d233d7708251a54c1be267e872f7435bbfdb195fa96",
+        "python_invoked_path": "${VENV_RUNTIME}/bin/python",
+        "python_tool": "capture_python",
+        "implementation": "cpython",
+        "version": "3.14.6 (main, Jun 23 2026, 15:18:23) [Clang 22.1.3 ]",
+        "version_info": [3, 14, 6, "final", 0],
+        "platformio": {
+          "version": "6.1.19",
+          "package_root": "${VENV_RUNTIME}/lib/python3.14/site-packages/platformio",
+          "module_relative_path": "__init__.py",
+          "tree_sha256": "82080144c9f694f051ad71dcad4df9ec9a6bae539ebcdfa002fc34f6a6d06cf8"
+        },
+        "scons": {
+          "version": "4.8.1",
+          "package_root": "${PIO_PACKAGES}/tool-scons/scons-local-4.8.1/SCons",
+          "module_relative_path": "__init__.py",
+          "tree_sha256": "41cc38ada41e6820b835e6617d9342b75cbc689ce4a28053b6a6c5012055c8b8"
+        }
+      },
+      "tools": {
+        "capture_python": {
+          "path": "${PYTHON_RUNTIME}/bin/python3.14",
+          "sha256": "255e900f44ce87c630e83b637a79435f9ae7778dd72f6e2a2f18a486e501d016"
+        },
+        "compiler": {
+          "path": "${TOOLCHAIN}/bin/riscv32-esp-elf-g++",
+          "sha256": "13976d952160abd3f9a711b0d92733bc182753766cf905c94f2c36c5f40d6554"
+        },
+        "cc1plus": {
+          "path": "${TOOLCHAIN}/libexec/gcc/riscv32-esp-elf/14.2.0/cc1plus",
+          "sha256": "cdf223bb53628ac0c78dcabb7506caa4b70d8eb5d39aed233386dbbde58c9ce7"
+        },
+        "assembler": {
+          "path": "${TOOLCHAIN}/riscv32-esp-elf/bin/as",
+          "sha256": "fe3f8cec314fe159414d95bf451b5af0b7634f763f05d7e9d02ab62e0e509fff"
+        },
+        "assembler_backend": {
+          "path": "${TOOLCHAIN}/riscv32-esp-elf/bin/as-xespv2p1",
+          "sha256": "7649c74de353006e60eb64c0a41a4405a73e5e26226da3ef6498cb90633758e8"
+        },
+        "collect2": {
+          "path": "${TOOLCHAIN}/libexec/gcc/riscv32-esp-elf/14.2.0/collect2",
+          "sha256": "5b932651a2ef38c785ba7030bf17aa487c6bdc30fbc1f064181212bb98dbad95"
+        },
+        "link_driver": {
+          "path": "${TOOLCHAIN}/bin/riscv32-esp-elf-g++",
+          "sha256": "13976d952160abd3f9a711b0d92733bc182753766cf905c94f2c36c5f40d6554"
+        },
+        "linker": {
+          "path": "${TOOLCHAIN}/riscv32-esp-elf/bin/ld",
+          "sha256": "d4afcd04997ff69a4825ff52a5764dfb7e33cf31359e2b17cd339bff6be37016"
+        },
+        "nm": {
+          "path": "${TOOLCHAIN}/bin/riscv32-esp-elf-nm",
+          "sha256": "2f6924208d26fa10dd48b8614ec5b41948926a7fd551759aeff403caada88c91"
+        },
+        "objdump": {
+          "path": "${TOOLCHAIN}/riscv32-esp-elf/bin/objdump-xespv2p1",
+          "sha256": "85fee12f7f6d3eb2bf575550a30e6d8bc75a6926e617a660d3bc8e08dce81ac1"
+        }
+      },
+      "release_consumer": {
+        "status": "absent",
+        "note": "No production P4 boot/activation/return composition consumes these units. p4-browser-vdp links DisconnectedStream and is not a release surrogate."
+      },
+      "units": [
+        {
+          "id": "p4-parallel-data-plane",
+          "classification": "equality",
+          "source_root": "SOURCE",
+          "source": "vdp/video/extender/transport/p4_parallel_data_plane.cpp",
+          "object_suffix": "/video/extender/transport/p4_parallel_data_plane.cpp.o",
+          "producer_kind": "cxx-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {
+              "name": "_ZN4agon8extender9transport19P4ParallelDataPlane11serviceOnceENS1_17ReceiveWaitPolicyE",
+              "map_name": "agon::extender::transport::P4ParallelDataPlane::serviceOnce(agon::extender::transport::ReceiveWaitPolicy)",
+              "types": ["T"]
+            },
+            {
+              "name": "_ZN4agon8extender9transport19P4ParallelDataPlane20enterAuthorizedEpochENS1_18ParallelEpochLeaseE",
+              "map_name": "agon::extender::transport::P4ParallelDataPlane::enterAuthorizedEpoch(agon::extender::transport::ParallelEpochLease)",
+              "types": ["T"]
+            }
+          ]
+        },
+        {
+          "id": "p4-extender-vdp-stream",
+          "classification": "equality",
+          "source_root": "SOURCE",
+          "source": "vdp/video/extender/transport/extender_vdp_stream.cpp",
+          "object_suffix": "/video/extender/transport/extender_vdp_stream.cpp.o",
+          "producer_kind": "cxx-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {
+              "name": "_ZN4agon8extender9transport17ExtenderVdpStream5writeEPKhj",
+              "map_name": "agon::extender::transport::ExtenderVdpStream::write(unsigned char const*, unsigned int)",
+              "types": ["T"]
+            },
+            {
+              "name": "_ZN4agon8extender9transport17ExtenderVdpStream5writeEh",
+              "map_name": "agon::extender::transport::ExtenderVdpStream::write(unsigned char)",
+              "types": ["T"]
+            }
+          ]
+        },
+        {
+          "id": "p4-parallel-target",
+          "classification": "equality",
+          "source_root": "SOURCE",
+          "source": "vdp/video/extender/transport/p4_parallel_target.cpp",
+          "object_suffix": "/video/extender/transport/p4_parallel_target.cpp.o",
+          "producer_kind": "cxx-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {
+              "name": "_ZN4agon8extender9transport18EspP4ParlioBackend4waitENS1_17ReceiveWaitPolicyERKSt6atomicIbE",
+              "map_name": "agon::extender::transport::EspP4ParlioBackend::wait(agon::extender::transport::ReceiveWaitPolicy, std::atomic<bool> const&)",
+              "types": ["T"]
+            },
+            {
+              "name": "_ZN4agon8extender9transport18EspP4EpochHardware24disableSharedUartOutputsEv",
+              "map_name": "agon::extender::transport::EspP4EpochHardware::disableSharedUartOutputs()",
+              "types": ["T"]
+            },
+            {
+              "name": "_ZN4agon8extender9transport18EspP4EpochHardware26enableParallelForwardBanksEv",
+              "map_name": "agon::extender::transport::EspP4EpochHardware::enableParallelForwardBanks()",
+              "types": ["T"]
+            }
+          ]
+        },
+        {
+          "id": "p4-qualification-owner",
+          "classification": "qualification-only",
+          "source_root": "SOURCE",
+          "source": "vdp/video/extender/transport/p4_parallel_qualification.cpp",
+          "object_suffix": "/video/extender/transport/p4_parallel_qualification.cpp.o",
+          "producer_kind": "cxx-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {
+              "name": "_ZN4agon8extender9transport38beginP4ParallelNonreleaseQualificationEv",
+              "map_name": "agon::extender::transport::beginP4ParallelNonreleaseQualification()",
+              "types": ["T"]
+            },
+            {
+              "name": "_ZN4agon8extender9transport44requestP4ParallelNonreleaseQualificationStopEv",
+              "map_name": "agon::extender::transport::requestP4ParallelNonreleaseQualificationStop()",
+              "types": ["T"]
+            }
+          ]
+        },
+        {
+          "id": "p4-qualification-sketch-bridge",
+          "classification": "qualification-only",
+          "source_root": "SOURCE",
+          "source": "vdp/video/extender/boot/p4_parallel_qualification_vdp.cpp",
+          "object_suffix": "/video/extender/boot/p4_parallel_qualification_vdp.cpp.o",
+          "producer_kind": "cxx-compile",
+          "producer_tool": "compiler",
+          "symbols": [
+            {"name": "_Z5setupv", "map_name": "setup()", "types": ["T"]},
+            {"name": "_Z4loopv", "map_name": "loop()", "types": ["T"]}
+          ]
+        }
+      ],
+      "command_normalization": "root-paths-and-build-identity-defines-v1",
+      "command_policy_status": "awaiting-clean-rehearsal",
+      "roles": {
+        "qualification": {
+          "required_units": [
+            "p4-parallel-data-plane",
+            "p4-extender-vdp-stream",
+            "p4-parallel-target",
+            "p4-qualification-owner",
+            "p4-qualification-sketch-bridge"
+          ],
+          "forbidden_units": [],
+          "forbidden_symbols": [],
+          "requires_separate_composition_identity": true,
+          "expected_composition_artifact_id": "port-008-forward-qualification",
+          "expected_composition_artifact_kind": "test_procedure",
+          "source_selection": "pio/p4-port008-nonrelease-qualification-source-selection.json",
+          "unit_command_sha256": {
+            "p4-parallel-data-plane": null,
+            "p4-extender-vdp-stream": null,
+            "p4-parallel-target": null,
+            "p4-qualification-owner": null,
+            "p4-qualification-sketch-bridge": null
+          },
+          "final_link_command_sha256": null
+        },
+        "release": {
+          "required_units": [
+            "p4-parallel-data-plane",
+            "p4-extender-vdp-stream",
+            "p4-parallel-target"
+          ],
+          "forbidden_units": [
+            "p4-qualification-owner",
+            "p4-qualification-sketch-bridge"
+          ],
+          "forbidden_symbols": [
+            "_ZN4agon8extender9transport38beginP4ParallelNonreleaseQualificationEv",
+            "_ZN4agon8extender9transport44requestP4ParallelNonreleaseQualificationStopEv"
+          ],
+          "requires_separate_composition_identity": false,
+          "expected_composition_artifact_id": null,
+          "expected_composition_artifact_kind": null,
+          "source_selection": null,
+          "unit_command_sha256": {
+            "p4-parallel-data-plane": null,
+            "p4-extender-vdp-stream": null,
+            "p4-parallel-target": null
+          },
+          "final_link_command_sha256": null
+        }
+      },
+      "equality_compile_commands_must_match": true
+    }
+  },
+  "known_open_boundaries": [
+    {
+      "id": "PORT008-PROV-P023",
+      "status": "corrected-source-unbuilt",
+      "summary": "The P4 non-release qualification define formerly contaminated every production translation-unit command; it is now local to the two qualification-only translation units."
+    },
+    {
+      "id": "PORT008-PROV-P024",
+      "status": "corrected-source-unbuilt",
+      "summary": "The ordinary and fixed EMOS profiles historically applied role and identity CPPFLAGS component-wide. Equality-unit compile commands must match after per-source flag scoping; the gate will not waive the difference merely because current object bytes happen to match."
+    },
+    {
+      "id": "PORT008-PROV-P025",
+      "status": "corrected-source-unbuilt",
+      "summary": "The P4 build-identity generator formerly placed varying identity, build, and lifecycle definitions on every translation unit even though the boot composition alone consumes them. Identity generation and inputs must remain boot-scoped, while equality-unit commands and dependencies must match exactly."
+    },
+    {
+      "id": "PORT008-PROV-P026",
+      "status": "corrected-source-unversioned",
+      "summary": "The EMOS fixed profile formerly substituted its qualification label for the firmware source/build identity. The profile now binds the common agon-emos source lineage and lifecycle separately from the qualification procedure revision; qualification and release still require distinct immutable build IDs. All successor identities remain unapproved until the Author assigns them and fresh target evidence exists."
+    },
+    {
+      "id": "PORT008-PROV-P027",
+      "status": "corrected-source-unversioned",
+      "summary": "The P4 fixed composition formerly had no independently revisioned qualification identity. The boot identity owner now binds it separately from the common firmware tuple; Author approval and fresh target evidence remain required."
+    },
+    {
+      "id": "PORT008-PROV-P028",
+      "status": "corrected-wrapper-unbuilt",
+      "summary": "The EMOS wrapper formerly failed to forward its selected target toolchain to recursive producer targets. All three recursive paths now forward the exact absolute root and have regression coverage."
+    },
+    {
+      "id": "PORT008-PROV-P029",
+      "status": "corrected-recorder-pre-baseline",
+      "summary": "The first generic actual-step recorder/build interface admitted pattern-scoped flags, ambiguous sessions/producers, nested response indirection, and incomplete driver-selected tool authority. Generic commits 7e00798 and 64bbf34 correct those paths; no retained evidence depends on the invalid rehearsal."
+    },
+    {
+      "id": "PORT008-PROV-P030",
+      "status": "corrected-recorder-awaiting-clean-rehearsal",
+      "summary": "The first P4 recorder underbound actual argv, deterministic child/runtime roots, response forms, generated inputs, and dispatcher-selected backends. The corrected recorder passes adversarial host tests, but a clean real PlatformIO capture remains required."
+    },
+    {
+      "id": "PORT008-PROV-P031",
+      "status": "corrected-gate-awaiting-clean-rehearsal",
+      "summary": "The first product-gate draft admitted incomplete command, lineage, role, session, path, unique-registry, calendar-valid build-ID, independently delimited identity, and linked-instruction comparisons and overstated closure. The corrected gate remains deliberately ineligible while its command-fingerprint slots are null."
+    }
+  ]
+}

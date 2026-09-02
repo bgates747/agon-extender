@@ -1,22 +1,34 @@
-"""Inject explicit human-readable identity into deployable diagnostics.
+"""Materialize explicit human-readable identity for diagnostic consumers.
 
 Unset values deliberately compile as UNVERSIONED-DO-NOT-DEPLOY. Qualification
 tooling must reject that marker; ordinary compile/link investigation remains
 possible without inventing a build identity.
+
+Bootable retained-VDP environments consume a generated header from only their
+boot translation unit. This prevents environment/build-specific identity
+strings from perturbing every otherwise-common production object's compile
+command. Legacy canary environments retain their component-wide definitions
+until their own diagnostic consumers are independently migrated.
 """
 
 from __future__ import annotations
 
 import json
 import os
-from pathlib import Path
+from pathlib import Path, PurePosixPath
 import re
+import stat
+from typing import Any, Mapping
+import uuid
 
-
-Import("env")  # type: ignore[name-defined]  # Provided by PlatformIO/SCons.
 
 MARKER = "UNVERSIONED-DO-NOT-DEPLOY"
 VALID = re.compile(r"^[A-Za-z0-9][A-Za-z0-9.-]*$")
+LOCAL_IDENTITY_FIELD = "translation_unit_local_build_identity"
+QUALIFICATION_ENVIRONMENT = "p4-port008-nonrelease-qualification"
+QUALIFICATION_COMPOSITION_VARIABLE = (
+    "AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY"
+)
 
 
 def validated(name: str, value: str) -> str:
@@ -25,33 +37,322 @@ def validated(name: str, value: str) -> str:
     return value
 
 
-def environment_identity(name: str) -> str:
-    value = os.environ.get(name, MARKER)
+def environment_identity(
+    name: str, process_environment: Mapping[str, str]
+) -> str:
+    value = process_environment.get(name, MARKER)
     return validated(name, value)
 
 
-environment = env.subst("$PIOENV")  # type: ignore[name-defined]
-project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
-identity_path = project_dir / f"pio/{environment}-identity.json"
-if identity_path.is_file():
-    record = json.loads(identity_path.read_text(encoding="utf-8"))
-    source_identity = validated("source_identity", record["source_identity"])
-    artifact_status = validated("status", record["status"])
-    requested_source = os.environ.get("AGON_EXTENDER_SOURCE_IDENTITY")
-    if requested_source is not None and requested_source != source_identity:
-        raise RuntimeError(
-            "AGON_EXTENDER_SOURCE_IDENTITY does not match committed "
-            f"{identity_path.relative_to(project_dir)}"
+def _identity_values(
+    project_dir: Path,
+    environment: str,
+    process_environment: Mapping[str, str],
+) -> tuple[str, str, str]:
+    identity_path = project_dir / f"pio/{environment}-identity.json"
+    if identity_path.is_file():
+        record = json.loads(identity_path.read_text(encoding="utf-8"))
+        source_identity = validated("source_identity", record["source_identity"])
+        artifact_status = validated("status", record["status"])
+        requested_source = process_environment.get(
+            "AGON_EXTENDER_SOURCE_IDENTITY"
         )
+        if requested_source is not None and requested_source != source_identity:
+            raise RuntimeError(
+                "AGON_EXTENDER_SOURCE_IDENTITY does not match committed "
+                f"{identity_path.relative_to(project_dir)}"
+            )
+    else:
+        source_identity = environment_identity(
+            "AGON_EXTENDER_SOURCE_IDENTITY", process_environment
+        )
+        artifact_status = MARKER
+    build_id = environment_identity("AGON_EXTENDER_BUILD_ID", process_environment)
+    return source_identity, build_id, artifact_status
+
+
+def _qualification_composition_identity(
+    environment: str, process_environment: Mapping[str, str]
+) -> str | None:
+    requested = process_environment.get(QUALIFICATION_COMPOSITION_VARIABLE)
+    if environment == QUALIFICATION_ENVIRONMENT:
+        return validated(
+            QUALIFICATION_COMPOSITION_VARIABLE,
+            requested if requested is not None else MARKER,
+        )
+    if requested is not None:
+        raise RuntimeError(
+            f"{QUALIFICATION_COMPOSITION_VARIABLE} is qualification-only and "
+            f"must not be supplied to {environment}"
+        )
+    return None
+
+
+def _normalized_local_header(
+    project_dir: Path,
+    environment: str,
+    selection: Mapping[str, Any],
+) -> Path | None:
+    record = selection.get(LOCAL_IDENTITY_FIELD)
+    if record is None:
+        return None
+    if not isinstance(record, dict) or set(record) != {
+        "consumer",
+        "generated_header",
+    }:
+        raise RuntimeError(
+            f"source selection {LOCAL_IDENTITY_FIELD} must contain exactly "
+            "consumer and generated_header"
+        )
+    consumer = record["consumer"]
+    generated = record["generated_header"]
+    if (
+        not isinstance(consumer, str)
+        or consumer not in selection.get("project_translation_units", [])
+    ):
+        raise RuntimeError(
+            "translation-unit-local build identity consumer is not selected"
+        )
+    expected = f".pio/build-identities/{environment}/build_identity.hpp"
+    if generated != expected:
+        raise RuntimeError(
+            "translation-unit-local build identity header must use the exact "
+            f"environment-owned path {expected}"
+        )
+    pure = PurePosixPath(generated)
+    if pure.is_absolute() or any(part in ("", ".", "..") for part in pure.parts):
+        raise RuntimeError("translation-unit-local build identity path is unsafe")
+    return project_dir / pure
+
+
+def _render_header(
+    source_identity: str,
+    build_id: str,
+    artifact_status: str,
+    qualification_composition_identity: str | None = None,
+) -> str:
+    content = (
+        "// Generated by pio/build_identity.py; do not edit.\n"
+        "#pragma once\n"
+        f'#define AGON_EXTENDER_SOURCE_IDENTITY "{source_identity}"\n'
+        f'#define AGON_EXTENDER_BUILD_ID "{build_id}"\n'
+        f'#define AGON_EXTENDER_ARTIFACT_STATUS "{artifact_status}"\n'
+    )
+    if qualification_composition_identity is not None:
+        content += (
+            "#define AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY "
+            f'"{qualification_composition_identity}"\n'
+        )
+    return content
+
+
+def _generated_relative_path(path: Path, project_dir: Path) -> Path:
+    try:
+        relative = path.relative_to(project_dir)
+    except ValueError as exc:
+        raise RuntimeError("generated build-identity header is outside project") from exc
+    if (
+        not relative.parts
+        or any(part in ("", ".", "..") for part in relative.parts)
+        or path.name in ("", ".", "..")
+    ):
+        raise RuntimeError("generated build-identity header path is unsafe")
+    return relative
+
+
+def _write_if_changed(path: Path, content: str, project_dir: Path) -> None:
+    """Write through anchored directory descriptors without following links.
+
+    The project checkout and build host remain trusted. The descriptor walk,
+    ``O_NOFOLLOW`` opens, and directory-relative atomic replacement close
+    accidental or pre-existing symlink redirection; they do not claim to make
+    a live build safe against a hostile process continuously mutating the same
+    directory tree.
+    """
+
+    relative = _generated_relative_path(path, project_dir)
+    encoded = content.encode("utf-8")
+    directory_flags = os.O_RDONLY | os.O_DIRECTORY | os.O_CLOEXEC | os.O_NOFOLLOW
+    directory_descriptor = os.open(project_dir, directory_flags)
+    temporary_name: str | None = None
+    try:
+        for part in relative.parts[:-1]:
+            try:
+                child_descriptor = os.open(
+                    part, directory_flags, dir_fd=directory_descriptor
+                )
+            except FileNotFoundError:
+                try:
+                    os.mkdir(part, mode=0o700, dir_fd=directory_descriptor)
+                except FileExistsError:
+                    # A concurrent creator is accepted only if the subsequent
+                    # O_NOFOLLOW directory open proves the exact node type.
+                    pass
+                try:
+                    child_descriptor = os.open(
+                        part, directory_flags, dir_fd=directory_descriptor
+                    )
+                except OSError as exc:
+                    raise RuntimeError(
+                        "generated build-identity header traverses an unsafe "
+                        f"parent component: {part}: {exc}"
+                    ) from exc
+            except OSError as exc:
+                raise RuntimeError(
+                    "generated build-identity header traverses an unsafe "
+                    f"parent component: {part}: {exc}"
+                ) from exc
+            os.close(directory_descriptor)
+            directory_descriptor = child_descriptor
+
+        final_name = relative.parts[-1]
+        try:
+            existing_descriptor = os.open(
+                final_name,
+                os.O_RDONLY | os.O_CLOEXEC | os.O_NOFOLLOW,
+                dir_fd=directory_descriptor,
+            )
+        except FileNotFoundError:
+            existing_descriptor = None
+        except OSError as exc:
+            raise RuntimeError(
+                "generated build-identity header is an unsafe existing node: "
+                f"{final_name}: {exc}"
+            ) from exc
+        if existing_descriptor is not None:
+            with os.fdopen(existing_descriptor, "rb") as existing:
+                existing_stat = os.fstat(existing.fileno())
+                if not stat.S_ISREG(existing_stat.st_mode):
+                    raise RuntimeError(
+                        "generated build-identity header is not a regular file: "
+                        f"{final_name}"
+                    )
+                existing_bytes = existing.read()
+            try:
+                current_stat = os.stat(
+                    final_name,
+                    dir_fd=directory_descriptor,
+                    follow_symlinks=False,
+                )
+            except OSError:
+                current_stat = None
+            if (
+                existing_bytes == encoded
+                and current_stat is not None
+                and stat.S_ISREG(current_stat.st_mode)
+                and current_stat.st_dev == existing_stat.st_dev
+                and current_stat.st_ino == existing_stat.st_ino
+            ):
+                return
+
+        temporary_name = f".{final_name}.{uuid.uuid4().hex}.tmp"
+        temporary_descriptor = os.open(
+            temporary_name,
+            os.O_WRONLY
+            | os.O_CREAT
+            | os.O_EXCL
+            | os.O_CLOEXEC
+            | os.O_NOFOLLOW,
+            0o600,
+            dir_fd=directory_descriptor,
+        )
+        with os.fdopen(temporary_descriptor, "wb") as output:
+            output.write(encoded)
+            output.flush()
+            os.fsync(output.fileno())
+
+        try:
+            destination_stat = os.stat(
+                final_name,
+                dir_fd=directory_descriptor,
+                follow_symlinks=False,
+            )
+        except FileNotFoundError:
+            destination_stat = None
+        except OSError as exc:
+            raise RuntimeError(
+                "cannot inspect generated build-identity destination: "
+                f"{final_name}: {exc}"
+            ) from exc
+        if destination_stat is not None and not stat.S_ISREG(
+            destination_stat.st_mode
+        ):
+            raise RuntimeError(
+                "generated build-identity header destination is not a regular "
+                f"file: {final_name}"
+            )
+        os.replace(
+            temporary_name,
+            final_name,
+            src_dir_fd=directory_descriptor,
+            dst_dir_fd=directory_descriptor,
+        )
+        temporary_name = None
+        os.fsync(directory_descriptor)
+    finally:
+        if temporary_name is not None:
+            try:
+                os.unlink(temporary_name, dir_fd=directory_descriptor)
+            except FileNotFoundError:
+                pass
+        os.close(directory_descriptor)
+
+
+def install(env: Any) -> Path | None:
+    """Install local boot identity or legacy canary definitions for one env."""
+
+    environment = env.subst("$PIOENV")
+    project_dir = Path(env.subst("$PROJECT_DIR")).resolve(strict=True)
+    selection_path = project_dir / f"pio/{environment}-source-selection.json"
+    if not selection_path.is_file():
+        selection_path = project_dir / "pio/source-selection.json"
+    selection = json.loads(selection_path.read_text(encoding="utf-8"))
+    if selection.get("environment") != environment:
+        raise RuntimeError(
+            f"{selection_path}: does not describe environment {environment}"
+        )
+    source_identity, build_id, artifact_status = _identity_values(
+        project_dir, environment, os.environ
+    )
+    qualification_composition_identity = _qualification_composition_identity(
+        environment, os.environ
+    )
+    local_header = _normalized_local_header(project_dir, environment, selection)
+    if local_header is not None:
+        _write_if_changed(
+            local_header,
+            _render_header(
+                source_identity,
+                build_id,
+                artifact_status,
+                qualification_composition_identity,
+            ),
+            project_dir,
+        )
+        return local_header
+
+    env.Append(
+        CPPDEFINES=[
+            (
+                "AGON_EXTENDER_SOURCE_IDENTITY",
+                env.StringifyMacro(source_identity),
+            ),
+            ("AGON_EXTENDER_BUILD_ID", env.StringifyMacro(build_id)),
+            (
+                "AGON_EXTENDER_ARTIFACT_STATUS",
+                env.StringifyMacro(artifact_status),
+            ),
+        ]
+    )
+    return None
+
+
+# SCons injects Import when this file is executed as an extra script. Keeping
+# ordinary Python import inert makes header policy directly host-testable.
+try:  # pragma: no cover - exercised inside PlatformIO
+    Import  # type: ignore[name-defined]
+except NameError:
+    pass
 else:
-    source_identity = environment_identity("AGON_EXTENDER_SOURCE_IDENTITY")
-    artifact_status = MARKER
-
-
-env.Append(  # type: ignore[name-defined]
-    CPPDEFINES=[
-        ("AGON_EXTENDER_SOURCE_IDENTITY", env.StringifyMacro(source_identity)),  # type: ignore[name-defined]
-        ("AGON_EXTENDER_BUILD_ID", env.StringifyMacro(environment_identity("AGON_EXTENDER_BUILD_ID"))),  # type: ignore[name-defined]
-        ("AGON_EXTENDER_ARTIFACT_STATUS", env.StringifyMacro(artifact_status)),  # type: ignore[name-defined]
-    ]
-)
+    Import("env")  # type: ignore[name-defined]
+    install(env)  # type: ignore[name-defined]

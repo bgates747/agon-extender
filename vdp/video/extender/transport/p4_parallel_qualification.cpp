@@ -1,3 +1,6 @@
+// Keep the non-release composition marker local to its qualification owner.
+#define AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION 1
+
 #include "extender/transport/p4_parallel_qualification.hpp"
 
 #include <array>

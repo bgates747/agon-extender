@@ -50,14 +50,54 @@ if selected_forbidden:
         + ", ".join(sorted(selected_forbidden))
     )
 
+local_identity = selection.get("translation_unit_local_build_identity")
+if local_identity is not None:
+    if not isinstance(local_identity, dict) or set(local_identity) != {
+        "consumer",
+        "generated_header",
+    }:
+        raise RuntimeError(
+            f"{selection_path}: translation_unit_local_build_identity must "
+            "contain exactly consumer and generated_header"
+        )
+    if local_identity["consumer"] not in project_translation_units:
+        raise RuntimeError(
+            f"{selection_path}: local build-identity consumer is not a "
+            "selected translation unit"
+        )
+    expected_identity_header = (
+        f".pio/build-identities/{environment}/build_identity.hpp"
+    )
+    if local_identity["generated_header"] != expected_identity_header:
+        raise RuntimeError(
+            f"{selection_path}: local build-identity header must be "
+            f"{expected_identity_header}"
+        )
+
 definition_pattern = re.compile(r"^[A-Z][A-Z0-9_]*(?:=[A-Za-z0-9_]+)?$")
 component_compile_definitions = selection.get(
     "component_compile_definitions", []
 )
+qualification_local_definition = (
+    "AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION"
+)
+translation_unit_local_definitions = {
+    qualification_local_definition,
+    "AGON_EXTENDER_SOURCE_IDENTITY",
+    "AGON_EXTENDER_BUILD_ID",
+    "AGON_EXTENDER_ARTIFACT_STATUS",
+    "AGON_EXTENDER_QUALIFICATION_COMPOSITION_IDENTITY",
+}
 for definition in component_compile_definitions:
     if not definition_pattern.fullmatch(definition):
         raise RuntimeError(
             f"{selection_path}: unsupported component definition {definition!r}"
+        )
+    definition_name = definition.partition("=")[0]
+    if definition_name in translation_unit_local_definitions:
+        raise RuntimeError(
+            f"{selection_path}: {definition_name} must be defined only by "
+            "its owning translation unit"
         )
 
 # Hybrid Arduino/ESP-IDF builds intentionally ignore PlatformIO's source

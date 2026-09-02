@@ -30,6 +30,7 @@
     "vendor/ESP32Time/ESP32Time.cpp"
   ],
   "forbidden_project_translation_units": [
+    "video/extender/boot/p4_parallel_qualification_vdp.cpp",
     "video/extender/transport/p4_parallel_qualification.cpp"
   ],
   "vendored_translation_units": [

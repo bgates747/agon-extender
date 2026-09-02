@@ -61,9 +61,6 @@ class SyntheticClosure:
     def make_documents(self) -> dict[str, dict]:
         qualification = {
             "environment": self.environment,
-            "component_compile_definitions": [
-                gate.QUALIFICATION_DEFINITION
-            ],
             "project_translation_units": [
                 *gate.REQUIRED_TRANSLATION_UNITS,
                 "video/extender/display/p4_display_controller.cpp",
@@ -82,7 +79,7 @@ class SyntheticClosure:
                     "video/extender/transport/disconnected_stream.cpp"
                 ],
                 "forbidden_project_translation_units": [
-                    gate.QUALIFICATION_TRANSLATION_UNIT
+                    *gate.QUALIFICATION_ONLY_TRANSLATION_UNITS
                 ],
             }
         return documents
@@ -191,7 +188,7 @@ class NonreleaseTargetClosureTests(unittest.TestCase):
         with self.assertRaisesRegex(gate.ClosureError, "outside the supplied"):
             self.evidence.validate()
 
-    def test_forbidden_prototype_load_fails_closed(self) -> None:
+    def test_forbidden_project_load_fails_closed(self) -> None:
         forbidden = gate.object_path(gate.FORBIDDEN_TRANSLATION_UNITS[0])
         self.evidence.write_map(
             [f"LOAD .pio/build/{self.evidence.environment}/{forbidden}"]
@@ -230,6 +227,15 @@ class NonreleaseTargetClosureTests(unittest.TestCase):
         with self.assertRaisesRegex(gate.ClosureError, "omits required"):
             self.evidence.validate()
 
+    def test_qualification_definition_must_not_be_component_wide(self) -> None:
+        self.evidence.documents["qualification"][
+            "component_compile_definitions"
+        ] = [gate.QUALIFICATION_DEFINITION]
+        with self.assertRaisesRegex(
+            gate.ClosureError, "must be translation-unit-local"
+        ):
+            self.evidence.validate()
+
     def test_ordinary_manifest_must_forbid_qualification(self) -> None:
         ordinary = next(iter(gate.ORDINARY_MANIFESTS))
         self.evidence.documents[ordinary][
@@ -241,7 +247,7 @@ class NonreleaseTargetClosureTests(unittest.TestCase):
     def test_ordinary_manifest_must_not_select_qualification(self) -> None:
         ordinary = next(iter(gate.ORDINARY_MANIFESTS))
         self.evidence.documents[ordinary]["project_translation_units"].append(
-            gate.QUALIFICATION_TRANSLATION_UNIT
+            gate.QUALIFICATION_ONLY_TRANSLATION_UNITS[0]
         )
         with self.assertRaisesRegex(gate.ClosureError, "selects qualification"):
             self.evidence.validate()

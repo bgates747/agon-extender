@@ -9,6 +9,15 @@
 
 #define AGON_EXTENDER_P4_BOOT 1
 
+// Build identity is deliberately local to this boot translation unit. The
+// qualification wrapper overrides only this include path before retaining the
+// same sketch bridge; common production objects receive no identity macros.
+#ifndef AGON_EXTENDER_BUILD_IDENTITY_HEADER
+#define AGON_EXTENDER_BUILD_IDENTITY_HEADER \
+  "../../../.pio/build-identities/p4-browser-vdp/build_identity.hpp"
+#endif
+#include AGON_EXTENDER_BUILD_IDENTITY_HEADER
+
 void processLoop(void *parameter);
 void boot_screen();
 void debug_log(char const *format, ...);
