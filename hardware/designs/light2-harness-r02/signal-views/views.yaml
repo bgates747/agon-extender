@@ -14,7 +14,7 @@ groups:
     p4-gpio17-parallel-forward-control-n: all
     parallel-forward-oe-n: all
     p4-3v3: [J2.1, R29.1]
-    agon-3v3: [J1.34, R26.1]
+    agon-3v3: [J1.34, R26.2]
     ground: [J1.33, U4.2, U4.5, U4.9, U4.12]
   uart_return_control:
     p4-gpio21-uart-return-control-n: all
@@ -137,12 +137,12 @@ views:
     title: Agon 3.3 V domain and bypassing
     nets:
       agon-3v3: all
-      ground: [J1.33, C1.2, C2.2, C3.2, C5.2, U1.6, U1.8, U1.10, U2.10, U2.11, U2.13, U2.15, U2.17, U3.7, U3.9, U3.12]
+      ground: [J1.33, C1.1, C2.1, C3.1, C5.2, U1.6, U1.8, U1.10, U2.10, U2.11, U2.13, U2.15, U2.17, U3.7, U3.9, U3.12]
   - descriptor: p4-3v3-domain-and-bypassing
     title: P4 3.3 V domain and bypassing
     nets:
       p4-3v3: all
-      ground: [J2.2, C4.2, C6.2, U4.2, U4.5, U4.7, U4.9, U4.12]
+      ground: [J2.2, C4.1, C6.2, U4.2, U4.5, U4.7, U4.9, U4.12]
   - descriptor: common-ground
     title: Common ground
     nets:

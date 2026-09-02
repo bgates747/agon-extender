@@ -1070,11 +1070,11 @@ nets:
   class: power
   members:
   - component: C1
-    pin: '1'
+    pin: '2'
   - component: C2
-    pin: '1'
+    pin: '2'
   - component: C3
-    pin: '1'
+    pin: '2'
   - component: C5
     pin: '1'
   - component: J1
@@ -1084,7 +1084,7 @@ nets:
   - component: R25
     pin: '1'
   - component: R26
-    pin: '1'
+    pin: '2'
   - component: R27
     pin: '1'
   - component: U1
@@ -1175,7 +1175,7 @@ nets:
   - component: J1
     pin: '13'
   - component: R13
-    pin: '2'
+    pin: '1'
   - component: R24
     pin: '2'
   description: Active-low Extender-to-Agon parallel admission
@@ -1199,13 +1199,13 @@ nets:
   class: ground
   members:
   - component: C1
-    pin: '2'
+    pin: '1'
   - component: C2
-    pin: '2'
+    pin: '1'
   - component: C3
-    pin: '2'
+    pin: '1'
   - component: C4
-    pin: '2'
+    pin: '1'
   - component: C5
     pin: '2'
   - component: C6
@@ -1268,7 +1268,7 @@ nets:
   class: power
   members:
   - component: C4
-    pin: '1'
+    pin: '2'
   - component: C6
     pin: '1'
   - component: J2
@@ -1539,7 +1539,7 @@ nets:
   class: control
   members:
   - component: R26
-    pin: '2'
+    pin: '1'
   - component: U1
     pin: '19'
   - component: U2
@@ -1551,7 +1551,7 @@ nets:
   class: control
   members:
   - component: R13
-    pin: '1'
+    pin: '2'
   - component: U4
     pin: '11'
   description: Low-only READY_N source before series resistance

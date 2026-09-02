@@ -9,23 +9,30 @@ The placement-independent [`connectivity.yaml`](connectivity.yaml) is the sole
 electrical authority. It fixes every component instance, component value,
 terminal, net, intentional no-connect, pin assignment, power domain, bias, and
 series element. [`schematic.kicad_sch`](schematic.kicad_sch) is the maintained
-authoritative human electrical drawing. Its checked
+authoritative human electrical drawing and breadboard-construction aid. It uses
+top-view physical DIP pin order for U1--U4, including package VCC and GND pins,
+rather than conventional function-grouped symbols. Its checked
 [`schematic.xml`](schematic.xml) and explicit-white
 [`schematic.svg`](schematic.svg) projections make that drawing machine- and
 human-reviewable. The schematic remains a checked projection; its geometry
 does not override the connectivity model.
 
-[`signal-views/`](signal-views/README.md) contains deterministic focused
-projections for individual data lanes, control signals, power domains, ground,
-and startup biasing. Those views retain the maintained schematic's component
-placement but show only one bounded function at a time; they are review aids,
-not additional electrical authorities.
+[`Physical_DIP.kicad_sym`](Physical_DIP.kicad_sym) contains the custom
+`SN74LVC244AN_DIP_TOP` and `SN74LV125AN_DIP_TOP` symbols used by the drawing.
+Their pin-1 dots mark package orientation. Resistor bodies carry compact
+reference/value labels while their complete values remain stored in KiCad.
 
-The Author accepted the maintained schematic on 2026-08-30 after manually
-arranging the complete circuit and clarifying each local bypass-capacitor
-assignment. KiCad's exported endpoint partition exactly matches every r02 net
-and intentional no-connect. Regenerate and validate the maintained projections
-from the repository root with:
+[`signal-views/`](signal-views/README.md) retains the focused-view definitions
+and deterministic extraction helpers. Its former generated views described the
+superseded functional-symbol drawing and have been removed. Regeneration from
+the physical direct-wire canonical drawing is pending an extractor update that
+can distinguish crossing wire geometry without weakening topology checks.
+
+The Author accepted the maintained schematic after manually arranging the
+complete circuit, clarifying each local bypass-capacitor assignment, and
+checking its direct wire geometry. KiCad's exported endpoint partition exactly
+matches every r02 net and intentional no-connect. Regenerate and validate the
+maintained projections from the repository root with:
 
 ```text
 .venv/bin/python \

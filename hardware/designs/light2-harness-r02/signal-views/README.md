@@ -1,4 +1,14 @@
-# Light 2 harness r02 function views
+# Light 2 harness r02 function-view definitions
+
+The definitions and deterministic extraction helpers are retained for renewed
+focused views of the canonical physical direct-wire schematic. Generated views
+from the superseded functional-symbol schematic were removed rather than left
+as stale construction evidence.
+
+The current extractor stops safely when direct-wire geometry touches more than
+one selected electrical net. It must be updated and requalified for the
+physical canonical drawing before generated signal views are restored. Do not
+weaken or bypass that check merely to produce drawings.
 
 This directory contains deterministic, non-authoritative projections of the
 maintained r02 schematic. Each drawing is made by copying
