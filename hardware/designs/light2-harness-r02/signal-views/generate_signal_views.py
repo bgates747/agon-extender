@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate deterministic r02 schematics focused on one function at a time.
+"""Generate ordered deterministic r02 schematics focused on one function at a time.
 
 The maintained ``../schematic.kicad_sch`` supplies component placement and
 orientation.  ``../connectivity.yaml`` supplies every electrical endpoint.
@@ -46,6 +46,9 @@ FIXED_SVG_DATE = "2026/09/01 00:00:00"
 WHITE_BACKGROUND = (
     '  <rect id="explicit-white-background" x="0" y="0" width="100%" '
     'height="100%" fill="#ffffff" stroke="none"/>\n'
+)
+CONTEXT_STROKE = (
+    "(stroke (width 0.127) (type solid) (color 160 160 160 1))"
 )
 
 
@@ -130,8 +133,33 @@ def extract_source_floorplan() -> dict[str, tuple[int, int, str]]:
     return floorplan
 
 
+def block_uuid(block: sexpr.Block) -> str:
+    """Return the UUID of one top-level schematic object."""
+
+    match = re.search(r"\(uuid\s+([^\s)]+)\)", block.text)
+    if match is None:
+        raise FunctionViewError(f"{block.kind}: object has no UUID")
+    return match.group(1)
+
+
+def wire_as_context_polyline(block: sexpr.Block) -> str:
+    """Convert a canonical electrical wire into a gray non-electrical line."""
+
+    text, kind_count = re.subn(r"^\(wire\b", "(polyline", block.text, count=1)
+    text, stroke_count = re.subn(
+        r"\(stroke\s+\(width\s+[^)]+\)\s+\(type\s+[^)]+\)"
+        r"(?:\s+\(color\s+[^)]+\))?\s*\)",
+        CONTEXT_STROKE,
+        text,
+        count=1,
+    )
+    if kind_count != 1 or stroke_count != 1:
+        raise FunctionViewError("cannot convert canonical wire to context polyline")
+    return text
+
+
 def validate_source_geometry(path: Path) -> None:
-    """Require symbols and retained connectivity graphics to be source blocks."""
+    """Require selected wires and gray context to derive from the master."""
 
     source_text = SOURCE_SCHEMATIC.read_text(encoding="utf-8")
     actual_text = path.read_text(encoding="utf-8")
@@ -154,7 +182,56 @@ def validate_source_geometry(path: Path) -> None:
         )
     source_blocks = list(sexpr.immediate_blocks(source_text))
     actual_blocks = list(sexpr.immediate_blocks(actual_text))
-    for kind in ("wire", "junction", "global_label"):
+
+    source_wires = {
+        block_uuid(block): block
+        for block in source_blocks
+        if block.kind == "wire"
+    }
+    actual_wires = {
+        block_uuid(block): block
+        for block in actual_blocks
+        if block.kind == "wire"
+    }
+    actual_polylines = {
+        block_uuid(block): block
+        for block in actual_blocks
+        if block.kind == "polyline"
+    }
+    source_polylines = {
+        block_uuid(block): block
+        for block in source_blocks
+        if block.kind == "polyline"
+    }
+    for uuid, source_wire in source_wires.items():
+        real = actual_wires.get(uuid)
+        context = actual_polylines.get(uuid)
+        if (real is None) == (context is None):
+            raise FunctionViewError(
+                f"{path.name}: master wire {uuid} must appear exactly once as "
+                "a selected wire or gray context"
+            )
+        if real is not None and real.text != source_wire.text:
+            raise FunctionViewError(f"{path.name}: changed selected wire {uuid}")
+        if context is not None and context.text != wire_as_context_polyline(source_wire):
+            raise FunctionViewError(f"{path.name}: changed gray context wire {uuid}")
+    unexpected_wires = sorted(set(actual_wires) - set(source_wires))
+    if unexpected_wires:
+        raise FunctionViewError(
+            f"{path.name}: invented electrical wires: {unexpected_wires}"
+        )
+    native_actual_polylines = {
+        uuid: block
+        for uuid, block in actual_polylines.items()
+        if uuid not in source_wires
+    }
+    if set(native_actual_polylines) != set(source_polylines) or any(
+        native_actual_polylines[uuid].text != source_polylines[uuid].text
+        for uuid in source_polylines
+    ):
+        raise FunctionViewError(f"{path.name}: changed native graphical polylines")
+
+    for kind in ("junction", "global_label"):
         source_graphics = Counter(
             block.text for block in source_blocks if block.kind == kind
         )
@@ -239,7 +316,16 @@ def resolved_view_selections(document: dict, model: dict) -> list[dict]:
     }
     views = []
     descriptors = set()
+    orders = set()
     for record in document.get("views", []):
+        order = record.get("order")
+        if type(order) is not int or not 1 <= order <= 99:
+            raise FunctionViewError(
+                f"invalid function-view order: {order!r}; expected integer 1--99"
+            )
+        if order in orders:
+            raise FunctionViewError(f"duplicate function-view order: {order}")
+        orders.add(order)
         descriptor = record.get("descriptor")
         if not isinstance(descriptor, str) or not re.fullmatch(
             r"[a-z0-9]+(?:-[a-z0-9]+)*", descriptor
@@ -283,9 +369,16 @@ def resolved_view_selections(document: dict, model: dict) -> list[dict]:
                 )
             resolved[net_id] = endpoints
         views.append({**record, "resolved": resolved, "prefix": prefix})
-    if len(views) != 19:
-        raise FunctionViewError(f"expected 19 function views, found {len(views)}")
-    return views
+    if len(views) != 17:
+        raise FunctionViewError(f"expected 17 function views, found {len(views)}")
+    expected_orders = set(range(1, len(views) + 1))
+    if orders != expected_orders:
+        raise FunctionViewError(
+            "function-view orders must be contiguous from 1 through "
+            f"{len(views)}; missing={sorted(expected_orders - orders)}, "
+            f"extra={sorted(orders - expected_orders)}"
+        )
+    return sorted(views, key=lambda view: view["order"])
 
 
 def projected_member(ref: str, pin: str) -> tuple[str, str]:
@@ -349,8 +442,104 @@ def point_on_segment(
     )
 
 
-def source_marker_points(label_view: Path) -> dict[str, set[tuple[Decimal, Decimal]]]:
-    """Translate temporary pin labels onto exact master-sheet coordinates."""
+def symbol_pin_points(
+    path: Path,
+    refs: set[str],
+) -> dict[tuple[str, str], tuple[Decimal, Decimal]]:
+    """Return exact sheet coordinates for selected angle-zero symbol pins.
+
+    The physical DIP symbols deliberately have different pin geometry from the
+    functional symbols used in the temporary SKiDL label view.  KiCad embeds
+    both symbol definitions in each schematic, so derive the coordinates from
+    those definitions instead of assuming equal geometry around equal symbol
+    centers.
+    """
+
+    text = path.read_text(encoding="utf-8")
+    root_blocks = list(sexpr.immediate_blocks(text))
+    library_container = next(
+        (block for block in root_blocks if block.kind == "lib_symbols"), None
+    )
+    if library_container is None:
+        raise FunctionViewError(f"{path.name}: schematic has no embedded symbols")
+    libraries = {}
+    for block in sexpr.immediate_blocks(library_container.text):
+        if block.kind != "symbol":
+            continue
+        match = re.match(r'^\(symbol "([^"]+)"', block.text)
+        if match is not None:
+            libraries[match.group(1)] = block
+
+    points = {}
+    for block in root_blocks:
+        if block.kind != "symbol":
+            continue
+        ref = sexpr.symbol_reference(block)
+        if ref not in refs:
+            continue
+        transform = re.match(
+            r'^\(symbol\s+\(lib_id "([^"]+)"\)\s+'
+            r'\(at\s+(-?[0-9.]+)\s+(-?[0-9.]+)\s+(0|90|180|270)\)'
+            r'(?:\s+\(mirror\s+([xy])\))?',
+            block.text,
+        )
+        if transform is None:
+            raise FunctionViewError(f"{path.name}/{ref}: unsupported symbol instance")
+        lib_id, x_text, y_text, angle_text, mirror = transform.groups()
+        if angle_text != "0" or mirror is not None:
+            raise FunctionViewError(
+                f"{path.name}/{ref}: pin remapping currently requires "
+                "an unmirrored angle-zero symbol"
+            )
+        try:
+            library = libraries[lib_id]
+        except KeyError as error:
+            raise FunctionViewError(
+                f"{path.name}/{ref}: missing embedded symbol {lib_id}"
+            ) from error
+        x_origin, y_origin = Decimal(x_text), Decimal(y_text)
+        stack = [library]
+        found = set()
+        while stack:
+            parent = stack.pop()
+            for child in sexpr.immediate_blocks(parent.text):
+                if child.kind == "symbol":
+                    stack.append(child)
+                    continue
+                if child.kind != "pin":
+                    continue
+                at_match = re.search(
+                    r"\(at\s+(-?[0-9.]+)\s+(-?[0-9.]+)\s+"
+                    r"(?:0|90|180|270)\)",
+                    child.text,
+                )
+                number_match = re.search(r'\(number "([^"]+)"', child.text)
+                if at_match is None or number_match is None:
+                    raise FunctionViewError(
+                        f"{path.name}/{ref}: malformed embedded pin"
+                    )
+                pin = number_match.group(1)
+                if pin in found:
+                    continue
+                found.add(pin)
+                local_x, local_y = map(Decimal, at_match.groups())
+                points[(ref, pin)] = (
+                    x_origin + local_x,
+                    y_origin - local_y,
+                )
+        if not found:
+            raise FunctionViewError(f"{path.name}/{ref}: embedded symbol has no pins")
+    missing = sorted(refs - {ref for ref, _ in points})
+    if missing:
+        raise FunctionViewError(f"{path.name}: missing pin geometry for {missing}")
+    return points
+
+
+def source_marker_points(
+    label_view: Path,
+    view_model: dict,
+) -> dict[str, set[tuple[Decimal, Decimal]]]:
+    """Translate temporary labels onto exact master pin coordinates."""
 
     source_layout = extract_symbol_layout(SOURCE_SCHEMATIC)
     label_layout = extract_symbol_layout(label_view)
@@ -373,6 +562,34 @@ def source_marker_points(label_view: Path) -> dict[str, set[tuple[Decimal, Decim
         label = sexpr.parse_label(block)
         point = (Decimal(label.x_text) - dx, Decimal(label.y_text) - dy)
         markers.setdefault(label.net_id, set()).add(point)
+
+    # U1--U4 use physical top-view DIP symbols in the canonical drawing but
+    # functional symbols in the temporary label view.  Replace only those
+    # temporary marker coordinates with coordinates derived from each file's
+    # embedded symbol definition.  This is an intentional projection
+    # workaround, not an electrical exception; exported netlists below remain
+    # the final authority and must match exactly.
+    physical_refs = {"U1", "U2", "U3", "U4"}
+    source_pins = symbol_pin_points(SOURCE_SCHEMATIC, physical_refs)
+    label_pins = symbol_pin_points(label_view, physical_refs)
+    for net in view_model["nets"]:
+        net_id = net["net_id"]
+        for member in net["members"]:
+            endpoint = (member["component"], member["pin"])
+            if endpoint[0] not in physical_refs:
+                continue
+            label_point = (
+                label_pins[endpoint][0] - dx,
+                label_pins[endpoint][1] - dy,
+            )
+            try:
+                markers[net_id].remove(label_point)
+            except (KeyError, ValueError) as error:
+                raise FunctionViewError(
+                    f"{label_view.name}/{net_id}: temporary marker for "
+                    f"{endpoint[0]}.{endpoint[1]} was not found"
+                ) from error
+            markers[net_id].add(source_pins[endpoint])
     return markers
 
 
@@ -420,14 +637,14 @@ def filter_master_schematic(
     view_model: dict,
     title: str,
 ) -> None:
-    """Copy the master drawing while retaining only selected source graphics."""
+    """Keep selected nets real and render all other master wires as gray graphics."""
 
     source_text = SOURCE_SCHEMATIC.read_text(encoding="utf-8")
     blocks = list(sexpr.immediate_blocks(source_text))
     wires = [block for block in blocks if block.kind == "wire"]
     junctions = [block for block in blocks if block.kind == "junction"]
     labels = [block for block in blocks if block.kind == "global_label"]
-    markers = source_marker_points(label_view)
+    markers = source_marker_points(label_view, view_model)
     expected_counts = {
         net["net_id"]: len(net["members"])
         for net in view_model["nets"]
@@ -510,7 +727,10 @@ def filter_master_schematic(
     removable = {"wire", "junction", "global_label", "no_connect"}
     for block in sorted(blocks, key=lambda item: item.start, reverse=True):
         if block.kind in removable and block.start not in keep_starts:
-            source_text = source_text[:block.start] + source_text[block.end:]
+            replacement = (
+                wire_as_context_polyline(block) if block.kind == "wire" else ""
+            )
+            source_text = source_text[:block.start] + replacement + source_text[block.end:]
     source_text, count = re.subn(
         r'\(title "[^"]*"\)',
         f'(title "{title}")',
@@ -519,6 +739,10 @@ def filter_master_schematic(
     )
     if count != 1:
         raise FunctionViewError("master schematic lacks its unique title")
+    # Removed connectivity objects leave their original indentation behind.
+    # Strip that semantically empty whitespace here so checked generated
+    # schematics remain reviewable and pass repository whitespace checks.
+    source_text = "\n".join(line.rstrip() for line in source_text.splitlines()) + "\n"
     output.write_text(source_text, encoding="utf-8")
 
 
@@ -630,7 +854,7 @@ def generate_all(destination: Path) -> list[tuple[Path, Path]]:
         )
     outputs = []
     for view in views:
-        stem = f"{view['prefix']}{view['descriptor']}"
+        stem = f"{view['order']:02d}_{view['prefix']}{view['descriptor']}"
         title = f"Light 2 harness r02 — {view['title']} — FUNCTION VIEW, NOT AUTHORITY"
         view_model = build_view_model(components, view)
         view_mapping = {
@@ -740,7 +964,7 @@ def main() -> int:
         print(f"FAIL: {error}", file=sys.stderr)
         return 1
     action = "generated and validated" if args.write else "validated"
-    print(f"PASS: {action} 19 r02 function views")
+    print(f"PASS: {action} 17 r02 function views")
     return 0
 
 

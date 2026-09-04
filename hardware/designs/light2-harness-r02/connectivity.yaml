@@ -1076,7 +1076,7 @@ nets:
   - component: C3
     pin: '2'
   - component: C5
-    pin: '1'
+    pin: '2'
   - component: J1
     pin: '34'
   - component: R24
@@ -1084,7 +1084,7 @@ nets:
   - component: R25
     pin: '1'
   - component: R26
-    pin: '2'
+    pin: '1'
   - component: R27
     pin: '1'
   - component: U1
@@ -1207,7 +1207,7 @@ nets:
   - component: C4
     pin: '1'
   - component: C5
-    pin: '2'
+    pin: '1'
   - component: C6
     pin: '2'
   - component: J1
@@ -1539,7 +1539,7 @@ nets:
   class: control
   members:
   - component: R26
-    pin: '1'
+    pin: '2'
   - component: U1
     pin: '19'
   - component: U2

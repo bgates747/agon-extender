@@ -78,6 +78,42 @@ def expected_topology(model: dict) -> tuple[Counter, frozenset[tuple[str, str]]]
     return partitions, unconnected
 
 
+def validate_net_label_presentation(model: dict) -> None:
+    """Require labels only for power nets and keep them horizontal.
+
+    Signal and control nets are literal wires.  Only ground and the two 3.3 V
+    domains use labels.  KiCad may rotate labels along with moved symbols, so
+    this presentation check complements electrical topology validation.
+    """
+
+    text = SCHEMATIC.read_text(encoding="utf-8")
+    labels = re.findall(
+        r'^\s*\(global_label\s+"([^"]+)"[^\n]*'
+        r'\(at\s+-?[0-9.]+\s+-?[0-9.]+\s+(0|90|180|270)\)',
+        text,
+        re.MULTILINE,
+    )
+    power_nets = {"ground", "agon-3v3", "p4-3v3"}
+    expected_count = sum(
+        len(net["members"]) for net in model["nets"] if net["net_id"] in power_nets
+    )
+    if len(labels) != expected_count:
+        raise SchematicError(
+            f"canonical schematic has {len(labels)} endpoint labels; "
+            f"expected {expected_count} power/ground labels"
+        )
+    unexpected = sorted({name for name, _ in labels} - power_nets)
+    if unexpected:
+        raise SchematicError(
+            f"canonical schematic retains non-power net labels: {unexpected}"
+        )
+    vertical = sum(angle in {"90", "270"} for _, angle in labels)
+    if vertical:
+        raise SchematicError(
+            f"canonical schematic has {vertical} vertically rotated net labels"
+        )
+
+
 def exported_topology(path: Path) -> tuple[Counter, frozenset[tuple[str, str]]]:
     root = ET.parse(path).getroot()
     partitions = Counter()
@@ -195,6 +231,7 @@ def main() -> int:
     args = parser.parse_args()
     try:
         model = load_validator().validate(MODEL)
+        validate_net_label_presentation(model)
         with tempfile.TemporaryDirectory(prefix="light2-harness-r02-schematic-") as scratch:
             xml_path, svg_path = export_views(Path(scratch))
             compare_topology(model, xml_path)

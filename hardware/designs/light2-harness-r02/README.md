@@ -22,11 +22,12 @@ does not override the connectivity model.
 Their pin-1 dots mark package orientation. Resistor bodies carry compact
 reference/value labels while their complete values remain stored in KiCad.
 
-[`signal-views/`](signal-views/README.md) retains the focused-view definitions
-and deterministic extraction helpers. Its former generated views described the
-superseded functional-symbol drawing and have been removed. Regeneration from
-the physical direct-wire canonical drawing is pending an extractor update that
-can distinguish crossing wire geometry without weakening topology checks.
+[`signal-views/`](signal-views/README.md) contains the focused-view definitions,
+deterministic extraction helpers, and 17 generated function views derived from
+the physical direct-wire canonical drawing. Each generated view retains all
+components and shows unselected canonical wire routes as light-gray,
+non-electrical graphical context while leaving only the selected function as
+real electrical wiring.
 
 The Author accepted the maintained schematic after manually arranging the
 complete circuit, clarifying each local bypass-capacitor assignment, and

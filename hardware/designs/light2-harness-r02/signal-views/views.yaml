@@ -1,5 +1,6 @@
 # Machine-readable inventory of r02 human function views.
 # Electrical membership is always validated against ../connectivity.yaml.
+# Order is the contiguous construction and incremental qualification sequence.
 schema_version: 1
 filename_prefix: schematic_
 
@@ -14,7 +15,7 @@ groups:
     p4-gpio17-parallel-forward-control-n: all
     parallel-forward-oe-n: all
     p4-3v3: [J2.1, R29.1]
-    agon-3v3: [J1.34, R26.2]
+    agon-3v3: [J1.34, R26.1]
     ground: [J1.33, U4.2, U4.5, U4.9, U4.12]
   uart_return_control:
     p4-gpio21-uart-return-control-n: all
@@ -31,7 +32,24 @@ groups:
     ground: [J1.33, U4.2, U4.5, U4.9, U4.12]
 
 views:
-  - descriptor: d0-uart-rx-lane
+  - order: 1
+    descriptor: power-domains
+    title: Power domains and common ground
+    nets:
+      ground: all
+      agon-3v3: all
+      p4-3v3: all
+  - order: 2
+    descriptor: startup-and-fail-safe-bias-network
+    title: Startup and fail-safe bias network
+    selector: bias-resistors-r14-r31
+  - order: 3
+    descriptor: uart-forward-enable
+    title: UART forward enable
+    groups: [uart_forward_control]
+    nets: {}
+  - order: 4
+    descriptor: d0-uart-rx-lane
     title: D0 / UART RX lane
     groups: [uart_forward_control]
     nets:
@@ -39,7 +57,22 @@ views:
       p4-gpio22-d0-uart-rx-driver: all
       p4-gpio22-d0-uart-rx: all
       p4-3v3: [R14.1]
-  - descriptor: d1-uart-tx-lane
+  - order: 5
+    descriptor: d2-uart-cts-lane
+    title: D2 / UART CTS lane
+    groups: [uart_forward_control]
+    nets:
+      agon-pc2-d2-uart-rts: all
+      p4-gpio23-d2-uart-cts-driver: all
+      p4-gpio23-d2-uart-cts: all
+      p4-3v3: [R16.1]
+  - order: 6
+    descriptor: uart-return-enable
+    title: UART return enable
+    groups: [uart_return_control]
+    nets: {}
+  - order: 7
+    descriptor: d1-uart-tx-lane
     title: D1 / UART TX lane
     groups: [parallel_forward_control, uart_return_control]
     nets:
@@ -48,15 +81,8 @@ views:
       p4-gpio12-d1-uart-tx: all
       p4-uart-tx-driver: all
       p4-3v3: [R15.1]
-  - descriptor: d2-uart-cts-lane
-    title: D2 / UART CTS lane
-    groups: [uart_forward_control]
-    nets:
-      agon-pc2-d2-uart-rts: all
-      p4-gpio23-d2-uart-cts-driver: all
-      p4-gpio23-d2-uart-cts: all
-      p4-3v3: [R16.1]
-  - descriptor: d3-uart-rts-lane
+  - order: 8
+    descriptor: d3-uart-rts-lane
     title: D3 / UART RTS lane
     groups: [parallel_forward_control, uart_return_control]
     nets:
@@ -65,7 +91,13 @@ views:
       p4-gpio11-d3-uart-rts: all
       p4-uart-rts-driver: all
       p4-3v3: [R17.1]
-  - descriptor: d4-lane
+  - order: 9
+    descriptor: parallel-forward-enable
+    title: Parallel forward enable
+    groups: [parallel_forward_control]
+    nets: {}
+  - order: 10
+    descriptor: d4-lane
     title: D4 lane
     groups: [parallel_forward_control]
     nets:
@@ -73,7 +105,8 @@ views:
       p4-gpio32-d4-driver: all
       p4-gpio32-d4: all
       ground: [R18.2]
-  - descriptor: d5-lane
+  - order: 11
+    descriptor: d5-lane
     title: D5 lane
     groups: [parallel_forward_control]
     nets:
@@ -81,7 +114,8 @@ views:
       p4-gpio10-d5-driver: all
       p4-gpio10-d5: all
       ground: [R19.2]
-  - descriptor: d6-lane
+  - order: 12
+    descriptor: d6-lane
     title: D6 lane
     groups: [parallel_forward_control]
     nets:
@@ -89,7 +123,8 @@ views:
       p4-gpio33-d6-driver: all
       p4-gpio33-d6: all
       ground: [R20.2]
-  - descriptor: d7-lane
+  - order: 13
+    descriptor: d7-lane
     title: D7 lane
     groups: [parallel_forward_control]
     nets:
@@ -97,7 +132,8 @@ views:
       p4-gpio9-d7-driver: all
       p4-gpio9-d7: all
       ground: [R21.2]
-  - descriptor: clock
+  - order: 14
+    descriptor: clock
     title: CLOCK
     groups: [parallel_forward_control]
     nets:
@@ -105,7 +141,8 @@ views:
       p4-gpio14-clock-driver: all
       p4-gpio14-clock: all
       ground: [R22.2]
-  - descriptor: valid-n
+  - order: 15
+    descriptor: valid-n
     title: VALID_N
     groups: [parallel_forward_control]
     nets:
@@ -113,40 +150,13 @@ views:
       p4-gpio13-valid-n-driver: all
       p4-gpio13-valid-n: all
       p4-3v3: [R23.1]
-  - descriptor: ready-n
-    title: READY_N
-    groups: [ready_control]
-    nets: {}
-  - descriptor: uart-forward-enable
-    title: UART forward enable
-    groups: [uart_forward_control]
-    nets: {}
-  - descriptor: parallel-forward-enable
-    title: Parallel forward enable
-    groups: [parallel_forward_control]
-    nets: {}
-  - descriptor: uart-return-enable
-    title: UART return enable
-    groups: [uart_return_control]
-    nets: {}
-  - descriptor: ready-control
+  - order: 16
+    descriptor: ready-control
     title: READY control
     groups: [ready_control]
     nets: {}
-  - descriptor: agon-3v3-domain-and-bypassing
-    title: Agon 3.3 V domain and bypassing
-    nets:
-      agon-3v3: all
-      ground: [J1.33, C1.1, C2.1, C3.1, C5.2, U1.6, U1.8, U1.10, U2.10, U2.11, U2.13, U2.15, U2.17, U3.7, U3.9, U3.12]
-  - descriptor: p4-3v3-domain-and-bypassing
-    title: P4 3.3 V domain and bypassing
-    nets:
-      p4-3v3: all
-      ground: [J2.2, C4.1, C6.2, U4.2, U4.5, U4.7, U4.9, U4.12]
-  - descriptor: common-ground
-    title: Common ground
-    nets:
-      ground: all
-  - descriptor: startup-and-fail-safe-bias-network
-    title: Startup and fail-safe bias network
-    selector: bias-resistors-r14-r31
+  - order: 17
+    descriptor: ready-n
+    title: READY_N
+    groups: [ready_control]
+    nets: {}
