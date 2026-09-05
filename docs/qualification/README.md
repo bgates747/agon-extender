@@ -9,6 +9,13 @@ The matrix does not define VDU/EDU syntax, protocols, wiring, operating modes,
 procedures, or run outcomes. Those remain authoritative in their owning
 documents. Qualification records link them without copying their contents.
 
+[Staged circuit validation](staged-circuit-validation.md) owns the recurring
+construction/test process accepted under PORT-008-D003. HW-001, QUAL-002, and
+PORT-008 record bounded stage evidence before the complete release or mode
+matrix exists. This does not promote the superseded matrix below or confer
+untested compatibility; accepted stage evidence can later be linked to its
+exact obligations.
+
 ## Authority and layout
 
 `reviewed/` contains the human-reviewed semantic inputs:

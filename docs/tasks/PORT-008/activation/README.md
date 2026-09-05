@@ -19,10 +19,11 @@ deployment, or approves a physical operation.
 2. Retain the accepted all-controls-released Legacy/uncommitted rule and the
    current corrective-action containment. Production activation requires an
    intended-circuit solution that makes an EMOS-originated request observable.
-3. Use r01 only for production-identical forward-parallel data-plane work under
-   `PORT-008-D002`. The separate
-   [production-equivalence audit](../production-equivalence/README.md) is the
-   current authority for that boundary.
+3. D002's r01 development schedule is now superseded by PORT-008-D003's staged
+   r02 process. The [production-equivalence audit](../production-equivalence/README.md)
+   preserves the component factoring and predecessor analysis; the
+   [staged process](../../../qualification/staged-circuit-validation.md)
+   governs current tests. It does not resolve this activation question.
 4. The detailed proposal, alternatives, state envelope, and validation matrix
    below remain historical research. Their conditional “if D001 is accepted”
    language is non-operative.

@@ -59,8 +59,16 @@ until this task closes or explicitly releases a bounded artifact:
    nor mode-qualified. The audit found no implemented Extender system-mode
    behavior; this freeze prevents new claims rather than presuming existing
    code is defective.
-7. `light2-harness-r01` remains an Exclusive Extended split-link design target
-   only. It is not an Exclusive Compatible stock-UART candidate.
+7. `light2-harness-r01` remains predecessor split-link evidence only. Current
+   construction and component validation use r02's ordered circuit subsets
+   under PORT-008-D003; r01 is not a stock-UART candidate.
+
+The Author-accepted [staged process](../qualification/staged-circuit-validation.md)
+permits preparation of mode-neutral circuit/component checks with their own
+relevant prerequisites. Such a stage does not require the unfinished complete
+mode matrix or release firmware. Physical execution still requires its
+reviewed stage procedure and authorization; any test that exercises or claims
+mode-dependent behavior remains subject to the freeze above.
 
 This is a governance freeze, not a byte-for-byte source snapshot or release.
 No commit, tag, version promotion, or generated-data promotion is authorized by
@@ -657,8 +665,10 @@ mode-dependent qualification uses it as authority.
    stable IDs consistently.
 4. The corrected qualification model is deterministic, validated, reviewed,
    and promoted through QUAL-001 rather than by this task alone.
-5. Exclusive Compatible firmware requirements gate a separately created future
-   hardware design task; the inherited enhanced harness is never repurposed.
+5. HW-001's current r02 common-UART design and PORT-008's candidate components
+   follow the accepted staged process. Complete Exclusive Compatible claims
+   retain the corresponding firmware/mode gates; the predecessor harness is
+   never repurposed or relabeled as that design.
 6. Historical evidence remains intact and clearly separated from current
    authority.
 7. The Author accepts the final conformance report and explicitly releases the

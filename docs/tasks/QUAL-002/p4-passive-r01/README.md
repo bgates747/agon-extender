@@ -4,6 +4,13 @@ This is a bench-only ESP32-P4 firmware fixture for incremental construction
 checks of `light2-harness-r02`. It is not product firmware and must not be
 described or deployed as an Extender release.
 
+This is an example of the scoped electrical diagnostic permitted by
+PORT-008-D003 and the
+[staged process](../../../qualification/staged-circuit-validation.md). Its
+power-domain observations do not test candidate transport code. A later active
+stage selects the relevant candidate components and safe states through its
+own reviewed procedure; this fixture is not an implicit next-stage firmware.
+
 The application explicitly places every P4 GPIO connected by r02 into
 input-only mode with both internal pulls disabled, then idles indefinitely. It
 initializes no Extender transport, UART, PARLIO, Ethernet, display, or
@@ -36,4 +43,3 @@ Its source SHA-256 was
 `50b60db9aa6e33a19b41a357d8c01bce9b380703c6ecc566ac044e839a6e7091`.
 Build timestamps mean a later semantically identical build need not reproduce
 the factory image byte-for-byte.
-

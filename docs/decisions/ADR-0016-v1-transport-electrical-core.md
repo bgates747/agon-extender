@@ -3,6 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-28
+- Last amended: 2026-09-05
 - Related task: HW-001
 - Open-decision tracker: HW-001
 
@@ -51,6 +52,15 @@ then from the exact Espressif and TI component contracts.
    procedures. This does not resolve the remaining firmware-epoch or Legacy
    electrical-absence questions and does not constitute electrical
    qualification.
+9. Apply the Author-accepted PORT-008-D003 process to the current r02 circuit:
+   the operator constructs and tests functions in the existing signal-view
+   order, P4 and EMOS tests use applicable production-candidate components,
+   and scoped diagnostic firmware may isolate an electrical measurement.
+   Candidate evidence is recorded at each stage; proof that an eventual
+   release consumes the tested objects follows when that release exists.
+   The durable [staged process](../qualification/staged-circuit-validation.md)
+   owns the workflow. This changes neither the electrical definition nor EMOS
+   ownership, and confers no untested activation, mode, or release claim.
 
 ## Rationale
 

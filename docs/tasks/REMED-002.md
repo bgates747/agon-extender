@@ -7,7 +7,7 @@
   favor of replacement production data-plane objects; the P4 and EMOS
   forward-data-plane compositions are software-integrated and local defects
   P008--P044 are recorded at the bounded host/source/build level; P034--P040
-  have retained corrections, P042/P043 have retained uncommitted corrections,
+  have retained corrections, P042/P043 have checkpointed provisional corrections,
   and P041/P044 retain explicitly open validation/normalization paths,
   while owner-task target-runtime, provenance, activation, return, artifact,
   and physical remediation remains pending
@@ -90,6 +90,13 @@ an accepted architecture decision, and operating the physical bench.
 
 ## Active containment
 
+PORT-008-D003 now sequences component work through r02's ordered circuit
+stages under [staged circuit validation](../qualification/staged-circuit-validation.md).
+Apply each finding to the code, observation method, and claim actually selected
+by the stage. The deferred release-pair tool program is not a blanket gate on
+power/bias or other independently evidenced circuit checks. Existing defects
+remain open and no affected report is accepted merely by changing the process.
+
 Until the relevant owner task and the Author release a narrower boundary:
 
 1. Do not deploy, flash, reset, or perform another powered PORT-008 transfer or
@@ -109,7 +116,9 @@ Until the relevant owner task and the Author release a narrower boundary:
    superseded, or withdrawn disposition before reuse.
 6. **Superseded containment:** the former `light2-harness-r02` digest/
    projection mismatch was reconciled under F008. That artifact-control repair
-   does not freeze construction, electrical behavior, or qualification.
+   does not qualify construction or electrical behavior. The later
+   connectivity/profile discrepancy recorded on 2026-09-05 is now HW-001's
+   explicit S3 controlled-input blocker.
 7. Do not begin mode-dependent QUAL-002 physical work while REMED-001's freeze
    remains active or treat QUAL-002's older local approval wording as a release.
 8. Preserve all task-controlled historical failed-run evidence and predecessor
@@ -201,8 +210,8 @@ PORT-008 recorded before the audit. They do not create duplicate findings.
 | `PORT008-PROV-P039` — root/suffix/symlink containment admitted escape or retargeting cases | Local evidence-gate defect; no official MOS/VDP counterpart | Require absolute contained roots, safe suffixes, and stable physical identity | Retained correction and regressions |
 | `PORT008-PROV-P040` — zds2gas evidence hashed raw rather than semantic source text | Local generic evidence-tool defect; official MOS has no recorder counterpart | Hash UTF-8 universal-newline text matching zds2gas semantics | Retained correction and regression |
 | `PORT008-PROV-P041` — Python boolean values could satisfy integer evidence fields | Local Python/JSON gate defect; no official MOS/VDP counterpart | Require exact integer types throughout evidence validation | Partly corrected; P4 `ascii_occurrences` and runtime `version_info` remain open |
-| `PORT008-PROV-P042` — EMOS linked comparison rejected valid rebasing and undercovered allocated contributions | Local Work 2.e comparator defect; official MOS has no comparator counterpart | Verify object-to-link bytes and `r_imm24` relocations across every allocated section before canonical comparison | Retained uncommitted correction; 62-test host suite passed; fresh evidence pending |
-| `PORT008-PROV-P043` — EMOS coordinator lacked a policy-owned composition dependency delta | Local Work 2.e policy defect; official MOS has no qualification comparison policy | Permit exactly qualification-only `${PREPARED}/src/emos_parallel.h` | Retained uncommitted correction and regression; fresh evidence pending |
+| `PORT008-PROV-P042` — EMOS linked comparison rejected valid rebasing and undercovered allocated contributions | Local Work 2.e comparator defect; official MOS has no comparator counterpart | Verify object-to-link bytes and `r_imm24` relocations across every allocated section before canonical comparison | Checkpointed provisional correction; fresh evidence pending |
+| `PORT008-PROV-P043` — EMOS coordinator lacked a policy-owned composition dependency delta | Local Work 2.e policy defect; official MOS has no qualification comparison policy | Permit exactly qualification-only `${PREPARED}/src/emos_parallel.h` | Checkpointed provisional correction and regression; fresh evidence pending |
 | `PORT008-PROV-P044` — literal reserved placeholders can collide with substituted roots | Local recorder/validator normalization defect; no official MOS/VDP counterpart | Reject or unambiguously encode literal placeholders before normalization | P4 raw-command rejection retained; generic `mos-agondev` recorder path remains open |
 
 ## Decision register
@@ -213,6 +222,11 @@ PORT-008 recorded before the audit. They do not create duplicate findings.
 | REMED-002-D002 | Should upstream reports or contributions for F001--F003 extend UPSTREAM-001 or receive separate task authority? | Deferred until an Extender-specific trigger or separately prioritized upstream test exists | Determines future external contribution tracking; creates no present local-correction obligation |
 | REMED-002-D003 | Should the exact PORT-008 prototype adapters be repaired only for bounded investigation or be replaced with production objects? | Accepted by the Author, 2026-09-01: replace; retain exact adapters only as evidence or last-resort diagnosis | PORT-008 now software-integrates the new epoch-preconditioned production data-plane objects and a separately identified fixed-backend qualification composition; no new physical run has occurred, and target-runtime, provenance, activation, return, artifact, and intended-circuit work remain separately gated |
 | REMED-002-D004 | Should source-level upstream defects be corrected during present Extender work without evidence of a distinct Extender trigger? | Accepted by the Author, 2026-09-01 | No. Record them, defer correction and regression design, and reopen only if deterministic evidence meets PORT-003-D012 or the defect blocks a selected Extender function. Current priority remains forward-parallel transport. |
+
+PORT-008-D003, accepted 2026-09-05, changes that immediate sequencing to staged
+r02 circuit validation, beginning with relevant power/bias and UART subsets.
+D004's inherited-defect threshold and D003's prototype-replacement decision
+remain binding. This register does not duplicate the owner task's stage queue.
 
 ### REMED-002-D001 accepted decision
 
@@ -329,7 +343,7 @@ task's existing Author gates and the containments above.
 
 PORT-008's accepted D002 immediate execution chain now groups 2.e, 2.f, and
 2.h with the new production P4/EMOS data-plane implementation, non-release
-fixed-backend composition, and target-object identity gate. Those owner-task
+fixed-backend composition, and candidate-object evidence. Those owner-task
 steps may complete without 2.g; production activation and the corrective-
 action physical hold remain separately blocked.
 
@@ -386,10 +400,13 @@ designed now.
 The Author rejected `PORT-008-D001` and accepted `PORT-008-D002` on
 2026-09-01. The receive-only Legacy listener and no-CTS bootstrap sender are not
 production work. D002 resolves REMED-002-D003 in favor of replacing the exact
-r01 adapters with new production forward-parallel objects and exercising those
-objects on r01 only through a non-release fixed-backend qualification
-composition. The composition supplies an active epoch but makes no activation,
-UART-return, response, mode, or r02 electrical claim.
+r01 adapters with new production forward-parallel objects. Its original r01
+test schedule is superseded by PORT-008-D003: use those components where
+applicable in the ordered r02 stages, with separately scoped diagnostic
+callers. A supplied active epoch still proves no activation or formal mode.
+Actual r02 measurements may support their exact circuit claims; historical
+r01 evidence does not supply them. Authenticate stage candidates now and
+compare eventual release consumption later under PORT-008 Work 2.g.
 
 Work 2.e, 2.f, and 2.h therefore apply to the new production P4 ingress and
 control boundary rather than a patch promotion of `ForwardParallelStream`.
@@ -404,8 +421,11 @@ must avoid changing de-facto behavior accidentally during factoring.
 Gate 2 applies to findings whose accepted disposition selects present local
 correction. Recorded upstream observations deferred by D004/D012 do not block
 forward-transport investigation unless new evidence meets the trigger
-threshold. The PORT-008 physical hold remains until its corrective action
-independently meets every resolution condition.
+threshold. The corrective action continues to hold retired proactive-READY
+retries and production activation claims. PORT-008-D003 permits preparation
+of bounded r02 stages outside that defective behavior; their physical
+execution requires stage-specific approval and does not close the corrective
+action or release mode-dependent gates.
 
 ## Work 3 — Evidence and configuration trust
 
@@ -425,6 +445,8 @@ independently meets every resolution condition.
   digest, generated projection, and applicability metadata before PORT-008 or
   QUAL-002 consumes that design. This closes only F008 artifact identity;
   construction, electrical, and qualification gates remain open.
+  That dated closure does not resolve the later connectivity/profile digest
+  discrepancy now recorded under HW-001 S3.
 - [ ] **3.f** PORT-008 must reconcile baseline and corrected-candidate MOS
   source identities under the versioning policy for F015.
 - [ ] **3.g** Re-run or explicitly withdraw every promotion claim whose support

@@ -2,42 +2,37 @@
 
 ## State
 
-- Status: In progress — the three r01 physical attempts failed and the later
-  two-point diagnostic did not establish its intended READY-isolated fixture.
-  The pre-activation corrective action therefore remains open, and the missing
-  r01 CLOCK observation remains unresolved. The Author rejected
-  `PORT-008-D001`: no receive-only Legacy listener or dedicated no-CTS
-  bootstrap sender will become the production path. `PORT-008-D002` instead
-  accepts a production-equivalence boundary: replace rather than repair the
-  exact prototype adapters, exercise only the production forward-parallel data
-  plane on r01 through an identified fixed-backend qualification composition,
-  and defer activation, UART return, response/sysvar, and electrical claims to
-  the intended circuit. The P4 production data plane and the EMOS ordinary and
-  fixed software compositions are now integrated and source-frozen in
-  `e134f3d` and EMOS `b823e0e`. Their recorded pre-freeze build results are
-  implementation evidence only. Production-object provenance, target-
-  runtime behavior, activation, UART return and response integration, artifact
-  identity, deployment, and physical work retain their existing gates.
+- Status: In progress — PORT-008-D003 makes incremental validation of the
+  authoritative r02 circuit the current process. Use production-candidate P4
+  and EMOS components where applicable, with bounded diagnostic firmware when
+  the circuit measurement requires it. The replacement parallel components
+  are implemented; their former Work 2.e tooling is checkpointed but provisional.
+  Stage evidence is required before use; release-pair equivalence waits for an
+  actual release consumer. The r01 failures remain historical and do not
+  require another r01 run before r02 work. Production activation, response
+  integration, mode qualification, and physical-operation gates remain open.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
 ## Intent
 
-Implement the accepted physical transport direction for Extender compatibility:
-an eight-bit parallel Agon-to-P4 command path and a P4-to-eZ80 UART1 response
-path. Preserve the official VDP application-visible byte-stream and VDP
-protocol-packet contracts while replacing the stock PICO-D4 UART hardware
-binding with the selected Extender wiring and MOS/eZ80 integration.
+Implement the r02 common four-signal UART between EMOS/eZ80 UART1 and EDP/P4,
+plus its eight-bit parallel Agon-to-P4 command path. Preserve the official VDP
+application-visible byte-stream and response-packet contracts while replacing
+the stock PICO-D4 UART hardware binding with the selected Extender wiring and
+EMOS integration. Follow the ordered circuit subsets under
+`hardware/designs/light2-harness-r02/signal-views/` and the durable
+[staged circuit validation process](../qualification/staged-circuit-validation.md).
 
-This task exercises the actual retained VDP port; it must not substitute a
-throwaway receiver, invented command vocabulary, or disposable protocol merely
-to make the wiring move bytes. The first bidirectional end-to-end compatibility
-canary is the existing official General Poll startup exchange. Before adding
-that UART return path,
-the task performs a forward-only visible-command tranche over the existing
-controlled-power predecessor circuit. Neither tranche may invent a second
-discovery handshake or promote the predecessor's experimental fixed-frame UART
-protocol into the product design.
+Component tests exercise the applicable production-candidate code with an
+explicit test caller; power, bias, or isolated electrical checks may use
+simplified diagnostic firmware and make only their measured circuit claims.
+Parser/display and compatibility tests exercise the retained VDP port rather
+than a substitute command interpreter. The first bidirectional end-to-end
+compatibility canary remains the official General Poll exchange after its
+transport and lifecycle prerequisites are satisfied. No preceding r01
+forward-only tranche or completed production release build is required to
+start the ordered r02 component checks.
 
 ## Authority and inputs
 
@@ -46,8 +41,7 @@ protocol into the product design.
 - [SETUP-004 Work 1.c](SETUP-004.md#work-1c-execution-record) and its accepted
   low-level peripheral disposition.
 - [`light2-harness-r01`](../../hardware/designs/light2-harness-r01/README.md)
-  and `light2-extender-solderless-assembly-r01` for the bounded preserved
-  forward-only prototype tranche.
+  and `light2-extender-solderless-assembly-r01` as predecessor evidence only.
 - [`light2-harness-r02`](../../hardware/designs/light2-harness-r02/README.md)
   and `light2-extender-solderless-assembly-r02` for the frozen common-UART and
   forward-parallel target.
@@ -55,9 +49,9 @@ protocol into the product design.
 - Official VDP v2.16.0 Stream/parser/packet behavior and official MOS startup
   General Poll behavior.
 - [HW-001](HW-001.md), which owns the selected common V1 four-signal UART and
-  one-way forward-parallel electrical core. Review Gate 2 froze
-  `light2-harness-r02`; exact r02 breadboard construction and powered bench
-  qualification remain open.
+  one-way forward-parallel electrical core. The r02 connectivity model,
+  maintained human schematic, and ordered signal views guide construction;
+  stage-specific as-built records and qualification remain to be completed.
 - [ADR-0016](../decisions/ADR-0016-v1-transport-electrical-core.md), which
   accepts the four-chip transport topology without closing HW-001's remaining
   design and qualification gates.
@@ -83,7 +77,7 @@ protocol into the product design.
    enables, released-idle behavior, break-before-make, resets, failures, and
    coexistence with every retained P4 pin function.
 5. Determine the required flow-control contract from official behavior and the
-   split-link architecture. If the candidate harness cannot satisfy it, stop
+   common-UART/parallel architecture. If the candidate harness cannot satisfy it, stop
    for a separately approved harness revision before changing wiring.
 6. Supply the selected eZ80/MOS-side command routing and MOS-owned response
    parsing path. Extender must not write MOS sysvars or completion flags
@@ -103,12 +97,16 @@ protocol into the product design.
 |---|---|---|---|---|
 | `PORT-008-D001` | How can EDP hear the explicit EMOS activation request when r02 currently disables every Agon-to-P4 path in Legacy and uncommitted state? | Former proposal: assert only the common-UART Agon-to-P4 enable as a receive-only listener and use a dedicated no-CTS EMOS bootstrap sender. | Rejected by the Author, 2026-09-01 | Do not implement or reconcile the listener exception. The all-controls-released Legacy rule and corrective action remain binding; production activation requires an intended-circuit solution. |
 | `PORT-008-D002` | Which current-circuit work can execute intended production code without promoting an r01 workaround? | Implement new epoch-preconditioned production forward-parallel objects and invoke them through a separately identified fixed-backend qualification composition; add no r01 behavior to the product and make no activation, UART, return, or r02 electrical claim. | Accepted by the Author, 2026-09-01 | Resolves `REMED-002-D003` in favor of replacement rather than repair/promotion of the prototype adapters. Production data-plane implementation and host tests may be separately authorized; physical and artifact gates remain. |
+| `PORT-008-D003` | How should circuit construction, candidate-code tests, and eventual release proof be sequenced? | Validate r02 in its existing signal-view order; use applicable production-candidate components and scoped test callers, allow simplified electrical diagnostics, authenticate each tested candidate, and verify eventual release consumption later. | Accepted by the Author, 2026-09-05 | Supersedes D002's r01-first scheduling and the requirement to complete a release pair before stage validation. Retains production-component reuse, EMOS ownership, exact evidence, and applicable physical/mode gates. |
 
 The rejected alternative and source trace remain in the task-local
 [activation bootstrap design](PORT-008/activation/README.md). The accepted
 current-circuit boundary, exact hardware/code matrix, permissible tests, and
 stop gates are in the
 [production-equivalence audit](PORT-008/production-equivalence/README.md).
+D003 retains that component factoring but replaces its current-circuit
+schedule with the durable staged process. It does not adopt the rejected D001
+activation exception or resolve HW-001-Q010.
 
 The activation questions remain deferred until `HW-001-Q010` supplies an
 accepted intended-circuit request path. They do not block the bounded production
@@ -125,6 +123,29 @@ forward-parallel data-plane work selected by D002:
    epoch rejection, parser invalidation, and clean retry.
 
 ## Work
+
+### Current work — staged r02 circuit validation
+
+1. [ ] **S1 — Select and document the next installed subset.** Coordinate
+   with HW-001 and QUAL-002 using `signal-views/views.yaml`. Consume the
+   September 4 power-domain observations as preliminary evidence only; obtain
+   the current as-built state before selecting another physical step. Record
+   cumulative wiring, remaining omissions, safe states, and measurement scope.
+2. [ ] **S2 — Select the smallest applicable firmware composition.** Name
+   the P4 and EMOS candidate components that the selected stage can execute,
+   their test caller and preconditions, and any missing implementation. Use a
+   simplified diagnostic only with its electrical purpose and later candidate-
+   code test explicitly recorded. Keep unrelated services inactive.
+3. [ ] **S3 — Prepare stage evidence and review.** Apply Work 2.e's candidate
+   record requirement to code used by the stage; define bounded observations,
+   appropriate host/target checks, and the applicable procedure and identities.
+   Evaluate known defects only against the paths and evidence method selected.
+   Do not resume the entire interrupted validator repair sequence by default.
+4. [ ] **S4 — Integrate accepted stage results.** After separately authorized
+   execution, link electrical results to QUAL-002 and transport results here.
+   Expand from UART subsets to parallel subsets in the controlled order, then
+   to the retained parser and General Poll when their prerequisites exist.
+   Retain failed or partial results without claiming a complete operating mode.
 
 ### Historical/contained prototype tranche — Exclusive Extended response vertical slice
 
@@ -911,11 +932,12 @@ The containment record is
    evidence set were not used as authority or modified. This is a historical
    scope statement, not a current audit exclusion.
 
-### Immediate Work 2 execution chain — production forward data plane
+### Work 2 execution chain — production forward components and evidence
 
-The Author authorized execution on 2026-09-01. This chain implements D002 and
-is the immediate PORT-008 work queue. It replaces the exact prototype adapters;
-it does not repair or promote them.
+The Author authorized the component replacement on 2026-09-01. D003 now
+integrates its remaining work with the staged r02 queue above. Completed
+implementation stays available; open work is selected by the next stage's
+requirements rather than by restarting the historical r01 sequence.
 
 1. [x] **2.a — Freeze the executable boundary.** Use the task-local
    production-equivalence audit as the design input. Keep the active parallel
@@ -939,16 +961,30 @@ it does not repair or promote them.
    validate that condition. They must call the production entry points, emit no
    activation or precommit General Poll, add no supported application bypass,
    and remain excluded from release manifests.
-5. [ ] **2.e — Prove production-object identity.** Record target compiler,
-   relevant flags/defines, compile commands, object/archive-member digests,
-   linked symbols, and normalized disassembly. Qualification and eventual
-   release compositions must consume byte-identical production target objects;
-   host-native builds are same-source behavioral evidence only.
-6. [ ] **2.f — Validate and hand off.** Run deterministic P4 host tests, EMOS
-   source/emulator/link checks, target compile/link checks that require no
-   hardware, fail-closed evidence-tool tests, local-link/privacy/diff checks,
-   and an adversarial boundary review. Record exact remaining blockers and do
-   not assign deployment identities or perform a physical operation.
+5. [ ] **2.e — Authenticate the candidate components used by the stage.**
+   Record committed source/configuration and generated inputs, actual target
+   compiler commands and relevant flags/defines, object/archive-member and
+   image digests, and evidence that the selected link consumes the claimed
+   components. Review that bounded record under the staged process. Retain
+   tested target objects for later comparison; host-native tests establish
+   behavior only. Complete release-pair fingerprints and a production P4
+   release consumer are not prerequisites for this stage record. The existing
+   comparator remains provisional and cannot certify affected records while
+   its defects remain open.
+6. [ ] **2.f — Validate the selected component boundary and hand off.** Run
+   relevant P4 host, EMOS source/link, and target compile/link checks, evidence-
+   method checks, and a bounded review for the selected stage. Preserve the
+   human emulator gate whenever an EMOS/emulator change requires it. Require
+   actual retained-parser fault injection when parser behavior is claimed;
+   lower-level Stream tests do not substitute for it. Record physical and
+   identity prerequisites without executing a physical operation here.
+7. [ ] **2.g — Verify eventual release consumption.** When production
+   compositions exist, compare their consumed candidate objects and linked
+   contracts with the recorded stage inputs. Reuse evidence only within its
+   tested scope; changed objects or integration require impact review and
+   relevant repeat tests. The release-pair comparator's repair, fingerprint,
+   and capture work belongs to this gate if that method is selected. This
+   deferred gate does not block S1--S4 or candidate evidence under 2.e.
 
 **Immediate Work 2 stop gate:** Stop before any flash, SD mutation, wiring or
 probe change, reset, power operation, or decision-bearing physical run. Also
@@ -956,6 +992,11 @@ stop before selecting production activation grammar/carrier, enabling UART
 return on r01, or representing captured P4 output as delivered MOS traffic.
 
 #### 2026-09-01 software-only execution status
+
+This dated execution record and its interruption handoff preserve the earlier
+Work 2.e definition. D003 and the current checklist above supersede their
+repair order and release-pair prerequisites for new stage work. Their failed
+or invalid capture dispositions remain unchanged.
 
 1. Work 2.b is implemented. The maintained P4 boundary now consists of
    `P4EpochHardware`, transactional `P4ParlioIngress`, `P4ParallelDataPlane`,
@@ -1223,6 +1264,10 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
 
 #### Work 2.e interruption handoff
 
+**Current use:** Historical continuation context for the provisional comparator,
+not the current task queue. D003 supersedes its ordered repair-and-recapture
+sequence for stage validation; consult S1--S4 and Work 2.e/2.g above.
+
 **Checkpoint disposition, 2026-09-05:** The Author authorized preserving this
 work in a commit and push as the GPT-5.6 Sol to GPT-6 Astra handoff. The
 uncommitted-state descriptions below record the interruption state; the
@@ -1235,7 +1280,7 @@ failure, and the sequencing recommendation that remains subject to review.
 
 This handoff records the 2026-09-02 Author stop boundary and was reconciled
 against the task-local
-[production-object gate](production-equivalence/object-equivalence/README.md),
+[production-object gate](PORT-008/production-equivalence/object-equivalence/README.md),
 REMED-002, the integrity audit, and the development log on 2026-09-05. The
 defect descriptions and general eligibility blockers remain in those
 authorities; this section records only the worktree state and continuation
@@ -1371,11 +1416,10 @@ the bounded prototype tranche.
    timeout, error, recovery, packet transparency, and ownership state.
 5. Update source selection, dependency graphs, compatibility matrix rows, and
    provenance-rich inline comments for every unavoidable hardware substitution.
-6. For the fixed-backend qualification build, freeze target compiler,
-   flags/defines, compile commands, and production-object digests. Require the
-   intended release compositions to consume byte-identical production target
-   objects and compare linked symbols/normalized disassembly; host-native
-   builds prove behavior but not target-object identity.
+6. Authenticate each stage's selected candidate objects under Work 2.e.
+   Preserve their exact build and link records; compare eventual release
+   consumption under Work 2.g. A diagnostic that does not use a product
+   component makes no claim about that component.
 
 ### PORT-008.3 — Implement the eZ80/MOS integration boundary
 
@@ -1390,6 +1434,11 @@ the bounded prototype tranche.
    attempting broad application tests.
 
 ### PORT-008.4 — Qualify physical transport
+
+Develop the circuit evidence incrementally under S1--S4; the complete
+transport requirements below are the destination, not prerequisites for power,
+bias, or individual-path measurements. Qualify each selected subset only after
+its relevant safety, construction, and procedure review.
 
 1. Freeze versioned firmware, MOS/eZ80 fixture, harness, analyzer fixture,
    procedure, build, and run identities before each decision-bearing run.
@@ -1422,13 +1471,15 @@ before this task can gate integrated compatibility claims.
   cold-boot executable through the Agon SD card's root `/autoexec.txt`, with no
   interactive keyboard prerequisite. Record the exact invocation and a
   non-keyboard evidence path before each affected run.
-- QUAL-001 Review Gate 1 must be accepted before contract implementation, and
-  its baseline matrix must exist before PORT-008 qualification evidence is
-  recorded.
+- QUAL-001 supplies accepted compatibility obligations before corresponding
+  compatibility claims. Its incomplete mode matrix does not prevent bounded
+  mode-neutral circuit/component evidence in PORT-008 or QUAL-002.
 - PORT-003 Gate F provides the qualified retained VDU/parser/mode lifecycle and
   browser-output target. It does not qualify physical ingress, General Poll,
   EMOS routing, or any Agon integration; PORT-008 must establish those claims
-  through its own approved prototype and qualification gates.
+  through its own approved stage and integration gates. Power, bias, and
+  isolated transport checks need no browser or retained-parser dependency
+  unless their selected observation method uses those services.
 - `SETUP-005-D001` and `D002` historically authorized only the bounded
   Exclusive Extended prototype above. `PORT-008-D002` now supersedes its
   implementation disposition with new production data-plane objects and a
@@ -1437,8 +1488,9 @@ before this task can gate integrated compatibility claims.
   integration, Exclusive Compatible, Dual's separate EDU result domain, and
   broad compatibility qualification. Prototype findings remain visibly
   provisional until the Author accepts their D003 disposition.
-- QUAL-002 begins only after a controlled transport candidate exists and gates
-  final qualification of assembled-system power/reset behavior.
+- QUAL-002 owns staged power/bias/electrical checks before a complete transport
+  exists. Only active-transfer tests require the relevant controlled transport
+  candidate; full power/reset and mode claims retain their integration gates.
 - PORT-008 Gate 2 is required before PORT-003 Gate G or later tasks claim
   end-to-end Agon compatibility through Extender.
 - Read `HARDWARE.local.md` before any physical operation. No bench action is
@@ -1454,14 +1506,13 @@ Compatible mode's stock-UART transport. It was designed for the predecessor's en
 parallel-forward/reverse-UART architecture and must not be incrementally tested
 or relabeled into stock physical or firmware conformance.
 
-Exclusive Compatible mode requires hardware-independent firmware work first.
-That work must freeze the endpoint, signaling, flow-control, timing, reset,
-failure, and recovery requirements through deterministic tests without waiting
-for physical qualification. The separate HW-001 design-review task now owns
-the frozen `light2-harness-r02` common UART/parallel candidate and records the
-firmware dependencies it cannot settle electrically. No stock-UART bench test
-against `light2-harness-r01` is authorized or useful. Construction of the r02
-assembly is permitted, but powered tests remain procedure-gated.
+HW-001 owns the authoritative r02 common UART/parallel candidate. D003 develops
+its UART circuit subsets before parallel completion, using the applicable
+candidate drivers and bounded diagnostics. A UART lane or enable test does not
+claim Exclusive Compatible mode or resolve its lifecycle/response contract.
+Those claims require the relevant firmware design and integration evidence.
+No stock-UART bench test against r01 is authorized by this process; powered r02
+tests retain their stage-specific procedure gates.
 
 The final task split remains under SETUP-005. Historically, this boundary did
 not change PORT-008's then-approved Exclusive Extended split-link prototype; it
@@ -1525,6 +1576,8 @@ later accepted D002 boundary authorizes only the software replacement work
    digest, generated complete/focused views, and version record on 2026-09-01.
    This closes only the frozen-input identity defect; r02 remains unqualified
    and every construction, activation, return, and physical gate stays open.
+   The later connectivity/profile discrepancy recorded on 2026-09-05 is
+   tracked under HW-001 S3 and prevents a present clean frozen-input claim.
 5. [ ] **F013:** Make receiver startup transactional: represent started state
    explicitly, unwind every partially allocated/configured resource in reverse
    order, restore released outputs, and prove deterministic retry after each

@@ -1,5 +1,13 @@
 # P4 actual-step provenance capture
 
+This is the provisional recorder associated with the deferred release-pair
+method in PORT-008 Work 2.g. Under accepted D003, the
+[staged process](../../../../qualification/staged-circuit-validation.md)
+requires adequate evidence for the actual candidate but does not require this
+particular recorder to be completed for unrelated electrical measurements.
+Its command and environment requirements below remain mandatory if selected;
+its unresolved defects and invalid captures are not waived.
+
 `vdp/pio/capture_p4_actual_steps.py` is the qualification-only evidence
 producer for PlatformIO environment `p4-port008-nonrelease-qualification`.
 It observes the SCons actions that actually produce the linked `.o` files and

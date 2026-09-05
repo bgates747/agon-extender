@@ -200,20 +200,20 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   responses and onboard-VDP input packets populate canonical MOS sysvars in
   both exclusive modes, and define the separate EDU result domain used in Dual
   mode. Exclusive Extended's adopted return path terminates on eZ80 UART1.
-  Exclusive Compatible's endpoint and physical route remain requirements for
-  firmware-first design and a later new hardware review; they must not be
-  inferred from `light2-harness-r01`. Stock MOS feeds only the onboard VDP's
+  Both exclusive modes select HW-001's current r02 common four-signal UART
+  circuit; the remaining decision concerns firmware routing and response
+  ownership, not a future unidentified circuit. R01 supplies no stock-UART
+  authority. Stock MOS feeds only the onboard VDP's
   UART0 stream through its VDP packet parser. Extender, applications, and a
   resident service must not write MOS-owned sysvars directly; compatible
   updates require an explicitly selected MOS-owned parser route. Full D003
-  disposition is deferred until PORT-008 produces a narrow working Exclusive
-  Extended vertical slice. That prototype may use a fixed-backend development
-  EMOS build, the accepted parallel-forward/UART1-return direction, exact
-  official response packets, and an EMOS-owned experimental parser that alone
-  updates MOS sysvars. It must not claim Dual or Exclusive Compatible behavior,
-  settle the general EDU result domain, or authorize EDP/P4 firmware to write
-  eZ80 memory directly. The prototype is discovery evidence for D003 rather
-  than an implicit architecture decision.
+  disposition may use relevant PORT-008 staged circuit and component evidence.
+  The former Exclusive Extended prototype is historical discovery input, not
+  a required preliminary r01 run. PORT-008-D003 permits isolated UART/parallel
+  stage tests but does not select a production response parser, settle the
+  general EDU result domain, or authorize EDP/P4 writes to eZ80 memory.
+  Any response/sysvar experiment must retain a separately reviewed EMOS-owned
+  parser boundary and cannot imply acceptance of full mode behavior.
 - [ ] **SETUP-005-D004 — Legacy abstraction boundary:** define which classes of
   non-EDU-aware software can be supported through wrappers or loaders in
   Dual mode and the qualification required for each class.
@@ -273,12 +273,16 @@ recording their disposition in the development log.
 
 - Every accepted decision must update the corresponding QUAL-001 operating-mode,
   transport, MOS/sysvar, carve-out, blocker, and qualification fields.
-- `SETUP-005-D001` and `D002` permit PORT-008's bounded Exclusive Extended
-  vertical slice under D003's recorded prototype constraints. Full D003
+- `SETUP-005-D001` and `D002` retain EMOS routing and lifecycle authority.
+  PORT-008-D003 now sequences r02 circuit/component tests independently of a
+  complete exclusive-mode implementation. Full SETUP-005-D003
   acceptance still gates production response routing, broad General Poll and
   response-class qualification, Exclusive Compatible integration, Dual's EDU
   result domain, and any general compatibility claim. Bounded physical-link
-  analysis that makes no mode or MOS claim remains independently permissible.
+  analysis and stage tests that make no mode or MOS claim remain independently
+  permissible under their applicable procedure gates. The
+  [staged process](../qualification/staged-circuit-validation.md) does not
+  release any mode-dependent freeze or authorize physical execution itself.
 - `SETUP-005-D002` gates QUAL-002's complete legacy-absence, reset, failure, and
   recovery state matrix.
 - `SETUP-005-D005` gates only optional onboard-VDP audio forwarding; it does not

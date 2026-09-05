@@ -152,9 +152,10 @@ transport run visually unobservable.
 6. Require an explicit browser WebSocket connection before any future run that
    expects visible browser output.
 
-The task now contains a proposed READY-isolated, two-point CLOCK diagnostic.
-It is review material only and does not relax containment or authorize a
-physical change.
+The READY-isolated two-point CLOCK diagnostic was attempted, but its intended
+wiring precondition was not established. Its invalid outcome remains
+historical evidence; it is not a pending current procedure or a prerequisite
+for r02 stage work.
 
 ## Design-status update
 
@@ -199,6 +200,15 @@ controlled physical evidence, and General Poll completion required below all
 remain open.
 
 ## Resolution conditions
+
+**Stage boundary, 2026-09-05:** Accepted PORT-008-D003 makes r02's ordered
+circuit subsets the current construction/test path. Power/bias checks and
+reviewed component fixtures that do not exercise the retired proactive-READY
+behavior may be prepared independently of production activation. Each physical
+stage needs its applicable authorization under the
+[staged process](../qualification/staged-circuit-validation.md). Such evidence
+does not establish Legacy absence, authorize a supported EMOS bypass, or close
+this corrective action. Its full resolution conditions below remain intact.
 
 This corrective action may close only after the Author approves a bounded
 activation design, deterministic checks prove its fail-closed Legacy and

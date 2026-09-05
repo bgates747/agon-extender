@@ -37,6 +37,13 @@ are deferred beyond the first forward test.
 
 ## Authority and inputs
 
+Under PORT-008-D003, the browser/network service is a dependency only for r02
+stages that actually select it as an observation or application path. Power,
+bias, and isolated UART/parallel checks may keep it inactive and use their
+reviewed direct evidence method under the
+[staged process](../qualification/staged-circuit-validation.md). These checks
+do not qualify network behavior or close this task's resilience findings.
+
 - [SETUP-004 Work 1.g](SETUP-004.md#work-1g-execution-record) and its generated
   network/transfer inventory.
 - [ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md),

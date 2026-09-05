@@ -166,7 +166,7 @@ that storage capability without defining its physical backend.
 ## Hardware design target
 
 [`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md) is the
-authoritative predecessor harness and bounded forward-prototype target. It
+preserved predecessor harness and historical forward-prototype target. It
 preserves the physically exercised eight-bit forward-bus pin map, installed-
 view routing geometry, series resistance, and control-signal evidence. It is
 not the V1 common-UART electrical design and must not be promoted by relabeling
@@ -187,6 +187,18 @@ This selection does not qualify target-speed UART, reset recovery, Legacy
 electrical absence, construction, or Console8 adaptation. HW-001 owns those
 remaining design and evidence gates before the topology can become a released
 V1 hardware artifact.
+
+R02 is the current incremental construction and validation target. Its
+connectivity model owns the circuit, its maintained physical schematic guides
+construction, and its ordered signal views select the functions added and
+tested in sequence. Tests use production-candidate P4 and EMOS components where
+applicable; scoped diagnostic firmware may isolate measurements such as power
+and bias. Evidence authenticates the tested stage and candidate code before
+eventual release consumption is compared. The complete product firmware and
+unrelated mode decisions are not prerequisites for a mode-neutral circuit
+measurement. The accepted
+[staged process](qualification/staged-circuit-validation.md) defines these
+boundaries without changing EMOS ownership or qualifying untested behavior.
 
 ## EDU operating modes and application interface
 

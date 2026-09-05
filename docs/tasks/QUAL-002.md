@@ -2,8 +2,10 @@
 
 ## State
 
-- Status: Not started — plan approved; blocked by REMED-001 and REMED-002 gates
-- Started: --
+- Status: In progress — preliminary r02 power-domain observations recorded;
+  staged circuit validation accepted under PORT-008-D003. Full mode-dependent
+  qualification remains blocked by the applicable REMED-001/REMED-002 gates.
+- Started: 2026-09-04 18:32 EDT
 - Finished: --
 
 ## Intent
@@ -64,6 +66,29 @@ production isolation requirements.
     non-bricking guarantee for external code that bypasses EMOS.
 
 ## Work
+
+### Current staged work
+
+Follow [staged circuit validation](../qualification/staged-circuit-validation.md)
+and r02's `signal-views/views.yaml`. The September 4 observations below are
+preliminary construction evidence; their historical "not started" wording
+describes the then-unstarted formal qualification program. No full review gate
+or qualified outcome has since been inferred from those measurements.
+
+1. [ ] **S1:** With HW-001, record the installed cumulative subset and its
+   actual terminals, omissions, power sources/cables, and measurement access.
+   Confirm present bench state before selecting the next ordered stage.
+2. [ ] **S2:** Apply Review Gates 1 and 2 to that stage's state space, including
+   already powered ICs and shared enables. Power/bias checks do not require
+   completed UART/parallel firmware or production activation. Active-transfer
+   stages require the applicable PORT-008 candidate and ownership preconditions.
+3. [ ] **S3:** Identify the firmware used for the measurement. A passive or
+   other scoped diagnostic may establish electrical behavior; production-
+   candidate component claims require that component to execute with exact
+   build provenance. Keep unrelated service initialization disabled.
+4. [ ] **S4:** Record each accepted result with its limitations and feed the
+   next stage. Do not promote a power-domain check to GPIO-passivity, complete
+   transport, Legacy-absence, reset, or mode evidence.
 
 ## Preliminary r02 construction observations
 
@@ -149,7 +174,7 @@ review gate is satisfied, and no qualification claim follows from them.
    absolute `board_build.sdkconfig_defaults` path was ignored by this
    PlatformIO composition, leaving the ESP-IDF default 100 Hz FreeRTOS tick.
    Copying the accepted defaults into the temporary project selected the
-   required 1000 Hz tick and produced the successful build. The source remains
+   required 1000 Hz tick and produced the successful build. The source
    now lives durably under `docs/tasks/QUAL-002/p4-passive-r01/`; its tracked
    source hash matches the flashed temporary source exactly, and a build from
    that tracked project completed successfully. The rebuilt factory image is
@@ -216,9 +241,11 @@ review gate is satisfied, and no qualification claim follows from them.
 5. Produce a no-change sufficiency finding or a bounded proposal for new
    harness/fixture revisions. Do not alter the live bench during this work.
 
-**Review Gate 1:** Author approves the supported state matrix, safety analysis,
-instrumentation plan, stop conditions, and any required design-revision work
-before a procedure or physical experiment is authorized.
+**Review Gate 1:** Author approves the selected stage's supported states,
+safety analysis, instrumentation, stop conditions, and any required design
+revision before its procedure or experiment is authorized. This gate may be
+satisfied for a bounded mode-neutral subset without approving the full future
+power/reset/mode matrix. Acceptance names the exact subset and exclusions.
 
 ### QUAL-002.3 — Freeze candidate artifacts and procedures
 
@@ -255,18 +282,25 @@ current bench state before execution.
 
 ## Dependencies and sequencing gates
 
-- QUAL-001 must define the relevant compatibility and evidence identities.
-- PORT-008 Review Gate 1 must define transport ownership and candidate wiring;
-  a controlled transport candidate must exist before active-transfer tests.
+- Record mode-neutral construction evidence in this task using the versioning
+  policy; the unfinished QUAL-001 mode matrix is not a prerequisite. QUAL-001
+  must define the relevant obligations before compatibility claims are made.
+- HW-001 supplies r02 circuit and stage construction authority. PORT-008 must
+  define the relevant transport ownership and controlled candidate before an
+  active-transfer test, not before power or passive-bias observations.
 - Accepted `SETUP-005-D002` supplies the lifecycle foundation. REMED-001's
   four-mode freeze, open SETUP-005 decisions, HW-001-Q003/Q007/Q010, and this
   task's corrected execution gates still block approval of the full physical
   mode matrix.
 - REMED-001's four-mode conformance freeze must explicitly release the
-  applicable mode-dependent scope before any physical qualification begins.
+  applicable mode-dependent scope before that scope is physically qualified.
+  Bounded tests that neither exercise nor claim those modes use their stage
+  gates under PORT-008-D003; they do not release the full freeze.
 - REMED-002 F008's frozen-input identity block was reconciled on 2026-09-01.
-  F016 still prohibits treating this task's older plan approval as an
-  execution release, and all electrical/physical gates remain independent.
+  A later connectivity/profile hash mismatch was recorded on 2026-09-05;
+  HW-001 must reconcile it before r02 is claimed as a clean frozen
+  qualification input. F016 still prohibits treating older plan approval as
+  an execution release, and all stage electrical/physical gates remain.
 - QUAL-002 Gate 2 is required before any physical power-order, reset-order,
   connection-change, or fault-injection run.
 - A passing QUAL-002 scope is required before PORT-008 Gate 2, PORT-003 Gate G,
@@ -308,12 +342,14 @@ current bench state before execution.
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
 
 1. [ ] Consume `light2-harness-r02` only after HW-001 proves that its maintained
-   schematic, profile digest, generated projection, assembly mapping, and
-   version identity agree. HW-001's F008 reconciliation satisfies the
-   schematic/profile/projection identity condition, but the F021 construction-
-   mapping gate remains open; neither condition is electrical qualification.
-2. [ ] Make every future plan, procedure, and run gate name the applicable
-   REMED-001 freeze release and corrected four-mode authority explicitly.
+   schematic, profile digest, generated projection, relevant stage assembly
+   mapping, and version identity agree. The 2026-09-05 connectivity digest
+   mismatch remains a controlled-input blocker. The human schematic and
+   ordered views guide construction; a missing whole-assembly map does not
+   prohibit a documented, reviewed partial stage. Neither is electrical proof.
+2. [ ] Make each future plan, procedure, and run state whether it exercises
+   mode-dependent behavior and name the applicable REMED-001 release when it
+   does. A mode-neutral stage states its narrower scope and exclusions.
 3. [ ] Treat the 2026-08-22 plan approval as approval of scope only, never as
    authorization for bench access, a physical run, or mode-dependent evidence.
 4. [x] Reconcile any earlier candidate record that relied on the mismatched r02

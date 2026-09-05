@@ -29,6 +29,13 @@ components and shows unselected canonical wire routes as light-gray,
 non-electrical graphical context while leaving only the selected function as
 real electrical wiring.
 
+The Author's accepted staged process uses these views to add and test circuit
+functions in order, with production-candidate P4/EMOS components wherever
+applicable and scoped diagnostic firmware for measurements such as power and
+bias. See [staged circuit validation](../../../docs/qualification/staged-circuit-validation.md)
+for cumulative construction records, evidence, and applicable review gates.
+Full release firmware is not a prerequisite for a component measurement.
+
 The Author accepted the maintained schematic after manually arranging the
 complete circuit, clarifying each local bypass-capacitor assignment, and
 checking its direct wire geometry. KiCad's exported endpoint partition exactly
@@ -120,7 +127,9 @@ The following remain open work:
 4. the EMOS/eZ80 and EDP/P4 break-before-make epoch protocol;
 5. continuity, passive, either-order-power, contention, reset, fault, and
    recovery qualification; and
-6. an exact breadboard construction map for the r02 assembly target.
+6. cumulative as-built mapping and inspection for the r02 assembly target;
+   each tested subset needs its own adequate record while the complete map
+   develops.
 
 Construction is permitted only as a controlled prototype under the applicable
 bench and qualification procedures. These open boundaries cannot be cited as

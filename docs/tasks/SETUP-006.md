@@ -3,8 +3,9 @@
 ## State
 
 - Status: Paused — naming/scaffold work retained; current electrical design
-  promoted to HW-001 and `light2-harness-r02`; exact r02 construction mapping
-  remains open
+  promoted to HW-001 and `light2-harness-r02`; current staged construction uses
+  the accepted physical schematic and ordered views, with as-built records
+  accumulated under HW-001/QUAL-002
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -17,7 +18,7 @@ Build the task incrementally as firmware requirements and electrical decisions
 become concrete rather than attempting to design the complete carrier in
 advance.
 
-This task begins from the currently adopted `light2-harness-r01`, its vendored
+This task began from the then-adopted `light2-harness-r01`, its vendored
 legacy evidence, and the corresponding read-only legacy repository. Existing
 files are evidence and inputs, not proof that their terminology, presentation,
 mode scope, electrical design, or qualification claims are suitable for the
@@ -38,6 +39,11 @@ firmware, or executing a physical test. Those actions require their applicable
 versioning, design-review, procedure, and qualification gates.
 
 ## Authority and inputs
+
+The following are the historical research inputs. Current construction uses
+the r02 connectivity model, maintained physical schematic, and ordered
+`signal-views/` under HW-001, following PORT-008-D003 and the
+[staged process](../qualification/staged-circuit-validation.md).
 
 1. `hardware/designs/light2-harness-r01/profile.yaml` and its current README.
 2. The files under `hardware/designs/light2-harness-r01/legacy-evidence/`,
@@ -461,14 +467,17 @@ remain open under HW-001 and QUAL-002.
 
 ## Stop condition
 
-SETUP-006 is paused while the critical path returns to the retained VDP port
-and its bounded forward test. SETUP-006.1.1 is accepted and frozen in commit
+SETUP-006's naming/scaffold research is paused; HW-001 and QUAL-002 now own
+incremental r02 construction and validation, with PORT-008 owning candidate
+transport code. SETUP-006.1.1 is accepted and frozen in commit
 `b38b445`. SETUP-006.1.2 is accepted review provenance, and SETUP-006.2 has promoted its names into
 `hardware-object-registry-r01`. The Author resolved the registry-identity gate
 as `SETUP-006-D002`. SETUP-006.3 is accepted as the canonical unwired
-breadboard scaffold. SETUP-006 remains open because the firmware-driven
-electrical design, connectivity, construction definition, and qualification
-are not established. Do not rename existing files, change a hardware profile,
+breadboard scaffold. The r02 electrical design and human construction drawing
+are established. SETUP-006 retains historical-provenance and hardware-object
+applicability work; it does not own a competing current construction design.
+Stage-specific as-built records and qualification accumulate with their
+current owners. Do not rename existing files, change a hardware profile,
 advance another artifact revision, synchronize ERP records, or modify physical
 wiring without the applicable Author approval.
 
@@ -478,10 +487,10 @@ wiring without the applicable Author approval.
 of `INTEGRITY-AUDIT-F021`. The detailed audit evidence remains in
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
 
-1. [ ] Amend the stop-state and routine references so no reader can mistake
+1. [x] Amend the stop-state and routine references so no reader can mistake
    SETUP-006's earlier open construction language for the current promoted r02
    construction authority.
-2. [ ] Retain task-local drafts, Fritzing records, pin research, and deferred
+2. [x] Retain task-local drafts, Fritzing records, pin research, and deferred
    questions as historical design provenance without duplicating HW-001's
    current construction map.
 3. [ ] Route revision-independent hardware-object applicability metadata to

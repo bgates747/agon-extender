@@ -1,11 +1,11 @@
-# PORT-008 Work 2.e production-object provenance gate
+# PORT-008 deferred release-pair production-object provenance gate
 
 - Status: product policy, raw-record adapters, validator/comparator, and
   adversarial host tests implemented; mechanical EMOS and P4 rehearsal output
   exists but is ineligible, intended-command fingerprints await a clean
   rehearsal, no target evidence has been accepted, and no equivalence claim is
   available
-- Owner: PORT-008 under accepted `PORT-008-D002`
+- Owner: PORT-008 Work 2.g under D002 as sequenced by accepted D003
 - Policy: `production-object-policy.json`
 - Build-record skeleton: `BUILD-RECORD.template.json`
 - Gate: `../scripts/validate-production-object-provenance.py`
@@ -13,10 +13,20 @@
 
 ## Outcome and claim boundary
 
-This is the Work 2.e product gate. It supersedes the retained schema-v1
-similarity checker only for Work 2.e production-object claims. The preliminary
-checker remains intact for interpreting its earlier reports; it cannot close
-`PORT-008-D002`.
+This is the release-pair gate developed under the former Work 2.e definition.
+PORT-008-D003 now places its release-consumption claim in Work 2.g. Current
+Work 2.e authenticates the candidate components actually used by a stage under
+the [staged process](../../../../qualification/staged-circuit-validation.md).
+A complete release consumer, paired command-fingerprint freeze, and this
+recorder's environment restrictions are not blanket prerequisites for that
+stage. The owner must still provide adequate reviewed build-to-source and
+object/link evidence; the preliminary similarity checker cannot supply that
+claim by itself.
+
+The executable policy and validator are unchanged by this process amendment.
+Their strict eligibility checks remain binding whenever their reports are
+used. The procedures below describe that deferred method, not instructions to
+resume its full repair program before the next circuit stage.
 
 The gate consumes the recorders' raw actual-step evidence rather than a
 manifest-selected compiler replay. The tracked policy, not the evidence, owns
@@ -95,7 +105,7 @@ or physical qualification.
 
 ## Current honest result
 
-Work 2.e cannot currently produce an eligible comparison:
+The release-pair gate cannot currently produce an eligible comparison:
 
 1. Every per-role unit and final-link command-fingerprint slot in the tracked
    policy is intentionally null and the target policies remain
@@ -237,7 +247,9 @@ EMOS bindings:
 7. `TOOLCHAIN`: the selected AgonDev release root.
 8. `PROVENANCE`: the fresh EMOS evidence root.
 
-Although policy permits the `PYTHON_ENV` root itself to be a leaf symlink,
+The following is a constraint of this recorder/gate method, not a general
+project Python or staged-circuit requirement. Although policy permits the
+`PYTHON_ENV` root itself to be a leaf symlink,
 it does not permit symlinks below that root. A conventional virtual
 environment whose `bin/python` is a symlink is therefore ineligible. Create
 the fresh capture environment from the policy-pinned interpreter with

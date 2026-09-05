@@ -80,7 +80,7 @@ item is removed.
 ## System qualification
 
 - [ ] **QUAL-002 — Qualify assembled-system electrical absence, power, and reset behavior**
-  - Started: --
+  - Started: 2026-09-04 18:32 EDT
   - Finished: --
   - Details: [QUAL-002](docs/tasks/QUAL-002.md)
 

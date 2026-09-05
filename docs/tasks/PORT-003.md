@@ -57,6 +57,12 @@ than defining separate VDP implementations.
 
 ## Dependencies and gates
 
+- PORT-008-D003 now establishes the circuit incrementally on r02. This task's
+  parser/display/browser components become dependencies only when the selected
+  stage exercises or observes them. Power, bias, and isolated transport checks
+  follow the [staged process](../qualification/staged-circuit-validation.md)
+  without requiring Gate G or a complete release composition. Gate G's
+  end-to-end compatibility prerequisites remain unchanged.
 - Complete SETUP-004 before implementation so audio, input, network, and
   storage boundaries cannot be mistaken for display-backend ownership.
 - PORT-002 must represent old concrete controllers as vendored but excluded and
@@ -1775,6 +1781,12 @@ difference that cannot be narrowly isolated and recorded, or if target
 compilation invalidates the accepted one-controller facade.
 
 ## Phase F — Browser video handoff and bootable port
+
+The first-bench/first-fixture selections in this accepted phase record describe
+the earlier bring-up sequence. PORT-008-D003 now owns the current r02 stage
+order. Gate F's retained display/browser result remains available to later
+stages; it does not force power, bias, or isolated UART checks to initialize
+the parser or browser, or to repeat the former forward-only fixture.
 
 ### Accepted direction
 

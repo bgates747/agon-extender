@@ -24,10 +24,20 @@ Revisioned physical breadboard configurations live under
 assigned to `light2-extender-solderless-assembly-r02`, whose exact construction
 map remains unfinished.
 
-The current logic-analyzer attachment target is
+The accepted r02 physical schematic and ordered
+[`signal views`](designs/light2-harness-r02/signal-views/README.md) guide current
+incremental construction. HW-001 and QUAL-002 record the actual installed
+subset at each step under
+[staged circuit validation](../docs/qualification/staged-circuit-validation.md).
+The unfinished complete assembly map is not a lack of circuit authority or a
+requirement to finish the entire build before checking a bounded stage.
+
+The retained predecessor logic-analyzer attachment reference is
 [`la03-p4-probe-fixture-r01`](fixtures/la03-p4-probe-fixture-r01/README.md).
 Its green D0 endpoint was physically verified as GPIO32 / EXT2 pin 9; the
 contradictory legacy pin-10 label is retained only as provenance.
+Each r02 stage selects and verifies its own relevant measurement attachment;
+the predecessor map is not automatically the probe map for that stage.
 
 Machine-local specimen identities, bench topology, and current connection
 status remain in the ignored `HARDWARE.local.md`, not this directory.

@@ -1,9 +1,10 @@
-# PORT-008 current-circuit production-equivalence audit
+# PORT-008 production-component boundary and predecessor equivalence audit
 
 - Status: Software-only production data plane and ordinary/fixed EMOS
   compositions integrated; provenance, target-runtime, activation, return,
   artifact, and physical gates open
 - Date: 2026-09-01
+- Process supersession: 2026-09-05, PORT-008-D003
 - Owning task: [PORT-008](../../PORT-008.md)
 - Corrective action:
   [`CA-2026-09-01-001`](../../../decisions/CA-2026-09-01-001-port008-preactivation-ready.md)
@@ -11,6 +12,17 @@
   [`AUDIT-2026-09-01-001`](../../../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md)
 
 ## Purpose and placement
+
+**Current process:** PORT-008-D003 and
+[staged circuit validation](../../../qualification/staged-circuit-validation.md)
+replace this audit's r01-first schedule. The current target is the ordered r02
+construction subsets. The component factoring and rejection of supported
+transport bypasses remain applicable; the r01 electrical matrix and proposed
+tests below are predecessor analysis, not the current work queue. Exact stage
+candidate evidence precedes eventual release-consumption comparison. No r01
+rerun or complete release-pair proof is required merely to begin a bounded r02
+stage. Any reused component still needs its actual r02 stage preconditions
+reviewed; matching endpoint pins are insufficient.
 
 This task-local audit answers one bounded question: which work can use the
 present `light2-harness-r01` circuit while executing code intended to remain
@@ -29,7 +41,7 @@ were inspected only through their committed Git objects. That review performed
 no build, deployment, wiring change, reset, or powered operation. The later
 authorized software-only execution is recorded separately below.
 
-## Answer
+## Historical r01 boundary answer
 
 The current circuit is useful for a substantial but sharply bounded production
 slice: the complete **forward-parallel data plane inside one already-authorized
@@ -75,9 +87,11 @@ was authorized.
 5. The intended comparison authority is committed
    [`light2-harness-r02`](../../../../hardware/designs/light2-harness-r02/profile.yaml).
    F008's schematic digest and generated projections were reconciled to the
-   committed authority on 2026-09-01, so the identity is no longer stale. Its
-   initial physical assembly remains draft with no construction authority,
-   and no electrical or qualification claim follows from that repair.
+   committed authority on 2026-09-01. The later 2026-09-05 connectivity/profile
+   hash discrepancy remains tracked by HW-001. The accepted r02 physical
+   schematic and current ordered views guide construction; its draft assembly
+   profile has no complete as-built authority yet. That does not prohibit
+   reviewed stage-specific construction records or confer qualification.
 6. R02 is a controlled-beta candidate core, not yet a complete production
    electrical claim. Its own eZ80-only reset and Legacy electrical-absence
    questions remain open. This audit does not infer answers for them.
@@ -112,7 +126,7 @@ and
 
 ### Current evidence-tool limitation
 
-The genuine Work 2.e gate is now specified and implemented under
+The release-pair gate developed under the former Work 2.e definition is under
 [`object-equivalence/`](object-equivalence/README.md). It consumes generic EMOS
 and P4 raw actual-step records, authenticates clean source/capture/tool
 authority, owns the complete role/unit/symbol sets in tracked policy, binds
@@ -120,8 +134,10 @@ each required object to the final link and nonzero map contribution, and
 compares independently captured qualification/release objects plus normalized
 linked instructions. The product gate remains unexercised on target evidence;
 no approved successor firmware/procedure identities exist, and no production
-P4 release consumer exists. Work 2.e therefore remains open and no production
-equivalence report exists.
+P4 release consumer exists. No production-equivalence report exists. Under
+D003 this tooling is a deferred Work 2.g method, not the sole permitted stage-
+evidence method for current Work 2.e. Its defects must be resolved before
+relying on affected reports; no earlier capture is reclassified by this change.
 
 The historical `validate-target-object-equivalence.py` remains only a
 preliminary compile-output/final-symbol similarity checker. It does not prove
@@ -329,7 +345,7 @@ evidence.
 These tests can establish production software behavior. They cannot substitute
 for r02 electrical qualification.
 
-### Physical r01 work using production source
+### Historical physical r01 proposal using production source
 
 After the prerequisites below, r01 can execute this exact production chain:
 
@@ -427,7 +443,10 @@ later data-plane qualification on the intended circuit:
    digests of every claimed production object or archive member. The intended
    P4 and eZ80 release compositions must link target objects with the same
    digests and mechanically compare linked symbols and normalized disassembly;
-   a host-native build is not object-equivalence evidence. The production
+   a host-native build is not object-equivalence evidence. Under D003, retain
+   the authenticated candidate record at the stage and perform the release
+   comparison when that consumer exists; it is not a prerequisite for the
+   stage itself. The production
    release manifest excludes the qualification top-level/profile and proves no
    supported runtime bypass exists.
 4. The composition does not expose a new application command, wire grammar,
@@ -449,7 +468,7 @@ later data-plane qualification on the intended circuit:
    the observed forward consumer. It says nothing about production activation,
    UART return, formal-mode commit, or electrical equivalence.
 
-The Work 2.e product gate under `object-equivalence/` now implements item 3's
+The deferred release-pair gate under `object-equivalence/` implements item 3's
 required final-link replay, direct map contribution, symbol-origin, Git,
 source, tool, identity, and cross-role comparison checks. Its tracked intended-
 command fingerprints still await a clean rehearsal, and no eligible target

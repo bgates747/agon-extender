@@ -26,6 +26,18 @@ ADR or normative architecture, and current development log.
 
 ## Reviewed snapshot
 
+**Later process disposition, 2026-09-05:** The Author accepted PORT-008-D003.
+Current work follows r02's staged circuit process; references below to the
+former Work 2.e release-pair gate and r01 continuation describe their historical
+scope. The Sol-to-Astra checkpoint retained the provisional P042/P043 edits;
+P041/P044 remain open. Tool findings still bar reliance on affected reports,
+but do not independently block a stage that uses another adequate reviewed
+evidence method. HW-001 owns the newly recorded connectivity/profile digest
+discrepancy; the earlier F008 closure is not proof of current consistency.
+F021's document reconciliation now distinguishes the accepted human circuit
+drawing from unfinished cumulative as-built records. Owner tasks retain the
+remaining work; this note changes no historical finding or run outcome.
+
 1. Repository `agon-extender` was reviewed at tracked `HEAD`
    `45c45d5ef02285a737969a11b29dcc011aa4ef9b` plus the Author's pre-existing
    uncommitted PORT-008 diagnostic, transport, procedure, corrective-action,

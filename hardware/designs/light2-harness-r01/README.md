@@ -1,5 +1,10 @@
 # Light 2 harness r01
 
+This revision is predecessor evidence. Current construction and staged
+validation use [r02](../light2-harness-r02/README.md) under PORT-008-D003.
+The revision-specific descriptions below preserve its original scope and do
+not make it the current UART or forward-transport test target.
+
 `light2-harness-r01` is the authoritative first electrical and pin-assignment
 target for the Agon Light 2 to Olimex ESP32-P4-DevKit Rev D1 prototype. It is a
 clean-project adoption of the mature predecessor breadboard design, not a new

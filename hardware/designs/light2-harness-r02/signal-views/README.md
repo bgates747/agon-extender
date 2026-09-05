@@ -62,6 +62,15 @@ the complete forward UART path before the reverse UART path, adds the remaining
 parallel data lanes in numeric order, and finishes with the parallel strobes
 and READY return path.
 
+Use this order through the accepted
+[staged circuit validation process](../../../../docs/qualification/staged-circuit-validation.md).
+The operator records the cumulative installed subset; a view's gray context
+neither connects an omitted wire nor proves previous construction. Power/bias
+measurements may use passive diagnostic firmware. Active stages exercise
+applicable production-candidate components without requiring a complete release
+image, and retain stage-specific safety and evidence gates. These views are
+construction guidance, not executable test procedures or passed results.
+
 The 17 projections cover combined power and ground, D0 through D7, CLOCK,
 VALID_N, READY_N, the four control functions, and the startup/fail-safe bias
 network. Every selected wire, junction, and global net label is the original

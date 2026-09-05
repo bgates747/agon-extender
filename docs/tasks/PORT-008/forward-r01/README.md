@@ -6,6 +6,11 @@ scripts and frozen inputs remain solely to interpret the historical candidate
 and its preserved evidence; INTEG-002 and PORT-008 own the replacement common
 production path and non-release qualification compositions.
 
+PORT-008-D003 now selects the ordered r02 circuit stages. The sole current
+construction aid retained in this historical directory is the separately
+described header-placement/ribbon-color reference below; it does not reactivate
+the rejected firmware, procedure, probes, or evidence package.
+
 This directory historically owned the deterministic build and evidence glue for the first
 physical EMOS-to-EDP forward test. The task scope and decisions remain in
 [`../../PORT-008.md`](../../PORT-008.md); the controlled execution is

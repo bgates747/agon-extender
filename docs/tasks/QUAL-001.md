@@ -18,6 +18,13 @@ The matrix is a traceability and qualification authority. It does not redefine
 VDU commands, create protocols, resolve open architecture questions, or turn a
 successful build into a compatibility claim.
 
+Under PORT-008-D003, mode-neutral r02 construction and component evidence is
+recorded in HW-001, QUAL-002, and PORT-008 using the
+[staged process](../qualification/staged-circuit-validation.md). Completion of
+this task's four-mode matrix is not a prerequisite for those observations.
+This task later links accepted evidence to its exact obligations; neither a
+partial circuit result nor an unreviewed matrix can qualify a complete mode.
+
 ## Authority and inputs
 
 - [AUDIT-001](AUDIT-001.md), especially accepted decisions R01–R03 and the
