@@ -83,14 +83,14 @@ is part of the expected evidence.
 
 ## Normal wiring and probe reference
 
-`normal-forward-wiring-and-probes.svg` is the task-local human reference for
-the normal r01 forward wiring and canonical LA-03 probe placement.
-It is generated from the retained `light2-harness-r01` legacy wiring drawing by
-`scripts/generate-normal-forward-wiring-and-probes.py`, while its probe markers
-follow `la03-p4-probe-fixture-r01`. The drawing shows the ordinary signal path,
-including Agon PD4 to P4 GPIO20 for `READY_N`; like its source drawing, it does
-not depict the intervening logic device and therefore does not replace the
-electrical authority for that circuit.
+`normal-forward-wiring-and-probes.svg` is the task-local physical header
+placement and canonical ribbon-conductor color reference. Its historical
+filename is retained for stable task references; it intentionally contains no
+wires, passives, or probe markers. The generator checks connector assignments
+against the authoritative `light2-harness-r02` connectivity model and presents
+the headers in their physical breadboard landing orientation. Each Agon row
+gives both the Agon 2x17 header pin and the corresponding split landing-header
+pin. This orientation aid does not replace the electrical authority.
 
 ## Media stages
 

@@ -37,6 +37,7 @@ SHA256_RE = re.compile(r"^[0-9a-f]{64}$")
 COMMIT_RE = re.compile(r"^(?:[0-9a-f]{40}|[0-9a-f]{64})$")
 ROOT_RE = re.compile(r"^[A-Z][A-Z0-9_]*$")
 ROOTED_PATH_RE = re.compile(r"^\$\{([A-Z][A-Z0-9_]*)\}(?:/(.*))?$")
+RESERVED_ROOT_PLACEHOLDER = re.compile(r"\$\{[A-Z][A-Z0-9_]*\}")
 BUILD_ID_RE = re.compile(
     r"^(?P<identity>[a-z][a-z0-9]*(?:-[a-z0-9]+)*-v\d+\.\d+\.\d+)"
     r"-b(?P<timestamp>\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2})Z$"
@@ -44,6 +45,21 @@ BUILD_ID_RE = re.compile(
 ARCHITECTURE_RE = re.compile(r"^architecture:\s*([^,\r\n]+)", re.MULTILINE)
 DISASSEMBLY_HEADER = re.compile(r"^\s*([0-9a-fA-F]+)\s+<([^>]+)>:\s*$")
 DISASSEMBLY_LINE = re.compile(r"^\s*([0-9a-fA-F]+):\s*(\S.*?)\s*$")
+RELOCATION_TARGET = re.compile(r"^([^+\s]+)(?:\+0x([0-9a-fA-F]+))?$")
+SECTION_TABLE_ROW = re.compile(
+    r"^\s*\d+\s+(\S+)\s+([0-9a-fA-F]+)\s+([0-9a-fA-F]+)\s+"
+    r"[0-9a-fA-F]+\s+[0-9a-fA-F]+\s+\S+\s*$"
+)
+SECTION_CONTENT_ROW = re.compile(
+    # Pinned GNU objdump renders sixteen bytes in a fixed 36-column field.
+    # Using that field boundary avoids mistaking an all-hex ASCII column for
+    # evidence bytes and also handles unaligned ranges split into five groups.
+    r"^\s*([0-9a-fA-F]+)\s+(.{36})\s.*$"
+)
+RELOCATION_SECTION_HEADER = re.compile(r"^RELOCATION RECORDS FOR \[(\S+)\]:$")
+RELOCATION_TABLE_ROW = re.compile(
+    r"^\s*([0-9a-fA-F]+)\s+(r_[A-Za-z0-9_]+)\s+(\S.*?)\s*$"
+)
 MAP_CONTRIBUTION = re.compile(
     r"^\s*(?:(\.[^\s]+)\s+)?(0x[0-9A-Fa-f]+)\s+"
     r"(0x[0-9A-Fa-f]+)\s+(.+?)\s*$"
@@ -64,6 +80,27 @@ NONALLOCATED_SECTION_PREFIXES = (
 SHELL_CONTROL_TOKENS = {";", "&&", "||", "|", "&", ">", ">>", "<", "<<"}
 P4_UNQUOTED_SHELL_META = frozenset(" \t\n\r\v\f\\'\"`$&;|<>()*?[#~")
 P4_DOUBLE_QUOTE_ESCAPABLE = frozenset('\\\\"$`')
+P4_CANONICAL_MAP_PREFIX = "-Wl,-Map="
+P4_MAP_OPTION_PREFIXES = ("-Wl,-Map", "-Wl,--Map", "-Map", "--Map")
+P4_COMPILE_VALUE_OPTIONS = frozenset(
+    {
+        "-D",
+        "-I",
+        "-MF",
+        "-MQ",
+        "-MT",
+        "-U",
+        "-idirafter",
+        "-imacros",
+        "-include",
+        "-iprefix",
+        "-iquote",
+        "-isystem",
+        "-iwithprefix",
+        "-iwithprefixbefore",
+        "-o",
+    }
+)
 P4_UNPROVED_NESTED_TOOL_OPTIONS = (
     "-B",
     "-flto",
@@ -110,6 +147,24 @@ def sha256_file(path: Path) -> str:
     return digest.hexdigest()
 
 
+def sha256_generator_text_input(path: Path, label: str) -> str:
+    """Reproduce zds2gas's UTF-8/universal-newline input digest exactly.
+
+    Prepared-source metadata separately authenticates the file's raw bytes.
+    The generator manifest describes the decoded text consumed by Path.read_text,
+    which normalizes CRLF and CR line endings before zds2gas re-encodes the text
+    for its semantic-input digest.
+    """
+
+    try:
+        text = path.read_text(encoding="utf-8")
+    except (OSError, UnicodeError) as error:
+        raise GateError(
+            f"cannot decode {label} as generator UTF-8 input: {error}"
+        ) from error
+    return sha256_bytes(text.encode("utf-8"))
+
+
 def canonical_bytes(value: object) -> bytes:
     return (json.dumps(value, sort_keys=True, separators=(",", ":")) + "\n").encode(
         "utf-8"
@@ -136,6 +191,17 @@ def require_exact_keys(
 def require_sha256(value: Any, label: str) -> str:
     if not isinstance(value, str) or SHA256_RE.fullmatch(value) is None:
         raise GateError(f"{label} is not a lowercase SHA-256 digest")
+    return value
+
+
+def require_exact_integer(
+    value: Any, label: str, *, minimum: int | None = None
+) -> int:
+    """Accept JSON integers without treating booleans as numeric evidence."""
+
+    if type(value) is not int or (minimum is not None and value < minimum):
+        boundary = f" at least {minimum}" if minimum is not None else ""
+        raise GateError(f"{label} must be an integer{boundary}")
     return value
 
 
@@ -178,15 +244,27 @@ def identity_registry_artifacts(value: Any) -> dict[str, dict[str, Any]]:
 
 
 def safe_relative(value: Any, label: str) -> PurePosixPath:
-    if not isinstance(value, str) or not value or "\\" in value:
+    if not isinstance(value, str) or not value or "\x00" in value or "\\" in value:
         raise GateError(f"{label} must be a nonempty POSIX relative path")
     relative = PurePosixPath(value)
     if (
         relative.is_absolute()
+        or not relative.parts
         or value != relative.as_posix()
         or any(part in ("", ".", "..") for part in relative.parts)
     ):
         raise GateError(f"{label} is not a normalized relative path: {value!r}")
+    return relative
+
+
+def safe_slash_prefixed_relative(value: Any, label: str) -> PurePosixPath:
+    """Validate a policy suffix spelled as one slash plus a relative path."""
+
+    if not isinstance(value, str) or not value.startswith("/"):
+        raise GateError(f"{label} must start with exactly one slash")
+    relative = safe_relative(value[1:], label)
+    if value != "/" + relative.as_posix():
+        raise GateError(f"{label} is not a canonical slash-prefixed path")
     return relative
 
 
@@ -271,6 +349,8 @@ def parse_root_arguments(
         name, path_text = item.split("=", 1)
         if ROOT_RE.fullmatch(name) is None or name in raw or not path_text:
             raise GateError(f"invalid or duplicate root binding: {item!r}")
+        if not Path(path_text).is_absolute():
+            raise GateError(f"root binding path must be absolute: {item!r}")
         raw[name] = Path(os.path.abspath(path_text))
     if set(raw) != set(required):
         raise GateError(
@@ -307,7 +387,18 @@ def parse_root_arguments(
     return bindings
 
 
-def resolve_rooted_path(
+def require_stable_root(root: RootBinding, label: str) -> None:
+    """Reject a declared root whose lexical leaf was retargeted after binding."""
+
+    try:
+        current = root.lexical.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise GateError(f"{label} declared root is unavailable: {error}") from error
+    if current != root.resolved:
+        raise GateError(f"{label} declared root changed after binding")
+
+
+def resolve_rooted_existing_path(
     value: str, roots: Mapping[str, RootBinding], label: str
 ) -> Path:
     if not isinstance(value, str):
@@ -316,19 +407,33 @@ def resolve_rooted_path(
     if match is None or match.group(1) not in roots:
         raise GateError(f"{label} does not use a declared root: {value!r}")
     root = roots[match.group(1)]
+    require_stable_root(root, label)
     suffix = match.group(2)
     parts: tuple[str, ...] = ()
     if suffix is not None:
-        relative = PurePosixPath(suffix)
-        if any(part in ("", ".", "..") for part in relative.parts) or "\\" in suffix:
-            raise GateError(f"{label} contains an unsafe path: {value!r}")
+        relative = safe_relative(suffix, f"{label} rooted-path suffix")
         parts = relative.parts
     lexical = root.lexical.joinpath(*parts)
-    return regular_file(
-        lexical,
-        label,
-        root=None if root.allow_symlink else root.lexical,
-    )
+    # parse_root_arguments() applies allow_symlink only to the declared root's
+    # own leaf.  It never authorizes a descendant symlink or an escape through
+    # one, so inspect every component below the root for both root classes.
+    no_symlink_components(lexical, root.lexical, label)
+    try:
+        resolved = lexical.resolve(strict=True)
+    except (OSError, RuntimeError) as error:
+        raise GateError(f"{label} is unavailable: {lexical}: {error}") from error
+    if resolved != root.resolved and not resolved.is_relative_to(root.resolved):
+        raise GateError(f"{label} escapes its declared root: {value!r}")
+    return resolved
+
+
+def resolve_rooted_path(
+    value: str, roots: Mapping[str, RootBinding], label: str
+) -> Path:
+    path = resolve_rooted_existing_path(value, roots, label)
+    if not path.is_file():
+        raise GateError(f"{label} is not a regular file: {path}")
+    return path
 
 
 def verify_file_record(
@@ -340,11 +445,70 @@ def verify_file_record(
     expected = require_sha256(record["sha256"], f"{label}.sha256")
     if sha256_file(path) != expected:
         raise GateError(f"{label} SHA-256 mismatch")
-    if not isinstance(record["size"], int) or record["size"] < 0:
+    if type(record["size"]) is not int or record["size"] < 0:
         raise GateError(f"{label}.size must be a nonnegative integer")
     if path.stat().st_size != record["size"]:
         raise GateError(f"{label} size mismatch")
     return path
+
+
+def canonical_file_paths_match(left: Path, right: Path, label: str) -> bool:
+    """Match one resolved pathname, rejecting a distinct hardlink spelling."""
+
+    if left == right:
+        return True
+    try:
+        hardlink_alias = left.samefile(right)
+    except OSError as error:
+        raise GateError(f"cannot compare {label} file identities: {error}") from error
+    if hardlink_alias:
+        raise GateError(f"{label} uses a distinct hardlink alias")
+    return False
+
+
+def register_unique_file_path(path: Path, seen: set[Path], label: str) -> None:
+    """Reject repeated resolved paths and distinct hardlink aliases in one set."""
+
+    for previous in seen:
+        if canonical_file_paths_match(path, previous, label):
+            raise GateError(f"{label} contains a duplicate resolved file")
+    seen.add(path)
+
+
+def require_predeclared_file_record(
+    record: Mapping[str, Any],
+    path: Path,
+    declared_by_path: Mapping[Path, Mapping[str, Any]],
+    label: str,
+) -> None:
+    """Bind a record to one canonical declaration, rejecting hardlink aliases."""
+
+    declared = declared_by_path.get(path)
+    if declared is None:
+        for declared_path in declared_by_path:
+            canonical_file_paths_match(path, declared_path, label)
+        raise GateError(f"{label} was not predeclared")
+    if any(record[field] != declared[field] for field in ("sha256", "size")):
+        raise GateError(f"{label} differs from its predeclared file")
+
+
+def file_records_same_identity(
+    left: Any,
+    right: Any,
+    roots: Mapping[str, RootBinding],
+    label: str,
+) -> bool:
+    """Compare authenticated file identity independently of rooted spelling."""
+
+    left_record = require_object(left, f"{label} left record")
+    right_record = require_object(right, f"{label} right record")
+    left_path = verify_file_record(left_record, roots, f"{label} left record")
+    right_path = verify_file_record(right_record, roots, f"{label} right record")
+    return (
+        canonical_file_paths_match(left_path, right_path, label)
+        and left_record["sha256"] == right_record["sha256"]
+        and left_record["size"] == right_record["size"]
+    )
 
 
 def verify_evidence_reference(value: Any, root: Path, label: str) -> Path:
@@ -450,7 +614,10 @@ def validate_policy(document: Any) -> dict[str, Any]:
         ),
         "policy",
     )
-    if policy["schema_version"] != 1 or policy["evidence_kind"] != POLICY_KIND:
+    if (
+        require_exact_integer(policy["schema_version"], "policy schema_version") != 1
+        or policy["evidence_kind"] != POLICY_KIND
+    ):
         raise GateError("unsupported production-object policy")
     registry_policy = require_object(policy["identity_registry"], "identity registry policy")
     require_exact_keys(
@@ -561,6 +728,10 @@ def validate_policy(document: Any) -> dict[str, Any]:
         ):
             if field not in target:
                 raise GateError(f"policy target {target_name} lacks {field}")
+        for field in ("final_image_suffix", "link_map_suffix"):
+            safe_slash_prefixed_relative(
+                target[field], f"policy target {target_name} {field}"
+            )
         if target_name == "p4":
             safe_relative(target.get("project_relative"), "p4 project_relative")
             safe_relative(target.get("venv_relative"), "p4 venv_relative")
@@ -661,16 +832,21 @@ def validate_policy(document: Any) -> dict[str, Any]:
             safe_relative(unit.get("source"), f"{target_name} unit {unit_id} source")
             if unit.get("source_root") not in target["required_roots"]:
                 raise GateError(f"{target_name} unit {unit_id} source root is unknown")
-            if not isinstance(unit.get("object_suffix"), str) or not unit[
-                "object_suffix"
-            ].startswith("/"):
-                raise GateError(f"{target_name} unit {unit_id} object suffix is invalid")
+            safe_slash_prefixed_relative(
+                unit.get("object_suffix"),
+                f"{target_name} unit {unit_id} object suffix",
+            )
             if not isinstance(unit.get("producer_kind"), str) or not isinstance(
                 unit.get("producer_tool"), str
             ):
                 raise GateError(f"{target_name} unit {unit_id} producer is incomplete")
             if unit["producer_tool"] not in target["tools"]:
                 raise GateError(f"{target_name} unit {unit_id} names an unknown tool")
+            dependency_delta_field = (
+                ("expected_dependency_delta",)
+                if unit["classification"] == "composition-dependent"
+                else ()
+            )
             generator = unit.get("generator")
             if unit["producer_kind"] == "wrapped-assembly":
                 require_exact_keys(
@@ -687,7 +863,8 @@ def validate_policy(document: Any) -> dict[str, Any]:
                         "producer_tool",
                         "generator",
                         "symbols",
-                    ),
+                    )
+                    + dependency_delta_field,
                     f"{target_name} unit {unit_id}",
                 )
                 generator = require_object(generator, f"{unit_id} generator")
@@ -703,6 +880,11 @@ def validate_policy(document: Any) -> dict[str, Any]:
                         "wrapper",
                     ),
                     f"{unit_id} generator",
+                )
+                require_exact_integer(
+                    generator["manifest_schema"],
+                    f"{unit_id} generator manifest_schema",
+                    minimum=1,
                 )
                 if unit.get("maintained_source_root") not in target["required_roots"]:
                     raise GateError(f"{unit_id} maintained-source root is unknown")
@@ -724,9 +906,59 @@ def validate_policy(document: Any) -> dict[str, Any]:
                         "producer_kind",
                         "producer_tool",
                         "symbols",
-                    ),
+                    )
+                    + dependency_delta_field,
                     f"{target_name} unit {unit_id}",
                 )
+            if dependency_delta_field:
+                dependency_delta = require_object(
+                    unit["expected_dependency_delta"],
+                    f"{target_name} unit {unit_id} expected dependency delta",
+                )
+                require_exact_keys(
+                    dependency_delta,
+                    ("qualification_only", "release_only"),
+                    f"{target_name} unit {unit_id} expected dependency delta",
+                )
+                normalized_delta_paths: dict[str, list[str]] = {}
+                for role_key in ("qualification_only", "release_only"):
+                    paths = dependency_delta[role_key]
+                    if (
+                        not isinstance(paths, list)
+                        or len(paths) != len(set(paths))
+                        or any(not isinstance(path, str) for path in paths)
+                    ):
+                        raise GateError(
+                            f"{target_name} unit {unit_id} {role_key} dependency delta is malformed"
+                        )
+                    normalized: list[str] = []
+                    for path in paths:
+                        match = ROOTED_PATH_RE.fullmatch(path)
+                        if (
+                            match is None
+                            or match.group(1) not in target["required_roots"]
+                            or match.group(2) is None
+                        ):
+                            raise GateError(
+                                f"{target_name} unit {unit_id} {role_key} dependency is not policy-rooted"
+                            )
+                        relative = safe_relative(
+                            match.group(2),
+                            f"{target_name} unit {unit_id} {role_key} dependency",
+                        )
+                        canonical = "${" + match.group(1) + "}/" + relative.as_posix()
+                        if path != canonical:
+                            raise GateError(
+                                f"{target_name} unit {unit_id} {role_key} dependency is not canonical"
+                            )
+                        normalized.append(canonical)
+                    normalized_delta_paths[role_key] = normalized
+                if set(normalized_delta_paths["qualification_only"]) & set(
+                    normalized_delta_paths["release_only"]
+                ):
+                    raise GateError(
+                        f"{target_name} unit {unit_id} dependency delta overlaps roles"
+                    )
             symbols = unit.get("symbols")
             if not isinstance(symbols, list) or not symbols:
                 raise GateError(f"{target_name} unit {unit_id} has no owned symbols")
@@ -865,7 +1097,7 @@ def verify_prepared_source(
         root=prepared,
     )
     metadata = require_object(load_json(metadata_path, "prepared-source metadata"), "prepared metadata")
-    if metadata.get("schema") != 1:
+    if require_exact_integer(metadata.get("schema"), "prepared metadata schema") != 1:
         raise GateError("prepared-source metadata has unsupported schema")
     source_record = require_object(metadata.get("source"), "prepared metadata source")
     if source_record.get("tracked_dirty") is not False:
@@ -973,14 +1205,16 @@ def verify_tool(
 def expanded_policy_location(
     value: str, roots: Mapping[str, RootBinding], label: str
 ) -> Path:
+    if not isinstance(value, str):
+        raise GateError(f"{label} must be a rooted path string")
     match = ROOTED_PATH_RE.fullmatch(value)
     if match is None or match.group(1) not in roots:
         raise GateError(f"{label} does not use a declared root")
     suffix = match.group(2)
-    relative = PurePosixPath(suffix) if suffix is not None else PurePosixPath()
-    if suffix is not None and any(part in ("", ".", "..") for part in relative.parts):
-        raise GateError(f"{label} contains an unsafe policy path")
-    return roots[match.group(1)].resolved.joinpath(*relative.parts)
+    parts: tuple[str, ...] = ()
+    if suffix is not None:
+        parts = safe_relative(suffix, f"{label} rooted-path suffix").parts
+    return roots[match.group(1)].resolved.joinpath(*parts)
 
 
 def validate_environment(
@@ -1187,7 +1421,11 @@ def load_mos_step(
     path = verify_evidence_reference(reference, evidence_root, label)
     document = require_object(load_json(path, label), label)
     require_exact_keys(document, RAW_STEP_FIELDS, label)
-    if document["schema_version"] != 1 or document["evidence_kind"] != expected_kind:
+    if (
+        require_exact_integer(document["schema_version"], f"{label}.schema_version")
+        != 1
+        or document["evidence_kind"] != expected_kind
+    ):
         raise GateError(f"{label} has unsupported raw-step schema/kind")
     if document["input_stability"] != "verified-before-and-after":
         raise GateError(f"{label} lacks verified input stability")
@@ -1209,17 +1447,21 @@ def load_mos_step(
     if not isinstance(response_files, list):
         raise GateError(f"{label}.response_files must be an array")
     response_paths: list[str] = []
+    response_records: list[tuple[Path, dict[str, Any]]] = []
+    response_identities: set[Path] = set()
     for index, response in enumerate(response_files):
         response_path = verify_file_record(
             response, roots, f"{label}.response_files[{index}]"
+        )
+        register_unique_file_path(
+            response_path, response_identities, f"{label}.response_files"
         )
         if b"@" in response_path.read_bytes():
             raise GateError(
                 f"{label}.response_files[{index}] contains unsupported nested-response syntax"
             )
         response_paths.append(response["path"])
-    if len(response_paths) != len(set(response_paths)):
-        raise GateError(f"{label}.response_files contains a duplicate")
+        response_records.append((response_path, response))
     command_responses = [
         item[1:] for item in command if item.startswith("@") and len(item) > 1
     ]
@@ -1231,7 +1473,7 @@ def load_mos_step(
     executables = document["executables"]
     if not isinstance(executables, list) or not executables:
         raise GateError(f"{label} has no executable records")
-    executable_paths: set[str] = set()
+    executable_paths: set[Path] = set()
     for index, executable in enumerate(executables):
         validate_executable_record(
             executable,
@@ -1239,9 +1481,12 @@ def load_mos_step(
             environment["variables"],
             f"{label}.executables[{index}]",
         )
-        if executable["path"] in executable_paths:
-            raise GateError(f"{label} has a duplicate executable record")
-        executable_paths.add(executable["path"])
+        executable_path = resolve_rooted_path(
+            executable["path"], roots, f"{label}.executables[{index}]"
+        )
+        register_unique_file_path(
+            executable_path, executable_paths, f"{label} executable records"
+        )
     if command[0] != executables[0]["path"]:
         raise GateError(f"{label} command does not start with its primary executable")
     source = verify_file_record(document["source"], roots, f"{label}.source")
@@ -1251,61 +1496,92 @@ def load_mos_step(
         raise GateError(f"{label} has no declared inputs")
     if not isinstance(dependencies, list) or not dependencies:
         raise GateError(f"{label} has no dependencies")
-    declared_by_path: dict[str, dict[str, Any]] = {}
+    declared_by_path: dict[Path, dict[str, Any]] = {}
+    declared_paths: set[Path] = set()
     for index, record in enumerate(declared):
-        verify_file_record(record, roots, f"{label}.declared_inputs[{index}]")
-        if record["path"] in declared_by_path:
-            raise GateError(f"{label} has duplicate declared input {record['path']}")
-        declared_by_path[record["path"]] = record
+        declared_path = verify_file_record(
+            record, roots, f"{label}.declared_inputs[{index}]"
+        )
+        register_unique_file_path(
+            declared_path, declared_paths, f"{label} declared inputs"
+        )
+        declared_by_path[declared_path] = record
     normalized_declared = sorted(declared, key=lambda item: item["path"])
     if sha256_bytes(canonical_bytes(normalized_declared)) != require_sha256(
         document["declared_inputs_sha256"], f"{label}.declared_inputs_sha256"
     ):
         raise GateError(f"{label} declared-input aggregate digest mismatch")
-    dependency_paths: set[str] = set()
+    dependency_paths: set[Path] = set()
     for index, record in enumerate(dependencies):
-        verify_file_record(record, roots, f"{label}.dependencies[{index}]")
-        if record["path"] in dependency_paths:
-            raise GateError(f"{label} has duplicate dependency {record['path']}")
-        dependency_paths.add(record["path"])
-        if declared_by_path.get(record["path"]) != record:
-            raise GateError(f"{label} dependency was not identically predeclared")
-    if document["source"]["path"] not in dependency_paths:
+        dependency_path = verify_file_record(
+            record, roots, f"{label}.dependencies[{index}]"
+        )
+        register_unique_file_path(
+            dependency_path, dependency_paths, f"{label} dependencies"
+        )
+        require_predeclared_file_record(
+            record,
+            dependency_path,
+            declared_by_path,
+            f"{label} dependency",
+        )
+    if source not in dependency_paths:
+        for dependency_path in dependency_paths:
+            canonical_file_paths_match(source, dependency_path, f"{label} source dependency")
         raise GateError(f"{label} dependencies omit the primary source")
-    for response in response_files:
-        if declared_by_path.get(response["path"]) != response:
-            raise GateError(f"{label} response file was not predeclared")
+    for response_path, response in response_records:
+        require_predeclared_file_record(
+            response,
+            response_path,
+            declared_by_path,
+            f"{label} response file",
+        )
     depfile = verify_file_record(document["depfile"], roots, f"{label}.depfile")
     output = verify_file_record(document["output"], roots, f"{label}.output")
     secondary = document["secondary_outputs"]
     if not isinstance(secondary, list):
         raise GateError(f"{label}.secondary_outputs must be an array")
-    secondary_paths: set[str] = set()
+    secondary_paths: set[Path] = set()
     for index, record in enumerate(secondary):
-        verify_file_record(record, roots, f"{label}.secondary_outputs[{index}]")
-        if record["path"] in secondary_paths:
-            raise GateError(f"{label} has a duplicate secondary output")
-        secondary_paths.add(record["path"])
+        secondary_path = verify_file_record(
+            record, roots, f"{label}.secondary_outputs[{index}]"
+        )
+        register_unique_file_path(
+            secondary_path, secondary_paths, f"{label} secondary outputs"
+        )
+    stdout_path: Path | None = None
     if document["captured_stdout"] is not None:
-        verify_file_record(document["captured_stdout"], roots, f"{label}.captured_stdout")
+        stdout_path = verify_file_record(
+            document["captured_stdout"], roots, f"{label}.captured_stdout"
+        )
     ordered = document["ordered_link_inputs"]
     if not isinstance(ordered, list):
         raise GateError(f"{label}.ordered_link_inputs must be an array")
-    ordered_paths: set[str] = set()
+    ordered_paths: set[Path] = set()
     for index, record in enumerate(ordered):
-        verify_file_record(record, roots, f"{label}.ordered_link_inputs[{index}]")
-        if record["path"] in ordered_paths:
-            raise GateError(f"{label} has a duplicate ordered link input")
-        ordered_paths.add(record["path"])
-        if declared_by_path.get(record["path"]) != record:
-            raise GateError(f"{label} ordered link input was not identically predeclared")
-        if record["path"] not in dependency_paths:
+        ordered_path = verify_file_record(
+            record, roots, f"{label}.ordered_link_inputs[{index}]"
+        )
+        register_unique_file_path(
+            ordered_path, ordered_paths, f"{label} ordered link inputs"
+        )
+        require_predeclared_file_record(
+            record,
+            ordered_path,
+            declared_by_path,
+            f"{label} ordered link input",
+        )
+        if ordered_path not in dependency_paths:
+            for dependency_path in dependency_paths:
+                canonical_file_paths_match(
+                    ordered_path, dependency_path, f"{label} ordered dependency"
+                )
             raise GateError(f"{label} dependency file omits an ordered link input")
     producers = document["producer_records"]
     if not isinstance(producers, list):
         raise GateError(f"{label}.producer_records must be an array")
-    producer_inputs: set[str] = set()
-    producer_records: set[str] = set()
+    producer_inputs: set[Path] = set()
+    producer_records: set[Path] = set()
     for index, producer in enumerate(producers):
         producer = require_object(producer, f"{label}.producer_records[{index}]")
         require_exact_keys(
@@ -1321,24 +1597,41 @@ def load_mos_step(
             raise GateError(f"{label} producer output digest is stale")
         if sha256_file(record_path) != producer["record_sha256"]:
             raise GateError(f"{label} producer record digest is stale")
-        if producer["input"] in producer_inputs or producer["record"] in producer_records:
-            raise GateError(f"{label} has a duplicate/ambiguous producer record")
-        if producer["input"] not in ordered_paths:
+        register_unique_file_path(
+            input_path, producer_inputs, f"{label} producer inputs"
+        )
+        register_unique_file_path(
+            record_path, producer_records, f"{label} producer records"
+        )
+        if input_path not in ordered_paths:
+            for ordered_path in ordered_paths:
+                canonical_file_paths_match(
+                    input_path, ordered_path, f"{label} producer input"
+                )
             raise GateError(f"{label} producer input is not an ordered link input")
         if not producer["record"].startswith("${PROVENANCE}/"):
             raise GateError(f"{label} producer record is not actual-step evidence")
-        producer_inputs.add(producer["input"])
-        producer_records.add(producer["record"])
     recorder = verify_file_record(document["recorder"], roots, f"{label}.recorder")
     session = verify_file_record(document["session"], roots, f"{label}.session")
-    for name, record in (("recorder", document["recorder"]), ("session", document["session"])):
-        if declared_by_path.get(record["path"]) != record:
-            raise GateError(f"{label} {name} was not predeclared")
-    output_paths = {document["output"]["path"], document["depfile"]["path"], *secondary_paths}
-    if document["captured_stdout"] is not None:
-        output_paths.add(document["captured_stdout"]["path"])
-    if len(output_paths) != 2 + len(secondary_paths) + (document["captured_stdout"] is not None):
-        raise GateError(f"{label} output paths overlap")
+    for name, record, record_path in (
+        ("recorder", document["recorder"], recorder),
+        ("session", document["session"], session),
+    ):
+        require_predeclared_file_record(
+            record, record_path, declared_by_path, f"{label} {name}"
+        )
+    output_records = [
+        ("output", output),
+        ("depfile", depfile),
+        *(("secondary output", item) for item in secondary_paths),
+    ]
+    if stdout_path is not None:
+        output_records.append(("captured stdout", stdout_path))
+    output_paths: set[Path] = set()
+    for output_name, output_path in output_records:
+        register_unique_file_path(
+            output_path, output_paths, f"{label} {output_name} paths"
+        )
     return StepView(
         record_path=path,
         record_sha256=sha256_file(path),
@@ -1374,6 +1667,11 @@ def denormalize_token(value: str, roots: Mapping[str, RootBinding], label: str) 
     if "${" in result:
         raise GateError(f"{label} contains an undeclared root placeholder")
     return result
+
+
+def reject_reserved_root_placeholder(value: str, label: str) -> None:
+    if RESERVED_ROOT_PLACEHOLDER.search(value):
+        raise GateError(f"{label} contains a literal reserved root placeholder")
 
 
 def normalize_external_text(value: str, roots: Mapping[str, RootBinding]) -> str:
@@ -1728,6 +2026,9 @@ def validate_mos_driver_selection(
         observed.decode("utf-8", errors="replace"), roots
     )
     normalized_bytes = normalized_observed.encode("utf-8")
+    require_exact_integer(
+        record["probe_output_size"], f"{label} probe output size", minimum=0
+    )
     if (
         record["probe_output"] != normalized_observed
         or len(normalized_bytes) != record["probe_output_size"]
@@ -1819,11 +2120,24 @@ def command_path_positions(
     label: str,
 ) -> list[int]:
     expected = resolve_rooted_path(rooted_value, roots, f"{label} expected path")
-    return [
-        index
-        for index, token in enumerate(command)
-        if command_token_path(token, roots, working_directory, label) == expected
-    ]
+    positions: list[int] = []
+    for index, token in enumerate(command):
+        rooted_match = ROOTED_PATH_RE.fullmatch(token)
+        if token.startswith("${") and rooted_match is None:
+            raise GateError(f"{label} contains a malformed root placeholder")
+        if rooted_match is not None:
+            candidate = resolve_rooted_existing_path(token, roots, label)
+            if candidate.is_dir():
+                continue
+            if not candidate.is_file():
+                raise GateError(f"{label} token is not a regular file: {candidate}")
+        else:
+            candidate = command_token_path(token, roots, working_directory, label)
+        if candidate is not None and canonical_file_paths_match(
+            candidate, expected, label
+        ):
+            positions.append(index)
+    return positions
 
 
 def validate_mos_command(
@@ -2065,16 +2379,41 @@ def rooted_policy_record(
     label: str,
 ) -> dict[str, Any]:
     relative = safe_relative(relative_name, label)
-    path = regular_file(
-        roots[root_name].lexical.joinpath(*relative.parts),
+    rooted_name = "${" + root_name + "}/" + relative.as_posix()
+    path = resolve_rooted_path(
+        rooted_name,
+        roots,
         label,
-        root=None if roots[root_name].allow_symlink else roots[root_name].lexical,
     )
     return {
-        "path": "${" + root_name + "}/" + relative.as_posix(),
+        "path": rooted_name,
         "sha256": sha256_file(path),
         "size": path.stat().st_size,
     }
+
+
+def require_unique_declared_policy_file(
+    declared: Sequence[dict[str, Any]],
+    expected: dict[str, Any],
+    roots: Mapping[str, RootBinding],
+    label: str,
+) -> dict[str, Any]:
+    expected_path = resolve_rooted_path(expected["path"], roots, f"{label} policy file")
+    matches: list[dict[str, Any]] = []
+    for index, record in enumerate(declared):
+        observed_path = verify_file_record(
+            record, roots, f"{label} declared input {index}"
+        )
+        if canonical_file_paths_match(observed_path, expected_path, label):
+            matches.append(record)
+    if not matches:
+        raise GateError(f"{label} is not predeclared")
+    if len(matches) != 1:
+        raise GateError(f"{label} has duplicate rooted aliases in declared inputs")
+    observed = matches[0]
+    if any(observed[field] != expected[field] for field in ("sha256", "size")):
+        raise GateError(f"{label} declared input differs from its policy file")
+    return observed
 
 
 def validate_wrapped_assembly(
@@ -2101,10 +2440,11 @@ def validate_wrapped_assembly(
             "PREPARED", ".mos-agondev-worktree.json", roots, f"{label} prepared metadata"
         ),
     }
-    declared = {item["path"]: item for item in step.document["declared_inputs"]}
+    declared = step.document["declared_inputs"]
     for name, record in expected_records.items():
-        if declared.get(record["path"]) != record:
-            raise GateError(f"{label} does not predeclare its exact {name}")
+        require_unique_declared_policy_file(
+            declared, record, roots, f"{label} {name}"
+        )
     build_tool = roots[generator["tool_root"]].resolved
     generator_path = resolve_rooted_path(expected_records["generator"]["path"], roots, f"{label} generator")
     wrapper_path = resolve_rooted_path(expected_records["wrapper"]["path"], roots, f"{label} wrapper")
@@ -2127,7 +2467,10 @@ def validate_wrapped_assembly(
         ),
         f"{label} manifest",
     )
-    if manifest["schema"] != generator["manifest_schema"]:
+    if (
+        require_exact_integer(manifest["schema"], f"{label} manifest schema")
+        != generator["manifest_schema"]
+    ):
         raise GateError(f"{label} generator manifest schema differs from policy")
     provenance = require_object(manifest["input_provenance"], f"{label} manifest provenance")
     require_exact_keys(
@@ -2140,6 +2483,11 @@ def validate_wrapped_assembly(
             "tracked_dirty",
         ),
         f"{label} manifest provenance",
+    )
+    require_exact_integer(
+        provenance["prepared_file_count"],
+        f"{label} manifest prepared_file_count",
+        minimum=0,
     )
     if provenance != {
         "metadata": ".mos-agondev-worktree.json",
@@ -2175,7 +2523,9 @@ def validate_wrapped_assembly(
         f"{label} maintained source",
         root=roots[unit["maintained_source_root"]].lexical,
     )
-    maintained_digest = sha256_file(maintained_path)
+    maintained_digest = sha256_generator_text_input(
+        maintained_path, f"{label} maintained source"
+    )
     if (
         entry.get("source") != maintained_name.as_posix()
         or entry.get("source_sha256") != maintained_digest
@@ -2198,7 +2548,9 @@ def validate_wrapped_assembly(
             f"{label} source closure file",
             root=roots[unit["maintained_source_root"]].lexical,
         )
-        if sha256_file(source_path) != require_sha256(
+        if sha256_generator_text_input(
+            source_path, f"{label} source closure file"
+        ) != require_sha256(
             source_record["sha256"], f"{label} source closure digest"
         ):
             raise GateError(f"{label} manifest source closure is stale")
@@ -2327,6 +2679,292 @@ def normalized_disassembly(
     return {"symbol": symbol, "instructions": instructions}
 
 
+def resolve_ez80_imm24_relocation(
+    expression: str,
+    section_contributions: Sequence[dict[str, Any]],
+    linked_symbols: Mapping[str, list[dict[str, Any]]],
+    label: str,
+) -> int:
+    """Resolve the exact r_imm24 expression using map and final-symbol authority."""
+
+    match = RELOCATION_TARGET.fullmatch(expression)
+    if match is None:
+        raise GateError(f"{label} has an unsupported relocation target {expression!r}")
+    target, addend_text = match.groups()
+    addend = int(addend_text, 16) if addend_text is not None else 0
+    if target.startswith("."):
+        matches = [
+            contribution
+            for contribution in section_contributions
+            if contribution["section"] == target and contribution["size"] > 0
+        ]
+        if len(matches) != 1:
+            raise GateError(
+                f"{label} section target {target!r} has {len(matches)} map contributions"
+            )
+        contribution = matches[0]
+        if addend >= contribution["size"]:
+            raise GateError(f"{label} section relocation addend is out of range")
+        value = contribution["address"] + addend
+    else:
+        matches = linked_symbols.get(target, [])
+        if len(matches) != 1:
+            raise GateError(
+                f"{label} symbol target {target!r} occurs {len(matches)} times"
+            )
+        value = matches[0]["address"] + addend
+    if not 0 <= value <= 0xFFFFFF:
+        raise GateError(f"{label} relocation value is outside the eZ80 ADL address space")
+    return value
+
+
+def objdump_section_table(tool: Path, image: Path, label: str) -> dict[str, dict[str, Any]]:
+    output = os.fsdecode(
+        run_checked((os.fspath(tool), "-h", os.fspath(image))).stdout
+    ).splitlines()
+    sections: dict[str, dict[str, Any]] = {}
+    pending: dict[str, Any] | None = None
+    for line in output:
+        row = SECTION_TABLE_ROW.match(line)
+        if row is not None:
+            name, size_text, vma_text = row.groups()
+            if name in sections:
+                raise GateError(f"{label} has duplicate section {name!r}")
+            pending = {
+                "name": name,
+                "size": int(size_text, 16),
+                "vma": int(vma_text, 16),
+                "flags": None,
+            }
+            sections[name] = pending
+            continue
+        if pending is not None and line.strip():
+            flags = tuple(item.strip() for item in line.strip().split(","))
+            if not flags or any(not item for item in flags):
+                raise GateError(f"{label} section {pending['name']!r} has malformed flags")
+            pending["flags"] = flags
+            pending = None
+    if pending is not None:
+        raise GateError(f"{label} section {pending['name']!r} omits flags")
+    if not sections or any(section["flags"] is None for section in sections.values()):
+        raise GateError(f"{label} has an incomplete section table")
+    return sections
+
+
+def objdump_section_bytes(
+    tool: Path,
+    image: Path,
+    label: str,
+    *,
+    section: str | None = None,
+    start: int | None = None,
+    size: int | None = None,
+) -> bytes:
+    if (section is None) == (start is None or size is None):
+        raise GateError(f"{label} byte-range request is malformed")
+    argv = [os.fspath(tool), "-s"]
+    if section is not None:
+        argv.extend(("-j", section))
+    else:
+        assert start is not None and size is not None
+        argv.extend((f"--start-address={start:#x}", f"--stop-address={start + size:#x}"))
+    argv.append(os.fspath(image))
+    output = os.fsdecode(run_checked(argv).stdout).splitlines()
+    observed: dict[int, int] = {}
+    for line in output:
+        row = SECTION_CONTENT_ROW.match(line)
+        if row is None:
+            continue
+        address_text, chunks_text = row.groups()
+        chunks = chunks_text.split()
+        if not chunks or any(
+            len(chunk) > 8
+            or len(chunk) % 2
+            or re.fullmatch(r"[0-9a-fA-F]+", chunk) is None
+            for chunk in chunks
+        ):
+            raise GateError(f"{label} has malformed objdump content bytes")
+        row_bytes = bytes.fromhex("".join(chunks))
+        address = int(address_text, 16)
+        for index, value in enumerate(row_bytes):
+            byte_address = address + index
+            if byte_address in observed:
+                raise GateError(f"{label} repeats content address {byte_address:#x}")
+            observed[byte_address] = value
+    if section is not None:
+        if not observed:
+            raise GateError(f"{label} has no contents for section {section!r}")
+        first = min(observed)
+        last = max(observed) + 1
+    else:
+        assert start is not None and size is not None
+        first = start
+        last = start + size
+        outside = sorted(address for address in observed if not first <= address < last)
+        if outside:
+            raise GateError(f"{label} objdump returned bytes outside the requested range")
+    missing = [address for address in range(first, last) if address not in observed]
+    if missing:
+        raise GateError(f"{label} content bytes are not contiguous")
+    return bytes(observed[address] for address in range(first, last))
+
+
+def objdump_relocations(
+    tool: Path, image: Path, label: str
+) -> dict[str, list[dict[str, Any]]]:
+    output = os.fsdecode(
+        run_checked((os.fspath(tool), "-r", os.fspath(image))).stdout
+    ).splitlines()
+    result: dict[str, list[dict[str, Any]]] = {}
+    current_section: str | None = None
+    for line in output:
+        header = RELOCATION_SECTION_HEADER.match(line)
+        if header is not None:
+            current_section = header.group(1)
+            if current_section in result:
+                raise GateError(f"{label} repeats relocation section {current_section!r}")
+            result[current_section] = []
+            continue
+        relocation = RELOCATION_TABLE_ROW.match(line)
+        if relocation is None:
+            continue
+        if current_section is None:
+            raise GateError(f"{label} has a relocation outside a section")
+        offset_text, relocation_type, target = relocation.groups()
+        result[current_section].append(
+            {
+                "offset": int(offset_text, 16),
+                "type": relocation_type,
+                "target": target,
+            }
+        )
+    for section, records in result.items():
+        offsets = [record["offset"] for record in records]
+        if offsets != sorted(offsets) or len(offsets) != len(set(offsets)):
+            raise GateError(f"{label} section {section!r} relocations are unordered or duplicate")
+    return result
+
+
+def normalized_ez80_linked_object(
+    tool: Path,
+    object_image: Path,
+    linked_image: Path,
+    section_contributions: Sequence[dict[str, Any]],
+    linked_symbols: Mapping[str, list[dict[str, Any]]],
+    label: str,
+) -> dict[str, Any]:
+    """Verify and normalize every allocated contribution from one eZ80 object."""
+
+    section_table = objdump_section_table(tool, object_image, f"{label} object")
+    relocations_by_section = objdump_relocations(tool, object_image, f"{label} object")
+    relevant_sections = {
+        name: section
+        for name, section in section_table.items()
+        if section["size"] > 0
+        and "ALLOC" in section["flags"]
+        and not any(name.startswith(prefix) for prefix in NONALLOCATED_SECTION_PREFIXES)
+    }
+    if not relevant_sections:
+        raise GateError(f"{label} object has no allocated sections")
+    contributions_by_section: dict[str, list[dict[str, Any]]] = {}
+    for contribution in section_contributions:
+        contributions_by_section.setdefault(contribution["section"], []).append(contribution)
+    normalized_sections: list[dict[str, Any]] = []
+    for section_name, section in sorted(relevant_sections.items()):
+        if section["vma"] != 0:
+            raise GateError(f"{label} section {section_name!r} has unsupported nonzero VMA")
+        contributions = [
+            contribution
+            for contribution in contributions_by_section.get(section_name, [])
+            if contribution["size"] > 0
+        ]
+        if len(contributions) != 1:
+            raise GateError(
+                f"{label} allocated section {section_name!r} has "
+                f"{len(contributions)} map contributions"
+            )
+        contribution = contributions[0]
+        if contribution["size"] != section["size"]:
+            raise GateError(f"{label} mapped section size differs from its object")
+        relocation_records = relocations_by_section.pop(section_name, [])
+        has_contents = "CONTENTS" in section["flags"]
+        if not has_contents:
+            if relocation_records:
+                raise GateError(f"{label} non-content section carries relocations")
+            normalized_sections.append(
+                {"section": section_name, "size": section["size"], "contents": None, "relocations": []}
+            )
+            continue
+        object_bytes = objdump_section_bytes(
+            tool,
+            object_image,
+            f"{label} object section {section_name}",
+            section=section_name,
+        )
+        if len(object_bytes) != section["size"]:
+            raise GateError(f"{label} object section content size differs from its table")
+        linked_bytes = objdump_section_bytes(
+            tool,
+            linked_image,
+            f"{label} linked section {section_name}",
+            start=contribution["address"],
+            size=contribution["size"],
+        )
+        if len(linked_bytes) != len(object_bytes):
+            raise GateError(f"{label} linked contribution size differs from its object")
+        masked = bytearray(linked_bytes)
+        protected: set[int] = set()
+        normalized_relocations: list[dict[str, Any]] = []
+        for relocation in relocation_records:
+            if relocation["type"] != "r_imm24":
+                raise GateError(
+                    f"{label} has unsupported relocation type {relocation['type']!r}"
+                )
+            offset = relocation["offset"]
+            width = 3
+            positions = set(range(offset, offset + width))
+            if offset < 0 or offset + width > len(linked_bytes):
+                raise GateError(f"{label} relocation is outside its section")
+            if protected & positions:
+                raise GateError(f"{label} has overlapping relocations")
+            protected.update(positions)
+            expected = resolve_ez80_imm24_relocation(
+                relocation["target"],
+                section_contributions,
+                linked_symbols,
+                f"{label} {section_name} relocation at {offset}",
+            ).to_bytes(width, "little")
+            if linked_bytes[offset : offset + width] != expected:
+                raise GateError(f"{label} linked relocation bytes are incorrect")
+            masked[offset : offset + width] = b"\0" * width
+            normalized_relocations.append(relocation)
+        for index, (object_byte, linked_byte) in enumerate(
+            zip(object_bytes, linked_bytes, strict=True)
+        ):
+            if index not in protected and object_byte != linked_byte:
+                raise GateError(
+                    f"{label} linked non-relocation byte differs from its object at "
+                    f"{section_name}+{index:#x}"
+                )
+        normalized_sections.append(
+            {
+                "section": section_name,
+                "size": section["size"],
+                "contents": bytes(masked).hex(),
+                "relocations": normalized_relocations,
+            }
+        )
+    unknown_relocation_sections = {
+        name: records for name, records in relocations_by_section.items() if records
+    }
+    if unknown_relocation_sections:
+        raise GateError(
+            f"{label} has relocations outside allocated production sections: "
+            f"{sorted(unknown_relocation_sections)}"
+        )
+    return {"normalization": "ez80-r_imm24-full-allocation-v1", "sections": normalized_sections}
+
+
 def object_architecture(objdump: Path, path: Path, expected: str, label: str) -> None:
     output = os.fsdecode(run_checked((os.fspath(objdump), "-f", os.fspath(path))).stdout)
     match = ARCHITECTURE_RE.search(output)
@@ -2366,6 +3004,7 @@ def map_contribution_and_owners(
     if marker not in text:
         raise GateError(f"{label} map lacks the linker memory-map section")
     allocated = 0
+    section_contributions: list[dict[str, Any]] = []
     current_owner = False
     symbol_owners: dict[str, int] = {item["map_name"]: 0 for item in symbols}
     for line in text.split(marker, 1)[1].splitlines():
@@ -2377,6 +3016,10 @@ def map_contribution_and_owners(
             if current_owner:
                 address = int(address_text, 16)
                 size = int(size_text, 16)
+                if section is not None:
+                    section_contributions.append(
+                        {"section": section, "address": address, "size": size}
+                    )
                 if (
                     address > 0
                     and size > 0
@@ -2392,7 +3035,11 @@ def map_contribution_and_owners(
     wrong = {name: count for name, count in symbol_owners.items() if count != 1}
     if wrong:
         raise GateError(f"{label} map symbol ownership is missing or ambiguous: {wrong}")
-    return {"load_record": matched_loads[0], "allocated_bytes": allocated}
+    return {
+        "load_record": matched_loads[0],
+        "allocated_bytes": allocated,
+        "section_contributions": section_contributions,
+    }
 
 
 def normalized_working_directory(
@@ -2402,14 +3049,14 @@ def normalized_working_directory(
     if match is None or match.group(1) not in roots:
         raise GateError(f"{label} working directory is malformed")
     root = roots[match.group(1)]
+    require_stable_root(root, f"{label} working directory")
     suffix = match.group(2)
     if suffix is None:
         path = root.lexical
     else:
         relative = safe_relative(suffix, f"{label} working-directory suffix")
         path = root.lexical.joinpath(*relative.parts)
-    if not root.allow_symlink:
-        no_symlink_components(path, root.lexical, f"{label} working directory")
+    no_symlink_components(path, root.lexical, f"{label} working directory")
     try:
         resolved = path.resolve(strict=True)
     except (OSError, RuntimeError) as error:
@@ -2653,16 +3300,14 @@ def validate_mos_capture(
             )
             for symbol in unit["symbols"]
         ]
-        linked_disassembly = [
-            normalized_disassembly(
-                tools["objdump"]["resolved"],
-                elf_path,
-                symbol["name"],
-                f"unit {unit_id} linked image",
-                relocations=False,
-            )
-            for symbol in unit["symbols"]
-        ]
+        linked_disassembly = normalized_ez80_linked_object(
+            tools["objdump"]["resolved"],
+            step.output_path,
+            elf_path,
+            map_record["section_contributions"],
+            linked_table,
+            f"unit {unit_id} linked image",
+        )
         normalized_command = normalize_policy_command(
             step.command, roots, identity_binding
         )
@@ -2704,9 +3349,25 @@ def validate_mos_capture(
     first_recorder = all_steps[0].document["recorder"]
     first_session = all_steps[0].document["session"]
     first_environment = all_steps[0].document["environment"]
-    if any(step.document["recorder"] != first_recorder for step in all_steps[1:]):
+    if any(
+        not file_records_same_identity(
+            step.document["recorder"],
+            first_recorder,
+            roots,
+            "EMOS recorder",
+        )
+        for step in all_steps[1:]
+    ):
         raise GateError("EMOS records were emitted by different recorder bytes")
-    if any(step.document["session"] != first_session for step in all_steps[1:]):
+    if any(
+        not file_records_same_identity(
+            step.document["session"],
+            first_session,
+            roots,
+            "EMOS session marker",
+        )
+        for step in all_steps[1:]
+    ):
         raise GateError("EMOS records do not share one provenance session")
     if any(step.document["environment"] != first_environment for step in all_steps[1:]):
         raise GateError("EMOS records do not share one exact child environment")
@@ -2720,7 +3381,11 @@ def validate_mos_capture(
     expected_session = rooted_policy_record(
         "PROVENANCE", recorder_policy["session_path"], roots, "EMOS session marker"
     )
-    if first_recorder != expected_recorder or first_session != expected_session:
+    if not file_records_same_identity(
+        first_recorder, expected_recorder, roots, "EMOS recorder authority"
+    ) or not file_records_same_identity(
+        first_session, expected_session, roots, "EMOS session authority"
+    ):
         raise GateError("EMOS recorder/session authority differs from tracked policy")
     verify_tracked_file(
         roots[recorder_policy["root"]].resolved,
@@ -2737,7 +3402,10 @@ def validate_mos_capture(
         "EMOS provenance session",
     )
     if (
-        session_document["schema_version"] != 1
+        require_exact_integer(
+            session_document["schema_version"], "EMOS session schema_version"
+        )
+        != 1
         or session_document["evidence_kind"]
         != "mos-agondev-target-provenance-session"
         or session_document["fresh_directory_required"] is not True
@@ -2984,6 +3652,105 @@ def p4_path_under_roots(
     return resolved
 
 
+def p4_canonical_argument_file(value: Any, cwd: Path, label: str) -> Path:
+    """Resolve one argv file operand without admitting symlink/path aliases."""
+
+    if not isinstance(value, str) or not value or "\x00" in value:
+        raise GateError(f"{label} path operand is malformed")
+    candidate = Path(value)
+    lexical = candidate if candidate.is_absolute() else cwd / candidate
+    try:
+        resolved = lexical.resolve(strict=True)
+    except (OSError, RuntimeError, ValueError) as error:
+        raise GateError(f"{label} path operand is unavailable: {value!r}") from error
+    if lexical != resolved:
+        raise GateError(f"{label} path operand is not canonical or traverses a symlink")
+    if not resolved.is_file():
+        raise GateError(f"{label} path operand is not a regular file")
+    return resolved
+
+
+def require_p4_output_argument(
+    arguments: Sequence[str], output: Path, cwd: Path, label: str
+) -> None:
+    """Require the production driver's exact split `-o FILE` grammar."""
+
+    if any(argument.startswith("-o") and argument != "-o" for argument in arguments):
+        raise GateError(f"{label} uses an unsupported attached output option")
+    positions = [index for index, argument in enumerate(arguments) if argument == "-o"]
+    if len(positions) != 1 or positions[0] + 1 >= len(arguments):
+        raise GateError(f"{label} must contain exactly one complete -o option")
+    observed = p4_canonical_argument_file(
+        arguments[positions[0] + 1], cwd, f"{label} output"
+    )
+    if not canonical_file_paths_match(observed, output, f"{label} output"):
+        raise GateError(f"{label} -o path differs from its captured output")
+
+
+def validate_p4_compile_argument_paths(
+    arguments: Sequence[str], source: Path, output: Path, cwd: Path, label: str
+) -> None:
+    """Bind one C++ source and one object output to the actual compiler argv."""
+
+    if arguments.count("-c") != 1 or "-" in arguments or any(
+        argument == "-x" or argument.startswith("-x") for argument in arguments
+    ):
+        raise GateError(f"{label} does not use the supported single-source compile grammar")
+    source_operands: list[Path] = []
+    skip_value = False
+    for index, argument in enumerate(arguments[1:], 1):
+        if skip_value:
+            skip_value = False
+            continue
+        if argument in P4_COMPILE_VALUE_OPTIONS:
+            if index + 1 >= len(arguments):
+                raise GateError(f"{label} ends with a value-taking compiler option")
+            skip_value = True
+            continue
+        if argument.startswith(("-", "@")):
+            continue
+        source_operands.append(
+            p4_canonical_argument_file(
+                argument, cwd, f"{label} source argument {index}"
+            )
+        )
+    if len(source_operands) != 1 or not canonical_file_paths_match(
+        source_operands[0], source, f"{label} source"
+    ):
+        raise GateError(f"{label} must compile exactly its one captured source")
+    require_p4_output_argument(arguments, output, cwd, label)
+    if any(argument.startswith(P4_MAP_OPTION_PREFIXES) for argument in arguments):
+        raise GateError(f"{label} compile argv contains a map-output option")
+
+
+def validate_p4_link_argument_paths(
+    arguments: Sequence[str], output: Path, map_path: Path, cwd: Path, label: str
+) -> None:
+    """Bind the final ELF and canonical map option to the actual linker argv."""
+
+    require_p4_output_argument(arguments, output, cwd, label)
+    map_arguments = [
+        argument
+        for argument in arguments
+        if argument.startswith(P4_MAP_OPTION_PREFIXES)
+    ]
+    if (
+        len(map_arguments) != 1
+        or not map_arguments[0].startswith(P4_CANONICAL_MAP_PREFIX)
+        or map_arguments[0] == P4_CANONICAL_MAP_PREFIX
+    ):
+        raise GateError(
+            f"{label} must contain exactly one canonical -Wl,-Map=FILE option"
+        )
+    observed_map = p4_canonical_argument_file(
+        map_arguments[0][len(P4_CANONICAL_MAP_PREFIX) :],
+        cwd,
+        f"{label} map output",
+    )
+    if not canonical_file_paths_match(observed_map, map_path, f"{label} map output"):
+        raise GateError(f"{label} map option differs from its captured map")
+
+
 def validate_p4_artifact(
     value: Any,
     roots: Mapping[str, RootBinding],
@@ -2992,6 +3759,10 @@ def validate_p4_artifact(
 ) -> Path:
     record = require_object(value, label)
     require_exact_keys(record, P4_ARTIFACT_FIELDS, label)
+    require_exact_integer(record["size"], f"{label}.size", minimum=0)
+    require_exact_integer(record["inode"], f"{label}.inode", minimum=0)
+    require_exact_integer(record["mtime_ns"], f"{label}.mtime_ns")
+    require_exact_integer(record["ctime_ns"], f"{label}.ctime_ns")
     path = p4_path_under_roots(record["path"], roots, allowed_roots, label)
     if not path.is_file():
         raise GateError(f"{label} is not a regular file")
@@ -3243,7 +4014,10 @@ def validate_p4_probe(
         ("arguments", "exit_status", "output_utf8", "output_truncated"),
         label,
     )
-    if probe["arguments"] != list(expected_arguments) or probe["exit_status"] != 0:
+    if (
+        probe["arguments"] != list(expected_arguments)
+        or require_exact_integer(probe["exit_status"], f"{label} exit_status") != 0
+    ):
         raise GateError(f"{label} arguments/status differ from policy")
     if probe["output_truncated"] is not False or not isinstance(probe["output_utf8"], str):
         raise GateError(f"{label} output is incomplete")
@@ -3555,6 +4329,9 @@ def validate_p4_response_files(
             raise GateError(
                 f"{label} response contains unproved nested/tool response indirection"
             )
+        require_exact_integer(
+            response["size"], f"{label} response {index} size", minimum=0
+        )
         if len(blob_bytes) != response["size"] or sha256_bytes(blob_bytes) != response["sha256"]:
             raise GateError(f"{label} saved response bytes differ")
         decoded_arguments, encoded_words = decode_p4_response_bytes(
@@ -3646,7 +4423,7 @@ def validate_p4_dependency_scan(
     )
     if (
         scan["phase"] != phase
-        or scan["exit_status"] != 0
+        or require_exact_integer(scan["exit_status"], f"{label} exit_status") != 0
         or scan["output_truncated"] is not False
         or not isinstance(scan["argument_vector"], list)
         or not isinstance(scan["output_utf8"], str)
@@ -3703,18 +4480,21 @@ def validate_p4_event(
     require_exact_keys(event, P4_EVENT_FIELDS, label)
     if event["session_id"] != session_id:
         raise GateError(f"{label} belongs to another session")
-    if not isinstance(event["sequence"], int) or event["sequence"] < 0:
+    if type(event["sequence"]) is not int or event["sequence"] < 0:
         raise GateError(f"{label} sequence is malformed")
     if (
-        not isinstance(event["started_time_ns"], int)
-        or not isinstance(event["finished_time_ns"], int)
+        type(event["started_time_ns"]) is not int
+        or type(event["finished_time_ns"]) is not int
         or event["finished_time_ns"] < event["started_time_ns"]
     ):
         raise GateError(f"{label} timing is malformed")
     expected_kind = "cxx_compile" if role == "compile" else "final_cxx_link"
     if event["kind"] != expected_kind:
         raise GateError(f"{label} has the wrong actual-step kind")
-    if event["exit_status"] != 0 or event["spawn_exception"] is not None:
+    if (
+        require_exact_integer(event["exit_status"], f"{label} exit_status") != 0
+        or event["spawn_exception"] is not None
+    ):
         raise GateError(f"{label} did not execute successfully")
     if event["capture_errors"] != []:
         raise GateError(f"{label} has command/response capture errors")
@@ -3779,6 +4559,7 @@ def validate_p4_event(
     for item in [event["shell_command"], *actual, *expanded]:
         if "\x00" in item or "\n" in item or "\r" in item:
             raise GateError(f"{label} contains NUL or newline text")
+        reject_reserved_root_placeholder(item, label)
     for item in [*actual, *expanded]:
         if ",@" in item:
             raise GateError(f"{label} contains unproved tool response indirection")
@@ -3818,6 +4599,9 @@ def validate_p4_event(
         )
         if os.fspath(output) != event["output"]:
             raise GateError(f"{label} output path differs from its artifact")
+        validate_p4_compile_argument_paths(
+            expanded, source, output, working_directory, label
+        )
         if event["map_before"] is not None or event["map_after"] is not None or event["map_fresh"] is not False:
             raise GateError(f"{label} compile step has unexpected map claims")
         for phase, scan in (("before", scan_before), ("after", scan_after)):
@@ -3868,6 +4652,9 @@ def validate_p4_event(
         )
         if os.fspath(output) != event["output"]:
             raise GateError(f"{label} ELF path differs from its artifact")
+        validate_p4_link_argument_paths(
+            expanded, output, map_path, working_directory, label
+        )
         if event["source"] is not None or event["source_before"] is not None or event["source_after"] is not None:
             raise GateError(f"{label} final link has a false primary-source claim")
         if event["declared_map_paths"] != [os.fspath(map_path)]:
@@ -4158,8 +4945,8 @@ def validate_p4_capture(
     if not isinstance(session_id, str) or re.fullmatch(r"[0-9a-f]{32}", session_id) is None:
         raise GateError("P4 provenance session_id is malformed")
     if (
-        not isinstance(report["started_time_ns"], int)
-        or not isinstance(report["completed_time_ns"], int)
+        type(report["started_time_ns"]) is not int
+        or type(report["completed_time_ns"]) is not int
         or report["completed_time_ns"] < report["started_time_ns"]
     ):
         raise GateError("P4 provenance report timing is malformed")
@@ -4309,11 +5096,31 @@ def validate_p4_capture(
                 "sha256": sha256_bytes(line),
             }
         )
-    if report["raw_event_lines"] != raw_lines:
+    reported_raw_lines = report["raw_event_lines"]
+    if not isinstance(reported_raw_lines, list):
+        raise GateError("P4 report raw_event_lines must be an array")
+    for index, item in enumerate(reported_raw_lines):
+        item = require_object(item, f"P4 report raw event line {index}")
+        require_exact_keys(
+            item,
+            ("line_number", "sequence", "size", "sha256"),
+            f"P4 report raw event line {index}",
+        )
+        require_exact_integer(
+            item["line_number"], f"P4 report raw event line {index} number", minimum=1
+        )
+        require_exact_integer(
+            item["sequence"], f"P4 report raw event line {index} sequence", minimum=0
+        )
+        require_exact_integer(
+            item["size"], f"P4 report raw event line {index} size", minimum=1
+        )
+        require_sha256(item["sha256"], f"P4 report raw event line {index} digest")
+    if reported_raw_lines != raw_lines:
         raise GateError("P4 report line hashes differ from raw event bytes")
     sequences = [event.get("sequence") for event in raw_events]
     if len(sequences) != len(set(sequences)) or any(
-        not isinstance(item, int) or item < 0 for item in sequences
+        type(item) is not int or item < 0 for item in sequences
     ):
         raise GateError("P4 raw event sequences are duplicate or malformed")
     if any(event.get("session_id") != session_id for event in raw_events):
@@ -4478,6 +5285,11 @@ def validate_p4_capture(
         )
         if chain["input_path"] in chains_by_input:
             raise GateError("P4 final link producer input is duplicated")
+        require_exact_integer(
+            chain["producer_sequence"],
+            "P4 link producer chain sequence",
+            minimum=0,
+        )
         chains_by_input[chain["input_path"]] = chain
     for path in expected_paths:
         event = required_by_output[path]
@@ -4591,6 +5403,12 @@ def validate_p4_capture(
             "report_sha256",
         ),
         "P4 session",
+    )
+    require_exact_integer(
+        session["started_time_ns"], "P4 session started_time_ns", minimum=0
+    )
+    require_exact_integer(
+        session["completed_time_ns"], "P4 session completed_time_ns", minimum=0
     )
     hook_path = roots["PROJECT"].resolved / "pio/capture_p4_actual_steps.py"
     expected_session_environment = {
@@ -4926,7 +5744,11 @@ def validate_build(
     build_path = regular_file(build_path, "build record", root=evidence_root)
     build = require_object(load_json(build_path, "build record"), "build record")
     require_exact_keys(build, BUILD_FIELDS, "build record")
-    if build["schema_version"] != BUILD_SCHEMA or build["evidence_kind"] != BUILD_KIND:
+    if (
+        require_exact_integer(build["schema_version"], "build record schema_version")
+        != BUILD_SCHEMA
+        or build["evidence_kind"] != BUILD_KIND
+    ):
         raise GateError("unsupported build-record schema/kind")
     if build["target"] not in policy["targets"] or build["role"] not in {
         "qualification",
@@ -5086,6 +5908,25 @@ def validate_build(
     }
 
 
+def composition_dependencies_match_policy(
+    qualification_dependencies: Sequence[dict[str, Any]],
+    release_dependencies: Sequence[dict[str, Any]],
+    expected_delta: Mapping[str, Sequence[str]],
+) -> bool:
+    qualification = {record["path"]: record for record in qualification_dependencies}
+    release = {record["path"]: record for record in release_dependencies}
+    qualification_paths = set(qualification)
+    release_paths = set(release)
+    if qualification_paths - release_paths != set(
+        expected_delta["qualification_only"]
+    ) or release_paths - qualification_paths != set(expected_delta["release_only"]):
+        return False
+    return all(
+        qualification[path] == release[path]
+        for path in qualification_paths & release_paths
+    )
+
+
 def compare_validations(
     qualification: dict[str, Any], release: dict[str, Any], policy: dict[str, Any]
 ) -> dict[str, Any]:
@@ -5151,7 +5992,6 @@ def compare_validations(
                 continue
             owner_fields = (
                 "source_sha256",
-                "dependencies",
                 "declared_inputs",
                 "environment",
                 "executables",
@@ -5162,6 +6002,14 @@ def compare_validations(
             if changed:
                 differences.append(
                     f"{unit_id}: composition-owner inputs differ in {', '.join(changed)}"
+                )
+            if not composition_dependencies_match_policy(
+                left["dependencies"],
+                right["dependencies"],
+                unit["expected_dependency_delta"],
+            ):
+                differences.append(
+                    f"{unit_id}: composition-owner dependencies differ from exact policy delta"
                 )
     comparison: dict[str, Any] = {}
     for unit_id in equality_ids:

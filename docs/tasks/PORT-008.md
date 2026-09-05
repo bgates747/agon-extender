@@ -1001,8 +1001,14 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
    `equivalence_proved: false`. The new product gate and EMOS/P4 actual-step
    recorders now implement the clean Git/source/tool, producer, final-link,
    contribution, symbol, disassembly, role, identity, and cross-composition
-   boundary. They remain ineligible until clean rehearsal freezes every
-   command fingerprint and fresh records use approved identities. A production
+   boundary. Unversioned EMOS role-pair records and partial P4 diagnostics now
+   exist, but all predate retained gate/policy corrections and are invalid.
+   The gate's full allocated-section EMOS relocation projection and exact
+   composition-dependent coordinator dependency rule are retained work in
+   progress. Two JSON boolean-as-integer checks and the generic recorder's
+   literal reserved-placeholder collision remain open. The comparison remains
+   ineligible until clean rehearsal freezes every command fingerprint and
+   fresh records use approved identities. A production
    P4 release consumer still does not exist, so P4 qualification/release
    equivalence cannot yet be claimed.
 6. Work 2.f remains open. Lower-level output-fault tests do not replace the
@@ -1163,6 +1169,177 @@ return on r01, or representing captured P4 output as delivered MOS traffic.
     `PROJECT_DIR`, and a host regression executes the active-install path with
     `__file__` deliberately absent. A new committed clean capture is still
     required; the stopped invocation authenticates nothing.
+23. The first EMOS gate replay exposed `PORT008-PROV-P033`: the generic
+    recorder substituted an enclosing `BUILD_TOOL` root when an exact nested
+    `BUILD` root was followed by a quote in Clang's `-###` output. The gate's
+    longest-root delimiter grammar therefore rederived different bytes and
+    rejected the record. Official MOS has no recorder or driver-selection
+    probe. Generic `mos-agondev` commit `6d4008c` now applies one global
+    longest-candidate pass with the gate's conservative right-boundary set and
+    adversarial prefix/delimiter coverage. Both otherwise successful EMOS
+    captures remain invalid for fingerprint freeze and must be repeated with
+    the corrected recorder.
+24. `PORT008-PROV-P034` was a local P4 evidence-tool defect: the TEMPFILE
+    callable and authenticated PlatformIO/SCons `piomaxlen` response contract
+    did not match the real producer. The retained correction exercises a real
+    forced long command. Official VDP has no corresponding recorder.
+25. `PORT008-PROV-P035` was a local P4 recorder defect: the spawn wrapper could
+    delegate an ambiguous or unclassifiable possible target action. The
+    retained correction fails closed. Official VDP has no recorder counterpart.
+26. `PORT008-PROV-P036` was a local P4 gate defect: claimed source, output,
+    ELF, and map fields were not rebound to exact expanded-argv operands. The
+    retained correction performs that binding; official VDP has no such gate.
+27. `PORT008-PROV-P037` was a local gate path-classification defect: rooted
+    directories could be treated as files and malformed or missing rooted
+    tokens were underclassified. The retained correction rejects those forms.
+28. `PORT008-PROV-P038` was a local gate identity defect: rooted spellings
+    could stand in for canonical file identity and hardlink aliases could
+    create duplicate ambiguity. The retained correction uses canonical
+    resolved identity and rejects aliases.
+29. `PORT008-PROV-P039` groups local gate containment defects involving
+    relative roots, absolute suffix escape, unsafe policy suffixes, descendant
+    symlinks, and root-leaf retargeting. The retained correction rejects them.
+30. `PORT008-PROV-P040` was a local generic-evidence semantic-hash defect:
+    zds2gas input was hashed as raw bytes rather than its UTF-8 universal-
+    newline text contract. The retained correction hashes that semantic text.
+31. `PORT008-PROV-P041` is a local Python/JSON exact-type defect. Broad integer
+    checks are corrected, but boolean values can still satisfy the P4
+    `ascii_occurrences` and Python-runtime `version_info` integer comparisons.
+    Those two residual paths remain open and no evidence may be accepted.
+32. `PORT008-PROV-P042` was a local EMOS comparator defect: linked
+    disassembly treated valid `r_imm24` rebasing as drift and did not cover the
+    full allocated object contribution. The retained work-in-progress
+    correction verifies and canonicalizes relocations across allocated
+    sections; its host suite passed 62 tests, but it is not a final baseline.
+33. `PORT008-PROV-P043` was a local policy defect: the comparator had no
+    policy-owned dependency delta for the composition-dependent EMOS
+    coordinator. The retained policy permits exactly qualification-only
+    `${PREPARED}/src/emos_parallel.h` and no release-only dependency.
+34. `PORT008-PROV-P044` is a local normalization-collision defect. The retained
+    P4 validator rejects literal reserved placeholders in raw argv, but the
+    generic `mos-agondev` recorder can still collapse literal `${ROOT}` and a
+    substituted real root to the same normalized value. That recorder path
+    remains open. Official MOS and VDP have no normalization counterpart.
+
+#### Work 2.e interruption handoff
+
+**Checkpoint disposition, 2026-09-05:** The Author authorized preserving this
+work in a commit and push as the GPT-5.6 Sol to GPT-6 Astra handoff. The
+uncommitted-state descriptions below record the interruption state; the
+checkpoint retains those corrections as provisional source, not as an accepted
+baseline. Astra subsequently ran the complete task-local host suite: all 155
+tests passed. Work 2.e remains incomplete, earlier captures remain ineligible,
+and no release-equivalence or physical claim follows. The dated development
+log records the checkpoint scope, the existing hardware version-validation
+failure, and the sequencing recommendation that remains subject to review.
+
+This handoff records the 2026-09-02 Author stop boundary and was reconciled
+against the task-local
+[production-object gate](production-equivalence/object-equivalence/README.md),
+REMED-002, the integrity audit, and the development log on 2026-09-05. The
+defect descriptions and general eligibility blockers remain in those
+authorities; this section records only the worktree state and continuation
+context a fresh agent cannot reconstruct safely from their prose alone.
+
+1. **Where the pass stopped.** The Author halted the pass after the focused
+   host tests had passed while the independent adversarial review was still
+   incomplete and before cleanup, commit, command-fingerprint rehearsal, or
+   fresh capture. The
+   validator, test, and policy work completed across the interruption was
+   subsequently approved for retention as work in progress, not accepted as a
+   final baseline. No Work 2.f, deployment, emulator, target-runtime, reset,
+   power, wiring, or other physical operation occurred.
+2. **Earlier retained P4 recorder cluster.** The uncommitted P4 cluster is
+   `vdp/pio/capture_p4_actual_steps.py`, its focused test file, and its
+   task-local README. It authenticates the exact loaded PlatformIO 6.1.19 /
+   SCons 4.8.1 `piomaxlen` response-file contract, exercises an actual forced
+   long command, and refuses to delegate ambiguous possible target actions.
+   The associated P4 gate changes bind claimed source/output/ELF/map paths to
+   the actual expanded argv and strengthen rooted-path identity and
+   containment. These changes address P034--P039; they have not produced a
+   complete P4 capture.
+3. **Comparator/policy cluster active at the stop.** The uncommitted
+   `validate-production-object-provenance.py`, its focused test file, and
+   `production-object-policy.json` replace the old EMOS selected-symbol
+   linked-disassembly comparison with a full allocated-section projection.
+   The gate verifies every non-relocation linked byte, accepts only proved
+   `r_imm24` relocation rebasing, resolves section targets from exact map
+   contributions and named targets from a unique final symbol, and
+   canonicalizes only verified relocation spans. The policy also owns the
+   coordinator's exact dependency delta: qualification alone adds
+   `${PREPARED}/src/emos_parallel.h`. The change was made because the pinned
+   eZ80 objdump renders relocated absolute operands; the former comparison
+   reported ordinary link-layout rebasing as drift and did not cover the full
+   allocated contribution.
+4. **Last diagnostic checkpoint.** A direct, read-only diagnostic against the
+   invalid unversioned EMOS release/qualification pair produced identical
+   canonical linked projections for all five equality units:
+
+   | Equality unit | Canonical projection SHA-256 | Allocated sections: bytes / relocations |
+   |---|---|---|
+   | `emos-parallel-owner` | `00f80362556606f40e5d62111549011bac0a8fb5804db380e3425f5fe4bc3068` | `.bss`: 40 / 0; `.rodata`: 12 / 4; `.text`: 1256 / 131 |
+   | `emos-parallel-engine` | `a36e01854c45443ead6e1f4e4433782edda591d11e01ddb57271c81bca104ac9` | `.text`: 1398 / 55 |
+   | `emos-uart-owner` | `793031e8f2da9129005e974e5d12ca0c256a78d9d99743d2afb25fd300c43ef4` | `.text`: 462 / 22 |
+   | `emos-parallel-io` | `77511e089fc1d78d806318641ea4a000d6a226a87632e1663acb9006fb3ecca5` | `.STARTUP`: 393 / 7 |
+   | `emos-vdu-serial-bridge` | `ed254558a4ee265a2b8b97179ddd5011bd3b7569a0344d561951d5c0dc1b0ef7` | `.STARTUP`: 364 / 19 |
+
+   This was a debugging observation, not a gate report or evidence claim. Both
+   captures predate the retained authority/policy state, use unapproved
+   identities, and remain ineligible. The ignored local Work 2.e evidence root
+   for run `PORT-008-2026-09-02-03-31-14Z` preserves the raw diagnostic
+   context; do not edit, move, commit, or promote it.
+5. **Last test checkpoint.** Before interruption, all 43 focused P4-recorder
+   tests passed. After the P042/P043 changes, all 62 focused production-gate
+   tests passed, including correct rebasing; wrong relocation and
+   non-relocation bytes; unsupported, overlapping, and out-of-range
+   relocations; ambiguous map/symbol resolution; unaligned section parsing;
+   and the exact dependency delta. No complete task-local suite, product build,
+   or new capture was run after the final retained edits, so the focused
+   results must not be generalized.
+6. **Environment gotcha.** The strengthened root checks allow only an
+   explicitly permitted root leaf to be a symlink, not descendant symlinks.
+   A fresh EMOS rehearsal therefore needs a newly provisioned
+   `venv --copies` Python environment. The diagnostic copied environment is
+   local setup material only. The production-object gate README owns the
+   durable capture rule.
+7. **Investigate and finish before rehearsal.**
+
+   1. Review the complete retained Work 2.e diff independently, with particular
+      attention to the real pinned objdump section/relocation grammar, exact
+      map-contribution resolution, relocation expression/addend bounds,
+      allocated no-content sections, and rejection of any unverified byte
+      normalization. Existing tests demonstrate selected cases but do not
+      substitute for this review.
+   2. Close P041 by applying exact-integer validation to P4
+      `final_elf_strings[].ascii_occurrences` and every element of captured
+      Python `version_info`, then add direct Boolean-collision regressions.
+   3. Close the remaining generic-recorder half of P044 in
+      `mos-agondev`'s
+      `projects/mos-port/tools/record_target_step.py`. The recorder must
+      reject or encode literal reserved placeholders before root substitution
+      so a literal `${ROOT}` cannot collide with an actual root. Retain a
+      regression proving the two inputs remain distinguishable. The clean
+      generic repository was at commit `6d4008c` at handoff; recheck its state
+      rather than assuming it is unchanged.
+   4. Rerun both focused suites and the complete task-local host discovery,
+      review the resulting diff and documented claim boundaries, and commit
+      all controlled gate/recorder/policy inputs before any new capture.
+   5. Provision the copied EMOS Python environment, perform a new unversioned
+      two-role command-fingerprint rehearsal, review every candidate command,
+      commit the frozen EMOS fingerprints, and then recapture both roles
+      because the policy digest will have changed. Do not reuse the existing
+      rehearsal directories.
+   6. Keep P4 qualification rehearsal separate. P4 cannot complete a
+      release/qualification pair or freeze a release policy until a real
+      production P4 release consumer exists; the browser composition is not a
+      surrogate. Approved successor firmware and qualification-composition
+      identities remain an Author gate for eligible final captures, but not
+      for explicit unversioned mechanical rehearsals.
+8. **Review provenance.** The interrupted auxiliary adversarial reviews did
+   not leave an accepted patch or completed review result. P041 and P044 are
+   the recorded actionable findings from that boundary. A fresh agent must
+   verify the retained code directly and must not infer review completion from
+   the 43- or 62-test checkpoints.
 
 ### PORT-008.1 — Freeze transport and wiring contracts
 
@@ -1402,7 +1579,15 @@ later accepted D002 boundary authorizes only the software replacement work
 19. [x] Record and correct `PORT008-PROV-P032` as a local P4 recorder-
     installation defect, retain a no-`__file__` active-install regression, and
     reject the stopped invocation as evidence.
-20. [ ] Close the pre-activation corrective action only after the Author
+20. [x] Record and correct `PORT008-PROV-P033` as a local generic-recorder
+    root-normalization defect, retain longest-root/delimiter/prefix regressions,
+    and require both EMOS roles to be recaptured.
+21. [x] Record `PORT008-PROV-P034` through `P040` as local recorder/gate
+    defects and retain their fail-closed corrections and regressions.
+22. [x] Record `PORT008-PROV-P041` through `P044`; retain the P042/P043
+    work-in-progress corrections, and keep P041's two exact-type paths and
+    P044's generic-recorder collision explicitly open.
+23. [ ] Close the pre-activation corrective action only after the Author
     accepts an EMOS-requested activation design, deterministic checks prove
     fail-closed Legacy and transition behavior, and General Poll completes
     without an unexplained CLOCK or READY gap. Because D001 is rejected, a

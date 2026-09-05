@@ -3,11 +3,13 @@
 from __future__ import annotations
 
 import importlib.util
+import inspect
 import json
 import os
 from pathlib import Path
 import shlex
 import stat
+import subprocess
 import sys
 import tempfile
 from types import ModuleType, SimpleNamespace
@@ -494,8 +496,15 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
                 return action, message
 
         fake_environment = ActiveEnvironment()
-        fake_platformio = SimpleNamespace(__version__="synthetic-platformio")
-        fake_scons = SimpleNamespace(__version__="synthetic-scons")
+        fake_platformio = ModuleType("platformio")
+        fake_platformio.__version__ = "synthetic-platformio"
+        fake_scons = ModuleType("SCons")
+        fake_scons.__version__ = "synthetic-scons"
+        fake_scons.__path__ = []
+        fake_scons_platform = ModuleType("SCons.Platform")
+        fake_scons_subst = ModuleType("SCons.Subst")
+        fake_scons.Platform = fake_scons_platform
+        fake_scons.Subst = fake_scons_subst
         module_file = capture.__dict__.pop("__file__")
         try:
             with (
@@ -506,7 +515,17 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
                 ),
                 mock.patch.dict(
                     sys.modules,
-                    {"platformio": fake_platformio, "SCons": fake_scons},
+                    {
+                        "platformio": fake_platformio,
+                        "SCons": fake_scons,
+                        "SCons.Platform": fake_scons_platform,
+                        "SCons.Subst": fake_scons_subst,
+                    },
+                ),
+                mock.patch.object(
+                    capture,
+                    "_authenticate_piomaxlen_contract",
+                    return_value=object(),
                 ),
                 mock.patch.object(
                     capture,
@@ -534,6 +553,146 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
         )
         self.assertIn("SPAWN", fake_environment.replacements)
         self.assertEqual(1, len(fake_environment.preactions))
+
+    def test_authenticates_exact_loaded_platformio_piomaxlen_contract(
+        self,
+    ) -> None:
+        runtime = Path(self.temporary.name) / "piomax-runtime"
+        platformio_file = runtime / "platformio/__init__.py"
+        piomaxlen_file = runtime / "platformio/builder/tools/piomaxlen.py"
+        platformio_file.parent.mkdir(parents=True)
+        piomaxlen_file.parent.mkdir(parents=True)
+        platformio_file.write_text("# synthetic PlatformIO package\n")
+        piomaxlen_file.write_text("# synthetic piomaxlen tool\n")
+        build_root = runtime / "build"
+        build_root.mkdir()
+
+        def quote_spaces(argument):
+            return f'"{argument}"' if " " in argument or "\t" in argument else argument
+
+        class UpstreamTempFile:
+            pass
+
+        platformio = ModuleType("platformio")
+        platformio.__version__ = capture.PINNED_PLATFORMIO_VERSION
+        platformio.__file__ = str(platformio_file)
+        piomaxlen = ModuleType("piomaxlen")
+        piomaxlen.__file__ = str(piomaxlen_file)
+        piomaxlen.quote_spaces = quote_spaces
+        piomaxlen.IS_WINDOWS = False
+        piomaxlen.MAX_LINE_LENGTH = capture.PINNED_PIOMAXLEN_MAX_LINE_LENGTH
+        exec(
+            "def tempfile_arg_esc_func(argument):\n"
+            "    argument = quote_spaces(argument)\n"
+            "    if not IS_WINDOWS:\n"
+            "        return argument\n"
+            "    raise AssertionError('Windows path is outside this test')\n",
+            piomaxlen.__dict__,
+        )
+        self.assertIsNot(piomaxlen.tempfile_arg_esc_func, quote_spaces)
+        scons = ModuleType("SCons")
+        scons.__version__ = capture.PINNED_SCONS_VERSION
+        scons_platform = ModuleType("SCons.Platform")
+        scons_platform.TempFileMunge = UpstreamTempFile
+        scons_subst = ModuleType("SCons.Subst")
+        scons_subst.quote_spaces = quote_spaces
+        scons_subst.SUBST_CMD = object()
+        scons.Platform = scons_platform
+        scons.Subst = scons_subst
+
+        class ContractEnvironment(dict):
+            def subst(self, value):
+                values = {
+                    "$MAXLINELENGTH": str(
+                        capture.PINNED_PIOMAXLEN_MAX_LINE_LENGTH
+                    ),
+                    "$TEMPFILEPREFIX": "@",
+                    "$TEMPFILESUFFIX": ".tmp",
+                    "$TEMPFILEDIR": str(build_root),
+                }
+                return values[value]
+
+        environment = ContractEnvironment(
+            TEMPFILE=UpstreamTempFile,
+            TEMPFILEARGESCFUNC=piomaxlen.tempfile_arg_esc_func,
+            TEMPFILEARGJOIN=" ",
+        )
+        with mock.patch.dict(
+            sys.modules,
+            {
+                "piomaxlen": piomaxlen,
+                "SCons": scons,
+                "SCons.Platform": scons_platform,
+                "SCons.Subst": scons_subst,
+            },
+        ):
+            contract = capture._authenticate_piomaxlen_contract(
+                environment,
+                platformio,
+                scons,
+                build_root,
+            )
+            self.assertIs(
+                piomaxlen.tempfile_arg_esc_func,
+                contract.escape_argument,
+            )
+            self.assertIs(scons_subst, contract.scons_subst_module)
+            self.assertIs(scons_subst.SUBST_CMD, contract.subst_command_mode)
+
+            environment["TEMPFILEARGESCFUNC"] = lambda value: quote_spaces(value)
+            with self.assertRaisesRegex(
+                capture.ProvenanceError,
+                "authenticated PlatformIO piomaxlen TEMPFILEARGESCFUNC",
+            ):
+                capture._authenticate_piomaxlen_contract(
+                    environment,
+                    platformio,
+                    scons,
+                    build_root,
+                )
+            environment["TEMPFILEARGESCFUNC"] = (
+                piomaxlen.tempfile_arg_esc_func
+            )
+
+            replacement_subst = ModuleType("SCons.Subst.replaced")
+            with (
+                mock.patch.dict(
+                    sys.modules,
+                    {"SCons.Subst": replacement_subst},
+                ),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst module was replaced",
+                ),
+            ):
+                contract.validate_response_environment(environment)
+
+            with (
+                mock.patch.object(scons_subst, "SUBST_CMD", object()),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst response state changed",
+                ),
+            ):
+                contract.validate_response_environment(environment)
+
+            with (
+                mock.patch.object(scons_subst, "quote_spaces", lambda value: value),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst response state changed",
+                ),
+            ):
+                contract.validate_response_environment(environment)
+
+            with (
+                mock.patch.object(scons, "Subst", replacement_subst),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst module was replaced",
+                ),
+            ):
+                contract.validate_response_environment(environment)
 
     def test_platformio_wires_hook_only_into_qualification_environment(
         self,
@@ -863,7 +1022,7 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
             ):
                 capture._decode_pinned_scons_posix_word(unsafe, "test")
 
-    def test_non_driver_prefix_is_delegated_and_cannot_form_evidence(self) -> None:
+    def test_driver_later_in_argv_is_rejected_without_delegation(self) -> None:
         evidence = self.evidence()
         session = evidence.session()
         arguments = [
@@ -875,27 +1034,135 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
             str(evidence.source),
         ]
         escaped = evidence._escaped(arguments)
-        delegated: list[list[str]] = []
+        with self.assertRaisesRegex(
+            capture.ProvenanceError, r"driver appears at argv\[1\]"
+        ):
+            evidence._run_in_project(
+                lambda: session.spawn(
+                    evidence.original_spawn,
+                    "/bin/sh",
+                    lambda value: value,
+                    escaped[0],
+                    escaped,
+                    evidence.environment(),
+                )
+            )
+        self.assertEqual(0, evidence.original_spawn_calls)
+        self.assertFalse(evidence.object.exists())
 
-        def original(shell, escape, command, raw_arguments, environment):
-            del shell, escape, command, environment
-            delegated.append(list(raw_arguments))
-            return 0
-
-        evidence._run_in_project(
-            lambda: session.spawn(
-                original,
+    def test_malformed_later_driver_token_is_rejected_without_delegation(
+        self,
+    ) -> None:
+        evidence = self.evidence()
+        session = evidence.session()
+        arguments = ["/usr/bin/env", str(evidence.driver) + ";"]
+        with self.assertRaisesRegex(
+            capture.ProvenanceError, r"driver appears at argv\[1\]"
+        ):
+            session.spawn(
+                evidence.original_spawn,
                 "/bin/sh",
                 lambda value: value,
-                escaped[0],
-                escaped,
+                arguments[0],
+                arguments,
                 evidence.environment(),
             )
-        )
-        self.assertEqual([escaped], delegated)
+        self.assertEqual(0, evidence.original_spawn_calls)
+
+    def test_required_target_output_with_non_driver_prefix_is_rejected(self) -> None:
+        evidence = self.evidence()
+        session = evidence.session()
+        for output, message in (
+            (evidence.object, "required selected C\\+\\+ object"),
+            (evidence.elf, "final firmware ELF"),
+            (evidence.map, "final link map"),
+        ):
+            with self.subTest(output=output), self.assertRaisesRegex(
+                capture.ProvenanceError, message
+            ):
+                arguments = ["/usr/bin/not-a-cxx-driver", "-o", str(output)]
+                escaped = evidence._escaped(arguments)
+                evidence._run_in_project(
+                    lambda: session.spawn(
+                        evidence.original_spawn,
+                        "/bin/sh",
+                        lambda value: value,
+                        escaped[0],
+                        escaped,
+                        evidence.environment(),
+                    )
+                )
+        self.assertEqual(0, evidence.original_spawn_calls)
         self.assertFalse(evidence.object.exists())
-        with self.assertRaisesRegex(capture.ProvenanceError, "observed no actual"):
-            session.finalize()
+        self.assertFalse(evidence.elf.exists())
+
+    def test_undecodable_output_after_non_driver_is_not_delegated(self) -> None:
+        evidence = self.evidence()
+        session = evidence.session()
+        arguments = [
+            "/usr/bin/not-a-cxx-driver",
+            "-o",
+            '"' + str(evidence.object),
+        ]
+        with self.assertRaisesRegex(
+            capture.ProvenanceError, "output argument.*not canonically decodable"
+        ):
+            session.spawn(
+                evidence.original_spawn,
+                "/bin/sh",
+                lambda value: value,
+                arguments[0],
+                arguments,
+                evidence.environment(),
+            )
+        self.assertEqual(0, evidence.original_spawn_calls)
+
+    def test_empty_argv_is_rejected_without_delegation(self) -> None:
+        evidence = self.evidence()
+        session = evidence.session()
+        with self.assertRaisesRegex(capture.ProvenanceError, "empty SCons argv"):
+            session.spawn(
+                evidence.original_spawn,
+                "/bin/sh",
+                lambda value: value,
+                "",
+                [],
+                evidence.environment(),
+            )
+        self.assertEqual(0, evidence.original_spawn_calls)
+
+    def test_undecodable_argv0_fails_closed_with_bounded_context(self) -> None:
+        evidence = self.evidence()
+        session = evidence.session()
+        malformed = [
+            "<SCons.Script._persistent_tempfile_class.<locals>."
+            "PersistentProvenanceTempFile",
+            "object",
+            "at",
+            "0x1234>" + ("x" * 4096),
+            *("surplus" for _ in range(100)),
+        ]
+        with self.assertRaises(capture.ProvenanceError) as raised:
+            session.spawn(
+                evidence.original_spawn,
+                "/bin/sh",
+                lambda value: value,
+                malformed[0],
+                malformed,
+                evidence.environment(),
+            )
+        message = str(raised.exception)
+        self.assertIn("cannot classify argv[0]", message)
+        self.assertIn("callable expansion", message)
+        self.assertIn("argc=104", message)
+        self.assertLessEqual(
+            len(capture._bounded_spawn_context(malformed[0], malformed)),
+            capture.MAX_SPAWN_CONTEXT_CHARS,
+        )
+        self.assertLess(
+            len(message), capture.MAX_SPAWN_CONTEXT_CHARS + 512
+        )
+        self.assertEqual(0, evidence.original_spawn_calls)
 
     def test_non_cxx_shell_action_is_delegated_without_decoding(self) -> None:
         evidence = self.evidence()
@@ -1167,23 +1434,63 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
 
             def subst(self, value):
                 if value == "$MAXLINELENGTH":
-                    return "1"
+                    return self.get("maximum", "1")
                 if value == "$TEMPFILEPREFIX":
                     return self.get("prefix", "@")
+                if value == "$TEMPFILESUFFIX":
+                    return self.get("suffix", ".tmp")
+                if value == "$TEMPFILEDIR":
+                    return str(self["build_root"])
                 raise AssertionError(value)
 
         response_root = Path(self.temporary.name) / "tempfile-evidence"
         (response_root / "responses").mkdir(parents=True)
+        build_root = Path(self.temporary.name) / "tempfile-build"
+        build_root.mkdir()
+        piomaxlen = ModuleType("piomaxlen")
+        piomaxlen.quote_spaces = quote_spaces
+        piomaxlen.IS_WINDOWS = False
+        piomaxlen.MAX_LINE_LENGTH = 1
+        exec(
+            "def tempfile_arg_esc_func(argument):\n"
+            "    return quote_spaces(argument)\n",
+            piomaxlen.__dict__,
+        )
+        scons_subst_mode = object()
+        subst.SUBST_CMD = scons_subst_mode
+        contract = capture._PiomaxlenContract(
+            module=piomaxlen,
+            scons_module=scons,
+            scons_subst_module=subst,
+            subst_command_mode=scons_subst_mode,
+            escape_argument=piomaxlen.tempfile_arg_esc_func,
+            quote_spaces=quote_spaces,
+            build_root=build_root,
+            maximum_line_length=1,
+        )
         with mock.patch.dict(
             sys.modules,
-            {"SCons": scons, "SCons.Subst": subst},
+            {
+                "SCons": scons,
+                "SCons.Subst": subst,
+                "piomaxlen": piomaxlen,
+            },
         ):
-            tempfile_class = capture._persistent_tempfile_class(response_root)
+            tempfile_class = capture._persistent_tempfile_class(
+                response_root,
+                contract,
+            )
             command = ["driver", "-o", "output file.o", "-c", "input.cpp"]
+            self.assertEqual(
+                ["target", "source", "env", "for_signature"],
+                list(inspect.signature(tempfile_class(command)).parameters),
+            )
             environment = FakeEnvironment(
-                TEMPFILEARGESCFUNC=quote_spaces,
+                TEMPFILEARGESCFUNC=piomaxlen.tempfile_arg_esc_func,
                 TEMPFILEARGJOIN=" ",
+                build_root=build_root,
                 prefix="@",
+                suffix=".tmp",
             )
             result = tempfile_class(command)(None, None, environment, False)
             self.assertEqual("driver", result[0])
@@ -1192,11 +1499,21 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
                 response_path.read_bytes(), "synthetic persistent response"
             )
             self.assertEqual(command[1:], decoded)
+            self.assertIs(
+                scons_subst_mode,
+                environment.last_substitution[0],
+            )
 
             unsupported = (
                 ({"TEMPFILEARGESCFUNC": lambda value: value}, "ARGESCFUNC"),
                 ({"TEMPFILEARGJOIN": "\n"}, "ARGJOIN"),
                 ({"prefix": "-via"}, "PREFIX"),
+                ({"suffix": ".lnk"}, "SUFFIX"),
+                ({"maximum": "2"}, "MAXLINELENGTH"),
+                (
+                    {"build_root": Path(self.temporary.name)},
+                    "TEMPFILEDIR",
+                ),
             )
             for changes, message in unsupported:
                 with self.subTest(message=message):
@@ -1206,6 +1523,212 @@ class P4ActualStepProvenanceTests(unittest.TestCase):
                         tempfile_class(command)(
                             None, None, rejected, False
                         )
+
+            with (
+                mock.patch.object(subst, "SUBST_CMD", object()),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst response state changed",
+                ),
+            ):
+                tempfile_class(command)(None, None, environment, False)
+
+            replacement_subst = ModuleType("SCons.Subst.replaced")
+            with (
+                mock.patch.dict(
+                    sys.modules,
+                    {"SCons.Subst": replacement_subst},
+                ),
+                self.assertRaisesRegex(
+                    capture.ProvenanceError,
+                    "authenticated SCons.Subst module was replaced",
+                ),
+            ):
+                tempfile_class(command)(None, None, environment, False)
+
+    def test_pinned_platformio_scons_long_response_executes_through_capture(
+        self,
+    ) -> None:
+        scons_root = (
+            ROOT
+            / "vdp/.pio/packages/tool-scons/scons-local-4.8.1"
+        )
+        if not (scons_root / "SCons/__init__.py").is_file():
+            self.skipTest("pinned SCons 4.8.1 package is not installed")
+        if importlib.util.find_spec("platformio") is None:
+            self.skipTest("pinned PlatformIO package is not installed")
+
+        evidence = SyntheticCapture(
+            Path(self.temporary.name),
+            spaced_paths=True,
+        )
+        response_root = Path(self.temporary.name) / "real-scons-responses"
+        response_root.joinpath("responses").mkdir(parents=True)
+        build_root = Path(self.temporary.name) / "real-scons-build"
+        build_root.mkdir()
+        filler = [
+            f"-DPROVENANCE_LONG_{index:03d}=" + ("X" * 1000)
+            for index in range(132)
+        ]
+        command = [
+            str(evidence.driver),
+            "-march=rv32imafc_zicsr_zifencei_xesppie",
+            "-o",
+            str(evidence.object),
+            "-c",
+            str(evidence.source),
+            *filler,
+        ]
+        self.assertGreater(
+            sum(len(argument) for argument in command) + len(command) - 1,
+            capture.PINNED_PIOMAXLEN_MAX_LINE_LENGTH,
+        )
+        command_path = Path(self.temporary.name) / "long-command.json"
+        command_path.write_text(json.dumps(command), encoding="utf-8")
+        script = r'''
+import importlib.util
+import json
+from pathlib import Path
+import sys
+
+root = Path(sys.argv[1])
+scons_root = Path(sys.argv[2])
+response_root = Path(sys.argv[3])
+build_root = Path(sys.argv[4])
+command = json.loads(Path(sys.argv[5]).read_text(encoding="utf-8"))
+sys.path.insert(0, str(scons_root))
+import platformio
+import SCons
+import SCons.Platform
+import SCons.Script
+import SCons.Subst
+
+spec = importlib.util.spec_from_file_location(
+    "p4_actual_steps_real_scons",
+    root / "vdp/pio/capture_p4_actual_steps.py",
+)
+assert spec and spec.loader
+capture = importlib.util.module_from_spec(spec)
+spec.loader.exec_module(capture)
+piomaxlen_path = (
+    Path(platformio.__file__).resolve().parent
+    / "builder/tools/piomaxlen.py"
+)
+piomaxlen_spec = importlib.util.spec_from_file_location(
+    "piomaxlen", piomaxlen_path
+)
+assert piomaxlen_spec and piomaxlen_spec.loader
+piomaxlen = importlib.util.module_from_spec(piomaxlen_spec)
+sys.modules["piomaxlen"] = piomaxlen
+piomaxlen_spec.loader.exec_module(piomaxlen)
+env = SCons.Script.Environment(tools=[])
+env.Replace(
+    TEMPFILE=SCons.Platform.TempFileMunge,
+    MAXLINELENGTH=piomaxlen.MAX_LINE_LENGTH,
+    TEMPFILEARGESCFUNC=piomaxlen.tempfile_arg_esc_func,
+    TEMPFILEARGJOIN=" ",
+    TEMPFILEPREFIX="@",
+    TEMPFILESUFFIX=".tmp",
+    TEMPFILEDIR=str(build_root),
+)
+contract = capture._authenticate_piomaxlen_contract(
+    env,
+    platformio,
+    SCons,
+    build_root,
+)
+tempfile_class = capture._persistent_tempfile_class(response_root, contract)
+env.Replace(TEMPFILE=tempfile_class(command))
+result = env.subst_list(
+    "$TEMPFILE",
+    SCons.Subst.SUBST_CMD,
+    target=[],
+    source=[],
+)
+print(
+    json.dumps(
+        {
+            "piomaxlen_escape_is_distinct": (
+                piomaxlen.tempfile_arg_esc_func is not SCons.Subst.quote_spaces
+            ),
+            "scons_version": SCons.__version__,
+            "result": [[str(item) for item in line] for line in result],
+        }
+    )
+)
+'''
+        completed = subprocess.run(
+            [
+                sys.executable,
+                "-B",
+                "-c",
+                script,
+                str(ROOT),
+                str(scons_root),
+                str(response_root),
+                str(build_root),
+                str(command_path),
+            ],
+            check=False,
+            capture_output=True,
+            text=True,
+            timeout=15,
+        )
+        self.assertEqual(0, completed.returncode, completed.stderr)
+        result = json.loads(completed.stdout)
+        self.assertEqual("4.8.1", result["scons_version"])
+        self.assertTrue(result["piomaxlen_escape_is_distinct"])
+        self.assertEqual(1, len(result["result"]))
+        returned_arguments = result["result"][0]
+        self.assertEqual(str(evidence.driver), returned_arguments[0])
+        self.assertEqual(2, len(returned_arguments))
+        self.assertTrue(returned_arguments[1].startswith("@"))
+        response_path = Path(returned_arguments[1][1:])
+        self.assertEqual(response_root / "responses", response_path.parent)
+        expected_response = (
+            " ".join(
+                f'"{argument}"'
+                if " " in argument or "\t" in argument
+                else argument
+                for argument in command[1:]
+            )
+            + "\n"
+        ).encode("utf-8")
+        self.assertEqual(expected_response, response_path.read_bytes())
+        self.assertEqual(
+            "scons-" + capture.sha256_bytes(expected_response) + ".rsp",
+            response_path.name,
+        )
+
+        session = evidence.session()
+        escaped_arguments = evidence._escaped(returned_arguments)
+        evidence._run_in_project(
+            lambda: session.spawn(
+                evidence.original_spawn,
+                "/bin/sh",
+                lambda value: value,
+                escaped_arguments[0],
+                escaped_arguments,
+                evidence.environment(),
+            )
+        )
+        evidence.link(session)
+        report = session.finalize()
+        compile_record = report["capture"]["required_target_compiles"][0]
+        self.assertEqual(
+            command[1:],
+            compile_record["expanded_argument_vector"][1:],
+        )
+        self.assertEqual(
+            [str(evidence.driver), "@" + str(response_path)],
+            evidence.spawn_records[0]["argv"],
+        )
+        self.assertEqual(1, len(compile_record["response_files"]))
+        response_record = compile_record["response_files"][0]
+        self.assertTrue(response_record["byte_round_trip_verified"])
+        self.assertTrue(response_record["stable_before_and_after"])
+        retained_blob = evidence.output / response_record["saved_blob"]
+        self.assertEqual(expected_response, retained_blob.read_bytes())
 
     def test_nested_response_file_is_rejected_before_execution(self) -> None:
         evidence = self.evidence()

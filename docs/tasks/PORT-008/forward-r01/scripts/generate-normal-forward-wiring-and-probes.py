@@ -1,128 +1,143 @@
 #!/usr/bin/env python3
-"""Generate the PORT-008 normal-r01 wiring and LA-03 probe reference.
+"""Generate the PORT-008 physical header-placement and ribbon-color reference.
 
-This task-local generator deliberately derives the drawing from the retained
-light2-harness-r01 legacy diagram instead of making that historical evidence
-authoritative for current logic-analyzer placement.  Electrical routes remain
-those shown by the source drawing; LA-03 probe markers come from the canonical
-la03-p4-probe-fixture-r01 profile and map.
+The historical output filename is retained because PORT-008 already refers to
+it. This revision intentionally contains no wiring, passives, or probe markers.
+Connector assignments are checked against the authoritative r02 connectivity
+model; colors preserve the legacy ribbon-conductor convention.
 """
 
 from __future__ import annotations
 
+from html import escape
 from pathlib import Path
+
+import yaml
 
 
 SCRIPT = Path(__file__).resolve()
 REPOSITORY = SCRIPT.parents[5]
-SOURCE = (
-    REPOSITORY
-    / "hardware/designs/light2-harness-r01/legacy-evidence/wiring-diagram.svg"
-)
+CONNECTIVITY = REPOSITORY / "hardware/designs/light2-harness-r02/connectivity.yaml"
 OUTPUT = SCRIPT.parent.parent / "normal-forward-wiring-and-probes.svg"
 
+AGON_LABELS = {
+    1: "VBAT", 2: "+5V USB", 3: "GND", 4: "+5V", 5: "GND",
+    6: "ESP39", 7: "ESP35", 8: "ESP27", 9: "ESP26", 10: "ESP36",
+    11: "ESP37", 12: "ESP38", 13: "PD4 / READY_N", 14: "PD5 / CLOCK",
+    15: "PD6", 16: "PD7 / VALID_N", 17: "PC0 / TXD1 / D0",
+    18: "PC1 / RXD1 / D1", 19: "PC2 / RTS1 / D2",
+    20: "PC3 / CTS1 / D3", 21: "PC4 / D4", 22: "PC5 / D5",
+    23: "PC6 / D6", 24: "PC7 / D7", 25: "CS", 26: "PB5",
+    27: "PB6", 28: "CLK", 29: "SDA", 30: "SCL", 31: "PB3",
+    32: "PB7", 33: "GND", 34: "+3.3V",
+}
 
-def replace_once(document: str, old: str, new: str) -> str:
-    count = document.count(old)
-    if count != 1:
-        raise RuntimeError(f"expected one source fragment, found {count}: {old[:80]!r}")
-    return document.replace(old, new, 1)
+P4_LABELS = {
+    "J2": {
+        1: "P4 3V3", 2: "GND", 3: "unused", 4: "unused", 5: "unused",
+        6: "unused", 7: "unused", 8: "unused", 9: "unused",
+        10: "GPIO9 / D7", 11: "GPIO10 / D5",
+        12: "GPIO11 / D3 / UART RTS", 13: "GPIO12 / D1 / UART TX",
+        14: "GPIO13 / VALID_N", 15: "GPIO14 / CLOCK",
+        16: "GPIO15 / UART forward OE_N", 17: "unused",
+        18: "GPIO17 / parallel forward OE_N", 19: "unused", 20: "unused",
+    },
+    "J3": {
+        1: "P4 5V (unused)", 2: "GND", 3: "unused", 4: "unused",
+        5: "unused", 6: "unused", 7: "unused", 8: "GPIO33 / D6",
+        9: "GPIO32 / D4", 10: "GPIO23 / D2 / UART CTS",
+        11: "GPIO22 / D0 / UART RX", 12: "GPIO21 / UART return OE_N",
+        13: "GPIO20 / READY control_N", 14: "unused", 15: "GND",
+        16: "unused", 17: "unused", 18: "GND", 19: "unused", 20: "unused",
+    },
+}
+
+# Exact conductor colors retained from the legacy 16-way Agon ribbons.
+ODD_COLORS = [
+    "#d32f2f", "#808080", "#111111", "#ffffff", "#808080", "#7b1fa2",
+    "#1976d2", "#388e3c", "#fbc02d", "#f57c00", "#d32f2f", "#6d4c41",
+    "#111111", "#ffffff", "#808080", "#7b1fa2", "#111111",
+]
+EVEN_COLORS = [
+    "#1976d2", "#388e3c", "#fbc02d", "#f57c00", "#d32f2f", "#6d4c41",
+    "#111111", "#ffffff", "#808080", "#7b1fa2", "#1976d2", "#388e3c",
+    "#fbc02d", "#f57c00", "#d32f2f", "#6d4c41", "#d32f2f",
+]
+P4_COLORS = {
+    ("J2", 10): "#388e3c", ("J2", 11): "#1976d2",
+    ("J2", 12): "#7b1fa2", ("J2", 13): "#808080",
+    ("J2", 14): "#ffffff", ("J2", 15): "#111111",
+    ("J3", 8): "#6d4c41", ("J3", 9): "#d32f2f",
+    ("J3", 10): "#f57c00", ("J3", 11): "#fbc02d",
+    ("J3", 13): "#1976d2",
+}
+
+
+def load_connectors() -> dict[str, dict[int, str]]:
+    model = yaml.safe_load(CONNECTIVITY.read_text(encoding="utf-8"))
+    result = {}
+    for component in model["components"]:
+        if component["ref"] in {"J1", "J2", "J3"}:
+            result[component["ref"]] = {
+                int(item["pin"]): item["name"] for item in component["terminals"]
+            }
+    if set(result) != {"J1", "J2", "J3"}:
+        raise RuntimeError("connectivity model lacks J1/J2/J3")
+    return result
+
+
+def text_color(fill: str) -> str:
+    dark = {"#111111", "#6d4c41", "#7b1fa2", "#1976d2", "#388e3c", "#d32f2f"}
+    return "#ffffff" if fill in dark else "#111111"
+
+
+def bank(title: str, subtitle: str, x: int, y: int, rows: list[tuple[str, str]]) -> str:
+    width, height, gap = 500, 25, 3
+    out = [
+        f'<g aria-label="{escape(title)}">',
+        f'<text x="{x}" y="{y - 28}" class="bank-title">{escape(title)}</text>',
+        f'<text x="{x}" y="{y - 9}" class="bank-note">{escape(subtitle)}</text>',
+    ]
+    for index, (label, fill) in enumerate(rows):
+        row_y = y + index * (height + gap)
+        out.append(f'<rect x="{x}" y="{row_y}" width="{width}" height="{height}" rx="3" fill="{fill}" stroke="#333"/>')
+        out.append(f'<text x="{x + 8}" y="{row_y + 17}" class="pin" fill="{text_color(fill)}">{escape(label)}</text>')
+    out.append("</g>")
+    return "\n".join(out)
 
 
 def main() -> None:
-    document = SOURCE.read_text(encoding="utf-8")
+    authority = load_connectors()
+    assert set(authority["J1"]) == set(range(1, 35))
+    assert set(authority["J2"]) == set(range(1, 21))
+    assert set(authority["J3"]) == set(range(1, 21))
 
-    document = replace_once(
-        document,
-        '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n',
-        '<?xml version="1.0" encoding="UTF-8" standalone="no"?>\n'
-        '<!-- Generated by scripts/generate-normal-forward-wiring-and-probes.py.\n'
-        '     Electrical routes derive from light2-harness-r01 legacy evidence.\n'
-        '     Probe placement derives from la03-p4-probe-fixture-r01. -->\n',
-    )
-    document = replace_once(
-        document,
-        'viewBox="-150 0 1400 1250"',
-        'viewBox="-150 0 1400 1420"',
-    )
-    document = replace_once(
-        document,
-        'width="1400"\n   height="1250"',
-        'width="1400"\n   height="1420"',
-    )
-    document = replace_once(
-        document,
-        'sodipodi:docname="wiring-diagram.svg"',
-        'sodipodi:docname="normal-forward-wiring-and-probes.svg"',
-    )
-    document = replace_once(
-        document,
-        '     height="1250"\n     fill="#ffffff" />',
-        '     height="1420"\n     fill="#ffffff" />',
-    )
+    j2_rows = [(f"J2.{pin:02d}  {P4_LABELS['J2'][pin]}", P4_COLORS.get(("J2", pin), "#ffffff")) for pin in range(1, 21)]
+    j3_rows = [(f"J3.{pin:02d}  {P4_LABELS['J3'][pin]}", P4_COLORS.get(("J3", pin), "#ffffff")) for pin in range(1, 21)]
 
-    ext1_rows = {
-        '<rect id="p4-ext1-pin16" x="0" y="104" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="119"><tspan font-weight="bold">16</tspan><tspan> GPIO15</tspan></text>':
-        '<rect id="p4-ext1-pin16" x="0" y="104" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="119"><tspan font-weight="bold">16</tspan><tspan> GPIO15 / FWD_OE_N</tspan></text><circle id="probe-d7-gpio15" cx="237" cy="115" r="7" fill="#6d4c41" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext1-pin15" x="0" y="130" width="250" height="22" rx="3" fill="#111111" stroke="#333333" stroke-width="1.5"/><text x="6" y="145" fill="#ffffff"><tspan font-weight="bold">15</tspan><tspan> GPIO14 / CLOCK</tspan></text><circle id="probe-gray-gpio14" cx="237" cy="141" r="7" fill="#808080" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext1-pin15" x="0" y="130" width="250" height="22" rx="3" fill="#111111" stroke="#333333" stroke-width="1.5"/><text x="6" y="145" fill="#ffffff"><tspan font-weight="bold">15</tspan><tspan> GPIO14 / CLOCK</tspan></text><circle id="probe-d5-gpio14" cx="237" cy="141" r="7" fill="#d32f2f" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext1-pin14" x="0" y="156" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="171"><tspan font-weight="bold">14</tspan><tspan> GPIO13 / VALID_N</tspan></text><circle id="probe-purple-gpio13" cx="237" cy="167" r="7" fill="#7b1fa2" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext1-pin14" x="0" y="156" width="250" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="171"><tspan font-weight="bold">14</tspan><tspan> GPIO13 / VALID_N</tspan></text><circle id="probe-d3-gpio13" cx="237" cy="167" r="7" fill="#f57c00" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext1-pin13" x="0" y="182" width="250" height="22" rx="3" fill="#808080" stroke="#333333" stroke-width="1.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO12 / D1</tspan></text><circle id="probe-blue-gpio12" cx="237" cy="193" r="7" fill="#1976d2" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext1-pin13" x="0" y="182" width="250" height="22" rx="3" fill="#808080" stroke="#333333" stroke-width="1.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO12 / UART TX / D1</tspan></text><circle id="probe-d1-gpio12" cx="237" cy="193" r="7" fill="#fbc02d" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext1-pin12" x="0" y="208" width="250" height="22" rx="3" fill="#7b1fa2" stroke="#333333" stroke-width="1.5"/><text x="6" y="223" fill="#ffffff"><tspan font-weight="bold">12</tspan><tspan> GPIO11 / D3</tspan></text><circle id="probe-green-gpio11" cx="237" cy="219" r="7" fill="#388e3c" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext1-pin12" x="0" y="208" width="250" height="22" rx="3" fill="#7b1fa2" stroke="#333333" stroke-width="1.5"/><text x="6" y="223" fill="#ffffff"><tspan font-weight="bold">12</tspan><tspan> GPIO11 / D3</tspan></text>',
-    }
-    for old, new in ext1_rows.items():
-        document = replace_once(document, old, new)
+    odd_rows, even_rows = [], []
+    for landing in range(1, 18):
+        odd, even = 2 * landing - 1, 2 * landing
+        odd_fill = "#ffffff" if authority["J1"][odd].startswith("UNUSED_") else ODD_COLORS[landing - 1]
+        even_fill = "#ffffff" if authority["J1"][even].startswith("UNUSED_") else EVEN_COLORS[landing - 1]
+        odd_rows.append((f"Agon {odd:02d}  ·  JO1.{landing:02d}  ·  {AGON_LABELS[odd]}", odd_fill))
+        even_rows.append((f"Agon {even:02d}  ·  JE1.{landing:02d}  ·  {AGON_LABELS[even]}", even_fill))
 
-    ext2_rows = {
-        '<rect id="p4-ext2-pin13" x="0" y="182" width="300" height="22" rx="3" fill="#1976d2" stroke="#333333" stroke-width="1.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO20 / READY_N</tspan></text><circle id="probe-yellow-gpio20" cx="287" cy="193" r="7" fill="#fbc02d" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext2-pin13" x="0" y="182" width="300" height="22" rx="3" fill="#1976d2" stroke="#333333" stroke-width="2.5"/><text x="6" y="197" fill="#ffffff"><tspan font-weight="bold">13</tspan><tspan> GPIO20 / READY_N</tspan></text><circle id="probe-d6-gpio20" cx="287" cy="193" r="7" fill="#808080" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext2-pin12" x="0" y="208" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="223"><tspan font-weight="bold">12</tspan><tspan> GPIO21</tspan></text><circle id="probe-orange-gpio21" cx="287" cy="219" r="7" fill="#f57c00" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext2-pin12" x="0" y="208" width="300" height="22" rx="3" fill="#ffffff" stroke="#333333" stroke-width="1.5"/><text x="6" y="223"><tspan font-weight="bold">12</tspan><tspan> GPIO21 / REV_OE_N</tspan></text><circle id="probe-d4-gpio21" cx="287" cy="219" r="7" fill="#7b1fa2" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext2-pin11" x="0" y="234" width="300" height="22" rx="3" fill="#fbc02d" stroke="#333333" stroke-width="1.5"/><text x="6" y="249" fill="#111111"><tspan font-weight="bold">11</tspan><tspan> GPIO22 / D0</tspan></text><circle id="probe-red-gpio22" cx="287" cy="245" r="7" fill="#d32f2f" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext2-pin11" x="0" y="234" width="300" height="22" rx="3" fill="#fbc02d" stroke="#333333" stroke-width="1.5"/><text x="6" y="249" fill="#111111"><tspan font-weight="bold">11</tspan><tspan> GPIO22 / UART RX / D0</tspan></text><circle id="probe-d2-gpio22" cx="287" cy="245" r="7" fill="#1976d2" stroke="#111111" stroke-width="1.5"/>',
-        '<rect id="p4-ext2-pin10" x="0" y="260" width="300" height="22" rx="3" fill="#f57c00" stroke="#333333" stroke-width="1.5"/><text x="6" y="275" fill="#111111"><tspan font-weight="bold">10</tspan><tspan> GPIO23 / D2</tspan></text><circle id="probe-brown-gpio23" cx="287" cy="271" r="7" fill="#6d4c41" stroke="#555555" stroke-width="1.5"/>':
-        '<rect id="p4-ext2-pin10" x="0" y="260" width="300" height="22" rx="3" fill="#f57c00" stroke="#333333" stroke-width="1.5"/><text x="6" y="275" fill="#111111"><tspan font-weight="bold">10</tspan><tspan> GPIO23 / D2</tspan></text>',
-        '<rect id="p4-ext2-pin9" x="0" y="286" width="300" height="22" rx="3" fill="#d32f2f" stroke="#333333" stroke-width="1.5"/><text x="6" y="301" fill="#ffffff"><tspan font-weight="bold">9</tspan><tspan> GPIO32 / D4</tspan></text>':
-        '<rect id="p4-ext2-pin9" x="0" y="286" width="300" height="22" rx="3" fill="#d32f2f" stroke="#333333" stroke-width="1.5"/><text x="6" y="301" fill="#ffffff"><tspan font-weight="bold">9</tspan><tspan> GPIO32 / D4</tspan></text><circle id="probe-d0-gpio32" cx="287" cy="297" r="7" fill="#388e3c" stroke="#111111" stroke-width="1.5"/>',
-    }
-    for old, new in ext2_rows.items():
-        document = replace_once(document, old, new)
-
-    route = '''    <g id="route-pd4">
-      <polyline id="wire-pd4-underlay" points="190,238.8089 630,238.8089" stroke="#ffffff" stroke-width="9"/>
-      <polyline id="wire-pd4" class="wire-conductor" data-net="PD4" points="190,238.8089 630,238.8089" stroke="#1976d2" stroke-width="3"/>
-    </g>'''
-    route_with_label = route + '''
-    <g id="ready-normal-path-callout">
-      <rect x="305" y="210.8089" width="270" height="20" rx="4" fill="#ffffff" stroke="#1976d2" stroke-width="1.5"/>
-      <text x="440" y="224.8089" text-anchor="middle" font-size="11" font-weight="bold" fill="#0d47a1">READY_N · Agon PD4 → P4 GPIO20</text>
-    </g>'''
-    document = replace_once(document, route, route_with_label)
-
-    legend = '''
-  <g id="normal-forward-state-and-la03-legend">
-    <rect x="-125" y="1225" width="1350" height="170" rx="10" fill="#f7f7f7" stroke="#333333" stroke-width="2"/>
-    <text x="-100" y="1252" font-size="16" font-weight="bold" fill="#111111">Normal r01 forward wiring · canonical LA-03 probe placement</text>
-    <g font-size="12" font-weight="bold" fill="#111111">
-      <circle cx="-90" cy="1280" r="7" fill="#388e3c" stroke="#111111" stroke-width="1.5"/><text x="-75" y="1284">D0 · GPIO32 · parallel D4</text>
-      <circle cx="205" cy="1280" r="7" fill="#fbc02d" stroke="#111111" stroke-width="1.5"/><text x="220" y="1284">D1 · GPIO12 · UART TX / D1</text>
-      <circle cx="520" cy="1280" r="7" fill="#1976d2" stroke="#111111" stroke-width="1.5"/><text x="535" y="1284">D2 · GPIO22 · UART RX / D0</text>
-      <circle cx="830" cy="1280" r="7" fill="#f57c00" stroke="#111111" stroke-width="1.5"/><text x="845" y="1284">D3 · GPIO13 · VALID_N</text>
-      <circle cx="-90" cy="1310" r="7" fill="#7b1fa2" stroke="#111111" stroke-width="1.5"/><text x="-75" y="1314">D4 · GPIO21 · REV_OE_N</text>
-      <circle cx="205" cy="1310" r="7" fill="#d32f2f" stroke="#111111" stroke-width="1.5"/><text x="220" y="1314">D5 · GPIO14 · CLOCK</text>
-      <circle cx="520" cy="1310" r="7" fill="#808080" stroke="#111111" stroke-width="1.5"/><text x="535" y="1314">D6 · GPIO20 · READY_N</text>
-      <circle cx="830" cy="1310" r="7" fill="#6d4c41" stroke="#111111" stroke-width="1.5"/><text x="845" y="1314">D7 · GPIO15 · FWD_OE_N</text>
-    </g>
-    <text x="-100" y="1347" font-size="13" font-weight="bold" fill="#111111">BLACK GND · retain the qualified P4 signal-ground attachment.</text>
-    <text x="-100" y="1377" font-size="13" font-weight="bold" fill="#0d47a1">READY_N normal state · Agon PD4 → P4 EXT2 pin 13 / GPIO20 · alter wiring only while both boards are powered off.</text>
-  </g>
-'''
-    document = replace_once(document, "</svg>", legend + "</svg>")
-
-    OUTPUT.write_text(document, encoding="utf-8")
+    content = [
+        '<svg xmlns="http://www.w3.org/2000/svg" width="1140" height="1260" viewBox="0 0 1140 1260">',
+        '<!-- Generated by scripts/generate-normal-forward-wiring-and-probes.py. -->',
+        '<rect width="1140" height="1260" fill="#ffffff"/>',
+        '<style>.title{font:700 24px sans-serif}.note{font:14px sans-serif;fill:#333}.bank-title{font:700 18px sans-serif}.bank-note{font:italic 13px sans-serif;fill:#444}.pin{font:700 13px monospace}</style>',
+        '<text x="570" y="36" text-anchor="middle" class="title">Physical header placement and canonical conductor colors</text>',
+        '<text x="570" y="61" text-anchor="middle" class="note">Header positions and pin order show the physical breadboard landing orientation.</text>',
+        bank("J3 — ESP32-P4 EXT2", "physical left", 45, 112, j3_rows),
+        bank("J2 — ESP32-P4 EXT1", "physical right", 595, 112, j2_rows),
+        bank("JO1 — Agon odd-pin landing header", "Agon pin · breadboard-header pin · signal", 45, 738, odd_rows),
+        bank("JE1 — Agon even-pin landing header", "Agon pin · breadboard-header pin · signal", 595, 738, even_rows),
+        '<text x="570" y="1235" text-anchor="middle" class="note">Colors identify canonical ribbon conductors; this drawing does not specify electrical connectivity.</text>',
+        '</svg>\n',
+    ]
+    OUTPUT.write_text("\n".join(content), encoding="utf-8")
     print(OUTPUT.relative_to(REPOSITORY))
 
 

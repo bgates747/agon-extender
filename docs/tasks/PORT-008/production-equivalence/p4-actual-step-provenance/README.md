@@ -74,13 +74,22 @@ ineligible evidence.
 Only top-level SCons `@response` arguments are supported. The capture-owned
 response bytes are retained and parsed for the analytical expanded vector.
 Each file must be one UTF-8, LF-terminated line whose encoded words re-encode
-byte-for-byte with the pinned SCons quote-spaces generator; the event records
-the encoded word boundaries, decoded vector, and successful round trip. A
-nested `@response` or tool/linker response form such as `-Wl,@response` fails
-before the compiler driver executes. The capture-owned long-command helper
-also requires the exact SCons `quote_spaces` function, one-space argument
-joiner, and `@` prefix; an environment override of any of those settings fails
-before response materialization.
+byte-for-byte with the recorder's pinned safe subset of SCons `quote_spaces`;
+the event records the encoded word boundaries, decoded vector, and successful
+round trip. SCons `quote_spaces` leaves some quote, dollar, backslash, and other
+tool-specific response syntax literal. The recorder does not generalize or
+reinterpret those forms: any word outside its canonical ordinary-word grammar
+fails closed before the compiler driver executes. A nested `@response` or
+tool/linker response form such as `-Wl,@response` fails at the same boundary.
+
+The capture-owned long-command helper authenticates the exact loaded
+PlatformIO `piomaxlen.tempfile_arg_esc_func` wrapper and its binding to the
+loaded SCons `quote_spaces` function. It also freezes the exact `SCons.Subst`
+module and `SUBST_CMD` mode used to expand the response, the one-space argument
+joiner, `@` prefix, `.tmp` suffix, build-owned temporary directory, and pinned
+maximum command length. The helper revalidates every mutable module and
+environment value in that stored response contract before materialization; a
+replacement or override fails before it can produce executable response bytes.
 
 The compiler action receives and records the `sanitized-deterministic-v1`
 child environment: only `PATH`, `LANG=C`, `LC_ALL=C`, `TZ=UTC`, and a

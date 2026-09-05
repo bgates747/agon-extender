@@ -125,7 +125,10 @@ here so the upstream/local and permanent/prototype boundaries are complete
 rather than silently excluding code that had already been corrected,
 contained, or found discrepant.
 The first real rehearsal subsequently exposed P032 in the active P4 recorder
-installation boundary.
+installation boundary and P033 in generic recorder normalization. Continued
+adversarial review found P034 through P044 in project-owned Work 2.e
+recorder, gate, comparator, and policy code; official MOS and VDP have no
+counterpart for those evidence mechanisms.
 
 | Recorded defect | Provenance classification | Maintained-surface status |
 |---|---|---|
@@ -161,6 +164,18 @@ installation boundary.
 | `PORT008-PROV-P030` — the first P4 actual-step recorder draft underbound executed argv, runtime roots, response forms, and dispatched subtools | Created while implementing project P4 evidence tooling; the Espressif multi-call dispatchers are intentional upstream behavior, but failure to authenticate the selected backends was local | Corrected before the recorder's first commit with direct execution, exact response/runtime/root records, dispatcher/backend binding, and adversarial tests; a clean real capture remains required |
 | `PORT008-PROV-P031` — the first product-gate draft admitted incomplete command, lineage, path, role, and linked-instruction comparisons | Created while implementing project Work 2.e comparison tooling; official MOS and VDP provide no corresponding gate | Corrected before any eligible evidence; command fingerprints deliberately remain empty until a clean rehearsal and therefore the gate still fails closed |
 | `PORT008-PROV-P032` — the active P4 recorder assumed Python `__file__` exists in a SCons extra-script namespace | Created in project Work 2.e PlatformIO integration; official VDP has no actual-step recorder or extra-script hook | First real rehearsal stopped before evidence creation; corrected by resolving the committed hook from SCons `PROJECT_DIR`, with a no-`__file__` active-install regression; new clean capture pending |
+| `PORT008-PROV-P033` — the generic recorder selected an enclosing root when a quoted probe contained an exact nested root | Created in project `mos-agondev` actual-step evidence tooling; official MOS has no recorder or driver-selection replay | Gate rejected both otherwise successful EMOS captures; corrected in `6d4008c` with one global longest-root delimiter pass and prefix regressions; recapture pending |
+| `PORT008-PROV-P034` — P4 TEMPFILE callable/response contract mismatch | Created in project P4 evidence tooling; no official-VDP recorder counterpart | Retained correction matches SCons/PlatformIO behavior and forces a real long-command regression; recapture pending |
+| `PORT008-PROV-P035` — ambiguous P4 spawn classification could delegate a possible target action | Created in project P4 evidence tooling; no official-VDP recorder counterpart | Retained correction fails closed; recapture pending |
+| `PORT008-PROV-P036` — P4 evidence paths were not rebound to expanded argv | Created in the project gate; no upstream counterpart | Retained correction binds source/output/ELF/map operands exactly |
+| `PORT008-PROV-P037` — rooted directory and malformed/missing-token classification was permissive | Created in the project gate; no upstream counterpart | Retained correction rejects the malformed evidence |
+| `PORT008-PROV-P038` — path spelling could stand in for canonical file identity | Created in the project gate; no upstream counterpart | Retained correction rejects hardlink aliases and duplicate identity |
+| `PORT008-PROV-P039` — root, suffix, symlink, and retarget containment was incomplete | Created in the project gate; no upstream counterpart | Retained correction enforces absolute contained stable identities |
+| `PORT008-PROV-P040` — zds2gas evidence used raw-byte rather than semantic-text hashing | Created in generic evidence tooling; official MOS has no recorder counterpart | Retained correction hashes UTF-8 universal-newline text |
+| `PORT008-PROV-P041` — JSON booleans could satisfy integer evidence fields | Created in the Python gate; no upstream counterpart | Partly corrected; P4 `ascii_occurrences` and runtime `version_info` remain open |
+| `PORT008-PROV-P042` — EMOS linked comparison rejected valid rebasing and undercovered object contributions | Created in the project comparator; official MOS has no comparator counterpart | Retained uncommitted full allocated-section/verified-`r_imm24` correction; fresh evidence pending |
+| `PORT008-PROV-P043` — EMOS coordinator had no explicit composition dependency delta | Created in project comparison policy; no upstream counterpart | Retained uncommitted exact qualification-only header delta; fresh evidence pending |
+| `PORT008-PROV-P044` — literal reserved placeholders can collide with normalized roots | Created in project normalization tooling; no upstream counterpart | P4 rejection retained; generic recorder collision remains open |
 
 1. Official MOS v3.0.2 at commit
    `8336409351ee5314e02801a7b72a4f1bb5282519` contains the uncast
@@ -436,6 +451,15 @@ installation boundary.
     invokes active installation after removing the module global. This local
     integration defect is `PORT008-PROV-P032`; only a new clean capture at the
     corrective commit can authenticate production steps.
+32. The first EMOS validation replay then proved that the generic recorder's
+    root substitution did not share the product gate's external-text boundary
+    grammar. A quoted exact nested `BUILD` path fell through to its enclosing
+    `BUILD_TOOL` root, so replay was non-reproducible and failed structurally.
+    Official MOS has no corresponding recorder. Generic commit `6d4008c`
+    substitutes all lexical/resolved candidates globally longest-first, accepts
+    only the gate's conservative right delimiters, and rejects longer path-
+    component lookalikes. This local tooling defect is
+    `PORT008-PROV-P033`; both captures require replacement.
 
 None of these classifications promotes the fixed-purpose PORT-008 adapters or
 temporary recovery image into production. For P002 through P006, EMOS's mode
@@ -456,9 +480,11 @@ P027 is likewise P4 qualification identity integration; P028 is EMOS wrapper
 tooling; and P029 through P031 are generic recorder, P4 recorder, and product-
 gate infrastructure created and corrected before any eligible Work 2.e
 evidence. P032 is a later local P4 recorder-installation defect caught by the
-first clean live rehearsal before evidence creation. Their corrections are
-prerequisites for fresh target provenance, not evidence that any
-pre-correction build was authentic.
+first clean live rehearsal before evidence creation. P033 through P044 are
+later local evidence-tool defects caught by gate replay and adversarial review
+before fingerprint freeze. P041 and the generic-recorder half of P044 remain
+open; P042/P043 are retained uncommitted corrections. None of these changes
+makes pre-correction output authentic.
 
 After Author disposition, the exact then-current dirty P4 and EMOS deltas were
 preserved as historical binary patches under
@@ -1330,6 +1356,22 @@ evidence root. The hook now derives its exact committed path from SCons'
 `PROJECT_DIR`, and an active-install regression deletes `__file__` before
 installation. Only a new clean capture at the corrective commit can supply
 evidence.
+
+P033 was exposed by the next fail-closed EMOS gate replay. The generic recorder
+normalized a quoted exact nested root as its enclosing root, which made the
+gate's independent driver-probe replay disagree. Official MOS has no recorder
+counterpart. Generic commit `6d4008c` unifies longest-root delimiter handling.
+Both earlier EMOS records remain invalid.
+
+P034 through P044 arose only in project-owned Work 2.e recording and
+comparison machinery. They cover the real P4 TEMPFILE/spawn contract, argv and
+path identity binding, containment, zds2gas semantic hashing, exact JSON types,
+full allocated-section EMOS relocation normalization, the coordinator's exact
+composition dependency delta, and reserved-placeholder collisions. Official
+MOS and VDP contain no corresponding evidence machinery. Retained corrections
+cover P034--P040, P042, P043, and the P4 half of P044; P041's two exact-type
+paths and the generic-recorder half of P044 remain open. The 62-test host result
+for the retained comparator work is not target evidence or a final baseline.
 
 PORT-008 and INTEG-002 still own authenticated source/tool and final-link object
 provenance, target-runtime behavior, retained-parser fault injection,

@@ -1,9 +1,10 @@
 # PORT-008 Work 2.e production-object provenance gate
 
 - Status: product policy, raw-record adapters, validator/comparator, and
-  adversarial host tests implemented; intended-command fingerprints await a
-  clean rehearsal, no target evidence has been accepted, and no equivalence
-  claim is available
+  adversarial host tests implemented; mechanical EMOS and P4 rehearsal output
+  exists but is ineligible, intended-command fingerprints await a clean
+  rehearsal, no target evidence has been accepted, and no equivalence claim is
+  available
 - Owner: PORT-008 under accepted `PORT-008-D002`
 - Policy: `production-object-policy.json`
 - Build-record skeleton: `BUILD-RECORD.template.json`
@@ -59,22 +60,25 @@ following before comparison:
    target executable identities, child environments, response files, compile
    commands, object bytes, object symbols, object disassembly, and the policy-
    selected owned-symbol contracts plus those symbols' normalized linked
-   instructions.
+   instructions. The EMOS coordinator is composition-dependent: policy permits
+   exactly the qualification-only dependency `${PREPARED}/src/emos_parallel.h`
+   and no release-only dependency; every other dependency must match.
 
 The gate deliberately scopes final-link claims to the policy-required objects.
 It does not claim that P4 evidence enumerates every implicit driver runtime,
 `-l` resolution, default linker script, framework archive, or whole-image link
 input. Each required unit must nevertheless be an exact actual-link input and
-must contribute owned code. Linked disassembly is symbol-relative and limited
-to the policy-selected owned symbols: the gate removes each selected symbol's
-absolute start address, records instruction offsets from that start, and
-replaces rendered absolute symbol targets with their symbol names.
-Qualification and release records for those selected symbols must still match.
-A different relaxation/opcode/immediate within that selected set therefore
-fails even when object bytes match, while a harmless whole-image address/layout
-shift does not. Exact pre-link object bytes remain the complete byte-level
-equality authority for each required object; the linked-disassembly result is
-not a whole-object or whole-image instruction-coverage claim.
+must contribute owned code. For EMOS, the gate projects every allocated object
+section into the linked image. It verifies every linked non-relocation byte
+against the object, accepts only the pinned eZ80 `r_imm24` relocation form,
+resolves section targets from exact map contributions and named targets from a
+unique final symbol, verifies each relocated linked value, and canonicalizes
+only those verified relocation spans. Equality therefore covers the full
+allocated contribution, including non-code and no-content sections where
+applicable, while permitting only proved address rebasing. Exact pre-link
+object bytes remain the byte-level authority. P4 retains the selected-owned-
+symbol linked-instruction comparison; no production P4 release consumer yet
+exists against which to make a release/qualification claim.
 
 EMOS linker `--trace` output is required, nonempty, and hash-bound. It is a
 diagnostic only: the gate does not parse it into a broader link-closure claim.
@@ -104,10 +108,18 @@ Work 2.e cannot currently produce an eligible comparison:
 3. The only registered `port-008-forward-qualification` revision is rejected.
 4. No production P4 release composition consumes the P4 production units.
    `p4-browser-vdp` uses `DisconnectedStream` and is not a release surrogate.
-5. No real P4 target capture has integrated the final actual-step recorder
-   shape, and no Work 2.e EMOS ordinary/fixed pair has been captured.
-6. `PORT008-PROV-P023` through `PORT008-PROV-P031` are corrected in source or
-   pre-baseline evidence tooling but lack fresh target evidence. P024/P025
+5. P4 `diagnostic-06` captured compile-step diagnostics but stopped before the
+   final link. The unversioned EMOS release and qualification rehearsals made
+   complete mechanical records, but they predate the retained gate/policy
+   corrections and remain invalid. None is accepted evidence.
+6. `PORT008-PROV-P023` through `PORT008-PROV-P040`, P042, and P043 are
+   corrected in source or retained work-in-progress evidence tooling but lack
+   fresh target evidence. P041 remains open for two exact-type checks:
+   `final_elf_strings[].ascii_occurrences` and Python-runtime `version_info`
+   can still admit JSON booleans as integers. P044 is only partly corrected:
+   the P4 validator rejects literal reserved placeholders in raw command
+   vectors, while the generic `mos-agondev` recorder can still normalize a
+   literal `${ROOT}` into the same value as a substituted real root. P024/P025
    specifically require equality of
    common compile commands and dependencies after role/identity flags became
    translation-unit-local; no waiver is allowed for coincidentally equal
@@ -224,6 +236,15 @@ EMOS bindings:
    exact `BUILD/ld/mos.ld`.
 7. `TOOLCHAIN`: the selected AgonDev release root.
 8. `PROVENANCE`: the fresh EMOS evidence root.
+
+Although policy permits the `PYTHON_ENV` root itself to be a leaf symlink,
+it does not permit symlinks below that root. A conventional virtual
+environment whose `bin/python` is a symlink is therefore ineligible. Create
+the fresh capture environment from the policy-pinned interpreter with
+`python -m venv --copies`, and verify that its interpreter and recorded files
+are regular files before starting a capture. A copied environment used during
+diagnosis is not itself evidence and must not be reused as though it came from
+a clean committed capture.
 
 P4 bindings:
 

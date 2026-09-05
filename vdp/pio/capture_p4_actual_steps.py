@@ -50,8 +50,18 @@ SCHEMA_VERSION = "1.0.0"
 MAX_RESPONSE_BYTES = 16 * 1024 * 1024
 MAX_IDENTITY_OUTPUT_BYTES = 64 * 1024
 IDENTITY_TIMEOUT_SECONDS = 15
+MAX_SPAWN_CONTEXT_ARGUMENTS = 4
+MAX_SPAWN_CONTEXT_VALUE_CHARS = 160
+MAX_SPAWN_CONTEXT_CHARS = 1024
+PINNED_PLATFORMIO_VERSION = "6.1.19"
+PINNED_SCONS_VERSION = "4.8.1"
+PINNED_PIOMAXLEN_MAX_LINE_LENGTH = 130560
 CPP_SUFFIXES = (".cc", ".cpp", ".cxx", ".C")
 DRIVER_NAME = re.compile(r"(?:^|[-_])(?:g\+\+|clang\+\+|c\+\+)$")
+RAW_DRIVER_TOKEN = re.compile(
+    r"(?:^|[/\\\"'\s])(?:[A-Za-z0-9_.-]*-)?"
+    r"(?:g\+\+|clang\+\+|c\+\+)(?=$|[\\\"'\s;&|<>])"
+)
 MAP_FLAG = re.compile(r"^-Wl,(?:--?Map)(?:=|,)(.+)$")
 MAP_LOAD = re.compile(r"^LOAD[ \t]+(.+?)[ \t]*$")
 IDENTITY_DEFINE = re.compile(
@@ -329,6 +339,34 @@ def _driver_index(arguments: Sequence[str]) -> int | None:
         if DRIVER_NAME.search(Path(argument).name):
             return index
     return None
+
+
+def _bounded_spawn_context(command: Any, arguments: Sequence[Any]) -> str:
+    """Render bounded, escaped context for a rejected SCons spawn boundary."""
+
+    def bounded_repr(value: Any) -> str:
+        rendered = repr(str(value))
+        if len(rendered) > MAX_SPAWN_CONTEXT_VALUE_CHARS:
+            rendered = (
+                rendered[: MAX_SPAWN_CONTEXT_VALUE_CHARS - 3] + "..."
+            )
+        return rendered
+
+    preview = [
+        bounded_repr(argument)
+        for argument in arguments[:MAX_SPAWN_CONTEXT_ARGUMENTS]
+    ]
+    if len(arguments) > MAX_SPAWN_CONTEXT_ARGUMENTS:
+        preview.append(
+            f"<... {len(arguments) - MAX_SPAWN_CONTEXT_ARGUMENTS} more>"
+        )
+    context = (
+        f"command={bounded_repr(command)}, argc={len(arguments)}, "
+        f"argv=[{', '.join(preview)}]"
+    )
+    if len(context) > MAX_SPAWN_CONTEXT_CHARS:
+        context = context[: MAX_SPAWN_CONTEXT_CHARS - 3] + "..."
+    return context
 
 
 def _candidate_source(arguments: Sequence[str], cwd: Path) -> Path | None:
@@ -671,52 +709,223 @@ def _parse_depfile(path: Path, cwd: Path) -> tuple[Path, ...]:
     return tuple(dependencies)
 
 
-def _persistent_tempfile_class(output_root: Path):
-    """Return a SCons TEMPFILE implementation with retained response bytes."""
+class _PiomaxlenContract:
+    """Authenticated PlatformIO/SCons response-file construction boundary."""
 
-    import SCons.Subst
+    def __init__(
+        self,
+        *,
+        module: Any,
+        scons_module: Any,
+        scons_subst_module: Any,
+        subst_command_mode: Any,
+        escape_argument: Callable[[str], str],
+        quote_spaces: Callable[[str], str],
+        build_root: Path,
+        maximum_line_length: int,
+    ) -> None:
+        self.module = module
+        self.scons_module = scons_module
+        self.scons_subst_module = scons_subst_module
+        self.subst_command_mode = subst_command_mode
+        self.escape_argument = escape_argument
+        self.quote_spaces = quote_spaces
+        self.build_root = build_root
+        self.maximum_line_length = maximum_line_length
+
+    def validate_response_environment(self, env: Any) -> None:
+        """Reject mutation of authenticated state used to render response bytes."""
+
+        if sys.modules.get("piomaxlen") is not self.module:
+            raise ProvenanceError("authenticated piomaxlen module was replaced")
+        if (
+            sys.modules.get("SCons") is not self.scons_module
+            or sys.modules.get("SCons.Subst") is not self.scons_subst_module
+            or getattr(self.scons_module, "Subst", None)
+            is not self.scons_subst_module
+        ):
+            raise ProvenanceError(
+                "authenticated SCons.Subst module was replaced"
+            )
+        if (
+            getattr(self.scons_subst_module, "SUBST_CMD", None)
+            is not self.subst_command_mode
+            or getattr(self.scons_subst_module, "quote_spaces", None)
+            is not self.quote_spaces
+        ):
+            raise ProvenanceError(
+                "authenticated SCons.Subst response state changed"
+            )
+        if (
+            getattr(self.module, "tempfile_arg_esc_func", None)
+            is not self.escape_argument
+            or getattr(self.module, "quote_spaces", None) is not self.quote_spaces
+            or getattr(self.module, "IS_WINDOWS", None) is not False
+            or getattr(self.module, "MAX_LINE_LENGTH", None)
+            != self.maximum_line_length
+        ):
+            raise ProvenanceError("authenticated piomaxlen globals changed")
+        if env.get("TEMPFILEARGESCFUNC") is not self.escape_argument:
+            raise ProvenanceError(
+                "P4 provenance requires the authenticated PlatformIO "
+                "piomaxlen TEMPFILEARGESCFUNC"
+            )
+        if env.get("TEMPFILEARGJOIN") != " ":
+            raise ProvenanceError(
+                "P4 provenance requires a single-space TEMPFILEARGJOIN"
+            )
+        if env.subst("$TEMPFILEPREFIX") != "@":
+            raise ProvenanceError(
+                "P4 provenance requires the exact @ TEMPFILEPREFIX"
+            )
+        if env.subst("$TEMPFILESUFFIX") != ".tmp":
+            raise ProvenanceError(
+                "P4 provenance requires the exact .tmp TEMPFILESUFFIX"
+            )
+        try:
+            tempfile_directory = Path(env.subst("$TEMPFILEDIR")).resolve(
+                strict=True
+            )
+        except (OSError, RuntimeError) as exc:
+            raise ProvenanceError(
+                f"P4 provenance TEMPFILEDIR is not a real directory: {exc}"
+            ) from exc
+        if tempfile_directory != self.build_root:
+            raise ProvenanceError(
+                "P4 provenance requires TEMPFILEDIR to resolve to BUILD_DIR"
+            )
+        try:
+            maximum = int(env.subst("$MAXLINELENGTH"))
+        except (TypeError, ValueError) as exc:
+            raise ProvenanceError(
+                "P4 provenance MAXLINELENGTH is not an integer"
+            ) from exc
+        if maximum != self.maximum_line_length:
+            raise ProvenanceError(
+                "P4 provenance MAXLINELENGTH differs from pinned piomaxlen"
+            )
+
+
+def _authenticate_piomaxlen_contract(
+    env: Any,
+    platformio_module: Any,
+    scons_module: Any,
+    build_root: Path,
+) -> _PiomaxlenContract:
+    """Authenticate the exact loaded PlatformIO response-file tool."""
+
+    if str(platformio_module.__version__) != PINNED_PLATFORMIO_VERSION:
+        raise ProvenanceError(
+            "P4 provenance requires PlatformIO " + PINNED_PLATFORMIO_VERSION
+        )
+    if str(scons_module.__version__) != PINNED_SCONS_VERSION:
+        raise ProvenanceError(
+            "P4 provenance requires SCons " + PINNED_SCONS_VERSION
+        )
+    if os.name != "posix" or sys.platform == "win32":
+        raise ProvenanceError("P4 provenance requires the pinned POSIX build path")
+
+    piomaxlen = sys.modules.get("piomaxlen")
+    if piomaxlen is None:
+        raise ProvenanceError("PlatformIO piomaxlen tool is not loaded")
+    platformio_name = getattr(platformio_module, "__file__", None)
+    piomaxlen_name = getattr(piomaxlen, "__file__", None)
+    if not isinstance(platformio_name, str) or not isinstance(piomaxlen_name, str):
+        raise ProvenanceError("PlatformIO/piomaxlen module file is absent")
+    platformio_file = Path(os.path.abspath(platformio_name))
+    piomaxlen_file = Path(os.path.abspath(piomaxlen_name))
+    _reject_symlink_components(platformio_file, "PlatformIO module path")
+    _reject_symlink_components(piomaxlen_file, "piomaxlen module path")
+    expected_piomaxlen = (
+        _regular_file(platformio_file, "PlatformIO module file").parent
+        / "builder/tools/piomaxlen.py"
+    ).resolve(strict=True)
+    actual_piomaxlen = _regular_file(piomaxlen_file, "piomaxlen module file")
+    if actual_piomaxlen != expected_piomaxlen:
+        raise ProvenanceError(
+            "loaded piomaxlen is outside the authenticated PlatformIO package"
+        )
+
+    scons_subst = getattr(scons_module, "Subst", None)
+    scons_platform = getattr(scons_module, "Platform", None)
+    if scons_subst is None or scons_platform is None:
+        raise ProvenanceError("pinned SCons Subst/Platform modules are not loaded")
+    if (
+        sys.modules.get("SCons") is not scons_module
+        or sys.modules.get("SCons.Subst") is not scons_subst
+    ):
+        raise ProvenanceError("loaded SCons/Subst module identities are inconsistent")
+    quote_spaces = getattr(scons_subst, "quote_spaces", None)
+    subst_command_mode = getattr(scons_subst, "SUBST_CMD", None)
+    escape_argument = getattr(piomaxlen, "tempfile_arg_esc_func", None)
+    if not callable(quote_spaces) or not callable(escape_argument):
+        raise ProvenanceError("piomaxlen response encoder is not callable")
+    if subst_command_mode is None:
+        raise ProvenanceError("pinned SCons SUBST_CMD mode is absent")
+    if getattr(piomaxlen, "quote_spaces", None) is not quote_spaces:
+        raise ProvenanceError(
+            "piomaxlen is not bound to the authenticated SCons quote_spaces"
+        )
+    if getattr(piomaxlen, "IS_WINDOWS", None) is not False:
+        raise ProvenanceError("piomaxlen selected its Windows response policy")
+    if (
+        getattr(piomaxlen, "MAX_LINE_LENGTH", None)
+        != PINNED_PIOMAXLEN_MAX_LINE_LENGTH
+    ):
+        raise ProvenanceError("piomaxlen maximum command length is not pinned")
+    if env.get("TEMPFILE") is not getattr(scons_platform, "TempFileMunge", None):
+        raise ProvenanceError(
+            "PlatformIO piomaxlen TEMPFILE was replaced before provenance install"
+        )
+
+    contract = _PiomaxlenContract(
+        module=piomaxlen,
+        scons_module=scons_module,
+        scons_subst_module=scons_subst,
+        subst_command_mode=subst_command_mode,
+        escape_argument=escape_argument,
+        quote_spaces=quote_spaces,
+        build_root=build_root,
+        maximum_line_length=PINNED_PIOMAXLEN_MAX_LINE_LENGTH,
+    )
+    contract.validate_response_environment(env)
+    return contract
+
+
+def _persistent_tempfile_class(
+    output_root: Path, contract: _PiomaxlenContract
+):
+    """Return a SCons TEMPFILE implementation with retained response bytes."""
 
     class PersistentProvenanceTempFile:
         def __init__(self, command, command_string=None) -> None:
             self.command = command
             self.command_string = command_string
 
-        def __call__(self, target, source, environment, for_signature):
+        def __call__(self, target, source, env, for_signature):
             if for_signature:
                 return self.command
-            command = environment.subst_list(
+            contract.validate_response_environment(env)
+            command = env.subst_list(
                 self.command,
-                SCons.Subst.SUBST_CMD,
+                contract.subst_command_mode,
                 target,
                 source,
             )[0]
-            maximum = int(environment.subst("$MAXLINELENGTH"))
+            maximum = contract.maximum_line_length
             if sum(len(str(item)) for item in command) + len(command) - 1 <= maximum:
                 return self.command
-            escape_argument = environment.get(
-                "TEMPFILEARGESCFUNC", SCons.Subst.quote_spaces
-            )
-            join_character = environment.get("TEMPFILEARGJOIN", " ")
-            prefix = environment.subst("$TEMPFILEPREFIX") or "@"
-            if escape_argument is not SCons.Subst.quote_spaces:
-                raise ProvenanceError(
-                    "P4 provenance requires SCons TEMPFILEARGESCFUNC="
-                    "SCons.Subst.quote_spaces"
-                )
-            if join_character != " ":
-                raise ProvenanceError(
-                    "P4 provenance requires a single-space TEMPFILEARGJOIN"
-                )
-            if prefix != "@":
-                raise ProvenanceError(
-                    "P4 provenance requires the exact @ TEMPFILEPREFIX"
-                )
             response = (
-                join_character.join(
-                    str(escape_argument(str(argument))) for argument in command[1:]
+                " ".join(
+                    str(contract.escape_argument(str(argument)))
+                    for argument in command[1:]
                 )
                 + "\n"
             ).encode("utf-8")
+            if len(response) > MAX_RESPONSE_BYTES:
+                raise ProvenanceError(
+                    f"persistent response exceeds {MAX_RESPONSE_BYTES} bytes"
+                )
             digest = sha256_bytes(response)
             path = output_root / "responses" / f"scons-{digest}.rsp"
             try:
@@ -731,7 +940,7 @@ def _persistent_tempfile_class(output_root: Path):
                     destination.write(response)
                     destination.flush()
                     os.fsync(destination.fileno())
-            return [command[0], prefix + str(path)]
+            return [command[0], "@" + str(path)]
 
     return PersistentProvenanceTempFile
 
@@ -1432,15 +1641,86 @@ class CaptureSession:
 
         escaped_arguments = [str(argument) for argument in arguments]
         if not escaped_arguments:
-            return original_spawn(shell, escape, command, arguments, environment)
+            raise ProvenanceError(
+                "enabled P4 actual-step capture received an empty SCons argv; "
+                "refusing to delegate; check SCons action expansion: "
+                + _bounded_spawn_context(command, arguments)
+            )
         try:
             first_argument = _decode_pinned_scons_posix_word(
                 escaped_arguments[0], "escaped SCons argument 0"
             )
-        except ProvenanceError:
-            # Provenance does not interpret or modify non-C++ shell actions.
-            return original_spawn(shell, escape, command, arguments, environment)
+        except ProvenanceError as exc:
+            raise ProvenanceError(
+                "enabled P4 actual-step capture cannot classify argv[0]; "
+                "refusing to delegate; check SCons callable expansion and pinned "
+                f"POSIX escaping: {exc}; "
+                + _bounded_spawn_context(command, escaped_arguments)
+            ) from exc
         if _driver_index([first_argument]) != 0:
+            decoded_arguments: list[str | None] = [first_argument]
+            for index, argument in enumerate(escaped_arguments[1:], start=1):
+                try:
+                    decoded = _decode_pinned_scons_posix_word(
+                        argument, f"escaped SCons argument {index}"
+                    )
+                except ProvenanceError:
+                    decoded = None
+                decoded_arguments.append(decoded)
+                if (
+                    decoded is not None and _driver_index([decoded]) == 0
+                ) or RAW_DRIVER_TOKEN.search(argument):
+                    raise ProvenanceError(
+                        "refusing to delegate a possible C++ target action: "
+                        f"a C++ compiler driver appears at argv[{index}] instead "
+                        "of argv[0]; "
+                        + _bounded_spawn_context(command, escaped_arguments)
+                    )
+
+            for index, decoded in enumerate(decoded_arguments):
+                if decoded == "-o" and (
+                    index + 1 >= len(decoded_arguments)
+                    or decoded_arguments[index + 1] is None
+                ):
+                    raise ProvenanceError(
+                        "refusing to delegate a possible C++ target action: "
+                        "an -o output argument is absent or not canonically "
+                        "decodable; "
+                        + _bounded_spawn_context(command, escaped_arguments)
+                    )
+                if decoded is None and (
+                    escaped_arguments[index].startswith("-o")
+                    or escaped_arguments[index].startswith('"-o')
+                ):
+                    raise ProvenanceError(
+                        "refusing to delegate a possible C++ target action: "
+                        "a possible combined -o output argument is not "
+                        "canonically decodable; "
+                        + _bounded_spawn_context(command, escaped_arguments)
+                    )
+
+            output = _option_output(
+                [value if value is not None else "" for value in decoded_arguments],
+                Path.cwd().resolve(strict=True),
+            )
+            target_kind: str | None = None
+            if output in self.expected_objects:
+                target_kind = "a required selected C++ object"
+            elif output == self.elf_path:
+                target_kind = "the final firmware ELF"
+            elif output == self.map_path:
+                target_kind = "the final link map"
+            if target_kind is not None:
+                raise ProvenanceError(
+                    "refusing to delegate a possible C++ target action: its -o "
+                    f"output resolves to {target_kind}, but argv[0] is not a C++ "
+                    "compiler driver; "
+                    + _bounded_spawn_context(command, escaped_arguments)
+                )
+
+            # A canonical non-driver argv[0] with no target/driver indicator
+            # retains SCons' ordinary behavior. Unrelated later shell text is
+            # intentionally left to that recognized non-C++ action.
             return original_spawn(shell, escape, command, arguments, environment)
 
         working_directory = Path.cwd().resolve(strict=True)
@@ -2481,6 +2761,8 @@ def install(env: Any) -> CaptureSession | None:
     try:
         import platformio
         import SCons
+        import SCons.Platform
+        import SCons.Subst
     except ImportError as exc:  # pragma: no cover - available inside PlatformIO
         raise ProvenanceError(f"cannot identify PlatformIO/SCons: {exc}") from exc
     # Cache files are executable inputs too. Prevent the capture invocation from
@@ -2488,6 +2770,12 @@ def install(env: Any) -> CaptureSession | None:
     sys.dont_write_bytecode = True
     project_root = Path(env.subst("$PROJECT_DIR")).resolve(strict=True)
     build_root = Path(env.subst("$BUILD_DIR")).resolve(strict=True)
+    tempfile_contract = _authenticate_piomaxlen_contract(
+        env,
+        platformio,
+        SCons,
+        build_root,
+    )
     # PlatformIO/SCons executes extra scripts with exec(), not as imported
     # Python modules, so __file__ is not part of that execution namespace.
     # The qualification hook is a committed project-relative build boundary;
@@ -2525,7 +2813,10 @@ def install(env: Any) -> CaptureSession | None:
 
     env.Replace(
         SPAWN=capture_spawn,
-        TEMPFILE=_persistent_tempfile_class(session.output_root),
+        TEMPFILE=_persistent_tempfile_class(
+            session.output_root,
+            tempfile_contract,
+        ),
     )
     env.AddPreAction(
         "checkprogsize",

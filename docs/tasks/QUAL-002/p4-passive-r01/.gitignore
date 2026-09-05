@@ -1,0 +1,8 @@
+# PlatformIO/ESP-IDF generated state. The fixture's maintained inputs are the
+# adjacent configuration, partition table, and src/main.cpp.
+.pio/
+CMakeLists.txt
+dependencies.lock
+managed_components/
+sdkconfig.*
+!sdkconfig.defaults

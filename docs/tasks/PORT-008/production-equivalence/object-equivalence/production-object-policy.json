@@ -228,9 +228,15 @@
           ]
         },
         {
-          "id": "emos-mode-coordinator",
-          "classification": "composition-dependent",
-          "source_root": "PREPARED",
+      "id": "emos-mode-coordinator",
+      "classification": "composition-dependent",
+      "expected_dependency_delta": {
+        "qualification_only": [
+          "${PREPARED}/src/emos_parallel.h"
+        ],
+        "release_only": []
+      },
+      "source_root": "PREPARED",
           "source": "src/emos.c",
           "object_suffix": "/obj/src/emos.o",
           "producer_kind": "c-compile",
