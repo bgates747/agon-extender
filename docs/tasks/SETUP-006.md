@@ -2,10 +2,10 @@
 
 ## State
 
-- Status: Paused — naming/scaffold work retained; current electrical design
-  promoted to HW-001 and `light2-harness-r02`; current staged construction uses
-  the accepted physical schematic and ordered views, with as-built records
-  accumulated under HW-001/QUAL-002
+- Status: On hold — incomplete. Naming/scaffold work and the r02 design and
+  assembly records are retained under HW-001. Full-circuit wiring is incomplete
+  and the complete circuit is untested; construction and as-built completion
+  are paused by the Author as of 2026-09-07.
 - Started: 2026-08-24 19:09 EDT
 - Finished: --
 
@@ -40,10 +40,13 @@ versioning, design-review, procedure, and qualification gates.
 
 ## Authority and inputs
 
-The following are the historical research inputs. Current construction uses
-the r02 connectivity model, maintained physical schematic, and ordered
-`signal-views/` under HW-001, following PORT-008-D003 and the
+The following are the historical research inputs. Suspended construction used
+the r02 connectivity basis, maintained physical schematic, and separate
+`wiring-order/` under HW-001, following PORT-008-D003/D004 and the
 [staged process](../qualification/staged-circuit-validation.md).
+The permanent input-bias proposal was rejected; HW-001-Q011 retains the
+unresolved input-state question on hold. Signal views remain tracing/debugging
+references. No wiring sequence is currently authorized for execution.
 
 1. `hardware/designs/light2-harness-r01/profile.yaml` and its current README.
 2. The files under `hardware/designs/light2-harness-r01/legacy-evidence/`,

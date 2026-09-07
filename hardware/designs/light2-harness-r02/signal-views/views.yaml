@@ -1,6 +1,7 @@
 # Machine-readable inventory of r02 human function views.
 # Electrical membership is always validated against ../connectivity.yaml.
-# Order is the contiguous construction and incremental qualification sequence.
+# Order is the contiguous function-view presentation sequence.
+# Powered construction checkpoints are planned separately in ../wiring-order/.
 schema_version: 1
 filename_prefix: schematic_
 

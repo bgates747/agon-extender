@@ -24,9 +24,13 @@ Revisioned physical breadboard configurations live under
 assigned to `light2-extender-solderless-assembly-r02`, whose exact construction
 map remains unfinished.
 
-The accepted r02 physical schematic and ordered
-[`signal views`](designs/light2-harness-r02/signal-views/README.md) guide current
-incremental construction. HW-001 and QUAL-002 record the actual installed
+The accepted r02 physical schematic provides the circuit basis; the separate
+[`wiring order`](designs/light2-harness-r02/wiring-order/README.md) plans powered
+incremental construction in a now-superseded draft. The resistor-addition
+proposal was rejected. Present hardware design, construction, and testing are
+on hold as of 2026-09-07: full wiring is incomplete and the complete circuit
+is untested. Signal views remain tracing/debugging references.
+HW-001 and QUAL-002 record the actual installed
 subset at each step under
 [staged circuit validation](../docs/qualification/staged-circuit-validation.md).
 The unfinished complete assembly map is not a lack of circuit authority or a

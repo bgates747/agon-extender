@@ -1,0 +1,212 @@
+# Draft construction sequence; permanent additions require an approved successor circuit.
+# Function-view references select existing endpoints; they do not prescribe power safety.
+schema_version: 1
+status: rejected
+status_reason: Superseded sequence; R32-R41 additions rejected by the Author; hardware work on hold 2026-09-07.
+design_basis: ../connectivity.yaml
+target_harness_identity: null
+procedure_identity: null
+requires_decision: HW-001-Q011
+source_views: ../signal-views/views.yaml
+permanent_bias_proposal:
+- proposed_ref: R32
+  signal: D0
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.2
+  bias_net: agon-3v3
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R33
+  signal: D1
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.17
+  bias_net: agon-3v3
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R34
+  signal: D2
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.4
+  bias_net: agon-3v3
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R35
+  signal: D3
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.15
+  bias_net: agon-3v3
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R36
+  signal: D4
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U2.2
+  bias_net: ground
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R37
+  signal: D5
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U2.4
+  bias_net: ground
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R38
+  signal: D6
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U2.6
+  bias_net: ground
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R39
+  signal: D7
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U2.8
+  bias_net: ground
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R40
+  signal: CLOCK
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.13
+  bias_net: ground
+  install_step: 2
+  retain_in_finished_circuit: true
+- proposed_ref: R41
+  signal: VALID_N
+  value: 10 kohm
+  tolerance_percent: 1
+  minimum_power_w: 0.125
+  input_endpoint: U1.11
+  bias_net: agon-3v3
+  install_step: 2
+  retain_in_finished_circuit: true
+steps:
+- order: 1
+  descriptor: power-foundation
+  add_function_views:
+  - 1
+  add_complete_basis_nets: []
+  method: Passive; ICs absent for a fresh build
+- order: 2
+  descriptor: startup-and-fail-safe-bias-network
+  add_function_views:
+  - 2
+  add_complete_basis_nets: []
+  method: Passive; all ICs populated only after permanent input bias is fitted
+- order: 3
+  descriptor: enable-bank-checkpoint
+  add_function_views: []
+  add_complete_basis_nets: []
+  method: Control
+- order: 4
+  descriptor: d0-uart-forward-data
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc0-d0-uart-tx
+  - p4-gpio22-d0-uart-rx-driver
+  method: Lane
+- order: 5
+  descriptor: d2-uart-forward-flow-control
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc2-d2-uart-rts
+  - p4-gpio23-d2-uart-cts-driver
+  method: Lane
+- order: 6
+  descriptor: uart-return-data
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc1-d1-uart-rx
+  - p4-uart-tx-driver
+  method: UART return electrical diagnostic
+- order: 7
+  descriptor: uart-return-flow-control-and-four-wire-uart
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc3-d3-uart-cts
+  - p4-uart-rts-driver
+  method: UART
+- order: 8
+  descriptor: ready-return
+  add_function_views: []
+  add_complete_basis_nets:
+  - ready-n-driver
+  method: Control with EMOS PD4 input/readback
+- order: 9
+  descriptor: parallel-d1-output
+  add_function_views: []
+  add_complete_basis_nets:
+  - p4-gpio12-d1-uart-tx-driver
+  method: Lane
+- order: 10
+  descriptor: parallel-d3-output
+  add_function_views: []
+  add_complete_basis_nets:
+  - p4-gpio11-d3-uart-rts-driver
+  method: Lane
+- order: 11
+  descriptor: parallel-d4
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc4-d4
+  - p4-gpio32-d4-driver
+  method: Lane
+- order: 12
+  descriptor: parallel-d5
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc5-d5
+  - p4-gpio10-d5-driver
+  method: Lane
+- order: 13
+  descriptor: parallel-d6
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc6-d6
+  - p4-gpio33-d6-driver
+  method: Lane
+- order: 14
+  descriptor: parallel-d7
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pc7-d7
+  - p4-gpio9-d7-driver
+  method: Lane
+- order: 15
+  descriptor: clock
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pd5-clock
+  - p4-gpio14-clock-driver
+  method: Lane
+- order: 16
+  descriptor: valid-n
+  add_function_views: []
+  add_complete_basis_nets:
+  - agon-pd7-valid-n
+  - p4-gpio13-valid-n-driver
+  method: Lane
+- order: 17
+  descriptor: complete-candidate-parallel-records
+  add_function_views: []
+  add_complete_basis_nets: []
+  method: Parallel

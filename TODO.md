@@ -36,6 +36,7 @@ item is removed.
 - [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
   - Started: 2026-08-24 19:09 EDT
   - Finished: --
+  - Status: On hold; physical wiring and as-built record incomplete.
   - Details: [SETUP-006](docs/tasks/SETUP-006.md)
 
 - [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
@@ -48,6 +49,7 @@ item is removed.
 - [ ] **HW-001 — Design and qualify the V1 UART and forward-parallel interface**
   - Started: 2026-08-28 13:06 EDT
   - Finished: --
+  - Status: Design, wiring, and testing on hold; incomplete and full circuit untested.
   - Details: [HW-001](docs/tasks/HW-001.md)
 
 ## Porting
@@ -60,6 +62,7 @@ item is removed.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
+  - Status: Present-hardware work on hold; transport implementation remains incomplete.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
@@ -82,6 +85,7 @@ item is removed.
 - [ ] **QUAL-002 — Qualify assembled-system electrical absence, power, and reset behavior**
   - Started: 2026-09-04 18:32 EDT
   - Finished: --
+  - Status: Present-hardware qualification on hold; full circuit untested.
   - Details: [QUAL-002](docs/tasks/QUAL-002.md)
 
 ## Upstream research

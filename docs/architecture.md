@@ -188,10 +188,16 @@ electrical absence, construction, or Console8 adaptation. HW-001 owns those
 remaining design and evidence gates before the topology can become a released
 V1 hardware artifact.
 
-R02 is the current incremental construction and validation target. Its
+R02 is the retained candidate design; its design work, construction, and
+validation are on hold by Author direction as of 2026-09-07. Full-circuit
+wiring is incomplete and the complete circuit is untested. The following
+process description does not authorize resuming work. Its
 connectivity model owns the circuit, its maintained physical schematic guides
-construction, and its ordered signal views select the functions added and
-tested in sequence. Tests use production-candidate P4 and EMOS components where
+construction. Signal views isolate functions for tracing/debugging; a separate
+wiring order defines cumulative assemblies suitable for powered tests, including
+every required input state and shared-bank dependency. The construction plan
+uses permanent circuit parts only; any required electrical addition follows
+normal successor-revision approval. Tests use production-candidate P4 and EMOS components where
 applicable; scoped diagnostic firmware may isolate measurements such as power
 and bias. Evidence authenticates the tested stage and candidate code before
 eventual release consumption is compared. The complete product firmware and

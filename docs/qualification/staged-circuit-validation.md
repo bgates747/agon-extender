@@ -1,8 +1,13 @@
 # Staged circuit validation
 
+Present-hardware execution is on hold by Author direction as of 2026-09-07.
+The r02 design work and full wiring remain incomplete; the complete circuit
+is untested. This reusable process does not lift that task hold.
+
 This document owns the recurring process for constructing and validating the
 current Agon Extender circuit incrementally. The Author accepted this process
-on 2026-09-05 under PORT-008-D003. It governs test scope and evidence; it does
+on 2026-09-05 under PORT-008-D003, refined by PORT-008-D004 to require
+checkpoints suitable for powered testing. It governs test scope and evidence; it does
 not change electrical connectivity, operating modes, artifact identities, or
 the machine-local bench authorization boundary.
 
@@ -11,13 +16,15 @@ the machine-local bench authorization boundary.
 The current circuit is
 [`light2-harness-r02`](../../hardware/designs/light2-harness-r02/README.md).
 Its `connectivity.yaml` owns electrical topology; its maintained complete
-schematic is the checked human construction drawing. The ordered
+schematic is the checked human construction drawing. The
 [`signal-views/views.yaml`](../../hardware/designs/light2-harness-r02/signal-views/views.yaml)
-selects the incremental functions. The generated views explain those subsets
-without defining alternative circuits. Gray context is not an instruction to
-connect an unselected wire.
+selects functions for tracing/debugging; its numbered drawings do not define
+powerable intermediate assemblies. The separate
+[wiring order](../../hardware/designs/light2-harness-r02/wiring-order/README.md)
+owns the cumulative construction checkpoints and their test dependencies.
+Gray context in a function view is not an instruction to connect a wire.
 
-The operator adds and checks functions in that order. Each stage retains the
+The operator adds and checks functions in the reviewed wiring order. Each stage retains the
 previously installed circuitry unless its approved instructions explicitly
 change it. A focused drawing alone does not describe the cumulative as-built
 state, prove that a prerequisite is installed, or constitute a test procedure.
@@ -26,6 +33,17 @@ omissions, relevant breadboard/contact mapping, and probes. HW-001 owns that
 construction mapping; QUAL-002 owns its electrical evidence. A complete future
 assembly drawing is not a prerequisite for a bounded stage whose actual
 construction and measurement boundary are recorded adequately.
+
+Each powered checkpoint must account for every powered IC input, shared enable
+bank, attached processor pad, omitted lane and reset/idle interval. A source
+wire alone does not define a level if its driving pad is undriven. The Author
+requires permanent circuit parts only for this sequence. When a missing
+prerequisite requires a circuit addition, prepare the exact change and obtain
+its approved successor revision before using it; do not disguise it as a
+temporary fixture or edit a frozen circuit in place. The ten-input
+resistor proposal was rejected by the Author; HW-001-Q011 retains the input-state
+question on hold. Reordering drawings alone cannot
+resolve that electrical gap.
 
 Predecessor r01 drawings, failures, and fixed-forward procedures remain
 historical evidence. Repeating an r01 experiment is not a prerequisite for r02
@@ -80,6 +98,16 @@ filename, an unused compilation database, or matching source alone does not
 prove which code ran. A bounded review may establish these facts without
 completing a general release-pair validator.
 
+Human construction test sheets and their completed results live beside the
+owning design, currently in the [r02 test directory](../../hardware/designs/light2-harness-r02/wiring-order/tests/README.md).
+Keep the reusable sheet separate from each result. Task documents link to
+these records and retain sequencing, unresolved findings, review decisions,
+and acceptance. Controlled run manifests and their raw evidence retain the
+version policy's repository-root `tests/runs/<RUN-ID>/` location; the
+design-side result links to them. Preserve historical observations and their
+limitations when relocating them instead of copying a second authority into
+the task document.
+
 The existing [versioning policy](../versions/README.md) still governs controlled
 artifacts and qualified runs. Exploratory or incomplete records remain
 diagnostic evidence. Clean candidate inputs, approved identities, and the
@@ -109,8 +137,8 @@ power, bias, isolation, and reset observations; PORT-008 owns active transport
 components and their eZ80/P4 integration. PORT-003 and PORT-006 become test
 dependencies when a stage actually uses the retained parser/display or browser
 service. QUAL-001 consumes the exact accepted claims; its unfinished four-mode
-matrix does not prevent mode-neutral construction evidence being recorded in
-the owner task.
+matrix does not prevent mode-neutral construction evidence being recorded
+beside the design and linked from the owner task.
 
 Each physical step still requires its applicable reviewed procedure and
 explicit authorization under `HARDWARE.local.md`. The operator confirms the

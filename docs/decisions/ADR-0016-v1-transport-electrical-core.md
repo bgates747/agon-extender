@@ -52,9 +52,11 @@ then from the exact Espressif and TI component contracts.
    procedures. This does not resolve the remaining firmware-epoch or Legacy
    electrical-absence questions and does not constitute electrical
    qualification.
-9. Apply the Author-accepted PORT-008-D003 process to the current r02 circuit:
-   the operator constructs and tests functions in the existing signal-view
-   order, P4 and EMOS tests use applicable production-candidate components,
+9. Apply the Author-accepted PORT-008-D003 process and its D004 refinement:
+   signal views isolate functions for tracing/debugging; a separate cumulative
+   wiring order includes the permanent connections and input-state prerequisites
+   needed for powered intermediate tests. Any electrical addition requires an
+   approved successor revision. P4 and EMOS tests use applicable production-candidate components,
    and scoped diagnostic firmware may isolate an electrical measurement.
    Candidate evidence is recorded at each stage; proof that an eventual
    release consumes the tested objects follows when that release exists.

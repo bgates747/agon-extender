@@ -1,5 +1,14 @@
 # Light 2 harness r02
 
+**On hold — incomplete (Author direction, 2026-09-07).** The present
+hardware design, construction, and testing are paused pending review of stock
+MOS/VDP communications and interface requirements. Full wiring of the r02
+circuit as drawn is incomplete, and the complete circuit has not been tested.
+The September 4 power-domain observations retain only their recorded scope.
+The frozen candidate identity preserves the design checkpoint; it does not
+claim design completion, complete assembly, or qualification. Earlier stage
+instructions below are retained references and do not authorize further work.
+
 `light2-harness-r02` is the frozen candidate electrical design for the second
 Light 2 Extender solderless prototype. It combines one common four-signal UART
 circuit for Exclusive Compatible and Exclusive Extended with the one-way
@@ -29,12 +38,25 @@ components and shows unselected canonical wire routes as light-gray,
 non-electrical graphical context while leaving only the selected function as
 real electrical wiring.
 
-The Author's accepted staged process uses these views to add and test circuit
-functions in order, with production-candidate P4/EMOS components wherever
-applicable and scoped diagnostic firmware for measurements such as power and
-bias. See [staged circuit validation](../../../docs/qualification/staged-circuit-validation.md)
-for cumulative construction records, evidence, and applicable review gates.
+The [connection ledger](wiring-order/connections.md) gives each r02 connection
+a stable ID independent of these overlapping views. It records endpoints and
+existing branch points; discrete construction steps remain to be discussed.
+
+The separate [wiring order](wiring-order/README.md) plans the cumulative
+connections and input states required for powered testing at each construction
+step. The signal views remain useful for tracing individual functions. Tests
+use production-candidate P4/EMOS components wherever applicable and scoped
+diagnostics for power, bias and isolated electrical measurements. The current
+draft proposed permanent input-bias additions, which the Author rejected.
+That sequence is superseded; the connection ledger uses unchanged r02. See
+[staged circuit validation](../../../docs/qualification/staged-circuit-validation.md)
+for evidence and applicable review gates.
 Full release firmware is not a prerequisite for a component measurement.
+
+[Test sheets and construction results](wiring-order/tests/README.md) live beside this
+design. That index includes the September 4 power-domain observations and the
+stage-02 startup/fail-safe bias worksheet. Task documents own sequencing and
+review, and link to those measurement records.
 
 The Author accepted the maintained schematic after manually arranging the
 complete circuit, clarifying each local bypass-capacitor assignment, and

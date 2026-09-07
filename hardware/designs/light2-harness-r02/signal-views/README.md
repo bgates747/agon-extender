@@ -27,15 +27,16 @@ once in each view: either unchanged as a selected electrical wire or as the
 prescribed gray non-electrical context. It rejects invented, missing, or
 modified context segments.
 
-Generated filenames begin with the zero-padded construction and qualification
-order, followed by the required `schematic_` role prefix and function
-descriptor. Each KiCad schematic has a matching `.svg` for human viewing.
-`views.yaml` is the ordering authority; the generator rejects duplicate,
-missing, or non-contiguous order numbers. The combined power-domain view is the
-first construction and qualification stage; separate power-domain views are
-intentionally omitted as redundant.
+Generated filenames retain their zero-padded function-view order, followed by
+the `schematic_` role prefix and descriptor. Each KiCad schematic has a matching
+`.svg`. `views.yaml` owns this presentation order, and the generator rejects
+duplicate, missing or non-contiguous numbers. These numbers were originally
+used as a construction sequence; powered assembly now follows the separate
+[wiring order](../wiring-order/README.md), which supplies missing input-state
+and whole-bank prerequisites. The combined power-domain view remains one
+reference drawing; separate rail views are omitted as redundant.
 
-The controlled order is:
+The retained function-view order is:
 
 1. `01_schematic_power-domains` (combined common ground and both 3.3 V
    domains);
@@ -56,13 +57,12 @@ The controlled order is:
 16. `16_schematic_ready-control`; and
 17. `17_schematic_ready-n`.
 
-This sequence establishes common ground, both power domains and their
-bypassing, and fail-safe biasing before any active transport. It then brings up
-the complete forward UART path before the reverse UART path, adds the remaining
-parallel data lanes in numeric order, and finishes with the parallel strobes
-and READY return path.
+This display order groups power/bias, UART, parallel data and strobes. It
+isolates functions for tracing and debugging a populated circuit. It does not
+account for every input of an intermediate powered assembly; in particular,
+views 01 and 02 alone leave ten U1/U2 data inputs without connections.
 
-Use this order through the accepted
+Use the separate wiring order through the accepted
 [staged circuit validation process](../../../../docs/qualification/staged-circuit-validation.md).
 The operator records the cumulative installed subset; a view's gray context
 neither connects an omitted wire nor proves previous construction. Power/bias
@@ -70,6 +70,10 @@ measurements may use passive diagnostic firmware. Active stages exercise
 applicable production-candidate components without requiring a complete release
 image, and retain stage-specific safety and evidence gates. These views are
 construction guidance, not executable test procedures or passed results.
+The wiring order's [test directory](../wiring-order/tests/README.md) holds the corresponding
+human worksheets and results; start with the
+[stage-02 bias sheet](../wiring-order/tests/02-startup-and-fail-safe-bias-network.md) for the
+current construction check.
 
 The 17 projections cover combined power and ground, D0 through D7, CLOCK,
 VALID_N, READY_N, the four control functions, and the startup/fail-safe bias

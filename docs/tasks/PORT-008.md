@@ -2,15 +2,14 @@
 
 ## State
 
-- Status: In progress — PORT-008-D003 makes incremental validation of the
-  authoritative r02 circuit the current process. Use production-candidate P4
-  and EMOS components where applicable, with bounded diagnostic firmware when
-  the circuit measurement requires it. The replacement parallel components
-  are implemented; their former Work 2.e tooling is checkpointed but provisional.
-  Stage evidence is required before use; release-pair equivalence waits for an
-  actual release consumer. The r01 failures remain historical and do not
-  require another r01 run before r02 work. Production activation, response
-  integration, mode qualification, and physical-operation gates remain open.
+- Status: On hold for present-hardware construction, test preparation, and
+  physical validation as of 2026-09-07. The r02 design work remains incomplete;
+  full-circuit wiring is incomplete and the complete circuit is untested.
+  Candidate parallel components and provisional Work 2.e tooling are retained
+  as checkpoints, not qualified results. Activation, response integration,
+  mode qualification, and release-consumer gates remain open. Stock MOS/VDP
+  communications review is the proposed next discussion; this checkpoint does
+  not start that review or authorize resuming hardware work.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -20,8 +19,8 @@ Implement the r02 common four-signal UART between EMOS/eZ80 UART1 and EDP/P4,
 plus its eight-bit parallel Agon-to-P4 command path. Preserve the official VDP
 application-visible byte-stream and response-packet contracts while replacing
 the stock PICO-D4 UART hardware binding with the selected Extender wiring and
-EMOS integration. Follow the ordered circuit subsets under
-`hardware/designs/light2-harness-r02/signal-views/` and the durable
+EMOS integration. Follow the cumulative powered-test plan under
+`hardware/designs/light2-harness-r02/wiring-order/` and the durable
 [staged circuit validation process](../qualification/staged-circuit-validation.md).
 
 Component tests exercise the applicable production-candidate code with an
@@ -50,7 +49,9 @@ start the ordered r02 component checks.
   General Poll behavior.
 - [HW-001](HW-001.md), which owns the selected common V1 four-signal UART and
   one-way forward-parallel electrical core. The r02 connectivity model,
-  maintained human schematic, and ordered signal views guide construction;
+  maintained human schematic, and separate wiring order guide construction;
+  signal views remain tracing/debugging references. Hardware work is on hold;
+  the resistor-addition proposal was rejected under HW-001-Q011;
   stage-specific as-built records and qualification remain to be completed.
 - [ADR-0016](../decisions/ADR-0016-v1-transport-electrical-core.md), which
   accepts the four-chip transport topology without closing HW-001's remaining
@@ -98,6 +99,7 @@ start the ordered r02 component checks.
 | `PORT-008-D001` | How can EDP hear the explicit EMOS activation request when r02 currently disables every Agon-to-P4 path in Legacy and uncommitted state? | Former proposal: assert only the common-UART Agon-to-P4 enable as a receive-only listener and use a dedicated no-CTS EMOS bootstrap sender. | Rejected by the Author, 2026-09-01 | Do not implement or reconcile the listener exception. The all-controls-released Legacy rule and corrective action remain binding; production activation requires an intended-circuit solution. |
 | `PORT-008-D002` | Which current-circuit work can execute intended production code without promoting an r01 workaround? | Implement new epoch-preconditioned production forward-parallel objects and invoke them through a separately identified fixed-backend qualification composition; add no r01 behavior to the product and make no activation, UART, return, or r02 electrical claim. | Accepted by the Author, 2026-09-01 | Resolves `REMED-002-D003` in favor of replacement rather than repair/promotion of the prototype adapters. Production data-plane implementation and host tests may be separately authorized; physical and artifact gates remain. |
 | `PORT-008-D003` | How should circuit construction, candidate-code tests, and eventual release proof be sequenced? | Validate r02 in its existing signal-view order; use applicable production-candidate components and scoped test callers, allow simplified electrical diagnostics, authenticate each tested candidate, and verify eventual release consumption later. | Accepted by the Author, 2026-09-05 | Supersedes D002's r01-first scheduling and the requirement to complete a release pair before stage validation. Retains production-component reuse, EMOS ownership, exact evidence, and applicable physical/mode gates. |
+| `PORT-008-D004` | How should intermediate assemblies support powered measurements and logic capture? | Separate tracing-oriented signal views from a cumulative `wiring-order/` plan. Include every powered-input and shared-bank prerequisite, use permanent circuit parts only, and keep test sheets/results under that plan. | Accepted by the Author, 2026-09-05 | Refines D003's sequencing assumption. The later R32–R41 proposal was rejected; no circuit change or physical execution is approved by this process decision. Hardware execution is on hold as of 2026-09-07. |
 
 The rejected alternative and source trace remain in the task-local
 [activation bootstrap design](PORT-008/activation/README.md). The accepted
@@ -124,26 +126,42 @@ forward-parallel data-plane work selected by D002:
 
 ## Work
 
-### Current work — staged r02 circuit validation
+### Suspended work — staged r02 circuit validation
+
+The Author placed this hardware-dependent checklist on hold on 2026-09-07.
+The retained draft sequence does not authorize construction or test preparation.
+Resume only after the Author has reviewed the communication requirements and
+explicitly resumed the hardware work.
 
 1. [ ] **S1 — Select and document the next installed subset.** Coordinate
-   with HW-001 and QUAL-002 using `signal-views/views.yaml`. Consume the
-   September 4 power-domain observations as preliminary evidence only; obtain
-   the current as-built state before selecting another physical step. Record
-   cumulative wiring, remaining omissions, safe states, and measurement scope.
+   with HW-001 and QUAL-002 after the hold is lifted. Use the connection
+   ledger to describe the actual subset; the earlier sequence is superseded
+   and the R32–R41 proposal was rejected. Full wiring remains incomplete.
+   Consume the
+   [September 4 power-domain observations](../../hardware/designs/light2-harness-r02/wiring-order/tests/01-power-domains-results-2026-09-04.md)
+   as preliminary evidence only; obtain the current as-built state before
+   selecting another physical step. Record cumulative wiring, remaining
+   omissions, safe states, and measurement scope.
 2. [ ] **S2 — Select the smallest applicable firmware composition.** Name
    the P4 and EMOS candidate components that the selected stage can execute,
    their test caller and preconditions, and any missing implementation. Use a
    simplified diagnostic only with its electrical purpose and later candidate-
    code test explicitly recorded. Keep unrelated services inactive.
+   Use the [method inventory](../../hardware/designs/light2-harness-r02/wiring-order/test-methods.md)
+   to prepare only the next caller: passive bias first, isolated enable-bank
+   diagnostics next, then EMOS-owned lane/UART callers. Existing parallel
+   components do not supply an already-built UART or per-lane fixture.
 3. [ ] **S3 — Prepare stage evidence and review.** Apply Work 2.e's candidate
    record requirement to code used by the stage; define bounded observations,
    appropriate host/target checks, and the applicable procedure and identities.
    Evaluate known defects only against the paths and evidence method selected.
    Do not resume the entire interrupted validator repair sequence by default.
 4. [ ] **S4 — Integrate accepted stage results.** After separately authorized
-   execution, link electrical results to QUAL-002 and transport results here.
-   Expand from UART subsets to parallel subsets in the controlled order, then
+   execution, keep human circuit sheets/results in the
+   [r02 design test directory](../../hardware/designs/light2-harness-r02/wiring-order/tests/README.md)
+   and link their electrical disposition to QUAL-002 and transport findings here.
+   Expand from UART subsets through READY and the parallel lanes in the wiring
+   order, then
    to the retained parser and General Poll when their prerequisites exist.
    Retain failed or partial results without claiming a complete operating mode.
 
