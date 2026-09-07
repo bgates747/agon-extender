@@ -1,0 +1,5 @@
+schema_version: 1
+artifact_id: header-pinwalk-boot
+identity: header-pinwalk-boot-r01
+status: experimental
+scope: Keyboard-free stock-MOS diagnostic using the retained generic GPIO walk.

@@ -1,0 +1,64 @@
+{
+  "status": "PASS",
+  "sample_rate_hz": 100000,
+  "sample_count": 3581952,
+  "signals": [
+    {
+      "signal": "PC0",
+      "channel": "D1",
+      "expected_pulses": 1,
+      "observed_pulses": 1,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC1",
+      "channel": "D6",
+      "expected_pulses": 2,
+      "observed_pulses": 2,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC2",
+      "channel": "D3",
+      "expected_pulses": 3,
+      "observed_pulses": 3,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC3",
+      "channel": "D4",
+      "expected_pulses": 4,
+      "observed_pulses": 4,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC4",
+      "channel": "D5",
+      "expected_pulses": 5,
+      "observed_pulses": 5,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC5",
+      "channel": "D2",
+      "expected_pulses": 6,
+      "observed_pulses": 6,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC6",
+      "channel": "D7",
+      "expected_pulses": 7,
+      "observed_pulses": 7,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC7",
+      "channel": "D0",
+      "expected_pulses": 8,
+      "observed_pulses": 8,
+      "status": "PASS"
+    }
+  ],
+  "errors": []
+}

@@ -1,0 +1,25 @@
+schema_version: 1
+build:
+  build_id: header-pinwalk-boot-r01-b2026-09-07-23-01-31Z
+  artifact_id: header-pinwalk-boot
+  source_identity: header-pinwalk-boot-r01
+  variant: null
+  created_at: '2026-09-07T23:01:31Z'
+  status: experimental
+provenance:
+  repository: https://github.com/bgates747/agon-extender.git
+  commit: 6981dd4e95944eabc206b5f5e7edd38b7dd34456
+  dirty: true
+  source_sha256:
+    src/build_identity.h: a59498dc7b314f4cc0e74e5a496bd119580b74ae73ff309a9dd47b9771bf2643
+    src/main.c: ba935505af15d464dc2d33fb35e9135e5d0f1b87599b25e8e989b9a778009709
+    src/pinwalk_wire.asm: 9636c231bb1f4c818166661b73ba58e99b12ff797bd38a216c2ea465cdad71a6
+    src/pinwalk_wire.h: 0ea92f9683f863d0ae50479c8c38d6d662e9a7511aa3bca933310912dd2fa325
+outputs:
+- filename: header-pinwalk-boot-r01-b2026-09-07-23-01-31Z.bin
+  deploy_alias: PWBOOT.BIN
+  size_bytes: 2101
+  sha256: 45861339992f54152a958fb553b7a106c572d188a5363ae36076be9d58a1bea5
+notes:
+- Uncommitted diagnostic build; no qualification claim.
+- Inherited GPIO assembly; new noninteractive entry; no I2C exercise.

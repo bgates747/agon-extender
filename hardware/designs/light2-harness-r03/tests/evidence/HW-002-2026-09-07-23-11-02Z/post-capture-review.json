@@ -1,0 +1,17 @@
+{
+  "run_id": "HW-002-2026-09-07-23-11-02Z",
+  "review_type": "post-capture diagnostic review",
+  "outcome": "partial",
+  "capture_complete": false,
+  "pulse_count_result": "PASS",
+  "first_transition_seconds": 21.68023,
+  "last_transition_seconds": 22.22317,
+  "initial_all_high": true,
+  "final_all_high": true,
+  "quiet_tail_seconds": 13.59634,
+  "logic_sha256": "e2180039afcff33c488dd41900b7e7d2c4c3ed6dfd63888902f87fd49f779eb2",
+  "limits": [
+    "Cause of short acquisition unknown.",
+    "P4 power/input state, probe positions and displayed build identity not reported."
+  ]
+}

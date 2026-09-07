@@ -1,0 +1,16 @@
+schema_version: 1
+run_id: HW-002-2026-09-07-23-11-02Z
+accepted_by: Author
+recorded_at: 2026-09-07T23:19:22Z
+outcome: pass
+scope: Eight-line Port C pin identity and pulse-count test at the attached probes.
+rationale: The complete expected 1–8 pulse sequence is present on all eight channels with a quiet high tail.
+retained_deviation:
+  acquisition_complete: false
+  requested_samples: 6000000
+  actual_samples: 3581952
+  sample_rate_hz: 100000
+  cause: null
+limits:
+  - Does not qualify UART operation or the full r03 electrical design.
+  - Original automated acquisition and post-capture partial verdicts remain unchanged.

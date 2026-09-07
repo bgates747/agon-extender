@@ -1,10 +1,22 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r17
-updated_at: 2026-09-01T23:17:54Z
+registry_revision: r20
+updated_at: 2026-09-07T23:19:22Z
 
 artifacts:
+  - artifact_id: header-pinwalk-boot
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: header-pinwalk-boot-r01
+    status: experimental
+    variants: []
+    description: Keyboard-free stock-MOS header pinwalk diagnostic prepared under HW-002.
+    notes:
+      - Revision r01 wraps the retained generic GPIO assembly with a boot delay and one-shot execution, omitting the former I2C exercise.
+      - Preparation is unqualified; the experimental build does not inherit predecessor physical results.
+      - The Author accepted the first eight-line pinwalk on 2026-09-07; its complete pulse sequence passed despite the retained short-acquisition discrepancy.
+
   - artifact_id: extender-vdp
     kind: firmware
     identity_scheme: semantic_version
@@ -150,18 +162,21 @@ artifacts:
   - artifact_id: light2-harness
     kind: wiring_harness
     identity_scheme: revision
-    latest_identity: light2-harness-r02
-    status: candidate
+    latest_identity: light2-harness-r03
+    status: draft
     variants:
       - light2
     description: Extender wiring harness for Agon Light 2 GPIO.
     notes:
       - Revision r01 adopts the physically exercised predecessor breadboard pin map as the authoritative first design target.
       - Its forward mapping has inherited qualification evidence; the clean-project combination remains a candidate.
-      - The buffered PC0/PC1 UART circuit is the selected first wiring target; predecessor tests deliberately qualified correctness at 115.2 kbaud.
+      - The earlier buffered PC0/PC1 UART target has predecessor correctness evidence at 115.2 kbaud; it is not the current simplified-wiring review target.
       - Operation at the required 1.152 Mbaud legacy rate, required flow-control behavior, production isolation, power behavior, and final carrier construction remain unqualified.
       - Revision r02 freezes the four-chip common-UART and forward-parallel controlled-prototype circuit with 220-ohm series population on all thirteen driven outputs.
       - Revision r02 is an unqualified candidate; eZ80-only reset recovery, Legacy electrical absence, target-rate UART and flow control, transport epochs, and physical qualification remain open.
+      - Revision r02 design, construction and testing are on hold with full wiring incomplete and the complete circuit untested.
+      - Revision r03 is the Author-requested draft of direct Port C wiring with eight 220-ohm series resistors and eight 15k Agon-rail pull-ups for initial Exclusive Compatible review under HW-002.
+      - Revision r03 is not an accepted replacement design or verified as-built record; its new identity does not reclassify an assembly or inherit predecessor qualification.
 
   - artifact_id: light2-extender-solderless-assembly
     kind: solderless_assembly

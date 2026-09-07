@@ -1,0 +1,51 @@
+{
+  "run_id": "HW-002-2026-09-07-23-11-02Z",
+  "status": "diagnostic",
+  "operator_reports_stock_mos_vdp": true,
+  "displayed_versions": null,
+  "samplerate_hz": 100000,
+  "samples": 6000000,
+  "expectations": [
+    [
+      "PC0",
+      "D1",
+      1
+    ],
+    [
+      "PC1",
+      "D6",
+      2
+    ],
+    [
+      "PC2",
+      "D3",
+      3
+    ],
+    [
+      "PC3",
+      "D4",
+      4
+    ],
+    [
+      "PC4",
+      "D5",
+      5
+    ],
+    [
+      "PC5",
+      "D2",
+      6
+    ],
+    [
+      "PC6",
+      "D7",
+      7
+    ],
+    [
+      "PC7",
+      "D0",
+      8
+    ]
+  ],
+  "probe_position": null
+}

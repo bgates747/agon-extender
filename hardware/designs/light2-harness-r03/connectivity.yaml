@@ -1,0 +1,841 @@
+schema_version: 1
+model:
+  model_id: light2-harness-r03
+  title: Light 2 direct Port C harness — Exclusive Compatible draft
+  status: draft
+  authority: true
+  scope: Draft of the Author-reported eight direct Port C lanes, 220-ohm series resistors and 15k Agon-rail
+    pull-ups; initial UART-only review.
+  source_refs:
+  - docs/tasks/HW-002.md
+  - hardware/designs/light2-harness-r01/legacy-evidence/wiring-diagram.svg
+  - hardware/designs/light2-harness-r02/connectivity.yaml
+  notes: This is a draft electrical definition, not a verified as-built record or qualified circuit. The
+    reference pin map, Agon-side pull-up junction placement and common ground require assembly confirmation.
+    PC4-PC7 remain connected but are unused for the UART milestone. The onboard VDP retains its existing
+    VSync/PB1 connection; no P4 timing wire is added.
+components:
+- ref: J1
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Agon Light 2 GPIO 2x17
+  description: Agon GPIO header; actual physical pin numbers, grouped by function in the drawing.
+  terminals:
+  - pin: '1'
+    name: UNUSED_1
+    electrical_type: passive
+  - pin: '2'
+    name: UNUSED_2
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: UNUSED_8
+    electrical_type: passive
+  - pin: '9'
+    name: UNUSED_9
+    electrical_type: passive
+  - pin: '10'
+    name: UNUSED_10
+    electrical_type: passive
+  - pin: '11'
+    name: UNUSED_11
+    electrical_type: passive
+  - pin: '12'
+    name: UNUSED_12
+    electrical_type: passive
+  - pin: '13'
+    name: PD4
+    electrical_type: passive
+  - pin: '14'
+    name: PD5
+    electrical_type: passive
+  - pin: '15'
+    name: UNUSED_15
+    electrical_type: passive
+  - pin: '16'
+    name: PD7
+    electrical_type: passive
+  - pin: '17'
+    name: PC0/TXD1
+    electrical_type: passive
+  - pin: '18'
+    name: PC1/RXD1
+    electrical_type: passive
+  - pin: '19'
+    name: PC2/RTS1
+    electrical_type: passive
+  - pin: '20'
+    name: PC3/CTS1
+    electrical_type: passive
+  - pin: '21'
+    name: PC4
+    electrical_type: passive
+  - pin: '22'
+    name: PC5
+    electrical_type: passive
+  - pin: '23'
+    name: PC6
+    electrical_type: passive
+  - pin: '24'
+    name: PC7
+    electrical_type: passive
+  - pin: '25'
+    name: UNUSED_25
+    electrical_type: passive
+  - pin: '26'
+    name: UNUSED_26
+    electrical_type: passive
+  - pin: '27'
+    name: UNUSED_27
+    electrical_type: passive
+  - pin: '28'
+    name: UNUSED_28
+    electrical_type: passive
+  - pin: '29'
+    name: UNUSED_29
+    electrical_type: passive
+  - pin: '30'
+    name: UNUSED_30
+    electrical_type: passive
+  - pin: '31'
+    name: UNUSED_31
+    electrical_type: passive
+  - pin: '32'
+    name: UNUSED_32
+    electrical_type: passive
+  - pin: '33'
+    name: GND
+    electrical_type: passive
+  - pin: '34'
+    name: AGON_3V3
+    electrical_type: passive
+- ref: J2
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Olimex P4 EXT1
+  description: Existing P4 EXT1 header; actual physical pin numbers.
+  terminals:
+  - pin: '1'
+    name: P4_3V3
+    electrical_type: passive
+  - pin: '2'
+    name: GND
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: UNUSED_8
+    electrical_type: passive
+  - pin: '9'
+    name: UNUSED_9
+    electrical_type: passive
+  - pin: '10'
+    name: GPIO9
+    electrical_type: passive
+  - pin: '11'
+    name: GPIO10
+    electrical_type: passive
+  - pin: '12'
+    name: GPIO11
+    electrical_type: passive
+  - pin: '13'
+    name: GPIO12
+    electrical_type: passive
+  - pin: '14'
+    name: GPIO13
+    electrical_type: passive
+  - pin: '15'
+    name: GPIO14
+    electrical_type: passive
+  - pin: '16'
+    name: GPIO15
+    electrical_type: passive
+  - pin: '17'
+    name: UNUSED_17
+    electrical_type: passive
+  - pin: '18'
+    name: GPIO17
+    electrical_type: passive
+  - pin: '19'
+    name: UNUSED_19
+    electrical_type: passive
+  - pin: '20'
+    name: UNUSED_20
+    electrical_type: passive
+- ref: J3
+  kind: connector
+  orientation: keyed
+  terminal_scope: complete
+  value: Olimex P4 EXT2
+  description: Existing P4 EXT2 header; actual physical pin numbers.
+  terminals:
+  - pin: '1'
+    name: P4_5V
+    electrical_type: passive
+  - pin: '2'
+    name: GND
+    electrical_type: passive
+  - pin: '3'
+    name: UNUSED_3
+    electrical_type: passive
+  - pin: '4'
+    name: UNUSED_4
+    electrical_type: passive
+  - pin: '5'
+    name: UNUSED_5
+    electrical_type: passive
+  - pin: '6'
+    name: UNUSED_6
+    electrical_type: passive
+  - pin: '7'
+    name: UNUSED_7
+    electrical_type: passive
+  - pin: '8'
+    name: GPIO33
+    electrical_type: passive
+  - pin: '9'
+    name: GPIO32
+    electrical_type: passive
+  - pin: '10'
+    name: GPIO23
+    electrical_type: passive
+  - pin: '11'
+    name: GPIO22
+    electrical_type: passive
+  - pin: '12'
+    name: GPIO21
+    electrical_type: passive
+  - pin: '13'
+    name: GPIO20
+    electrical_type: passive
+  - pin: '14'
+    name: UNUSED_14
+    electrical_type: passive
+  - pin: '15'
+    name: GND
+    electrical_type: passive
+  - pin: '16'
+    name: UNUSED_16
+    electrical_type: passive
+  - pin: '17'
+    name: UNUSED_17
+    electrical_type: passive
+  - pin: '18'
+    name: GND
+    electrical_type: passive
+  - pin: '19'
+    name: UNUSED_19
+    electrical_type: passive
+  - pin: '20'
+    name: UNUSED_20
+    electrical_type: passive
+- ref: R1
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC0 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R2
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC1 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R3
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC2 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R4
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC3 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R5
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC4 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R6
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC5 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R7
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC6 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R8
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 220 ohm
+  description: PC7 retained series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R9
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC0 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R10
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC1 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R11
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC2 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R12
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC3 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R13
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC4 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R14
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC5 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R15
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC6 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+- ref: R16
+  kind: resistor
+  orientation: symmetric
+  terminal_scope: complete
+  value: 15k ohm
+  description: PC7 pull-up to Agon 3.3 V, on the Agon side of the series resistor
+  terminals:
+  - pin: '1'
+    name: A
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+  - pin: '2'
+    name: B
+    electrical_type: passive
+    interchangeable_group: resistor-ends
+nets:
+- net_id: agon-3v3
+  class: power
+  members:
+  - component: J1
+    pin: '34'
+  - component: R9
+    pin: '1'
+  - component: R10
+    pin: '1'
+  - component: R11
+    pin: '1'
+  - component: R12
+    pin: '1'
+  - component: R13
+    pin: '1'
+  - component: R14
+    pin: '1'
+  - component: R15
+    pin: '1'
+  - component: R16
+    pin: '1'
+  description: Agon-sourced 3.3 V; no harness connection to a P4 positive supply pin.
+- net_id: agon-pc0
+  class: signal
+  members:
+  - component: J1
+    pin: '17'
+  - component: R1
+    pin: '1'
+  - component: R9
+    pin: '2'
+  description: PC0 Agon side, with 15k pull-up.
+- net_id: agon-pc1
+  class: signal
+  members:
+  - component: J1
+    pin: '18'
+  - component: R2
+    pin: '1'
+  - component: R10
+    pin: '2'
+  description: PC1 Agon side, with 15k pull-up.
+- net_id: agon-pc2
+  class: signal
+  members:
+  - component: J1
+    pin: '19'
+  - component: R3
+    pin: '1'
+  - component: R11
+    pin: '2'
+  description: PC2 Agon side, with 15k pull-up.
+- net_id: agon-pc3
+  class: signal
+  members:
+  - component: J1
+    pin: '20'
+  - component: R4
+    pin: '1'
+  - component: R12
+    pin: '2'
+  description: PC3 Agon side, with 15k pull-up.
+- net_id: agon-pc4
+  class: signal
+  members:
+  - component: J1
+    pin: '21'
+  - component: R5
+    pin: '1'
+  - component: R13
+    pin: '2'
+  description: PC4 Agon side, with 15k pull-up.
+- net_id: agon-pc5
+  class: signal
+  members:
+  - component: J1
+    pin: '22'
+  - component: R6
+    pin: '1'
+  - component: R14
+    pin: '2'
+  description: PC5 Agon side, with 15k pull-up.
+- net_id: agon-pc6
+  class: signal
+  members:
+  - component: J1
+    pin: '23'
+  - component: R7
+    pin: '1'
+  - component: R15
+    pin: '2'
+  description: PC6 Agon side, with 15k pull-up.
+- net_id: agon-pc7
+  class: signal
+  members:
+  - component: J1
+    pin: '24'
+  - component: R8
+    pin: '1'
+  - component: R16
+    pin: '2'
+  description: PC7 Agon side, with 15k pull-up.
+- net_id: ground
+  class: ground
+  members:
+  - component: J1
+    pin: '33'
+  - component: J2
+    pin: '2'
+  description: Required common signal ground; present assembly connection has not been confirmed.
+- net_id: p4-pc0
+  class: signal
+  members:
+  - component: J3
+    pin: '11'
+  - component: R1
+    pin: '2'
+  description: PC0 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc1
+  class: signal
+  members:
+  - component: J2
+    pin: '13'
+  - component: R2
+    pin: '2'
+  description: PC1 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc2
+  class: signal
+  members:
+  - component: J3
+    pin: '10'
+  - component: R3
+    pin: '2'
+  description: PC2 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc3
+  class: signal
+  members:
+  - component: J2
+    pin: '12'
+  - component: R4
+    pin: '2'
+  description: PC3 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc4
+  class: signal
+  members:
+  - component: J3
+    pin: '9'
+  - component: R5
+    pin: '2'
+  description: PC4 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc5
+  class: signal
+  members:
+  - component: J2
+    pin: '11'
+  - component: R6
+    pin: '2'
+  description: PC5 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc6
+  class: signal
+  members:
+  - component: J3
+    pin: '8'
+  - component: R7
+    pin: '2'
+  description: PC6 P4 side, beyond the 220-ohm series resistor.
+- net_id: p4-pc7
+  class: signal
+  members:
+  - component: J2
+    pin: '10'
+  - component: R8
+    pin: '2'
+  description: PC7 P4 side, beyond the 220-ohm series resistor.
+unconnected:
+- component: J1
+  pin: '1'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '2'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '3'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '4'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '5'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '6'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '7'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '8'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '9'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '10'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '11'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '12'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '13'
+  reason: Author reports isolated ribbon-cable landing; no breadboard or P4 connection.
+- component: J1
+  pin: '14'
+  reason: Author reports isolated ribbon-cable landing; no breadboard or P4 connection.
+- component: J1
+  pin: '15'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '16'
+  reason: Author reports isolated ribbon-cable landing; no breadboard or P4 connection.
+- component: J1
+  pin: '25'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '26'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '27'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '28'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '29'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '30'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '31'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J1
+  pin: '32'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '1'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '3'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '4'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '5'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '6'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '7'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '8'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '9'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '14'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '15'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '16'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '17'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '18'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '19'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J2
+  pin: '20'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '1'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '2'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '3'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '4'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '5'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '6'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '7'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '12'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '13'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '14'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '15'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '16'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '17'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '18'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '19'
+  reason: No external harness connection; board-internal connections are outside this model.
+- component: J3
+  pin: '20'
+  reason: No external harness connection; board-internal connections are outside this model.

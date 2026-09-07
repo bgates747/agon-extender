@@ -9,7 +9,16 @@ The durable role vocabulary for hardware objects is maintained under
 only. Pins, nets, components, and electrical connectivity remain authoritative
 inside the applicable revisioned design or fixture profile.
 
-The frozen current design target is
+The current simplified-wiring review draft is
+[`light2-harness-r03`](designs/light2-harness-r03/README.md), requested under
+[HW-002](../docs/tasks/HW-002.md) for the first Exclusive Compatible proof.
+It records eight direct Port C lanes with 220 Ω series resistors and 15 kΩ
+pull-ups to Agon 3.3 V. The editable KiCad drawing and SVG/PDF previews are
+kept beside its draft connectivity authority. Circuit acceptance, as-built
+confirmation and physical validation remain open; no existing assembly or
+test result is reclassified as r03.
+
+The held frozen candidate is
 [`light2-harness-r02`](designs/light2-harness-r02/README.md). Its
 placement-independent connectivity YAML is the electrical authority. The
 revision also provides a checked design BOM in maintained YAML plus generated
@@ -27,7 +36,7 @@ map remains unfinished.
 The accepted r02 physical schematic provides the circuit basis; the separate
 [`wiring order`](designs/light2-harness-r02/wiring-order/README.md) plans powered
 incremental construction in a now-superseded draft. The resistor-addition
-proposal was rejected. Present hardware design, construction, and testing are
+proposal was rejected. The r02 design, construction, and testing remain
 on hold as of 2026-09-07: full wiring is incomplete and the complete circuit
 is untested. Signal views remain tracing/debugging references.
 HW-001 and QUAL-002 record the actual installed

@@ -1,0 +1,28 @@
+{
+  "status": "FAIL",
+  "expected_rate_hz": 100000,
+  "actual_rate_hz": 100000,
+  "expected_samples": 6000000,
+  "actual_samples": 3581952,
+  "expected_channels": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "actual_channels": [
+    "D0",
+    "D1",
+    "D2",
+    "D3",
+    "D4",
+    "D5",
+    "D6",
+    "D7"
+  ],
+  "recorded_duration_seconds": 35.81952
+}

@@ -1,0 +1,54 @@
+schema_version: 1
+artifact_id: light2-harness
+identity: light2-harness-r03
+kind: wiring_harness
+variant: light2
+status: draft
+authority: connectivity.yaml
+lineage:
+  predecessor: light2-harness-r02
+  pin_map_reference: light2-harness-r01
+authorization:
+  revision_requested_by: Author
+  requested_on: 2026-09-07
+  scope: Prepare an r03 circuit drawing from the reported simplified assembly.
+  circuit_accepted_by: null
+  circuit_accepted_at: null
+  task: HW-002
+hardware:
+  host:
+    product: Agon Light 2
+    revision: null
+  extender:
+    product: Olimex ESP32-P4-DevKit
+    reference_revision: Rev D1
+draft_properties:
+  port_c_lanes: 8
+  series_resistors: 8 x 220 ohm
+  pull_up_resistors: 8 x 15k ohm
+  pull_up_supply: Agon 3.3 V
+  pull_up_junction: Agon side of each series resistor
+  positive_rails_joined_by_harness: false
+  common_signal_ground_required: true
+  parallel_handshakes_connected: false
+  initial_proof: Exclusive Compatible over UART1
+as_built:
+  confirmed_mapping: null
+  confirmed_pull_up_junctions: null
+  confirmed_common_ground: null
+qualification:
+  status: Author accepted the bounded eight-line pinwalk; full circuit and UART qualification
+    remain open.
+  evidence: tests/HW-002-2026-09-07-23-11-02Z.md
+checkpoint:
+  accepted_by: Author
+  accepted_at: '2026-09-07T23:19:22Z'
+  scope: Commit the schematic checkpoint with the accepted eight-line pinwalk and
+    retained acquisition discrepancy.
+integrity:
+  algorithm: sha256
+  files:
+    connectivity.yaml: 4791297e6fbc65a0717175097734674f1e474918946f0e96765cf5d6b2655eb1
+    schematic.kicad_sch: e6836805880e138bb15b668294f3bd4b94a5f82d25b50d22d6934d5c84b163cb
+    Harness.kicad_sym: 7b0ea767c7db7a6246e6461ad92bfa8a9fa7ecfa0357147107f635854c9e522d
+    sym-lib-table: 70f7fa37c857b95943cee2f2c5c9d65c4d3264244e6b36ab1166120f83cd31a4

@@ -46,6 +46,12 @@ item is removed.
 
 ## Hardware design
 
+- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
+  - Started: 2026-09-07 17:36 EDT
+  - Finished: --
+  - Status: R03 schematic checkpoint and eight-line pinwalk accepted; endpoint review remains open.
+  - Details: [HW-002](docs/tasks/HW-002.md)
+
 - [ ] **HW-001 — Design and qualify the V1 UART and forward-parallel interface**
   - Started: 2026-08-28 13:06 EDT
   - Finished: --
