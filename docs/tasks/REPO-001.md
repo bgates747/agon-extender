@@ -16,6 +16,12 @@ firmware changes merely because those changes must move between repositories.
 
 ## Intent
 
+**Current-role clarification (2026-09-07):** The Author requires the canonical
+`agon-mos` and `agon-vdp` directories to be clean read-only references at their
+most recent official tagged releases. [Current ownership](../../OWNERSHIP.md)
+supersedes the MOS working-fork allocation below. The completed migration
+record is retained as history; it does not authorize local reference edits.
+
 Create `agon-emos` under the Author's established project root and a matching
 private repository in the Author's GitHub account as the single project home
 for Extender MOS (EMOS) customizations and their implementation-specific

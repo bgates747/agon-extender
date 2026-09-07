@@ -1,7 +1,7 @@
 # Cross-repository ownership
 
-The Extender product spans four repositories. Each current artifact and task
-must have one authoritative owner.
+The Extender product uses the following implementation and reference
+repositories. Each current artifact and task must have one authoritative owner.
 
 1. `agon-extender` owns the assembled product: ESP32-P4/EDP firmware and
    hardware, operating-mode and transport contracts, cross-processor
@@ -9,9 +9,14 @@ must have one authoritative owner.
 2. `agon-emos` owns Extender MOS (EMOS): maintained MOS-derived source,
    eZ80-side Extender behavior, EMOS APIs and module/service implementation,
    product-specific tests, implementation tasks, and EMOS qualification.
-3. `agon-mos` is the Author's upstream-oriented official-MOS fork. It owns
-   official lineage and independently useful generic MOS corrections, not EMOS
-   product work.
+3. The canonical `agon-mos` and `agon-vdp` directories are read-only stock
+   references, kept clean at their most recent official tagged releases.
+   They do not host local fixes, experiments, or Extender development. Preserve
+   such work in separate project-owned checkouts. The distinct `mystuff/agon-mos`
+   checkout is the Author's MOS fork and owns generic MOS development; its
+   `qsort` branch holds the relocated qsort work. This Author clarification
+   of 2026-09-07 supersedes the earlier upstream-fork working role for the
+   canonical MOS directory.
 4. `mos-agondev` owns reusable AgonDev preparation, translation, build,
    linking, runtime, emulator, inspection, and qualification infrastructure for
    MOS-family source. It consumes product-specific policy only through explicit
