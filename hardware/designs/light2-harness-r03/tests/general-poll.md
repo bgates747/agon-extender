@@ -64,3 +64,11 @@ v0.5.0 is retained for rollback. The Author subsequently confirmed EMOS installa
 Preserve original trace, serial log, identities, command/extent metadata,
 measured waveform and Author screen/prompt observation beside this sheet.
 No sustained-load, analog-margin or complete startup qualification is implied.
+
+[Paired run](PORT-013-2026-09-08-18-20-21Z/README.md): both endpoints and
+exact-frame checks pass. Acquisition and five-second waveform tail are short;
+Author disposition is pending. Original FAIL verdicts are retained.
+
+Author acceptance on 2026-09-08: paired run accepted PASS with shortened
+acquisition and waveform quiet-tail exceptions. Original failed checks remain
+false in the run record. PORT-013 is complete for this bounded exchange.

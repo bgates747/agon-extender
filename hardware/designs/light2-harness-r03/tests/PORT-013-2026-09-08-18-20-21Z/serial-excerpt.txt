@@ -1,0 +1,27 @@
+I (1702) extender_identity: source_identity=uart-general-poll-probe-r01
+I (1702) extender_identity: build_id=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (1703) extender_identity: artifact_status=candidate
+I (1722) general-poll: GENERAL POLL RECEIVER uart-general-poll-probe-r01-b2026-09-08-18-09-42Z (candidate)
+I (1723) general-poll: RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+I (1723) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (2724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (3724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (4724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (5724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (6724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (7724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (8724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (9724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (10724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (11724) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (12445) general-poll: GENERAL POLL START build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (12447) general-poll: GENERAL POLL REQUEST hex=170080A5 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (12447) general-poll: GENERAL POLL PARSER reply=8001A5 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (12449) general-poll: GENERAL POLL SENT count=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (12724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (13724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (14724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (15724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (16724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (17724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (18724) general-poll: GENERAL POLL PASS received=4 reply=3 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z

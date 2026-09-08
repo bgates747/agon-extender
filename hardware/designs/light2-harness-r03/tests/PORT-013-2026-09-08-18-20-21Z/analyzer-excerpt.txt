@@ -1,0 +1,4 @@
+sr: [00:18.421542] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:18.426321] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:18.663747] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+Device only sent 119481370 samples.

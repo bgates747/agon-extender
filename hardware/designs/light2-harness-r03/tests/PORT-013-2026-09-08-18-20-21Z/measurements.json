@@ -1,0 +1,32 @@
+{
+  "samples": 119481370,
+  "sample_rate_hz": 24000000,
+  "duration_seconds": 4.978390416666667,
+  "frames": {
+    "forward": {
+      "hex": "170080A5",
+      "start_samples": [
+        2953124,
+        2953682,
+        2954239,
+        2954797
+      ],
+      "valid_stop_bits": true,
+      "flow_control_pass": true
+    },
+    "return": {
+      "hex": "8001A5",
+      "start_samples": [
+        3020360,
+        3020568,
+        3020776
+      ],
+      "valid_stop_bits": true,
+      "flow_control_pass": true
+    }
+  },
+  "quiet_after_final_rts_stop_seconds": 4.655860625,
+  "serial_clean_seconds_after_pass": 6.005567751999479,
+  "acquisition_pass": false,
+  "five_second_waveform_tail_pass": false
+}

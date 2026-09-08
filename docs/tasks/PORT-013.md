@@ -1,6 +1,6 @@
 # PORT-013 — General Poll through the retained EDP handler
 
-Status: active; both candidates installed, paired hardware test pending. Started: 2026-09-08.
+Status: complete; Author accepted analyzer exceptions. Started: 2026-09-08. Completed: 2026-09-08.
 
 ## Scope and decisions
 
@@ -51,7 +51,7 @@ public application transport bypass. Preserve passing v0.5.0/r02 rollback.
    prepare same-build smoke/no-peer review and launch graphical validation.
 3. [x] After Author acceptance, freeze candidates, prepare rollback/SD/capture,
    and deploy under the bench authorization boundary.
-4. [ ] Prove exact request/response and prompt return on hardware; retain
+4. [x] Prove exact request/response and prompt return on hardware; retain
    results beside the r03 design. No sustained-load or mode-activation claim.
 
 EMOS implementation belongs to INTEG-007 in agon-emos. Private bench details
@@ -155,3 +155,27 @@ PORT-013-2026-09-08-18-10-29Z beside r03. EMOS v0.6.0 remains the accepted
 build b2026-09-08-17-50-12Z; its verified smoke/VDPPOLL SD is safely unmounted.
 Both endpoints are installed. Next is operator-triggered paired capture with
 powered Agon reset only at the readiness cue. No General Poll PASS is claimed.
+
+## Paired General Poll observation — 2026-09-08
+
+PORT-013-2026-09-08-18-20-21Z records both endpoint PASS results and Author
+confirmation of final MOS prompt. Waveform independently confirms exact
+170080A5/8001A5, valid framing and flow-control permission for complete frames.
+Acquisition stopped at 119481370/240000000 samples (4.978390/10 seconds),
+with empty USB timeouts. Final RTS-stop quiet tail is 4.655861 seconds; serial
+monitoring remained clean 6.005568 seconds after PASS. Result is partial
+pending Author disposition of acquisition and five-second waveform exceptions.
+SD has been returned locally; no media or hardware changes made during review.
+
+## Accepted General Poll milestone — 2026-09-08
+
+The Author explicitly approved the bounded General Poll milestone with the
+analyzer exception. PORT-013-2026-09-08-18-20-21Z is accepted PASS for the
+exact retained-parser request/reply, framing, flow-control permission and
+Agon return to MOS. Acquisition remains FAIL (4.978390/10 seconds), and
+waveform quiet tail remains below the five-second requirement (4.655861
+seconds). These are accepted exceptions, not repaired or passing checks.
+P4 serial monitoring remained clean for 6.005568 seconds after PASS.
+PORT-013 and INTEG-007 are complete and removed from their TODOs. No
+sustained-load, analog-margin or complete-startup qualification is implied.
+Artifact identities and installed firmware remain unchanged.

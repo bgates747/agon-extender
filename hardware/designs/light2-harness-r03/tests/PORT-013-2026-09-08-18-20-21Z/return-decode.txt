@@ -1,0 +1,33 @@
+uart-1: Start bit
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 1
+uart-1: 80
+uart-1: Stop bit
+uart-1: Start bit
+uart-1: 1
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 0
+uart-1: 01
+uart-1: Stop bit
+uart-1: Start bit
+uart-1: 1
+uart-1: 0
+uart-1: 1
+uart-1: 0
+uart-1: 0
+uart-1: 1
+uart-1: 0
+uart-1: 1
+uart-1: A5
+uart-1: Stop bit
