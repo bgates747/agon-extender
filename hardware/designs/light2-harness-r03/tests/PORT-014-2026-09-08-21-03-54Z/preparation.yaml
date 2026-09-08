@@ -1,0 +1,41 @@
+schema_version: 1
+run_id: PORT-014-2026-09-08-21-03-54Z
+started_at: '2026-09-08T21:03:54.232687+00:00'
+completed_at: '2026-09-08T21:06:16.238284+00:00'
+operation: post-install SD counting-sample preparation and P4 candidate staging
+outcome: pass
+procedure_identity: uart-visible-text-probe-r03
+emos_installation:
+  build_id: agon-emos-v0.1.7-b2026-09-08-20-53-57Z
+  result: Author reported good flash
+  consumed_payload_sha256: 61f8fe2763b48de0be270c7d79e1089653b12160a788ee8975a3f1defeb991fe
+  checks:
+  - EMDONE.BIN matches the selected candidate
+  - EMNEW.BIN absent
+  - v0.7.0 EMPREV.BIN and v0.2.0 EMBACK.BIN hashes unchanged
+  qualification_scope: Installation report and SD payload verification; paired hardware
+    smoke/count pending
+sample_build_id: uart-visible-text-probe-r03-b2026-09-08-20-53-57Z
+staged_files_sha256:
+  bin/EMBOOT.BIN: 166d9b8e7f0c93b975b1cd38ec3c579b42c1284433462441f2c633f898253707
+  emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+  bin/VTEXT.BIN: b0630561fdf24cce7fce077cd6c472292927b18993acadec36b791615c026802
+  autoexec.txt: 435b28f9b93e24c18bfae21877a86885ff3ca6c5b6753edeaa1483e1e2abe62e
+media_handoff: verified and safely unmounted via udisksctl
+p4_staging:
+  build_id: uart-visible-text-probe-r03-b2026-09-08-20-54-40Z
+  source_commit: 18024d823df5349128b07ec0d1268302aa4c2f69
+  source_dirty: false
+  factory_sha256: 7824ed2891034e167a060ab7f9f2f24d313933d87b0dd1b491e176086bc49a3b
+  remote_hashes_verified: true
+  stable_usb_identity_verified_read_only: true
+  physical_deployment: pending explicit authorization
+hardware_counting_test: pending
+checks:
+- Frozen candidate profile inputs verified
+- Sample and same-build smoke hashes verified
+- Existing card files backed up before replacement
+- Boot script published last; every copied file verified
+- Autoexec selects VDU 22 3, runs EMBOOT and VTEXT, contains no flash command
+- Matching P4 image and capture helpers staged and hash-verified without opening serial
+  or resetting P4

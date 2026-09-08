@@ -285,3 +285,19 @@ The counting-test autoexec will be prepared after the SD returns; P4 remains
 r02 pending its separate deployment. No physical board flash/reset or capture
 was performed during SD preparation. This record does not claim a hardware
 counting pass.
+
+
+## EMOS v0.1.7 installed; counting-test media prepared
+
+The Author reports good flash. `PORT-014-2026-09-08-21-03-54Z` records matching consumed candidate
+payload, absent EMNEW.BIN, preserved rollback hashes and the verified,
+safely unmounted SD. Autoexec now selects mode 3, runs same-build EMBOOT,
+then independently built VTEXT with the accepted 250 ms pauses. No flash
+command remains. Paired SD/CLOCK, counting, browser and prompt checks are
+still pending.
+
+P4 `uart-visible-text-probe-r03-b2026-09-08-20-54-40Z` and r03 capture helpers are staged and
+hash-verified, including the 11-transaction verdict and 24 MHz / 288M request.
+Read-only stable USB identity passed. Installed P4 remains r02 until explicit
+flash authorization; no P4 serial open/reset/flash or paired capture occurred.
+Evidence: `hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-21-03-54Z/`.
