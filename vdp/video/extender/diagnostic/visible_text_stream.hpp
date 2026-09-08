@@ -1,4 +1,4 @@
-// PORT-014 one-shot qualification binding; no product mode activation.
+// PORT-014 repeatable qualification binding; no product mode activation.
 #pragma once
 #include <Stream.h>
 #include "visible_text_transaction.hpp"

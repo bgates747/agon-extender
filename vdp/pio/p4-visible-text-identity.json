@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-visible-text-probe",
-  "source_identity": "uart-visible-text-probe-r01",
+  "source_identity": "uart-visible-text-probe-r02",
   "status": "candidate",
-  "note": "Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08. Physical text/browser qualification remains pending."
+  "note": "Author approved r02 and registry r33 for repeated Agon-only resets after successful text transactions; EMOS remains v0.7.0."
 }

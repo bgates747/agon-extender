@@ -17,7 +17,7 @@ import re
 import subprocess
 import time
 
-PROCEDURE_ID = "uart-visible-text-probe-r01"
+PROCEDURE_ID = "uart-visible-text-probe-r02"
 # Author-approved identity; physical capture still selects a frozen build.
 
 
@@ -77,7 +77,7 @@ def main():
     args = p.parse_args()
     if PROCEDURE_ID == "UNVERSIONED-DO-NOT-DEPLOY":
         p.error("visible text procedure identity awaits Author approval")
-    if not re.fullmatch(r"uart-visible-text-probe-r01-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z", args.build_id):
+    if not re.fullmatch(r"uart-visible-text-probe-r02-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z", args.build_id):
         p.error("select the approved frozen build; unversioned captures are not accepted")
     if not 10 <= args.seconds <= 180: p.error("capture duration must be 10–180 seconds")
     if args.port.parent != Path("/dev/serial/by-id"): p.error("use the verified stable by-id path")

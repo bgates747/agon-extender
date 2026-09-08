@@ -1,6 +1,8 @@
 // PORT-014 boot-TU-only hardware orchestration around the retained parser.
-// Deliberately admits one fixed text/flush/poll sequence; not an activation protocol or public UART
-// transport. Parser-produced reply bytes are buffered before hardware enqueue.
+// Admits repeated fixed text/flush/poll transactions; not product activation.
+// Parser-produced replies are buffered before hardware enqueue. After success,
+// wait for EMOS to release RTS before accepting a fresh request. Keep the
+// framebuffer and parser alive so opening the browser later still works.
 #include <driver/gpio.h>
 #include <driver/uart.h>
 #include <hal/uart_ll.h>
@@ -9,6 +11,14 @@ constexpr uart_port_t vt_port = UART_NUM_1;
 VisibleTextStream *vt_stream;
 QueueHandle_t vt_events;
 bool vt_released;
+void vt_connect() {
+  ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11,1));
+  ESP_ERROR_CHECK(gpio_set_direction(GPIO_NUM_11,GPIO_MODE_OUTPUT));
+  ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_12,1));
+  ESP_ERROR_CHECK(uart_set_pin(vt_port,12,22,UART_PIN_NO_CHANGE,23));
+  ESP_ERROR_CHECK(gpio_input_enable(GPIO_NUM_23));
+  vt_released=false;
+}
 void vt_release() {
   if (vt_released) return;
   // ESP-IDF 5.5.5 has RX-only uart_flush. Disconnect TX before cancelling any
@@ -35,15 +45,11 @@ VisibleTextStream *beginVisibleTextQualification() {
     ESP_ERROR_CHECK(gpio_pullup_dis(gpio_num_t(pin)));
     ESP_ERROR_CHECK(gpio_pulldown_dis(gpio_num_t(pin)));
   }
-  ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11,1));
-  ESP_ERROR_CHECK(gpio_set_direction(GPIO_NUM_11,GPIO_MODE_OUTPUT));
   uart_config_t cfg={}; cfg.baud_rate=1152000; cfg.data_bits=UART_DATA_8_BITS;
   cfg.parity=UART_PARITY_DISABLE; cfg.stop_bits=UART_STOP_BITS_1;
   cfg.flow_ctrl=UART_HW_FLOWCTRL_CTS; cfg.source_clk=UART_SCLK_DEFAULT;
   ESP_ERROR_CHECK(uart_param_config(vt_port,&cfg));
-  ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_12,1));
-  ESP_ERROR_CHECK(uart_set_pin(vt_port,12,22,UART_PIN_NO_CHANGE,23));
-  ESP_ERROR_CHECK(gpio_input_enable(GPIO_NUM_23));
+  vt_connect();
   ESP_ERROR_CHECK(uart_driver_install(vt_port,1024,0,16,&vt_events,0));
   vt_stream=new VisibleTextStream;
   ESP_LOGI("visible-text","VISIBLE TEXT RECEIVER %s (%s)",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
@@ -55,6 +61,7 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
   Stage stage=Stage::waiting;
   uint32_t since=millis(), report=since-1000;
   auto &t=vt_stream->transaction;
+  unsigned cycle=0;
   for (;;) {
     const auto now=millis();
     uart_event_t ev;
@@ -68,8 +75,10 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
     }
     const bool stopped=gpio_get_level(GPIO_NUM_23)!=0;
     if (stage==Stage::waiting && !stopped && !t.failure) {
+      if (vt_released) vt_connect();
       stage=Stage::receiving; since=now;
       ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11,0));
+      ESP_LOGI("visible-text","VISIBLE TEXT CYCLE %u build=%s",++cycle,AGON_EXTENDER_BUILD_ID);
       ESP_LOGI("visible-text","VISIBLE TEXT START build=%s",AGON_EXTENDER_BUILD_ID);
     }
     if (stage==Stage::receiving && t.received==sizeof(t.input) && !t.failure) {
@@ -101,16 +110,23 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
         vt_release(); stage=Stage::quiet; since=now;
       } else if (tx!=ESP_ERR_TIMEOUT) t.fail("UART TX completion error");
     }
-    if (stage==Stage::quiet && now-since>=250 && !t.failure) stage=Stage::pass;
-    if (stage==Stage::waiting && now-since>=180000) t.fail("no EMOS start edge");
+    if (stage==Stage::quiet && now-since>=250 && !t.failure) {
+      stage=Stage::pass;
+      ESP_LOGI("visible-text","VISIBLE TEXT PASS received=35 reply=3 build=%s",AGON_EXTENDER_BUILD_ID);
+    }
+    // A stopped peer marks the end of EMOS's receive/quiet interval. Never
+    // replay a reply or treat the still-active request as a new transaction.
+    // Idle waiting has no expiry; only active exchanges have deadlines.
+    if (stage==Stage::pass && stopped && !t.failure) {
+      t=VisibleTextTransaction{};
+      stage=Stage::waiting; since=now; report=now-1000;
+    }
     if ((stage==Stage::receiving || stage==Stage::sending) && now-since>=5000)
       t.fail("transaction timeout");
     if (t.failure) { vt_release(); stage=Stage::fail; }
     if (now-report>=1000) {
       if (stage==Stage::waiting)
         ESP_LOGI("visible-text","VISIBLE TEXT WAIT received=0 cts=%d build=%s",stopped,AGON_EXTENDER_BUILD_ID);
-      else if (stage==Stage::pass)
-        ESP_LOGI("visible-text","VISIBLE TEXT PASS received=35 reply=3 build=%s",AGON_EXTENDER_BUILD_ID);
       else if (stage==Stage::fail)
         ESP_LOGE("visible-text","VISIBLE TEXT FAIL reason=%s build=%s",t.failure,AGON_EXTENDER_BUILD_ID);
       report=now;

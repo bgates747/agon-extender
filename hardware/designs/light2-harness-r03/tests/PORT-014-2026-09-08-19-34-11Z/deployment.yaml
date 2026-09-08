@@ -1,0 +1,29 @@
+schema_version: 1
+record_type: p4_deployment
+run_id: PORT-014-2026-09-08-19-34-11Z
+outcome: pass
+scope: Flash verification, empty UART readiness and browser startup frame only; paired
+  text test pending
+procedure_identity: uart-visible-text-probe-r01
+build_id: uart-visible-text-probe-r01-b2026-09-08-19-24-57Z
+source_commit: a3ab788948a9e5f5cb0b5d795a057282e34381d2
+factory_sha256: 28a6750ee8ca981f52c2bba78256d97587f7376661dd1ae970922df162be3a77
+checks:
+  write_verified: true
+  candidate_identity_observed: true
+  silicon_revision: v1.3
+  uart_baud: 1152000
+  uart_format: 8N1
+  uart_pins:
+    rx: 22
+    tx: 12
+    cts: 23
+    rts: 11
+  receiver_empty: true
+  cts_stopped: true
+  http_asset_matches: true
+  startup_frame_valid: true
+  startup_frame_width: 640
+  startup_frame_height: 480
+  startup_frame_sha256: c5cdd290e9fb16d2ce7d42549092e7f5a320b02f4ef7126d7f46303f70c7a2ac
+paired_text_browser_result: null

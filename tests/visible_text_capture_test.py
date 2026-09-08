@@ -2,7 +2,7 @@ from pathlib import Path
 import runpy
 import unittest
 M=runpy.run_path(str(Path(__file__).resolve().parents[1]/'scripts/capture_visible_text.py'))
-BUILD='uart-visible-text-probe-r01-b2026-09-08-12-00-00Z'
+BUILD='uart-visible-text-probe-r02-b2026-09-08-12-00-00Z'
 def transcript():
     return ''.join(s+' build='+BUILD+'\n' for s in ['VISIBLE TEXT START','VISIBLE TEXT REQUEST hex=0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6','VISIBLE TEXT PARSER reply=8001A6','VISIBLE TEXT SENT count=3','VISIBLE TEXT PASS received=35 reply=3']).encode()
 class CaptureTests(unittest.TestCase):

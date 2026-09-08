@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "environment": "p4-visible-text",
-  "diagnostic_status": "PORT-014 one-shot visible text through retained parser, not product activation",
+  "diagnostic_status": "PORT-014 repeatable visible text through retained parser, not product activation",
   "generated_build_files": [
     "video/CMakeLists.txt"
   ],

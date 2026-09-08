@@ -1,0 +1,26 @@
+schema_version: 1
+run_id: PORT-014-2026-09-08-19-36-36Z
+procedure_identity: uart-visible-text-probe-r01
+outcome: partial
+scope: First fixed UART text/parser/browser proof; final Agon smoke/prompt confirmation
+  pending
+inputs:
+  emos_build_id: agon-emos-v0.7.0-b2026-09-08-19-24-57Z
+  p4_build_id: uart-visible-text-probe-r01-b2026-09-08-19-24-57Z
+  p4_commit: a3ab788948a9e5f5cb0b5d795a057282e34381d2
+  emos_commit: 5a9549c9288573930c927d193d37ac019e91dd86
+checks:
+  p4_stages: true
+  agon_text_pass_reported: true
+  agon_sd_clock_and_final_prompt_confirmed: null
+  browser_text_observed: true
+  acquisition_pass: true
+  exact_bytes_framing_flow: true
+  five_second_waveform_tail_pass: true
+logic_sha256: 1a8faa2c4052b632c87d005d55e8531f8a52f4ce1c413d579bf441114ba5c8c8
+original_serial_sha256: 6268d6a6b5d53b4238702c3685364803bdd7e7eb4dbea9e908d3dadaa944f67f
+serial_clean_seconds_after_pass: 9.005480390998855
+browser_observation: 'Author screenshot shows EMOS TO EDP: UART TEXT, connected EVF1
+  display at 640x480, received/presented 217 frames.'
+repeat_observation: Agon-only second reset timed out because r01 receiver remains
+  completed; r02 correction requested.

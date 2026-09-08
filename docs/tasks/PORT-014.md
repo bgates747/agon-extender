@@ -49,11 +49,13 @@ the onboard VDP; EMOS owns this Legacy-only bounded diagnostic.
 2. [x] Build both drafts; run configured EMOS/linked/runtime/host checks and
    P4 host checks. Launch same-build ordinary/no-peer graphical review from
    .emulator; await Author acceptance before committing emulator-coupled work.
-3. [ ] Freeze clean candidates after review; preserve working v0.6.0/General
+3. [x] Freeze clean candidates after review; preserve working v0.6.0/General
    Poll rollback, prepare guarded SD installation/test media and authorized P4
    deployment with network/browser readiness checks.
 4. [ ] Capture the paired exchange and browser text; accept or diagnose the
    bounded result before proposing another increment.
+5. [ ] Make successful text transactions repeatable after Agon-only resets;
+   qualify r02 with two further successes while P4 and browser stay running.
 
 EMOS implementation belongs to INTEG-008. Physical wiring remains unchanged.
 Current bench coordinates and preparation live only in ignored local records.
@@ -91,3 +93,61 @@ The Author is separately curating Extended Compatible-mode example programs
 in agon-utils/examples/extender, with emulator testing in that repository.
 Examples may move into agon-extender as they mature. This diagnostic continues
 the current Exclusive Compatible bring-up sequence.
+
+## Installation media prepared — 2026-09-08
+
+Clean candidates from Extender a3ab788 and EMOS 5a9549c use build timestamp
+b2026-09-08-19-24-57Z. Build/identity and same-build automated emulator checks
+pass. Preparation record
+[PORT-014-2026-09-08-19-28-52Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-28-52Z/README.md)
+records the verified, safely unmounted EMOS install SD. Working v0.6.0 and
+older rollbacks are preserved on card and backed up off-card. Physical Agon
+installation, separate smoke/VDPTEXT media and P4 deployment remain pending.
+
+The Author subsequently reported successful installation. Post-install record
+[PORT-014-2026-09-08-19-32-11Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-32-11Z/README.md)
+confirms the consumed candidate payload and prepares the same-build SD/CLOCK
+smoke and VDPTEXT media with no flash command. SD is safely unmounted. The
+P4 candidate is staged and hash-verified with read-only device identification;
+P4 deployment and paired UART/browser acceptance remain pending.
+
+The Author authorized P4 flashing. Deployment record
+[PORT-014-2026-09-08-19-34-11Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-34-11Z/README.md)
+confirms independent flash verification, exact candidate identity, correct UART
+settings and empty receiver readiness. The served browser index matches its
+source and a requested startup frame passes EVF1 validation at 640×480.
+Both endpoints are installed; the operator-triggered paired capture, Agon
+result and browser-visible message remain pending.
+
+## Repeatability correction — 2026-09-08
+
+The Author reports Agon success and supplies r01 capture with P4 stages and
+24MHz/240M acquisition PASS. The browser screenshot shows the exact expected
+text. A subsequent Agon-only reset timed out: r01 deliberately retained its
+completed transaction and released UART outputs until P4 restart. The Author
+rejected this restriction for ordinary text testing and approved
+uart-visible-text-probe-r02 and registry r33. EMOS stays v0.7.0.
+
+R02 preserves parser/framebuffer state, emits one PASS per successful cycle,
+waits for EMOS RTS to stop before clearing that cycle, and reconnects P4 TX/RTS
+only when the next EMOS request starts. Idle waiting no longer expires. Active
+deadlines and fail-latched diagnostics remain. ESP-IDF 5.5.5 uart_wait_tx_done
+re-enables TX_DONE after the existing cancellation helper disables it; no
+driver reinstall or FIFO replay is used. Host tests compile the real hardware
+orchestration with fake UART/GPIO and prove two exchanges, a long idle interval,
+malformed-input rejection and transmit timeout/release. The retained parser
+and electrical repeatability still require physical checks.
+
+Use [the r02 sheet](../../hardware/designs/light2-harness-r03/tests/visible-text-repeatable.md)
+for repeatability. R01 source/procedure remains frozen in a3ab788 and its
+capture uses the original deployed checker.
+
+First-run record
+[PORT-014-2026-09-08-19-36-36Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-36-36Z/README.md)
+preserves the capture: exact 35/3 bytes, valid framing/flow control, full
+240M acquisition, 9.444288-second final waveform quiet tail and 9.005480
+seconds clean serial after PASS. Author reports Agon success; screenshot
+shows the exact browser text. Explicit SD/CLOCK and final prompt confirmation
+remain pending. R02 host checks and P4 draft build pass; freeze the clean
+candidate before physical repeatability checks. EMOS and its emulator inputs
+are unchanged by this P4-only correction.

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r32
-updated_at: 2026-09-08T19:24:24Z
+registry_revision: r33
+updated_at: 2026-09-08T19:45:28Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -317,7 +317,7 @@ artifacts:
   - artifact_id: uart-visible-text-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-visible-text-probe-r01
+    latest_identity: uart-visible-text-probe-r02
     status: candidate
     variants: []
     description: Bounded EMOS UART text through the retained EDP parser and browser framebuffer.
@@ -325,3 +325,4 @@ artifacts:
       - Author-approved under PORT-014; EMOS owns VDPTEXT at 1152000 baud with RTS/CTS.
       - Real parser ACK, visible browser text and final MOS prompt are separate checks.
       - Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08; physical text/browser qualification remains pending.
+      - Author approved r02 and registry r33 for repeatable successful text transactions on 2026-09-08; EMOS remains v0.7.0.

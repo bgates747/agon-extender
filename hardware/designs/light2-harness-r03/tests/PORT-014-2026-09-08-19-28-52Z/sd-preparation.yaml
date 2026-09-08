@@ -1,0 +1,37 @@
+schema_version: 1
+record_type: sd_preparation
+run_id: PORT-014-2026-09-08-19-28-52Z
+started_at: '2026-09-08T19:28:52.054448+00:00'
+outcome: partial
+scope: Verified EMOS installation media; physical installation and text/browser test
+  pending
+procedure_identity: uart-visible-text-probe-r01
+inputs:
+  emos_build_id: agon-emos-v0.7.0-b2026-09-08-19-24-57Z
+  emos_status: candidate
+  emos_commit: 5a9549c9288573930c927d193d37ac019e91dd86
+  builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+  clean_build_inputs: true
+  firmware_size_bytes: 121922
+  firmware_sha256: c1fe4d81def840f8415283edb8eb16ed6c786acfc8f121def12c0a3bee58e444
+  firmware_crc32: D911314A
+  flash_sha256: 480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57
+staging:
+  preparation_pass: true
+  sd_unmounted: true
+  firmware_path: /EMNEW.BIN
+  consumed_payload_path: /EMDONE.BIN
+  rollback_path: /EMPREV.BIN
+  rollback_identity: agon-emos-v0.6.0
+  rollback_sha256: 89a71acdd5e4e076e74c0865ecf2c2cd1d9b2f69f00135992dba204742880123
+  older_rollbacks:
+    /EMV050.BIN: agon-emos-v0.5.0
+    /EMV040.BIN: agon-emos-v0.4.0
+    /EMV030.BIN: agon-emos-v0.3.0
+    /EMBACK.BIN: agon-emos-v0.2.0
+  install_autoexec_sha256: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+  off_card_backups_verified: true
+hardware:
+  agon_installation_pass: null
+  p4_target_candidate_deployed: false
+  text_browser_test_pass: null

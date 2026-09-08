@@ -1,0 +1,63 @@
+{
+  "samples": 240000000,
+  "sample_rate_hz": 24000000,
+  "duration_seconds": 10.0,
+  "frames": {
+    "forward": {
+      "hex": "0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6",
+      "start_samples": [
+        2411113,
+        2411671,
+        2412228,
+        2412786,
+        2413343,
+        2413900,
+        2414458,
+        2415015,
+        2415573,
+        2416130,
+        2416688,
+        2417245,
+        2417803,
+        2418360,
+        2418917,
+        2419475,
+        2420032,
+        2420590,
+        2421147,
+        2421705,
+        2422262,
+        2422819,
+        2423377,
+        2423934,
+        2424492,
+        2425049,
+        2425607,
+        2426164,
+        2426722,
+        2427279,
+        2427836,
+        2428394,
+        2428951,
+        2429509,
+        2430066
+      ],
+      "valid_stop_bits": true,
+      "flow_control_pass": true
+    },
+    "return": {
+      "hex": "8001A6",
+      "start_samples": [
+        8808089,
+        8808298,
+        8808506
+      ],
+      "valid_stop_bits": true,
+      "flow_control_pass": true
+    }
+  },
+  "quiet_after_final_rts_stop_seconds": 9.444287958333334,
+  "serial_clean_seconds_after_pass": 9.005480390998855,
+  "acquisition_pass": true,
+  "five_second_waveform_tail_pass": true
+}
