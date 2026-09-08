@@ -1,0 +1,46 @@
+{
+  "schema_version": 1,
+  "scope": "Waveform measurements over retained trace; not a full-duration acquisition pass",
+  "logic_sha256": "1b8f8b2a1f2623f9a538ead50a580b08b4f4998c0f3e6cdc98bd53c6a01551a1",
+  "samplerate_hz": 2000000,
+  "sample_period_seconds": 5e-07,
+  "samples": 55152640,
+  "duration_seconds": 27.57632,
+  "bit_mapping": {
+    "PC0": "D1, physical bit 1",
+    "PC1": "D6, physical bit 6",
+    "PC2": "D3, physical bit 3",
+    "PC3": "D4, physical bit 4"
+  },
+  "forward_hold_seconds": 1.0012325,
+  "return_hold_seconds": 0.985767,
+  "quiet_after_final_stop_seconds": 11.526723,
+  "forward_first_edge_seconds": 13.863211,
+  "forward_last_edge_seconds": 13.8637235,
+  "return_first_edge_seconds": 14.849888,
+  "return_last_edge_seconds": 14.850661,
+  "final_stop_seconds": 16.049597,
+  "forward_hex": "464C4F570D0A",
+  "return_hex": "464C4F5741434B0D0A",
+  "checks": {
+    "forward_hold_at_least_half_second": true,
+    "no_forward_edges_during_hold": true,
+    "forward_frame_within_permission": true,
+    "exact_forward_bytes": true,
+    "return_hold_at_least_half_second": true,
+    "no_return_edges_during_hold": true,
+    "return_frame_within_permission": true,
+    "exact_return_bytes": true,
+    "blocked_forward_no_edges": true,
+    "blocked_return_no_edges": true,
+    "quiet_after_final_stop_at_least_five_seconds": true,
+    "all_lines_start_and_finish_high": true
+  },
+  "waveform_checks_pass": true,
+  "attempt_evidence": "Pair with exact P4 stage log and Author-confirmed EMOS PASS; silence alone does not establish attempted transmission",
+  "limits": [
+    "Sample times derive from the archive rate; instrument calibration was not performed.",
+    "Capture ended before requested 60 seconds; no waveform claim beyond retained trace.",
+    "A HIGH digital sample does not establish high impedance or analog margin."
+  ]
+}

@@ -1,0 +1,118 @@
+schema_version: 1
+run_id: PORT-011-2026-09-08-16-16-36Z
+started_at: '2026-09-08T16:16:36.565790+00:00'
+ended_at: '2026-09-08T16:18:08.722618+00:00'
+recorded_at: '2026-09-08T16:24:50.136125+00:00'
+outcome: pass
+procedure_identity: uart-flow-probe-r01
+wiring_identity: light2-harness-r03
+scope: 'Legacy EMOS UARTFLOW at 115200/8N1: pause/resume and blocked senders in both directions'
+acceptance: Author approved this bounded UART test as PASS with the shortened acquisition
+  explicitly accepted for this run.
+endpoints:
+  emos:
+    build_id: agon-emos-v0.4.0-b2026-09-08-05-51-31Z
+    status: candidate
+    source_commit: 3d8e09de4c32e7acf0d51f39c2725168e30310cb
+    builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+    dirty: false
+    binary_sha256: 552f7a22b06e84771e81def293f1127d5278d8fc5f17cefb32187fac881491f8
+  p4:
+    build_id: uart-flow-probe-r01-b2026-09-08-05-51-31Z
+    status: candidate
+    source_commit: 3869264a520c62a9746109fd7e4794a1f4549f2c
+    dirty: false
+    factory_sha256: c3d04b971d78c25ddbf049d9df97d8603c3854f3dd598ef0eab094ae0356de93
+operator_trigger: powered Agon reset button after readiness cue
+observations:
+  p4_flow_stages_pass: true
+  raw_serial_verdict_independently_rechecked: true
+  capture_seconds: 90
+  seconds_observed_after_first_pass: 70.12544342399997
+  reset_cue_issued: true
+  later_p4_uart_error_or_extra_request: false
+  agon_uart_flow_pass_reported: true
+  agon_sd_clock_pass_reported: true
+  agon_final_mos_prompt_reported: true
+analyzer:
+  samplerate_hz: 2000000
+  requested_samples: 120000000
+  actual_samples: 55152640
+  requested_seconds: 60
+  actual_seconds: 27.57632
+  channel_map:
+    D1: PC0, EMOS TX to P4 RX
+    D6: PC1, P4 TX to EMOS RX
+    D3: PC2, EMOS RTS to P4 CTS
+    D4: PC3, P4 RTS to EMOS CTS
+  probe_positions_relative_to_series_resistors: null
+  process_exit_code: 0
+  acquisition_pass: false
+  waveform_checks_pass: true
+  forward_hold_seconds: 1.0012325
+  return_hold_seconds: 0.985767
+  quiet_after_final_stop_seconds: 11.526723
+  forward_hex: 464C4F570D0A
+  return_hex: 464C4F5741434B0D0A
+author_observation:
+  initial: agon reports pass
+  followup: Yes, all of those
+  followup_question: Did Agon also show SD/CLOCK PASS and return to its normal MOS prompt
+    after UART FLOW PASS?
+  basis: Author reports for this capture; no archived screen image supplied.
+evidence:
+  acquisition-end.txt: 93944929057ce04fa7219aff6e035c7957b2ab89e4123352d335ce47ea86ac36
+  capture-tools.txt: 10672b7c7094cfb813b71a5bf87f24c2750b6d14cce38924bffaa30137ffa818
+  decoder-tools.txt: 0e5618a631d53378dc7e6001512607bb9e4369960a2b1cd0efb2fd1c548d0a91
+  edges.json: 3c35dbedc826bf0d36555d3c1fedb0a88217d3a43c576e0f0e07c22cbdacf101
+  logic.sr: 1b8f8b2a1f2623f9a538ead50a580b08b4f4998c0f3e6cdc98bd53c6a01551a1
+  measurements.json: 7fe0fcb25133844cc4947afb90cf48fd30f179b4e6f9aae4a0020dd47100ad9f
+  serial.txt: a2cc97db3d419e296abcf35f4035d3ef993fbda0e081abc17d7ec63f336d5776
+  uart-decoder.txt: 08ea0e890f14cfc631fc74ca731c6f1dc3a0a2dfdbc8140ced1b594438599b5f
+private_evidence:
+  combined_result_sha256: 6b62980e9be423fdcdc031d2e7b6d337baf3d7d2603e55e02983aa0ad1d0df5d
+  capture_result_sha256: 991bbedd4e57ee5b97717134cd9705b439996c01d090deb20bb2396a916448a1
+  full_sigrok_log_sha256: 53b2c909dc39e41483f96b4b1a69dc488b39c1c899e8bc479e4c382c2b5622e0
+  arm_command_sha256: 3f186d3e0133478de0bb737f573be5bac0890f8fea5642ae07cbeda771c974d9
+  arm_log_sha256: 46000c4760cee03f5118e84da0e819232b66018ede22d71a9413f602a5f289f4
+  helper_sha256:
+    capture_combined.py: 2847e52f85f46a4517eed8b7b802c9506f6802a899d649e07ef0028621a69ead
+    capture_on_pi.py: e24cdf15b24b2fa6067d06b49295c9b72179266edea94ec93a0b62320ffdcf09
+    bench.py: 92820781367dfc00ad2f0d046728e58dad0f020c826f1995857e4bb6c7e7130d
+    bench.json: 6b59d2e5b32d987453f695c90384350d06954d524f554c51a70f2a36152845a6
+dependencies:
+  emos_build_manifest: ../PORT-011-2026-09-08-05-55-02Z/build-manifest.yaml
+  p4_deployment: ../PORT-011-2026-09-08-05-54-22Z/deployment.yaml
+  test_sd_preparation: ../PORT-011-2026-09-08-06-05-59Z/preparation.json
+notes:
+- Both decoded streams are exact; no extra bytes or framing warnings appear in the retained
+  capture.
+- The trace contains the complete exchange and more than the required five seconds after the
+  final stop edge.
+- Repeated empty USB transfer timeouts ended acquisition early. The original FAIL is retained;
+  the 60-second check was not relaxed.
+- P4 log proves ACK and blocked byte were queued; Author EMOS PASS and both logs complement
+  waveform silence.
+- No waveform claim extends beyond 27.57632 seconds; P4 serial continued for 90 seconds after
+  the cue.
+- Raw digital HIGH levels do not prove high impedance or analog voltage margin.
+- Private host/account/device metadata remains in ignored bench records.
+- This does not qualify sustained throughput, faster baud rates, reset/unequal-power behavior,
+  production EDP traffic or Exclusive Compatible activation.
+corrections:
+- recorded_at: '2026-09-08T16:36:18.971049+00:00'
+  kind: author_acceptance
+  instruction: approve this as a passed test.
+  previous_manifest_sha256: bacc50beed335237f79783c562ab81d2c4fb0c6b24aa513cd057a36ff4eb77aa
+  previous_fields:
+    outcome: partial
+    acceptance: Pending Author disposition of shortened acquisition; endpoint and retained-waveform
+      checks pass
+  accepted_fields:
+    outcome: pass
+    acceptance: Author approved this bounded UART test as PASS with the shortened acquisition
+      explicitly accepted for this run.
+  basis: Both endpoints and retained-waveform checks pass; the trace contains the complete
+    exchange and 11.526723 seconds after the final stop.
+  preserved: Original acquisition FAIL, measured sample count, raw evidence and 60-second
+    procedure requirement are unchanged.

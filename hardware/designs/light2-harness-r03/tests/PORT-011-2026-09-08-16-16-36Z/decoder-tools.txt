@@ -1,0 +1,19 @@
+sigrok-cli 0.7.2
+
+Libraries and features:
+- libsigrok 0.5.2/5:1:1 (rt: 0.5.2/5:1:1).
+ - Libs:
+  - glib 2.80.0 (rt: 2.80.0/8000:0)
+  - libzip 1.7.3
+  - libserialport 0.1.1/1:0:1 (rt: 0.1.1/1:0:1)
+  - libusb-1.0 1.0.27.11882 API 0x0100010a
+  - hidapi 0.14.0
+  - bluez 5.72
+  - libftdi 1.5
+  - Host: x86_64-pc-linux-gnu, little-endian.
+  - SCPI backends: TCP, serial, USBTMC.
+- libsigrokdecode 0.5.3/6:1:2 (rt: 0.5.3/6:1:2).
+ - Libs:
+  - glib 2.80.0 (rt: 2.80.0/8000:0)
+  - Python 3.12.2 / 0x30c02f0 (API 1013, ABI 3)
+  - Host: x86_64-pc-linux-gnu, little-endian.

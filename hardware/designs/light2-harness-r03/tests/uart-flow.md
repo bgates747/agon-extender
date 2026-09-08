@@ -110,7 +110,24 @@ level after release. A HIGH waveform alone does not prove high impedance.
 
 ## Results and limits
 
-No physical run yet. Store accepted or informative results in this directory
+Both candidates were installed and the
+[same-build SD prepared](PORT-011-2026-09-08-06-05-59Z/README.md) before
+[run PORT-011-2026-09-08-16-16-36Z](PORT-011-2026-09-08-16-16-36Z/README.md).
+The Author confirmed SD/CLOCK PASS, UART FLOW PASS and normal prompt return;
+P4's serial checker and the retained waveform pass their respective checks.
+Both exact frames and deliberate pauses are present, with 11.526723 seconds
+of quiet trace after the final stop.
+
+The analyzer saved 27.57632 of the requested 60 seconds after repeated empty
+USB transfer timeouts, as in the earlier
+[preflights](PORT-011-2026-09-08-06-05-31Z/README.md). Its acquisition FAIL
+and the 60-second check remain unchanged. The Author explicitly accepted this
+bounded test as PASS on 2026-09-08 because the full exchange and required quiet
+tail are present. The run manifest retains the earlier partial disposition
+in its dated acceptance record. This exception applies to this run; no artifact
+lifecycle promotion or broader electrical claim is implied.
+
+Store accepted or informative results in this directory
 with endpoint manifests, screen observation, serial verdict/log, raw analyzer
 capture and measured intervals. Keep private host/device details in ignored
 bench records. This is a short diagnostic exchange; it does not qualify

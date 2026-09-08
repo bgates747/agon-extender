@@ -7,11 +7,6 @@ item is removed.
 
 ## Active
 
-- [ ] **PORT-011 — Prove UART RTS/CTS pause, resume and timeout**
-  - Started: 2026-09-08
-  - Finished: --
-  - Details: [PORT-011](docs/tasks/PORT-011.md)
-
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --

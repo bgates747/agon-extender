@@ -1,0 +1,7 @@
+sr: [00:16.835444] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:16.840621] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:16.845830] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:17.080631] fx2lafw: receive_transfer(): status LIBUSB_TRANSFER_TIMED_OUT received 0 bytes.
+sr: [00:17.082237] session: bus: Received SR_DF_END packet.
+cli: Received SR_DF_END.
+Device only sent 31682560 samples.

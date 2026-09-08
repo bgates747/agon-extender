@@ -1,0 +1,21 @@
+{
+  "run_id": "PORT-011-2026-09-08-06-05-59Z",
+  "prepared_at": "2026-09-08T06:05:59.245402+00:00",
+  "build_id": "agon-emos-v0.4.0-b2026-09-08-05-51-31Z",
+  "before_sha256": {
+    "bin/EMBOOT.BIN": "e80e8dac9450aaac0af5ff5f59bd44f9ec681e236ddec1830e9b01a913990838",
+    "emos-boot/check.txt": "47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50",
+    "autoexec.txt": "c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022"
+  },
+  "after_sha256": {
+    "bin/EMBOOT.BIN": "9da67abe63aca135fd6a4c711b9a3e420395818b4751909cbc35bd24c8ce7450",
+    "emos-boot/check.txt": "47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50",
+    "autoexec.txt": "c6a48a3b3415737b657f7e057197142387e59a905aa661d0eac8f956fcd826d3"
+  },
+  "consumed_payload_sha256": "552f7a22b06e84771e81def293f1127d5278d8fc5f17cefb32187fac881491f8",
+  "flash_result": "Author reported good flash",
+  "expected_test": "SD/CLOCK PASS, four UART FLOW stage passes, UART FLOW PASS, MOS prompt",
+  "hardware_test_result": "pending",
+  "safely_unmounted": true,
+  "installed_firmware_evidence": "Author report plus matching consumed EMDONE.BIN; no flash-screen image"
+}

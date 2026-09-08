@@ -1,11 +1,18 @@
 # Light 2 r03 tests
 
-Next test: [UART RTS/CTS pause and timeout](uart-flow.md).
+Latest completed test: [UART RTS/CTS pause and timeout](uart-flow.md).
 [P4 deployment](PORT-011-2026-09-08-05-54-22Z/README.md) passed;
-[EMOS installation media](PORT-011-2026-09-08-05-55-02Z/README.md) is prepared.
-Agon installation and flow-control results remain pending.
+[EMOS installation](PORT-011-2026-09-08-05-55-02Z/README.md) is Author-confirmed.
+The [smoke/flow test SD](PORT-011-2026-09-08-06-05-59Z/README.md) is ready and
+unmounted before the run. The
+[physical flow result](PORT-011-2026-09-08-16-16-36Z/README.md) passes both
+endpoint reports and all retained-waveform checks. The analyzer saved 27.57632
+of the requested 60 seconds, including the complete exchange and 11.526723
+seconds after the final stop. The Author accepted this bounded test as PASS
+with that acquisition limitation explicit; the original acquisition FAIL
+remains recorded.
 
-Latest completed test: [UART request and acknowledgement](uart-roundtrip.md).
+Previous completed test: [UART request and acknowledgement](uart-roundtrip.md).
 The [acknowledged round trip](PORT-010-2026-09-08-04-39-39Z/README.md) passed exact P4
 request/ACK capture and Author-confirmed Agon success with prompt return.
 The [EMOS installation and timeout record](PORT-010-2026-09-08-04-07-39Z/README.md)

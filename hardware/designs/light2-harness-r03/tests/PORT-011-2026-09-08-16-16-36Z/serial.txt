@@ -1,0 +1,107 @@
+Core0 Saved PC:0x40012a02
+Core1 Saved PC:0x4fc012cc
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1888
+load:0x4ff29ed0,len:0xfe8
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29ed0
+I (13) boot: ESP-IDF 5.5.5 2nd stage bootloader
+I (13) boot: compile time Sep  8 2026 01:07:15
+I (14) boot: Multicore bootloader
+I (16) boot: chip revision: v1.3
+I (16) boot: efuse block revision: v0.3
+I (17) qio_mode: Enabling QIO for flash chip WinBond
+I (18) boot.esp32p4: SPI Speed      : 80MHz
+I (19) boot.esp32p4: SPI Mode       : QIO
+I (20) boot.esp32p4: SPI Flash Size : 16MB
+I (21) boot: Enabling RNG early entropy source...
+I (22) boot: Partition Table:
+I (23) boot: ## Label            Usage          Type ST Offset   Length
+I (25) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (26) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (27) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (28) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (29) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (30) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (31) boot: End of partition table
+I (32) esp_image: segment 0: paddr=00020020 vaddr=40030020 size=10b54h ( 68436) map
+I (43) esp_image: segment 1: paddr=00030b7c vaddr=30100000 size=00070h (   112) load
+I (44) esp_image: segment 2: paddr=00030bf4 vaddr=4ff00000 size=0f424h ( 62500) load
+I (56) esp_image: segment 3: paddr=00040020 vaddr=40000020 size=2c12ch (180524) map
+I (80) esp_image: segment 4: paddr=0006c154 vaddr=4ff0f424 size=03818h ( 14360) load
+I (84) esp_image: segment 5: paddr=0006f974 vaddr=4ff12c80 size=032a4h ( 12964) load
+I (91) boot: Loaded app from partition at offset 0x20000
+I (92) boot: Disabling RNG early entropy source...
+I (95) hex_psram: vendor id    : 0x0d (AP)
+I (95) hex_psram: Latency      : 0x01 (Fixed)
+I (96) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (97) hex_psram: dev id       : 0x03 (generation 4)
+I (98) hex_psram: density      : 0x07 (256 Mbit)
+I (99) hex_psram: good-die     : 0x06 (Pass)
+I (100) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (101) hex_psram: BurstType    : 0x00 ( Wrap)
+I (102) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (103) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (104) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (105) hex_psram: DriveStrength: 0x00 (1/1)
+I (106) MSPI Timing: Enter psram timing tuning
+I (275) esp_psram: Found 32MB PSRAM device
+I (275) esp_psram: Speed: 200MHz
+I (276) hex_psram: psram CS IO is dedicated
+I (276) cpu_start: Multicore app
+I (1184) esp_psram: SPI SRAM memory test OK
+I (1194) cpu_start: Pro cpu start user code
+I (1194) cpu_start: cpu freq: 360000000 Hz
+I (1195) app_init: Application information:
+I (1195) app_init: Project name:     vdp
+I (1196) app_init: App version:      3869264
+I (1196) app_init: Compile time:     Sep  8 2026 01:51:44
+I (1197) app_init: ELF file SHA256:  5c5b727f8...
+I (1197) app_init: ESP-IDF:          5.5.5
+I (1198) efuse_init: Min chip rev:     v1.0
+I (1198) efuse_init: Max chip rev:     v1.99 
+I (1199) efuse_init: Chip rev:         v1.3
+I (1199) heap_init: Initializing. RAM available for dynamic allocation:
+I (1200) heap_init: At 4FF18CA0 len 00022320 (136 KiB): RETENT_RAM
+I (1201) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1202) heap_init: At 4FF40000 len 00060000 (384 KiB): RAM
+I (1202) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (1203) heap_init: At 30100070 len 00001F90 (7 KiB): SPM
+I (1203) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1204) spi_flash: detected chip: generic
+I (1205) spi_flash: flash io: qio
+I (1205) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1207) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1208) esp_core_dump_flash: Init core dump to flash
+I (1208) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1209) main_task: Started on CPU0
+I (1209) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1210) main_task: Calling app_main()
+I (1215) main_task: Returned from app_main()
+I (1216) uart: queue free spaces: 16
+I (1217) uart-flow: UART FLOW RECEIVER uart-flow-probe-r01-b2026-09-08-05-51-31Z (candidate)
+I (1217) uart-flow: RX=22 TX=12 CTS=23 RTS=11 baud=115200 8N1; HIGH=stop LOW=ready
+I (1218) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (6217) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (11217) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (13723) uart-flow: UART FLOW FORWARD RELEASE min_hold_ms=1000 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (13725) uart-flow: UART FLOW REQUEST count=6 hex=464C4F570D0A build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (13726) uart-flow: UART FLOW ACK QUEUED cts=stop build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (14711) uart-flow: UART FLOW ACK SENT count=9 hex=464C4F5741434B0D0A build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (15910) uart-flow: UART FLOW BLOCKED QUEUED cts=stop build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (16910) uart-flow: UART FLOW BLOCKED TIMEOUT cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (21910) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (26910) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (31910) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (36911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (41911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (46911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (51911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (56911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (61911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (66911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (71911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (76911) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (81912) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (86912) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (91912) uart-flow: UART FLOW PASS received=6 ack=9 blocked=1 cancelled=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z

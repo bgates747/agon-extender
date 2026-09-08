@@ -1,8 +1,9 @@
 # PORT-011 — Prove UART RTS/CTS pause, resume and timeout
 
-Status: P4 candidate deployed and verified; EMOS installation SD prepared and
-unmounted. Awaiting Author Agon installation, then flow-capture handover.
+Status: complete. Author accepted the UART flow test as PASS, including the
+explicit shortened-acquisition exception. Candidate identities are unchanged.
 Started: 2026-09-08.
+Finished: 2026-09-08.
 
 ## Scope and decisions
 
@@ -59,10 +60,14 @@ the current bench authorization boundary. No new electrical claim is implied.
 1. [x] Implement EMOS driver/command and P4 peer with host negative tests.
 2. [x] Build through the full existing EMOS gate, verify P4 compilation, and
    prepare same-build SD/clock/absent-peer emulator review and test sheet.
-3. [ ] Obtain Author graphical acceptance and source-freeze approval; build
-   clean candidates, preserve rollback media and prepare deployment/capture.
-4. [ ] Qualify pause/resume and blocked timeouts on hardware, including exact
+3. [x] Prepare capture. Author graphical acceptance/source freeze, clean builds,
+   both installations, rollback/test media and capture handover are done.
+   The Author chose to proceed directly to the paired run; verify actual
+   acquisition duration in its results, retaining the existing 60-second check.
+4. [x] Qualify pause/resume and blocked timeouts on hardware, including exact
    bytes, no late traffic and prompt return. Keep results beside r03 design.
+   Endpoint and retained-waveform checks pass; the Author accepted the
+   shortened acquisition explicitly for this completed run.
 
 Machine-local topology, SD backup and hardware access live in HARDWARE.local.md
 and ignored agents records. PORT-008 and held hardware tasks stay on hold.
@@ -159,3 +164,118 @@ payloads. The Author must insert SD and reset Agon once to install EMOS, then
 remount SD for the separate smoke/UARTFLOW test. Physical installation, the
 combined analyzer capture launcher and actual flow-control results remain
 pending. No existing qualified result is extended by these preparation checks.
+
+## EMOS installed; analyzer preflight incomplete — 2026-09-08
+
+The Author reported a successful EMOS flash. The remounted SD's EMDONE.BIN
+matches the selected v0.4.0 candidate exactly; EMNEW.BIN is absent and both
+rollback images remain intact. The installation record above now includes
+that report. No raw flash-screen CRC or physical UARTFLOW result is inferred.
+
+[Preparation PORT-011-2026-09-08-06-05-59Z](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-06-05-59Z/README.md)
+replaced the guarded installer with the exact same-build smoke/UARTFLOW media,
+verified the copied hashes and safely unmounted the SD. Both boards remain
+powered and the harness remains seated. No processor was reset this turn.
+
+The private combined launcher is staged. It verifies the selected P4, waits
+for actual analyzer data and the frozen serial checker's empty WAIT before
+issuing the reset cue, and separately verifies saved sample extent. Checks
+reject both real truncated traces and a synthetic wrong-channel capture;
+an exact-size synthetic capture passes acquisition validation only.
+The orchestrator has not yet run against the physical flow exchange.
+
+Two measurement-only preflights requested the approved 2 MHz / 60-second /
+D1,D3,D4,D6 capture but saved only
+[15.84128 seconds](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-06-05-31Z/README.md)
+and [20.85888 seconds](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-06-12-01Z/README.md).
+Both exited zero after repeated empty USB transfer timeouts. This reproduces
+the acquisition issue seen during pinwalk, without establishing its cause or
+any UART result. USB autosuspend was already disabled; no corresponding USB
+disconnect was present in the inspected kernel log. Do not weaken the capture
+duration or infer success from the process exit code.
+
+The Author subsequently cycled the sniffer and explicitly chose the paired
+test run without another idle-wire preflight. The requested acquisition settings
+and separate sample-extent verdict remain unchanged. Earlier short traces
+remain informative; no endpoint firmware change is justified by them.
+
+## Capture discovery correction and Pi restart — 2026-09-08
+
+Attempt PORT-011-2026-09-08-16-06-12Z stopped during discovery before P4 rearm,
+analyzer sampling or an Agon reset cue. The sniffer was present in the saved
+scan. The private launcher incorrectly parsed the short `sigrok-cli --scan`
+output as a detailed device row and omitted the detailed row's channel suffix.
+Its printed P4/acquisition FAIL lines therefore describe checks that did not
+run; they are not endpoint or waveform failures. Preserve this informative
+launcher defect in the local attempt record.
+
+The helper now requests `--scan --show`, validates the complete device row,
+and uses its current connection identifier. After a power cycle, the first
+scan can return a bare row while the FX2 firmware loads and USB re-enumerates;
+in that specific case, the helper waits two seconds and rescans once. Missing,
+duplicate or unexpected devices still stop setup before P4 rearm. Checks not
+started are reported as NOT RUN, with null verdicts in the result record.
+
+The Author suggested restarting the Pi, which completed and was verified by
+a changed boot ID. The Author clarified that the intervening P4 USB absence
+was their power-down to inspect wiring; it is not evidence of a USB defect.
+Both devices are now back up and pass the corrected discovery checks. The
+helper's local/remote hashes match; tests cover real scan formatting, initial
+bare-row recovery, bounded retries, rejection cases and no-reset/NOT RUN
+behavior on setup failure. No additional sampling or UARTFLOW run occurred.
+
+The remounted SD's test files and consumed payload still match the frozen
+candidate; no higher-priority boot script or EMNEW.BIN is present. The card
+was safely unmounted without edits. Next action: Author inserts the card,
+runs the existing workstation launcher, presses Enter, then resets Agon at
+the cue. Preserve the 90-second serial capture and report analyzer extent
+separately; the earlier shortened acquisitions remain unresolved observations.
+
+## Physical flow result — 2026-09-08
+
+[Run PORT-011-2026-09-08-16-16-36Z](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-16-16-36Z/README.md)
+passes the P4's exact ordered flow-stage checker. The Author independently
+confirmed Agon UART FLOW PASS, SD/CLOCK PASS and normal MOS prompt return.
+Raw serial integrity and the frozen verdict were independently rechecked;
+capture includes 70.125 seconds after first P4 success without later RX errors
+or unexpected bytes. No new screen image was supplied.
+
+The retained 2 MHz waveform decodes exactly six forward bytes `FLOW\r\n`
+and nine return bytes `FLOWACK\r\n`. Measured forward/return holds are
+1.0012325 and 0.985767 seconds. Both senders remain silent while stopped;
+the trace contains 11.526723 seconds after the final stop, with no escaped
+A5 or 21 byte. P4 queue/cancellation logs and the Author's EMOS PASS support
+the attempted-transfer checks that a quiet waveform alone cannot establish.
+
+Acquisition nevertheless saved only 55,152,640 samples (27.57632 seconds),
+with the same empty USB timeouts and zero exit code as the earlier preflights.
+The original acquisition FAIL remains. The run outcome is partial pending
+Author disposition; the recommendation is to accept the bounded UART increment
+because the complete exchange and required quiet tail are present, retaining
+the analyzer defect separately. No firmware version/status, capture threshold,
+task completion or qualification claim has been changed by that recommendation.
+
+The Author suggested exhaustion of sampling memory. The installed
+[libsigrok 0.5.2 driver](https://raw.githubusercontent.com/sigrokproject/libsigrok/libsigrok-0.5.2/src/hardware/fx2lafw/protocol.c)
+continuously forwards incoming samples and resubmits USB buffers; its start
+command sends sampling settings, with the sample-count limit enforced by the
+host. The three 2 MHz attempts stopped at different sample counts. This makes
+a fixed onboard capture-capacity limit less likely. A temporary FIFO/USB
+buffer overrun or host streaming stall remains a hypothesis, not an observed
+cause. No lower-rate diagnostic or further hardware operation was run during
+this evidence review.
+
+## Author acceptance and completion — 2026-09-08
+
+The Author instructed: "approve this as a passed test." Run
+PORT-011-2026-09-08-16-16-36Z is accepted as PASS for the declared bounded
+UART flow-control scope. Its 27.57632-second trace contains the entire
+exchange and 11.526723 seconds after the final stop, alongside both endpoint
+reports and normal MOS prompt return. The run manifest records the dated
+change from partial to accepted pass without altering original measurements
+or the acquisition FAIL. The 60-second procedure remains unchanged for future
+runs; the analyzer issue is unresolved and is retained as a known limitation.
+
+All work is complete. Removed this task and sibling EMOS INTEG-005 from their
+authoritative TODOs. No new firmware version, lifecycle promotion, hardware
+operation or broader compatibility claim follows from this acceptance.

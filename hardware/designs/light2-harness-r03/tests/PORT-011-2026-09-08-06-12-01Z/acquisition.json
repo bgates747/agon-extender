@@ -1,0 +1,30 @@
+{
+  "exit_code": 0,
+  "wall_seconds": 22.507869851076975,
+  "metadata": "[global]\nsigrok version=0.5.2\n\n[device 1]\ncapturefile=logic-1\ntotal probes=8\nsamplerate=2 MHz\ntotal analog=0\nprobe2=D1\nprobe4=D3\nprobe5=D4\nprobe7=D6\nunitsize=1\n",
+  "samples": 41717760,
+  "seconds": 20.85888,
+  "acquisition_pass": false,
+  "seconds_at_requested_rate": 20.85888,
+  "channels": {
+    "probe2": "D1",
+    "probe4": "D3",
+    "probe5": "D4",
+    "probe7": "D6"
+  },
+  "sha256": "1adff4a34cf471fe3a8497e19c22166b205b8a452fc3fdc840c0e42f3633373c",
+  "run_id": "PORT-011-2026-09-08-06-12-01Z",
+  "scope": "Analyzer acquisition preflight only; no processor reset or UART fixture",
+  "requested_samplerate": 2000000,
+  "requested_samples": 120000000,
+  "requested_seconds": 60,
+  "requested_channels": [
+    "D1",
+    "D3",
+    "D4",
+    "D6"
+  ],
+  "full_log_sha256": "2346b9812744af440df4a8f68624a3a8ebd85717a3e4370c59476593c31081ab",
+  "full_log_location": "Ignored local bench evidence; contains machine-specific paths",
+  "firmware_change": false
+}
