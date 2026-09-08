@@ -7,6 +7,11 @@ item is removed.
 
 ## Active
 
+- [ ] **PORT-009 — Prove one UART1 message from EMOS to P4**
+  - Started: 2026-09-07
+  - Finished: --
+  - Details: [PORT-009](docs/tasks/PORT-009.md)
+
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --

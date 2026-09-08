@@ -1,0 +1,6 @@
+{
+  "artifact_id": "uart-forward-probe",
+  "source_identity": "uart-forward-probe-r01",
+  "status": "candidate",
+  "note": "Author approved the proposed paired fixture freeze and P4 deployment; sender/receiver share one build."
+}

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r23
-updated_at: 2026-09-08T01:57:45Z
+registry_revision: r24
+updated_at: 2026-09-08T02:35:25Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -248,3 +248,18 @@ artifacts:
     notes:
       - Revision r01 is the 118-byte PORT-008 cold-boot program whose ordinary RST.LIL 18h payload is the frozen 106-byte visible VDU command.
       - It contains no GPIO access, EDU envelope, return parser, or Extender-specific application API.
+
+  - artifact_id: uart-forward-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-forward-probe-r01
+    status: candidate
+    variants:
+      - sender
+      - receiver
+    description: Paired ordinary EMOS UART1 caller and input-only P4 receiver for one 18-byte message.
+    notes:
+      - Revision r01 uses 115200 baud, 8N1, no flow control and light2-harness-r03 wiring under PORT-009.
+      - Both endpoint variants share one generated contract and build timestamp; installed EMOS is unchanged.
+      - The Author authorized source freeze and P4 USB deployment with both boards powered and ribbons connected.
+      - This diagnostic does not qualify return traffic, flow control or Exclusive Compatible operation.

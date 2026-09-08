@@ -1,0 +1,9 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-uart-forward",
+  "diagnostic_status": "PORT-009 RX-only UART diagnostic; not product EDP",
+  "generated_build_files": ["video/CMakeLists.txt"],
+  "project_translation_units": ["video/extender/diagnostic/uart_forward_receiver.cpp"],
+  "vendored_translation_units": [],
+  "excluded_source_families": ["video/video.ino", "video/extender/boot/*", "video/extender/transport/*"]
+}
