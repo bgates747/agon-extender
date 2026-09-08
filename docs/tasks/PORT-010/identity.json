@@ -1,0 +1,6 @@
+{
+  "artifact_id": "uart-roundtrip-probe",
+  "source_identity": "uart-roundtrip-probe-r01",
+  "status": "draft",
+  "note": "Author approved r01 for emulator-review preparation. Physical deployment still requires reviewed, frozen candidate builds of P4 and EMOS."
+}
