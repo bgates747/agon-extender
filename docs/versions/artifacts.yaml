@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r24
-updated_at: 2026-09-08T02:35:25Z
+registry_revision: r25
+updated_at: 2026-09-08T02:48:31Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -252,8 +252,8 @@ artifacts:
   - artifact_id: uart-forward-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-forward-probe-r01
-    status: candidate
+    latest_identity: uart-forward-probe-r02
+    status: experimental
     variants:
       - sender
       - receiver
@@ -263,3 +263,5 @@ artifacts:
       - Both endpoint variants share one generated contract and build timestamp; installed EMOS is unchanged.
       - The Author authorized source freeze and P4 USB deployment with both boards powered and ribbons connected.
       - This diagnostic does not qualify return traffic, flow control or Exclusive Compatible operation.
+      - Revision r02 is the Author-requested host capture correction: Enter before P4 arming, readiness-gated reset cue, quiet console, and powered Agon reset-button trigger.
+      - The r02 procedure explicitly reuses uart-forward-probe-r01-b2026-09-08-02-35-54Z endpoint binaries; no firmware reflash accompanies the correction.

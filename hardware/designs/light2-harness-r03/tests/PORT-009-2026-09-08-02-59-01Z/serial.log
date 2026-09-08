@@ -1,0 +1,103 @@
+Core0 Saved PC:0x4fc19f4c
+Core1 Saved PC:0x4fc058e0
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1888
+load:0x4ff29ed0,len:0xfe8
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29ed0
+I (13) boot: ESP-IDF 5.5.5 2nd stage bootloader
+I (13) boot: compile time Sep  7 2026 22:17:15
+I (14) boot: Multicore bootloader
+I (16) boot: chip revision: v1.3
+I (16) boot: efuse block revision: v0.3
+I (17) qio_mode: Enabling QIO for flash chip WinBond
+I (18) boot.esp32p4: SPI Speed      : 80MHz
+I (19) boot.esp32p4: SPI Mode       : QIO
+I (20) boot.esp32p4: SPI Flash Size : 16MB
+I (20) boot: Enabling RNG early entropy source...
+I (21) boot: Partition Table:
+I (22) boot: ## Label            Usage          Type ST Offset   Length
+I (23) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (24) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (25) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (26) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (27) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (28) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (29) boot: End of partition table
+I (31) esp_image: segment 0: paddr=00020020 vaddr=40030020 size=10660h ( 67168) map
+I (41) esp_image: segment 1: paddr=00030688 vaddr=30100000 size=00070h (   112) load
+I (42) esp_image: segment 2: paddr=00030700 vaddr=4ff00000 size=0f918h ( 63768) load
+I (54) esp_image: segment 3: paddr=00040020 vaddr=40000020 size=2b840h (178240) map
+I (77) esp_image: segment 4: paddr=0006b868 vaddr=4ff0f918 size=03370h ( 13168) load
+I (81) esp_image: segment 5: paddr=0006ebe0 vaddr=4ff12d00 size=0328ch ( 12940) load
+I (89) boot: Loaded app from partition at offset 0x20000
+I (90) boot: Disabling RNG early entropy source...
+I (93) hex_psram: vendor id    : 0x0d (AP)
+I (93) hex_psram: Latency      : 0x01 (Fixed)
+I (94) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (95) hex_psram: dev id       : 0x03 (generation 4)
+I (96) hex_psram: density      : 0x07 (256 Mbit)
+I (97) hex_psram: good-die     : 0x06 (Pass)
+I (98) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (99) hex_psram: BurstType    : 0x00 ( Wrap)
+I (100) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (101) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (102) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (103) hex_psram: DriveStrength: 0x00 (1/1)
+I (104) MSPI Timing: Enter psram timing tuning
+I (273) esp_psram: Found 32MB PSRAM device
+I (273) esp_psram: Speed: 200MHz
+I (274) hex_psram: psram CS IO is dedicated
+I (274) cpu_start: Multicore app
+I (1182) esp_psram: SPI SRAM memory test OK
+I (1192) cpu_start: Pro cpu start user code
+I (1192) cpu_start: cpu freq: 360000000 Hz
+I (1193) app_init: Application information:
+I (1193) app_init: Project name:     vdp
+I (1194) app_init: App version:      fd25958
+I (1194) app_init: Compile time:     Sep  7 2026 22:36:07
+I (1195) app_init: ELF file SHA256:  2f3126bac...
+I (1195) app_init: ESP-IDF:          5.5.5
+I (1196) efuse_init: Min chip rev:     v1.0
+I (1196) efuse_init: Max chip rev:     v1.99 
+I (1197) efuse_init: Chip rev:         v1.3
+I (1197) heap_init: Initializing. RAM available for dynamic allocation:
+I (1198) heap_init: At 4FF18D60 len 00022260 (136 KiB): RETENT_RAM
+I (1199) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1200) heap_init: At 4FF40000 len 00060000 (384 KiB): RAM
+I (1200) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (1201) heap_init: At 30100070 len 00001F90 (7 KiB): SPM
+I (1201) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1202) spi_flash: detected chip: generic
+I (1203) spi_flash: flash io: qio
+I (1203) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1204) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1205) esp_core_dump_flash: Init core dump to flash
+I (1206) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1207) main_task: Started on CPU0
+I (1207) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1208) main_task: Calling app_main()
+I (1214) main_task: Returned from app_main()
+I (1214) uart: queue free spaces: 16
+I (1214) uart-forward: UART FORWARD RECEIVER uart-forward-probe-r01-b2026-09-08-02-35-54Z (candidate)
+I (1215) uart-forward: READY RX=GPIO22 baud=115200 8N1 flow=none TX/RTS=unconnected; deadline=180s
+I (1215) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (6216) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (11217) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (12564) uart-forward: UART FORWARD WAIT received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (12764) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (17774) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (22775) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (27776) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (32777) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (37788) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (42798) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (47799) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (52800) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (57811) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (62821) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (67822) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (72823) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (77834) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (82844) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z
+I (87845) uart-forward: UART FORWARD PASS received=18 expected=18 hex=454D4F53205541525431202D3E2050340D0A reason=none build=uart-forward-probe-r01-b2026-09-08-02-35-54Z

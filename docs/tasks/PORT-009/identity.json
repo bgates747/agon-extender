@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-forward-probe",
-  "source_identity": "uart-forward-probe-r01",
-  "status": "candidate",
-  "note": "Author approved the proposed paired fixture freeze and P4 deployment; sender/receiver share one build."
+  "source_identity": "uart-forward-probe-r02",
+  "status": "experimental",
+  "note": "Author-requested host capture/reset-button correction. r02 procedure explicitly reuses deployed r01 endpoint build 2026-09-08-02-35-54Z; no firmware changes."
 }
