@@ -1,0 +1,30 @@
+schema_version: 1
+run_id: PORT-014-2026-09-08-20-57-20Z
+operation: guarded EMOS-only installation media preparation
+outcome: pass
+hardware_installation: pending
+media_handoff: verified and safely unmounted
+build_id: agon-emos-v0.1.7-b2026-09-08-20-53-57Z
+source_commit: 026ac46a921ffe6607101b62fadbab676c5175f2
+source_dirty: false
+firmware_size_bytes: 122645
+firmware_sha256: 61f8fe2763b48de0be270c7d79e1089653b12160a788ee8975a3f1defeb991fe
+firmware_crc32: F61FA518
+flash_utility_sha256: 480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57
+install_autoexec_sha256: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+rollback:
+  EMPREV.BIN: agon-emos-v0.7.0-b2026-09-08-19-24-57Z
+  EMV060.BIN: previous v0.6.0 rollback archived unchanged
+checks:
+- Candidate provenance and all output hashes verified
+- Same-build ordinary and invalid-SD checks passed
+- Same-build SD/CLOCK, real gateway rejection, count preview and bounded no-peer return
+  passed
+- Installed v0.7.0 payload, updater and older rollback hashes verified before preparation
+- Off-card backups verified before card changes
+- New payload verified; autoexec published last
+notes:
+- Preparation only; the operator performs the flash after inserting the card.
+- Counting-test autoexec is retained here for later preparation; it is not the active
+  SD autoexec.
+- P4 remains the previous r02 receiver. No P4 flash or reset performed.

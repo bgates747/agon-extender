@@ -261,3 +261,27 @@ to candidate in registry r34. The required clean-source freeze precedes new
 candidate builds, automatic same-build review, then guarded MOS-only install
 media. Physical counting and P4 deployment remain separate later steps. No
 historical identity or result is relabelled.
+
+
+## Paced sample candidate — guarded SD installation ready
+
+The accepted source is frozen in EMOS `026ac46` and Extender `18024d8`.
+Clean candidate EMOS `agon-emos-v0.1.7-b2026-09-08-20-53-57Z` passes its
+configured, linked and runtime gates, ordinary/bad-SD emulator checks, and
+same-build sample gateway rejection, decimal preview and bounded no-peer
+return. Clean sample `uart-visible-text-probe-r03-b2026-09-08-20-53-57Z`
+and P4 receiver `uart-visible-text-probe-r03-b2026-09-08-20-54-40Z` build
+successfully. The Author already accepted the paced graphical behavior.
+
+Preparation record `hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-20-57-20Z/`
+records the verified, safely unmounted installer SD: 122645-byte EMOS image,
+CRC32 `F61FA518`. Autoexec renames EMNEW.BIN to EMDONE.BIN before
+`FLASH mos EMDONE.BIN -f`. Working v0.7.0 remains available as EMPREV.BIN;
+former v0.6.0 rollback is archived as EMV060.BIN. Verified off-card backups
+and older rollback images are retained.
+
+Hardware installation is pending the Author's reset and updater Done report.
+The counting-test autoexec will be prepared after the SD returns; P4 remains
+r02 pending its separate deployment. No physical board flash/reset or capture
+was performed during SD preparation. This record does not claim a hardware
+counting pass.
