@@ -56,6 +56,11 @@ software and integration contract, not a hardware privilege boundary: code
 that bypasses EMOS is unsupported, may corrupt or brick either system, and is
 used entirely at the operator's risk.
 
+Example programs for Extended Compatible mode are currently curated and
+emulator-tested in the sibling `agon-utils` repository under
+`examples/extender`. The Author may move examples into this project as they
+mature.
+
 ## Extended Capabilities
 
 Core extended functionality will be provided directly by the ESP32-P4-DevKit

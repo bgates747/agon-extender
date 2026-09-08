@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r31
-updated_at: 2026-09-08T05:50:26Z
+registry_revision: r32
+updated_at: 2026-09-08T19:24:24Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,7 +38,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.6.0
+    latest_identity: agon-emos-v0.7.0
     status: candidate
     variants:
       - port008-forward
@@ -313,3 +313,15 @@ artifacts:
       - Author approved r01, EMOS v0.6.0 and registry r31 for PORT-013 on 2026-09-08.
       - EMOS owns the single request at 1152000 baud in Legacy; mode activation and sustained traffic remain outside this fixture.
       - The Author accepted graphical review and approved source freeze/clean candidate preparation on 2026-09-08; physical General Poll qualification remains pending.
+
+  - artifact_id: uart-visible-text-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-visible-text-probe-r01
+    status: candidate
+    variants: []
+    description: Bounded EMOS UART text through the retained EDP parser and browser framebuffer.
+    notes:
+      - Author-approved under PORT-014; EMOS owns VDPTEXT at 1152000 baud with RTS/CTS.
+      - Real parser ACK, visible browser text and final MOS prompt are separate checks.
+      - Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08; physical text/browser qualification remains pending.
