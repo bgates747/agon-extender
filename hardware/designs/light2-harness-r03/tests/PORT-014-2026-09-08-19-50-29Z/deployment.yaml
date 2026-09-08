@@ -1,0 +1,17 @@
+schema_version: 1
+record_type: p4_deployment
+run_id: PORT-014-2026-09-08-19-50-29Z
+outcome: pass
+scope: Verified r02 flash and startup readiness; physical repeatability pending
+procedure_identity: uart-visible-text-probe-r02
+build_id: uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+source_commit: a18432b
+factory_sha256: be28222f74f22bb5896c7b03af7b2e807b8b4f2b57abaf99ec960c925f7c8388
+checks:
+  write_verified: true
+  candidate_identity_observed: true
+  receiver_empty: true
+  cts_stopped: true
+  uart_baud: 1152000
+  browser_asset_matches: true
+repeatability_result: null

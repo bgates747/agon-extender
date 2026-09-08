@@ -136,3 +136,5 @@ Desktop.ini
 # content such as vdp-gl's generated Doxygen .map files.
 !/vdp/vendor/
 !/vdp/vendor/**
+
+/tests/fixtures/visible-text/obj/

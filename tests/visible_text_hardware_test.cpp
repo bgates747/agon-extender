@@ -19,6 +19,9 @@ struct uart_event_t { int type; };
 struct VisibleTextStream { VisibleTextTransaction transaction; };
 static unsigned now_ms, connects, replies, parses, pass_logs, fail_logs;
 static unsigned received[2];
+static constexpr uint8_t first[]={12,'F','I','R','S','T',13,10,23,0,0xCA,23,0,0x80,0xA7};
+static constexpr uint8_t second[]={12,31,2,2,'2',13,10,23,0,0xCA,23,0,0x80,0xA7};
+static constexpr uint8_t ack[]={0x80,1,0xA7};
 static int scenario, levels[40], directions[40];
 static bool tx_connected;
 struct Finished {};
@@ -55,13 +58,14 @@ static int xQueueReceive(int,uart_event_t *,int) { return 0; }
 static int uart_read_bytes(int,uint8_t *p,unsigned length,int) {
   if(directions[11]!=GPIO_MODE_OUTPUT || levels[11] || gpio_get_level(23)) return 0;
   unsigned cycle=now_ms>=200700 ? 1 : 0, n=0;
-  while(n<length && received[cycle]<sizeof(VisibleTextTransaction::request))
-    p[n++]=VisibleTextTransaction::request[received[cycle]++];
-  if(scenario==1 && n) p[0]^=1;
+  const auto *request=cycle ? second : first;
+  const auto size=cycle ? sizeof(second) : sizeof(first);
+  while(n<length && received[cycle]<size) p[n++]=request[received[cycle]++];
+  if(scenario==1 && n) p[0]=22;
   return int(n);
 }
 static int uart_tx_chars(int,const char *p,int n) {
-  assert(tx_connected && n==3 && !std::memcmp(p,VisibleTextTransaction::reply,3));
+  assert(tx_connected && n==3 && !std::memcmp(p,ack,3));
   ++replies; return n;
 }
 static int uart_wait_tx_done(int,int) { return scenario==2 ? ESP_ERR_TIMEOUT : ESP_OK; }
@@ -80,8 +84,10 @@ class VDUStreamProcessor {
   VisibleTextStream *stream;
   void processNext() {
     ++parses;
-    for(auto expected:VisibleTextTransaction::request) assert(stream->transaction.read()==expected);
-    for(auto b:VisibleTextTransaction::reply) assert(stream->transaction.write(b)==1);
+    const auto *expected=parses==1 ? first : second;
+    const auto size=parses==1 ? sizeof(first) : sizeof(second);
+    for(unsigned i=0;i<size;++i) assert(stream->transaction.read()==expected[i]);
+    for(auto b:ack) assert(stream->transaction.write(b)==1);
   }
 };
 #include "visible_text_hardware.inc"

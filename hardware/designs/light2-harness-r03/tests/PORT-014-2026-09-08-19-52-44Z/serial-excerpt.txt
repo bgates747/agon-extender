@@ -1,0 +1,28 @@
+I (1751) visible-text: VISIBLE TEXT RECEIVER uart-visible-text-probe-r02-b2026-09-08-19-48-35Z (candidate)
+I (1752) visible-text: RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+I (1752) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (2753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (3753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (4753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (5753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (6753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (7753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (8753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (9753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (10753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (11753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (12753) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13538) visible-text: VISIBLE TEXT CYCLE 1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13538) visible-text: VISIBLE TEXT START build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13540) visible-text: VISIBLE TEXT REQUEST hex=0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13813) visible-text: VISIBLE TEXT PARSER reply=8001A6 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13814) visible-text: VISIBLE TEXT SENT count=3 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (13815) visible-text: VISIBLE TEXT PASS received=35 reply=3 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (14010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (15010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (16010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (17010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (18010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (19010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (20010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+I (21010) visible-text: VISIBLE TEXT WAIT received=0 cts=1 build=uart-visible-text-probe-r02-b2026-09-08-19-48-35Z

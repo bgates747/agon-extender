@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-visible-text-probe",
-  "source_identity": "uart-visible-text-probe-r02",
+  "source_identity": "uart-visible-text-probe-r03",
   "status": "candidate",
-  "note": "Author approved r02 and registry r33 for repeated Agon-only resets after successful text transactions; EMOS remains v0.7.0."
+  "note": "Author accepted paced graphical review and requested SD deployment; r03/r34 candidate freeze for the independently SD-loaded C sample and EMOS v0.1.7 gateway."
 }

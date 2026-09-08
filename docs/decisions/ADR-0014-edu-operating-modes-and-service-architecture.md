@@ -393,3 +393,15 @@ that processor.
 14. The proof-of-concept input profile is intentionally application-mediated.
     It validates EDP-local input behavior without claiming transparent legacy
     compatibility or pre-deciding the v1 routing mechanism.
+
+
+## SD-loaded qualification samples — 2026-09-08 clarification
+
+The Author accepted moving the visible-text sample into an SD-loaded C
+application. This uses decision 16's separately identified qualification-traffic
+exception: the application supplies a bounded text buffer to resident EMOS;
+EMOS owns validation, UART transport, completion and release. P4 admits a
+bounded text grammar and executes it through retained EDP. Sample text is
+independent of both firmware images. The diagnostic does not activate a mode
+or redirect ordinary application VDU, and establishes no supported application
+bypass of EMOS ownership. PORT-014 owns its bounded implementation and evidence.

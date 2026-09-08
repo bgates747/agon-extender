@@ -17,7 +17,7 @@ import re
 import subprocess
 import time
 
-PROCEDURE_ID = "uart-visible-text-probe-r02"
+PROCEDURE_ID = "uart-visible-text-probe-r03"
 # Author-approved identity; physical capture still selects a frozen build.
 
 
@@ -40,23 +40,27 @@ def verdict(data, build_id):
         return False, "P4 reported a visible text test failure or UART error"
     if text.count(b"VISIBLE TEXT RECEIVER ") > 1:
         return False, "P4 restarted during capture"
-    expected = [b"VISIBLE TEXT START", b"VISIBLE TEXT REQUEST hex=0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6",
-                b"VISIBLE TEXT PARSER reply=8001A6", b"VISIBLE TEXT SENT count=3"]
-    prefixes = [b"VISIBLE TEXT START", b"VISIBLE TEXT REQUEST", b"VISIBLE TEXT PARSER", b"VISIBLE TEXT SENT"]
-    last = -1
-    for prefix, record in zip(prefixes, expected):
-        full = record + b" build=" + build_id.encode()
-        matches = list(re.finditer(re.escape(full) + rb"\r?\n", text))
-        if len(matches) != 1 or text.count(prefix) != 1 or matches[0].start() <= last:
-            return False, "missing, malformed, duplicate or out-of-order visible text stage"
-        last = matches[0].start()
-    passes = list(re.finditer(rb"VISIBLE TEXT PASS received=35 reply=3 build=" +
-                             re.escape(build_id.encode()) + rb"\r?\n", text))
-    if not passes or text.count(b"VISIBLE TEXT PASS") != len(passes) or passes[0].start() <= last:
-        return False, "no exact final P4 visible text PASS after the required stages"
-    if b"VISIBLE TEXT RECEIVER " in text[passes[0].start():]:
+    # Eleven independently completed requests: banner, then decimal 1..10.
+    # The app waits 250 ms after each completed call before submitting a line.
+    payloads = [b"\x0c\x1f\x02\x02EMOS TO EDP: UART TEXT\r\n"]
+    payloads += [(str(n) + "\r\n").encode() for n in range(1, 11)]
+    suffix = bytes.fromhex("1700CA170080A7")
+    expected = []
+    for payload in payloads:
+        request = payload + suffix
+        expected.extend([
+            b"VISIBLE TEXT START",
+            b"VISIBLE TEXT REQUEST hex=" + request.hex().upper().encode(),
+            b"VISIBLE TEXT PARSER reply=8001A7", b"VISIBLE TEXT SENT count=3",
+            b"VISIBLE TEXT PASS received=" + str(len(request)).encode() + b" reply=3"])
+    expected = [record + b" build=" + build_id.encode() for record in expected]
+    stages = re.findall(rb"VISIBLE TEXT (?:START|REQUEST|PARSER|SENT|PASS)[^\r\n]*", text)
+    if stages != expected:
+        return False, "missing, malformed, duplicate or out-of-order counting stages"
+    final = text.rfind(expected[-1])
+    if b"VISIBLE TEXT RECEIVER " in text[final:]:
         return False, "P4 restarted after PASS"
-    return True, "P4 visible text stages PASS; confirm Agon VDP TEXT PASS/prompt, browser text and exact waveform separately"
+    return True, "P4 banner and ten counting stages PASS; confirm Agon prompt, browser and waveform separately"
 
 
 def capture_complete(first_pass_at, now, analyzer_finished):
@@ -77,7 +81,7 @@ def main():
     args = p.parse_args()
     if PROCEDURE_ID == "UNVERSIONED-DO-NOT-DEPLOY":
         p.error("visible text procedure identity awaits Author approval")
-    if not re.fullmatch(r"uart-visible-text-probe-r02-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z", args.build_id):
+    if not re.fullmatch(r"uart-visible-text-probe-r03-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z", args.build_id):
         p.error("select the approved frozen build; unversioned captures are not accepted")
     if not 10 <= args.seconds <= 180: p.error("capture duration must be 10–180 seconds")
     if args.port.parent != Path("/dev/serial/by-id"): p.error("use the verified stable by-id path")
@@ -136,7 +140,7 @@ def main():
     elif passed and not args.analyzer_complete.exists():
         passed, reason = False, "analyzer did not finish before the overall deadline"
     elif passed and observed_after_pass < 5:
-        passed, reason = False, "less than five seconds observed after first PASS"
+        passed, reason = False, "less than five seconds observed after the final counting stage"
     record = {"run_id": folder.name, "started_at": now.isoformat(),
               "ended_at": datetime.now(timezone.utc).isoformat(), "build_id": args.build_id,
               "device": str(device), "usb_serial": props.get("ID_SERIAL_SHORT"),

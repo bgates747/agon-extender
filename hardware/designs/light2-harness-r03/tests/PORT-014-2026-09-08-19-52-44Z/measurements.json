@@ -1,0 +1,20 @@
+{
+  "samples": 119128764,
+  "duration_seconds": 4.9636985,
+  "frames": {
+    "tx": {
+      "hex": "0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6",
+      "valid_framing": true,
+      "flow_control": true
+    },
+    "rx": {
+      "hex": "8001A6",
+      "valid_framing": true,
+      "flow_control": true
+    }
+  },
+  "acquisition_pass": false,
+  "quiet_tail_seconds": 4.391214416666666,
+  "five_second_waveform_tail_pass": false,
+  "serial_clean_seconds_after_pass": 7.004348400001618
+}

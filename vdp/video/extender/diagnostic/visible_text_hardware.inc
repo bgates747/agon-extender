@@ -1,5 +1,5 @@
 // PORT-014 boot-TU-only hardware orchestration around the retained parser.
-// Admits repeated fixed text/flush/poll transactions; not product activation.
+// Admits repeated bounded text/flush/poll transactions; not product activation.
 // Parser-produced replies are buffered before hardware enqueue. After success,
 // wait for EMOS to release RTS before accepting a fresh request. Keep the
 // framebuffer and parser alive so opening the browser later still works.
@@ -81,12 +81,19 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
       ESP_LOGI("visible-text","VISIBLE TEXT CYCLE %u build=%s",++cycle,AGON_EXTENDER_BUILD_ID);
       ESP_LOGI("visible-text","VISIBLE TEXT START build=%s",AGON_EXTENDER_BUILD_ID);
     }
-    if (stage==Stage::receiving && t.received==sizeof(t.input) && !t.failure) {
+    if (stage==Stage::receiving && t.complete && !t.failure) {
       ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11,1));
-      ESP_LOGI("visible-text","VISIBLE TEXT REQUEST hex=0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6 build=%s",AGON_EXTENDER_BUILD_ID);
+      // Actual admitted bytes, not a compiled expected banner.
+      static char hex[2 * sizeof(t.input) + 1];
+      const char digits[] = "0123456789ABCDEF";
+      for (size_t i=0; i<t.received; ++i) {
+        hex[2*i]=digits[t.input[i] >> 4]; hex[2*i+1]=digits[t.input[i] & 15];
+      }
+      hex[2*t.received]=0;
+      ESP_LOGI("visible-text","VISIBLE TEXT REQUEST hex=%s build=%s",hex,AGON_EXTENDER_BUILD_ID);
       if (!t.begin()) t.fail("parser admission failed");
       else {
-        // Every command is dispatched by the retained parser. A complete fixed
+        // Every command is dispatched by the retained parser. A complete bounded
         // request prevents waiting on partial command parameters; require
         // forward progress for each parser call. Flush precedes the real GP.
         while (t.available() && !t.failure) {
@@ -96,7 +103,7 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
           if (millis()-since>=5000) t.fail("retained parser deadline");
         }
         if (t.finish()) {
-          ESP_LOGI("visible-text","VISIBLE TEXT PARSER reply=8001A6 build=%s",AGON_EXTENDER_BUILD_ID);
+          ESP_LOGI("visible-text","VISIBLE TEXT PARSER reply=%02X%02X%02X build=%s",t.output[0],t.output[1],t.output[2],AGON_EXTENDER_BUILD_ID);
           if (uart_tx_chars(vt_port,reinterpret_cast<const char *>(t.output),3)!=3)
             t.fail("reply enqueue failed");
           else { stage=Stage::sending; since=now; }
@@ -112,7 +119,7 @@ void runVisibleTextQualification(VDUStreamProcessor *processor) {
     }
     if (stage==Stage::quiet && now-since>=250 && !t.failure) {
       stage=Stage::pass;
-      ESP_LOGI("visible-text","VISIBLE TEXT PASS received=35 reply=3 build=%s",AGON_EXTENDER_BUILD_ID);
+      ESP_LOGI("visible-text","VISIBLE TEXT PASS received=%u reply=3 build=%s",unsigned(t.received),AGON_EXTENDER_BUILD_ID);
     }
     // A stopped peer marks the end of EMOS's receive/quiet interval. Never
     // replay a reply or treat the still-active request as a new transaction.

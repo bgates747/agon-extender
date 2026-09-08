@@ -2,7 +2,8 @@
 """Build the P4 retained-parser visible-text diagnostic locally; never flash or edit SD media.
 
 EMOS is built/reviewed through its own wrappers. This bundle's autoexec is for
-that reviewed firmware only; both endpoints must select the same baud.
+the separately built SD sample and reviewed EMOS gateway; both UART endpoints
+must select the same baud.
 """
 import argparse
 from datetime import datetime, timezone
@@ -80,12 +81,13 @@ def main():
         target = output / (build_id + '.' + suffix)
         shutil.copyfile(source, target)
         files.append({'filename': target.name, 'sha256': sha(target), 'size_bytes': target.stat().st_size})
-    (output / 'autoexec.txt').write_bytes(b'VDU 22 3\r\nEMOS VDPTEXT\r\n')
+    (output / 'autoexec.txt').write_bytes(b'VDU 22 3\r\nLOAD /bin/VTEXT.BIN\r\nRUN\r\n')
     manifest = {'schema_version': 1, 'build': {'artifact_id': identity['artifact_id'],
-                'source_identity': source_identity, 'build_id': build_id, 'status': status,
+                'source_identity': source_identity, 'build_id': build_id, 'status': status, 'variant': 'receiver',
                 'created_at': now.isoformat()}, 'provenance': before, 'outputs': files,
-                'baud_rate': 1152000, 'request_hex': '0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A6', 'reply_hex': '8001A6',
-                'requires': 'separately built and reviewed EMOS providing EMOS VDPTEXT',
+                'baud_rate': 1152000, 'transactions': 11, 'request_bytes_total': 136,
+                'reply_hex_per_transaction': '8001A7', 'inter_transaction_pause_ms': 250,
+                'requires': 'separately built VTEXT sample and reviewed EMOS providing edu.text-probe',
                 'notes': ['Local build only; no hardware or emulator qualification.']}
     (output / 'build-manifest.yaml').write_text(yaml.safe_dump(manifest, sort_keys=False))
     print('P4 build PASS; bundle: ' + str(output))

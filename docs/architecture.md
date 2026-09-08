@@ -262,6 +262,15 @@ route it only to the EDP. Targeted private input/bootstrap control, recovery
 diagnostics, and separately identified qualification traffic are not mirrored
 application output. Competing writes to canonical sysvars remain unsupported.
 
+Separately identified qualification traffic may originate in an SD-loaded
+application that submits a bounded request to resident EMOS. EMOS validates
+and owns the complete transport transaction; the application does not access
+Extender registers, UARTs or routing state. The visible-text diagnostic keeps
+ordinary VDU on the onboard VDP while P4 executes the submitted text through
+retained EDP. Sample contents are independent of both firmware images. This
+implements the diagnostic exception in ADR-0014 and does not constitute an
+additional operating mode or ordinary-VDU route.
+
 EMOS is one complete backward-compatible replacement for stock MOS, not a
 side-by-side companion. It is the only supported software authority for
 ordinary VDU routing, Extender transport ownership, and committed mode.

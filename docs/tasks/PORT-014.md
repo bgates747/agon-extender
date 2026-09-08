@@ -1,7 +1,7 @@
 # PORT-014 — EMOS UART text rendered by EDP in the browser
 
-Status: active; Author accepted graphical review and approved source freeze
-and clean candidate preparation; physical text/browser qualification pending.
+Status: active; paced graphical review accepted and SD deployment requested.
+Candidate freeze/preparation in progress; physical counting not yet run.
 Started: 2026-09-08.
 
 ## Scope and roadmap relationship
@@ -13,7 +13,7 @@ service. It advances Exclusive Compatible without activating that mode or
 resuming the held parallel/r02 work. Ordinary console and clock remain on
 the onboard VDP; EMOS owns this Legacy-only bounded diagnostic.
 
-## Bounded references and contract
+## Initial r01 references and contract
 
 1. Official agon-docs at f9806bd3cbff6ed5d1c08bef1d51fed11764b86b,
    docs/vdp/VDU-Commands.md: VDU 12 clears text and homes the cursor;
@@ -56,6 +56,9 @@ the onboard VDP; EMOS owns this Legacy-only bounded diagnostic.
    bounded result before proposing another increment.
 5. [ ] Make successful text transactions repeatable after Agon-only resets;
    qualify r02 with two further successes while P4 and browser stay running.
+6. [ ] Build the SD-loaded C clear/banner/decimal 1..10 sample, the bounded
+   EMOS gateway and payload-independent P4 text receiver; qualify the sample
+   through the gateway and repeat it after Agon-only resets.
 
 EMOS implementation belongs to INTEG-008. Physical wiring remains unchanged.
 Current bench coordinates and preparation live only in ignored local records.
@@ -151,3 +154,110 @@ shows the exact browser text. Explicit SD/CLOCK and final prompt confirmation
 remain pending. R02 host checks and P4 draft build pass; freeze the clean
 candidate before physical repeatability checks. EMOS and its emulator inputs
 are unchanged by this P4-only correction.
+
+R02 candidate uart-visible-text-probe-r02-b2026-09-08-19-48-35Z from a18432b
+passes the clean build and was deployed with explicit Author authorization.
+[PORT-014-2026-09-08-19-50-29Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-50-29Z/README.md)
+records independent flash verification, exact startup identity/UART settings,
+empty WAIT and matching HTTP browser asset. The launcher now selects r02;
+EMOS/SD remain unchanged. Captured and repeated physical exchanges are pending.
+
+R02 capture
+[PORT-014-2026-09-08-19-52-44Z](../../hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-19-52-44Z/README.md)
+passes P4 stages and exact-byte/framing/flow review; the Author reports the
+browser banner. Acquisition is 119128764/240M samples (4.9636985s), with a
+4.391214s final waveform tail; both remain failed checks. Serial stays clean
+7.004348s after PASS. Repeated-reset and Agon smoke/prompt confirmations and
+exception disposition remain pending.
+
+## SD-loaded sample decision — 2026-09-08
+
+D001 accepted: the Author selected C and approved separating the sample from
+EMOS so changes to its banner/count do not require reflashing either processor.
+The sample owns its text and decimal conversion; EMOS owns UART configuration,
+RTS/CTS, flush/General Poll completion, timeouts and cleanup. This is explicit
+qualification traffic; ordinary VDU routing and committed mode stay Legacy.
+The separate agent's agon-utils demo tree remains owned by that agent.
+
+The Author approved EMOS v0.1.7 as a deliberate numbering reset, plus
+uart-visible-text-probe-r03 and registry r34. All are draft until review.
+Historical v0.7.0 and r01/r02 builds/evidence retain their original identities.
+
+Bounded implementation contract: use existing resident gateway API 0x51,
+operation 2, namespace `edu`, provider `text-probe`. Accept 1..1024 bytes in
+ordinary application RAM; allow printable ASCII, VDU 8..13, VDU 30 and complete
+VDU 31,x,y. Reject unsupported/incomplete commands before touching UART. This
+qualification-only Core service does not load a module. EMOS appends flush
+23,0,CA and General Poll 23,0,80,A7 and requires 80,01,A7. P4 accepts that
+bounded grammar independent of a particular banner/count and dispatches only
+complete transactions through the retained parser. Neither endpoint synthesizes
+a successful parser result. Legacy VDPTEXT keeps its original fixed A6 exchange.
+
+References: EMOS projects/emos/README.md defines the existing 66-byte gateway
+and project-owned API 0x51. Official docs/MOS.md gives application RAM
+040000..0AFFFF; docs/mos/Executables.md gives the MOS ADL application header.
+Official docs/vdp/VDU-Commands.md defines the admitted text controls. Same clean
+tagged MOS/VDP references listed above verified again. No stock source changes. Official docs/mos/Star-Commands.md specifies
+`RUN . <parameters>` for a default-address application with arguments; the
+preview/check review scripts use that syntax.
+
+
+## SD-sample draft validation — 2026-09-08
+
+EMOS agon-emos-v0.1.7-b2026-09-08-20-34-02Z is 122624 bytes and passes
+configured qualification, linked UART/parallel checks, runtime checks and all
+74 host tests. The text-engine harness covers 42 success/failure scenarios,
+including the historical A6 command, different application text, the full
+1024-byte limit, invalid grammar, finite waits and cleanup.
+
+The independently built sample uart-visible-text-probe-r03-b2026-09-08-20-35-00Z
+is 10757 bytes. The real emulated eZ80 runs its C decimal conversion, displays
+1..10 in the onboard preview, rejects invalid gateway inputs, passes same-build
+SD/CLOCK smoke and returns to MOS after the expected no-peer status 15. The
+isolated graphical review has been launched for Author acceptance. This
+preview does not claim P4 rendering or electrical validation.
+
+P4 draft uart-visible-text-probe-r03-b2026-09-08-20-40-14Z builds successfully
+with embedded identities verified. Host transaction/orchestration checks cover
+different payloads on successive cycles, maximum length, partial/unsupported/
+extra traffic, idle/rearm and TX failure; capture checker tests pass. Artifact
+registry validation passes independently of the already recorded held-r02
+hardware-profile mismatch. No hardware/SD operation or commit was performed.
+Candidate freeze, installation and physical counting/repeatability checks
+remain pending Author review.
+
+
+## Visible pacing — Author correction
+
+The Author confirmed the initial SD preview counted correctly and requested
+250 ms between increments. The sample now submits the banner and each number
+as separate bounded gateway transactions, with a 250 ms MOS-clock pause after
+each completed call before the next line. Formatting delays inside a single
+buffer would not make P4 rendering incremental. The P4 generic receiver needs
+no source change for this. EMOS suppresses per-call start/success chatter for
+the application gateway; the sample reports one final result, and failures
+remain visible. Legacy VDPTEXT keeps its original diagnostics.
+
+The r03 draft sheet now defines 11 transactions (136 forward and 33 return
+bytes), waits for all 11 before capture success, and requests 24MHz/288M samples
+(12 seconds) to include the paced run and five-second quiet tail. The original
+single-buffer draft review is recorded above; the paced sample needs a fresh
+build and graphical check. Identities remain the approved v0.1.7/r03 drafts.
+
+
+Paced review checkpoint: EMOS agon-emos-v0.1.7-b2026-09-08-20-46-22Z
+(122641 bytes), SD sample uart-visible-text-probe-r03-b2026-09-08-20-47-59Z
+(10987 bytes), and P4 uart-visible-text-probe-r03-b2026-09-08-20-48-19Z
+build successfully. Configured/linked/runtime EMOS gates and all 74 host tests
+pass; P4 transaction/orchestration and 11-cycle capture verdict tests pass.
+The paced sample passes the actual emulated gateway's invalid-input/no-peer
+checks, count preview and same-build SD/CLOCK smoke. A fresh graphical profile
+is ready for Author pacing review. No commit, SD edit or physical operation.
+
+
+The Author confirmed the paced graphical result and requested deployment to
+the mounted SD card. Reviewed implementation is unchanged; v0.1.7/r03 advance
+to candidate in registry r34. The required clean-source freeze precedes new
+candidate builds, automatic same-build review, then guarded MOS-only install
+media. Physical counting and P4 deployment remain separate later steps. No
+historical identity or result is relabelled.

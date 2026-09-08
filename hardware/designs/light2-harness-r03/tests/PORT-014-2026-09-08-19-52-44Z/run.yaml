@@ -1,0 +1,21 @@
+schema_version: 1
+run_id: PORT-014-2026-09-08-19-52-44Z
+procedure_identity: uart-visible-text-probe-r02
+outcome: partial
+build_id: uart-visible-text-probe-r02-b2026-09-08-19-48-35Z
+logic_sha256: cea0dcd17d04200f2ce269e89e7037bbf950c20939a0068bd3cdb5e5c091510c
+original_serial_sha256: 2f280c3e2145df5b6dde5ec4b87f50a9fb2ec219e6d661e7df4b8d1d07a864f5
+checks:
+  p4_stages: true
+  browser_banner_reported: true
+  exact_bytes_framing_flow: true
+  acquisition_pass: false
+  five_second_waveform_tail_pass: false
+  repeated_agon_only_resets_confirmed: null
+  agon_smoke_and_final_prompt_confirmed: null
+samples: 119128764
+duration_seconds: 4.9636985
+quiet_tail_seconds: 4.391214416666666
+serial_clean_seconds_after_pass: 7.004348400001618
+disposition: Short acquisition remains an explicit failure; no exception acceptance
+  recorded.

@@ -47,7 +47,8 @@ Rules:
 
 1. Semantic versions have no leading zeroes. Major is a compatibility break,
    minor is a backward-compatible capability addition, and patch is a
-   backward-compatible correction without intended interface expansion.
+   backward-compatible correction without intended interface expansion, subject
+   to the explicit EMOS development convention below.
 2. Revisions begin at `r01`, advance monotonically, and continue from `r99` to
    `r100` without wrapping.
 3. Builds and runs use UTC creation/start timestamps. `Z` is mandatory.
@@ -118,6 +119,26 @@ automatically, but must not silently advance a version or revision.
 - Before `v1.0.0`, the interface is explicitly developmental. Increment minor
   for a developmental breaking change and patch for compatible corrections;
   manifests must not imply stability merely because versions are ordered.
+
+### EMOS early-development convention
+
+On 2026-09-08 the Author approved a one-time EMOS numbering reset: the next
+source identity is `agon-emos-v0.1.7`, following the recorded `v0.7.0` builds.
+This is a naming-policy transition, not a rollback or renaming of any binary.
+Existing builds, rollback payloads, manifests and evidence retain their exact
+original identities. Use exact identities across this transition; numeric
+version ordering does not describe its chronology. Previously used identities
+remain reserved, including the earlier v0.2.0 through v0.7.0 identities; a
+future milestone must select an unused identity.
+
+During this early EMOS development series, compatible small implementation
+increments, including bounded diagnostic additions, advance `v0.1.x`'s patch
+number. Minor increments are reserved for Author-agreed capability milestones
+or developmental breaking changes. This project-specific pre-1.0 convention
+overrides the general capability-addition rule above for EMOS. Patch numbers
+have no two-digit limit. Test-article-only changes advance the fixture revision;
+they do not by themselves advance EMOS. Changed executable bytes still receive
+a new build timestamp, even when the firmware version stays the same.
 
 ### Revisions
 

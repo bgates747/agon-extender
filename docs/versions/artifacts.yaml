@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r33
-updated_at: 2026-09-08T19:45:28Z
+registry_revision: r34
+updated_at: 2026-09-08T20:52:54Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,12 +38,13 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.7.0
+    latest_identity: agon-emos-v0.1.7
     status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author approved v0.1.7 as a deliberate numbering reset after historical v0.7.0; the bounded resident text gateway is candidate after accepted graphical pacing review and SD deployment authorization; old build identities remain immutable.
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
       - The Author accepted v0.2.0 on 2026-09-07 for the minimal ordinary Legacy boot milestone owned by EMOS QUAL-002; draft review builds are not deployment candidates.
@@ -317,12 +318,13 @@ artifacts:
   - artifact_id: uart-visible-text-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-visible-text-probe-r02
+    latest_identity: uart-visible-text-probe-r03
     status: candidate
-    variants: []
+    variants: [sample, receiver]
     description: Bounded EMOS UART text through the retained EDP parser and browser framebuffer.
     notes:
       - Author-approved under PORT-014; EMOS owns VDPTEXT at 1152000 baud with RTS/CTS.
       - Real parser ACK, visible browser text and final MOS prompt are separate checks.
       - Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08; physical text/browser qualification remains pending.
       - Author approved r02 and registry r33 for repeatable successful text transactions on 2026-09-08; EMOS remains v0.7.0.
+      - Author approved r03 and registry r34 for the independently SD-loaded C sample and reusable bounded EMOS/P4 text diagnostic; candidate after accepted paced review and SD deployment authorization.
