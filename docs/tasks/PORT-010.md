@@ -118,3 +118,20 @@ e013e42 UART checkpoint amendment. Their only tree differences were two raw
 log `.gitattributes` files. Merge f46a219 preserves both histories and the local
 attributes; its tree is identical to e013e42. No firmware or evidence bytes
 changed. Do not amend these published checkpoints or force-push over them.
+
+## Candidate installation preparation — 2026-09-08
+
+The Author authorized the proposed next step and reported both boards powered
+and the SD mounted locally. EMOS v0.3.0 advances to candidate for a clean build
+and guarded MOS-only installation; registry r27 records that lifecycle change.
+The P4 r01 draft remains undeployed, and its installed receive-only predecessor
+is intentionally retained for the first hardware timeout test.
+
+The workstation preserves the old v0.2.0 EMDONE.BIN and boot script before
+replacement. The installation uses the already reviewed rename-before-flash
+mechanism: RENAME /EMNEW.BIN /EMDONE.BIN, then FLASH mos EMDONE.BIN -f. A
+subsequent reset stops at the missing EMNEW.BIN. The operator then returns the
+card for the combined SD/clock and UART timeout script; installation does not
+automatically run that test. Current powered/seated-ribbon instructions govern
+this run, overriding the isolation steps of the earlier ordinary-boot proof.
+No WROOM or reset-breakout operation is authorized or needed for preparation.

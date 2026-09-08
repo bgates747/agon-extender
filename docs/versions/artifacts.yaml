@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r26
-updated_at: 2026-09-08T03:42:05Z
+registry_revision: r27
+updated_at: 2026-09-08T04:04:01Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -39,7 +39,7 @@ artifacts:
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: agon-emos-v0.3.0
-    status: draft
+    status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
@@ -50,6 +50,7 @@ artifacts:
       - The Author accepted the ordinary Legacy hardware smoke and evidence freeze on 2026-09-07; EMOS run QUAL-002-2026-09-08-01-23-44Z records three cold boots of agon-emos-v0.2.0-b2026-09-08-01-20-50Z with a documented installation-command deviation from r01.
       - Version v0.2.0 remains the installed candidate; its bounded runtime pass does not qualify the original installation script or imply broader hardware qualification.
       - The Author approved v0.3.0 for PORT-010 emulator review: an explicit Legacy-only UARTTEST command adds bounded request/acknowledgement diagnostics without changing public MOS API slots. New builds remain draft until review and freeze.
+      - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advances to candidate with unchanged implementation; physical installation and UART results remain pending.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: emos-ordinary-boot
