@@ -7,6 +7,10 @@ item is removed.
 
 ## Active
 
+- [ ] **PORT-013 — General Poll through the retained EDP handler**
+  - Started: 2026-09-08
+  - Details: [PORT-013](docs/tasks/PORT-013.md)
+
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --

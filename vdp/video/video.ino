@@ -112,7 +112,9 @@ ESP32Time		rtc(0);							// The RTC
 #include "agon_ttxt.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/network/wired_network_service.hpp"
-#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+#if defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
+#include "extender/diagnostic/general_poll_stream.hpp"
+#elif defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
 #include "extender/transport/p4_parallel_qualification.hpp"
 #elif defined(AGON_EXTENDER_PORT008_FORWARD)
 #include "extender/transport/forward_parallel_stream.hpp"
@@ -138,7 +140,9 @@ VDUStreamProcessor *	processor;				// VDU Stream Processor
 #endif /* !USERSPACE */
 
 #ifdef AGON_EXTENDER_P4_BOOT
-#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+#if defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
+// The bounded General Poll composition supplies its adopted Stream in setup.
+#elif defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
 // The qualification composition owns its production objects and returns the
 // one heap Stream that VDUStreamProcessor adopts below.
 #elif defined(AGON_EXTENDER_PORT008_FORWARD)
@@ -194,7 +198,9 @@ void setup() {
 	changeMode(startup_screen_mode);
 	copy_font();
 	#ifdef AGON_EXTENDER_P4_BOOT
-		#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+		#if defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
+		processor = new VDUStreamProcessor(beginGeneralPollQualification());
+		#elif defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
 		auto *qualificationVDPStream =
 			agon::extender::transport::
 				beginP4ParallelNonreleaseQualification();
@@ -240,7 +246,7 @@ void setup() {
 		initAudio();
 	#endif
 	boot_screen();
-	#ifdef AGON_EXTENDER_P4_BOOT
+	#if defined(AGON_EXTENDER_P4_BOOT) && !defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
 		if (_VGAController == nullptr) {
 			ESP_LOGE("extender_boot", "browser service has no display controller");
 		} else {
@@ -339,7 +345,14 @@ void processLoop(void * parameter) {
 #endif /* USERSPACE */
 
 	setupKeyboardAndMouse();
+#ifdef AGON_EXTENDER_GENERAL_POLL_QUALIFICATION
+	// One bounded poll through the real parser. wait_eZ80 additionally emits
+	// mode information and varies with reset cause; startup is a later gate.
+	runGeneralPollQualification(processor);
+	return;
+#else
 	processor->wait_eZ80();
+#endif
 
 	while (true) {
 #ifdef USERSPACE

@@ -8,7 +8,9 @@
 #include "agon.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/input/unavailable_input_adapter.hpp"
-#if defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
+#if defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
+#include "extender/diagnostic/general_poll_stream.hpp"
+#elif defined(AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION)
 #include "extender/transport/p4_parallel_qualification.hpp"
 #elif defined(AGON_EXTENDER_PORT008_FORWARD)
 #include "extender/transport/forward_parallel_stream.hpp"

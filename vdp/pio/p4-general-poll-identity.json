@@ -1,0 +1,6 @@
+{
+  "artifact_id": "uart-general-poll-probe",
+  "source_identity": "uart-general-poll-probe-r01",
+  "status": "candidate",
+  "note": "Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08. Physical General Poll qualification is pending."
+}
