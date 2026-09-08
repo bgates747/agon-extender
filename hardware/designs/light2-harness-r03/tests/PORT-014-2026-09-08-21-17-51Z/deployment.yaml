@@ -1,0 +1,38 @@
+schema_version: 1
+record_type: p4_deployment
+run_id: PORT-014-2026-09-08-21-17-51Z
+outcome: pass
+scope: Verified r03 flash and startup readiness; paired counting and repeatability
+  pending
+procedure_identity: uart-visible-text-probe-r03
+authorization: 'Author: yes flash away'
+build_id: uart-visible-text-probe-r03-b2026-09-08-20-54-40Z
+source_commit: 18024d823df5349128b07ec0d1268302aa4c2f69
+source_dirty: false
+factory_sha256: 7824ed2891034e167a060ab7f9f2f24d313933d87b0dd1b491e176086bc49a3b
+checks:
+  local_and_staged_hashes_verified: true
+  stable_usb_identity_verified: true
+  p4_revision_observed: v1.3
+  write_verified: true
+  candidate_identity_observed: true
+  receiver_empty: true
+  cts_stopped: true
+  uart_baud: 1152000
+  uart_pins:
+    rx: 22
+    tx: 12
+    cts: 23
+    rts: 11
+  browser_asset_matches_frozen_source: true
+private_evidence_sha256:
+  deployment.json: 702b73543382744aab34bb1c6988b41b38a0a55bc4d5735801747522942e8508
+  write-command.json: 5cbd56bb8efe2328fcd820fe34136a50b3f84295d01ce2ab2c964b34c1d1d504
+  write.log: 17e43a54aaa9d2a4ba99980542f5f851c17abb534c0e3867778597820fc876c5
+  verify-command.json: 5e364f125703f90a95956c407ab93d081ab10c4738a6ea855c965d34cbc5e64b
+  verify.log: 7fd05b45357b2d9017d86108aa44a581e4bac54bf54ef15eba1f76788ce29b00
+  boot.log: 420f88c062bbd52b165fc6ad5fb460aa982c7de15ce0954e6d3e5ace0f15bf33
+  network-readiness.json: 3d7fa286f9efa62481e1a5b58f45cbd96bd7c96f6fa475a7912f75158b90a481
+launcher_sha256: f2ed410c3e89ee58e75d6edc9b8e78229a2d76e3242970633ef84de7e67f9fdb
+paired_counting_result: null
+repeatability_result: null
