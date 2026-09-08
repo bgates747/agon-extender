@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r21
-updated_at: 2026-09-08T00:24:50Z
+registry_revision: r22
+updated_at: 2026-09-08T01:09:29Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -39,7 +39,7 @@ artifacts:
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: agon-emos-v0.2.0
-    status: draft
+    status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
@@ -47,7 +47,20 @@ artifacts:
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
       - The Author accepted v0.2.0 on 2026-09-07 for the minimal ordinary Legacy boot milestone owned by EMOS QUAL-002; draft review builds are not deployment candidates.
+      - Candidate scope is the emos-ordinary-boot-r01 Legacy boot procedure; emulator and preliminary stock hardware smokes pass, while EMOS hardware qualification remains pending.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
+
+  - artifact_id: emos-ordinary-boot
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: emos-ordinary-boot-r01
+    status: candidate
+    variants: []
+    description: Ordinary EMOS Legacy boot with onboard VDP, automatic SD smoke and MOS-clock progress.
+    notes:
+      - Revision r01 selects video mode 3 in autoexec, keeps the harness isolated, uses the normal MOS-only one-shot flash path, and records three cold boots.
+      - The Author-reported stock smoke is a prerequisite; no EMOS physical qualification is claimed before its recorded candidate run.
+      - WROOM recovery remains a contingency only; no UART1/P4 or parallel-transport qualification is included.
 
   - artifact_id: port-008-forward-qualification
     kind: test_procedure
