@@ -22,6 +22,15 @@ def sha(path):
     return hashlib.sha256(path.read_bytes()).hexdigest()
 
 
+def verify_embedded_identity(path, source_identity, build_id, status):
+    # Manifest metadata cannot prove that an incremental build recompiled the
+    # boot identity consumer. Reject stale outputs before publishing a bundle.
+    data = path.read_bytes()
+    for value in (source_identity, build_id, status):
+        if value.encode('ascii') + b'\0' not in data:
+            raise ValueError(f'{path.name}: missing embedded identity {value}')
+
+
 def git(*args):
     return subprocess.check_output(['git', '-C', str(ROOT), *args], text=True).strip()
 
@@ -67,6 +76,7 @@ def main():
     files = []
     for suffix in ('bin', 'elf', 'factory.bin'):
         source = ROOT / ('vdp/.pio/build/p4-general-poll/firmware.' + suffix)
+        verify_embedded_identity(source, source_identity, build_id, status)
         target = output / (build_id + '.' + suffix)
         shutil.copyfile(source, target)
         files.append({'filename': target.name, 'sha256': sha(target), 'size_bytes': target.stat().st_size})

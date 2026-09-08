@@ -1,0 +1,19 @@
+run_id: PORT-013-2026-09-08-18-06-37Z
+prepared_at: '2026-09-08T18:06:37.169920+00:00'
+build_id: agon-emos-v0.6.0-b2026-09-08-17-50-12Z
+before_sha256:
+  bin/EMBOOT.BIN: d79c71d3022ff48e033fca8259e1db01ff33a1b41ba01dbf2183a0e0fec465e6
+  emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+  autoexec.txt: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+after_sha256:
+  bin/EMBOOT.BIN: d7e367855bb0f40028ba1810b2736ef6c281efe480cd2c243147882bd79da615
+  emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+  autoexec.txt: 0b419214042bc58c386d9b60f6a06cc1dacc0345db5ceb8e41134f7b25c41392
+consumed_payload_sha256: 89a71acdd5e4e076e74c0865ecf2c2cd1d9b2f69f00135992dba204742880123
+flash_result: Author reported good flash
+expected_test: SD/CLOCK PASS, VDP POLL PASS, MOS prompt
+hardware_test_result: pending
+schema_version: 1
+record_type: test_media_preparation
+outcome: partial
+sd_unmounted: true
