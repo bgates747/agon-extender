@@ -1,0 +1,86 @@
+Core0 Saved PC:0x4ff10e4a
+Core1 Saved PC:0x4fc058e0
+SPI mode:DIO, clock div:1
+load:0x4ff33ce0,len:0x1888
+load:0x4ff29ed0,len:0xfe8
+load:0x4ff2cbd0,len:0x36bc
+entry 0x4ff29ed0
+I (10) boot: ESP-IDF 5.5.5 2nd stage bootloader
+I (10) boot: compile time Sep  7 2026 23:20:35
+I (11) boot: Multicore bootloader
+I (13) boot: chip revision: v1.3
+I (13) boot: efuse block revision: v0.3
+I (14) qio_mode: Enabling QIO for flash chip WinBond
+I (15) boot.esp32p4: SPI Speed      : 80MHz
+I (16) boot.esp32p4: SPI Mode       : QIO
+I (17) boot.esp32p4: SPI Flash Size : 16MB
+I (18) boot: Enabling RNG early entropy source...
+I (19) boot: Partition Table:
+I (20) boot: ## Label            Usage          Type ST Offset   Length
+I (21) boot:  0 nvs              WiFi data        01 02 00009000 00006000
+I (22) boot:  1 otadata          OTA data         01 00 0000f000 00002000
+I (23) boot:  2 coredump         Unknown data     01 03 00011000 0000f000
+I (24) boot:  3 ota_0            OTA app          00 10 00020000 00700000
+I (25) boot:  4 ota_1            OTA app          00 11 00720000 00700000
+I (26) boot:  5 reserved         Unknown data     01 40 00e20000 001e0000
+I (27) boot: End of partition table
+I (28) esp_image: segment 0: paddr=00020020 vaddr=40030020 size=107c0h ( 67520) map
+I (39) esp_image: segment 1: paddr=000307e8 vaddr=30100000 size=00070h (   112) load
+I (40) esp_image: segment 2: paddr=00030860 vaddr=4ff00000 size=0f7b8h ( 63416) load
+I (52) esp_image: segment 3: paddr=00040020 vaddr=40000020 size=2bc0ch (179212) map
+I (76) esp_image: segment 4: paddr=0006bc34 vaddr=4ff0f7b8 size=034d0h ( 13520) load
+I (79) esp_image: segment 5: paddr=0006f10c vaddr=4ff12d00 size=0328ch ( 12940) load
+I (87) boot: Loaded app from partition at offset 0x20000
+I (88) boot: Disabling RNG early entropy source...
+I (91) hex_psram: vendor id    : 0x0d (AP)
+I (91) hex_psram: Latency      : 0x01 (Fixed)
+I (92) hex_psram: DriveStr.    : 0x00 (25 Ohm)
+I (93) hex_psram: dev id       : 0x03 (generation 4)
+I (94) hex_psram: density      : 0x07 (256 Mbit)
+I (95) hex_psram: good-die     : 0x06 (Pass)
+I (96) hex_psram: SRF          : 0x02 (Slow Refresh)
+I (97) hex_psram: BurstType    : 0x00 ( Wrap)
+I (98) hex_psram: BurstLen     : 0x03 (2048 Byte)
+I (99) hex_psram: BitMode      : 0x01 (X16 Mode)
+I (100) hex_psram: Readlatency  : 0x04 (14 cycles@Fixed)
+I (101) hex_psram: DriveStrength: 0x00 (1/1)
+I (102) MSPI Timing: Enter psram timing tuning
+I (271) esp_psram: Found 32MB PSRAM device
+I (271) esp_psram: Speed: 200MHz
+I (272) hex_psram: psram CS IO is dedicated
+I (273) cpu_start: Multicore app
+I (1179) esp_psram: SPI SRAM memory test OK
+I (1189) cpu_start: Pro cpu start user code
+I (1189) cpu_start: cpu freq: 360000000 Hz
+I (1190) app_init: Application information:
+I (1190) app_init: Project name:     vdp
+I (1190) app_init: App version:      748f959
+I (1191) app_init: Compile time:     Sep  8 2026 00:29:11
+I (1192) app_init: ELF file SHA256:  ff42dc41e...
+I (1192) app_init: ESP-IDF:          5.5.5
+I (1193) efuse_init: Min chip rev:     v1.0
+I (1193) efuse_init: Max chip rev:     v1.99 
+I (1194) efuse_init: Chip rev:         v1.3
+I (1194) heap_init: Initializing. RAM available for dynamic allocation:
+I (1195) heap_init: At 4FF18D60 len 00022260 (136 KiB): RETENT_RAM
+I (1195) heap_init: At 4FF3AFC0 len 00004BF0 (18 KiB): RAM
+I (1196) heap_init: At 4FF40000 len 00060000 (384 KiB): RAM
+I (1197) heap_init: At 50108080 len 00007F80 (31 KiB): RTCRAM
+I (1197) heap_init: At 30100070 len 00001F90 (7 KiB): SPM
+I (1198) esp_psram: Adding pool of 32768K of PSRAM memory to heap allocator
+I (1199) spi_flash: detected chip: generic
+I (1199) spi_flash: flash io: qio
+I (1200) sleep_gpio: Configure to isolate all GPIO pins in sleep state
+I (1201) sleep_gpio: Enable automatic switching of GPIO sleep configuration
+I (1202) esp_core_dump_flash: Init core dump to flash
+I (1202) esp_core_dump_flash: Found partition 'coredump' @ 11000 61440 bytes
+I (1203) main_task: Started on CPU0
+I (1203) esp_psram: Reserving pool of 32K of internal memory for DMA/internal allocations
+I (1204) main_task: Calling app_main()
+I (1209) main_task: Returned from app_main()
+I (1210) uart: queue free spaces: 16
+I (1210) uart-forward: UART FORWARD RECEIVER uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z (candidate)
+I (1211) uart-forward: READY RX=GPIO22 baud=115200 8N1 flow=none TX=GPIO12 RTS=unconnected; deadline=180s
+I (1212) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z
+I (6212) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z
+I (11213) uart-forward: UART FORWARD WAIT received=0 expected=18 hex= reason=none build=uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z

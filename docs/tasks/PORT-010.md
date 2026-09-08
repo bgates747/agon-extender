@@ -1,6 +1,11 @@
 # PORT-010 — Prove an acknowledged UART round trip
 
-Status: implementation authorized, in progress. Started: 2026-09-07.
+Status: complete. Started: 2026-09-07. Finished: 2026-09-08.
+
+The [acknowledged hardware run](../../hardware/designs/light2-harness-r03/tests/PORT-010-2026-09-08-04-39-39Z/README.md)
+passed exact P4 request/ACK checks and Author-confirmed EMOS success/prompt
+return. The earlier intentional no-reply case also passed. Remaining sections
+preserve the implementation and qualification history.
 
 The Author accepted the next chunk: EMOS sends the previously proven 18-byte
 message, P4 sends a short acknowledgement, and EMOS verifies it with a bounded
@@ -43,10 +48,9 @@ activation or production protocol is added.
    mechanics when approved identities permit deployment staging.
 3. [x] Obtain emulator acceptance, freeze/rebuild the EMOS candidate, install
    it and confirm its running identity and ordinary hardware SD/clock smoke.
-4. [ ] Complete the reply test. The receive-only P4 timeout case passed; prepare
-   the clean P4 ACK candidate, deploy under the bench authorization boundary,
-   then capture request/ACK and confirm EMOS PASS with prompt return. Retain
-   passing evidence beside r03's tests.
+4. [x] Complete both hardware cases. The receive-only P4 timeout passed; the
+   clean ACK candidate passed request/reply capture and Author-confirmed EMOS
+   PASS/prompt return. Passing evidence is retained beside r03's tests.
 
 The forward checkpoint was frozen in Extender e013e42 and EMOS bd08b76.
 Machine-specific details remain in HARDWARE.local.md. No push was requested.
@@ -164,3 +168,32 @@ approved version/revision. Prepare the isolated Pi bundle and quiet Enter-to-arm
 launcher before physical deployment. GPIO12 is the sole P4 harness output;
 keep both boards powered and the ribbons seated. Successful round-trip receipt
 remains pending the P4 capture and Agon PASS/prompt observation.
+
+## P4 ACK candidate deployed — 2026-09-08
+
+The Author explicitly authorized flashing. The [deployment record](../../hardware/designs/light2-harness-r03/tests/PORT-010-2026-09-08-04-35-25Z/README.md)
+confirms flash programming, independent verification and matching candidate
+startup for uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z from clean commit
+748f959. P4 reports GPIO22 RX, GPIO12 TX and empty WAIT. Both boards remain
+powered with the harness seated. The existing EMOS/SD contents are ready;
+no EMOS rebuild, reflash or SD edit accompanied this deployment.
+
+Next, the operator runs the prepared workstation launcher, presses Enter, then
+presses/releases Agon reset at the verified empty-WAIT cue. Retain the 90-second
+P4 request/ACK capture and confirm Agon's UART ROUND TRIP PASS and final prompt
+before completing work item 4. Deployment alone is not a round-trip pass.
+
+The Author reports Agon round-trip success while the 90-second capture is
+still running. Record EMOS reply verification as Author-reported PASS; final
+prompt confirmation and the completed P4 capture remain pending.
+
+## Completed round trip — 2026-09-08
+
+PORT-010-2026-09-08-04-39-39Z passes independent saved-log verification: exact
+18-byte request, exactly one 5-byte ACK, correct P4 build, 90-second capture
+and 78.094 seconds after first success without UART errors or extra request
+bytes. The Author separately confirmed Agon round-trip success and its normal
+prompt. This completes work item 4 and PORT-010's bounded scope; remove it
+from the authoritative TODO. The run does not resolve flow control, activation,
+production routing or the broader hardware questions. No further deployment
+or test is required for this task.

@@ -1,0 +1,79 @@
+schema_version: 1
+run_id: PORT-010-2026-09-08-04-35-25Z
+started_at: '2026-09-08T04:35:25Z'
+recorded_at: '2026-09-08T04:39:07.975842+00:00'
+outcome: partial
+scope: P4 candidate deployment and startup passed; acknowledged UART transfer not
+  yet executed
+procedure_identity: uart-roundtrip-probe-r01
+wiring_identity: light2-harness-r03
+authorization: 'Author explicitly instructed: flash away'
+build:
+  artifact_id: uart-roundtrip-probe
+  source_identity: uart-roundtrip-probe-r01
+  build_id: uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z
+  status: candidate
+  created_at: '2026-09-08T04:28:58.674464+00:00'
+provenance:
+  repository: https://github.com/bgates747/agon-extender.git
+  commit: 748f9596062946a6dff057184f72f495c77fcce3
+  dirty: false
+  complete_private_build_manifest_sha256: 7c55188e32a0337bdda4fbe2315b9d023b46964c5a6c5aeb7f19e2d13fe99c1f
+outputs:
+- filename: uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z.bin
+  sha256: e11c3196355582b17d037caee18f9d67c398dc58c86d634dc6ac2b603dfaa186
+  size_bytes: 336832
+- filename: uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z.elf
+  sha256: ff42dc41e823963d1e0573905a31e0f234a221f91e328a3a1fa6e4d63199afa1
+  size_bytes: 7259864
+- filename: uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z.factory.bin
+  sha256: 17ecf383c3545fc8410fd8f805986b2c67fdf02586df567562c1a76de341df73
+  size_bytes: 467904
+installed_emos_build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+installed_emos_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+checks:
+  local_and_remote_staged_hashes_match: true
+  stable_usb_identity_match: true
+  flash_write_pass: true
+  independent_verify_pass: true
+  boot_identity_match: true
+  candidate_status_observed: true
+  p4_revision: v1.3
+  flash_mode: QIO
+  flash_frequency_mhz: 80
+  cpu_frequency_mhz: 360
+  rx_gpio: 22
+  tx_gpio: 12
+  baud: 115200
+  format: 8N1
+  flow_control: none
+  receiver_wait_received: 0
+  receiver_wait_expected: 18
+  p4_request_receipt: null
+  p4_ack_transmission: null
+  emos_ack_receipt: null
+physical_setup:
+  both_boards_powered: true
+  harness_seated: true
+  agon_reset_performed_by_agent: false
+  sd_edited: false
+  reset_breakout_used: false
+evidence:
+  boot.txt: 4c441f95417be8ad06955cd43bd2138c797d5f0c99a179c3b58cad05855a62ab
+  private_write_log_sha256: 34a2443e29311e28858dd3f00532de354397d6f74e6aadf9205e8ca9548f2271
+  private_verify_log_sha256: 5b455ecc51f58100f996b50af614bde41b6eccb424ccfcc476dbdc22745b8c66
+  private_write_command_sha256: 73dd0d6aee73a890abcd0fa8e3d4cfb7d616d2b6b4f80670e5a109709766e563
+  private_verify_command_sha256: 5521fd148b2ece46e879d205c1816a0011f1e46200a7cb24b7de6a78f5ddca3b
+  private_bench_launcher_sha256: 880175cc513858ed6ab7a66945790ed215ea31016c911d5b4025a2fb4f105b62
+  capture_checker_sha256: becb75fa69bacb2ff7c1bddbda76d8275729baa1f6a339d613d0f90a87f9a07b
+notes:
+- The deploy timestamp names the actual Pi operation, not the later documentation
+  time.
+- Full source snapshot, device identities, command records and write/verify logs remain
+  in ignored bench evidence.
+- Current SD already runs the same-build ordinary smoke followed by EMOS UARTTEST;
+  no media edit is required.
+- The workstation launcher waits for Enter before resetting P4, then requires matching
+  empty WAIT before the powered Agon reset cue.
+- A separate 90-second capture and Author Agon PASS/prompt observation must establish
+  the acknowledged round trip.

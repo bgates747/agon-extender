@@ -1,0 +1,2 @@
+# Preserve original serial bytes and line endings.
+serial.txt -text -whitespace

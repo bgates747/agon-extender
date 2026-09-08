@@ -1,9 +1,12 @@
 # Light 2 r03 tests
 
-Current test: [UART request and acknowledgement](uart-roundtrip.md).
+Latest completed test: [UART request and acknowledgement](uart-roundtrip.md).
+The [acknowledged round trip](PORT-010-2026-09-08-04-39-39Z/README.md) passed exact P4
+request/ACK capture and Author-confirmed Agon success with prompt return.
 The [EMOS installation and timeout record](PORT-010-2026-09-08-04-07-39Z/README.md)
 confirms successful installation, physical SD/clock smoke and the intentional
-no-reply case. P4 acknowledgement and EMOS reply receipt remain pending.
+no-reply case. The [P4 acknowledgement candidate deployment](PORT-010-2026-09-08-04-35-25Z/README.md)
+passed flash verification and startup before the successful capture.
 
 The [first UART1 forward message](uart-forward.md) is the accepted predecessor.
 The [P4 deployment checkpoint](PORT-009-2026-09-08-02-37-48Z/README.md) passed

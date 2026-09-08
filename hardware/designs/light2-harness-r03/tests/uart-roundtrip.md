@@ -82,9 +82,10 @@ parallel transport or any other r03 lanes.
 
 The [physical smoke and no-reply case](PORT-010-2026-09-08-04-07-39Z/timeout-result.yaml)
 passed on the installed v0.3.0 candidate, including prompt return. Elapsed
-time was not measured. The acknowledged round trip remains pending. Store
-its accepted screen observations, raw P4 log, endpoint manifests and hashes
-under a new `PORT-010-<UTC timestamp>` directory here. Record the
-intentional silence test separately from the successful round trip. Keep
-informative failures; discard ordinary resolved operator mistakes per Author
-policy. The task tracks remaining implementation and deployment gates.
+time was not measured. The [acknowledged round trip](PORT-010-2026-09-08-04-39-39Z/README.md)
+also passed: exact request, single ACK and clean observation after success,
+with Author-confirmed Agon success and prompt return. These complete the
+bounded test. The two candidate build identities and hashes remain recorded
+in the run metadata; this result does not imply broader lifecycle or circuit
+qualification. Keep future runs separate and retain passing or informative
+evidence under the Author's retention policy.

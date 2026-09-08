@@ -7,11 +7,6 @@ item is removed.
 
 ## Active
 
-- [ ] **PORT-010 — Prove an acknowledged UART round trip**
-  - Started: 2026-09-07
-  - Finished: --
-  - Details: [PORT-010](docs/tasks/PORT-010.md)
-
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --

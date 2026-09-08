@@ -35,9 +35,10 @@ pin is connected to that rail by the harness.
 | J1.24 — PC7 | R8 / R16 | J2.10 — EXT1.10 | GPIO9 | Connected; P4 input, unused for UART |
 
 The drawing includes the required common ground from **J1.33 to EXT1.2
-(J2.2)**. Its presence in the current physical assembly remains unconfirmed.
-All UART roles describe the intended EMOS/P4 configuration, not the currently
-running images or reset behavior.
+(J2.2)**. The Author subsequently confirmed that Agon and P4 grounds are tied
+together; the exact fitted ground contacts have not been independently traced.
+UART data directions have now passed the bounded test linked below. The
+remaining roles and reset behavior still require their declared checks.
 
 PD4/J1.13, PD5/J1.14 and PD7/J1.16 have no onward harness connection. The
 Author reports that their ribbon-cable conductors terminate on isolated
@@ -78,7 +79,7 @@ This is a component summary, not a frozen procurement specification.
 ## Review and evidence limits
 
 The historical PC-to-P4 map, the actual pull-up junction placement and the
-common-ground connection require assembly confirmation under HW-002-Q001.
+exact common-ground contacts require assembly confirmation under HW-002-Q001.
 GPIO startup/reset states, unequal-power behavior, contention, target-rate
 UART/flow control and lifecycle requirements remain under Q002/Q003. The
 initial pinwalk supplies only the bounded observations linked below; it does
@@ -97,6 +98,13 @@ prepared keyboard-free diagnostic and capture sequence. The first capture
 contains all eight expected pulse counts and was accepted by the Author as a
 passed pinwalk. The result record retains the shortened acquisition and its
 original automated verdict separately.
+
+The [acknowledged UART test](tests/PORT-010-2026-09-08-04-39-39Z/README.md)
+subsequently passed both data directions at 115200/8N1 without flow control,
+with EMOS success and prompt return confirmed by the Author. The preceding
+no-reply case also returned to the prompt. These are bounded runtime results;
+they do not complete the assembly review or qualify RTS/CTS and power/reset
+behavior. The [test index](tests/README.md) holds the current evidence.
 
 ## Export and check
 

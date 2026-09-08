@@ -1,0 +1,64 @@
+schema_version: 1
+run_id: PORT-010-2026-09-08-04-39-39Z
+started_at: '2026-09-08T04:39:39.840640+00:00'
+ended_at: '2026-09-08T04:41:11.959700+00:00'
+recorded_at: '2026-09-08T04:45:13.925590+00:00'
+outcome: pass
+procedure_identity: uart-roundtrip-probe-r01
+wiring_identity: light2-harness-r03
+scope: Bounded Legacy EMOS UARTTEST request and acknowledgement at 115200/8N1 without
+  flow control
+endpoints:
+  emos:
+    build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+    status: candidate
+    source_commit: daf6881c1e3cb822d540a97d00981a7389dbbb82
+    builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+    dirty: false
+    binary_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+  p4:
+    build_id: uart-roundtrip-probe-r01-b2026-09-08-04-28-58Z
+    status: candidate
+    source_commit: 748f9596062946a6dff057184f72f495c77fcce3
+    dirty: false
+    factory_sha256: 17ecf383c3545fc8410fd8f805986b2c67fdf02586df567562c1a76de341df73
+operator_trigger: powered Agon reset button
+observations:
+  p4_request_received_bytes: 18
+  request_hex: 454D4F53205541525431202D3E2050340D0A
+  p4_ack_sent_bytes: 5
+  ack_hex: 41434B0D0A
+  ack_record_count: 1
+  p4_request_and_ack_pass: true
+  raw_log_verdict_independently_rechecked: true
+  capture_seconds: 90
+  seconds_observed_after_first_pass: 78.09406453801785
+  reset_cue_issued: true
+  later_uart_error_or_extra_request: false
+  agon_roundtrip_pass_reported: true
+  agon_final_legacy_prompt_reported: true
+author_observation:
+  roundtrip: agon reports round trip success. capture is still running
+  prompt: agon is back at its normal prompt. script finished
+  basis: Author reports for this same capture; no archived screenshot supplied for
+    the positive test.
+evidence:
+  serial.txt: 55602e5f8e8dbc19126111274c4f9fc1d9d81de8fba9969406577885849ef86e
+  private_capture_result_sha256: b52c9d45eb8296b9ea086a5275b6cee2656a8ddc65bd693092f0fa599d5caeda
+  capture_checker_sha256: becb75fa69bacb2ff7c1bddbda76d8275729baa1f6a339d613d0f90a87f9a07b
+  private_arm_log_sha256: 46000c4760cee03f5118e84da0e819232b66018ede22d71a9413f602a5f289f4
+  private_arm_command_sha256: 3f186d3e0133478de0bb737f573be5bac0890f8fea5642ae07cbeda771c974d9
+dependencies:
+  emos_installation_and_timeout: ../PORT-010-2026-09-08-04-07-39Z/README.md
+  p4_deployment: ../PORT-010-2026-09-08-04-35-25Z/deployment.yaml
+notes:
+- The checker observes P4 request receipt and ACK transmission; EMOS reply receipt
+  and prompt return are independently confirmed by the Author.
+- Both boards remained powered with the harness seated. The operator used the Agon
+  reset button after the readiness cue.
+- This pass does not qualify RTS/CTS, production EDP traffic, Exclusive Compatible
+  activation, parallel transfer, or unequal-power/reset electrical behavior.
+- Private host, account and device identifiers remain in the original ignored capture
+  records.
+- The earlier deliberate no-reply case passed termination/prompt checks; its screen
+  observation did not measure elapsed time.
