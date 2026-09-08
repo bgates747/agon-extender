@@ -1,6 +1,11 @@
 # Light 2 r03 tests
 
-Current test: [first UART1 forward message](uart-forward.md).
+Current test: [UART request and acknowledgement](uart-roundtrip.md).
+The [EMOS installation and timeout record](PORT-010-2026-09-08-04-07-39Z/README.md)
+confirms successful installation, physical SD/clock smoke and the intentional
+no-reply case. P4 acknowledgement and EMOS reply receipt remain pending.
+
+The [first UART1 forward message](uart-forward.md) is the accepted predecessor.
 The [P4 deployment checkpoint](PORT-009-2026-09-08-02-37-48Z/README.md) passed
 flash verification and receiver startup. The
 [corrected UART capture](PORT-009-2026-09-08-02-59-01Z/README.md) passed exact receiver receipt and

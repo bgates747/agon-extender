@@ -1,7 +1,7 @@
-# UART request and acknowledgement — draft test sheet
+# UART request and acknowledgement — candidate test sheet
 
-Approved procedure identity: **uart-roundtrip-probe-r01**; lifecycle: draft. Owning task: [PORT-010](../../../../docs/tasks/PORT-010.md).
-Do not deploy draft review builds; freeze and rebuild candidates after review.
+Approved procedure identity: **uart-roundtrip-probe-r01**; lifecycle: candidate. Owning task: [PORT-010](../../../../docs/tasks/PORT-010.md).
+Reviewed source is frozen for candidate builds; draft review images remain non-deployable.
 
 ## What this proves
 
@@ -23,13 +23,13 @@ parallel transport or any other r03 lanes.
    Agon PC1 is UART1 RX. PD4/PD5/PD7 remain isolated.
 2. Review and accept the new EMOS image in the emulator, including the
    ordinary boot smoke and the diagnostic's no-peer return. Freeze candidate
-   inputs and rebuild before physical deployment. The installed v0.2.0 EMOS
-   does **not** implement `EMOS UARTTEST`.
+   inputs and rebuild before physical deployment. The v0.2.0 rollback image
+   does **not** implement `EMOS UARTTEST`; v0.3.0 is required.
 3. Stage and install the reviewed EMOS through the established minimal-boot
    procedure, retaining its working rollback image. No flash invocation is
    hidden in this UART test's autoexec. Record the installed EMOS build and
    binary hash independently of the P4 build.
-4. After installation, use exactly this SD-root `autoexec.txt` (CRLF):
+4. After installation, the minimal SD-root `autoexec.txt` is (CRLF):
 
    ```text
    VDU 22 3
@@ -37,8 +37,12 @@ parallel transport or any other r03 lanes.
    ```
 
    EMOS prints identity before the diagnostic and the outcome last. There is
-   no `LOAD`/`RUN` application and no repeated STATUS block. Mode selection
-   belongs only in autoexec. Safely unmount before returning SD to the Agon.
+   no transport application and no repeated STATUS block. The accepted combined
+   smoke script inserts `LOAD /bin/EMBOOT.BIN` and `RUN` before UARTTEST, using
+   the same-build ordinary SD/clock smoke and its check file. The
+   [installed combined script](PORT-010-2026-09-08-04-07-39Z/test-autoexec.txt)
+   can remain for the ACK test. Mode selection belongs only in autoexec.
+   Safely unmount before returning SD to the Agon.
 
 ## First: prove the timeout
 
@@ -76,8 +80,11 @@ parallel transport or any other r03 lanes.
 
 ## Results
 
-Not run. Store accepted screen observations, raw P4 log, endpoint manifests
-and hashes under a new `PORT-010-<UTC timestamp>` directory here. Record the
+The [physical smoke and no-reply case](PORT-010-2026-09-08-04-07-39Z/timeout-result.yaml)
+passed on the installed v0.3.0 candidate, including prompt return. Elapsed
+time was not measured. The acknowledged round trip remains pending. Store
+its accepted screen observations, raw P4 log, endpoint manifests and hashes
+under a new `PORT-010-<UTC timestamp>` directory here. Record the
 intentional silence test separately from the successful round trip. Keep
 informative failures; discard ordinary resolved operator mistakes per Author
 policy. The task tracks remaining implementation and deployment gates.

@@ -1,0 +1,38 @@
+schema_version: 1
+recorded_at: '2026-09-08T04:18:40.868872+00:00'
+phase: installation_report_and_test_media
+emos_build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+flash_result: pass
+flash_evidence: 'Author reported: good flash. sd card remounted locally'
+raw_flash_capture: null
+explicit_crc_screen_observation: null
+card_observation:
+  emnew_absent: true
+  emdone_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+  emdone_matches_candidate: true
+  v020_rollback_preserved: true
+test_media:
+  procedure_identity: uart-roundtrip-probe-r01
+  same_as_checked_candidate_profile: true
+  before_sha256:
+    bin/EMBOOT.BIN: db5d1b8b1bdb2c99738d8eb2fc193ab682272115aac0f29ac7662e4353e1b058
+    emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+    autoexec.txt: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+  after_sha256:
+    bin/EMBOOT.BIN: e80e8dac9450aaac0af5ff5f59bd44f9ec681e236ddec1830e9b01a913990838
+    emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+    autoexec.txt: cf4cc0b0af01f26a8e6a990d07bfde095ef35cc6624717cfd23bbcf0a1a25cbd
+  old_media_backup_verified: true
+  sd_unmounted: true
+hardware_smoke_and_timeout_result: null
+p4_firmware: uart-forward-probe-r01-b2026-09-08-02-35-54Z
+expected_observation:
+- BOOT SMOKE SD PASS
+- BOOT SMOKE CLOCK PASS
+- BOOT SMOKE PASS - returning to MOS
+- 'UART ROUND TRIP FAIL: no reply from P4'
+- Volume timeout followed by MOS prompt
+notes:
+- The absent-peer UART failure is the intentional negative test; no hardware timeout
+  pass is claimed yet.
+- P4 remains receive-only and both boards stay powered with harness seated.

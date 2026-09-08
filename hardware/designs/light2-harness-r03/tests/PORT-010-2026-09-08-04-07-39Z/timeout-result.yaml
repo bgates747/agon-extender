@@ -1,0 +1,32 @@
+schema_version: 1
+recorded_at: '2026-09-08T04:28:12.381807+00:00'
+phase: hardware_smoke_and_intentional_no_reply
+procedure_identity: uart-roundtrip-probe-r01
+outcome: pass
+emos_build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+emos_status_observed: candidate
+emos_binary_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+p4_installed_build_id: uart-forward-probe-r01-b2026-09-08-02-35-54Z
+p4_identity_basis: Prior verified receive-only installation; no subsequent P4 mutation.
+evidence_basis: Author-supplied physical Agon screenshot observed in this conversation.
+archived_screenshot: null
+physical_test_started_at: null
+elapsed_seconds_measured: null
+screen_observations:
+- BOOT SMOKE SD PASS
+- BOOT SMOKE CLOCK PASS
+- BOOT SMOKE PASS - returning to MOS
+- 'UART ROUND TRIP: waiting for acknowledgement...'
+- 'UART ROUND TRIP FAIL: no reply from P4'
+- Error executing autoexec.txt at line 4
+- Volume timeout
+- Final / * prompt
+acknowledged_roundtrip_result: null
+notes:
+- Expected missing-reply failure and prompt return pass the deliberate silence case;
+  no ACK receipt is claimed.
+- The screenshot confirms termination and prompt return, but cannot measure the timeout
+  duration.
+- Volume timeout is inherited MOS FR_TIMEOUT text; the ordinary SD smoke passed.
+- Existing combined test autoexec remains suitable after separately deploying the
+  P4 ACK candidate.

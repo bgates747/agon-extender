@@ -41,10 +41,12 @@ activation or production protocol is added.
 2. [x] Build/check both endpoints and prepare the [test sheet](../../hardware/designs/light2-harness-r03/tests/uart-roundtrip.md)
    and round-trip capture checker. Reuse the existing private launcher
    mechanics when approved identities permit deployment staging.
-3. [ ] Obtain required emulator/flash validation for the concrete
-   EMOS replacement before deployment. SD is reported mounted locally.
-4. [ ] Confirm timeout with the receive-only P4, then run with a reply;
-   retain informative failures and passing evidence beside r03's tests.
+3. [x] Obtain emulator acceptance, freeze/rebuild the EMOS candidate, install
+   it and confirm its running identity and ordinary hardware SD/clock smoke.
+4. [ ] Complete the reply test. The receive-only P4 timeout case passed; prepare
+   the clean P4 ACK candidate, deploy under the bench authorization boundary,
+   then capture request/ACK and confirm EMOS PASS with prompt return. Retain
+   passing evidence beside r03's tests.
 
 The forward checkpoint was frozen in Extender e013e42 and EMOS bd08b76.
 Machine-specific details remain in HARDWARE.local.md. No push was requested.
@@ -135,3 +137,30 @@ card for the combined SD/clock and UART timeout script; installation does not
 automatically run that test. Current powered/seated-ribbon instructions govern
 this run, overriding the isolation steps of the earlier ordinary-boot proof.
 No WROOM or reset-breakout operation is authorized or needed for preparation.
+
+The [installation preparation record](../../hardware/designs/light2-harness-r03/tests/PORT-010-2026-09-08-04-07-39Z/README.md)
+identifies the clean candidate, passing automated checks, verified SD contents
+and preserved v0.2.0 rollback payload. SD is unmounted; physical installation
+and UART outcomes remain pending. No P4 or onboard VDP mutation occurred.
+
+The Author reported a good flash and remounted SD. The consumed EMDONE.BIN
+hash matches candidate v0.3.0. The second SD handover now contains the same
+combined smoke/no-peer script and smoke binary as the checked candidate
+profile, with old files backed up and SD unmounted. Installation and media
+observations are recorded beside the design in the existing preparation
+folder; physical SD/clock and timeout outcomes remain pending.
+
+## Physical timeout pass and P4 candidate preparation — 2026-09-08
+
+The [physical timeout result](../../hardware/designs/light2-harness-r03/tests/PORT-010-2026-09-08-04-07-39Z/timeout-result.yaml)
+records the Author screenshot: exact candidate identity, SD/CLOCK PASS,
+expected no-reply failure and final prompt. No elapsed duration was measured.
+The installed EMOS and its combined autoexec already support the ACK test.
+
+Promote the reviewed r01 P4 composition to candidate, freeze its unchanged
+implementation and build from clean inputs. Registry r28 records this lifecycle
+transition and the installed EMOS observation; neither endpoint changes its
+approved version/revision. Prepare the isolated Pi bundle and quiet Enter-to-arm
+launcher before physical deployment. GPIO12 is the sole P4 harness output;
+keep both boards powered and the ribbons seated. Successful round-trip receipt
+remains pending the P4 capture and Agon PASS/prompt observation.

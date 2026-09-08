@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-roundtrip-probe",
   "source_identity": "uart-roundtrip-probe-r01",
-  "status": "draft",
-  "note": "Author approved r01 for emulator-review preparation. Physical deployment still requires reviewed, frozen candidate builds of P4 and EMOS."
+  "status": "candidate",
+  "note": "Reviewed r01 implementation frozen for physical request/ACK qualification after the installed EMOS v0.3.0 passed the no-reply case. Only clean candidate builds may be deployed."
 }

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r27
-updated_at: 2026-09-08T04:04:01Z
+registry_revision: r28
+updated_at: 2026-09-08T04:28:12Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -48,9 +48,9 @@ artifacts:
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
       - The Author accepted v0.2.0 on 2026-09-07 for the minimal ordinary Legacy boot milestone owned by EMOS QUAL-002; draft review builds are not deployment candidates.
       - The Author accepted the ordinary Legacy hardware smoke and evidence freeze on 2026-09-07; EMOS run QUAL-002-2026-09-08-01-23-44Z records three cold boots of agon-emos-v0.2.0-b2026-09-08-01-20-50Z with a documented installation-command deviation from r01.
-      - Version v0.2.0 remains the installed candidate; its bounded runtime pass does not qualify the original installation script or imply broader hardware qualification.
+      - Version v0.2.0 is retained as the working rollback payload; its bounded runtime pass does not qualify the original installation script or imply broader hardware qualification.
       - The Author approved v0.3.0 for PORT-010 emulator review: an explicit Legacy-only UARTTEST command adds bounded request/acknowledgement diagnostics without changing public MOS API slots. New builds remain draft until review and freeze.
-      - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advances to candidate with unchanged implementation; physical installation and UART results remain pending.
+      - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advances to candidate with unchanged implementation; its installation, physical SD/clock smoke and intentional no-reply case have since passed. Acknowledged reply receipt remains pending under PORT-010.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: emos-ordinary-boot
@@ -273,13 +273,13 @@ artifacts:
     kind: test_fixture
     identity_scheme: revision
     latest_identity: uart-roundtrip-probe-r01
-    status: draft
+    status: candidate
     variants:
       - receiver
     description: Bounded EMOS UARTTEST and P4 acknowledgement diagnostic on light2-harness-r03.
     notes:
       - The Author approved r01 and registry r26 for emulator-review builds under PORT-010.
       - P4 receives the prior 18-byte request on GPIO22 and returns five-byte ACK CR LF on GPIO12 at 115200 baud, 8N1, without flow control.
-      - EMOS is versioned independently as v0.3.0; its installed v0.2.0 predecessor does not implement UARTTEST.
+      - EMOS is versioned independently; installed v0.3.0 implements UARTTEST, while the retained v0.2.0 rollback does not.
       - The receive-only P4 predecessor supplies the intentional no-reply hardware case before replacement with the acknowledgement image.
-      - This draft does not qualify physical reply receipt, activation, flow control or Exclusive Compatible operation.
+      - The reviewed r01 P4 implementation is frozen as candidate after the physical EMOS no-reply pass. Physical reply receipt remains pending; activation, flow control and Exclusive Compatible operation are outside this test.

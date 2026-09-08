@@ -1,0 +1,48 @@
+schema_version: 1
+record_type: sd_preparation
+run_id: PORT-010-2026-09-08-04-07-39Z
+started_at: '2026-09-08T04:07:39Z'
+outcome: partial
+scope: Guarded MOS-only installation media; physical installation and tests pending
+procedure_identity: uart-roundtrip-probe-r01
+inputs:
+  emos_build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+  emos_status: candidate
+  emos_commit: daf6881c1e3cb822d540a97d00981a7389dbbb82
+  builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+  extender_commit: 0c550c7
+  clean_build_inputs: true
+  firmware_size_bytes: 117828
+  firmware_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+  firmware_crc32: BB602CBF
+  flash_utility: agon-flash-v1.9
+  flash_sha256: 480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57
+  installed_emos_build_id: agon-emos-v0.2.0-b2026-09-08-01-20-50Z
+  installed_p4_build_id: uart-forward-probe-r01-b2026-09-08-02-35-54Z
+staging:
+  preparation_pass: true
+  sd_unmounted: true
+  firmware_path: /EMNEW.BIN
+  consumed_payload_path: /EMDONE.BIN
+  rollback_path: /EMBACK.BIN
+  rollback_sha256: 076a9c359591b1beecf4716b9dc41648b8cf3122bf6fd4a1b6dbe56e187c44ba
+  previous_autoexec_sha256: 73e648b475bb2cec95421f6249ce38e2139dc722a581d09554adbee71633b23f
+  install_autoexec_sha256: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+  off_card_backups_verified: true
+  higher_priority_boot_scripts_absent: true
+operator_report:
+  both_boards_powered: true
+  harness_seated: true
+hardware:
+  flash_crc_pass: null
+  installed_identity_confirmed: null
+  timeout_test_pass: null
+  acknowledgement_test_pass: null
+notes:
+- Preparation cannot establish physical flash or UART success.
+- Current Author instruction keeps both boards powered and ribbons seated; earlier
+  isolation-only boot instructions do not apply.
+- The first handover installs only EMOS. After successful flash and guarded reset,
+  remount SD for the combined smoke/UART test.
+- P4 and onboard VDP firmware were not changed.
+- Machine-specific device paths and backup locations remain in the ignored bench record.

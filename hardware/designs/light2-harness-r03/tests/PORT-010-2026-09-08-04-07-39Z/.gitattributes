@@ -1,0 +1,2 @@
+install-autoexec.txt -text whitespace=cr-at-eol
+test-autoexec.txt -text whitespace=cr-at-eol
