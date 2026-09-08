@@ -1,0 +1,43 @@
+schema_version: 1
+record_type: sd_preparation
+run_id: PORT-011-2026-09-08-05-55-02Z
+started_at: '2026-09-08T05:55:02.044159+00:00'
+outcome: partial
+scope: Verified EMOS installation media; physical Agon installation and flow test
+  pending
+procedure_identity: uart-flow-probe-r01
+inputs:
+  emos_build_id: agon-emos-v0.4.0-b2026-09-08-05-51-31Z
+  emos_status: candidate
+  emos_commit: 3d8e09de4c32e7acf0d51f39c2725168e30310cb
+  builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+  extender_commit: 3869264a520c62a9746109fd7e4794a1f4549f2c
+  clean_build_inputs: true
+  firmware_size_bytes: 119863
+  firmware_sha256: 552f7a22b06e84771e81def293f1127d5278d8fc5f17cefb32187fac881491f8
+  firmware_crc32: 1C40FDD0
+  flash_utility: agon-flash-v1.9
+  flash_sha256: 480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57
+  installed_emos_build_id: agon-emos-v0.3.0-b2026-09-08-04-04-00Z
+  installed_p4_build_id: uart-flow-probe-r01-b2026-09-08-05-51-31Z
+staging:
+  preparation_pass: true
+  sd_unmounted: true
+  firmware_path: /EMNEW.BIN
+  consumed_payload_path: /EMDONE.BIN
+  rollback_path: /EMPREV.BIN
+  rollback_sha256: 371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36
+  older_rollback_path: /EMBACK.BIN
+  older_rollback_sha256: 076a9c359591b1beecf4716b9dc41648b8cf3122bf6fd4a1b6dbe56e187c44ba
+  install_autoexec_sha256: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+  off_card_backups_verified: true
+  higher_priority_boot_scripts_absent: true
+hardware:
+  agon_installation_pass: null
+  flow_test_pass: null
+notes:
+- Both boards remain powered and the harness seated.
+- Installer renames its input before flashing; the following reset stops at the missing
+  input instead of reflashing.
+- Remount SD after successful Agon installation for the separate smoke/UARTFLOW autoexec.
+- Private device and backup paths remain in ignored bench records.

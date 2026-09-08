@@ -1,6 +1,9 @@
 # Light 2 r03 tests
 
-Next test, in candidate preparation: [UART RTS/CTS pause and timeout](uart-flow.md).
+Next test: [UART RTS/CTS pause and timeout](uart-flow.md).
+[P4 deployment](PORT-011-2026-09-08-05-54-22Z/README.md) passed;
+[EMOS installation media](PORT-011-2026-09-08-05-55-02Z/README.md) is prepared.
+Agon installation and flow-control results remain pending.
 
 Latest completed test: [UART request and acknowledgement](uart-roundtrip.md).
 The [acknowledged round trip](PORT-010-2026-09-08-04-39-39Z/README.md) passed exact P4

@@ -1,0 +1,5 @@
+I (1211) uart-flow: UART FLOW RECEIVER uart-flow-probe-r01-b2026-09-08-05-51-31Z (candidate)
+I (1211) uart-flow: RX=22 TX=12 CTS=23 RTS=11 baud=115200 8N1; HIGH=stop LOW=ready
+I (1212) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (6211) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z
+I (11211) uart-flow: UART FLOW WAIT received=0 cts=1 build=uart-flow-probe-r01-b2026-09-08-05-51-31Z

@@ -1,0 +1,34 @@
+schema_version: 1
+record_type: p4_deployment
+run_id: PORT-011-2026-09-08-05-54-22Z
+procedure_identity: uart-flow-probe-r01
+outcome: pass
+scope: P4 flash write, independent verify and matching candidate startup only
+build_id: uart-flow-probe-r01-b2026-09-08-05-51-31Z
+source_commit: 3869264a520c62a9746109fd7e4794a1f4549f2c
+build_status: candidate
+clean_build_inputs: true
+factory_size_bytes: 470080
+factory_sha256: c3d04b971d78c25ddbf049d9df97d8603c3854f3dd598ef0eab094ae0356de93
+write_offset: '0x0'
+write_flash_parameters: keep generated image settings
+flash_verified: true
+observed_chip: ESP32-P4 revision v1.3
+stable_usb_identity_verified: true
+observed_uart:
+  baud: 115200
+  format: 8N1
+  rx_gpio: 22
+  tx_gpio: 12
+  cts_gpio: 23
+  rts_gpio: 11
+  initial_received: 0
+  initial_cts: 1
+boot_raw_sha256: 279fcb1e08f2727151b94bab264c9641aa6ddfdd4fd5d4f5bfe33816ffb7977e
+uart_flow_test_pass: null
+notes:
+- Author authorized deployment after emulator acceptance and source freeze.
+- Both boards powered; ribbons remain seated. No Agon or reset-breakout operation.
+- Boot excerpt excludes private host/device details; full commands and raw logs remain
+  in ignored bench records.
+- No exchange or physical flow-control timing result is implied.

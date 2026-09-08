@@ -1,7 +1,7 @@
 # PORT-011 — Prove UART RTS/CTS pause, resume and timeout
 
-Status: reviewed and approved for source freeze and candidate deployment;
-physical flow-control qualification pending.
+Status: P4 candidate deployed and verified; EMOS installation SD prepared and
+unmounted. Awaiting Author Agon installation, then flow-capture handover.
 Started: 2026-09-08.
 
 ## Scope and decisions
@@ -140,3 +140,22 @@ v0.2.0 EMBACK.BIN, with verified off-card backups. The authorization includes
 preparing Agon installation media and flashing the P4 candidate with both
 boards powered and the harness seated. Physical Agon installation still needs
 the Author to move the SD card and press its reset button.
+
+## Candidate preparation and P4 deployment — 2026-09-08
+
+EMOS `agon-emos-v0.4.0-b2026-09-08-05-51-31Z` was built from clean EMOS
+`3d8e09d` and builder `cf24304`. Its full
+configured gate, 68 host tests and exact-candidate ordinary/bad-SD/no-peer
+checks passed. The implementation matches the reviewed draft.
+
+P4 `uart-flow-probe-r01-b2026-09-08-05-51-31Z` was built from clean Extender
+`3869264`, flashed and independently verified under the Author's
+authorization. [Deployment PORT-011-2026-09-08-05-54-22Z](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-05-54-22Z/README.md)
+records the matching candidate startup and empty stopped-CTS WAIT.
+
+[Preparation PORT-011-2026-09-08-05-55-02Z](../../hardware/designs/light2-harness-r03/tests/PORT-011-2026-09-08-05-55-02Z/README.md)
+records verified, safely unmounted Agon installation media and both rollback
+payloads. The Author must insert SD and reset Agon once to install EMOS, then
+remount SD for the separate smoke/UARTFLOW test. Physical installation, the
+combined analyzer capture launcher and actual flow-control results remain
+pending. No existing qualified result is extended by these preparation checks.
