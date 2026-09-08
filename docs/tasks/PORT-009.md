@@ -1,6 +1,6 @@
 # PORT-009 — Prove one UART1 message from EMOS to P4
 
-Status: implementation and local checks complete; source freeze authorized; candidate build and bench deployment next.
+Status: complete — exact 18-byte P4 receipt and same-run Agon Legacy return confirmed.
 Started: 2026-09-07. The Author directed “make it so” after accepting one fixed
 forward UART message as the next implementation chunk.
 
@@ -62,9 +62,9 @@ and esp_driver_gpio headers; P4 framework/board/flash defaults are reused.
    decision-bearing bench run. Approved shared fixture lineage:
    `uart-forward-probe-r01`, with sender/receiver variants and one paired build.
    Compile exploration uses UNVERSIONED-DO-NOT-DEPLOY until approved.
-4. [ ] With the reviewed operation authorized and current wiring checked,
+4. [x] With the reviewed operation authorized and current wiring checked,
    deploy the receiver with both boards powered, ribbons seated and Agon idle;
-   verify READY and only then let the operator cold-boot the sender.
+   verify READY and only then let the operator press Agon's powered hard-reset button.
    Capture exact receipt and return to Legacy prompt; stop for review.
 
 Private device identities, SSH and access boundaries remain in HARDWARE.local.md.
@@ -117,3 +117,55 @@ next,” authorizing the proposed fixture identity/source freeze and connected,
 powered P4 deployment. Registry r24 records uart-forward-probe-r01 as candidate.
 The workstation will stage the ordinary sender; no EMOS flash is authorized or
 needed for this step. UART hardware receipt remains pending.
+
+## Deployment checkpoint
+
+The candidate `uart-forward-probe-r01-b2026-09-08-02-35-54Z` was built from
+clean Extender `fd25958029c09b3828f7559aef519a4428c2789d` and EMOS
+`4baeb277b041783b5fa01f1c48487ac52a22b294`. All paired build checks passed.
+The [deployment record](../../hardware/designs/light2-harness-r03/tests/PORT-009-2026-09-08-02-37-48Z/README.md)
+records successful P4 write, independent flash verification and matching
+receiver boot/WAIT at zero received bytes with the powered harness connected.
+The exact sender and mode-3 autoexec were staged to SD after backup; the card
+was verified, synced and unmounted. The local capture launcher restarts the
+verified receiver, prompts the operator to boot Agon, records 90 seconds and
+retrieves the Pi evidence. Its private location is in the local bench record.
+No UART transfer PASS or final Agon observation is claimed yet.
+
+## Operator capture correction
+
+The Author reported that console chatter hid the reset cue and requested a
+workstation Enter pause before P4 arming, a clear reset cue, and an Agon reset
+button press with power retained. The reported MOS startup delay is 2–3 seconds.
+Revision uart-forward-probe-r02 records this host/procedure correction and
+explicitly selects the already-deployed r01 endpoint build; no firmware change
+or flash is needed. Registry r25 records r02 as experimental. The original r01
+test sheet remains archived beside its replacement.
+
+The launcher now pauses before any P4 reset, hides esptool/boot chatter in logs,
+and displays RESET AGON NOW only after the capture port is open and the expected
+receiver reports a complete empty WAIT. The 90-second observation begins then.
+Nine host tests pass, including simulated three-second Agon startup, a complete
+90-second window after the cue, quiet output and rejection of incorrect WAIT.
+
+The Author corrected misaligned headers; the unchanged firmware then passed.
+Keep the harness seated to avoid repeated mechanical strain and alignment
+errors. At the Author's direction, the uninformative failed capture bundles
+were removed from both hosts; the passing evidence is retained.
+
+The [corrected capture](../../hardware/designs/light2-harness-r03/tests/PORT-009-2026-09-08-02-59-01Z/README.md)
+passed exact P4 receipt: 18 expected bytes, matching build, no UART errors or
+later FAIL, and 79 seconds of observation after PASS. Raw log hash and verdict
+were independently checked. The Author confirmed the same-run Agon SENT/final
+Legacy prompt, completing the test.
+
+## Closeout — 2026-09-07
+
+The Author confirmed that the passing run reset and returned to the Legacy
+prompt, with the screen appearing identical to the earlier sender/SENT
+photograph and without stock MOS/VDP branding. Combined with independently
+verified exact receipt in PORT-009-2026-09-08-02-59-01Z, this completes the
+bounded test. The earlier pending-confirmation checkpoints above are historical.
+Removed this completed item from the authoritative TODO. No return-channel
+work, broader qualification, firmware reflash, commit or push follows from
+this confirmation.

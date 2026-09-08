@@ -1,0 +1,2 @@
+# Raw evidence retains its original serial line endings and whitespace.
+boot.log -text -whitespace

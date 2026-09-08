@@ -14,6 +14,22 @@ import re
 import subprocess
 import time
 
+PROCEDURE_ID = "uart-forward-probe-r02"
+
+
+def receiver_ready(data, build_id):
+    """Only an empty, matching receiver WAIT permits the operator reset cue."""
+    text = re.sub(rb"\x1b\[[0-9;]*m", b"", data)
+    if b"UART FORWARD FAIL" in text or b"UART event type=" in text:
+        raise RuntimeError("receiver failed before the Agon reset cue")
+    if b"UART FORWARD PASS" in text:
+        raise RuntimeError("receiver already received data before the Agon reset cue")
+    waits = re.findall(rb"UART FORWARD WAIT received=(\d+) expected=(\d+) hex=(\S*) reason=none build=(\S+)\r?\n", text)
+    for count, length, data_hex, build in waits:
+        if build.decode() != build_id or int(count) != 0 or int(length) != 18 or data_hex:
+            raise RuntimeError("receiver WAIT is not the selected empty receiver")
+    return bool(waits)
+
 
 def verdict(data, build_id):
     text = re.sub(rb"\x1b\[[0-9;]*m", b"", data)
@@ -45,6 +61,8 @@ def main():
     p.add_argument("--build-id", required=True)
     p.add_argument("--output-parent", type=Path, required=True)
     p.add_argument("--seconds", type=int, default=90)
+    p.add_argument("--prompt-on-ready", action="store_true",
+                   help="hide raw diagnostics; cue Agon reset only after a matching empty WAIT")
     args = p.parse_args()
     if not re.fullmatch(r"uart-forward-probe-r\d+-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z", args.build_id):
         p.error("select the approved frozen build; unversioned captures are not accepted")
@@ -68,16 +86,26 @@ def main():
     collected = bytearray()
     first_pass_at = None
     capture_error = None
+    ready_at = None
     try:
         if args.port.resolve(strict=True) != device: raise RuntimeError("device changed during open")
-        deadline = time.monotonic() + args.seconds
+        deadline = time.monotonic() + (15 if args.prompt_on_ready else args.seconds)
         with (folder / "serial.log").open("wb") as log:
             while time.monotonic() < deadline:
                 data = port.read(4096)
                 if not data: continue
                 log.write(data); log.flush(); collected.extend(data)
-                print(data.decode("utf-8", errors="replace"), end="", flush=True)
+                if not args.prompt_on_ready:
+                    print(data.decode("utf-8", errors="replace"), end="", flush=True)
                 if len(collected) > 2_000_000: raise RuntimeError("unexpected diagnostic volume")
+                if args.prompt_on_ready and ready_at is None and receiver_ready(bytes(collected), args.build_id):
+                    ready_at = time.monotonic()
+                    deadline = ready_at + args.seconds
+                    print("\n========================================\n"
+                          "           RESET AGON NOW\n"
+                          "  Press and release its reset button.\n"
+                          "========================================\n"
+                          f"Capturing for {args.seconds} seconds. Leave both boards powered.\n", flush=True)
                 if first_pass_at is None and verdict(bytes(collected), args.build_id)[0]:
                     first_pass_at = time.monotonic()
     except Exception as exc:
@@ -86,6 +114,8 @@ def main():
         port.close()
     passed, reason = verdict(bytes(collected), args.build_id)
     observed_after_pass = 0 if first_pass_at is None else time.monotonic() - first_pass_at
+    if args.prompt_on_ready and ready_at is None and not capture_error:
+        capture_error = "no matching empty receiver WAIT within 15 seconds; do not reset Agon"
     if capture_error:
         passed, reason = False, "capture interrupted: " + capture_error
     elif passed and observed_after_pass < 5:
@@ -95,6 +125,9 @@ def main():
               "device": str(device), "usb_serial": props.get("ID_SERIAL_SHORT"),
               "capture_seconds": args.seconds, "receiver_pass": passed, "reason": reason,
               "seconds_observed_after_first_pass": observed_after_pass,
+              "procedure_identity": PROCEDURE_ID,
+              "operator_trigger": "powered Agon reset button" if args.prompt_on_ready else "externally coordinated",
+              "reset_cue_issued": ready_at is not None,
               "serial_sha256": hashlib.sha256(collected).hexdigest()}
     (folder / "capture-result.json").write_text(json.dumps(record, indent=2) + "\n")
     print("\n" + ("PASS: " if passed else "FAIL: ") + reason + "\nEvidence: " + str(folder))

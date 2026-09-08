@@ -1,9 +1,17 @@
-# Initial Port C pinwalk
+# Light 2 r03 tests
+
+Current test: [first UART1 forward message](uart-forward.md).
+The [P4 deployment checkpoint](PORT-009-2026-09-08-02-37-48Z/README.md) passed
+flash verification and receiver startup. The
+[corrected UART capture](PORT-009-2026-09-08-02-59-01Z/README.md) passed exact receiver receipt and
+the Author confirmed the same-run Agon SENT/final Legacy prompt.
+
+## Initial Port C pinwalk (historical)
 
 [HW-002](../../../../docs/tasks/HW-002.md) owns this diagnostic and its
 [keyboard-free fixture](../../../../docs/tasks/HW-002/pinwalk/README.md).
 
-The SD card's `autoexec.txt` now contains:
+For the accepted pinwalk, the SD card's `autoexec.txt` contained:
 
 ```text
 LOAD /bin/PWBOOT.BIN

@@ -1,0 +1,37 @@
+schema_version: 1
+run_id: PORT-009-2026-09-08-02-37-48Z
+started_at: '2026-09-08T02:37:48Z'
+outcome: partial
+scope: P4 deployment and receiver startup; UART message test not executed
+build_id: uart-forward-probe-r01-b2026-09-08-02-35-54Z
+fixture_identity: uart-forward-probe-r01
+wiring_identity: light2-harness-r03
+installed_emos_build: agon-emos-v0.2.0-b2026-09-08-01-20-50Z
+observations:
+  p4_revision: v1.3
+  both_boards_powered: true
+  harness_connected: true
+  factory_write_verified: true
+  independent_verify_pass: true
+  boot_identity_match: true
+  receiver_wait_received: 0
+  receiver_wait_expected: 18
+  uart_receipt: null
+  agon_sender_result: null
+sd_files:
+- path: bin/U1SEND.BIN
+  previous_sha256: null
+  sha256: 46a91ede9625a6fd24da7c66fd6d3a3fd9599cad0d1b30f96e9a2ec0e62bbfff
+  size_bytes: 7712
+- path: autoexec.txt
+  previous_sha256: f93eb392975dada1cc90a6626422dd5b42e33a21d354366fc0ea2ec8a7b73c7f
+  sha256: 73e648b475bb2cec95421f6249ce38e2139dc722a581d09554adbee71633b23f
+  size_bytes: 63
+evidence:
+  boot_sha256: dfebe776c8231da284e7520aba917be013ef09d2e315d7b4272208de058b12f0
+  private_write_log_sha256: e805ba0428b5795155cee5cc003f0cd4c0198c9d880676fc2c8b71ef522e5a95
+  private_verify_log_sha256: 16132282302f9a91cde15d57fd5ba7f1d3ccf9c6e7aebc9c8a0dc8a8321028bf
+notes:
+- Private device paths and full deployment logs remain in ignored bench evidence.
+- Existing autoexec was backed up before SD staging; card verified, synced and unmounted.
+- No EMOS firmware flash, ribbon removal or Agon reset was performed.

@@ -1,0 +1,64 @@
+schema_version: 1
+build:
+  artifact_id: uart-forward-probe
+  source_identity: uart-forward-probe-r01
+  build_id: uart-forward-probe-r01-b2026-09-08-02-35-54Z
+  status: candidate
+  variant: null
+  created_at: '2026-09-08T02:35:54Z'
+provenance:
+  extender:
+    commit: fd25958029c09b3828f7559aef519a4428c2789d
+    dirty: false
+    source_sha256:
+      vdp/platformio.ini: c0d3c7bb559ede94d29fedb39cd35acd1e3bfb588f90a9b38fb41cc171afd17c
+      vdp/sdkconfig.defaults: 3c2774f51ae4755140cb43f0a5e30925662d21990ea245354973ef4e397afc34
+      vdp/partitions.csv: 922b1e9b619b16e04a7feb8681ccdaded9f01dc8aa6238600901b16b28d56dcd
+      vdp/boards/olimex_esp32_p4_devkit.json: 5da58a453c16525c7e8d28f964948fa071158d03fc097bfc6ec3609b361e7c5a
+      vdp/pio/select_sources.py: 59d4050884828c4ec4cfc34ba3b0319695b4d315e30045a08e3556b5a0821230
+      vdp/pio/p4-uart-forward-source-selection.json: 9be6e0c7534d0ecfcd9083588b403e6f3c77be356d5c7e5d4917b0a53d1df3b0
+      vdp/video/extender/diagnostic/uart_forward_receiver.cpp: bcde355a4b1232cd942c1ac38aa6cc944959bbe1897ffed365110f762ed2c5e3
+      vdp/video/extender/diagnostic/uart_forward_match.hpp: 5f354855e8d1f2bf48ca164c778cdf35084784973029d959bdd3ec31624b0923
+      tests/uart_forward_match_test.cpp: bb2332aa31086565ad4b9bea8ed29aeb8d69e550b385c65c491caf2afff06ab5
+      scripts/prepare_uart_forward.py: e88a980bd0c80912c5495c39e4e2e8e310652aa44b53a6d055ae288d622dae40
+      docs/tasks/PORT-009/identity.json: dbe1c75acffda67610735c68aec5ad93e649a5a69e39d256f7087a9b17974b37
+  emos:
+    commit: 4baeb277b041783b5fa01f1c48487ac52a22b294
+    dirty: false
+    source_sha256:
+      projects/uart-forward/src/main.c: 766ef32c2ba3d7d4703231d84be8b8748096531b22a9faff736bb490a05f8cdd
+      projects/uart-forward/Makefile: 73c948336cfd79f2cc0608c05e4aa09a4510297ccc9a6b728d1b9be040abbc43
+toolchain:
+  ez80_compiler_sha256: 34670dda66966bc83b59bafe97bbe84fd7ca20ad15728eb3f3753097d22dc51d
+  ez80_libagon_sha256: 5de7878342ab6780593fbf8d54d8005960e2471bd0e34c0e307fbcfe42fef28a
+contract:
+  baud: 115200
+  format: 8N1
+  flow_control: false
+  message_hex: 454d4f53205541525431202d3e2050340d0a
+  message_length: 18
+outputs:
+- filename: uart-forward-probe-r01-b2026-09-08-02-35-54Z-sender.bin
+  role: sender
+  size_bytes: 7712
+  sha256: 46a91ede9625a6fd24da7c66fd6d3a3fd9599cad0d1b30f96e9a2ec0e62bbfff
+- filename: uart-forward-probe-r01-b2026-09-08-02-35-54Z-sender.map
+  role: sender_map
+  size_bytes: 27617
+  sha256: 4273a897a4497269f7690ab578c0fe13a69ac0247a999a482e24a652b82cfdc8
+- filename: uart-forward-probe-r01-b2026-09-08-02-35-54Z-receiver.bin
+  role: receiver
+  size_bytes: 335504
+  sha256: a04cd0f5c53e733d08ae6dc927ac5dfdfe9041827383bab41dc577cfda75ff1d
+- filename: uart-forward-probe-r01-b2026-09-08-02-35-54Z-receiver.factory.bin
+  role: receiver_factory
+  size_bytes: 466576
+  sha256: 8afeaf900e08759603447dadbbd9a68b4efc5c40684bd14b60f0a57c922a0287
+- filename: uart-forward-probe-r01-b2026-09-08-02-35-54Z-receiver.elf
+  role: receiver_elf
+  size_bytes: 7258328
+  sha256: 2f3126bace151b79b009f6174f9397b750c02d3d18e4a76ca7c90f66c366aa23
+header_sha256: 292f33702511d2df28a1bb2b97f34b4fe417fb53948fa82eca8c918f52556d82
+notes:
+- Compile and host-test evidence only; no hardware pass.
+- Retain unchanged installed EMOS; do not flash an EMOS image.
