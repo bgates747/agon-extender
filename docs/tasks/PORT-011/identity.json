@@ -1,0 +1,6 @@
+{
+  "artifact_id": "uart-flow-probe",
+  "source_identity": "uart-flow-probe-r01",
+  "status": "candidate",
+  "note": "Author accepted graphical review and approved source freeze, candidate preparation and deployment on 2026-09-08. Physical flow-control qualification is pending."
+}

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r28
-updated_at: 2026-09-08T04:28:12Z
+registry_revision: r29
+updated_at: 2026-09-08T05:50:26Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,7 +38,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.3.0
+    latest_identity: agon-emos-v0.4.0
     status: candidate
     variants:
       - port008-forward
@@ -50,7 +50,8 @@ artifacts:
       - The Author accepted the ordinary Legacy hardware smoke and evidence freeze on 2026-09-07; EMOS run QUAL-002-2026-09-08-01-23-44Z records three cold boots of agon-emos-v0.2.0-b2026-09-08-01-20-50Z with a documented installation-command deviation from r01.
       - Version v0.2.0 is retained as the working rollback payload; its bounded runtime pass does not qualify the original installation script or imply broader hardware qualification.
       - The Author approved v0.3.0 for PORT-010 emulator review: an explicit Legacy-only UARTTEST command adds bounded request/acknowledgement diagnostics without changing public MOS API slots. New builds remain draft until review and freeze.
-      - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advances to candidate with unchanged implementation; its installation, physical SD/clock smoke and intentional no-reply case have since passed. Acknowledged reply receipt remains pending under PORT-010.
+      - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advanced to candidate with unchanged implementation; its installation, physical SD/clock smoke, intentional no-reply case and acknowledged round trip passed under PORT-010.
+      - The Author approved v0.4.0 under PORT-011 for the Legacy-only UARTFLOW command and explicit RTS/CTS diagnostics. The Author accepted the graphical timeout/prompt result and approved source freeze and deployment on 2026-09-08; v0.4.0 is candidate for the bounded flow procedure. The passing v0.3.0 image remains the rollback.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: emos-ordinary-boot
@@ -283,3 +284,16 @@ artifacts:
       - EMOS is versioned independently; installed v0.3.0 implements UARTTEST, while the retained v0.2.0 rollback does not.
       - The receive-only P4 predecessor supplies the intentional no-reply hardware case before replacement with the acknowledgement image.
       - The reviewed r01 P4 implementation is frozen as candidate after the physical EMOS no-reply pass. Physical reply receipt remains pending; activation, flow control and Exclusive Compatible operation are outside this test.
+
+  - artifact_id: uart-flow-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-flow-probe-r01
+    status: candidate
+    variants: [receiver]
+    description: Bounded RTS/CTS pause, resume and blocked-sender UART diagnostic on r03.
+    notes:
+      - The Author approved r01, EMOS v0.4.0 and registry r29 under PORT-011 on 2026-09-08.
+      - Both ready/wait directions are exercised at 115200 baud, 8N1, under explicit EMOS UARTFLOW ownership in Legacy.
+      - Existing v0.3.0 and round-trip r01 passing images remain installed until reviewed replacement candidates are prepared.
+      - The Author accepted emulator review and approved freeze/deployment; r01 is candidate for the declared four-wire flow-control procedure. No physical flow result is claimed.

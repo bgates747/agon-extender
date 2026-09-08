@@ -1,0 +1,17 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-uart-flow",
+  "diagnostic_status": "PORT-011 bounded RTS/CTS diagnostic; not product EDP",
+  "generated_build_files": [
+    "video/CMakeLists.txt"
+  ],
+  "project_translation_units": [
+    "video/extender/diagnostic/uart_flow_receiver.cpp"
+  ],
+  "vendored_translation_units": [],
+  "excluded_source_families": [
+    "video/video.ino",
+    "video/extender/boot/*",
+    "video/extender/transport/*"
+  ]
+}

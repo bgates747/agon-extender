@@ -1,5 +1,7 @@
 # Light 2 r03 tests
 
+Next test, in candidate preparation: [UART RTS/CTS pause and timeout](uart-flow.md).
+
 Latest completed test: [UART request and acknowledgement](uart-roundtrip.md).
 The [acknowledged round trip](PORT-010-2026-09-08-04-39-39Z/README.md) passed exact P4
 request/ACK capture and Author-confirmed Agon success with prompt return.
