@@ -74,3 +74,16 @@ explicitly approved source freeze and candidate/deployment preparation.
 Promote lifecycle metadata to candidate, commit reviewed inputs, and build
 clean candidates. This no-peer review does not establish physical baud or
 flow-control success. Preserve installed v0.4.0/r01 for rollback.
+
+## Candidate preparation — 2026-09-08
+
+Clean EMOS `agon-emos-v0.5.0-b2026-09-08-17-10-00Z` from `0bbd50b` passes all
+configured/linked/runtime checks, 68 host tests, ordinary/bad-SD smoke and
+bounded no-peer return. Clean P4 r02 from `5116e41` builds and is staged with
+verified hashes; stable USB identity matched without flash/reset.
+
+[Installation media](../../hardware/designs/light2-harness-r03/tests/PORT-012-2026-09-08-17-12-29Z/README.md)
+are verified and safely unmounted. Working v0.4.0 is preserved on-card and
+off-card; older rollback images remain available. The combined capture helper
+passes offline full/short/wrong-rate extent checks, with no hardware capture.
+Physical Agon installation and explicit P4 flash authorization are pending.
