@@ -9,6 +9,16 @@
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
+## Keyboard integration boundary — 2026-09-08
+
+REMOTE-001's focused keyboard slice now has priority in the task queue. It may
+add focus and keyboard event controls to the existing browser display page;
+PORT-003 retains video framing, framebuffer and presentation ownership, and
+PORT-006 owns network delivery. Keyboard input does not require completion of
+this task's remaining display gates or a change to ordinary VDU routing. The
+keyboard documentation was accepted for freeze on 2026-09-08; implementation
+is separate.
+
 ## Intent
 
 Implement the accepted Work 1.d display boundary: retain the official VDP

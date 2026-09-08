@@ -25,6 +25,17 @@ this task's four-mode matrix is not a prerequisite for those observations.
 This task later links accepted evidence to its exact obligations; neither a
 partial circuit result nor an unreviewed matrix can qualify a complete mode.
 
+## Next bounded consumer — browser keyboard
+
+REMOTE-001/PORT-005/PORT-008 and agon-emos INTEG-009 consume AUDIT-004
+P013/P014 and A003–A005 for exact keyboard packets, event variables, MOS key
+sysvars/count, virtual map, callbacks and read/editor behavior. Record those
+specific obligations and declared test coverage before claiming parity. The
+full matrix, other packet families, mouse and all-mode qualification remain
+separate; do not require their completion before the selected UART keyboard
+increment. Source-qualified exceptions in AUDIT-004 remain authoritative
+research findings rather than silently corrected stock contracts.
+
 ## Authority and inputs
 
 - [AUDIT-001](AUDIT-001.md), especially accepted decisions R01–R03 and the

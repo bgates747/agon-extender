@@ -7,6 +7,14 @@
 - State: Accepted 2026-08-24
 - Prepared: 2026-08-23
 
+## Applicability amendment — browser keyboard, 2026-09-08
+
+The next input increment follows [SETUP-005](../SETUP-005.md) K001:
+browser → P4 → stock UART1 keyboard packets → EMOS. The lifecycle invariants
+below remain in force. K002/K003 own explicit entry/exit, source selection and
+receiver integration for the first bounded test; it does not claim complete
+mode activation or require state-preserving transitions first.
+
 ## Purpose
 
 Define a safe lifecycle for Legacy, Exclusive Compatible, Exclusive Extended,

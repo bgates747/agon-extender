@@ -224,9 +224,11 @@ Optional resident facilities do not independently intercept or redirect
 `RST.LIL 10h` or `RST.LIL 18h`; the EMOS mode dispatcher alone owns those VDU
 paths. Applications must discover and open EDU deliberately through EMOS. EMOS
 owns persistent transport state, interrupt-driven reception, queues, client
-arbitration, and mode lifecycle. A future upstream MOS Modules integration may
-replace that internal machinery without changing the application-facing EDU
-contract. See
+arbitration, and mode lifecycle. Extend resident EMOS with ordinary compile-time
+linking and clear command/service/interrupt boundaries. The current scope
+requires no module loader, runtime relocation or restriction to moslet space.
+Keep changes small and upstream-reviewable while preserving the EDU contract.
+See
 [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
 
 In **Exclusive Compatible mode**, the EDP is the sole compatibility display
@@ -303,8 +305,10 @@ ordinary-VDU routing and EDP service. Only these combinations are valid:
 | Exclusive Compatible | EDP compatible | active |
 | Exclusive Extended | EDP extended | active |
 
-An exclusive route with inactive EDP service is invalid. A third independent
-state dimension requires a separate architecture decision. EMOS alone derives
+An exclusive route with inactive EDP service is invalid. Keyboard-source
+selection is independently retained across mode changes under ADR-0014's
+2026-09-08 amendment. Keyboard-only P4 activity does not activate the ordinary
+EDP/EDU service plane or imply Dual. EMOS alone derives
 and names formal mode from the two committed planes; requested, conditionally
 pending, failure, and fallback information belongs to lifecycle state rather
 than to a fifth formal mode.
@@ -417,16 +421,49 @@ damage, or brick either system. If EDP safely observes unmanaged activity, it
 may warn through an Extender-owned display or log only and must not respond over
 unactivated Agon-facing wiring.
 
-In **Legacy mode**, Extender is electrically and logically absent from the Agon
-interface even when connected and powered. The onboard VDP owns all stock
-behavior, including maintenance/operator facilities omitted by Extender. In
+In **Legacy mode**, the onboard VDP retains ordinary VDU and display behavior,
+including maintenance/operator facilities omitted by Extender. Explicitly
+selected browser keyboard input may continue through P4 and EMOS; it is the
+accepted exception to older total Extender absence/quiescence requirements.
+EMOS retains canonical keyboard state ownership. Other EDP/EDU service remains
+inactive. In
 Dual mode those facilities may likewise remain available through ordinary VDU
 to the onboard VDP; they are not implemented by Extender.
+
+During ExCom, EMOS leaves a static mode/status notice on mainboard VGA and
+hides its text cursor with stock VDP commands. Ordinary CLI echo and application
+VDU output follow the EDP route. The mainboard VDP keeps scanning out the notice
+and generating the retained VBlank clock without periodic EMOS redraws or a
+double-buffering requirement. This transition/status output does not mirror
+ordinary VDU; Dual retains both displays' active roles.
+Initially, returning to Legacy starts a fresh mainboard screen with a visible
+cursor and MOS prompt, preserving keyboard source and layout. Clearing the
+screen is an initial implementation choice rather than a permanent mode rule.
 
 The formal operating-mode names are **Legacy mode**, **Exclusive Compatible
 mode**, **Exclusive Extended mode**, and **Dual mode**. “Compatible” and
 “Extended” are accepted short forms in unambiguous operating-mode context, but
 “Exclusive” remains part of both official exclusive-mode names.
+**ExCom** is accepted conversational shorthand for **Exclusive Compatible**;
+the formal name and stable mode identity remain unchanged.
+
+EMOS CLI control uses case-insensitive `EMOS <subcommand>` syntax in both
+interactive commands and autoexec. `EMOS EXCOM` and `EMOS LEGACY` request the
+named destination mode; `EDU` explicitly addresses Extender functionality while
+`VDU` retains ordinary semantics and EMOS-owned routing. The accepted command
+contract is in [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md#cli-and-keyboard-selection--2026-09-08).
+
+`EMOS KEYINPUT mainboard` selects the Agon mainboard keyboard;
+`EMOS KEYINPUT browser` selects focused browser input. The `extender` source
+name is reserved for future Extender-connected input hardware and is currently
+unavailable. With no source argument, the command reports the selected source.
+`SET KEYBOARD n` remains the distinct runtime layout selection with the same
+effect across modes. `EMOS LEGACY` preserves the selected keyboard source;
+returning display output to the mainboard does not shut down browser input.
+Across boots, `autoexec.txt` alone restores these selections. EMOS starts with
+mainboard keyboard input; commands at the interactive prompt change runtime
+state without saving a separate state/configuration file. No new nonvolatile
+settings store is introduced for this increment.
 
 Extender v1 does not inherit the stock VDP's UART0 `DBGSerial` mapping or local
 operator facilities. In either exclusive mode, attempts to invoke those paths
@@ -467,31 +504,60 @@ preclude future compile-time performance profiles that exploit P4 resources at
 the cost of legacy behavioral fidelity. EDU-aware applications must discover
 the active profile's advertised capabilities rather than infer them.
 
-The onboard VDP remains the physical keyboard and mouse owner. Its stock packets
-to MOS remain the canonical legacy input path. In the proof of concept, an
-EDU-aware eZ80 application reads stock input and explicitly forwards processed
-events to an EDP input-injection adapter when it needs display-local behavior
-such as paged mode, control keys, mouse cursors, VDP variables, or callbacks.
-The adapter updates EDP-local state and does not automatically echo stock input
-packets back to the forwarding application. This profile makes no compatibility
-claim for untouched applications. A more automatic v1 route and its
-single-writer relationship with MOS sysvars remain open under SETUP-005-D007.
-V1 adds no P4-owned keyboard, mouse, or other
-peripheral hardware beyond facilities already present on the selected P4
-DevKit; additional input hardware is post-v1 work.
+The next input capability is browser keyboard capture while the EDP display
+has focus. The browser sends events to P4's network service. P4 translates
+those events into the retained stock VDP keyboard semantics and emits normal
+VDP keyboard packets to EMOS over the existing r03 four-signal UART1 link at
+1,152,000 baud, 8N1 with RTS/CTS. Keyboard configuration/query traffic uses the
+same UART in the Agon-to-P4 direction. No parallel transfer or direct
+onboard-VDP/EDP link is required for this capability.
 
-The vdp-gl physical keyboard device, scan-code conversion task, locale-layout
-engine, typematic/LED device control, and compiled layout tables remain in the
-complete vendored source but are excluded from the P4 build. The onboard VDP
-owns those operations. Extender retains only the stable virtual-key and event
-vocabulary required by its processed-event injection adapter.
+EMOS owns the selected input ingress and stock-compatible packet handling.
+P4 sends keyboard events/settings, not MOS memory: EMOS updates its own key
+sysvars, event counter, virtual keyboard map and application keyboard hooks
+through the stock handling semantics. Ordinary applications continue to use
+MOS keyboard APIs, sysvars and the keymap; they do not forward input to P4 or
+configure UART1. Browser/P4 session messages are distinct from the stock VDP
+wire contract and do not introduce a proprietary UART keyboard envelope.
 
-The vdp-gl physical mouse device, PS/2 packet decoder, task, queues,
-acceleration, and direct display-positioning engine likewise remain vendored
-but are excluded from the P4 build. The onboard VDP owns physical mouse
-processing. Application-forwarded processed mouse fields feed the EDP adapter,
-which owns EDP-local state and cursor effects through the retained display
-backend.
+For the first increment, an explicit autoexec command enables EMOS reception
+of browser keyboard input. While enabled, EMOS selects P4 keyboard events
+exclusively and continues handling the onboard VDP's other communications.
+When browser focus or its connection is lost, P4 sends stock key-up packets
+for held keys, then stops keyboard packet delivery to EMOS. This behavior and
+source choice are scoped to the initial increment.
+
+P4 accepts keyboard input from one controlling browser session at a time.
+Other sessions may view within supported video connection limits. Explicit
+takeover revokes the previous owner and releases its held keys before input
+from the new owner is admitted; focus alone does not transfer control.
+
+Session admission and revocation precede stock packet delivery. The selected
+browser session is a keyboard authority, including normal stock key effects;
+focus is a capture condition, not authentication. EMOS retains input-source
+selection and canonical-state ownership. EMOS uses interrupt-driven UART1 reception with packet assembly separate from
+UART0; the receive streams must not race or splice parser state. The precise session and ingress mechanisms are
+owned by SETUP-005, REMOTE-001, PORT-006, PORT-008 and agon-emos INTEG-009.
+
+Physical PS/2 keyboard/mouse acquisition remains on the onboard VDP where
+those devices are used. It is not a relay for browser keys. The accepted bench
+clock remains the onboard VDP's VBlank/PB1 path. This keyboard increment adds
+no physical input device, wiring, VBlank replacement or ordinary-VDU routing
+change. A bounded qualification session has explicit entry/exit; it does not
+claim complete Exclusive Compatible mode; Legacy permits the explicitly
+selected keyboard service described above.
+
+P4's processed-input adapter owns EDP-local keyboard variables, relevant
+callbacks, control-key and paged-mode behavior and stock packet generation.
+Later Agon-originated EDU event forwarding retains its non-echo rule; browser
+keys are original events and must be emitted toward EMOS. Mouse injection and
+full mode-specific input composition remain separate scope.
+
+Physical vdp-gl keyboard/mouse drivers, PS/2 controllers, scan-code tasks and
+device controls stay vendored but excluded from the P4 build. The browser
+adapter reuses stock virtual-key/event vocabulary and applicable pure mapping
+semantics without depending on physical PS/2 hardware. No v1 input hardware
+beyond the selected P4 DevKit's existing facilities is added.
 
 Extender retains ESP-IDF's OTA image, boot-partition, rollback, and restart
 lifecycle as the low-level update substrate. This is independent of the omitted

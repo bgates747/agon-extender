@@ -1,88 +1,112 @@
-# PORT-005 — Implement the EDU processed-input injection adapter
+# PORT-005 — Implement the processed-keyboard input adapter
 
 ## State
 
-- Status: Not started — registered from SETUP-004 Work 1.f
-- Started: --
+- Status: Browser-keyboard plan accepted for freeze, 2026-09-08; implementation not started.
+- Started: -- (implementation has not started).
 - Finished: --
 
-## Intent
+## Intent and ownership
 
-Implement the accepted Work 1.f proof-of-concept boundary. Replace official
-VDP input integration's direct FabGL keyboard, mouse, and PS/2-controller
-bindings with a narrow EDU input-injection adapter. An EDU-aware eZ80
-application reads processed input through the stock onboard-VDP path and
-forwards selected events explicitly to Extender.
+P4 accepts processed browser keyboard events from REMOTE-001 through the
+PORT-006 network boundary. The adapter maps them to the retained VDP event,
+virtual-key and modifier vocabulary, updates EDP-local keyboard state and
+callbacks, and emits ordinary stock keyboard packets through PORT-008's UART
+sender. EMOS alone processes those packets into canonical eZ80 keyboard state.
 
-## Authority and inputs
+This supersedes the earlier immediate proof-of-concept assumption that an
+EDU-aware Agon application must first read onboard input and forward it to P4.
+That aware-application adapter and mouse injection remain later scope. A
+forwarded copy must not echo back as a duplicate event; this non-echo rule does
+not suppress browser-originated key packets.
 
-- [SETUP-004 Work 1.f](SETUP-004.md#work-1f-execution-record) and its generated
-  input inventory.
-- [ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md),
-  especially decisions 26–28.
-- [ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md),
-  especially decisions 23–24.
-- [Current architecture](../architecture.md).
-- [PORT-002 source-selection work](PORT-002.md).
+## Authority and bounded reference
 
-## Required outcomes
+1. SETUP-005 D003/D007 and ADR-0014 select browser → P4 → EMOS over r03 UART1.
+2. ADR-0013 decisions 26–28 preserve processed-input integration and omit
+   physical PS/2 drivers. Existing vendored source remains intact; pure stock
+   key/event definitions may inform the browser adapter without enabling a
+   physical keyboard engine.
+3. AUDIT-004 P013/P014, A003–A005 and its primary/MOS traces establish the stock
+   packet and host effects. Use the source-qualified notes where official
+   documentation differs from the selected source; do not repair upstream
+   behavior incidentally in this increment.
+4. Official `agon-docs/docs/mos/Keyboard.md`, `mos/API.md` and
+   `vdp/System-Commands.md`, stock MOS `src/vdp_protocol.asm` and
+   `src/keyboard.asm`, and VDP `video/vdu_stream_processor.h`/`video/vdu_sys.h`
+   bound the implementation. AUDIT-004 retains exact commit links.
 
-1. Define versioned EDU operations for injecting processed keyboard and mouse
-   events without exposing FabGL physical-device objects.
-2. Update EDP-local input variables, buffered callbacks, control-key and
-   paged-mode logic, logical mouse state, and cursor effects from injected
-   events where the selected proof-of-concept profile requires them.
-3. Do not automatically emit `PACKET_KEYCODE` or `PACKET_MOUSE` back to the
-   eZ80 application that forwarded an event. Keep packet emission as an
-   explicit later routing-policy capability.
-4. Preserve stable official event, packet, modifier, virtual-key, mouse-field,
-   callback, and state semantics needed by later compatibility profiles.
-5. Exclude vdp-gl PS/2 controller, physical keyboard and layout engine, and
-   physical mouse engine translation units from the P4 build while retaining
-   their complete source in the vendor tree.
-6. Retain only shared virtual-key, keyboard-event, mouse-event, status, cursor,
-   and other type vocabulary actually required by selected code.
-7. Add deterministic host-side tests for event injection, state updates,
-   callbacks, control-key/paged-mode effects, cursor behavior, ordering,
-   duplicate suppression, and non-echo behavior.
+The accepted CLI contract in ADR-0014 uses `EMOS KEYINPUT browser` or
+`mainboard` to select the source and reserves `extender` for future hardware.
+The runtime `SET KEYBOARD n` layout must apply consistently to the selected
+path and survive mode changes. Autoexec alone restores settings across boots;
+do not add a separate saved configuration. Do not conflate layout with source,
+or add numeric source codes.
+
+## Required keyboard outcomes
+
+SETUP-005 K002 now selects autoexec enablement and P4-only keyboard input for
+the first increment. On focus loss/disconnect, P4 sends stock key-up packets
+for held keys, then stops keyboard delivery to EMOS. The Author accepted this
+cleanup for trial; items 4 and 6 must verify it even after abrupt browser loss.
+
+1. [ ] Preserve keycode, modifier bits, FabGL/vdp-gl virtual-key identity and
+   down/up state. Stock event wire form is `81 04 keycode modifiers vkey down`.
+   It is not an ASCII-only terminal stream.
+2. [ ] Preserve relevant retained VDP event variables, callback ordering,
+   control-key and paged-mode semantics. Use the real stock packet serializer
+   and UART adapter rather than a fixture-generated substitute reply.
+3. [ ] Specify and test locale, repeat/LED state, control-key setting and
+   current-key-state query behavior for the selected first keyboard scope.
+   Applicable stock commands include `23,0,&81`, `&88`, `&98` and `&99`.
+   The settings reply is `88 05 delay_lo delay_hi rate_lo rate_hi led`;
+   EMOS owns resulting settings sysvars. No physical LED claim is implied.
+4. [ ] Maintain ordered key transitions under backpressure. Release held keys
+   and modifiers under the accepted blur/disconnect/session-reset policy;
+   choose one repeat authority to avoid browser/P4 double repeats. On explicit
+   browser takeover, emit the previous owner's held-key releases before any
+   new owner's input; do not let queued old-session events restore those keys.
+5. [ ] Feed the UART stock event stream to EMOS; never transmit a proprietary
+   sysvar/keymap image or write MOS memory from P4. EMOS's existing parser,
+   keymap handler and application APIs remain the compatibility destination.
+6. [ ] Test key-down/up, multiple held keys, modifiers/locks, repeat, rapid
+   transitions, callbacks, query/settings effects and focus/disconnect cleanup.
+   Report exactly which cases are covered before claiming keyboard parity.
+
+## Resident EMOS integration
+
+INTEG-009 extends resident EMOS with normal compile-time linking and explicit
+ownership boundaries. The Author rejected the proposed module loader and
+runtime relocation; MOS-001 is cancelled in favor of resident EMOS extensions.
+P4/browser work retains its existing ownership and stock UART contract.
 
 ## Dependencies and gates
 
-- Complete SETUP-004 before implementation.
-- PORT-002 must represent the omitted physical input sources as vendored but
-  excluded without losing required shared declarations.
-- The proof of concept does not depend on transparent routing or modified MOS.
-- `SETUP-005-D007` governs any more automatic v1 route and must not be presumed
-  by this task.
-- QUAL-001 must identify the mode-specific input, state, callback, cursor,
-  packet, and sysvar obligations before the injection contract is frozen.
-- PORT-008 is required before an EDU-aware Agon application can physically
-  inject events through the selected Extender transport; deterministic host
-  adapter work may precede it.
-- REMOTE-001 owns browser-originated keyboard events, remote sessions, and any
-  direct EDP/onboard-VDP delivery path. PORT-005 continues to own only the
-  EDP-local processed-input adapter consumed after an accepted source delivers
-  an event.
-- Active bench constraint BC-001 means no current eZ80 fixture may depend on
-  interactive hardware keyboard input; affected fixtures must cold-boot via
-  `/autoexec.txt` until the Author clears it.
-- Define the EDU injection command format and acceptance fixtures with the
-  Author before coding.
+REMOTE-001 owns browser/session semantics; PORT-006 owns network delivery;
+PORT-008 and agon-emos INTEG-009 own UART/EMOS integration. SETUP-005 resolves
+input-source selection, so UART0 and UART1 cannot race to publish conflicting
+keyboard state. QUAL-001 records the bounded keyboard obligations; finishing
+its entire matrix is not a prerequisite for this increment.
+
+SETUP-004 and PORT-002's accepted source inventory are references, not new
+surveys to restart. No parallel transport, physical keyboard repair, direct
+onboard-VDP link, complete MOS Modules framework, mouse implementation or completion of
+all display/audio work is required. Keep autoexec invocation and video-mode
+selection under BC-001. Documentation review/freeze precedes coding and new
+artifact identities retain the normal Author-approval policy.
 
 ## Retained REMED-002 risk
 
-[REMED-002](REMED-002.md) retains `INTEGRITY-AUDIT-R002` as a prospective
-PORT-005 design risk, not a current defect. The upstream
-`thread_safe_variant_deque` coalesces state notifications by event type and
-later packet generation reads mutable VDP state; that behavior is intentional
-for its original use.
+1. [ ] **R002:** The inherited `thread_safe_variant_deque` coalesces events by
+   type and packet generation can read mutable current state. Before selecting
+   an injection queue, prove that key-down/up, modifiers and repeat cannot be
+   collapsed, reordered or replaced by a later event's state.
+2. [ ] Reuse retained mechanisms only where ordered-event fixtures establish
+   correctness; otherwise use an explicit ordered input representation while
+   preserving stock callbacks and emitted packet semantics. Later mouse cases
+   remain separate scope.
 
-1. [ ] Before selecting an injection queue, add fixtures that reject collapsed,
-   reordered, or state-substituted key-down, key-up, modifier, mouse-button,
-   movement, wheel, and repeat transitions.
-2. [ ] Reuse the retained queue only if an explicit ordered-event contract and
-   those fixtures prove it suitable; otherwise give injected input a distinct
-   ordered representation.
-
-The supporting analysis remains in
-[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+Later aware-application EDU injection retains versioned command definitions,
+EDP-local updates and non-echo behavior. It is not the browser keyboard's
+critical path. Exact evidence/provenance for R002 remains in REMED-002 and its
+accepted integrity audit.

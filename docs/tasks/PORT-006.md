@@ -2,10 +2,37 @@
 
 ## State
 
-- Status: In progress — browser-video bench path accepted and paused; initial-
-  tranche resilience item 6 remains open
+- Status: Keyboard transport plan accepted for freeze, 2026-09-08. Earlier browser-video bench path accepted; initial-tranche resilience
+  item 6 remains open.
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
+
+## Current priority — focused keyboard transport
+
+The next tranche supports REMOTE-001's browser keyboard session over existing
+wired networking. Documentation is accepted for freeze; implementation has not
+started. Keep P4 UART keyboard packets stock-compatible: network event/session
+encoding terminates on P4 and is not copied as a new UART envelope.
+
+1. [ ] Define a bounded input endpoint and session ownership, with explicit
+   opt-in/admission, Origin/cross-site checks and revocation for the selected
+   bench scope. Focus gates key capture but does not authenticate a client.
+   Retain the existing service's broader-exposure restrictions. Enforce
+   REMOTE-001 K004: one controlling browser, explicit takeover, old-session
+   revocation and held-key release before new input, with stale events rejected.
+   Viewing alone does not grant keyboard control.
+2. [ ] Deliver ordered browser event messages to PORT-005 through REMOTE-001's
+   interface. Bound size, queueing, backpressure, disconnect and stale-session
+   handling while browser video is active; notify release/revocation reliably.
+3. [ ] Keep keyboard semantics in REMOTE-001/PORT-005 and EMOS source authority
+   in SETUP-005/INTEG-009. Do not turn this endpoint into a structured remote
+   command/update service or require Wi-Fi/OTA completion first.
+4. [ ] Test the affected connection and failure paths, including applicable
+   F003/F012 containment. The earlier video tranche remains evidence, not a
+   proof that a writable input endpoint is already authorized or implemented.
+
+The full network/update roadmap below remains later work. This keyboard slice
+has priority over its unrelated services.
 
 ## Intent
 
@@ -28,6 +55,11 @@ PORT-003 owns framebuffer handoff, video framing and encoding, browser assets,
 presentation code, and video-specific diagnostics. PORT-006 treats video as
 opaque bytes; PORT-003 does not control Ethernet hardware. OTA, optional Wi-Fi,
 management, and unrelated network services remain outside this tranche.
+
+For the new keyboard slice, PORT-003 retains video/presentation ownership in
+the shared browser page; REMOTE-001 owns its keyboard event and focus controls.
+PORT-006 supplies their bounded network connection. Full display-backend
+completion is not a prerequisite for adding input to the existing page.
 
 The first bench tranche uses ordinary DHCP. The router's existing MAC-based
 reservation is expected to supply the stable bench address, but firmware does

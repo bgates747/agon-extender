@@ -2,10 +2,16 @@
 
 ## State
 
-- Status: Not started — scope reopened by REMOTE-001; no bus or product-version
-  commitment
+- Status: Deferred optional research; not a focused-browser-keyboard dependency.
 - Started: --
 - Finished: --
+
+## Scheduling amendment — 2026-09-08
+
+The Author selected browser → P4 → existing UART1 → EMOS for focused keyboard
+input. That capability does not depend on this task or custom onboard-VDP
+firmware. The original REMOTE-001 direct-link-first assumption is superseded
+for keyboard input; research below remains later optional scope.
 
 ## Namespace
 

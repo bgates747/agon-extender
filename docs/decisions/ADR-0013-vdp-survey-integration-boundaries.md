@@ -3,8 +3,8 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
-- Last amended: 2026-08-22
-- Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-007
+- Last amended: 2026-09-08
+- Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-005, PORT-007, REMOTE-001
 
 ## Context
 
@@ -143,20 +143,17 @@ ESP32-specific `esp32/ulp.h`.
     processing, delay logical note completion, or change channel status.
     Delivery may drop or resynchronize when necessary. Rev 1 does not guarantee
     the stock analog-output location, analog distortion, or sink latency.
-26. Replace official VDP input integration's direct global FabGL keyboard,
-    mouse, and PS/2-controller bindings with a narrow processed-event injection
-    adapter. In the proof of concept an EDU-aware eZ80 application reads stock
-    onboard-VDP input and injects it explicitly. Injection updates EDP-local
-    variables, callbacks, control-key and paged-mode logic, mouse state, and
-    cursor effects without automatically echoing the same input packets back to
-    the forwarding application. Preserve official packet/event semantics for
-    later profiles, but do not presume transparent routing.
-27. Omit vdp-gl's physical keyboard device, scan-code conversion task, locale
-    layout engine, typematic/LED device control, and compiled layout tables from
-    the P4 build while retaining the complete sources in the vendored release.
-    The onboard VDP remains the physical translation and device-state owner;
-    retain only stable virtual-key and event vocabulary required by the EDP
-    injection adapter.
+26. Replace direct FabGL physical-input bindings with a processed-event
+    adapter. Under ADR-0014's 2026-09-08 amendment, the first source is focused
+    browser keyboard input. P4 preserves applicable VDP variables, callbacks,
+    control-key/paged-mode behavior and emits stock keyboard packets to EMOS
+    over UART. The former aware-application forwarding profile remains later
+    scope and retains non-echo behavior for copied events only.
+27. Keep physical keyboard, PS/2 scan-code tasks and device control excluded
+    from the P4 build while preserving complete vendored sources. Retain stock
+    virtual-key/event vocabulary and reuse applicable pure mapping semantics
+    for browser input. Physical onboard keyboard ownership does not require
+    browser keys to pass through the onboard VDP.
 28. Omit vdp-gl's physical mouse device, PS/2 packet decoder, update task,
     queues, acceleration, and direct display-positioning engine from the P4
     build while retaining the complete sources in the vendored release. The

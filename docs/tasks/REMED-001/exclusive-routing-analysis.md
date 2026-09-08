@@ -1,12 +1,24 @@
 # Exclusive-mode transparent command-routing analysis
 
 - Parent task: [REMED-001](../REMED-001.md), Work 2.c
-- Open decision: SETUP-005-D001
+- Accepted decision: SETUP-005-D001
 - Scope: untouched VDU command routing in Exclusive Compatible and Exclusive
   Extended modes
 - State: Accepted task-local routing decision
 - Prepared: 2026-08-23
 - Accepted: 2026-08-23
+
+## Applicability amendment — browser keyboard, 2026-09-08
+
+The Author also cancelled the later MOS Modules development path on this date.
+References below to MOS-001 preserve the earlier Q01 discussion, not pending
+work. Resident EMOS extensions are the selected implementation path.
+
+[SETUP-005](../SETUP-005.md) K001 and amended ADR-0014 select browser → P4
+→ stock UART1 keyboard packets → EMOS. References below to onboard input
+bootstrap concern selected physical devices. Keyboard reception does not
+require completion of exclusive output routing or parallel transport; K002/K003
+own the first bounded test's source/session/receiver choices.
 
 ## Question to resolve
 

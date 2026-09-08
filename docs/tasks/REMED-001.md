@@ -245,6 +245,16 @@ produce D003 discovery evidence under its fixed-backend, single-EMOS-writer,
 Author-approved prototype gate but cannot make a production or cross-mode
 claim.
 
+### Current input amendment — 2026-09-08
+
+SETUP-005 K001 selects browser → P4 → stock UART1 keyboard packets → EMOS as
+the next increment. D003/D007 and Work 2.i are partially resolved for direction
+and ownership; K002/K003 retain session/receiver details and broader mouse/
+mode composition stays open. ADR-0014, architecture and the ownership inventory
+are amended. The dated execution records below preserve earlier physical-input
+assumptions; they do not require an onboard relay for browser keys. Parallel
+work remains held while this bounded UART increment is reviewed.
+
 ### Work 2.a execution record
 
 The task-local inventory separates semantic, storage, mechanism, and
@@ -297,7 +307,9 @@ one at a time. The Author accepted Q01 on 2026-08-23: both exclusive modes use
 an Extender-enabled MOS routing modification in the first round. A later
 MOS Modules-aligned service architecture is the aspirational route to genuinely
 cooperative operation; [MOS-001](MOS-001.md) now owns its research,
-architecture, possible mode supersession, and upstream alignment. Q02 was
+architecture, possible mode supersession, and upstream alignment. That later
+Modules path was cancelled by the Author on 2026-09-08 in favor of resident
+EMOS extensions; MOS-001 is now a closed historical record. Q02 was
 accepted on the same date: one MOS-owned byte/stream VDU dispatcher
 captures restart and MOS C-runtime output while raw UART APIs retain their
 device identities. Q03 was accepted with Legacy/Dual mapped to onboard UART0

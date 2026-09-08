@@ -6,6 +6,14 @@
 - Prepared: 2026-08-23
 - Accepted: 2026-08-23
 
+## Applicability amendment — browser keyboard, 2026-09-08
+
+The browser-keyboard direction in [SETUP-005](../SETUP-005.md) K001 and
+amended ADR-0014 supersedes the earlier assumption that all input starts on
+the onboard VDP. P4 sends browser keys to EMOS as stock packets over UART1.
+This inventory retains Dual's ordinary onboard state domain; K002/K003 own
+the source/session/receiver choices for the first bounded keyboard test.
+
 ## Purpose
 
 Expand the accepted Dual-mode boundary into explicit ownership classes. This

@@ -5,7 +5,36 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Active
+## Current priority — browser-focused keyboard input
+
+The order below applies to the keyboard slice in each detail file, not to
+completion of the whole task. Documentation was accepted for freeze on
+2026-09-08; implementation remains pending. The selected Agon/P4 path uses only r03 UART1.
+Resident EMOS keyboard implementation is next in the EMOS queue; module
+loading, runtime relocation and moslet-space residency are not prerequisites.
+
+- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
+  - Started: 2026-09-08 (scope reconciliation only).
+  - Finished: --
+  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
+
+- [ ] **PORT-006 — Implement the Extender network foundation and update service**
+  - Started: 2026-08-27 19:13 EDT
+  - Finished: --
+  - Details: [PORT-006](docs/tasks/PORT-006.md)
+
+- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
+  - Started: --
+  - Finished: --
+  - Details: [PORT-005](docs/tasks/PORT-005.md)
+
+- [ ] **PORT-008 — Implement and qualify the compatibility transport**
+  - Started: 2026-08-29 19:12 EDT
+  - Finished: --
+  - Status: UART keyboard planning first; r02/parallel work remains on hold.
+  - Details: [PORT-008](docs/tasks/PORT-008.md)
+
+## Other active work
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
@@ -33,16 +62,17 @@ item is removed.
 
 ## Setup
 
+- [ ] **SETUP-005 — Resolve remaining operating-mode integration decisions**
+  - Started: 2026-08-21 00:49 EDT
+  - Finished: --
+  - Status: Immediate keyboard decisions accepted; broader integration remains open.
+  - Details: [SETUP-005](docs/tasks/SETUP-005.md)
+
 - [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
   - Started: 2026-08-24 19:09 EDT
   - Finished: --
   - Status: On hold; physical wiring and as-built record incomplete.
   - Details: [SETUP-006](docs/tasks/SETUP-006.md)
-
-- [ ] **SETUP-005 — Resolve EDU operating modes and system integration**
-  - Started: 2026-08-21 00:49 EDT
-  - Finished: --
-  - Details: [SETUP-005](docs/tasks/SETUP-005.md)
 
 ## Hardware design
 
@@ -60,26 +90,10 @@ item is removed.
 
 ## Porting
 
-- [ ] **PORT-006 — Implement the Extender network foundation and update service**
-  - Started: 2026-08-27 19:13 EDT
-  - Finished: --
-  - Details: [PORT-006](docs/tasks/PORT-006.md)
-
-- [ ] **PORT-008 — Implement and qualify the compatibility transport**
-  - Started: 2026-08-29 19:12 EDT
-  - Finished: --
-  - Status: Present-hardware work on hold; transport implementation remains incomplete.
-  - Details: [PORT-008](docs/tasks/PORT-008.md)
-
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
   - Started: --
   - Finished: --
   - Details: [PORT-004](docs/tasks/PORT-004.md)
-
-- [ ] **PORT-005 — Implement the EDU processed-input injection adapter**
-  - Started: --
-  - Finished: --
-  - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**
   - Started: --
@@ -119,13 +133,6 @@ item is removed.
   - Started: --
   - Finished: --
   - Details: [DIAG-001](docs/tasks/DIAG-001.md)
-
-## Remote interaction
-
-- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
-  - Started: --
-  - Finished: --
-  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Interprocessor links
 

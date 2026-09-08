@@ -2,38 +2,41 @@
 
 ## State
 
-- Status: On hold for present-hardware construction, test preparation, and
-  physical validation as of 2026-09-07. The r02 design work remains incomplete;
-  full-circuit wiring is incomplete and the complete circuit is untested.
-  Candidate parallel components and provisional Work 2.e tooling are retained
-  as checkpoints, not qualified results. Activation, response integration,
-  mode qualification, and release-consumer gates remain open. Stock MOS/VDP
-  communications review is the proposed next discussion; this checkpoint does
-  not start that review or authorize resuming hardware work.
+- Status: UART keyboard plan accepted for freeze on 2026-09-08; implementation pending.
+  Persistent input reception and stock MOS state integration remain incomplete.
+  The r02 design, wiring, parallel implementation/Work 2.e recapture and full
+  circuit qualification remain on hold. No hardware operation is started by
+  this planning amendment.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
 ## Intent
 
-Implement the r02 common four-signal UART between EMOS/eZ80 UART1 and EDP/P4,
-plus its eight-bit parallel Agon-to-P4 command path. Preserve the official VDP
-application-visible byte-stream and response-packet contracts while replacing
-the stock PICO-D4 UART hardware binding with the selected Extender wiring and
-EMOS integration. Follow the cumulative powered-test plan under
-`hardware/designs/light2-harness-r02/wiring-order/` and the durable
-[staged circuit validation process](../qualification/staged-circuit-validation.md).
+Immediate scope: carry stock keyboard packets and relevant keyboard
+configuration/query traffic between EMOS and P4 over the existing r03 UART1
+link at 1152000/8N1 RTS/CTS. PORT-005 owns P4 event semantics, REMOTE-001 owns
+browser sessions, and agon-emos [INTEG-009](../../../agon-emos/docs/tasks/INTEG-009.md)
+owns persistent EMOS reception and
+canonical keyboard handling. Preserve stock wire bytes and MOS APIs, sysvars,
+virtual keymap and callback semantics; do not introduce a custom UART keyboard
+protocol or raw sysvar/keymap transfer.
 
-Component tests exercise the applicable production-candidate code with an
-explicit test caller; power, bias, or isolated electrical checks may use
-simplified diagnostic firmware and make only their measured circuit claims.
-Parser/display and compatibility tests exercise the retained VDP port rather
-than a substitute command interpreter. The first bidirectional end-to-end
-compatibility canary remains the official General Poll exchange after its
-transport and lifecycle prerequisites are satisfied. No preceding r01
-forward-only tranche or completed production release build is required to
-start the ordered r02 component checks.
+The completed PORT-010 through PORT-014 diagnostics establish bounded UART,
+General Poll and rendering evidence. Those bounded fixtures release UART when
+finished; the current text gateway closes it after each call. They do not prove
+a persistent unsolicited-key receiver. The current work fills that specific
+gap. Keyboard tests use the actual retained P4/EMOS components.
+
+The historical r02/parallel destination and its evidence/tooling remain below
+for their original scope. They do not gate this UART-only increment. The new
+keyboard tranche controls current scheduling; no held construction, parallel
+recapture, direct VDP link or full mode activation is resumed.
 
 ## Authority and inputs
+
+- Current keyboard authority: SETUP-005 K001, REMOTE-001, PORT-005,
+  agon-emos INTEG-009 and the r03 hardware/test record. AUDIT-004 P013/P014 and
+  A003–A005 supply stock semantics. The r02 references below are held context.
 
 - AUDIT-001 requirements `C01` through `C06` and wiring findings `W01` through
   `W05`.
@@ -62,6 +65,40 @@ start the ordered r02 component checks.
 - PORT-003 Gate F run `PORT-003-2026-08-28-15-28-59Z`, which qualifies
   `extender-vdp-v0.1.1` only as a P4-retained-parser/display/browser target and
   makes no transport or Agon-integration claim.
+
+## Resident EMOS integration
+
+INTEG-009 extends resident EMOS with normal compile-time linking and explicit
+ownership boundaries. The Author rejected the proposed module loader and
+runtime relocation; MOS-001 is cancelled in favor of resident EMOS extensions.
+P4/browser work retains its existing ownership and stock UART contract.
+
+## Current keyboard tranche
+
+1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
+   Use r03 PC0/TX→P4 RX22, PC1/RX←P4 TX12, PC2/RTS→P4 CTS23 and
+   PC3/CTS←P4 RTS11. Existing hardware/evidence identities are unchanged.
+2. [ ] Provide P4's normal keyboard packet sender on the UART stream, sharing
+   complete frames with applicable stock replies without byte interleaving.
+   Key packets must not require an EMOS poll or diagnostic ACK for each event.
+3. [ ] Integrate agon-emos INTEG-009's persistent owned receive path, source
+   selection and stock handler effects; preserve the independent UART0/onboard
+   display and clock while the bounded test runs.
+4. [ ] Qualify exact key-down/up, modifiers, virtual-key map, key counter,
+   callbacks and relevant settings/query effects, plus focus/disconnect/reset
+   cleanup and backpressure. Keep stock versus project-specific recovery
+   behavior explicit and retain normal boot/SD/clock regression checks.
+5. [ ] Record paired evidence beside r03's design tests and link bounded
+   keyboard obligations in QUAL-001. A test does not qualify all of PORT-008.
+
+These instructions supersede parallel-first/r02-only prerequisites for this
+slice. Firmware identities, test details and any later physical operations
+remain separate review/deployment steps.
+
+## Historical full transport scope (held)
+
+The following required outcomes and earlier work retain their original scope;
+parallel-specific gates are not requirements for the current keyboard tranche.
 
 ## Required outcomes
 

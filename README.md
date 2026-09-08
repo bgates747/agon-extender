@@ -6,6 +6,16 @@ Agon Extender is an experimental hardware and firmware project for extending
 the capabilities of the Agon computer family with an external Espressif ESP32-P4
 coprocessor, by way of the Olimex ESP32-P4-DevKit (rev. D1). The intent is for Extender to operate as a wholly-independent video display processor (VDP) with enhanced performance and extended functionality over the stock VDP, while remaining fully backward-compatible with existing Agon software, but not limited to legacy software capabilities.
 
+## Current development priority
+
+The next increment captures keyboard input while the browser display has
+focus. P4 processes those events into stock VDP keyboard packets and sends
+them to EMOS over existing UART1; EMOS maintains its normal keyboard sysvars,
+virtual keyboard map and application interfaces. Relevant configuration and
+query traffic also uses UART. Parallel transfer and a direct onboard-VDP link
+are outside this increment. See [TODO.md](TODO.md) for the ordered task slices;
+the documentation was accepted for freeze on 2026-09-08; implementation follows.
+
 ## Hardware
 
 - [Espressif ESP32-P4 product page](https://www.espressif.com/en/producttype/esp32-p4)

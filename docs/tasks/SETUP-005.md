@@ -2,7 +2,9 @@
 
 ## State
 
-- Status: In progress — mode vocabulary and D001–D002 accepted; D003–D008 remain open
+- Status: In progress — mode vocabulary and D001–D002 accepted. D003/D007 have
+  an accepted browser/UART direction; their remaining choices and D004–D006/D008
+  stay open. Keyboard decisions accepted for freeze, 2026-09-08.
 - Started: 2026-08-21 00:49 EDT
 - Finished: --
 
@@ -19,13 +21,75 @@ driver disposition survey. SETUP-004 determines what code and behavior must be
 retained, replaced, stubbed, omitted, or deferred; this task determines how the
 retained behavior is routed between processors and MOS.
 
+## Current priority — browser keyboard (2026-09-08)
+
+The Author selected browser-focused keyboard input before further parallel
+work. Documentation is accepted for freeze, 2026-09-08. Only the
+keyboard portions of D003/D007 are on this immediate path; other mode and
+service decisions remain open.
+
+| Decision | Accepted direction or remaining question | State / owner |
+|---|---|---|
+| SETUP-005-K001 | Browser → P4 processed keyboard → stock VDP packets on r03 UART1 → EMOS-owned keyboard handling/sysvars/keymap. Both directions use 1152000/8N1 RTS/CTS. No parallel or onboard relay. | Accepted by the Author, 2026-09-08; amended ADR-0014 and architecture. |
+| SETUP-005-K002 | Explicit autoexec command enables EMOS browser-keyboard reception; for the first increment EMOS accepts P4 keyboard events exclusively while retaining other onboard VDP communications. On focus loss/disconnect, P4 sends stock key-up packets for held keys, then stops keyboard packets to EMOS. | Initial behavior accepted for trial by the Author, 2026-09-08. Detailed session mechanisms remain to be specified with REMOTE-001 and INTEG-009. |
+| SETUP-005-K003 | Persistent UART1 reception and stock handler reuse with separate UART0 parser state, stock callback context/order and no conflicting keyboard writers. | Interrupt-driven UART1 and separate packet assembly accepted, 2026-09-08; detailed implementation/qualification belongs to PORT-008 and INTEG-009. |
+| SETUP-005-K004 | Case-insensitive `EMOS <subcommand>` control; `EMOS EXCOM` / `EMOS LEGACY` destination selectors; `EDU` explicit Extender commands; `EMOS KEYINPUT [mainboard / browser / extender]` source selection/reporting; `SET KEYBOARD n` layout retained across mode changes; reboot persistence via autoexec. | Accepted, 2026-09-08; ADR-0014 CLI section is authoritative. Extender hardware source is reserved, unavailable. |
+| SETUP-005-K005 | Keyboard source is independent of display mode. `EMOS LEGACY` restores mainboard VDU routing while preserving selected browser input; explicitly selected keyboard traffic is an exception to total Extender absence in Legacy. | Accepted by the Author, 2026-09-08; amends ADR-0014 and the two-plane model without treating keyboard-only activity as Dual. |
+| SETUP-005-K006 | Start with mainboard input; restore desired source/layout and other explicit startup selections through `autoexec.txt` only. Commands retain runtime state across mode changes, not through separate saved configuration. | Accepted by the Author, 2026-09-08. No new state/.cfg/NVS settings store for this increment; revisit only if a later need justifies it. |
+| SETUP-005-K007 | ExCom sends ordinary CLI/VDU output to EDP; mainboard VGA shows a static mode banner with cursor hidden. No double buffering or periodic redraw; VBlank continues. Dual retains active display roles. | Accepted by the Author, 2026-09-08; ADR-0014 display section. |
+| SETUP-005-K008 | Initially, return to Legacy with a fresh mainboard screen, visible cursor and MOS prompt, preserving keyboard source/layout. | Accepted by the Author, 2026-09-08. Later, consider one-line transition notices and cursor hide/show while preserving the existing background; not a first-increment gate. |
+
+
+K002's initial behavior, K003's receiver direction and K005's independent
+keyboard source are settled; K006 settles autoexec-only persistence. The
+Author approved the documentation freeze; implementation has not started. No broad
+mode-transition redesign or complete four-mode matrix is a prerequisite for
+an explicitly bounded keyboard test. Product mode integration remains gated.
+
+K002 cleanup was accepted for trial: P4 tracks held keys and emits their stock
+key-up events before going quiet on focus loss or browser disconnect. This
+avoids leaving EMOS's keymap in a held state. REMOTE-001/PORT-005 implement the
+behavior; receiver qualification verifies the resulting EMOS state. Abrupt
+browser loss must not depend on the browser sending its own final releases.
+
+K005 explicitly permits selected browser input while mainboard VDU output
+continues. Mode changes preserve the keyboard source. Keyboard-only P4 traffic
+is an accepted exception to earlier total-inactivity language in D002 and the
+linked lifecycle studies; it does not activate the ordinary EDP/EDU service or
+commit Dual. EMOS still owns activation, transport and canonical state. K006
+restores startup selections only by executing autoexec commands. The immediate
+startup/source/receiver decisions are settled; broader task questions remain
+outside this first increment.
+The Author approved freezing these decisions on 2026-09-08; no implementation
+has started.
+
+## Later display refinement
+
+The Author would prefer eventually retaining the mainboard display contents,
+including a user-chosen background, with one-line mode-change confirmations
+and cursor hide/show on departure and return. K008's initial fresh-screen
+behavior is accepted for now, not a permanent requirement to clear the display.
+When revisiting this, account for notice placement and scrolling so a status
+line does not accidentally destroy the background it is meant to preserve.
+No screen snapshot/restore machinery or new implementation is requested now.
+
+## Implementation strategy — resident EMOS
+
+The Author rejected the proposed moslet-space module foundation and runtime
+relocation. Extend resident EMOS with normal compile-time linking and clear
+command/service/interrupt ownership. No module loader, generic module manager
+or moslet-space restriction gates the keyboard increment. INTEG-009 owns the
+implementation; MOS-001 is cancelled and retains historical research only.
+K001–K008 remain accepted. The documentation freeze is approved; coding is
+separate.
+
 ## Accepted operating-mode vocabulary
 
 The Author accepted the following formal names and stable identities on
 2026-08-23:
 
-- **Legacy mode** — `mode:extender:legacy`; Extender is inactive and behaves as
-  if absent.
+- **Legacy mode** — `mode:extender:legacy`; mainboard VDU routing and inactive
+  EDP/EDU service, with explicitly selected browser input permitted under K005.
 - **Exclusive Compatible mode** — `mode:extender:exclusive-compatible`; the EDP
   is exclusive and uses the stock VDP UART transport contract.
 - **Exclusive Extended mode** — `mode:extender:exclusive-extended`; the EDP has
@@ -36,6 +100,8 @@ The Author accepted the following formal names and stable identities on
 
 “Compatible” and “Extended” are permitted short forms in unambiguous
 operating-mode context. “Exclusive” is mandatory in the two official names.
+On 2026-09-08 the Author also accepted **ExCom** as conversational shorthand
+for **Exclusive Compatible**, retaining its formal name and stable identity.
 Naming is resolved; lifecycle, routing, reverse capabilities, carve-outs, and
 the remaining questions below stay open.
 
@@ -196,24 +262,19 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   before attempting any different non-Legacy destination. Direct non-Legacy
   transitions require later separate architecture, implementation, and
   qualification approval.
-- [ ] **SETUP-005-D003 — Compatible response delivery:** determine how EDP
-  responses and onboard-VDP input packets populate canonical MOS sysvars in
-  both exclusive modes, and define the separate EDU result domain used in Dual
-  mode. Exclusive Extended's adopted return path terminates on eZ80 UART1.
-  Both exclusive modes select HW-001's current r02 common four-signal UART
-  circuit; the remaining decision concerns firmware routing and response
-  ownership, not a future unidentified circuit. R01 supplies no stock-UART
-  authority. Stock MOS feeds only the onboard VDP's
-  UART0 stream through its VDP packet parser. Extender, applications, and a
-  resident service must not write MOS-owned sysvars directly; compatible
-  updates require an explicitly selected MOS-owned parser route. Full D003
-  disposition may use relevant PORT-008 staged circuit and component evidence.
-  The former Exclusive Extended prototype is historical discovery input, not
-  a required preliminary r01 run. PORT-008-D003 permits isolated UART/parallel
-  stage tests but does not select a production response parser, settle the
-  general EDU result domain, or authorize EDP/P4 writes to eZ80 memory.
-  Any response/sysvar experiment must retain a separately reviewed EMOS-owned
-  parser boundary and cannot imply acceptance of full mode behavior.
+- [ ] **SETUP-005-D003 — Compatible response delivery (partially accepted):**
+  EMOS owns reception and canonical sysvar effects. K001 selects ordinary VDP
+  keyboard packets from P4 over the existing r03 UART1 link for the next
+  increment. Stock MOS currently parses VDP packets only from UART0; INTEG-009
+  must preserve its keyboard semantics while providing an EMOS-owned UART1
+  ingress. Sysvars and the virtual keymap are local MOS memory, not additional
+  UART payload formats. Keep UART0/UART1 parser assembly and source authority
+  separate; reuse stock handlers without competing canonical writers.
+  K002/K003 track session/receiver details. Other packet classes, exclusive-mode
+  integration and Dual's separate EDU result domain remain open. The old r02
+  circuit and parallel Work 2.e are held, not prerequisites for this r03 UART
+  keyboard increment. Do not conflate the completed bounded UART diagnostics
+  with a persistent receiver or complete mode qualification.
 - [ ] **SETUP-005-D004 — Legacy abstraction boundary:** define which classes of
   non-EDU-aware software can be supported through wrappers or loaders in
   Dual mode and the qualification required for each class.
@@ -232,30 +293,18 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   without that strict promise should improve the behavior with deterministic
   no-op, rejection, status, timeout, parser recovery, and diagnostics. Define
   explicitly which modes are strict before assigning command behavior.
-- [ ] **SETUP-005-D007 — Peripheral-input ownership and routing:** retain the
-  onboard VDP as the initial physical keyboard and mouse owner and preserve its
-  stock packets to MOS as the canonical legacy input path. The proof of concept
-  uses an EDU-aware eZ80 application to read stock input and explicitly forward
-  processed events to Extender. Injected events update EDP-local behavior and do
-  not automatically echo stock input packets back to the forwarding eZ80
-  application. This does not support untouched applications or constitute
-  transparent exclusive routing. Determine whether and how v1 adds
-  a more automatic route by which an exclusive EDP session receives events for
-  display-local behavior—including paged mode, control-key handling, mouse
-  cursor state, VDP variables, and callbacks—without creating competing MOS
-  sysvar writers. Compare an Extender-enabled MOS relay, aware-application
-  forwarding, and other eZ80-owned routing mechanisms. Rev 1 selects no
-  direct onboard-VDP/EDP bridge: MOS/eZ80 software must relay every message
-  between them, including bootstrap, input, configuration, and any accepted
-  delegation. A possible bidirectional high-speed direct link, probably SPI,
-  is a post-v1 aspiration owned by LINK-001 rather than a current requirement.
-  REMOTE-001 now supplies concrete browser-keyboard, remote-terminal, and
-  agent-control reasons to revisit that schedule. The current Rev 1 exclusion
-  remains authoritative until D007 and the architecture receive an explicit
-  reviewed amendment; task creation alone does not select or authorize a link.
-  Rev 1 also adds no P4-owned keyboard, mouse, or other peripheral hardware
-  beyond facilities already present on the selected P4 DevKit; any such
-  expansion is post-v1.
+- [ ] **SETUP-005-D007 — Peripheral-input ownership and routing (partially accepted):**
+  K001 selects focused browser keyboard input into P4, then stock keyboard
+  packets over UART1 into EMOS. Applications use normal MOS key reads, sysvars,
+  virtual keymap and callbacks; no aware-application relay is required. P4
+  preserves relevant EDP-local keyboard state and packet semantics. K002/K003
+  retain exact source/session/receiver choices; REMOTE-001 owns key mapping,
+  focus, repeat and release details. The stock onboard VDP remains the source
+  for physical devices where selected and remains the current VBlank clock.
+  Mouse, multi-source composition and later aware-application EDU forwarding
+  remain open. Copied Agon-originated events retain non-echo behavior.
+  Rev 1 selects no direct onboard-VDP/EDP bridge; LINK-001 is later research
+  and is not a browser-keyboard dependency. No added input hardware is selected.
 - [ ] **SETUP-005-D008 — RTC authority and synchronization:** define the
   authoritative clock and read/set routing in Legacy, Exclusive Compatible,
   Exclusive Extended, and Dual modes. Specify how MOS RTC sysvars, the onboard
@@ -301,7 +350,7 @@ The common required behavior of Exclusive Compatible and Exclusive Extended is:
 
 ```text
 all application audio/video output -> EDP
-onboard VDP keyboard/mouse input    -> Extender compatibility path
+selected browser/physical input    -> Extender compatibility path
 Extender compatibility path         -> one coherent MOS response/sysvar domain
 ```
 
@@ -325,19 +374,12 @@ are fixed in low ROM. The evaluated implementation families are:
    may support useful compatibility profiles but cannot establish a guarantee
    for arbitrary untouched binaries.
 
-The accepted narrow MOS direction keeps the onboard VDP's input packets arriving
-on UART0 and reuses MOS's normal parser to update canonical sysvars. MOS could mirror
-those parsed events to the EDU service so the EDP sees the same input. When the
-EDP parser recognizes a keyboard or mouse configuration command in the diverted
-VDU stream, it could ask the MOS backend to forward the corresponding bytes to
-the onboard VDP; this avoids adding a second complete VDU parser to MOS.
-
-This direction keeps sysvar memory under MOS ownership, avoids competing packet
-writers, and requires no user hardware modification. It would, however, make an
-Extender-enabled MOS release a prerequisite for full exclusive compatibility
-and requires a defined stock-mode fallback. The MOS requirement and lifecycle
-fallback are accepted under D001 and D002; the remaining response-path and
-input mechanics stay open under D003 and D007.
+The next selected keyboard route is browser → P4 → UART1 → EMOS. EMOS
+preserves stock packet-handler effects and application interfaces; its
+session/source-selection policy prevents conflict with onboard UART0 traffic.
+A later selected physical onboard-input route may use an EMOS-owned relay and
+controlled device configuration, but is not a prerequisite for browser input.
+D003/D007 retain the remaining parser/session decisions and broader mode scope.
 
 ## Review gate
 

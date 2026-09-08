@@ -2,193 +2,163 @@
 
 ## State
 
-- Status: Not started — registered from the 2026-08-28 bench-input failure and
-  existing remote-access plans
-- Started: --
+- Status: Browser-keyboard plan accepted for freeze, 2026-09-08; implementation not started.
+- Started: 2026-09-08 (scope reconciliation only).
 - Finished: --
 
-## Namespace
+## Current increment
 
-`REMOTE` identifies remotely originated human or agent interaction with the
-Agon, EMOS, onboard VDP, or EDP. It covers user-facing browser input, remote
-terminal sessions, privileged command services, authorization, observability,
-and the endpoint integrations they require. Physical interprocessor-link
-research remains in the `LINK` namespace.
+The Author selected keyboard capture while the browser display has focus as
+the next feature. Browser events travel through the existing P4 network
+service; P4 processes them into stock-compatible VDP keyboard packets and
+sends them to EMOS over the existing r03 UART1 connection at 1152000/8N1 with
+RTS/CTS. EMOS owns reception and all canonical keyboard/sysvar effects.
+This path needs neither parallel transfer nor an onboard-VDP/EDP direct link.
 
-## Prompting need
-
-The current bench Agon's hardware keyboard path is inoperative. BC-001 therefore
-requires cold-boot `/autoexec.txt` execution for eZ80 text fixtures until the
-Author clears that constraint. Browser keyboard input is a desired product
-capability regardless of whether the stock hardware is repaired, but it may
-also become the practical fallback for this bench machine.
-
-The broader planned facility should let an explicitly authorized human or
-agent interact with EMOS remotely and support a remote-terminal experience.
-That work creates a concrete use case for the previously aspirational
-bidirectional EDP/onboard-VDP link. SPI is the leading hypothesis, not an
-accepted bus or wiring design.
+The current bench keyboard circuit is inoperative. Browser input is the chosen
+next input source; diagnosing or repairing that circuit is not a prerequisite.
+BC-001 remains active while this alternative is unqualified. This amendment
+updates the original 2026-08-28 intake; its direct-link-first sequence is
+superseded for focused keyboard input.
 
 ## Actor and ownership boundaries
 
-1. Browser code captures focused keyboard events and presents explicit remote
-   session state. It does not invent VDP packets, write MOS state, or execute
-   eZ80 commands.
-2. EDP/P4 firmware authenticates and bounds the browser session, translates
-   browser events into a separately versioned remote-input protocol, and owns
-   the EDP endpoint of any selected direct link.
-3. Custom onboard-VDP firmware owns the other direct-link endpoint and any
-   accepted injection into its existing processed-keyboard/packet path. It
-   must distinguish physical-device handling from remote injection internally,
-   even if compatibility requires ordinary stock packets toward MOS/EMOS.
-4. EMOS remains the sole eZ80 authority for VDU routing, Extender activation,
-   canonical MOS state, and privileged remote-command authorization and
-   execution. No browser, EDP firmware, onboard-VDP firmware, application, or
-   agent receives a supported bypass around EMOS.
-5. A remote human or agent requests operations through an explicit opt-in
-   service. Possession of network reachability alone must not grant command
-   execution authority.
-6. PORT-006 owns the network listener, connection lifecycle, generic bounded
-   transport, authentication substrate, and exposure policy. REMOTE-001 owns
-   keyboard/session semantics and remote-control behavior.
-7. PORT-005 owns EDP-local processed-input injection and its effects on EDP
-   state. LINK-001 owns research and selection of the physical/protocol
-   EDP/onboard-VDP channel. PORT-008's Agon/EDP transport remains a separate
-   link and must not be conflated with either one.
+1. REMOTE-001 owns browser focus, key-down/up, modifiers, repeat, layout,
+   visible session state and focus-loss/disconnect release behavior. The
+   browser describes events; it does not construct VDP wire packets or modify
+   MOS memory. Browser/P4 event encoding is separate from the stock UART wire.
+2. PORT-006 owns the input endpoint, connection lifecycle, bounded transport
+   and session-access/Origin policy. Focus alone is not network authorization.
+3. PORT-005 owns P4 processed-keyboard state, stock event/virtual-key mapping,
+   relevant retained callbacks/control-key behavior and stock packet creation.
+   Browser-originated input is emitted once toward EMOS. Non-echo protection
+   applies to any later Agon-originated forwarded copy, not to browser keys.
+4. PORT-008 owns UART transport and cross-component receiver qualification.
+   EMOS implementation lives in agon-emos task INTEG-009. EMOS selects the
+   accepted input source/session, owns receive/parser state, keyboard sysvars,
+   the virtual keyboard map and the existing application keyboard APIs/hooks.
+5. The onboard VDP keeps its existing physical-device and clock roles. It is
+   not a relay for these browser keys and requires no firmware replacement.
+6. Keyboard authority is meaningful operator authority: normal stock key
+   behavior can reach the MOS command line and reset-key handling. Session
+   admission/revocation must be explicit. This is not an implementation of
+   a structured agent-command, updater or privileged automation API.
 
-## Required outcomes
+## CLI coordination
 
-1. Define browser key-down, key-up, modifier, repeat, focus-loss, layout, and
-   disconnect behavior with deterministic mapping to the accepted Agon input
-   domain.
-2. Deliver remotely injected keyboard events through a bounded path that can
-   produce ordinary MOS/EMOS-visible keyboard behavior without competing
-   sysvar writers, duplicate packets, stuck keys, or silent unbounded queues.
-3. Research and, if accepted, implement a versioned bidirectional
-   EDP/onboard-VDP channel. Compare SPI, I2C, UART, and maintained alternatives;
-   select no bus before firmware requirements, exposed onboard-VDP pins, P4
-   GPIO budget, wiring safety, boot order, reset, and failure behavior are
-   reviewed.
-4. Preserve normal operation when EDP, the direct link, browser service, custom
-   onboard-VDP firmware, or EMOS support is absent, incompatible, starting,
-   disconnected, or failed. A stock Agon must not become dependent on Extender
-   merely because compatible custom firmware is installed.
-5. Define an opt-in EMOS remote-command service with explicit request,
-   authorization, execution, result, timeout, cancellation, and audit actors.
-   Decide separately whether terminal keystrokes and structured agent commands
-   share only transport/session infrastructure or also an application protocol.
-6. Provide a human remote-terminal path using the browser's existing video
-   presentation plus accepted keyboard input. Define what terminal output is
-   framebuffer-only and what, if anything, is exposed as structured text.
-7. Provide a bounded automation interface suitable for authorized agents
-   without treating arbitrary generated text as trusted operator intent.
-   Destructive commands, firmware changes, resets, and mode changes retain
-   their existing approval and safety policies.
-8. Add deterministic host/emulator tests, endpoint protocol tests, browser
-   event tests, malformed/authentication tests, disconnect and stuck-key
-   recovery, boot-order tests, and separately approved physical/electrical
-   qualification for any new wiring.
+SETUP-005 K004 and ADR-0014 define case-insensitive `EMOS KEYINPUT browser`
+and `EMOS KEYINPUT mainboard`, with a bare command reporting the source.
+`extender` is reserved for future physical input and is unavailable. Keep
+`SET KEYBOARD n` layout separate from source selection. K005 preserves the
+keyboard source across mode changes, including returning to Legacy. K006
+starts with mainboard input and restores preferences only through autoexec;
+this increment adds no separate saved configuration.
 
-## Work
+## Single controlling browser
 
-1. Diagnose or bound the current hardware keyboard failure and record whether
-   repair, replacement, or browser fallback is the bench strategy. Keep
-   BC-001 active until its independent removal condition is met.
-2. Freeze separate use cases and actor paths for browser keyboard emulation,
-   EDP-local input effects, remote human terminal access, structured agent
-   control, diagnostics, and any later bulk or display-state transfer.
-3. Execute LINK-001's direct-link research against these concrete use cases.
-   If the link is advanced into beta or v1, obtain an explicit architecture
-   amendment to the current no-direct-link Rev 1 boundary before reserving
-   pins, changing firmware, or designing circuitry.
-4. Freeze versioned keyboard-event, direct-link, remote-session, and EMOS
-   command/result contracts. Keep those protocol domains distinct even when
-   they share a physical link or WebSocket.
-5. Implement and qualify the selected EDP and onboard-VDP endpoints in their
-   owning repositories, with exact upstream-version provenance and safe
-   stock/absent-peer behavior.
-6. Implement browser keyboard capture and visible session controls through the
-   PORT-006 network boundary. The current HTTP-only trusted-bench service is
-   not sufficient authority for unattended or broader remote command access.
-7. Implement the EMOS-owned command/terminal service and emulator fixtures
-   before granting a network client authority over physical hardware.
-8. Produce a new revisioned wiring design from accepted firmware requirements,
-   then run approved electrical, protocol, lifecycle, security, and integrated
-   qualification. Do not retrofit an undocumented link into the current
-   harness.
+For the first version, P4 admits keyboard input from exactly one controlling
+browser session at a time. Other browser sessions may view the display within
+the video service's supported connection limits. Taking keyboard control is
+explicit; focus alone does not take it from another session. P4 revokes the
+old session, emits stock key-up packets for its held keys, then admits the new
+session's input. Reject stale events from the previous owner so the two input
+streams cannot mix. The UI identifies whether this browser has control.
 
-## Open decisions
+This controls browser-session ownership without changing the stock UART packet
+format or the selected EMOS keyboard source. No multi-player keyboard scheme
+is implied. Qualify takeover with held modifiers and queued old-session events.
 
-1. Is the current keyboard failure repairable, and does browser input remain
-   optional or become required for the affected bench machine?
-2. Is remote keyboard input a beta requirement, v1 requirement, or later
-   capability independent of the bench workaround?
-3. Does the direct EDP/onboard-VDP link move into beta or v1, or remain a later
-   prerequisite for the remote feature?
-4. Which bus, processor roles, pins, voltage-domain protection, connector, and
-   flow-control/integrity contract are selected?
-5. Does onboard-VDP firmware inject remote keys into the stock processed input
-   path, or does EMOS receive a distinct authenticated remote-input service?
-6. Are remote terminal keystrokes sufficient for agents, or is a structured
-   EMOS command/result API required from the first implementation?
-7. What authentication, authorization, session-presence, network-exposure, and
-   audit policy is required for humans and agents?
-8. Which operations may an unattended agent request, and which still require
-   contemporaneous operator approval or physical presence?
-9. Does remote terminal output remain video-only, or does EMOS additionally
-   expose a structured text stream?
+## Stock compatibility reference
 
-## Dependencies and gates
+Use the accepted AUDIT-004 inventory P013/P014 and A003–A005, and its
+[primary packet trace](AUDIT-004/trace-primary-protocol.md) and
+[MOS API trace](AUDIT-004/trace-mos-interfaces.md). Official references are
+MOS v3.0.2 at `8336409351ee5314e02801a7b72a4f1bb5282519` and VDP v2.16.0 at
+`c7ac293d2aa81ddfa693390549bcd909069c8fc3`. Both remain clean read-only sources.
 
-1. Read the official VDP and MOS input/packet documentation and source before
-   freezing event semantics or endpoint insertion points.
-2. Reconcile SETUP-005-D007, ADR-0014, REMED-001 input ownership, PORT-005, and
-   QUAL-001 before changing the accepted canonical-writer model.
-3. LINK-001 must complete the applicable link research before a bus or wiring
-   revision is selected.
-4. PORT-006 must define authentication and privileged-service exposure before
-   browser clients can send EMOS commands outside a tightly controlled bench
-   fixture.
-5. EMOS source and emulator qualification live in the agon-emos project. This
-   task records Extender integration requirements and cross-project evidence;
-   it does not move EMOS implementation into this repository.
-6. Each firmware, wiring, and physical-run tranche requires its own reviewed
-   source boundary, versioned identities, deterministic fixtures, and explicit
-   authorization.
+P4 sends normal VDP packets, including key events and applicable keyboard
+settings replies. EMOS derives its sysvars and 16-byte virtual keyboard map
+from those packets. No new UART keymap download, raw memory write, diagnostic
+ACK per key, or proprietary keyboard envelope is selected.
 
-## Immediate non-decisions
+## Resident EMOS integration
 
-1. No bus, GPIO assignment, connector, wire protocol, browser command format,
-   authentication method, or product-version commitment is selected here.
-2. No direct-link or remote-control code is authorized by creating this task.
-3. The present workaround remains cold-boot `/autoexec.txt`; REMOTE-001 does
-   not gate PORT-008's forward-only visible-command prototype.
+INTEG-009 extends resident EMOS with normal compile-time linking and explicit
+ownership boundaries. The Author rejected the proposed module loader and
+runtime relocation; MOS-001 is cancelled in favor of resident EMOS extensions.
+P4/browser work retains its existing ownership and stock UART contract.
+
+## Work — keyboard slice
+
+K002 now accepts explicit autoexec enablement and P4-only keyboard events for
+the initial increment, with other onboard VDP communication retained. Focus
+loss/disconnect makes P4 send stock key-up packets for held keys, then stop
+keyboard delivery to EMOS. The Author accepted that cleanup for trial under
+SETUP-005 K002; browser disconnect cleanup must also work without a final
+browser message.
+
+1. [ ] Resolve the remaining narrow SETUP-005 D003/D007 session, source-selection
+   and receiver decisions. Record exactly which stock keys/configuration
+   behaviors the first test covers and which remain unqualified.
+2. [ ] Define focused display capture: key-down/up, modifiers and lock state,
+   repeat ownership, locale mapping, browser-reserved shortcuts and unsupported
+   input, with deterministic release on blur, hidden page, disconnect or reset.
+   Do not consume keystrokes intended for other browser controls.
+3. [ ] Consume PORT-006's bounded session transport and PORT-005's ordered event
+   adapter. Bind the existing display UI without making full PORT-003
+   completion or additional video routing a keyboard prerequisite.
+4. [ ] Integrate with PORT-008/INTEG-009 and prove stock MOS-visible key reads,
+   sysvars, virtual keymap and callbacks, including while no foreground UART
+   transaction is running. Autoexec starts the identified test; applications
+   must not configure UART1 or forward their own input back to P4.
+5. [ ] Exercise focus/release/reconnect, held modifiers, repeat, rapid ordered
+   transitions and reset recovery in host/emulator and paired hardware tests.
+   Preserve ordinary boot/SD/clock and the currently selected VDU route. The
+   first bounded qualification session does not silently activate an exclusive
+   mode. Legacy accepts browser input only when explicitly selected under K005.
+
+## Decision register
+
+| ID | Decision | State / owner |
+|---|---|---|
+| REMOTE-001-K001 | Browser display focus is the keyboard capture boundary; P4 sends stock-compatible keyboard traffic to EMOS over existing UART1. No parallel or direct onboard link is needed. | Accepted by the Author, 2026-09-08; SETUP-005 owns the architecture. |
+| REMOTE-001-K002 | On focus loss/disconnect P4 sends held-key releases, then goes quiet. Exact repeat, locale and browser-reserved-key mapping remain to be specified. | Release behavior accepted for trial, 2026-09-08; remaining mapping details open with PORT-005. |
+| REMOTE-001-K003 | Input-session admission, source selection, revocation and first bounded test invocation. | Open; SETUP-005 with PORT-006 and INTEG-009. |
+| REMOTE-001-K004 | One controlling browser; explicit takeover releases the old session's held keys before admitting new input. Other sessions may view within supported video limits. | Accepted by the Author, 2026-09-08; REMOTE-001/PORT-006 own session transfer, PORT-005 owns ordered key-up emission. |
+
+## Later work retained
+
+Structured agent control, a full remote-terminal product, broader network
+exposure and optional direct-link research remain later use cases. LINK-001
+owns any future link study; neither that research nor new circuitry gates this
+keyboard increment. Mouse capture and Agon-originated EDU event forwarding
+remain later PORT-005 scope. Full ordinary VDU routing to the browser is a
+separate integration milestone; receiving keys does not redirect output.
 
 ## Accepted REMED-002 findings and retained risk
 
-[REMED-002](REMED-002.md) assigns REMOTE-001 the product-semantics portions of
-F010 and F019 and retains R003 in this task. Detailed evidence and provenance
-remain in
-[`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+1. [ ] **F010:** REMOTE-001 owns remote product/session semantics. LINK-001 owns
+   only optional direct-link research. A later new link needs its own accepted
+   endpoint/hardware/qualification scope; this keyboard path uses existing
+   hardware and the task owners above.
+2. [ ] **F019:** Preserve remote-session provenance and EMOS authority at session
+   admission and the selected UART1 ingress. The Author selected ordinary
+   stock keyboard packets, so do not add remote-origin tags to those packets.
+   Define the admitted keyboard session's authority before enabling it. Do not
+   claim stock key packets can distinguish typed shell commands from other
+   ordinary input, or that keyboard focus authorizes structured agent requests.
+3. [ ] Keep any later structured command/result protocol and privileged agent
+   permissions separate from this keyboard path; preserve existing agent flash,
+   reset and deployment approval rules.
+4. [ ] **R003:** With PORT-006, define access, Origin/cross-site WebSocket,
+   session-presence and revocation behavior for the selected bench input
+   endpoint. Broader/unattended exposure remains deferred and requires its own
+   accepted policy and negative tests. Trusted LAN video acceptance alone does
+   not authorize keyboard control.
 
-1. [ ] **F010:** Keep remote use cases, session semantics, authorization, and
-   product requirements here. LINK-001 may research candidate direct links but
-   owns no firmware, protocol, pins, circuit, or product commitment. If the
-   Author accepts implementation, create separately approved endpoint,
-   hardware, and qualification tasks before changing artifacts.
-2. [ ] **F019:** Preserve authenticated remote-origin provenance until EMOS
-   authorizes the requested operation. Do not convert privileged remote intent
-   into an indistinguishable ordinary keyboard packet unless the Author first
-   accepts a narrowly constrained terminal authority that cannot escape its
-   session policy.
-3. [ ] Define whether remote terminal input or a structured EMOS operation API
-   owns shell commands, reset, flash/update, mode transition, filesystem, and
-   other privileged requests; name the authenticating, authorizing, executing,
-   observing, and revoking actor for each class.
-4. [ ] **R003:** Before enabling browser input or commands beyond the accepted
-   trusted bench LAN, consume PORT-006's authentication, Origin, cross-site
-   WebSocket, exposure, session-presence, and revocation contract and add
-   negative security fixtures.
+## Review boundary
 
-No link, browser-input path, EMOS service, or network exposure is authorized by
-this intake.
+The Author approved freezing this documentation on 2026-09-08 and requested
+a stop after committing. Implementation has not started. No new firmware,
+fixture, protocol revision, deployment or hardware operation is authorized by
+this documentation update. Existing artifact identities remain unchanged.

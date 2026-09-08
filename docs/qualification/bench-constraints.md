@@ -32,6 +32,16 @@ topology or a particular specimen. Machine-specific observations remain in
    release packets reach MOS/EMOS. Removing BC-001 does not itself qualify the
    repaired circuit for broader compatibility.
 
+## Browser-keyboard qualification while BC-001 remains active
+
+The Author selected browser-focused input as the next replacement path on
+2026-09-08. Autoexec still launches and configures the identified test without
+physical-keyboard setup. That test may then request browser keystrokes after
+its explicit readiness cue; the path under test must not be assumed available
+for installation, recovery or earlier setup. Keep the physical-keyboard fault
+record and require Author-observed successful input qualification before
+relaxing BC-001 for fixtures that use the browser path.
+
 ## Capture completion for subsequent UART procedures
 
 Author-approved on 2026-09-08: subsequent paired UART capture procedures end

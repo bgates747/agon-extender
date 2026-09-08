@@ -1,5 +1,13 @@
 # REMED-002 — Remediate open-task implementation and evidence-integrity findings
 
+## Keyboard-priority amendment — 2026-09-08
+
+SETUP-005 K001 selects the existing UART browser-keyboard path. F010 therefore
+keeps LINK-001 outside its critical path; F019/R003 apply to session admission
+and EMOS source authority while preserving stock keyboard wire bytes. R002's
+ordered-event risk remains in PORT-005. The historical audit findings are not
+rewritten or marked fixed by this documentation amendment.
+
 ## State
 
 - Status: In progress — Gate 1 complete; PORT-003 Work 2.a findings recorded
@@ -476,9 +484,12 @@ disposition.
   the owner and storage of a surviving target request, the EMOS commit point,
   and Legacy fallback. Accepted implementation and qualification must then be
   assigned separately.
-- [ ] **4.f** REMOTE-001 must preserve authenticated remote-origin provenance
-  through EMOS authorization or explicitly constrain remote terminal authority
-  before selecting an input representation.
+- [ ] **4.f** REMOTE-001/PORT-006 and EMOS must define input-session admission,
+  provenance, source selection and revocation. The Author selected stock UART
+  keyboard packets on 2026-09-08; preserve origin/authority in the admitted
+  session and EMOS ingress, not a proprietary per-key UART envelope. Normal
+  keyboard authority includes stock command-line/key effects. Structured agent
+  requests remain separate. This policy/implementation work is still open.
 - [ ] **4.g** DIAG-001 must define classification, redaction, authentication,
   retention, export, and erase policy before capturing or exporting memory.
 - [ ] **4.h** HW-001, SETUP-006, PORT-007, and the hardware-object promotion
