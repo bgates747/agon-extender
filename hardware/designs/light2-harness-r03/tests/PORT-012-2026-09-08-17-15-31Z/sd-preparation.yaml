@@ -1,0 +1,20 @@
+run_id: PORT-012-2026-09-08-17-15-31Z
+prepared_at: '2026-09-08T17:15:31.679801+00:00'
+build_id: agon-emos-v0.5.0-b2026-09-08-17-10-00Z
+before_sha256:
+  bin/EMBOOT.BIN: 9da67abe63aca135fd6a4c711b9a3e420395818b4751909cbc35bd24c8ce7450
+  emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+  autoexec.txt: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+after_sha256:
+  bin/EMBOOT.BIN: d79c71d3022ff48e033fca8259e1db01ff33a1b41ba01dbf2183a0e0fec465e6
+  emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+  autoexec.txt: c6a48a3b3415737b657f7e057197142387e59a905aa661d0eac8f956fcd826d3
+consumed_payload_sha256: 09379ccd57d613bd00e51c5a4433c0643f5ad0477595dafa2016213ac5edb642
+flash_result: Author reported good flash
+expected_test: SD/CLOCK PASS, four UART FLOW stage passes, UART FLOW PASS, MOS prompt
+hardware_test_result: pending
+schema_version: 1
+record_type: sd_preparation
+outcome: partial
+sd_unmounted: true
+p4_target_candidate_deployed: false

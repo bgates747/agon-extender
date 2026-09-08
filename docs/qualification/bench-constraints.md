@@ -31,3 +31,17 @@ topology or a particular specimen. Machine-specific observations remain in
    replaced and a separately recorded smoke test proves ordinary key press and
    release packets reach MOS/EMOS. Removing BC-001 does not itself qualify the
    repaired circuit for broader compatibility.
+
+## Capture completion for subsequent UART procedures
+
+Author-approved on 2026-09-08: subsequent paired UART capture procedures end
+as soon as the analyzer has completed its required acquisition and the host
+has observed at least five clean seconds after the P4's final PASS. The host
+continues checking for late errors, extra traffic and restarts during that
+interval; any such event fails the run. Retain a bounded overall timeout for
+missing progress, rather than making successful runs wait for that timeout.
+Agon's own PASS and final MOS prompt remain separate operator observations.
+
+Apply this convention when preparing the next procedure revision. Previously
+frozen procedures and evidence, including uart-flow-probe-r02's 90-second
+serial window, retain their original definitions.

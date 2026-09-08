@@ -1,0 +1,12 @@
+run_id: PORT-012-2026-09-08-17-16-35Z
+build_id: uart-flow-probe-r02-b2026-09-08-17-10-00Z
+factory_sha256: 4b6ec60878650170706a8690246a863f7c4b4f43737ead483c093732c6b2fceb
+write_verified: true
+receiver_wait_observed: true
+uart_transfer_test: pending
+schema_version: 1
+record_type: p4_deployment
+outcome: pass
+scope: Verified candidate installation and empty stopped-CTS readiness only
+procedure_identity: uart-flow-probe-r02
+baud_rate: 1152000

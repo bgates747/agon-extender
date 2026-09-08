@@ -113,7 +113,12 @@ level after release. A HIGH waveform alone does not prove high impedance.
 
 ## Results and limits
 
-Pending. Record actual sample rate/count and trigger position, then decode both
+Completed: [passing run](PORT-012-2026-09-08-17-17-51Z/README.md) records
+both endpoint passes and final MOS prompt, all 240M samples at 24 MHz, exact
+frames, both pauses and 6.712620 seconds of final quiet. Candidate identities
+are unchanged.
+
+For interpretation, record actual sample rate/count and trigger position, then decode both
 lanes at 1,152,000 baud. Measure bit spacing against the nominal 0.868056 µs
 (about 20.83 samples at 24 MHz); report measured timing and decode errors rather
 than inferring baud from endpoint success. Require the complete exchange and

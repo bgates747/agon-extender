@@ -1,0 +1,52 @@
+{
+  "schema_version": 1,
+  "logic_sha256": "31c56cef68e669511389728ef90fa46540c19d5949a7e4199e9c296e4ad7fb9d",
+  "serial_sha256": "de629254ff4de7792fabd8d053a99c1aad313007ee42cc6c7c55912660acd0ed",
+  "samplerate_hz": 24000000,
+  "samples": 240000000,
+  "duration_seconds": 10.0,
+  "forward_hex": "464C4F570D0A",
+  "return_hex": "464C4F5741434B0D0A",
+  "forward_hold_seconds": 1.001078875,
+  "return_hold_seconds": 0.9859147083333335,
+  "quiet_after_final_stop_seconds": 6.712619999999999,
+  "timing": {
+    "EMOS_to_P4": {
+      "samples_per_bit_fit": 20.834021091242548,
+      "baud_fit": 1151961.97099408,
+      "single_bit_width_samples": [
+        20,
+        21
+      ],
+      "max_edge_fit_residual_samples": 0.5034387883043081
+    },
+    "P4_to_EMOS": {
+      "samples_per_bit_fit": 20.841396897357793,
+      "baud_fit": 1151554.2896763626,
+      "single_bit_width_samples": [
+        20,
+        21
+      ],
+      "max_edge_fit_residual_samples": 0.4919364384590672
+    }
+  },
+  "checks": {
+    "forward_hold_at_least_half_second": true,
+    "return_hold_at_least_half_second": true,
+    "forward_edges_only_while_permitted": true,
+    "return_edges_only_while_permitted": true,
+    "exact_forward_and_return_bytes": true,
+    "no_late_or_blocked_data_edges": true,
+    "quiet_tail_at_least_five_seconds": true,
+    "all_lines_start_and_finish_high": true,
+    "trigger_at_expected_pretrigger_position": true,
+    "full_acquisition": true
+  },
+  "waveform_checks_pass": true,
+  "seconds_serial_after_first_pass": 70.0731717650001,
+  "limits": [
+    "Timing derives from analyzer sample clock; no instrument calibration performed.",
+    "Short exchange only; sustained load and analog margins remain unqualified.",
+    "Quiet trace is paired with both endpoint stage reports to establish attempted blocked sends."
+  ]
+}

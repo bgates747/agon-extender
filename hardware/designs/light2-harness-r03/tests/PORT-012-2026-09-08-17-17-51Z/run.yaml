@@ -1,0 +1,61 @@
+schema_version: 1
+run_id: PORT-012-2026-09-08-17-17-51Z
+started_at: '2026-09-08T17:17:51.772878+00:00'
+ended_at: '2026-09-08T17:19:23.880034+00:00'
+recorded_at: '2026-09-08T17:22:55.977409+00:00'
+outcome: pass
+scope: Short bidirectional Legacy UARTFLOW pause/resume and blocked-timeout test at
+  1152000/8N1
+procedure_identity: uart-flow-probe-r02
+wiring_identity: light2-harness-r03
+endpoints:
+  emos:
+    build_id: agon-emos-v0.5.0-b2026-09-08-17-10-00Z
+    source_commit: 0bbd50b79abd851160f853335557ba251c1b5c45
+    builder_commit: cf2430459c323928cb0b6cd290dbb5ee0bac875b
+    status: candidate
+    dirty: false
+    binary_sha256: 09379ccd57d613bd00e51c5a4433c0643f5ad0477595dafa2016213ac5edb642
+  p4:
+    build_id: uart-flow-probe-r02-b2026-09-08-17-10-00Z
+    source_commit: 5116e4135a7fbb5b34c28b1ccc028dd610dae520
+    status: candidate
+    dirty: false
+    factory_sha256: 4b6ec60878650170706a8690246a863f7c4b4f43737ead483c093732c6b2fceb
+observations:
+  p4_flow_stages_pass: true
+  serial_verdict_independently_rechecked: true
+  agon_all_tests_pass_reported: true
+  agon_final_mos_prompt_reported: true
+  seconds_serial_after_first_pass: 70.0731717650001
+analyzer:
+  samplerate_hz: 24000000
+  requested_samples: 240000000
+  actual_samples: 240000000
+  duration_seconds: 10
+  trigger: D3 falling, 1% pretrigger
+  trigger_sample: 2400000
+  acquisition_pass: true
+  waveform_checks_pass: true
+  forward_hold_seconds: 1.001078875
+  return_hold_seconds: 0.9859147083333335
+  quiet_after_final_stop_seconds: 6.712619999999999
+  probe_positions_relative_to_series_resistors: null
+author_observation: agon reports all tests passed
+evidence:
+  capture-tools.txt: 10672b7c7094cfb813b71a5bf87f24c2750b6d14cce38924bffaa30137ffa818
+  edges.json: a16770aa1cee433a85f81fdddaa280f09005b80919dedac9305af99887881117
+  logic.sr: 31c56cef68e669511389728ef90fa46540c19d5949a7e4199e9c296e4ad7fb9d
+  measurements.json: e8f63156f1a5bc1b38350c61cbbb07998b15217f049599d525c7a96a5d29d624
+  serial.txt: de629254ff4de7792fabd8d053a99c1aad313007ee42cc6c7c55912660acd0ed
+  uart-decoder.txt: 6958926d854b1a7800d772925d56a8261efea130ab03099504d9de8c7ff8c853
+limits:
+- Timing derives from analyzer sample clock; no instrument calibration performed.
+- Short exchange only; sustained load and analog margins remain unqualified.
+- Quiet trace is paired with both endpoint stage reports to establish attempted blocked
+  sends.
+corrections:
+- recorded_at: '2026-09-08T17:24:17.487244+00:00'
+  previous_outcome: partial
+  reason: 'Author confirmed final return to MOS: yes it returned to mos. All declared
+    endpoint, acquisition and waveform checks now pass.'

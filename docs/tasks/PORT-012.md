@@ -1,6 +1,6 @@
 # PORT-012 — Prove UART flow control at 1,152,000 baud
 
-Status: active; reviewed candidate preparation. Started: 2026-09-08.
+Status: complete. Started: 2026-09-08. Finished: 2026-09-08.
 
 ## Scope and accepted decisions
 
@@ -36,9 +36,9 @@ freeze, clean candidate builds and authorized deployment.
    build provenance, and run actual-code host tests and full build gates.
 2. [x] Prepare and launch same-build ordinary/bad-SD and no-peer emulator
    review. Obtain Author validation before committing emulator-coupled changes.
-3. [ ] Freeze reviewed candidates, preserve rollback, prepare guarded SD
+3. [x] Freeze reviewed candidates, preserve rollback, prepare guarded SD
    installation and combined capture; deploy only under bench authorization.
-4. [ ] Run the paired test and retain endpoint results, exact decoded bytes,
+4. [x] Run the paired test and retain endpoint results, exact decoded bytes,
    measured baud/pauses and at least five seconds of final quiet waveform.
 
 The current fixture definition is `vdp/fixtures/uart-flow/identity.json`;
@@ -87,3 +87,34 @@ are verified and safely unmounted. Working v0.4.0 is preserved on-card and
 off-card; older rollback images remain available. The combined capture helper
 passes offline full/short/wrong-rate extent checks, with no hardware capture.
 Physical Agon installation and explicit P4 flash authorization are pending.
+
+The Author reported successful v0.5.0 installation. Consumed payload hash
+matched the clean candidate; EMNEW was absent and rollback hashes verified.
+PORT-012-2026-09-08-17-15-31Z records same-build smoke/UARTFLOW SD
+preparation and safe unmount. P4 r02 flashing authorization remains pending;
+no paired run or physical target-baud PASS is claimed.
+
+Author authorized P4 flashing. PORT-012-2026-09-08-17-16-35Z passes
+independent image verification and startup identity/pin/1152000-baud/empty-WAIT
+checks. Both candidates are installed and same-build SD is prepared. The next
+step is the operator-triggered paired capture; no UARTFLOW result is claimed.
+
+PORT-012-2026-09-08-17-17-51Z passes P4 stages and all waveform checks.
+Author reports all Agon tests passed; final prompt confirmation is requested.
+Full 24 MHz/240M acquisition retained both exact frames, 1.001079/0.985915s
+holds and 6.712620s quiet tail. No shortened-capture exception is needed.
+Physical timing matches nominal 1152000 baud; sustained load remains outside
+this bounded test. Evidence is retained beside the r03 design.
+
+## Completed — 2026-09-08
+
+The Author confirmed all Agon tests passed and final return to MOS for
+PORT-012-2026-09-08-17-17-51Z. Both clean candidates pass the bounded
+1,152,000-baud test: exact FLOW/ACK, both deliberate pauses, blocked-sender
+cancellation and no late traffic. The full 24 MHz/240M acquisition includes
+6.712620 seconds of final quiet; no acquisition exception is needed.
+
+EMOS v0.5.0 and P4 uart-flow-probe-r02 remain candidate identities. This
+completes the short target-baud milestone, not sustained-load, analog-margin
+or Exclusive Compatible activation qualification. No firmware changed during
+closeout. Passing evidence lives beside the r03 hardware design.
