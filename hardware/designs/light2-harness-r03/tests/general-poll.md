@@ -57,7 +57,9 @@ console and 60 Hz clock source. P4's diagnostic omits browser/network startup.
 
 Hardware result pending. [Installation media](PORT-013-2026-09-08-17-55-37Z/README.md)
 is prepared from the clean candidate; the card is safely unmounted and working
-v0.5.0 is retained for rollback. P4 staging is verified; flashing is pending.
+v0.5.0 is retained for rollback. The Author subsequently confirmed EMOS installation;
+[test media](PORT-013-2026-09-08-18-06-37Z/README.md) is ready, and
+[corrected P4 deployment](PORT-013-2026-09-08-18-10-29Z/README.md) passed.
 
 Preserve original trace, serial log, identities, command/extent metadata,
 measured waveform and Author screen/prompt observation beside this sheet.

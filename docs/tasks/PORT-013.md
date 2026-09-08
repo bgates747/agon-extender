@@ -1,6 +1,6 @@
 # PORT-013 — General Poll through the retained EDP handler
 
-Status: active; clean candidates prepared, hardware installation pending. Started: 2026-09-08.
+Status: active; both candidates installed, paired hardware test pending. Started: 2026-09-08.
 
 ## Scope and decisions
 
@@ -49,7 +49,7 @@ public application transport bypass. Preserve passing v0.5.0/r02 rollback.
    negative tests, build identity and capture checks.
 2. [x] Run complete EMOS configured/linked/runtime gates and P4 compilation;
    prepare same-build smoke/no-peer review and launch graphical validation.
-3. [ ] After Author acceptance, freeze candidates, prepare rollback/SD/capture,
+3. [x] After Author acceptance, freeze candidates, prepare rollback/SD/capture,
    and deploy under the bench authorization boundary.
 4. [ ] Prove exact request/response and prompt return on hardware; retain
    results beside the r03 design. No sustained-load or mode-activation claim.
@@ -145,3 +145,13 @@ for dependency scanning. The bundle builder checks embedded identity in ELF,
 application and factory images before publishing a manifest; regression tests
 reject stale and prefix-only matches. Verify successive incremental builds
 before restaging and completing the already-authorized P4 deployment.
+
+## General Poll deployment ready — 2026-09-08
+
+Corrected P4 build uart-general-poll-probe-r01-b2026-09-08-18-09-42Z from
+d29f55d passed successive incremental identity checks, flash verification and
+exact candidate/pin/baud/empty-WAIT startup checks. Deployment evidence is
+PORT-013-2026-09-08-18-10-29Z beside r03. EMOS v0.6.0 remains the accepted
+build b2026-09-08-17-50-12Z; its verified smoke/VDPPOLL SD is safely unmounted.
+Both endpoints are installed. Next is operator-triggered paired capture with
+powered Agon reset only at the readiness cue. No General Poll PASS is claimed.

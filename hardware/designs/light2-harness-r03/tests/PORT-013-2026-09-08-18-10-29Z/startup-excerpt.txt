@@ -1,0 +1,16 @@
+I (1697) extender_identity: source_identity=uart-general-poll-probe-r01
+I (1697) extender_identity: build_id=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (1698) extender_identity: artifact_status=candidate
+I (1717) general-poll: GENERAL POLL RECEIVER uart-general-poll-probe-r01-b2026-09-08-18-09-42Z (candidate)
+I (1718) general-poll: RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+I (1718) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (2719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (3719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (4719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (5719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (6719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (7719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (8719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (9719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (10719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+I (11719) general-poll: GENERAL POLL WAIT received=0 cts=1 build=uart-general-poll-probe-r01-b2026-09-08-18-09-42Z

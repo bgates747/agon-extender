@@ -1,0 +1,11 @@
+run_id: PORT-013-2026-09-08-18-10-29Z
+build_id: uart-general-poll-probe-r01-b2026-09-08-18-09-42Z
+factory_sha256: 4702e8e5579b576fb5235effb1ed021fa7d6eb9a7f4eff7bb131bae861baa58f
+write_verified: true
+receiver_wait_observed: true
+uart_transfer_test: pending
+schema_version: 1
+outcome: pass
+scope: P4 flash verification and startup readiness only
+source_commit: d29f55d450a3c4c99d1165a7d74b03e33147cb26
+baud_rate: 1152000
