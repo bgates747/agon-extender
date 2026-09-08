@@ -1,0 +1,153 @@
+{
+  "logic_sha256": "c1d47ec64de5986bec86937ad3b9aa30e72216a5090e2124f1f1069e4dad9f27",
+  "samples": 288000000,
+  "sample_rate_hz": 24000000,
+  "duration_seconds": 12.0,
+  "uart_baud": 1152000,
+  "transactions": [
+    {
+      "index": 1,
+      "label": "banner",
+      "request_hex": "0C1F0202454D4F5320544F204544503A205541525420544558540D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 0.12065141666666666,
+      "request_end_seconds": 0.12159341666666666,
+      "reply_start_seconds": 0.531303125,
+      "reply_end_seconds": 0.5313291666666666
+    },
+    {
+      "index": 2,
+      "label": "1",
+      "request_hex": "310D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 0.9660535416666667,
+      "request_end_seconds": 0.9663104166666666,
+      "reply_start_seconds": 0.970397,
+      "reply_end_seconds": 0.9704230416666667
+    },
+    {
+      "index": 3,
+      "label": "2",
+      "request_hex": "320D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 1.5241025833333333,
+      "request_end_seconds": 1.5243594583333333,
+      "reply_start_seconds": 1.5265605,
+      "reply_end_seconds": 1.5265865416666666
+    },
+    {
+      "index": 4,
+      "label": "3",
+      "request_hex": "330D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 1.966309875,
+      "request_end_seconds": 1.96656675,
+      "reply_start_seconds": 1.9686987916666667,
+      "reply_end_seconds": 1.9687248333333334
+    },
+    {
+      "index": 5,
+      "label": "4",
+      "request_hex": "340D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 2.523916125,
+      "request_end_seconds": 2.524173,
+      "reply_start_seconds": 2.526865125,
+      "reply_end_seconds": 2.5268911666666667
+    },
+    {
+      "index": 6,
+      "label": "5",
+      "request_hex": "350D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 2.9657036666666667,
+      "request_end_seconds": 2.9659605416666666,
+      "reply_start_seconds": 2.9710014583333333,
+      "reply_end_seconds": 2.9710275416666665
+    },
+    {
+      "index": 7,
+      "label": "6",
+      "request_hex": "360D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 3.5245505416666667,
+      "request_end_seconds": 3.5248074166666665,
+      "reply_start_seconds": 3.527171375,
+      "reply_end_seconds": 3.5271974166666666
+    },
+    {
+      "index": 8,
+      "label": "7",
+      "request_hex": "370D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 3.966801708333333,
+      "request_end_seconds": 3.9670585833333334,
+      "reply_start_seconds": 3.9694395,
+      "reply_end_seconds": 3.969465583333333
+    },
+    {
+      "index": 9,
+      "label": "8",
+      "request_hex": "380D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 4.524828958333333,
+      "request_end_seconds": 4.525085833333334,
+      "reply_start_seconds": 4.527477541666666,
+      "reply_end_seconds": 4.527503625
+    },
+    {
+      "index": 10,
+      "label": "9",
+      "request_hex": "390D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 4.9641805,
+      "request_end_seconds": 4.964437375,
+      "reply_start_seconds": 4.969656041666667,
+      "reply_end_seconds": 4.969682083333334
+    },
+    {
+      "index": 11,
+      "label": "10",
+      "request_hex": "31300D0A1700CA170080A7",
+      "reply_hex": "8001A7",
+      "request_start_seconds": 5.5249262083333335,
+      "request_end_seconds": 5.5252105,
+      "reply_start_seconds": 5.5288247083333335,
+      "reply_end_seconds": 5.52885075
+    }
+  ],
+  "forward_byte_count": 136,
+  "return_byte_count": 33,
+  "valid_8n1_framing": true,
+  "cts_permission_at_start_and_through_frames": true,
+  "independent_sigrok_decode_matches": true,
+  "acquisition_pass": true,
+  "last_signal_transition_seconds": 5.712121166666667,
+  "quiet_tail_seconds": 6.2878787916666665,
+  "five_second_waveform_tail_pass": true,
+  "serial_clean_seconds_after_final_pass": 6.008466633000353,
+  "request_start_intervals_seconds": [
+    0.845402125,
+    0.5580490416666666,
+    0.44220729166666684,
+    0.5576062499999999,
+    0.4417875416666668,
+    0.558846875,
+    0.4422511666666664,
+    0.5580272499999999,
+    0.43935154166666734,
+    0.5607457083333331
+  ],
+  "transition_counts": {
+    "D1": 690,
+    "D3": 22,
+    "D4": 22,
+    "D6": 132
+  },
+  "final_levels": {
+    "D1": 1,
+    "D3": 1,
+    "D4": 1,
+    "D6": 1
+  }
+}

@@ -1,0 +1,71 @@
+schema_version: 1
+run_id: PORT-014-2026-09-08-21-22-24Z
+procedure_identity: uart-visible-text-probe-r03
+outcome: pass
+started_at: '2026-09-08T21:22:24.053864+00:00'
+capture_ended_at: '2026-09-08T21:22:50.082451+00:00'
+scope: Bounded EMOS-owned SD sample, retained EDP rendering and Agon-reset repeatability
+builds:
+  emos:
+    build_id: agon-emos-v0.1.7-b2026-09-08-20-53-57Z
+    source_commit: 026ac46a921ffe6607101b62fadbab676c5175f2
+    source_dirty: false
+    firmware_sha256: 61f8fe2763b48de0be270c7d79e1089653b12160a788ee8975a3f1defeb991fe
+  sample:
+    build_id: uart-visible-text-probe-r03-b2026-09-08-20-53-57Z
+    variant: sample
+    source_commit: 18024d823df5349128b07ec0d1268302aa4c2f69
+    source_dirty: false
+    bin_sha256: b0630561fdf24cce7fce077cd6c472292927b18993acadec36b791615c026802
+  p4:
+    build_id: uart-visible-text-probe-r03-b2026-09-08-20-54-40Z
+    variant: receiver
+    source_commit: 18024d823df5349128b07ec0d1268302aa4c2f69
+    source_dirty: false
+    factory_sha256: 7824ed2891034e167a060ab7f9f2f24d313933d87b0dd1b491e176086bc49a3b
+wiring_identity: light2-harness-r03
+checks:
+  frozen_p4_serial_stages: true
+  exact_11_requests_and_replies: true
+  valid_uart_8n1_framing: true
+  active_low_cts_permission: true
+  independent_sigrok_decode_matches: true
+  full_analyzer_acquisition: true
+  five_second_four_signal_quiet_tail: true
+  five_second_clean_serial_tail: true
+  browser_banner_and_count_screenshot_observed: true
+  agon_sd_clock_sample_pass_and_mos_return_author_confirmed: true
+  two_additional_agon_only_runs_author_confirmed: true
+measurements:
+  sample_rate_hz: 24000000
+  samples: 288000000
+  seconds: 12.0
+  uart_baud: 1152000
+  request_bytes: 136
+  reply_bytes: 33
+  waveform_quiet_seconds: 6.2878787916666665
+  serial_clean_seconds: 6.008466633000353
+operator_observations:
+  captured_run: Author supplied successful capture output and browser screenshot showing
+    banner and 1..10.
+  repeat_runs: Author answered Yes, all three runs passed when asked about SD/CLOCK,
+    sample PASS and MOS return on the capture and two Agon-only resets.
+  separate_repeat_waveforms: false
+exceptions: []
+retained_sha256:
+  logic.sr: c1d47ec64de5986bec86937ad3b9aa30e72216a5090e2124f1f1069e4dad9f27
+  measurements.json: 86a2208661e073497502a2a8174ab5db9e65fc03e9f860671864a73b458623a3
+  uart-decoder.txt: f4fe8a6cd67f8cf92a3fb1dc0ce6e650d8b05c47681198de88036756e0e25b66
+  serial-excerpt.txt: e30969f1f3cd4b8699b3d1a12c7d1cf2d46b12142b2e59a2c0160d7cb175e760
+original_serial_sha256: 038da9a2d64d6ed4100579591d161d9c14a6e85cdfeeec8a3f07a19785ee6d23
+private_analysis_script_sha256: 95048c23a56e17b476ba240a1daa7cd79616f31346e2e3317640ec7451282ef9
+capture_helper_sha256:
+  capture_combined.py: c03bc43d24e2873f7589aa49a6826b5d7f5441161c5a49f4201690cae241d4cc
+  capture_on_pi.py: c02255e05ca18adb468e8f9dcdb6d24d0afc154aca9de60c2194000e8fbca99a
+  bench.py: 98edb80a316d6fe19a864262ad4857383061375371b78dbfb8a6db50afe832f9
+  bench.json: ddca7e5d05e328de647d8aedcb34903c455dd7085dbd9fa7cec7d64f8da35e21
+qualification_limits:
+- One captured paced sequence plus two operator-confirmed repeat runs; no sustained-load
+  claim.
+- Legacy diagnostic ownership remains in EMOS; ordinary VDU routing and Exclusive
+  Compatible activation are not exercised.

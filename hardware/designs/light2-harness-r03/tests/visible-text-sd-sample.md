@@ -70,6 +70,8 @@ The capture checker requires all 11 completions before starting its five-second
 clean tail. The 12-second analyzer extent gives the paced exchanges and final
 five-second quiet interval room to complete. Parser ACK and browser appearance
 are independent checks.
-No physical r03 run is recorded yet. Previous r01/r02 evidence retains its
-original definition and identity. The old EMOS VDPTEXT/A6 command remains
+The [passing r03 result](PORT-014-2026-09-08-21-22-24Z/README.md) records the full captured
+sequence, browser screenshot observation and Author-confirmed Agon smoke/prompt
+across three runs. Previous r01/r02 evidence retains its original definition
+and identity. The old EMOS VDPTEXT/A6 command remains
 available but is not the counting sample.

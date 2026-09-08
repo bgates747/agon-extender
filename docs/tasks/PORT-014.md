@@ -1,7 +1,7 @@
 # PORT-014 — EMOS UART text rendered by EDP in the browser
 
-Status: active; paced graphical review accepted and SD deployment requested.
-Candidate freeze/preparation in progress; physical counting not yet run.
+Status: complete — r03 hardware count, waveform and Author-confirmed repeat runs passed.
+Completed: 2026-09-08.
 Started: 2026-09-08.
 
 ## Scope and roadmap relationship
@@ -52,11 +52,12 @@ the onboard VDP; EMOS owns this Legacy-only bounded diagnostic.
 3. [x] Freeze clean candidates after review; preserve working v0.6.0/General
    Poll rollback, prepare guarded SD installation/test media and authorized P4
    deployment with network/browser readiness checks.
-4. [ ] Capture the paired exchange and browser text; accept or diagnose the
+4. [x] Capture the paired exchange and browser text; accept or diagnose the
    bounded result before proposing another increment.
-5. [ ] Make successful text transactions repeatable after Agon-only resets;
-   qualify r02 with two further successes while P4 and browser stay running.
-6. [ ] Build the SD-loaded C clear/banner/decimal 1..10 sample, the bounded
+5. [x] Make successful text transactions repeatable after Agon-only resets.
+   The r02-specific rerun is superseded by the passing r03 count and two
+   further Agon-only runs; historical r02 evidence remains partial.
+6. [x] Build the SD-loaded C clear/banner/decimal 1..10 sample, the bounded
    EMOS gateway and payload-independent P4 text receiver; qualify the sample
    through the gateway and repeat it after Agon-only resets.
 
@@ -317,3 +318,26 @@ only at its cue, then observes sample PASS, browser count and MOS return.
 Two subsequent Agon-only resets test repeatability after capture finishes.
 Paired and repeatability results remain pending; startup is not a counting pass.
 Evidence: `hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-21-17-51Z/`.
+
+
+## Completed — paced hardware count and repeatability
+
+`PORT-014-2026-09-08-21-22-24Z` passes the bounded r03 counting procedure. Original hashes and the
+frozen serial checker verify 11 ordered transactions; independent sigrok and
+raw-sample review agree on 136 forward/33 return bytes, valid 8N1 and CTS
+permission at 1152000 baud. The full 24 MHz / 288M acquisition lasts 12 seconds,
+with 6.287879 seconds quiet on all four signals and
+6.008467 seconds clean serial after the last PASS.
+No analyzer exception is needed.
+
+The Author supplied the browser banner/count screenshot and confirmed all three
+Agon runs passed SD/CLOCK and sample checks and returned to MOS, including the
+two further Agon-only resets. Only the first run has a waveform capture.
+The bounded visible-text/gateway/counting work is complete. The outstanding r02
+repeat-test work is superseded by r03; historical partial runs stay partial.
+Clean builds: EMOS `agon-emos-v0.1.7-b2026-09-08-20-53-57Z`, SD sample
+`uart-visible-text-probe-r03-b2026-09-08-20-53-57Z`, P4 `uart-visible-text-probe-r03-b2026-09-08-20-54-40Z`.
+Evidence: `hardware/designs/light2-harness-r03/tests/PORT-014-2026-09-08-21-22-24Z/`.
+No source, version, wiring, firmware, SD or hardware state changed in closeout;
+registry r34 remains unchanged. Ordinary VDU routing/mode activation and the
+held transport tasks are outside this completed diagnostic.

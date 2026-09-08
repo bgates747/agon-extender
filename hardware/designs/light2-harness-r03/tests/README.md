@@ -1,10 +1,12 @@
 # Light 2 r03 tests
 
-Current work: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
+Latest completed test: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
 following the [repeatable single-banner fixture](visible-text-repeatable.md).
 Both the first [r01 text result](PORT-014-2026-09-08-19-36-36Z/README.md) and
 [r02 text result](PORT-014-2026-09-08-19-52-44Z/README.md) retain their individual
-observations and limitations. The counting sample has not run on hardware.
+observations and limitations. The [r03 counting result](PORT-014-2026-09-08-21-22-24Z/README.md)
+passes exact UART bytes, full acquisition, browser rendering and Author-confirmed
+Agon smoke/prompt plus two additional reset runs.
 
 Earlier completed test: [UART RTS/CTS pause and timeout](uart-flow.md).
 [P4 deployment](PORT-011-2026-09-08-05-54-22Z/README.md) passed;

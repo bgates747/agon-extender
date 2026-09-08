@@ -7,10 +7,6 @@ item is removed.
 
 ## Active
 
-- [ ] **PORT-014 — EMOS UART text rendered by EDP in the browser**
-  - Started: 2026-09-08
-  - Details: [PORT-014](docs/tasks/PORT-014.md)
-
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
