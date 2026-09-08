@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r22
-updated_at: 2026-09-08T01:09:29Z
+registry_revision: r23
+updated_at: 2026-09-08T01:57:45Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -47,19 +47,22 @@ artifacts:
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
       - The Author accepted v0.2.0 on 2026-09-07 for the minimal ordinary Legacy boot milestone owned by EMOS QUAL-002; draft review builds are not deployment candidates.
-      - Candidate scope is the emos-ordinary-boot-r01 Legacy boot procedure; emulator and preliminary stock hardware smokes pass, while EMOS hardware qualification remains pending.
+      - The Author accepted the ordinary Legacy hardware smoke and evidence freeze on 2026-09-07; EMOS run QUAL-002-2026-09-08-01-23-44Z records three cold boots of agon-emos-v0.2.0-b2026-09-08-01-20-50Z with a documented installation-command deviation from r01.
+      - Firmware remains candidate; the bounded runtime pass does not qualify the original installation script or imply broader hardware qualification.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: emos-ordinary-boot
     kind: test_procedure
     identity_scheme: revision
-    latest_identity: emos-ordinary-boot-r01
+    latest_identity: emos-ordinary-boot-r02
     status: candidate
     variants: []
     description: Ordinary EMOS Legacy boot with onboard VDP, automatic SD smoke and MOS-clock progress.
     notes:
       - Revision r01 selects video mode 3 in autoexec, keeps the harness isolated, uses the normal MOS-only one-shot flash path, and records three cold boots.
-      - The Author-reported stock smoke is a prerequisite; no EMOS physical qualification is claimed before its recorded candidate run.
+      - Revision r01 is archived for evidence only because its uppercase MOS updater argument is invalid; do not execute that installation command.
+      - The Author authorized correction and freeze on 2026-09-07; revision r02 uses lowercase mos and the operator-confirmed bare payload filename from the card root, retaining the rename-before-flash guard and mode-3 smoke.
+      - The accepted three-cold-boot result remains an r01 run with an operator deviation; the combined r02 installation script has not itself been rerun on hardware.
       - WROOM recovery remains a contingency only; no UART1/P4 or parallel-transport qualification is included.
 
   - artifact_id: port-008-forward-qualification
