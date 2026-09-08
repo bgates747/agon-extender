@@ -55,6 +55,10 @@ console and 60 Hz clock source. P4's diagnostic omits browser/network startup.
 
 ## Results
 
-Pending. Preserve original trace, serial log, identities, command/extent metadata,
+Hardware result pending. [Installation media](PORT-013-2026-09-08-17-55-37Z/README.md)
+is prepared from the clean candidate; the card is safely unmounted and working
+v0.5.0 is retained for rollback. P4 staging is verified; flashing is pending.
+
+Preserve original trace, serial log, identities, command/extent metadata,
 measured waveform and Author screen/prompt observation beside this sheet.
 No sustained-load, analog-margin or complete startup qualification is implied.

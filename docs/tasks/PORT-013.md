@@ -1,6 +1,6 @@
 # PORT-013 — General Poll through the retained EDP handler
 
-Status: active; reviewed candidate preparation. Started: 2026-09-08.
+Status: active; clean candidates prepared, hardware installation pending. Started: 2026-09-08.
 
 ## Scope and decisions
 
@@ -109,3 +109,21 @@ source freeze and clean candidate preparation. Promote v0.6.0 and the General
 Poll fixture lifecycle metadata to candidate with reviewed implementation
 unchanged. Commit before building and retain passing v0.5.0/flow-r02 rollback.
 Physical flashing remains subject to the recorded bench authorization boundary.
+
+## Clean candidates and installation media — 2026-09-08
+
+Reviewed sources are frozen at Extender `6ed3232` and EMOS `e5d9921`, with
+unchanged builder `cf24304`. Both clean candidate builds carry timestamp
+`b2026-09-08-17-50-12Z`. EMOS passes the full configured/linked/runtime gate,
+all 71 host tests, stock/EMOS ordinary and bad-SD smoke, and bounded no-peer
+General Poll failure with prompt return. The P4 candidate is staged with
+matching hashes and verified stable USB identity; it is not yet flashed.
+
+[Installation-media record](../../hardware/designs/light2-harness-r03/tests/PORT-013-2026-09-08-17-55-37Z/README.md)
+records verified SD preparation and safe unmount. EMOS is 120901 bytes, CRC32
+`642B19C0`; working v0.5.0 remains as EMPREV.BIN, with older images archived
+and off-card backups verified. The card runs only the guarded installer.
+After the Author observes successful installation and remounts the card,
+prepare the frozen smoke/VDPPOLL media for the paired test. P4 flashing still
+requires authorization for this candidate. No physical General Poll result
+or processor reset/flash is claimed by this preparation.
