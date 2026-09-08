@@ -7,6 +7,10 @@ item is removed.
 
 ## Active
 
+- [ ] **PORT-012 — Prove UART flow control at 1,152,000 baud**
+  - Started: 2026-09-08
+  - Details: [PORT-012](docs/tasks/PORT-012.md)
+
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --

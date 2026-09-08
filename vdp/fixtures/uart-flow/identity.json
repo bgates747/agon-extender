@@ -1,0 +1,7 @@
+{
+  "artifact_id": "uart-flow-probe",
+  "source_identity": "uart-flow-probe-r02",
+  "status": "candidate",
+  "baud_rate": 1152000,
+  "note": "Author accepted v0.5.0 graphical review and approved source freeze/candidate preparation on 2026-09-08. Physical target-baud test pending."
+}

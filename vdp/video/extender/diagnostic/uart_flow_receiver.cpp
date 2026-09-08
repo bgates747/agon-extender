@@ -1,4 +1,4 @@
-// PORT-011 diagnostic peer. GPIO22 RX, GPIO12 TX, GPIO23 CTS and GPIO11 RTS.
+// PORT-012 diagnostic peer. GPIO22 RX, GPIO12 TX, GPIO23 CTS and GPIO11 RTS.
 // P4 deliberately controls RTS in software; UART1 hardware gates TX on CTS.
 // This contract begins in setup(), not in ROM/reset. No product activation.
 #include <Arduino.h>
@@ -55,7 +55,7 @@ void setup() {
   ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11, 1)); // Stop Agon before enabling RTS output.
   ESP_ERROR_CHECK(gpio_set_direction(GPIO_NUM_11, GPIO_MODE_OUTPUT));
   uart_config_t config = {};
-  config.baud_rate = 115200; config.data_bits = UART_DATA_8_BITS;
+  config.baud_rate = UART_FLOW_BAUD; config.data_bits = UART_DATA_8_BITS;
   config.parity = UART_PARITY_DISABLE; config.stop_bits = UART_STOP_BITS_1;
   config.flow_ctrl = UART_HW_FLOWCTRL_CTS; config.source_clk = UART_SCLK_DEFAULT;
   ESP_ERROR_CHECK(uart_param_config(port, &config));
@@ -66,7 +66,7 @@ void setup() {
   ESP_ERROR_CHECK(uart_driver_install(port, 1024, 0, 16, &events, 0));
   peer.since = millis();
   ESP_LOGI(tag, "UART FLOW RECEIVER %s (%s)", UART_FLOW_BUILD_ID, UART_FLOW_STATUS);
-  ESP_LOGI(tag, "RX=22 TX=12 CTS=23 RTS=11 baud=115200 8N1; HIGH=stop LOW=ready");
+  ESP_LOGI(tag, "RX=22 TX=12 CTS=23 RTS=11 baud=%d 8N1; HIGH=stop LOW=ready", UART_FLOW_BAUD);
   report();
 }
 void loop() {

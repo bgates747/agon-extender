@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Capture the PORT-011 RTS/CTS flow stages without changing board state.
+"""Capture the PORT-012 RTS/CTS flow stages without changing board state.
 
 Retains the accepted forward capture mechanics; the frozen historical forward
 procedure stays under its original task. This script owns flow-control verdicts.
@@ -17,7 +17,7 @@ import re
 import subprocess
 import time
 
-PROCEDURE_ID = "uart-flow-probe-r01"
+PROCEDURE_ID = "uart-flow-probe-r02"
 # Author-approved identity; physical capture still selects a frozen build.
 
 
@@ -89,7 +89,7 @@ def main():
     if normalize(props.get("ID_SERIAL_SHORT", "")) != normalize(args.expected_serial):
         p.error("USB serial identity mismatch")
     now = datetime.now(timezone.utc)
-    folder = args.output_parent / ("PORT-011-" + now.strftime("%Y-%m-%d-%H-%M-%SZ"))
+    folder = args.output_parent / ("PORT-012-" + now.strftime("%Y-%m-%d-%H-%M-%SZ"))
     folder.mkdir(parents=True, exist_ok=False)
     import serial
     port = serial.Serial(port=None, baudrate=115200, timeout=1)

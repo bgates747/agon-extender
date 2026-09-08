@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r29
+registry_revision: r30
 updated_at: 2026-09-08T05:50:26Z
 
 artifacts:
@@ -38,7 +38,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.4.0
+    latest_identity: agon-emos-v0.5.0
     status: candidate
     variants:
       - port008-forward
@@ -52,6 +52,7 @@ artifacts:
       - The Author approved v0.3.0 for PORT-010 emulator review: an explicit Legacy-only UARTTEST command adds bounded request/acknowledgement diagnostics without changing public MOS API slots. New builds remain draft until review and freeze.
       - After accepting the graphical review and source checkpoint, the Author authorized hardware candidate preparation on 2026-09-08. v0.3.0 advanced to candidate with unchanged implementation; its installation, physical SD/clock smoke, intentional no-reply case and acknowledged round trip passed under PORT-010.
       - The Author approved v0.4.0 under PORT-011 for the Legacy-only UARTFLOW command and explicit RTS/CTS diagnostics. The Author accepted the graphical timeout/prompt result and approved source freeze and deployment on 2026-09-08; v0.4.0 is candidate for the bounded flow procedure. The passing v0.3.0 image remains the rollback.
+      - The Author approved v0.5.0 under PORT-012 for UARTFLOW at 1152000 baud; graphical review and candidate preparation are approved; passing v0.4.0 remains the working rollback.
       - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: emos-ordinary-boot
@@ -288,7 +289,7 @@ artifacts:
   - artifact_id: uart-flow-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-flow-probe-r01
+    latest_identity: uart-flow-probe-r02
     status: candidate
     variants: [receiver]
     description: Bounded RTS/CTS pause, resume and blocked-sender UART diagnostic on r03.
@@ -297,3 +298,5 @@ artifacts:
       - Both ready/wait directions are exercised at 115200 baud, 8N1, under explicit EMOS UARTFLOW ownership in Legacy.
       - Existing v0.3.0 and round-trip r01 passing images remain installed until reviewed replacement candidates are prepared.
       - The Author accepted emulator review and approved freeze/deployment; r01 is candidate for the declared four-wire flow-control procedure. No physical flow result is claimed.
+      - The Author accepted the r01 hardware test under PORT-011, with its recorded shortened-acquisition exception.
+      - The Author approved r02, EMOS v0.5.0 and registry r30 under PORT-012 for the same exchange at 1152000 baud with a 24 MHz triggered capture. The Author subsequently accepted graphical review and approved source freeze and candidate preparation; both identities are candidate.
