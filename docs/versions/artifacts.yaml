@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r20
-updated_at: 2026-09-07T23:19:22Z
+registry_revision: r21
+updated_at: 2026-09-08T00:24:50Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,15 +38,16 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.0
-    status: rejected
+    latest_identity: agon-emos-v0.2.0
+    status: draft
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.
-      - Production-integration source is frozen in EMOS commit b823e0e, but no approved artifact identity or post-freeze qualified build exists; ordinary builds identify themselves as UNVERSIONED-DO-NOT-DEPLOY.
+      - The Author accepted v0.2.0 on 2026-09-07 for the minimal ordinary Legacy boot milestone owned by EMOS QUAL-002; draft review builds are not deployment candidates.
+      - UART1/P4 activation and parallel qualification remain outside that boot milestone; the fixed parallel composition retains its independent unversioned non-deployment marker.
 
   - artifact_id: port-008-forward-qualification
     kind: test_procedure
