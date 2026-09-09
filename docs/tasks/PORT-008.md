@@ -83,7 +83,10 @@ are kept separate from the new owned interrupt receiver. The Author approved
 EMOS v0.1.8 and registry r35; the accepted source checkpoint retains its
 reviewed draft build. INTEG-009 Work 3 passed Author emulator review with the
 separate `keyboard-api-probe-r01` SD exerciser; the Author authorized its
-source freeze and bounded Work 4 cleanup/recovery tests. It reuses the reviewed EMOS
+source freeze and bounded Work 4 cleanup/recovery tests. The Author approved
+`keyboard-api-probe-r02` and registry r37 for that emulator fixture. All nineteen
+paired and graphical stages pass; the Author confirmed the displayed recovery
+result and authorized freezing this bounded checkpoint. It reuses the reviewed EMOS
 v0.1.8 image unchanged; a generic isolated Fab UART1 peer exercises the real
 resident interrupt/parser and public MOS keyboard APIs. This does not qualify
 browser input or authorize a P4 change, physical flash or UART1 bench run.

@@ -9,9 +9,11 @@ item is removed.
 
 The order below applies to the keyboard slice in each detail file, not to
 completion of the whole task. Documentation was accepted for freeze on
-2026-09-08; implementation remains pending. The selected Agon/P4 path uses only r03 UART1.
-Resident EMOS keyboard implementation is next in the EMOS queue; module
-loading, runtime relocation and moslet-space residency are not prerequisites.
+2026-09-08. The resident EMOS receiver, API proof and bounded recovery emulator
+checkpoints are accepted and frozen. P4 keyboard sending, browser integration
+and physical/session qualification remain open. The selected Agon/P4 path uses
+only r03 UART1; module loading, runtime relocation and moslet-space residency
+are not prerequisites.
 
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08 (scope reconciliation only).
@@ -31,7 +33,7 @@ loading, runtime relocation and moslet-space residency are not prerequisites.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: UART keyboard planning first; r02/parallel work remains on hold.
+  - Status: EMOS keyboard emulator checkpoints frozen; P4 integration and paired qualification remain; r02/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 ## Other active work
