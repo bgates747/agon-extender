@@ -17,7 +17,7 @@ only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.
 
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
-  - Started: 2026-09-08 (scope reconciliation only).
+  - Started: 2026-09-08 (focused typing implementation now in review).
   - Finished: --
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
@@ -29,7 +29,7 @@ are not prerequisites.
 - [ ] **PORT-005 — Implement the processed-keyboard input adapter**
   - Started: 2026-09-08 (controlled P4 sender).
   - Finished: --
-  - Status: Controlled P4 sender, resident EMOS API effects and three Agon runs pass on hardware; browser event/session integration is next.
+  - Status: Controlled P4 sender, resident EMOS API effects and three Agon runs pass on hardware; focused browser typing is implemented for review; paired typing hardware remains pending.
   - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**

@@ -3,6 +3,9 @@
 #include <array>
 #include <cstring>
 #include <limits>
+#include <cerrno>
+#include <esp_timer.h>
+#include "extender/input/browser_keyboard.hpp"
 
 #include <esp_log.h>
 #include <lwip/sockets.h>
@@ -31,7 +34,13 @@ WiredNetworkService::WiredNetworkService(
     OpaqueMessageProvider &provider) noexcept
     : provider_(provider) {}
 
-WiredNetworkService::~WiredNetworkService() { stop(); }
+WiredNetworkService::~WiredNetworkService() {
+  stop();
+  // F012 containment: destruction with a live callback target is forbidden.
+  // The static product service has process lifetime; a failed stop is fatal
+  // for a hypothetical shorter-lived owner rather than a use-after-free.
+  if (server_.load()!=nullptr) abort();
+}
 
 void WiredNetworkService::increment(
     std::atomic<std::uint32_t> &counter) noexcept {
@@ -144,6 +153,7 @@ void WiredNetworkService::worker() noexcept {
   while (!stop_requested_.load(std::memory_order_acquire)) {
     auto const events = pending_events_.exchange(0, std::memory_order_acq_rel);
     if (events != 0) processEvents(events);
+    if (http_fault_) { stopHttp(); if (!http_fault_ && ETH.hasIP()) processEvents(EthernetGotIp); }
     if (state() == WiredServiceState::LeasedServing) attemptVideoSend();
     ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(kWorkerPollMilliseconds));
   }
@@ -195,6 +205,66 @@ void WiredNetworkService::reportLease() const noexcept {
            mask.c_str(), gateway.c_str(), dns.c_str());
 }
 
+namespace {
+int completeSend(httpd_handle_t, int fd, const char *data, size_t length, int flags) {
+  // F003: IDF 5.5.5 WebSocket callers accept a positive short send. This
+  // override returns the whole requested segment or an error, never a prefix.
+  size_t sent=0;
+  const auto start=esp_timer_get_time();
+  while (sent<length) {
+    if (esp_timer_get_time()-start>1000000) return HTTPD_SOCK_ERR_TIMEOUT;
+    const auto n=send(fd,data+sent,length-sent,flags);
+    if (n<0 && errno==EINTR) continue;
+    if (n<=0) return HTTPD_SOCK_ERR_FAIL;
+    sent+=size_t(n);
+  }
+  return int(sent);
+}
+}
+esp_err_t WiredNetworkService::socketOpened(httpd_handle_t server,int socket) noexcept {
+  return httpd_sess_set_send_override(server,socket,&completeSend);
+}
+esp_err_t WiredNetworkService::keyboardAdmission(httpd_req_t *request) noexcept {
+  // Deliberately trusted bench LAN, explicit same-origin opt-in. No credentials
+  // or general remote access claim. Host and Origin must equal the leased IP;
+  // attacker-controlled matching Host/Origin names cannot pass DNS rebinding.
+  char origin[80]{},host[64]{};
+  auto expected=ETH.localIP().toString();
+  if (httpd_req_get_hdr_value_str(request,"Host",host,sizeof(host))!=ESP_OK ||
+      httpd_req_get_hdr_value_str(request,"Origin",origin,sizeof(origin))!=ESP_OK ||
+      expected!=host || (String("http://")+expected)!=origin) return ESP_FAIL;
+  return ESP_OK;
+}
+esp_err_t WiredNetworkService::keyboardHandler(httpd_req_t *request) noexcept {
+  if (request->method==HTTP_GET) return ESP_OK;
+  const int socket=httpd_req_to_sockfd(request);
+  auto &keys=input::browserKeyboard();
+  httpd_ws_frame_t frame{};
+  auto rc=httpd_ws_recv_frame(request,&frame,0);
+  if (rc!=ESP_OK) { keys.close(socket); return rc; }
+  uint8_t bytes[4]{};
+  if (frame.type!=HTTPD_WS_TYPE_BINARY || (frame.len!=1 && frame.len!=4) || !frame.final) {
+    keys.close(socket); return ESP_FAIL;
+  }
+  frame.payload=bytes;
+  rc=httpd_ws_recv_frame(request,&frame,sizeof(bytes));
+  if (rc!=ESP_OK) { keys.close(socket); return rc; }
+  const auto now=uint32_t(esp_timer_get_time()/1000);
+  bool ok=false;
+  if (frame.len==1 && bytes[0]=='T') ok=keys.take(socket,now);
+  else if (frame.len==1 && bytes[0]=='H') ok=keys.heartbeat(socket,now);
+  else if (frame.len==1 && bytes[0]=='R') { keys.close(socket); ok=true; }
+  else if (frame.len==4 && bytes[0]=='K') ok=keys.push(socket,{bytes[1],bytes[2],bytes[3]},now);
+  if (!ok) { keys.close(socket); return ESP_FAIL; }
+  // Acknowledgements are bounded and ordered with input. The browser keeps
+  // at most one outstanding event, so congestion cannot become a stale queue.
+  httpd_ws_frame_t ack{}; uint8_t accepted='A';
+  ack.type=HTTPD_WS_TYPE_BINARY; ack.payload=&accepted; ack.len=1;
+  rc=httpd_ws_send_frame(request,&ack);
+  if (rc!=ESP_OK) keys.close(socket);
+  return rc;
+}
+
 esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
   auto const *asset = static_cast<web::EmbeddedAsset const *>(request->user_ctx);
   if (asset == nullptr || asset->data == nullptr || asset->size == 0)
@@ -207,10 +277,13 @@ esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
 }
 
 bool WiredNetworkService::startHttp() noexcept {
-  if (server_.load(std::memory_order_acquire) != nullptr) return true;
+  if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 6;
+  config.max_uri_handlers = 7;
+  config.open_fn = &socketOpened;
+  config.send_wait_timeout = 1;
+  config.recv_wait_timeout = 1;
   config.lru_purge_enable = false;
   config.global_user_ctx = this;
   config.global_user_ctx_free_fn = nullptr;
@@ -231,8 +304,8 @@ bool WiredNetworkService::startHttp() noexcept {
     uri.user_ctx = const_cast<web::EmbeddedAsset *>(&asset);
     if (httpd_register_uri_handler(server, &uri) != ESP_OK) {
       ESP_LOGE(kTag, "HTTP route registration failed: %s", asset.route);
-      server_.store(nullptr, std::memory_order_release);
-      httpd_stop(server);
+      http_fault_=true;
+      stopHttp();
       increment(http_start_failures_);
       return false;
     }
@@ -247,25 +320,40 @@ bool WiredNetworkService::startHttp() noexcept {
   video.ws_post_handshake_cb = &videoPostHandshake;
   if (httpd_register_uri_handler(server, &video) != ESP_OK) {
     ESP_LOGE(kTag, "video WebSocket registration failed");
-    server_.store(nullptr, std::memory_order_release);
-    httpd_stop(server);
+    http_fault_=true;
+    stopHttp();
     increment(http_start_failures_);
     return false;
   }
 
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+  httpd_uri_t keyboard{};
+  keyboard.uri="/keyboard"; keyboard.method=HTTP_GET;
+  keyboard.handler=&keyboardHandler; keyboard.user_ctx=this;
+  keyboard.is_websocket=true;
+  keyboard.ws_pre_handshake_cb=&keyboardAdmission;
+  if (httpd_register_uri_handler(server,&keyboard)!=ESP_OK) {
+    http_fault_=true; stopHttp(); increment(http_start_failures_); return false;
+  }
+#endif
+  http_fault_=false;
   increment(http_starts_);
   ESP_LOGI(kTag, "HTTP browser service ready");
   return true;
 }
 
 void WiredNetworkService::stopHttp() noexcept {
-  auto const server = server_.exchange(nullptr, std::memory_order_acq_rel);
+  auto const server = server_.load(std::memory_order_acquire);
+  input::browserKeyboard().ready(false);
   if (server == nullptr) return;
   if (httpd_stop(server) == ESP_OK) {
+    server_.store(nullptr,std::memory_order_release);
+    http_fault_=false;
     increment(http_stops_);
     ESP_LOGI(kTag, "HTTP browser service stopped");
   } else {
-    ESP_LOGE(kTag, "HTTP browser service stop failed");
+    http_fault_=true;
+    ESP_LOGE(kTag, "HTTP browser service stop failed; live handle retained");
   }
 }
 
@@ -405,6 +493,7 @@ void WiredNetworkService::performQueuedSend() noexcept {
 
 void WiredNetworkService::socketClosed(httpd_handle_t server,
                                        int socket) noexcept {
+  input::browserKeyboard().close(socket);
   auto *service = static_cast<WiredNetworkService *>(
       httpd_get_global_user_ctx(server));
   if (service != nullptr && service->video_.disconnect(socket))

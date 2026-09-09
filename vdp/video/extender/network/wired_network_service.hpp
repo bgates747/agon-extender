@@ -66,6 +66,9 @@ class WiredNetworkService final {
 
   static void workerEntry(void *context) noexcept;
   static void queuedSend(void *context) noexcept;
+  static esp_err_t socketOpened(httpd_handle_t server, int socket) noexcept;
+  static esp_err_t keyboardHandler(httpd_req_t *request) noexcept;
+  static esp_err_t keyboardAdmission(httpd_req_t *request) noexcept;
   static esp_err_t assetHandler(httpd_req_t *request) noexcept;
   static esp_err_t videoHandler(httpd_req_t *request) noexcept;
   static esp_err_t videoPostHandshake(httpd_req_t *request) noexcept;
@@ -91,6 +94,7 @@ class WiredNetworkService final {
   std::atomic<bool> stop_requested_{};
   std::atomic<TaskHandle_t> worker_task_{};
   std::atomic<httpd_handle_t> server_{};
+  bool http_fault_{}; // worker-owned; a failed rollback retains its live handle
   network_event_handle_t network_event_handle_{};
   bool network_event_registered_{};
 

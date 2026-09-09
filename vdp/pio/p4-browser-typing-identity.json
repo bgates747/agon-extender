@@ -1,0 +1,6 @@
+{
+  "artifact_id": "browser-keyboard-probe",
+  "source_identity": "browser-keyboard-probe-r01",
+  "status": "candidate",
+  "note": "Author supplied the expected graphical typing PASS and MOS return; standing version preapproval covers candidate preparation."
+}

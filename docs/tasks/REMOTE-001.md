@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: Browser-keyboard plan accepted for freeze, 2026-09-08; implementation not started.
-- Started: 2026-09-08 (scope reconciliation only).
+- Status: Focused typing implemented and automated checks pass; human emulator and hardware review pending, 2026-09-09.
+- Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
 ## Current increment
@@ -156,9 +156,85 @@ separate integration milestone; receiving keys does not redirect output.
    accepted policy and negative tests. Trusted LAN video acceptance alone does
    not authorize keyboard control.
 
-## Review boundary
+## Earlier review boundary
 
-The Author approved freezing this documentation on 2026-09-08 and requested
-a stop after committing. Implementation has not started. No new firmware,
-fixture, protocol revision, deployment or hardware operation is authorized by
-this documentation update. Existing artifact identities remain unchanged.
+The Author froze the documentation on 2026-09-08. Subsequent explicit
+authorization starts the implementation recorded below; the documentation
+freeze alone did not authorize deployment. Human review of the new executable
+behavior remains pending.
+
+## Current implementation increment — 2026-09-09
+
+Author authorized focused typing and preapproved versioning. Work now implements
+an autoexec-launched SD typing program using public EMOS keyboard APIs and the
+resident text gateway. EMOS v0.1.9 shares its UART1 IRQ receiver with foreground
+text transactions; browser-keyboard-probe-r01 selects the paired P4 composition.
+Registry r40 is draft. No ordinary CLI/ExCom routing is claimed. Bounded research
+and implementation notes live in the ignored agents/precis/browser-typing.md.
+Review and paired hardware acceptance remain pending; earlier freeze wording
+above records the preceding documentation gate, not a current prohibition.
+
+### Bounded r01 behavior under review
+
+1. The browser explicitly requests control with **Capture keyboard / take
+   control** (or a click in the live display). P4 accepts only while EMOS has
+   selected browser input and completed locale/General Poll admission. Canvas
+   focus gates subsequent keys; viewing alone sends no input.
+2. `/keyboard` is a same-origin WebSocket on the existing trusted bench LAN.
+   P4 checks Host and Origin against its current leased IPv4 address before
+   upgrade. There are no credentials, TLS, saved tokens or structured commands
+   in this bounded trial. This is an explicit local control opt-in, not a claim
+   of protection from other trusted-LAN hosts or arbitrary non-browser clients.
+3. Binary network messages are `T` (take), `H` (presence), or four bytes
+   `K physical-id modifiers down`. Physical IDs follow the supported USB HID
+   positions but are a browser/P4 encoding, not USB hardware traffic. P4 replies
+   `A` only to a syntactically accepted, owned message. This acknowledgement is
+   never forwarded on UART and is not proof of EMOS delivery. `R` releases.
+4. The browser sends one message at a time, at most 64 queued messages, with a
+   1.5-second acknowledgement deadline and 500 ms presence messages. P4 has a
+   64-event queue and a two-second lease checked by its process task independently
+   of HTTP progress. Overflow, malformed owner traffic, blur, hidden document,
+   disconnect and expiry revoke. P4 releases consumed held keys before the next
+   owner's queued events. An old owner cannot refresh an expired lease.
+5. This test explicitly selects `SET KEYBOARD 1` (US). P4 maps physical letters,
+   digits and punctuation, Shift/Caps and control letters. Browser repeat is the
+   initial repeat authority. Tab stays browser navigation; Alt/Meta shortcuts
+   release capture and stay local. Unsupported keys and composition/IME text
+   are not converted. No other locale or complete international keyboard claim.
+6. The SD program formats and echoes input through the existing resident text
+   gateway. EMOS receives keys throughout each acknowledged text transaction.
+   Enter starts a new line; Backspace erases within that line; lines wrap at
+   70 characters. Escape exits; five minutes ends the session without a key.
+   The program always removes its callback and requests mainboard input before
+   returning. A queue/transport/clock failure reports FAIL. It writes one result
+   byte and never changes video mode. The optional preview mirrors only text
+   already acknowledged by the UART peer onto mainboard VDU for emulator review.
+7. Hardware procedure and result meanings are defined beside the r03 design in
+   `tests/browser-keyboard-probe-r01.md`. Human emulator review, physical typing,
+   repeated reset and browser release/reacquisition remain unaccepted. Full CLI
+   display switching and ExCom activation remain separate work.
+
+Automated checks now cover stock virtual-key constants, host session mapping,
+repeat and release ordering, late/stale input, queue overflow, actual Chromium
+focus and acknowledgement loss, retained P4 key serialization, EMOS IRQ/text
+interleaving and an absent text acknowledgement with MOS return. Shared network
+F003/F012 containment is exercised by fault-injecting the maintained target
+method bodies. P4 compiles/links; this does not substitute for paired hardware.
+
+### Validation limitation discovered during preparation
+
+The artifact-registry/template/VDP-identity checks pass. The repository-wide
+version validator stops at an inherited r02 connectivity/profile hash mismatch.
+Both files match this task's starting HEAD byte-for-byte; the r02 circuit remains
+on hold. No r02 hash, frozen wiring or old evidence was silently rewritten to
+make that unrelated check pass. This does not change the r03 typing test scope.
+
+## Graphical typing review accepted — 2026-09-09
+
+The Author supplied the review screenshot showing `aB3?`, newline `z`,
+BROWSER TYPING PASS (8 edited characters), mainboard input and the MOS prompt.
+This accepts the bounded graphical result, not physical browser typing.
+Standing version preapproval advances registry r41 and the unchanged EMOS
+v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
+The reviewed draft builds and their results retain their original identities.
+Guarded Agon installation and paired P4/browser qualification are next.

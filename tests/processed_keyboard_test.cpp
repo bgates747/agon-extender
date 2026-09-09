@@ -82,10 +82,30 @@ class VDUStreamProcessor {
   void sendGeneralPoll();
 };
 #include "retained.inc"
+#include "extender/input/browser_keyboard.hpp"
 using agon::extender::input::ProcessedKey;
 int main(int argc,char **argv) {
   auto &q=agon::extender::input::processedKeyboard();
   ProcessedKey out;
+  if (argc==3 && std::string(argv[2])=="typing") {
+    VDUStreamProcessor p;
+    agon::extender::input::BrowserKeyboard browser;
+    browser.ready(true); assert(browser.take(1,0));
+    // aB3! Backspace ? Enter z Escape, with explicit Shift transitions.
+    const agon::extender::input::BrowserKeyboard::Event events[]={
+      {4,0,1},{4,0,0},{225,2,1},{5,2,1},{5,2,0},{225,0,0},
+      {32,0,1},{32,0,0},{225,2,1},{30,2,1},{30,2,0},{225,0,0},
+      {42,0,1},{42,0,0},{225,2,1},{56,2,1},{56,2,0},{225,0,0},
+      {40,0,1},{40,0,0},{29,0,1},{29,0,0},{41,0,1},{41,0,0}};
+    for (auto e:events) {
+      assert(browser.push(1,e,0)); assert(browser.pop(out,0));
+      assert(q.push(out)); p.handleKeyboardAndMouse();
+    }
+    assert(p.bytes.size()==sizeof(events)/sizeof(events[0])*6);
+    std::ofstream file(argv[1],std::ios::binary);
+    file.write(reinterpret_cast<const char *>(p.bytes.data()),p.bytes.size());
+    return 0;
+  }
   assert(!q.pop(out) && !q.push({0,0,249,1,0}) && !q.push({0,0,22,2,0}));
   for (unsigned i=0;i<q.capacity;++i) assert(q.push({uint8_t(i),0,22,uint8_t(i&1),0}));
   assert(!q.push({99,0,22,1,99}));

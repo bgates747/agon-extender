@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Bounded controlled-sender hardware proof passes, including two additional Agon-only resets; browser/session integration remains open.
+- Status: Bounded controlled-sender hardware proof passes, including two additional Agon-only resets; focused browser/session integration is implemented for review; physical typing remains pending.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
@@ -245,3 +245,24 @@ hashes still match. This completes supplemental collection for the last run,
 while the three-run confirmation remains the Author's observation. This
 checkpoint freezes the installation, deployment, passing capture and readback
 evidence before the next agreed browser-input increment.
+
+## Focused browser typing increment — 2026-09-09
+
+The Author authorized implementation and preapproved versioning. REMOTE-001's
+bounded r01 record now owns the browser-session/test scope. P4 maps US physical
+key events into the retained serializer; EMOS v0.1.9 receives keyboard packets
+while its resident text gateway sends the SD program's echo. UART1 remains
+1152000/8N1 on r03; ordinary VDU/ExCom routing and parallel work are unchanged.
+Registry r40 and browser-keyboard-probe-r01 are draft, with human review and
+physical typing pending. Earlier documentation-only freeze statements describe
+the previous gate and no longer prohibit this authorized increment.
+
+## Graphical typing review accepted — 2026-09-09
+
+The Author supplied the review screenshot showing `aB3?`, newline `z`,
+BROWSER TYPING PASS (8 edited characters), mainboard input and the MOS prompt.
+This accepts the bounded graphical result, not physical browser typing.
+Standing version preapproval advances registry r41 and the unchanged EMOS
+v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
+The reviewed draft builds and their results retain their original identities.
+Guarded Agon installation and paired P4/browser qualification are next.

@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Keyboard transport plan accepted for freeze, 2026-09-08. Earlier browser-video bench path accepted; initial-tranche resilience
+- Status: Bounded browser keyboard transport implemented for review, 2026-09-09. Earlier browser-video bench path accepted; initial-tranche resilience
   item 6 remains open.
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
@@ -10,8 +10,8 @@
 ## Current priority — focused keyboard transport
 
 The next tranche supports REMOTE-001's browser keyboard session over existing
-wired networking. Documentation is accepted for freeze; implementation has not
-started. Keep P4 UART keyboard packets stock-compatible: network event/session
+wired networking. The bounded endpoint and failure containment are implemented
+and host-tested; human review and physical typing remain pending. Keep P4 UART keyboard packets stock-compatible: network event/session
 encoding terminates on P4 and is not copied as a new UART envelope.
 
 1. [ ] Define a bounded input endpoint and session ownership, with explicit
@@ -263,3 +263,35 @@ remain in
 An upstream ESP-IDF origin for F003 or documentation inconsistency for F012
 does not defer the local product containment. Any upstream-report task split is
 pending REMED-002-D002.
+
+## Focused browser typing increment — 2026-09-09
+
+The Author authorized implementation and preapproved versioning. REMOTE-001's
+bounded r01 record now owns the browser-session/test scope. P4 maps US physical
+key events into the retained serializer; EMOS v0.1.9 receives keyboard packets
+while its resident text gateway sends the SD program's echo. UART1 remains
+1152000/8N1 on r03; ordinary VDU/ExCom routing and parallel work are unchanged.
+Registry r40 and browser-keyboard-probe-r01 are draft, with human review and
+physical typing pending. Earlier documentation-only freeze statements describe
+the previous gate and no longer prohibit this authorized increment.
+
+The new endpoint checks leased-IP Host/Origin before WebSocket upgrade and
+uses one controller, bounded ordered messages, acknowledgement timeout and
+process-task lease expiry. F003 now uses a complete-or-error socket send
+override; a positive prefix cannot masquerade as a completed frame. F012
+retains a live server handle after failed stop/registration rollback, retries
+from the network worker and prevents a duplicate server. Destruction refuses
+a live callback target. Host fault injection covers all seven route rollback
+positions and stop/retry, short sends and cross-site/rebinding rejection.
+Physical link-loss/failed-stop lifecycle qualification remains open; these
+checks do not close the full resilience work or claim remote authentication.
+
+## Graphical typing review accepted — 2026-09-09
+
+The Author supplied the review screenshot showing `aB3?`, newline `z`,
+BROWSER TYPING PASS (8 edited characters), mainboard input and the MOS prompt.
+This accepts the bounded graphical result, not physical browser typing.
+Standing version preapproval advances registry r41 and the unchanged EMOS
+v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
+The reviewed draft builds and their results retain their original identities.
+Guarded Agon installation and paired P4/browser qualification are next.

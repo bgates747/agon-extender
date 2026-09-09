@@ -27,7 +27,7 @@ def function(text, signature):
     return text[start:end]+'\n'
 
 
-def verify(output=None):
+def verify(output=None, typing=False):
     video = ROOT/'vdp/video'
     source = (video/'vdu_stream_processor.h').read_text()
     helpers = (video/'extender/input/unavailable_input_adapter.hpp').read_text()
@@ -53,13 +53,14 @@ def verify(output=None):
         subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-Wno-unused-parameter',
                         '-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(temp),'-I'+str(video),
                         str(ROOT/'tests/processed_keyboard_test.cpp'),'-o',str(binary)], check=True)
-        subprocess.run([str(binary), *([str(output.resolve())] if output else [])], check=True)
+        subprocess.run([str(binary), *([str(output.resolve())] if output else []), *(["typing"] if typing else [])], check=True)
     print('PASS: processed FIFO and retained keyboard callbacks/serializer')
     if output:
         paths = [Path(__file__), ROOT/'tests/processed_keyboard_test.cpp',
                  video/'agon.h', video/'vdu_stream_processor.h', video/'vdu_sys.h',
                  video/'vdp_variables.h', video/'utils/thread_safe_variant_deque.h',
                  video/'extender/input/processed_keyboard.hpp',
+                 video/'extender/input/browser_keyboard.hpp',
                  video/'extender/input/unavailable_input_adapter.hpp',
                  video/'extender/diagnostic/keyboard_probe_stream.hpp']
         sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
@@ -75,4 +76,6 @@ def verify(output=None):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emit-packets', type=Path)
-    verify(parser.parse_args().emit_packets)
+    parser.add_argument("--typing", action="store_true")
+    args=parser.parse_args()
+    verify(args.emit_packets, args.typing)

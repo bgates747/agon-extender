@@ -14,13 +14,18 @@
     </header>
 
     <section class="screen-shell">
-      <canvas id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
+      <canvas tabindex="0" id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
     </section>
 
     <section class="controls">
       <button id="connect" type="button">Connect</button>
       <button id="demo" type="button">Local test pattern</button>
       <span id="state">disconnected</span>
+    </section>
+
+    <section class="controls">
+      <button id="keyboard" type="button">Capture keyboard / take control</button>
+      <span id="keyboard-state">Keyboard released</span>
     </section>
 
     <dl class="stats">

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r39
-updated_at: 2026-09-09T02:59:40Z
+registry_revision: r41
+updated_at: 2026-09-09T04:38:06Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,12 +38,13 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.8
+    latest_identity: agon-emos-v0.1.9
     status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author preapproved this increment's identities on 2026-09-09. Version v0.1.9 adds shared resident text and keyboard UART transactions; graphical review passed and candidate preparation uses standing preapproval; physical typing remains pending.
       - Author approved registry r39 candidate promotion after the controlled keyboard graphical proof and source freeze; physical qualification remains pending.
       - Author approved v0.1.8 and registry r35 for INTEG-009 resident keyboard reception, then accepted the Work 2 emulator result and source freeze on 2026-09-08. The reviewed build remains draft; this checkpoint does not authorize deployment or claim P4/browser keyboard qualification.
       - Author approved v0.1.7 as a deliberate numbering reset after historical v0.7.0; the bounded resident text gateway is candidate after accepted graphical pacing review and SD deployment authorization; old build identities remain immutable.
@@ -358,3 +359,15 @@ artifacts:
       - Author approved r01 and registry r38 for twelve unsolicited stock key events after locale and matched General Poll admission at 1152000 baud.
       - P4 uses retained VDP acquisition, callbacks and packet serialization. EMOS v0.1.8 remains unchanged; the SD program only uses public MOS APIs.
       - Host and emulator checks precede source freeze and physical qualification. Browser focus, network ownership, mapping and session cleanup remain separate work.
+
+  - artifact_id: browser-keyboard-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: browser-keyboard-probe-r01
+    status: candidate
+    variants: []
+    description: Focused browser typing through resident EMOS and retained P4 rendering.
+    notes:
+      - Author preapproved versioning for this increment on 2026-09-09.
+      - Includes shared UART text/input, SD typing program and bounded browser session.
+      - Human emulator review passed; hardware acceptance remains pending.
