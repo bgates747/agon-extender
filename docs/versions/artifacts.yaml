@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r34
-updated_at: 2026-09-08T20:52:54Z
+registry_revision: r35
+updated_at: 2026-09-08T23:56:39Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,12 +38,13 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.7
-    status: candidate
+    latest_identity: agon-emos-v0.1.8
+    status: draft
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author approved v0.1.8 and registry r35 for INTEG-009 resident keyboard reception, then accepted the Work 2 emulator result and source freeze on 2026-09-08. The reviewed build remains draft; this checkpoint does not authorize deployment or claim P4/browser keyboard qualification.
       - Author approved v0.1.7 as a deliberate numbering reset after historical v0.7.0; the bounded resident text gateway is candidate after accepted graphical pacing review and SD deployment authorization; old build identities remain immutable.
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
       - The former port008-forward build profile is a fail-fast tombstone; its fixed-purpose sender, precommit General Poll, and predecessor lifecycle must not be selected.

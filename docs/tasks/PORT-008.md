@@ -75,6 +75,15 @@ P4/browser work retains its existing ownership and stock UART contract.
 
 ## Current keyboard tranche
 
+INTEG-009 Work 1 has an [accepted command/receiver contract](../../../agon-emos/docs/tasks/INTEG-009/keyboard-contract.md)
+and Work 2 is accepted and frozen in EMOS commit `2e5eb23`. Its matched General Poll barrier requires P4 to serialize
+previously queued keyboard frames before the reply; neither a new keyboard
+wire envelope nor per-key ACK is proposed. Existing polling-only RTS helpers
+are kept separate from the new owned interrupt receiver. The Author approved
+EMOS v0.1.8 and registry r35; the accepted source checkpoint retains its
+reviewed draft build. INTEG-009 Work 3 is next. This does not qualify
+browser input or authorize a P4 change, physical flash or UART1 bench run.
+
 1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
    Use r03 PC0/TX→P4 RX22, PC1/RX←P4 TX12, PC2/RTS→P4 CTS23 and
    PC3/CTS←P4 RTS11. Existing hardware/evidence identities are unchanged.
