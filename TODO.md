@@ -28,7 +28,7 @@ are not prerequisites.
 - [ ] **PORT-005 — Implement the processed-keyboard input adapter**
   - Started: 2026-09-08 (controlled P4 sender).
   - Finished: --
-  - Status: Controlled sender and paired SD observer pass graphical review; checkpoint frozen; candidate preparation and physical qualification precede browser integration.
+  - Status: Controlled sender and paired SD observer pass graphical review; checkpoint frozen; guarded MOS installation media ready, P4 staged; physical qualification precedes browser integration.
   - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**

@@ -96,7 +96,7 @@ and the ordinary SD observer, approving uart-keyboard-probe-r01 and registry
 r38. The implementation now shares the retained acquisition/callback/serializer
 path for twelve unsolicited key events after locale/General Poll admission.
 Host ordering/orchestration, paired EMOS CLI/timeout and Author-supplied
-graphical checks pass; freeze and physical qualification remain gates. The [r03 keyboard
+graphical checks pass; candidates are frozen and physical qualification remains pending. The [r03 keyboard
 sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
 defines the paired scope. Browser focus/network integration is the following
 increment, not part of this controlled sender proof.

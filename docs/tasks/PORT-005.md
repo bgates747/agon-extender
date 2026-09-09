@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Bounded P4 sender implemented; graphical proof passed, source freeze pending.
+- Status: Bounded sender checkpoint frozen; candidates and guarded MOS installation media ready.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
@@ -185,7 +185,7 @@ A second run admits the source but withholds all keys; the SD observer reaches
 its deadline, removes its callback and returns to mainboard input and MOS.
 EMOS v0.1.8 and the reviewed UART1 emulator runtime remain byte-identical.
 The isolated runtime exchanges bytes and cannot prove physical baud or CTS/RTS.
-The supplied screenshot confirms graphical PASS; explicit source freeze remains pending.
+The supplied screenshot confirms graphical PASS; the Author subsequently froze the checkpoint and approved candidate preparation.
 
 The [paired hardware sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
 owns the first physical sequence and future results. Candidate production,
@@ -198,6 +198,8 @@ The Author supplied the matching graphical screenshot: unchanged EMOS v0.1.8,
 SD/CLOCK PASS, twelve-packet/callback/counter PASS, held-key/map/modifier/repeat
 PASS, mainboard input restored and final MOS prompt. The controlled peer also
 records twelve keys and PASS. This confirms the bounded emulator result;
-source-freeze approval and physical P4/Agon qualification remain pending.
+the source checkpoint is frozen and physical P4/Agon qualification remains pending.
 
 The Author accepted the graphical result and explicitly authorized freezing this bounded sender/observer checkpoint, then preparing the paired hardware test. Reviewed builds retain their original draft status; candidate packaging and physical qualification follow separately.
+
+Candidate preparation and SD handover are recorded beside r03 in `PORT-005-2026-09-09-03-10-57Z`. Both exact candidate endpoint builds and the SD observer pass their applicable automatic checks. The P4 is staged only; physical MOS installation, P4 deployment and paired qualification remain pending. The generic builder portability correction preserves the reviewed runtime executable hashes exactly.

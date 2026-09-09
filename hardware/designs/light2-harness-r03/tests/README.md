@@ -2,7 +2,7 @@
 
 Next bounded test: [controlled P4 keyboard sender](keyboard-sender.md).
 The draft uses the resident EMOS receiver and an SD-loaded API observer.
-Software/emulator review passes; candidate freeze and physical deployment remain gates.
+Software/emulator review and candidate builds pass. The [guarded MOS installation media](PORT-005-2026-09-09-03-10-57Z/README.md) is ready; physical deployment and paired qualification remain pending.
 
 Latest completed test: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
 following the [repeatable single-banner fixture](visible-text-repeatable.md).

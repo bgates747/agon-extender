@@ -1,0 +1,37 @@
+{
+  "run_id": "PORT-005-2026-09-09-03-10-57Z",
+  "operation": "Guarded MOS-only SD installation preparation",
+  "status": "prepared and safely unmounted; physical installation pending",
+  "procedure_identity": "uart-keyboard-probe-r01",
+  "registry_revision": "r39",
+  "emos_build_id": "agon-emos-v0.1.8-b2026-09-09-03-07-18Z",
+  "emos_firmware_sha256": "7d2716d292525822dc6954d535d75cadf7566779159d2e72826ce0d6f3b6d56e",
+  "emos_firmware_bytes": 126363,
+  "sd_fixture_build_id": "uart-keyboard-probe-r01-b2026-09-09-03-09-38Z",
+  "sd_fixture_sha256": "42db808141117deaddcff9f613578eaca64c80f1cffc121cce0c90624028c906",
+  "p4_build_id": "uart-keyboard-probe-r01-b2026-09-09-03-01-48Z",
+  "source_commits": {
+    "emos": "86bfe8e387ebe479b49e404d138564b5bc8c8e32",
+    "builder": "85a3be5eea1d97cc2a8f336179e8c2f410731498",
+    "p4": "2426534dc793da1ac56587d742d35097a156abbb"
+  },
+  "validation": {
+    "configured_emos_qualification": "pass",
+    "linked_baud_and_port_checks": "pass",
+    "ordinary_and_bad_sd_smoke": "pass",
+    "mainboard_and_absent_peer": "pass",
+    "paired_twelve_keys": "pass",
+    "admitted_without_keys_deadline": "pass",
+    "p4_build_and_embedded_identity": "pass",
+    "p4_remote_hashes_and_stable_device_identity": "pass",
+    "hardware_installation": "pending",
+    "physical_keyboard_test": "pending"
+  },
+  "rollback": {
+    "source_identity": "agon-emos-v0.1.7",
+    "sha256": "61f8fe2763b48de0be270c7d79e1089653b12160a788ee8975a3f1defeb991fe",
+    "on_card": "EMPREV.BIN",
+    "previous_v070_archive": "EMV070.BIN",
+    "local_backup_verified": true
+  }
+}
