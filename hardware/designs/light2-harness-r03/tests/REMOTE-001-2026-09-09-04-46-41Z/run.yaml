@@ -1,0 +1,29 @@
+run_id: REMOTE-001-2026-09-09-04-46-41Z
+operation: P4 deployment and paired typing-test handover
+procedure: browser-keyboard-probe-r01
+outcome: deployment_verified_test_pending
+p4:
+  run_id: REMOTE-001-2026-09-09-04-46-41Z
+  build_id: browser-keyboard-probe-r01-b2026-09-09-04-38-19Z
+  factory_sha256: 869c8d7acb2b1549c3a40d48a2d7ae3229c33a32b2794f44c07b030277e116aa
+  write_verified: true
+  typing_startup_observed: true
+  uart_transfer_test: pending
+emos:
+  build_id: agon-emos-v0.1.9-b2026-09-09-04-38-19Z
+  installation: Author reports successful flash; consumed SD payload hash verified
+  consumed_payload_sha256: 0310eb73ad418d8176cd6332f61eb81eca12fbdfc939ad3986fe12675ab99b2e
+sd:
+  sample_build_id: browser-keyboard-probe-r01-b2026-09-09-04-40-34Z
+  files_sha256:
+    bin/EMBOOT.BIN: 9122b77703ee437660cb384118746353738d59654a08647afafae1ae43c8de9b
+    emos-boot/check.txt: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+    bin/BTYPE.BIN: 3f5ee573a75e521170cd79aa04ff1e7857dd8235829e95fdb46f4a5e380a60b9
+    autoexec.txt: c6e82c26d27ffb2ac0856927160a259d94b53fba3fae3aa657859800353db1cc
+  unmounted: true
+  installer_removed: true
+boot_observation:
+- Exact candidate identity and expected UART pin/baud declaration
+- DHCP acquired and HTTP service ready
+- No typing failure or unsolicited Agon admission during startup
+physical_typing: pending operator test

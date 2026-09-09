@@ -1,0 +1,3 @@
+I (1746) keyboard: BROWSER TYPING browser-keyboard-probe-r01-b2026-09-09-04-38-19Z (candidate)
+I (1747) keyboard: RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+I (4876) extender_net: HTTP browser service ready
