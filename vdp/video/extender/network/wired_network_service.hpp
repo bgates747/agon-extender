@@ -69,6 +69,7 @@ class WiredNetworkService final {
   static esp_err_t socketOpened(httpd_handle_t server, int socket) noexcept;
   static esp_err_t keyboardHandler(httpd_req_t *request) noexcept;
   static esp_err_t keyboardAdmission(httpd_req_t *request) noexcept;
+  static esp_err_t traceHandler(httpd_req_t *request) noexcept;
   static esp_err_t assetHandler(httpd_req_t *request) noexcept;
   static esp_err_t videoHandler(httpd_req_t *request) noexcept;
   static esp_err_t videoPostHandshake(httpd_req_t *request) noexcept;

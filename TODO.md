@@ -12,7 +12,8 @@ completion of the whole task. Documentation was accepted for freeze on
 2026-09-08. The resident EMOS receiver, API proof and bounded recovery emulator
 checkpoints are accepted and frozen. Controlled P4 keyboard sending and EMOS
 API effects pass on hardware. Physical browser typing, Enter and Backspace
-now work; latency and apparent focus/capture loss are the next investigation.
+now work; browser/P4 timing instrumentation is ready for a paired observation
+of latency and keyboard/video disconnections.
 Broader physical/session qualification remains open. The selected Agon/P4 path uses
 only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.

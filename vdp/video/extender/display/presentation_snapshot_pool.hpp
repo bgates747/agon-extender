@@ -167,6 +167,9 @@ class PresentationSnapshotPool final {
   std::uint64_t pending_boundary_time_us_{};
   std::uint64_t pending_present_period_us_{};
   std::uint64_t generation_{};
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+  std::uint64_t trace_compose_start_{},trace_compose_end_{};
+#endif
   std::uint64_t last_publication_time_us_{};
   bool has_publication_time_{};
 

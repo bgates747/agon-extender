@@ -23,6 +23,7 @@ def main():
 #include <cstdio>
 #include <string>
 #include <cstring>
+template<typename... T> void trace(T...) {}
 using httpd_handle_t=void *; using esp_err_t=int;
 constexpr int ESP_OK=0, HTTP_GET=0, HTTPD_SOCK_ERR_TIMEOUT=-2, HTTPD_SOCK_ERR_FAIL=-1;
 #define ESP_LOGE(...) ((void)0)
@@ -58,6 +59,7 @@ class WiredNetworkService {
  static int assetHandler(void*){return 0;} static int videoHandler(void*){return 0;}
  static int videoPostHandshake(void*){return 0;} static int keyboardHandler(void*){return 0;}
  static int keyboardAdmission(httpd_req_t*) noexcept;
+ static int traceHandler(void*){return 0;}
  bool startHttp() noexcept; void stopHttp() noexcept;
 };
 '''
@@ -73,7 +75,7 @@ int main() {
  assert(completeSend(nullptr,1,data,12,0)==12 && sends==4);
  send_error=-1; assert(completeSend(nullptr,1,data,12,0)<0);
  // Each registration position, including the new writable endpoint.
- for(int failure=1;failure<=7;++failure) {
+ for(int failure=1;failure<=8;++failure) {
   starts=stops=registrations=0;fail_at=failure;stop_error=-1;
   WiredNetworkService s;
   assert(!s.startHttp()); assert(starts==1&&stops==1&&s.server_!=nullptr&&s.http_fault_);
@@ -83,7 +85,7 @@ int main() {
   fail_at=0;registrations=0;assert(s.startHttp());assert(starts==2);
   assert(s.startHttp()&&starts==2);s.stopHttp();assert(s.server_==nullptr);
  }
- puts("PASS: positive short writes complete; all seven registration failures retain live handles across failed stop/retry");
+ puts("PASS: positive short writes complete; all eight registration failures retain live handles across failed stop/retry");
 }
 '''
     with tempfile.TemporaryDirectory() as temp:

@@ -2,6 +2,7 @@
 // state transitions; the producer never spins and the network owner never
 // retains the guard while handling or transmitting pixel bytes.
 #include "extender/display/presentation_snapshot_pool.hpp"
+#include "extender/diagnostic/browser_trace.hpp"
 
 #include <limits>
 
@@ -145,6 +146,11 @@ void PresentationSnapshotPool::finalizePendingLocked() noexcept {
       old.generation = 0;
       old.present_period_us = 0;
     }
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+    // Match the existing opaque token/EVF sequence to the actual composition
+    // interval, including publication deferred by a busy snapshot lock.
+    diagnostic::trace("snapshot",generation_+1,trace_compose_start_,trace_compose_end_);
+#endif
     ++generation_;
     producer.generation = generation_;
     producer.present_period_us = pending_present_period_us_;
@@ -204,6 +210,9 @@ SnapshotBeginResult PresentationSnapshotPool::tryBegin(
   pending_boundary_time_us_ = boundary_time_us;
   unlock();
 
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+  trace_compose_start_=esp_timer_get_time();
+#endif
   view = {slot.pixels,
           kPresentationSnapshotBytesPerSlot /
               kPresentationSnapshotBytesPerPixel,
@@ -216,6 +225,9 @@ SnapshotFinishResult PresentationSnapshotPool::finish(
     CompositionResult composition,
     std::uint64_t present_period_us) noexcept {
   if (producer_slot_ < 0) return SnapshotFinishResult::NoProducer;
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+  trace_compose_end_=esp_timer_get_time();
+#endif
   if (composition == CompositionResult::Ok) {
     pending_action_ = PendingAction::Publish;
     pending_present_period_us_ = present_period_us;

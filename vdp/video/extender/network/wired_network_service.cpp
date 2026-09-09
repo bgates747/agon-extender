@@ -4,6 +4,9 @@
 #include <cstring>
 #include <limits>
 #include <cerrno>
+#include <cstdio>
+#include <cstdlib>
+#include "extender/diagnostic/browser_trace.hpp"
 #include <esp_timer.h>
 #include "extender/input/browser_keyboard.hpp"
 
@@ -11,6 +14,9 @@
 #include <lwip/sockets.h>
 
 #include "extender/web/embedded_assets.hpp"
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+#include "../../../.pio/build-identities/p4-browser-typing/build_identity.hpp"
+#endif
 
 #if !CONFIG_HTTPD_WS_SUPPORT
 #error "PORT-006 requires CONFIG_HTTPD_WS_SUPPORT"
@@ -20,6 +26,7 @@
 #endif
 
 namespace agon::extender::network {
+using diagnostic::trace;
 namespace {
 
 constexpr char kTag[] = "extender_net";
@@ -131,6 +138,7 @@ void WiredNetworkService::notifyWorker() noexcept {
 }
 
 void WiredNetworkService::onNetworkEvent(arduino_event_id_t event) noexcept {
+  trace("network_event",0,event);
   std::uint32_t bit = 0;
   switch (event) {
     case ARDUINO_EVENT_ETH_START: bit = EthernetStarted; break;
@@ -212,16 +220,20 @@ int completeSend(httpd_handle_t, int fd, const char *data, size_t length, int fl
   size_t sent=0;
   const auto start=esp_timer_get_time();
   while (sent<length) {
-    if (esp_timer_get_time()-start>1000000) return HTTPD_SOCK_ERR_TIMEOUT;
+    if (esp_timer_get_time()-start>1000000) {
+      trace("send_budget",fd,length,sent,esp_timer_get_time()-start);
+      return HTTPD_SOCK_ERR_TIMEOUT;
+    }
     const auto n=send(fd,data+sent,length-sent,flags);
     if (n<0 && errno==EINTR) continue;
-    if (n<=0) return HTTPD_SOCK_ERR_FAIL;
+    if (n<=0) { trace("send_error",fd,length,sent,n<0?errno:0); return HTTPD_SOCK_ERR_FAIL; }
     sent+=size_t(n);
   }
   return int(sent);
 }
 }
 esp_err_t WiredNetworkService::socketOpened(httpd_handle_t server,int socket) noexcept {
+  trace("socket_open",socket);
   return httpd_sess_set_send_override(server,socket,&completeSend);
 }
 esp_err_t WiredNetworkService::keyboardAdmission(httpd_req_t *request) noexcept {
@@ -235,35 +247,91 @@ esp_err_t WiredNetworkService::keyboardAdmission(httpd_req_t *request) noexcept 
       expected!=host || (String("http://")+expected)!=origin) return ESP_FAIL;
   return ESP_OK;
 }
+namespace {
+struct KeyTraceContext { uint32_t session{}, ordinal{}; };
+uint32_t traceSession(httpd_req_t *r) {
+  char query[80]{}, value[20]{};
+  if(httpd_req_get_url_query_str(r,query,sizeof(query))!=ESP_OK ||
+     httpd_query_key_value(query,"sid",value,sizeof(value))!=ESP_OK) return 0;
+  return uint32_t(strtoul(value,nullptr,10));
+}
+}
 esp_err_t WiredNetworkService::keyboardHandler(httpd_req_t *request) noexcept {
-  if (request->method==HTTP_GET) return ESP_OK;
   const int socket=httpd_req_to_sockfd(request);
+  if (request->method==HTTP_GET) {
+    auto *ctx=static_cast<KeyTraceContext *>(calloc(1,sizeof(KeyTraceContext)));
+    if(!ctx) return ESP_ERR_NO_MEM;
+    ctx->session=traceSession(request); request->sess_ctx=ctx; request->free_ctx=free;
+    trace("keyboard_open",ctx->session,socket);
+    return ESP_OK;
+  }
+  auto *ctx=static_cast<KeyTraceContext *>(request->sess_ctx);
+  if(!ctx) return ESP_FAIL;
   auto &keys=input::browserKeyboard();
   httpd_ws_frame_t frame{};
   auto rc=httpd_ws_recv_frame(request,&frame,0);
-  if (rc!=ESP_OK) { keys.close(socket); return rc; }
+  if (rc!=ESP_OK) { trace("key_recv_header_error",ctx->session,socket,rc); keys.close(socket); return rc; }
   uint8_t bytes[4]{};
   if (frame.type!=HTTPD_WS_TYPE_BINARY || (frame.len!=1 && frame.len!=4) || !frame.final) {
+    trace("key_frame_rejected",ctx->session,socket,frame.type,frame.len);
     keys.close(socket); return ESP_FAIL;
   }
   frame.payload=bytes;
   rc=httpd_ws_recv_frame(request,&frame,sizeof(bytes));
-  if (rc!=ESP_OK) { keys.close(socket); return rc; }
+  if (rc!=ESP_OK) { trace("key_recv_payload_error",ctx->session,socket,rc); keys.close(socket); return rc; }
+  ++ctx->ordinal;
+  const auto packed=uint32_t(bytes[0])|(uint32_t(bytes[1])<<8)|(uint32_t(bytes[2])<<16)|(uint32_t(bytes[3])<<24);
+  trace("key_message",ctx->session,ctx->ordinal,packed,socket);
   const auto now=uint32_t(esp_timer_get_time()/1000);
   bool ok=false;
   if (frame.len==1 && bytes[0]=='T') ok=keys.take(socket,now);
   else if (frame.len==1 && bytes[0]=='H') ok=keys.heartbeat(socket,now);
   else if (frame.len==1 && bytes[0]=='R') { keys.close(socket); ok=true; }
-  else if (frame.len==4 && bytes[0]=='K') ok=keys.push(socket,{bytes[1],bytes[2],bytes[3]},now);
-  if (!ok) { keys.close(socket); return ESP_FAIL; }
-  // Acknowledgements are bounded and ordered with input. The browser keeps
-  // at most one outstanding event, so congestion cannot become a stale queue.
+  else if (frame.len==4 && bytes[0]=='K') ok=keys.push(socket,{bytes[1],bytes[2],bytes[3],ctx->session,ctx->ordinal},now);
+  if (!ok) { trace("key_rejected",ctx->session,ctx->ordinal,packed,socket); keys.close(socket); return ESP_FAIL; }
+  // Acknowledgement is admission, not confirmation of EMOS consumption.
   httpd_ws_frame_t ack{}; uint8_t accepted='A';
   ack.type=HTTPD_WS_TYPE_BINARY; ack.payload=&accepted; ack.len=1;
+  trace("key_ack_start",ctx->session,ctx->ordinal);
   rc=httpd_ws_send_frame(request,&ack);
+  trace("key_ack_end",ctx->session,ctx->ordinal,rc);
   if (rc!=ESP_OK) keys.close(socket);
   return rc;
 }
+
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+esp_err_t WiredNetworkService::traceHandler(httpd_req_t *request) noexcept {
+  // Explicit after-run export only. It shares HTTP execution with video; the
+  // page disconnects video first. Never poll this endpoint during measurement.
+  auto &t=diagnostic::browserTrace();
+  char query[40]{};
+  httpd_req_get_url_query_str(request,query,sizeof(query));
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  if(!strcmp(query,"on") || !strcmp(query,"off")) {
+    t.configure(!strcmp(query,"on"));
+    return httpd_resp_sendstr(request,t.available()?"ok":"trace allocation failed");
+  }
+  auto total=t.freeze();
+  httpd_resp_set_type(request,"text/plain");
+  char chunk[2048];
+  int used=snprintf(chunk,sizeof(chunk),"# " AGON_EXTENDER_BUILD_ID " (" AGON_EXTENDER_ARTIFACT_STATUS ")\n# browser timing v1; us=P4 monotonic; capacity=%u; total=%llu; overwritten=%llu; available=%d; cost_us=%lld; max_cost_us=%lld\nindex,us,event,id,a,b,c\n",
+    t.capacity,(unsigned long long)total,(unsigned long long)(total>t.capacity?total-t.capacity:0),t.available(),
+    (long long)t.cost_us(),(long long)t.max_cost_us());
+  diagnostic::TraceRecord row{};
+  for(auto i=total>t.capacity?total-t.capacity:0;i<total;++i) {
+    if(!t.read(i,row)) continue;
+    if(used>int(sizeof(chunk))-200) {
+      if(httpd_resp_send_chunk(request,chunk,used)!=ESP_OK) return ESP_FAIL;
+      used=0;
+    }
+    used+=snprintf(chunk+used,sizeof(chunk)-used,"%llu,%lld,%s,%llu,%lld,%lld,%lld\n",
+      (unsigned long long)i,(long long)row.us,row.event,(unsigned long long)row.id,
+      (long long)row.a,(long long)row.b,(long long)row.c);
+  }
+  if(used && httpd_resp_send_chunk(request,chunk,used)!=ESP_OK) return ESP_FAIL;
+  return httpd_resp_send_chunk(request,nullptr,0);
+}
+#endif
 
 esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
   auto const *asset = static_cast<web::EmbeddedAsset const *>(request->user_ctx);
@@ -280,7 +348,7 @@ bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 7;
+  config.max_uri_handlers = 8;
   config.open_fn = &socketOpened;
   config.send_wait_timeout = 1;
   config.recv_wait_timeout = 1;
@@ -336,6 +404,13 @@ bool WiredNetworkService::startHttp() noexcept {
     http_fault_=true; stopHttp(); increment(http_start_failures_); return false;
   }
 #endif
+#ifdef AGON_EXTENDER_BROWSER_TYPING
+  httpd_uri_t timing{};
+  timing.uri="/diagnostics"; timing.method=HTTP_GET; timing.handler=&traceHandler;
+  if(httpd_register_uri_handler(server,&timing)!=ESP_OK) {
+    http_fault_=true; stopHttp(); increment(http_start_failures_); return false;
+  }
+#endif
   http_fault_=false;
   increment(http_starts_);
   ESP_LOGI(kTag, "HTTP browser service ready");
@@ -362,6 +437,7 @@ esp_err_t WiredNetworkService::videoPostHandshake(
   auto *service = static_cast<WiredNetworkService *>(request->user_ctx);
   if (service == nullptr) return ESP_FAIL;
   auto const socket = httpd_req_to_sockfd(request);
+  trace("video_open",traceSession(request),socket);
   if (service->video_.connect(socket) == VideoConnectResult::Accepted) {
     ESP_LOGI(kTag, "video client accepted fd=%d", socket);
     return ESP_OK;
@@ -374,6 +450,7 @@ esp_err_t WiredNetworkService::videoPostHandshake(
 void WiredNetworkService::closeVideo(httpd_req_t *request,
                                      std::uint16_t code,
                                      char const *reason) noexcept {
+  trace("video_close_requested",httpd_req_to_sockfd(request),code);
   std::array<std::uint8_t, 64> payload{};
   payload[0] = static_cast<std::uint8_t>(code >> 8U);
   payload[1] = static_cast<std::uint8_t>(code);
@@ -441,6 +518,8 @@ void WiredNetworkService::attemptVideoSend() noexcept {
   }
 
   auto const server = server_.load(std::memory_order_acquire);
+  const auto queued_view=video_.sendingView(video_.client());
+  trace("video_queued",queued_view.token,video_.client());
   if (server == nullptr ||
       httpd_queue_work(server, &queuedSend, this) != ESP_OK) {
     increment(queue_failures_);
@@ -469,6 +548,7 @@ void WiredNetworkService::performQueuedSend() noexcept {
     return;
   }
 
+  trace("video_send_start",view.token,socket,view.total_bytes);
   esp_err_t result = ESP_OK;
   for (std::size_t index = 0; index < view.segment_count; ++index) {
     httpd_ws_frame_t frame{};
@@ -481,6 +561,7 @@ void WiredNetworkService::performQueuedSend() noexcept {
     if (result != ESP_OK) break;
   }
 
+  trace("video_send_end",view.token,socket,result);
   if (result == ESP_OK) {
     video_.complete(socket, OpaqueReleaseDisposition::Sent);
   } else {
@@ -493,6 +574,7 @@ void WiredNetworkService::performQueuedSend() noexcept {
 
 void WiredNetworkService::socketClosed(httpd_handle_t server,
                                        int socket) noexcept {
+  trace("socket_close",socket);
   input::browserKeyboard().close(socket);
   auto *service = static_cast<WiredNetworkService *>(
       httpd_get_global_user_ctx(server));

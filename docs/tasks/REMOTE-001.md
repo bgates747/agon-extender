@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Physical typing, Enter and Backspace work; latency and apparent focus/capture loss remain unresolved, 2026-09-09.
+- Status: Physical typing/editing and reconnect/recapture work; latency and keyboard/video disconnections remain unresolved. Measurement instrumentation implemented; paired observation preparation in progress, 2026-09-09.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
@@ -266,3 +266,136 @@ no full hardware PASS or qualification promotion is claimed.
 
 The Author requested this checkpoint and a stop for the night. No investigation,
 new firmware or additional hardware operation is included in this checkpoint.
+
+## Morning connection-loss follow-up — 2026-09-09
+
+The operator feedback now records keyboard socket closure preceding video
+disconnection by 135 received frames, with reconnect/recapture restoring typing
+without disturbing Agon. I002 must distinguish the socket-close initiator and
+reason; ordinary DOM blur alone does not explain the first displayed message.
+Escape/MOS return remains unconfirmed.
+
+Bounded source inspection identifies a concrete scheduling hypothesis: video
+frame sends and keyboard handling share the HTTP server task, while the typing
+change sets socket send/receive timeouts to one second. Browser acknowledgement
+and P4 owner-lease deadlines are 1.5 and 2 seconds respectively. Inspect send
+duration, heartbeat/acknowledgement timing and owner-revocation reasons together
+before selecting a repair. No measured root cause is claimed. Existing mocked
+WebSocket UI tests do not cover this combined physical load; add representative
+coverage with the eventual repair. No firmware or hardware changes accompany
+this follow-up.
+
+## Proposed measurement increment — I001/I002
+
+**State:** Author authorized implementation and hardware preparation on
+2026-09-09. Browser/P4 instrumentation and automated checks are complete;
+operator measurements and repair review remain pending.
+
+### Objective and scope
+
+Locate visible typing delay and identify the initiator/reason of keyboard and
+video socket closure in the current SD typing sample. Measure the existing
+browser → P4 → EMOS/sample → P4 → browser path before choosing a repair.
+This is not ordinary CLI/ExCom qualification, a stock-performance equivalence
+claim, a timeout-policy change or a parallel-transport increment.
+
+### Work items
+
+1. [x] **I001-M1 — Define correlated checkpoints.** Browser records monotonic
+   key-event, socket-send, acknowledgement, frame-receive and presentation
+   timestamps. P4 records event admission, keyboard-packet UART submission and
+   completion where observable, returned text receipt, render completion,
+   frame identity, and video-send start/end. Document whether each checkpoint
+   observes queue admission, driver completion or physical transmission; do
+   not label a queued write as bytes already sent on the wire. Use event and
+   session identifiers in diagnostic records without modifying stock VDP
+   keyboard packets. Start with separated, single printable keys so the
+   returned text can be associated unambiguously; discard ambiguous matches.
+2. [x] **I001-M2 — Calculate intervals without synchronized clocks.**
+   Browser measures event-to-acknowledgement and event-to-presentation on its
+   own clock. P4 measures admission-to-acknowledgement handling, UART round
+   trip, rendering and send duration on its own clock. A browser round trip
+   includes server handling; it is not an exact one-way Ethernet measurement.
+   Never subtract a P4 timestamp from a browser timestamp. Associate each
+   rendered update with its actual video frame identifier so browser records
+   refer to the frame containing the returned character, not merely the next
+   received frame. Record superseded/dropped frames explicitly. Browser
+   presentation instrumentation identifies a rendering submission/frame
+   callback, not a measured physical monitor scanout; label that limit.
+3. [x] **I002-M3 — Record connection lifecycle alongside timing.** P4 records
+   heartbeat processing, owner-lease expiry/revocation reason, UART faults,
+   socket send failures and durations, and socket closures. Browser records
+   focus/visibility changes, acknowledgement timeout, intentional release,
+   and WebSocket close code/reason/clean flag. Distinguish a locally initiated
+   close from an observed peer closure; an abnormal close alone does not
+   establish why the peer disappeared. Correlate these records with video
+   sends to test the shared-HTTP-task scheduling hypothesis.
+4. [ ] **I001-M4 — Keep instrumentation bounded and validate it.** Use bounded
+   in-memory records with overflow counters and retrieve them after the
+   observation; avoid per-key serial printing or synchronous diagnostic
+   requests in the measured path. Record overhead and compare behavior with
+   diagnostics disabled. Exercise real combined video/keyboard servicing;
+   the existing fake-WebSocket tests do not establish scheduling under video
+   load. Verify timestamp ordering, event/frame association, overflow handling
+   and disconnect reason reporting with focused checks before deployment.
+   Keep EMOS unchanged if P4 checkpoints suffice; propose any necessary
+   resident instrumentation separately rather than assuming another MOS flash.
+5. [ ] **I001-M5 — Run one bounded operator session after preparation.** Read
+   the machine-local bench instructions and active fixture constraints first.
+   Record exact deployed identities and diagnostic settings under the version
+   policy. Use the existing wiring, UART rate and SD typing application.
+   Observe a short sequence of separated printable keys with video active,
+   then normal typing and an idle interval within the sample's five-minute
+   limit. Record sample exit separately from connection failure. If a
+   disconnect occurs, retain the pre-close records and observe reconnect and
+   recapture without resetting Agon. Coordinate the sole viewer with the
+   Author. Use the analyzer only if software timestamps leave UART timing
+   uncertain; analyzer acquisition is not a prerequisite for initial results.
+6. [ ] **I001-M6 — Report findings and stop before repair.** Report sample
+   counts, typical and worst observed intervals, missing/ambiguous records,
+   and closure ordering. Separate measured facts from hypotheses. Identify
+   which interval dominates visible delay and whether HTTP send stalls
+   coincide with lost keyboard service or video closure. If the failure does
+   not recur, retain useful measurements but leave its cause unresolved.
+   Propose the smallest supported repair for Author review; do not simply
+   increase deadlines or claim full hardware qualification.
+
+### Evidence and completion gate
+
+Keep operator observations and resulting timing evidence beside the r03 design
+under its existing tests directory, with exact provenance and machine-private
+capture locations referenced through ignored local records. Update I001/I002
+with conclusions and remaining uncertainties. This measurement increment is
+complete when the Author can review correlated timing and lifecycle evidence
+and a bounded repair recommendation, or a precise statement of what remains
+unmeasured. Existing success with typing, Enter, Backspace and recapture remains
+valid; Escape/MOS return is not inferred from it.
+
+### Instrumentation checkpoint — 2026-09-09
+
+1. Browser/P4 session IDs and ordered message records now correlate browser
+   acknowledgement, P4 queue/UART/drawing activity and EVF sequence numbers.
+   There is no stock UART format, EMOS binary, SD sample, timeout or cadence
+   change. First guaranteed frame association is conservative and rejects
+   ambiguous edits; it does not claim earliest physical visibility.
+2. Source inspection found the existing 200000-us minimum browser snapshot
+   interval. It differs from EVF's logical frame period and is a concrete
+   possible component of visible delay. Measurement preserves it.
+3. The new bounded recorder, renderer/snapshot/send checkpoints and after-run
+   download live under the r02 procedure beside the r03 design. Same-clock
+   analysis is in `scripts/analyze_browser_timing.py`. BTYPE/EMBOOT hashes on
+   returned SD match prior deployment. Its result byte is 02 (timed exit),
+   without a timestamp identifying which observation produced it.
+4. Validation: P4 draft compiles/links. Actual Chromium WebSockets carry full
+   640x480 frames and keys against a controlled host peer; injected serialized
+   send delay is observed as acknowledgement timeout, closure and successful
+   recapture/export. This tests measurement sensitivity, not physical P4
+   scheduling. Existing keyboard mapping/retained serializer and focus/editing
+   checks pass. Recorder concurrency/overflow/disable/lease-reason checks and
+   synthetic deliberately different-clock analysis pass. Network send/failed
+   registration containment covers all eight routes. Registry/template/VDP
+   identity checks pass; inherited r02 hardware-profile limitation remains.
+5. I001-M4 is complete for local automated checks; actual P4 overhead comparison
+   remains part of operator observation. I001-M5 and findings/repair review
+   remain open. Freeze the P4 measurement candidate before deployment; do not
+   present an attention cue until it and the unchanged SD are ready.

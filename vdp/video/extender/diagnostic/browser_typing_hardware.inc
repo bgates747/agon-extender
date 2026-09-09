@@ -8,6 +8,11 @@ constexpr uart_port_t key_port=UART_NUM_1;
 BrowserTypingStream *key_stream;
 QueueHandle_t key_events;
 bool key_released;
+uint32_t typing_tx_id{},typing_command_id{};
+using agon::extender::diagnostic::trace;
+uint32_t packTrace(const uint8_t *p,unsigned n) {
+  uint32_t v=0; for(unsigned i=0;i<n && i<4;++i) v|=uint32_t(p[i])<<(8*i); return v;
+}
 void key_connect() {
   ESP_ERROR_CHECK(gpio_set_level(GPIO_NUM_11,1));
   ESP_ERROR_CHECK(gpio_set_direction(GPIO_NUM_11,GPIO_MODE_OUTPUT));
@@ -33,6 +38,8 @@ void key_release() {
 }
 bool key_transmit() {
   const auto n=key_stream->produced;
+  ++typing_tx_id;
+  trace("uart_submit",typing_tx_id,n,packTrace(key_stream->output,n),n>4?packTrace(key_stream->output+4,n-4):0);
   if (!n || uart_tx_chars(key_port,reinterpret_cast<const char *>(key_stream->output),n)!=int(n)) {
     key_stream->fail("UART enqueue"); return false;
   }
@@ -43,6 +50,8 @@ void rejectBrowserTypingDuplex() {
   if (key_stream) key_stream->fail("unsupported duplex change");
 }
 BrowserTypingStream *beginBrowserTyping() {
+  agon::extender::diagnostic::browserTrace().begin();
+  trace("typing_start");
   for (int pin : {9,10,11,12,13,14,15,17,20,21,22,23,32,33}) {
     ESP_ERROR_CHECK(gpio_reset_pin(gpio_num_t(pin)));
     ESP_ERROR_CHECK(gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT));
@@ -78,6 +87,7 @@ void runBrowserTyping(VDUStreamProcessor *processor) {
     // Long CTS stop terminates this bounded session. Ordinary receive-ISR
     // CTS pulses are much shorter and never imply keyboard revocation.
     if ((active || stream.failure) && stopped && now-stopped_at>=1000) {
+      trace("uart_session_stop",0,now-stopped_at);
       browser.ready(false); key_release(); input.reset(); stream=BrowserTypingStream{};
       uart_flush_input(key_port); xQueueReset(key_events);
       active=layout_seen=admitted=transmitting=false; used=0; needed=1;
@@ -97,7 +107,7 @@ void runBrowserTyping(VDUStreamProcessor *processor) {
     }
     if (transmitting && !stream.failure) {
       auto result=uart_wait_tx_done(key_port,0);
-      if (result==ESP_OK) { transmitting=false; stream.produced=0; }
+      if (result==ESP_OK) { trace("uart_done_observed",typing_tx_id); transmitting=false; stream.produced=0; }
       else if (result!=ESP_ERR_TIMEOUT || now-tx_at>=5000) stream.fail("TX timeout");
     }
     if (active && !transmitting && !stream.failure) {
@@ -118,9 +128,12 @@ void runBrowserTyping(VDUStreamProcessor *processor) {
         if (stream.failure) break;
       }
       if (used && used==needed && !stream.failure) {
+        ++typing_command_id;
+        trace("vdu_received",typing_command_id,packTrace(command,needed),needed);
         if (!layout_seen && !(needed==4&&command[0]==23&&command[2]==0x81&&command[3]==1)) stream.fail("expected US locale admission");
         if (stream.command(command,needed) && !stream.failure) {
           processor->processNext();
+          trace(command[0]==23 && command[2]==0xCA ? "draw_flush_done" : "vdu_parser_return",typing_command_id);
           if (stream.available()) stream.fail("parser consumption");
           if (command[0]==23 && command[2]==0x81) {
             if (kbRegion!=1) stream.fail("typing probe requires US locale");
@@ -137,6 +150,7 @@ void runBrowserTyping(VDUStreamProcessor *processor) {
       if (!stream.produced && admitted && !stream.failure) {
         agon::extender::input::ProcessedKey key;
         if (browser.pop(key,now)) {
+          trace("key_pop",0,key.keycode,key.down,key.modifiers);
           if (!input.push(key)) stream.fail("processed queue overflow");
           else processor->processNext();
         }
@@ -145,6 +159,8 @@ void runBrowserTyping(VDUStreamProcessor *processor) {
     }
     if (stream.failure) {
       browser.ready(false); key_release();
+      if (active) trace("uart_failure");
+      if (active) trace(stream.failure);
       if (active) ESP_LOGE("typing","TYPING FAIL %s build=%s",stream.failure,AGON_EXTENDER_BUILD_ID);
       active=false;
     }
