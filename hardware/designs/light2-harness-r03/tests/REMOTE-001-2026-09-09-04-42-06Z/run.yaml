@@ -1,0 +1,36 @@
+run_id: REMOTE-001-2026-09-09-04-42-06Z
+operation: Guarded MOS installation SD preparation; no board flash or reset
+procedure: browser-keyboard-probe-r01
+outcome: prepared_verified
+emos:
+  build_id: agon-emos-v0.1.9-b2026-09-09-04-38-19Z
+  source_commit: a8cd3618311fa15b48d81b88dc163cf0aeb3a9bb
+  sha256: 0310eb73ad418d8176cd6332f61eb81eca12fbdfc939ad3986fe12675ab99b2e
+  status: candidate
+p4:
+  build_id: browser-keyboard-probe-r01-b2026-09-09-04-38-19Z
+  source_commit: 5e8ebf56bc79c15d43001ad43f678fa6a528ac59
+  status: candidate
+  deployment: staged and hash-verified only
+sd_application:
+  build_id: browser-keyboard-probe-r01-b2026-09-09-04-40-34Z
+  sha256: 3f5ee573a75e521170cd79aa04ff1e7857dd8235829e95fdb46f4a5e380a60b9
+  deployment: prepared locally; not yet on installation SD
+rollback:
+  identity: agon-emos-v0.1.8
+  filename: EMPREV.BIN
+  sha256: 7d2716d292525822dc6954d535d75cadf7566779159d2e72826ce0d6f3b6d56e
+installer:
+  sha256: c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022
+  flash_utility_sha256: 480b476703b798cf8d93294cac42d77cad93f7747003b061520b86685c75eb57
+  sd_unmounted: true
+checks:
+- Clean committed EMOS/builder/P4 inputs and candidate hashes
+- Linked ABI/UART/keyboard guards and firmware size bound
+- Candidate ordinary SD/CLOCK positive and negative checks
+- Candidate typing round trip and withheld-ACK bounded MOS return
+- Stable P4 USB identity and remote staged hashes; no serial open
+pending:
+- Author installs EMOS and reports outcome
+- Test SD handover and P4 deployment
+- Physical browser typing, focus release and repeated reset
