@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Focused typing implemented and automated checks pass; human emulator and hardware review pending, 2026-09-09.
+- Status: Physical typing, Enter and Backspace work; latency and apparent focus/capture loss remain unresolved, 2026-09-09.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
@@ -238,3 +238,31 @@ Standing version preapproval advances registry r41 and the unchanged EMOS
 v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
 The reviewed draft builds and their results retain their original identities.
 Guarded Agon installation and paired P4/browser qualification are next.
+
+## Physical typing checkpoint — 2026-09-09
+
+The Author confirms that typed characters appear in the browser and that Enter
+and Backspace work. Preserve this functional milestone while keeping latency
+and apparent focus/capture loss unresolved. The Author's possible P4 connection
+loss explanation is unverified. The operator record lives beside the design:
+[operator feedback](../../hardware/designs/light2-harness-r03/tests/REMOTE-001-2026-09-09-04-46-41Z/operator-feedback.md).
+Escape/MOS return and the on-card result byte remain unconfirmed for this run;
+no full hardware PASS or qualification promotion is claimed.
+
+### Next bounded investigation
+
+1. [ ] **REMOTE-001-I001 — Responsiveness:** Measure browser event submission,
+   P4 admission/UART delivery, EMOS text acknowledgement and frame presentation
+   separately. Identify where the observed delay accumulates before changing
+   timeout or buffering policy.
+2. [ ] **REMOTE-001-I002 — Capture stability:** Distinguish DOM focus/visibility
+   changes, browser acknowledgement timeout, P4 lease revocation and actual
+   socket closure. Record the triggering reason and correlate it with I001;
+   do not assume a network disconnect or simply lengthen deadlines.
+3. [ ] After the bounded repair, repeat typing/editing, deliberate release and
+   reacquisition, Escape/MOS return and Agon-only reset with the Author. Collect
+   the result byte when the SD is next returned; do not require another hardware
+   run merely to fill an unsupported claim about this first session.
+
+The Author requested this checkpoint and a stop for the night. No investigation,
+new firmware or additional hardware operation is included in this checkpoint.

@@ -1770,3 +1770,13 @@ Standing version preapproval advances registry r41 and the unchanged EMOS
 v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
 The reviewed draft builds and their results retain their original identities.
 Guarded Agon installation and paired P4/browser qualification are next.
+
+## First physical browser typing feedback — 2026-09-09
+
+The Author confirms visible typed characters, Enter and Backspace on hardware,
+with noticeable latency and apparent focus/capture loss while typing. P4
+connection loss is a suggested cause, not an established finding. REMOTE-001
+I001/I002 own the next bounded measurement and diagnosis; no full hardware
+qualification or candidate-status change is made. Escape/MOS return and the
+result byte are unconfirmed for this physical session. The operator observation
+is retained beside the r03 deployment, separately from its earlier run record.
