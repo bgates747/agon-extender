@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Bounded sender checkpoint frozen; candidates and guarded MOS installation media ready.
+- Status: Bounded controlled-sender hardware proof passes, including two additional Agon-only resets; browser/session integration remains open.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
@@ -203,3 +203,45 @@ the source checkpoint is frozen and physical P4/Agon qualification remains pendi
 The Author accepted the graphical result and explicitly authorized freezing this bounded sender/observer checkpoint, then preparing the paired hardware test. Reviewed builds retain their original draft status; candidate packaging and physical qualification follow separately.
 
 Candidate preparation and SD handover are recorded beside r03 in `PORT-005-2026-09-09-03-10-57Z`. Both exact candidate endpoint builds and the SD observer pass their applicable automatic checks. The P4 is staged only; physical MOS installation, P4 deployment and paired qualification remain pending. The generic builder portability correction preserves the reviewed runtime executable hashes exactly.
+
+The Author subsequently reported a successful EMOS flash. The returned card's
+consumed payload matches the candidate; rollback files remain intact. The
+verified, safely unmounted smoke/keyboard-test SD and installation report are
+recorded in [PORT-005-2026-09-09-03-19-20Z](../../hardware/designs/light2-harness-r03/tests/PORT-005-2026-09-09-03-19-20Z/README.md).
+P4 candidate hashes and stable USB identity pass read-only reinspection. P4
+flashing awaits explicit authorization; paired keyboard results remain pending.
+
+The Author then authorized P4 flashing. [PORT-005-2026-09-09-03-22-37Z](../../hardware/designs/light2-harness-r03/tests/PORT-005-2026-09-09-03-22-37Z/README.md)
+records the exact candidate written, independently verified and observed in
+clean WAIT at 1152000 baud on the selected UART pins. Both endpoint candidates
+are installed and the prepared capture launcher is active. The Author performs
+the Enter/reset-cued test, then two Agon-only resets after capture completes.
+Physical packet/API, waveform and repeatability results remain pending.
+
+### Controlled-sender hardware result — PASS
+
+[PORT-005-2026-09-09-03-26-09Z](../../hardware/designs/light2-harness-r03/tests/PORT-005-2026-09-09-03-26-09Z/README.md)
+contains exact locale/poll admission and twelve unsolicited stock keyboard
+packets: eight forward and 75 return bytes at 1152000 baud. Independent sigrok
+and raw-sample decoders agree; framing and CTS permission at every character
+start pass. All 288M samples at 24 MHz are present, with 7.590125 seconds quiet
+on all four signals and 8.005626 seconds clean P4 serial after PASS. The Author
+confirmed SD/CLOCK and keyboard PASS, mainboard source and MOS return on the
+captured run and two further Agon-only resets. The bounded hardware proof is
+complete; the broader browser/session and settings/query obligations above
+remain open.
+
+**Analysis gotcha:** EMOS raises RTS while its UART interrupt drains the FIFO.
+Thirty-seven already-started P4 characters finish during the resulting CTS
+pause. All characters start with permission; no new character starts while CTS
+is HIGH. The earlier counting helper's whole-character LOW assertion was
+inapplicable here and was corrected only in offline analysis. The recorded
+data and candidate firmware are unchanged; this is not a waived framing or
+flow-control failure.
+
+The returned SD was read on 2026-09-09 at 03:44:25 UTC. Its exact `01` PASS byte
+and timestamped readback receipt are retained with the result; candidate media
+hashes still match. This completes supplemental collection for the last run,
+while the three-run confirmation remains the Author's observation. This
+checkpoint freezes the installation, deployment, passing capture and readback
+evidence before the next agreed browser-input increment.

@@ -1,0 +1,11 @@
+{
+  "related_run_id": "PORT-005-2026-09-09-03-26-09Z",
+  "observed_at": "2026-09-09T03:44:25.293039+00:00",
+  "observation": "Supplemental SD readback after Author-confirmed three successful runs",
+  "result_byte": 1,
+  "result_hex": "01",
+  "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a",
+  "same_candidate_fixture_smoke_autoexec_and_consumed_payload_verified": true,
+  "represents": "Last completed run only; fixture overwrites the result on each run",
+  "card_modified": false
+}

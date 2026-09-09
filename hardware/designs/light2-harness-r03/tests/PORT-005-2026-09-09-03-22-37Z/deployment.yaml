@@ -1,0 +1,37 @@
+schema_version: 1
+record_type: p4_deployment
+run_id: PORT-005-2026-09-09-03-22-37Z
+outcome: pass
+scope: Verified P4 flash and startup readiness; paired keyboard and repeatability
+  pending
+procedure_identity: uart-keyboard-probe-r01
+authorization: 'Author: flash away'
+build_id: uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+source_commit: 2426534dc793da1ac56587d742d35097a156abbb
+source_dirty: false
+factory_sha256: 95c43128e2fe122a5b1b49747315b0eb59017223ffa03dfdaea34ccd9607029b
+checks:
+  local_and_staged_hashes_verified: true
+  stable_usb_identity_verified: true
+  p4_revision_observed: v1.3
+  write_verified: true
+  independent_flash_verification: true
+  candidate_identity_observed: true
+  sender_wait_observed: true
+  cts_stopped: true
+  uart_baud: 1152000
+  uart_pins:
+    rx: 22
+    tx: 12
+    cts: 23
+    rts: 11
+private_evidence_sha256:
+  boot.log: 33007af885f228f610561951a502152de66d943e315737122c452081dda44ffa
+  deployment.json: f92dde04f4e2a6d55896ffd8f6f01be75e3104f40c65e6f66630c8de4788d931
+  verify-command.json: 31224c7893bd43595389a3d7a25ce596a1d0eda2a235eec9a8e39dd214c26a46
+  verify.log: 21ebd07aa93d27000443f0d288faa60c2faa84177fa51a607db15051f910d4e5
+  write-command.json: 41d94986422923e7acff189318d49f786d2effb0a4c27479e78fe340785548e5
+  write.log: 76dd1c9e4228347bda7361c669bf784932668c0a8a5c63ec41adfe8c143538ab
+launcher_sha256: 2e06543458646a3e05c041c067124c32c215c54f4f4a8a0c5f6dc97edcfe2eb9
+paired_keyboard_result: null
+repeatability_result: null

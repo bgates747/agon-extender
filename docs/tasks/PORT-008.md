@@ -96,10 +96,15 @@ and the ordinary SD observer, approving uart-keyboard-probe-r01 and registry
 r38. The implementation now shares the retained acquisition/callback/serializer
 path for twelve unsolicited key events after locale/General Poll admission.
 Host ordering/orchestration, paired EMOS CLI/timeout and Author-supplied
-graphical checks pass; candidates are frozen and physical qualification remains pending. The [r03 keyboard
+graphical checks pass; candidates are frozen. The Author confirmed EMOS
+installation. The paired hardware capture now passes exact stock keyboard
+packets, framing, character-start CTS permission and full acquisition; the
+Author confirmed Agon API checks and MOS return on all three runs. The [r03 keyboard
 sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
 defines the paired scope. Browser focus/network integration is the following
-increment, not part of this controlled sender proof.
+increment, not part of this controlled sender proof. The
+[bounded result](../../hardware/designs/light2-harness-r03/tests/PORT-005-2026-09-09-03-26-09Z/README.md)
+retains the evidence; wider session, load and query-routing work remains open.
 
 1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
    Use r03 PC0/TX→P4 RX22, PC1/RX←P4 TX12, PC2/RTS→P4 CTS23 and

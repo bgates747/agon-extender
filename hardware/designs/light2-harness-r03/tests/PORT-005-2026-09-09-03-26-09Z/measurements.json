@@ -1,0 +1,134 @@
+{
+  "logic_sha256": "0ec5fe8c4b0380d26d964dd69e0ba74c71c387ad9238e3da0391d3121895c23e",
+  "samples": 288000000,
+  "sample_rate_hz": 24000000,
+  "duration_seconds": 12.0,
+  "uart_baud": 1152000,
+  "admission_request_hex": "1700810117008001",
+  "poll_reply_hex": "800101",
+  "events": [
+    {
+      "index": 1,
+      "label": "a down",
+      "packet_hex": "810461001601",
+      "start_seconds": 0.8083833333333333,
+      "end_seconds": 0.8084782916666666,
+      "gap_after_previous_completed_frame_seconds": 0.5982782916666667
+    },
+    {
+      "index": 2,
+      "label": "a up",
+      "packet_hex": "810461001600",
+      "start_seconds": 1.0588810833333333,
+      "end_seconds": 1.058976,
+      "gap_after_previous_completed_frame_seconds": 0.2504027916666667
+    },
+    {
+      "index": 3,
+      "label": "Shift down",
+      "packet_hex": "810400027501",
+      "start_seconds": 1.409403375,
+      "end_seconds": 1.4094982916666667,
+      "gap_after_previous_completed_frame_seconds": 0.350427375
+    },
+    {
+      "index": 4,
+      "label": "B down 1",
+      "packet_hex": "810442023101",
+      "start_seconds": 1.6605103333333333,
+      "end_seconds": 1.6606053333333333,
+      "gap_after_previous_completed_frame_seconds": 0.2510120416666667
+    },
+    {
+      "index": 5,
+      "label": "B down 2",
+      "packet_hex": "810442023101",
+      "start_seconds": 2.0081525416666666,
+      "end_seconds": 2.008247708333333,
+      "gap_after_previous_completed_frame_seconds": 0.34754720833333336
+    },
+    {
+      "index": 6,
+      "label": "B down 3",
+      "packet_hex": "810442023101",
+      "start_seconds": 2.258738125,
+      "end_seconds": 2.258833083333333,
+      "gap_after_previous_completed_frame_seconds": 0.25049041666666666
+    },
+    {
+      "index": 7,
+      "label": "B up",
+      "packet_hex": "810442023100",
+      "start_seconds": 2.6087873333333333,
+      "end_seconds": 2.6088822916666667,
+      "gap_after_previous_completed_frame_seconds": 0.34995425
+    },
+    {
+      "index": 8,
+      "label": "Shift up",
+      "packet_hex": "810400007500",
+      "start_seconds": 2.862880625,
+      "end_seconds": 2.8629755416666667,
+      "gap_after_previous_completed_frame_seconds": 0.2539983333333333
+    },
+    {
+      "index": 9,
+      "label": "7 down",
+      "packet_hex": "810437000901",
+      "start_seconds": 3.20859675,
+      "end_seconds": 3.2086917083333333,
+      "gap_after_previous_completed_frame_seconds": 0.3456212083333333
+    },
+    {
+      "index": 10,
+      "label": "7 up",
+      "packet_hex": "810437000900",
+      "start_seconds": 3.4599702916666666,
+      "end_seconds": 3.4600653333333335,
+      "gap_after_previous_completed_frame_seconds": 0.25127858333333336
+    },
+    {
+      "index": 11,
+      "label": "Enter down",
+      "packet_hex": "81040D008F01",
+      "start_seconds": 3.8086903333333333,
+      "end_seconds": 3.8087852916666667,
+      "gap_after_previous_completed_frame_seconds": 0.348625
+    },
+    {
+      "index": 12,
+      "label": "Enter up",
+      "packet_hex": "81040D008F00",
+      "start_seconds": 4.0591565,
+      "end_seconds": 4.059251583333333,
+      "gap_after_previous_completed_frame_seconds": 0.2503712083333333
+    }
+  ],
+  "forward_byte_count": 8,
+  "return_byte_count": 75,
+  "unsolicited_key_bytes": 72,
+  "key_event_count": 12,
+  "valid_8n1_framing": true,
+  "cts_low_at_every_character_start": true,
+  "new_character_starts_while_cts_high": 0,
+  "in_flight_return_characters_during_cts_pause": 37,
+  "cts_low_through_every_character": false,
+  "independent_sigrok_decode_matches": true,
+  "acquisition_pass": true,
+  "last_signal_transition_seconds": 4.409875,
+  "quiet_tail_seconds": 7.590124958333333,
+  "five_second_waveform_tail_pass": true,
+  "serial_clean_seconds_after_final_pass": 8.0056259280027,
+  "transition_counts": {
+    "D1": 30,
+    "D3": 78,
+    "D4": 2,
+    "D6": 314
+  },
+  "final_levels": {
+    "D1": 1,
+    "D3": 1,
+    "D4": 1,
+    "D6": 1
+  }
+}

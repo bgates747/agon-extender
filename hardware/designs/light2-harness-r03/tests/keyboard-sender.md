@@ -1,6 +1,6 @@
 # Controlled P4 keyboard sender
 
-Identity: `uart-keyboard-probe-r01`. Status: candidate under registry r39; not deployed.
+Identity: `uart-keyboard-probe-r01`. Status: candidate under registry r39; bounded hardware test passed.
 Owner: [PORT-005](../../../../docs/tasks/PORT-005.md), coordinated with
 [PORT-008](../../../../docs/tasks/PORT-008.md) and EMOS INTEG-009.
 
@@ -84,7 +84,19 @@ MOS prompt. The controlled peer reports twelve keys and PASS. EMOS remains
 `agon-emos-v0.1.8-b2026-09-09-00-09-53Z`. The Author authorized source freeze and candidate preparation;
 this is emulator evidence, not a physical P4 sender result.
 
-Physical results pending. The local host tests exercise retained method bodies
+The Author confirmed candidate EMOS installation; the [smoke/keyboard-test
+media](PORT-005-2026-09-09-03-19-20Z/README.md) was prepared and safely unmounted
+for the test; the later returned-card readback is recorded with the result.
+[P4 deployment](PORT-005-2026-09-09-03-22-37Z/README.md) passes independent
+flash verification and startup readiness; the capture launcher is active.
+The [physical result](PORT-005-2026-09-09-03-26-09Z/README.md) passes exact
+admission/poll and twelve key packets, valid framing, CTS permission at each
+character start, full 24 MHz / 288M acquisition and a 7.590125-second quiet
+tail. The Author confirmed all expected Agon checks and MOS return on the
+captured run and two subsequent Agon-only resets. The result record explains
+EMOS's mid-character receive pauses and the subsequently collected `01` SD
+result byte, with its separate readback timestamp.
+The local host tests exercise retained method bodies
 with variable/context fakes and hardware orchestration with UART/GPIO fakes.
 The emulator receives those serializer-produced bytes and executes real EMOS;
 it does not execute the P4 binary or validate baud/CTS/RTS electrical timing.

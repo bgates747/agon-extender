@@ -10,8 +10,9 @@ item is removed.
 The order below applies to the keyboard slice in each detail file, not to
 completion of the whole task. Documentation was accepted for freeze on
 2026-09-08. The resident EMOS receiver, API proof and bounded recovery emulator
-checkpoints are accepted and frozen. P4 keyboard sending, browser integration
-and physical/session qualification remain open. The selected Agon/P4 path uses
+checkpoints are accepted and frozen. Controlled P4 keyboard sending and EMOS
+API effects pass on hardware; browser integration and broader physical/session
+qualification remain open. The selected Agon/P4 path uses
 only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.
 
@@ -28,13 +29,13 @@ are not prerequisites.
 - [ ] **PORT-005 — Implement the processed-keyboard input adapter**
   - Started: 2026-09-08 (controlled P4 sender).
   - Finished: --
-  - Status: Controlled sender and paired SD observer pass graphical review; checkpoint frozen; guarded MOS installation media ready, P4 staged; physical qualification precedes browser integration.
+  - Status: Controlled P4 sender, resident EMOS API effects and three Agon runs pass on hardware; browser event/session integration is next.
   - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: EMOS keyboard emulator checkpoints frozen; P4 integration and paired qualification remain; r02/parallel work stays on hold.
+  - Status: Controlled P4-to-EMOS keyboard UART proof passes; browser/session and wider integration remain; r02/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 ## Other active work

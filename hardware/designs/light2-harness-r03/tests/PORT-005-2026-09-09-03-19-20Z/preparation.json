@@ -1,0 +1,29 @@
+{
+  "run_id": "PORT-005-2026-09-09-03-19-20Z",
+  "prepared_at": "2026-09-09T03:19:20.553828+00:00",
+  "build_id": "agon-emos-v0.1.8-b2026-09-09-03-07-18Z",
+  "sample_build_id": "uart-keyboard-probe-r01-b2026-09-09-03-09-38Z",
+  "before_sha256": {
+    "bin/EMBOOT.BIN": "166d9b8e7f0c93b975b1cd38ec3c579b42c1284433462441f2c633f898253707",
+    "emos-boot/check.txt": "47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50",
+    "bin/KBWIRE.BIN": null,
+    "autoexec.txt": "c1dd625d0f96c77ec99f6c57a5e04c68cc6aaa88c6f3207d2151391ee305b022"
+  },
+  "after_sha256": {
+    "bin/EMBOOT.BIN": "79ec620bca4beb95944bd5122167428d43e40efa182fb6eec982096477185b73",
+    "emos-boot/check.txt": "47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50",
+    "bin/KBWIRE.BIN": "42db808141117deaddcff9f613578eaca64c80f1cffc121cce0c90624028c906",
+    "autoexec.txt": "cd4afe51907f0359ac34ec3e6ef135fdf5d7f453f116cdfb25b2d884095f488a"
+  },
+  "consumed_payload_sha256": "7d2716d292525822dc6954d535d75cadf7566779159d2e72826ce0d6f3b6d56e",
+  "flash_result": "Author reported good flash",
+  "expected_test": "SD/CLOCK PASS, both detailed P4 KEYBOARD PASS checks, mainboard input and MOS prompt",
+  "hardware_test_result": "pending",
+  "sd_unmounted": true,
+  "emnew_absent": true,
+  "rollback_hashes_verified": true,
+  "candidate_profile_check": "pass",
+  "p4_remote_hashes_and_stable_device_identity": "pass",
+  "p4_deployment": "pending authorization",
+  "flash_memory_readback": "not performed"
+}

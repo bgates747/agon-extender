@@ -1,0 +1,39 @@
+KEYBOARD SENDER uart-keyboard-probe-r01-b2026-09-09-03-01-48Z (candidate)
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD START cycle=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD LOCALE 1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD POLL token=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 1 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 2 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 3 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 4 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 5 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 6 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 7 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 8 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 9 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 10 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 11 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD EVENT 12 SENT build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD SENDER PASS events=12 key_bytes=72 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+KEYBOARD WAIT cts=1 build=uart-keyboard-probe-r01-b2026-09-09-03-01-48Z

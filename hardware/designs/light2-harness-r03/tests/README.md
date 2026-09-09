@@ -1,10 +1,14 @@
 # Light 2 r03 tests
 
-Next bounded test: [controlled P4 keyboard sender](keyboard-sender.md).
-The draft uses the resident EMOS receiver and an SD-loaded API observer.
-Software/emulator review and candidate builds pass. The [guarded MOS installation media](PORT-005-2026-09-09-03-10-57Z/README.md) is ready; physical deployment and paired qualification remain pending.
+Latest bounded result: [controlled P4 keyboard sender](keyboard-sender.md)
+[PASS](PORT-005-2026-09-09-03-26-09Z/README.md). The full capture verifies twelve
+stock keyboard packets at 1152000 baud; the Author confirmed Agon SD/CLOCK,
+keyboard API effects and MOS return on the captured run and two Agon-only
+resets. Browser/session integration remains later work. The
+[keyboard-test SD](PORT-005-2026-09-09-03-19-20Z/README.md) and
+[P4 deployment](PORT-005-2026-09-09-03-22-37Z/README.md) records identify the inputs.
 
-Latest completed test: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
+Previous completed test: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
 following the [repeatable single-banner fixture](visible-text-repeatable.md).
 Both the first [r01 text result](PORT-014-2026-09-08-19-36-36Z/README.md) and
 [r02 text result](PORT-014-2026-09-08-19-52-44Z/README.md) retain their individual

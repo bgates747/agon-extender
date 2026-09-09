@@ -1,0 +1,87 @@
+schema_version: 1
+run_id: PORT-005-2026-09-09-03-26-09Z
+procedure_identity: uart-keyboard-probe-r01
+outcome: pass
+started_at: '2026-09-09T03:26:09.021803+00:00'
+capture_ended_at: '2026-09-09T03:26:36.054926+00:00'
+scope: Bounded controlled P4 keyboard sender, resident EMOS public-API effects and
+  Agon-reset repeatability
+builds:
+  emos:
+    build_id: agon-emos-v0.1.8-b2026-09-09-03-07-18Z
+    source_commit: 86bfe8e387ebe479b49e404d138564b5bc8c8e32
+    source_dirty: false
+    firmware_sha256: 7d2716d292525822dc6954d535d75cadf7566779159d2e72826ce0d6f3b6d56e
+  sample:
+    build_id: uart-keyboard-probe-r01-b2026-09-09-03-09-38Z
+    variant: observer
+    source_commit: 86bfe8e387ebe479b49e404d138564b5bc8c8e32
+    source_dirty: false
+    bin_sha256: 42db808141117deaddcff9f613578eaca64c80f1cffc121cce0c90624028c906
+  p4:
+    build_id: uart-keyboard-probe-r01-b2026-09-09-03-01-48Z
+    variant: sender
+    source_commit: 2426534dc793da1ac56587d742d35097a156abbb
+    source_dirty: false
+    factory_sha256: 95c43128e2fe122a5b1b49747315b0eb59017223ffa03dfdaea34ccd9607029b
+wiring_identity: light2-harness-r03
+checks:
+  frozen_p4_serial_stages: true
+  exact_admission_poll_and_twelve_stock_key_packets: true
+  valid_uart_8n1_framing: true
+  cts_low_at_every_character_start: true
+  no_new_character_started_while_cts_high: true
+  independent_sigrok_decode_matches: true
+  full_analyzer_acquisition: true
+  five_second_four_signal_quiet_tail: true
+  five_second_clean_serial_tail: true
+  agon_sd_clock_keyboard_pass_and_mos_return_author_confirmed: true
+  two_additional_agon_only_runs_author_confirmed: true
+  sd_result_byte_independently_retrieved: false
+measurements:
+  sample_rate_hz: 24000000
+  samples: 288000000
+  seconds: 12.0
+  uart_baud: 1152000
+  forward_bytes: 8
+  return_bytes: 75
+  key_packets: 12
+  in_flight_characters_completed_during_cts_pause: 37
+  waveform_quiet_seconds: 7.590124958333333
+  serial_clean_seconds: 8.0056259280027
+operator_observations:
+  captured_run: Author reported Agon tests passed, then confirmed SD/CLOCK and keyboard
+    PASS with MOS return.
+  repeat_runs: Author answered Yes, all three passed for the captured run and two
+    additional Agon-only resets.
+  separate_repeat_waveforms: false
+  sd_result_byte: Not independently collected; SD remains with Agon. The observed
+    final PASS follows a successful one-byte result-file write in the frozen fixture.
+exceptions: []
+analysis_notes:
+- EMOS raises RTS during receive-interrupt FIFO processing. Thirty-seven already-started
+  return characters finish during CTS HIGH; every character starts with CTS LOW. The
+  earlier counting-only whole-character LOW assumption is not the keyboard flow-control
+  criterion.
+- Full UART/API and repeatability PASS is based on the captured bytes and explicit
+  Author screen/prompt observations. Supplemental SD result-byte retrieval remains
+  pending.
+retained_sha256:
+  logic.sr: 0ec5fe8c4b0380d26d964dd69e0ba74c71c387ad9238e3da0391d3121895c23e
+  measurements.json: 3e11cfe6299ffdfeceaea3cd130be05dd87df1092a0732b3e4810e3959b0a590
+  serial-excerpt.txt: 708e4efbc7add6a5c892e22ea586dcf035bad5ed715a69874821605f2e3db22e
+  uart-decoder.txt: 2c0e326e1b73e7d7dd7fbde9be0a197f3e80100cdd98782f9f1a73110ce605b4
+original_serial_sha256: f55cc8c0af160f8f844c61ff2ba3026bf5c70041174124d5c33e826b6513c74a
+private_analysis_script_sha256: 25e2288bc55756a26bfbfa0a48f9a8b0fba346bb57f80732017f1717ba6ba0ea
+capture_helper_sha256:
+  capture_combined.py: 44d2a8fff7c2d208ba3a25bde0895323a54578d5b6d3e076bb2cf6b337052ae1
+  capture_on_pi.py: 5426992cc1a816a57aa39d401f137ecf024ba68a8000e6115cf85452dcbc73cd
+  bench.py: b684c348bc96a7c5401c259ffd62fda16677a35b73a7faab981f3f82e2bb765e
+  bench.json: 3a5179b58e6075923a824aa6c50373e99badbcf1910567e834075cef0bc81c9e
+qualification_limits:
+- One captured paced twelve-event sequence plus two operator-confirmed repeat runs;
+  no sustained-load or electrical-margin claim.
+- Browser focus, session cleanup/takeover, keyboard layout translation and repeat
+  generation are not exercised.
+- Ordinary VDU and clock remain on mainboard VDP; ExCom display activation and source-aware
+  raw keyboard-control routing remain open.
