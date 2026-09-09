@@ -91,6 +91,16 @@ v0.1.8 image unchanged; a generic isolated Fab UART1 peer exercises the real
 resident interrupt/parser and public MOS keyboard APIs. This does not qualify
 browser input or authorize a P4 change, physical flash or UART1 bench run.
 
+The Author subsequently authorized PORT-005's bounded P4 controlled-key sender
+and the ordinary SD observer, approving uart-keyboard-probe-r01 and registry
+r38. The implementation now shares the retained acquisition/callback/serializer
+path for twelve unsolicited key events after locale/General Poll admission.
+Host ordering/orchestration, paired EMOS CLI/timeout and Author-supplied
+graphical checks pass; freeze and physical qualification remain gates. The [r03 keyboard
+sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
+defines the paired scope. Browser focus/network integration is the following
+increment, not part of this controlled sender proof.
+
 1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
    Use r03 PC0/TX→P4 RX22, PC1/RX←P4 TX12, PC2/RTS→P4 CTS23 and
    PC3/CTS←P4 RTS11. Existing hardware/evidence identities are unchanged.
@@ -1732,3 +1742,5 @@ version-record validator stops at the already committed r02 profile's
 `c68e4d4f...`). Both files match HEAD and were untouched by keyboard work.
 Reconcile that held-design record before resuming r02 qualification; it is
 not evidence against the r03 UART keyboard fixture.
+
+The Author accepted the graphical result and explicitly authorized freezing this bounded sender/observer checkpoint, then preparing the paired hardware test. Reviewed builds retain their original draft status; candidate packaging and physical qualification follow separately.

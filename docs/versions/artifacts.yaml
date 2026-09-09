@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r37
-updated_at: 2026-09-09T01:54:03Z
+registry_revision: r38
+updated_at: 2026-09-09T02:34:19Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -342,3 +342,17 @@ artifacts:
       - The fixture covers callbacks, sysvars, virtual map, counter wrap, getkey, editor and locale retention through the resident receiver.
       - An isolated Fab test adaptation supplies UART1 RX interrupts and an ordered socket byte peer with constant CTS-ready; physical UART timing, P4/browser behavior and RTS backpressure are not qualified.
       - Author approved r02 and registry r37 for bounded Work 4 held-key cleanup, partial-frame timeout and explicit recovery tests; the reviewed EMOS v0.1.8 image and generic emulator runtime remain unchanged.
+
+  - artifact_id: uart-keyboard-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-keyboard-probe-r01
+    status: draft
+    variants:
+      - sender
+      - sd-sample
+    description: Controlled P4 processed-key sender and ordinary EMOS keyboard API observer.
+    notes:
+      - Author approved r01 and registry r38 for twelve unsolicited stock key events after locale and matched General Poll admission at 1152000 baud.
+      - P4 uses retained VDP acquisition, callbacks and packet serialization. EMOS v0.1.8 remains unchanged; the SD program only uses public MOS APIs.
+      - Host and emulator checks precede source freeze and physical qualification. Browser focus, network ownership, mapping and session cleanup remain separate work.

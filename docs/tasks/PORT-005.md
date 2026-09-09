@@ -2,8 +2,8 @@
 
 ## State
 
-- Status: Browser-keyboard plan accepted for freeze, 2026-09-08; implementation not started.
-- Started: -- (implementation has not started).
+- Status: Bounded P4 sender implemented; graphical proof passed, source freeze pending.
+- Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
 ## Intent and ownership
@@ -110,3 +110,94 @@ Later aware-application EDU injection retains versioned command definitions,
 EDP-local updates and non-echo behavior. It is not the browser keyboard's
 critical path. Exact evidence/provenance for R002 remains in REMED-002 and its
 accepted integrity audit.
+
+
+## Current bounded implementation — controlled P4 keys
+
+The Author authorized the P4 sender after freezing the resident EMOS receiver,
+API and recovery emulator checkpoints (EMOS 55466d7; Extender a29ae36).
+Keep EMOS v0.1.8 unchanged. Implement an explicitly selected P4 processed-input
+binding, with a small controlled event source for first sender qualification.
+The ordinary disconnected/browser display composition still has no input source.
+Browser focus, network admission, layout translation and repeat generation are
+later integration work, not prerequisites for this controlled sequence.
+
+Official Keyboard/API and VDP System-Commands documentation was reviewed first.
+At the pinned VDP v2.16.0 source, `handleKeyboardAndMouse` publishes event
+variables, invokes CALLBACK_KEYBOARD, applies control/paged semantics and drains
+`processEventQueue` after EACH input item. That queue coalesces event types and
+reads current variables. Preserve that per-input drain; queue complete processed
+input snapshots outside it, never several mutable states before one drain.
+`send_packet` remains the sole wire serializer. The existing P4 hook currently
+returns without acquiring keys; its no-device helpers retain no locale.
+
+1. Add a bounded FIFO of processed key snapshots. Its process-task consumer
+   presents one VirtualKeyItem at a time through the existing stock helper.
+   Preserve callbacks, per-event serialization, modifiers and down/up/repeats.
+   Reject full/invalid input rather than silently replacing queued keys.
+2. Bind the retained parser to a bounded UART test Stream. EMOS sends its
+   ordinary locale and matched General Poll admission; P4 serializes replies
+   and key frames from the same process task. Do not introduce per-key ACKs,
+   application UART access or a proprietary keyboard packet.
+3. After admission, emit twelve paced events: a down/up, held Shift with three
+   B downs, B/Shift releases, 7 down/up and Enter down/up. The autoexec-loaded
+   eZ80 test observes callback payloads, counts, sysvars and map through public
+   APIs, with a finite clock deadline and mainboard cleanup on every exit.
+4. Verify event ordering/callback effects with maintained host code, compile
+   the P4 composition, and review the SD fixture in the emulator before source
+   freeze. Later clean candidate/deployment and real UART capture gates apply.
+
+The first P4 helper retains accepted locale/settings bytes but does not claim
+browser layout translation, physical LEDs or a typematic generator. Explicit
+processed repetitions come from the controlled source. Full source-aware raw
+VDU keyboard-control routing remains EMOS W3-K001. Real focus/disconnect/
+takeover and abrupt resets remain unqualified. No physical action is authorized
+by starting this implementation. The Author approved `uart-keyboard-probe-r01`
+and registry r38; both P4 sender and SD observer remain draft.
+
+### Implementation and bounded checks
+
+`extender/input/processed_keyboard.hpp` holds sixteen complete snapshots with
+one process-task owner. `getKeyboardKey` supplies the retained handler; its
+callback/event drain and serializer are unchanged. The explicit `p4-keyboard`
+composition enables this binding; ordinary `p4-browser-vdp` still has no input.
+Network producers must marshal to the process task before using this FIFO.
+No concurrent producer, browser session or full mode activation is claimed.
+
+`tests/processed_keyboard_test.py` passes burst down/up and repeated-down
+ordering through the actual coalescing event queue, callback order, packet
+editing/suppression, control/paged effects and retained settings. Its variable
+and context boundary is faked; it is not full VDP execution. The maintained
+`setVDPVariable` schedules VK/DOWN events even for repeated values. The helper's
+`isVKDown`/injection placeholders are still unavailable: raw `&99` queries
+remain unimplemented for processed input and must not be represented as parity.
+
+`tests/keyboard_hardware_test.py` exercises the real orchestration/Stream with
+faked UART/GPIO: two successful cycles after long idle, a midstream CTS pause,
+invalid input, blocked-TX timeout, absent/partial admission, UART error,
+short enqueue and unexpected post-admission traffic. Every failure releases
+P4 outputs and remains latched; successful completion rearms after EMOS source
+release. This is host sequencing evidence, not electrical qualification.
+
+The paired EMOS CLI test passes twelve serializer-produced stock packets and
+the real resident ISR/parser, callback/count, held-key map and mainboard prompt.
+A second run admits the source but withholds all keys; the SD observer reaches
+its deadline, removes its callback and returns to mainboard input and MOS.
+EMOS v0.1.8 and the reviewed UART1 emulator runtime remain byte-identical.
+The isolated runtime exchanges bytes and cannot prove physical baud or CTS/RTS.
+The supplied screenshot confirms graphical PASS; explicit source freeze remains pending.
+
+The [paired hardware sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
+owns the first physical sequence and future results. Candidate production,
+guarded EMOS installation, P4 deployment and capture preparation follow source
+review; no device, SD card or installed firmware has changed in this increment.
+
+Identified P4 draft `uart-keyboard-probe-r01-b2026-09-09-02-38-20Z` compiles and its BIN/ELF/factory outputs contain the exact requested identity and draft status. The reviewed SD draft is `uart-keyboard-probe-r01-b2026-09-09-02-36-43Z`.
+
+The Author supplied the matching graphical screenshot: unchanged EMOS v0.1.8,
+SD/CLOCK PASS, twelve-packet/callback/counter PASS, held-key/map/modifier/repeat
+PASS, mainboard input restored and final MOS prompt. The controlled peer also
+records twelve keys and PASS. This confirms the bounded emulator result;
+source-freeze approval and physical P4/Agon qualification remain pending.
+
+The Author accepted the graphical result and explicitly authorized freezing this bounded sender/observer checkpoint, then preparing the paired hardware test. Reviewed builds retain their original draft status; candidate packaging and physical qualification follow separately.

@@ -1,0 +1,6 @@
+{
+  "artifact_id": "uart-keyboard-probe",
+  "source_identity": "uart-keyboard-probe-r01",
+  "status": "draft",
+  "note": "Author approved r01/r38 for the controlled P4 processed-key sender and paired SD test. No browser-input or physical qualification claim. EMOS remains v0.1.8."
+}

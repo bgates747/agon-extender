@@ -8,7 +8,9 @@
 #include "agon.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/input/unavailable_input_adapter.hpp"
-#if defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
+#if defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+#include "extender/diagnostic/keyboard_probe_stream.hpp"
+#elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 #include "extender/diagnostic/visible_text_stream.hpp"
 #elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
 #include "extender/diagnostic/general_poll_stream.hpp"

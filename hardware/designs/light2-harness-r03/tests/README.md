@@ -1,5 +1,9 @@
 # Light 2 r03 tests
 
+Next bounded test: [controlled P4 keyboard sender](keyboard-sender.md).
+The draft uses the resident EMOS receiver and an SD-loaded API observer.
+Software/emulator review passes; candidate freeze and physical deployment remain gates.
+
 Latest completed test: [SD-loaded clear/banner/count sample](visible-text-sd-sample.md),
 following the [repeatable single-banner fixture](visible-text-repeatable.md).
 Both the first [r01 text result](PORT-014-2026-09-08-19-36-36Z/README.md) and

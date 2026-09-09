@@ -3,13 +3,18 @@
 // Physical PS/2 acquisition and input routing belong to PORT-005. The retained
 // parser still names the official input helpers throughout header-defined VDU
 // code, so this bounded adapter supplies the same call surface without
-// constructing a PS2Controller, reading GPIO, or emitting an event. It is not
-// evidence that keyboard or mouse commands are qualified.
+// constructing a PS2Controller or reading GPIO. PORT-005's explicit processed
+// binding enables only the key FIFO below; physical mouse and PS/2 stay absent.
+// It does not establish browser layout/repeat/query or physical qualification.
 #pragma once
 
 #include <algorithm>
 #include <cstdint>
 #include <memory>
+
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+#include "processed_keyboard.hpp"
+#endif
 
 #include "agon.h"
 #include "extender/compat/p4_vdp_gl.hpp"
@@ -68,8 +73,32 @@ inline UnavailableMouse *getMouse() noexcept {
 }
 
 inline void setupKeyboardAndMouse() noexcept {}
-inline void setKeyboardLayout(std::uint8_t) noexcept {}
-inline bool getKeyboardKey(fabgl::VirtualKeyItem *) noexcept { return false; }
+inline void setKeyboardLayout(std::uint8_t region) noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+  // Match stock accepted locale numbers; actual browser mapping is PORT-005's
+  // next integration boundary. These already processed events need no remap.
+  kbRegion = region <= 17 ? region : 0;
+#else
+  (void)region;
+#endif
+}
+inline bool getKeyboardKey(fabgl::VirtualKeyItem *item) noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+  agon::extender::input::ProcessedKey event;
+  if (!agon::extender::input::processedKeyboard().pop(event)) return false;
+  *item = {}; // Processed input has no physical PS/2 scan codes.
+  _keycode = event.keycode;
+  item->ASCII = event.ascii; item->vk = fabgl::VirtualKey(event.virtual_key);
+  item->down = event.down;
+  item->CTRL = event.modifiers & 1; item->SHIFT = (event.modifiers >> 1) & 1;
+  item->LALT = (event.modifiers >> 2) & 1; item->RALT = (event.modifiers >> 3) & 1;
+  item->CAPSLOCK = (event.modifiers >> 4) & 1; item->NUMLOCK = (event.modifiers >> 5) & 1;
+  item->SCROLLLOCK = (event.modifiers >> 6) & 1; item->GUI = (event.modifiers >> 7) & 1;
+  return true;
+#else
+  (void)item; return false;
+#endif
+}
 
 inline std::uint8_t packKeyboardModifiers(
     fabgl::VirtualKeyItem *item) noexcept {
@@ -78,8 +107,20 @@ inline std::uint8_t packKeyboardModifiers(
          item->SCROLLLOCK << 6 | item->GUI << 7;
 }
 
-inline bool shiftKeyPressed() noexcept { return false; }
-inline bool ctrlKeyPressed() noexcept { return false; }
+inline bool shiftKeyPressed() noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+  return (agon::extender::input::processedKeyboard().modifiers() & 2) != 0;
+#else
+  return false;
+#endif
+}
+inline bool ctrlKeyPressed() noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+  return (agon::extender::input::processedKeyboard().modifiers() & 1) != 0;
+#else
+  return false;
+#endif
+}
 
 inline void getKeyboardState(std::uint16_t *repeat_delay,
                              std::uint16_t *repeat_rate,
@@ -93,8 +134,17 @@ inline void getKeyboardState(std::uint16_t *repeat_delay,
   *led_state = scroll_lock | (caps_lock << 1) | (num_lock << 2);
 }
 
-inline void setKeyboardState(std::uint16_t, std::uint16_t,
-                             std::uint8_t) noexcept {}
+inline void setKeyboardState(std::uint16_t delay, std::uint16_t rate,
+                             std::uint8_t leds) noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+  // Stock v2.16.0 retention/ranges; no physical LED or repeat generation claim.
+  if (delay >= 250 && delay <= 1000) kbRepeatDelay = (delay / 250) * 250;
+  if (rate >= 33 && rate <= 500) kbRepeatRate = rate;
+  if (leds != 255) getKeyboard()->setLEDs(leds & 4, leds & 2, leds & 1);
+#else
+  (void)delay; (void)rate; (void)leds;
+#endif
+}
 
 inline void hideMouseCursor() noexcept { mouseVisible = false; }
 inline void showMouseCursor() noexcept { mouseVisible = false; }

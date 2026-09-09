@@ -112,7 +112,9 @@ ESP32Time		rtc(0);							// The RTC
 #include "agon_ttxt.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/network/wired_network_service.hpp"
-#if defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
+#if defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+#include "extender/diagnostic/keyboard_probe_stream.hpp"
+#elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 #include "extender/diagnostic/visible_text_stream.hpp"
 #elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
 #include "extender/diagnostic/general_poll_stream.hpp"
@@ -142,7 +144,9 @@ VDUStreamProcessor *	processor;				// VDU Stream Processor
 #endif /* !USERSPACE */
 
 #ifdef AGON_EXTENDER_P4_BOOT
-#if defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
+#if defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+// The keyboard composition supplies its adopted Stream in setup.
+#elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 // The bounded visible-text composition supplies its Stream in setup.
 #elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
 // The bounded General Poll composition supplies its adopted Stream in setup.
@@ -202,7 +206,9 @@ void setup() {
 	changeMode(startup_screen_mode);
 	copy_font();
 	#ifdef AGON_EXTENDER_P4_BOOT
-		#if defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
+		#if defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+		processor = new VDUStreamProcessor(beginKeyboardQualification());
+		#elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 		processor = new VDUStreamProcessor(beginVisibleTextQualification());
 		#elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
 		processor = new VDUStreamProcessor(beginGeneralPollQualification());
@@ -351,7 +357,10 @@ void processLoop(void * parameter) {
 #endif /* USERSPACE */
 
 	setupKeyboardAndMouse();
-#if defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
+#if defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+	runKeyboardQualification(processor);
+	return;
+#elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 	runVisibleTextQualification(processor);
 	return;
 #elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)

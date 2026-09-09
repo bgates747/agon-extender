@@ -706,10 +706,13 @@ void VDUStreamProcessor::flushEcho() {
 }
 
 void VDUStreamProcessor::handleKeyboardAndMouse() {
-#ifdef AGON_EXTENDER_P4_BOOT
-	// PORT-005 owns the eventual processed-event source. Gate F has none.
+#if defined(AGON_EXTENDER_P4_BOOT) && !defined(AGON_EXTENDER_PROCESSED_KEYBOARD)
+	// The ordinary disconnected P4 composition has no input source.
 	return;
 #else
+	// PORT-005's explicit binding supplies processed snapshots through the same
+	// helper. Keep the stock per-item callback/event-queue drain: batching only
+	// mutable VDP variables here would collapse down/up and repeated events.
 	MouseDelta delta;
 	fabgl::VirtualKeyItem kbItem;
 
