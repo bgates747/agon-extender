@@ -1,0 +1,25 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-usb-keyboard",
+  "diagnostic_status": "PORT-015 USB acquisition only; no UART or display",
+  "generated_build_files": [
+    "video/CMakeLists.txt",
+    "video/idf_component.yml",
+    "CMakeLists.txt"
+  ],
+  "managed_dependencies": {
+    "espressif/usb_host_hid": "1.2.1",
+    "espressif/dl_fft": "0.6.0",
+    "espressif/esp-dl": "3.3.9",
+    "espressif/esp_hosted": "2.12.12"
+  },
+  "project_translation_units": [
+    "video/extender/boot/p4_usb_keyboard.cpp"
+  ],
+  "vendored_translation_units": [],
+  "translation_unit_local_build_identity": {
+    "consumer": "video/extender/boot/p4_usb_keyboard.cpp",
+    "generated_header": ".pio/build-identities/p4-usb-keyboard/build_identity.hpp"
+  },
+  "dependency_lock": "pio/p4-usb-keyboard-dependencies.lock"
+}

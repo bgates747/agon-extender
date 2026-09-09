@@ -1,0 +1,947 @@
+{
+  "schema": 1,
+  "intervals": {
+    "browser_event_to_ack_ms": {
+      "n": 264,
+      "median_ms": 49.0,
+      "max_ms": 343
+    },
+    "browser_send_to_ack_ms": {
+      "n": 383,
+      "median_ms": 42,
+      "max_ms": 137
+    },
+    "p4_admission_to_uart_submit_ms": {
+      "n": 109,
+      "median_ms": 59.086,
+      "max_ms": 112.39
+    },
+    "p4_uart_submit_to_echo_ms": {
+      "n": 109,
+      "median_ms": 1.114,
+      "max_ms": 2.865
+    },
+    "p4_echo_to_flush_ms": {
+      "n": 102,
+      "median_ms": 1.222,
+      "max_ms": 96.085
+    },
+    "p4_snapshot_compose_ms": {
+      "n": 1232,
+      "median_ms": 116.376,
+      "max_ms": 121.827
+    },
+    "p4_video_send_ms": {
+      "n": 918,
+      "median_ms": 89.728,
+      "max_ms": 1662.395
+    },
+    "browser_receive_to_submit_ms": {
+      "n": 916,
+      "median_ms": 5.0,
+      "max_ms": 19
+    },
+    "browser_event_to_guaranteed_frame_ms": {
+      "n": 90,
+      "median_ms": 422.0,
+      "max_ms": 743
+    }
+  },
+  "isolated_frame_associations": [
+    {
+      "event_id": 1,
+      "ascii": 97,
+      "frame_sequence": 853,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 3,
+      "ascii": 98,
+      "frame_sequence": 859,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 5,
+      "ascii": 99,
+      "frame_sequence": 866,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 9,
+      "ascii": 97,
+      "frame_sequence": 941,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 11,
+      "ascii": 98,
+      "frame_sequence": 947,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 13,
+      "ascii": 99,
+      "frame_sequence": 952,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 15,
+      "ascii": 100,
+      "frame_sequence": 958,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 17,
+      "ascii": 101,
+      "frame_sequence": 965,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 21,
+      "ascii": 97,
+      "frame_sequence": 978,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 23,
+      "ascii": 98,
+      "frame_sequence": 985,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 25,
+      "ascii": 99,
+      "frame_sequence": 991,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 33,
+      "ascii": 100,
+      "frame_sequence": 1009,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 35,
+      "ascii": 101,
+      "frame_sequence": 1015,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 39,
+      "ascii": 112,
+      "frame_sequence": 1057,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 41,
+      "ascii": 100,
+      "frame_sequence": 1063,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 43,
+      "ascii": 113,
+      "frame_sequence": 1067,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 45,
+      "ascii": 114,
+      "frame_sequence": 1074,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 47,
+      "ascii": 115,
+      "frame_sequence": 1077,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 49,
+      "ascii": 116,
+      "frame_sequence": 1081,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 51,
+      "ascii": 117,
+      "frame_sequence": 1089,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 53,
+      "ascii": 118,
+      "frame_sequence": 1096,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 55,
+      "ascii": 119,
+      "frame_sequence": 1102,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 57,
+      "ascii": 120,
+      "frame_sequence": 1108,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 59,
+      "ascii": 121,
+      "frame_sequence": 1113,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 61,
+      "ascii": 122,
+      "frame_sequence": 1122,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 67,
+      "ascii": 101,
+      "frame_sequence": 1136,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 69,
+      "ascii": 108,
+      "frame_sequence": 1137,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 71,
+      "ascii": 108,
+      "frame_sequence": 1138,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 73,
+      "ascii": 111,
+      "frame_sequence": 1139,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 75,
+      "ascii": 44,
+      "frame_sequence": 1141,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 77,
+      "ascii": 32,
+      "frame_sequence": 1142,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 81,
+      "ascii": 115,
+      "frame_sequence": 1143,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 83,
+      "ascii": 32,
+      "frame_sequence": 1144,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 85,
+      "ascii": 116,
+      "frame_sequence": 1145,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 89,
+      "ascii": 101,
+      "frame_sequence": 1146,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 95,
+      "ascii": 32,
+      "frame_sequence": 1148,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 97,
+      "ascii": 97,
+      "frame_sequence": 1151,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 99,
+      "ascii": 110,
+      "frame_sequence": 1152,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 101,
+      "ascii": 121,
+      "frame_sequence": 1153,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 105,
+      "ascii": 111,
+      "frame_sequence": 1154,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 107,
+      "ascii": 100,
+      "frame_sequence": 1155,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 111,
+      "ascii": 32,
+      "frame_sequence": 1156,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 113,
+      "ascii": 105,
+      "frame_sequence": 1157,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 115,
+      "ascii": 110,
+      "frame_sequence": 1158,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 119,
+      "ascii": 116,
+      "frame_sequence": 1159,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 121,
+      "ascii": 104,
+      "frame_sequence": 1160,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 125,
+      "ascii": 114,
+      "frame_sequence": 1161,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 127,
+      "ascii": 101,
+      "frame_sequence": 1162,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 130,
+      "ascii": 63,
+      "frame_sequence": 1163,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 135,
+      "ascii": 106,
+      "frame_sequence": 1168,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 139,
+      "ascii": 115,
+      "frame_sequence": 1169,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 143,
+      "ascii": 32,
+      "frame_sequence": 1170,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 145,
+      "ascii": 110,
+      "frame_sequence": 1171,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 147,
+      "ascii": 111,
+      "frame_sequence": 1172,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 149,
+      "ascii": 100,
+      "frame_sequence": 1173,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 153,
+      "ascii": 105,
+      "frame_sequence": 1175,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 155,
+      "ascii": 102,
+      "frame_sequence": 1176,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 157,
+      "ascii": 32,
+      "frame_sequence": 1177,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 161,
+      "ascii": 111,
+      "frame_sequence": 1178,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 164,
+      "ascii": 32,
+      "frame_sequence": 1179,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 167,
+      "ascii": 99,
+      "frame_sequence": 1180,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 169,
+      "ascii": 97,
+      "frame_sequence": 1181,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 175,
+      "ascii": 104,
+      "frame_sequence": 1183,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 180,
+      "ascii": 101,
+      "frame_sequence": 1217,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 182,
+      "ascii": 97,
+      "frame_sequence": 1218,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 184,
+      "ascii": 114,
+      "frame_sequence": 1219,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 186,
+      "ascii": 32,
+      "frame_sequence": 1223,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 190,
+      "ascii": 101,
+      "frame_sequence": 1224,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 194,
+      "ascii": 105,
+      "frame_sequence": 1234,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 198,
+      "ascii": 32,
+      "frame_sequence": 1235,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 200,
+      "ascii": 116,
+      "frame_sequence": 1236,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 202,
+      "ascii": 104,
+      "frame_sequence": 1237,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 207,
+      "ascii": 101,
+      "frame_sequence": 1239,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 210,
+      "ascii": 97,
+      "frame_sequence": 1245,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 212,
+      "ascii": 110,
+      "frame_sequence": 1246,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 214,
+      "ascii": 121,
+      "frame_sequence": 1247,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 216,
+      "ascii": 111,
+      "frame_sequence": 1248,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 217,
+      "ascii": 110,
+      "frame_sequence": 1249,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 220,
+      "ascii": 101,
+      "frame_sequence": 1250,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 234,
+      "ascii": 32,
+      "frame_sequence": 1264,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 236,
+      "ascii": 97,
+      "frame_sequence": 1265,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 238,
+      "ascii": 110,
+      "frame_sequence": 1266,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 240,
+      "ascii": 121,
+      "frame_sequence": 1267,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 246,
+      "ascii": 101,
+      "frame_sequence": 1270,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 250,
+      "ascii": 97,
+      "frame_sequence": 1271,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 254,
+      "ascii": 32,
+      "frame_sequence": 1273,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 256,
+      "ascii": 104,
+      "frame_sequence": 1276,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 259,
+      "ascii": 109,
+      "frame_sequence": 1277,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 262,
+      "ascii": 101,
+      "frame_sequence": 1278,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    },
+    {
+      "event_id": 265,
+      "ascii": 63,
+      "frame_sequence": 1279,
+      "bound": "first recorded presented frame guaranteed to contain flushed drawing; may overestimate earliest visibility"
+    }
+  ],
+  "unpaired_or_nonprintable_keys": 23,
+  "browser_overwritten": 0,
+  "p4_metadata": [
+    "# browser-keyboard-probe-r04-b2026-09-09-17-57-18Z (candidate)",
+    "# browser timing v1; us=P4 monotonic; capacity=8192; total=7541; overwritten=0; available=1; cost_us=87087; max_cost_us=221"
+  ],
+  "browser_lifecycle": [
+    {
+      "ms": 3485,
+      "event": "key_close",
+      "sid": 95260161,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 3485,
+      "event": "key_release_local",
+      "sid": 95260161,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 10407,
+      "event": "video_close",
+      "sid": 329382534,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 24069,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 27272,
+      "event": "key_close",
+      "sid": 1523410627,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 27272,
+      "event": "key_release_local",
+      "sid": 1523410627,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 30324,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 37273,
+      "event": "key_close",
+      "sid": 866015325,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 37273,
+      "event": "key_release_local",
+      "sid": 866015325,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 47704,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 66786,
+      "event": "key_close",
+      "sid": 2802717910,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 66786,
+      "event": "key_release_local",
+      "sid": 2802717910,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 71134,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 100219,
+      "event": "key_close",
+      "sid": 927266195,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 100219,
+      "event": "key_release_local",
+      "sid": 927266195,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 104478,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 119815,
+      "event": "key_close",
+      "sid": 3281691128,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 119815,
+      "event": "key_release_local",
+      "sid": 3281691128,
+      "reason": "Keyboard unavailable or released; start the Agon sample, then capture again"
+    },
+    {
+      "ms": 127661,
+      "event": "canvas_blur"
+    },
+    {
+      "ms": 127662,
+      "event": "window_blur"
+    },
+    {
+      "ms": 203685,
+      "event": "video_close",
+      "sid": 1190477245,
+      "code": 1006,
+      "reason": "",
+      "clean": false
+    },
+    {
+      "ms": 264440,
+      "event": "canvas_blur"
+    }
+  ],
+  "p4_lifecycle": [
+    {
+      "index": 36,
+      "us": 140473580,
+      "event": "key_rejected",
+      "id": 95260161,
+      "a": 1,
+      "b": 84,
+      "c": 60
+    },
+    {
+      "index": 37,
+      "us": 140473619,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 145,
+      "us": 147022952,
+      "event": "send_budget",
+      "id": 59,
+      "a": 921600,
+      "b": 856758,
+      "c": 1661464
+    },
+    {
+      "index": 147,
+      "us": 147024660,
+      "event": "socket_close",
+      "id": 59,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 501,
+      "us": 163761487,
+      "event": "owner_revoke",
+      "id": 60,
+      "a": 3,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 514,
+      "us": 164261391,
+      "event": "key_rejected",
+      "id": 1523410627,
+      "a": 3,
+      "b": 72,
+      "c": 60
+    },
+    {
+      "index": 515,
+      "us": 164261433,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 815,
+      "us": 173761135,
+      "event": "owner_revoke",
+      "id": 60,
+      "a": 3,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 828,
+      "us": 174261088,
+      "event": "key_rejected",
+      "id": 866015325,
+      "a": 21,
+      "b": 72,
+      "c": 60
+    },
+    {
+      "index": 829,
+      "us": 174261132,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 1861,
+      "us": 203278897,
+      "event": "owner_revoke",
+      "id": 60,
+      "a": 3,
+      "b": 1,
+      "c": 0
+    },
+    {
+      "index": 1877,
+      "us": 203773799,
+      "event": "key_rejected",
+      "id": 2802717910,
+      "a": 69,
+      "b": 72,
+      "c": 60
+    },
+    {
+      "index": 1878,
+      "us": 203773846,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 4211,
+      "us": 237112555,
+      "event": "owner_revoke",
+      "id": 60,
+      "a": 3,
+      "b": 1,
+      "c": 0
+    },
+    {
+      "index": 4223,
+      "us": 237206928,
+      "event": "key_rejected",
+      "id": 927266195,
+      "a": 186,
+      "b": 18876491,
+      "c": 60
+    },
+    {
+      "index": 4224,
+      "us": 237206963,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 5217,
+      "us": 253126357,
+      "event": "socket_close",
+      "id": 57,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 5319,
+      "us": 254125921,
+      "event": "socket_close",
+      "id": 58,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 5652,
+      "us": 256629544,
+      "event": "owner_revoke",
+      "id": 60,
+      "a": 3,
+      "b": 2,
+      "c": 0
+    },
+    {
+      "index": 5663,
+      "us": 256802792,
+      "event": "key_rejected",
+      "id": 3281691128,
+      "a": 109,
+      "b": 72,
+      "c": 60
+    },
+    {
+      "index": 5664,
+      "us": 256802836,
+      "event": "socket_close",
+      "id": 60,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    },
+    {
+      "index": 7311,
+      "us": 340671095,
+      "event": "send_budget",
+      "id": 59,
+      "a": 921600,
+      "b": 809238,
+      "c": 1633982
+    },
+    {
+      "index": 7313,
+      "us": 340672546,
+      "event": "socket_close",
+      "id": 59,
+      "a": 0,
+      "b": 0,
+      "c": 0
+    }
+  ],
+  "limits": [
+    "UART submit is a driver call boundary, not physical first/last-bit measurement.",
+    "No cross-clock subtraction or exact one-way Ethernet timing.",
+    "Missing/overwritten/ambiguous matches are not zero latency.",
+    "P4 cost counters include record lock/clock overhead; they do not measure every instrumentation cost."
+  ]
+}

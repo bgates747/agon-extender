@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-08
+- Last amended: 2026-09-09
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -40,8 +40,8 @@ use of both processors requires separate state domains.
 The two P4-exclusive operating modes share one asymmetric ownership model. All
 applications, whether EDU-aware or not, use the EDP for audio and video output.
 The onboard VDP retains physical keyboard/mouse acquisition where used.
-Browser-originated keyboard input instead enters P4 directly and reaches EMOS
-over UART1; it does not require an onboard-VDP relay. MOS must
+Browser-originated and directly attached USB keyboard input instead enter P4
+and reach EMOS over UART1; neither requires an onboard-VDP relay. MOS must
 observe one coherent stream of stock-compatible responses and input events and
 update its canonical sysvars accordingly. Extender controls that logical
 stream; MOS should continue to own and mechanically update its own sysvars
@@ -158,7 +158,8 @@ that processor.
     and the strict-mode boundary remain in the linked task rather than this ADR.
 20. Define **Legacy mode** as mainboard ordinary-VDU routing with the ordinary
     EDP/EDU service inactive. The separately selected keyboard source is
-    preserved: explicitly selected browser input may continue over P4 UART1.
+    preserved: explicitly selected browser or P4 USB keyboard input may continue
+    over P4 UART1.
     This is the accepted keyboard exception to total Extender absence. EMOS
     retains canonical sysvar ownership; mainboard display and maintenance
     behavior remain on the onboard VDP.
@@ -172,7 +173,7 @@ that processor.
     selected response to reach a MOS-owned parser; this decision grants the EDP
     no ownership of MOS memory. The strict-mode requirement is independently
     sufficient to retain this surface.
-23. Select focused browser keyboard input as the next input increment. P4
+23. Select focused browser keyboard input as the first input increment. P4
     processes browser events and emits stock-compatible VDP keyboard packets
     over existing r03 UART1 to EMOS. EMOS owns packet reception, canonical key
     sysvars, keymap and application hook effects. Applicable configuration and
@@ -186,11 +187,13 @@ that processor.
     sends stock key-up packets for held keys, then stops keyboard packet
     delivery to EMOS. This source selection and cleanup are accepted for trial
     for the initial increment rather than a universal mode policy.
-24. Keep physical keyboard and mouse acquisition on the onboard VDP where used;
-    that does not make it the mandatory source or relay for browser keyboard
-    events. This increment adds no physical input hardware and retains the
-    selected onboard VBlank clock. V1 adds no P4-owned peripheral hardware
-    beyond facilities already present on the selected P4 DevKit.
+24. Keep mainboard-connected keyboard/mouse acquisition on the onboard VDP
+    where used; it is not a mandatory source or relay for P4-originated input.
+    Permit a directly attached USB keyboard through the P4 DevKit's native USB
+    host and the required connector/power assembly. This brings forward the
+    physical Extender input source while retaining the selected onboard VBlank
+    clock. It does not enable the retained physical PS/2 drivers or select
+    wider P4-owned peripheral hardware.
 25. Define **Exclusive Extended mode** as selection of the EDP as the same
     exclusive compatibility authority established for Exclusive Compatible
     mode, but with the eight-bit parallel Agon-to-EDP command path and the
@@ -441,9 +444,10 @@ bypass of EMOS ownership. PORT-014 owns its bounded implementation and evidence.
    not encoded in that number. A future dual-keyboard design may extend this
    model, but is outside the first increment.
 5. Use `EMOS KEYINPUT mainboard` for the keyboard connected to the Agon
-   mainboard and `EMOS KEYINPUT browser` for focused browser capture. Reserve
-   `EMOS KEYINPUT extender` for future Extender-connected keyboard hardware;
-   it is unavailable until implemented. `EMOS KEYINPUT` without an argument
+   mainboard and `EMOS KEYINPUT browser` for focused browser capture. Use
+   `EMOS KEYINPUT extender` for Extender-connected keyboard hardware, initially
+   a directly attached USB keyboard as selected on 2026-09-09.
+   `EMOS KEYINPUT` without an argument
    reports the selected source. Use readable named arguments, not numeric
    source codes or Unix-style option switches, for this selector.
 6. Receive browser keyboard packets through an EMOS-owned interrupt-driven
@@ -456,7 +460,7 @@ bypass of EMOS ownership. PORT-014 owns its bounded implementation and evidence.
 
 The Author accepted preserving the selected keyboard source across display-mode
 changes. `EMOS LEGACY` restores mainboard display routing while selected
-browser input continues. EMOS admits that input explicitly through KEYINPUT;
+browser or P4 USB keyboard input continues. EMOS admits that input explicitly through KEYINPUT;
 selecting Legacy is not an instruction to shut down the keyboard path.
 
 This amends earlier total electrical/logical absence and quiescence requirements

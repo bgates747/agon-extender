@@ -21,23 +21,26 @@ driver disposition survey. SETUP-004 determines what code and behavior must be
 retained, replaced, stubbed, omitted, or deferred; this task determines how the
 retained behavior is routed between processors and MOS.
 
-## Current priority — browser keyboard (2026-09-08)
+## Current priority — direct USB keyboard (2026-09-09)
 
-The Author selected browser-focused keyboard input before further parallel
-work. Documentation is accepted for freeze, 2026-09-08. Only the
-keyboard portions of D003/D007 are on this immediate path; other mode and
-service decisions remain open.
+The accepted browser keyboard slice now has physical typing and measured
+latency/connection findings. On 2026-09-09 the Author selected PORT-015's
+direct USB keyboard before browser repairs, first using the ordinary EMOS CLI
+on mainboard VGA. Existing UART/keyboard ownership decisions apply. Only the
+keyboard portions of D003/D007 are on this path; other mode/service decisions
+remain open.
 
 | Decision | Accepted direction or remaining question | State / owner |
 |---|---|---|
 | SETUP-005-K001 | Browser → P4 processed keyboard → stock VDP packets on r03 UART1 → EMOS-owned keyboard handling/sysvars/keymap. Both directions use 1152000/8N1 RTS/CTS. No parallel or onboard relay. | Accepted by the Author, 2026-09-08; amended ADR-0014 and architecture. |
 | SETUP-005-K002 | Explicit autoexec command enables EMOS browser-keyboard reception; for the first increment EMOS accepts P4 keyboard events exclusively while retaining other onboard VDP communications. On focus loss/disconnect, P4 sends stock key-up packets for held keys, then stops keyboard packets to EMOS. | Initial behavior accepted for trial by the Author, 2026-09-08. Detailed session mechanisms remain to be specified with REMOTE-001 and INTEG-009. |
 | SETUP-005-K003 | Persistent UART1 reception and stock handler reuse with separate UART0 parser state, stock callback context/order and no conflicting keyboard writers. | Interrupt-driven UART1 and separate packet assembly accepted, 2026-09-08; detailed implementation/qualification belongs to PORT-008 and INTEG-009. |
-| SETUP-005-K004 | Case-insensitive `EMOS <subcommand>` control; `EMOS EXCOM` / `EMOS LEGACY` destination selectors; `EDU` explicit Extender commands; `EMOS KEYINPUT [mainboard / browser / extender]` source selection/reporting; `SET KEYBOARD n` layout retained across mode changes; reboot persistence via autoexec. | Accepted, 2026-09-08; ADR-0014 CLI section is authoritative. Extender hardware source is reserved, unavailable. |
+| SETUP-005-K004 | Case-insensitive `EMOS <subcommand>` control; `EMOS EXCOM` / `EMOS LEGACY` destination selectors; `EDU` explicit Extender commands; `EMOS KEYINPUT [mainboard / browser / extender]` source selection/reporting; `SET KEYBOARD n` layout retained across mode changes; reboot persistence via autoexec. | Accepted, 2026-09-08; ADR-0014 CLI section is authoritative. K009 selects implementation of the reserved extender source. |
 | SETUP-005-K005 | Keyboard source is independent of display mode. `EMOS LEGACY` restores mainboard VDU routing while preserving selected browser input; explicitly selected keyboard traffic is an exception to total Extender absence in Legacy. | Accepted by the Author, 2026-09-08; amends ADR-0014 and the two-plane model without treating keyboard-only activity as Dual. |
 | SETUP-005-K006 | Start with mainboard input; restore desired source/layout and other explicit startup selections through `autoexec.txt` only. Commands retain runtime state across mode changes, not through separate saved configuration. | Accepted by the Author, 2026-09-08. No new state/.cfg/NVS settings store for this increment; revisit only if a later need justifies it. |
 | SETUP-005-K007 | ExCom sends ordinary CLI/VDU output to EDP; mainboard VGA shows a static mode banner with cursor hidden. No double buffering or periodic redraw; VBlank continues. Dual retains active display roles. | Accepted by the Author, 2026-09-08; ADR-0014 display section. |
 | SETUP-005-K008 | Initially, return to Legacy with a fresh mainboard screen, visible cursor and MOS prompt, preserving keyboard source/layout. | Accepted by the Author, 2026-09-08. Later, consider one-line transition notices and cursor hide/show while preserving the existing background; not a first-increment gate. |
+| SETUP-005-K009 | Bring forward one directly attached USB keyboard using P4 native USB host and `EMOS KEYINPUT extender`; reuse stock packets over r03 UART1. First prove ordinary EMOS CLI on mainboard VGA, independently of browser focus/network. The DevKit USB connector/power assembly is permitted for this input. | Accepted by Author, 2026-09-09; PORT-015 owns implementation and physical proof; ADR-0014 amended. |
 
 
 K002's initial behavior, K003's receiver direction and K005's independent

@@ -31,6 +31,8 @@
 # are intentionally not project-authored; see ADR-0008.
 /vdp/CMakeLists.txt
 /vdp/video/CMakeLists.txt
+# Generated for the selected environment by the same source-selection hook.
+/vdp/video/idf_component.yml
 .cache/
 .clang_complete
 .gcc-flags.json

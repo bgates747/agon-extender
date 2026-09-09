@@ -1,0 +1,2 @@
+take(100)=1; heartbeat(150)=1; pop(100); heartbeat(151)=0
+take(100)=1; heartbeat(150)=1; pop(150); heartbeat(151)=1

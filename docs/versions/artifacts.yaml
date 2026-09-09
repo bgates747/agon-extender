@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r44
-updated_at: 2026-09-09T04:38:06Z
+registry_revision: r45
+updated_at: 2026-09-09T19:44:20Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -371,3 +371,15 @@ artifacts:
       - Author preapproved versioning for this increment on 2026-09-09.
       - r04 corrects diagnostic WebSocket session initialization and retains the r03 off-stack export buffer; it uses the unchanged r01 SD sample and EMOS v0.1.9.
       - r01 typing/editing and reconnect work; r04 measures unresolved latency and socket closure before repair.
+
+  - artifact_id: usb-keyboard-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: usb-keyboard-probe-r01
+    status: candidate
+    variants: []
+    description: Native P4 USB boot-keyboard acquisition over the dedicated host PHY.
+    notes:
+      - Standing Author versioning preapproval applies to PORT-015 implementation.
+      - P4 debug console reports acquisition and cleanup; no Agon UART traffic or EMOS change.
+      - Hardware wiring and powered acquisition remain unqualified.

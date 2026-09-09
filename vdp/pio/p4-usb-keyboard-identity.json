@@ -1,0 +1,6 @@
+{
+  "artifact_id": "usb-keyboard-probe",
+  "source_identity": "usb-keyboard-probe-r01",
+  "status": "candidate",
+  "note": "Native USB acquisition candidate after decoder/selection checks and identified draft build; standing Author versioning preapproval. No physical qualification."
+}

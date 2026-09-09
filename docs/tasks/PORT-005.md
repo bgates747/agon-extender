@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Bounded controlled-sender hardware proof passes, including two additional Agon-only resets; focused browser/session integration is implemented for review; physical typing remains pending.
+- Status: Controlled-sender and browser typing/editing work on hardware; broader parity remains open. PORT-015 now brings forward native USB acquisition through this processed-input path, 2026-09-09.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
@@ -13,6 +13,12 @@ PORT-006 network boundary. The adapter maps them to the retained VDP event,
 virtual-key and modifier vocabulary, updates EDP-local keyboard state and
 callbacks, and emits ordinary stock keyboard packets through PORT-008's UART
 sender. EMOS alone processes those packets into canonical eZ80 keyboard state.
+
+PORT-015 adds the selected native USB keyboard source. Reuse the ordered
+processed event and stock serializer boundaries; USB device lifetime and
+repeat belong to P4's USB input source, not browser heartbeat/ownership policy.
+The first USB proof uses normal EMOS CLI and mainboard VGA. Browser repairs
+remain separately tracked; no implicit multi-source input merging is selected.
 
 This supersedes the earlier immediate proof-of-concept assumption that an
 EDU-aware Agon application must first read onboard input and forward it to P4.
@@ -37,7 +43,9 @@ not suppress browser-originated key packets.
    bound the implementation. AUDIT-004 retains exact commit links.
 
 The accepted CLI contract in ADR-0014 uses `EMOS KEYINPUT browser` or
-`mainboard` to select the source and reserves `extender` for future hardware.
+`mainboard` to select the source. PORT-015 now implements the reserved
+`extender` selector for direct USB hardware; it remains unavailable in the
+currently installed image until that implementation is deployed.
 The runtime `SET KEYBOARD n` layout must apply consistently to the selected
 path and survive mode changes. Autoexec alone restores settings across boots;
 do not add a separate saved configuration. Do not conflate layout with source,

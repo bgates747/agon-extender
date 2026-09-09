@@ -1,10 +1,15 @@
 # Light 2 r03 tests
 
-Latest bounded result: [controlled P4 keyboard sender](keyboard-sender.md)
+Current preparation: [native USB keyboard acquisition](usb-keyboard-probe-r01.md),
+with wiring and physical results pending. The preceding
+[browser timing result](REMOTE-001-2026-09-09-18-00-44Z/README.md) records working
+typing with measured latency and unresolved keyboard/video disconnections.
+
+Accepted controlled-input baseline: [controlled P4 keyboard sender](keyboard-sender.md)
 [PASS](PORT-005-2026-09-09-03-26-09Z/README.md). The full capture verifies twelve
 stock keyboard packets at 1152000 baud; the Author confirmed Agon SD/CLOCK,
 keyboard API effects and MOS return on the captured run and two Agon-only
-resets. Browser/session integration remains later work. The
+resets. Browser/session qualification remains incomplete. The
 [keyboard-test SD](PORT-005-2026-09-09-03-19-20Z/README.md) and
 [P4 deployment](PORT-005-2026-09-09-03-22-37Z/README.md) records identify the inputs.
 

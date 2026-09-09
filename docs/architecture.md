@@ -454,12 +454,15 @@ named destination mode; `EDU` explicitly addresses Extender functionality while
 contract is in [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md#cli-and-keyboard-selection--2026-09-08).
 
 `EMOS KEYINPUT mainboard` selects the Agon mainboard keyboard;
-`EMOS KEYINPUT browser` selects focused browser input. The `extender` source
-name is reserved for future Extender-connected input hardware and is currently
-unavailable. With no source argument, the command reports the selected source.
+`EMOS KEYINPUT browser` selects focused browser input. The accepted
+`EMOS KEYINPUT extender` source selects Extender-connected hardware input,
+initially a USB keyboard through the P4 DevKit's native host controller.
+PORT-015 records implementation and qualification of this newly selected source.
+With no source argument, the command reports the selected source.
 `SET KEYBOARD n` remains the distinct runtime layout selection with the same
 effect across modes. `EMOS LEGACY` preserves the selected keyboard source;
-returning display output to the mainboard does not shut down browser input.
+returning display output to the mainboard does not shut down selected browser
+or P4 USB keyboard input.
 Across boots, `autoexec.txt` alone restores these selections. EMOS starts with
 mainboard keyboard input; commands at the interactive prompt change runtime
 state without saving a separate state/configuration file. No new nonvolatile
@@ -541,11 +544,20 @@ owned by SETUP-005, REMOTE-001, PORT-006, PORT-008 and agon-emos INTEG-009.
 
 Physical PS/2 keyboard/mouse acquisition remains on the onboard VDP where
 those devices are used. It is not a relay for browser keys. The accepted bench
-clock remains the onboard VDP's VBlank/PB1 path. This keyboard increment adds
+clock remains the onboard VDP's VBlank/PB1 path. The initial browser proof adds
 no physical input device, wiring, VBlank replacement or ordinary-VDU routing
 change. A bounded qualification session has explicit entry/exit; it does not
 claim complete Exclusive Compatible mode; Legacy permits the explicitly
 selected keyboard service described above.
+
+The next selected input source is a directly attached USB keyboard. P4 receives
+USB HID reports through its native host controller, translates them into
+ordered processed keyboard events and sends stock keyboard packets through
+the same EMOS-owned UART1 session. Explicit `EMOS KEYINPUT extender` selection
+controls this path independently of browser focus/network and display mode.
+Initial scope is one wired HID boot-protocol keyboard with normal EMOS CLI on
+mainboard VGA. USB removal releases held state; it is not browser lease expiry.
+No implicit browser/USB mixing or new UART keyboard packet format is selected.
 
 P4's processed-input adapter owns EDP-local keyboard variables, relevant
 callbacks, control-key and paged-mode behavior and stock packet generation.
@@ -556,8 +568,10 @@ full mode-specific input composition remain separate scope.
 Physical vdp-gl keyboard/mouse drivers, PS/2 controllers, scan-code tasks and
 device controls stay vendored but excluded from the P4 build. The browser
 adapter reuses stock virtual-key/event vocabulary and applicable pure mapping
-semantics without depending on physical PS/2 hardware. No v1 input hardware
-beyond the selected P4 DevKit's existing facilities is added.
+semantics without depending on physical PS/2 hardware. Direct USB keyboard
+input may use the selected P4 DevKit's existing native host plus the required
+USB connector and power assembly. This permission does not restore the omitted
+PS/2 engines or select other peripheral expansion.
 
 Extender retains ESP-IDF's OTA image, boot-partition, rollback, and restart
 lifecycle as the low-level update substrate. This is independent of the omitted

@@ -1,0 +1,57 @@
+schema_version: 1
+run_id: REMOTE-001-2026-09-09-18-00-44Z
+started_utc: '2026-09-09T18:00:44.704Z'
+procedure: browser-keyboard-probe-r04
+operation: operator typing latency and connection-loss observation
+outcome: partial
+source_commit: 1ce96dc97177c9818fe9254ad5a5500ffd6142c9
+source_dirty: false
+p4:
+  build_id: browser-keyboard-probe-r04-b2026-09-09-17-57-18Z
+  factory_sha256: 0dbd2f5eda479502c8af5fb1208624895830765a0fd26ceebc47387b698bf5b2
+  deployment_run: REMOTE-001-2026-09-09-17-58-10Z
+emos:
+  build_id: agon-emos-v0.1.9-b2026-09-09-04-38-19Z
+  changed: false
+sd:
+  sample_build_id: browser-keyboard-probe-r01-b2026-09-09-04-40-34Z
+  changed: false
+  previously_verified_sha256:
+    bin/EMBOOT.BIN: 9122b77703ee437660cb384118746353738d59654a08647afafae1ae43c8de9b
+    bin/BTYPE.BIN: 3f5ee573a75e521170cd79aa04ff1e7857dd8235829e95fdb46f4a5e380a60b9
+    autoexec.txt: c6e82c26d27ffb2ac0856927160a259d94b53fba3fae3aa657859800353db1cc
+transport:
+  hardware_design: light2-harness-r03
+  path: UART1
+  baud: 1152000
+  framing: 8N1
+  flow_control: RTS/CTS
+recording:
+  mode: 'on'
+  browser_records: 2896
+  p4_records: 7541
+  browser_overwritten: 0
+  p4_overwritten: 0
+  p4_export_error: null
+  frozen_by_agent_before_operator_download: true
+  independent_p4_export_matches_download: true
+observations:
+  operator_slow_and_normal_typing: true
+  keyboard_recapture: true
+  premature_keyboard_lease_revocations: 5
+  video_send_budget_closures: 2
+  recorded_uart_failures: 0
+  escape_and_mos_return: null
+  physical_recording_off_comparison: false
+evidence:
+  raw_download: timing.json
+  derived_intervals: analysis.json
+  findings: README.md
+  diagnostic_reproducer: stale-clock-reproducer.cpp
+  diagnostic_output: stale-clock-reproducer.txt
+limits:
+  - Measurement and reproduced defects; no qualification promotion.
+  - Guaranteed-containing frame is a conservative bound, not physical scanout.
+  - No cross-clock subtraction or exact one-way Ethernet measurement.
+  - Instrumentation overhead comparison remains incomplete.
+  - Original behavior repair awaits Author review.

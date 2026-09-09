@@ -5,21 +5,28 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current priority — browser-focused keyboard input
+## Current priority — direct USB keyboard input
 
 The order below applies to the keyboard slice in each detail file, not to
 completion of the whole task. Documentation was accepted for freeze on
 2026-09-08. The resident EMOS receiver, API proof and bounded recovery emulator
 checkpoints are accepted and frozen. Controlled P4 keyboard sending and EMOS
 API effects pass on hardware. Physical browser typing, Enter and Backspace
-now work; browser/P4 timing instrumentation is ready for a paired observation
-of latency and keyboard/video disconnections.
+now work. Paired timing measurements identify a reproducible keyboard lease
+defect and P4 video send-budget closures. The Author reviewed those findings
+and selected direct USB keyboard input before browser repairs on 2026-09-09,
+to restore a keyboard for the ordinary EMOS CLI on mainboard VGA.
 Broader physical/session qualification remains open. The selected Agon/P4 path uses
 only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.
 
+- [ ] **PORT-015 — Bring up a directly connected USB keyboard**
+  - Started: 2026-09-09 (connector verification, then native P4 HID input).
+  - Finished: --
+  - Details: [PORT-015](docs/tasks/PORT-015.md)
+
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
-  - Started: 2026-09-08 (physical typing/editing works; responsiveness and capture stability next).
+  - Started: 2026-09-08 (physical typing/editing works; reviewed findings retained; repairs follow PORT-015).
   - Finished: --
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
@@ -31,7 +38,7 @@ are not prerequisites.
 - [ ] **PORT-005 — Implement the processed-keyboard input adapter**
   - Started: 2026-09-08 (controlled P4 sender).
   - Finished: --
-  - Status: Controlled P4 sender, resident EMOS API effects and three Agon runs pass on hardware; focused browser typing is implemented for review; paired typing hardware remains pending.
+  - Status: Controlled sender and browser typing work on hardware; PORT-015 reuses the processed-input path for USB; wider input parity remains open.
   - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**

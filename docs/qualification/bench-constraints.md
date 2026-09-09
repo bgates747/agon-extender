@@ -42,6 +42,14 @@ for installation, recovery or earlier setup. Keep the physical-keyboard fault
 record and require Author-observed successful input qualification before
 relaxing BC-001 for fixtures that use the browser path.
 
+On 2026-09-09 the Author selected direct USB keyboard input through P4 as
+another replacement path, owned by PORT-015. The same qualification exception
+applies: autoexec performs setup, then the test may request USB keystrokes
+after readiness. Do not require this unqualified keyboard for installation or
+recovery. Mainboard VGA may show the test and ordinary EMOS prompt; browser
+video is not required. BC-001 remains active until the replacement smoke and
+Author confirmation satisfy its removal condition.
+
 ## Capture completion for subsequent UART procedures
 
 Author-approved on 2026-09-08: subsequent paired UART capture procedures end

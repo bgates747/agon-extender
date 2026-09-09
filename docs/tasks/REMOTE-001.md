@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Physical typing/editing and reconnect/recapture work; latency and keyboard/video disconnections remain unresolved. Measurement instrumentation implemented; measurement candidate deployed; operator observation pending, 2026-09-09.
+- Status: Physical findings reviewed by Author, 2026-09-09. Browser repairs are deferred behind PORT-015 direct USB keyboard input. Stale-time lease defect, video stalls, latency and wider qualification remain open.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
@@ -289,7 +289,8 @@ this follow-up.
 
 **State:** Author authorized implementation and hardware preparation on
 2026-09-09. Browser/P4 instrumentation and automated checks are complete;
-operator measurements and repair review remain pending.
+operator measurements and findings are recorded below; repair review remains
+pending. Physical recording-off comparison remains incomplete.
 
 ### Objective and scope
 
@@ -340,7 +341,7 @@ claim, a timeout-policy change or a parallel-transport increment.
    and disconnect reason reporting with focused checks before deployment.
    Keep EMOS unchanged if P4 checkpoints suffice; propose any necessary
    resident instrumentation separately rather than assuming another MOS flash.
-5. [ ] **I001-M5 — Run one bounded operator session after preparation.** Read
+5. [x] **I001-M5 — Run one bounded operator session after preparation.** Read
    the machine-local bench instructions and active fixture constraints first.
    Record exact deployed identities and diagnostic settings under the version
    policy. Use the existing wiring, UART rate and SD typing application.
@@ -351,7 +352,7 @@ claim, a timeout-policy change or a parallel-transport increment.
    recapture without resetting Agon. Coordinate the sole viewer with the
    Author. Use the analyzer only if software timestamps leave UART timing
    uncertain; analyzer acquisition is not a prerequisite for initial results.
-6. [ ] **I001-M6 — Report findings and stop before repair.** Report sample
+6. [x] **I001-M6 — Report findings and stop before repair.** Report sample
    counts, typical and worst observed intervals, missing/ambiguous records,
    and closure ordering. Separate measured facts from hypotheses. Identify
    which interval dominates visible delay and whether HTTP send stalls
@@ -457,3 +458,52 @@ missing-context path did not occur. No keyboard ownership or keys were injected
 by the agent. Actual operator capture/typing still requires restarting the Agon
 sample and reloading the page. EMOS, SD, wiring, UART and timing policy remain
 unchanged. Original r01 latency/disconnection measurement remains open.
+
+### Operator measurement and findings — 2026-09-09
+
+Evidence and full interval/count/closure analysis:
+[REMOTE-001-2026-09-09-18-00-44Z](../../hardware/designs/light2-harness-r03/tests/REMOTE-001-2026-09-09-18-00-44Z/README.md).
+The unchanged raw download contains 2896 browser and 7541 P4 records, with no
+overwrite. The Author typed at slow and normal cadence, recaptured after
+releases, and reported video closure within Agon's five-minute session.
+
+1. **I002: false keyboard expiry is reproduced.** Five reason-3 revocations
+   occurred only 6.493–84.210 ms after accepted messages. The P4 loop caches
+   its clock before potentially blocking VDU work; the HTTP task can publish
+   a newer heartbeat before `pop` uses that old timestamp. Unsigned subtraction
+   then falsely exceeds the two-second lease. A host reproducer using the
+   actual class demonstrates this task ordering. This code exists in original
+   r01, before instrumentation. The physical trace supports this cause but
+   does not expose the cached argument itself.
+2. **I002: P4 initiates video closure on send-budget failure.** Two partial
+   frame sends exceeded the one-second budget, observed after about 1.66/1.63
+   seconds because checks occur between blocking sends. Both correlate with
+   browser video closure. Why those sends stalled remains unresolved. No
+   browser ACK timeout or P4 UART failure is recorded. Missed heartbeats
+   during those stalls do not explain the five premature lease revocations.
+3. **I001: UART/EMOS echo is small; queue/display intervals are substantial.**
+   Medians: P4 admission to UART submission 59.086 ms (109 matches), UART
+   submission to echoed text 1.114 ms (109), snapshot composition 116.376 ms
+   (1232), successful video send 89.726 ms (916). Ninety conservative
+   guaranteed-containing frame matches give event-to-submission median
+   422 ms, maximum 743 ms. These are different sample sets, not additive
+   budgets or exact physical-display latency. Full counts/exclusions are
+   recorded with the evidence.
+4. **Review recommendation:** first correct lease timing across task
+   interleaving while preserving true expiry, wrap behavior and held-key
+   cleanup, then repeat paired typing. No EMOS or SD change is indicated.
+   Keep video send scheduling and snapshot cost for the next bounded
+   investigation. No original-behavior repair is implemented here.
+5. I001-M5/M6 now have their measurement/report deliverable. I001-M4's physical
+   recording-off comparison remains incomplete; cost counters cannot establish
+   negligible total overhead. I001/I002 remain open until repairs and review.
+   Escape/MOS return is not inferred. Stop for Author review before repair.
+
+### Priority diversion accepted — 2026-09-09
+
+The Author reviewed the measurement findings, then selected PORT-015's direct
+USB keyboard input before browser repair work. Preserve this evidence and all
+unresolved I001/I002 findings. No original browser-behavior repair has been
+implemented; direct USB acquisition must use its own device lifetime rather
+than inherit the defective browser lease. Resume browser work after the first
+USB/normal-CLI proof or subsequent Author steering.
