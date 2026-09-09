@@ -81,7 +81,11 @@ previously queued keyboard frames before the reply; neither a new keyboard
 wire envelope nor per-key ACK is proposed. Existing polling-only RTS helpers
 are kept separate from the new owned interrupt receiver. The Author approved
 EMOS v0.1.8 and registry r35; the accepted source checkpoint retains its
-reviewed draft build. INTEG-009 Work 3 is next. This does not qualify
+reviewed draft build. INTEG-009 Work 3 passed Author emulator review with the
+separate `keyboard-api-probe-r01` SD exerciser; the Author authorized its
+source freeze and bounded Work 4 cleanup/recovery tests. It reuses the reviewed EMOS
+v0.1.8 image unchanged; a generic isolated Fab UART1 peer exercises the real
+resident interrupt/parser and public MOS keyboard APIs. This does not qualify
 browser input or authorize a P4 change, physical flash or UART1 bench run.
 
 1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
@@ -1715,3 +1719,13 @@ later accepted D002 boundary authorizes only the software replacement work
 Every existing capture or build claim materially dependent on F007, F014, or
 F015 must receive an explicit retained, rerun, superseded, or withdrawn
 disposition before it is reused.
+
+
+### Repository validation note — 2026-09-08 keyboard Work 3
+
+The new keyboard fixture registry entry and templates validate. The full
+version-record validator stops at the already committed r02 profile's
+`connectivity.yaml` integrity mismatch (expected `560ab589...`, actual
+`c68e4d4f...`). Both files match HEAD and were untouched by keyboard work.
+Reconcile that held-design record before resuming r02 qualification; it is
+not evidence against the r03 UART keyboard fixture.

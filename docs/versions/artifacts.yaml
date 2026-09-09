@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r35
-updated_at: 2026-09-08T23:56:39Z
+registry_revision: r36
+updated_at: 2026-09-09T00:55:25Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -329,3 +329,15 @@ artifacts:
       - Author accepted graphical review and approved source freeze and clean candidate preparation on 2026-09-08; physical text/browser qualification remains pending.
       - Author approved r02 and registry r33 for repeatable successful text transactions on 2026-09-08; EMOS remains v0.7.0.
       - Author approved r03 and registry r34 for the independently SD-loaded C sample and reusable bounded EMOS/P4 text diagnostic; candidate after accepted paced review and SD deployment authorization.
+
+  - artifact_id: keyboard-api-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: keyboard-api-probe-r01
+    status: draft
+    variants: []
+    description: Ordinary SD-loaded MOS keyboard API exerciser with a controlled emulator UART1 byte peer.
+    notes:
+      - Author approved r01 and registry r36 for INTEG-009 Work 3; EMOS remains at v0.1.8 and the previously reviewed firmware image is reused unchanged.
+      - The fixture covers callbacks, sysvars, virtual map, counter wrap, getkey, editor and locale retention through the resident receiver.
+      - An isolated Fab test adaptation supplies UART1 RX interrupts and an ordered socket byte peer with constant CTS-ready; physical UART timing, P4/browser behavior and RTS backpressure are not qualified.
