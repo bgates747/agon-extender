@@ -23,6 +23,7 @@ are not prerequisites.
 - [ ] **PORT-015 — Bring up a directly connected USB keyboard**
   - Started: 2026-09-09 (connector verification, then native P4 HID input).
   - Finished: --
+  - Status: Native USB acquisition passes; ordinary EMOS CLI integration is drafted with host/emulator checks passing, awaiting Author review and hardware proof. Power particulars remain open.
   - Details: [PORT-015](docs/tasks/PORT-015.md)
 
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r45
-updated_at: 2026-09-09T19:44:20Z
+registry_revision: r47
+updated_at: 2026-09-09T21:51:14Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,12 +38,13 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.9
+    latest_identity: agon-emos-v0.1.10
     status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author accepted the native USB CLI graphical review and authorized paired deployment; v0.1.10 is candidate under standing version preapproval.
       - Author preapproved this increment's identities on 2026-09-09. Version v0.1.9 adds shared resident text and keyboard UART transactions; graphical review passed and candidate preparation uses standing preapproval; physical typing remains pending.
       - Author approved registry r39 candidate promotion after the controlled keyboard graphical proof and source freeze; physical qualification remains pending.
       - Author approved v0.1.8 and registry r35 for INTEG-009 resident keyboard reception, then accepted the Work 2 emulator result and source freeze on 2026-09-08. The reviewed build remains draft; this checkpoint does not authorize deployment or claim P4/browser keyboard qualification.
@@ -383,3 +384,14 @@ artifacts:
       - Standing Author versioning preapproval applies to PORT-015 implementation.
       - P4 debug console reports acquisition and cleanup; no Agon UART traffic or EMOS change.
       - Hardware wiring and powered acquisition remain unqualified.
+
+  - artifact_id: usb-cli-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: usb-cli-probe-r01
+    status: candidate
+    variants: []
+    description: Native USB input through P4 stock keyboard packets to ordinary resident EMOS CLI.
+    notes:
+      - Author accepted graphical CLI review and authorized P4 flash and EMOS SD preparation; candidate under standing version preapproval, physical proof pending.
+      - UK/US boot-keyboard subset and typematic; mainboard VGA output, no browser input.

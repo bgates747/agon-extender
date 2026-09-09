@@ -115,7 +115,11 @@ ESP32Time		rtc(0);							// The RTC
 #if defined(AGON_EXTENDER_BROWSER_TYPING)
 #include "extender/diagnostic/browser_typing_stream.hpp"
 #elif defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
+#ifdef AGON_EXTENDER_USB_CLI
+#include "extender/diagnostic/usb_cli_stream.hpp"
+#else
 #include "extender/diagnostic/keyboard_probe_stream.hpp"
+#endif
 #elif defined(AGON_EXTENDER_VISIBLE_TEXT_QUALIFICATION)
 #include "extender/diagnostic/visible_text_stream.hpp"
 #elif defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
@@ -264,7 +268,7 @@ void setup() {
 		initAudio();
 	#endif
 	boot_screen();
-	#if defined(AGON_EXTENDER_P4_BOOT) && !defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION)
+	#if defined(AGON_EXTENDER_P4_BOOT) && !defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION) && !defined(AGON_EXTENDER_USB_CLI)
 		if (_VGAController == nullptr) {
 			ESP_LOGE("extender_boot", "browser service has no display controller");
 		} else {

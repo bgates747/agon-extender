@@ -1,0 +1,4 @@
+USB KEYBOARD usb-keyboard-probe-r01 build=usb-keyboard-probe-r01-b2026-09-09-19-58-58Z status=candidate
+USB HOST READY: attach one boot keyboard; acquisition only
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0

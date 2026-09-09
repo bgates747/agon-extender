@@ -1,0 +1,33 @@
+USB KEYBOARD usb-keyboard-probe-r01 build=usb-keyboard-probe-r01-b2026-09-09-19-58-58Z status=candidate
+USB HOST READY: attach one boot keyboard; acquisition only
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB IGNORE address=1 interface=1 subclass=0 protocol=0
+USB CONNECTED #1 vid=04d9 pid=a088 address=1 interface=0
+USB KEYBOARD READY: press/release keys; US subset, no repeat or LEDs
+USB KEY DOWN usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB STATUS attached=1 reports=2 key_events=1
+USB KEY UP usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+E (24466) USB HOST: EP command error: ESP_ERR_INVALID_STATE
+USB DISCONNECTED: held keys released; waiting for keyboard
+USB STATUS attached=0 reports=3 key_events=2
+USB IGNORE address=2 interface=1 subclass=0 protocol=0
+USB CONNECTED #2 vid=04d9 pid=a088 address=2 interface=0
+USB KEYBOARD READY: press/release keys; US subset, no repeat or LEDs
+USB STATUS attached=1 reports=4 key_events=2
+USB KEY DOWN usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB KEY UP usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB STATUS attached=1 reports=6 key_events=4
+E (37998) USB HOST: EP command error: ESP_ERR_INVALID_STATE
+USB DISCONNECTED: held keys released; waiting for keyboard
+USB IGNORE address=3 interface=1 subclass=0 protocol=0
+USB CONNECTED #3 vid=04d9 pid=a088 address=3 interface=0
+USB KEYBOARD READY: press/release keys; US subset, no repeat or LEDs
+USB STATUS attached=1 reports=7 key_events=4
+USB KEY DOWN usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB KEY UP usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB STATUS attached=1 reports=9 key_events=6
+USB STATUS attached=1 reports=9 key_events=6
+USB STATUS attached=1 reports=9 key_events=6
+USB STATUS attached=1 reports=9 key_events=6

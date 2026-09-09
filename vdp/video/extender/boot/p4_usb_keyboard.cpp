@@ -54,6 +54,12 @@ void key(const Decoder::Key &event) {
 void interfaceEvent(hid_host_device_handle_t handle,hid_host_interface_event_t kind,void *) {
   Event event{}; event.handle=handle;
   if (kind==HID_HOST_INTERFACE_EVENT_DISCONNECTED) {
+    // HID 1.2.1 + IDF 5.5.5 may log EP command ESP_ERR_INVALID_STATE
+    // before this callback: upstream disconnect cleanup clears an endpoint
+    // after its port is disabled. Our second close only deletes the retained
+    // interface. Keep other errors visible; do not suppress the USB HOST tag.
+    // Source trace/evidence: hardware/designs/light2-harness-r03/tests/
+    // usb-keyboard-unplug-review.md. Recheck when either dependency changes.
     detached.store(true);
     event.kind=Kind::disconnected;
     // Only one interface is claimed. Reports reserve two queue entries for

@@ -1,0 +1,6 @@
+{
+  "artifact_id": "usb-cli-probe",
+  "source_identity": "usb-cli-probe-r01",
+  "status": "candidate",
+  "note": "Author accepted graphical CLI review and authorized paired hardware deployment; physical proof pending."
+}

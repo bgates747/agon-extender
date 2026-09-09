@@ -27,7 +27,7 @@ def function(text, signature):
     return text[start:end]+'\n'
 
 
-def verify(output=None, typing=False):
+def verify(output=None, typing=False, usb_cli=False):
     video = ROOT/'vdp/video'
     source = (video/'vdu_stream_processor.h').read_text()
     helpers = (video/'extender/input/unavailable_input_adapter.hpp').read_text()
@@ -53,7 +53,10 @@ def verify(output=None, typing=False):
         subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-Wno-unused-parameter',
                         '-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+str(temp),'-I'+str(video),
                         str(ROOT/'tests/processed_keyboard_test.cpp'),'-o',str(binary)], check=True)
-        subprocess.run([str(binary), *([str(output.resolve())] if output else []), *(["typing"] if typing else [])], check=True)
+        mode = 'usb-cli' if usb_cli else 'typing' if typing else None
+        if mode and not output:
+            raise ValueError('Packet replay modes require an output path')
+        subprocess.run([str(binary), *([str(output.resolve())] if output else []), *([mode] if mode else [])], check=True)
     print('PASS: processed FIFO and retained keyboard callbacks/serializer')
     if output:
         paths = [Path(__file__), ROOT/'tests/processed_keyboard_test.cpp',
@@ -63,6 +66,9 @@ def verify(output=None, typing=False):
                  video/'extender/input/browser_keyboard.hpp',
                  video/'extender/input/unavailable_input_adapter.hpp',
                  video/'extender/diagnostic/keyboard_probe_stream.hpp']
+        if usb_cli:
+            paths += [video/'extender/input'/name for name in (
+                'usb_cli_keyboard.hpp', 'usb_boot_keyboard.hpp', 'hid_key_mapping.hpp')]
         sha = lambda path: hashlib.sha256(path.read_bytes()).hexdigest()
         output.with_suffix('.json').write_text(json.dumps({
             'outcome':'pass', 'packet_sha256':sha(output),
@@ -76,6 +82,8 @@ def verify(output=None, typing=False):
 if __name__ == '__main__':
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--emit-packets', type=Path)
-    parser.add_argument("--typing", action="store_true")
+    modes=parser.add_mutually_exclusive_group()
+    modes.add_argument("--typing", action="store_true")
+    modes.add_argument("--usb-cli", action="store_true")
     args=parser.parse_args()
-    verify(args.emit_packets, args.typing)
+    verify(args.emit_packets, args.typing, args.usb_cli)

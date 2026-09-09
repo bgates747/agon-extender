@@ -1,0 +1,35 @@
+{
+  "schema_version": 1,
+  "run_id": "PORT-015-2026-09-09-20-59-38Z",
+  "build_id": "usb-keyboard-probe-r01-b2026-09-09-19-58-58Z",
+  "source_commit": "bee69b2",
+  "outcome": "partial",
+  "duration_seconds": 73.907,
+  "raw_serial_sha256": "65743c2f9d7903db18a8efdbca820d19ea89ffad68be5297bdebc096325760c4",
+  "capture_script_sha256": "f9598e6126384ea96c10be5308f4e7ccd34da8bce277839d37e912799923f3c5",
+  "keyboard": "Perixx PERIBOARD-409",
+  "vid": "04d9",
+  "pid": "a088",
+  "checks": {
+    "all_requested_keys_and_matching_releases": true,
+    "connections": 2,
+    "removals": 1,
+    "final_reports": 16,
+    "final_key_events": 14,
+    "unplug_endpoint_diagnostics": 1,
+    "application_restart_after_readiness": false
+  },
+  "wiring_context": {
+    "purpose": "Repeat with Agon harness connected to USB-side P4 header",
+    "operator_report": "Everything powered, keyboard initially disconnected; requested sequence completed, keyboard left connected",
+    "harness_seating": "Intended for this repeat; no separate explicit seating confirmation or independent inspection"
+  },
+  "open_issue": "The same USB HOST EP command error ESP_ERR_INVALID_STATE occurs on unplug; cause/disposition pending.",
+  "review_addenda": [
+    {
+      "recorded_at": "2026-09-09T21:06:51+00:00",
+      "review": "../usb-keyboard-unplug-review.md",
+      "finding": "Pinned HID disconnect cleanup clears an endpoint whose IDF port is disabled; the logged invalid-state return is expected on this path. Functional acquisition observations pass. Original partial outcome retained; no artifact status change."
+    }
+  ]
+}

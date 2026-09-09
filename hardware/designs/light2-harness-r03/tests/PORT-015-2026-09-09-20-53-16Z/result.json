@@ -1,0 +1,29 @@
+{
+  "schema_version": 1,
+  "run_id": "PORT-015-2026-09-09-20-53-16Z",
+  "build_id": "usb-keyboard-probe-r01-b2026-09-09-19-58-58Z",
+  "source_commit": "bee69b2",
+  "outcome": "partial",
+  "duration_seconds": 61.885,
+  "raw_serial_sha256": "2f1f1462156bdbf53b3a9f90ce9a0628e94aa47e37a0538a385ebf715779dce3",
+  "capture_script_sha256": "f9598e6126384ea96c10be5308f4e7ccd34da8bce277839d37e912799923f3c5",
+  "keyboard": "Perixx PERIBOARD-409",
+  "vid": "04d9",
+  "pid": "a088",
+  "observations": "Three keyboard connections and two removals in one recording; each connection admits one lowercase a DOWN/UP pair. Final counters: attached=1, reports=9, key_events=6. No application restart between these connections.",
+  "open_issue": "USB HOST EP command error: ESP_ERR_INVALID_STATE on removal; functional cleanup/reconnection observed, cause and qualification disposition pending.",
+  "corrections": [
+    {
+      "recorded_at": "2026-09-09T20:58:50+00:00",
+      "source": "Author report",
+      "description": "The Author clarified that Agon was powered during these USB captures, but the Agon harness was not connected to the P4 right-side header (the same side as the USB connections). This supersedes the earlier assumption of a fully seated Agon/P4 harness for these runs. Native USB observations remain valid for this reported wiring state; simultaneous operation with the full Agon harness attached was not tested. The relation, if any, to the unplug diagnostic remains unestablished. No reconnection or hardware operation is implied by this correction."
+    }
+  ],
+  "review_addenda": [
+    {
+      "recorded_at": "2026-09-09T21:06:51+00:00",
+      "review": "../usb-keyboard-unplug-review.md",
+      "finding": "Pinned HID disconnect cleanup clears an endpoint whose IDF port is disabled; the logged invalid-state return is expected on this path. Functional acquisition observations pass. Original partial outcome retained; no artifact status change."
+    }
+  ]
+}

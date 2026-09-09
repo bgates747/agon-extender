@@ -1,0 +1,38 @@
+USB KEYBOARD usb-keyboard-probe-r01 build=usb-keyboard-probe-r01-b2026-09-09-19-58-58Z status=candidate
+USB HOST READY: attach one boot keyboard; acquisition only
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB STATUS attached=0 reports=0 key_events=0
+USB IGNORE address=1 interface=1 subclass=0 protocol=0
+USB CONNECTED #1 vid=04d9 pid=a088 address=1 interface=0
+USB KEYBOARD READY: press/release keys; US subset, no repeat or LEDs
+USB STATUS attached=1 reports=1 key_events=0
+USB KEY DOWN usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB KEY UP usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB KEY DOWN usage=e5 modifiers=02 ascii=0 vk=118 mapped=yes
+USB KEY DOWN usage=04 modifiers=02 ascii=65 vk=48 mapped=yes
+USB KEY UP usage=04 modifiers=02 ascii=65 vk=48 mapped=yes
+USB KEY UP usage=e5 modifiers=00 ascii=0 vk=118 mapped=yes
+USB STATUS attached=1 reports=7 key_events=6
+USB KEY DOWN usage=1e modifiers=00 ascii=49 vk=3 mapped=yes
+USB KEY UP usage=1e modifiers=00 ascii=49 vk=3 mapped=yes
+USB KEY DOWN usage=28 modifiers=00 ascii=13 vk=143 mapped=yes
+USB KEY UP usage=28 modifiers=00 ascii=13 vk=143 mapped=yes
+USB KEY DOWN usage=2a modifiers=00 ascii=8 vk=132 mapped=yes
+USB KEY UP usage=2a modifiers=00 ascii=8 vk=132 mapped=yes
+USB STATUS attached=1 reports=13 key_events=12
+E (44320) USB HOST: EP command error: ESP_ERR_INVALID_STATE
+USB DISCONNECTED: held keys released; waiting for keyboard
+USB STATUS attached=0 reports=13 key_events=12
+USB IGNORE address=2 interface=1 subclass=0 protocol=0
+USB CONNECTED #2 vid=04d9 pid=a088 address=2 interface=0
+USB KEYBOARD READY: press/release keys; US subset, no repeat or LEDs
+USB STATUS attached=1 reports=14 key_events=12
+USB KEY DOWN usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB KEY UP usage=04 modifiers=00 ascii=97 vk=22 mapped=yes
+USB STATUS attached=1 reports=16 key_events=14
+USB STATUS attached=1 reports=16 key_events=14
+USB STATUS attached=1 reports=16 key_events=14
+USB STATUS attached=1 reports=16 key_events=14

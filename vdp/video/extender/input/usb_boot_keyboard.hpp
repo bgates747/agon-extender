@@ -13,6 +13,11 @@ class UsbBootKeyboard final {
   enum class Result { accepted, invalid, waiting_neutral, rearmed };
   struct Key { uint8_t usage; ProcessedKey processed; bool mapped; };
 
+  bool neutral() const {
+    for (const auto &key:held_) if (key.processed.down) return false;
+    return true;
+  }
+
   template<class Emit> void releaseAll(Emit emit) {
     // Preserve the pressed key's identity; physical modifier flags are cleared.
     for (unsigned i=224;i<232;++i) release(i,0,emit);

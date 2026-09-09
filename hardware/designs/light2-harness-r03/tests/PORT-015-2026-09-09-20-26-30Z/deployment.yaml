@@ -1,0 +1,23 @@
+run_id: PORT-015-2026-09-09-20-26-30Z
+build_id: usb-keyboard-probe-r01-b2026-09-09-19-58-58Z
+factory_sha256: d55017fb4e549033cad18879e660d168c36114ae2bab06b1ef1d515a9ff15b5a
+write_verified: true
+usb_host_startup_observed: true
+physical_usb_acquisition: pending
+source_commit: bee69b2d0b468910be7c8567e426a809ece0ec4d
+source_clean: true
+wiring_checks:
+  continuity: Author-reported PASS
+  shorts: Author-reported PASS
+  socket_supply: Author-reported PASS; numeric measurement not supplied
+  keyboard_connected: false
+private_log_sha256:
+  boot.log: b408ff6ca73bc67e1f649f0c1fc36faea51bceb85ead39c3c5ae5562e2efa3af
+  deployment.json: 634e856696b856ed76c90df5ce63a9fd296ca72286131ea0dc382b01a2d2f27e
+  verify-command.json: 789d9d5089343dabc2aeb91467397311eb1c08e113fa81cafb68671bf8dd6f97
+  verify.log: 1f062dcc0e016c3d7c255431a16cd3167c532fb0431f0a70b9cdfb011668ef38
+  write-command.json: 1604e0ff9d21ab51e72ee6e38828df0e3ece003d3a1ee6885f9e52afbb59cf4d
+  write.log: f894eea715994f80af96a554b6860d96d330ea2a5ff16cb5b7fd3294c058690b
+remaining:
+- Keyboard identity/current rating and supply budget record
+- Physical USB enumeration, key transitions and unplug/replug proof

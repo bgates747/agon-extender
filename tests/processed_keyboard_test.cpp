@@ -83,10 +83,43 @@ class VDUStreamProcessor {
 };
 #include "retained.inc"
 #include "extender/input/browser_keyboard.hpp"
+#include "extender/input/usb_cli_keyboard.hpp"
 using agon::extender::input::ProcessedKey;
 int main(int argc,char **argv) {
   auto &q=agon::extender::input::processedKeyboard();
   ProcessedKey out;
+  if (argc==3 && std::string(argv[2])=="usb-cli") {
+    VDUStreamProcessor p;
+    agon::extender::input::UsbCliKeyboard keyboard;
+    keyboard.locale=1;keyboard.admit();
+    uint32_t now=0;
+    auto emit=[&](ProcessedKey key) {assert(q.push(key));p.handleKeyboardAndMouse();};
+    auto tap=[&](uint8_t usage,uint8_t modifiers=0) {
+      uint8_t report[]={modifiers,0,usage,0,0,0,0,0};
+      keyboard.report(report,8,now++,emit);
+      report[0]=report[2]=0;keyboard.report(report,8,now++,emit);
+    };
+    auto type=[&](const char *text) {
+      for(;*text;++text) {
+        bool found=false;
+        for(unsigned mods:{0,2}) for(unsigned usage=4;usage<=56 && !found;++usage) {
+          auto key=agon::extender::input::mapUsbCliKey(usage,mods,1);
+          if(key.keycode==uint8_t(*text)) {tap(usage,mods);found=true;}
+        }
+        assert(found);
+      }
+    };
+    // Real ordinary MOS line editing: replace x, move left/right, then submit.
+    type("echo USB clx");tap(42);type("i");tap(80);tap(79);tap(40);
+    type("echo Shift 1!");tap(40);
+    type("EmOs KeYiNpUt");tap(40);
+    type("echo USB CLI REVIEW COMPLETE");tap(40);
+    type("emos keyinput mainboard");tap(40);
+    assert(!p.bytes.empty() && p.bytes.size()%6==0);
+    std::ofstream file(argv[1],std::ios::binary);
+    file.write(reinterpret_cast<const char *>(p.bytes.data()),p.bytes.size());
+    assert(file.good());return 0;
+  }
   if (argc==3 && std::string(argv[2])=="typing") {
     VDUStreamProcessor p;
     agon::extender::input::BrowserKeyboard browser;

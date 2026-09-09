@@ -48,7 +48,8 @@ superseded for focused keyboard input.
 
 SETUP-005 K004 and ADR-0014 define case-insensitive `EMOS KEYINPUT browser`
 and `EMOS KEYINPUT mainboard`, with a bare command reporting the source.
-`extender` is reserved for future physical input and is unavailable. Keep
+PORT-015 now implements `extender` in a separate native-USB composition; it is
+not a second acquisition provider in the browser candidate. Keep
 `SET KEYBOARD n` layout separate from source selection. K005 preserves the
 keyboard source across mode changes, including returning to Legacy. K006
 starts with mainboard input and restores preferences only through autoexec;
