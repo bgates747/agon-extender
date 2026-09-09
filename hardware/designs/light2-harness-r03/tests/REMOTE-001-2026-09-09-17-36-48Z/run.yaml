@@ -1,0 +1,24 @@
+schema_version: 1
+run_id: REMOTE-001-2026-09-09-17-36-48Z
+operation: P4 measurement candidate deployment
+procedure: browser-keyboard-probe-r03
+outcome: pass
+source_commit: 47e7bff81fe1932abc09960bb1e0e5abf82381d1
+source_dirty: false
+p4:
+  run_id: REMOTE-001-2026-09-09-17-36-48Z
+  build_id: browser-keyboard-probe-r03-b2026-09-09-17-35-56Z
+  factory_sha256: 867695688260247af4991c47ede4f3993c151d8b1dbb4edde869c4d386fc71b2
+  write_verified: true
+  typing_startup_observed: true
+  uart_transfer_test: pending
+sd:
+  files_sha256:
+    bin/BTYPE.BIN: 3f5ee573a75e521170cd79aa04ff1e7857dd8235829e95fdb46f4a5e380a60b9
+    bin/EMBOOT.BIN: 9122b77703ee437660cb384118746353738d59654a08647afafae1ae43c8de9b
+    autoexec.txt: c6e82c26d27ffb2ac0856927160a259d94b53fba3fae3aa657859800353db1cc
+  writes_performed: false
+  unmounted: true
+  prior_result_byte: 02; timed exit, producing run unknown
+scope: Independent flash verification and clean startup. Separate after-deployment
+  video/export check retained alongside; operator typing measurements pending.

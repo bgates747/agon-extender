@@ -1,0 +1,79 @@
+{
+  "schema": 1,
+  "intervals": {
+    "browser_event_to_ack_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    },
+    "browser_send_to_ack_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    },
+    "p4_admission_to_uart_submit_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    },
+    "p4_uart_submit_to_echo_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    },
+    "p4_echo_to_flush_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    },
+    "p4_snapshot_compose_ms": {
+      "n": 5,
+      "median_ms": 118.217,
+      "max_ms": 121.256
+    },
+    "p4_video_send_ms": {
+      "n": 6,
+      "median_ms": 91.201,
+      "max_ms": 99.923
+    },
+    "browser_receive_to_submit_ms": {
+      "n": 6,
+      "median_ms": 7.6,
+      "max_ms": 13.4
+    },
+    "browser_event_to_guaranteed_frame_ms": {
+      "n": 0,
+      "median_ms": null,
+      "max_ms": null
+    }
+  },
+  "isolated_frame_associations": [],
+  "unpaired_or_nonprintable_keys": 0,
+  "browser_overwritten": 0,
+  "p4_metadata": [
+    "# browser-keyboard-probe-r03-b2026-09-09-17-35-56Z (candidate)",
+    "# browser timing v1; us=P4 monotonic; capacity=8192; total=25; overwritten=0; available=1; cost_us=320; max_cost_us=21"
+  ],
+  "browser_lifecycle": [
+    {
+      "ms": 3723.699999999255,
+      "event": "video_close_local",
+      "sid": 2322874554
+    },
+    {
+      "ms": 3738.5,
+      "event": "video_close",
+      "sid": 2322874554,
+      "code": 1005,
+      "reason": "",
+      "clean": true
+    }
+  ],
+  "p4_lifecycle": [],
+  "limits": [
+    "UART submit is a driver call boundary, not physical first/last-bit measurement.",
+    "No cross-clock subtraction or exact one-way Ethernet timing.",
+    "Missing/overwritten/ambiguous matches are not zero latency.",
+    "P4 cost counters include record lock/clock overhead; they do not measure every instrumentation cost."
+  ]
+}

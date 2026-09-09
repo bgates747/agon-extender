@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Physical typing/editing and reconnect/recapture work; latency and keyboard/video disconnections remain unresolved. Measurement instrumentation implemented; paired observation preparation in progress, 2026-09-09.
+- Status: Physical typing/editing and reconnect/recapture work; latency and keyboard/video disconnections remain unresolved. Measurement instrumentation implemented; measurement candidate deployed; operator observation pending, 2026-09-09.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
@@ -412,3 +412,20 @@ to checked heap storage after observation; no task stack, transport timeout or
 snapshot policy change is included. Retain the informative failed check and
 exact candidate provenance. Repeat physical diagnostics/video validation before
 operator handoff. Standing version preapproval covers r03 and registry r43.
+
+### Measurement candidate handoff
+
+r03 from commit 47e7bff was flashed and independently verified. A separate
+short headless browser check received six actual P4 frames and successfully
+exported matching snapshot/send records; the browser connection was closed
+before handoff. The check did not take keyboard ownership or exercise Agon.
+Evidence: `hardware/designs/light2-harness-r03/tests/REMOTE-001-2026-09-09-17-36-48Z/`.
+I001-M5 now awaits operator input. The existing SD was verified and unmounted
+without edits. No EMOS flash or Agon reset was performed.
+
+Initial video-only medians were 118.217 ms per snapshot composition and
+91.201 ms per send, with six submitted frames. They do not establish total
+keypress latency. The 200000-us snapshot cadence check uses accumulated
+logical boundary time, not a wall-clock five-fps guarantee. Runtime recording
+off still retains hook clock/locking costs. Preserve these interpretation
+limits when comparing the upcoming operator measurements.

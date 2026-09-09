@@ -1,0 +1,106 @@
+{
+  "schema": 1,
+  "mode": "on",
+  "start_utc": "2026-09-09T17:37:32.344Z",
+  "clock": "browser performance.now milliseconds; draw submission is not scanout",
+  "total": 16,
+  "overwritten": 0,
+  "rows": [
+    {
+      "ms": 2715,
+      "event": "video_open",
+      "sid": 2322874554
+    },
+    {
+      "ms": 2847.5,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 139
+    },
+    {
+      "ms": 2855.5999999996275,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 139
+    },
+    {
+      "ms": 3002.5999999996275,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 140
+    },
+    {
+      "ms": 3005.2999999998137,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 140
+    },
+    {
+      "ms": 3149,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 141
+    },
+    {
+      "ms": 3154.5999999996275,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 141
+    },
+    {
+      "ms": 3291.0999999996275,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 142
+    },
+    {
+      "ms": 3304.199999999255,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 142
+    },
+    {
+      "ms": 3441.199999999255,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 143
+    },
+    {
+      "ms": 3454.5999999996275,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 143
+    },
+    {
+      "ms": 3681.0999999996275,
+      "event": "frame_received",
+      "sid": 2322874554,
+      "seq": 144
+    },
+    {
+      "ms": 3688.199999999255,
+      "event": "frame_submitted",
+      "sid": 2322874554,
+      "seq": 144
+    },
+    {
+      "ms": 3723.699999999255,
+      "event": "video_close_local",
+      "sid": 2322874554
+    },
+    {
+      "ms": 3723.699999999255,
+      "event": "export_requested"
+    },
+    {
+      "ms": 3738.5,
+      "event": "video_close",
+      "sid": 2322874554,
+      "code": 1005,
+      "reason": "",
+      "clean": true
+    }
+  ],
+  "p4": "# browser-keyboard-probe-r03-b2026-09-09-17-35-56Z (candidate)\n# browser timing v1; us=P4 monotonic; capacity=8192; total=25; overwritten=0; available=1; cost_us=320; max_cost_us=21\nindex,us,event,id,a,b,c\n0,28322430,socket_open,59,0,0,0\n1,28324488,video_open,2322874554,59,0,0\n2,28330746,video_queued,139,59,0,0\n3,28331326,video_send_start,139,59,921632,0\n4,28359570,snapshot,140,28241340,28359557,0\n5,28415588,video_send_end,139,59,0,0\n6,28471858,video_queued,140,59,0,0\n7,28472471,video_send_start,140,59,921632,0\n8,28562628,snapshot,141,28441344,28562600,0\n9,28572394,video_send_end,140,59,0,0\n10,28620388,video_queued,141,59,0,0\n11,28620916,video_send_start,141,59,921632,0\n12,28718484,video_send_end,141,59,0,0\n13,28761586,snapshot,142,28641412,28761559,0\n14,28769937,video_queued,142,59,0,0\n15,28770542,video_send_start,142,59,921632,0\n16,28861127,video_send_end,142,59,0,0\n17,28958330,snapshot,143,28841394,28958296,0\n18,28960096,video_queued,143,59,0,0\n19,28960964,video_send_start,143,59,921632,0\n20,29052782,video_send_end,143,59,0,0\n21,29157737,snapshot,144,29041407,29157710,0\n22,29160096,video_queued,144,59,0,0\n23,29160986,video_send_start,144,59,921632,0\n24,29250322,video_send_end,144,59,0,0\n",
+  "p4_export_error": null
+}
