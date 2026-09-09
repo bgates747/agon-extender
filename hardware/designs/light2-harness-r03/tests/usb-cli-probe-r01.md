@@ -2,7 +2,7 @@
 
 Procedure identity: **usb-cli-probe-r01** (candidate; registry r47).
 Owner: [PORT-015 W3](../../../../docs/tasks/PORT-015.md).
-State: software and Author-supplied emulator review pass; physical result pending.
+State: software/graphical review and first physical CLI typing pass; broader checks pending.
 
 ## Article and scope
 
@@ -85,8 +85,43 @@ command or receive fault requires P4 reset in this bounded composition.
 
 ## Result record
 
-Physical result: **not run**. Record the actual checks completed, limitations,
+Physical result: **initial typing passes**, as recorded below. Record further checks, limitations,
 screen observations, serial evidence, exact paired identities and source
 return/repeat outcome in a run directory beside this sheet. Software tests,
 successful compilation and emulator screen review do not substitute for the
 USB/UART physical test. Keep ordinary setup mistakes only as brief corrections.
+
+
+### First ordinary USB CLI hardware pass
+
+The Author reports PASS for the prepared startup and `echo Usb 123!` test:
+SD/CLOCK checks, extender admission, physical USB keyboard command entry and
+echoed output on mainboard VGA. Paired candidates are EMOS
+agon-emos-v0.1.10-b2026-09-09-21-51-31Z and P4
+usb-cli-probe-r01-b2026-09-09-21-51-31Z. This is Author-observed functional
+evidence; no waveform or latency measurement was collected. Editing, held-key
+repeat, reconnect and source-return/repeated-reset checks in the test sheet
+are not inferred from this report. W1 power particulars and wider keyboard
+compatibility remain open. No hardware or SD operation accompanied recording.
+
+The Author additionally reports **zero noticeable latency** during native USB
+CLI typing. This is a subjective responsiveness observation, not a measured
+zero-latency claim.
+
+### Gameplay observations and priority decision — 2026-09-09
+
+The Author subsequently used the Extender USB keyboard with AgonWolf3D and
+Nurples. Nurples' Up problem was traced to its legacy GPIO joystick reads:
+PC3 low for P4 RTS/Agon CTS was interpreted as joystick Down. Nurples commit
+`4a52199` adds a splash Y/N choice and skips direction/fire GPIO polling when
+disabled. The Author accepted that build in the emulator and then on Agon
+hardware with the joystick disabled. No EMOS/P4 image changed for that fix.
+
+After gameplay, the Author reported possibly a slight increase in keyboard
+latency relative to the stock interface, but not enough to materially affect
+play. This qualifies the earlier CLI impression of no noticeable delay; neither
+report is an instrumented latency measurement or establishes equality with
+stock timing. The Author accepted the practical result and selected
+mainboard/Extender keyboard choice as the immediate goal, deferring browser
+input. Full source-return, repeat/reconnect, electrical and wider keyboard
+qualification are not inferred from this gameplay observation.

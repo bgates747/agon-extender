@@ -173,20 +173,22 @@ that processor.
     selected response to reach a MOS-owned parser; this decision grants the EDP
     no ownership of MOS memory. The strict-mode requirement is independently
     sufficient to retain this surface.
-23. Select focused browser keyboard input as the first input increment. P4
-    processes browser events and emits stock-compatible VDP keyboard packets
+23. Select mainboard/Extender keyboard choice as the immediate input goal,
+    with directly attached USB as the Extender acquisition source. Focused
+    browser input retains its contract but is deferred until explicitly
+    reprioritized. P4 processes selected input and emits stock-compatible VDP keyboard packets
     over existing r03 UART1 to EMOS. EMOS owns packet reception, canonical key
     sysvars, keymap and application hook effects. Applicable configuration and
     queries use the same UART in the forward direction. No proprietary UART
     keyboard/state envelope, parallel transfer or direct onboard link is needed.
     The earlier aware-application forwarding proof of concept is later scope;
     its non-echo rule applies to forwarded copies, not browser-originated keys.
-    For the initial increment, an explicit autoexec command enables EMOS input
+    An explicit CLI or autoexec command enables EMOS input
     reception; EMOS selects P4 keyboard events exclusively while retaining
-    other onboard VDP communications. On focus loss or browser disconnect, P4
+    other onboard VDP communications. For the deferred browser source, on focus loss or browser disconnect, P4
     sends stock key-up packets for held keys, then stops keyboard packet
-    delivery to EMOS. This source selection and cleanup are accepted for trial
-    for the initial increment rather than a universal mode policy.
+    delivery to EMOS. Native USB device lifetime is independent of browser
+    focus, leases and network connectivity.
 24. Keep mainboard-connected keyboard/mouse acquisition on the onboard VDP
     where used; it is not a mandatory source or relay for P4-originated input.
     Permit a directly attached USB keyboard through the P4 DevKit's native USB
@@ -519,7 +521,7 @@ non-destructive notification refinement.
 
 ## Single controlling browser — 2026-09-08
 
-For the first version P4 accepts keyboard events from one controlling browser
+When browser input is resumed, P4 accepts keyboard events from one controlling browser
 session at a time. Other sessions may view within the video service's supported
 limits. Keyboard takeover is explicit. P4 revokes the old session and emits
 stock key-up packets for its held keys before admitting new-owner input;
@@ -527,3 +529,19 @@ stale events from the old session cannot enter the new stream. Focus gates
 capture but does not itself take control. This session policy preserves the
 stock UART format and EMOS keyboard-source ownership. REMOTE-001 K004 owns
 implementation and qualification of the transition.
+
+## Immediate keyboard priority — 2026-09-09
+
+Following accepted native USB ordinary-CLI and gameplay results, the Author
+selected `EMOS KEYINPUT mainboard` / `EMOS KEYINPUT extender` as the immediate
+keyboard goal. Browser input is deferred until explicitly reprioritized, with
+its implementation, session contract and diagnostic findings preserved. It is
+not a required next step after USB bring-up. This does not defer browser video
+as an output capability or change the four operating modes.
+
+EMOS retains case-insensitive source selection, separate `SET KEYBOARD n`
+layout, mainboard input at boot, and autoexec-only startup persistence. The
+selected input source remains independent of display mode; no automatic
+fallback or simultaneous keyboard-source mixing is selected. The P4 USB
+connector/power addition is specified beside the r03 design. SETUP-005 K010
+records acceptance; HW-002 owns incorporating it into the drawing.

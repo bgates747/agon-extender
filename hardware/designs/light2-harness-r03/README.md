@@ -10,7 +10,40 @@ Open the [SVG drawing](schematic.svg), [printable A3 PDF](schematic.pdf), or
 the [KiCad project](schematic.kicad_pro). The editable drawing is
 [`schematic.kicad_sch`](schematic.kicad_sch).
 
-## Electrical definition
+## USB keyboard addition — 2026-09-09
+
+The Author selected the tested direct USB keyboard connection as the Extender
+input path. This section is the specification for that addition. The existing
+KiCad drawing, connectivity model, exports and frozen profile still describe
+the Port C harness without this USB connection; they do not yet represent the
+complete current assembly. The drawing update is deferred under HW-002.
+
+One USB keyboard plugs into the female-to-female USB-A adapter on the existing
+male USB-A cable. The following numbers identify the cable's reversed
+breadboard header, **not** the USB connector's contact numbering:
+
+| Cable header pin | Signal | Olimex ESP32-P4-DevKit Rev D1 endpoint |
+| ---: | --- | --- |
+| 1 | GND | EXT2.18, GND |
+| 2 | USB D+ (old cable label KCLK) | EXT2.19, USB_DP / silkscreen USB-P |
+| 3 | USB D− (old cable label KDAT) | EXT2.20, USB_DN / silkscreen USB-N |
+| 4 | USB VBUS, +5 V | EXT2.1, +5V |
+
+These are USB data signals, not PS/2 clock/data. USB-P is D+, not a power
+source. This uses the dedicated native host pair, not the other exposed
+GPIO27/26 pair at EXT2.16/17. The board's USB Serial/JTAG programming connection
+remains separate. The keyboard's power comes from the P4 DevKit's +5 V rail;
+the Agon/P4 shared signal ground and existing UART wiring remain in use. The
+Agon's 3.3 V Port C pull-ups and series resistors are not USB components.
+
+The Author reported passing continuity, short and supply-voltage checks after
+construction; corrected data wiring subsequently passed USB acquisition,
+ordinary EMOS CLI and gameplay with a Perixx PERIBOARD-409. EXT2.1 supplies the
+board's +5 V rail directly; this record does not identify a dedicated switched
+or current-limited host VBUS circuit. Remaining supply/current and wider
+electrical qualification belong to [PORT-015](../../../docs/tasks/PORT-015.md).
+
+## Electrical definition of the existing drawing
 
 [`connectivity.yaml`](connectivity.yaml) is the sole electrical authority **for
 this draft**. The maintained KiCad drawing is its checked human projection.

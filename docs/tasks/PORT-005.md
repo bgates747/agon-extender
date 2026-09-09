@@ -2,14 +2,14 @@
 
 ## State
 
-- Status: Controlled-sender and browser typing/editing work on hardware; broader parity remains open. PORT-015 now brings forward native USB acquisition through this processed-input path, 2026-09-09.
+- Status: Native USB CLI and gameplay pass on hardware. Prioritize mainboard/extender source-selection and processed-keyboard parity with PORT-015; browser-specific work is deferred with REMOTE-001. Broader parity remains open.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
 ## Intent and ownership
 
-P4 accepts processed browser keyboard events from REMOTE-001 through the
-PORT-006 network boundary. The adapter maps them to the retained VDP event,
+P4 accepts native USB keyboard events from PORT-015 for the immediate goal.
+The deferred browser provider enters through REMOTE-001/PORT-006. The adapter maps selected events to the retained VDP event,
 virtual-key and modifier vocabulary, updates EDP-local keyboard state and
 callbacks, and emits ordinary stock keyboard packets through PORT-008's UART
 sender. EMOS alone processes those packets into canonical eZ80 keyboard state.
@@ -28,7 +28,8 @@ not suppress browser-originated key packets.
 
 ## Authority and bounded reference
 
-1. SETUP-005 D003/D007 and ADR-0014 select browser → P4 → EMOS over r03 UART1.
+1. SETUP-005 D003/D007, K009/K010 and ADR-0014 select USB keyboard → P4 → EMOS
+   over r03 UART1, with explicit mainboard/extender source choice.
 2. ADR-0013 decisions 26–28 preserve processed-input integration and omit
    physical PS/2 drivers. Existing vendored source remains intact; pure stock
    key/event definitions may inform the browser adapter without enabling a
@@ -42,10 +43,10 @@ not suppress browser-originated key packets.
    `src/keyboard.asm`, and VDP `video/vdu_stream_processor.h`/`video/vdu_sys.h`
    bound the implementation. AUDIT-004 retains exact commit links.
 
-The accepted CLI contract in ADR-0014 uses `EMOS KEYINPUT browser` or
-`mainboard` to select the source. PORT-015 now implements the reserved
-`extender` selector for direct USB hardware; it remains unavailable in the
-currently installed image until that implementation is deployed.
+The immediate CLI choices are `EMOS KEYINPUT mainboard` and
+`EMOS KEYINPUT extender`. The latter is deployed and working with the native
+USB P4 candidate. `browser` retains its meaning for the deferred browser
+composition; it is not a second provider in the installed USB candidate.
 The runtime `SET KEYBOARD n` layout must apply consistently to the selected
 path and survive mode changes. Autoexec alone restores settings across boots;
 do not add a separate saved configuration. Do not conflate layout with source,
@@ -53,10 +54,10 @@ or add numeric source codes.
 
 ## Required keyboard outcomes
 
-SETUP-005 K002 now selects autoexec enablement and P4-only keyboard input for
-the first increment. On focus loss/disconnect, P4 sends stock key-up packets
-for held keys, then stops keyboard delivery to EMOS. The Author accepted this
-cleanup for trial; items 4 and 6 must verify it even after abrupt browser loss.
+SETUP-005 K009/K010 prioritize explicit mainboard/extender selection, retained
+layout and stock packet effects. For native USB, verify device removal,
+readmission and source-change cleanup. Browser focus/lease/takeover requirements
+below remain deferred with REMOTE-001 rather than gating native USB completion.
 
 1. [ ] Preserve keycode, modifier bits, FabGL/vdp-gl virtual-key identity and
    down/up state. Stock event wire form is `81 04 keycode modifiers vkey down`.
@@ -70,8 +71,9 @@ cleanup for trial; items 4 and 6 must verify it even after abrupt browser loss.
    The settings reply is `88 05 delay_lo delay_hi rate_lo rate_hi led`;
    EMOS owns resulting settings sysvars. No physical LED claim is implied.
 4. [ ] Maintain ordered key transitions under backpressure. Release held keys
-   and modifiers under the accepted blur/disconnect/session-reset policy;
-   choose one repeat authority to avoid browser/P4 double repeats. On explicit
+   and modifiers on USB removal or source/session reset; P4 owns USB repeat.
+   For the deferred browser provider, apply its blur/disconnect policy and
+   choose one repeat authority to avoid double repeats. On explicit
    browser takeover, emit the previous owner's held-key releases before any
    new owner's input; do not let queued old-session events restore those keys.
 5. [ ] Feed the UART stock event stream to EMOS; never transmit a proprietary
@@ -273,7 +275,9 @@ This accepts the bounded graphical result, not physical browser typing.
 Standing version preapproval advances registry r41 and the unchanged EMOS
 v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
 The reviewed draft builds and their results retain their original identities.
-Guarded Agon installation and paired P4/browser qualification are next.
+At that checkpoint, guarded Agon installation and paired P4/browser
+qualification were next; subsequent results follow below. Browser input is
+now deferred as stated in this task's current status.
 
 ## First physical browser typing feedback — 2026-09-09
 

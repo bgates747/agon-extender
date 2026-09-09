@@ -1,0 +1,9 @@
+I (1709) extender_identity: source_identity=usb-cli-probe-r01
+I (1709) extender_identity: build_id=usb-cli-probe-r01-b2026-09-09-21-51-31Z
+I (1710) extender_identity: artifact_status=candidate
+USB HOST READY: attach one boot keyboard
+USB CLI usb-cli-probe-r01-b2026-09-09-21-51-31Z (candidate) RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+USB CONNECTED #1 vid=04d9 pid=a088 address=1 interface=0
+USB KEYBOARD READY
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0

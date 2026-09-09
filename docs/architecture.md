@@ -423,7 +423,7 @@ unactivated Agon-facing wiring.
 
 In **Legacy mode**, the onboard VDP retains ordinary VDU and display behavior,
 including maintenance/operator facilities omitted by Extender. Explicitly
-selected browser keyboard input may continue through P4 and EMOS; it is the
+selected browser or native USB keyboard input may continue through P4 and EMOS; it is the
 accepted exception to older total Extender absence/quiescence requirements.
 EMOS retains canonical keyboard state ownership. Other EDP/EDU service remains
 inactive. In
@@ -454,10 +454,11 @@ named destination mode; `EDU` explicitly addresses Extender functionality while
 contract is in [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md#cli-and-keyboard-selection--2026-09-08).
 
 `EMOS KEYINPUT mainboard` selects the Agon mainboard keyboard;
-`EMOS KEYINPUT browser` selects focused browser input. The accepted
-`EMOS KEYINPUT extender` source selects Extender-connected hardware input,
-initially a USB keyboard through the P4 DevKit's native host controller.
-PORT-015 records implementation and qualification of this newly selected source.
+`EMOS KEYINPUT extender` selects Extender-connected hardware input, initially a
+USB keyboard through the P4 DevKit's native host controller. These are the
+immediate input choices. `EMOS KEYINPUT browser` retains its focused-browser
+meaning, but browser-input development is deferred until explicitly
+reprioritized. PORT-015 records native USB implementation and qualification.
 With no source argument, the command reports the selected source.
 `SET KEYBOARD n` remains the distinct runtime layout selection with the same
 effect across modes. `EMOS LEGACY` preserves the selected keyboard source;
@@ -507,10 +508,10 @@ preclude future compile-time performance profiles that exploit P4 resources at
 the cost of legacy behavioral fidelity. EDU-aware applications must discover
 the active profile's advertised capabilities rather than infer them.
 
-The next input capability is browser keyboard capture while the EDP display
-has focus. The browser sends events to P4's network service. P4 translates
-those events into the retained stock VDP keyboard semantics and emits normal
-VDP keyboard packets to EMOS over the existing r03 four-signal UART1 link at
+The immediate input goal is selectable Agon-mainboard or Extender-connected
+keyboard input. P4 acquires one directly attached USB HID boot keyboard,
+translates its events into retained stock VDP keyboard semantics and emits
+normal VDP keyboard packets to EMOS over the existing r03 four-signal UART1 link at
 1,152,000 baud, 8N1 with RTS/CTS. Keyboard configuration/query traffic uses the
 same UART in the Agon-to-P4 direction. No parallel transfer or direct
 onboard-VDP/EDP link is required for this capability.
@@ -523,14 +524,18 @@ MOS keyboard APIs, sysvars and the keymap; they do not forward input to P4 or
 configure UART1. Browser/P4 session messages are distinct from the stock VDP
 wire contract and do not introduce a proprietary UART keyboard envelope.
 
-For the first increment, an explicit autoexec command enables EMOS reception
-of browser keyboard input. While enabled, EMOS selects P4 keyboard events
-exclusively and continues handling the onboard VDP's other communications.
-When browser focus or its connection is lost, P4 sends stock key-up packets
-for held keys, then stops keyboard packet delivery to EMOS. This behavior and
-source choice are scoped to the initial increment.
+An explicit `EMOS KEYINPUT extender` command enables native USB input through
+P4; `EMOS KEYINPUT mainboard` selects the mainboard VDP's keyboard path. EMOS
+admits only the selected keyboard source and continues handling the mainboard
+VDP's other communications. Source selection is independent of display mode;
+autoexec alone restores the desired selection after reboot. Source changes
+release held state before admitting the new source; no dual-keyboard mixing
+is selected.
 
-P4 accepts keyboard input from one controlling browser session at a time.
+Browser-input development is deferred, not a prerequisite for these choices.
+Its retained contract requires P4 to accept input from one controlling browser
+session at a time. On focus loss/disconnect P4 releases held keys and stops
+that session's keyboard delivery.
 Other sessions may view within supported video connection limits. Explicit
 takeover revokes the previous owner and releases its held keys before input
 from the new owner is admitted; focus alone does not transfer control.
@@ -544,13 +549,14 @@ owned by SETUP-005, REMOTE-001, PORT-006, PORT-008 and agon-emos INTEG-009.
 
 Physical PS/2 keyboard/mouse acquisition remains on the onboard VDP where
 those devices are used. It is not a relay for browser keys. The accepted bench
-clock remains the onboard VDP's VBlank/PB1 path. The initial browser proof adds
-no physical input device, wiring, VBlank replacement or ordinary-VDU routing
-change. A bounded qualification session has explicit entry/exit; it does not
+clock remains the onboard VDP's VBlank/PB1 path. Native USB input uses the
+[specified USB keyboard connection](../hardware/designs/light2-harness-r03/README.md#usb-keyboard-addition--2026-09-09).
+It does not replace VBlank or itself change ordinary VDU routing. A bounded
+qualification session has explicit entry/exit; it does not
 claim complete Exclusive Compatible mode; Legacy permits the explicitly
 selected keyboard service described above.
 
-The next selected input source is a directly attached USB keyboard. P4 receives
+For the selected directly attached USB keyboard, P4 receives
 USB HID reports through its native host controller, translates them into
 ordered processed keyboard events and sends stock keyboard packets through
 the same EMOS-owned UART1 session. Explicit `EMOS KEYINPUT extender` selection

@@ -5,7 +5,7 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current priority — direct USB keyboard input
+## Current priority — selectable mainboard or Extender keyboard input
 
 The order below applies to the keyboard slice in each detail file, not to
 completion of the whole task. Documentation was accepted for freeze on
@@ -14,8 +14,12 @@ checkpoints are accepted and frozen. Controlled P4 keyboard sending and EMOS
 API effects pass on hardware. Physical browser typing, Enter and Backspace
 now work. Paired timing measurements identify a reproducible keyboard lease
 defect and P4 video send-budget closures. The Author reviewed those findings
-and selected direct USB keyboard input before browser repairs on 2026-09-09,
-to restore a keyboard for the ordinary EMOS CLI on mainboard VGA.
+and selected direct USB keyboard input on 2026-09-09. Ordinary EMOS CLI and
+gameplay now pass with the P4 USB keyboard and mainboard VGA. On that evidence,
+the Author selected mainboard/Extender keyboard choice as the immediate goal;
+browser input is deferred until explicitly reprioritized, not queued to resume
+automatically after USB bring-up. The USB wiring is recorded in the design
+specification; its schematic update is deferred to the next Author session.
 Broader physical/session qualification remains open. The selected Agon/P4 path uses
 only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.
@@ -23,37 +27,46 @@ are not prerequisites.
 - [ ] **PORT-015 — Bring up a directly connected USB keyboard**
   - Started: 2026-09-09 (connector verification, then native P4 HID input).
   - Finished: --
-  - Status: Native USB acquisition passes; ordinary EMOS CLI integration is drafted with host/emulator checks passing, awaiting Author review and hardware proof. Power particulars remain open.
+  - Status: Native USB acquisition, ordinary EMOS CLI and gameplay pass on hardware; complete mainboard/extender source-selection qualification, wider keyboard parity and power particulars.
   - Details: [PORT-015](docs/tasks/PORT-015.md)
 
-- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
-  - Started: 2026-09-08 (physical typing/editing works; reviewed findings retained; repairs follow PORT-015).
+- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
+  - Started: 2026-09-07 17:36 EDT
   - Finished: --
-  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
+  - Status: USB keyboard addition specified; schematic/model update deferred to the next Author session. Existing endpoint review remains open.
+  - Details: [HW-002](docs/tasks/HW-002.md)
+
+- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
+  - Started: 2026-09-08 (controlled P4 sender).
+  - Finished: --
+  - Status: Prioritize native USB mapping, repeat/settings and source-release parity; browser-specific work is deferred with REMOTE-001.
+  - Details: [PORT-005](docs/tasks/PORT-005.md)
+
+- [ ] **PORT-008 — Implement and qualify the compatibility transport**
+  - Started: 2026-08-29 19:12 EDT
+  - Finished: --
+  - Status: P4-to-EMOS keyboard UART and native USB gameplay pass; qualify mainboard/extender lifecycle and wider integration; r02/parallel work stays on hold.
+  - Details: [PORT-008](docs/tasks/PORT-008.md)
+
+## Other active work
 
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**
   - Started: 2026-08-27 19:13 EDT
   - Finished: --
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 
-- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
-  - Started: 2026-09-08 (controlled P4 sender).
-  - Finished: --
-  - Status: Controlled sender and browser typing work on hardware; PORT-015 reuses the processed-input path for USB; wider input parity remains open.
-  - Details: [PORT-005](docs/tasks/PORT-005.md)
-
-- [ ] **PORT-008 — Implement and qualify the compatibility transport**
-  - Started: 2026-08-29 19:12 EDT
-  - Finished: --
-  - Status: Controlled P4-to-EMOS keyboard UART proof passes; browser/session and wider integration remain; r02/parallel work stays on hold.
-  - Details: [PORT-008](docs/tasks/PORT-008.md)
-
-## Other active work
-
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
   - Details: [PORT-003](docs/tasks/PORT-003.md)
+
+## Deferred browser input
+
+- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
+  - Started: 2026-09-08
+  - Finished: --
+  - Status: Deferred by Author, 2026-09-09; retain implementation, measurements and unresolved defects. Resume only on explicit reprioritization.
+  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Qualification infrastructure
 
@@ -89,12 +102,6 @@ are not prerequisites.
   - Details: [SETUP-006](docs/tasks/SETUP-006.md)
 
 ## Hardware design
-
-- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
-  - Started: 2026-09-07 17:36 EDT
-  - Finished: --
-  - Status: R03 schematic checkpoint and eight-line pinwalk accepted; endpoint review remains open.
-  - Details: [HW-002](docs/tasks/HW-002.md)
 
 - [ ] **HW-001 — Design and qualify the V1 UART and forward-parallel interface**
   - Started: 2026-08-28 13:06 EDT

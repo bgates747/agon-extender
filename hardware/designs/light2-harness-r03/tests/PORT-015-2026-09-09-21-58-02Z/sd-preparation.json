@@ -1,0 +1,13 @@
+{
+  "run_id": "PORT-015-2026-09-09-21-58-02Z",
+  "emos_build": "agon-emos-v0.1.10-b2026-09-09-21-51-31Z",
+  "flash_result": "Author reported success; consumed payload hash matches",
+  "files": {
+    "bin/EMBOOT.BIN": "b2790d6efb0feaaf6d61fa33970f10f61efe8f24cc421a1daed99b051ee60bd1",
+    "emos-boot/check.txt": "47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50",
+    "autoexec.txt": "999c171c61aee86b179f2d9a29211d69cc95f96d8a1b5490cb3fb90f1dd1f174"
+  },
+  "autoexec": "VDU 22 3\nLOAD /bin/EMBOOT.BIN\nRUN\nSET KEYBOARD 1\nEMOS KEYINPUT extender\n",
+  "rollback_sha256": "0310eb73ad418d8176cd6332f61eb81eca12fbdfc939ad3986fe12675ab99b2e",
+  "physical_cli_result": "pending"
+}

@@ -2,22 +2,22 @@
 
 ## State
 
-- Status: Physical findings reviewed by Author, 2026-09-09. Browser repairs are deferred behind PORT-015 direct USB keyboard input. Stale-time lease defect, video stalls, latency and wider qualification remain open.
+- Status: Deferred by Author, 2026-09-09, in favor of selectable mainboard/Extender USB keyboard input. Resume only on explicit reprioritization. Retain the stale-time lease defect, video stalls, latency findings and wider qualification work.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
-## Current increment
+## Retained browser increment — deferred
 
-The Author selected keyboard capture while the browser display has focus as
-the next feature. Browser events travel through the existing P4 network
+The earlier increment selected keyboard capture while the browser display has
+focus. It is no longer the immediate input goal. Browser events travel through the existing P4 network
 service; P4 processes them into stock-compatible VDP keyboard packets and
 sends them to EMOS over the existing r03 UART1 connection at 1152000/8N1 with
 RTS/CTS. EMOS owns reception and all canonical keyboard/sysvar effects.
 This path needs neither parallel transfer nor an onboard-VDP/EDP direct link.
 
-The current bench keyboard circuit is inoperative. Browser input is the chosen
-next input source; diagnosing or repairing that circuit is not a prerequisite.
-BC-001 remains active while this alternative is unqualified. This amendment
+The mainboard keyboard circuit remains inoperative; P4 native USB now supplies
+the working replacement. Browser repair is not a prerequisite for selectable
+mainboard/Extender input. This retained browser amendment
 updates the original 2026-08-28 intake; its direct-link-first sequence is
 superseded for focused keyboard input.
 
@@ -238,7 +238,9 @@ This accepts the bounded graphical result, not physical browser typing.
 Standing version preapproval advances registry r41 and the unchanged EMOS
 v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
 The reviewed draft builds and their results retain their original identities.
-Guarded Agon installation and paired P4/browser qualification are next.
+At that checkpoint, guarded Agon installation and paired P4/browser
+qualification were next; subsequent results follow below. Browser input is
+now deferred as stated in this task's current status.
 
 ## Physical typing checkpoint — 2026-09-09
 
@@ -506,5 +508,6 @@ The Author reviewed the measurement findings, then selected PORT-015's direct
 USB keyboard input before browser repair work. Preserve this evidence and all
 unresolved I001/I002 findings. No original browser-behavior repair has been
 implemented; direct USB acquisition must use its own device lifetime rather
-than inherit the defective browser lease. Resume browser work after the first
-USB/normal-CLI proof or subsequent Author steering.
+than inherit the defective browser lease. After USB CLI and gameplay passed,
+the Author deferred browser input as an immediate goal. Resume only on explicit
+Author reprioritization; completion of PORT-015 is not an automatic trigger.

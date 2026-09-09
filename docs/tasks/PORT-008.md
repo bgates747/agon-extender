@@ -2,11 +2,13 @@
 
 ## State
 
-- Status: UART keyboard plan accepted for freeze on 2026-09-08; implementation pending.
-  Persistent input reception and stock MOS state integration remain incomplete.
+- Status: Resident EMOS keyboard reception and stock MOS state integration
+  pass controlled hardware checks; native USB ordinary CLI and gameplay are
+  accepted. Mainboard/extender lifecycle and wider transport qualification
+  remain open. Browser input is deferred until explicit reprioritization.
   The r02 design, wiring, parallel implementation/Work 2.e recapture and full
   circuit qualification remain on hold. No hardware operation is started by
-  this planning amendment.
+  this progress update.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -14,8 +16,9 @@
 
 Immediate scope: carry stock keyboard packets and relevant keyboard
 configuration/query traffic between EMOS and P4 over the existing r03 UART1
-link at 1152000/8N1 RTS/CTS. PORT-005 owns P4 event semantics, REMOTE-001 owns
-browser sessions, and agon-emos [INTEG-009](../../../agon-emos/docs/tasks/INTEG-009.md)
+link at 1152000/8N1 RTS/CTS. PORT-015 owns native USB acquisition, PORT-005
+owns P4 event semantics, REMOTE-001 retains deferred browser sessions, and
+agon-emos [INTEG-009](../../../agon-emos/docs/tasks/INTEG-009.md)
 owns persistent EMOS reception and
 canonical keyboard handling. Preserve stock wire bytes and MOS APIs, sysvars,
 virtual keymap and callback semantics; do not introduce a custom UART keyboard
@@ -23,9 +26,10 @@ protocol or raw sysvar/keymap transfer.
 
 The completed PORT-010 through PORT-014 diagnostics establish bounded UART,
 General Poll and rendering evidence. Those bounded fixtures release UART when
-finished; the current text gateway closes it after each call. They do not prove
-a persistent unsolicited-key receiver. The current work fills that specific
-gap. Keyboard tests use the actual retained P4/EMOS components.
+finished; their text gateway closes it after each call. Those diagnostics alone
+did not prove a persistent unsolicited-key receiver. The subsequent keyboard
+checks below establish that bounded receiver proof using the actual retained
+P4/EMOS components; wider source/session qualification remains open.
 
 The historical r02/parallel destination and its evidence/tooling remain below
 for their original scope. They do not gate this UART-only increment. The new
@@ -34,9 +38,10 @@ recapture, direct VDP link or full mode activation is resumed.
 
 ## Authority and inputs
 
-- Current keyboard authority: SETUP-005 K001, REMOTE-001, PORT-005,
+- Current keyboard authority: SETUP-005 K009/K010, PORT-015, PORT-005,
   agon-emos INTEG-009 and the r03 hardware/test record. AUDIT-004 P013/P014 and
-  A003–A005 supply stock semantics. The r02 references below are held context.
+  A003–A005 supply stock semantics. REMOTE-001 retains the deferred browser
+  contract. The r02 references below are held context.
 
 - AUDIT-001 requirements `C01` through `C06` and wiring findings `W01` through
   `W05`.
@@ -101,12 +106,18 @@ installation. The paired hardware capture now passes exact stock keyboard
 packets, framing, character-start CTS permission and full acquisition; the
 Author confirmed Agon API checks and MOS return on all three runs. The [r03 keyboard
 sheet](../../hardware/designs/light2-harness-r03/tests/keyboard-sender.md)
-defines the paired scope. Browser focus/network integration is the following
-increment, not part of this controlled sender proof. The
+defines the paired scope. Browser focus/network integration followed that
+controlled proof; it is now deferred under SETUP-005 K010. The
 [bounded result](../../hardware/designs/light2-harness-r03/tests/PORT-005-2026-09-09-03-26-09Z/README.md)
 retains the evidence; wider session, load and query-routing work remains open.
 
-1. [ ] Consume SETUP-005 K001–K003 and the stock reference in REMOTE-001.
+The subsequent native USB CLI/gameplay acceptance is recorded in
+[PORT-015](PORT-015.md#gameplay-acceptance-and-immediate-scope--2026-09-09).
+The immediate qualification work uses mainboard/extender selection; browser
+focus, lease and network cleanup remain deferred with REMOTE-001.
+
+1. [ ] Apply SETUP-005 K001–K003 and K009/K010, PORT-015 and the retained
+   stock reference to the remaining transport qualification.
    Use r03 PC0/TX→P4 RX22, PC1/RX←P4 TX12, PC2/RTS→P4 CTS23 and
    PC3/CTS←P4 RTS11. Existing hardware/evidence identities are unchanged.
 2. [ ] Provide P4's normal keyboard packet sender on the UART stream, sharing
@@ -116,8 +127,9 @@ retains the evidence; wider session, load and query-routing work remains open.
    selection and stock handler effects; preserve the independent UART0/onboard
    display and clock while the bounded test runs.
 4. [ ] Qualify exact key-down/up, modifiers, virtual-key map, key counter,
-   callbacks and relevant settings/query effects, plus focus/disconnect/reset
-   cleanup and backpressure. Keep stock versus project-specific recovery
+   callbacks and relevant settings/query effects, plus USB removal,
+   source-change/reset cleanup and backpressure. Browser focus/disconnect
+   cases remain deferred. Keep stock versus project-specific recovery
    behavior explicit and retain normal boot/SD/clock regression checks.
 5. [ ] Record paired evidence beside r03's design tests and link bounded
    keyboard obligations in QUAL-001. A test does not qualify all of PORT-008.
@@ -1769,14 +1781,17 @@ This accepts the bounded graphical result, not physical browser typing.
 Standing version preapproval advances registry r41 and the unchanged EMOS
 v0.1.9/browser-keyboard-probe-r01 implementation to candidate for clean builds.
 The reviewed draft builds and their results retain their original identities.
-Guarded Agon installation and paired P4/browser qualification are next.
+At that checkpoint, guarded Agon installation and paired P4/browser
+qualification were next; subsequent observations follow below. Current input
+priority is native USB as recorded in this task's State and Intent.
 
 ## First physical browser typing feedback — 2026-09-09
 
 The Author confirms visible typed characters, Enter and Backspace on hardware,
 with noticeable latency and apparent focus/capture loss while typing. P4
 connection loss is a suggested cause, not an established finding. REMOTE-001
-I001/I002 own the next bounded measurement and diagnosis; no full hardware
+I001/I002 were assigned the bounded measurement and diagnosis; their findings
+are retained in that deferred task. No full hardware
 qualification or candidate-status change is made. Escape/MOS return and the
 result byte are unconfirmed for this physical session. The operator observation
 is retained beside the r03 deployment, separately from its earlier run record.

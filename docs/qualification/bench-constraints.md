@@ -50,6 +50,17 @@ recovery. Mainboard VGA may show the test and ordinary EMOS prompt; browser
 video is not required. BC-001 remains active until the replacement smoke and
 Author confirmation satisfy its removal condition.
 
+### Accepted native USB use — 2026-09-09
+
+The Author has now accepted native P4 USB input at the ordinary EMOS CLI and
+in gameplay, with autoexec selecting `EMOS KEYINPUT extender`. That demonstrated
+path may be used for ordinary interactive application testing. This does not
+restore the broken mainboard keyboard interface or establish every source
+switch/recovery case. Installation and recovery procedures must still provide
+their established noninteractive path when the required P4/EMOS candidate or
+input admission is unavailable; BC-001 must not be read as banning use of the
+now-demonstrated replacement keyboard.
+
 ## Capture completion for subsequent UART procedures
 
 Author-approved on 2026-09-08: subsequent paired UART capture procedures end

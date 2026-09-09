@@ -5,9 +5,9 @@
 - Status: W2 bounded native USB acquisition passes on PERIBOARD-409: key
   transitions, held-key cleanup and reconnection observed. The unplug diagnostic
   is explained by the pinned upstream cleanup path (review linked below).
-  W1 power/current particulars remain open. W3 ordinary-CLI integration is
-  drafted; host/headless checks and Author-supplied graphical screenshot
-  review pass. Source freeze and physical deployment/proof remain pending.
+  W1 power/current particulars remain open. W3 candidates are installed;
+  software/graphical review, physical ordinary-CLI typing and gameplay pass.
+  Broader editing/repeat/reconnect/source-return checks remain pending.
   Artifact status remains candidate; this is not full keyboard qualification.
 - Started: 2026-09-09.
 - Finished: --
@@ -15,8 +15,9 @@
 The Author brought forward direct P4 USB keyboard input because the Agon
 mainboard keyboard interface remains inoperative. First useful milestone:
 USB keyboard → P4 processed keyboard → existing r03 UART1 → resident EMOS
-keyboard handling → ordinary CLI on mainboard VGA. Browser input repairs
-remain tracked in REMOTE-001 and follow this increment. Browser video is not
+keyboard handling → ordinary CLI on mainboard VGA. The immediate goal is now
+selectable `mainboard` / `extender` keyboard input. Browser input repairs
+remain deferred in REMOTE-001 until explicitly reprioritized. Browser video is not
 the display dependency for this proof.
 
 Use one ordinary wired USB HID boot-protocol keyboard initially. P4 owns USB
@@ -32,8 +33,9 @@ UART bypass, proprietary keymap packet or implicit browser/USB input mixing.
 | ID | Decision | State |
 |---|---|---|
 | PORT-015-D001 | Bring forward native P4 USB keyboard acquisition; first prove ordinary EMOS CLI on mainboard VGA using the existing UART contract. | Accepted by Author, 2026-09-09; SETUP-005 K009 and ADR-0014. |
-| PORT-015-D002 | Use one wired boot-protocol keyboard and the existing `extender` input selector for the first increment. | Accepted direction; W3 draft implemented, physical CLI proof pending. |
+| PORT-015-D002 | Use one wired boot-protocol keyboard and the existing `extender` input selector for the first increment. | Accepted; physical CLI and gameplay pass, wider W3 qualification remains open. |
 | PORT-015-D003 | Author's USB-A male cable terminates in a reversed four-pin male header; a female-to-female USB-A adapter accepts the keyboard plug. | Author corrected the initial socket description and reported passing continuity/short/voltage checks; corrected data pair subsequently enumerates the keyboard. W1 particulars remain open. |
+| PORT-015-D004 | Make selectable mainboard/Extender keyboard input the immediate goal after USB CLI and gameplay proof; defer browser input until explicitly reprioritized. | Accepted by Author, 2026-09-09; SETUP-005 K010 and ADR-0014. |
 
 ## Bounded reference
 
@@ -107,42 +109,23 @@ hash mismatch; repairing that held historical design is outside this increment.
 The [USB acquisition test sheet](../../hardware/designs/light2-harness-r03/tests/usb-keyboard-probe-r01.md)
 owns the wiring confirmation and operator observations.
 
-## Proposed connector mapping
+## Recorded connector mapping
 
-This table uses the Author's cable-header numbering, not USB receptacle contact
-numbering. The cable has a male USB-A plug with a female-to-female USB-A adapter
-accepting the keyboard's plug. Check the complete cable/adapter assembly.
-Legacy `KCLK`/`KDAT` labels identify positions only: these wires carry
-actual USB D+/D− here, not PS/2 clock/data.
-
-| Cable header pin | Reported conductor | P4 DevKit connection |
-|---:|---|---|
-| 1 | GND | EXT2 pin 18, GND |
-| 2 | KCLK / USB D+ position | EXT2 pin 19, `USB_DP`, silkscreen `USB-P` |
-| 3 | KDAT / USB D− position | EXT2 pin 20, `USB_DN`, silkscreen `USB-N` |
-| 4 | +5 V / VBUS | EXT2 pin 1, `+5V` |
-
-`USB-P` is the positive USB data signal, not a power source. The dedicated
-host signals reach chip DP/DM pins 50/49. The existing USB-C Serial/JTAG path
-uses different pins and stays available for programming. EXT2.1 is the board's
-5 V rail, not a separately switched/current-limited host VBUS output. The
-keyboard's load and available bench supply budget must be checked before use;
-do not infer a qualified host power circuit from a net named `+5V`.
-
-Keep the D+/D− connection short and together. Do not reuse the Agon Port C
-pull-ups or series resistors for USB. The new connection is not part of the
-previously qualified r03 pinwalk/UART evidence; record its as-built state and
-eventual fixture identity beside the hardware design before powered testing.
+The canonical connection is now in the [r03 USB keyboard specification](../../hardware/designs/light2-harness-r03/README.md#usb-keyboard-addition--2026-09-09).
+It records the reversed cable-header numbering, male cable/F–F adapter,
+dedicated USB-P/USB-N pair, +5 V source and the separate programming connection.
+HW-002 owns the deferred schematic/model update. W1 retains the remaining
+supply/current and assembly qualification; the existing frozen r03 drawing
+and earlier pinwalk evidence do not include the USB addition.
 
 ## Work
 
-1. [ ] **W1 — Verify the physical connection.** With boards powered down and
-   ribbons seated, the operator checks socket-to-header continuity and absence
-   of shorts, then connects the four mapped conductors. Record cable orientation
-   and keyboard identity/current rating. Verify supply polarity/voltage at the
-   socket before attaching the keyboard. The USB acquisition candidate is now
-   installed and enumeration has been observed. Prepare the controlled
-   wiring/test record and suitable VBUS protection/power scope before deployment.
+1. [ ] **W1 — Complete the physical connection record.** The Author reported
+   passing continuity/short/supply-voltage checks and the corrected assembly
+   now passes acquisition, CLI and gameplay. Preserve that evidence and record
+   remaining keyboard current rating, supply budget and VBUS protection scope.
+   HW-002 owns the schematic update; this remaining record does not request
+   dismantling or repeating the already observed wiring checks.
 2. [x] **W2 — Prove P4 USB acquisition.** Integrate the supported HID host
    component with a bounded event source; first observe enumeration and exact
    press/release/modifier reports. Keep USB work outside HTTP handling and
@@ -318,3 +301,55 @@ Author accepted the graphical result and authorized P4 flashing plus guarded
 EMOS SD preparation. Freeze the reviewed implementation as candidates under
 registry r47 (standing version preapproval). Physical CLI proof remains pending;
 installed images and exact new builds are recorded with deployment evidence.
+
+
+## Native USB CLI candidates deployed/staged
+
+P4 deployment PORT-015-2026-09-09-21-52-55Z passes write/readback and native
+host startup for usb-cli-probe-r01-b2026-09-09-21-51-31Z, clean Extender
+bce654c. The connected PERIBOARD-409 enumerates; no EMOS admission or physical
+CLI result is claimed. Evidence is beside the r03 design.
+
+Clean EMOS 1a40ddb produced agon-emos-v0.1.10-b2026-09-09-21-51-31Z.
+Build/linked guards and candidate headless CLI/absent-peer checks pass. The
+locally mounted SD received the verified one-shot installer; v0.1.9 is
+EMPREV.BIN, older v0.1.8 is EMV018.BIN, and local backups preserve prior bytes.
+The card was safely unmounted. Author should insert it and reset Agon once,
+then report installation and return the SD for the non-flashing USB CLI
+autoexec. No Agon reset or flash was performed by the agent.
+
+
+Author confirmed successful EMOS v0.1.10 flash. The returned SD's consumed
+payload matches the candidate and v0.1.9 rollback is intact. Matching EMBOOT,
+check data and non-flashing autoexec now run SD/CLOCK smoke, SET KEYBOARD 1
+and EMOS KEYINPUT extender. Card safely unmounted. P4 remains the installed
+USB CLI candidate; no reflash/reset was performed. Ordinary USB CLI typing
+and source-return/repeat checks are pending. SD receipt: PORT-015-2026-09-09-21-58-02Z.
+
+
+### First ordinary USB CLI hardware pass
+
+The Author reports PASS for the prepared startup and `echo Usb 123!` test:
+SD/CLOCK checks, extender admission, physical USB keyboard command entry and
+echoed output on mainboard VGA. Paired candidates are EMOS
+agon-emos-v0.1.10-b2026-09-09-21-51-31Z and P4
+usb-cli-probe-r01-b2026-09-09-21-51-31Z. This is Author-observed functional
+evidence; no waveform or latency measurement was collected. Editing, held-key
+repeat, reconnect and source-return/repeated-reset checks in the test sheet
+are not inferred from this report. W1 power particulars and wider keyboard
+compatibility remain open. No hardware or SD operation accompanied recording.
+
+The Author additionally reports **zero noticeable latency** during native USB
+CLI typing. This is a subjective responsiveness observation, not a measured
+zero-latency claim.
+
+### Gameplay acceptance and immediate scope — 2026-09-09
+
+The Author accepted Nurples gameplay after its application-side GPIO joystick
+polling was made optional (Nurples `4a52199`), following use of AgonWolf3D.
+The paired EMOS/P4 candidates were unchanged. The [design-adjacent test sheet](../../hardware/designs/light2-harness-r03/tests/usb-cli-probe-r01.md#gameplay-observations-and-priority-decision--2026-09-09)
+records the possible slight, non-disruptive latency and its non-measured status.
+This supports D004's immediate mainboard/extender selection goal. Browser
+input is deferred until explicitly reprioritized; no automatic continuation
+into REMOTE-001 follows W3. Native USB selection/release, layout/repeat/settings
+parity and the remaining W1/W3 evidence stay on this task's path.

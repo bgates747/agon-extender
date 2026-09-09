@@ -1,0 +1,17 @@
+run_id: PORT-015-2026-09-09-21-52-55Z
+build_id: usb-cli-probe-r01-b2026-09-09-21-51-31Z
+factory_sha256: dd22391142b0ba6934ec5448acc4b5f416585ea20274f006a7fef2cdd1687f17
+write_verified: true
+usb_host_startup_observed: true
+physical_usb_cli: pending
+source_commit: bce654c81e31ad8a4e9b27fd909675f85ecc59d4
+source_clean: true
+keyboard_enumerated: Perixx PERIBOARD-409; VID 04d9 PID a088; boot interface
+emos_installation: pending operator; guarded SD staged separately
+private_log_sha256:
+  boot.log: c47ccbffd3ec0721532fcc2816633b1c1ab470817b4830ecf9b346c8e44b83bb
+  verify.log: 2808b3b0373c45fb6ea2f39f0ec7746b938a91e4c166caa1103e2459b665816f
+  write-command.json: 753a2660e87e05f090079f20baffea240d24439e996305625a5316396935a351
+  write.log: da3e1fbc923b4d85da33f1035295fa549303e813dbaa945cd6e33a3913491121
+  deployment.json: dede585cacd53a2ec11a6873ebd1d76d629e2d5df33d1070281688b79761b38e
+  verify-command.json: aff801fdafe64ebffbd3281cc6faff9f38dced6124c0a750553af5bba213967c

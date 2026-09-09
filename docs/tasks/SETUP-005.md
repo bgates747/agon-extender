@@ -21,12 +21,14 @@ driver disposition survey. SETUP-004 determines what code and behavior must be
 retained, replaced, stubbed, omitted, or deferred; this task determines how the
 retained behavior is routed between processors and MOS.
 
-## Current priority — direct USB keyboard (2026-09-09)
+## Current priority — mainboard/Extender keyboard selection (2026-09-09)
 
 The accepted browser keyboard slice now has physical typing and measured
 latency/connection findings. On 2026-09-09 the Author selected PORT-015's
-direct USB keyboard before browser repairs, first using the ordinary EMOS CLI
-on mainboard VGA. Existing UART/keyboard ownership decisions apply. Only the
+direct USB keyboard, now passing ordinary EMOS CLI and gameplay on mainboard
+VGA. K010 makes selectable mainboard/Extender input the immediate goal and
+defers browser input until explicitly reprioritized. Existing UART/keyboard
+ownership decisions apply. Only the
 keyboard portions of D003/D007 are on this path; other mode/service decisions
 remain open.
 
@@ -41,6 +43,7 @@ remain open.
 | SETUP-005-K007 | ExCom sends ordinary CLI/VDU output to EDP; mainboard VGA shows a static mode banner with cursor hidden. No double buffering or periodic redraw; VBlank continues. Dual retains active display roles. | Accepted by the Author, 2026-09-08; ADR-0014 display section. |
 | SETUP-005-K008 | Initially, return to Legacy with a fresh mainboard screen, visible cursor and MOS prompt, preserving keyboard source/layout. | Accepted by the Author, 2026-09-08. Later, consider one-line transition notices and cursor hide/show while preserving the existing background; not a first-increment gate. |
 | SETUP-005-K009 | Bring forward one directly attached USB keyboard using P4 native USB host and `EMOS KEYINPUT extender`; reuse stock packets over r03 UART1. First prove ordinary EMOS CLI on mainboard VGA, independently of browser focus/network. The DevKit USB connector/power assembly is permitted for this input. | Accepted by Author, 2026-09-09; PORT-015 owns implementation and physical proof; ADR-0014 amended. |
+| SETUP-005-K010 | Prioritize selectable `mainboard` / `extender` keyboard input after native USB CLI and gameplay pass. Defer browser input until explicitly reprioritized, preserving its code, decisions and findings. Record the tested USB connection in the hardware specification now; defer the schematic update to the next Author session. | Accepted by Author, 2026-09-09; PORT-015/PORT-005 own input qualification, REMOTE-001 is deferred, HW-002 owns the drawing update. |
 
 
 K002's initial behavior, K003's receiver direction and K005's independent
@@ -297,17 +300,20 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   no-op, rejection, status, timeout, parser recovery, and diagnostics. Define
   explicitly which modes are strict before assigning command behavior.
 - [ ] **SETUP-005-D007 — Peripheral-input ownership and routing (partially accepted):**
-  K001 selects focused browser keyboard input into P4, then stock keyboard
-  packets over UART1 into EMOS. Applications use normal MOS key reads, sysvars,
+  K009/K010 select native USB keyboard input into P4, then stock keyboard
+  packets over UART1 into EMOS, with explicit mainboard/extender selection.
+  K001's browser acquisition remains deferred. Applications use normal MOS key reads, sysvars,
   virtual keymap and callbacks; no aware-application relay is required. P4
   preserves relevant EDP-local keyboard state and packet semantics. K002/K003
-  retain exact source/session/receiver choices; REMOTE-001 owns key mapping,
-  focus, repeat and release details. The stock onboard VDP remains the source
+  retain exact source/session/receiver choices; PORT-015/PORT-005 own native
+  USB mapping, repeat and release, while REMOTE-001 retains browser-specific
+  session details. The stock onboard VDP remains the source
   for physical devices where selected and remains the current VBlank clock.
   Mouse, multi-source composition and later aware-application EDU forwarding
   remain open. Copied Agon-originated events retain non-echo behavior.
   Rev 1 selects no direct onboard-VDP/EDP bridge; LINK-001 is later research
-  and is not a browser-keyboard dependency. No added input hardware is selected.
+  and is not a keyboard dependency. The P4 USB connector/power addition is
+  selected; no direct onboard-VDP/EDP bridge is implied.
 - [ ] **SETUP-005-D008 — RTC authority and synchronization:** define the
   authoritative clock and read/set routing in Legacy, Exclusive Compatible,
   Exclusive Extended, and Dual modes. Specify how MOS RTC sysvars, the onboard
@@ -377,11 +383,11 @@ are fixed in low ROM. The evaluated implementation families are:
    may support useful compatibility profiles but cannot establish a guarantee
    for arbitrary untouched binaries.
 
-The next selected keyboard route is browser → P4 → UART1 → EMOS. EMOS
+The immediate Extender keyboard route is USB keyboard → P4 → UART1 → EMOS. EMOS
 preserves stock packet-handler effects and application interfaces; its
 session/source-selection policy prevents conflict with onboard UART0 traffic.
 A later selected physical onboard-input route may use an EMOS-owned relay and
-controlled device configuration, but is not a prerequisite for browser input.
+controlled device configuration, but is not a prerequisite for native USB input.
 D003/D007 retain the remaining parser/session decisions and broader mode scope.
 
 ## Review gate
