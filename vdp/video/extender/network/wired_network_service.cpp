@@ -258,17 +258,23 @@ uint32_t traceSession(httpd_req_t *r) {
   return uint32_t(strtoul(value,nullptr,10));
 }
 }
+esp_err_t WiredNetworkService::keyboardPostHandshake(httpd_req_t *request) noexcept {
+  // IDF 5.5.5 httpd_uri.c returns after the WebSocket handshake callbacks;
+  // it explicitly skips the URI handler for the initial GET. r02/r03 put
+  // this allocation in keyboardHandler's GET branch, so every first message
+  // lacked context and was rejected. Keep initialization in this callback.
+  if(request->sess_ctx) return ESP_FAIL;
+  auto *ctx=static_cast<KeyTraceContext *>(calloc(1,sizeof(KeyTraceContext)));
+  if(!ctx) return ESP_ERR_NO_MEM;
+  ctx->session=traceSession(request); request->sess_ctx=ctx; request->free_ctx=free;
+  trace("keyboard_open",ctx->session,httpd_req_to_sockfd(request));
+  return ESP_OK;
+}
 esp_err_t WiredNetworkService::keyboardHandler(httpd_req_t *request) noexcept {
   const int socket=httpd_req_to_sockfd(request);
-  if (request->method==HTTP_GET) {
-    auto *ctx=static_cast<KeyTraceContext *>(calloc(1,sizeof(KeyTraceContext)));
-    if(!ctx) return ESP_ERR_NO_MEM;
-    ctx->session=traceSession(request); request->sess_ctx=ctx; request->free_ctx=free;
-    trace("keyboard_open",ctx->session,socket);
-    return ESP_OK;
-  }
+  if(request->method==HTTP_GET) return ESP_OK;
   auto *ctx=static_cast<KeyTraceContext *>(request->sess_ctx);
-  if(!ctx) return ESP_FAIL;
+  if(!ctx) { trace("key_context_missing",socket); return ESP_FAIL; }
   auto &keys=input::browserKeyboard();
   httpd_ws_frame_t frame{};
   auto rc=httpd_ws_recv_frame(request,&frame,0);
@@ -409,6 +415,7 @@ bool WiredNetworkService::startHttp() noexcept {
   keyboard.handler=&keyboardHandler; keyboard.user_ctx=this;
   keyboard.is_websocket=true;
   keyboard.ws_pre_handshake_cb=&keyboardAdmission;
+  keyboard.ws_post_handshake_cb=&keyboardPostHandshake;
   if (httpd_register_uri_handler(server,&keyboard)!=ESP_OK) {
     http_fault_=true; stopHttp(); increment(http_start_failures_); return false;
   }

@@ -1,6 +1,6 @@
 {
   "artifact_id": "browser-keyboard-probe",
-  "source_identity": "browser-keyboard-probe-r03",
+  "source_identity": "browser-keyboard-probe-r04",
   "status": "candidate",
-  "note": "Standing version preapproval: correct r02 diagnostic export stack use; no measured-path policy change."
+  "note": "Standing version preapproval: initialize diagnostic session in the IDF WebSocket post-handshake callback; existing wire/timeout/EMOS behavior unchanged."
 }

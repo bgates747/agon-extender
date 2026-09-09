@@ -429,3 +429,20 @@ keypress latency. The 200000-us snapshot cadence check uses accumulated
 logical boundary time, not a wall-clock five-fps guarantee. Runtime recording
 off still retains hook clock/locking costs. Preserve these interpretation
 limits when comparing the upcoming operator measurements.
+
+### Immediate keyboard capture regression — 2026-09-09
+
+The Author reports immediate capture failure with r03. Retrieved P4 records
+show repeated socket opens/closes separated by only a few milliseconds, with
+no keyboard_open/key_message records. Pinned IDF 5.5.5 httpd_uri.c explicitly
+returns after WebSocket handshake callbacks without invoking the URI handler.
+The r02/r03 diagnostic session allocation was in that skipped initial-GET
+branch; the first message then had null context and failed immediately. This
+is an instrumentation regression, distinct from the earlier r01 failure.
+
+r04 moves allocation into the registered post-handshake callback. Add regression
+coverage using the actual IDF dispatch branch and target handler, including
+session cleanup, before rebuilding and verifying the physical endpoint. Keep
+EMOS, SD application, UART bytes, deadlines and snapshot policy unchanged.
+Standing version preapproval covers r04/registry r44. Original latency/closure
+measurement remains pending after this preparation repair.

@@ -67,6 +67,7 @@ class WiredNetworkService final {
   static void workerEntry(void *context) noexcept;
   static void queuedSend(void *context) noexcept;
   static esp_err_t socketOpened(httpd_handle_t server, int socket) noexcept;
+  static esp_err_t keyboardPostHandshake(httpd_req_t *request) noexcept;
   static esp_err_t keyboardHandler(httpd_req_t *request) noexcept;
   static esp_err_t keyboardAdmission(httpd_req_t *request) noexcept;
   static esp_err_t traceHandler(httpd_req_t *request) noexcept;

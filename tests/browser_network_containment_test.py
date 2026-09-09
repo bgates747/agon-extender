@@ -57,6 +57,7 @@ class WiredNetworkService {
  void increment(std::atomic<unsigned>&n){++n;}
  static int socketOpened(void*,int){return 0;} static void socketClosed(void*,int){}
  static int assetHandler(void*){return 0;} static int videoHandler(void*){return 0;}
+ static int keyboardPostHandshake(void*){return 0;}
  static int videoPostHandshake(void*){return 0;} static int keyboardHandler(void*){return 0;}
  static int keyboardAdmission(httpd_req_t*) noexcept;
  static int traceHandler(void*){return 0;}
