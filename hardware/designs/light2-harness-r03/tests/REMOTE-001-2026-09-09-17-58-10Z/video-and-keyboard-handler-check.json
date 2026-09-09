@@ -1,0 +1,98 @@
+{
+  "schema": 1,
+  "mode": "on",
+  "start_utc": "2026-09-09T17:58:53.157Z",
+  "clock": "browser performance.now milliseconds; draw submission is not scanout",
+  "total": 15,
+  "overwritten": 0,
+  "rows": [
+    {
+      "ms": 2711.4000000003725,
+      "event": "video_open",
+      "sid": 3355472885
+    },
+    {
+      "ms": 2846.100000000559,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 135
+    },
+    {
+      "ms": 2853.5,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 135
+    },
+    {
+      "ms": 2989.100000000559,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 136
+    },
+    {
+      "ms": 3002.300000000745,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 136
+    },
+    {
+      "ms": 3140.7000000001863,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 137
+    },
+    {
+      "ms": 3152.100000000559,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 137
+    },
+    {
+      "ms": 3329.2000000001863,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 138
+    },
+    {
+      "ms": 3335.300000000745,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 138
+    },
+    {
+      "ms": 3522.800000000745,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 139
+    },
+    {
+      "ms": 3535.100000000559,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 139
+    },
+    {
+      "ms": 3720.800000000745,
+      "event": "frame_received",
+      "sid": 3355472885,
+      "seq": 140
+    },
+    {
+      "ms": 3724.7000000001863,
+      "event": "frame_submitted",
+      "sid": 3355472885,
+      "seq": 140
+    },
+    {
+      "ms": 3789.4000000003725,
+      "event": "video_close_local",
+      "sid": 3355472885
+    },
+    {
+      "ms": 3789.5,
+      "event": "export_requested"
+    }
+  ],
+  "p4": "# browser-keyboard-probe-r04-b2026-09-09-17-57-18Z (candidate)\n# browser timing v1; us=P4 monotonic; capacity=8192; total=34; overwritten=0; available=1; cost_us=665; max_cost_us=226\nindex,us,event,id,a,b,c\n0,27480201,socket_open,59,0,0,0\n1,27482354,video_open,3355472885,59,0,0\n2,27484136,video_queued,135,59,0,0\n3,27484713,video_send_start,135,59,921632,0\n4,27562624,snapshot,136,27441072,27562593,0\n5,27572771,video_send_end,135,59,0,0\n6,27625775,video_queued,136,59,0,0\n7,27626247,video_send_start,136,59,921632,0\n8,27715728,video_send_end,136,59,0,0\n9,27761650,snapshot,137,27641113,27761616,0\n10,27774875,video_queued,137,59,0,0\n11,27775513,video_send_start,137,59,921632,0\n12,27867141,video_send_end,137,59,0,0\n13,27958424,snapshot,138,27841112,27958390,0\n14,27964872,video_queued,138,59,0,0\n15,27965739,video_send_start,138,59,921632,0\n16,28055308,video_send_end,138,59,0,0\n17,28157682,snapshot,139,28041123,28157649,0\n18,28158061,video_queued,139,59,0,0\n19,28158942,video_send_start,139,59,921632,0\n20,28249190,video_send_end,139,59,0,0\n21,28357333,snapshot,140,28241127,28357299,0\n22,28357909,video_queued,140,59,0,0\n23,28358774,video_send_start,140,59,921632,0\n24,28447513,video_send_end,140,59,0,0\n25,28518160,socket_open,60,0,0,0\n26,28520288,keyboard_open,424242,60,0,0\n27,28521795,key_message,424242,1,72,60\n28,28521833,key_rejected,424242,1,72,60\n29,28521870,socket_close,60,0,0,0\n30,28557737,snapshot,141,28441138,28557703,0\n31,28560873,video_queued,141,59,0,0\n32,28561948,video_send_start,141,59,921632,0\n33,28651044,video_send_end,141,59,0,0\n",
+  "p4_export_error": null
+}

@@ -1,0 +1,23 @@
+schema_version: 1
+run_id: REMOTE-001-2026-09-09-17-58-10Z
+procedure: browser-keyboard-probe-r04
+operation: P4 measurement preparation repair
+outcome: pass
+source_commit: 1ce96dc97177c9818fe9254ad5a5500ffd6142c9
+source_dirty: false
+p4:
+  run_id: REMOTE-001-2026-09-09-17-58-10Z
+  build_id: browser-keyboard-probe-r04-b2026-09-09-17-57-18Z
+  factory_sha256: 0dbd2f5eda479502c8af5fb1208624895830765a0fd26ceebc47387b698bf5b2
+  write_verified: true
+  typing_startup_observed: true
+  uart_transfer_test: pending
+checks:
+- independent flash verification and matching startup
+- six actual browser frames and diagnostic export
+- keyboard post-handshake context and first-message handling on P4
+limits:
+- 'Non-owner heartbeat only: no take-control or key events sent by agent.'
+- Agon/sample reset and operator capture/typing measurement remain pending.
+emos_changed: false
+sd_changed: false

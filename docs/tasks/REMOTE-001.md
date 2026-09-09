@@ -446,3 +446,14 @@ session cleanup, before rebuilding and verifying the physical endpoint. Keep
 EMOS, SD application, UART bytes, deadlines and snapshot policy unchanged.
 Standing version preapproval covers r04/registry r44. Original latency/closure
 measurement remains pending after this preparation repair.
+
+### Corrected keyboard callback physically verified
+
+r04 from clean commit 1ce96dc was deployed and independently verified under
+REMOTE-001-2026-09-09-17-58-10Z. A real browser/P4 check received six frames,
+exported records, and confirmed keyboard_open plus first-message handling for
+a non-owner heartbeat. The expected non-owner rejection followed; the former
+missing-context path did not occur. No keyboard ownership or keys were injected
+by the agent. Actual operator capture/typing still requires restarting the Agon
+sample and reloading the page. EMOS, SD, wiring, UART and timing policy remain
+unchanged. Original r01 latency/disconnection measurement remains open.
