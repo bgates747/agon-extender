@@ -1,6 +1,6 @@
 # Controlled P4 keyboard sender
 
-Identity: `uart-keyboard-probe-r01`. Status: draft, not deployed.
+Identity: `uart-keyboard-probe-r01`. Status: candidate under registry r39; not deployed.
 Owner: [PORT-005](../../../../docs/tasks/PORT-005.md), coordinated with
 [PORT-008](../../../../docs/tasks/PORT-008.md) and EMOS INTEG-009.
 
@@ -81,7 +81,7 @@ Pre-hardware graphical result: the Author supplied the matching
 `uart-keyboard-probe-r01-b2026-09-09-02-36-43Z` screenshot showing SD/CLOCK
 PASS, both detailed keyboard PASS checks, mainboard input restored and final
 MOS prompt. The controlled peer reports twelve keys and PASS. EMOS remains
-`agon-emos-v0.1.8-b2026-09-09-00-09-53Z`. Source-freeze approval is pending;
+`agon-emos-v0.1.8-b2026-09-09-00-09-53Z`. The Author authorized source freeze and candidate preparation;
 this is emulator evidence, not a physical P4 sender result.
 
 Physical results pending. The local host tests exercise retained method bodies
@@ -95,3 +95,5 @@ abrupt reset and sustained load remain separate work. The selected P4 test
 Stream deliberately admits only locale and General Poll commands. The optional
 processed FIFO has one process-task owner; a future network producer must
 marshal events to that owner before using it.
+
+The maintained serial checker is `scripts/capture_keyboard.py`; its four host tests include every missing stage, malformed/reordered records, restart/late traffic and acquisition/quiet-tail completion. Machine-local arming and deployment wrappers supply private bench values.

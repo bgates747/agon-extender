@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r38
-updated_at: 2026-09-09T02:34:19Z
+registry_revision: r39
+updated_at: 2026-09-09T02:59:40Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -39,11 +39,12 @@ artifacts:
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: agon-emos-v0.1.8
-    status: draft
+    status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author approved registry r39 candidate promotion after the controlled keyboard graphical proof and source freeze; physical qualification remains pending.
       - Author approved v0.1.8 and registry r35 for INTEG-009 resident keyboard reception, then accepted the Work 2 emulator result and source freeze on 2026-09-08. The reviewed build remains draft; this checkpoint does not authorize deployment or claim P4/browser keyboard qualification.
       - Author approved v0.1.7 as a deliberate numbering reset after historical v0.7.0; the bounded resident text gateway is candidate after accepted graphical pacing review and SD deployment authorization; old build identities remain immutable.
       - Version v0.1.0 freezes the rejected PORT-008 predecessor in the separate agon-emos repository.
@@ -347,12 +348,13 @@ artifacts:
     kind: test_fixture
     identity_scheme: revision
     latest_identity: uart-keyboard-probe-r01
-    status: draft
+    status: candidate
     variants:
       - sender
       - sd-sample
     description: Controlled P4 processed-key sender and ordinary EMOS keyboard API observer.
     notes:
+      - Author approved registry r39 candidate promotion after the controlled keyboard graphical proof and source freeze; physical qualification remains pending.
       - Author approved r01 and registry r38 for twelve unsolicited stock key events after locale and matched General Poll admission at 1152000 baud.
       - P4 uses retained VDP acquisition, callbacks and packet serialization. EMOS v0.1.8 remains unchanged; the SD program only uses public MOS APIs.
       - Host and emulator checks precede source freeze and physical qualification. Browser focus, network ownership, mapping and session cleanup remain separate work.
