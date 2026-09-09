@@ -1,6 +1,6 @@
 {
   "artifact_id": "browser-keyboard-probe",
-  "source_identity": "browser-keyboard-probe-r02",
+  "source_identity": "browser-keyboard-probe-r03",
   "status": "candidate",
-  "note": "Standing Author version preapproval: browser/P4 timing instrumentation; existing EMOS and SD sample unchanged."
+  "note": "Standing version preapproval: correct r02 diagnostic export stack use; no measured-path policy change."
 }

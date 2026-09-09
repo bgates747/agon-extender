@@ -1,0 +1,15 @@
+schema_version: 1
+run_id: REMOTE-001-2026-09-09-17-29-26Z
+operation: P4 measurement candidate deployment
+procedure: browser-keyboard-probe-r02
+outcome: pass
+source_commit: 6be2a8d
+p4:
+  run_id: REMOTE-001-2026-09-09-17-29-26Z
+  build_id: browser-keyboard-probe-r02-b2026-09-09-17-28-18Z
+  factory_sha256: 57e308755703b04e68e64e34496382855ea1d5a14ece30191d342681123d2466
+  write_verified: true
+  typing_startup_observed: true
+  uart_transfer_test: pending
+scope: Flash write and independent verification, matching startup only. Subsequent
+  diagnostic check failed; see follow-up.

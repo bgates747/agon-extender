@@ -399,3 +399,16 @@ valid; Escape/MOS return is not inferred from it.
    remains part of operator observation. I001-M5 and findings/repair review
    remain open. Freeze the P4 measurement candidate before deployment; do not
    present an attention cue until it and the unchanged SD are ready.
+
+### Instrumentation preparation defect and correction
+
+The r02 candidate flashed and independently verified, but pre-handoff browser
+validation did not receive frames. Passive serial capture showed a P4 HTTP
+stack-protection fault in newlib snprintf formatting. The new trace handler
+reserved a 2048-byte automatic export buffer inside the default 4096-byte
+HTTP task stack, including control requests. This is an instrumentation defect,
+not evidence of the Author's pre-existing failure. r03 moves the export buffer
+to checked heap storage after observation; no task stack, transport timeout or
+snapshot policy change is included. Retain the informative failed check and
+exact candidate provenance. Repeat physical diagnostics/video validation before
+operator handoff. Standing version preapproval covers r03 and registry r43.

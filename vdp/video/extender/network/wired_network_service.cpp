@@ -6,6 +6,8 @@
 #include <cerrno>
 #include <cstdio>
 #include <cstdlib>
+#include <memory>
+#include <new>
 #include "extender/diagnostic/browser_trace.hpp"
 #include <esp_timer.h>
 #include "extender/input/browser_keyboard.hpp"
@@ -313,18 +315,25 @@ esp_err_t WiredNetworkService::traceHandler(httpd_req_t *request) noexcept {
   }
   auto total=t.freeze();
   httpd_resp_set_type(request,"text/plain");
-  char chunk[2048];
-  int used=snprintf(chunk,sizeof(chunk),"# " AGON_EXTENDER_BUILD_ID " (" AGON_EXTENDER_ARTIFACT_STATUS ")\n# browser timing v1; us=P4 monotonic; capacity=%u; total=%llu; overwritten=%llu; available=%d; cost_us=%lld; max_cost_us=%lld\nindex,us,event,id,a,b,c\n",
+  // r02's 2 KiB automatic buffer overflowed IDF 5.5.5's 4 KiB HTTP
+  // stack during snprintf/response handling (P4 stack-protection panic).
+  // Allocate only for after-run export; retain the ordinary task stack and
+  // measured traffic behavior. Keep this buffer off-stack in future revisions.
+  constexpr size_t chunk_size=2048;
+  std::unique_ptr<char[]> storage(new(std::nothrow) char[chunk_size]);
+  if(!storage) return httpd_resp_send_500(request);
+  char *chunk=storage.get();
+  int used=snprintf(chunk,chunk_size,"# " AGON_EXTENDER_BUILD_ID " (" AGON_EXTENDER_ARTIFACT_STATUS ")\n# browser timing v1; us=P4 monotonic; capacity=%u; total=%llu; overwritten=%llu; available=%d; cost_us=%lld; max_cost_us=%lld\nindex,us,event,id,a,b,c\n",
     t.capacity,(unsigned long long)total,(unsigned long long)(total>t.capacity?total-t.capacity:0),t.available(),
     (long long)t.cost_us(),(long long)t.max_cost_us());
   diagnostic::TraceRecord row{};
   for(auto i=total>t.capacity?total-t.capacity:0;i<total;++i) {
     if(!t.read(i,row)) continue;
-    if(used>int(sizeof(chunk))-200) {
+    if(used>int(chunk_size)-200) {
       if(httpd_resp_send_chunk(request,chunk,used)!=ESP_OK) return ESP_FAIL;
       used=0;
     }
-    used+=snprintf(chunk+used,sizeof(chunk)-used,"%llu,%lld,%s,%llu,%lld,%lld,%lld\n",
+    used+=snprintf(chunk+used,chunk_size-used,"%llu,%lld,%s,%llu,%lld,%lld,%lld\n",
       (unsigned long long)i,(long long)row.us,row.event,(unsigned long long)row.id,
       (long long)row.a,(long long)row.b,(long long)row.c);
   }

@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r42
+registry_revision: r43
 updated_at: 2026-09-09T04:38:06Z
 
 artifacts:
@@ -363,11 +363,11 @@ artifacts:
   - artifact_id: browser-keyboard-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: browser-keyboard-probe-r02
+    latest_identity: browser-keyboard-probe-r03
     status: candidate
     variants: []
     description: Focused browser typing through resident EMOS and retained P4 rendering.
     notes:
       - Author preapproved versioning for this increment on 2026-09-09.
-      - r02 adds browser/P4 timing records; it uses the unchanged r01 SD sample and EMOS v0.1.9.
-      - r01 typing/editing and reconnect work; r02 measures unresolved latency and socket closure before repair.
+      - r03 corrects the r02 diagnostic export stack overflow; it uses the unchanged r01 SD sample and EMOS v0.1.9.
+      - r01 typing/editing and reconnect work; r03 measures unresolved latency and socket closure before repair.
