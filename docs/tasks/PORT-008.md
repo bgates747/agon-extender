@@ -4,8 +4,9 @@
 
 - Status: Resident EMOS keyboard reception and stock MOS state integration
   pass controlled hardware checks; native USB ordinary CLI and gameplay are
-  accepted. Mainboard/extender lifecycle and wider transport qualification
-  remain open. Browser input is deferred until explicit reprioritization.
+  accepted. Bounded USB reconnect, mainboard source exclusion and Agon-only
+  reset readmission also pass; wider transport qualification remains open.
+  Browser input is deferred until explicit reprioritization.
   The r02 design, wiring, parallel implementation/Work 2.e recapture and full
   circuit qualification remain on hold. No hardware operation is started by
   this progress update.
@@ -113,7 +114,10 @@ retains the evidence; wider session, load and query-routing work remains open.
 
 The subsequent native USB CLI/gameplay acceptance is recorded in
 [PORT-015](PORT-015.md#gameplay-acceptance-and-immediate-scope--2026-09-09).
-The immediate qualification work uses mainboard/extender selection; browser
+The [W3 continuation](../../hardware/designs/light2-harness-r03/tests/PORT-015-2026-09-09-23-25-54Z/README.md)
+also passes ordinary editing/repeat, USB reconnect, mainboard source exclusion
+and Agon-only reset readmission. The remaining qualification work uses
+mainboard/extender selection; browser
 focus, lease and network cleanup remain deferred with REMOTE-001.
 
 1. [ ] Apply SETUP-005 K001–K003 and K009/K010, PORT-015 and the retained

@@ -19,22 +19,10 @@ gameplay now pass with the P4 USB keyboard and mainboard VGA. On that evidence,
 the Author selected mainboard/Extender keyboard choice as the immediate goal;
 browser input is deferred until explicitly reprioritized, not queued to resume
 automatically after USB bring-up. The USB wiring is recorded in the design
-specification; its schematic update is deferred to the next Author session.
+specification; its schematic update is deferred until 2026-09-10.
 Broader physical/session qualification remains open. The selected Agon/P4 path uses
 only r03 UART1; module loading, runtime relocation and moslet-space residency
 are not prerequisites.
-
-- [ ] **PORT-015 — Bring up a directly connected USB keyboard**
-  - Started: 2026-09-09 (connector verification, then native P4 HID input).
-  - Finished: --
-  - Status: Native USB acquisition, ordinary EMOS CLI and gameplay pass on hardware; complete mainboard/extender source-selection qualification, wider keyboard parity and power particulars.
-  - Details: [PORT-015](docs/tasks/PORT-015.md)
-
-- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
-  - Started: 2026-09-07 17:36 EDT
-  - Finished: --
-  - Status: USB keyboard addition specified; schematic/model update deferred to the next Author session. Existing endpoint review remains open.
-  - Details: [HW-002](docs/tasks/HW-002.md)
 
 - [ ] **PORT-005 — Implement the processed-keyboard input adapter**
   - Started: 2026-09-08 (controlled P4 sender).
@@ -45,8 +33,16 @@ are not prerequisites.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: P4-to-EMOS keyboard UART and native USB gameplay pass; qualify mainboard/extender lifecycle and wider integration; r02/parallel work stays on hold.
+  - Status: P4-to-EMOS keyboard UART, native USB gameplay and bounded source-return/reconnection pass; wider integration remains; r02/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
+
+## Scheduled hardware documentation
+
+- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
+  - Started: 2026-09-07 17:36 EDT
+  - Finished: --
+  - Status: USB keyboard addition specified; schematic/model update deferred until 2026-09-10. Existing endpoint review remains open.
+  - Details: [HW-002](docs/tasks/HW-002.md)
 
 ## Other active work
 

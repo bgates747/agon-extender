@@ -2,15 +2,18 @@
 
 ## State and scope
 
-- Status: W2 bounded native USB acquisition passes on PERIBOARD-409: key
+- Status: Complete — bounded one-keyboard bring-up. W2 native USB acquisition
+  passes on PERIBOARD-409: key
   transitions, held-key cleanup and reconnection observed. The unplug diagnostic
   is explained by the pinned upstream cleanup path (review linked below).
-  W1 power/current particulars remain open. W3 candidates are installed;
+  W1's bounded power/connection record is complete. W3 candidates are installed;
   software/graphical review, physical ordinary-CLI typing and gameplay pass.
-  Broader editing/repeat/reconnect/source-return checks remain pending.
+  The Author also accepted physical editing, repeat, reconnect, source exclusion
+  and Agon-only reset readmission; bounded W3 ordinary-CLI proof is complete.
+  Broader keyboard parity remains with PORT-005.
   Artifact status remains candidate; this is not full keyboard qualification.
 - Started: 2026-09-09.
-- Finished: --
+- Finished: 2026-09-09 (bounded one-keyboard bring-up).
 
 The Author brought forward direct P4 USB keyboard input because the Agon
 mainboard keyboard interface remains inoperative. First useful milestone:
@@ -33,8 +36,8 @@ UART bypass, proprietary keymap packet or implicit browser/USB input mixing.
 | ID | Decision | State |
 |---|---|---|
 | PORT-015-D001 | Bring forward native P4 USB keyboard acquisition; first prove ordinary EMOS CLI on mainboard VGA using the existing UART contract. | Accepted by Author, 2026-09-09; SETUP-005 K009 and ADR-0014. |
-| PORT-015-D002 | Use one wired boot-protocol keyboard and the existing `extender` input selector for the first increment. | Accepted; physical CLI and gameplay pass, wider W3 qualification remains open. |
-| PORT-015-D003 | Author's USB-A male cable terminates in a reversed four-pin male header; a female-to-female USB-A adapter accepts the keyboard plug. | Author corrected the initial socket description and reported passing continuity/short/voltage checks; corrected data pair subsequently enumerates the keyboard. W1 particulars remain open. |
+| PORT-015-D002 | Use one wired boot-protocol keyboard and the existing `extender` input selector for the first increment. | Accepted; bounded W3 CLI, editing/repeat/reconnect/source-return and gameplay checks pass on PERIBOARD-409. Wider keyboard parity remains with PORT-005. |
+| PORT-015-D003 | Author's USB-A male cable terminates in a reversed four-pin male header; a female-to-female USB-A adapter accepts the keyboard plug. | Author reported passing continuity/short/voltage checks and confirmed the keyboard's 100 mA label rating and P4-only VBUS source. W1 bounded record is complete. |
 | PORT-015-D004 | Make selectable mainboard/Extender keyboard input the immediate goal after USB CLI and gameplay proof; defer browser input until explicitly reprioritized. | Accepted by Author, 2026-09-09; SETUP-005 K010 and ADR-0014. |
 
 ## Bounded reference
@@ -114,31 +117,35 @@ owns the wiring confirmation and operator observations.
 The canonical connection is now in the [r03 USB keyboard specification](../../hardware/designs/light2-harness-r03/README.md#usb-keyboard-addition--2026-09-09).
 It records the reversed cable-header numbering, male cable/F–F adapter,
 dedicated USB-P/USB-N pair, +5 V source and the separate programming connection.
-HW-002 owns the deferred schematic/model update. W1 retains the remaining
-supply/current and assembly qualification; the existing frozen r03 drawing
+HW-002 owns the deferred schematic/model update. W1 records the tested
+connection and its power scope; the existing frozen r03 drawing
 and earlier pinwalk evidence do not include the USB addition.
 
 ## Work
 
-1. [ ] **W1 — Complete the physical connection record.** The Author reported
+1. [x] **W1 — Complete the physical connection record.** The Author reported
    passing continuity/short/supply-voltage checks and the corrected assembly
-   now passes acquisition, CLI and gameplay. Preserve that evidence and record
-   remaining keyboard current rating, supply budget and VBUS protection scope.
-   HW-002 owns the schematic update; this remaining record does not request
-   dismantling or repeating the already observed wiring checks.
+   now passes acquisition, CLI and gameplay. The keyboard label rates 100 mA;
+   P4 is powered solely through its USB connection and supplies keyboard VBUS
+   from EXT2.1 +5 V. No Agon supply feeds the keyboard. This records the load
+   rating and working single-keyboard power arrangement, not measured aggregate
+   supply headroom or a dedicated protected host power circuit. HW-002 owns
+   the schematic update; no additional wiring is required by this record.
 2. [x] **W2 — Prove P4 USB acquisition.** Integrate the supported HID host
    component with a bounded event source; first observe enumeration and exact
    press/release/modifier reports. Keep USB work outside HTTP handling and
    deliver events through the P4 process owner. Verify removal clears held
    state. Freeze the identified candidate before bench deployment; preserve
    existing UART pins and avoid sending unsolicited input to EMOS.
-3. [ ] **W3 — Prove the ordinary EMOS CLI.** Implement and test explicit
+3. [x] **W3 — Prove the ordinary EMOS CLI.** Implement and test explicit
    `extender` source admission and source-return cleanup, reusing stock packet
    handling. Handle key transitions, layout, repeat and removal; define the
    supported keyboard set before claiming parity. Autoexec performs setup and
    returns to the normal CLI on mainboard VGA. Test typing/editing, modifiers,
    held/released keys and unplug/replug without relying on browser focus or
    video. Record result and remaining compatibility limits beside the design.
+   Accepted bounded proof on PERIBOARD-409, 2026-09-09; see the continuation
+   result below. Full layout/keypad/LED/settings parity remains with PORT-005.
 
 BC-001 remains active for installation/recovery: the keyboard under test cannot
 be assumed working to launch or repair its own test. Native USB input does not
@@ -353,3 +360,34 @@ This supports D004's immediate mainboard/extender selection goal. Browser
 input is deferred until explicitly reprioritized; no automatic continuation
 into REMOTE-001 follows W3. Native USB selection/release, layout/repeat/settings
 parity and the remaining W1/W3 evidence stay on this task's path.
+
+### W3 continuation accepted — 2026-09-09
+
+The Author reports all requested continuation checks passed: boot smoke and
+admission, CLI Backspace/arrows, held repeat stopping on release, neutral USB
+unplug/replug, case-insensitive source query, mainboard selection excluding USB
+input, and Agon-only reset restoring USB typing. The [completed run](../../hardware/designs/light2-harness-r03/tests/PORT-015-2026-09-09-23-25-54Z/README.md)
+retains the exact candidate pair, serial excerpt and diagnostic dispositions.
+The P4 remained running after its initial serial-open startup; fresh admission
+and typing resumed after blocked-TX cleanup. No application fault was observed.
+
+W3's bounded ordinary CLI proof is complete. This task remains open only for
+W1's physical power/current record. PORT-005 retains wider keyboard parity;
+HW-002 owns the deferred schematic/model update. Mainboard selection here
+proves exclusion of USB input, not repair of the mainboard keyboard circuit.
+No firmware, SD contents or artifact lifecycle status changed for this run.
+
+### W1 power record and bounded completion — 2026-09-09
+
+The Author read **100 mA** from the PERIBOARD-409 label and confirmed P4 is
+powered solely through its USB connection. The keyboard receives +5 V from
+P4 EXT2.1, never from the Agon. The machine-specific upstream USB supply is
+recorded in HARDWARE.local.md. The design README owns the connector/power
+specification. Direct board-rail VBUS remains the scope of this tested assembly;
+no dedicated switched/current-limited host output or measured supply margin
+is claimed.
+
+This completes W1 and the bounded PORT-015 bring-up following the accepted
+W2/W3 results. Removed PORT-015 from the active TODO. PORT-005 retains wider
+keyboard parity and HW-002 retains the schematic/model update; the accepted
+browser-input deferral remains. Installed artifacts remain candidates.

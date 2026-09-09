@@ -2,14 +2,14 @@
 
 Procedure identity: **usb-cli-probe-r01** (candidate; registry r47).
 Owner: [PORT-015 W3](../../../../docs/tasks/PORT-015.md).
-State: software/graphical review and first physical CLI typing pass; broader checks pending.
+State: software/graphical review and bounded physical CLI, editing/repeat/reconnect/source-return checks pass; wider keyboard parity remains open.
 
 ## Article and scope
 
 One Perixx PERIBOARD-409 boot keyboard connects to the dedicated P4 USB host
-through the already exercised cable/adapter. The connection and W1 remaining
-power/current particulars are recorded in
-[usb-keyboard-probe-r01](usb-keyboard-probe-r01.md). Agon/P4 use the existing
+through the already exercised cable/adapter. The connection and completed
+W1 power record are in the
+[design specification](../README.md#usb-keyboard-addition--2026-09-09). Agon/P4 use the existing
 r03 four-wire UART1 connection, 1152000 baud, 8N1 with RTS/CTS and common ground.
 Keep the GPIO ribbons seated. This test adds no parallel wiring or transport.
 
@@ -85,7 +85,7 @@ command or receive fault requires P4 reset in this bounded composition.
 
 ## Result record
 
-Physical result: **initial typing passes**, as recorded below. Record further checks, limitations,
+Physical result: **bounded CLI checks pass**, as recorded below. Record further checks, limitations,
 screen observations, serial evidence, exact paired identities and source
 return/repeat outcome in a run directory beside this sheet. Software tests,
 successful compilation and emulator screen review do not substitute for the
@@ -125,3 +125,21 @@ stock timing. The Author accepted the practical result and selected
 mainboard/Extender keyboard choice as the immediate goal, deferring browser
 input. Full source-return, repeat/reconnect, electrical and wider keyboard
 qualification are not inferred from this gameplay observation.
+
+### Editing, repeat, reconnect and source-return pass — 2026-09-09
+
+The Author accepted all requested continuation checks in
+[PORT-015-2026-09-09-23-25-54Z](PORT-015-2026-09-09-23-25-54Z/README.md).
+Boot smoke, editing, held-repeat release, USB reconnect, mixed-case source
+query, mainboard exclusion and Agon-only reset readmission passed. The run
+retains P4 serial evidence and the bounded dispositions of unplug logging and
+blocked-TX cleanup. Together with prior typing/gameplay results this completes
+PORT-015 W3; it does not close W1 power particulars or PORT-005's wider parity.
+
+### Subsequent power-record completion — 2026-09-09
+
+The Author confirmed the keyboard's 100 mA label rating and sole USB power
+to P4, with keyboard VBUS drawn from P4's +5 V rail rather than the Agon.
+The [design specification](../README.md#usb-keyboard-addition--2026-09-09)
+records that arrangement. This closes PORT-015 W1's bounded record without
+changing any earlier run observation or claiming measured supply headroom.

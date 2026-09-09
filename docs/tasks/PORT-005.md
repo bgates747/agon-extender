@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Native USB CLI and gameplay pass on hardware. Prioritize mainboard/extender source-selection and processed-keyboard parity with PORT-015; browser-specific work is deferred with REMOTE-001. Broader parity remains open.
+- Status: Native USB CLI/gameplay and bounded editing/repeat/reconnect/source-return pass on hardware with PORT-015. Wider mapping, layout, LED/settings and processed-keyboard parity remain open; browser-specific work is deferred with REMOTE-001.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 

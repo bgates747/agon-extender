@@ -1,0 +1,55 @@
+schema_version: 1
+run_id: PORT-015-2026-09-09-23-25-54Z
+started_at: '2026-09-09T23:25:54Z'
+outcome: pass
+scope: Bounded ordinary CLI continuation on PERIBOARD-409; operator observations plus
+  P4 debug serial
+procedure:
+  identity: usb-cli-probe-r01
+  commit: 457cbf7cec929e1707b58a4ece12d4796b349b22
+  selection: Startup, editing, repeat, reconnect and source-return checks; prior initial
+    typing evidence retained separately
+firmware:
+  emos:
+    build_id: agon-emos-v0.1.10-b2026-09-09-21-51-31Z
+    source_commit: 1a40ddb52206a05eb9075a41269adf3d54e201be
+    source_dirty: false
+    sha256: 2a87f91dffc114813f7193525729d637758b543e3ddf31bd17ce062f0a3d0449
+  p4:
+    build_id: usb-cli-probe-r01-b2026-09-09-21-51-31Z
+    source_commit: bce654c81e31ad8a4e9b27fd909675f85ecc59d4
+    source_dirty: false
+    factory_sha256: dd22391142b0ba6934ec5448acc4b5f416585ea20274f006a7fef2cdd1687f17
+artifact_status: candidate
+operator_results:
+  sd_clock_and_extender_prompt: pass
+  backspace_and_arrow_editing: pass
+  repeat_stops_on_release: pass
+  usb_reconnect_without_board_reset: pass
+  case_insensitive_source_query: pass
+  mainboard_selection_suppresses_usb: pass
+  agon_only_reset_restores_usb_typing: pass
+capture:
+  duration_seconds: 425.953
+  stop_reason: operator-finished
+  application_startups_observed: 1
+  usb_connections: 2
+  usb_removals: 1
+  native_admissions: 2
+  final_keys_sent_counter: 283
+  counter_scope: P4 serializer/enqueue attempts; not independently decoded UART receipt
+  capture_script_sha256: f9598e6126384ea96c10be5308f4e7ccd34da8bce277839d37e912799923f3c5
+  private_raw_log_sha256: 1c81d0bc6cacdae0122d16dea8c6d07c5bce13e84486e30026313d12184dc4ca
+  private_metadata_sha256: cb73acf813e6d0d051674763469504b540b17e4c01dd42e9db6ab4aaeebe54c4
+diagnostics:
+  unplug_endpoint_invalid_state: 1
+  input_backlog_release: 1
+  blocked_tx_cancellation: 1
+  subsequent_application_restart: false
+  application_fault: false
+limits:
+- No UART waveform, latency or exact repeat timing measurement
+- Mainboard keyboard hardware remains inoperative; source exclusion and reset readmission
+  were tested
+- Power/current record remains open in PORT-015 W1
+- Broader layouts, keypad, LEDs and settings parity remain in PORT-005

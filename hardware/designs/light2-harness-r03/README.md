@@ -32,7 +32,9 @@ breadboard header, **not** the USB connector's contact numbering:
 These are USB data signals, not PS/2 clock/data. USB-P is D+, not a power
 source. This uses the dedicated native host pair, not the other exposed
 GPIO27/26 pair at EXT2.16/17. The board's USB Serial/JTAG programming connection
-remains separate. The keyboard's power comes from the P4 DevKit's +5 V rail;
+remains separate. P4 is powered solely through its USB connection. The
+PERIBOARD-409 label rates 100 mA, as confirmed by the Author. The keyboard's
+power comes from the P4 DevKit's +5 V rail, not an Agon supply;
 the Agon/P4 shared signal ground and existing UART wiring remain in use. The
 Agon's 3.3 V Port C pull-ups and series resistors are not USB components.
 
@@ -40,8 +42,10 @@ The Author reported passing continuity, short and supply-voltage checks after
 construction; corrected data wiring subsequently passed USB acquisition,
 ordinary EMOS CLI and gameplay with a Perixx PERIBOARD-409. EXT2.1 supplies the
 board's +5 V rail directly; this record does not identify a dedicated switched
-or current-limited host VBUS circuit. Remaining supply/current and wider
-electrical qualification belong to [PORT-015](../../../docs/tasks/PORT-015.md).
+or current-limited host VBUS circuit. This records the working single-keyboard
+arrangement and rated load, not measured aggregate supply headroom.
+[PORT-015](../../../docs/tasks/PORT-015.md) retains the completed bounded
+bring-up evidence; HW-002 owns the deferred schematic/model update.
 
 ## Electrical definition of the existing drawing
 

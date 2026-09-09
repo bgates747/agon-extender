@@ -1,0 +1,101 @@
+I (1708) extender_identity: source_identity=usb-cli-probe-r01
+I (1708) extender_identity: build_id=usb-cli-probe-r01-b2026-09-09-21-51-31Z
+I (1709) extender_identity: artifact_status=candidate
+USB HOST READY: attach one boot keyboard
+USB CLI usb-cli-probe-r01-b2026-09-09-21-51-31Z (candidate) RX=22 TX=12 CTS=23 RTS=11 baud=1152000 8N1
+USB IGNORE address=1 interface=1 subclass=0 protocol=0
+USB CONNECTED #1 vid=04d9 pid=a088 address=1 interface=0
+USB KEYBOARD READY
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI STATUS admitted=0 attached=1 keys_sent=0
+USB CLI READY: native keyboard admitted
+USB CLI STATUS admitted=1 attached=1 keys_sent=0
+USB CLI STATUS admitted=1 attached=1 keys_sent=0
+USB CLI STATUS admitted=1 attached=1 keys_sent=0
+USB CLI STATUS admitted=1 attached=1 keys_sent=1
+USB CLI STATUS admitted=1 attached=1 keys_sent=28
+USB CLI STATUS admitted=1 attached=1 keys_sent=32
+USB CLI STATUS admitted=1 attached=1 keys_sent=37
+USB CLI STATUS admitted=1 attached=1 keys_sent=38
+USB CLI STATUS admitted=1 attached=1 keys_sent=38
+USB CLI STATUS admitted=1 attached=1 keys_sent=53
+USB CLI STATUS admitted=1 attached=1 keys_sent=55
+USB CLI STATUS admitted=1 attached=1 keys_sent=55
+USB CLI STATUS admitted=1 attached=1 keys_sent=55
+E (269091) USB HOST: EP command error: ESP_ERR_INVALID_STATE
+USB DISCONNECTED: held keys released; waiting for keyboard
+USB CLI STATUS admitted=1 attached=0 keys_sent=55
+USB IGNORE address=2 interface=1 subclass=0 protocol=0
+USB CONNECTED #2 vid=04d9 pid=a088 address=2 interface=0
+USB KEYBOARD READY
+USB CLI STATUS admitted=1 attached=1 keys_sent=55
+USB CLI STATUS admitted=1 attached=1 keys_sent=87
+USB CLI STATUS admitted=1 attached=1 keys_sent=89
+USB CLI STATUS admitted=1 attached=1 keys_sent=103
+USB CLI STATUS admitted=1 attached=1 keys_sent=119
+USB CLI STATUS admitted=1 attached=1 keys_sent=137
+USB CLI STATUS admitted=1 attached=1 keys_sent=137
+USB CLI STATUS admitted=1 attached=1 keys_sent=137
+USB CLI STATUS admitted=1 attached=1 keys_sent=139
+USB CLI STATUS admitted=1 attached=1 keys_sent=143
+USB CLI STATUS admitted=1 attached=1 keys_sent=159
+USB CLI STATUS admitted=1 attached=1 keys_sent=177
+USB CLI STATUS admitted=1 attached=1 keys_sent=193
+USB CLI STATUS admitted=1 attached=1 keys_sent=193
+USB CLI STATUS admitted=1 attached=1 keys_sent=193
+USB CLI STATUS admitted=1 attached=1 keys_sent=211
+USB CLI STATUS admitted=1 attached=1 keys_sent=243
+USB CLI input backlog: held keys released; release physical keys
+USB CLI STATUS admitted=1 attached=1 keys_sent=245
+USB CLI WAIT: blocked TX cancelled; awaiting EMOS admission
+USB CLI STATUS admitted=0 attached=1 keys_sent=245
+USB CLI STATUS admitted=0 attached=1 keys_sent=245
+USB CLI READY: native keyboard admitted
+USB CLI STATUS admitted=1 attached=1 keys_sent=245
+USB CLI STATUS admitted=1 attached=1 keys_sent=277
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
+USB CLI STATUS admitted=1 attached=1 keys_sent=283
