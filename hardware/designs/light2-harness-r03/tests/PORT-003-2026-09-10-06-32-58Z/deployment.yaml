@@ -1,0 +1,25 @@
+run_id: PORT-003-2026-09-10-06-32-58Z
+build_id: uart-excom-console-r07-b2026-09-10-06-31-58Z
+factory_sha256: 8d6e97577632b1e70d7fcafef985fb433533893097d49e41ee641cfbc3c5fb40
+write_verified: true
+usb_host_startup_observed: true
+physical_rgb222_throughput_stability: pending
+source_commit: 52479f0ae9653e293031a1eed1b65f0cec9695cd
+source_clean: true
+http_assets_match: true
+browser_continuous_credit_seconds: 20
+browser_frames_presented: 104
+surface: 640x480 RGB222
+stride_bytes: 640
+emos: Existing v0.1.12 unchanged
+sd_changed: false
+agon_reset: false
+keyboard_admission: pending operator retest
+excom_activation: pending operator retest
+private_log_sha256:
+  boot.log: 3ccbefc80cad98e866cf67994e27679d9654e1327a71b54d37ca20946325bfe9
+  deployment.json: f52e1fa9cc721ad9b126c07a81f2f0b5289e167dcf8522e64c7acdff8c3661ee
+  verify-command.json: 7f32e0431339a39b29a019a2b3010aa819a9a71e5bc5978a05887b1b0fd4dac0
+  verify.log: 5dfa44f3549b64249aeda9a9ded2f38c825d15aaa62ac442a06fefdf9c5304c1
+  write-command.json: 89c85f99f4d03d771e48eec960378f957a551828c43102201173e5c15de9366c
+  write.log: 731a2eb8b3a4f22f0d05136f6b14d9452ff1621f207f2be3ccde16e2483abfdc

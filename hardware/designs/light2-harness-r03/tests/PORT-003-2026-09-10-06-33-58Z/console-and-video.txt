@@ -1,0 +1,90 @@
+ExCom console uart-excom-console-r07-b2026-09-10-06-31-58Z (candidate), UART1 1152000 8N1 RTS/CTS
+I (13882) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=0 no_new=0
+I (13883) extender_network: state=4 clients=0 refused=0 credits=0 protocol=0 sent=0 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=0 queue_fail=0 socket_fail=0
+I (23231) extender_net: video client accepted fd=60
+I (23885) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=3 no_new=54
+I (23886) extender_network: state=4 clients=1 refused=0 credits=4 protocol=0 sent=3 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=3 queue_fail=0 socket_fail=0
+I (33888) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=52 no_new=831
+I (33889) extender_network: state=4 clients=1 refused=0 credits=52 protocol=0 sent=51 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=51 queue_fail=0 socket_fail=0
+I (43893) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=102 no_new=1564
+I (43894) extender_network: state=4 clients=1 refused=0 credits=103 protocol=0 sent=102 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=102 queue_fail=0 socket_fail=0
+W (44339) httpd_ws: httpd_ws_send_frame_async: Failed to send WS header
+E (44339) extender_net: video socket send failed fd=60 err=-1
+I (44340) extender_net: video client disconnected fd=60
+I (53896) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (53897) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (63899) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (63899) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (73901) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (73902) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (83904) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (83904) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (93906) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (93907) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (103909) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (103909) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (113911) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (113912) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (123914) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (123915) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (133917) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (133918) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (143919) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (143920) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (153922) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (153922) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (163924) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (163925) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (173927) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (173927) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (183929) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (183930) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (193932) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (193932) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (203934) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (203935) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (213937) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (213938) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (223940) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (223941) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (233943) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (233944) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (243946) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (243947) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (253948) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (253949) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (263951) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (263951) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (273953) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=105 no_new=1599
+I (273954) extender_network: state=4 clients=1 refused=0 credits=105 protocol=0 sent=104 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=105 queue_fail=0 socket_fail=1
+I (278677) extender_net: video client accepted fd=60
+I (283956) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=129 no_new=1968
+I (283957) extender_network: state=4 clients=2 refused=0 credits=131 protocol=0 sent=129 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=130 queue_fail=0 socket_fail=1
+I (293959) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=175 no_new=2660
+I (293960) extender_network: state=4 clients=2 refused=0 credits=177 protocol=0 sent=175 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=176 queue_fail=0 socket_fail=1
+ExCom native keyboard admitted
+ExCom control op=1 active=0
+ExCom control op=2 active=1
+I (303962) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=1 producer_busy=0 no_slot=0 compose_fail=0 published=218 no_new=3340
+I (303963) extender_network: state=4 clients=2 refused=0 credits=219 protocol=0 sent=218 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=219 queue_fail=0 socket_fail=1
+I (313965) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=1 producer_busy=0 no_slot=0 compose_fail=0 published=258 no_new=3940
+I (313966) extender_network: state=4 clients=2 refused=0 credits=259 protocol=0 sent=258 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=259 queue_fail=0 socket_fail=1
+I (323969) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=1 producer_busy=0 no_slot=0 compose_fail=0 published=322 no_new=4563
+I (323970) extender_network: state=4 clients=2 refused=0 credits=324 protocol=0 sent=322 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=323 queue_fail=0 socket_fail=1
+I (333973) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=390 no_new=5038
+I (333974) extender_network: state=4 clients=2 refused=0 credits=391 protocol=0 sent=390 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=391 queue_fail=0 socket_fail=1
+I (343982) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=465 no_new=5583
+I (343983) extender_network: state=4 clients=2 refused=0 credits=466 protocol=0 sent=464 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=466 queue_fail=0 socket_fail=1
+I (353987) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=517 no_new=6272
+I (353988) extender_network: state=4 clients=2 refused=0 credits=519 protocol=0 sent=517 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=518 queue_fail=0 socket_fail=1
+I (363990) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=567 no_new=7014
+I (363991) extender_network: state=4 clients=2 refused=0 credits=569 protocol=0 sent=567 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=568 queue_fail=0 socket_fail=1
+I (373993) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=615 no_new=7739
+I (373994) extender_network: state=4 clients=2 refused=0 credits=617 protocol=0 sent=615 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=616 queue_fail=0 socket_fail=1
+ExCom control op=3 active=0
+I (383997) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=661 no_new=8419
+I (383999) extender_network: state=4 clients=2 refused=0 credits=662 protocol=0 sent=660 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=662 queue_fail=0 socket_fail=1
+I (394001) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=706 no_new=9094
+I (394002) extender_network: state=4 clients=2 refused=0 credits=707 protocol=0 sent=706 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=707 queue_fail=0 socket_fail=1
+I (404004) extender_snapshot: enabled=1 alloc_fail=0 cadence=0 transition=2 producer_busy=0 no_slot=0 compose_fail=0 published=757 no_new=9859
+I (404006) extender_network: state=4 clients=2 refused=0 credits=758 protocol=0 sent=756 send_fail=1 disconnect_release=0 http=1/0 http_fail=0 queued=758 queue_fail=0 socket_fail=1

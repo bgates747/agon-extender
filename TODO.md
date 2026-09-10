@@ -18,7 +18,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Active next increment: RGB222 browser video and removal of the 5 fps throttle; local review first, running hardware must remain undisturbed.
+  - Status: Partially working checkpoint: RGB222, USB keyboard admission, ExCom entry and slideshow function on hardware. Typing and Nurples are very laggy, with compressed laser spacing. Review stock MOS reuse and the EMOS transmit path before further instrumentation or core changes; performance/uptime qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**

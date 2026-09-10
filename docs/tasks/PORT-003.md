@@ -93,7 +93,7 @@ the startup correction; slideshow performance and sustained stability remain
 for the Author's next test. The SD is safely unmounted with Extender keyboard
 selection followed by the slideshow directory change. No Agon reset occurred.
 
-### Keyboard admission regression under investigation
+### Admission regression and r07 functional recovery
 
 The Author's first Agon test after the r06 deployment reports `KEYINPUT FAIL:
 receiver readiness timeout`, mainboard input retained, and autoexec stopped at
@@ -107,8 +107,9 @@ P4 HTTP remained responsive. A bounded serial recording of the installed r06
 candidate collected an Agon-only reset attempt with browser video
 disconnected, to distinguish admission failure from browser-dependent load.
 Opening the recording restarted P4; no firmware or SD changes accompanied it.
-The root cause and RGB-4 hardware result remain unresolved. Private capture
-details and current recording state are in `HARDWARE.local.md`.
+At that point the cause and hardware result remained unresolved; the r07
+follow-up below records functional recovery. Private capture details and
+current bench state are in `HARDWARE.local.md`.
 
 The Author confirms keyboard input works after the recorded P4 restart with
 browser video disconnected, and manually launched slideshow on mainboard VDP.
@@ -135,8 +136,8 @@ can request another attempt. It retains logical tick semantics, the single
 renderer owner, immutable leases and no fixed frame-rate limit. The test
 interleaves twelve network retries per composition over 120 frames and checks
 that no unrequested extra composition begins, plus cancellation recovery.
-Physical retesting is required to establish whether this fully resolves the
-observed handshake failures. EMOS and browser assets are unchanged. Standing
+The subsequent hardware retest below confirms successful admission and ExCom
+entry, while typing latency remains open. EMOS and browser assets are unchanged. Standing
 identity/deployment authorization selects candidate r07 and registry r57.
 
 The Author raised dedicating a P4 core to critical UART/USB/command work. This
@@ -144,6 +145,64 @@ remains an architectural option, not an accepted assignment: first complete the
 bounded request correction, then use task-runtime and latency measurements to
 judge core placement and rendering cost. Core assignment cannot by itself fix
 duplicate work or cross-task waits.
+
+
+Candidate `uart-excom-console-r07-b2026-09-10-06-31-58Z` from clean `52479f0`
+is now installed and independently verified. Deployment evidence is
+[PORT-003-2026-09-10-06-32-58Z](../../hardware/designs/light2-harness-r03/tests/PORT-003-2026-09-10-06-32-58Z/README.md).
+USB/HTTP startup and 104 real RGB222 browser presentations including a continuous
+20-second credit interval pass. Periodic diagnostic output retained its normal
+cadence in that bounded check. The agent browser closed before the Author-operated keyboard admission and
+manual ExCom retest with browser video connected, recorded below.
+
+
+**Functional recovery confirmed; typing latency open:** the Author reports
+successful manual ExCom entry and slideshow on Extender. The completed
+[PORT-003-2026-09-10-06-33-58Z](../../hardware/designs/light2-harness-r03/tests/PORT-003-2026-09-10-06-33-58Z/README.md)
+record shows keyboard admission, accepted PREPARE/COMMIT/LEAVE, one P4 startup
+and no panic, UART blockage or USB fault. Periodic diagnostics retained their
+normal cadence. One socket-send failure occurred at the agent's deliberate
+browser closure before the operator's test; no further failure was recorded.
+Capture is stopped and preserved. No further firmware/SD/reset operation.
+
+The Author also reports very laggy refresh while typing. This functional PASS
+does not close responsiveness or RGB-4's remaining performance/uptime checks.
+The next proposed bounded investigation measures USB reception, UART delivery
+to EMOS, returned VDU bytes, P4 rendering/snapshot readiness and browser
+presentation. Use correlated intervals to distinguish input and output delay
+before changing task priority/core assignments. No new instrumentation or
+core-assignment implementation is authorized by recording that proposal alone.
+
+### Partially working checkpoint — 2026-09-10
+
+The Author requests preserving the current state, with the functional recovery
+above accepted only within its stated scope. The later Nurples run was very
+laggy on EDP, with rapid-fire laser bolts closer together than on mainboard
+VDP. This is a subsequent operator observation, not part of the earlier serial
+capture or a measured throughput result. Typing responsiveness and gameplay
+performance remain unresolved; the earlier successful Nurples milestone does
+not qualify this newer P4 candidate's performance.
+
+A read-only scan of the deployed Nurples repair lineage (`4a52199`, no assembly
+source differences in the inspected checkout) found that `player_laser.inc`
+uses a MOS-clock cooldown of 12 clock units, fixed movement of four pixels per
+game update, and one recharge unit per six updates. `timer.inc` samples MOS
+time; `vdu.inc` waits for that clock to change rather than requesting EDP
+render completion. Fewer game updates between elapsed-time shot deadlines
+could therefore explain compressed bolt spacing. This is a timing clue, not
+proof of the bottleneck. Continuous fire reads the held-key map.
+
+The EMOS source scan found synchronous byte transmission, per-byte deadline
+and interrupt bookkeeping, and waits when P4 pauses reception through CTS.
+P4 backpressure and EMOS execution overhead remain alternative or contributing
+causes; no trace measures their cost yet. No Nurples or firmware source,
+hardware state, or SD contents changed during this investigation.
+
+The Author places a stock-MOS reuse audit before further instrumentation or
+core assignment. Review the smallest EMOS routing/ownership changes that can
+retain proven stock implementation; do not assume C itself proves a defect or
+remove necessary compatibility, flow-control, lifecycle or recovery behavior.
+The audit plan is the next review, not authorization to implement repairs.
 
 ## State
 

@@ -1,0 +1,31 @@
+schema_version: 1
+run_id: PORT-003-2026-09-10-06-33-58Z
+outcome: pass
+scope: Bounded functional keyboard admission, ExCom entry and slideshow rendering;
+  typing latency remains open, no performance qualification.
+build_id: uart-excom-console-r07-b2026-09-10-06-31-58Z
+source_commit: 52479f0ae9653e293031a1eed1b65f0cec9695cd
+emos_identity: agon-emos-v0.1.12-b2026-09-10-03-50-35Z
+duration_seconds: 411.131
+operator_observations:
+  manual_excom: worked
+  slideshow_on_extender: worked
+  typing_refresh: very laggy; input versus display latency unresolved
+p4_observations:
+  native_keyboard_admitted: true
+  accepted_control_operations:
+  - 1
+  - 2
+  - 3
+  application_startups: 1
+  panic_or_uart_or_usb_faults: 0
+  maximum_periodic_diagnostic_interval_ms: 10009
+  socket_send_failures: 1
+  socket_failure_context: At deliberate agent browser closure around 44.3 seconds,
+    before operator reconnect at 278.7 seconds; counter did not rise again.
+limits:
+- No timestamped end-to-end key trace, workload-specific frame-rate benchmark, or
+  long-run qualification.
+- P4 accepted LEAVE; user explicitly confirmed entry and slideshow only.
+raw_serial_sha256: f53d849d653e37946dbdc1c3b2ffbafc389f28cbbbf5f9c139e53d2075e386a0
+capture_script_sha256: 441e4385d1419050f5d79517ea40e6b418771a52883d30a91eafc7b33c290078
