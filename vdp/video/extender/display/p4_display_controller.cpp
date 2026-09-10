@@ -83,7 +83,7 @@ Allocator defaultSnapshotAllocator() noexcept {
 
 P4DisplayController::P4DisplayController(
     Allocator allocator, Allocator snapshot_allocator) noexcept
-    : storage_(allocator), palettes_(allocator), snapshots_(snapshot_allocator, SnapshotPixelFormat::RGB222) {}
+    : storage_(allocator), palettes_(allocator), snapshots_(snapshot_allocator, SnapshotPixelFormat::RGB222, 0, true) {}
 
 ConfigureResult P4DisplayController::configure(ModeDescriptor const &mode) noexcept {
   if (frame_service_running_.load(std::memory_order_acquire)) {

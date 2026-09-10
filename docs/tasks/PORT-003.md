@@ -68,6 +68,20 @@ SD autoexec select `EMOS KEYINPUT extender` and then `CD /mystuff/slideshow/64`;
 selection must remain automatic. Mode selection and application launch remain
 operator actions. No Agon reset is authorized here.
 
+### Deployment startup correction
+
+The r05 candidate flashed and independently verified, and native USB input
+enumerated. However, the HTTP endpoint refused connections after DHCP. Source
+inspection identified unrequested full-frame composition on every tick in the
+high-priority frame task as a starvation risk exposed by removing the throttle.
+The r06 correction admits snapshots only when a consumer needs a fresh frame;
+logical VDP work continues independently and no fixed fps cap returns.
+Browser decoder/UI bytes remain exactly those accepted by the Author. Added
+regressions for 120 idle ticks with no composition and 120 successive 60 Hz
+consumer requests. The deployment is not a physical graphics/performance PASS.
+The Author's flashing and standing identity authorization cover this P4-only
+startup correction, selected as candidate r06 with registry r56.
+
 ## State
 
 - Status: In progress — Gate F accepted; Work 2.a source findings are recorded

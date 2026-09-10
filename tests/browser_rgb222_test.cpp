@@ -59,5 +59,27 @@ int main() {
     assert(latest.view().segments[1].data[i] == (i + 119) % 64);
   latest.release(n::OpaqueReleaseDisposition::Sent);
   assert(provider.tryAcquireAfter(120, latest) == n::OpaqueAcquireResult::NoNewMessage);
-  std::cout << "PASS: RGB222 all colours, exact EVF1 bytes, 60 Hz publication, immutable slow-client lease and latest selection\n";
+  // Production demand path: idle startup does no expensive composition.
+  d::PresentationSnapshotPool demand({nullptr, allocate, deallocate},
+                                    d::SnapshotPixelFormat::RGB222, 0, true);
+  w::BrowserVideoProvider requested(demand);
+  d::MutableSnapshotView destination{};
+  for (unsigned tick = 1; tick <= 120; ++tick)
+    assert(demand.tryBegin(8, 8, tick * 16667ULL, destination) ==
+           d::SnapshotBeginResult::NotRequested);
+  for (unsigned tick = 121; tick <= 240; ++tick) {
+    n::OpaqueMessageLease frame;
+    const auto previous = tick - 121;
+    assert(requested.tryAcquireAfter(previous, frame) == n::OpaqueAcquireResult::NoNewMessage);
+    assert(demand.tryBegin(8, 8, tick * 16667ULL, destination) == d::SnapshotBeginResult::Ok);
+    for (unsigned i = 0; i < 64; ++i) destination.pixels[i] = {255, 0, 0};
+    assert(demand.finish(d::CompositionResult::Ok, 16667) == d::SnapshotFinishResult::Published);
+    assert(requested.tryAcquireAfter(previous, frame) == n::OpaqueAcquireResult::Acquired);
+    assert(frame.view().token == previous + 1);
+    assert(demand.tryBegin(8, 8, tick * 16667ULL + 1, destination) ==
+           d::SnapshotBeginResult::NotRequested);
+    frame.release(n::OpaqueReleaseDisposition::Sent);
+  }
+  assert(demand.metrics().publications == 120 && demand.metrics().cadence_skips == 0);
+  std::cout << "PASS: RGB222 all colours, exact EVF1 bytes, 60 Hz publication with bounded demand, immutable slow-client lease and latest selection\n";
 }

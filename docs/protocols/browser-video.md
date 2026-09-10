@@ -52,7 +52,7 @@ and payload is no larger than 2,359,296 bytes. It rejects unknown formats,
 unknown header flags, missing full-frame indication, invalid dimensions,
 reserved header data, truncation and trailing bytes.
 
-The r05 console producer selects RGB222. The updated browser also accepts
+The r06 console producer selects RGB222. The updated browser also accepts
 older RGB888 frames. Earlier browser code rejects RGB222; reload the page
 from the updated P4 after deployment. Assets are served with `Cache-Control:
 no-store`. The header layout and version stay unchanged; pixel format 2 is
@@ -64,8 +64,11 @@ the same 32-byte header. Packing is lossless for the existing P4 compositor's
 
 ## Pacing and bounded delivery
 
-P4 snapshots may be produced at each logical frame boundary. The active console
-has no fixed 200 ms interval. Logical frame timing and VDU execution do not
+P4 snapshots are admitted by browser demand and may be produced at each logical
+frame boundary. The active console has no fixed 200 ms interval. A consumer
+request with no fresh snapshot schedules composition; an idle or stalled browser
+does not cause continuous full-surface work. The frame service still progresses
+without requests. Logical frame timing and VDU execution do not
 wait for browser presentation or a socket send.
 
 PORT-006 transports opaque bytes for one video client. The browser sends the

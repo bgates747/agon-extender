@@ -51,8 +51,9 @@ void PresentationSnapshotLease::release() noexcept {
 
 PresentationSnapshotPool::PresentationSnapshotPool(
     Allocator allocator, SnapshotPixelFormat format,
-    std::uint64_t minimum_interval_us) noexcept
-    : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us) {
+    std::uint64_t minimum_interval_us, bool on_demand) noexcept
+    : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us),
+      on_demand_(on_demand) {
   transition_lock_.clear(std::memory_order_release);
   if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr) {
     increment(allocation_failures_);
@@ -179,6 +180,12 @@ SnapshotBeginResult PresentationSnapshotPool::tryBegin(
               kPresentationSnapshotBytesPerPixel) {
     return SnapshotBeginResult::InvalidDimensions;
   }
+  // An unthrottled high-priority frame task must not continuously compose
+  // full surfaces with no browser demand. That starved HTTP startup in r05.
+  // Consumer demand admits one snapshot at a logical boundary; no fixed fps
+  // cap or network wait is introduced into logical VDP work.
+  if (on_demand_ && !requested_.load(std::memory_order_acquire))
+    return SnapshotBeginResult::NotRequested;
   if (has_publication_time_ &&
       boundary_time_us - last_publication_time_us_ <
           minimum_interval_us_) {
@@ -195,6 +202,7 @@ SnapshotBeginResult PresentationSnapshotPool::tryBegin(
     increment(producer_no_slot_);
     return SnapshotBeginResult::NoFreeSlot;
   }
+  requested_.store(false, std::memory_order_release);
   auto &slot = slots_[static_cast<std::size_t>(free_slot)];
   slot.state = SlotState::Producer;
   slot.width = width;
@@ -262,6 +270,7 @@ bool PresentationSnapshotPool::tryAcquireLatest(
   int latest = findLocked(SlotState::Latest);
   if (latest < 0 ||
       slots_[static_cast<std::size_t>(latest)].generation <= last_generation) {
+    requested_.store(true, std::memory_order_release);
     unlock();
     increment(consumer_no_new_);
     return false;

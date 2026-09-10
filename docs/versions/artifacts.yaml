@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r55
+registry_revision: r56
 updated_at: 2026-09-10T03:49:16Z
 
 artifacts:
@@ -402,11 +402,12 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r05
+    latest_identity: uart-excom-console-r06
     status: candidate
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r06 corrects r05 deployment startup starvation by composing RGB222 snapshots only on consumer demand; no fixed fps cap. Browser pixels/UI are unchanged from the accepted review. Author flashing and standing identity authorization apply; physical follow-up remains pending.
       - Author accepted the RGB222 local visual review and authorized P4 deployment on 2026-09-10; registry r55 promotes the unchanged r05 source identity to candidate under standing preapproval.
       - r05 adds RGB222 browser video and removes the fixed snapshot throttle under Author standing identity preapproval; draft for local review, no hardware deployment authorized during the uptime test.
       - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.

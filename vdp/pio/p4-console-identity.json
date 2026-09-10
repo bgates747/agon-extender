@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r05",
+  "source_identity": "uart-excom-console-r06",
   "status": "candidate",
-  "note": "Author accepted local RGB222 visual review and authorized P4 flashing on 2026-09-10; existing EMOS unchanged. Physical throughput and stability remain pending."
+  "note": "Deployment follow-up under Author flashing and standing identity authorization: RGB222 snapshots follow browser demand to prevent unrequested composition starving startup. Browser decoding unchanged from accepted review."
 }
