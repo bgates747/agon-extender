@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r01",
+  "source_identity": "uart-excom-console-r02",
   "status": "candidate",
-  "note": "Author accepted mainboard emulator review and requested freeze/continue; physical console and native-reference rendering checks remain open."
+  "note": "Author-directed video-only rollback; browser input/timing retired, USB and EMOS unchanged. Standing identity/deployment preapproval applies; ExCom hardware activation remains unresolved."
 }

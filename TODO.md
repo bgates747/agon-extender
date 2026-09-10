@@ -18,7 +18,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: ExCom CLI/VDU routing and Legacy return frozen; clean candidate builds, software checks and Author mainboard visual review pass. Deployment files are prepared locally; paired hardware proof awaits the Author finishing current bench testing. P4 combines the retained parser/display with native USB input. Existing UART/keyboard proofs remain accepted; r02/parallel work stays on hold.
+  - Status: Legacy USB input passes; first hardware ExCom entry failed and retained Legacy. At the Author's request, restore video-only browser/service behavior in console r02 before further functionality. Host/browser checks pass; P4 build and physical retry follow. ExCom activation remains unresolved. The r02 hardware/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
@@ -40,6 +40,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**
   - Started: 2026-08-27 19:13 EDT
   - Finished: --
+  - Status: Restore video-only browser service for the ExCom retry; browser capture/timing are retired. Network resilience work remains open.
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 
 ## Deferred keyboard refinements

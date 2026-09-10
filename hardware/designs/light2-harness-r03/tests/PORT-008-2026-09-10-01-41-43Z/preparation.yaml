@@ -1,0 +1,19 @@
+run_id: PORT-008-2026-09-10-01-41-43Z
+build_id: agon-emos-v0.1.11-b2026-09-10-01-22-40Z
+firmware_sha256: 2198f97ac3d1cf0b60b9948abe8af2333c0263e649976d53d1413c7873728a36
+installed_result: Author reports successful flash; consumed SD payload verified
+files:
+  bin/EMBOOT.BIN:
+    sha256: d9875c10f8cc33b89c0bd71c0ea501c1f6a872c3c0488ff4eae9baf8b7c05129
+    size_bytes: 1784
+  emos-boot/check.txt:
+    sha256: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+    size_bytes: 15
+  autoexec.txt:
+    sha256: 999c171c61aee86b179f2d9a29211d69cc95f96d8a1b5490cb3fb90f1dd1f174
+    size_bytes: 77
+physical_excom_test: pending
+sd_preparation: Same-build boot smoke, layout 1 and extender input autoexec; safely
+  unmounted
+p4_build_id: uart-excom-console-r01-b2026-09-10-01-22-40Z
+private_receipt_sha256: 0181a3e0bbe59123aa6cbf049969a0f689522ad82e379e558212294848209caf

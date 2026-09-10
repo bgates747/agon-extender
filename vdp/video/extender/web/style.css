@@ -97,5 +97,3 @@ dd { margin: 0; font-variant-numeric: tabular-nums; }
 @media (max-width: 650px) {
   .stats { grid-template-columns: 1fr 1fr; }
 }
-
-#screen.keyboard-focus { outline: 2px solid #83b5ee; outline-offset: -2px; }

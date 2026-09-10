@@ -1,6 +1,6 @@
 {
   "artifact_id": "browser-keyboard-probe",
   "source_identity": "browser-keyboard-probe-r04",
-  "status": "candidate",
-  "note": "Standing version preapproval: initialize diagnostic session in the IDF WebSocket post-handshake callback; existing wire/timeout/EMOS behavior unchanged."
+  "status": "deprecated",
+  "note": "Author retired browser keyboard capture; previous candidate evidence remains at recorded historical commits."
 }

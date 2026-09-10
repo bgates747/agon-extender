@@ -6,12 +6,13 @@
   pass controlled hardware checks; native USB ordinary CLI and gameplay are
   accepted. Bounded USB reconnect, mainboard source exclusion and Agon-only
   reset readmission also pass; wider transport qualification remains open.
-  Current priority is the first ExCom console slice below, now implemented
-  as a reviewed software checkpoint; paired hardware tests remain pending. Browser input and
-  further keyboard refinements are deferred.
+  Current priority is the first ExCom console slice below. Its first physical
+  attempt passed Legacy input but failed ExCom entry. Restore the video-only
+  browser service at the Author's request, then retry with P4 stage logs.
+  Browser input is deprecated; further keyboard refinements are deferred.
   The r02 design, wiring, parallel implementation/Work 2.e recapture and full
-  circuit qualification remain on hold. No hardware operation is started by
-  this progress update.
+  circuit qualification remain on hold. The ExCom P4 candidate is deployed and
+  the Author confirms EMOS installation; non-flashing test startup is ready.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
@@ -162,6 +163,48 @@ v0.1.10/USB CLI rollback images are prepared locally. Full manifests and the
 handoff remain in ignored `agents/excom/`. No SD, Pi staging, serial, flash,
 reset or power operation accompanied this preparation. Continue with paired
 deployment when the Author returns the bench and SD.
+
+### Candidate deployment started — 2026-09-09
+
+The Author returned the SD and both powered boards and authorized proceeding.
+P4 deployment `PORT-008-2026-09-10-01-36-43Z` passes independent flash
+verification, exact candidate startup and PERIBOARD-409 enumeration. Evidence
+is beside r03 in `tests/PORT-008-2026-09-10-01-36-43Z/`.
+The guarded EMOS v0.1.11 installer is staged and the SD safely unmounted;
+v0.1.10 and the earlier rollback images are preserved. Await the Author's Agon
+flash result and SD return before restoring the non-flashing startup. No Agon
+reset or installation was performed by the agent; paired ExCom/Legacy console
+behavior and N001's physical display check remain pending.
+
+The Author subsequently reported successful EMOS installation. The returned
+SD's consumed candidate and rollback hashes verify. Preparation
+`PORT-008-2026-09-10-01-41-43Z` restores matching boot smoke and the procedure's
+non-flashing autoexec; the card is safely unmounted. P4 remains running, with
+no new serial/reset/flash operation. The paired ordinary-console observations
+are now ready for the Author; physical ExCom PASS remains pending.
+
+### First hardware attempt and video-only rollback — 2026-09-09
+
+The Author confirms ordinary Legacy USB input passes. EMOS EXCOM fails with
+`display switch failed; current route retained` / `EMOS backend unavailable`
+and returns to the mainboard prompt. Browser video appeared disconnected and
+showed deprecated keyboard release controls. The original P4 HTTP assets
+confirm the controls and instrumented JavaScript were still being served.
+The design-adjacent `uart-excom-console-r01-observation.md` records this
+informative failure without claiming a common root cause.
+
+At the Author's request, restore video-only web assets from `a53dffd`, remove
+shared keyboard/timing endpoints and snapshot instrumentation, and retire the
+old browser-input composition. Retain F003/F012 network correctness fixes with
+the earlier five-second socket waits. Standing preapproval supplies
+uart-excom-console-r02 and registry r50; EMOS v0.1.11, the USB input code and
+the ExCom activation implementation remain unchanged. The r02 sheet first
+checks the restored video connection, then repeats the console test.
+
+N002: ExCom activation failure remains open. Inspect actual P4 control-stage
+logs on a subsequent controlled attempt; the earlier emulator peer did not
+execute ESP-IDF or the actual P4 display-mode transition. Do not claim the
+browser rollback fixes activation. N001 reference rendering also remains open.
 
 #### N001 — Native reference glyph omission (open)
 

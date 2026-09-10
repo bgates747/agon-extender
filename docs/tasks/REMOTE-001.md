@@ -2,11 +2,24 @@
 
 ## State
 
-- Status: Deferred by Author, 2026-09-09, in favor of selectable mainboard/Extender USB keyboard input. Resume only on explicit reprioritization. Retain the stale-time lease defect, video stalls, latency findings and wider qualification work.
+- Status: Browser-input implementation deprecated by Author, 2026-09-09;
+  future input work remains deferred in favor of selectable mainboard/Extender
+  USB keyboard input. Active browser and network service are video-only.
+  Resume only on explicit reprioritization. Retain the stale-time lease defect,
+  video stalls, latency findings and wider qualification work.
 - Started: 2026-09-08 (scope reconciliation); implementation 2026-09-09.
 - Finished: --
 
 ## Retained browser increment — deferred
+
+After the first ExCom hardware attempt, the Author explicitly requested rolling
+back browser keyboard/release behavior before adding functionality. The shared
+page, HTTP service and snapshot pool no longer carry this experiment. The
+`p4-browser-typing` composition is retired and blocks new builds; historical
+candidate `1ce96dc` retains the measured implementation and its UI tests for
+reproduction. This does not repair or close I001/I002. The current video-only
+rollback is tracked under PORT-008/PORT-006; the requirements below describe
+the deferred input path rather than active product behavior.
 
 The earlier increment selected keyboard capture while the browser display has
 focus. It is no longer the immediate input goal. Browser events travel through the existing P4 network

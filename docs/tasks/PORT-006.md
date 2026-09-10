@@ -2,14 +2,30 @@
 
 ## State
 
-- Status: Bounded browser keyboard transport implemented for review, 2026-09-09. Earlier browser-video bench path accepted; initial-tranche resilience
-  item 6 remains open.
+- Status: Video-only service restored at the Author's request, 2026-09-09.
+  Browser keyboard capture is deprecated. Initial-tranche resilience and the
+  current ExCom browser connection check remain open.
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
 
-## Current priority — focused keyboard transport
+## Current priority — restore video-only service
 
-The next tranche supports REMOTE-001's browser keyboard session over existing
+The Author requested removal of browser keyboard/release behavior after the
+first ExCom hardware attempt. Restore the page to pre-input commit `a53dffd`,
+remove keyboard/timing HTTP routes and callbacks, and remove shared snapshot
+instrumentation. The existing native USB input path is independent and remains.
+Keep F003 complete-or-error sends and F012 live-handle containment; restore
+the pre-input ESP-IDF default five-second socket waits instead of the
+experiment's one-second limits. No activation repair is inferred from this
+network rollback. PORT-008's r02 procedure owns the immediate physical check.
+
+The browser-input composition is retired through its existing source-selection
+guard. Its builds, findings and old UI tests remain reproducible at the
+recorded historical commits. Resume input work only on Author reprioritization.
+
+## Historical focused-keyboard tranche — deprecated
+
+The earlier tranche supported REMOTE-001's browser keyboard session over existing
 wired networking. The bounded endpoint and failure containment are implemented
 and host-tested; human review and physical typing remain pending. Keep P4 UART keyboard packets stock-compatible: network event/session
 encoding terminates on P4 and is not copied as a new UART envelope.
@@ -31,8 +47,8 @@ encoding terminates on P4 and is not copied as a new UART envelope.
    F003/F012 containment. The earlier video tranche remains evidence, not a
    proof that a writable input endpoint is already authorized or implemented.
 
-The full network/update roadmap below remains later work. This keyboard slice
-has priority over its unrelated services.
+The full network/update roadmap below remains later work. The keyboard items
+above are historical requirements, not the current implementation priority.
 
 ## Intent
 

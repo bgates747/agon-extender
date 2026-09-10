@@ -79,5 +79,7 @@
     "video/hexload.h",
     "video/ymodem.h",
     "video/zdi.h"
-  ]
+  ],
+  "retired": true,
+  "retirement_reason": "Author deprecated browser keyboard capture; active web assets and network service are video-only. Historical experiment and evidence remain in the earlier commits."
 }

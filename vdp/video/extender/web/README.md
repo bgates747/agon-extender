@@ -4,6 +4,14 @@ These project-owned assets implement the primary EDP video presentation path.
 EDP/P4 serves them directly from firmware through PORT-006; no Pi, filesystem,
 or external web server is a product runtime dependency.
 
+The Author retired browser keyboard capture on 2026-09-09. The active page is
+restored byte-for-byte from the pre-input video baseline (`a53dffd`): video
+connection, frame statistics and the local test pattern only. Keyboard input
+comes from the separately selected mainboard or P4 USB device. The shared HTTP
+service provides no keyboard or timing endpoint. Earlier browser-input source
+and UI tests remain reproducible at their recorded Git commits; REMOTE-001
+retains the evidence and unresolved findings.
+
 The current first-tranche firmware serves plain HTTP and WebSocket only on the
 trusted bench LAN. Open `http://<observed-dhcp-address>/`; `https://` is not
 implemented. TLS, authentication, and wider network exposure remain explicitly

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r49
-updated_at: 2026-09-10T01:22:21Z
+registry_revision: r50
+updated_at: 2026-09-10T01:55:37Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -366,10 +366,11 @@ artifacts:
     kind: test_fixture
     identity_scheme: revision
     latest_identity: browser-keyboard-probe-r04
-    status: candidate
+    status: deprecated
     variants: []
     description: Focused browser typing through resident EMOS and retained P4 rendering.
     notes:
+      - Author retired browser keyboard capture on 2026-09-09; source selection blocks new builds, and active browser/network assets return to video-only. Historical builds and findings retain their recorded identities.
       - Author preapproved versioning for this increment on 2026-09-09.
       - r04 corrects diagnostic WebSocket session initialization and retains the r03 off-stack export buffer; it uses the unchanged r01 SD sample and EMOS v0.1.9.
       - r01 typing/editing and reconnect work; r04 measures unresolved latency and socket closure before repair.
@@ -400,10 +401,11 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r01
+    latest_identity: uart-excom-console-r02
     status: candidate
     variants: []
     description: Paired idle-CLI Legacy/ExCom UART console with native USB input and retained EDP browser video.
     notes:
       - Author standing identity preapproval applies; PORT-008-D005 authorizes switching without restart.
-      - Author accepted mainboard graphical review and requested freeze/continue; candidate status under standing version preapproval, with no physical or full compatibility claim.
+      - r02 restores the pre-keyboard video page and removes browser input/timing from the shared service; retains complete-write and failed-stop containment with baseline five-second socket timeouts. EMOS v0.1.11 and native USB are unchanged.
+      - r01 physical Legacy USB input passes, but ExCom activation failed and retained Legacy. The rollback does not claim that separate defect is fixed.

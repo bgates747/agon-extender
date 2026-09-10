@@ -16,6 +16,9 @@ from prepare_visible_text import ROOT, git, sha, snapshot, verify_embedded_ident
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
+    selection = json.loads((ROOT/'vdp/pio/p4-browser-typing-source-selection.json').read_text())
+    if selection.get('retired'):
+        parser.error('Browser keyboard capture is retired; see docs/tasks/REMOTE-001.md. Use the recorded historical commit to reproduce earlier evidence.')
     parser.add_argument('--output', required=True, type=Path)
     args = parser.parse_args()
     output = args.output.absolute()
