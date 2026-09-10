@@ -56,7 +56,7 @@ measure, not the diagnosed cause of the game regression.
    record any dropped or inconsistent observations explicitly. Do not log,
    allocate, write storage or perform network I/O in these measured paths.
    Compile instrumentation only into the selected diagnostic console.
-2. [ ] **W2 — Validate and prepare the identified image.** Use deterministic
+2. [x] **W2 — Validate and prepare the identified image.** Use deterministic
    clock tests for interval arithmetic, in-flight states, wrap, history and
    recorder contention/loss. Run the affected frame/controller/snapshot checks
    and compile the real P4 console. Preserve prior evidence. Reuse the existing
@@ -64,7 +64,7 @@ measure, not the diagnosed cause of the game regression.
    approval covers console r09 and registry r65; the new task owns its host
    recorder directly, without inventing another firmware or fixture lineage.
    Freeze deployable inputs and retain exact manifest/image hashes.
-3. [ ] **W3 — Deploy diagnostics and prepare reproduction.** The Author's
+3. [x] **W3 — Deploy diagnostics and prepare reproduction.** The Author's
    instruction to proceed without further prompting authorizes this bounded
    P4 diagnostic deployment after the checks above. Verify stable device
    identity, image readback and startup with the established private bench
@@ -108,6 +108,22 @@ Review caught the need for a seventh HTTP route slot before deployment. The
 selected console now supplies it while other builds keep their existing count.
 The aggregate version validator remains blocked by the pre-existing held-r02
 connectivity hash mismatch; this task does not alter that hardware design.
-Candidate inputs are frozen before the final identified build. W3/W4 still
-require verified deployment and the operator's physical game reproduction;
-these local checks are not a gameplay result.
+Candidate inputs were frozen in `cfae7d7`; the final identified build and W3
+deployment now pass. W4 still requires the operator's physical game reproduction;
+these checks are not a gameplay result.
+
+
+## Hardware test ready
+
+[Deployment receipt summary](AUDIT-006/deployment.json) binds the clean candidate
+build to independent flash readback, native USB and HTTP startup, and a valid
+read-only timing response. Serial is closed. Both prior rollback bundles remain.
+The local host recorder also passed a complete replay run with sampling, a marker,
+operator finish and verified output hashes; that run is not hardware evidence.
+
+SD autoexec now selects mode 3, enables Extender keyboard and changes into the
+existing Nurples directory. The prior autoexec is backed up; every Nurples and
+benchmark file checked before/after is unchanged, and the card is safely
+unmounted. The private launcher is `agents/run-frame-timing`, with exact local
+binding and evidence under `agents/audit-006/`. W4 is ready for one manual run;
+no new flash, reboot of P4 or game change is needed. W5 remains unperformed.

@@ -1,0 +1,32 @@
+{
+  "at": "2026-09-10T23:24:34.311502+00:00",
+  "build": {
+    "artifact_id": "uart-excom-console",
+    "source_identity": "uart-excom-console-r09",
+    "build_id": "uart-excom-console-r09-b2026-09-10-23-19-51Z",
+    "status": "candidate",
+    "created_at": "2026-09-10T23:19:51.122457+00:00"
+  },
+  "source_commit": "cfae7d787079ec54c04a691d1d156d577029e9e2",
+  "source_dirty": false,
+  "factory_sha256": "5c34449adf7369e6b9eddc554f39f586b2f61ca802946a60a9c1614445fbd2ec",
+  "build_manifest_sha256": "c77a9314beeff40efa3c24bc80fa333a079b9cb6f2c6f580fc53de595060dadb",
+  "deployment_run": "AUDIT-006-2026-09-10-23-21-10Z",
+  "deployment_receipt_sha256": "4e74710078545d8eca978e50ddf8773cfb2a9e628223fb80095b7317dc692624",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "http_service_startup_observed": true,
+  "timing_endpoint_schema": 1,
+  "serial_closed": true,
+  "emos_build_unchanged": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "nurples_sha256_unchanged": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088",
+  "sd_autoexec": [
+    "VDU 22 3",
+    "EMOS KEYINPUT extender",
+    "CD /mystuff/nurples"
+  ],
+  "sd_safely_unmounted": true,
+  "host_collector_smoke": "PASS: local HTTP replay, samples/marker/finish/checksums; not gameplay evidence",
+  "physical_reproduction": "pending operator",
+  "scope": "diagnostic deployment and readiness only; no hang cause or game improvement claimed"
+}
