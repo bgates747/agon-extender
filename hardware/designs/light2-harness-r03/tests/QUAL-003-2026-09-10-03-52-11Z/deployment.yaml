@@ -1,0 +1,17 @@
+run_id: QUAL-003-2026-09-10-03-52-11Z
+build_id: uart-excom-console-r04-b2026-09-10-03-50-36Z
+factory_sha256: 09b2ff6f80b8b17d0b0519ed62d01adcd3594d0a19b704db96f7b3f62b47b959
+write_verified: true
+usb_host_startup_observed: true
+physical_paired_graphics: pending
+source_commit: 79437899f7fbd0a83db3e17ec41a35188d34e020
+source_clean: true
+keyboard_enumerated: Perixx PERIBOARD-409; VID 04d9 PID a088; boot interface
+emos: v0.1.12 candidate staged on SD; hardware installation pending
+private_log_sha256:
+  boot.log: 860bc056b256493e249d2af1676a6ac18b52de918f4f9a775ef09ea0011b6353
+  deployment.json: d128d2265d9b1fc5ab7773e19ed6ac256f6adc5a687ddfc2852e503f14e747be
+  verify-command.json: e98e5902dc66dc19b989704fdfa5d4c2d5e575979999aaac85f62ec48547fbc1
+  verify.log: b256a135ff574c0b5e4b9d104e6808f90f191814eb646515b3498b470d27a161
+  write-command.json: dcf694f0f3c07e3bb97a2dbf66110678d8411ab8181c7ca48b190361995857ae
+  write.log: 69fbcb247aec2caff81355ea3b96d016e98c3cdb60f2cbb563c1f264be29e816

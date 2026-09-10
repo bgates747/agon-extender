@@ -2,7 +2,7 @@
 
 ## State and scope
 
-Status: Visual review accepted; hardware deployment authorized. Author requested paired graphics fixtures after accepted
+Status: P4 candidate deployed; Agon installer staged, awaiting Author flash confirmation. Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
 with one keypress pause after the pair. Native P4 USB remains the input source.
@@ -163,3 +163,18 @@ still reports the pre-existing r02 connectivity hash mismatch; both affected
 r02 files are byte-identical to HEAD and that held design is not used by this
 r03 UART comparison. No r02 evidence or hardware definition was changed to
 satisfy an unrelated gate.
+
+## Physical deployment handover — 2026-09-09
+
+Clean candidate builds passed from EMOS `82929c4` and Extender `7943789`.
+EMOS v0.1.12 is 130219 bytes (853 bytes below 128 KiB). P4 console r04 passed
+flash/readback verification, exact candidate identity, USB keyboard enumeration
+and browser-service startup. The [deployment record](../../hardware/designs/light2-harness-r03/tests/QUAL-003-2026-09-10-03-52-11Z/README.md)
+contains the observed result and artifact hashes.
+
+The SD contains both candidate graphics programs, their runtime assets and the
+matching boot smoke. Its active autoexec remains the one-shot MOS installer;
+the working v0.1.11 image is preserved as rollback. The card was safely
+unmounted. Next the Author inserts it, resets Agon, confirms the flash and
+remounts it locally; replace the installer with the test-sheet startup then.
+Physical paired rendering, CLI return and repeat checks remain pending.

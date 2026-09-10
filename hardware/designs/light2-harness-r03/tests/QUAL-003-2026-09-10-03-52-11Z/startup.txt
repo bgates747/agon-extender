@@ -1,0 +1,8 @@
+I (1739) extender_identity: source_identity=uart-excom-console-r04
+I (1739) extender_identity: build_id=uart-excom-console-r04-b2026-09-10-03-50-36Z
+I (1740) extender_identity: artifact_status=candidate
+USB HOST READY: attach one boot keyboard
+ExCom console uart-excom-console-r04-b2026-09-10-03-50-36Z (candidate), UART1 1152000 8N1 RTS/CTS
+USB CONNECTED #1 vid=04d9 pid=a088 address=1 interface=0
+USB KEYBOARD READY
+I (5486) extender_net: HTTP browser service ready

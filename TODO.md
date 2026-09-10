@@ -17,7 +17,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: Full paired emulator review accepted; candidate freeze and hardware deployment authorized. Compare mainboard-first/EDP-second images through EMOS while retaining native USB input.
+  - Status: Paired candidates frozen; P4 flashed and verified, Agon installer and graphics files staged. Await Agon flash confirmation, then activate the paired hardware comparison with native USB input.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
