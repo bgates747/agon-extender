@@ -151,6 +151,18 @@ committed inputs and prepare the installer/rollback and P4 package locally.
 The Author is using the installed pair and SD; actual staging/flashing and
 physical observations remain pending. N001 is not accepted as a P4 exception.
 
+Candidate preparation completed from clean Extender `17ece3d` and EMOS
+`78bec86`: `uart-excom-console-r01-b2026-09-10-01-22-40Z` and
+`agon-emos-v0.1.11-b2026-09-10-01-22-40Z`. The EMOS qualification wrapper,
+linked guards, runtime/boot checks and P4 build pass. The candidate EMOS also
+passes the existing paired and withheld-activation control/stream/prompt
+checks; native reference pixels remain outside those assertions. The guarded
+installer, repeatable startup payload, P4 deployment package and verified
+v0.1.10/USB CLI rollback images are prepared locally. Full manifests and the
+handoff remain in ignored `agents/excom/`. No SD, Pi staging, serial, flash,
+reset or power operation accompanied this preparation. Continue with paired
+deployment when the Author returns the bench and SD.
+
 #### N001 — Native reference glyph omission (open)
 
 The native VDP library used by the isolated review intermittently omits glyphs
