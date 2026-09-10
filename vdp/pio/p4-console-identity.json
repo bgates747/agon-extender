@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
   "source_identity": "uart-excom-console-r01",
-  "status": "draft",
-  "note": "Standing Author version preapproval; PORT-008 idle-console increment. Review pending."
+  "status": "candidate",
+  "note": "Author accepted mainboard emulator review and requested freeze/continue; physical console and native-reference rendering checks remain open."
 }

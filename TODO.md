@@ -18,7 +18,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: Draft ExCom CLI/VDU routing and Legacy return implemented; software checks and Author mainboard visual review pass; candidate preparation and paired hardware proof pending. P4 combines the retained parser/display with native USB input. Existing UART/keyboard proofs remain accepted; r02/parallel work stays on hold.
+  - Status: Draft ExCom CLI/VDU routing and Legacy return implemented; software checks and Author mainboard visual review pass; candidate preparation in progress; paired hardware proof pending. P4 combines the retained parser/display with native USB input. Existing UART/keyboard proofs remain accepted; r02/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**

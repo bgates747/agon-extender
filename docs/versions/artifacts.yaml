@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r48
-updated_at: 2026-09-10T00:27:35Z
+registry_revision: r49
+updated_at: 2026-09-10T01:22:21Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -39,11 +39,12 @@ artifacts:
     kind: firmware
     identity_scheme: semantic_version
     latest_identity: agon-emos-v0.1.11
-    status: draft
+    status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author accepted the v0.1.11 mainboard graphical review and requested freeze/continue; candidate under standing version preapproval. Physical ExCom and native-reference glyph checks remain open.
       - Author accepted the native USB CLI graphical review and authorized paired deployment; v0.1.10 is candidate under standing version preapproval.
       - Author preapproved this increment's identities on 2026-09-09. Version v0.1.9 adds shared resident text and keyboard UART transactions; graphical review passed and candidate preparation uses standing preapproval; physical typing remains pending.
       - Author approved registry r39 candidate promotion after the controlled keyboard graphical proof and source freeze; physical qualification remains pending.
@@ -400,9 +401,9 @@ artifacts:
     kind: test_fixture
     identity_scheme: revision
     latest_identity: uart-excom-console-r01
-    status: draft
+    status: candidate
     variants: []
     description: Paired idle-CLI Legacy/ExCom UART console with native USB input and retained EDP browser video.
     notes:
       - Author standing identity preapproval applies; PORT-008-D005 authorizes switching without restart.
-      - EMOS v0.1.11 and this P4 composition are draft; no physical or full compatibility claim.
+      - Author accepted mainboard graphical review and requested freeze/continue; candidate status under standing version preapproval, with no physical or full compatibility claim.

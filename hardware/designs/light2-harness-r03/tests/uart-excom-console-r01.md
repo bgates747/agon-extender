@@ -1,6 +1,6 @@
 # Ordinary ExCom console — uart-excom-console-r01
 
-Draft procedure owned by [PORT-008](../../../../docs/tasks/PORT-008.md), using
+Candidate procedure owned by [PORT-008](../../../../docs/tasks/PORT-008.md), using
 r03's existing UART and native USB keyboard wiring. The [control contract](../../../../docs/protocols/excom-console.md)
 and EMOS INTEG-010 define the bounded implementation. No physical run has yet
 been performed with this composition.

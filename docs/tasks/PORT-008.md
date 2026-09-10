@@ -140,6 +140,17 @@ text/cursor/transport checks remain open. The Author retains the SD for other
 testing. Prepare locally without SD writes, serial opens, flashes or resets;
 coordinate the actual paired deployment after that testing finishes.
 
+### Candidate preparation
+
+The reviewed source is frozen in Extender `3761076` and EMOS `8e63cc4`.
+The Author's standing version preapproval and explicit freeze-and-continue
+instruction authorize candidate status for EMOS v0.1.11 and
+uart-excom-console-r01, recorded in registry r49. Only lifecycle/build identity
+changes; console behavior and procedure remain as reviewed. Build from clean
+committed inputs and prepare the installer/rollback and P4 package locally.
+The Author is using the installed pair and SD; actual staging/flashing and
+physical observations remain pending. N001 is not accepted as a P4 exception.
+
 #### N001 — Native reference glyph omission (open)
 
 The native VDP library used by the isolated review intermittently omits glyphs
