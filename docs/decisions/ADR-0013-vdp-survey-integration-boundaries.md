@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
-- Last amended: 2026-09-08
+- Last amended: 2026-09-10
 - Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-005, PORT-007, REMOTE-001
 
 ## Context
@@ -173,7 +173,10 @@ ESP32-specific `esp32/ulp.h`.
     presently select a file-browser interface. Required v1 P4 DevKit SD-card
     support is a separate project-owned capability, deferred beyond the first
     beta; future browser or network file interfaces require their own concrete
-    consumers and service decisions.
+    consumers and service decisions. On 2026-09-10 the Author confirmed that
+    EMOS must be able to read files from the P4 card. EDP owns the physical
+    card/filesystem service; EMOS requests and receives reads through its
+    owned Extender transport. PORT-007 owns this consumer's integration.
 31. Omit vdp-gl's classic-ESP32 SDSPI/SPIFFS mount, format, capacity, pin,
     host/DMA, global-watchdog, and VGA/WiFi-workaround backend from the P4
     build while retaining it in the complete vendored release. Provide no

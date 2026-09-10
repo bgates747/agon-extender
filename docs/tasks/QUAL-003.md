@@ -302,6 +302,16 @@ stock-compatible query proposal remains relevant to timing the stock mainboard
 reference; it does not replace the general EDP facility. The callback model
 requires further discussion. Benchmark and service implementation have not begun.
 
+### Measurement ordering amendment — 2026-09-10
+
+The Author subsequently selected the smaller paired Legacy/ExCom pathway
+benchmark in [AUDIT-005](AUDIT-005.md#accepted-measurement-sequence--2026-09-10)
+before performance repairs, followed by repeat measurements and personal
+Nurples playtesting. This task's completion-boundary research supports that
+increment; the full graphics-suite benchmark and generalized callback service
+remain later work. Automated Nurples control is also deferred; its eventual
+EDP-generated keyboard packets must traverse the normal UART/EMOS receiver.
+
 ## Graphics-suite milestone frozen — 2026-09-10
 
 The Author explicitly accepts the graphics suite as a pass and requests a

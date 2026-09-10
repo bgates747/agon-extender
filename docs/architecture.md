@@ -171,6 +171,10 @@ API, and required local storage does not imply one. The P4 DevKit microSD card
 is a required v1 capability deferred beyond the first beta; its implementation
 will follow maintained Olimex/Espressif P4 SDMMC reference code and a
 project-owned lifecycle rather than FabGL's classic-ESP32 storage backend.
+EDP owns this physical card and its filesystem service. EMOS must be able to
+request file reads and receive data from that service through its owned
+Extender transport; the P4 card is distinct from the Agon's own SD card.
+PORT-007 owns the EMOS interface and storage integration.
 Future installed-application, media, network-file, or browser interfaces consume
 that storage capability without defining its physical backend.
 

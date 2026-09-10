@@ -202,7 +202,14 @@ The Author places a stock-MOS reuse audit before further instrumentation or
 core assignment. Review the smallest EMOS routing/ownership changes that can
 retain proven stock implementation; do not assume C itself proves a defect or
 remove necessary compatibility, flow-control, lifecycle or recovery behavior.
-The audit plan is the next review, not authorization to implement repairs.
+The [AUDIT-005 review](AUDIT-005.md) takes priority over the earlier
+instrumentation proposal. W1–W2 are complete. The Author selected paired
+Legacy/ExCom pathway benchmarks before choosing repairs, followed by repeated
+measurements and personal Nurples playtesting; automated game input is
+deferred. The findings distinguish definite EMOS byte-path overhead from
+unmeasured P4 backpressure; they do not establish the cause of lag. This task
+retains the unresolved display/performance work. The current freeze is
+documentation only; benchmark implementation has not started.
 
 ## State
 

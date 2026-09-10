@@ -145,6 +145,19 @@ but its form and interface have not yet been determined. At minimum, the
 Extender hardware will expose GPIOs through headers so users can develop and
 connect their own peripherals and experimental expansions.
 
+### Future Software Capabilities
+
+MicroPython scripting within EDP on the ESP32-P4 is a planned long-term
+capability, including potential uses in automation and repeatable test control.
+Its inclusion in v1 is undecided; it is not restricted to a post-v1 release.
+Scope and scheduling are tracked in [PORT-016](docs/tasks/PORT-016.md) and
+the authoritative [TODO](TODO.md#future-software-capabilities).
+
+The P4 DevKit's own microSD card will provide EDP-managed storage readable
+from EMOS, with future MicroPython scripts sharing that storage service.
+[PORT-007](docs/tasks/PORT-007.md) retains the existing v1 storage target,
+independently of MicroPython's release timing.
+
 ## Licensing
 
 Agon Extender is distributed under the **GNU General Public License, version 3

@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Not started — registered from SETUP-004 Work 1.h
+- Status: Not started — required v1 storage; EMOS read access confirmed by Author on 2026-09-10.
 - Started: --
 - Finished: --
 
@@ -12,9 +12,22 @@ Implement the project-owned storage service for the Olimex ESP32-P4-DevKit's
 onboard microSD card. This is a required v1 capability deferred until after the
 first beta. It does not require or imply a file browser.
 
+EMOS must be able to read files from this P4-local card. EDP owns the physical
+card and filesystem service on the P4; EMOS requests reads and receives the
+results through its owned Extender transport. This is distinct from the
+Agon's own SD card. Future [MicroPython support](PORT-016.md) is another
+potential consumer of the P4 storage service, not a prerequisite for EMOS
+read access.
+
 Begin from Olimex's board-specific ESP-IDF SDMMC demo and Espressif's maintained
 P4 SDMMC implementation rather than adapting vdp-gl's dormant FileBrowser or
 classic-ESP32 SDSPI/SPIFFS backend.
+
+## Decision register
+
+| ID | State | Decision |
+| --- | --- | --- |
+| PORT-007-D001 | Accepted, 2026-09-10 | The Author requires EMOS read access to the P4 DevKit's microSD card. EDP retains physical-card/filesystem ownership. The existing v1 storage target remains; the EMOS API, namespace and request/reply protocol are implementation design work below. |
 
 ## Authority and inputs
 
@@ -44,7 +57,10 @@ classic-ESP32 SDSPI/SPIFFS backend.
    startup, shutdown, and recovery behavior. Do not inherit global mutable
    mount state from vdp-gl.
 5. Define namespaces and safe concurrent access for firmware assets, installed
-   applications, media, network services, and later MOS-facing RPC consumers.
+   applications, media, network services, future MicroPython scripts and EMOS
+   read requests. Define the EMOS API and request/reply protocol, including
+   paths, bounded transfers, missing-card/file errors and concurrent EDP use;
+   implement and verify file reads from the P4 card through EMOS.
 6. Define write durability, flushing, power-loss behavior, capacity reporting,
    supported card/filesystem limits, and performance targets.
 7. Make destructive formatting an explicit authorized operation. Never format

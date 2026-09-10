@@ -15,10 +15,16 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
+- [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
+  - Started: 2026-09-10
+  - Finished: --
+  - Status: W1–W2 complete; paired Legacy/ExCom measurements selected before repairs, then repeat benchmarks and Author Nurples playtest. Automated Nurples input is deferred. Documentation freeze only; fixture work has not started.
+  - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
+
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Partially working checkpoint: RGB222, USB keyboard admission, ExCom entry and slideshow function on hardware. Typing and Nurples are very laggy, with compressed laser spacing. Review stock MOS reuse and the EMOS transmit path before further instrumentation or core changes; performance/uptime qualification remains open.
+  - Status: Partially working checkpoint: RGB222, USB keyboard admission, ExCom entry and slideshow function on hardware. Typing and Nurples are very laggy, with compressed laser spacing. AUDIT-005 precedes further instrumentation or core changes; performance/uptime qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
@@ -117,6 +123,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**
   - Started: --
   - Finished: --
+  - Status: Required v1 capability, scheduled after the first beta; EMOS must be able to read the P4 card. Future MicroPython is a storage consumer, not a prerequisite.
   - Details: [PORT-007](docs/tasks/PORT-007.md)
 
 ## System qualification
@@ -159,3 +166,11 @@ initial Extender display. The USB schematic waits until 2026-09-10.
   - Started: --
   - Finished: --
   - Details: [LINK-001](docs/tasks/LINK-001.md)
+
+## Future software capabilities
+
+- [ ] **PORT-016 — Add MicroPython scripting to EDP**
+  - Started: --
+  - Finished: --
+  - Status: Long-term capability requested by Author, 2026-09-10. Implementation deferred; inclusion in v1 remains undecided. Not a dependency of the current performance investigation.
+  - Details: [PORT-016](docs/tasks/PORT-016.md)
