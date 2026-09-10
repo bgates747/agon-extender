@@ -1,0 +1,11 @@
+{
+  "recorded_at": "2026-09-10T20:22:19.033789+00:00",
+  "run_id": "AUDIT-005-2026-09-10-20-03-35Z",
+  "author_acceptance_date": "2026-09-10",
+  "outcome": "pass",
+  "scope": "Exploratory browser-disconnected control; no material difference in total workload time. Original evidence limitations remain.",
+  "author_instruction": "ok good test, no material difference with the browser disconnected. draft your next task and pause for my review. then when i approve, we'll freeze our findings and the new task contract.",
+  "supersedes_review_state": "collection.json recorded review pending at collection time; original record preserved",
+  "next_contract": "../../p4-wait-attribution.md",
+  "next_contract_status": "draft; freeze and execution await approval"
+}

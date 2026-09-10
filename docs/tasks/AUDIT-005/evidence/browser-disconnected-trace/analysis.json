@@ -1,0 +1,113 @@
+{
+  "coverage_pass": true,
+  "acquisition_pass": true,
+  "independent_decode_matches": true,
+  "trace_sha256": "808661e5268c50c0dd8472fd14e9793e0f340b464446cef270387eaabb339d7e",
+  "analysis_sha256": "835762ab8f200c7b9c80ee15b50da77fb01c30dd22b0e7ed12639eea485dc07c",
+  "numpy_version": "2.5.2",
+  "samples": 720000000,
+  "sample_rate_hz": 24000000,
+  "uart_baud": 1152000,
+  "forward_payload_bytes": 32768,
+  "marker_start_seconds": 12.530651666666667,
+  "final_reply_end_seconds": 17.60758676388889,
+  "marker_reply_seconds": 0.001409875,
+  "marker_reply_to_first_payload_seconds": 0.00015081944444527229,
+  "payload_end_to_query_seconds": 8.948611111193895e-05,
+  "final_query_reply_seconds": 0.6840476666666667,
+  "final_query_to_first_reply_seconds": 0.6839526944444453,
+  "final_query_to_first_reply_agon_rts_high_seconds": 0.0,
+  "final_query_through_reply_agon_rts_high_seconds": 4.701388888806105e-05,
+  "payload_start_to_reply_seconds": 5.075173597222221,
+  "payload": {
+    "wire_span_seconds": 4.3908356388888885,
+    "estimated_byte_time_seconds": 0.2844444444173177,
+    "idle_seconds": 4.106391194471571,
+    "idle_cts_high_seconds": 3.3437346111115342,
+    "idle_cts_low_seconds": 0.7626565833600362,
+    "cts_high_seconds": 3.3439137222222213,
+    "idle_cts_high_fraction": 0.8142757113869716,
+    "longest_gaps": [
+      {
+        "start_seconds": 12.956127847222222,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014187819444445273
+      },
+      {
+        "start_seconds": 13.039478347222222,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014190652777778605
+      },
+      {
+        "start_seconds": 13.206204388888889,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014178527777778605
+      },
+      {
+        "start_seconds": 13.289554888888889,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014184777777778606
+      },
+      {
+        "start_seconds": 13.372905388888888,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014186777777778605
+      },
+      {
+        "start_seconds": 13.456255888888888,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014199777777778606
+      },
+      {
+        "start_seconds": 13.539631388888887,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014179319444445272
+      },
+      {
+        "start_seconds": 13.956408930555554,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014187319444445273
+      },
+      {
+        "start_seconds": 14.039759430555554,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014192861111111938
+      },
+      {
+        "start_seconds": 14.206485472222221,
+        "duration_seconds": 0.014203194444445273,
+        "cts_high_seconds": 0.014181319444445272
+      }
+    ]
+  },
+  "final_reply": {
+    "wire_span_seconds": 9.497222222139437e-05,
+    "estimated_byte_time_seconds": 5.2055555552244184e-05,
+    "idle_seconds": 4.2916666669150196e-05,
+    "idle_cts_high_seconds": 4.280555555721124e-05,
+    "idle_cts_low_seconds": 1.111111119389534e-07,
+    "cts_high_seconds": 4.701388888806105e-05,
+    "idle_cts_high_fraction": 0.9974110032171063,
+    "longest_gaps": [
+      {
+        "start_seconds": 17.607547722222222,
+        "duration_seconds": 2.169444444527229e-05,
+        "cts_high_seconds": 2.165277777860562e-05
+      },
+      {
+        "start_seconds": 17.607509138888886,
+        "duration_seconds": 2.1194444445272286e-05,
+        "cts_high_seconds": 2.115277777860562e-05
+      },
+      {
+        "start_seconds": 17.60753901388889,
+        "duration_seconds": 2.7777778605620065e-08,
+        "cts_high_seconds": 0.0
+      }
+    ]
+  },
+  "framing_errors_outside_window": 0,
+  "byte_starts_while_cts_high": 0,
+  "final_reply_starts_while_agon_rts_high": 0,
+  "limits": "CTS overlap is not pure CPU stall time; CTS-low gaps do not identify their software cause. Frame ends have approximately one-sample uncertainty; in-flight bytes may finish after CTS rises."
+}

@@ -1,0 +1,26 @@
+{
+  "procedure": "uart-path-capture-r02",
+  "browser_condition": "disconnected",
+  "observation": "operator confirmed; server client count not independently observed",
+  "operator_confirmed_at": "2026-09-10T20:03:30.170009+00:00",
+  "csv_browser_annotation_override": true,
+  "settlement_seconds": 5.0004141080007685,
+  "settled_at": "2026-09-10T20:03:35.170543+00:00",
+  "connected_reference_run": "AUDIT-005-2026-09-10-19-44-52Z",
+  "run_id": "AUDIT-005-2026-09-10-20-03-35Z",
+  "bench_sha256": "89ace70776cdf844d022cc70fa2670a8cb46717f0dea6bdc191a4c43d1f5319c",
+  "capture_result_sha256": "6974553dfe4418bc426177b694e52f5d91ae553437e2d2928ddcc75fbe3b87d0",
+  "original_host_condition_sha256": "e1e98ab3a0d8a66be7cc343b972d3832e7004502acef619f9d89a366891273ac",
+  "redaction": "Private preparation topology omitted; original remains in ignored capture bundle.",
+  "procedure_build": "uart-path-capture-r02-b2026-09-10-20-00-20Z",
+  "source_commit": "1275b015fa6c05d11202a61281b86e5b1335c73b",
+  "source_dirty": true,
+  "files": {
+    "docs/tasks/AUDIT-005/scripts/capture_trace.py": "545209df6e3492c818029661e3bf3ff147be53dec1f1cbe1585a80a622b71a9d",
+    "docs/tasks/AUDIT-005/scripts/run_trace.py": "8c50f6306b78628415f35114eb8139593aa212997e6a1584170eea4c73fb558f",
+    "docs/tasks/AUDIT-005/scripts/analyze_trace.py": "835762ab8f200c7b9c80ee15b50da77fb01c30dd22b0e7ed12639eea485dc07c",
+    "docs/tasks/AUDIT-005/browser-disconnected-control.md": "5693fc07ebed2158ad5e502ee8494008e9b8efec9806b1b3e7efa2ac4908ac51"
+  },
+  "csv_filename": "00000005.CSV",
+  "csv_sha256": "bdcdf037b99eafc2ceed9ede0065439ed4d5f9bf19ce3012274eac9e408624ea"
+}

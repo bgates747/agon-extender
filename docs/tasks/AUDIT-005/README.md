@@ -19,7 +19,14 @@ now passes waveform checks. Its [findings](uart-cts-findings.md) show 3.407
 of 4.456 payload-wire seconds idle while P4 withholds permission. The returned
 one-row CSV agrees within clock resolution and confirms Legacy return. W6
 measurement is complete and accepted. The [browser-disconnected control](browser-disconnected-control.md)
-is now authorized as W7. No screenshot or repeat is needed to validate this run.
+also completes: [W7 findings](browser-disconnected-findings.md) show effectively
+unchanged total time and persistent P4 backpressure, despite shorter individual
+gaps. Its waveform and returned CSV pass and the Author accepted W7 on
+2026-09-10. The [W8 wait-attribution contract](p4-wait-attribution.md) is
+accepted for execution after the requested freeze. It first compares stock VDP's drain/flush behavior with
+EDP's fixed primitive budget, then accounts for the workload; instrumentation
+is conditional on unresolved attribution. Repair implementation remains outside W8.
+No screenshot or repeat is needed to validate either completed run.
 
 ## r03 measurement deadline and prior diagnosis
 

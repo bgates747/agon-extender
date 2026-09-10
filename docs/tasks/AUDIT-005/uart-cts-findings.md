@@ -81,6 +81,9 @@ The Author accepted these findings and authorized the
 [formal W7 control](browser-disconnected-control.md) on 2026-09-10: the
 same trace with browser video disconnected, keeping the firmware and workload
 fixed. That would test whether servicing browser snapshots materially changes
-P4 backpressure before choosing a firmware repair or core assignment. It has
-not yet been run. No repair is
-selected or authorized by this result.
+P4 backpressure before choosing a firmware repair or core assignment. The
+[completed W7 comparison](browser-disconnected-findings.md) now shows
+effectively unchanged total time, with shorter individual pauses but continued
+P4 backpressure. The Author accepted W7 and requested the
+[W8 contract](p4-wait-attribution.md), subsequently approved for execution
+after freezing prior work. No repair is selected or authorized by either result.

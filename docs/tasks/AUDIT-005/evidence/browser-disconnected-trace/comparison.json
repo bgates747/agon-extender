@@ -1,0 +1,154 @@
+{
+  "connected_run": "AUDIT-005-2026-09-10-19-44-52Z",
+  "disconnected_run": "AUDIT-005-2026-09-10-20-03-35Z",
+  "units": "seconds except explicitly named fractions",
+  "clock": {
+    "send_seconds": {
+      "connected": 4.45,
+      "disconnected": 4.383333333333334,
+      "disconnected_minus_connected": -0.06666666666666643,
+      "disconnected_over_connected": 0.9850187265917604,
+      "percent_change": -1.4981273408239646
+    },
+    "tail_seconds": {
+      "connected": 0.6166666666666667,
+      "disconnected": 0.6833333333333333,
+      "disconnected_minus_connected": 0.06666666666666665,
+      "disconnected_over_connected": 1.1081081081081081,
+      "percent_change": 10.810810810810809
+    },
+    "total_seconds": {
+      "connected": 5.066666666666666,
+      "disconnected": 5.066666666666666,
+      "disconnected_minus_connected": 0.0,
+      "disconnected_over_connected": 1.0,
+      "percent_change": 0.0
+    }
+  },
+  "wire": {
+    "send_seconds": {
+      "connected": 4.456138263888888,
+      "disconnected": 4.3908356388888885,
+      "disconnected_minus_connected": -0.06530262499999928,
+      "disconnected_over_connected": 0.9853454670540206,
+      "percent_change": -1.4654532945979428
+    },
+    "tail_seconds": {
+      "connected": 0.6250525000000007,
+      "disconnected": 0.6843379583333329,
+      "disconnected_minus_connected": 0.05928545833333221,
+      "disconnected_over_connected": 1.0948487660369843,
+      "percent_change": 9.484876603698432
+    },
+    "total_seconds": {
+      "connected": 5.0811907638888885,
+      "disconnected": 5.075173597222221,
+      "disconnected_minus_connected": -0.006017166666667073,
+      "disconnected_over_connected": 0.9988157959529034,
+      "percent_change": -0.11842040470965974
+    }
+  },
+  "payload": {
+    "estimated_byte_time_seconds": {
+      "connected": 0.2844444444173177,
+      "disconnected": 0.2844444444173177,
+      "disconnected_minus_connected": 0.0,
+      "disconnected_over_connected": 1.0,
+      "percent_change": 0.0
+    },
+    "idle_seconds": {
+      "connected": 4.17169381947157,
+      "disconnected": 4.106391194471571,
+      "disconnected_minus_connected": -0.06530262499999928,
+      "disconnected_over_connected": 0.9843462565025275,
+      "percent_change": -1.5653743497472494
+    },
+    "idle_cts_high_seconds": {
+      "connected": 3.407279402778201,
+      "disconnected": 3.3437346111115342,
+      "disconnected_minus_connected": -0.06354479166666671,
+      "disconnected_over_connected": 0.9813502844483919,
+      "percent_change": -1.8649715551608141
+    },
+    "idle_cts_low_seconds": {
+      "connected": 0.7644144166933695,
+      "disconnected": 0.7626565833600362,
+      "disconnected_minus_connected": -0.0017578333333333473,
+      "disconnected_over_connected": 0.9977004183922418,
+      "percent_change": -0.22995816077582812
+    },
+    "cts_high_seconds": {
+      "connected": 3.407458513888888,
+      "disconnected": 3.3439137222222213,
+      "disconnected_minus_connected": -0.06354479166666671,
+      "disconnected_over_connected": 0.9813512647600384,
+      "percent_change": -1.8648735239961547
+    },
+    "idle_cts_high_fraction": {
+      "connected": 0.8167616201540414,
+      "disconnected": 0.8142757113869716,
+      "disconnected_minus_connected": -0.0024859087670697777,
+      "disconnected_over_connected": 0.9969563839610865,
+      "percent_change": -0.3043616038913453
+    }
+  },
+  "boundaries": {
+    "marker_reply_seconds": {
+      "connected": 0.12443683333333333,
+      "disconnected": 0.001409875,
+      "disconnected_minus_connected": -0.12302695833333332,
+      "disconnected_over_connected": 0.011330045632255188,
+      "percent_change": -98.86699543677449
+    },
+    "marker_reply_to_first_payload_seconds": {
+      "connected": 0.00015111111111193896,
+      "disconnected": 0.00015081944444527229,
+      "disconnected_minus_connected": -2.9166666666666924e-07,
+      "disconnected_over_connected": 0.998069852941187,
+      "percent_change": -0.19301470588129724
+    },
+    "payload_end_to_query_seconds": {
+      "connected": 8.948611111193895e-05,
+      "disconnected": 8.948611111193895e-05,
+      "disconnected_minus_connected": 0.0,
+      "disconnected_over_connected": 1.0,
+      "percent_change": 0.0
+    },
+    "final_query_reply_seconds": {
+      "connected": 0.6247622083333333,
+      "disconnected": 0.6840476666666667,
+      "disconnected_minus_connected": 0.05928545833333343,
+      "disconnected_over_connected": 1.0948928368946773,
+      "percent_change": 9.489283689467737
+    },
+    "final_query_to_first_reply_seconds": {
+      "connected": 0.624667361111112,
+      "disconnected": 0.6839526944444453,
+      "disconnected_minus_connected": 0.0592853333333333,
+      "disconnected_over_connected": 1.0949070449717124,
+      "percent_change": 9.490704497171254
+    },
+    "final_query_to_first_reply_agon_rts_high_seconds": {
+      "connected": 0.0,
+      "disconnected": 0.0,
+      "disconnected_minus_connected": 0.0,
+      "disconnected_over_connected": null,
+      "percent_change": null
+    },
+    "final_query_through_reply_agon_rts_high_seconds": {
+      "connected": 4.705555555472771e-05,
+      "disconnected": 4.701388888806105e-05,
+      "disconnected_minus_connected": -4.166666666666316e-08,
+      "disconnected_over_connected": 0.9991145218417791,
+      "percent_change": -0.08854781582209345
+    }
+  },
+  "longest_payload_gap_seconds": {
+    "connected": 0.15409802777777862,
+    "disconnected": 0.014203194444445273,
+    "disconnected_minus_connected": -0.13989483333333336,
+    "disconnected_over_connected": 0.09216986517781647,
+    "percent_change": -90.78301348221837
+  },
+  "limits": "One run per condition, no variance estimate; operator-confirmed client closure, not independent server client count. CTS overlap is not pure CPU stall time. Final reply is not browser presentation."
+}

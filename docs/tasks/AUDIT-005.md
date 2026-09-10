@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W6 results accepted. W7 browser-disconnected control is authorized under the formal contract. Firmware, workload and acquisition settings stay fixed; no repair is authorized.
+- Status: W1–W7 results accepted. W8 contract accepted and execution authorized after the requested freeze: stock VDP versus EDP queue draining, workload accounting, then conditional instrumentation only if needed. No repair is authorized.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --
@@ -156,7 +156,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    Reconcile existing defects and accepted remedies before creating new ones.
    Keep checkout locations and private deployment details in ignored records.
 
-## Work — W1–W6 accepted; W7 control authorized
+## Work — W1–W7 accepted; W8 authorized
 
 1. [x] **W1 — Pin the comparison and map the active paths.** Verify exact
    stock release, EMOS deployed/source and P4 source identities, documenting
@@ -224,7 +224,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    choosing a specific P4 service repair. The Author accepted these findings
    and authorized W7 on 2026-09-10.
 
-7. [ ] **W7 — Compare the same workload with browser video disconnected.**
+7. [x] **W7 — Compare the same workload with browser video disconnected.**
    The Author approved the [formal control contract](AUDIT-005/browser-disconnected-control.md)
    and execution on 2026-09-10. Commit the completed W6 result and contract,
    prepare the recorded browser-off condition, then capture one unchanged
@@ -233,6 +233,35 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    the returned CSV and UART/CTS measurements with the connected W6 run.
    Record the fixed CSV browser-annotation override explicitly. Stop with
    the comparison and a recommended next action; do not implement a repair.
+   Preparation is ready: r02 condition metadata, closure/settlement gate,
+   distinct launcher, hash-verified Pi staging and unchanged SD all pass.
+   Fifteen local preparation tests pass. Run
+   `AUDIT-005-2026-09-10-20-03-35Z` and returned `00000005.CSV` now pass
+   acquisition, exact waveform, condition, integrity, clock and Legacy-return
+   validation. The [comparison](AUDIT-005/browser-disconnected-findings.md)
+   measures 5.075 s total versus 5.081 s connected, with 3.344 s still idle
+   under P4 backpressure. Longest gaps shrink from 154 to 14 ms; this does not
+   remove the throughput bottleneck. The Author accepted this test on
+   2026-09-10, agreeing there is no material difference in total time with the
+   browser disconnected. No further capture, firmware change or repair has
+   started. The original collection record retains its at-collection review
+   state; acceptance is recorded separately.
+
+8. [ ] **W8 — Attribute P4 receive and drawing waits.**
+   The [accepted work contract](AUDIT-005/p4-wait-attribution.md) first compares
+   stock VDP's background drain and immediate-flush behavior with EDP's fixed
+   primitive budget. This is a mandatory gate before instrumentation. Then
+   count parser/primitive operations and predict send and final-reply timing
+   for the exact W7 workload, distinguishing the two unrelated 64-operation
+   budgets. Examine reuse of stock behavior before new scheduling machinery.
+   If ambiguity remains after that comparison and calculation, use bounded RAM
+   timing and at most two browser-off hardware runs of one probe image,
+   recording disabled/enabled, to distinguish internal waits and observer
+   effects. Keep EMOS and the SD workload fixed. Stop with attribution and
+   one proposed repair or discriminating test; implementation of that repair
+   remains outside W8. The Author approved freezing W7 findings and this
+   contract, then proceeding, on 2026-09-10. The existing emulator and
+   physical deployment gates still apply.
 
 ## Deliverables and acceptance
 

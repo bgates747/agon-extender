@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Pi-side passive acquisition for uart-path-capture-r01. Never opens P4 serial.
+"""Pi-side passive acquisition for uart-path-capture-r01/r02. Never opens P4 serial.
 
 The 30-second untriggered window includes operator reaction and Agon boot.
 Readiness requires delivered USB samples, not merely a live sigrok process.
@@ -94,12 +94,16 @@ def pack_raw(raw, destination):
     return expected
 
 
-def capture(folder, idle_check=False):
-    record = dict(procedure=PROCEDURE, run_id=folder.name,
+def capture(folder, idle_check=False, browser_disconnected=False):
+    record = dict(procedure='uart-path-capture-r02' if browser_disconnected else PROCEDURE, run_id=folder.name,
                   started_at=datetime.now(timezone.utc).isoformat(),
                   purpose='passive acquisition check' if idle_check else 'counted-point workload',
                   reset_cue_issued=False, acquisition_pass=False, waveform_verdict='not evaluated',
                   helper_sha256=sha(__file__))
+    if browser_disconnected:
+        record['browser_condition'] = 'operator-confirmed disconnected; see host condition record'
+        record['csv_browser_annotation_override'] = True
+        record['connected_reference_run'] = 'AUDIT-005-2026-09-10-19-44-52Z'
     proc = None
     try:
         connection = discover(folder)
@@ -158,10 +162,13 @@ def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument('--output-parent', type=Path, required=True)
     parser.add_argument('--idle-check', action='store_true', help='Same passive capture; no operator reset cue')
+    parser.add_argument('--browser-disconnected', action='store_true', help='W7 r02 condition; host must record closure and settlement')
     args = parser.parse_args()
     folder = args.output_parent / ('AUDIT-005-'+datetime.now(timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ'))
     folder.mkdir(parents=True, exist_ok=False)
-    raise SystemExit(capture(folder, args.idle_check))
+    if args.idle_check and args.browser_disconnected:
+        parser.error('An idle acquisition check is not a browser-disconnected workload control')
+    raise SystemExit(capture(folder, args.idle_check, args.browser_disconnected))
 
 
 if __name__ == '__main__': main()

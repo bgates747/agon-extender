@@ -209,9 +209,17 @@ rows and measures direct ExCom send times 2.61–4.52× Legacy medians. The
 [completed UART/CTS trace](AUDIT-005/uart-cts-findings.md) now locates 3.407
 of 4.456 payload-wire seconds in idle while P4 withholds permission. The
 returned CSV agrees within clock resolution and confirms Legacy return.
-P4 receive/parser/display service is the immediate performance target; a
-browser-disconnected control is now authorized under AUDIT-005 W7 before
-selecting a repair.
+P4 receive/parser/display service is the immediate performance target. The
+[W7 browser-disconnected control](AUDIT-005/browser-disconnected-findings.md)
+now measures 5.075 s total versus 5.081 s connected, with P4 still withholding
+permission during 3.344 s of idle. Long individual gaps shrink, but the main
+throughput problem persists. The Author accepted these findings; the
+[W8 internal wait-attribution contract](AUDIT-005/p4-wait-attribution.md)
+is accepted for execution after the findings/contract freeze. Its first gate compares
+stock VDP's drain/flush policy with EDP's fixed primitive budget and accounts
+for the benchmark's actual operations. Complete that comparison before
+instrumentation or scheduling changes; a budget adjustment is not yet an
+approved repair. No repair is selected.
 The Author selected paired
 Legacy/ExCom pathway benchmarks before choosing repairs, followed by repeated
 measurements and personal Nurples playtesting; automated game input is
