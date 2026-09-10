@@ -123,8 +123,8 @@ cannot advance `frameCounter`, execute primitives, or unblock an official swap.
 The initial compatibility target is:
 
 1. record the logical frame edge and advance the writable 32-bit frame count;
-2. execute the frame-bounded primitive work permitted by retained queue
-   semantics;
+2. drain queued primitives until empty or suspended, without a fixed count or
+   elapsed-time budget, through retained queue semantics;
 3. execute a queued buffer swap against logical drawing/visible planes;
 4. refresh software-sprite state and freeze the presentation metadata;
 5. publish a new presentation generation.
@@ -154,7 +154,7 @@ upstream correction.
 ### Overrun policy
 
 Logical time must not block on a sink. Every recorded timer event receives a
-distinct logical frame edge and bounded renderer opportunity, preserving the
+distinct logical frame edge and stock-style queue-draining opportunity, preserving the
 upstream physical-VSYNC event model. Exact backlog, frame-wait, and callback
 behavior under deliberate overload must be measured against stock firmware.
 

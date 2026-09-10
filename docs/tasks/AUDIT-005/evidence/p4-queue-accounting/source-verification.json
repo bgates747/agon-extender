@@ -1,0 +1,104 @@
+{
+  "evidence_class": "read-only source and saved-build verification",
+  "p4_commit": "52479f0ae9653e293031a1eed1b65f0cec9695cd",
+  "p4_build_manifest_sha256": "8ae8dacd6a23282e37d7a3cf31791028d41f921113fbc7234887fe2ee5c382ed",
+  "matching_source_sha256": {
+    "vdp/platformio.ini": "dc406b9dffea17d1635da4c428833f1129fe6624a2b0322bfad9e6cd73ff583b",
+    "vdp/sdkconfig.defaults": "93107ec19f08c96243c95c68fd4175f96587f5139bccf97b2b5d1519422ddbe2",
+    "vdp/vendor/vdp-gl/src/canvas.cpp": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+    "vdp/vendor/vdp-gl/src/fabglconf.h": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+    "vdp/video/agon_screen.h": "abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a",
+    "vdp/video/context/graphics.h": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+    "vdp/video/extender/display/cursor_position_adapter.cpp": "5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155",
+    "vdp/video/extender/display/cursor_position_adapter.hpp": "b9eff7588d635e87c9d1f73a74a8eb5d7515edb4c9f072fc12bf450c9450acb4",
+    "vdp/video/extender/display/logical_frame_service.cpp": "8defa3b3463503646341b360ad407b8aa28368fc3a841f4c0c02c20e3e323406",
+    "vdp/video/extender/display/logical_frame_service.hpp": "9acdaef50447ed9f4ebb60aadfaf93983b3a5cddb75a036c30fb51a9b37ed46f",
+    "vdp/video/extender/display/native_pixel_codec.cpp": "5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2",
+    "vdp/video/extender/display/native_pixel_codec.hpp": "b613bcae014620d15fc91d00edf271d39484461151ee1f9a2b8ef90d8f2a14c5",
+    "vdp/video/extender/display/p4_display_controller.cpp": "343725af427c5d6042a67b2479cbec8b55d46f8b2f628ef6b96793cd29378ac7",
+    "vdp/video/extender/display/p4_display_controller.hpp": "63f1a4816f953b4c3d5c2877c704df18085d46b9b6722207a82a9022bedc62e6",
+    "vdp/video/extender/display/p4_frame_service.cpp": "af621edde8ba56212356dbeff6152aa265f87236f8cf058ea9a12cef3801490a",
+    "vdp/video/extender/display/p4_frame_service.hpp": "fef0fcfecb3ee182bb110dab858b91f201f995427f4a11e5be21934311b5e626",
+    "vdp/video/extender/display/palette_state.cpp": "174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245",
+    "vdp/video/extender/display/palette_state.hpp": "cda22f17973cc5a4fa6bc273cdb5236a23fa744ccc737a6fd7a97a640e3fc1cf",
+    "vdp/video/extender/display/plane_storage.cpp": "6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257",
+    "vdp/video/extender/display/plane_storage.hpp": "a07df1398849149c44dec2d0386f49f4f02a0f5ba0a17f256fec515bbe667aa3",
+    "vdp/video/extender/display/presentation_compositor.cpp": "aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d",
+    "vdp/video/extender/display/presentation_compositor.hpp": "664f9dde8269b0d4e5322dfd273c0ca24faf0fc9c9d5124809824ddf2a9e6c2d",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "0461bfa96a2fd4b3e6cdabcc39870310d42073f23f565182a63d50d13a40a640",
+    "vdp/video/extender/display/presentation_snapshot_pool.hpp": "1723bd17c1fd9f1228f8f7a6d60d690caaa4eff6a8fdb82ace8419f3b388ce28",
+    "vdp/video/extender/display/screen_facade_adapter.cpp": "0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb",
+    "vdp/video/extender/display/screen_facade_adapter.hpp": "cf7be4e0581472e2c618f82f406b164fd2c279b1b97648d9b930e1c4b0eb5620",
+    "vdp/video/extender/display/screen_facade_p4_binding.cpp": "8ad984ba31d5edb658385a57327c821dc8fbeb2ce5e3a2197d118db8f9e87309",
+    "vdp/video/extender/transport/console_hardware.inc": "91bba306a04ac8254dd2bbeb0825783726b6ca7cc43fe35653ccf3184e69206f",
+    "vdp/video/extender/transport/console_session.hpp": "1525c52e11851cfdae755149d3d00b342e60e4763bd6e12ad2e047ceeceeec00",
+    "vdp/video/extender/transport/console_stream.hpp": "9b9b3c4f12c468e3d913470a1a27f44464f54112db8d0e3b7d41d0b125ec0836",
+    "vdp/video/extender/transport/console_wire.h": "b83f13000605ae927c576af2bba3c3a6a35e1f66d27d866f3f4e67102a4c2a42",
+    "vdp/video/vdu.h": "d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926",
+    "vdp/video/vdu_stream_processor.h": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "vdp/video/vdu_sys.h": "9d214daaf24a2784e4f6799e3ddb44748e484fac2781877c9d88abf0d7e5d280"
+  },
+  "verified_saved_outputs": [
+    {
+      "filename": "uart-excom-console-r07-b2026-09-10-06-31-58Z.bin",
+      "sha256": "ee99d5e4dc9eb9c4fa6d659a05afb9b0c40f3bec926e5eca48c04279b8f8da9e",
+      "size_bytes": 1331616
+    },
+    {
+      "filename": "uart-excom-console-r07-b2026-09-10-06-31-58Z.elf",
+      "sha256": "10ff26c9fd370f82dfd9e5a1907ccb2104d1ecacae4b28fbc311d7c15f6dac7d",
+      "size_bytes": 24592516
+    },
+    {
+      "filename": "uart-excom-console-r07-b2026-09-10-06-31-58Z.factory.bin",
+      "sha256": "8d6e97577632b1e70d7fcafef985fb433533893097d49e41ee641cfbc3c5fb40",
+      "size_bytes": 1462688
+    },
+    {
+      "filename": "dependencies.lock",
+      "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+      "size_bytes": 8845
+    }
+  ],
+  "current_build_elf_matches_saved_elf": true,
+  "generated_sdkconfig_sha256": "1107641f408bafeea50c4c2aa460efab5f861d3beb2a2f86f1fb8bf8b10c5692",
+  "generated_config_freertos_hz": 1000,
+  "source_defaults_freertos_hz": 1000,
+  "pinned_vdp_gl": [
+    {
+      "path": "src/dispdrivers/vgabasecontroller.cpp",
+      "url": "https://raw.githubusercontent.com/AgonPlatform/vdp-gl/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/dispdrivers/vgabasecontroller.cpp",
+      "sha256": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa"
+    },
+    {
+      "path": "src/canvas.cpp",
+      "url": "https://raw.githubusercontent.com/AgonPlatform/vdp-gl/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/canvas.cpp",
+      "sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271"
+    },
+    {
+      "path": "src/displaycontroller.cpp",
+      "url": "https://raw.githubusercontent.com/AgonPlatform/vdp-gl/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/displaycontroller.cpp",
+      "sha256": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902"
+    },
+    {
+      "path": "src/fabglconf.h",
+      "url": "https://raw.githubusercontent.com/AgonPlatform/vdp-gl/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/fabglconf.h",
+      "sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3"
+    }
+  ],
+  "reference_checkouts": {
+    "MOS": {
+      "commit": "8336409351ee5314e02801a7b72a4f1bb5282519",
+      "tracked_worktree_clean": true
+    },
+    "VDP": {
+      "commit": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+      "tracked_worktree_clean": true
+    },
+    "EMOS": {
+      "commit": "82929c4b3e64c370d1102f46f61e8b600d57d665",
+      "tracked_worktree_clean": true
+    }
+  }
+}

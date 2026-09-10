@@ -92,6 +92,11 @@ execution through the unchanged common controller, logical frame progression,
 and presentation publication. Each recorded tick receives its own logical edge
 rather than being coalesced. Physical sink callbacks may recycle sink buffers
 but do not advance the VDP frame counter or unblock logical swaps.
+On a service opportunity, P4 drains queued drawing in FIFO order until empty
+or suspended, matching stock VDP's background worker with its timeout disabled.
+No fixed primitive-count or elapsed-time cap throttles this drain. Suspension
+is checked between primitive executions; immediate flush and double-buffered
+drawing/swap contracts remain unchanged.
 
 The retained common renderer remains byte-identical to pinned upstream for
 queue submission, completion waits, background draining, dynamic payloads, and

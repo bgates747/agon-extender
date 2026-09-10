@@ -1,5 +1,23 @@
 # PORT-003 — Implement the P4 display backend and logical frame service
 
+## Active correction — stock queue draining, 2026-09-10
+
+**PORT-003-D013 — Accepted:** remove the P4 primitive-count limit. On each
+service opportunity, drain FIFO work until empty or suspended, matching the
+selected stock worker with its timeout disabled. Preserve independent tick
+accounting, immediate flush, double-buffer drawing/swap and existing P4
+suspension handling. Core assignments and UART/parser budgets stay unchanged.
+ADR-0015 and the normative architecture/frame contract are amended accordingly.
+
+1. [ ] Implement the drain policy and remove the production budget interface.
+2. [ ] Validate backlog draining, suspension/resume, completion, swaps and
+   lifecycle; prepare the P4 build and concrete deployment for review.
+3. [ ] After the physical gate, run the single comparison and report results.
+
+The [W9 work contract](AUDIT-005/stock-queue-drain.md) owns exact inputs,
+identity, measurement boundaries and stopping rule. Earlier Phase C target
+qualification remains evidence of its original candidate, not this correction.
+
 ## Current increment — RGB222 browser video, 2026-09-10
 
 The Author selected this as the next display increment, ahead of broader
@@ -173,6 +191,30 @@ presentation. Use correlated intervals to distinguish input and output delay
 before changing task priority/core assignments. No new instrumentation or
 core-assignment implementation is authorized by recording that proposal alone.
 
+### Deferred core-affinity review
+
+Author-directed on 2026-09-10; follow-up owned by PORT-003, not an active
+implementation increment. The P4 frame-service task currently uses unpinned
+`xTaskCreate`, while the command-processing task is pinned to core 0. The
+[original proposal](PORT-003/PROPOSAL.md#concurrency-ownership) deferred exact
+affinity to measurement; no subsequent pinned-versus-unpinned comparison was
+found in this review. Stock VGA/core-local timing assumptions explain why core
+numbers were not copied automatically, but do not establish that leaving P4
+frame service unpinned is preferable. Pinning a task does not reserve a core.
+
+1. [ ] Revisit this decision when the current AUDIT-005 investigations are
+   exhausted or the reported slowdown is resolved. If material slowdown
+   remains, consider a bounded affinity comparison as a diagnostic follow-up;
+   do not combine it with the current stock-drain correction.
+2. [ ] If the current work resolves the slowdown, retain the review as a
+   further optimization deferred until implementation is substantially
+   complete. At that point compare measured P4 task placement, contention and
+   responsiveness with stock's division of work before proposing any change.
+
+These are conditional dispositions of one review, not authorization to change
+affinity, priority or scheduling now. Record which branch applies when the
+current performance investigation closes.
+
 ### Partially working checkpoint — 2026-09-10
 
 The Author requests preserving the current state, with the functional recovery
@@ -215,11 +257,15 @@ now measures 5.075 s total versus 5.081 s connected, with P4 still withholding
 permission during 3.344 s of idle. Long individual gaps shrink, but the main
 throughput problem persists. The Author accepted these findings; the
 [W8 internal wait-attribution contract](AUDIT-005/p4-wait-attribution.md)
-is accepted for execution after the findings/contract freeze. Its first gate compares
-stock VDP's drain/flush policy with EDP's fixed primitive budget and accounts
-for the benchmark's actual operations. Complete that comparison before
-instrumentation or scheduling changes; a budget adjustment is not yet an
-approved repair. No repair is selected.
+was frozen in `71f082e`. The completed
+[W8 source accounting](AUDIT-005/p4-queue-accounting.md) finds five queued
+primitives per point. EDP's 64-per-frame limit predicts 5.067 s versus 5.075 s
+measured; RX buffering and approximately 60 Hz wire bursts corroborate the
+mechanism. Stock's background drain has no such fixed count limit. W8 required
+no instrumentation and is accepted. The Author rejected the 128-budget
+experiment and authorized [stock queue draining](AUDIT-005/stock-queue-drain.md)
+under PORT-003-D013, followed by one unchanged browser-off comparison. Its
+physical deployment gate remains explicit.
 The Author selected paired
 Legacy/ExCom pathway benchmarks before choosing repairs, followed by repeated
 measurements and personal Nurples playtesting; automated game input is

@@ -22,10 +22,13 @@ measurement is complete and accepted. The [browser-disconnected control](browser
 also completes: [W7 findings](browser-disconnected-findings.md) show effectively
 unchanged total time and persistent P4 backpressure, despite shorter individual
 gaps. Its waveform and returned CSV pass and the Author accepted W7 on
-2026-09-10. The [W8 wait-attribution contract](p4-wait-attribution.md) is
-accepted for execution after the requested freeze. It first compares stock VDP's drain/flush behavior with
-EDP's fixed primitive budget, then accounts for the workload; instrumentation
-is conditional on unresolved attribution. Repair implementation remains outside W8.
+2026-09-10. The [W8 wait-attribution contract](p4-wait-attribution.md) was
+frozen with prior findings in `71f082e`. The completed
+[source accounting](p4-queue-accounting.md) predicts 5.067 s from EDP's
+primitive budget, versus 5.075 s measured, and reconciles the send/tail split
+and burst cadence. No instrumentation was needed. The Author accepted W8 and authorized
+[W9 stock queue draining](stock-queue-drain.md), followed by one unchanged
+browser-off comparison. The proposed 128-budget experiment was rejected.
 No screenshot or repeat is needed to validate either completed run.
 
 ## r03 measurement deadline and prior diagnosis

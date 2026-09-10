@@ -24,7 +24,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
   - Started: 2026-09-10
   - Finished: --
-  - Status: W1–W7 accepted. W8 approved after freeze: compare stock/EDP queue draining, account for measured workload, then instrument only unresolved waits. No repair authorized.
+  - Status: W1–W8 accepted. W9 authorized after freeze: restore stock drawing drain under PORT-003, then repeat the unchanged browser-off point benchmark. No fixed-budget experiment.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**

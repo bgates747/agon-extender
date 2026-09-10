@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W7 results accepted. W8 contract accepted and execution authorized after the requested freeze: stock VDP versus EDP queue draining, workload accounting, then conditional instrumentation only if needed. No repair is authorized.
+- Status: W1–W8 accepted. W9 authorized after the requested freeze: PORT-003 restores stock queue draining, then the unchanged browser-off benchmark measures the result. The 128-budget experiment is rejected; physical deployment retains its explicit gate.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --
@@ -156,7 +156,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    Reconcile existing defects and accepted remedies before creating new ones.
    Keep checkout locations and private deployment details in ignored records.
 
-## Work — W1–W7 accepted; W8 authorized
+## Work — W1–W8 accepted; W9 authorized
 
 1. [x] **W1 — Pin the comparison and map the active paths.** Verify exact
    stock release, EMOS deployed/source and P4 source identities, documenting
@@ -247,7 +247,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    started. The original collection record retains its at-collection review
    state; acceptance is recorded separately.
 
-8. [ ] **W8 — Attribute P4 receive and drawing waits.**
+8. [x] **W8 — Attribute P4 receive and drawing waits.**
    The [accepted work contract](AUDIT-005/p4-wait-attribution.md) first compares
    stock VDP's background drain and immediate-flush behavior with EDP's fixed
    primitive budget. This is a mandatory gate before instrumentation. Then
@@ -262,6 +262,28 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    remains outside W8. The Author approved freezing W7 findings and this
    contract, then proceeding, on 2026-09-10. The existing emulator and
    physical deployment gates still apply.
+   Completed the source-only gate after freeze `71f082e`:
+   [W8 accounting and AUDIT-005-F006](AUDIT-005/p4-queue-accounting.md)
+   identifies five queued primitives per point, 20,480 in total. The
+   64-per-frame budget predicts 5.066768 s versus 5.075174 s measured;
+   receive buffering accounts for the send/tail split within roughly one
+   frame. Existing wire bursts recur at a mean 16.669 ms. No instrumentation
+   or hardware change was needed. The Author accepted the findings.
+
+9. [ ] **W9 — Restore stock drawing drain and measure the result.**
+   The Author directed the stock policy rather than a larger fixed budget.
+   [The accepted contract](AUDIT-005/stock-queue-drain.md) governs the P4-only
+   change, source/host validation, deployment gate and one unchanged counted-point
+   capture/CSV comparison. PORT-003 owns implementation under D013. Freeze W8
+   progress and this contract before coding. No EMOS, UART tuning, core-affinity
+   change or new game test belongs to this increment.
+
+When the current investigations are exhausted or resolve the reported
+slowdown, disposition the [deferred core-affinity review](PORT-003.md#deferred-core-affinity-review).
+If the slowdown remains, consider it as a subsequent diagnostic; if resolved,
+leave it for optimization after implementation is substantially complete.
+The Author requested this conditional follow-up on 2026-09-10. It does not
+expand the current work contract or authorize a scheduling change.
 
 ## Deliverables and acceptance
 
@@ -272,9 +294,11 @@ candidate, constraints, recommended owner and any missing measurements.
 W1 records paths and provenance. W2 records AUDIT-005-F001 through F005:
 transmit duplication/overhead, partial-write recovery, caller/flag differences,
 receive adaptations and P4 backpressure boundaries. W2 left those findings
-unranked. W6 now measures P4 backpressure as the dominant idle component of
-counted-point output; the internal P4 contributor and individual EMOS costs
-remain unisolated. W3 provides
+unranked. W6 measures P4 backpressure as the dominant idle component of
+counted-point output. W8's source-backed AUDIT-005-F006 attributes this workload
+to EDP's drawing budget, corroborated by elapsed time and burst cadence;
+internal occupancy/CPU intervals and individual EMOS costs remain unmeasured.
+W3 provides
 the concrete cases, autoexec, timing/reply boundaries, SD records and capture
 coverage requirements for the next increment; it is not benchmark evidence.
 

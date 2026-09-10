@@ -4,6 +4,10 @@ These contracts freeze logical frame behavior before implementation. They
 extend the qualified Phase B renderer without defining presentation pixels, an
 official mode facade, or an output sink.
 
+Amended 2026-09-10 by PORT-003-D013: stock-style queue draining replaces the
+original bounded primitive batch. Earlier qualified images and evidence retain
+their original behavior; this amendment does not retroactively requalify them.
+
 ## Execution ownership and clock boundary
 
 One frame-service owner performs every frame-boundary state transition. A host
@@ -32,7 +36,7 @@ presentation generation that user software cannot write.
 
 The notification boundary accumulates elapsed tick count rather than merely a
 boolean wake. Each pending tick is consumed as a distinct logical frame edge,
-increments the compatibility counter by one, receives one bounded renderer
+increments the compatibility counter by one, receives one queue-draining
 opportunity, and publishes one generation. This preserves the upstream
 one-VSYNC-event/one-frame-edge model rather than replacing several elapsed
 events with one newest-state pass. It records `elapsedTicks` and
@@ -42,7 +46,8 @@ backlog behavior rather than inferring them from host tests.
 For each service pass the normative order is:
 
 1. consume one elapsed tick and advance the compatibility frame count by one;
-2. execute the bounded eligible primitive batch in FIFO order;
+2. drain eligible primitives in FIFO order until the queue empties or
+   processing is suspended, checking suspension between executions;
 3. let unchanged common execution perform an encountered logical swap and
    notify its submitter;
 4. freeze Phase C frame metadata (pixels are not composed yet); and
@@ -63,7 +68,9 @@ the unchanged common execution paths. Correcting or otherwise strengthening
 these semantics belongs to `UPSTREAM-001`, not the strict-compatible baseline.
 
 Ordinary single-buffer primitives execute in FIFO order on logical frame
-service passes. A queued `Flush` used by official single-buffer `switchBuffer`
+service passes, without a fixed primitive-count or elapsed-time budget. This
+matches the selected stock worker with its background timeout disabled. A
+queued `Flush` used by official single-buffer `switchBuffer`
 therefore leaves the queue at the next logical edge. Ordinary
 double-buffer drawing retains immediate Phase B execution against the drawing
 plane; the queued swap is the frame-bounded operation.

@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-22
-- Last amended: 2026-09-01
+- Last amended: 2026-09-10
 - Related task: PORT-003
 
 ## Context
@@ -55,11 +55,15 @@ creating separate VDP renderers or clocks.
    submitter-notification ordering unless a later compatibility decision
    explicitly authorizes different behavior.
 6. Process each recorded logical frame edge independently. At each edge,
-   advance the writable 32-bit compatibility counter by one, execute bounded
-   frame work through the retained common controller, then publish the newest
+   advance the writable 32-bit compatibility counter by one, drain queued
+   drawing through the retained common controller until empty or suspended,
+   then publish the newest
    presentation generation. Do not coalesce multiple elapsed ticks into one
    renderer pass in the strict-compatible baseline. Sinks never own or block
-   logical time.
+   logical time. Match the selected stock VDP background drain with its
+   timeout disabled: no fixed primitive-count or elapsed-time budget limits
+   that drain. Suspension is observed between primitive executions; immediate
+   completion and double-buffer/swap semantics remain unchanged.
 7. Implement one central presentation compositor for every sink. It decodes
    native logical pixels, selects palette state by Copper scanline, converts
    to a requested output format, and adds hardware sprites and cursors without
@@ -109,6 +113,11 @@ Task-context rendering removes dependency on the old VGA ISR without silently
 changing retained queue semantics. A central compositor prevents Copper and
 hardware-overlay behavior from being reimplemented differently for each output
 path.
+
+The 2026-09-10 amendment removes the P4-specific primitive-count throttle.
+AUDIT-005's point-workload accounting and wire measurements exposed its
+throughput cost. The Author selected stock drain behavior directly; tick
+accounting, core affinity and consumer policies are separate from this change.
 
 ## Consequences
 

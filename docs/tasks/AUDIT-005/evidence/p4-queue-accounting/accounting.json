@@ -1,0 +1,58 @@
+{
+  "evidence_class": "source model plus offline analysis of accepted W7 wire decode",
+  "input_sha256": {
+    "analysis.json": "02150cd5406c13f0ae7736e4c3ba64f5b0db6d9465d7ddbee358270294d393ee",
+    "frames.json": "9e3984b8a15125c0d1dd58778d5c2bce0985b15c17b191a25b67c28a00d460c2"
+  },
+  "payload_bytes": 32768,
+  "points": 4096,
+  "nul_commands": 8192,
+  "payload_parser_calls": 12288,
+  "primitives_per_point": 5,
+  "payload_primitives": 20480,
+  "queue_capacity": 1024,
+  "primitive_budget": 64,
+  "period_microseconds": 16667,
+  "nominal_receive_buffer_bytes": 4096,
+  "model_passes": {
+    "total": 304.0,
+    "send": 264.0,
+    "tail": 40.0
+  },
+  "model_seconds": {
+    "total": 5.066768000000001,
+    "send": 4.400088,
+    "tail": 0.66668
+  },
+  "measured_seconds": {
+    "total": 5.075173597222221,
+    "send": 4.3908356388888885,
+    "tail": 0.6843379583333329
+  },
+  "measured_minus_model_seconds": {
+    "total": 0.008405597222220784,
+    "send": -0.009252361111111718,
+    "tail": 0.017657958333332835
+  },
+  "wire_bursts": {
+    "gap_threshold_seconds": 0.001,
+    "gap_count": 249,
+    "gap_min_seconds": 0.009349819444445273,
+    "gap_median_seconds": 0.012852236111111939,
+    "gap_max_seconds": 0.014203194444445273,
+    "resume_interval_count": 248,
+    "resume_interval_min_seconds": 0.016103875,
+    "resume_interval_mean_seconds": 0.01666863692876344,
+    "resume_interval_median_seconds": 0.016989166666666666,
+    "resume_interval_max_seconds": 0.017014208333333333,
+    "between_resume_byte_counts": {
+      "64": 100,
+      "128": 148
+    },
+    "mean_bytes_between_resumes": 102.19354838709677,
+    "first_burst_bytes": 7360,
+    "last_burst_bytes": 64,
+    "first_resume_offset_seconds": 0.2549878749999994
+  },
+  "limits": "No P4 occupancy or function duration was measured. Startup phase, finite FIFO/driver buffering, enqueue progress, direct flush and scheduling costs are not separately assigned. This models the original r07 budget; it predicts no exact time for the selected stock-drain correction."
+}

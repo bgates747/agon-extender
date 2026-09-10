@@ -1,7 +1,7 @@
 schema_version: 1.0.0
 artifact_kind: port_003_phase_c_implementation_manifest
 authority: docs/tasks/PORT-003.md#phase-c--logical-frame-service
-phase_contract: sink-independent logical ticks, bounded task-context execution through unchanged upstream queue semantics, swaps, frame count, and mock publication only
+phase_contract: sink-independent logical ticks, drain-until-empty-or-suspended task-context execution through unchanged upstream queue semantics, swaps, frame count, and mock publication only
 source_baselines:
   agon_vdp: v2.16.0
   vdp_gl:
