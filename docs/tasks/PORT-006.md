@@ -8,20 +8,20 @@
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
 
-## Current priority — restore video-only service
+## Current priority — video delivery
 
-The Author requested removal of browser keyboard/release behavior after the
-first ExCom hardware attempt. Restore the page to pre-input commit `a53dffd`,
-remove keyboard/timing HTTP routes and callbacks, and remove shared snapshot
-instrumentation. The existing native USB input path is independent and remains.
-Keep F003 complete-or-error sends and F012 live-handle containment; restore
-the pre-input ESP-IDF default five-second socket waits instead of the
-experiment's one-second limits. No activation repair is inferred from this
-network rollback. PORT-008's r02 procedure owns the immediate physical check.
+The video-only service is restored; the Author reports a ten-minute slideshow
+run without browser disconnects or visible faults on 2026-09-10. This is a
+bounded observation, not closure of the remaining resilience work.
 
-The browser-input composition is retired through its existing source-selection
-guard. Its builds, findings and old UI tests remain reproducible at the
-recorded historical commits. Resume input work only on Author reprioritization.
+PORT-003 now owns the RGB222 encoding and unthrottled snapshot increment under
+the [current browser-video contract](../protocols/browser-video.md). PORT-006
+continues transporting opaque bytes with one client, one credit, complete sends
+and bounded backpressure. Do not revive browser keyboard/timing routes.
+
+The Author requires the current Agon/P4 slideshow uptime run to remain
+undisturbed during local preparation. No device access or physical deployment
+is part of this increment's local review.
 
 ## Historical focused-keyboard tranche — deprecated
 

@@ -35,7 +35,7 @@ int main() {
               {2, 1, display::NativePixelFormat::PALETTE4, false, 0}) ==
               display::ConfigureResult::Ok,
           "configure first mode");
-  controller.setLogicalFramePeriodMicroseconds(200000);
+  controller.setLogicalFramePeriodMicroseconds(16667);
   controller.enableBackgroundPrimitiveExecution(true);
   controller.executeFrameWork(8);
 
@@ -43,10 +43,10 @@ int main() {
   require(controller.snapshotPool().tryAcquireLatest(0, first),
           "first boundary published");
   require(first.view().generation == 1 && first.view().width == 2 &&
-              first.view().height == 1 && first.view().payload_bytes == 6,
+              first.view().height == 1 && first.view().payload_bytes == 2 &&
+              first.view().pixel_format == display::SnapshotPixelFormat::RGB222,
           "first snapshot metadata");
-  require(first.view().data[0] == 0 && first.view().data[1] == 0 &&
-              first.view().data[2] == 0,
+  require(first.view().data[0] == 0 && first.view().data[1] == 0,
           "cleared logical plane composes black");
   first.release();
 
@@ -57,8 +57,8 @@ int main() {
   display::PresentationSnapshotLease second{};
   require(controller.snapshotPool().tryAcquireLatest(1, second),
           "second boundary published");
-  require(second.view().generation == 2 && second.view().data[0] == 255 &&
-              second.view().data[1] == 0 && second.view().data[2] == 0,
+  require(second.view().generation == 2 && second.view().data[0] == 3 &&
+              second.view().data[1] == 0,
           "palette-expanded red is immutable output");
   second.release();
 
@@ -74,7 +74,7 @@ int main() {
   require(maximum.view().generation == 3 && maximum.view().width == 1024 &&
               maximum.view().height == 768 &&
               maximum.view().payload_bytes ==
-                  display::kPresentationSnapshotBytesPerSlot,
+                  1024 * 768,
           "maximum snapshot metadata");
 
   std::cout << "snapshot-controller=pass\n";

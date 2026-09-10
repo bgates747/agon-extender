@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: Not started — registered from SETUP-004 Work 1.e
+- Status: Deferred by the Author on 2026-09-10 until the Author chooses to begin audio implementation
 - Started: --
 - Finished: --
 
@@ -102,3 +102,38 @@ network for browser consumption.
 PORT-003 owns the safe retained-parser binding. PORT-008 and SETUP-005 own the
 transport-reachability and mode-policy portions. This finding does not select
 an audio sink or authorize implementation.
+
+## Deferred Wolf3D/audio framing follow-up — 2026-09-10
+
+The Author explicitly defers repair of the audio-command parser until taking
+on audio implementation. This is a scheduling decision, not acceptance of the
+current parser behavior as compatible. Do not start a separate interim repair
+or Wolf3D investigation without renewed direction.
+
+The quick source audit found that
+`vdp/video/extender/audio/unavailable_audio_adapter.hpp:19` defines an empty
+`VDUStreamProcessor::vdu_sys_audio()`. The retained dispatch in
+`vdp/video/vdu_sys.h` calls it for `VDU 23,0,&85`; the P4 handler consumes no
+channel, subcommand or payload and sends no audio status. Remaining bytes can
+therefore become top-level VDU controls or text. The deployed paired-graphics
+manifest records the same adapter SHA-256 as the inspected source:
+`d610a6cc457bd917054da4f281cd63fa910c3f2a4ed57baec669b137afeb3e3e`.
+
+Wolf3D source inspected at commit `1a5af2c` sends channel-enable commands at
+startup and sample-selection/play commands during gameplay (`src/asm/wolf3d.asm`
+and `src/asm/vdu_sound.asm`). Its ordinary graphics operations have retained
+EDP handlers. The exact tested game binary has not been pinned. The framing
+defect is confirmed by code inspection; its responsibility for all observed
+Wolf3D symptoms has not been established by a repair/retest.
+
+1. [ ] When audio implementation resumes, resolve the existing framing and
+   acknowledgement obligations above, including a regression test for Wolf3D's
+   command sequences followed by ordinary text/graphics commands.
+2. [ ] Retest the same identified Wolf3D binary on mainboard VDP and EDP;
+   check text placement, gameplay and clean return to EMOS. Close
+   [QUAL-003-I003](QUAL-003.md) only when evidence supports doing so.
+
+Official contract: Agon documentation `docs/vdp/Enhanced-Audio-API.md`,
+command framing and status replies; retained stock-shaped implementation in
+`vdp/video/vdu_audio.h`. No audio sink choice, code change or hardware operation
+accompanies this deferral.

@@ -4,8 +4,8 @@
 
 Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.
 Mainboard BSP-28–30 artifacts are reference-display observations. A separate
-Wolf3D failure with EDP, startup follow-up and callback/benchmark design remain
-open. Author requested paired graphics fixtures after accepted
+Wolf3D failure with EDP is deferred to PORT-004 at the Author's request.
+Startup follow-up and callback/benchmark design remain open. Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
 with one keypress pause after the pair. Native P4 USB remains the input source.
@@ -254,18 +254,21 @@ The page varies count (1/2/4/8/16), backend, pixel format, scanline alignment
 and frame size; do not assume a population threshold or shared cause before
 the affected sub-stage is identified.
 
-QUAL-003-I003 — open: Wolf3D compatibility failure with EDP. The Author reports
+QUAL-003-I003 — deferred to PORT-004 by the Author on 2026-09-10 until audio
+implementation resumes: Wolf3D compatibility failure with EDP. The Author reports
 misplaced text and apparently unplayable behavior; Nurples appeared fine. The
 Author corrected the initial crash description: Escape/quit worked, the game
 exited cleanly to EMOS and operation was normal afterward. No crash is confirmed.
 The Author confirms the same game build works properly on mainboard VDP;
 treat this as an EDP-path compatibility difference, not a general game defect.
-Record the exact game build and steps before reproduction, identify where
-behavior diverges and compare the affected VDU commands/queries against stock
-behavior. Missing or incomplete VDP calls are the Author's
-hypothesis, not a confirmed diagnosis. Preserve useful failure evidence and
-coordinate any production port correction with PORT-008. Do not fold this
-failure into mainboard-only BSP-28–30 artifacts or the passing suite result.
+The quick source audit confirms that EDP's empty audio handler leaves command
+parameters in the VDU stream, where they can be interpreted as text or controls.
+Wolf3D sends these commands. This is a strong candidate explanation, not a
+hardware-confirmed complete diagnosis. [PORT-004](PORT-004.md) owns the recorded
+source evidence, framing repair and subsequent same-binary Wolf3D retest.
+Investigation and repair are deferred, not current graphics-suite work. Preserve
+this separate limitation; do not fold it into mainboard-only BSP-28–30 artifacts
+or the passing suite result.
 
 ## Completed visual review and performance request — 2026-09-10
 

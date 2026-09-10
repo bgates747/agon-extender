@@ -1,3 +1,5 @@
+import { PixelFormat } from "./frame_protocol.js";
+
 const VERTEX_SHADER = `#version 300 es
 precision highp float;
 
@@ -20,11 +22,20 @@ const FRAGMENT_SHADER = `#version 300 es
 precision highp float;
 
 uniform sampler2D u_frame;
+uniform bool u_rgb222;
 in vec2 v_uv;
 out vec4 out_color;
 
 void main() {
-  out_color = vec4(texture(u_frame, v_uv).rgb, 1.0);
+  vec3 colour = texture(u_frame, v_uv).rgb;
+  if (u_rgb222) {
+    // R8 holds the complete packed byte; nearest sampling preserves its bits.
+    // Decode final colour only. Palette/Copper/sprite rules remain on P4.
+    highp uint pixel = uint(round(colour.r * 255.0));
+    colour = vec3(float(pixel & 3u), float((pixel >> 2u) & 3u),
+                  float((pixel >> 4u) & 3u)) / 3.0;
+  }
+  out_color = vec4(colour, 1.0);
 }
 `;
 
@@ -78,6 +89,8 @@ export class WebGL2Presenter {
     this.texture = gl.createTexture();
     this.textureWidth = 0;
     this.textureHeight = 0;
+    this.pixelFormat = null;
+    this.formatUniform = gl.getUniformLocation(this.program, "u_rgb222");
     this.staging = null;
 
     gl.bindVertexArray(this.vao);
@@ -99,13 +112,16 @@ export class WebGL2Presenter {
 
   present(frame) {
     const gl = this.gl;
-    const { width, height, strideBytes, pixels } = frame;
-    const packedStride = width * 3;
+    const { width, height, strideBytes, pixels, pixelFormat } = frame;
+    const rgb222 = pixelFormat === PixelFormat.RGB222;
+    const uploadFormat = rgb222 ? gl.RED : gl.RGB;
+    const packedStride = width * (rgb222 ? 1 : 3);
 
-    this.canvas.width = width;
-    this.canvas.height = height;
+    if (this.canvas.width !== width) this.canvas.width = width;
+    if (this.canvas.height !== height) this.canvas.height = height;
 
-    if (this.textureWidth !== width || this.textureHeight !== height) {
+    if (this.textureWidth !== width || this.textureHeight !== height ||
+        this.pixelFormat !== pixelFormat) {
       // WebGL immutable texture storage cannot be resized. Recreate the one
       // texture on a VDU mode change; steady-state presentation allocates none.
       gl.deleteTexture(this.texture);
@@ -114,16 +130,17 @@ export class WebGL2Presenter {
       gl.texImage2D(
         gl.TEXTURE_2D,
         0,
-        gl.RGB8,
+        rgb222 ? gl.R8 : gl.RGB8,
         width,
         height,
         0,
-        gl.RGB,
+        uploadFormat,
         gl.UNSIGNED_BYTE,
         null,
       );
       this.textureWidth = width;
       this.textureHeight = height;
+      this.pixelFormat = pixelFormat;
     }
 
     let upload = pixels;
@@ -151,11 +168,12 @@ export class WebGL2Presenter {
       0,
       width,
       height,
-      gl.RGB,
+      uploadFormat,
       gl.UNSIGNED_BYTE,
       upload,
     );
     gl.useProgram(this.program);
+    gl.uniform1i(this.formatUniform, rgb222 ? 1 : 0);
     gl.bindVertexArray(this.vao);
     gl.drawArrays(gl.TRIANGLES, 0, 3);
   }

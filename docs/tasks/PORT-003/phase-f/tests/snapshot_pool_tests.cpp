@@ -51,7 +51,8 @@ void checkAllocationFailures() {
     Tracking tracking{};
     tracking.fail_on = failure;
     {
-      display::PresentationSnapshotPool pool(allocator(tracking));
+      display::PresentationSnapshotPool pool(allocator(tracking),
+        display::SnapshotPixelFormat::RGB888, 200000);
       require(!pool.enabled(), "failed allocation disables pool");
       require(pool.metrics().allocation_failures == 1,
               "failed allocation is counted once");
@@ -64,7 +65,8 @@ void checkAllocationFailures() {
 void checkPublicationAndLease() {
   Tracking tracking{};
   {
-    display::PresentationSnapshotPool pool(allocator(tracking));
+    display::PresentationSnapshotPool pool(allocator(tracking),
+        display::SnapshotPixelFormat::RGB888, 200000);
     require(pool.enabled(), "three-slot pool enabled");
     require(tracking.calls == 3 && tracking.live == 3,
             "exactly three fixed slots allocated");
@@ -141,7 +143,8 @@ void checkPublicationAndLease() {
 void checkCancellationAndBounds() {
   Tracking tracking{};
   {
-    display::PresentationSnapshotPool pool(allocator(tracking));
+    display::PresentationSnapshotPool pool(allocator(tracking),
+        display::SnapshotPixelFormat::RGB888, 200000);
     display::MutableSnapshotView write{};
     require(pool.tryBegin(0, 1, 0, write) ==
                 display::SnapshotBeginResult::InvalidDimensions,
@@ -170,13 +173,14 @@ void checkCancellationAndBounds() {
 void checkSustainedBoundedConsumers() {
   Tracking tracking{};
   {
-    display::PresentationSnapshotPool pool(allocator(tracking));
+    display::PresentationSnapshotPool pool(allocator(tracking),
+        display::SnapshotPixelFormat::RGB888, 200000);
     display::MutableSnapshotView write{};
 
     // A disconnected/null consumer leaves only one replaceable latest frame.
     for (std::uint64_t generation = 1; generation <= 256; ++generation) {
       auto const time = (generation - 1) *
-                        display::kPresentationSnapshotMinimumIntervalUs;
+                        200000ULL;
       require(pool.tryBegin(320, 240, time, write) ==
                   display::SnapshotBeginResult::Ok,
               "null-consumer production remains available");
@@ -195,7 +199,7 @@ void checkSustainedBoundedConsumers() {
     // One held lease plus a replaceable latest still leaves one producer slot.
     // Beginning that producer occupies all three slots; another begin is
     // refused immediately instead of allocating or waiting.
-    auto time = 256 * display::kPresentationSnapshotMinimumIntervalUs;
+    auto time = 256 * 200000ULL;
     require(pool.tryBegin(640, 480, time, write) ==
                 display::SnapshotBeginResult::Ok,
             "producer starts while slow lease is held");
@@ -211,7 +215,7 @@ void checkSustainedBoundedConsumers() {
             "producer replaces latest while old lease remains held");
 
     for (std::uint64_t generation = 258; generation <= 4096; ++generation) {
-      time += display::kPresentationSnapshotMinimumIntervalUs;
+      time += 200000;
       require(pool.tryBegin((generation & 1U) == 0 ? 320 : 1024,
                             (generation & 1U) == 0 ? 240 : 768,
                             time, write) == display::SnapshotBeginResult::Ok,

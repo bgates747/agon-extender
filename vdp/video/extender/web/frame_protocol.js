@@ -8,6 +8,7 @@ export const FRAME_REQUEST = "frame";
 
 export const PixelFormat = Object.freeze({
   RGB888: 1,
+  RGB222: 2, // One byte: 00BBGGRR, final P4-composed colour.
 });
 
 export const FrameFlags = Object.freeze({
@@ -68,7 +69,7 @@ export function parseFrame(buffer) {
   if (headerBytes !== FRAME_HEADER_BYTES) {
     reject("header-bytes", `EVF1 v1 header must be 32 bytes, not ${headerBytes}`);
   }
-  if (pixelFormat !== PixelFormat.RGB888) {
+  if (pixelFormat !== PixelFormat.RGB888 && pixelFormat !== PixelFormat.RGB222) {
     reject("pixel-format", `unsupported EVF1 pixel format ${pixelFormat}`);
   }
   if ((flags & ~FrameFlags.KNOWN_MASK) !== 0) {
@@ -84,9 +85,9 @@ export function parseFrame(buffer) {
     reject("dimension-limit", `EVF1 surface ${width}×${height} exceeds limits`);
   }
 
-  const minimumStride = width * 3;
+  const minimumStride = width * (pixelFormat === PixelFormat.RGB222 ? 1 : 3);
   if (strideBytes < minimumStride) {
-    reject("stride-too-small", `RGB888 stride ${strideBytes} < ${minimumStride}`);
+    reject("stride-too-small", `pixel stride ${strideBytes} < ${minimumStride}`);
   }
   const expectedPayload = strideBytes * height;
   if (expectedPayload > MAXIMUM_PAYLOAD_BYTES) {
@@ -132,10 +133,15 @@ export function makeDemoFrame({
   sequence,
   width = 320,
   height = 240,
-  presentPeriodUs = 200000,
+  presentPeriodUs = 16667,
+  pixelFormat = PixelFormat.RGB888,
 }) {
   validateDemoDimensions(width, height);
-  const strideBytes = width * 3;
+  if (pixelFormat !== PixelFormat.RGB888 && pixelFormat !== PixelFormat.RGB222) {
+    throw new RangeError("unsupported demo pixel format");
+  }
+  const bytesPerPixel = pixelFormat === PixelFormat.RGB222 ? 1 : 3;
+  const strideBytes = width * bytesPerPixel;
   const payloadBytes = strideBytes * height;
   const buffer = new ArrayBuffer(FRAME_HEADER_BYTES + payloadBytes);
   const view = new DataView(buffer);
@@ -145,7 +151,7 @@ export function makeDemoFrame({
   }
   view.setUint8(4, FRAME_VERSION);
   view.setUint8(5, FRAME_HEADER_BYTES);
-  view.setUint8(6, PixelFormat.RGB888);
+  view.setUint8(6, pixelFormat);
   view.setUint8(
     7,
     FrameFlags.FULL_FRAME | FrameFlags.PRESENT_BOUNDARY,
@@ -161,10 +167,17 @@ export function makeDemoFrame({
   const pixels = new Uint8Array(buffer, FRAME_HEADER_BYTES, payloadBytes);
   for (let y = 0; y < height; ++y) {
     for (let x = 0; x < width; ++x) {
-      const offset = y * strideBytes + x * 3;
-      pixels[offset] = (x + sequence) & 0xff;
-      pixels[offset + 1] = (y * 2) & 0xff;
-      pixels[offset + 2] = ((x ^ y) + sequence * 3) & 0xff;
+      const offset = y * strideBytes + x * bytesPerPixel;
+      const red = (x + sequence) & 0xff;
+      const green = (y * 2) & 0xff;
+      const blue = ((x ^ y) + sequence * 3) & 0xff;
+      if (pixelFormat === PixelFormat.RGB222) {
+        pixels[offset] = (red >> 6) | ((green >> 6) << 2) | ((blue >> 6) << 4);
+      } else {
+        pixels[offset] = red;
+        pixels[offset + 1] = green;
+        pixels[offset + 2] = blue;
+      }
     }
   }
   return buffer;

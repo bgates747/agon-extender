@@ -6,7 +6,6 @@
 namespace agon::extender::web {
 namespace {
 
-constexpr std::uint8_t kRgb888PixelFormat = 1;
 constexpr std::uint8_t kFullFrameFlag = 1U << 0U;
 constexpr std::uint8_t kPresentBoundaryFlag = 1U << 1U;
 
@@ -43,7 +42,10 @@ void BrowserVideoProvider::increment(std::uint32_t &counter) noexcept {
 
 bool BrowserVideoProvider::encodeHeader(
     display::ImmutableSnapshotView const &snapshot) noexcept {
-  constexpr std::size_t bytes_per_pixel = 3;
+  const std::size_t bytes_per_pixel =
+      snapshot.pixel_format == display::SnapshotPixelFormat::RGB222 ? 1 : 3;
+  if (snapshot.pixel_format != display::SnapshotPixelFormat::RGB222 &&
+      snapshot.pixel_format != display::SnapshotPixelFormat::RGB888) return false;
   if (snapshot.data == nullptr || snapshot.width == 0 || snapshot.height == 0 ||
       snapshot.width > display::kPresentationSnapshotMaximumWidth ||
       snapshot.height > display::kPresentationSnapshotMaximumHeight ||
@@ -64,7 +66,7 @@ bool BrowserVideoProvider::encodeHeader(
   header_[3] = '1';
   header_[4] = 1;
   header_[5] = static_cast<std::uint8_t>(kEvf1HeaderBytes);
-  header_[6] = kRgb888PixelFormat;
+  header_[6] = static_cast<std::uint8_t>(snapshot.pixel_format);
   header_[7] = kFullFrameFlag | kPresentBoundaryFlag;
   put32(header_.data() + 8,
         static_cast<std::uint32_t>(snapshot.generation));

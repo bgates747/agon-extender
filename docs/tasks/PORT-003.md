@@ -1,5 +1,73 @@
 # PORT-003 — Implement the P4 display backend and logical frame service
 
+## Current increment — RGB222 browser video, 2026-09-10
+
+The Author selected this as the next display increment, ahead of broader
+compatibility work. PORT-003 owns packed-pixel publication, EVF1 encoding,
+browser decoding and presentation pacing; PORT-006 retains opaque network
+transport and connection/backpressure ownership. Audio/Wolf3D repair remains
+deferred to PORT-004.
+
+1. [x] **RGB-1** Publish the P4-composed final image as one-byte RGB222 and
+   decode it in browser WebGL. Preserve palette, Copper, sprites and cursor
+   composition on P4; retain RGB888 browser decoding for existing streams.
+2. [x] **RGB-2** Remove the 200 ms snapshot throttle; retain bounded snapshots,
+   latest-frame selection and one-credit-per-present browser backpressure.
+   Report measured browser presentation rate separately from logical VDP time.
+3. [x] **RGB-3** Verify all 64 colours, format/dimension changes, malformed
+   frames, immutability and backpressure locally; build the P4 draft and prepare
+   an isolated browser review. Launch an explicitly labelled emulator attention
+   cue only after the review is ready.
+4. [ ] **RGB-4** After Author review and later deployment authorization, retest
+   slideshow/gameplay colour, responsiveness, achieved frame rate and uptime.
+
+The Author requires the currently running Agon/P4 slideshow to remain
+undisturbed: no device access, deployment, reset, network probe or SD edits
+during that completed preparation. The subsequent deployment authorization
+below supersedes this temporary hold for P4 flashing and the requested SD edit.
+The reported ten-minute slideshow run had no browser
+disconnects or visible faults; this is an observation of the existing build.
+Use standing identity preapproval for draft uart-excom-console-r05 and registry
+r54; EMOS and paired graphics fixtures remain unchanged.
+
+### Decision and local review record
+
+**PORT-003-RGB-D001 — accepted:** the Author selected RGB222 browser decoding
+and removal of the 5 fps throttle. [ADR-0018](../decisions/ADR-0018-rgb222-browser-video.md)
+records the boundary; [browser video](../protocols/browser-video.md) is the
+current encoding/pacing authority.
+
+Local preparation and Author visual review are complete. The Author accepted
+the preview and authorized P4 flashing; physical qualification remains pending. Draft P4 build:
+`uart-excom-console-r05-b2026-09-10-05-47-38Z`.
+The bundle and browser evidence are in the ignored `agents/rgb222-review/`.
+No EMOS build, physical flash, serial open, bench network request or SD edit
+was performed.
+
+Validation: C++ address/undefined-behavior sanitizer checks passed for all 64
+packed colours and exact header bytes, 120 successive 60 Hz publication
+boundaries, immutable slow-client leases and latest selection; existing pool,
+controller and network regressions passed. Actual Chromium WebGL readback
+passed all colours, RGB888/RGB222 format switches, padded rows, minimum/maximum
+surfaces, orientation, malformed frames and credit. The production page's
+reconnect/video-only and network containment tests passed. The local demo
+measured about 60 fps; this does not measure P4/Ethernet throughput.
+
+Registry and VDP source identity validation passed. The whole-repository
+version validator still fails on an unchanged r02 hardware connectivity hash
+mismatch; this predates the increment and is outside its scope. Diff checks
+pass. Author review is now accepted; source is being frozen for a clean candidate build.
+
+### Accepted review and deployment authorization — 2026-09-10
+
+The Author reports the local preview looked good and requests P4 flashing.
+Standing identity preapproval advances registry r55 and the existing console
+r05 to candidate. EMOS remains unchanged. The Author separately requests that
+SD autoexec select `EMOS KEYINPUT extender` and then `CD /mystuff/slideshow/64`;
+`app.bin` is directly in that directory. The Author clarified that keyboard
+selection must remain automatic. Mode selection and application launch remain
+operator actions. No Agon reset is authorized here.
+
 ## State
 
 - Status: In progress — Gate F accepted; Work 2.a source findings are recorded

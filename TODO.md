@@ -15,9 +15,15 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
+- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
+  - Started: 2026-08-22 10:14 EDT
+  - Finished: --
+  - Status: Active next increment: RGB222 browser video and removal of the 5 fps throttle; local review first, running hardware must remain undisturbed.
+  - Details: [PORT-003](docs/tasks/PORT-003.md)
+
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: EDP graphics-suite PASS accepted; mainboard BSP-28–30 artifacts recorded. Remaining: Wolf3D failure with EDP, startup follow-up and generalized-callback/benchmark design.
+  - Status: EDP graphics-suite PASS accepted; mainboard BSP-28–30 artifacts recorded. Remaining: startup follow-up and generalized-callback/benchmark design. Wolf3D/audio parsing follow-up deferred to PORT-004.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
@@ -26,11 +32,6 @@ initial Extender display. The USB schematic waits until 2026-09-10.
   - Status: First ExCom hardware console and Nurples gameplay accepted as a major milestone; native USB input and retained browser graphics work over UART. Entry/return/re-entry logs show no prior crash; N002 closed. Wider qualification remains open; r02 hardware/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
-- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: 2026-08-22 10:14 EDT
-  - Finished: --
-  - Status: First retained ExCom console accepted. Improve browser presentation latency and expand VDP fidelity in subsequent bounded increments.
-  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 ## Scheduled hardware documentation
 
@@ -45,7 +46,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**
   - Started: 2026-08-27 19:13 EDT
   - Finished: --
-  - Status: Restore video-only browser service for the ExCom retry; browser capture/timing are retired. Network resilience work remains open.
+  - Status: Video-only service restored; supports PORT-003 RGB222 delivery. Browser input remains retired; network resilience work remains open.
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 
 ## Deferred keyboard refinements
@@ -110,6 +111,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
   - Started: --
   - Finished: --
+  - Status: Deferred by the Author until audio implementation is requested; includes audio-command framing defect and Wolf3D retest.
   - Details: [PORT-004](docs/tasks/PORT-004.md)
 
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**

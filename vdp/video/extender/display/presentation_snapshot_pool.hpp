@@ -25,10 +25,12 @@ inline constexpr std::size_t kPresentationSnapshotBytesPerSlot =
     kPresentationSnapshotMaximumWidth * kPresentationSnapshotMaximumHeight *
     kPresentationSnapshotBytesPerPixel;
 inline constexpr std::uint64_t kPresentationSnapshotMinimumIntervalUs =
-    200'000;
+    0;
 
 static_assert(sizeof(PresentationRGB888) == kPresentationSnapshotBytesPerPixel,
               "PresentationRGB888 must remain tightly packed");
+
+enum class SnapshotPixelFormat : std::uint8_t { RGB888 = 1, RGB222 = 2 };
 
 enum class SnapshotBeginResult : std::uint8_t {
   Ok,
@@ -62,6 +64,7 @@ struct ImmutableSnapshotView {
   std::size_t stride_bytes;
   std::uint64_t generation;
   std::uint64_t present_period_us;
+  SnapshotPixelFormat pixel_format{SnapshotPixelFormat::RGB888};
 };
 
 struct SnapshotPoolMetrics {
@@ -107,7 +110,10 @@ class PresentationSnapshotLease final {
 
 class PresentationSnapshotPool final {
  public:
-  explicit PresentationSnapshotPool(Allocator allocator) noexcept;
+  explicit PresentationSnapshotPool(
+      Allocator allocator,
+      SnapshotPixelFormat format = SnapshotPixelFormat::RGB888,
+      std::uint64_t minimum_interval_us = kPresentationSnapshotMinimumIntervalUs) noexcept;
   ~PresentationSnapshotPool();
 
   PresentationSnapshotPool(PresentationSnapshotPool const &) = delete;
@@ -159,6 +165,8 @@ class PresentationSnapshotPool final {
   void releaseAllocations() noexcept;
 
   Allocator allocator_{};
+  SnapshotPixelFormat format_;
+  std::uint64_t minimum_interval_us_;
   std::array<Slot, kPresentationSnapshotSlotCount> slots_{};
   mutable std::atomic_flag transition_lock_ = ATOMIC_FLAG_INIT;
   bool enabled_{};

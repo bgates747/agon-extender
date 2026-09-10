@@ -677,3 +677,12 @@ its coordinator without clearing those scenes or drawing a mode notice. USB
 source selection and the mainboard clock remain independent. Default console
 switch commands keep their fresh-display behavior. ADR-0014 records this
 bounded extension; it does not authorize direct application transport access.
+
+## Browser-video encoding and pacing
+
+EDP composes the final pixels on P4. The [browser-video contract](protocols/browser-video.md)
+owns presentation transport encoding and pacing: RGB222 saves threefold payload
+relative to RGB888, browser WebGL expands colours, and bounded frame credits
+control delivery without a fixed 5 fps throttle. Logical VDP time remains
+independent of network/browser progress. Hardware qualification of the new
+encoding and pacing is tracked in PORT-003.

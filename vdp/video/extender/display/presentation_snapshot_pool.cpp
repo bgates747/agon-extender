@@ -49,8 +49,10 @@ void PresentationSnapshotLease::release() noexcept {
   view_ = {};
 }
 
-PresentationSnapshotPool::PresentationSnapshotPool(Allocator allocator) noexcept
-    : allocator_(allocator) {
+PresentationSnapshotPool::PresentationSnapshotPool(
+    Allocator allocator, SnapshotPixelFormat format,
+    std::uint64_t minimum_interval_us) noexcept
+    : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us) {
   transition_lock_.clear(std::memory_order_release);
   if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr) {
     increment(allocation_failures_);
@@ -179,7 +181,7 @@ SnapshotBeginResult PresentationSnapshotPool::tryBegin(
   }
   if (has_publication_time_ &&
       boundary_time_us - last_publication_time_us_ <
-          kPresentationSnapshotMinimumIntervalUs) {
+          minimum_interval_us_) {
     increment(cadence_skips_);
     return SnapshotBeginResult::CadenceLimited;
   }
@@ -217,6 +219,23 @@ SnapshotFinishResult PresentationSnapshotPool::finish(
     std::uint64_t present_period_us) noexcept {
   if (producer_slot_ < 0) return SnapshotFinishResult::NoProducer;
   if (composition == CompositionResult::Ok) {
+    if (pending_action_ == PendingAction::None &&
+        format_ == SnapshotPixelFormat::RGB222) {
+      // P4 already quantizes the composed palette/overlay image to RGB222.
+      // Pack forward in the exclusive producer slot BEFORE immutable publication.
+      // Reading each RGB888 value before overwriting its earlier output byte
+      // permits in-place compaction without another frame allocation or a lock
+      // over the pixel loop. A deferred publication must never pack twice.
+      auto &slot = slots_[static_cast<std::size_t>(producer_slot_)];
+      auto *packed = reinterpret_cast<std::uint8_t *>(slot.pixels);
+      const auto count = slot.width * slot.height;
+      for (std::size_t i = 0; i < count; ++i) {
+        const auto pixel = slot.pixels[i];
+        packed[i] = (pixel.red >> 6) | ((pixel.green >> 6) << 2) |
+                    ((pixel.blue >> 6) << 4);
+      }
+      slot.payload_bytes = count;
+    }
     pending_action_ = PendingAction::Publish;
     pending_present_period_us_ = present_period_us;
   } else {
@@ -254,9 +273,10 @@ bool PresentationSnapshotPool::tryAcquireLatest(
       slot.payload_bytes,
       slot.width,
       slot.height,
-      slot.width * kPresentationSnapshotBytesPerPixel,
+      slot.width * (format_ == SnapshotPixelFormat::RGB222 ? 1 : 3),
       slot.generation,
       slot.present_period_us,
+      format_,
   };
   unlock();
   lease = PresentationSnapshotLease(this, static_cast<std::size_t>(latest),

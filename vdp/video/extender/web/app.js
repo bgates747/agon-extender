@@ -1,5 +1,6 @@
 import {
   BrowserCreditState,
+  PixelFormat,
   FrameProtocolError,
   makeDemoFrame,
   parseFrame,
@@ -16,6 +17,7 @@ const strideNode = document.querySelector("#stride");
 const periodNode = document.querySelector("#period");
 const receivedNode = document.querySelector("#received");
 const presentedNode = document.querySelector("#presented");
+const fpsNode = document.querySelector("#fps");
 const gapsNode = document.querySelector("#gaps");
 
 const presenter = new WebGL2Presenter(canvas);
@@ -29,6 +31,8 @@ let sequenceGaps = 0;
 let lastSequence = null;
 let demoTimer = null;
 let demoSequence = 0;
+let rateStart = performance.now();
+let rateFrames = 0;
 
 function defaultEndpoint() {
   const scheme = location.protocol === "https:" ? "wss:" : "ws:";
@@ -48,11 +52,14 @@ function resetStats() {
   receivedNode.textContent = "0";
   presentedNode.textContent = "0";
   gapsNode.textContent = "0";
+  fpsNode.textContent = "—";
+  rateStart = performance.now();
+  rateFrames = 0;
 }
 
 function updateStats(frame) {
   sequenceNode.textContent = String(frame.sequence);
-  surfaceNode.textContent = `${frame.width}×${frame.height} RGB888`;
+  surfaceNode.textContent = `${frame.width}×${frame.height} ${frame.pixelFormat === PixelFormat.RGB222 ? "RGB222" : "RGB888"}`;
   strideNode.textContent = `${frame.strideBytes} B`;
   periodNode.textContent = frame.presentPeriodUs
     ? `${frame.presentPeriodUs} µs`
@@ -98,6 +105,13 @@ function animationLoop() {
     try {
       presenter.present(accepted.frame);
       ++presented;
+      ++rateFrames;
+      const now = performance.now();
+      if (now - rateStart >= 1000) {
+        fpsNode.textContent = (rateFrames * 1000 / (now - rateStart)).toFixed(1);
+        rateStart = now;
+        rateFrames = 0;
+      }
       updateStats(accepted.frame);
       if (accepted.usesCredit) credit.presented(sendCredit);
     } catch (error) {
@@ -173,15 +187,15 @@ function startDemo() {
   disconnect();
   stopDemo();
   resetStats();
-  setState("local EVF1 RGB888 test pattern");
+  setState("local RGB222 test pattern");
   demoSequence = 0;
   const queueDemoFrame = () => {
     if (pendingFrame) return;
-    const frame = parseFrame(makeDemoFrame({ sequence: demoSequence++ }));
+    const frame = parseFrame(makeDemoFrame({ sequence: demoSequence++, pixelFormat: PixelFormat.RGB222 }));
     acceptFrame(frame, false);
   };
   queueDemoFrame();
-  demoTimer = setInterval(queueDemoFrame, 200);
+  demoTimer = setInterval(queueDemoFrame, 1000 / 60);
 }
 
 connectButton.addEventListener("click", connect);

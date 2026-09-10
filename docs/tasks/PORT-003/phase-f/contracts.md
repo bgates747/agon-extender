@@ -1,7 +1,10 @@
 # PORT-003 Phase F contracts
 
 The Author accepted these contracts with the complete Phase F plan on
-2026-08-27. They govern implementation until an explicit reviewed amendment.
+2026-08-27. They govern implementation subject to the current
+[browser-video contract](../../../protocols/browser-video.md). The Author
+requested RGB222 encoding and removal of the 200 ms throttle on 2026-09-10;
+the RGB888-only and first-bench cadence clauses below are historical.
 
 ## Actors and ownership
 

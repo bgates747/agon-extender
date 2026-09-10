@@ -1,5 +1,9 @@
 # PORT-003 Phase F — Browser handoff and bootable port
 
+Current encoding/pacing authority: [browser video](../../../protocols/browser-video.md).
+This phase's frozen RGB888/5 fps records describe the original implementation;
+PORT-003's 2026-09-10 increment adds RGB222 and removes the fixed throttle.
+
 [`../../PORT-003.md`](../../PORT-003.md#phase-f--browser-video-handoff-and-bootable-port)
 is the authoritative checklist and scope fence. This directory owns Phase F's
 bounded source evidence, immutable snapshot and browser-video contracts,
