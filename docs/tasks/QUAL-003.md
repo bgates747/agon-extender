@@ -2,7 +2,10 @@
 
 ## State and scope
 
-Status: Both candidates installed; paired graphics startup prepared, awaiting hardware observations. Author requested paired graphics fixtures after accepted
+Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.
+Mainboard BSP-28–30 artifacts are reference-display observations. A separate
+Wolf3D failure with EDP, startup follow-up and callback/benchmark design remain
+open. Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
 with one keypress pause after the pair. Native P4 USB remains the input source.
@@ -58,6 +61,24 @@ only the committed route/reply authority. This keeps the comparison meaningful
 and preserves staged bitmap state; it requires a bounded EMOS/P4 extension.
 Alternative: current disruptive switches and rebuilding every previous stage
 on each transition; the mainboard image would not remain for comparison.
+
+QUAL-003-D002 — accepted and clarified by the Author on 2026-09-10: generalized
+callbacks are a supported production EDP capability, enabling applications to
+receive useful feedback about EDP work and state. Render completion is one use
+case; the graphics benchmark is an initial intended consumer. The Pingo
+mainboard callback is a precedent, not the scope limit or automatically selected
+mechanism. Recorded in
+[ADR-0017](../decisions/ADR-0017-generalized-edp-callbacks.md).
+
+QUAL-003-D003 — open: discuss the general callback model with the Author before
+implementation. Establish callback execution ownership, registration, event and
+state/result access, then the request/correlation and delivery contract under
+EMOS. For the rendering use case, specify covered work, hardware-sprite
+composition, deferred operations and the distinction from sink presentation.
+Capability discovery, cancellation/reset and stale-event behavior also require
+a contract. The Author explicitly requests further discussion; do not infer an
+event catalogue, arbitrary memory access, uploaded-code execution or a public
+ABI from the Pingo-specific carrier.
 
 ## Evidence and limits
 
@@ -187,3 +208,105 @@ images verify. The installer was replaced with the committed graphics startup;
 the card is safely unmounted. The [installation and startup receipt](../../hardware/designs/light2-harness-r03/tests/QUAL-003-2026-09-10-04-02-44Z/README.md)
 distinguishes the Author's flash report from SD checks. P4 r04 is unchanged.
 The next Agon reset starts Shapes; physical comparison remains pending.
+
+## Initial hardware feedback — 2026-09-10
+
+The Author reports the graphics look good so far and that manually loading and
+running the programs works better than automatic launch. The browser showed an
+SD-related complaint during the automatic path, although EMOS could load the
+programs manually. Exact message, failing autoexec line, timing and observed
+page/stage coverage are not yet recorded. This is partial positive visual
+feedback, not a complete Shapes/Bitmaps pass. See the design-adjacent
+[observation notes](../../hardware/designs/light2-harness-r03/tests/paired-graphics-observations.md).
+
+QUAL-003-I001 — open: identify the automatic-start failure. First recover the
+exact message and whether it precedes the first page or follows program exit.
+EMOS's inherited `src/mos.c` maps return code 1 to `Error accessing SD card`;
+`mos_EXEC` propagates command/program failure to the normal error printer.
+The paired fixtures also return 1 for mode/route failures (`paired.inc` and
+Shapes' initial mode check). Therefore the generic SD wording cannot by itself
+identify the failed subsystem. A mode-readiness race is a hypothesis only;
+neither SD failure nor that race has been reproduced or established.
+
+For the next media handover, follow the Author's manual-launch preference:
+retain boot smoke, native USB input, both mode-20 selections, ExCom and the
+`/extender` working directory, then stop at the prompt. Omit only the final
+`LOAD shapes.bin` / `RUN` pair. Record the changed startup as a procedure
+deviation or revision when deployed; do not rewrite the frozen r01 startup or
+earlier evidence. The card is not mounted locally at this observation, so no
+media or running-board change accompanied it. Leave the automatic-start defect
+open even if manual loading continues to work.
+
+QUAL-003-I002 — recorded mainboard reference anomaly; non-blocking for the
+accepted EDP suite pass: sprite-display anomalies on pages 28–30.
+The Author reports mainboard VDP shaking/tearing while EDP appears steady and
+continues the review. Page 28 exercises hardware paint-mode transitions;
+page 29 exercises transformed frame lists on both sprite backends. Preserve
+this observation without changing the fixture mid-review or attributing the
+cause to stock VDP, wiring, mode switching or EDP. After the review, narrow
+the affected sub-stages and whether the effect continues while paused; account
+for mainboard VGA versus EDP's five-fps browser presentation. Exact footage,
+sub-stages and repeat evidence remain unavailable.
+
+The Author additionally reports abnormal mainboard output on BSP-30, bounded
+sprite population. Its exact artifact and EDP comparison are not yet reported.
+The page varies count (1/2/4/8/16), backend, pixel format, scanline alignment
+and frame size; do not assume a population threshold or shared cause before
+the affected sub-stage is identified.
+
+QUAL-003-I003 — open: Wolf3D compatibility failure with EDP. The Author reports
+misplaced text and apparently unplayable behavior; Nurples appeared fine. The
+Author corrected the initial crash description: Escape/quit worked, the game
+exited cleanly to EMOS and operation was normal afterward. No crash is confirmed.
+The Author confirms the same game build works properly on mainboard VDP;
+treat this as an EDP-path compatibility difference, not a general game defect.
+Record the exact game build and steps before reproduction, identify where
+behavior diverges and compare the affected VDU commands/queries against stock
+behavior. Missing or incomplete VDP calls are the Author's
+hypothesis, not a confirmed diagnosis. Preserve useful failure evidence and
+coordinate any production port correction with PORT-008. Do not fold this
+failure into mainboard-only BSP-28–30 artifacts or the passing suite result.
+
+## Completed visual review and performance request — 2026-09-10
+
+The Author reports everything else passes and EDP is steady throughout,
+including BSP-30. This accepts the visual tour with the previously recorded
+mainboard and startup exceptions; precise automated pixel/timing evidence is
+not inferred. EDP appeared slower on some tests, but rendering time and browser
+presentation delay have not been separated. The Author requests an automated
+whole-suite mainboard-first/EDP-second benchmark proposal with durable file
+output; benchmark implementation and deployment have not begun.
+
+The Author suggests reusing the existing Pingo VDP render-completion callback,
+which was developed and physically tested on the mainboard ESP32. Its `P3DR`
+notification is a token/sequence-tagged ten-byte event, emitted after a Pingo
+scene render has finished writing its destination, and consumed through the
+MOS keyboard callback. That specific hook is scoped to Pingo 3D completion;
+ordinary 2D VDU queue completion requires its own verified boundary.
+
+The stock VDP and retained EDP `sendScreenPixel` handlers already call
+`waitPlotCompletion()` before returning the pixel packet, and the documented
+VDU 23,0,&CA command explicitly drains the drawing queue. These provide a
+stock-compatible completion/reply path to assess for this benchmark. A hardware
+sprite's recurring VGA scanout or EDP presentation composition is not completed
+by a framebuffer read; label command/framebuffer timing separately from actual
+display presentation. Exact local Pingo references are in the paired-graphics
+précis. No mainboard firmware replacement is implied by this discussion.
+
+The Author subsequently clarified the broader product goal: generalized EDP
+callbacks (D002), with render completion as an example. The earlier
+stock-compatible query proposal remains relevant to timing the stock mainboard
+reference; it does not replace the general EDP facility. The callback model
+requires further discussion. Benchmark and service implementation have not begun.
+
+## Graphics-suite milestone frozen — 2026-09-10
+
+The Author explicitly accepts the graphics suite as a pass and requests a
+commit, emphasizing that the notable suite artifacts are on mainboard VDP,
+not Extender. Record the bounded EDP visual PASS beside the design. The later
+Wolf3D text/playability report is a separate unresolved EDP compatibility issue;
+Nurples is reported visually fine. The suite comparison work is accepted,
+while the task retains the named follow-ups. Firmware identities remain
+candidates; no measured performance result or broad game qualification is
+claimed. The generalized-callback direction is included in this checkpoint,
+with its interface still open for discussion.

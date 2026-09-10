@@ -101,6 +101,17 @@ compatibility retains upstream queue-depth completion behavior even though a
 separate A/B research task may evaluate stronger semantics for an upstream
 contribution.
 
+Generalized callbacks are a production EDP capability, giving applications a
+documented return path for EDP events, results and state information. This
+supports meaningful interaction beyond submitting display commands. EMOS
+retains transport and application mediation under the EDU service contract.
+Render completion and the graphics benchmark are initial use cases within the
+broader facility. Rendering completion remains distinct from output-sink
+presentation, and the retained stock VDU completion contract still applies.
+Pingo's mainboard-tested callback supplies a precedent without prescribing the
+general callback mechanism or ABI. See
+[ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md).
+
 One central presentation compositor decodes native pixels, applies Copper
 palettes by scanline, and adds hardware sprites and cursors without changing
 logical framebuffer state or readback. Network/browser and later local-display

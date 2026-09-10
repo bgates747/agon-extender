@@ -2,7 +2,10 @@
 
 Candidate hardware procedure owned by [QUAL-003](../../../../docs/tasks/QUAL-003.md).
 The Author accepted the paired emulator images and authorized deployment on
-2026-09-09. Hardware observations remain pending.
+2026-09-09. The Author accepted the EDP graphics-suite visual result as PASS on
+2026-09-10; [observations](paired-graphics-observations.md) record the manual
+launch, mainboard sprite artifacts and separate Wolf3D failure. The frozen
+execution steps below retain their original definition.
 
 ## Candidate and installation
 

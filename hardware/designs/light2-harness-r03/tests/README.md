@@ -1,6 +1,11 @@
 # Light 2 r03 tests
 
-Current preparation: [paired mainboard/EDP graphics](paired-graphics-probe-r01.md).
+Accepted [EDP graphics-suite visual PASS](paired-graphics-observations.md):
+mainboard VDP showed artifacts on BSP-28–30, while EDP was steady throughout
+the suite. Wolf3D's text/playability problems with EDP remain unresolved; it
+exited cleanly to normal EMOS operation, with no confirmed crash.
+Nurples appeared fine. The [paired procedure](paired-graphics-probe-r01.md)
+and observations preserve the manual-launch exception and unmeasured timings.
 Native USB keyboard input and [ordinary ExCom console](uart-excom-console-r03.md)
 are accepted functional baselines. The earlier
 [browser timing result](REMOTE-001-2026-09-09-18-00-44Z/README.md) remains historical;

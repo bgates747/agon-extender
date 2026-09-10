@@ -17,7 +17,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: Both candidates installed; repeatable paired graphics startup ready on SD. Await mainboard-first/EDP-second hardware observations with native USB input.
+  - Status: EDP graphics-suite PASS accepted; mainboard BSP-28–30 artifacts recorded. Remaining: Wolf3D failure with EDP, startup follow-up and generalized-callback/benchmark design.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**

@@ -1,5 +1,15 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## Generalized EDP callbacks — 2026-09-10
+
+The Author selected generalized callbacks as a production EDP capability in
+[ADR-0017](../decisions/ADR-0017-generalized-edp-callbacks.md), enabling useful
+feedback about EDP work and state. QUAL-003 tracks the initial design discussion
+and render-completion benchmark use case. Preserve EMOS-owned transport and
+application mediation when the contract is implemented and qualified. The
+callback model remains under discussion. Rendering completion remains distinct
+from output-sink presentation; the existing stock VDU queue contract still applies.
+
 ## State
 
 - Status: The Author accepts the first ordinary ExCom hardware console as a
