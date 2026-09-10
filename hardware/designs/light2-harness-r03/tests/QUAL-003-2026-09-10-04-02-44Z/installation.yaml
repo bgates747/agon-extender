@@ -1,0 +1,72 @@
+run_id: QUAL-003-2026-09-10-04-02-44Z
+operation: Repeatable graphics startup preparation
+prepared_at: '2026-09-10T04:02:44.215859+00:00'
+emos_build_id: agon-emos-v0.1.12-b2026-09-10-03-50-35Z
+emos_sha256: 2c261e290cd3e9af44a168775eabef4a514cf3262d9391fc4ce3dfe414ed5a77
+fixture_build_id: paired-graphics-probe-r01-b2026-09-10-03-50-35Z
+installation_confirmation: Author reports good EMOS flash; consumed SD payload matches
+  candidate; no independent flash readback
+autoexec_sha256: c2aaf9909b2ce704f0ed59b213a0e1931c62961b19a320f4deaa67f5297d95f2
+runtime_files:
+- destination: extender/shapes.bin
+  sha256: 8d31183e8d86138f9efb1d6510f42804abe483e4144521d65774596c2eda075d
+- destination: extender/bitmaps.bin
+  sha256: 7341dbf29159580adde6789ec2b59f37146d21ed2761a1a2a788a4350650d1e0
+- destination: extender/assets/bitmaps/alpha2.rgba2
+  sha256: 978269bde44d4279880f0eb39d90f97fe2c56fa4363ac662d63855526bfb09eb
+- destination: extender/assets/bitmaps/alpha8.rgba8
+  sha256: c976b114adabd8382692dd5e8072a4f0b838f33df2556ec35eba3f451597dcdf
+- destination: extender/assets/bitmaps/axes2.rgba2
+  sha256: 6d7156081386707a0ed346256a95b64409fb3fe90045a833ac42d85b4b21e25c
+- destination: extender/assets/bitmaps/axes8.rgba8
+  sha256: 9db3148de94029486167c33de94ec8f049fc6fb933fc87c6612a3ae9a8798aec
+- destination: extender/assets/bitmaps/checker.rgba2
+  sha256: 4724abbe0008b22342aa835936a2bfcbb4fd552fa4bef57ac70585c80037853c
+- destination: extender/assets/bitmaps/cut2.rgba2
+  sha256: 316a2d38dfe9352624f9da34389c3bfb677328824dfeb6944c5a311185a13deb
+- destination: extender/assets/bitmaps/cut8.rgba8
+  sha256: 270258a45dc8dcfcca30aa55e3f311320c72595d4e5e069df0482684f4d1eb80
+- destination: extender/assets/bitmaps/frame0_2.rgba2
+  sha256: 5ce872666147ddd5e5edbb07e81d1f971c663aae5423dee8c9e14b936604192f
+- destination: extender/assets/bitmaps/frame0_8.rgba8
+  sha256: 7b074cce48c0a4426b3f7252ceb1f84478fee8bbfd632f02fff1a3d49a5cd8be
+- destination: extender/assets/bitmaps/frame1_2.rgba2
+  sha256: d9be421f28b372ee5e44b689dfe272eb7dfc3e6249ffbd43b0cba73375d11312
+- destination: extender/assets/bitmaps/frame1_8.rgba8
+  sha256: a9a3960b5d0247609165e549009a6157d7910bed3091e6713c32e28fd93fc9a6
+- destination: extender/assets/bitmaps/frame2_2.rgba2
+  sha256: 2efa962dd5cf9ffcc8ec452c78777ef4dd404f4cc86427daa3f59e767559389e
+- destination: extender/assets/bitmaps/frame2_8.rgba8
+  sha256: 4340e3ec03338d6b2a15d88d6970cd315f65f064f8bc2e8a232b6acb9d89e43a
+- destination: extender/assets/bitmaps/frame3_2.rgba2
+  sha256: 5097938b27f7419b8233397a3b9a1dc808913c1d5810af29cf16f6e050ff20f3
+- destination: extender/assets/bitmaps/frame3_8.rgba8
+  sha256: 7dd17f6ede2e3416f7aec3dde8e2b3e87601fa9b80818818047c244be4057f78
+- destination: extender/assets/bitmaps/large2.rgba2
+  sha256: 03200bb8333f9a7e77c4fce17b05750821fc34b958e6dded46dc04589342f922
+- destination: extender/assets/bitmaps/large8.rgba8
+  sha256: cbc66aeda3c90f54d4f24931cac8aa1f83556b8d1bc0cc21d95822495c005c1c
+- destination: extender/assets/bitmaps/manifest.json
+  sha256: a025b5c9b70402c7815ad76d6b6dea0b0c0e0c761028c97e719b84a0dbb5cf1d
+- destination: extender/assets/bitmaps/mask.mask
+  sha256: 5733e6b11ad6af660e9a837054091b0334c23d295fc570fb735dd8f5dc26532f
+- destination: extender/assets/bitmaps/packed1.packed
+  sha256: e9dca3539172b240534a3a2dbd072d9d9ac5cdb64f50604dafdda8656862a7bd
+- destination: extender/assets/bitmaps/packed2.packed
+  sha256: 093cf63664703c3fd5db7b9ddbf4b1dd0fa902f8eac69b31d5f1fa5ad2115a45
+- destination: extender/assets/bitmaps/packed4.packed
+  sha256: 1e45b68a379836eb4e4718f7430eb2b53f25d0af8c2635ba492e1673253d4ef6
+- destination: extender/assets/bitmaps/stripes.rgba2
+  sha256: 3d4c3741e7d52a754d3765dfb2177c536df3c87b3ae9e4f178481babec794dcc
+- destination: extender/assets/bitmaps/wide2.rgba2
+  sha256: f7a4d61fb99dfa32c3aac5f251dc4c58f091f3005412afa531ee16334c4429fd
+- destination: extender/assets/bitmaps/wide8.rgba8
+  sha256: 34b2d9ed5693669a29bbe8eafc32bc6f54a3f440340148636aaf9180f7452964
+- destination: bin/EMBOOT.BIN
+  sha256: 0732ef90dd2f0c11d74e2042967b09d1e668709350428ff982ae356a10d86bb8
+- destination: emos-boot/check.txt
+  sha256: 47d8c66940ee5fb049aefe79c49f9cbdccd57f501497cfb14448e49da30fbc50
+rollback_v011_sha256: 2198f97ac3d1cf0b60b9948abe8af2333c0263e649976d53d1413c7873728a36
+rollback_v0110_sha256: 2a87f91dffc114813f7193525729d637758b543e3ddf31bd17ce062f0a3d0449
+physical_graphics_result: pending
+safe_unmount: passed

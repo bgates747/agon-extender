@@ -2,7 +2,7 @@
 
 ## State and scope
 
-Status: P4 candidate deployed; Agon installer staged, awaiting Author flash confirmation. Author requested paired graphics fixtures after accepted
+Status: Both candidates installed; paired graphics startup prepared, awaiting hardware observations. Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
 with one keypress pause after the pair. Native P4 USB remains the input source.
@@ -178,3 +178,12 @@ the working v0.1.11 image is preserved as rollback. The card was safely
 unmounted. Next the Author inserts it, resets Agon, confirms the flash and
 remounts it locally; replace the installer with the test-sheet startup then.
 Physical paired rendering, CLI return and repeat checks remain pending.
+
+## Installation confirmed — 2026-09-10
+
+The Author reports good EMOS flashing. Returned SD payload integrity matches
+the frozen v0.1.12 candidate, and all 29 runtime files and retained rollback
+images verify. The installer was replaced with the committed graphics startup;
+the card is safely unmounted. The [installation and startup receipt](../../hardware/designs/light2-harness-r03/tests/QUAL-003-2026-09-10-04-02-44Z/README.md)
+distinguishes the Author's flash report from SD checks. P4 r04 is unchanged.
+The next Agon reset starts Shapes; physical comparison remains pending.
