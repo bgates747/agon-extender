@@ -10,21 +10,21 @@ item is removed.
 Native USB keyboard bring-up is complete: ordinary MOS commands and gameplay
 work in Legacy. On 2026-09-09 the Author deferred further keyboard refinements
 and selected actual ExCom operation and the retained VDP-to-EDP port as the
-next priority. First prove normal CLI/VDU output on EDP with USB input retained,
-and a working return to Legacy. Use the existing UART-only r03 path; parallel
+next priority. The first ordinary ExCom console is now accepted, including
+observed Legacy return and re-entry. Build on that working UART console. Use the existing UART-only r03 path; parallel
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: Legacy USB input passes. Video-only r02 captured three ExCom crashes caused by skipped font/context initialization. P4 r03 uses the retained mode lifecycle; recheck physical entry/return and USB continuity. EMOS is unchanged. The r02 hardware/parallel work stays on hold.
+  - Status: First ExCom hardware console and Nurples gameplay accepted as a major milestone; native USB input and retained browser graphics work over UART. Entry/return/re-entry logs show no prior crash; N002 closed. Wider qualification remains open; r02 hardware/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Reuse the retained parser/rendering/browser display for the first ExCom console proof; expand VDP fidelity in subsequent bounded increments.
+  - Status: First retained ExCom console accepted. Improve browser presentation latency and expand VDP fidelity in subsequent bounded increments.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 ## Scheduled hardware documentation

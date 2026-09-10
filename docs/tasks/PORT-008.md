@@ -2,22 +2,17 @@
 
 ## State
 
-- Status: Resident EMOS keyboard reception and stock MOS state integration
-  pass controlled hardware checks; native USB ordinary CLI and gameplay are
-  accepted. Bounded USB reconnect, mainboard source exclusion and Agon-only
-  reset readmission also pass; wider transport qualification remains open.
-  Current priority is the first ExCom console slice below. Its first physical
-  attempt passed Legacy input but failed ExCom entry. Video-only
-  rollback is complete. Three captured entry attempts identify a P4 null-font
-  crash; correct the preparation lifecycle and recheck physical entry/return.
-  Browser input is deprecated; further keyboard refinements are deferred.
-  The r02 design, wiring, parallel implementation/Work 2.e recapture and full
-  circuit qualification remain on hold. The ExCom P4 candidate is deployed and
-  the Author confirms EMOS installation; non-flashing test startup is ready.
+- Status: The Author accepts the first ordinary ExCom hardware console as a
+  major milestone: native USB input, retained EDP browser output and UART-only
+  EMOS routing. P4 logs confirm entry, Legacy return and re-entry without the
+  prior activation crash; N002 is closed for that defect. Browser latency and
+  wider VDP fidelity remain follow-up work. Resident keyboard reception and
+  native USB Legacy CLI/gameplay were already accepted. Browser input remains
+  deprecated; the r02 circuit, parallel work and full qualification stay held.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
-## Next bounded increment — ordinary ExCom console
+## Accepted bounded increment — ordinary ExCom console
 
 Selected by the Author on 2026-09-09 after PORT-015 completion. This section
 supersedes the keyboard-only scheduling below. The existing r02/parallel hold
@@ -202,7 +197,8 @@ uart-excom-console-r02 and registry r50; EMOS v0.1.11, the USB input code and
 the ExCom activation implementation remain unchanged. The r02 sheet first
 checks the restored video connection, then repeats the console test.
 
-N002: Physical ExCom acceptance remains open. The r02 capture below identifies
+N002: The initial physical attempts failed; the accepted r03 result below
+closes this activation defect. The r02 capture below identifies
 the activation crash; the earlier emulator peer did not execute ESP-IDF or the
 actual P4 display-mode transition. N001 reference rendering remains separate.
 
@@ -214,7 +210,7 @@ over 15.008 seconds, without disconnect/error), then closed its connection.
 The existing SD startup was verified and safely unmounted without changes.
 The bounded capture completed and retained all three subsequent failures.
 
-#### N002 — ExCom preparation skips retained context initialization
+#### N002 — ExCom preparation skips retained context initialization (closed)
 
 `PORT-008-2026-09-10-02-01-27Z` records three matching P4 load-access panics
 following PREPARE/COMMIT. Exact ELF decoding reaches `vdu_resetViewports()` →
@@ -236,6 +232,13 @@ control, and rejects N002's old raw call as a negative control. Physical
 entry, editing, Legacy return and USB continuity must still pass before N002
 can close. A P4-only flash is sufficient; do not reflash EMOS for this fix.
 Peer-restart recovery beyond this crash correction remains unqualified.
+
+Clean source `0f10013` produced candidate
+`uart-excom-console-r03-b2026-09-10-02-21-03Z`. Deployment/readback and native
+USB startup pass under `PORT-008-2026-09-10-02-22-12Z`; video-only Presented
+advanced 3→78 over 15.012 seconds in a bounded physical-browser check. EMOS and
+SD are unchanged. A P4 log is armed for the Author's entry/return retry; those
+physical results were pending at deployment; acceptance is recorded below.
 
 #### N001 — Native reference glyph omission (open)
 
@@ -2067,3 +2070,48 @@ are retained in that deferred task. No full hardware
 qualification or candidate-status change is made. Escape/MOS return and the
 result byte are unconfirmed for this physical session. The operator observation
 is retained beside the r03 deployment, separately from its earlier run record.
+
+### r03 first working hardware observation — 2026-09-09
+
+The Author reports ExCom now working, with significant browser display latency.
+The existing capture `PORT-008-2026-09-10-02-22-54Z` records PREPARE/COMMIT,
+LEAVE, and another PREPARE/COMMIT, without a panic or P4 restart in the
+retrieved interval. This first report supported corrected activation. The Author subsequently
+accepted the functional milestone; the completed capture and precise evidence
+limits are recorded below.
+
+The browser provider sends complete RGB888 frames: 640×480×3 = 921,600 bytes.
+Snapshot production has a deliberate 200,000 µs minimum interval (5 Hz), and
+the runtime counters agree with approximately five publications per second.
+That cadence alone introduces up to roughly 200 ms waiting before transfer,
+with encoding/transfer/browser presentation adding delay. At 5 fps the raw
+pixel payload is 36.864 Mbit/s per fully receiving client. No latency intervals
+or Ethernet throughput were measured here; do not attribute all observed delay
+to bandwidth. Browser output optimization remains subsequent bounded work.
+
+### First ordinary ExCom console accepted — 2026-09-09
+
+The Author explicitly accepts this as a major success and authorizes the
+progress commit. `PORT-008-2026-09-10-02-22-54Z` preserves the successful
+P4 capture beside the r03 design tests. It records entry, one Legacy return
+and re-entry, with one startup and no recorded panic/console fault. The
+working-console observation and log close N002's activation crash. Do not
+infer a second completed return or individually unreported editing checks.
+
+This freezes the first ordinary UART-only ExCom console with native USB input
+and retained EDP browser output. EMOS v0.1.11 and console r03 remain candidates;
+no lifecycle status/version change accompanies functional acceptance. The log
+was stopped and retrieved without resetting either board. Significant browser
+latency is acknowledged: the current complete RGB888 frame path is capped at
+5 Hz. Subsequent increments should improve browser presentation and expand
+retained VDP fidelity. N001, broad transport qualification and held parallel
+work are not closed by this milestone.
+
+### Nurples gameplay included in the accepted milestone
+
+The Author subsequently clarified that they played Nurples rendered by EDP
+on the P4, with native USB input. Apart from the five-fps browser presentation,
+the graphics looked great by their visual assessment. The accepted milestone
+therefore includes real-game graphics/input beyond ordinary CLI output. The
+design-adjacent run record includes this additional operator observation; no
+exact game-binary identity, frame comparison or complete VDP parity is inferred.

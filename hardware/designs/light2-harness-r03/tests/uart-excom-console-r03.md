@@ -60,7 +60,9 @@ path or waive the console gate. Browser health before entry does not establish s
 
 ## Results and limits
 
-Hardware result: pending. Preserve the P4 serial log from before Agon reset
+Hardware result: Author-accepted functional milestone; see
+[the accepted run](PORT-008-2026-09-10-02-22-54Z/README.md) for exact observations
+and limits. Significant browser latency remains. Preserve the P4 serial log from before Agon reset
 through both entry/return cycles; no reopening serial mid-test. A panic/reset,
 frozen video or loss of USB input is a failure. Record Author observations and relevant P4 logs with
 the exact candidate pair; a browser image alone does not prove the return path.

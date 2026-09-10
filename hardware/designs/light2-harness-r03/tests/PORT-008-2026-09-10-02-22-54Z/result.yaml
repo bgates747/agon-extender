@@ -1,0 +1,33 @@
+run_id: PORT-008-2026-09-10-02-22-54Z
+status: author-accepted-functional-milestone
+accepted_at: '2026-09-10T02:48:24.778593+00:00'
+p4: uart-excom-console-r03-b2026-09-10-02-21-03Z
+emos: agon-emos-v0.1.11-b2026-09-10-01-22-40Z
+source_commit: 0f100130841177deb72f6de2ab6bbb5d4c5ae9c0
+capture_state: finished
+capture_stop_reason: operator-finished
+capture_duration_seconds: 1431.054
+control_events:
+- ExCom control op=1 active=0
+- ExCom control op=2 active=1
+- ExCom control op=3 active=0
+- ExCom control op=1 active=0
+- ExCom control op=2 active=1
+p4_startup_count: 1
+panic_or_console_fault_observed: false
+author_observation: ExCom working; significant browser display latency; accepted as
+  a major success.
+limits:
+- Log shows entry, one completed leave, and re-entry; a second leave and every individual
+  editing check are not inferred.
+- No measured end-to-end latency, throughput benchmark or complete VDP compatibility
+  qualification.
+- Firmware remains candidate; milestone acceptance does not change artifact lifecycle
+  status.
+- Nurples assessment is visual/operator-reported; exact game binary and frame-by-frame
+  comparison were not recorded.
+private_capture_sha256:
+  serial.log: bbbc7651f2b5d4cb1738dac4b2b55962138c1dfcb75a8c551c443d84a1453973
+  capture.json: 5b2f055f04debd176adabb2bfb6968964bb41a142a6d6f11ac656a8ab831282b
+additional_author_observation: Played Nurples rendered by EDP on P4 with native USB
+  input; graphics looked great apart from five-fps browser presentation.

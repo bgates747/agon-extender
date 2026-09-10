@@ -1,0 +1,16 @@
+ExCom console uart-excom-console-r03-b2026-09-10-02-21-03Z (candidate), UART1 1152000 8N1 RTS/CTS
+USB KEYBOARD READY
+ExCom native keyboard admitted
+ExCom control op=1 active=0
+ExCom control op=2 active=1
+ExCom control op=3 active=0
+ExCom control op=1 active=0
+ExCom control op=2 active=1
+I (1275171) extender_snapshot: enabled=1 alloc_fail=0 cadence=70014 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=6365 no_new=5413
+I (1275172) extender_network: state=4 clients=2 refused=0 credits=884 protocol=0 sent=883 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=883 queue_fail=0 socket_fail=0
+I (1275173) extender_provider: acquired=883 no_new=5413 invalid=0 sent=883 failed=0 disconnected=0
+I (1275174) extender_heap: free_8bit=26487415 minimum_8bit=26311176 free_psram=26107680 minimum_psram=25976944
+I (1285174) extender_snapshot: enabled=1 alloc_fail=0 cadence=70563 transition=0 producer_busy=0 no_slot=0 compose_fail=0 published=6415 no_new=6080
+I (1285175) extender_network: state=4 clients=2 refused=0 credits=933 protocol=0 sent=933 send_fail=0 disconnect_release=0 http=1/0 http_fail=0 queued=933 queue_fail=0 socket_fail=0
+I (1285176) extender_provider: acquired=933 no_new=6080 invalid=0 sent=933 failed=0 disconnected=0
+I (1285176) extender_heap: free_8bit=26240063 minimum_8bit=26135412 free_psram=25863664 minimum_psram=25803604

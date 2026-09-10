@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-09-10T02:23:02.809177+00:00",
+  "state": "pass",
+  "served_assets": "exact restored source bytes",
+  "presented_before": 3,
+  "presented_after": 78,
+  "observed_seconds": 15.012,
+  "browser_errors": [],
+  "scope": "Post-flash video-only connection; no ExCom activation or long-run stability claim"
+}
