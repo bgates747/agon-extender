@@ -1,0 +1,13 @@
+Valid saved benchmark: 48 rows. Nominal 120 clock units/s, 16.67 ms resolution.
+Ordinary MOS wait expired on 24 setup queries; final replies met the five-second measurement bound.
+Ordinary MOS wait expired on 18 measured completion queries; final replies met the five-second measurement bound.
+Entry/payload       Legacy send ticks  ExCom send ticks  ExCom/Legacy  Complete ticks L/E
+byte/null           148 [148..150]     438 [388..478]    2.96x          150/502
+byte/points         122 [122..124]     548 [544..554]    4.49x          124/626
+count/null          148 [148..150]     386 [334..504]    2.61x          150/470
+count/points        122 [122..124]     546 [546..558]    4.48x          124/632
+delimiter/null      150 [148..150]     456 [420..474]    3.04x          150/520
+delimiter/points    122 [122..124]     552 [546..558]    4.52x          124/636
+cli-putch/null      1942 [1940..1942]  2156 [2156..2156] 1.11x          1942/2156
+cli-putch/points    2144 [2144..2144]  2358 [2358..2358] 1.10x          2144/2360
+Times include caller/UART waits; CLI also includes parsing. Completion is not browser presentation.

@@ -1,0 +1,8 @@
+Filesystem probe fatfs-file-probe-r01-b2026-09-10-17-44-59Z (draft)
+setup=0 (expected 0)
+create_existing=0 (expected 8: FR_EXIST)
+original_contents=0 (expected 0)
+sync_open_written=9 (expected 0: FR_OK)
+close=0 (expected 0)
+reopened_contents=0 (expected 0)
+Filesystem probe FAIL

@@ -1,0 +1,14 @@
+# build=uart-path-benchmark-r01-b2026-09-10-17-45-53Z;status=draft
+# emos=agon-emos-v0.1.12-b2026-09-10-03-50-35Z;edp=uart-excom-console-r07-b2026-09-10-06-31-58Z;mainboard_vdp=2.16.0
+# mode=suite;baud=1152000;clock_units_per_second=120;clock_resolution_units=2
+# browser=one_visible_connected_client_operator_required;entries_include_caller_cost
+row,repeat,route,entry,payload,chunks,bytes,t0,t1,t2,send_ticks,tail_ticks,total_ticks,send_status,reply_status,pixel_r,pixel_g,pixel_b,pixel_index,mode,width,height,colours,valid
+1,1,legacy,byte,null,512,32768,1174,1322,1324,148,2,150,0,0,0,0,0,0,0,640,480,16,1
+2,1,legacy,byte,points,512,32768,1340,1464,1464,124,0,124,0,0,255,255,255,15,0,640,480,16,1
+3,1,legacy,count,null,512,32768,1482,1630,1632,148,2,150,0,0,0,0,0,0,0,640,480,16,1
+4,1,legacy,count,points,512,32768,1646,1768,1770,122,2,124,0,0,255,255,255,15,0,640,480,16,1
+5,1,legacy,delimiter,null,512,32768,1780,1930,1930,150,0,150,0,0,0,0,0,0,0,640,480,16,1
+6,1,legacy,delimiter,points,512,32768,1944,2068,2068,124,0,124,0,0,255,255,255,15,0,640,480,16,1
+7,1,legacy,cli-putch,null,512,32768,2092,4034,4034,1942,0,1942,0,0,0,0,0,0,0,640,480,16,1
+8,1,legacy,cli-putch,points,512,32768,4052,6196,6196,2144,0,2144,0,0,255,255,255,15,0,640,480,16,1
+# failed;rows=8;status=15;legacy_return=0

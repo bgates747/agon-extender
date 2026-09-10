@@ -1,0 +1,15 @@
+{
+  "collected_at": "2026-09-10T18:20:02.468161+00:00",
+  "run_start_utc": null,
+  "build": "uart-path-benchmark-r02-b2026-09-10-18-10-09Z",
+  "sha256": "f8f142620a99ef158dd79da9b4d6b9a8270516c963c313c2b63e0fc6c7b72679",
+  "outcome": "fail",
+  "phase": "cleared-pixel-query",
+  "route": "excom",
+  "first_wait_ticks": 30,
+  "total_wait_ticks": 66,
+  "nominal_clock_units_per_second": 120,
+  "first_status": 15,
+  "final_status": 0,
+  "legacy_return": 0
+}

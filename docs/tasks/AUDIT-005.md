@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W2 complete; benchmark-first sequence accepted for documentation freeze. Implementation not started.
+- Status: W1–W5 complete; all 48 hardware timing rows validate. Direct ExCom output takes 2.61–4.52× Legacy time. W6 is authorized: one UART/CTS capture before selecting a repair.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --
@@ -15,10 +15,19 @@ authorized W2 on 2026-09-10. The
 with five unranked findings and static call-site evidence from the matching
 deployed ELF. The Author selected paired measurements before performance
 repairs, followed by personal Nurples playtesting, and requested this
-documentation freeze on 2026-09-10. W3 must follow that disposition. No repair,
-instrumentation, core change, firmware build or bench operation has been
-performed. Stop after the documentation commit; executable work awaits the
-next instruction.
+documentation freeze on 2026-09-10, recorded in commit `721640c`. The Author
+subsequently authorized W3. The
+[paired benchmark plan](AUDIT-005/paired-benchmark-plan.md) was reviewed before implementation: one SD application, four output entries, two payloads, paired timings
+and a selected ExCom waveform capture. The Author then requested SD deployment,
+authorizing implementation. The [fixture and usage instructions](AUDIT-005/README.md)
+now implement that plan using the installed firmware. All 48 rows pass local
+functional validation with two native VDP references and a raw FAT image;
+the 24 ExCom payload windows match the expected bytes. The first physical run
+saved eight Legacy rows and stopped before the first ExCom workload. The
+short diagnostic identified a late reply, and the r03 measurement revision
+now completes all 48 hardware rows. The [paired hardware comparison](AUDIT-005/hardware-baseline.md)
+records the results and the remaining attribution boundary. No performance
+repair, firmware rebuild or flash has occurred.
 
 ## Purpose and review principle
 
@@ -147,7 +156,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    Reconcile existing defects and accepted remedies before creating new ones.
    Keep checkout locations and private deployment details in ignored records.
 
-## Work — W1–W2 complete; W3 follows the accepted measurement direction
+## Work — W1–W5 complete; W6 capture authorized
 
 1. [x] **W1 — Pin the comparison and map the active paths.** Verify exact
    stock release, EMOS deployed/source and P4 source identities, documenting
@@ -166,13 +175,42 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    definite duplication separately from necessary adaptations and unmeasured
    performance suspects. No new build or instrumentation is part of W2.
    Completed: [difference/reuse report](AUDIT-005/differences-and-reuse.md).
-3. [ ] **W3 — Define the smallest paired benchmark increment.** The Author
+3. [x] **W3 — Define the smallest paired benchmark increment.** The Author
    selected measurement before repairs. Turn D001–D002 into the bounded
    fixture cases, timing boundaries, CTS evidence and validity checks needed
    for implementation. Retain the stock-reuse findings as candidates to
    evaluate after measurement; do not rank their runtime contribution from
    static call counts. Keep D003's automated game fixture deferred. The
    documentation freeze does not start fixture implementation or execution.
+   Completed: [paired benchmark plan](AUDIT-005/paired-benchmark-plan.md).
+   The existing resident C `putch` is exercised through the public `VDU` CLI
+   command, with parser/caller cost explicitly included; no new firmware API
+   is proposed. Current probes measure ExCom UART1, not internal Legacy UART0.
+4. [x] **W4 — Implement and locally validate the SD benchmark.** Author
+   authorized through the request to deploy the reviewed plan. Added the
+   independently built application, identity/provenance, raw-FAT emulator
+   review, result validation and scoped SD deployment. Full 48-row review and
+   exact ExCom byte checks pass; these are functional, not P4 timing results.
+   The Author approved freezing the reviewed source, profiles and hardware
+   evidence on 2026-09-10. The requested exploratory SD test
+   does not require a new EMOS or EDP build.
+5. [x] **W5 — Collect the paired hardware baseline.** Deploy the identified
+   application, obtain the Author's completed run and return of the SD, retain
+   valid CSV results, then choose a relevant ExCom waveform capture. All 48
+   r03 hardware rows validate; [results and interpretation](AUDIT-005/hardware-baseline.md)
+   select counted point output for the next trace. Keep emulator timings
+   separate. The independent filesystem issue
+   is tracked in [REMED-003](REMED-003.md); it does not authorize a MOS change.
+6. [ ] **W6 — Separate sender time from P4 backpressure.** Author-authorized
+   on 2026-09-10 after freezing the completed baseline: capture the existing `trace count points` invocation
+   with the UART1 data and flow-control probes. Validate marker/payload/reply
+   coverage and compare eZ80 TX gaps with P4 CTS state. Preserve the current
+   firmware and workload. Use that evidence to recommend the smallest repair;
+   this item does not authorize a speculative firmware optimization. Prepare
+   and check the acquisition/analysis tools and an exact operator run sheet,
+   including full-window coverage, before the physical reset cue. Preserve
+   prior SD results and use the existing executable; the operator resets
+   Agon after the analyzer is ready. No P4 serial open or reset is required.
 
 ## Deliverables and acceptance
 
@@ -183,7 +221,9 @@ candidate, constraints, recommended owner and any missing measurements.
 W1 records paths and provenance. W2 records AUDIT-005-F001 through F005:
 transmit duplication/overhead, partial-write recovery, caller/flag differences,
 receive adaptations and P4 backpressure boundaries. These findings are
-unranked; their runtime contribution to lag remains unmeasured.
+unranked; their runtime contribution to lag remains unmeasured. W3 provides
+the concrete cases, autoexec, timing/reply boundaries, SD records and capture
+coverage requirements for the next increment; it is not benchmark evidence.
 
 Acceptance requires a source-backed path comparison, an explicit reason for
 each material EMOS departure, and a reviewable next increment small enough to
@@ -197,5 +237,64 @@ change inherits the existing emulator review and hardware qualification gates.
 
 The Author accepted the plan before W1 and reviews each authorized work item's
 result before proceeding. A repair or measurement requires separate disposition.
-No implementation checklist outside the owning
-tasks, firmware version change or qualification promotion follows implicitly.
+No firmware version change or qualification promotion follows implicitly.
+
+## Implementation notes — 2026-09-10
+
+The first physical attempt saved eight valid Legacy rows, then timed out
+before the first ExCom workload. The browser showed row 9; the saved footer
+reports status 15 and successful Legacy return. The preserved
+[CSV and collection record](AUDIT-005/evidence/first-hardware-attempt/)
+contain no invented run-start timestamp. Source inspection locates the
+timeout at the pre-workload pixel query; EMOS transmit timeout is status 2,
+whereas MOS reply-wait timeout is 15. No paired performance conclusion is
+available. This does not demonstrate an SD failure despite MOS's generic
+`Volume timeout` message.
+
+The r02 SD application added a short `probe` invocation to record initial,
+post-clear and post-point queries, with unchanged firmware. On the first
+timeout it observes the same request for nine further bounded API calls,
+records any late reply, and still returns the original failure. It does not
+substitute a permissive deadline into the benchmark. The retained MOS
+`wait_VDP` uses a 250,000-iteration CPU loop, not a wall-clock deadline;
+the probe records actual clock deltas. Normal/late/absent emulator checks
+pass, including failure preservation, prior-file preservation and Legacy
+recovery. A combined raw-image startup also runs the independent filesystem
+probe before the pixel diagnostic. At that preparation W5 remained incomplete
+pending physical observations; no firmware remedy was selected.
+
+The returned physical [r02 diagnostic](AUDIT-005/evidence/pixel-probe-hardware/)
+now records successful initial ExCom pixel/mode replies, followed by a
+post-clear pixel first timeout at 30 ticks and successful eventual reply at
+66 ticks. At the selected nominal 120 units/s these are about 250 and 550 ms.
+The pixel is correctly black; Legacy return succeeds. This identifies the
+benchmark's premature abort but does not isolate the underlying P4 delay.
+
+The r03 measurement revision uses a common 600-tick reply observation bound
+for both routes, checking after each stock API call, with at most 24 calls as
+a stopped-clock backstop. It saves the first wait status and actual setup/
+completion intervals, rejects a reply beyond the measurement bound, and never
+retransmits. This is a fixture methodology change, not a firmware performance
+fix or a claim that stock API deadlines are satisfied. Probe mode retains its
+first-timeout-fails semantics. The returned r03 file now supplies the complete
+paired matrix: all 48 rows pass final status/pixel/clock/mode checks and Legacy
+return. Raw CSV, hashes, per-case ranges and interpretation are retained in
+the [hardware baseline](AUDIT-005/hardware-baseline.md). All 24 ExCom setup
+queries and 18 direct-output completion queries exceeded the ordinary MOS
+wait; none did in Legacy. Measurement completion does not remove those misses.
+W5 is complete; W6 holds the selected waveform measurement before a repair.
+
+The raw FAT image is deliberate: Fab's directory-backed filesystem does not
+honour create-new exclusivity and does not implement mapped-file sync. The
+standalone REMED-003 probe reproduces both failures in unchanged upstream Fab;
+the same probe passes in raw-image mode and now on physical hardware. Its
+unchanged deployed executable hash and saved sentinel contents were verified.
+The report is ready for Author review and remains unsubmitted.
+The application retains real sync/close checks instead of working around the
+emulator defect in hardware code. FatFS timestamp queries are permitted in
+the review peer outside measured intervals.
+
+Targeted version-record validation passes. The full repository validator
+still rejects the pre-existing r02 connectivity hash mismatch; its current
+content is identical to HEAD. This unrelated, held hardware definition was
+not altered or silently requalified by the benchmark work.

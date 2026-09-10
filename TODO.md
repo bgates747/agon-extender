@@ -15,10 +15,16 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
+- [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
+  - Started: 2026-09-10
+  - Finished: --
+  - Status: Hardware and raw-image PASS; upstream directory backend reproduces both failures. Report and reproducible attachment ready for Author review; unsubmitted.
+  - Details: [REMED-003](docs/tasks/REMED-003.md)
+
 - [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
   - Started: 2026-09-10
   - Finished: --
-  - Status: W1–W2 complete; paired Legacy/ExCom measurements selected before repairs, then repeat benchmarks and Author Nurples playtest. Automated Nurples input is deferred. Documentation freeze only; fixture work has not started.
+  - Status: W1–W5 complete; all 48 hardware rows validate. Direct ExCom output takes 2.61–4.52× Legacy time. W6 authorized: one counted-point UART/CTS capture to separate sender overhead from P4 backpressure.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**

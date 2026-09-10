@@ -1,0 +1,45 @@
+{
+  "collected_at": "2026-09-10T18:28:17.751634+00:00",
+  "execution_start_utc": null,
+  "build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "scope": "Native-VDP emulator fixture validation, not physical P4 performance",
+  "cases": {
+    "full": {
+      "outcome": "pass",
+      "rows": 48,
+      "exact_uart_payloads": 24
+    },
+    "late": {
+      "outcome": "pass",
+      "rows": 1,
+      "exact_uart_payloads": 1
+    },
+    "absent": {
+      "outcome": "pass",
+      "rows": 0,
+      "exact_uart_payloads": 0,
+      "queries": [
+        {
+          "route": "excom",
+          "phase": "cleared-pixel-query",
+          "status": "15",
+          "flag": "4",
+          "send_status": "0",
+          "first_status": "15",
+          "final_status": "15",
+          "send_ticks": "0",
+          "first_wait_ticks": "30",
+          "total_wait_ticks": "606",
+          "flags": "49",
+          "rgb": "255/255/255",
+          "index": "15"
+        }
+      ]
+    },
+    "tail": {
+      "outcome": "pass",
+      "rows": 1,
+      "exact_uart_payloads": 1
+    }
+  }
+}

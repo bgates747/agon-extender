@@ -1,0 +1,12 @@
+# build=uart-path-benchmark-r02-b2026-09-10-18-10-09Z;status=draft
+# emos=agon-emos-v0.1.12-b2026-09-10-03-50-35Z;edp=uart-excom-console-r07-b2026-09-10-06-31-58Z;mainboard_vdp=2.16.0
+# mode=probe;baud=1152000;clock_units_per_second=120;clock_resolution_units=2
+# browser=one_visible_connected_client_operator_required;entries_include_caller_cost
+row,repeat,route,entry,payload,chunks,bytes,t0,t1,t2,send_ticks,tail_ticks,total_ticks,send_status,reply_status,pixel_r,pixel_g,pixel_b,pixel_index,mode,width,height,colours,valid
+# query;route=legacy;phase=route-mode-query;status=0;flag=16;send_status=0;first_status=0;final_status=0;send_ticks=0;first_wait_ticks=0;total_wait_ticks=0;flags=53;rgb=255/255/255;index=15
+# query;route=legacy;phase=initial-pixel-query;status=0;flag=4;send_status=0;first_status=0;final_status=0;send_ticks=0;first_wait_ticks=0;total_wait_ticks=0;flags=53;rgb=0/0/0;index=0
+# query;route=legacy;phase=cleared-pixel-value;status=0;flag=4;send_status=0;first_status=0;final_status=0;send_ticks=0;first_wait_ticks=0;total_wait_ticks=0;flags=53;rgb=0/0/0;index=0
+# query;route=legacy;phase=white-pixel-query;status=0;flag=4;send_status=0;first_status=0;final_status=0;send_ticks=0;first_wait_ticks=0;total_wait_ticks=0;flags=53;rgb=255/255/255;index=15
+# query;route=excom;phase=route-mode-query;status=0;flag=16;send_status=0;first_status=0;final_status=0;send_ticks=0;first_wait_ticks=2;total_wait_ticks=2;flags=53;rgb=255/255/255;index=15
+# query;route=excom;phase=initial-pixel-query;status=15;flag=4;send_status=0;first_status=15;final_status=0;send_ticks=0;first_wait_ticks=28;total_wait_ticks=178;flags=53;rgb=0/0/0;index=0
+# failed;rows=0;status=15;legacy_return=0

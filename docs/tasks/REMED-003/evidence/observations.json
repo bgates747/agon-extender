@@ -1,0 +1,21 @@
+{
+  "recorded_at": "2026-09-10T17:55:27.930057+00:00",
+  "execution_start_utc": null,
+  "scope": "Local functional reproduction; not hardware qualification",
+  "fixture_build": "fatfs-file-probe-r01-b2026-09-10-17-44-59Z",
+  "fixture_sha256": "58689fc7d0443ee1ca3adf8fc24cce31a1ea6724b0d3fea48a53048de27ff41a",
+  "fab_checkout": "fbb7d7ca887a06966ca8a62ed22272409a5ab640",
+  "fab_binary_sha256": "2d1b290c37ea37cb7044f24522522f546b750b7ef93050f1ebbdbd1c66e30ac3",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "directory": {
+    "create_existing": 0,
+    "sync_open_written": 9,
+    "contents_preserved": true
+  },
+  "raw_fat_image": {
+    "create_existing": 8,
+    "sync_open_written": 0,
+    "contents_preserved": true
+  },
+  "physical_agon": null
+}

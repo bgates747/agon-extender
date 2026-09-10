@@ -311,6 +311,11 @@ Nurples playtesting. This task's completion-boundary research supports that
 increment; the full graphics-suite benchmark and generalized callback service
 remain later work. Automated Nurples control is also deferred; its eventual
 EDP-generated keyboard packets must traverse the normal UART/EMOS receiver.
+The [pathway benchmark](AUDIT-005/README.md) uses the existing pixel-query
+completion reply for its initial two workloads. Its SD application passes
+functional emulator checks and now has a complete 48-row
+[physical pathway baseline](AUDIT-005/hardware-baseline.md). It does not
+require a new callback implementation or benchmark the whole graphics suite.
 
 ## Graphics-suite milestone frozen — 2026-09-10
 

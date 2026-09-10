@@ -1,10 +1,31 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r57
-updated_at: 2026-09-10T03:49:16Z
+registry_revision: r61
+updated_at: 2026-09-10T18:26:31Z
 
 artifacts:
+  - artifact_id: fatfs-file-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: fatfs-file-probe-r01
+    status: draft
+    variants: []
+    description: Standalone MOS create-new and sync contract comparison on hardware and Fab SD backends.
+    notes:
+      - Author requested a hardware-confirmed reproducer and report for Tom on 2026-09-10; standing identity preapproval applies.
+      - Hardware and raw-image results agree; directory backend fails create-new and sync. Report ready for review; unsubmitted.
+  - artifact_id: uart-path-benchmark
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-path-benchmark-r03
+    status: draft
+    variants: []
+    description: SD-loaded paired Legacy and ExCom output-path timings with pixel replies and durable Agon SD records.
+    notes:
+      - Author requested implementation and SD deployment on 2026-09-10; standing version preapproval applies to r01 and registry r58.
+      - Exploratory diagnostic using installed EMOS v0.1.12 and P4 console r07; no firmware update or qualified-performance claim.
+      - Standing preapproval covers r03 and registry r61; hardware measured a late post-clear reply. The fixture records ordinary wait timeouts and measures completion within a common five-second bound; no firmware repair.
   - artifact_id: header-pinwalk-boot
     kind: test_fixture
     identity_scheme: revision

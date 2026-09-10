@@ -1,0 +1,13 @@
+{
+  "collected_at": "2026-09-10T18:20:02.468161+00:00",
+  "run_start_utc": null,
+  "fixture_build": "fatfs-file-probe-r01-b2026-09-10-17-44-59Z",
+  "fixture_sha256": "58689fc7d0443ee1ca3adf8fc24cce31a1ea6724b0d3fea48a53048de27ff41a",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "outcome": "pass",
+  "files_sha256": {
+    "RESULT.TXT": "8e3c7c87706bf96dd01ac33bde87dad26f2d6f2f59ccf8d6c8185475c8eb0532",
+    "CREATE.DAT": "a60e31f36ef11f0556b0b1de487010d9d7116dd61c91a47c2212528720ffebae",
+    "SYNC.DAT": "a60e31f36ef11f0556b0b1de487010d9d7116dd61c91a47c2212528720ffebae"
+  }
+}

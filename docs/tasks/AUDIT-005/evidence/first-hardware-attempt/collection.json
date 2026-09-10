@@ -1,0 +1,11 @@
+{
+  "collected_at": "2026-09-10T18:06:35.198573+00:00",
+  "run_start_utc": null,
+  "original_filename": "00000001.CSV",
+  "sha256": "09e6d19f4a4eeb24d665dcd22e8c459beb59cca7d415c09954206bed057d063f",
+  "observed_rows": 8,
+  "outcome": "partial",
+  "failure_status": 15,
+  "legacy_return_status": 0,
+  "operator_observation": "ExCom display showed row 9; mainboard reported incomplete, 8 rows saved, and returned to Legacy prompt."
+}

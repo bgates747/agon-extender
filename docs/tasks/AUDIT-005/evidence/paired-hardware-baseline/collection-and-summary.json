@@ -1,0 +1,907 @@
+{
+  "collected_at": "2026-09-10T18:44:37.058399+00:00",
+  "run_start_utc": null,
+  "fixture_build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "fixture_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "csv_sha256": "1c3b3adb482c0f3b46495fce882e8593141e501d8668e2106230aec2953965df",
+  "outcome": "pass",
+  "scope": "Exploratory 48-row functional/timing baseline under the five-second measurement reply bound; not stock-deadline or firmware qualification",
+  "rows": 48,
+  "legacy_return_status": 0,
+  "operator_observation": "Author reports both displays completed 48/48; SD footer independently confirms successful return to Legacy.",
+  "clock_units_per_second": 120,
+  "clock_resolution_units": 2,
+  "baseline_identities": "The CSV declares the installed EMOS v0.1.12/P4 r07 pair from the unchanged deployment record; no new firmware identity query or flash was performed.",
+  "setup_wait_expirations": {
+    "legacy": 0,
+    "excom": 24
+  },
+  "completion_wait_expirations": {
+    "legacy": 0,
+    "excom": 18
+  },
+  "legacy_setup_ticks": {
+    "median": 3.0,
+    "min": 2,
+    "max": 8
+  },
+  "excom_setup_ticks": {
+    "median": 66.0,
+    "min": 64,
+    "max": 84
+  },
+  "cases": [
+    {
+      "entry": "byte",
+      "payload": "null",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            150,
+            148,
+            148
+          ],
+          "median": 148,
+          "min": 148,
+          "max": 150
+        },
+        "tail_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            150,
+            150,
+            150
+          ],
+          "median": 150,
+          "min": 150,
+          "max": 150
+        },
+        "setup_reply_ticks": {
+          "values": [
+            4,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 2,
+          "max": 4
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            438,
+            388,
+            478
+          ],
+          "median": 438,
+          "min": 388,
+          "max": 478
+        },
+        "tail_ticks": {
+          "values": [
+            64,
+            64,
+            62
+          ],
+          "median": 64,
+          "min": 62,
+          "max": 64
+        },
+        "total_ticks": {
+          "values": [
+            502,
+            452,
+            540
+          ],
+          "median": 502,
+          "min": 452,
+          "max": 540
+        },
+        "setup_reply_ticks": {
+          "values": [
+            82,
+            64,
+            80
+          ],
+          "median": 80,
+          "min": 64,
+          "max": 82
+        },
+        "reply_wait_ticks": {
+          "values": [
+            64,
+            64,
+            62
+          ],
+          "median": 64,
+          "min": 62,
+          "max": 64
+        }
+      },
+      "median_send_ratio": 2.9594594594594597
+    },
+    {
+      "entry": "byte",
+      "payload": "points",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            122,
+            124,
+            122
+          ],
+          "median": 122,
+          "min": 122,
+          "max": 124
+        },
+        "tail_ticks": {
+          "values": [
+            2,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            124,
+            124,
+            122
+          ],
+          "median": 124,
+          "min": 122,
+          "max": 124
+        },
+        "setup_reply_ticks": {
+          "values": [
+            8,
+            2,
+            4
+          ],
+          "median": 4,
+          "min": 2,
+          "max": 8
+        },
+        "reply_wait_ticks": {
+          "values": [
+            2,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            554,
+            544,
+            548
+          ],
+          "median": 548,
+          "min": 544,
+          "max": 554
+        },
+        "tail_ticks": {
+          "values": [
+            84,
+            82,
+            78
+          ],
+          "median": 82,
+          "min": 78,
+          "max": 84
+        },
+        "total_ticks": {
+          "values": [
+            638,
+            626,
+            626
+          ],
+          "median": 626,
+          "min": 626,
+          "max": 638
+        },
+        "setup_reply_ticks": {
+          "values": [
+            82,
+            66,
+            64
+          ],
+          "median": 66,
+          "min": 64,
+          "max": 82
+        },
+        "reply_wait_ticks": {
+          "values": [
+            84,
+            68,
+            78
+          ],
+          "median": 78,
+          "min": 68,
+          "max": 84
+        }
+      },
+      "median_send_ratio": 4.491803278688525
+    },
+    {
+      "entry": "count",
+      "payload": "null",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            148,
+            150,
+            148
+          ],
+          "median": 148,
+          "min": 148,
+          "max": 150
+        },
+        "tail_ticks": {
+          "values": [
+            2,
+            0,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            150,
+            150,
+            150
+          ],
+          "median": 150,
+          "min": 150,
+          "max": 150
+        },
+        "setup_reply_ticks": {
+          "values": [
+            2,
+            4,
+            8
+          ],
+          "median": 4,
+          "min": 2,
+          "max": 8
+        },
+        "reply_wait_ticks": {
+          "values": [
+            2,
+            0,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            504,
+            334,
+            386
+          ],
+          "median": 386,
+          "min": 334,
+          "max": 504
+        },
+        "tail_ticks": {
+          "values": [
+            84,
+            68,
+            84
+          ],
+          "median": 84,
+          "min": 68,
+          "max": 84
+        },
+        "total_ticks": {
+          "values": [
+            588,
+            402,
+            470
+          ],
+          "median": 470,
+          "min": 402,
+          "max": 588
+        },
+        "setup_reply_ticks": {
+          "values": [
+            64,
+            66,
+            66
+          ],
+          "median": 66,
+          "min": 64,
+          "max": 66
+        },
+        "reply_wait_ticks": {
+          "values": [
+            84,
+            68,
+            68
+          ],
+          "median": 68,
+          "min": 68,
+          "max": 84
+        }
+      },
+      "median_send_ratio": 2.608108108108108
+    },
+    {
+      "entry": "count",
+      "payload": "points",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            124,
+            122,
+            122
+          ],
+          "median": 122,
+          "min": 122,
+          "max": 124
+        },
+        "tail_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            124,
+            124,
+            124
+          ],
+          "median": 124,
+          "min": 124,
+          "max": 124
+        },
+        "setup_reply_ticks": {
+          "values": [
+            2,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 2,
+          "max": 2
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            546,
+            558,
+            546
+          ],
+          "median": 546,
+          "min": 546,
+          "max": 558
+        },
+        "tail_ticks": {
+          "values": [
+            86,
+            68,
+            92
+          ],
+          "median": 86,
+          "min": 68,
+          "max": 92
+        },
+        "total_ticks": {
+          "values": [
+            632,
+            626,
+            638
+          ],
+          "median": 632,
+          "min": 626,
+          "max": 638
+        },
+        "setup_reply_ticks": {
+          "values": [
+            66,
+            64,
+            66
+          ],
+          "median": 66,
+          "min": 64,
+          "max": 66
+        },
+        "reply_wait_ticks": {
+          "values": [
+            86,
+            68,
+            92
+          ],
+          "median": 86,
+          "min": 68,
+          "max": 92
+        }
+      },
+      "median_send_ratio": 4.475409836065574
+    },
+    {
+      "entry": "delimiter",
+      "payload": "null",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            148,
+            150,
+            150
+          ],
+          "median": 150,
+          "min": 148,
+          "max": 150
+        },
+        "tail_ticks": {
+          "values": [
+            2,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            150,
+            150,
+            150
+          ],
+          "median": 150,
+          "min": 150,
+          "max": 150
+        },
+        "setup_reply_ticks": {
+          "values": [
+            6,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 2,
+          "max": 6
+        },
+        "reply_wait_ticks": {
+          "values": [
+            2,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            474,
+            456,
+            420
+          ],
+          "median": 456,
+          "min": 420,
+          "max": 474
+        },
+        "tail_ticks": {
+          "values": [
+            46,
+            82,
+            34
+          ],
+          "median": 46,
+          "min": 34,
+          "max": 82
+        },
+        "total_ticks": {
+          "values": [
+            520,
+            538,
+            454
+          ],
+          "median": 520,
+          "min": 454,
+          "max": 538
+        },
+        "setup_reply_ticks": {
+          "values": [
+            66,
+            84,
+            66
+          ],
+          "median": 66,
+          "min": 66,
+          "max": 84
+        },
+        "reply_wait_ticks": {
+          "values": [
+            46,
+            82,
+            34
+          ],
+          "median": 46,
+          "min": 34,
+          "max": 82
+        }
+      },
+      "median_send_ratio": 3.04
+    },
+    {
+      "entry": "delimiter",
+      "payload": "points",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            124,
+            122,
+            122
+          ],
+          "median": 122,
+          "min": 122,
+          "max": 124
+        },
+        "tail_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        },
+        "total_ticks": {
+          "values": [
+            124,
+            124,
+            124
+          ],
+          "median": 124,
+          "min": 124,
+          "max": 124
+        },
+        "setup_reply_ticks": {
+          "values": [
+            6,
+            8,
+            8
+          ],
+          "median": 8,
+          "min": 6,
+          "max": 8
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            546,
+            552,
+            558
+          ],
+          "median": 552,
+          "min": 546,
+          "max": 558
+        },
+        "tail_ticks": {
+          "values": [
+            88,
+            84,
+            78
+          ],
+          "median": 84,
+          "min": 78,
+          "max": 88
+        },
+        "total_ticks": {
+          "values": [
+            634,
+            636,
+            636
+          ],
+          "median": 636,
+          "min": 634,
+          "max": 636
+        },
+        "setup_reply_ticks": {
+          "values": [
+            64,
+            82,
+            64
+          ],
+          "median": 64,
+          "min": 64,
+          "max": 82
+        },
+        "reply_wait_ticks": {
+          "values": [
+            88,
+            84,
+            78
+          ],
+          "median": 84,
+          "min": 78,
+          "max": 88
+        }
+      },
+      "median_send_ratio": 4.524590163934426
+    },
+    {
+      "entry": "cli-putch",
+      "payload": "null",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            1942,
+            1940,
+            1942
+          ],
+          "median": 1942,
+          "min": 1940,
+          "max": 1942
+        },
+        "tail_ticks": {
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "total_ticks": {
+          "values": [
+            1942,
+            1940,
+            1942
+          ],
+          "median": 1942,
+          "min": 1940,
+          "max": 1942
+        },
+        "setup_reply_ticks": {
+          "values": [
+            4,
+            6,
+            6
+          ],
+          "median": 6,
+          "min": 4,
+          "max": 6
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            2156,
+            2156,
+            2156
+          ],
+          "median": 2156,
+          "min": 2156,
+          "max": 2156
+        },
+        "tail_ticks": {
+          "values": [
+            10,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 10
+        },
+        "total_ticks": {
+          "values": [
+            2166,
+            2156,
+            2156
+          ],
+          "median": 2156,
+          "min": 2156,
+          "max": 2166
+        },
+        "setup_reply_ticks": {
+          "values": [
+            82,
+            64,
+            66
+          ],
+          "median": 66,
+          "min": 64,
+          "max": 82
+        },
+        "reply_wait_ticks": {
+          "values": [
+            10,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 10
+        }
+      },
+      "median_send_ratio": 1.110195674562307
+    },
+    {
+      "entry": "cli-putch",
+      "payload": "points",
+      "legacy": {
+        "send_ticks": {
+          "values": [
+            2144,
+            2144,
+            2144
+          ],
+          "median": 2144,
+          "min": 2144,
+          "max": 2144
+        },
+        "tail_ticks": {
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0
+        },
+        "total_ticks": {
+          "values": [
+            2144,
+            2144,
+            2144
+          ],
+          "median": 2144,
+          "min": 2144,
+          "max": 2144
+        },
+        "setup_reply_ticks": {
+          "values": [
+            2,
+            2,
+            2
+          ],
+          "median": 2,
+          "min": 2,
+          "max": 2
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            0,
+            0
+          ],
+          "median": 0,
+          "min": 0,
+          "max": 0
+        }
+      },
+      "excom": {
+        "send_ticks": {
+          "values": [
+            2358,
+            2358,
+            2358
+          ],
+          "median": 2358,
+          "min": 2358,
+          "max": 2358
+        },
+        "tail_ticks": {
+          "values": [
+            12,
+            2,
+            0
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 12
+        },
+        "total_ticks": {
+          "values": [
+            2370,
+            2360,
+            2358
+          ],
+          "median": 2360,
+          "min": 2358,
+          "max": 2370
+        },
+        "setup_reply_ticks": {
+          "values": [
+            82,
+            64,
+            66
+          ],
+          "median": 66,
+          "min": 64,
+          "max": 82
+        },
+        "reply_wait_ticks": {
+          "values": [
+            12,
+            2,
+            0
+          ],
+          "median": 2,
+          "min": 0,
+          "max": 12
+        }
+      },
+      "median_send_ratio": 1.099813432835821
+    }
+  ]
+}
