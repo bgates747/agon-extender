@@ -3,7 +3,17 @@
 The Author authorized implementation and SD deployment on 2026-09-10.
 This is an exploratory diagnostic, not a qualified performance baseline.
 The [plan](paired-benchmark-plan.md) defines the measurements and their limits.
-Both installed firmware images remain unchanged.
+The original baseline used P4 r07. The active follow-up uses the already
+deployed r08 drawing-drain correction, with EMOS and the benchmark unchanged.
+
+## Current result — full suite on r08
+
+The [full-suite repeat](stock-drain-full-suite.md) now supplies 48 valid rows
+and confirmed Legacy keyboard responsiveness. [Results](stock-drain-suite-findings.md)
+show improved point throughput but continuing stalls and ordinary-query
+timeouts. The Author subsequently reports substantial ExCom Nurples hangs.
+The original binary/CSV's r07 annotation is overridden by the verified r08
+deployment binding; original records stay intact. No next repeat is armed.
 
 ## Completed full-suite baseline
 

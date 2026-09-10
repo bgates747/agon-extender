@@ -1,0 +1,91 @@
+{
+  "collected_at": "2026-09-10T21:47:11.482194+00:00",
+  "run_id": "AUDIT-005-2026-09-10-21-40-16Z",
+  "outcome": "acquisition, payload, timing and saved result pass; post-run keyboard observation pending",
+  "author_review": "pending",
+  "scope": "One browser-off counted-point comparison; not all-workload, browser fps or stock timing qualification.",
+  "capture_result_sha256": "4a3cd22ab6f99b4f53e05b91009057df3794434bb676ed312c45b82ac9df9658",
+  "original_sha256sums_sha256": "39da41afa6f7473c2813fd0bb0d4bfb29ab48cbb6c9bbc1185d80ff5a957f137",
+  "host_sha256sums_sha256": "2158b94a4170b3c7c9cd4856328fcc551a2d02c1c0d952aaa71f27b7a73b7829",
+  "trace_sha256": "30b55bb6c3a9743cc81860477445678325ada51b1108148165216092aa973944",
+  "raw_samples_sha256": "6db2db99f87ad47ea49230b2982d2e0092f14930cfaca2f3802a3c0c92ee9489",
+  "csv_filename": "00000006.CSV",
+  "csv_sha256": "fd51337010d24134124154fc9746c486472a85644868fc89b0aa716a0743447a",
+  "csv": {
+    "row": "1",
+    "repeat": "1",
+    "route": "excom",
+    "entry": "count",
+    "payload": "points",
+    "chunks": "512",
+    "bytes": "32768",
+    "t0": "1232",
+    "t1": "1362",
+    "t2": "1362",
+    "send_ticks": "130",
+    "tail_ticks": "0",
+    "total_ticks": "130",
+    "send_status": "0",
+    "reply_status": "0",
+    "pixel_r": "255",
+    "pixel_g": "255",
+    "pixel_b": "255",
+    "pixel_index": "15",
+    "mode": "0",
+    "width": "640",
+    "height": "480",
+    "colours": "16",
+    "valid": "1",
+    "setup_first_status": "15",
+    "setup_reply_ticks": "66",
+    "first_reply_status": "0",
+    "reply_wait_ticks": "0"
+  },
+  "fixture_build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "fixture_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "autoexec_sha256": "a011c8a83bb6e2e8c896c3327a41c9ca77aec90ffc1b5ed06629cd00261554ac",
+  "prior_results_unchanged": true,
+  "sd_contents_modified_during_collection": false,
+  "legacy_return_status": 0,
+  "deployed_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+  "deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc",
+  "csv_browser_annotation_override": true,
+  "csv_edp_annotation_override": {
+    "compiled_build": "uart-excom-console-r07-b2026-09-10-06-31-58Z",
+    "measured_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+    "factory_sha256": "7c69f2796d33950ec69c4e9920603f1f4f3ed42074be2058880ab4d7f9efb321",
+    "build_manifest_sha256": "4f9e1a4931fc7cb880b4f3dfc3742865a63797e5de66564678cc2b6e601d2753",
+    "deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc"
+  },
+  "association": "Only new CSV since handover; unchanged executable and startup, correct build/case/pixels and same-run clock/wire agreement. FAT time is not a UTC run identity.",
+  "comparison": {
+    "clock": {
+      "send_seconds": 1.0833333333333333,
+      "tail_seconds": 0.0,
+      "total_seconds": 1.0833333333333333
+    },
+    "wire": {
+      "send_seconds": 1.0940463055555547,
+      "tail_seconds": 0.003089125000000026,
+      "total_seconds": 1.0971354305555547
+    },
+    "wire_minus_clock_seconds": {
+      "send_seconds": 0.01071297222222145,
+      "tail_seconds": 0.003089125000000026,
+      "total_seconds": 0.013802097222221477
+    },
+    "clock_resolution_seconds": 0.016666666666666666
+  },
+  "checks": {
+    "capture_integrity": true,
+    "host_integrity": true,
+    "deployment_binding": true,
+    "condition_record": true,
+    "unchanged_fixture_and_startup": true,
+    "csv": true,
+    "waveform": true,
+    "independent_decode": true,
+    "same_run_clock_wire_agreement": true
+  },
+  "collector_sha256": "6ddbaa45eb46df34587582afb8a6a234cf53592850f339e9427b6a62d50fda87"
+}

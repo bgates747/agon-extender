@@ -1,0 +1,35 @@
+{
+  "procedure": "uart-path-capture-r03",
+  "browser_condition": "disconnected",
+  "observation": "operator confirmed; server client count not independently observed",
+  "operator_confirmed_at": "2026-09-10T21:40:10.776916+00:00",
+  "csv_browser_annotation_override": true,
+  "browser_off_reference_run": "AUDIT-005-2026-09-10-20-03-35Z",
+  "drawing_policy": "stock-drain-until-empty-or-suspended",
+  "csv_edp_annotation_override": {
+    "compiled_build": "uart-excom-console-r07-b2026-09-10-06-31-58Z",
+    "measured_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+    "factory_sha256": "7c69f2796d33950ec69c4e9920603f1f4f3ed42074be2058880ab4d7f9efb321",
+    "build_manifest_sha256": "4f9e1a4931fc7cb880b4f3dfc3742865a63797e5de66564678cc2b6e601d2753",
+    "deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc"
+  },
+  "settlement_seconds": 5.000075561001722,
+  "settled_at": "2026-09-10T21:40:15.777101+00:00",
+  "connected_reference_run": "AUDIT-005-2026-09-10-19-44-52Z",
+  "run_id": "AUDIT-005-2026-09-10-21-40-16Z",
+  "bench_sha256": "95ff1d28d9f96a18fd6ec256bec9afa7282e6c4a74b1ae9cece9af80de7377e8",
+  "capture_result_sha256": "4a3cd22ab6f99b4f53e05b91009057df3794434bb676ed312c45b82ac9df9658",
+  "original_host_condition_sha256": "e0809f89c94be3d0e5bc20b1be68e1a1c7a6c344eb6e98a2ee5d1c6cac4bab03",
+  "redaction": "Private preparation topology omitted; original retained in ignored capture bundle.",
+  "procedure_build": "uart-path-capture-r03-b2026-09-10-21-23-44Z",
+  "source_commit": "b9d4ff615cf231a9a96364e7bbcf4df824bd3a39",
+  "source_dirty": false,
+  "files": {
+    "docs/tasks/AUDIT-005/scripts/capture_trace.py": "8faa1881b43b1169b73953abb2662d57a346850eae3f6f24d7bf0bc73ed5624d",
+    "docs/tasks/AUDIT-005/scripts/run_trace.py": "9867bcee3c579bff3c2cd751b552e837d7dee3f7d9b0b302dee1d391946ccdf0",
+    "docs/tasks/AUDIT-005/scripts/analyze_trace.py": "835762ab8f200c7b9c80ee15b50da77fb01c30dd22b0e7ed12639eea485dc07c",
+    "docs/tasks/AUDIT-005/stock-queue-drain.md": "6fd56e20261e2a6cbe8fc95eb44e36870282e7f24f33fa90f2c7a29713a483bd"
+  },
+  "csv_filename": "00000006.CSV",
+  "csv_sha256": "fd51337010d24134124154fc9746c486472a85644868fc89b0aa716a0743447a"
+}

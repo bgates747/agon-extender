@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W8 accepted. W9 authorized after the requested freeze: PORT-003 restores stock queue draining, then the unchanged browser-off benchmark measures the result. The 128-budget experiment is rejected; physical deployment retains its explicit gate.
+- Status: W1–W9 findings accepted; W10 results and reported game regression frozen for the Author-authorized AUDIT-006 timing investigation. All 48 cases and Legacy keyboard pass, but ordinary-query stalls and substantial Nurples hangs remain. No corrective firmware change selected.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --
@@ -26,8 +26,9 @@ the 24 ExCom payload windows match the expected bytes. The first physical run
 saved eight Legacy rows and stopped before the first ExCom workload. The
 short diagnostic identified a late reply, and the r03 measurement revision
 now completes all 48 hardware rows. The [paired hardware comparison](AUDIT-005/hardware-baseline.md)
-records the results and the remaining attribution boundary. No performance
-repair, firmware rebuild or flash has occurred.
+records the results and the remaining attribution boundary at that stage.
+Subsequent W8 attribution and W9's P4-only repair are documented below; EMOS
+and the benchmark executable remain unchanged.
 
 ## Purpose and review principle
 
@@ -156,7 +157,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    Reconcile existing defects and accepted remedies before creating new ones.
    Keep checkout locations and private deployment details in ignored records.
 
-## Work — W1–W8 accepted; W9 authorized
+## Work — W9 findings accepted; W10 collected with gameplay regression
 
 1. [x] **W1 — Pin the comparison and map the active paths.** Verify exact
    stock release, EMOS deployed/source and P4 source identities, documenting
@@ -270,7 +271,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    frame. Existing wire bursts recur at a mean 16.669 ms. No instrumentation
    or hardware change was needed. The Author accepted the findings.
 
-9. [ ] **W9 — Restore stock drawing drain and measure the result.**
+9. [x] **W9 — Restore stock drawing drain and measure the result.**
    The Author directed the stock policy rather than a larger fixed budget.
    [The accepted contract](AUDIT-005/stock-queue-drain.md) governs the P4-only
    change, source/host validation, deployment gate and one unchanged counted-point
@@ -279,8 +280,36 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    change or new game test belongs to this increment.
    Contract frozen as `1cac8ee`. Implementation and local frame/render/mode
    checks are complete; [preparation](AUDIT-005/stock-drain-preparation.md)
-   records the evidence. Candidate build/deployment and physical measurement
-   remain pending.
+   records the evidence. The clean r08 candidate build from `b9d4ff6` is
+   deployed with Author approval: independent readback and startup checks
+   pass. Capture r03 is bound to the deployment receipt and the unchanged SD
+   workload passed the single physical comparison. [W9 findings](AUDIT-005/stock-drain-findings.md)
+   record 5.075 s to 1.097 s, a 98.7% drop in P4-imposed UART idle, exact
+   payload/replies and no frame-sized pauses. The setup timeout remains;
+   final measured query succeeds on its first wait. The Author accepted the
+   findings and authorized W10. W9's separate post-run keyboard observation
+   remains unconfirmed; do not infer it from that acceptance. W10 includes
+   its own post-run keyboard check.
+
+10. [ ] **W10 — Repeat the full paired suite with browser video connected.**
+    [Authorized contract](AUDIT-005/stock-drain-full-suite.md): keep the r08
+    P4 image, EMOS and r03 executable fixed; restore original full-suite
+    startup, preserve six prior CSVs and collect one 48-row run. Compare each
+    route/path/payload with the original baseline, retaining setup/completion
+    timeouts separately. Record post-run keyboard and browser observations.
+    No analyzer, new instrumentation, game change or core reassignment.
+    Review these measurements before the planned personal Nurples playtest.
+    Collected [W10 findings](AUDIT-005/stock-drain-suite-findings.md): sole new
+    00000007.CSV validates all 48 rows and Legacy return. Point completion
+    improves by roughly 2.1–2.4 times; null/CLI behavior and query timeouts
+    remain problematic. Author confirms Legacy keyboard use, then reports
+    major Nurples hangs in ExCom. Browser continuity and hang recovery were
+    requested separately. Preserve both functional measurements and gameplay
+    regression; review before a bounded frame/snapshot investigation.
+    The Author authorized that diagnostic as [AUDIT-006](AUDIT-006.md), with
+    current progress and its contract frozen before implementation. Historical
+    browser/recovery observations remain unconfirmed; the new reproduction
+    will supply its own observations.
 
 When the current investigations are exhausted or resolve the reported
 slowdown, disposition the [deferred core-affinity review](PORT-003.md#deferred-core-affinity-review).
@@ -301,7 +330,9 @@ receive adaptations and P4 backpressure boundaries. W2 left those findings
 unranked. W6 measures P4 backpressure as the dominant idle component of
 counted-point output. W8's source-backed AUDIT-005-F006 attributes this workload
 to EDP's drawing budget, corroborated by elapsed time and burst cadence;
-internal occupancy/CPU intervals and individual EMOS costs remain unmeasured.
+W9's single controlled repair corroborates that attribution with a 4.63-fold
+speedup and disappearance of the predicted pauses. Internal occupancy/CPU
+intervals and individual EMOS costs remain unmeasured.
 W3 provides
 the concrete cases, autoexec, timing/reply boundaries, SD records and capture
 coverage requirements for the next increment; it is not benchmark evidence.

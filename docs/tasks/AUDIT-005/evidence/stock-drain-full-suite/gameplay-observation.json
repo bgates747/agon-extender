@@ -1,0 +1,16 @@
+{
+  "recorded_at": "2026-09-10T22:46:08.077331+00:00",
+  "author_report": "keyboard responded in legacy mode, i loaded nurples and ran it in excom mode. it has regressed unfortunately. big hangs.",
+  "evidence_class": "Author observation; not a timed or instrumented game run",
+  "p4_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "application_on_returned_sd": {
+    "relative_path": "mystuff/nurples/nurples.bin",
+    "sha256": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088"
+  },
+  "outcome": "Nurples ExCom gameplay regression; substantial hangs",
+  "hang_duration_recovery": "not yet specified; asked whether gameplay resumes and Escape returns to EMOS",
+  "browser_or_game_execution_boundary": "unresolved",
+  "qualification_effect": "Do not extend W9 point-workload success or W10 fixture PASS to game responsiveness.",
+  "new_game_or_firmware_changes": false
+}

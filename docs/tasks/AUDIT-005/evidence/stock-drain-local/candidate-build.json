@@ -1,0 +1,49 @@
+{
+  "build": {
+    "artifact_id": "uart-excom-console",
+    "source_identity": "uart-excom-console-r08",
+    "build_id": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+    "status": "candidate",
+    "created_at": "2026-09-10T21:23:43.436719+00:00"
+  },
+  "source_commit": "b9d4ff615cf231a9a96364e7bbcf4df824bd3a39",
+  "dirty": false,
+  "build_manifest_sha256": "4f9e1a4931fc7cb880b4f3dfc3742865a63797e5de66564678cc2b6e601d2753",
+  "outputs": [
+    {
+      "filename": "uart-excom-console-r08-b2026-09-10-21-23-43Z.bin",
+      "sha256": "a2a8021627c81bc0029af0adb9d3c47d04657e3d84cb4e1e69e422b8d3c802df",
+      "size_bytes": 1331600
+    },
+    {
+      "filename": "uart-excom-console-r08-b2026-09-10-21-23-43Z.elf",
+      "sha256": "256bc3e862acf638eaad23421c303dfa0820271fe4deb63097b366b26c44ac27",
+      "size_bytes": 24592056
+    },
+    {
+      "filename": "uart-excom-console-r08-b2026-09-10-21-23-43Z.factory.bin",
+      "sha256": "7c69f2796d33950ec69c4e9920603f1f4f3ed42074be2058880ab4d7f9efb321",
+      "size_bytes": 1462672
+    },
+    {
+      "filename": "dependencies.lock",
+      "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+      "size_bytes": 8845
+    }
+  ],
+  "changed_vdp_inputs_from_r07": [
+    "vdp/pio/p4-console-identity.json",
+    "vdp/video/extender/canary/frame_service_canary.cpp",
+    "vdp/video/extender/canary/presentation_canary.cpp",
+    "vdp/video/extender/display/logical_frame_service.cpp",
+    "vdp/video/extender/display/logical_frame_service.hpp",
+    "vdp/video/extender/display/p4_display_controller.cpp",
+    "vdp/video/extender/display/p4_display_controller.hpp",
+    "vdp/video/extender/display/p4_frame_service.cpp",
+    "vdp/video/extender/display/p4_frame_service.hpp"
+  ],
+  "managed_components_unchanged": true,
+  "remote_staged_hashes_match": true,
+  "hardware_deployed": false,
+  "emulator_review": "unchanged accepted workload; notification only for physical deployment gate"
+}

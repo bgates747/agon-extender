@@ -10,16 +10,31 @@ suspension handling. Core assignments and UART/parser budgets stay unchanged.
 ADR-0015 and the normative architecture/frame contract are amended accordingly.
 
 1. [x] Implement the drain policy and remove the production budget interface.
-2. [ ] Validate backlog draining, suspension/resume, completion, swaps and
+2. [x] Validate backlog draining, suspension/resume, completion, swaps and
    lifecycle; prepare the P4 build and concrete deployment for review.
-3. [ ] After the physical gate, run the single comparison and report results.
+3. [x] Author accepted the measured point comparison. W10 now validates all
+   48 cases and post-run Legacy keyboard input; W9's separate keyboard
+   observation remains unconfirmed. Broader responsiveness is still failing.
 
 The [W9 work contract](AUDIT-005/stock-queue-drain.md) owns exact inputs,
 identity, measurement boundaries and stopping rule. Earlier Phase C target
 qualification remains evidence of its original candidate, not this correction.
 The [local preparation record](AUDIT-005/stock-drain-preparation.md) records
-passing frame/render/mode checks and P4 compilation. Clean candidate build,
-deployment review and the physical comparison are pending.
+passing frame/render/mode checks and the clean r08 candidate build from
+`b9d4ff6`. The Author-authorized P4 deployment passed independent readback
+and startup checks. The [single comparison](AUDIT-005/stock-drain-findings.md)
+reduces counted-point completion from 5.075 s to 1.097 s, removing the
+approximately 60 Hz UART pauses. Broader workload and browser/gameplay
+validation remain open; the existing setup-query timeout persists.
+The [full-suite result](AUDIT-005/stock-drain-suite-findings.md) shows uneven
+improvement and persistent setup/null-path stalls. The Author then playtested
+Nurples and reports a regression with substantial ExCom hangs. Retain r08 as
+a candidate under investigation, not qualified gameplay. Review frame-worker
+drawing/sprite/snapshot waits before proposing a new repair; no scanline,
+core-affinity or drawing-budget change is authorized by these observations.
+The Author subsequently authorized [AUDIT-006](AUDIT-006.md) to instrument
+those intervals and reproduce the hang. It owns diagnostic deployment and
+evidence; this display task still owns the eventual reviewed correction.
 
 ## Current increment — RGB222 browser video, 2026-09-10
 

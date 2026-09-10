@@ -1,0 +1,2591 @@
+{
+  "clock_units_per_second": 120,
+  "clock_resolution_units": 2,
+  "reference_csv_sha256": "1c3b3adb482c0f3b46495fce882e8593141e501d8668e2106230aec2953965df",
+  "current_csv_sha256": "b88a1b86e0ac8a6efedc2b2d81c178b339c10c383f1b437df945d19467c1aeb4",
+  "cases": [
+    {
+      "entry": "byte",
+      "payload": "null",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              150,
+              148,
+              148
+            ],
+            "median": 148,
+            "min": 148,
+            "max": 150
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              150,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 150,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              4,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              438,
+              388,
+              478
+            ],
+            "median": 438,
+            "min": 388,
+            "max": 478
+          },
+          "tail_ticks": {
+            "values": [
+              64,
+              64,
+              62
+            ],
+            "median": 64,
+            "min": 62,
+            "max": 64
+          },
+          "total_ticks": {
+            "values": [
+              502,
+              452,
+              540
+            ],
+            "median": 502,
+            "min": 452,
+            "max": 540
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              64,
+              80
+            ],
+            "median": 80,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              64,
+              64,
+              62
+            ],
+            "median": 64,
+            "min": 62,
+            "max": 64
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              148,
+              150,
+              148
+            ],
+            "median": 148,
+            "min": 148,
+            "max": 150
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              150,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 150,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              4,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              360,
+              384,
+              386
+            ],
+            "median": 384,
+            "min": 360,
+            "max": 386
+          },
+          "tail_ticks": {
+            "values": [
+              40,
+              50,
+              32
+            ],
+            "median": 40,
+            "min": 32,
+            "max": 50
+          },
+          "total_ticks": {
+            "values": [
+              400,
+              434,
+              418
+            ],
+            "median": 418,
+            "min": 400,
+            "max": 434
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              66,
+              66
+            ],
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "reply_wait_ticks": {
+            "values": [
+              40,
+              50,
+              32
+            ],
+            "median": 40,
+            "min": 32,
+            "max": 50
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 148,
+            "after_median_ticks": 148,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "total_ticks": {
+            "before_median_ticks": 150,
+            "after_median_ticks": 150,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 438,
+            "after_median_ticks": 384,
+            "delta_ticks": -54,
+            "after_over_before": 0.8767123287671232
+          },
+          "tail_ticks": {
+            "before_median_ticks": 64,
+            "after_median_ticks": 40,
+            "delta_ticks": -24,
+            "after_over_before": 0.625
+          },
+          "total_ticks": {
+            "before_median_ticks": 502,
+            "after_median_ticks": 418,
+            "delta_ticks": -84,
+            "after_over_before": 0.8326693227091634
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 80,
+            "after_median_ticks": 66,
+            "delta_ticks": -14,
+            "after_over_before": 0.825
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 64,
+            "after_median_ticks": 40,
+            "delta_ticks": -24,
+            "after_over_before": 0.625
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 2.5945945945945947,
+      "current_excom_over_legacy_total": 2.7866666666666666
+    },
+    {
+      "entry": "byte",
+      "payload": "points",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              122,
+              124,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 124
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              124,
+              124,
+              122
+            ],
+            "median": 124,
+            "min": 122,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              8,
+              2,
+              4
+            ],
+            "median": 4,
+            "min": 2,
+            "max": 8
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              554,
+              544,
+              548
+            ],
+            "median": 548,
+            "min": 544,
+            "max": 554
+          },
+          "tail_ticks": {
+            "values": [
+              84,
+              82,
+              78
+            ],
+            "median": 82,
+            "min": 78,
+            "max": 84
+          },
+          "total_ticks": {
+            "values": [
+              638,
+              626,
+              626
+            ],
+            "median": 626,
+            "min": 626,
+            "max": 638
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              66,
+              64
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              84,
+              68,
+              78
+            ],
+            "median": 78,
+            "min": 68,
+            "max": 84
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              122,
+              122,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 122
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              122,
+              124,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              4,
+              4,
+              4
+            ],
+            "median": 4,
+            "min": 4,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              276,
+              252,
+              288
+            ],
+            "median": 276,
+            "min": 252,
+            "max": 288
+          },
+          "tail_ticks": {
+            "values": [
+              8,
+              4,
+              12
+            ],
+            "median": 8,
+            "min": 4,
+            "max": 12
+          },
+          "total_ticks": {
+            "values": [
+              284,
+              256,
+              300
+            ],
+            "median": 284,
+            "min": 256,
+            "max": 300
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              66,
+              66
+            ],
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "reply_wait_ticks": {
+            "values": [
+              8,
+              4,
+              12
+            ],
+            "median": 8,
+            "min": 4,
+            "max": 12
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 122,
+            "after_median_ticks": 122,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          },
+          "total_ticks": {
+            "before_median_ticks": 124,
+            "after_median_ticks": 122,
+            "delta_ticks": -2,
+            "after_over_before": 0.9838709677419355
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 4,
+            "after_median_ticks": 4,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 548,
+            "after_median_ticks": 276,
+            "delta_ticks": -272,
+            "after_over_before": 0.5036496350364964
+          },
+          "tail_ticks": {
+            "before_median_ticks": 82,
+            "after_median_ticks": 8,
+            "delta_ticks": -74,
+            "after_over_before": 0.0975609756097561
+          },
+          "total_ticks": {
+            "before_median_ticks": 626,
+            "after_median_ticks": 284,
+            "delta_ticks": -342,
+            "after_over_before": 0.4536741214057508
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 66,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 78,
+            "after_median_ticks": 8,
+            "delta_ticks": -70,
+            "after_over_before": 0.10256410256410256
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 2.262295081967213,
+      "current_excom_over_legacy_total": 2.3278688524590163
+    },
+    {
+      "entry": "count",
+      "payload": "null",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              148,
+              150,
+              148
+            ],
+            "median": 148,
+            "min": 148,
+            "max": 150
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              150,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 150,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              4,
+              8
+            ],
+            "median": 4,
+            "min": 2,
+            "max": 8
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              504,
+              334,
+              386
+            ],
+            "median": 386,
+            "min": 334,
+            "max": 504
+          },
+          "tail_ticks": {
+            "values": [
+              84,
+              68,
+              84
+            ],
+            "median": 84,
+            "min": 68,
+            "max": 84
+          },
+          "total_ticks": {
+            "values": [
+              588,
+              402,
+              470
+            ],
+            "median": 470,
+            "min": 402,
+            "max": 588
+          },
+          "setup_reply_ticks": {
+            "values": [
+              64,
+              66,
+              66
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 66
+          },
+          "reply_wait_ticks": {
+            "values": [
+              84,
+              68,
+              68
+            ],
+            "median": 68,
+            "min": 68,
+            "max": 84
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              148,
+              150,
+              148
+            ],
+            "median": 148,
+            "min": 148,
+            "max": 150
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              150,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 150,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              4,
+              2,
+              6
+            ],
+            "median": 4,
+            "min": 2,
+            "max": 6
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              0,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              422,
+              346,
+              350
+            ],
+            "median": 350,
+            "min": 346,
+            "max": 422
+          },
+          "tail_ticks": {
+            "values": [
+              66,
+              86,
+              50
+            ],
+            "median": 66,
+            "min": 50,
+            "max": 86
+          },
+          "total_ticks": {
+            "values": [
+              488,
+              432,
+              400
+            ],
+            "median": 432,
+            "min": 400,
+            "max": 488
+          },
+          "setup_reply_ticks": {
+            "values": [
+              84,
+              66,
+              82
+            ],
+            "median": 82,
+            "min": 66,
+            "max": 84
+          },
+          "reply_wait_ticks": {
+            "values": [
+              66,
+              86,
+              50
+            ],
+            "median": 66,
+            "min": 50,
+            "max": 86
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 148,
+            "after_median_ticks": 148,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "total_ticks": {
+            "before_median_ticks": 150,
+            "after_median_ticks": 150,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 4,
+            "after_median_ticks": 4,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 386,
+            "after_median_ticks": 350,
+            "delta_ticks": -36,
+            "after_over_before": 0.9067357512953368
+          },
+          "tail_ticks": {
+            "before_median_ticks": 84,
+            "after_median_ticks": 66,
+            "delta_ticks": -18,
+            "after_over_before": 0.7857142857142857
+          },
+          "total_ticks": {
+            "before_median_ticks": 470,
+            "after_median_ticks": 432,
+            "delta_ticks": -38,
+            "after_over_before": 0.9191489361702128
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 82,
+            "delta_ticks": 16,
+            "after_over_before": 1.2424242424242424
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 68,
+            "after_median_ticks": 66,
+            "delta_ticks": -2,
+            "after_over_before": 0.9705882352941176
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 2.364864864864865,
+      "current_excom_over_legacy_total": 2.88
+    },
+    {
+      "entry": "count",
+      "payload": "points",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              124,
+              122,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 124
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              124,
+              124,
+              124
+            ],
+            "median": 124,
+            "min": 124,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 2
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              546,
+              558,
+              546
+            ],
+            "median": 546,
+            "min": 546,
+            "max": 558
+          },
+          "tail_ticks": {
+            "values": [
+              86,
+              68,
+              92
+            ],
+            "median": 86,
+            "min": 68,
+            "max": 92
+          },
+          "total_ticks": {
+            "values": [
+              632,
+              626,
+              638
+            ],
+            "median": 632,
+            "min": 626,
+            "max": 638
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              64,
+              66
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 66
+          },
+          "reply_wait_ticks": {
+            "values": [
+              86,
+              68,
+              92
+            ],
+            "median": 86,
+            "min": 68,
+            "max": 92
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              122,
+              122,
+              124
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 124
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              2,
+              0
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              124,
+              124,
+              124
+            ],
+            "median": 124,
+            "min": 124,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              4,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              2,
+              0
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              242,
+              234,
+              186
+            ],
+            "median": 234,
+            "min": 186,
+            "max": 242
+          },
+          "tail_ticks": {
+            "values": [
+              26,
+              44,
+              10
+            ],
+            "median": 26,
+            "min": 10,
+            "max": 44
+          },
+          "total_ticks": {
+            "values": [
+              268,
+              278,
+              196
+            ],
+            "median": 268,
+            "min": 196,
+            "max": 278
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              64,
+              66
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              26,
+              44,
+              10
+            ],
+            "median": 26,
+            "min": 10,
+            "max": 44
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 122,
+            "after_median_ticks": 122,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "total_ticks": {
+            "before_median_ticks": 124,
+            "after_median_ticks": 124,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 546,
+            "after_median_ticks": 234,
+            "delta_ticks": -312,
+            "after_over_before": 0.42857142857142855
+          },
+          "tail_ticks": {
+            "before_median_ticks": 86,
+            "after_median_ticks": 26,
+            "delta_ticks": -60,
+            "after_over_before": 0.3023255813953488
+          },
+          "total_ticks": {
+            "before_median_ticks": 632,
+            "after_median_ticks": 268,
+            "delta_ticks": -364,
+            "after_over_before": 0.4240506329113924
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 66,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 86,
+            "after_median_ticks": 26,
+            "delta_ticks": -60,
+            "after_over_before": 0.3023255813953488
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 1.9180327868852458,
+      "current_excom_over_legacy_total": 2.161290322580645
+    },
+    {
+      "entry": "delimiter",
+      "payload": "null",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              148,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 148,
+            "max": 150
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              150,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 150,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              6,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 6
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              474,
+              456,
+              420
+            ],
+            "median": 456,
+            "min": 420,
+            "max": 474
+          },
+          "tail_ticks": {
+            "values": [
+              46,
+              82,
+              34
+            ],
+            "median": 46,
+            "min": 34,
+            "max": 82
+          },
+          "total_ticks": {
+            "values": [
+              520,
+              538,
+              454
+            ],
+            "median": 520,
+            "min": 454,
+            "max": 538
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              84,
+              66
+            ],
+            "median": 66,
+            "min": 66,
+            "max": 84
+          },
+          "reply_wait_ticks": {
+            "values": [
+              46,
+              82,
+              34
+            ],
+            "median": 46,
+            "min": 34,
+            "max": 82
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              148,
+              148,
+              148
+            ],
+            "median": 148,
+            "min": 148,
+            "max": 148
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              148,
+              150,
+              150
+            ],
+            "median": 150,
+            "min": 148,
+            "max": 150
+          },
+          "setup_reply_ticks": {
+            "values": [
+              8,
+              2,
+              8
+            ],
+            "median": 8,
+            "min": 2,
+            "max": 8
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              370,
+              408,
+              356
+            ],
+            "median": 370,
+            "min": 356,
+            "max": 408
+          },
+          "tail_ticks": {
+            "values": [
+              64,
+              32,
+              48
+            ],
+            "median": 48,
+            "min": 32,
+            "max": 64
+          },
+          "total_ticks": {
+            "values": [
+              434,
+              440,
+              404
+            ],
+            "median": 434,
+            "min": 404,
+            "max": 440
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              84,
+              84
+            ],
+            "median": 84,
+            "min": 82,
+            "max": 84
+          },
+          "reply_wait_ticks": {
+            "values": [
+              52,
+              32,
+              48
+            ],
+            "median": 48,
+            "min": 32,
+            "max": 52
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 150,
+            "after_median_ticks": 148,
+            "delta_ticks": -2,
+            "after_over_before": 0.9866666666666667
+          },
+          "tail_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 2,
+            "delta_ticks": 2,
+            "after_over_before": null
+          },
+          "total_ticks": {
+            "before_median_ticks": 150,
+            "after_median_ticks": 150,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 8,
+            "delta_ticks": 6,
+            "after_over_before": 4.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 2,
+            "delta_ticks": 2,
+            "after_over_before": null
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 456,
+            "after_median_ticks": 370,
+            "delta_ticks": -86,
+            "after_over_before": 0.8114035087719298
+          },
+          "tail_ticks": {
+            "before_median_ticks": 46,
+            "after_median_ticks": 48,
+            "delta_ticks": 2,
+            "after_over_before": 1.0434782608695652
+          },
+          "total_ticks": {
+            "before_median_ticks": 520,
+            "after_median_ticks": 434,
+            "delta_ticks": -86,
+            "after_over_before": 0.8346153846153846
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 84,
+            "delta_ticks": 18,
+            "after_over_before": 1.2727272727272727
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 46,
+            "after_median_ticks": 48,
+            "delta_ticks": 2,
+            "after_over_before": 1.0434782608695652
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 2.5,
+      "current_excom_over_legacy_total": 2.8933333333333335
+    },
+    {
+      "entry": "delimiter",
+      "payload": "points",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              124,
+              122,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 124
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              124,
+              124,
+              124
+            ],
+            "median": 124,
+            "min": 124,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              6,
+              8,
+              8
+            ],
+            "median": 8,
+            "min": 6,
+            "max": 8
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              546,
+              552,
+              558
+            ],
+            "median": 552,
+            "min": 546,
+            "max": 558
+          },
+          "tail_ticks": {
+            "values": [
+              88,
+              84,
+              78
+            ],
+            "median": 84,
+            "min": 78,
+            "max": 88
+          },
+          "total_ticks": {
+            "values": [
+              634,
+              636,
+              636
+            ],
+            "median": 636,
+            "min": 634,
+            "max": 636
+          },
+          "setup_reply_ticks": {
+            "values": [
+              64,
+              82,
+              64
+            ],
+            "median": 64,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              88,
+              84,
+              78
+            ],
+            "median": 84,
+            "min": 78,
+            "max": 88
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              122,
+              122,
+              122
+            ],
+            "median": 122,
+            "min": 122,
+            "max": 122
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 2
+          },
+          "total_ticks": {
+            "values": [
+              124,
+              124,
+              124
+            ],
+            "median": 124,
+            "min": 124,
+            "max": 124
+          },
+          "setup_reply_ticks": {
+            "values": [
+              4,
+              6,
+              6
+            ],
+            "median": 6,
+            "min": 4,
+            "max": 6
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 2
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              266,
+              252,
+              264
+            ],
+            "median": 264,
+            "min": 252,
+            "max": 266
+          },
+          "tail_ticks": {
+            "values": [
+              32,
+              8,
+              38
+            ],
+            "median": 32,
+            "min": 8,
+            "max": 38
+          },
+          "total_ticks": {
+            "values": [
+              298,
+              260,
+              302
+            ],
+            "median": 298,
+            "min": 260,
+            "max": 302
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              66,
+              66
+            ],
+            "median": 66,
+            "min": 66,
+            "max": 66
+          },
+          "reply_wait_ticks": {
+            "values": [
+              32,
+              8,
+              38
+            ],
+            "median": 32,
+            "min": 8,
+            "max": 38
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 122,
+            "after_median_ticks": 122,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "total_ticks": {
+            "before_median_ticks": 124,
+            "after_median_ticks": 124,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 8,
+            "after_median_ticks": 6,
+            "delta_ticks": -2,
+            "after_over_before": 0.75
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 552,
+            "after_median_ticks": 264,
+            "delta_ticks": -288,
+            "after_over_before": 0.4782608695652174
+          },
+          "tail_ticks": {
+            "before_median_ticks": 84,
+            "after_median_ticks": 32,
+            "delta_ticks": -52,
+            "after_over_before": 0.38095238095238093
+          },
+          "total_ticks": {
+            "before_median_ticks": 636,
+            "after_median_ticks": 298,
+            "delta_ticks": -338,
+            "after_over_before": 0.46855345911949686
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 64,
+            "after_median_ticks": 66,
+            "delta_ticks": 2,
+            "after_over_before": 1.03125
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 84,
+            "after_median_ticks": 32,
+            "delta_ticks": -52,
+            "after_over_before": 0.38095238095238093
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 2.1639344262295084,
+      "current_excom_over_legacy_total": 2.403225806451613
+    },
+    {
+      "entry": "cli-putch",
+      "payload": "null",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              1942,
+              1940,
+              1942
+            ],
+            "median": 1942,
+            "min": 1940,
+            "max": 1942
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "total_ticks": {
+            "values": [
+              1942,
+              1940,
+              1942
+            ],
+            "median": 1942,
+            "min": 1940,
+            "max": 1942
+          },
+          "setup_reply_ticks": {
+            "values": [
+              4,
+              6,
+              6
+            ],
+            "median": 6,
+            "min": 4,
+            "max": 6
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              2156,
+              2156,
+              2156
+            ],
+            "median": 2156,
+            "min": 2156,
+            "max": 2156
+          },
+          "tail_ticks": {
+            "values": [
+              10,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 10
+          },
+          "total_ticks": {
+            "values": [
+              2166,
+              2156,
+              2156
+            ],
+            "median": 2156,
+            "min": 2156,
+            "max": 2166
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              64,
+              66
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              10,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 10
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              1942,
+              1940,
+              1940
+            ],
+            "median": 1940,
+            "min": 1940,
+            "max": 1942
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "total_ticks": {
+            "values": [
+              1942,
+              1940,
+              1940
+            ],
+            "median": 1940,
+            "min": 1940,
+            "max": 1942
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              4,
+              4
+            ],
+            "median": 4,
+            "min": 2,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              2154,
+              2154,
+              2156
+            ],
+            "median": 2154,
+            "min": 2154,
+            "max": 2156
+          },
+          "tail_ticks": {
+            "values": [
+              2,
+              2,
+              12
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 12
+          },
+          "total_ticks": {
+            "values": [
+              2156,
+              2156,
+              2168
+            ],
+            "median": 2156,
+            "min": 2156,
+            "max": 2168
+          },
+          "setup_reply_ticks": {
+            "values": [
+              98,
+              66,
+              66
+            ],
+            "median": 66,
+            "min": 66,
+            "max": 98
+          },
+          "reply_wait_ticks": {
+            "values": [
+              2,
+              2,
+              12
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 12
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 1942,
+            "after_median_ticks": 1940,
+            "delta_ticks": -2,
+            "after_over_before": 0.9989701338825953
+          },
+          "tail_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          },
+          "total_ticks": {
+            "before_median_ticks": 1942,
+            "after_median_ticks": 1940,
+            "delta_ticks": -2,
+            "after_over_before": 0.9989701338825953
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 6,
+            "after_median_ticks": 4,
+            "delta_ticks": -2,
+            "after_over_before": 0.6666666666666666
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 2156,
+            "after_median_ticks": 2154,
+            "delta_ticks": -2,
+            "after_over_before": 0.9990723562152134
+          },
+          "tail_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 2,
+            "delta_ticks": 2,
+            "after_over_before": null
+          },
+          "total_ticks": {
+            "before_median_ticks": 2156,
+            "after_median_ticks": 2156,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 66,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 2,
+            "delta_ticks": 2,
+            "after_over_before": null
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 1.1103092783505155,
+      "current_excom_over_legacy_total": 1.111340206185567
+    },
+    {
+      "entry": "cli-putch",
+      "payload": "points",
+      "before": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              2144,
+              2144,
+              2144
+            ],
+            "median": 2144,
+            "min": 2144,
+            "max": 2144
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "total_ticks": {
+            "values": [
+              2144,
+              2144,
+              2144
+            ],
+            "median": 2144,
+            "min": 2144,
+            "max": 2144
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              2,
+              2
+            ],
+            "median": 2,
+            "min": 2,
+            "max": 2
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              2358,
+              2358,
+              2358
+            ],
+            "median": 2358,
+            "min": 2358,
+            "max": 2358
+          },
+          "tail_ticks": {
+            "values": [
+              12,
+              2,
+              0
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 12
+          },
+          "total_ticks": {
+            "values": [
+              2370,
+              2360,
+              2358
+            ],
+            "median": 2360,
+            "min": 2358,
+            "max": 2370
+          },
+          "setup_reply_ticks": {
+            "values": [
+              82,
+              64,
+              66
+            ],
+            "median": 66,
+            "min": 64,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              12,
+              2,
+              0
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 12
+          }
+        }
+      },
+      "after": {
+        "legacy": {
+          "send_ticks": {
+            "values": [
+              2144,
+              2142,
+              2142
+            ],
+            "median": 2142,
+            "min": 2142,
+            "max": 2144
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          },
+          "total_ticks": {
+            "values": [
+              2144,
+              2142,
+              2142
+            ],
+            "median": 2142,
+            "min": 2142,
+            "max": 2144
+          },
+          "setup_reply_ticks": {
+            "values": [
+              2,
+              4,
+              4
+            ],
+            "median": 4,
+            "min": 2,
+            "max": 4
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              0,
+              0
+            ],
+            "median": 0,
+            "min": 0,
+            "max": 0
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "values": [
+              2358,
+              2358,
+              2358
+            ],
+            "median": 2358,
+            "min": 2358,
+            "max": 2358
+          },
+          "tail_ticks": {
+            "values": [
+              0,
+              2,
+              18
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 18
+          },
+          "total_ticks": {
+            "values": [
+              2358,
+              2360,
+              2376
+            ],
+            "median": 2360,
+            "min": 2358,
+            "max": 2376
+          },
+          "setup_reply_ticks": {
+            "values": [
+              66,
+              82,
+              82
+            ],
+            "median": 82,
+            "min": 66,
+            "max": 82
+          },
+          "reply_wait_ticks": {
+            "values": [
+              0,
+              2,
+              18
+            ],
+            "median": 2,
+            "min": 0,
+            "max": 18
+          }
+        }
+      },
+      "changes": {
+        "legacy": {
+          "send_ticks": {
+            "before_median_ticks": 2144,
+            "after_median_ticks": 2142,
+            "delta_ticks": -2,
+            "after_over_before": 0.9990671641791045
+          },
+          "tail_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          },
+          "total_ticks": {
+            "before_median_ticks": 2144,
+            "after_median_ticks": 2142,
+            "delta_ticks": -2,
+            "after_over_before": 0.9990671641791045
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 4,
+            "delta_ticks": 2,
+            "after_over_before": 2.0
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 0,
+            "after_median_ticks": 0,
+            "delta_ticks": 0,
+            "after_over_before": null
+          }
+        },
+        "excom": {
+          "send_ticks": {
+            "before_median_ticks": 2358,
+            "after_median_ticks": 2358,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "tail_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "total_ticks": {
+            "before_median_ticks": 2360,
+            "after_median_ticks": 2360,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          },
+          "setup_reply_ticks": {
+            "before_median_ticks": 66,
+            "after_median_ticks": 82,
+            "delta_ticks": 16,
+            "after_over_before": 1.2424242424242424
+          },
+          "reply_wait_ticks": {
+            "before_median_ticks": 2,
+            "after_median_ticks": 2,
+            "delta_ticks": 0,
+            "after_over_before": 1.0
+          }
+        }
+      },
+      "current_excom_over_legacy_send": 1.1008403361344539,
+      "current_excom_over_legacy_total": 1.1017740429505136
+    }
+  ],
+  "timeouts": {
+    "before": {
+      "legacy": {
+        "setup": 0,
+        "completion": 0,
+        "completion_by_case": {
+          "byte/null": 0,
+          "byte/points": 0,
+          "count/null": 0,
+          "count/points": 0,
+          "delimiter/null": 0,
+          "delimiter/points": 0,
+          "cli-putch/null": 0,
+          "cli-putch/points": 0
+        },
+        "setup_reply_ticks": {
+          "values": [
+            4,
+            8,
+            2,
+            2,
+            6,
+            6,
+            4,
+            2,
+            2,
+            2,
+            4,
+            2,
+            2,
+            8,
+            6,
+            2,
+            2,
+            4,
+            8,
+            2,
+            2,
+            8,
+            6,
+            2
+          ],
+          "median": 3.0,
+          "min": 2,
+          "max": 8
+        },
+        "reply_wait_ticks": {
+          "values": [
+            0,
+            2,
+            2,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            2,
+            0,
+            0
+          ],
+          "median": 0.0,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "setup": 24,
+        "completion": 18,
+        "completion_by_case": {
+          "byte/null": 3,
+          "byte/points": 3,
+          "count/null": 3,
+          "count/points": 3,
+          "delimiter/null": 3,
+          "delimiter/points": 3,
+          "cli-putch/null": 0,
+          "cli-putch/points": 0
+        },
+        "setup_reply_ticks": {
+          "values": [
+            82,
+            82,
+            64,
+            66,
+            66,
+            64,
+            82,
+            82,
+            64,
+            66,
+            66,
+            64,
+            84,
+            82,
+            64,
+            64,
+            80,
+            64,
+            66,
+            66,
+            66,
+            64,
+            66,
+            66
+          ],
+          "median": 66.0,
+          "min": 64,
+          "max": 84
+        },
+        "reply_wait_ticks": {
+          "values": [
+            64,
+            84,
+            84,
+            86,
+            46,
+            88,
+            10,
+            12,
+            64,
+            68,
+            68,
+            68,
+            82,
+            84,
+            0,
+            2,
+            62,
+            78,
+            68,
+            92,
+            34,
+            78,
+            0,
+            0
+          ],
+          "median": 68.0,
+          "min": 0,
+          "max": 92
+        }
+      }
+    },
+    "after": {
+      "legacy": {
+        "setup": 0,
+        "completion": 0,
+        "completion_by_case": {
+          "byte/null": 0,
+          "byte/points": 0,
+          "count/null": 0,
+          "count/points": 0,
+          "delimiter/null": 0,
+          "delimiter/points": 0,
+          "cli-putch/null": 0,
+          "cli-putch/points": 0
+        },
+        "setup_reply_ticks": {
+          "values": [
+            2,
+            4,
+            4,
+            2,
+            8,
+            4,
+            2,
+            2,
+            4,
+            4,
+            2,
+            4,
+            2,
+            6,
+            4,
+            4,
+            2,
+            4,
+            6,
+            2,
+            8,
+            6,
+            4,
+            4
+          ],
+          "median": 4.0,
+          "min": 2,
+          "max": 8
+        },
+        "reply_wait_ticks": {
+          "values": [
+            2,
+            0,
+            2,
+            2,
+            0,
+            2,
+            0,
+            0,
+            0,
+            2,
+            0,
+            2,
+            2,
+            2,
+            0,
+            0,
+            2,
+            0,
+            2,
+            0,
+            2,
+            2,
+            0,
+            0
+          ],
+          "median": 1.0,
+          "min": 0,
+          "max": 2
+        }
+      },
+      "excom": {
+        "setup": 24,
+        "completion": 12,
+        "completion_by_case": {
+          "byte/null": 3,
+          "byte/points": 0,
+          "count/null": 3,
+          "count/points": 1,
+          "delimiter/null": 3,
+          "delimiter/points": 2,
+          "cli-putch/null": 0,
+          "cli-putch/points": 0
+        },
+        "setup_reply_ticks": {
+          "values": [
+            66,
+            66,
+            84,
+            82,
+            82,
+            66,
+            98,
+            66,
+            66,
+            66,
+            66,
+            64,
+            84,
+            66,
+            66,
+            82,
+            66,
+            66,
+            82,
+            66,
+            84,
+            66,
+            66,
+            82
+          ],
+          "median": 66.0,
+          "min": 64,
+          "max": 98
+        },
+        "reply_wait_ticks": {
+          "values": [
+            40,
+            8,
+            66,
+            26,
+            52,
+            32,
+            2,
+            0,
+            50,
+            4,
+            86,
+            44,
+            32,
+            8,
+            2,
+            2,
+            32,
+            12,
+            50,
+            10,
+            48,
+            38,
+            12,
+            18
+          ],
+          "median": 29.0,
+          "min": 0,
+          "max": 86
+        }
+      }
+    }
+  },
+  "limits": "Three repetitions per case in one session per image; coarse clock boundaries include caller/UART/receiver waits. No wire capture or browser presentation timing. Browser continuity observation pending."
+}

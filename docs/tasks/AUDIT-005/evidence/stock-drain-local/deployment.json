@@ -1,0 +1,13 @@
+{
+  "run_id": "PORT-003-2026-09-10-21-31-49Z",
+  "build_id": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+  "factory_sha256": "7c69f2796d33950ec69c4e9920603f1f4f3ed42074be2058880ab4d7f9efb321",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "physical_rgb222_throughput_stability": "pending",
+  "source_commit": "b9d4ff615cf231a9a96364e7bbcf4df824bd3a39",
+  "build_manifest_sha256": "4f9e1a4931fc7cb880b4f3dfc3742865a63797e5de66564678cc2b6e601d2753",
+  "deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc",
+  "drawing_policy": "stock-drain-until-empty-or-suspended",
+  "benchmark": "pending"
+}

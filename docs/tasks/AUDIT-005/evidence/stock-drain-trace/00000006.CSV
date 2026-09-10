@@ -1,0 +1,8 @@
+# build=uart-path-benchmark-r03-b2026-09-10-18-21-38Z;status=draft
+# emos=agon-emos-v0.1.12-b2026-09-10-03-50-35Z;edp=uart-excom-console-r07-b2026-09-10-06-31-58Z;mainboard_vdp=2.16.0
+# mode=trace;baud=1152000;clock_units_per_second=120;clock_resolution_units=2
+# browser=one_visible_connected_client_operator_required;entries_include_caller_cost
+# completion_deadline_ticks=600;max_wait_calls=24;probe_retains_first_timeout=1
+row,repeat,route,entry,payload,chunks,bytes,t0,t1,t2,send_ticks,tail_ticks,total_ticks,send_status,reply_status,pixel_r,pixel_g,pixel_b,pixel_index,mode,width,height,colours,valid,setup_first_status,setup_reply_ticks,first_reply_status,reply_wait_ticks
+1,1,excom,count,points,512,32768,1232,1362,1362,130,0,130,0,0,255,255,255,15,0,640,480,16,1,15,66,0,0
+# complete;rows=1;status=0;legacy_return=0

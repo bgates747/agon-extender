@@ -1,0 +1,37 @@
+{
+  "collected_at": "2026-09-10T22:46:08.077120+00:00",
+  "run_start_utc": null,
+  "outcome": "48-row functional and saved-clock checks pass; broader performance remains incomplete and gameplay regression reported",
+  "author_review": "pending",
+  "csv_filename": "00000007.CSV",
+  "csv_sha256": "b88a1b86e0ac8a6efedc2b2d81c178b339c10c383f1b437df945d19467c1aeb4",
+  "rows": 48,
+  "legacy_return_status": 0,
+  "fixture_build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "fixture_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "autoexec_sha256": "028a99cd1880fa809a34ccc133f19b2ee77a6e54b9b0f59d995d356dc2564b5e",
+  "p4_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+  "p4_deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc",
+  "original_preparation_sha256": "c5bcefb9b4d87fef8793bc80497720022862a80a555170ace4988e83c241f120",
+  "csv_edp_annotation_override": {
+    "compiled_build": "uart-excom-console-r07-b2026-09-10-06-31-58Z",
+    "selected_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+    "basis": "Previously verified deployment retained; no subsequent firmware write in this preparation."
+  },
+  "prior_results_unchanged": true,
+  "sd_contents_modified": false,
+  "source_association": "Only new CSV after six-result handover; exact build, case order, pixels and successful footer validated. Hardware start UTC was not observed; FAT timestamps are not a run ID.",
+  "browser_condition": "One visible connected client required; user resumed after asking P4 address. Continuity confirmation requested and pending.",
+  "keyboard_observation": "Author reports responsive keyboard in Legacy, loaded Nurples and ran it in ExCom after suite.",
+  "checks": {
+    "complete_matrix": true,
+    "case_order": true,
+    "final_statuses": true,
+    "pixels": true,
+    "clock_arithmetic": true,
+    "legacy_return": true,
+    "unchanged_inputs": true,
+    "deployment_binding": true
+  },
+  "collector_sha256": "82e6fca5c06f4ff91d3dcbaa498c311b91513dec89a0d3e91229e0f0ff4d63fc"
+}

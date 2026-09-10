@@ -1,0 +1,38 @@
+{
+  "prepared_at": "2026-09-10T21:54:02.931606+00:00",
+  "task_work_item": "AUDIT-005 W10",
+  "status": "prepared; physical result pending",
+  "fixture_build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "fixture_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "autoexec_sha256": "028a99cd1880fa809a34ccc133f19b2ee77a6e54b9b0f59d995d356dc2564b5e",
+  "invocation": "RUN",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "mainboard_vdp": "2.16.0",
+  "edp_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+  "edp_factory_sha256": "7c69f2796d33950ec69c4e9920603f1f4f3ed42074be2058880ab4d7f9efb321",
+  "edp_manifest_sha256": "4f9e1a4931fc7cb880b4f3dfc3742865a63797e5de66564678cc2b6e601d2753",
+  "p4_deployment_record_sha256": "32fe28d29b429db1c0cf0e887e51603dac13b33bcf12e997f0e2563f69f9e5bc",
+  "browser_condition": "one connected and visible video client required; operator observation pending",
+  "csv_edp_annotation_override": {
+    "compiled_build": "uart-excom-console-r07-b2026-09-10-06-31-58Z",
+    "selected_build": "uart-excom-console-r08-b2026-09-10-21-23-43Z",
+    "basis": "Previously verified deployment retained; no subsequent firmware write in this preparation."
+  },
+  "fixture_manifest_edp_annotation_override": true,
+  "previous_results": {
+    "00000001.CSV": "09e6d19f4a4eeb24d665dcd22e8c459beb59cca7d415c09954206bed057d063f",
+    "00000002.CSV": "f8f142620a99ef158dd79da9b4d6b9a8270516c963c313c2b63e0fc6c7b72679",
+    "00000003.CSV": "1c3b3adb482c0f3b46495fce882e8593141e501d8668e2106230aec2953965df",
+    "00000004.CSV": "0667fa10094123004bcdb914f20aa7ce1304359d92b2a2bad6851723c63200af",
+    "00000005.CSV": "bdcdf037b99eafc2ceed9ede0065439ed4d5f9bf19ce3012274eac9e408624ea",
+    "00000006.CSV": "fd51337010d24134124154fc9746c486472a85644868fc89b0aa716a0743447a"
+  },
+  "original_baseline_csv_sha256": "1c3b3adb482c0f3b46495fce882e8593141e501d8668e2106230aec2953965df",
+  "post_run_keyboard_observation": "pending",
+  "uart_capture": "none; saved-clock comparison",
+  "no_new_firmware_build_or_flash": true,
+  "no_emulator_behavior_change": "Reuses the accepted full-suite executable and original autoexec bytes. Notification only.",
+  "sd_handover": "safely unmounted; six prior results preserved",
+  "private_condition_sha256": "c5bcefb9b4d87fef8793bc80497720022862a80a555170ace4988e83c241f120",
+  "private_handover_sha256": "9bd28dfb926a6a77b16818eb19f7782991e3d657d1ae11aa572cfea161e6c702"
+}

@@ -1,0 +1,108 @@
+{
+  "coverage_pass": true,
+  "acquisition_pass": true,
+  "independent_decode_matches": true,
+  "trace_sha256": "30b55bb6c3a9743cc81860477445678325ada51b1108148165216092aa973944",
+  "analysis_sha256": "835762ab8f200c7b9c80ee15b50da77fb01c30dd22b0e7ed12639eea485dc07c",
+  "numpy_version": "2.5.2",
+  "samples": 720000000,
+  "sample_rate_hz": 24000000,
+  "uart_baud": 1152000,
+  "forward_payload_bytes": 32768,
+  "marker_start_seconds": 11.705931333333334,
+  "final_reply_end_seconds": 12.804804763888889,
+  "marker_reply_seconds": 0.0013867083333333333,
+  "marker_reply_to_first_payload_seconds": 0.00015052777777860562,
+  "payload_end_to_query_seconds": 8.948611111193895e-05,
+  "final_query_reply_seconds": 0.002798875,
+  "final_query_to_first_reply_seconds": 0.002703736111111939,
+  "final_query_to_first_reply_agon_rts_high_seconds": 0.0,
+  "final_query_through_reply_agon_rts_high_seconds": 4.701388888806105e-05,
+  "payload_start_to_reply_seconds": 1.0971354305555547,
+  "payload": {
+    "wire_span_seconds": 1.0940463055555547,
+    "estimated_byte_time_seconds": 0.2844444444173177,
+    "idle_seconds": 0.8096018611382371,
+    "idle_cts_high_seconds": 0.044065152778200806,
+    "idle_cts_low_seconds": 0.7655367083600362,
+    "cts_high_seconds": 0.04424501388888806,
+    "idle_cts_high_fraction": 0.05442817623498128,
+    "longest_gaps": [
+      {
+        "start_seconds": 11.713967430555554,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.724656180555554,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.735336888888888,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.741753347222222,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.746025638888888,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.76950622222222,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.775922680555555,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.797292138888889,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.807980888888888,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      },
+      {
+        "start_seconds": 11.81866159722222,
+        "duration_seconds": 0.00011036111111193895,
+        "cts_high_seconds": 8.619444444527229e-05
+      }
+    ]
+  },
+  "final_reply": {
+    "wire_span_seconds": 9.513888888806104e-05,
+    "estimated_byte_time_seconds": 5.204166666418314e-05,
+    "idle_seconds": 4.309722222387791e-05,
+    "idle_cts_high_seconds": 4.293055555721124e-05,
+    "idle_cts_low_seconds": 1.6666666666666668e-07,
+    "cts_high_seconds": 4.701388888806105e-05,
+    "idle_cts_high_fraction": 0.9961327747342769,
+    "longest_gaps": [
+      {
+        "start_seconds": 12.804765472222222,
+        "duration_seconds": 2.1944444445272288e-05,
+        "cts_high_seconds": 2.1861111111938955e-05
+      },
+      {
+        "start_seconds": 12.804726972222221,
+        "duration_seconds": 2.115277777860562e-05,
+        "cts_high_seconds": 2.1069444445272287e-05
+      }
+    ]
+  },
+  "framing_errors_outside_window": 0,
+  "byte_starts_while_cts_high": 0,
+  "final_reply_starts_while_agon_rts_high": 0,
+  "limits": "CTS overlap is not pure CPU stall time; CTS-low gaps do not identify their software cause. Frame ends have approximately one-sample uncertainty; in-flight bytes may finish after CTS rises."
+}

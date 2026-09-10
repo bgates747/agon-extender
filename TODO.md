@@ -24,13 +24,19 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
   - Started: 2026-09-10
   - Finished: --
-  - Status: W1–W8 accepted. W9 authorized after freeze: restore stock drawing drain under PORT-003, then repeat the unchanged browser-off point benchmark. No fixed-budget experiment.
+  - Status: W9/W10 measurements frozen for follow-up: point output improves but ordinary-query stalls remain and Nurples has large ExCom hangs. Further attribution moves to AUDIT-006; stock-reuse audit closure remains open.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
+
+- [ ] **AUDIT-006 — Measure P4 frame work during Nurples hangs**
+  - Started: 2026-09-10
+  - Finished: --
+  - Status: Authorized timing instrumentation, P4 diagnostic deployment and one game reproduction; no speculative scheduler or transport repair.
+  - Details: [AUDIT-006](docs/tasks/AUDIT-006.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Partially working checkpoint: RGB222, USB keyboard admission, ExCom entry and slideshow function on hardware. Typing and Nurples are very laggy, with compressed laser spacing. AUDIT-005 precedes further instrumentation or core changes; performance/uptime qualification remains open.
+  - Status: Stock drawing drain improves point throughput; full suite passes bounded checks, but ordinary-query stalls remain and Nurples now has substantial ExCom hangs. Gameplay regression under investigation; broader qualification open, no new budget/core/transport change selected.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
