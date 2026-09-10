@@ -1,0 +1,17 @@
+run_id: PORT-008-2026-09-10-02-00-11Z
+build_id: uart-excom-console-r02-b2026-09-10-01-58-58Z
+factory_sha256: 765a97cfe2244a03464a232d4737c50a7a89745b5940f2d7e294976ae3e6560b
+write_verified: true
+usb_host_startup_observed: true
+physical_excom_console: pending
+source_commit: 840c052590c5eb34af5c28b5ea1ba9b1f038b9ea
+source_clean: true
+keyboard_enumerated: Perixx PERIBOARD-409; VID 04d9 PID a088; boot interface
+emos: Unchanged installed agon-emos-v0.1.11-b2026-09-10-01-22-40Z
+private_log_sha256:
+  boot.log: 4cf17aa839421efe4091241a4be0738f5840dcda94bd019b99821a3a7373ef9f
+  deployment.json: e5af9dcae8143570badc56fb8e8e2ac4e91bee1cf4a80ab08889ef4d7009449b
+  verify-command.json: c3044cab00b31d4c1b27d674b4df11e598c6a0ac6ee12aa90f7018a6ec60eac1
+  verify.log: 6839a0d807c0ca6dba42193fe862c41a3389760f2c3be03ac30ff231a2860b31
+  write-command.json: 4c0e02cda9c0e6a4f005de6ce870bd945a14617dce0e0f45cd895f4611382fbe
+  write.log: 829a6578c803eee40274fc096b2dc9405f0ccfec996db9a4bed2d973a95bf502

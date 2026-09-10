@@ -187,7 +187,7 @@ void VDUStreamProcessor::vdu_sys_video() {
 #ifdef AGON_EXTENDER_CONSOLE
         case CONSOLE_OPCODE: {
             uint8_t control[CONSOLE_SIZE];
-            if (readIntoBuffer(control,sizeof(control)) == 0) consoleControl(control);
+            if (readIntoBuffer(control,sizeof(control)) == 0) consoleControl(this,control);
         } break;
 #endif
 		case VDP_GP: {					// VDU 23, 0, &80

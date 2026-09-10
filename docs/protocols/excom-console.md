@@ -46,7 +46,10 @@ the parser's own timeout behavior. P4 serial diagnostics use its USB console.
 ## Commit and return
 
 1. EMOS retains Legacy while P4 prepares a fresh mode-0 console surface and
-   returns the challenge. The bounded composition supports a known paired
+   returns the challenge. P4 uses the complete retained VDP mode lifecycle,
+   including context/font initialization, before acknowledging prepare. EMOS
+   ignores its early mode-information packet while Legacy is selected.
+   The bounded composition supports a known paired
    contract; it does not infer complete firmware identity or feature parity
    from a General Poll response.
 2. EMOS confirms commit, then initializes the destination viewport/screen and
@@ -63,7 +66,8 @@ the parser's own timeout behavior. P4 serial diagnostics use its USB console.
    successful leave, then clears the mainboard screen and restores its cursor.
    Failed entry abandons the unpublished local lease; failed active leave
    reports failure and retains the route. All EMOS control waits are bounded
-   by five seconds plus a finite poll budget for a stopped interrupt clock.
+   by 600 mainboard clock ticks (ten seconds at 60 Hz), with a finite poll
+   budget for a stopped interrupt clock.
 
 Keyboard selection/layout survive display transitions. Closing the keyboard
 source alone does not close UART1 while ExCom needs it. Normal display polls

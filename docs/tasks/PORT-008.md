@@ -7,8 +7,9 @@
   accepted. Bounded USB reconnect, mainboard source exclusion and Agon-only
   reset readmission also pass; wider transport qualification remains open.
   Current priority is the first ExCom console slice below. Its first physical
-  attempt passed Legacy input but failed ExCom entry. Restore the video-only
-  browser service at the Author's request, then retry with P4 stage logs.
+  attempt passed Legacy input but failed ExCom entry. Video-only
+  rollback is complete. Three captured entry attempts identify a P4 null-font
+  crash; correct the preparation lifecycle and recheck physical entry/return.
   Browser input is deprecated; further keyboard refinements are deferred.
   The r02 design, wiring, parallel implementation/Work 2.e recapture and full
   circuit qualification remain on hold. The ExCom P4 candidate is deployed and
@@ -201,10 +202,40 @@ uart-excom-console-r02 and registry r50; EMOS v0.1.11, the USB input code and
 the ExCom activation implementation remain unchanged. The r02 sheet first
 checks the restored video connection, then repeats the console test.
 
-N002: ExCom activation failure remains open. Inspect actual P4 control-stage
-logs on a subsequent controlled attempt; the earlier emulator peer did not
-execute ESP-IDF or the actual P4 display-mode transition. Do not claim the
-browser rollback fixes activation. N001 reference rendering also remains open.
+N002: Physical ExCom acceptance remains open. The r02 capture below identifies
+the activation crash; the earlier emulator peer did not execute ESP-IDF or the
+actual P4 display-mode transition. N001 reference rendering remains separate.
+
+r02 from clean source `840c052` built as
+`uart-excom-console-r02-b2026-09-10-01-58-58Z` and passed deployment/readback
+and native USB startup in `PORT-008-2026-09-10-02-00-11Z`. A physical browser
+observer verified the restored assets and advancing video (Presented 3→78
+over 15.008 seconds, without disconnect/error), then closed its connection.
+The existing SD startup was verified and safely unmounted without changes.
+The bounded capture completed and retained all three subsequent failures.
+
+#### N002 — ExCom preparation skips retained context initialization
+
+`PORT-008-2026-09-10-02-01-27Z` records three matching P4 load-access panics
+following PREPARE/COMMIT. Exact ELF decoding reaches `vdu_resetViewports()` →
+`cursorHome()` → `getFont()->width` (null pointer + 2). Local PREPARE invoked
+raw `changeMode(0)` and replaced Canvas without the retained mode routine's
+context/font reset. This also restarted the native USB provider, so Legacy
+output retention could not preserve working USB keyboard admission.
+
+Correct PREPARE to invoke retained `vdu_mode(0)` through its owning processor,
+including drain, fallback, context reset, mouse/cursor setup and mode reply.
+EMOS ignores that early mode packet while Legacy is selected; its existing
+post-COMMIT query barrier still governs publication. The control wire format,
+EMOS v0.1.11, native USB source selection and video-only browser are unchanged.
+Standing preapproval covers `uart-excom-console-r03` and registry r51.
+
+Host regression executes actual control + retained mode bodies at controlled
+seams, requires context reset before ACK, exercises repeat/leave and invalid
+control, and rejects N002's old raw call as a negative control. Physical
+entry, editing, Legacy return and USB continuity must still pass before N002
+can close. A P4-only flash is sufficient; do not reflash EMOS for this fix.
+Peer-restart recovery beyond this crash correction remains unqualified.
 
 #### N001 — Native reference glyph omission (open)
 

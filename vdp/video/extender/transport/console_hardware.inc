@@ -28,13 +28,17 @@ void consoleLayout(int region) {
   console_locale_pending=region>=0 && region<=1;
 }
 void consolePoll() { if(console_locale_pending) console_admit_pending=true; }
-void consoleControl(const uint8_t *p) {
+void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   uint8_t reply[CONSOLE_SIZE];
   if (!console_stream->session.request(p,millis(),esp_random(),reply)) return;
   if(p[3]==CONSOLE_PREPARE) {
-    // A fresh console surface is part of this bounded transition, not an
-    // attempt to migrate mainboard display state. USB acquisition is separate.
-    changeMode(0);
+    // PORT-008 N002: raw changeMode() replaces Canvas with no selected font.
+    // Skipping retained vdu_mode() context reset crashed on EMOS's first
+    // VDU 26 (cursorHome -> getFont()->width). Use the complete stock lifecycle,
+    // including drain, context/font reset and mode reply, before acknowledging
+    // preparation. EMOS ignores that pre-commit mode reply in Legacy; its
+    // post-commit queries still own publication. USB acquisition is separate.
+    processor->vdu_mode(0);
   }
   console_stream->write(CONSOLE_REPLY);console_stream->write(CONSOLE_SIZE);
   console_stream->write(reply,sizeof(reply));
@@ -125,7 +129,7 @@ void runConsole(VDUStreamProcessor *processor) {
             else {used=0;continue;}
           }
           if(used==need) {
-            if(incoming[2]==CONSOLE_OPCODE)consoleControl(incoming+3);
+            if(incoming[2]==CONSOLE_OPCODE)consoleControl(processor,incoming+3);
             else {s.feed(incoming);processor->processNext();}
             used=0;break;
           }

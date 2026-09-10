@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r02",
+  "source_identity": "uart-excom-console-r03",
   "status": "candidate",
-  "note": "Author-directed video-only rollback; browser input/timing retired, USB and EMOS unchanged. Standing identity/deployment preapproval applies; ExCom hardware activation remains unresolved."
+  "note": "Standing Author preapproval: correct ExCom preparation to use retained VDP mode/context lifecycle; EMOS v0.1.11 unchanged. Physical retry pending."
 }

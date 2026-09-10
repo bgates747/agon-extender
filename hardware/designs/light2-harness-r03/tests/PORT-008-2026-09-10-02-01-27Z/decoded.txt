@@ -1,0 +1,8 @@
+0x4000a4ce: Context::updateTextCursorPosition() at vdp/video/extender/boot/../../context.h:162 (discriminator 2)
+ (inlined by) Context::cursorCR(fabgl::Point*, fabgl::Rect*) at vdp/video/extender/boot/../../context/cursor.h:594 (discriminator 2)
+0x400119ca: Context::cursorHome(fabgl::Point*, fabgl::Rect*) at vdp/video/extender/boot/../../context/cursor.h:601
+ (inlined by) Context::cursorHome() at vdp/video/extender/boot/../../context.h:279
+ (inlined by) VDUStreamProcessor::vdu_resetViewports() at vdp/video/extender/boot/../../vdu.h:381
+0x4001eba0: VDUStreamProcessor::vdu(unsigned char, bool) at vdp/video/extender/boot/../../vdu.h:162
+0x400238f2: VDUStreamProcessor::processNext() at vdp/video/extender/boot/../../vdu_stream_processor.h:647
+0x400242d0: runConsole(VDUStreamProcessor*) at vdp/video/extender/boot/../transport/console_hardware.inc:112 (discriminator 11)

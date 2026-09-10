@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r50
-updated_at: 2026-09-10T01:55:37Z
+registry_revision: r51
+updated_at: 2026-09-10T02:20:42Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -401,11 +401,12 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r02
+    latest_identity: uart-excom-console-r03
     status: candidate
     variants: []
     description: Paired idle-CLI Legacy/ExCom UART console with native USB input and retained EDP browser video.
     notes:
       - Author standing identity preapproval applies; PORT-008-D005 authorizes switching without restart.
       - r02 restores the pre-keyboard video page and removes browser input/timing from the shared service; retains complete-write and failed-stop containment with baseline five-second socket timeouts. EMOS v0.1.11 and native USB are unchanged.
-      - r01 physical Legacy USB input passes, but ExCom activation failed and retained Legacy. The rollback does not claim that separate defect is fixed.
+      - r01/r02 physical entry failed; r02 captured a P4 null-font crash after raw changeMode skipped retained context initialization.
+      - r03 invokes the full retained mode lifecycle before preparation ACK; host regression rejects the former raw call. EMOS v0.1.11 is unchanged; physical entry/return remain pending.

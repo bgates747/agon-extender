@@ -18,7 +18,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: Legacy USB input passes; first hardware ExCom entry failed and retained Legacy. At the Author's request, restore video-only browser/service behavior in console r02 before further functionality. Host/browser checks pass; P4 build and physical retry follow. ExCom activation remains unresolved. The r02 hardware/parallel work stays on hold.
+  - Status: Legacy USB input passes. Video-only r02 captured three ExCom crashes caused by skipped font/context initialization. P4 r03 uses the retained mode lifecycle; recheck physical entry/return and USB continuity. EMOS is unchanged. The r02 hardware/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
