@@ -34,7 +34,7 @@ class FrameWorkExecutor {
     (void)period_microseconds;
   }
   virtual void setFrameServiceRunning(bool running) noexcept = 0;
-  virtual std::size_t executeFrameWork(std::size_t maximum_primitives) = 0;
+  virtual std::size_t executeFrameWork() = 0;
   virtual std::uint32_t advanceFrameCounter(
       std::uint32_t elapsed_ticks) noexcept = 0;
   virtual std::uint32_t readFrameCounter() const noexcept = 0;
@@ -63,8 +63,7 @@ class LogicalFrameService final {
  public:
   static constexpr std::size_t kMaximumConsumers = 8;
 
-  explicit LogicalFrameService(FrameWorkExecutor &executor,
-                               std::size_t work_budget = 64) noexcept;
+  explicit LogicalFrameService(FrameWorkExecutor &executor) noexcept;
 
   bool start() noexcept;
   void stop() noexcept;
@@ -107,7 +106,6 @@ class LogicalFrameService final {
   static void recordDrop(ConsumerSlot &slot) noexcept;
 
   FrameWorkExecutor &executor_;
-  std::size_t work_budget_;
   std::atomic<std::uint32_t> pending_ticks_{};
   std::atomic<std::uint32_t> saturated_tick_notifications_{};
   std::atomic<bool> running_{};

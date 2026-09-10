@@ -180,19 +180,22 @@ void P4DisplayController::setLogicalFramePeriodMicroseconds(
   logical_frame_period_us_ = period_microseconds;
 }
 
-std::size_t P4DisplayController::executeFrameWork(
-    std::size_t maximum_primitives) {
-  if (maximum_primitives == 0 ||
-      suspension_depth_.load(std::memory_order_acquire) != 0) {
+std::size_t P4DisplayController::executeFrameWork() {
+  if (suspension_depth_.load(std::memory_order_acquire) != 0) {
     return 0;
   }
   executing_frame_work_.store(true, std::memory_order_release);
   fabgl::Rect update(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
   std::size_t executed = 0;
   fabgl::Primitive primitive;
-  while (executed < maximum_primitives && getPrimitive(&primitive, 0)) {
+  // PORT-003-D013: match stock vdp-gl all-the-plots (ac2dd598) VGA worker
+  // with its timeout disabled. Drain until empty or suspended; the previous
+  // 64-per-frame cap throttled UART admission (AUDIT-005 W8). Keep the common
+  // executor, snapshot boundary and immediate-completion path unchanged.
+  while (getPrimitive(&primitive, 0)) {
     execPrimitive(primitive, update, false);
     ++executed;
+    if (suspension_depth_.load(std::memory_order_acquire) != 0) break;
   }
   showSprites(update);
   publishSnapshotAtBoundary();

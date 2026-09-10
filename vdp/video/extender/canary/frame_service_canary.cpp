@@ -67,7 +67,7 @@ class TimingConsumer final {
 enum class QualificationPhase { NormalCadence, RolloverAndCoalescing, Finished };
 
 display::P4DisplayController controller(display::defaultDisplayAllocator());
-display::P4FrameService frame_service(controller, 64);
+display::P4FrameService frame_service(controller);
 TimingConsumer timing_consumer;
 std::unique_ptr<fabgl::Canvas> canvas;
 QualificationPhase phase{QualificationPhase::NormalCadence};

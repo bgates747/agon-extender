@@ -1,0 +1,69 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_c_host_frame_results
+generated_by: docs/tasks/PORT-003/phase-c/scripts/run-host-frame-tests.py
+diagnostic_status: host ASan/UBSan deterministic logical-frame qualification; LSAN unavailable under managed tracing
+fixture_input:
+  path: docs/tasks/PORT-003/phase-c/fixtures/frame-traces.yaml
+  sha256: a4d2e870ac5e6fe7a6c974fa0c0fc1703a95df82cd4fa63e9d2cbcd46c9977c8
+  fixture_set_sha256: 5da1c5acf565eb251a6a72b4940e952e9239be1b0f2587dad6fb225be7b34439
+production_sources:
+- path: docs/tasks/PORT-003/phase-c/tests/logical_frame_service_tests.cpp
+  sha256: 3e6ad9e0d95c571c3b435061ea267f4f752a518afc2738c9a65403e34698daea
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 8bcb0c5d41e71a53c318b217ffd4ec0f7e46064e49a3feb84c34165dc2b64f5f
+retained_controller_sources:
+- path: docs/tasks/PORT-003/phase-c/tests/controller_frame_tests.cpp
+  sha256: db63d46636790907a7e560aa214711d8ddbc468cfbe1aeb1d20a5b60cd8cdfc7
+- path: vdp/video/extender/display/logical_frame_service.cpp
+  sha256: 8bcb0c5d41e71a53c318b217ffd4ec0f7e46064e49a3feb84c34165dc2b64f5f
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+- path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+  sha256: 0461bfa96a2fd4b3e6cdabcc39870310d42073f23f565182a63d50d13a40a640
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: 5f5176129fc831c2fb4ab4d0e1cd9c4194b4c45ca04316305db9b2e42da47070
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+retained_controller_output:
+- upstream-queue-wait-pass
+- double-buffer-swap-pass
+- single-buffer-edge-stop-pass
+- suspension-counter-pass
+- drain-restart-reconfigure-pass
+- whole-backlog-immediate-flush-pass
+- mid-drain-suspension-resume-pass
+stress_output:
+- concurrent-tick-burst-pass
+- saturation-lifecycle-pass
+- bounded-consumer-registry-pass
+summary:
+  fixture_count: 12
+  pass_count: 12
+  controller_case_count: 5
+  stress_case_count: 3
+  failure_count: 0
+  passed: true
+passes:
+- sink-free-edge
+- three-distinct-frame-edges
+- frame-counter-rollover
+- writable-counter-continues
+- dequeued-satisfies-upstream-queue-wait
+- single-buffer-fifo-drain
+- single-buffer-flush-next-edge
+- double-immediate-and-swap
+- slow-consumer-latest-only
+- consumer-disconnect-reconnect
+- tick-arrives-between-services
+- stop-drains-and-releases
+failures: []

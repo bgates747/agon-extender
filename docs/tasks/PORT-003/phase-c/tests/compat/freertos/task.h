@@ -4,6 +4,7 @@
 #include "FreeRTOS.h"
 
 #include <condition_variable>
+#include <functional>
 #include <mutex>
 #include <thread>
 
@@ -46,4 +47,9 @@ inline void vTaskNotifyGiveFromISR(TaskHandle_t handle, BaseType_t *) {
 }
 
 inline void vTaskDelete(TaskHandle_t) {}
-inline void taskYIELD() { std::this_thread::yield(); }
+// Observes the real P4 suspension wait from a deterministic host test.
+inline thread_local std::function<void()> phase_c_yield_hook;
+inline void taskYIELD() {
+  if (phase_c_yield_hook) phase_c_yield_hook();
+  std::this_thread::yield();
+}

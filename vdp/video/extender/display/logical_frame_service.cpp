@@ -9,9 +9,8 @@ namespace agon::extender::display {
 static_assert(std::atomic<std::uint32_t>::is_always_lock_free,
               "timer notification requires lock-free 32-bit atomics");
 
-LogicalFrameService::LogicalFrameService(FrameWorkExecutor &executor,
-                                         std::size_t work_budget) noexcept
-    : executor_(executor), work_budget_(work_budget == 0 ? 1 : work_budget) {}
+LogicalFrameService::LogicalFrameService(FrameWorkExecutor &executor) noexcept
+    : executor_(executor) {}
 
 bool LogicalFrameService::start() noexcept {
   bool expected = false;
@@ -76,7 +75,7 @@ FrameServiceResult LogicalFrameService::servicePending() {
   ++metrics_.elapsed_ticks;
   ++metrics_.serviced_edges;
 
-  std::size_t executed = executor_.executeFrameWork(work_budget_);
+  std::size_t executed = executor_.executeFrameWork();
   ++generation_;
   FrameNotice notice{
       generation_,

@@ -1,0 +1,56 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_b_host_fixture_results
+generated_by: docs/tasks/PORT-003/phase-b/scripts/run-host-fixtures.py
+diagnostic_status: host ASan/UBSan behavior qualification; LSAN unavailable under managed tracing
+fixture_input:
+  path: docs/tasks/PORT-003/phase-b/fixtures/native-codecs.yaml
+  sha256: f439250ceb3e9c2313f970406f6064375d43ba8a84dc95e747ee62f1b1338782
+  fixture_set_sha256: c95f06e957ee53c57c8349cfc13e958a11f0763b1ee2a96e862991fe2ce4154c
+  oracle_class: independent mathematical model
+primitive_fixture_input:
+  path: docs/tasks/PORT-003/phase-b/fixtures/primitives.yaml
+  sha256: 83ae314852f4d360d2be1e12fd8947098e7f2a9e170d3e84ace5d4e7630796d1
+  fixture_set_sha256: cffde6eef3ea7f96cd10491c314bd7f8b88934cf5c67c1acde37287c776afca0
+  oracle_class: independent mathematical model
+production_sources:
+- path: docs/tasks/PORT-003/phase-b/tests/native_pixel_codec_tests.cpp
+  sha256: 603fe13d4d570ec14a4ce79da82066801204466d19583dda7e6e2e93c1fe79fc
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: docs/tasks/PORT-003/phase-b/tests/renderer_fixture_tests.cpp
+  sha256: cf49f9dd61803ceb94d66aecce6c7183c12943fe96d3864f43705e4a1dfa0364
+- path: vdp/video/extender/display/plane_storage.cpp
+  sha256: 6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+- path: vdp/video/extender/display/presentation_snapshot_pool.cpp
+  sha256: 0461bfa96a2fd4b3e6cdabcc39870310d42073f23f565182a63d50d13a40a640
+- path: vdp/video/extender/display/p4_display_controller.cpp
+  sha256: 5f5176129fc831c2fb4ab4d0e1cd9c4194b4c45ca04316305db9b2e42da47070
+- path: vdp/video/extender/port/fabutils_port.cpp
+  sha256: e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536
+- path: vdp/vendor/vdp-gl/src/canvas.cpp
+  sha256: 3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271
+- path: vdp/vendor/vdp-gl/src/displaycontroller.cpp
+  sha256: f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902
+summary:
+  fixture_count: 139
+  counts_by_format:
+    PALETTE16: 25
+    PALETTE2: 11
+    PALETTE4: 13
+    PALETTE8: 17
+    SBGR2222: 73
+  primitive_fixture_count: 115
+  primitive_counts_by_format:
+    PALETTE16: 23
+    PALETTE2: 23
+    PALETTE4: 23
+    PALETTE8: 23
+    SBGR2222: 23
+  failure_count: 0
+  passed: true
+invalid_operation_contract: contract-pass
+failures: []

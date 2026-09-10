@@ -228,7 +228,7 @@ fixtures:
       serviced_edges: 0
     consumers: {}
   content_sha256: ac5e7263ec28dc26205c1f250f0039c804a3a9a633f832d79042172ddd4982e8
-- id: single-buffer-fifo-budget
+- id: single-buffer-fifo-drain
   oracle_class: independent upstream-derived contract state model
   initial: {}
   operations:
@@ -239,12 +239,10 @@ fixtures:
     dynamic: true
   - op: tick
   - op: service
-    budget: 1
   - op: wait
     sequence: 2
   - op: tick
   - op: service
-    budget: 1
   - op: wait
     sequence: 2
   expected_events:
@@ -266,19 +264,6 @@ fixtures:
   - event: completed
     sequence: 1
     kind: line
-  - event: published
-    generation: 1
-    frame_counter: 1
-    visible: 0
-  - event: wait-result
-    sequence: 2
-    result: blocked
-  - event: ticks-recorded
-    count: 1
-    pending: 1
-  - event: frame-edge
-    elapsed: 1
-    frame_counter: 2
   - event: started
     sequence: 2
     kind: glyph
@@ -287,6 +272,19 @@ fixtures:
   - event: completed
     sequence: 2
     kind: glyph
+  - event: published
+    generation: 1
+    frame_counter: 1
+    visible: 0
+  - event: wait-result
+    sequence: 2
+    result: satisfied
+  - event: ticks-recorded
+    count: 1
+    pending: 1
+  - event: frame-edge
+    elapsed: 1
+    frame_counter: 2
   - event: published
     generation: 2
     frame_counter: 2
@@ -309,7 +307,7 @@ fixtures:
       elapsed_ticks: 2
       serviced_edges: 2
     consumers: {}
-  content_sha256: 53aff862b63380f8453b3b0a7a3083ba1e3164c54ec48d7a493208981b0b5232
+  content_sha256: 6c4cd8a768a501b0ff478b22b7ff27c011c55831e8ee501844f319bce8b1e22c
 - id: single-buffer-flush-next-edge
   oracle_class: independent upstream-derived contract state model
   initial: {}
@@ -697,4 +695,4 @@ fixtures:
       serviced_edges: 0
     consumers: {}
   content_sha256: 1cc632f69dc0ed5f95f648cbeb97b13a143016ea7f2aefdf2faaf5c323b5c428
-fixture_set_sha256: 8b3361206574d72dba99a5aec3bd1d22b8b8dbc22d2ba4519c69d15076166efe
+fixture_set_sha256: 5da1c5acf565eb251a6a72b4940e952e9239be1b0f2587dad6fb225be7b34439

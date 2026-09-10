@@ -277,6 +277,10 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    capture/CSV comparison. PORT-003 owns implementation under D013. Freeze W8
    progress and this contract before coding. No EMOS, UART tuning, core-affinity
    change or new game test belongs to this increment.
+   Contract frozen as `1cac8ee`. Implementation and local frame/render/mode
+   checks are complete; [preparation](AUDIT-005/stock-drain-preparation.md)
+   records the evidence. Candidate build/deployment and physical measurement
+   remain pending.
 
 When the current investigations are exhausted or resolve the reported
 slowdown, disposition the [deferred core-affinity review](PORT-003.md#deferred-core-affinity-review).

@@ -6,9 +6,8 @@
 
 namespace agon::extender::display {
 
-P4FrameService::P4FrameService(FrameWorkExecutor &executor,
-                               std::size_t work_budget) noexcept
-    : logical_service_(executor, work_budget) {}
+P4FrameService::P4FrameService(FrameWorkExecutor &executor) noexcept
+    : logical_service_(executor) {}
 
 P4FrameService::~P4FrameService() { stop(); }
 

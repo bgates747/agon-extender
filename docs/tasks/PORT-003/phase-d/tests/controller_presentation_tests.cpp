@@ -131,7 +131,7 @@ int main() {
   require(equals(output[4], 255, 255, 0),
           "secondary Copper palette remains independent");
 
-  display::LogicalFrameService service(controller, 8);
+  display::LogicalFrameService service(controller);
   require(service.start(), "start frame service");
   controller.enableBackgroundPrimitiveExecution(true);
   require(controller.composeVisibleRegionQuiescent(

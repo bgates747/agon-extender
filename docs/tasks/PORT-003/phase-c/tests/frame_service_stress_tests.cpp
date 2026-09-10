@@ -23,7 +23,7 @@ struct Executor final : FrameWorkExecutor {
   std::uint64_t executions{};
 
   void setFrameServiceRunning(bool value) noexcept override { running = value; }
-  std::size_t executeFrameWork(std::size_t) override {
+  std::size_t executeFrameWork() override {
     ++executions;
     return 0;
   }
@@ -44,7 +44,7 @@ struct Executor final : FrameWorkExecutor {
 void concurrentTickBurst() {
   constexpr std::uint32_t kTicks = 200000;
   Executor executor;
-  LogicalFrameService service(executor, 8);
+  LogicalFrameService service(executor);
   int slot = service.registerConsumer();
   check(slot >= 0 && service.start());
   std::atomic<bool> done{};
@@ -71,7 +71,7 @@ void concurrentTickBurst() {
 
 void saturationAndLifecycle() {
   Executor executor;
-  LogicalFrameService service(executor, 1);
+  LogicalFrameService service(executor);
   check(service.start());
   check(service.recordTicks(std::numeric_limits<std::uint32_t>::max()));
   check(service.recordTicks(42));

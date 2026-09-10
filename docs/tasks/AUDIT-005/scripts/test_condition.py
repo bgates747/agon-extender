@@ -9,6 +9,20 @@ from capture_trace import sha
 
 
 class ConditionTest(unittest.TestCase):
+    def test_stock_drain_requires_image_and_deployment_binding(self):
+        cfg=dict(browser_condition='disconnected',procedure_identity='uart-path-capture-r03',
+                 drawing_policy='stock-drain-until-empty-or-suspended',
+                 p4_build='uart-excom-console-r08-b2026-09-10-00-00-00Z',
+                 p4_factory_sha256='a'*64,p4_manifest_sha256='b'*64,
+                 p4_deployment_record_sha256='c'*64)
+        self.assertEqual(run_trace.condition_settings(cfg),('disconnected','uart-path-capture-r03'))
+        for field in ('drawing_policy','p4_build','p4_factory_sha256','p4_manifest_sha256','p4_deployment_record_sha256'):
+            incomplete=dict(cfg);del incomplete[field]
+            with self.subTest(field=field),self.assertRaises(ValueError):
+                run_trace.condition_settings(incomplete)
+        with self.assertRaises(ValueError):
+            run_trace.condition_settings(dict(cfg,browser_condition='connected'))
+
     def test_condition_identity(self):
         self.assertEqual(run_trace.condition_settings({}),('connected','uart-path-capture-r01'))
         self.assertEqual(run_trace.condition_settings({'browser_condition':'disconnected',

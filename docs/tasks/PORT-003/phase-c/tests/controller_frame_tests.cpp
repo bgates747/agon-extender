@@ -44,7 +44,7 @@ void testUpstreamQueueWait(Allocator allocator) {
   P4DisplayController controller(allocator);
   check(controller.configure({8, 6, NativePixelFormat::SBGR2222, false, 0xC0}) ==
         ConfigureResult::Ok);
-  LogicalFrameService service(controller, 1);
+  LogicalFrameService service(controller);
   check(service.start());
   controller.enableBackgroundPrimitiveExecution(true);
   drainInitialRefresh(service);
@@ -72,7 +72,7 @@ void testDoubleBufferSwap(Allocator allocator) {
   P4DisplayController controller(allocator);
   check(controller.configure({8, 6, NativePixelFormat::SBGR2222, true, 0xC0}) ==
         ConfigureResult::Ok);
-  LogicalFrameService service(controller, 1);
+  LogicalFrameService service(controller);
   check(service.start());
   controller.enableBackgroundPrimitiveExecution(true);
   fabgl::Canvas canvas(&controller);
@@ -106,7 +106,7 @@ void testSingleBufferNextEdgeAndStop(Allocator allocator) {
   P4DisplayController controller(allocator);
   check(controller.configure({8, 6, NativePixelFormat::PALETTE4, false, 0}) ==
         ConfigureResult::Ok);
-  LogicalFrameService service(controller, 8);
+  LogicalFrameService service(controller);
   check(service.start());
   controller.enableBackgroundPrimitiveExecution(true);
   drainInitialRefresh(service);
@@ -137,7 +137,7 @@ void testSuspensionAndCounter(Allocator allocator) {
   P4DisplayController controller(allocator);
   check(controller.configure({8, 6, NativePixelFormat::PALETTE8, false, 0}) ==
         ConfigureResult::Ok);
-  LogicalFrameService service(controller, 8);
+  LogicalFrameService service(controller);
   check(service.start());
   controller.enableBackgroundPrimitiveExecution(true);
   drainInitialRefresh(service);
@@ -171,7 +171,7 @@ void testDrainRestartAndReconfigure(Allocator allocator) {
   P4DisplayController controller(allocator);
   check(controller.configure({8, 6, NativePixelFormat::SBGR2222, false, 0xC0}) ==
         ConfigureResult::Ok);
-  LogicalFrameService service(controller, 8);
+  LogicalFrameService service(controller);
   check(service.start());
   controller.enableBackgroundPrimitiveExecution(true);
   drainInitialRefresh(service);
@@ -196,6 +196,92 @@ void testDrainRestartAndReconfigure(Allocator allocator) {
   std::cout << "drain-restart-reconfigure-pass\n";
 }
 
+void testWholeBacklogAndImmediateFlush(Allocator allocator) {
+  P4DisplayController controller(allocator);
+  check(controller.configure({256, 2, NativePixelFormat::SBGR2222, false, 0xC0}) ==
+        ConfigureResult::Ok);
+  LogicalFrameService service(controller);
+  check(service.start());
+  controller.enableBackgroundPrimitiveExecution(true);
+  drainInitialRefresh(service);
+  fabgl::Canvas canvas(&controller);
+  // 514 real queue entries, with visible ordering: both rows must finish in
+  // one opportunity. This fails the previous 64 limit and a proposed 128 cap.
+  canvas.setPenColor(255, 0, 0);
+  for (int x = 0; x < 256; ++x) canvas.setPixel(x, 0);
+  canvas.setPenColor(0, 0, 255);
+  for (int x = 0; x < 256; ++x) canvas.setPixel(x, 1);
+  check((drawingPixel(controller, 255, 1) & 0x3F) == 0);
+  auto before = service.metrics().executed_primitives;
+  check(service.recordTicks());
+  check(service.servicePending() == FrameServiceResult::Serviced);
+  check(service.metrics().executed_primitives - before == 514);
+  for (int x = 0; x < 256; ++x) {
+    check((drawingPixel(controller, x, 0) & 0x3F) == 3);
+    check((drawingPixel(controller, x, 1) & 0x3F) == 48);
+  }
+  // Stock's immediate flush must still work without a new logical tick.
+  auto generation = service.generation();
+  canvas.setPenColor(0, 255, 0);
+  canvas.setPixel(255, 0);
+  canvas.waitCompletion(false);
+  check((drawingPixel(controller, 255, 0) & 0x3F) == 12);
+  check(service.generation() == generation);
+  service.stop();
+  std::cout << "whole-backlog-immediate-flush-pass\n";
+}
+
+void testSuspensionDuringDrain(Allocator allocator) {
+  P4DisplayController controller(allocator);
+  check(controller.configure({8, 2, NativePixelFormat::SBGR2222, false, 0xC0}) ==
+        ConfigureResult::Ok);
+  fabgl::Canvas canvas(&controller);
+  canvas.setPenColor(255, 0, 0);
+  LogicalFrameService service(controller);
+  check(service.start());
+  controller.enableBackgroundPrimitiveExecution(true);
+  drainInitialRefresh(service);
+  canvas.setPixel(0, 0);
+  canvas.setPenColor(0, 0, 255);
+  canvas.setPixel(1, 0);
+  std::atomic<bool> suspension_waiting{};
+  std::atomic<bool> suspension_returned{};
+  std::thread suspender;
+  // Hold the first dequeued primitive until suspend() has set its request
+  // and entered the existing wait. No sleep or guessed scheduler order.
+  phase_c_after_receive = [&] {
+    suspender = std::thread([&] {
+      phase_c_yield_hook = [&] {
+        suspension_waiting.store(true, std::memory_order_release);
+      };
+      controller.suspendBackgroundPrimitiveExecution();
+      phase_c_yield_hook = {};
+      suspension_returned.store(true, std::memory_order_release);
+    });
+    while (!suspension_waiting.load(std::memory_order_acquire))
+      std::this_thread::yield();
+    check(!suspension_returned.load(std::memory_order_acquire));
+  };
+  auto before = service.metrics().executed_primitives;
+  check(service.recordTicks());
+  check(service.servicePending() == FrameServiceResult::Serviced);
+  suspender.join();
+  check(suspension_returned.load(std::memory_order_acquire));
+  check(service.metrics().executed_primitives - before == 1);
+  check((drawingPixel(controller, 0, 0) & 0x3F) == 3);
+  check((drawingPixel(controller, 1, 0) & 0x3F) == 0);
+  check(service.recordTicks());
+  check(service.servicePending() == FrameServiceResult::Serviced);
+  check(service.metrics().executed_primitives - before == 1);
+  controller.resumeBackgroundPrimitiveExecution();
+  check(service.recordTicks());
+  check(service.servicePending() == FrameServiceResult::Serviced);
+  check(service.metrics().executed_primitives - before == 3);
+  check((drawingPixel(controller, 1, 0) & 0x3F) == 48);
+  service.stop();
+  std::cout << "mid-drain-suspension-resume-pass\n";
+}
+
 }  // namespace
 
 int main() {
@@ -205,5 +291,7 @@ int main() {
   testSingleBufferNextEdgeAndStop(allocator);
   testSuspensionAndCounter(allocator);
   testDrainRestartAndReconfigure(allocator);
+  testWholeBacklogAndImmediateFlush(allocator);
+  testSuspensionDuringDrain(allocator);
   return 0;
 }

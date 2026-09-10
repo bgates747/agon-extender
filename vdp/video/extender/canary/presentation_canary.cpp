@@ -17,7 +17,7 @@ namespace display = agon::extender::display;
 namespace {
 
 display::P4DisplayController controller(display::defaultDisplayAllocator());
-display::P4FrameService frame_service(controller, 64);
+display::P4FrameService frame_service(controller);
 
 }  // namespace
 

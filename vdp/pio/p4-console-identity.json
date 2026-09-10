@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r07",
+  "source_identity": "uart-excom-console-r08",
   "status": "candidate",
-  "note": "Coalesce consumer retries into the in-flight RGB222 frame, preventing duplicate composition demand. P4-only correction under standing identity/deployment authorization; EMOS and browser assets unchanged."
+  "note": "Stock drawing drain until empty or suspended under PORT-003-D013. Local frame/render/mode regressions and P4 compilation pass; W9 physical deployment/comparison pending. Unchanged EMOS/UART/browser behavior."
 }

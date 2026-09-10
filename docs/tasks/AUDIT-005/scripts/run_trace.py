@@ -7,6 +7,7 @@ operator inserts the prepared SD and resets Agon after the explicit cue.
 import argparse
 from datetime import datetime, timezone
 import json
+import re
 from pathlib import Path
 import shlex
 import subprocess
@@ -20,6 +21,15 @@ def condition_settings(cfg):
     if condition not in ('connected','disconnected'):
         raise ValueError('Unknown browser condition')
     procedure='uart-path-capture-r02' if condition=='disconnected' else 'uart-path-capture-r01'
+    if cfg.get('procedure_identity')=='uart-path-capture-r03':
+        if condition!='disconnected' or cfg.get('drawing_policy')!='stock-drain-until-empty-or-suspended':
+            raise ValueError('Stock-drain comparison requires the browser-off drain policy')
+        if not re.fullmatch(r'uart-excom-console-r08-b\d{4}-\d{2}-\d{2}-\d{2}-\d{2}-\d{2}Z',cfg.get('p4_build','')):
+            raise ValueError('Stock-drain comparison requires the selected r08 build')
+        for field in ('p4_factory_sha256','p4_manifest_sha256','p4_deployment_record_sha256'):
+            if not re.fullmatch(r'[0-9a-f]{64}',cfg.get(field,'') or ''):
+                raise ValueError('Missing verified P4 deployment binding: '+field)
+        procedure='uart-path-capture-r03'
     if cfg.get('procedure_identity',procedure)!=procedure:
         raise ValueError('Browser condition and procedure identity disagree')
     return condition,procedure
@@ -47,6 +57,15 @@ def main():
                           observation='operator confirmed; server client count not independently observed',
                           operator_confirmed_at=datetime.now(timezone.utc).isoformat(),
                           csv_browser_annotation_override=disconnected)
+    if procedure=='uart-path-capture-r03':
+        condition_record['browser_off_reference_run']='AUDIT-005-2026-09-10-20-03-35Z'
+        condition_record['drawing_policy']=cfg['drawing_policy']
+        condition_record['csv_edp_annotation_override']={
+            'compiled_build':'uart-excom-console-r07-b2026-09-10-06-31-58Z',
+            'measured_build':cfg['p4_build'],
+            'factory_sha256':cfg['p4_factory_sha256'],
+            'build_manifest_sha256':cfg['p4_manifest_sha256'],
+            'deployment_record_sha256':cfg['p4_deployment_record_sha256']}
     if disconnected:
         print('Waiting five seconds after browser closure...',flush=True)
         begin=time.monotonic()
@@ -65,6 +84,7 @@ def main():
         raise SystemExit('Remote helper changed; do not reset Agon.')
     command=['python3','-u',remote+'/capture_trace.py','--output-parent',remote+'/captures']
     if disconnected:command.append('--browser-disconnected')
+    if procedure=='uart-path-capture-r03':command.append('--stock-drain')
     recorded=None
     with log.open('w') as out:
         out.write('Preparation: '+args.bench.read_text()+'\n')

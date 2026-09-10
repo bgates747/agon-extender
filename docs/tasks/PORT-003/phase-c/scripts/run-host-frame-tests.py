@@ -35,13 +35,9 @@ def compile_checked(command: list[str], label: str) -> None:
     raise RuntimeError(f"{label} compilation failed with status {result.returncode}")
 
 
-def command_for(fixture: dict[str, Any]) -> tuple[str, int]:
+def command_for(fixture: dict[str, Any]) -> str:
     initial = fixture["initial"]
-    budgets = {int(op.get("budget", 64)) for op in fixture["operations"] if op["op"] == "service"}
-    budget = budgets.pop() if budgets else 64
-    if budgets:
-        raise ValueError(f"{fixture['id']}: varying service budgets are unsupported")
-    lines = [f"INIT {int(initial.get('double_buffered', False))} {int(initial.get('frame_counter', 0))} {budget}"]
+    lines = [f"INIT {int(initial.get('double_buffered', False))} {int(initial.get('frame_counter', 0))}"]
     submitted = 0
     for op in fixture["operations"]:
         name = op["op"]
@@ -50,7 +46,7 @@ def command_for(fixture: dict[str, Any]) -> tuple[str, int]:
                 submitted += 1
             lines.append(f"SUBMIT {op['kind']} {int(op.get('dynamic', False))}")
         elif name == "tick": lines.append(f"TICK {int(op.get('count', 1))}")
-        elif name == "service": lines.append(f"SERVICE {int(op.get('budget', 64))}")
+        elif name == "service": lines.append("SERVICE")
         elif name == "start-one": lines.append("START_ONE")
         elif name == "finish-one": lines.append("FINISH_ONE")
         elif name == "wait": lines.append(f"WAIT {int(op.get('sequence', submitted))}")
@@ -62,7 +58,7 @@ def command_for(fixture: dict[str, Any]) -> tuple[str, int]:
         elif name == "stop": lines.append("STOP")
         else: raise ValueError(f"{fixture['id']}: unknown operation {name}")
     lines.append("END")
-    return "\n".join(lines) + "\n", budget
+    return "\n".join(lines) + "\n"
 
 
 def main() -> int:
@@ -89,7 +85,7 @@ def main() -> int:
             "-o", str(binary),
         ], "logical frame harness")
         for fixture in data["fixtures"]:
-            protocol, _ = command_for(fixture)
+            protocol = command_for(fixture)
             run = subprocess.run(
                 [str(binary)], input=protocol, text=True, capture_output=True,
                 env={"ASAN_OPTIONS": "detect_leaks=0"}, check=False,
@@ -149,6 +145,8 @@ def main() -> int:
             "upstream-queue-wait-pass", "double-buffer-swap-pass",
             "single-buffer-edge-stop-pass", "suspension-counter-pass",
             "drain-restart-reconfigure-pass",
+            "whole-backlog-immediate-flush-pass",
+            "mid-drain-suspension-resume-pass",
         ]
         if controller_run is not None and (controller_run.returncode != 0 or controller_output != expected_controller):
             failures.append({"id": "retained-controller-integration", "reason": "process-or-output", "returncode": controller_run.returncode, "stdout": controller_run.stdout.strip(), "stderr": controller_run.stderr.strip()})
@@ -184,7 +182,7 @@ def main() -> int:
         "retained_controller_sources": [{"path": path.relative_to(ROOT).as_posix(), "sha256": sha256_file(path)} for path in controller_sources],
         "retained_controller_output": controller_output,
         "stress_output": stress_output,
-        "summary": {"fixture_count": len(data["fixtures"]), "pass_count": len(passes), "controller_case_count": 5, "stress_case_count": 3, "failure_count": len(failures), "passed": not failures},
+        "summary": {"fixture_count": len(data["fixtures"]), "pass_count": len(passes), "controller_case_count": len(expected_controller), "stress_case_count": 3, "failure_count": len(failures), "passed": not failures},
         "passes": passes,
         "failures": failures,
     }

@@ -6,6 +6,7 @@
 #include <condition_variable>
 #include <cstring>
 #include <deque>
+#include <functional>
 #include <mutex>
 #include <vector>
 
@@ -17,6 +18,9 @@ struct PhaseCHostQueue {
   std::condition_variable writable;
   std::deque<std::vector<std::uint8_t>> items;
 };
+
+// One-shot, host-only scheduling barrier for suspension during a dequeue.
+inline thread_local std::function<void()> phase_c_after_receive;
 
 inline QueueHandle_t xQueueCreate(UBaseType_t length, UBaseType_t item_size) {
   return new PhaseCHostQueue{length, item_size, {}, {}, {}, {}};
@@ -54,6 +58,9 @@ inline BaseType_t xQueueReceive(QueueHandle_t queue, void *item,
   queue->items.pop_front();
   lock.unlock();
   queue->writable.notify_one();
+  auto hook = std::move(phase_c_after_receive);
+  phase_c_after_receive = {};
+  if (hook) hook();
   return pdTRUE;
 }
 

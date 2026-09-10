@@ -9,7 +9,7 @@ accounting, immediate flush, double-buffer drawing/swap and existing P4
 suspension handling. Core assignments and UART/parser budgets stay unchanged.
 ADR-0015 and the normative architecture/frame contract are amended accordingly.
 
-1. [ ] Implement the drain policy and remove the production budget interface.
+1. [x] Implement the drain policy and remove the production budget interface.
 2. [ ] Validate backlog draining, suspension/resume, completion, swaps and
    lifecycle; prepare the P4 build and concrete deployment for review.
 3. [ ] After the physical gate, run the single comparison and report results.
@@ -17,6 +17,9 @@ ADR-0015 and the normative architecture/frame contract are amended accordingly.
 The [W9 work contract](AUDIT-005/stock-queue-drain.md) owns exact inputs,
 identity, measurement boundaries and stopping rule. Earlier Phase C target
 qualification remains evidence of its original candidate, not this correction.
+The [local preparation record](AUDIT-005/stock-drain-preparation.md) records
+passing frame/render/mode checks and P4 compilation. Clean candidate build,
+deployment review and the physical comparison are pending.
 
 ## Current increment — RGB222 browser video, 2026-09-10
 

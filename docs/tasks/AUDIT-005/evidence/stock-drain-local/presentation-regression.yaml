@@ -1,0 +1,48 @@
+schema_version: 1.0.0
+artifact_kind: port_003_phase_d_host_presentation_results
+generated_by: docs/tasks/PORT-003/phase-d/scripts/run-host-presentation-tests.py
+diagnostic_status: host ASan/UBSan; explicit project-allocation accounting; LSAN unavailable under managed tracing
+fixture_input:
+  path: docs/tasks/PORT-003/phase-d/fixtures/presentation.yaml
+  sha256: 5ee8de4bc98202608a19e427e119abba4d7603975667205038d87c22a44ca533
+production_sources:
+- path: vdp/video/extender/display/native_pixel_codec.cpp
+  sha256: 5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2
+- path: vdp/video/extender/display/palette_state.cpp
+  sha256: 174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245
+- path: vdp/video/extender/display/presentation_compositor.cpp
+  sha256: aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d
+matrix_passes:
+- defaults-palette2
+- defaults-palette4
+- defaults-palette8
+- defaults-palette16
+- defaults-sbgr2222
+- palette4-copy-wrap-implicit-and-explicit-lut
+- palette8-delete-referenced-and-all
+- palette2-unknown-zero-row-and-late-create
+- palette16-reset-and-empty-update
+- base-palette2
+- base-palette4
+- base-palette8
+- base-palette16
+- base-sbgr2222
+- copper-row-boundaries
+- overlay-order-alpha-xor-clipping
+- double-buffer-visible-plane
+- secondary-palette-allocation-failure
+- signal-list-allocation-failure
+unit_outputs:
+  palette-state:
+  - palette-state=pass
+  presentation-compositor:
+  - presentation-compositor=pass
+  controller-presentation:
+  - controller-presentation=pass
+summary:
+  palette_case_count: 9
+  composition_case_count: 8
+  allocation_case_count: 2
+  fixed_harness_count: 3
+  failure_count: 0
+  passed: true

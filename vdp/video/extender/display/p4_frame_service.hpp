@@ -36,8 +36,7 @@ enum class P4FrameServiceStartResult : std::uint8_t {
 
 class P4FrameService final {
  public:
-  explicit P4FrameService(FrameWorkExecutor &executor,
-                          std::size_t work_budget = 64) noexcept;
+  explicit P4FrameService(FrameWorkExecutor &executor) noexcept;
   ~P4FrameService();
 
   P4FrameService(P4FrameService const &) = delete;

@@ -47,8 +47,7 @@ class P4DisplayController final : public fabgl::GenericBitmappedDisplayControlle
   void setLogicalFramePeriodMicroseconds(
       std::uint64_t period_microseconds) noexcept override;
   void setFrameServiceRunning(bool running) noexcept override;
-  std::size_t executeFrameWork(
-      std::size_t maximum_primitives) override;
+  std::size_t executeFrameWork() override;
   std::uint32_t readFrameCounter() const noexcept override;
   void writeFrameCounter(std::uint32_t value) noexcept;
   std::uint32_t advanceFrameCounter(

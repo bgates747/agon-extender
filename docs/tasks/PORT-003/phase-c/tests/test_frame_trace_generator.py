@@ -31,7 +31,7 @@ class FrameTraceFixtureTests(unittest.TestCase):
         required = {
             "sink-free-edge", "three-distinct-frame-edges", "frame-counter-rollover",
             "writable-counter-continues", "dequeued-satisfies-upstream-queue-wait",
-            "single-buffer-fifo-budget", "single-buffer-flush-next-edge",
+            "single-buffer-fifo-drain", "single-buffer-flush-next-edge",
             "double-immediate-and-swap", "slow-consumer-latest-only",
             "consumer-disconnect-reconnect", "tick-arrives-between-services",
             "stop-drains-and-releases",

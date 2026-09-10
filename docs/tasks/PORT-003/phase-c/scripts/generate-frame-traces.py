@@ -89,7 +89,7 @@ class ContractModel:
             consumer["slot"] = self.generation
             self.event("consumer-notified", consumer=name, generation=self.generation)
 
-    def service(self, budget: int) -> None:
+    def service(self) -> None:
         if self.pending_ticks == 0:
             self.event("service-idle")
             return
@@ -98,9 +98,7 @@ class ContractModel:
         self.metrics["elapsed_ticks"] += 1
         self.metrics["serviced_edges"] += 1
         self.event("frame-edge", elapsed=1, frame_counter=self.frame)
-        for _ in range(budget):
-            if not self.queue:
-                break
+        while self.queue:
             self.start_one()
             item = self.execute_active()
             if item is not None:
@@ -116,7 +114,7 @@ class ContractModel:
             self.pending_ticks += count
             self.event("ticks-recorded", count=count, pending=self.pending_ticks)
         elif op == "service":
-            self.service(int(operation.get("budget", 64)))
+            self.service()
         elif op == "start-one":
             self.start_one()
         elif op == "finish-one":
@@ -189,7 +187,7 @@ SCENARIOS = (
     ("frame-counter-rollover", {"frame_counter": 0xFFFFFFFE}, [{"op": "tick", "count": 3}, {"op": "service"}, {"op": "service"}, {"op": "service"}]),
     ("writable-counter-continues", {}, [{"op": "write-frame-counter", "value": 0x1234FFFF}, {"op": "tick", "count": 2}, {"op": "service"}, {"op": "service"}]),
     ("dequeued-satisfies-upstream-queue-wait", {}, [{"op": "submit", "kind": "line"}, {"op": "start-one"}, {"op": "wait"}, {"op": "finish-one"}, {"op": "wait"}]),
-    ("single-buffer-fifo-budget", {}, [{"op": "submit", "kind": "line"}, {"op": "submit", "kind": "glyph", "dynamic": True}, {"op": "tick"}, {"op": "service", "budget": 1}, {"op": "wait", "sequence": 2}, {"op": "tick"}, {"op": "service", "budget": 1}, {"op": "wait", "sequence": 2}]),
+    ("single-buffer-fifo-drain", {}, [{"op": "submit", "kind": "line"}, {"op": "submit", "kind": "glyph", "dynamic": True}, {"op": "tick"}, {"op": "service"}, {"op": "wait", "sequence": 2}, {"op": "tick"}, {"op": "service"}, {"op": "wait", "sequence": 2}]),
     ("single-buffer-flush-next-edge", {}, [{"op": "submit", "kind": "flush"}, {"op": "wait"}, {"op": "tick"}, {"op": "service"}, {"op": "wait"}]),
     ("double-immediate-and-swap", {"double_buffered": True}, [{"op": "submit", "kind": "line"}, {"op": "submit", "kind": "swap"}, {"op": "wait"}, {"op": "tick"}, {"op": "service"}, {"op": "wait"}]),
     ("slow-consumer-latest-only", {}, [{"op": "register", "consumer": "slow"}, {"op": "tick"}, {"op": "service"}, {"op": "tick"}, {"op": "service"}, {"op": "tick"}, {"op": "service"}, {"op": "consume", "consumer": "slow"}]),

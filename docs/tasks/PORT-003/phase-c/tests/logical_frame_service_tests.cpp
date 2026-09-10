@@ -48,10 +48,9 @@ struct MockConsumer {
 };
 
 struct Harness final : FrameWorkExecutor {
-  explicit Harness(bool double_buffered, std::uint32_t initial_frame,
-                   std::size_t budget)
+  explicit Harness(bool double_buffered, std::uint32_t initial_frame)
       : double_buffered(double_buffered), frame(initial_frame),
-        service(*this, budget) {
+        service(*this) {
     observer_slot = service.registerConsumer();
     if (observer_slot < 0) std::abort();
   }
@@ -145,9 +144,9 @@ struct Harness final : FrameWorkExecutor {
     }
   }
 
-  std::size_t executeFrameWork(std::size_t maximum) override {
+  std::size_t executeFrameWork() override {
     std::size_t executed = 0;
-    while (executed < maximum && !queue.empty()) {
+    while (!queue.empty()) {
       startOne();
       finishOne(true);
       ++executed;
@@ -261,10 +260,9 @@ int main() {
   std::string command;
   bool double_buffered = false;
   std::uint32_t initial_frame = 0;
-  std::size_t budget = 64;
-  if (!(std::cin >> command >> double_buffered >> initial_frame >> budget) ||
+  if (!(std::cin >> command >> double_buffered >> initial_frame) ||
       command != "INIT") return 2;
-  Harness harness(double_buffered, initial_frame, budget);
+  Harness harness(double_buffered, initial_frame);
   while (std::cin >> command) {
     if (command == "SUBMIT") {
       std::string kind;
@@ -279,10 +277,7 @@ int main() {
       harness.event("ticks-recorded", {{"count", std::to_string(count)},
                                        {"pending", std::to_string(harness.service.pendingTicks())}});
     } else if (command == "SERVICE") {
-      std::size_t requested_budget;
-      std::cin >> requested_budget;
       harness.ensureStarted();
-      if (requested_budget != budget) std::abort();
       if (harness.service.servicePending() == FrameServiceResult::Serviced)
         harness.observePublications();
     } else if (command == "START_ONE") {
