@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W5 complete; all 48 hardware timing rows validate. Direct ExCom output takes 2.61–4.52× Legacy time. W6 is authorized: one UART/CTS capture before selecting a repair.
+- Status: W1–W6 results accepted. W7 browser-disconnected control is authorized under the formal contract. Firmware, workload and acquisition settings stay fixed; no repair is authorized.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --
@@ -156,7 +156,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    Reconcile existing defects and accepted remedies before creating new ones.
    Keep checkout locations and private deployment details in ignored records.
 
-## Work — W1–W5 complete; W6 capture authorized
+## Work — W1–W6 accepted; W7 control authorized
 
 1. [x] **W1 — Pin the comparison and map the active paths.** Verify exact
    stock release, EMOS deployed/source and P4 source identities, documenting
@@ -201,7 +201,7 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    select counted point output for the next trace. Keep emulator timings
    separate. The independent filesystem issue
    is tracked in [REMED-003](REMED-003.md); it does not authorize a MOS change.
-6. [ ] **W6 — Separate sender time from P4 backpressure.** Author-authorized
+6. [x] **W6 — Separate sender time from P4 backpressure.** Author-authorized
    on 2026-09-10 after freezing the completed baseline: capture the existing `trace count points` invocation
    with the UART1 data and flow-control probes. Validate marker/payload/reply
    coverage and compare eZ80 TX gaps with P4 CTS state. Preserve the current
@@ -210,7 +210,29 @@ measurements. The initial fixture can save its results to the Agon's own SD.
    and check the acquisition/analysis tools and an exact operator run sheet,
    including full-window coverage, before the physical reset cue. Preserve
    prior SD results and use the existing executable; the operator resets
-   Agon after the analyzer is ready. No P4 serial open or reset is required.
+   Agon after the analyzer is ready. No P4 serial open or reset is required. The executable
+   [capture procedure](AUDIT-005/uart-cts-capture.md) records exact preparation,
+   invocation, coverage and attribution checks. Preparation passes six
+   synthetic waveform tests, five result tests, the one-row emulator review
+   and two full passive acquisitions. The physical
+   [counted-point capture](AUDIT-005/uart-cts-findings.md) now passes exact
+   payload/reply/framing checks: 3.407 of 4.456 payload-wire seconds are
+   inter-byte idle with P4 withholding CTS permission. The returned one-row
+   CSV records 4.450 s send and 0.617 s tail, agrees with wire intervals within
+   one clock quantum, and confirms successful Legacy return. Measurement is
+   complete. Recommend one same-workload browser-disconnected control before
+   choosing a specific P4 service repair. The Author accepted these findings
+   and authorized W7 on 2026-09-10.
+
+7. [ ] **W7 — Compare the same workload with browser video disconnected.**
+   The Author approved the [formal control contract](AUDIT-005/browser-disconnected-control.md)
+   and execution on 2026-09-10. Commit the completed W6 result and contract,
+   prepare the recorded browser-off condition, then capture one unchanged
+   counted-point run. Keep P4 up, Ethernet and keyboard connected, and all
+   video clients closed through acquisition and normal Legacy return. Compare
+   the returned CSV and UART/CTS measurements with the connected W6 run.
+   Record the fixed CSV browser-annotation override explicitly. Stop with
+   the comparison and a recommended next action; do not implement a repair.
 
 ## Deliverables and acceptance
 
@@ -220,8 +242,10 @@ records exact source/symbols, evidence class, affected behavior, stock reuse
 candidate, constraints, recommended owner and any missing measurements.
 W1 records paths and provenance. W2 records AUDIT-005-F001 through F005:
 transmit duplication/overhead, partial-write recovery, caller/flag differences,
-receive adaptations and P4 backpressure boundaries. These findings are
-unranked; their runtime contribution to lag remains unmeasured. W3 provides
+receive adaptations and P4 backpressure boundaries. W2 left those findings
+unranked. W6 now measures P4 backpressure as the dominant idle component of
+counted-point output; the internal P4 contributor and individual EMOS costs
+remain unisolated. W3 provides
 the concrete cases, autoexec, timing/reply boundaries, SD records and capture
 coverage requirements for the next increment; it is not benchmark evidence.
 

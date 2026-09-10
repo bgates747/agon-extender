@@ -24,7 +24,7 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 - [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
   - Started: 2026-09-10
   - Finished: --
-  - Status: W1–W5 complete; all 48 hardware rows validate. Direct ExCom output takes 2.61–4.52× Legacy time. W6 authorized: one counted-point UART/CTS capture to separate sender overhead from P4 backpressure.
+  - Status: W1–W6 results accepted. W7 authorized: one identical counted-point capture with browser video disconnected, before choosing a P4 repair. Firmware and workload stay fixed.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**

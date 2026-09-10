@@ -14,9 +14,12 @@ hashes and per-case ranges. Direct ExCom output takes 2.61–4.52× the Legacy
 send-time medians. Ordinary wait expirations remain visible: 24 ExCom setup
 queries and 18 completion queries, none in Legacy.
 
-The next authorized measurement is one existing `trace count points` run with
-UART/CTS capture, before choosing a firmware repair. No new run is needed to
-confirm this completed CSV, and no screenshot is required for collection.
+The authorized `trace count points` [UART/CTS capture](uart-cts-capture.md)
+now passes waveform checks. Its [findings](uart-cts-findings.md) show 3.407
+of 4.456 payload-wire seconds idle while P4 withholds permission. The returned
+one-row CSV agrees within clock resolution and confirms Legacy return. W6
+measurement is complete and accepted. The [browser-disconnected control](browser-disconnected-control.md)
+is now authorized as W7. No screenshot or repeat is needed to validate this run.
 
 ## r03 measurement deadline and prior diagnosis
 

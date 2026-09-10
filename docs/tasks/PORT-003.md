@@ -203,15 +203,20 @@ core assignment. Review the smallest EMOS routing/ownership changes that can
 retain proven stock implementation; do not assume C itself proves a defect or
 remove necessary compatibility, flow-control, lifecycle or recovery behavior.
 The [AUDIT-005 review](AUDIT-005.md) takes priority over the earlier
-instrumentation proposal. W1–W5 are complete; the
+instrumentation proposal. W1–W6 measurements are complete; the
 [paired hardware baseline](AUDIT-005/hardware-baseline.md) validates all 48
 rows and measures direct ExCom send times 2.61–4.52× Legacy medians. The
-selected next UART/CTS trace will separate sender time from P4 backpressure.
+[completed UART/CTS trace](AUDIT-005/uart-cts-findings.md) now locates 3.407
+of 4.456 payload-wire seconds in idle while P4 withholds permission. The
+returned CSV agrees within clock resolution and confirms Legacy return.
+P4 receive/parser/display service is the immediate performance target; a
+browser-disconnected control is now authorized under AUDIT-005 W7 before
+selecting a repair.
 The Author selected paired
 Legacy/ExCom pathway benchmarks before choosing repairs, followed by repeated
 measurements and personal Nurples playtesting; automated game input is
 deferred. The findings distinguish definite EMOS byte-path overhead from
-unmeasured P4 backpressure; they do not establish the cause of lag. This task
+measured P4 backpressure; the internal P4 cause remains unisolated. This task
 retains the unresolved display/performance work. The physical CSV supplies
 the timing result; emulator checks establish fixture behavior. No performance
 repair or new core assignment has been made.

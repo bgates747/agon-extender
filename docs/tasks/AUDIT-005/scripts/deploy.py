@@ -23,6 +23,7 @@ def main():
     parser.add_argument('--backup',type=Path,required=True)
     parser.add_argument('--fs-bundle',type=Path)
     parser.add_argument('--fs-first',action='store_true',help='Run the independent filesystem check before the benchmark')
+    parser.add_argument('--trace', action='store_true', help='Run the existing counted-point trace instead of the full suite')
     args=parser.parse_args()
     if args.fs_first and not args.fs_bundle: parser.error('--fs-first requires --fs-bundle')
     bundle=args.bundle.resolve(strict=True)
@@ -65,6 +66,12 @@ def main():
     if fs_copies: (mount/'extender/fscheck').mkdir(parents=True,exist_ok=True)
     # Commit startup last, so a partially copied bundle is never auto-launched.
     startup=outputs['autoexec']
+    if args.trace:
+        original=startup.read_bytes()
+        if not original.endswith(b'RUN\r\n'):
+            parser.error('Trace requires the unchanged full-suite bundle')
+        startup=backup/'trace-autoexec.txt'
+        startup.write_bytes(original.removesuffix(b'RUN\r\n')+b'RUN . trace count points\r\n')
     if args.fs_first:
         # Keep the frozen bundle unchanged. Record the composed startup as an
         # explicit deployment input; its exact bytes/hash live in the receipt.

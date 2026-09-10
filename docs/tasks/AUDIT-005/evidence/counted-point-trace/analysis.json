@@ -1,0 +1,110 @@
+{
+  "coverage_pass": true,
+  "acquisition_pass": true,
+  "independent_decode_matches": true,
+  "trace_sha256": "3d487a53f809179497d3d02dc183339a9bb0b62d78cce35d368c6db71f69e76c",
+  "analysis_sha256": "4b766c936592c242c2dcf6863c077a35524d372784df64c4ee0ef8af1eb63e8c",
+  "numpy_version": "2.5.2",
+  "samples": 720000000,
+  "sample_rate_hz": 24000000,
+  "uart_baud": 1152000,
+  "forward_payload_bytes": 32768,
+  "marker_start_seconds": 12.71530275,
+  "final_reply_end_seconds": 17.92128222222222,
+  "marker_reply_seconds": 0.12443683333333333,
+  "marker_reply_to_first_payload_seconds": 0.00015111111111193896,
+  "payload_end_to_query_seconds": 8.948611111193895e-05,
+  "final_query_reply_seconds": 0.6247622083333333,
+  "payload_start_to_reply_seconds": 5.0811907638888885,
+  "payload": {
+    "wire_span_seconds": 4.456138263888888,
+    "estimated_byte_time_seconds": 0.2844444444173177,
+    "idle_seconds": 4.17169381947157,
+    "idle_cts_high_seconds": 3.407279402778201,
+    "idle_cts_low_seconds": 0.7644144166933695,
+    "cts_high_seconds": 3.407458513888888,
+    "idle_cts_high_fraction": 0.8167616201540414,
+    "longest_gaps": [
+      {
+        "start_seconds": 15.32075047222222,
+        "duration_seconds": 0.15409802777777862,
+        "cts_high_seconds": 0.1540944027777786
+      },
+      {
+        "start_seconds": 15.537683888888887,
+        "duration_seconds": 0.15379781944444526,
+        "cts_high_seconds": 0.15379069444444526
+      },
+      {
+        "start_seconds": 14.287359347222221,
+        "duration_seconds": 0.1536396527777786,
+        "cts_high_seconds": 0.15361694444444526
+      },
+      {
+        "start_seconds": 13.870581805555554,
+        "duration_seconds": 0.15341452777777861,
+        "cts_high_seconds": 0.15341123611111193
+      },
+      {
+        "start_seconds": 14.870829847222222,
+        "duration_seconds": 0.1532224027777786,
+        "cts_high_seconds": 0.15320519444444528
+      },
+      {
+        "start_seconds": 15.106061347222221,
+        "duration_seconds": 0.15261394444444526,
+        "cts_high_seconds": 0.15260756944444528
+      },
+      {
+        "start_seconds": 13.088484972222222,
+        "duration_seconds": 0.15208861111111194,
+        "cts_high_seconds": 0.15208436111111193
+      },
+      {
+        "start_seconds": 16.939893930555556,
+        "duration_seconds": 0.15199656944444528,
+        "cts_high_seconds": 0.1519716527777786
+      },
+      {
+        "start_seconds": 16.523241513888888,
+        "duration_seconds": 0.15194648611111194,
+        "cts_high_seconds": 0.15192006944444528
+      },
+      {
+        "start_seconds": 16.13994038888889,
+        "duration_seconds": 0.15141311111111194,
+        "cts_high_seconds": 0.15139727777777862
+      }
+    ]
+  },
+  "final_reply": {
+    "wire_span_seconds": 9.484722222139438e-05,
+    "estimated_byte_time_seconds": 5.2055555552244184e-05,
+    "idle_seconds": 4.279166666915019e-05,
+    "idle_cts_high_seconds": 4.263888889054457e-05,
+    "idle_cts_low_seconds": 1.5277777860562007e-07,
+    "cts_high_seconds": 4.705555555472771e-05,
+    "idle_cts_high_fraction": 0.9964297305878071,
+    "longest_gaps": [
+      {
+        "start_seconds": 17.921243138888887,
+        "duration_seconds": 2.169444444527229e-05,
+        "cts_high_seconds": 2.165277777860562e-05
+      },
+      {
+        "start_seconds": 17.92120472222222,
+        "duration_seconds": 2.1069444445272287e-05,
+        "cts_high_seconds": 2.0986111111938954e-05
+      },
+      {
+        "start_seconds": 17.921273513888888,
+        "duration_seconds": 2.7777778605620065e-08,
+        "cts_high_seconds": 0.0
+      }
+    ]
+  },
+  "framing_errors_outside_window": 0,
+  "byte_starts_while_cts_high": 0,
+  "final_reply_starts_while_agon_rts_high": 0,
+  "limits": "CTS overlap is not pure CPU stall time; CTS-low gaps do not identify their software cause. Frame ends have approximately one-sample uncertainty; in-flight bytes may finish after CTS rises."
+}

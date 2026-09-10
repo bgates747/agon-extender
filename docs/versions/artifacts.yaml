@@ -1,10 +1,23 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r61
-updated_at: 2026-09-10T18:26:31Z
+registry_revision: r63
+updated_at: 2026-09-10T19:57:16Z
 
 artifacts:
+  - artifact_id: uart-path-capture
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: uart-path-capture-r02
+    status: draft
+    variants: []
+    description: Passive UART and CTS capture for the unchanged counted-point benchmark.
+    notes:
+      - W6 authorized after the 48-row hardware baseline; standing identity preapproval covers r01 and registry r62.
+      - 24 MHz, 720 million samples; operator resets Agon after acquisition readiness. No P4 reset or firmware change.
+      - Capture coverage and Agon SD timing validity are separate; no performance repair or qualification claim.
+      - W6 r01 connected waveform and CSV accepted. W7 r02 changes only browser demand to operator-confirmed disconnected; the original CSV browser annotation is explicitly overridden in the host condition record.
+      - Author requested the formal W7 contract, results freeze and preapproved execution on 2026-09-10; standing approval covers r02 and registry r63.
   - artifact_id: fatfs-file-probe
     kind: test_fixture
     identity_scheme: revision

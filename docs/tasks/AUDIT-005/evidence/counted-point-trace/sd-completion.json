@@ -1,0 +1,62 @@
+{
+  "collected_at": "2026-09-10T19:49:56.227683+00:00",
+  "run_id": "AUDIT-005-2026-09-10-19-44-52Z",
+  "outcome": "pass",
+  "scope": "Exploratory counted-point waveform plus same-run CSV; not ordinary MOS-deadline compliance or firmware qualification",
+  "csv_filename": "00000004.CSV",
+  "csv_sha256": "0667fa10094123004bcdb914f20aa7ce1304359d92b2a2bad6851723c63200af",
+  "binary_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "csv": {
+    "row": "1",
+    "repeat": "1",
+    "route": "excom",
+    "entry": "count",
+    "payload": "points",
+    "chunks": "512",
+    "bytes": "32768",
+    "t0": "1258",
+    "t1": "1792",
+    "t2": "1866",
+    "send_ticks": "534",
+    "tail_ticks": "74",
+    "total_ticks": "608",
+    "send_status": "0",
+    "reply_status": "0",
+    "pixel_r": "255",
+    "pixel_g": "255",
+    "pixel_b": "255",
+    "pixel_index": "15",
+    "mode": "0",
+    "width": "640",
+    "height": "480",
+    "colours": "16",
+    "valid": "1",
+    "setup_first_status": "15",
+    "setup_reply_ticks": "64",
+    "first_reply_status": "15",
+    "reply_wait_ticks": "74"
+  },
+  "legacy_return_status": 0,
+  "prior_results_unchanged": true,
+  "association": "Only one new result since prepared SD handover; Author returned card for this capture. Correct unchanged build, trace case and clock/wire agreement. FAT file timestamp is not used as UTC run identity.",
+  "completion_of": "collection.json (earlier partial collection retained unchanged)",
+  "comparison": {
+    "clock": {
+      "send_seconds": 4.45,
+      "tail_seconds": 0.6166666666666667,
+      "total_seconds": 5.066666666666666
+    },
+    "wire": {
+      "send_seconds": 4.456138263888888,
+      "tail_seconds": 0.6250525000000007,
+      "total_seconds": 5.0811907638888885
+    },
+    "clock_resolution_seconds": 0.016666666666666666,
+    "note": "Software call and wire boundaries differ; each interval agrees within one 16.67 ms clock quantum. This is not sub-millisecond calibration.",
+    "wire_minus_clock_seconds": {
+      "send_seconds": 0.006138263888887607,
+      "tail_seconds": 0.00838583333333398,
+      "total_seconds": 0.014524097222222032
+    }
+  }
+}

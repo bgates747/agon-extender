@@ -1,0 +1,26 @@
+{
+  "run_id": "AUDIT-005-2026-09-10-19-44-52Z",
+  "procedure": "uart-path-capture-r01",
+  "started_at": "2026-09-10T19:44:52.077263+00:00",
+  "ended_at": "2026-09-10T19:45:26.501513+00:00",
+  "collected_at": "2026-09-10T19:48:58.061994+00:00",
+  "outcome": "partial",
+  "scope": "Acquisition and waveform pass; returned SD CSV and Legacy-return observation pending.",
+  "capture_helper_sha256": "5ab20a2759d68542cd77c2926c3d25abea8c9cc77c15f4341391d7430513912b",
+  "logic_sha256": "3d487a53f809179497d3d02dc183339a9bb0b62d78cce35d368c6db71f69e76c",
+  "raw_samples_sha256": "704aed40d6f6b4091ed2f461aa16784b3cddd8635950e4ec10811133a79ce171",
+  "reset_cue_issued": true,
+  "fixture_build": "uart-path-benchmark-r03-b2026-09-10-18-21-38Z",
+  "fixture_sha256": "a4307f487666ede3cb347c9f1e37343c4fae41c1bee53b4e0bb0fc5a7ffb7c1c",
+  "declared_installed_emos": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "declared_installed_p4": "uart-excom-console-r07-b2026-09-10-06-31-58Z",
+  "sd_result": null,
+  "sd_timing_comparison": null,
+  "decoder_evidence": {
+    "decoder-D1.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "decoder-D6.txt": "4faf5069b9dd6d9c61222d7b4f0980d527969abb39f1b7f84f5c55242e3a3bac",
+    "decoder-D6.stderr": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "decoder-D1.txt": "028b9f285be1cbf7ec96d37a376e7217d52928313493ae455a5ce5d5c7596e24"
+  },
+  "notes": "Firmware identities are the unchanged deployment record, not a new serial interrogation. Exact waveform covers marker, full payload and final reply. No cause of internal P4 delay is yet established."
+}

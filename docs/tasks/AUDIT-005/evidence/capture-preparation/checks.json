@@ -1,0 +1,91 @@
+{
+  "checks": [
+    {
+      "procedure": "uart-path-capture-r01",
+      "run_id": "AUDIT-005-2026-09-10-19-36-06Z",
+      "started_at": "2026-09-10T19:36:06.733870+00:00",
+      "ended_at": "2026-09-10T19:36:11.125020+00:00",
+      "purpose": "passive acquisition check",
+      "reset_cue_issued": false,
+      "acquisition_pass": false,
+      "helper_sha256": "237ec6e24325eb82f3fb81a9dc4a8e7dcc0317915edf9ce7cf2a22c19874e0ee",
+      "exit_code": 0,
+      "ready_seconds_after_start": 0.05075627999030985,
+      "acquisition": {
+        "samples": 42022400,
+        "sample_rate_hz": 24000000,
+        "seconds": 1.7509333333333332,
+        "expected_samples": 720000000,
+        "acquisition_pass": false,
+        "sha256": "5481363e04c0ddbc579e4df8313ea2bb106062bcca5ce91410e4fd70bbaff7a7"
+      }
+    },
+    {
+      "procedure": "uart-path-capture-r01",
+      "run_id": "AUDIT-005-2026-09-10-19-37-35Z",
+      "started_at": "2026-09-10T19:37:35.135135+00:00",
+      "ended_at": "2026-09-10T19:37:37.129876+00:00",
+      "purpose": "passive acquisition check",
+      "reset_cue_issued": false,
+      "acquisition_pass": false,
+      "helper_sha256": "237ec6e24325eb82f3fb81a9dc4a8e7dcc0317915edf9ce7cf2a22c19874e0ee",
+      "exit_code": 0,
+      "ready_seconds_after_start": 0.05073923000600189,
+      "acquisition": {
+        "samples": 10565632,
+        "sample_rate_hz": 24000000,
+        "seconds": 0.44023466666666666,
+        "expected_samples": 720000000,
+        "acquisition_pass": false,
+        "sha256": "57d4dc725b0b39f914dad44f321a3af517126db9b605d065039b75e0f1b6f312"
+      }
+    },
+    {
+      "procedure": "uart-path-capture-r01",
+      "run_id": "AUDIT-005-2026-09-10-19-38-55Z",
+      "started_at": "2026-09-10T19:38:55.770252+00:00",
+      "ended_at": "2026-09-10T19:39:30.158268+00:00",
+      "purpose": "passive acquisition check",
+      "reset_cue_issued": false,
+      "acquisition_pass": true,
+      "helper_sha256": "5ab20a2759d68542cd77c2926c3d25abea8c9cc77c15f4341391d7430513912b",
+      "exit_code": 0,
+      "ready_seconds_after_start": 0.0504276659921743,
+      "raw_samples_sha256": "328d6c6c6122ae88fe12118b49df7d7e0697c1b7a45c9381f5aacaf06f67cc8e",
+      "acquisition": {
+        "samples": 720000000,
+        "sample_rate_hz": 24000000,
+        "seconds": 30.0,
+        "expected_samples": 720000000,
+        "acquisition_pass": true,
+        "sha256": "dadc1189efc09f4bd8fb2b14ff4d7b017790d26ccaf4c81619c9c7a486834816"
+      }
+    },
+    {
+      "procedure": "uart-path-capture-r01",
+      "run_id": "AUDIT-005-2026-09-10-19-41-25Z",
+      "started_at": "2026-09-10T19:41:25.799581+00:00",
+      "ended_at": "2026-09-10T19:42:00.201338+00:00",
+      "purpose": "passive acquisition check",
+      "reset_cue_issued": false,
+      "acquisition_pass": true,
+      "helper_sha256": "5ab20a2759d68542cd77c2926c3d25abea8c9cc77c15f4341391d7430513912b",
+      "exit_code": 0,
+      "ready_seconds_after_start": 0.05040033799014054,
+      "raw_samples_sha256": "328d6c6c6122ae88fe12118b49df7d7e0697c1b7a45c9381f5aacaf06f67cc8e",
+      "acquisition": {
+        "samples": 720000000,
+        "sample_rate_hz": 24000000,
+        "seconds": 30.0,
+        "expected_samples": 720000000,
+        "acquisition_pass": true,
+        "sha256": "d28cde15a73e5c2e7e10173a3ab0542b15004c21d538d7c581cae65374243942"
+      }
+    }
+  ],
+  "synthetic_tests_passed": 6,
+  "result_validation_tests_passed": 5,
+  "trace_emulator_pass": true,
+  "physical_workload_run": false,
+  "limitations": "Two successful passive acquisitions do not guarantee future captures. Raw output and reduced logging changed together; no isolated compression root-cause claim."
+}
