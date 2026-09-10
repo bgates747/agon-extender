@@ -1,0 +1,21 @@
+schema_version: 1
+run_id: PORT-003-2026-09-10-06-13-32Z
+outcome: partial
+build_id: uart-excom-console-r06-b2026-09-10-06-01-48Z
+source_commit: 3c2daa8b7d15506390b792404df491842dc4e02f
+capture_duration_seconds: 878.554
+serial_open_restarted_p4: true
+raw_serial_sha256: 675a9811e8361cbf3258988ee305dc97accafe3b473747f885b68cbaef1fb9ac
+operator_observations:
+  keyboard_without_browser: pass after P4 restart
+  keyboard_with_browser: pass after Agon-only reset
+  manual_emos_excom: display switch failed; current route retained; backend unavailable
+  keyboard_after_failed_switch: responsive
+  slideshow_after_failed_switch: runs on mainboard
+recorded_control_operations:
+- 1
+- 4
+accepted_commit_recorded: false
+browser_video: frames continue; no send failure in record
+scope: Informative unresolved admission/scheduling failure, not physical qualification
+  of r06. Firmware/SD unchanged during recording.

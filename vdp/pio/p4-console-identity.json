@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r06",
+  "source_identity": "uart-excom-console-r07",
   "status": "candidate",
-  "note": "Deployment follow-up under Author flashing and standing identity authorization: RGB222 snapshots follow browser demand to prevent unrequested composition starving startup. Browser decoding unchanged from accepted review."
+  "note": "Coalesce consumer retries into the in-flight RGB222 frame, preventing duplicate composition demand. P4-only correction under standing identity/deployment authorization; EMOS and browser assets unchanged."
 }

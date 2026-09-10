@@ -66,7 +66,9 @@ the same 32-byte header. Packing is lossless for the existing P4 compositor's
 
 P4 snapshots are admitted by browser demand and may be produced at each logical
 frame boundary. The active console has no fixed 200 ms interval. A consumer
-request with no fresh snapshot schedules composition; an idle or stalled browser
+request with no fresh snapshot schedules composition; repeated polls while that
+composition is in progress wait for the same frame without scheduling another.
+After cancellation, a later poll may request a new attempt; an idle or stalled browser
 does not cause continuous full-surface work. The frame service still progresses
 without requests. Logical frame timing and VDU execution do not
 wait for browser presentation or a socket send.

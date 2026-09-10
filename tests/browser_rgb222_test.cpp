@@ -72,6 +72,11 @@ int main() {
     const auto previous = tick - 121;
     assert(requested.tryAcquireAfter(previous, frame) == n::OpaqueAcquireResult::NoNewMessage);
     assert(demand.tryBegin(8, 8, tick * 16667ULL, destination) == d::SnapshotBeginResult::Ok);
+    // The network owner polls while the frame task is still composing. These
+    // retries belong to the same outstanding credit, not a request for another
+    // surface. On P4 a composition can span several logical frame periods.
+    for (unsigned retry = 0; retry < 12; ++retry)
+      assert(requested.tryAcquireAfter(previous, frame) == n::OpaqueAcquireResult::NoNewMessage);
     for (unsigned i = 0; i < 64; ++i) destination.pixels[i] = {255, 0, 0};
     assert(demand.finish(d::CompositionResult::Ok, 16667) == d::SnapshotFinishResult::Published);
     assert(requested.tryAcquireAfter(previous, frame) == n::OpaqueAcquireResult::Acquired);
@@ -81,5 +86,17 @@ int main() {
     frame.release(n::OpaqueReleaseDisposition::Sent);
   }
   assert(demand.metrics().publications == 120 && demand.metrics().cadence_skips == 0);
+  // Coalescing must not lose retry demand after a failed composition.
+  n::OpaqueMessageLease retry;
+  assert(requested.tryAcquireAfter(120, retry) == n::OpaqueAcquireResult::NoNewMessage);
+  assert(demand.tryBegin(8, 8, 241 * 16667ULL, destination) == d::SnapshotBeginResult::Ok);
+  assert(requested.tryAcquireAfter(120, retry) == n::OpaqueAcquireResult::NoNewMessage);
+  assert(demand.finish(d::CompositionResult::InvalidPlane, 16667) == d::SnapshotFinishResult::Cancelled);
+  assert(requested.tryAcquireAfter(120, retry) == n::OpaqueAcquireResult::NoNewMessage);
+  assert(demand.tryBegin(8, 8, 242 * 16667ULL, destination) == d::SnapshotBeginResult::Ok);
+  for (unsigned i = 0; i < 64; ++i) destination.pixels[i] = {0, 255, 0};
+  assert(demand.finish(d::CompositionResult::Ok, 16667) == d::SnapshotFinishResult::Published);
+  assert(requested.tryAcquireAfter(120, retry) == n::OpaqueAcquireResult::Acquired);
+  assert(retry.view().token == 121);
   std::cout << "PASS: RGB222 all colours, exact EVF1 bytes, 60 Hz publication with bounded demand, immutable slow-client lease and latest selection\n";
 }

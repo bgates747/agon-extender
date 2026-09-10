@@ -93,6 +93,58 @@ the startup correction; slideshow performance and sustained stability remain
 for the Author's next test. The SD is safely unmounted with Extender keyboard
 selection followed by the slideshow directory change. No Agon reset occurred.
 
+### Keyboard admission regression under investigation
+
+The Author's first Agon test after the r06 deployment reports `KEYINPUT FAIL:
+receiver readiness timeout`, mainboard input retained, and autoexec stopped at
+line 1 with MOS's `Volume timeout` error. This is not a keyboard-admission PASS
+or evidence of an SD fault. EMOS and the UART protocol were unchanged. The new
+autoexec omits the previous `SET KEYBOARD 1`; default layout 0 (UK) and layout 1
+(US) are both accepted by the P4 console, so this difference alone does not
+explain a missing General Poll reply.
+
+P4 HTTP remained responsive. A bounded serial recording of the installed r06
+candidate collected an Agon-only reset attempt with browser video
+disconnected, to distinguish admission failure from browser-dependent load.
+Opening the recording restarted P4; no firmware or SD changes accompanied it.
+The root cause and RGB-4 hardware result remain unresolved. Private capture
+details and current recording state are in `HARDWARE.local.md`.
+
+The Author confirms keyboard input works after the recorded P4 restart with
+browser video disconnected, and manually launched slideshow on mainboard VDP.
+The serial record confirms native keyboard admission with no connected video
+client or reported fault. This establishes recovery, not the original failure
+cause: both P4 state and browser connection state changed. The next comparison
+kept browser video connected during Agon keyboard admission.
+
+
+The connected-browser repeat also admitted the keyboard. The Author then typed
+`emos excom` manually and received display-switch failure with Legacy retained;
+keyboard and mainboard slideshow remained usable. The captured P4 received
+PREPARE and later ABORT, with no COMMIT accepted, panic or UART fault. Browser
+frames continued; gaps appeared in lower-priority diagnostic reporting. The
+recording is stopped and retained as informative failure evidence under
+`PORT-003-2026-09-10-06-13-32Z` beside the design tests.
+
+Source review and a failing host regression identify duplicate snapshot demand:
+network polls while the producer is still composing set the request flag again.
+With continuous browser credit, the high-priority frame task can compose again
+on each catch-up tick. The r07 correction makes those polls await the existing
+Producer slot, including deferred publication; after cancellation a later poll
+can request another attempt. It retains logical tick semantics, the single
+renderer owner, immutable leases and no fixed frame-rate limit. The test
+interleaves twelve network retries per composition over 120 frames and checks
+that no unrequested extra composition begins, plus cancellation recovery.
+Physical retesting is required to establish whether this fully resolves the
+observed handshake failures. EMOS and browser assets are unchanged. Standing
+identity/deployment authorization selects candidate r07 and registry r57.
+
+The Author raised dedicating a P4 core to critical UART/USB/command work. This
+remains an architectural option, not an accepted assignment: first complete the
+bounded request correction, then use task-runtime and latency measurements to
+judge core placement and rendering cost. Core assignment cannot by itself fix
+duplicate work or cross-task waits.
+
 ## State
 
 - Status: In progress — Gate F accepted; Work 2.a source findings are recorded

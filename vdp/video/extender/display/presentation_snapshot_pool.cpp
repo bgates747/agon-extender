@@ -270,7 +270,14 @@ bool PresentationSnapshotPool::tryAcquireLatest(
   int latest = findLocked(SlotState::Latest);
   if (latest < 0 ||
       slots_[static_cast<std::size_t>(latest)].generation <= last_generation) {
-    requested_.store(true, std::memory_order_release);
+    // A network retry while a producer is composing waits for that same
+    // frame. Re-arming demand here queued another full composition on every
+    // catch-up tick, starving console work with continuous browser credit
+    // (PORT-003 RGB-4, console r06). The Producer state remains set through
+    // deferred publication, so it also covers retries during that interval.
+    // After failure/cancellation, the next consumer poll may request a retry.
+    if (findLocked(SlotState::Producer) < 0)
+      requested_.store(true, std::memory_order_release);
     unlock();
     increment(consumer_no_new_);
     return false;
