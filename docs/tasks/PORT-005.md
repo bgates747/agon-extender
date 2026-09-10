@@ -2,9 +2,17 @@
 
 ## State
 
-- Status: Native USB CLI/gameplay and bounded editing/repeat/reconnect/source-return pass on hardware with PORT-015. Wider mapping, layout, LED/settings and processed-keyboard parity remain open; browser-specific work is deferred with REMOTE-001.
+- Status: Further keyboard refinements deferred by Author, 2026-09-09, in favor of ExCom and the EDP port. Native USB CLI/gameplay and bounded editing/repeat/reconnect/source-return pass on hardware with PORT-015. Wider mapping, layout, LED/settings and processed-keyboard parity remain open; browser-specific work is deferred with REMOTE-001.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
+
+## Current scheduling — 2026-09-09
+
+The Author is satisfied with ordinary commands/gameplay using USB input in
+Legacy and deferred the proposed Caps Lock LED increment and further keyboard
+refinements. Retain the implementation, accepted tests and open parity items.
+They do not gate the first ExCom console proof; fix any demonstrated keyboard
+regression that blocks that proof without expanding into unrelated parity work.
 
 ## Intent and ownership
 

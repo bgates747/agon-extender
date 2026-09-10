@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r47
-updated_at: 2026-09-09T21:51:14Z
+registry_revision: r48
+updated_at: 2026-09-10T00:27:35Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,8 +38,8 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.10
-    status: candidate
+    latest_identity: agon-emos-v0.1.11
+    status: draft
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
@@ -395,3 +395,14 @@ artifacts:
     notes:
       - Author accepted graphical CLI review and authorized P4 flash and EMOS SD preparation; candidate under standing version preapproval, physical proof pending.
       - UK/US boot-keyboard subset and typematic; mainboard VGA output, no browser input.
+
+  - artifact_id: uart-excom-console
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-excom-console-r01
+    status: draft
+    variants: []
+    description: Paired idle-CLI Legacy/ExCom UART console with native USB input and retained EDP browser video.
+    notes:
+      - Author standing identity preapproval applies; PORT-008-D005 authorizes switching without restart.
+      - EMOS v0.1.11 and this P4 composition are draft; no physical or full compatibility claim.

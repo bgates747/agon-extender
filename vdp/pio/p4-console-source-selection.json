@@ -1,0 +1,92 @@
+{
+  "schema_version": "1.0.0",
+  "environment": "p4-console",
+  "diagnostic_status": "PORT-008 explicit ExCom UART console plus native USB keyboard and retained browser video",
+  "generated_build_files": [
+    "video/CMakeLists.txt",
+    "video/idf_component.yml",
+    "CMakeLists.txt"
+  ],
+  "translation_unit_local_build_identity": {
+    "consumer": "video/extender/boot/p4_console.cpp",
+    "generated_header": ".pio/build-identities/p4-console/build_identity.hpp"
+  },
+  "project_translation_units": [
+    "video/extender/boot/p4_console.cpp",
+    "video/extender/display/cursor_position_adapter.cpp",
+    "video/extender/display/logical_frame_service.cpp",
+    "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/p4_display_controller.cpp",
+    "video/extender/display/p4_frame_service.cpp",
+    "video/extender/display/palette_state.cpp",
+    "video/extender/display/plane_storage.cpp",
+    "video/extender/display/presentation_compositor.cpp",
+    "video/extender/display/presentation_snapshot_pool.cpp",
+    "video/extender/display/screen_facade_adapter.cpp",
+    "video/extender/display/screen_facade_p4_binding.cpp",
+    "video/extender/network/browser_video_service_core.cpp",
+    "video/extender/network/opaque_message.cpp",
+    "video/extender/network/wired_network_service.cpp",
+    "video/extender/port/fabutils_port.cpp",
+    "video/extender/port/p4_task_watchdog.cpp",
+    "video/extender/web/browser_video_provider.cpp",
+    "video/extender/web/embedded_assets.cpp",
+    "vendor/ESP32Time/ESP32Time.cpp"
+  ],
+  "forbidden_project_translation_units": [
+    "video/extender/boot/p4_parallel_qualification_vdp.cpp",
+    "video/extender/transport/p4_parallel_qualification.cpp"
+  ],
+  "vendored_translation_units": [
+    "vendor/vdp-gl/src/canvas.cpp",
+    "vendor/vdp-gl/src/codepages.cpp",
+    "vendor/vdp-gl/src/displaycontroller.cpp"
+  ],
+  "embedded_text_files": [
+    "video/extender/web/index.html",
+    "video/extender/web/style.css",
+    "video/extender/web/app.js",
+    "video/extender/web/frame_protocol.js",
+    "video/extender/web/webgl2_presenter.js"
+  ],
+  "header_defined_official_implementation": [
+    "video/video.ino",
+    "video/vdu_stream_processor.h",
+    "video/vdu.h",
+    "video/vdu_sys.h",
+    "video/vdu_buffered.h",
+    "video/vdu_context.h",
+    "video/vdu_fonts.h",
+    "video/vdu_sprites.h",
+    "video/vdu_layers.h",
+    "video/context.h",
+    "video/buffers.h",
+    "video/agon_screen.h",
+    "video/agon_ttxt.h",
+    "video/vdp_variables.h",
+    "video/extender/transport/console_hardware.inc"
+  ],
+  "excluded_source_families": [
+    "vendor/vdp-gl/src/VGA*.cpp",
+    "vendor/vdp-gl/src/CVBS*.cpp",
+    "vendor/vdp-gl/src/scene.cpp",
+    "vendor/vdp-gl/src/ps2*.cpp",
+    "vendor/vdp-gl/src/soundgen.cpp",
+    "vendor/vdp-gl/src/network.cpp",
+    "video/agon_ps2.h",
+    "video/agon_audio.h",
+    "video/vdu_audio.h",
+    "video/vdp_protocol.h",
+    "video/updater.h",
+    "video/hexload.h",
+    "video/ymodem.h",
+    "video/zdi.h"
+  ],
+  "managed_dependencies": {
+    "espressif/usb_host_hid": "1.2.1",
+    "espressif/dl_fft": "0.6.0",
+    "espressif/esp-dl": "3.3.9",
+    "espressif/esp_hosted": "2.12.12"
+  },
+  "dependency_lock": "pio/p4-console-dependencies.lock"
+}

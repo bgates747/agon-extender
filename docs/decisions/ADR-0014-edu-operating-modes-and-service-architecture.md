@@ -280,7 +280,7 @@ that processor.
     finish or be abandoned, reinitializes affected parser state, and commits
     atomically. The beta adds no second semantic VDU parser and does not
     preserve a multi-call partial command across a disruptive transition.
-36. Use a disruptive controlled restart for every ordinary-VDU route change in
+36. Subject to the idle-console amendment below, use a disruptive controlled restart for ordinary-VDU route changes in
     the proof-of-concept and beta, and retain it as an acceptable v1 fallback.
     Preservation of the loaded eZ80 program, data, and resident processor state
     is an aspirational v1 target and a firm v2 requirement under MODE-001; it
@@ -545,3 +545,19 @@ selected input source remains independent of display mode; no automatic
 fallback or simultaneous keyboard-source mixing is selected. The P4 USB
 connector/power addition is specified beside the r03 design. SETUP-005 K010
 records acceptance; HW-002 owns incorporating it into the drawing.
+
+## Idle-console transition amendment — 2026-09-09
+
+The Author accepted PORT-008-D005: resident EMOS may switch Legacy↔Exclusive
+Compatible at the idle MOS CLI, including autoexec commands, without rebooting.
+EMOS preserves the selected keyboard source and layout and presents a fresh
+screen/prompt at the destination. It draws the accepted static mainboard notice
+and hides that cursor after successful ExCom entry; mainboard VBlank continues.
+This is not a promise to preserve or migrate a running application's display
+state, and it does not authorize switching during in-flight application output.
+
+The earlier restart-mediated prerequisite does not gate this bounded console
+increment. EMOS still owns preparation, readiness, route commit and recovery;
+EDP must reach an explicit parser/queue boundary. Failed entry leaves Legacy
+usable. Other transition classes and state-preservation work retain their
+existing scope. Commands persist across reboot only through autoexec.

@@ -345,8 +345,13 @@ abandoned, reinitializes affected parser state, and commits atomically. The beta
 adds no second semantic VDU parser and does not preserve multi-call partial
 commands across a disruptive transition.
 
-The proof-of-concept and beta use a disruptive controlled restart for every
-ordinary-VDU route change; that mechanism remains an acceptable v1 fallback.
+The first idle-console Legacy↔Exclusive Compatible increment may switch
+without rebooting, as accepted in PORT-008-D005. EMOS preserves keyboard
+source/layout and presents a fresh destination screen/prompt. It retains
+transactional readiness, parser/queue quiescence and bounded failure recovery;
+this authorizes neither in-flight application switching nor display-state
+preservation or migration. The older disruptive controlled-restart baseline
+applies outside this bounded exception and remains an acceptable v1 fallback.
 Preserving loaded eZ80 program, data, and resident processor state is an
 aspirational v1 target and a firm v2 requirement under MODE-001; preservation
 never implies migration of display assets between processors. The exact restart

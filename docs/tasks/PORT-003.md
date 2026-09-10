@@ -9,15 +9,24 @@
 - Started: 2026-08-22 10:14 EDT
 - Finished: --
 
-## Keyboard integration boundary — 2026-09-08
+## Current integration priority — 2026-09-09
 
-REMOTE-001's focused keyboard slice now has priority in the task queue. It may
-add focus and keyboard event controls to the existing browser display page;
-PORT-003 retains video framing, framebuffer and presentation ownership, and
-PORT-006 owns network delivery. Keyboard input does not require completion of
-this task's remaining display gates or a change to ordinary VDU routing. The
-keyboard documentation was accepted for freeze on 2026-09-08; implementation
-is separate.
+The Author selected actual ExCom console operation and continued VDP-to-EDP
+porting after native USB CLI/gameplay passed. PORT-008's next bounded increment
+pairs EMOS-owned ordinary VDU routing with the retained P4 parser/rendering and
+browser display, while preserving USB input. Reuse the existing display work;
+this is not a restart of the upstream inventory or a claim of complete Gate G
+compatibility. Browser keyboard input and further keyboard polish are deferred.
+PORT-006 retains network ownership; browser video remains the initial output.
+A video defect that blocks this proof remains relevant even though browser
+input repairs are deferred. Historical r02/parallel prerequisites below do not
+resume held construction or gate this UART-only console proof.
+
+The paired `p4-console` composition is now a compiled draft under PORT-008;
+it feeds this retained parser and display path from EMOS ordinary UART VDU.
+Native-reference emulator checks do not exercise the P4 concrete controller or
+browser video. Those results await the bounded r03 console hardware sheet;
+Gate G and wider rendering qualification remain open.
 
 ## Intent
 

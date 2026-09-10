@@ -159,7 +159,8 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
   Exclusive routing with inactive EDP is invalid. A third independent state
   dimension requires explicit architectural review. Live Legacy↔Dual
   activation is accepted. The proof-of-concept/beta baseline uses a disruptive
-  controlled restart for every ordinary-VDU route change and remains an
+  controlled restart for ordinary-VDU route changes outside the accepted
+  PORT-008-D005 idle-console Legacy↔ExCom exception, and remains an
   acceptable v1 fallback. Preserving the loaded eZ80 program/data and resident
   processor state is an aspirational v1 target and firm v2 requirement under
   [MODE-001](MODE-001.md); preservation does not imply migrating display
@@ -435,3 +436,7 @@ committed-backend dispatcher is accepted rather than unresolved, and ordinary
 application VDU is never mirrored even under controlled ownership. D003--D008
 remain open, and the promotion deliberately leaves F018's disruptive-restart
 actor and carrier unresolved.
+
+PORT-008-D005, accepted 2026-09-09, authorizes the first idle-CLI ExCom/Legacy
+implementation without restart. It preserves keyboard source/layout with fresh
+destination screens. F018 is not a prerequisite for this bounded increment.

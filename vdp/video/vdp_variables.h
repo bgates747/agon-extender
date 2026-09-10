@@ -8,7 +8,9 @@
 #include "agon.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/input/unavailable_input_adapter.hpp"
-#if defined(AGON_EXTENDER_BROWSER_TYPING)
+#if defined(AGON_EXTENDER_CONSOLE)
+#include "extender/transport/console_stream.hpp"
+#elif defined(AGON_EXTENDER_BROWSER_TYPING)
 #include "extender/diagnostic/browser_typing_stream.hpp"
 #elif defined(AGON_EXTENDER_KEYBOARD_QUALIFICATION)
 #ifdef AGON_EXTENDER_USB_CLI

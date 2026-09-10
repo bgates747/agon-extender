@@ -64,6 +64,9 @@ void VDUStreamProcessor::wait_eZ80() {
 	if (esp_reset_reason() == ESP_RST_SW) {
 		// We only perform a s/w reset after flashing, so MOS will already be running
 		initialised = true;
+#ifdef AGON_EXTENDER_CONSOLE
+    consolePoll();
+#endif
 	} else {
 		debug_log("wait_eZ80: Start\n\r");
 		while (!initialised) {
@@ -181,6 +184,12 @@ void VDUStreamProcessor::vdu_sys_video() {
 				context->setCursorVEnd(offset);
 			}
 		}	break;
+#ifdef AGON_EXTENDER_CONSOLE
+        case CONSOLE_OPCODE: {
+            uint8_t control[CONSOLE_SIZE];
+            if (readIntoBuffer(control,sizeof(control)) == 0) consoleControl(control);
+        } break;
+#endif
 		case VDP_GP: {					// VDU 23, 0, &80
 			sendGeneralPoll();			// Send a general poll packet
 		}	break;
@@ -417,6 +426,9 @@ void VDUStreamProcessor::sendGeneralPoll() {
 	};
 	send_packet(PACKET_GP, sizeof packet, packet);
 	initialised = true;
+#ifdef AGON_EXTENDER_CONSOLE
+    consolePoll();
+#endif
 }
 
 // VDU 23, 0, &81, <region>: Set the keyboard layout
@@ -424,6 +436,9 @@ void VDUStreamProcessor::sendGeneralPoll() {
 void VDUStreamProcessor::vdu_sys_video_kblayout() {
 	auto region = readByte_t();			// Fetch the region
 	setKeyboardLayout(region);
+#ifdef AGON_EXTENDER_CONSOLE
+    consoleLayout(region);
+#endif
 }
 
 // VDU 23, 0, &82: Send the cursor position back to MOS

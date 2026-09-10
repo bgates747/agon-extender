@@ -5,36 +5,27 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current priority — selectable mainboard or Extender keyboard input
+## Current priority — Exclusive Compatible console and EDP
 
-The order below applies to the keyboard slice in each detail file, not to
-completion of the whole task. Documentation was accepted for freeze on
-2026-09-08. The resident EMOS receiver, API proof and bounded recovery emulator
-checkpoints are accepted and frozen. Controlled P4 keyboard sending and EMOS
-API effects pass on hardware. Physical browser typing, Enter and Backspace
-now work. Paired timing measurements identify a reproducible keyboard lease
-defect and P4 video send-budget closures. The Author reviewed those findings
-and selected direct USB keyboard input on 2026-09-09. Ordinary EMOS CLI and
-gameplay now pass with the P4 USB keyboard and mainboard VGA. On that evidence,
-the Author selected mainboard/Extender keyboard choice as the immediate goal;
-browser input is deferred until explicitly reprioritized, not queued to resume
-automatically after USB bring-up. The USB wiring is recorded in the design
-specification; its schematic update is deferred until 2026-09-10.
-Broader physical/session qualification remains open. The selected Agon/P4 path uses
-only r03 UART1; module loading, runtime relocation and moslet-space residency
-are not prerequisites.
-
-- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
-  - Started: 2026-09-08 (controlled P4 sender).
-  - Finished: --
-  - Status: Prioritize native USB mapping, repeat/settings and source-release parity; browser-specific work is deferred with REMOTE-001.
-  - Details: [PORT-005](docs/tasks/PORT-005.md)
+Native USB keyboard bring-up is complete: ordinary MOS commands and gameplay
+work in Legacy. On 2026-09-09 the Author deferred further keyboard refinements
+and selected actual ExCom operation and the retained VDP-to-EDP port as the
+next priority. First prove normal CLI/VDU output on EDP with USB input retained,
+and a working return to Legacy. Use the existing UART-only r03 path; parallel
+transport stays on hold. Browser input remains deferred; browser video is the
+initial Extender display. The USB schematic waits until 2026-09-10.
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: P4-to-EMOS keyboard UART, native USB gameplay and bounded source-return/reconnection pass; wider integration remains; r02/parallel work stays on hold.
+  - Status: Draft ExCom CLI/VDU routing and Legacy return implemented; software checks and Author mainboard visual review pass; candidate preparation and paired hardware proof pending. P4 combines the retained parser/display with native USB input. Existing UART/keyboard proofs remain accepted; r02/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
+
+- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
+  - Started: 2026-08-22 10:14 EDT
+  - Finished: --
+  - Status: Reuse the retained parser/rendering/browser display for the first ExCom console proof; expand VDP fidelity in subsequent bounded increments.
+  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 ## Scheduled hardware documentation
 
@@ -51,10 +42,13 @@ are not prerequisites.
   - Finished: --
   - Details: [PORT-006](docs/tasks/PORT-006.md)
 
-- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: 2026-08-22 10:14 EDT
+## Deferred keyboard refinements
+
+- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
+  - Started: 2026-09-08 (P4 controlled-key sender).
   - Finished: --
-  - Details: [PORT-003](docs/tasks/PORT-003.md)
+  - Status: Further keyboard refinements, including the proposed Caps Lock LED increment, deferred by Author on 2026-09-09. Preserve working USB input; repair only keyboard regressions that block the ExCom increment.
+  - Details: [PORT-005](docs/tasks/PORT-005.md)
 
 ## Deferred browser input
 

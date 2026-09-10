@@ -6,16 +6,176 @@
   pass controlled hardware checks; native USB ordinary CLI and gameplay are
   accepted. Bounded USB reconnect, mainboard source exclusion and Agon-only
   reset readmission also pass; wider transport qualification remains open.
-  Browser input is deferred until explicit reprioritization.
+  Current priority is the first ExCom console slice below, now implemented
+  as a reviewed software checkpoint; paired hardware tests remain pending. Browser input and
+  further keyboard refinements are deferred.
   The r02 design, wiring, parallel implementation/Work 2.e recapture and full
   circuit qualification remain on hold. No hardware operation is started by
   this progress update.
 - Started: 2026-08-29 19:12 EDT
 - Finished: --
 
-## Intent
+## Next bounded increment — ordinary ExCom console
 
-Immediate scope: carry stock keyboard packets and relevant keyboard
+Selected by the Author on 2026-09-09 after PORT-015 completion. This section
+supersedes the keyboard-only scheduling below. The existing r02/parallel hold
+remains; the accepted operating-mode, activation and EMOS ownership contracts
+remain binding. PORT-003 owns retained VDP rendering; this task owns the paired
+transport/EMOS integration boundary. The Author's standing preapproval covers
+EMOS v0.1.11, uart-excom-console-r01 and draft registry r48.
+
+1. Define the smallest paired EMOS/P4 composition that can enter actual ExCom.
+   Inspect the existing mode coordinator and activation/readiness path before
+   changing it; identify stale parallel assumptions and any unresolved contract
+   needed for this slice. Reuse the accepted UART1 receiver/serializer and USB
+   acquisition alongside the retained VDP parser, rendering and browser output.
+   Do not substitute diagnostic key echo or a second text interpreter for VDP.
+2. Implement case-insensitive `EMOS EXCOM` / `EMOS LEGACY` through EMOS's mode
+   coordinator and ordinary VDU dispatch. Preserve the selected USB keyboard
+   source and layout. Follow the accepted mainboard mode notification/cursor
+   policy and keep its VBlank clock. A missing/unready EDP must leave a usable
+   Legacy console; do not publish a committed mode before its prerequisites.
+   Keyboard events and ordinary VDP replies share UART1 without interleaving.
+3. Prove normal prompt output and editing on EDP, an ordinary command such as
+   `echo ExCom`, and return to the mainboard MOS prompt with USB input intact.
+   Repeat the transition and test absent-peer entry failure. Use emulator review
+   before guarded hardware deployment, then Author-observed browser/mainboard
+   results. Browser input, parallel transfer, full VDP feature parity and the
+   deferred USB schematic are not prerequisites for this bounded proof.
+
+Before implementation, record the concrete coordinator/composition findings
+and any decision that genuinely blocks these accepted behaviors. This is the
+first console increment toward Exclusive Compatible, not evidence that all
+VDP commands, queries, graphics, audio or other retained services already match
+stock. Expand the EDP port through subsequent discrete command/behavior tests.
+
+### Preimplementation coordinator/composition inspection — 2026-09-09
+
+These historical findings bounded item 1 before implementation. The Author
+subsequently accepted `PORT-008-D005`; the draft implementation below resolves
+the missing console adapter and wire grammar within that idle-CLI boundary.
+
+1. EMOS already owns a transactional mode coordinator and a single committed
+   VDU backend selector. Its production adapter is conditional on the held
+   parallel qualification composition. The compatible-UART backend is not
+   implemented: ordinary RST 10h/RST 18h output cannot yet reach EDP through it.
+2. The accepted P4 USB CLI composition admits only complete keyboard-layout
+   and General Poll commands. It uses the retained VDP keyboard handler and
+   serializer, but does not expose ordinary VDU or browser video. Extend that
+   composition boundary using the retained VDUStreamProcessor and renderer;
+   do not treat the existing diagnostic text gateway as an ExCom console.
+3. EMOS's UART1 receiver currently assembles keyboard, keyboard-settings and
+   admission-poll replies. An ordinary console also needs display replies
+   such as cursor position and mode information. Preserve separate UART0 and
+   UART1 assembly, and apply replies only from their selected authority while
+   reusing stock MOS state-update behavior. Keep native USB admission intact
+   across display changes and do not reset keyboard ownership on every poll.
+4. A General Poll echo proves neither mode activation nor peer capability.
+   Q001–Q004 still require a bounded framed, versioned, transaction-specific,
+   integrity-checked prepare/commit/recovery exchange before EMOS publishes an
+   EDP route. Keyboard service in Legacy is the accepted separate exception;
+   it does not authorize ordinary VDU there. No activation opcode or new wire
+   grammar has been selected by this inspection.
+5. MODE-001 and ADR-0014 decision 36 retain a restart-mediated route-change
+   baseline. The later console decisions preserve keyboard selection and
+   specify a fresh destination prompt, but do not explicitly settle the
+   restart carrier. D005 asks for the smallest explicit resolution rather
+   than silently implementing a different lifecycle.
+
+The bounded source précis is in the ignored local record
+`agents/precis/excom-console.md`. Official references remain clean at MOS
+v3.0.2 (`8336409351ee5314e02801a7b72a4f1bb5282519`) and VDP v2.16.0
+(`c7ac293d2aa81ddfa693390549bcd909069c8fc3`).
+
+### Reviewed console implementation and software checks — 2026-09-09
+
+1. Added the resident EMOS compatible-UART adapter to its existing mode
+   coordinator and ordinary byte/stream dispatcher. Case-insensitive EXCOM and
+   LEGACY commands preserve keyboard selection/layout. EMOS stages EDP mode
+   and cursor replies until route publication and preserves UART0 packet
+   scratch while invoking the retained stock state handlers. No application
+   owns the transport or mode commit.
+2. Added a separate P4 `p4-console` composition: native USB acquisition and
+   packet serialization share the retained VDU parser, renderer and browser
+   video. Preactivation accepts only the bounded control exchange and the
+   established keyboard layout/poll exception. Active control is recognized
+   by the retained parser at command boundaries. The draft
+   [wire contract](../protocols/excom-console.md) records the framed,
+   CRC-checked, transaction/challenge-bound prepare/commit/leave exchange.
+3. Built EMOS `agon-emos-v0.1.11-b2026-09-10-00-50-45Z` and P4
+   `uart-excom-console-r01-b2026-09-10-00-31-17Z`, both draft. EMOS's full
+   qualification wrapper, 76 product tests, stock regressions, runtime checks
+   and all profile-owned linked guards pass. P4 compilation and maintained
+   session integrity/replay/expiry/abort tests pass. The EMOS host adapter test
+   covers staging, stock scratch preservation, stale replies and bounded
+   failed-entry/leave behavior.
+4. The real-EMOS headless peer passes two ExCom/Legacy cycles with ordinary
+   command text and retained input, plus withheld activation followed by usable
+   Legacy input. Its second renderer is native stock VDP with the maintained
+   P4 session and USB key mapper. This proves neither ESP-IDF execution nor
+   browser video, electrical RTS/CTS, USB acquisition or full VDP parity.
+   The Author supplied the expected final mainboard screenshot and authorized
+   freezing and continued preparation; local manifests, logs and images live
+   under the ignored `agents/excom/` and `.emulator/excom/` records.
+5. The [draft hardware sheet](../../hardware/designs/light2-harness-r03/tests/uart-excom-console-r01.md)
+   defines the next bounded bench check after Author emulator acceptance and
+   candidate freeze. Installed EMOS v0.1.10/P4 USB CLI and physical SD contents
+   have not changed. No flash or hardware evidence is claimed here.
+
+Implementation details worth retaining: the P4 console uses IDF hardware RTS
+with its RX ring; the earlier bounded USB-only parser used manual RTS. That
+new composition requires physical qualification. EMOS's shared UART lease
+survives keyboard-source release while ExCom needs display replies. Its fixed
+parallel profile includes the new resident units only to remain linkable; held
+parallel work is not resumed. A retained parallel cleanup lease cannot be
+hidden by selecting the console adapter.
+
+### Author visual acceptance and source freeze — 2026-09-09
+
+The supplied final emulator screenshot shows `Legacy mode`, successful ordinary
+command output, `Keyboard input: extender`, and the restored MOS prompt with
+cursor. The Author authorized freezing this checkpoint and continuing candidate
+preparation. EMOS implementation checkpoint: `8e63cc4`. This accepts the mainboard visual gate; N001 and physical P4
+text/cursor/transport checks remain open. The Author retains the SD for other
+testing. Prepare locally without SD writes, serial opens, flashes or resets;
+coordinate the actual paired deployment after that testing finishes.
+
+#### N001 — Native reference glyph omission (open)
+
+The native VDP library used by the isolated review intermittently omits glyphs
+in the ExCom image. The complete byte stream reaches it. A timed replay with
+EMOS and the UART socket removed reproduces the omission; the native VDP's own
+VDP echo (variable 0110h, used only in that isolated diagnostic) confirms it
+consumed the full text. Disabling its cursor did not resolve the replay.
+Periodic scanout and CTS-respecting input are present; artificial byte delays
+are not used to make the paired review appear to pass.
+
+Reference library SHA-256:
+`cfd0aad2108e074af207f5bc6f1b73976097851405bc7c3f8949c7a165df2cb3`.
+The local reproduction, byte trace, echo and images are retained under
+`agents/excom/`. The failure is isolated from EMOS but not yet attributed to a
+specific native-backend or retained-VDP source defect. No upstream or reference
+checkout was modified. Automated review PASS explicitly means control,
+byte-stream and prompt assertions; it does not assert pixel equality.
+
+The Author's mainboard visual review can assess normal boot, switch notices,
+Legacy return and preserved input. EDP text completeness and cursor behavior
+remain explicit physical checks in the new P4 composition. If the P4 reproduces
+this symptom, repair it before accepting the bounded console milestone; do not
+promote missing glyphs to a compatibility exception. Remove this review
+limitation only with identified/repaired reference behavior and a repeated
+visual check.
+
+The whole-project identity validator also exposed a pre-existing held-r02
+connectivity hash mismatch: both the recorded hash and mismatching connectivity
+bytes are unchanged from HEAD. Artifact, template and P4 source-identity checks
+pass separately. Do not silently rehash the frozen design; reconcile it under
+HW-001's existing hardware review hold.
+
+## Established keyboard transport scope
+
+
+Established keyboard scope: carry stock keyboard packets and relevant keyboard
 configuration/query traffic between EMOS and P4 over the existing r03 UART1
 link at 1152000/8N1 RTS/CTS. PORT-015 owns native USB acquisition, PORT-005
 owns P4 event semantics, REMOTE-001 retains deferred browser sessions, and
@@ -33,9 +193,8 @@ checks below establish that bounded receiver proof using the actual retained
 P4/EMOS components; wider source/session qualification remains open.
 
 The historical r02/parallel destination and its evidence/tooling remain below
-for their original scope. They do not gate this UART-only increment. The new
-keyboard tranche controls current scheduling; no held construction, parallel
-recapture, direct VDP link or full mode activation is resumed.
+for their original scope. They do not gate this UART-only increment. The ExCom console section now controls scheduling; no held construction,
+parallel recapture or direct VDP link is resumed.
 
 ## Authority and inputs
 
@@ -184,6 +343,16 @@ parallel-specific gates are not requirements for the current keyboard tranche.
 | `PORT-008-D002` | Which current-circuit work can execute intended production code without promoting an r01 workaround? | Implement new epoch-preconditioned production forward-parallel objects and invoke them through a separately identified fixed-backend qualification composition; add no r01 behavior to the product and make no activation, UART, return, or r02 electrical claim. | Accepted by the Author, 2026-09-01 | Resolves `REMED-002-D003` in favor of replacement rather than repair/promotion of the prototype adapters. Production data-plane implementation and host tests may be separately authorized; physical and artifact gates remain. |
 | `PORT-008-D003` | How should circuit construction, candidate-code tests, and eventual release proof be sequenced? | Validate r02 in its existing signal-view order; use applicable production-candidate components and scoped test callers, allow simplified electrical diagnostics, authenticate each tested candidate, and verify eventual release consumption later. | Accepted by the Author, 2026-09-05 | Supersedes D002's r01-first scheduling and the requirement to complete a release pair before stage validation. Retains production-component reuse, EMOS ownership, exact evidence, and applicable physical/mode gates. |
 | `PORT-008-D004` | How should intermediate assemblies support powered measurements and logic capture? | Separate tracing-oriented signal views from a cumulative `wiring-order/` plan. Include every powered-input and shared-bank prerequisite, use permanent circuit parts only, and keep test sheets/results under that plan. | Accepted by the Author, 2026-09-05 | Refines D003's sequencing assumption. The later R32–R41 proposal was rejected; no circuit change or physical execution is approved by this process decision. Hardware execution is on hold as of 2026-09-07. |
+| `PORT-008-D005` | Does the first ordinary ExCom console switch at the idle MOS prompt without restarting, or retain the older restart-mediated route-change baseline? | Allow EMOS-owned Legacy↔ExCom switching at the idle CLI, preserving keyboard source/layout and presenting a fresh destination screen; make no application display-state preservation or migration claim. | Accepted by the Author, 2026-09-09 | Supersedes the restart prerequisite for this bounded idle-console increment; retain all activation, parser, timeout and rollback requirements. |
+
+D005's alternative is to retain restart-mediated switching. That requires
+settling SETUP-005 F018 first: the restarting processor, target-mode carrier,
+autoexec behavior and failure path. The recommendation avoids introducing that
+carrier for an idle-console proof, but requires a bounded parser/queue boundary
+and explicit recovery in EMOS and EDP. It does not authorize switching in the
+middle of an application's output or state-preserving mode migration. The
+paired UART activation and selected-authority reply handling identified above
+are prerequisites under either choice.
 
 The rejected alternative and source trace remain in the task-local
 [activation bootstrap design](PORT-008/activation/README.md). The accepted
@@ -194,9 +363,11 @@ D003 retains that component factoring but replaces its current-circuit
 schedule with the durable staged process. It does not adopt the rejected D001
 activation exception or resolve HW-001-Q010.
 
-The activation questions remain deferred until `HW-001-Q010` supplies an
-accepted intended-circuit request path. They do not block the bounded production
-forward-parallel data-plane work selected by D002:
+The historical r02 activation carrier remains deferred with `HW-001-Q010`.
+The next ExCom console increment must resolve the following questions for its
+current r03 UART composition; that does not resume r02 construction or adopt
+the rejected D001 listener. These questions still do not block the separately
+bounded production forward-parallel data-plane work selected by D002:
 
 1. `PORT-008-Q001` — activation grammar, version, integrity, transaction
    identity/replay behavior, deadlines, retries, bounded decoding, and the

@@ -73,8 +73,12 @@ transition may depend on direct VDP/EDP communication or state/buffer transfer.
 
 ## Gates
 
-- Complete and qualify the restart-mediated beta lifecycle before replacing
-  it as the safe fallback.
+- PORT-008-D005 (accepted 2026-09-09) permits the bounded idle-CLI
+  Legacy↔ExCom console increment without first implementing restart mediation.
+  It preserves keyboard selection/layout with fresh destination screens and
+  does not claim this task's broader application/display-state preservation.
+  Other replacements of the restart-mediated fallback retain their review and
+  qualification requirement.
 - Consume the final SETUP-005 D002, D003, D007, and related ownership
   decisions rather than inventing transition-local alternatives.
 - Do not implement transparent display-state migration without a separately
