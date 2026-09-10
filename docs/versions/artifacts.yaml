@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r64
-updated_at: 2026-09-10T21:17:50Z
+registry_revision: r65
+updated_at: 2026-09-10T23:11:57Z
 
 artifacts:
   - artifact_id: uart-path-capture
@@ -437,11 +437,12 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r08
+    latest_identity: uart-excom-console-r09
     status: candidate
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r09 instruments frame phases and parser/reply progress for AUDIT-006. Standing version approval covers r09 and registry r65; execution request authorizes checked diagnostic deployment. No scheduling or gameplay repair.
       - r08 removes the frame primitive budget and drains until empty or suspended, matching stock under PORT-003-D013. Author directed implementation and one W9 comparison; standing identity approval covers r08 and registry r64. Physical deployment pending.
       - r07 coalesces network retries while a snapshot is being composed; r06 incorrectly armed another composition for the same outstanding credit. Local regression reproduces the defect. P4-only correction under standing identity/deployment authorization; physical keyboard and ExCom retest pending.
       - r06 corrects r05 deployment startup starvation by composing RGB222 snapshots only on consumer demand; no fixed fps cap. Browser pixels/UI are unchanged from the accepted review. Author flashing and standing identity authorization apply; physical follow-up remains pending.

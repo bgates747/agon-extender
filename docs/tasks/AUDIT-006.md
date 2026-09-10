@@ -47,7 +47,7 @@ measure, not the diagnosed cause of the game regression.
 
 ## Work
 
-1. [ ] **W1 — Add bounded diagnostic timing.** Timestamp drawing-queue work,
+1. [x] **W1 — Add bounded diagnostic timing.** Timestamp drawing-queue work,
    sprite updates, snapshot preparation and whole frame execution. Record
    suspension-wait durations and enough parser/reply progress to relate
    stalled output to the frame work. Include frame backlog/context, sample
@@ -93,3 +93,21 @@ independent checks, deployment and media preparation are complete. No screenshot
 or additional approval is required; physical game interaction remains the
 operator's part. Keep host addresses, device identities and media paths in
 `HARDWARE.local.md` and ignored local receipts.
+
+## Implementation checkpoint
+
+W1 is implemented in the selected console only; exact boundaries and limitations
+are in [measurement.md](AUDIT-006/measurement.md). The private bounded research
+record is `agents/precis/p4-frame-timing.md`. W2 recorder and serialized-scope
+checks pass under ASan/UBSan, including concurrent sampling, forced record loss,
+active timing and wrap. Two host acquisition tests pass; retained frame and
+presentation checks pass, and the complete P4 diagnostic compiles. See
+[AUDIT-006 local validation](AUDIT-006/local-validation.json).
+
+Review caught the need for a seventh HTTP route slot before deployment. The
+selected console now supplies it while other builds keep their existing count.
+The aggregate version validator remains blocked by the pre-existing held-r02
+connectivity hash mismatch; this task does not alter that hardware design.
+Candidate inputs are frozen before the final identified build. W3/W4 still
+require verified deployment and the operator's physical game reproduction;
+these local checks are not a gameplay result.

@@ -4,6 +4,7 @@
 // all-the-plots spans fingerprinted by PORT-003 Phase B. This implementation
 // uses the project bounds-safe codec; no classic VGA controller is compiled.
 #include "extender/display/p4_display_controller.hpp"
+#include "extender/diagnostics/frame_timing.hpp"
 
 #include <climits>
 #include <cstdlib>
@@ -192,12 +193,19 @@ std::size_t P4DisplayController::executeFrameWork() {
   // with its timeout disabled. Drain until empty or suspended; the previous
   // 64-per-frame cap throttled UART admission (AUDIT-005 W8). Keep the common
   // executor, snapshot boundary and immediate-completion path unchanged.
-  while (getPrimitive(&primitive, 0)) {
-    execPrimitive(primitive, update, false);
-    ++executed;
-    if (suspension_depth_.load(std::memory_order_acquire) != 0) break;
+  {
+    diagnostics::Scope timing(diagnostics::Phase::Queue);
+    while (getPrimitive(&primitive, 0)) {
+      execPrimitive(primitive, update, false);
+      ++executed;
+      if (suspension_depth_.load(std::memory_order_acquire) != 0) break;
+    }
+    timing.units(static_cast<std::uint32_t>(executed));
   }
-  showSprites(update);
+  {
+    diagnostics::Scope timing(diagnostics::Phase::Sprites);
+    showSprites(update);
+  }
   publishSnapshotAtBoundary();
   executing_frame_work_.store(false, std::memory_order_release);
   return executed;
@@ -263,7 +271,8 @@ bool P4DisplayController::setDisplayCursorPosition(int x, int y) noexcept {
 }
 
 void P4DisplayController::suspendBackgroundPrimitiveExecution() {
-  suspension_depth_.fetch_add(1, std::memory_order_acq_rel);
+  const auto previous_depth = suspension_depth_.fetch_add(1, std::memory_order_acq_rel);
+  diagnostics::Scope timing(diagnostics::Phase::Suspend, previous_depth + 1);
   while (executing_frame_work_.load(std::memory_order_acquire)) taskYIELD();
 }
 
@@ -615,6 +624,9 @@ void P4DisplayController::publishSnapshotAtBoundary() noexcept {
   if (snapshots_.tryBegin(width, height, snapshot_clock_us_, destination) !=
       SnapshotBeginResult::Ok)
     return;
+  // Time actual composition only; an unrequested/skipped snapshot is no work.
+  diagnostics::Scope timing(diagnostics::Phase::Snapshot,
+                           static_cast<std::uint32_t>(width * height));
   PresentationRegion full{0, 0, width, height};
   CompositionResult result = composeVisibleRegionAtBoundary(
       full, destination.pixels, destination.pixel_capacity);

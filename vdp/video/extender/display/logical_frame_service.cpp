@@ -1,6 +1,7 @@
 // See logical_frame_service.hpp. Every state transition follows the order
 // frozen in docs/tasks/PORT-003/phase-c/contracts.md.
 #include "extender/display/logical_frame_service.hpp"
+#include "extender/diagnostics/frame_timing.hpp"
 
 #include <limits>
 
@@ -75,7 +76,13 @@ FrameServiceResult LogicalFrameService::servicePending() {
   ++metrics_.elapsed_ticks;
   ++metrics_.serviced_edges;
 
-  std::size_t executed = executor_.executeFrameWork();
+  std::size_t executed;
+  {
+    // AUDIT-006: pending includes this edge; context is backlog at entry.
+    diagnostics::Scope timing(diagnostics::Phase::Frame, pending);
+    executed = executor_.executeFrameWork();
+    timing.units(static_cast<std::uint32_t>(executed));
+  }
   ++generation_;
   FrameNotice notice{
       generation_,

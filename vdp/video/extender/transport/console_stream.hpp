@@ -11,6 +11,10 @@ class ConsoleStream final : public Stream {
   uint8_t setup[4]{},output[8192]{};
   unsigned pos{4},read_pos{},count{};
   int cached{-1};
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+  // Parser-owner-only counter; no atomic/timestamp operation per UART byte.
+  uint32_t diagnostic_rx_bytes{};
+#endif
   const char *failure{};
   void fail(const char *why) { if (!failure) failure=why; }
   void feed(const uint8_t *p) { std::memcpy(setup,p,4);pos=0; }
@@ -23,7 +27,11 @@ class ConsoleStream final : public Stream {
     if(pos<4) return setup[pos++];
     if(cached>=0) {int b=cached;cached=-1;return b;}
     uint8_t b;
-    return session.active() && uart_read_bytes(UART_NUM_1,&b,1,0)==1 ? b : -1;
+    const bool received=session.active() && uart_read_bytes(UART_NUM_1,&b,1,0)==1;
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+    if (received) ++diagnostic_rx_bytes;
+#endif
+    return received ? b : -1;
   }
   int peek() override { if(pos<4)return setup[pos];if(cached<0)cached=read();return cached; }
   void flush() override { /* Stream flush does not cancel pending UART bytes. */ }

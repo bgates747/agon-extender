@@ -6,6 +6,7 @@
 #include "../input/p4_usb_host.hpp"
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
+#include "../diagnostics/frame_timing.hpp"
 namespace {
 ConsoleStream *console_stream;
 QueueHandle_t console_events;
@@ -64,6 +65,7 @@ ConsoleStream *beginConsole() {
   return console_stream;
 }
 void runConsole(VDUStreamProcessor *processor) {
+  namespace timing = agon::extender::diagnostics;
   auto &s=*console_stream;
   auto &keyboard=console_keyboard;
   auto emit=[](agon::extender::input::ProcessedKey k){if(!console_keys.push(k))console_overload=true;};
@@ -87,7 +89,10 @@ void runConsole(VDUStreamProcessor *processor) {
         s.fail("UART receive corruption");
     if(transmitting) {
       auto result=uart_wait_tx_done(UART_NUM_1,0);
-      if(result==ESP_OK)transmitting=false;
+      if(result==ESP_OK) {
+        timing::Scope completed(timing::Phase::TxComplete);
+        transmitting=false;
+      }
       else if(result!=ESP_ERR_TIMEOUT)s.fail("TX completion");
       else if(now-tx_at>=5000) {
         console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();
@@ -97,8 +102,10 @@ void runConsole(VDUStreamProcessor *processor) {
       }
     }
     if(!transmitting && s.count) {
+      timing::Scope enqueue(timing::Phase::TxEnqueue, s.count);
       unsigned n=std::min<unsigned>(128,std::min<unsigned>(s.count,sizeof(s.output)-s.read_pos));
       int sent=uart_tx_chars(UART_NUM_1,reinterpret_cast<const char *>(s.output+s.read_pos),n);
+      if (sent > 0) enqueue.units(static_cast<std::uint32_t>(sent));
       if(sent<0)s.fail("TX enqueue");
       else if(sent) {s.read_pos=(s.read_pos+sent)%sizeof(s.output);s.count-=sent;transmitting=true;tx_at=now;}
     }
@@ -109,6 +116,13 @@ void runConsole(VDUStreamProcessor *processor) {
     // Leave enough reply capacity for one bounded stock parser invocation.
     // Parser reads may wait for continuation, but driver RTS protects its RX.
     if(s.count<4096) {
+      // Batch timing avoids timestamp/atomic overhead on each UART byte.
+      // Context: 1 admitted ExCom, 0 preactivation. Counts are batch progress,
+      // not a claim of complete commands, visible frames or eZ80 execution.
+      timing::Scope parse(timing::Phase::Parser, s.session.active() ? 1 : 0);
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+      const auto rx_before = s.diagnostic_rx_bytes;
+#endif
       agon::extender::input::ProcessedKey key;
       if(console_keys.pop(key)) {
         if(!agon::extender::input::processedKeyboard().push(key))s.fail("processed key queue");
@@ -140,6 +154,9 @@ void runConsole(VDUStreamProcessor *processor) {
         // Cursor/event housekeeping still belongs to the retained processor.
         if(!used)processor->processNext();
       }
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+      parse.units(s.diagnostic_rx_bytes - rx_before);
+#endif
     }
     keyboard.tick(now,emit);
     if(s.failure) {

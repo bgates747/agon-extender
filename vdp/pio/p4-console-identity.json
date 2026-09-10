@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r08",
+  "source_identity": "uart-excom-console-r09",
   "status": "candidate",
-  "note": "Stock drawing drain until empty or suspended under PORT-003-D013. Local frame/render/mode regressions and P4 compilation pass; W9 physical deployment/comparison pending. Unchanged EMOS/UART/browser behavior."
+  "note": "AUDIT-006 fixed-RAM frame timing. Recorder/HTTP host tests, retained frame and presentation checks, and P4 compilation pass. Candidate for one authorized diagnostic deployment and manual Nurples reproduction; no scheduling repair or gameplay qualification."
 }

@@ -1,7 +1,9 @@
 // Video-only service restored after retiring browser keyboard capture.
 // Keep F003 complete writes and F012 failed-stop containment; no input lease,
-// timing endpoint or browser-keyboard callback belongs in this service.
+// browser-keyboard callback belongs in this service. AUDIT-006 alone enables
+// a read-only frame-timing endpoint; it does not reinstate browser input.
 #include "extender/network/wired_network_service.hpp"
+#include "extender/diagnostics/frame_timing.hpp"
 
 #include <array>
 #include <cstring>
@@ -244,11 +246,26 @@ esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
                          static_cast<ssize_t>(asset->size));
 }
 
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+namespace {
+esp_err_t timingHandler(httpd_req_t *request) {
+  const auto body = agon::extender::diagnostics::timingJson();
+  if (body.empty()) return httpd_resp_send_500(request);
+  httpd_resp_set_type(request, "application/json");
+  httpd_resp_set_hdr(request, "Cache-Control", "no-store");
+  return httpd_resp_send(request, body.data(), body.size());
+}
+}
+#endif
+
 bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
   config.max_uri_handlers = 6;
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+  ++config.max_uri_handlers; // five assets + video + diagnostic GET
+#endif
   config.open_fn = &socketOpened;
   config.send_wait_timeout = kVideoSendWaitSeconds;
   config.lru_purge_enable = false;
@@ -293,6 +310,18 @@ bool WiredNetworkService::startHttp() noexcept {
     return false;
   }
 
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+  httpd_uri_t timing{};
+  timing.uri = "/diagnostics/frame-timing";
+  timing.method = HTTP_GET;
+  timing.handler = &timingHandler;
+  if (httpd_register_uri_handler(server, &timing) != ESP_OK) {
+    http_fault_ = true;
+    stopHttp();
+    increment(http_start_failures_);
+    return false;
+  }
+#endif
   http_fault_=false;
   increment(http_starts_);
   ESP_LOGI(kTag, "HTTP browser service ready");

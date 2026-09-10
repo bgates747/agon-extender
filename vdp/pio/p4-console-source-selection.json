@@ -13,6 +13,7 @@
   },
   "project_translation_units": [
     "video/extender/boot/p4_console.cpp",
+    "video/extender/diagnostics/frame_timing.cpp",
     "video/extender/display/cursor_position_adapter.cpp",
     "video/extender/display/logical_frame_service.cpp",
     "video/extender/display/native_pixel_codec.cpp",
@@ -88,5 +89,8 @@
     "espressif/esp-dl": "3.3.9",
     "espressif/esp_hosted": "2.12.12"
   },
-  "dependency_lock": "pio/p4-console-dependencies.lock"
+  "dependency_lock": "pio/p4-console-dependencies.lock",
+  "component_compile_definitions": [
+    "AGON_EXTENDER_FRAME_TIMING=1"
+  ]
 }
