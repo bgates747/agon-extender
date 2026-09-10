@@ -82,6 +82,17 @@ consumer requests. The deployment is not a physical graphics/performance PASS.
 The Author's flashing and standing identity authorization cover this P4-only
 startup correction, selected as candidate r06 with registry r56.
 
+### RGB222 deployment handover
+
+Candidate `uart-excom-console-r06-b2026-09-10-06-01-48Z` from clean source
+`3c2daa8` is installed. [PORT-003-2026-09-10-06-03-17Z](../../hardware/designs/light2-harness-r03/tests/PORT-003-2026-09-10-06-03-17Z/README.md)
+records independent flash verification, USB keyboard enumeration, HTTP startup,
+matching browser assets and five real RGB222 frames presented by an isolated
+Chromium client. The client closed and HTTP remained responsive. This confirms
+the startup correction; slideshow performance and sustained stability remain
+for the Author's next test. The SD is safely unmounted with Extender keyboard
+selection followed by the slideshow directory change. No Agon reset occurred.
+
 ## State
 
 - Status: In progress — Gate F accepted; Work 2.a source findings are recorded

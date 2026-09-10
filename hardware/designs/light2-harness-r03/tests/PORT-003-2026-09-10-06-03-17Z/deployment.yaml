@@ -1,0 +1,26 @@
+run_id: PORT-003-2026-09-10-06-03-17Z
+build_id: uart-excom-console-r06-b2026-09-10-06-01-48Z
+factory_sha256: 1b336ddc828325276cb88af21c3902fc812f60a1404a7b74fe463d31f96f7f86
+write_verified: true
+usb_host_startup_observed: true
+physical_rgb222_throughput_stability: pending
+source_commit: 3c2daa8b7d15506390b792404df491842dc4e02f
+source_clean: true
+http_assets_match: true
+browser_rgb222_frames_presented: 5
+surface: 640x480 RGB222
+stride_bytes: 640
+logical_period_us: 16667
+emos: Existing v0.1.12 unchanged
+agon_reset: false
+physical_slideshow_performance: pending
+autoexec:
+- EMOS KEYINPUT extender
+- CD /mystuff/slideshow/64
+private_log_sha256:
+  boot.log: 82b1c8f05e4b24367e781f93f598bf2bed0e912d55c212ef4b9dc1ba5c65d88c
+  deployment.json: 2f7cdd4a7652f99dddd0d2c6770f8f6a3b94c12cf612c6cb146f5bd5e8930ff6
+  verify-command.json: 789a848c85167d33ffb6cb2e72038ec1b12fade0fa23a4ad1f5a35af69b3d51f
+  verify.log: 0713f2e688544210ab37e7b0ae117ce577e75dc9e8d988516adeccba5d96003a
+  write-command.json: 2557e5869943c2ed4dceaf4e2a6b3c98d24e7eb8e245a50b047e5d58d6b82a81
+  write.log: 83ebb1bf78b0de3d5c3efd230328de910e960ed254982201afafaa186b86d84a
