@@ -21,7 +21,7 @@ forward terminal-mode command. No packet acknowledges a public MOS write.
 |---|---|
 | 0–1 | ASCII `EX` |
 | 2 | Wire version 1 |
-| 3 | Operation: prepare=1, commit=2, leave=3, abort=4; reply sets bit 7 |
+| 3 | Operation: prepare=1, commit=2, leave=3, abort=4, prepare-keep=5; reply sets bit 7 |
 | 4–7 | Nonzero EMOS transaction counter, little endian |
 | 8–11 | P4 challenge, little endian; zero only in prepare request |
 | 12 | Contract selector 1: bounded compatible UART console |
@@ -77,4 +77,25 @@ acknowledgement. P4 cancels blocked TX after five seconds and requires fresh
 admission; idle or power/reset activity cannot authorize a display mode.
 
 Physical reset/fault coverage, broad VDP behavior, maintenance/RTC/audio policy
-and application-state preservation remain outside this bounded console proof.
+and transparent migration of arbitrary application state remain outside this
+bounded console proof. The explicit comparison option below is separately scoped.
+
+## Display-preserving application requests
+
+`EMOS EXCOM --keep-display` selects prepare-keep (5). Its nonce, lease expiry,
+CRC and commit exchange are the same as prepare, but P4 does not replace the
+retained renderer's scene or mode. EMOS omits viewport/clear/cursor reset while
+retaining the post-COMMIT mode/cursor/poll barrier. An older peer that does not
+implement operation 5 sends no success response; EMOS retains its current
+route. `EMOS LEGACY --keep-display` uses the existing leave operation and
+suppresses mainboard clearing/notices. Applications request these commands
+through public mos_oscli at complete VDU/query boundaries; no new RST or
+application transport interface is introduced. Ordinary commands still perform
+fresh console initialization. The option is reset on return, including errors.
+
+For a live application, only this explicit option opens the Legacy/ExCom
+coordinator gate; the ordinary CLI-only mode-change restriction remains for
+other requests. A busy resident dispatcher still rejects the request. The
+option grants no transport ownership to the application. A rejected transition
+returns a nonzero MOS status; the caller stops before drawing on the wrong
+renderer. Mode/cursor sysvars always describe the selected display, not both.

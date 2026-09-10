@@ -61,6 +61,13 @@ int main() {
     request[3]=CONSOLE_LEAVE; console_seal(request); consoleControl(&processor,request);
     if(stream.session.active()) return 43;
   }
+  // A retaining preparation must ACK without changing mode/context/scene.
+  request[3]=CONSOLE_PREPARE_KEEP; request[4]=3;
+  std::fill_n(request+8,4,0); console_seal(request);
+  events.clear(); stream.bytes.clear(); consoleControl(&processor,request);
+  if(stream.bytes.size()!=CONSOLE_SIZE+2 ||
+     stream.bytes[5]!=(CONSOLE_PREPARE_KEEP|0x80) || attemptIndex!=1 ||
+     std::find(events.begin(),events.end(),"contexts.reset-all")!=events.end()) return 45;
   auto count=stream.bytes.size();
   request[3]=CONSOLE_PREPARE; // wrong CRC: no mode change or ACK
   consoleControl(&processor,request);

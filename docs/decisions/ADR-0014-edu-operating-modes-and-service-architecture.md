@@ -561,3 +561,16 @@ increment. EMOS still owns preparation, readiness, route commit and recovery;
 EDP must reach an explicit parser/queue boundary. Failed entry leaves Legacy
 usable. Other transition classes and state-preservation work retain their
 existing scope. Commands persist across reboot only through autoexec.
+
+## Explicit application comparison transition amendment — 2026-09-09
+
+The Author accepted QUAL-003-D001: an application may request Legacy↔ExCom
+through public mos_oscli using `EMOS LEGACY --keep-display` or
+`EMOS EXCOM --keep-display`. Each display keeps its own scene, mode, contexts
+and resources. EMOS suppresses disruptive destination initialization and
+mainboard notices for this option while retaining the activation handshake,
+selected-authority replies, atomic route publication and keyboard selection.
+Applications issue these requests only at complete VDU/query boundaries.
+Default console commands retain their existing fresh-display behavior. This
+explicit comparison facility extends the idle-console scope; it is not
+transparent arbitrary-application migration or an independent transport API.

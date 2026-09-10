@@ -1,9 +1,10 @@
 # Light 2 r03 tests
 
-Current preparation: [native USB keyboard acquisition](usb-keyboard-probe-r01.md),
-with wiring and physical results pending. The preceding
-[browser timing result](REMOTE-001-2026-09-09-18-00-44Z/README.md) records working
-typing with measured latency and unresolved keyboard/video disconnections.
+Current preparation: [paired mainboard/EDP graphics](paired-graphics-probe-r01.md).
+Native USB keyboard input and [ordinary ExCom console](uart-excom-console-r03.md)
+are accepted functional baselines. The earlier
+[browser timing result](REMOTE-001-2026-09-09-18-00-44Z/README.md) remains historical;
+browser keyboard input is deferred, while browser video remains the display.
 
 Accepted controlled-input baseline: [controlled P4 keyboard sender](keyboard-sender.md)
 [PASS](PORT-005-2026-09-09-03-26-09Z/README.md). The full capture verifies twelve

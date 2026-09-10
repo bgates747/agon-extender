@@ -1,0 +1,5 @@
+/build/
+/tgt/
+/.emulator/
+__pycache__/
+*.pyc

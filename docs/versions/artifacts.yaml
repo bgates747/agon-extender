@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r51
-updated_at: 2026-09-10T02:20:42Z
+registry_revision: r53
+updated_at: 2026-09-10T03:49:16Z
 
 artifacts:
   - artifact_id: header-pinwalk-boot
@@ -38,12 +38,13 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.11
+    latest_identity: agon-emos-v0.1.12
     status: candidate
     variants:
       - port008-forward
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
       - Author accepted the v0.1.11 mainboard graphical review and requested freeze/continue; candidate under standing version preapproval. Physical ExCom and native-reference glyph checks remain open.
       - Author accepted the native USB CLI graphical review and authorized paired deployment; v0.1.10 is candidate under standing version preapproval.
       - Author preapproved this increment's identities on 2026-09-09. Version v0.1.9 adds shared resident text and keyboard UART transactions; graphical review passed and candidate preparation uses standing preapproval; physical typing remains pending.
@@ -401,12 +402,27 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r03
+    latest_identity: uart-excom-console-r04
     status: candidate
     variants: []
-    description: Paired idle-CLI Legacy/ExCom UART console with native USB input and retained EDP browser video.
+    description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
       - Author standing identity preapproval applies; PORT-008-D005 authorizes switching without restart.
       - r02 restores the pre-keyboard video page and removes browser input/timing from the shared service; retains complete-write and failed-stop containment with baseline five-second socket timeouts. EMOS v0.1.11 and native USB are unchanged.
       - r01/r02 physical entry failed; r02 captured a P4 null-font crash after raw changeMode skipped retained context initialization.
       - r03 invokes the full retained mode lifecycle before preparation ACK; host regression rejects the former raw call. EMOS v0.1.11 is unchanged; physical entry/return remain pending.
+
+      - r04 adds explicit prepare-keep for Author-approved paired graphics comparisons; ordinary fresh preparation remains unchanged.
+
+  - artifact_id: paired-graphics-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: paired-graphics-probe-r01
+    status: candidate
+    variants: []
+    description: Mainboard VDP then Extender EDP Shapes/Bitmaps comparison through EMOS-owned routing.
+    notes:
+      - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
+      - Author requested vendoring and adapting the suites; standing version preapproval applies.
+      - Original source file hashes preserve the uncommitted agon-utils suite; physical comparison and graphical review pending.

@@ -1,0 +1,84 @@
+{
+  "repository": "https://github.com/bgates747/nurples.git",
+  "commit": "1b2b488046eff27aabfc41c55d4276a509ecd602",
+  "branch": "dev",
+  "import_date": "2026-09-08",
+  "files_match_source_commit": true,
+  "files": [
+    {
+      "source": "src/asm/mos_api.inc",
+      "vendored": "mos_api.inc",
+      "sha256": "60f785ef04bcd9e08a70945c15a59fb6accb53a45dc6bd624ec8381ce7769870"
+    },
+    {
+      "source": "src/asm/macros.inc",
+      "vendored": "macros.inc",
+      "sha256": "ef293f70ddd38b51d0f158520edbe47adc59bca58920b868b449595895024e7a"
+    },
+    {
+      "source": "src/asm/functions.inc",
+      "vendored": "functions.inc",
+      "sha256": "0feea2cef24d926c37833f063ca79cd2731bf65fa206c5a6488d1fa79b5350de"
+    },
+    {
+      "source": "src/asm/arith24.inc",
+      "vendored": "arith24.inc",
+      "sha256": "a9851547ff09bd7499d59407512d486411d6b8d34c9c1f1a03e0f46e67ef8c0d"
+    },
+    {
+      "source": "src/asm/maths.inc",
+      "vendored": "maths.inc",
+      "sha256": "5da7d7867f8992c730c4f09566559938d7957faf45880ee61107961ff14029ba"
+    },
+    {
+      "source": "src/asm/files.inc",
+      "vendored": "files.inc",
+      "sha256": "d39ed99271dd2f25433d02e411c3245b57e5c0d74505f85104132ae60550981e"
+    },
+    {
+      "source": "src/asm/fixed168.inc",
+      "vendored": "fixed168.inc",
+      "sha256": "64e9c6ccf6a73c34e443f77e305cee2a0fc801440d957e9e0c917f1ddd8854c7"
+    },
+    {
+      "source": "src/asm/timer.inc",
+      "vendored": "timer.inc",
+      "sha256": "e51fa22f7dd22509fb45c56835834046e1af24e567ef44ccb2715bc368b667f3"
+    },
+    {
+      "source": "src/asm/vdu.inc",
+      "vendored": "vdu.inc",
+      "sha256": "da04698ffc03319976cafaba7019a6b498962847979b682de70566fa7ab9126a"
+    },
+    {
+      "source": "src/asm/vdu_buffered_api.inc",
+      "vendored": "vdu_buffered_api.inc",
+      "sha256": "099c8f8951c6b4d458d441082eb5aaf7fde1e4a180949c39477576cf0c0c1f10"
+    },
+    {
+      "source": "src/asm/vdu_fonts.inc",
+      "vendored": "vdu_fonts.inc",
+      "sha256": "c5759632de75d0ffeaccf18b6a73d3e9cb96169b7de19cfc576203aa2e0fb355"
+    },
+    {
+      "source": "src/asm/vdu_plot.inc",
+      "vendored": "vdu_plot.inc",
+      "sha256": "6eac01d55c27708c0cd4828913a9fb61762b20e524dbde8969b98717c72bddcd"
+    },
+    {
+      "source": "src/asm/vdu_sprites.inc",
+      "vendored": "vdu_sprites.inc",
+      "sha256": "c45aad55653f49618c3435e084301f6ecf5db180814e148c97a00c12856fc105"
+    },
+    {
+      "source": "src/asm/vdu_sound.inc",
+      "vendored": "vdu_sound.inc",
+      "sha256": "7cff3919be67d7f0d3c38f1ddd10bc2fd1b1c2a3979343c02e19f0e0882be309"
+    },
+    {
+      "source": "LICENSE",
+      "vendored": "LICENSE",
+      "sha256": "6b0382b16279f26ff69014300541967a356a666eb0b91b422f6862f6b7dad17e"
+    }
+  ]
+}

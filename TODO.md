@@ -15,6 +15,11 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
+- [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
+  - Started: 2026-09-09
+  - Status: Full paired emulator review accepted; candidate freeze and hardware deployment authorized. Compare mainboard-first/EDP-second images through EMOS while retaining native USB input.
+  - Details: [QUAL-003](docs/tasks/QUAL-003.md)
+
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --

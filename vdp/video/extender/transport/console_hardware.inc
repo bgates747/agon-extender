@@ -40,6 +40,8 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
     // post-commit queries still own publication. USB acquisition is separate.
     processor->vdu_mode(0);
   }
+  // QUAL-003: PREPARE_KEEP deliberately leaves Canvas, contexts and resource
+  // buffers intact. Its fresh lease is still required before ordinary output.
   console_stream->write(CONSOLE_REPLY);console_stream->write(CONSOLE_SIZE);
   console_stream->write(reply,sizeof(reply));
   printf("ExCom control op=%u active=%u\n",p[3],console_stream->session.active());

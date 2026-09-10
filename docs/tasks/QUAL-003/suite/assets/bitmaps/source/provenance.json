@@ -1,0 +1,20 @@
+{
+  "files": [
+    {
+      "source": "pingoasm/src/blender/blenderaxes.png",
+      "bytes": 4712,
+      "sha256": "44076c4542dd727815a86325099d72248aa2af84ef7c3b4814a41e447490fb67"
+    },
+    {
+      "source": "pingoasm/src/blender/blenderaxes.rgba2",
+      "bytes": 1156,
+      "sha256": "6d7156081386707a0ed346256a95b64409fb3fe90045a833ac42d85b4b21e25c"
+    },
+    {
+      "source": "pingoasm/src/blender/blenderaxes.rgba8",
+      "bytes": 4624,
+      "sha256": "9db3148de94029486167c33de94ec8f049fc6fb933fc87c6612a3ae9a8798aec"
+    }
+  ],
+  "note": "RGBA8888 is regenerated from the PNG; its original hash is a reference."
+}

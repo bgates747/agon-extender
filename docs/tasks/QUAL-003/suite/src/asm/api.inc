@@ -1,0 +1,16 @@
+; Shared include order for Extender demos, assembled from build/.
+; Imported implementations and their provenance are in vendor/nurples/.
+    include "../vendor/nurples/mos_api.inc"
+    include "../vendor/nurples/macros.inc"
+    include "../vendor/nurples/functions.inc"
+    include "../vendor/nurples/arith24.inc"
+    include "../vendor/nurples/maths.inc"
+    include "../vendor/nurples/files.inc"
+    include "../vendor/nurples/fixed168.inc"
+    include "../vendor/nurples/timer.inc"
+    include "../vendor/nurples/vdu.inc"
+    include "../vendor/nurples/vdu_buffered_api.inc"
+    include "../vendor/nurples/vdu_fonts.inc"
+    include "../vendor/nurples/vdu_plot.inc"
+    include "../vendor/nurples/vdu_sprites.inc"
+    include "../vendor/nurples/vdu_sound.inc"

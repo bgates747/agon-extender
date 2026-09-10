@@ -11,9 +11,9 @@ class ConsoleSession {
   void expire(uint32_t now) { if (prepared_ && uint32_t(now-prepared_at_)>=2000) prepared_=false; }
   bool request(const uint8_t *p, uint32_t now, uint32_t challenge, uint8_t *reply) {
     expire(now);
-    if (!console_valid(p) || p[13] || p[3]<CONSOLE_PREPARE || p[3]>CONSOLE_ABORT ||
+    if (!console_valid(p) || p[13] || p[3]<CONSOLE_PREPARE || p[3]>CONSOLE_PREPARE_KEEP ||
         !(p[4]|p[5]|p[6]|p[7])) return false;
-    if (p[3]==CONSOLE_PREPARE) {
+    if (p[3]==CONSOLE_PREPARE || p[3]==CONSOLE_PREPARE_KEEP) {
       if (p[8]|p[9]|p[10]|p[11]) return false;
       // An explicit fresh prepare invalidates an older lease, including after
       // an Agon-only reset. Stale commits cannot reuse its random challenge.

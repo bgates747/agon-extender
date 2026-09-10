@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r03",
+  "source_identity": "uart-excom-console-r04",
   "status": "candidate",
-  "note": "Standing Author preapproval: correct ExCom preparation to use retained VDP mode/context lifecycle; EMOS v0.1.11 unchanged. Physical retry pending."
+  "note": "Author accepted the paired visual review and authorized hardware deployment; prepare-keep preserves scenes, ordinary fresh mode lifecycle unchanged."
 }

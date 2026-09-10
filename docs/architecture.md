@@ -655,3 +655,14 @@ The primary Rev-D1 pre-v3 board environment configures the CPU at 360 MHz. A
 forced 400 MHz candidate repeatedly asserted during clock initialization on the
 attached rev 1.3 silicon and is rejected for this hardware profile. See
 [ADR-0010](decisions/ADR-0010-cpu-frequency.md).
+
+### Explicit application display preservation
+
+For paired graphics inspection, applications use public mos_oscli to request
+`EMOS LEGACY --keep-display` and `EMOS EXCOM --keep-display` at complete
+VDU/query boundaries. Mainboard VDP and EDP each retain their own mode, scene
+and resources; EMOS changes the committed route and reply authority through
+its coordinator without clearing those scenes or drawing a mode notice. USB
+source selection and the mainboard clock remain independent. Default console
+switch commands keep their fresh-display behavior. ADR-0014 records this
+bounded extension; it does not authorize direct application transport access.

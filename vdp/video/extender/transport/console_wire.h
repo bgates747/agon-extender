@@ -11,6 +11,7 @@
 #define CONSOLE_COMMIT 2
 #define CONSOLE_LEAVE 3
 #define CONSOLE_ABORT 4
+#define CONSOLE_PREPARE_KEEP 5
 static unsigned short console_crc(const unsigned char *p) {
     /* Use native-width arithmetic: avoids adding a short-XOR runtime helper
      * to the restricted AgonDev link closure. Low 16 bits define the CRC. */
