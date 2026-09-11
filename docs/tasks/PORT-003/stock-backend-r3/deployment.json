@@ -1,0 +1,25 @@
+{
+  "run_id": "PORT-003-2026-09-11-03-39-04Z",
+  "build_id": "uart-excom-console-r10-b2026-09-11-03-37-54Z",
+  "factory_sha256": "cb29cf8b825d46c1b82fd247cc3f3488fb1efd10890eaaa5296a6cd5a60c2ad0",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "qualitative_nurples_playtest": "Author reports marked improvement; still jerky, with noticeable slowdown as more sprites appear",
+  "source_checkpoint": "f0dc2710396e2d4b8857e4c123fc99e03d8c8b77",
+  "usb_keyboard_enumerated": true,
+  "ethernet_started": true,
+  "http_root_status": 200,
+  "diagnostic_http_status": 200,
+  "startup_fault_observed": false,
+  "serial": "closed after bounded startup observation",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "sd_edits": false,
+  "nurples_sha256": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088",
+  "scope": "Verified deployment/startup and Author qualitative gameplay observation; measured performance and physical frame cadence remain unqualified",
+  "local_raw_evidence_sha256": {
+    "write.log": "f37ba6db09571a26067c3040e9dd4a12add2f5c50dfd1c13769cdee5fb941252",
+    "verify.log": "b0f14661ae0954a90780f5579f17b851b298a4a13d6a5d1ad14f28fcff5d47e2",
+    "boot.log": "75259b822175eed76599ed2217b3c095e539de4c9baa0e7b5276090f3ee48b41",
+    "deployment.json": "abc1959b83472078b7b6b962db8346100775f0eead8c9801eb313314f5723d9b"
+  }
+}

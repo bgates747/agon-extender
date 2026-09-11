@@ -18,13 +18,20 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 The Author's current first priority is a faithful stock video backend.
 AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
 The original-controller R1/R2 implementation is accepted. R3 starts with
-a P4-only deployment and qualitative repaired-Nurples playtest; the formal
-graphics/Nurples benchmark remains on hold.
+the completed P4-only deployment and qualitative repaired-Nurples review.
+The Author now selects QUAL-003's curated finite graphics timing tranche;
+deterministic Nurples and separate typing measurements are deferred.
+
+- [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
+  - Started: 2026-09-09
+  - Status: EDP visual PASS retained. Curated finite graphics timing tranche reactivated after restored-backend playtest. Prepare temporary mainboard/P4 hooks, bounded EMOS reception and automated SD results. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
+  - Details: [QUAL-003](docs/tasks/QUAL-003.md)
+
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Priority one. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 deployment authorized, starting with a qualitative repaired-Nurples playtest. No upstream fixes; full hardware qualification remains open.
+  - Status: Priority one. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
@@ -39,10 +46,6 @@ graphics/Nurples benchmark remains on hold.
   - Status: W9/W10 measurements frozen for follow-up: point output improves but ordinary-query stalls remain and Nurples has large ExCom hangs. Further attribution moves to AUDIT-006; stock-reuse audit closure remains open.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
-- [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
-  - Started: 2026-09-09
-  - Status: EDP visual PASS retained. Draft graphics/Nurples benchmark is on hold behind AUDIT-006's full backend comparison; callback work and the input-pattern question are parked. Wolf3D/audio remains deferred.
-  - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT

@@ -5,11 +5,16 @@
 Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.
 Mainboard BSP-28–30 artifacts are reference-display observations. A separate
 Wolf3D failure with EDP is deferred to PORT-004 at the Author's request.
-Startup follow-up and callback/benchmark design remain open. The
-[draft benchmark contract](QUAL-003/benchmark-contract.md), including the
-Author's unattended one-minute Nurples request, is **on hold behind AUDIT-006's
-full stock/P4 video-backend fidelity audit**. Its input-pattern question and
-callback implementation are parked; it is not the current work contract.
+Startup follow-up and production callback design remain open. The
+[benchmark contract](QUAL-003/benchmark-contract.md) is **reactivated for the
+Author's finite graphics timing tranche**, following the accepted backend
+audit/restoration and qualitative r10 playtest. Its
+[curated inventory](QUAL-003/curated-timing-cases.json) targets sprites, clipping
+and finite scrolling; the whole tour and deterministic Nurples are deferred
+until these results are reviewed. Temporary mainboard/P4 hooks, bounded EMOS
+receive integration and the automated durable-result runner remain to be
+implemented and validated. This is the current measurement work; no separate
+typing-timing increment is underway.
 Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
@@ -431,3 +436,24 @@ adaptation boundaries.
 
 [pingo-notify]: ../../../agon-vdp-pingo-v216-promotion/docs/pingo-render-completion.md
 [emos-keyboard]: ../../../agon-emos/src/emos_keyboard.c
+
+
+## Finite timing tranche reactivated — 2026-09-11
+
+The Author explicitly redirects the next tranche from typing latency to the
+already-proposed graphics torture tests, with temporary timing hooks in EMOS,
+mainboard VDP and P4 EDP and automated durable results. Curate the existing
+suite rather than start another audit. The current benchmark-contract section
+and machine-readable case inventory govern the first run; preserve complete
+page prerequisites and deliberately deferred sprite semantics. The restored
+r10 backend replaces the historical flat-framebuffer baseline. Mainboard's
+near-infallible 60 Hz operation remains the reference.
+
+The Author reports smooth Legacy Nurples without reloading the binary and
+improved ExCom typing with some residual latency, in addition to the marked
+gameplay improvement and sprite-heavy slowdown. None of those observations
+is a numerical benchmark. Deterministic Nurples stays deferred until this
+finite suite indicates whether it is needed; D004 does not block this tranche.
+D003's production callback model remains open; the bounded experimental
+completion-event details belong in B1 before implementation. The existing
+local validation/emulator review and rollback gates still apply.

@@ -1,7 +1,7 @@
 # Original stock backend — R3 first hardware review
 
-Status: candidate preparation for the Author-authorized qualitative Nurples
-playtest. R2 is accepted in `57a0d86`. This is a P4-only deployment; EMOS,
+Status: **candidate deployed; qualitative improvement reported, residual
+performance issues open**. R2 is accepted in `57a0d86`. This is a P4-only deployment; EMOS,
 the repaired game and the Agon/mainboard VDP firmware remain unchanged.
 
 ## Deployment contract
@@ -47,7 +47,37 @@ all five native depth scroll implementations, clock/drawing/output tasks and
 none of the old generic backend symbols are linked. Factory component offsets
 and required QIO/80 MHz SDK configuration match. The existing source-selection
 test and an exact nested-depth allowlist/rejected-subtree check pass; original
-body/scanline verification still passes. Clean candidate build, physical
-startup and gameplay results are pending. Local and
+body/scanline verification still passes. The clean candidate build from `f0dc271` and physical startup now pass;
+The Author reports marked gameplay improvement, with residual jerkiness and
+noticeable slowdown as more sprites appear. Full qualification remains open. Local and
 remote deployment details belong in ignored bench records; tracked evidence
 will retain only the build identity, source checkpoint and integrity/results.
+
+
+Candidate `uart-excom-console-r10-b2026-09-11-03-37-54Z` was written and
+independently verified in `PORT-003-2026-09-11-03-39-04Z`. Native USB enumerated
+the attached keyboard, Ethernet and HTTP started, and no startup fault was
+observed in the bounded log. The serial port is closed. The unchanged EMOS
+v0.1.12 and repaired game are recorded in [deployment.json](deployment.json);
+[image-checks.json](image-checks.json) binds exact candidate/layout/selection.
+The timing HTTP endpoint's availability is only a service-startup check; it
+does not validate restored-backend frame cadence or gameplay progress.
+
+No SD writes, automatic fixture, EMOS/mainboard flash or gameplay run occurred
+during preparation. The Author now owns the manual playtest. Keep physical
+60 Hz cadence, original-depth graphics coverage and sustained load checks open.
+
+
+### Author qualitative Nurples observation
+
+On the deployed r10 candidate, the Author reports: “marked improvement,” but
+the game remains jerky and bogs down noticeably when more sprites enter the
+mix. This is an operator observation, not a timed comparison. It supports
+retaining the restoration as progress; it does not identify which changed
+backend component caused the improvement or which component now limits speed.
+
+Sprite count correlates with the observed slowdown. Native sprite work,
+drawing/output exclusion, browser presentation and eZ80/UART progress have
+not been separated by this playtest. No additional code, instrumentation,
+flash, serial capture or benchmark was performed in response. Complete
+elimination of the prior long hangs and Escape/return remain unconfirmed.

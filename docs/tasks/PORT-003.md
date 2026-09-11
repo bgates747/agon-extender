@@ -43,7 +43,7 @@ as nonbootable objects. Original bodies remain beneath narrow entry/lifetime
 bindings; RGB222 output uses original packed scanline code directly.
 PORT-003-R2-D001 preserves the independent clock and the Author's reservation
 about stock's reliable 60 Hz cadence. R3 owns deployment selection, complete
-candidate build and physical qualification. The Author requests repaired Nurples as the first qualitative hardware check; full qualification remains separate.
+candidate build and physical qualification. The Author requests repaired Nurples as the first qualitative hardware check; full qualification remains separate. Candidate `uart-excom-console-r10-b2026-09-11-03-37-54Z` from `f0dc271` is now deployed with independent flash verification, USB keyboard enumeration and HTTP startup; the Author reports marked gameplay improvement, residual jerkiness and noticeable slowdown as more sprites appear. Measured attribution and full qualification remain open.
 
 ## Active correction — stock queue draining, 2026-09-10
 

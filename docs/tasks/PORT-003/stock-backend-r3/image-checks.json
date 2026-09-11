@@ -1,0 +1,49 @@
+{
+  "build": {
+    "artifact_id": "uart-excom-console",
+    "source_identity": "uart-excom-console-r10",
+    "build_id": "uart-excom-console-r10-b2026-09-11-03-37-54Z",
+    "status": "candidate",
+    "created_at": "2026-09-11T03:37:54.250937+00:00"
+  },
+  "source_checkpoint": "f0dc2710396e2d4b8857e4c123fc99e03d8c8b77",
+  "clean": true,
+  "factory_sha256": "cb29cf8b825d46c1b82fd247cc3f3488fb1efd10890eaaa5296a6cd5a60c2ad0",
+  "project_selection_exact": true,
+  "all_five_original_scroll_classes_linked": true,
+  "independent_clock_drawing_output_linked": true,
+  "old_backend_symbols_absent": true,
+  "factory_components_match": [
+    {
+      "name": "bootloader.bin",
+      "offset": "0x2000",
+      "sha256": "ef3ab54f5149fb03225b68aa1990cd0d1f8396b102a0f924e9420f418a3e2ea4",
+      "size_bytes": 24448
+    },
+    {
+      "name": "partitions.bin",
+      "offset": "0x8000",
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "size_bytes": 3072
+    },
+    {
+      "name": "firmware.bin",
+      "offset": "0x20000",
+      "sha256": "8c9dee4cfe05e4821951198f86c105888de7f3cf003407c1fe30905c068a662d",
+      "size_bytes": 1433376
+    }
+  ],
+  "required_sdkconfig": [
+    "CONFIG_ESPTOOLPY_FLASHMODE_QIO 1",
+    "CONFIG_ESPTOOLPY_FLASHFREQ_80M 1",
+    "CONFIG_ESPTOOLPY_FLASHSIZE_16MB 1",
+    "CONFIG_ESP_CONSOLE_USB_SERIAL_JTAG 1",
+    "CONFIG_FREERTOS_HZ 1000",
+    "CONFIG_ESP_REV_MIN_FULL 100",
+    "CONFIG_ESP_REV_MAX_FULL 199"
+  ],
+  "sdkconfig_sha256": "1107641f408bafeea50c4c2aa460efab5f861d3beb2a2f86f1fb8bf8b10c5692",
+  "selection_sha256": "b7dfe4cf4b678d0126bd54a0410a27c5952c4e99f7ad0af162fb2d89395dd425",
+  "build_manifest_sha256": "27929baaeb6c5b1f3f326197a5a61671eed634d13bda9eb1137592758b90bb74",
+  "scope": "complete image selection and integrity; physical qualification pending"
+}

@@ -1,11 +1,56 @@
 # Paired graphics and Nurples benchmark contract
 
-Status: **draft on hold behind AUDIT-006's priority-one video-backend fidelity
-audit; implementation is paused.** Revisit the proposed instrumentation and
-input-pattern question after that comparison. Owning task:
-[QUAL-003](../QUAL-003.md). This adds the requested unattended Nurples run to
-the existing Shapes/Bitmaps timing proposal. It does not authorize a performance
-repair or replace the [AUDIT-006 findings](../AUDIT-006/findings.md).
+Status: **finite graphics benchmark preparation reactivated by the Author,
+2026-09-11**. Owning task: [QUAL-003](../QUAL-003.md). The stock-backend audit
+and R1/R2 restoration are complete; r10 is deployed and qualitatively improved.
+This is the next requested measurement tranche. Typing-latency instrumentation
+is not the current increment. Automated Nurples gameplay is deferred until
+the finite graphics results are reviewed, provisionally the following session.
+No performance repair or upstream bug fix is included.
+
+## Current tranche — supersedes the earlier full-suite/game execution order
+
+1. Use the [curated case inventory](curated-timing-cases.json): Shapes pages
+   20/23 and Bitmaps pages 3/7/21/22/25/26/27/29/30. Preserve every stage and
+   prerequisite within each selected page. In particular, BSP-30 varies
+   1/2/4/8/16 sprites, software/hardware ownership, RGBA2222/RGBA8888, scanline
+   alignment and frame size. These target the remaining sprite-heavy slowdown.
+2. Include the empty-marker control and finite scrolling, one-row clipped
+   bitmap and combined cases already specified below. These are small graphics
+   batches; do not modify or automate the Nurples game in this tranche.
+3. Prepare equivalent bounded timing hooks in a project-owned copy of stock
+   mainboard VDP and restored P4 EDP, with EMOS-owned event reception. The
+   existing Pingo notification supplies the correlation/mailbox precedent,
+   not a ready-made ordinary-2D completion hook. Exact diagnostic carrier, hook
+   locations, image-space check and rollback inputs remain B1 implementation
+   preparation; they are not yet built or hardware-qualified.
+4. Time submission, renderer-local work/completion and result delivery as
+   distinct intervals. Measure recurring sprite/output work separately from
+   a finite drawing-queue drain; a quick drain does not prove cheap hardware
+   sprites. Exclude setup/SD I/O/probes/deliberate settling from drawing
+   intervals and report their failures. Retain controls for instrumentation
+   overhead and coarse eZ80 clock resolution.
+5. Run mainboard first and EDP second, repeat three paired passes, and persist
+   per-case results on Agon SD. Local validation and the existing required
+   Author emulator review precede physical firmware changes. Preserve and
+   restore the actual ordinary mainboard/P4/EMOS images. No screenshots or
+   per-stage keypresses should be required to collect physical results.
+6. Use those findings to decide whether the deferred deterministic Nurples
+   run is needed next. The retained game requirements and unresolved D004
+   input-pattern choice below apply only to that later tranche. The broader
+   production generalized-callback ABI under D003 also remains separate.
+
+Current baseline: P4 `uart-excom-console-r10-b2026-09-11-03-37-54Z` from
+`f0dc271`, EMOS `agon-emos-v0.1.12-b2026-09-10-03-50-35Z`, and the selected
+stock VDP release below. The Author reports marked ExCom improvement but
+residual jerkiness/sprite-heavy slowdown, smooth Legacy gameplay with the
+**same already-loaded binary**, and improved typing with slight remaining
+latency. These are qualitative observations, not measured attribution.
+
+The remainder retains the broader benchmark design and deferred game scope.
+Where its whole-tour/minute-game instructions conflict with this tranche,
+this section governs. No firmware, emulator, SD or running-board changes were
+made while reactivating and curating this contract.
 
 ## Question this experiment answers
 
@@ -54,9 +99,9 @@ checkout; the selected commit above governs if that checkout later changes.
 |---|---|---|
 | [tiles.inc][tiles], `tiles_scroll_background` | Each playing iteration scrolls the 256×336 playing field down one pixel, then sets an inclusive one-pixel-high graphics viewport. | Measure scrolling separately from drawing the newly exposed line. |
 | [tiles.inc][tiles], `tiles_plot` / `bg_plot` | Each iteration selects/draws one background bitmap and all 16 tile columns; tile Y advances from −15 through 0 before the next source row. Full bitmap commands rely on clipping to produce one scanline. | Check clipping, negative coordinates, origin and transparency, then time identical command batches. Do not replace this algorithm before measuring it. |
-| [P4 controller][p4], `VScroll` / `rawCopyRow` | P4 uses generic copy-and-fill scrolling with logical pixel reads/writes. For this region, a one-pixel scroll copies 85,760 pixels and fills 256. | Strong candidate for an expensive primitive, independent of how few UART bytes request it. |
-| [Retained VGA64 controller][vga64], `VScroll` | Mainboard uses the other generic overload: swap row pointers and preserve regions outside the scrolling rectangle with row swaps. | The P4 implementation is materially different. This alone does not quantify which is faster for this partial-width region. |
-| [Viewport context][viewport] and [bitmap clipping][bitmap] | The retained viewport validator permits equal Y endpoints. Bitmap clipping reduces the source/destination height before the P4 raw bitmap call; the P4 wrapper passes that clipped height onward. | No obvious single-scanline rejection found. A correctness test must establish actual behavior; a source scan is insufficient to dismiss the Author's hypothesis. |
+| Historical [P4 controller][p4], `VScroll` / `rawCopyRow` | Before restoration, P4 used generic per-pixel copy/fill. This controller is excluded from current r10. | Historical audit evidence only; do not attribute current slowdown to this removed path. |
+| [Retained VGA64 controller][vga64], `VScroll` | Mainboard and restored r10 now both use the original row-pointer/row-swap implementation. P4 adds the reviewed execution/output binding. | Measure current behavior and binding costs; the earlier algorithm difference has been removed. |
+| [Viewport context][viewport] and [bitmap clipping][bitmap] | The retained viewport validator permits equal Y endpoints. Bitmap clipping reduces the source/destination height before the native bitmap call. r10 now selects the original depth-class implementation. | No obvious single-scanline rejection found. A correctness test must establish actual behavior; a source scan is insufficient to dismiss the Author's hypothesis. |
 | [Game loop][game], [playing state][playing] | `timestamp_tick`, game work, then a bounded wait for a mainboard sysvar-clock change. Scrolling and most movement advance per loop; game work includes tiles, player/weapons, enemies, explosions, active tiles and UI. | Record completed loops and clock time separately. A slow renderer can reduce game updates; a slow publisher can hide otherwise progressing updates. |
 | [Laser][laser] and [sprite movement][sprites] | Laser spawning uses elapsed-clock deadlines, whereas bolt displacement and recharge use game iterations. | Closely spaced bolts are consistent with fewer movement updates between shots. That symptom alone does not locate UART, drawing or publication delay. |
 | [Runtime initialization][runtime] and [telemetry ABI][telemetry] | Entry resets the RNG and process state; an existing versioned RAM record counts completed loops and faults. | Reuse those mechanisms rather than inventing another game state machine or callback-based frame counter. RAM telemetry is not remotely readable on physical Agon without an explicit export. |

@@ -1,0 +1,175 @@
+{
+  "files": [
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.h",
+      "source_sha256": "d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+      "source_sha256": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.h",
+      "source_sha256": "2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "source_sha256": "0a82d8a4d35b783dbe6d397433808c7ce981f7c274eb27edcef9e9907102fd85",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.h",
+      "source_sha256": "badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "source_sha256": "575626e044d79b31682ba4197fd9dcd029dc31c6089785f43c40e61369724a96",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.h",
+      "source_sha256": "7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "source_sha256": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.h",
+      "source_sha256": "ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "source_sha256": "c106c53979d2dc1239636e2ccf98916944cac38d325b24b1e5fabdbb7bccd4ba",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.h",
+      "source_sha256": "d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+      "source_sha256": "a51d6e758c266df15102e5bc5ad64558f16190dd4919a61c2c8698bfb798ed13",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.h",
+      "source_sha256": "8ae3f9e85f4ab7d32f9ec8e9b33a65772f52bf4b5c2fee386e1c4301aeceab48",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+      "source_sha256": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/canvas.cpp",
+      "source_sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/canvas.h",
+      "source_sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/displaycontroller.cpp",
+      "source_sha256": "944cea3677cc6448a4e1d39ceffc85fe1c037b973f50e4cd50432d3d90cf36f1",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/displaycontroller.h",
+      "source_sha256": "f300b86a9ffa03eca65f06b6c750178caa02c9ed90b97e9d686f306046212f37",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/fabutils.cpp",
+      "source_sha256": "c279c0ba6712f66402fb3ea355aa70569c0b152093ea24eb63659e8d703a279d",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/fabutils.h",
+      "source_sha256": "7c52c0383364ad2917c7e0eaa014e011f230049b789ebd23656899e4bbef8651",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/codepages.cpp",
+      "source_sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/fabfonts.cpp",
+      "source_sha256": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/vendor/vdp-gl/src/fabfonts.h",
+      "source_sha256": "859b5112319f10305681036d17561c57522ce819b10d35dd3649c692afca61b3",
+      "check": "original tokens after only named P4 binding directives/guards"
+    },
+    {
+      "path": "vdp/video/sprites.h",
+      "source_sha256": "02dbe5921f2651b113530dbeb2f8d8b85d47f3f25b33488adf3cbc2ae9e44904",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/context.h",
+      "source_sha256": "d117f765b149a00260c95c9de031cf1039a4f0818faa6e93df0a0e9a3abb2700",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/context/cursor.h",
+      "source_sha256": "c747a1c8e4cf3533b820f9e613f861631090afd9a4fe8f0cc4a8c13be33c69a7",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/buffer_stream.h",
+      "source_sha256": "c524c5cfc3a150db63762f6385f7f01560acf9c2be879be6ee99742b23e83e4c",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/buffers.h",
+      "source_sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/vdu_buffered.h",
+      "source_sha256": "5171d4d2f49ba1abdef397831f33d3894e5d7473c3e1ed8d9739820a49091190",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/extender/port/stock_render_utils.cpp",
+      "source_sha256": "f46c946ee449862eec12aadc5c38d9581292fabcf2039c31b188660c32d69851",
+      "check": "R1 checkpoint plus native guards only"
+    },
+    {
+      "path": "vdp/video/agon_ps2.h",
+      "source_sha256": "f3ea3503cf08ef73b2e20200121988649ae59111476604b77d4b683ba63d78bc",
+      "check": "retained interface body; conditional owner binding and named native guards only"
+    },
+    {
+      "path": "vdp/video/vdu.h",
+      "source_sha256": "701b65924fb1559b5c52bf9c636f74016be0bbf91fb405dd2e03f96658148cb6",
+      "check": "retained interface body; conditional owner binding and named native guards only"
+    },
+    {
+      "path": "vdp/video/video.ino",
+      "source_sha256": "28d94663070c34837a1c6df6411f428bea5be0a74eb63c0728b07bf49f0fa0c8",
+      "check": "retained interface body; conditional owner binding and named native guards only"
+    },
+    {
+      "path": "vdp/video/agon_screen.h",
+      "source_sha256": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+      "check": "retained interface body; conditional owner binding and named native guards only"
+    }
+  ],
+  "verbatim_scanline_bodies": 5
+}

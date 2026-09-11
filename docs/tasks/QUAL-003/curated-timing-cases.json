@@ -1,0 +1,382 @@
+{
+  "scope": "Author-selected first finite graphics timing tranche; curation only, not an executable fixture or result",
+  "source": "QUAL-003/suite vendored generators; existing upstream-snapshot.json remains provenance authority",
+  "generator_sha256": {
+    "suite/scripts/bitmap_suite.py": "3f415c39c59294858d2b43773293f2950c2312707b4d74e032511f30fb8f3b18",
+    "suite/scripts/shapes_pages.py": "8da4dd53dded0630d2f8ffb8009227edf42adf3d6fc6dd9beb4f0426930ec889"
+  },
+  "shapes_pages": [
+    {
+      "page": 20,
+      "purpose": "Graphics viewports including one-pixel-wide/high cases"
+    },
+    {
+      "page": 23,
+      "purpose": "Bitmap plotting and direct drawing with viewport clipping"
+    }
+  ],
+  "bitmap_pages": [
+    {
+      "page": 3,
+      "title": "ALPHA AND CUTOUTS",
+      "purpose": "Alpha/cutout bitmap control",
+      "stages": [
+        {
+          "id": "bsp03_01",
+          "caption": "Opaque original, geometric cutout, then alpha-value bands.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 7,
+      "title": "DIRECT DRAW VERSUS PLOT",
+      "purpose": "Direct drawing versus clipped plotting",
+      "stages": [
+        {
+          "id": "bsp07_01",
+          "caption": "DOC: direct draw bypasses clip. Stock VDP may retain it.",
+          "quiet": false
+        },
+        {
+          "id": "bsp07_02",
+          "caption": "Direct drawing bypasses origin, logical units, XOR and scale.",
+          "quiet": false
+        },
+        {
+          "id": "bsp07_03",
+          "caption": "Four screen edges; top/bottom samples occupy the right corners.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 21,
+      "title": "SPRITE POSITION HELPERS",
+      "purpose": "Sprite positioning",
+      "stages": [
+        {
+          "id": "bsp21_01",
+          "caption": "Absolute / relative / fixed16.8 controls start in one row.",
+          "quiet": false
+        },
+        {
+          "id": "bsp21_02",
+          "caption": "Movement step 1: delta (+24,+32); all paths match.",
+          "quiet": false
+        },
+        {
+          "id": "bsp21_03",
+          "caption": "Movement step 2: delta (-40,+16); all paths match.",
+          "quiet": false
+        },
+        {
+          "id": "bsp21_04",
+          "caption": "Movement step 3: delta (+0,+0); all paths match.",
+          "quiet": false
+        },
+        {
+          "id": "bsp21_05",
+          "caption": "Movement step 4: delta (+16,-48); all paths match.",
+          "quiet": false
+        },
+        {
+          "id": "bsp21_06",
+          "caption": "Sprite positions ignore logical graphics coordinates and origin.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 22,
+      "title": "DEFERRED SOFTWARE UPDATE",
+      "purpose": "Deferred software updates",
+      "stages": [
+        {
+          "id": "bsp22_01",
+          "caption": "Key 1: stage move / key 2: update / key 3: move+draw / key 4: hide.",
+          "quiet": false
+        },
+        {
+          "id": "bsp22_02",
+          "caption": "Move submitted, no drawing or explicit update.",
+          "quiet": true
+        },
+        {
+          "id": "bsp22_03",
+          "caption": "Explicit command 15 reveals the pending move.",
+          "quiet": true
+        },
+        {
+          "id": "bsp22_04",
+          "caption": "Move to old position; a line draw triggers refresh.",
+          "quiet": true
+        },
+        {
+          "id": "bsp22_05",
+          "caption": "Hide and update restore the complete underlay.",
+          "quiet": true
+        }
+      ]
+    },
+    {
+      "page": 25,
+      "title": "SOFTWARE OVERLAP AND ACTIVATION",
+      "purpose": "Overlap, hide/show and background redraw",
+      "stages": [
+        {
+          "id": "bsp25_01",
+          "caption": "Four overlapping software sprites; higher IDs appear above.",
+          "quiet": false
+        },
+        {
+          "id": "bsp25_02",
+          "caption": "Activate only IDs 0..1; the other two leave the active prefix.",
+          "quiet": false
+        },
+        {
+          "id": "bsp25_03",
+          "caption": "Activate four again; hide ID 1 within the active prefix.",
+          "quiet": false
+        },
+        {
+          "id": "bsp25_04",
+          "caption": "Show ID 1; move front sprite and draw a stripe under the group.",
+          "quiet": false
+        },
+        {
+          "id": "bsp25_05",
+          "caption": "Hide group: the newly drawn background stripe remains intact.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 26,
+      "title": "HARDWARE SPRITE BASICS",
+      "purpose": "Hardware sprite updates",
+      "stages": [
+        {
+          "id": "bsp26_01",
+          "caption": "Hardware RGBA2222 and RGBA8888: opaque then cutout frames.",
+          "quiet": false
+        },
+        {
+          "id": "bsp26_02",
+          "caption": "Move without command 15: hardware positions update immediately.",
+          "quiet": false
+        },
+        {
+          "id": "bsp26_03",
+          "caption": "Hide then show hardware IDs 0 and 1; no explicit refresh.",
+          "quiet": false
+        },
+        {
+          "id": "bsp26_04",
+          "caption": "Show them; deactivate/convert/re-activate ID 3 as software.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 27,
+      "title": "MIXED SPRITE LAYERS",
+      "purpose": "Mixed hardware/software layers",
+      "stages": [
+        {
+          "id": "bsp27_01",
+          "caption": "HW 0 and HW 2 overlap SW 1. Transparent holes reveal lower layers.",
+          "quiet": false
+        },
+        {
+          "id": "bsp27_02",
+          "caption": "Draw a cyan stripe now: both hardware sprites remain above it.",
+          "quiet": false
+        },
+        {
+          "id": "bsp27_03",
+          "caption": "Hide top hardware ID 2 to reveal the next layer.",
+          "quiet": false
+        },
+        {
+          "id": "bsp27_04",
+          "caption": "Deactivate/convert/re-activate: IDs 0 and 2 become software.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 29,
+      "title": "TRANSFORMED SPRITE FRAMES",
+      "purpose": "Transformed sprite frames",
+      "stages": [
+        {
+          "id": "bsp29_01",
+          "caption": "Fixed 72x72 canvas / fitted frames / independent RGBA8888 control.",
+          "quiet": false
+        },
+        {
+          "id": "bsp29_02",
+          "caption": "Next frame 1: fixed pivot / fitted dimensions / host control.",
+          "quiet": false
+        },
+        {
+          "id": "bsp29_03",
+          "caption": "Next frame 2: fixed pivot / fitted dimensions / host control.",
+          "quiet": false
+        },
+        {
+          "id": "bsp29_04",
+          "caption": "Next frame 3: fixed pivot / fitted dimensions / host control.",
+          "quiet": false
+        },
+        {
+          "id": "bsp29_05",
+          "caption": "Next frame 4: fixed pivot / fitted dimensions / host control.",
+          "quiet": false
+        }
+      ]
+    },
+    {
+      "page": 30,
+      "title": "BOUNDED SPRITE POPULATION",
+      "purpose": "Sprite population, format, alignment and size",
+      "stages": [
+        {
+          "id": "bsp30_01",
+          "caption": "SOFTWARE RGBA2222: shared frames; step population.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_02",
+          "caption": "2 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_03",
+          "caption": "4 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_04",
+          "caption": "8 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_05",
+          "caption": "16 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_06",
+          "caption": "Sixteen staggered sprites; move all then refresh once.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_07",
+          "caption": "SOFTWARE RGBA8888: shared frames; step population.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_08",
+          "caption": "2 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_09",
+          "caption": "4 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_10",
+          "caption": "8 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_11",
+          "caption": "16 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_12",
+          "caption": "Sixteen staggered sprites; move all then refresh once.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_13",
+          "caption": "HARDWARE RGBA2222: shared frames; step population.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_14",
+          "caption": "2 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_15",
+          "caption": "4 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_16",
+          "caption": "8 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_17",
+          "caption": "16 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_18",
+          "caption": "Sixteen staggered sprites; move all then refresh once.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_19",
+          "caption": "HARDWARE RGBA8888: shared frames; step population.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_20",
+          "caption": "2 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_21",
+          "caption": "4 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_22",
+          "caption": "8 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_23",
+          "caption": "16 active; two aligned scanline groups.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_24",
+          "caption": "Sixteen staggered sprites; move all then refresh once.",
+          "quiet": false
+        },
+        {
+          "id": "bsp30_25",
+          "caption": "Distinct frames and four modest 68x68 hardware sprites.",
+          "quiet": false
+        }
+      ]
+    }
+  ],
+  "bitmap_stage_count": 58,
+  "additional_cases": [
+    "Empty completion marker/control",
+    "Fixed-count partial-viewport scroll",
+    "Oversized bitmap into one-row viewport",
+    "Combined scroll and clipped-strip batch"
+  ],
+  "execution": "All stages of each selected page in order; rebuild page state on each renderer/repetition. No skipping prerequisite stages.",
+  "deferred": "Whole-tour expansion, deterministic Nurples gameplay and scripted keyboard traffic"
+}

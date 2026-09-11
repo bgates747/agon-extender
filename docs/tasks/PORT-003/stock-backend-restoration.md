@@ -134,7 +134,9 @@ what this proof establishes.
    deployment rules. Prepare a reviewed candidate and rollback before any
    flash. Use the existing deterministic graphics/UART evidence machinery and
    Nurples playtest to compare results, with source/build/run identities kept
-   distinct. Do not automatically launch the held full QUAL-003 callback suite.
+   distinct. The Author has now explicitly reactivated QUAL-003's curated finite timing
+   tranche. Its current benchmark contract governs that work; the full tour
+   and deterministic Nurples remain deferred.
 
 ## Verification that can detect the actual departures
 
