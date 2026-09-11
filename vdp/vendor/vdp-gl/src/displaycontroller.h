@@ -264,6 +264,9 @@ enum PrimitiveCmd : uint8_t {
   // Set line options
   // params: lineOptions
   SetLineOptions,
+#ifdef AGON_GRAPHICS_TIMING
+  GraphicsFence = 126,
+#endif
 };
 
 

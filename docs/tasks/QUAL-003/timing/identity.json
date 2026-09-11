@@ -1,6 +1,6 @@
 {
-  "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r11",
+  "artifact_id": "graphics-timing-probe",
+  "source_identity": "graphics-timing-probe-r01",
   "status": "candidate",
   "note": "Author accepted the complete graphics timing visual review and authorized physical deployment on 2026-09-11. Hardware measurements pending."
 }

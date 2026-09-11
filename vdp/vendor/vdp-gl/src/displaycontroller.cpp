@@ -1,3 +1,8 @@
+#ifdef AGON_GRAPHICS_TIMING
+#include "extender/diagnostics/graphics_timing.hpp"
+#else
+#define AGON_GRAPHICS_SCOPE(metric)
+#endif
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -742,6 +747,10 @@ void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
 {
   AGON_STOCK_NATIVE_GUARD;
+#ifdef AGON_GRAPHICS_TIMING
+  agon_graphics_timing::FinishSprites qual_fence_after_sprite_scope;
+#endif
+  AGON_GRAPHICS_SCOPE(SoftwareSprites);
   if (m_spritesHidden) {
     m_spritesHidden = false;
     auto options = paintState().paintOptions;
@@ -811,7 +820,13 @@ void BitmappedDisplayController::setMouseCursorPos(int X, int Y)
 void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim, Rect & updateRect, bool insideISR)
 {
   AGON_STOCK_NATIVE_GUARD;
+  AGON_GRAPHICS_SCOPE(Primitive);
   switch (prim.cmd) {
+#ifdef AGON_GRAPHICS_TIMING
+    case PrimitiveCmd::GraphicsFence:
+      agon_graphics_timing::reached(uint16_t(prim.ivalue));
+      break;
+#endif
     case PrimitiveCmd::Flush:
       break;
     case PrimitiveCmd::Refresh:

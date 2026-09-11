@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r69
-updated_at: 2026-09-11T03:37:40Z
+registry_revision: r70
+updated_at: 2026-09-11T05:39:58Z
 
 artifacts:
+  - artifact_id: graphics-timing-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: graphics-timing-probe-r01
+    status: candidate
+    variants: []
+    description: Curated paired graphics timing with temporary classic and P4 hooks and durable SD results.
+    notes:
+      - QUAL-003 visual review accepted and deployment authorized by the Author on 2026-09-11; registry r70 candidate promotion. No hardware timing evidence yet.
   - artifact_id: stock-backend-binding
     kind: test_fixture
     identity_scheme: revision
@@ -86,7 +95,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.12
+    latest_identity: agon-emos-v0.1.13
     status: candidate
     variants:
       - port008-forward
@@ -450,7 +459,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r10
+    latest_identity: uart-excom-console-r11
     status: candidate
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.

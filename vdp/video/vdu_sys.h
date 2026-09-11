@@ -1,3 +1,6 @@
+#ifdef AGON_GRAPHICS_TIMING
+#include "extender/diagnostics/graphics_timing.hpp"
+#endif
 #ifndef VDU_SYS_H
 #define VDU_SYS_H
 
@@ -171,6 +174,9 @@ void VDUStreamProcessor::vdu_sys_video() {
 	clearEcho();
 
 	switch (mode) {
+#ifdef AGON_GRAPHICS_TIMING
+#include "extender/diagnostics/graphics_command.inc"
+#endif
 		case VDP_CURSOR_VSTART: {		// VDU 23, 0, &0A, offset
 			auto offset = readByte_t();	// Set the vertical start of the cursor
 			if (offset >= 0) {

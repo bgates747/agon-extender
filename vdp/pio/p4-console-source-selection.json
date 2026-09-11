@@ -105,6 +105,7 @@
   "dependency_lock": "pio/p4-console-dependencies.lock",
   "component_compile_definitions": [
     "AGON_EXTENDER_FRAME_TIMING=1",
-    "AGON_EXTENDER_STOCK_RUNTIME=1"
+    "AGON_EXTENDER_STOCK_RUNTIME=1",
+    "AGON_GRAPHICS_TIMING=1"
   ]
 }

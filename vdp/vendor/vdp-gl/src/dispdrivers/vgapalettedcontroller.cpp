@@ -1,3 +1,8 @@
+#ifdef AGON_GRAPHICS_TIMING
+#include "extender/diagnostics/graphics_timing.hpp"
+#else
+#define AGON_GRAPHICS_SCOPE(metric)
+#endif
 // PORT-003 R1: select the original native-row implementation without the
 // classic ESP32 physical engine. Drawing/palette methods remain upstream.
 // AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous. STOCK_RUNTIME shares only
@@ -497,6 +502,7 @@ void IRAM_ATTR VGAPalettedController::rawDrawSpriteScanline(uint8_t * pixelData,
 }
 
 void IRAM_ATTR VGAPalettedController::drawSpriteScanLine(uint8_t * pixelData, int scanRow, int scanWidth, int viewportHeight) {
+  AGON_GRAPHICS_SCOPE(ScanlineDecoration);
   // text cursor
   auto text = textCursor();
   if (text && text->visible) {

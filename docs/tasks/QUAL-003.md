@@ -457,3 +457,32 @@ finite suite indicates whether it is needed; D004 does not block this tranche.
 D003's production callback model remains open; the bounded experimental
 completion-event details belong in B1 before implementation. The existing
 local validation/emulator review and rollback gates still apply.
+
+## Finite timing implementation — 2026-09-11
+
+Contract frozen in fc14f02. B1/B2 implementation now uses the bounded
+[timing protocol](QUAL-003/timing/protocol.md): 64 cases, a normal-worker FIFO
+fence, separate primitive/software-sprite/scanline counters, raw FAT result
+files, and EMOS v0.1.13 source-owned reception. Mainboard and P4 diagnostic
+images and SD application compile; paired emulator validation is in progress.
+No physical firmware, SD card, reset or running-board state changed. Actual
+mainboard backup and Author emulator approval remain deployment gates.
+
+Offline validation now includes a complete 256-interval paired native result,
+five malformed/stale reply cases, 17/17 sprite presentation checks, source
+fidelity and all three firmware builds. See the bounded
+[validation record](QUAL-003/timing/validation.md). The project UART emulator
+helper needed a host-socket backpressure correction; it did not require a
+production UART change. A separate native COMBINED timeout is retained as an
+unresolved preparation observation, despite subsequent ordinary/traced passes.
+Review that partial result if recurrence appears during the next gate; do not
+discard or retry away a physical failure. Author visual validation is next.
+
+## Visual review accepted — 2026-09-11
+
+The Author supplied the completed 256-interval screen and MOS prompt and
+authorized deployment. Promote the same reviewed EMOS v0.1.13, console r11
+and graphics fixture r01 inputs to candidates under registry r70, then build
+from clean commits. Preserve the mainboard's actual flash before replacing it.
+Physical timing and restoration remain pending; the known native timeout and
+two inherited pixel-probe disagreements retain their recorded limits.
