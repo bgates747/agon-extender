@@ -27,7 +27,8 @@
 // Whole fabutils.cpp also owns classic GPIO/ADC/RTC/storage implementations.
 // R1 selects only the common-renderer/native-controller dependency closure.
 // Source spans and hashes: docs/tasks/PORT-003/stock-backend-r1/utility-spans.json.
-// This file replaces fabutils_port.cpp only in the nondeployable R1 proof.
+// R2 retains these bodies and adds only the same native-entry guard as
+// original LightMemoryPool::alloc/free; never guard its caller retry loop.
 #include "fabutils.h"
 #include "fabglconf.h"
 #include "esp_heap_caps.h"
@@ -271,6 +272,7 @@ LightMemoryPool::~LightMemoryPool()
 
 void * LightMemoryPool::alloc(int size)
 {
+  AGON_STOCK_NATIVE_GUARD;
   for (int pos = 0; pos < m_poolSize; ) {
     int16_t blockSize = getSize(pos);
     if (isFree(pos)) {

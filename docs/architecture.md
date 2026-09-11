@@ -115,10 +115,22 @@ No fixed primitive-count or elapsed-time cap throttles this drain. Suspension
 is checked between primitive executions; immediate flush and double-buffered
 drawing/swap contracts remain unchanged.
 
-The retained common renderer remains byte-identical to pinned upstream for
+For the original-controller P4 binding, browser row preparation may wait for
+one drawing primitive under PORT-003-R2-D001. Native drawing is excluded only
+during one row preparation, and all metadata/lifetime owners share the same
+exclusion protocol. This output compromise was accepted with reservation:
+stock's reliable 60 Hz cadence remains the reference. The frame-clock path
+takes no native-state lock and does not wait for drawing, output preparation,
+network delivery or a free snapshot slot. Qualification distinguishes actual
+clock jitter from delayed browser presentation. A full queue drain or full
+frame copy is not an allowed exclusion boundary.
+
+The retained common renderer preserves pinned upstream bodies for
 queue submission, completion waits, background draining, dynamic payloads, and
 swap notification. The P4 controller replaces only the unavailable physical
-frame executor through existing protected seams. In particular, strict
+frame executor through existing protected seams. Narrow native-state guards
+at execution/lifetime boundaries implement the accepted P4 CPU-reader binding;
+they do not change drawing algorithms or add upstream bug fixes. In particular, strict
 compatibility retains upstream queue-depth completion behavior even though a
 separate A/B research task may evaluate stronger semantics for an upstream
 contribution.

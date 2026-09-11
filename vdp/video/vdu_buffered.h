@@ -1,6 +1,10 @@
 #ifndef VDU_BUFFERED_H
 #define VDU_BUFFERED_H
 
+// P4 output binding: guard existing bitmap-buffer writes and user retirement
+// against native readers. Consume UART operands before entering write guards;
+// preserve stock command algorithms, ownership preconditions and quirks.
+
 #include <algorithm>
 #include <memory>
 #include <vector>
@@ -401,6 +405,7 @@ void VDUStreamProcessor::bufferRemoveUsers(uint16_t bufferId) {
 // sending a bufferId of 65535 (i.e. -1) clears all buffers
 //
 void VDUStreamProcessor::bufferClear(uint16_t bufferId) {
+	AGON_STOCK_NATIVE_GUARD;
 	debug_log("bufferClear: buffer %d\n\r", bufferId);
 	if (bufferId == 65535) {
 		buffers.clear();
@@ -979,7 +984,10 @@ void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
 			}
 		}
 		debug_log("bufferAdjust: result %d\n\r", sourceValue);
+		{ // AGON_STOCK_NATIVE_SCOPE
+		AGON_STOCK_NATIVE_GUARD;
 		targetSpan.front() = sourceValue;
+		} // AGON_STOCK_NATIVE_SCOPE
 		// increment offset in case carry is used
 		offset.blockOffset++;
 	} else {
@@ -993,7 +1001,10 @@ void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
 					debug_log("bufferAdjust: target buffer overflow\n\r");
 					return;
 				}
+				{ // AGON_STOCK_NATIVE_SCOPE
+				AGON_STOCK_NATIVE_GUARD;
 				func(targetSpan.data(), operandWord, carryValue, iterCount);
+				} // AGON_STOCK_NATIVE_SCOPE
 				offset.blockOffset += iterCount;
 				count -= iterCount;
 			}
@@ -1011,7 +1022,10 @@ void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
 					return;
 				}
 				bool sameBuffer = buffer[offset.blockIndex] == (*operandBuffer)[operandOffset.blockIndex];
+				{ // AGON_STOCK_NATIVE_SCOPE
+				AGON_STOCK_NATIVE_GUARD;
 				func(targetSpan.data(), operandSpan.data(), carryValue, iterCount, sameBuffer);
+				} // AGON_STOCK_NATIVE_SCOPE
 				offset.blockOffset += iterCount;
 				operandOffset.blockOffset += iterCount;
 				count -= iterCount;
@@ -1034,7 +1048,10 @@ void VDUStreamProcessor::bufferAdjust(uint16_t adjustBufferId) {
 						debug_log("bufferAdjust: operand timeout\n\r");
 						return;
 					}
+					{ // AGON_STOCK_NATIVE_SCOPE
+					AGON_STOCK_NATIVE_GUARD;
 					targetSpan[i] = func(targetSpan[i], operandValue, carryValue);
+					} // AGON_STOCK_NATIVE_SCOPE
 				}
 				offset.blockOffset += iterCount;
 				count -= iterCount;
@@ -1475,6 +1492,8 @@ void VDUStreamProcessor::bufferReverse(uint16_t bufferId, uint8_t options) {
 		}
 	}
 
+	AGON_STOCK_NATIVE_GUARD; // arguments consumed; no UART wait below
+
 	// verify that our blocks are a multiple of valueSize
 	for (const auto &block : buffer) {
 		auto size = block->size();
@@ -1551,6 +1570,7 @@ void VDUStreamProcessor::bufferCopyRef(uint16_t bufferId, tcb::span<const uint16
 // If target buffer is included in the source list it will be skipped.
 //
 void VDUStreamProcessor::bufferCopyAndConsolidate(uint16_t bufferId, tcb::span<const uint16_t> sourceBufferIds) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (bufferId == 65535) {
 		debug_log("bufferCopyAndConsolidate: ignoring buffer %d\n\r", bufferId);
 		return;
@@ -2398,6 +2418,8 @@ void VDUStreamProcessor::bufferReadVariable(uint16_t bufferId) {
 			return;
 		}
 	}
+
+	AGON_STOCK_NATIVE_GUARD; // arguments consumed; finite buffer store
 
 	// Does our target exist?
 	auto target = getBufferSpan(bufferId, offset, use16Bit ? 2 : 1);

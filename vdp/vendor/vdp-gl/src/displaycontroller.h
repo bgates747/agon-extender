@@ -52,6 +52,15 @@
 #include "fabglconf.h"
 #include "fabutils.h"
 
+// AGON EXTENDER: native-state entry guards for the accepted P4 CPU reader.
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#include "extender/display/stock_native_access.hpp"
+#else
+#define AGON_STOCK_NATIVE_GUARD
+#define AGON_STOCK_PALETTE_GUARD
+#define AGON_STOCK_FOREGROUND_GUARD
+#endif
+
 
 
 
@@ -676,8 +685,8 @@ struct Sprite {
   ~Sprite();
   Bitmap * getFrame() { return frames ? frames[currentFrame] : nullptr; }
   int getFrameIndex() { return currentFrame; }
-  void nextFrame() { currentFrame = (currentFrame  < framesCount - 1) ? currentFrame + 1 : 0; }
-  Sprite * setFrame(int frame) { currentFrame = frame; return this; }
+  void nextFrame() { AGON_STOCK_NATIVE_GUARD; currentFrame = (currentFrame  < framesCount - 1) ? currentFrame + 1 : 0; }
+  Sprite * setFrame(int frame) { AGON_STOCK_NATIVE_GUARD; currentFrame = frame; return this; }
   Sprite * addBitmap(Bitmap * bitmap);
   Sprite * addBitmap(Bitmap * bitmap[], int count);
   void clearBitmaps();
@@ -1048,7 +1057,7 @@ public:
    * 
    * @param sprite The sprite to use as text cursor. nullptr = disable text cursor.
    */
-  void setTextCursor(Sprite * sprite) { m_textCursor = sprite; }
+  void setTextCursor(Sprite * sprite) { AGON_STOCK_NATIVE_GUARD; m_textCursor = sprite; }
 
   virtual void readScreen(Rect const & rect, RGB888 * destBuf) = 0;
 
@@ -3045,6 +3054,5 @@ protected:
 
 
 } // end of namespace
-
 
 

@@ -45,6 +45,7 @@ std::uint64_t periodForRefresh(std::uint16_t refresh_hz) noexcept {
   return refresh_hz == 0 ? 0 : (1'000'000ULL + refresh_hz / 2) / refresh_hz;
 }
 
+#if !defined(AGON_EXTENDER_STOCK_RUNTIME)
 ScreenFacadeAdapter::ScreenFacadeAdapter(
     P4DisplayController &controller,
     FrameServiceBinding frame_service) noexcept
@@ -110,4 +111,5 @@ ConfigureResult ScreenFacadeAdapter::lastControllerResult() const noexcept {
   return last_controller_result_;
 }
 
+#endif
 }  // namespace agon::extender::display

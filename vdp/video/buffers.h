@@ -256,6 +256,7 @@ float readBufferFloat(uint32_t sourceBufferId, AdvancedOffset &offset, bool is16
 
 // Utility call to set a byte in a buffer at the given offset
 bool setBufferByte(uint8_t value, const BufferVector &buffer, AdvancedOffset &offset, bool iterate = false) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto bufferSpan = getBufferSpan(buffer, offset);
 	if (bufferSpan.empty()) {
 		// offset not found in buffer

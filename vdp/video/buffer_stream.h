@@ -1,10 +1,14 @@
 #ifndef BUFFER_STREAM_H
 #define BUFFER_STREAM_H
 
+// P4 output binding: buffered bitmaps can expose this storage to native row
+// preparation. Guard finite writes only; stream reads/transport waits stay outside.
+
 #include <memory>
 #include <Stream.h>
 
 #include "types.h"
+#include "extender/display/stock_native_access.hpp"
 
 class BufferStream : public Stream {
 	public:
@@ -90,6 +94,7 @@ size_t BufferStream::write(uint8_t b) {
 }
 
 bool BufferStream::writeBuffer(uint8_t * data, uint32_t length, uint32_t offset = 0) {
+	AGON_STOCK_NATIVE_GUARD;
 	// TODO consider return type - we could support writing to buffer limit,
 	// and returning how many bytes were written
 	if (length + offset <= bufferLength) {
@@ -102,6 +107,7 @@ bool BufferStream::writeBuffer(uint8_t * data, uint32_t length, uint32_t offset 
 }
 
 void BufferStream::writeBufferByte(uint8_t data, uint32_t offset = 0) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (offset < bufferLength) {
 		buffer[offset] = data;
 	}
@@ -111,6 +117,7 @@ void BufferStream::writeBufferByte(uint8_t data, uint32_t offset = 0) {
 // accepts an offset and a value to increment by
 // returns true if value overflowed
 bool BufferStream::incrementBufferByte(uint32_t offset = 0, int8_t by = 1) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (offset < bufferLength) {
 		auto oldValue = buffer[offset];
 		buffer[offset] += by;
@@ -143,6 +150,7 @@ class WritableBufferStream : public BufferStream {
 };
 
 size_t WritableBufferStream::write(uint8_t b) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (bufferWritePosition < bufferLength) {
 		buffer[bufferWritePosition++] = b;
 		return 1;

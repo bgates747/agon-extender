@@ -114,6 +114,16 @@ creating separate VDP renderers or clocks.
     the earlier audit proposal to remedy edge cases during restoration and
     takes precedence over decision 11 for this first pass.
 
+13. PORT-003-R2-D001 permits the P4 output reader to wait for one drawing
+    primitive, with drawing excluded only during one native scanline preparation.
+    All native writers and lifetime owners participate. This is an accepted
+    output-interface compromise, with the Author's reservation about stock's
+    superior scanout independence; it is not permission to stall logical time.
+    The independent 60 Hz clock takes no native-state mutex and waits for
+    neither drawing nor a consumer. Preserve the stock cadence as the reference
+    and qualify actual target jitter. Neither queue-drain exclusion nor a
+    whole-frame drawing suspension is authorized by this decision.
+
 ## Rationale
 
 One upstream-shaped Canvas backend preserves the largest body of official

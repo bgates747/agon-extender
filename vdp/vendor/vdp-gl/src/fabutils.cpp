@@ -1448,6 +1448,7 @@ LightMemoryPool::~LightMemoryPool()
 
 void * LightMemoryPool::alloc(int size)
 {
+  AGON_STOCK_NATIVE_GUARD;
   for (int pos = 0; pos < m_poolSize; ) {
     int16_t blockSize = getSize(pos);
     if (isFree(pos)) {

@@ -1,0 +1,71 @@
+PASS initial stock suspension blocks worker
+PASS worker admission opens after resume
+PASS a second worker cannot enter an active pass
+PASS suspension is published before active pass is joined
+PASS suspender waits for active worker
+PASS no check/start gap after foreground suspension
+PASS nested suspension remains effective
+PASS balanced resume restores admission
+PASS clock does not advance before its edge
+PASS late callback accounts elapsed ticks with register wrap
+PASS clock exposes missed-delivery count and lateness
+PASS a repeated observation does not replay a tick
+PASS clock never waits for native or foreground exclusion
+PASS sixty further edges advance while drawing/output ownership is held
+PASS forced scheduling barrier reached
+PASS output progresses inside an unfinished drain with queued work remaining
+PASS immediate flush cannot overtake a popped worker primitive
+PASS worker and immediate flush preserve actual FIFO pixel effects
+PASS palette-list retirement rebinds Copper before the next native row
+PASS double-buffer immediate drawing leaves visible native rows unchanged
+PASS explicit swap waits for worker notification
+PASS queued original swap exchanges native plane tables
+PASS row output uses the newly visible plane after explicit swap
+PASS queued path survives mutation of its caller's original array
+PASS stock disable flush executes and frees pending dynamic data
+PASS queued paths reuse more than the entire stock payload pool without exhaustion
+PASS packed snapshot pool allocates one byte per pixel per slot
+PASS direct RGB222 producer admitted
+PASS packed producer cannot accidentally write RGB888 pixels
+PASS packed image publishes without conversion
+PASS network lease acquires completed image
+PASS direct RGB222 producer admitted
+PASS packed producer cannot accidentally write RGB888 pixels
+PASS packed image publishes without conversion
+PASS existing single-consumer lease contract is retained
+PASS leased RGB222 data remains immutable across later publications
+PASS direct RGB222 producer admitted
+PASS packed producer cannot accidentally write RGB888 pixels
+PASS packed image publishes without conversion
+PASS existing single-consumer lease contract is retained
+PASS leased RGB222 data remains immutable across later publications
+PASS producer remains independent of an outstanding network lease
+PASS another output request skips an occupied producer without waiting
+PASS consumer acquires latest complete packed image after release; partial image cancelled
+PASS real service starts its separate clock through the host SDK model
+PASS real service creates independent drawing/output tasks
+PASS real output task publishes original scanlines
+PASS forced scheduling barrier reached
+PASS a held network lease does not admit a second consumer
+PASS 60 Hz clock advances during an intentionally blocked native primitive
+PASS mode detach waits for native owners before freeing rows
+PASS clock continues while teardown waits for the primitive
+PASS clock continues with no native controller attached
+PASS network lease survives native mode destruction
+PASS service reattaches a different original depth
+PASS forced scheduling barrier reached
+PASS mode detach waits for an active original output row
+PASS clock advances while output holds native state during detach
+PASS callback join prevents notifications to retired task handles
+PASS forced scheduling barrier reached
+PASS sprite retirement waits for the native row retaining its frames
+PASS in-flight row completes with the original sprite before retirement
+PASS next native row no longer accesses the retired sprite or bitmap
+PASS clock starts before worker-allocation fault injection
+PASS drawing-task allocation failure returns cleanly
+PASS output-task allocation failure joins its already-created drawing task
+PASS clock survives failed task creation
+PASS same native controller can retry after both allocation failures
+PASS allocation-failure unwind leaves no retired notification targets
+PASS snapshot allocation failure retains no publishable storage
+Stock runtime comparisons: 70 checks, 0 failures

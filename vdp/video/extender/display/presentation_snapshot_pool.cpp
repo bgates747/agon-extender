@@ -51,18 +51,20 @@ void PresentationSnapshotLease::release() noexcept {
 
 PresentationSnapshotPool::PresentationSnapshotPool(
     Allocator allocator, SnapshotPixelFormat format,
-    std::uint64_t minimum_interval_us, bool on_demand) noexcept
+    std::uint64_t minimum_interval_us, bool on_demand, bool direct_rgb222) noexcept
     : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us),
-      on_demand_(on_demand) {
+      on_demand_(on_demand), direct_rgb222_(direct_rgb222) {
   transition_lock_.clear(std::memory_order_release);
-  if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr) {
+  if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr ||
+      (direct_rgb222_ && format_ != SnapshotPixelFormat::RGB222)) {
     increment(allocation_failures_);
     return;
   }
   for (auto &slot : slots_) {
     slot.pixels = static_cast<PresentationRGB888 *>(
         allocator_.allocate(allocator_.context,
-                            kPresentationSnapshotBytesPerSlot));
+                            direct_rgb222_ ? kPresentationSnapshotMaximumWidth *
+                                kPresentationSnapshotMaximumHeight : kPresentationSnapshotBytesPerSlot));
     if (slot.pixels == nullptr) {
       increment(allocation_failures_);
       releaseAllocations();
@@ -207,18 +209,19 @@ SnapshotBeginResult PresentationSnapshotPool::tryBegin(
   slot.state = SlotState::Producer;
   slot.width = width;
   slot.height = height;
-  slot.payload_bytes = width * height * kPresentationSnapshotBytesPerPixel;
+  slot.payload_bytes = width * height * (direct_rgb222_ ? 1 : kPresentationSnapshotBytesPerPixel);
   slot.generation = 0;
   slot.present_period_us = 0;
   producer_slot_ = free_slot;
   pending_boundary_time_us_ = boundary_time_us;
   unlock();
 
-  view = {slot.pixels,
+  view = {direct_rgb222_ ? nullptr : slot.pixels,
           kPresentationSnapshotBytesPerSlot /
               kPresentationSnapshotBytesPerPixel,
           width,
-          height};
+          height,
+          direct_rgb222_ ? reinterpret_cast<std::uint8_t *>(slot.pixels) : nullptr};
   return SnapshotBeginResult::Ok;
 }
 
@@ -228,7 +231,7 @@ SnapshotFinishResult PresentationSnapshotPool::finish(
   if (producer_slot_ < 0) return SnapshotFinishResult::NoProducer;
   if (composition == CompositionResult::Ok) {
     if (pending_action_ == PendingAction::None &&
-        format_ == SnapshotPixelFormat::RGB222) {
+        format_ == SnapshotPixelFormat::RGB222 && !direct_rgb222_) {
       // P4 already quantizes the composed palette/overlay image to RGB222.
       // Pack forward in the exclusive producer slot BEFORE immutable publication.
       // Reading each RGB888 value before overwriting its earlier output byte

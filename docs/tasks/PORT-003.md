@@ -4,7 +4,7 @@
 
 The Author has made [AUDIT-006](AUDIT-006.md) the first priority and expanded it
 to compare the entire stock video-generation backend with the selected P4
-implementation. The source audit is accepted; execute its accepted R1 contract before another
+implementation. The source audit and R1 proof are accepted; execute the restoration contract before another
 local optimization or QUAL-003's benchmark. This task implements the
 subsequently accepted repair contract; it must not use the previous generic
 controller, flat planes or project pixel codecs as constraints on that review.
@@ -32,8 +32,18 @@ compile/link as a nondeployable P4 closure. The
 [native-row evidence](PORT-003/stock-backend-r1/README.md) records 180 passing
 checks and two preserved upstream two-colour scroll discrepancies. Original
 headers/common files and utility bodies are source-verified. R2's independent
-worker/output integration is next; the ordinary console still selects its
+worker/output integration is prepared below; the ordinary console still selects its
 existing backend, and no performance improvement is claimed yet.
+
+**R2 accepted; R3 deployment authorized:** the [runtime binding and evidence](PORT-003/stock-backend-r2/README.md)
+records 70 passing concurrency/lifetime checks, 42 passing stock scanline
+checks, and 180 native comparisons with the same two inherited discrepancies.
+The 20-unit P4 display closure and ordinary console integration compile/link
+as nonbootable objects. Original bodies remain beneath narrow entry/lifetime
+bindings; RGB222 output uses original packed scanline code directly.
+PORT-003-R2-D001 preserves the independent clock and the Author's reservation
+about stock's reliable 60 Hz cadence. R3 owns deployment selection, complete
+candidate build and physical qualification. The Author requests repaired Nurples as the first qualitative hardware check; full qualification remains separate.
 
 ## Active correction — stock queue draining, 2026-09-10
 

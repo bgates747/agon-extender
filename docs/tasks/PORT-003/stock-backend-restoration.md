@@ -1,12 +1,21 @@
 # PORT-003 — Restore the stock video backend
 
-Status: **accepted; R1 accepted and R2 authorized**, 2026-09-10. Commit `a773b19`
+Status: **accepted; R1/R2 accepted; R3 deployment authorized**, 2026-09-10. Commit `a773b19`
 froze the accepted no-fix rule before R1. The original five-controller binding
 now has target compile/link and host native-row evidence in the
 [R1 review](stock-backend-r1/README.md): 180 checks pass and two reproduce
 unchanged upstream narrow-scroll behavior. The Author accepted this result,
 directed a freeze, and authorized R2. Existing version preapproval applies.
-R3 remains a subsequent qualification boundary; no hardware was changed by R1.
+The Author has authorized R3 P4 deployment, starting with a qualitative repaired-Nurples playtest. No new EMOS or game build is needed; no hardware was changed by R1/R2.
+
+R2 began after freeze `f94c2e4` and is now **accepted for R3 deployment**.
+Its [runtime proof](stock-backend-r2/README.md) has 70 passing execution/lifetime
+checks, 42 passing stock scanline checks, and 180 native comparisons with the
+same two inherited scroll discrepancies. The 20-unit P4 display closure and
+ordinary console integration compile/link as nonbootable objects. R3 still
+owns deployment selection and physical qualification. PORT-003-R2-D001 retains
+the Author's reservation: browser rows may wait for a primitive; the clock may
+not wait for native state or a consumer.
 
 ## Governing first-pass rule
 
@@ -90,7 +99,7 @@ what this proof establishes.
    against original upstream bodies. It establishes feasibility, not runnable
    hardware or complete performance parity. Review R1 before expanding a
    surprising binding change.
-2. [ ] **R2 — Restore independent execution and packed row output.** Reuse
+2. [x] **R2 — Restore independent execution and packed row output (accepted).** Reuse
    the stock worker's drain/suspend behavior with its optional timeout disabled,
    and coalesce drawing notifications as stock does. Frame time advances from
    output timing, not from completed drains. Preserve immediate flush, FIFO
@@ -160,6 +169,35 @@ what this proof establishes.
    of draw progress, output progress and finite-work completion distinct.
    Passing a screenshot or 48 finite rows cannot by itself close F001. Do not
    assert improved gameplay/frame rate before measuring or Author observation.
+
+## R2 decision register
+
+| ID | State | Decision |
+|---|---|---|
+| PORT-003-R2-D001 | Accepted, with reservation | Browser row preparation may wait for one drawing primitive; the independent 60 Hz clock must continue. |
+
+The Author permits per-primitive drawing exclusion and per-row output
+exclusion as the smallest initial CPU-reader binding, subject to the required
+concurrency and target progress checks. Keep original drawing bodies unchanged;
+adapt their execution entry and all native metadata/lifetime owners. No wait
+for an empty queue, whole-frame drawing suspension, or drawing quota is proposed.
+
+Tradeoff: a single long primitive can delay browser output, unlike stock's
+physical scanout. Its maximum delay is not yet measured. Acceptance authorizes
+testing this explicit difference, not establishing performance parity. The
+Author accepts this under protest: mainboard VDP's near-infallible 60 Hz cadence
+remains the reference. EDP must not acquire the native-state lock, wait for a
+primitive, copy a frame or wait for a browser in its clock path. Test clock
+progress while both drawing and output are deliberately blocked; record actual
+target jitter separately from host clock accounting. The [source trace and ownership](stock-backend-r2/README.md#concrete-integration-decision)
+identify why simply splitting the existing worker is insufficient.
+
+Prerequisites/downstream effects: all selected native writers, synchronous
+draw callers, overlays/palettes and mode teardown must participate; leased
+snapshot storage must outlive replaceable native controllers. A selected
+binding needs forced-interleaving, sustained-queue and long-primitive checks
+before R2 completion. R3 still owns physical qualification. This accepted
+exception does not authorize a queue-drain or whole-frame exclusion boundary.
 
 ## Decision and stopping rules
 

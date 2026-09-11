@@ -1,0 +1,41 @@
+{
+  "upstream": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "body_source_checkpoint": "f94c2e4",
+  "bodies": [
+    {
+      "controller": 2,
+      "source": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+      "start_line": 761,
+      "sha256": "e2873239d86909078d1fac2931223937f52c73157ed6ed12a9714b68b196614b",
+      "bytes": 756
+    },
+    {
+      "controller": 4,
+      "source": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "start_line": 790,
+      "sha256": "db3390638361a78434ef5cc4514d504c3d13e440d2089727cce6a22d84db3f19",
+      "bytes": 978
+    },
+    {
+      "controller": 8,
+      "source": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "start_line": 744,
+      "sha256": "c67af8cc253c64c7913f6d7ecb61427ae1d76a6050a3eeeb54c37017d8f7cf2c",
+      "bytes": 1754
+    },
+    {
+      "controller": 16,
+      "source": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "start_line": 785,
+      "sha256": "689f9981c9354a56fbd5a79879bf4430090b1f68d11f12b2522f289f9a4279fb",
+      "bytes": 1447
+    },
+    {
+      "controller": 64,
+      "source": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "start_line": 746,
+      "sha256": "e9d19105622d551d6a13902b760c9b63d43d27b06b6a7ccdd0c0f29b689656fd",
+      "bytes": 197
+    }
+  ]
+}

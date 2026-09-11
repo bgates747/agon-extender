@@ -1,6 +1,9 @@
 #ifndef SPRITES_H
 #define SPRITES_H
 
+// P4 binding: guard native-visible sprite/bitmap mutation; never hold this
+// guard across waitPlotCompletion, queue admission or UART reads.
+
 #include <algorithm>
 #include <limits>
 #include <memory>
@@ -37,6 +40,7 @@ std::shared_ptr<Bitmap> getBitmap(uint16_t id) {
 }
 
 void resetBitmaps() {
+	AGON_STOCK_NATIVE_GUARD;
 	bitmaps.clear();
 	// this will only be used after resetting sprites, so we can clear the bitmapUsers list
 	bitmapUsers.clear();
@@ -55,6 +59,7 @@ inline uint8_t getCurrentSprite() {
 }
 
 void clearSpriteFrames(uint8_t s = current_sprite) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite(s);
 	sprite->visible = false;
 	sprite->setFrame(0);
@@ -72,6 +77,7 @@ void clearSpriteFrames(uint8_t s = current_sprite) {
 }
 
 void clearBitmap(uint16_t b) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (bitmaps.find(b) == bitmaps.end()) {
 		return;
 	}
@@ -89,6 +95,7 @@ void clearBitmap(uint16_t b) {
 }
 
 void addSpriteFrame(uint16_t bitmapId) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	auto bitmap = getBitmap(bitmapId);
 	if (!bitmap) {
@@ -107,6 +114,7 @@ void addSpriteFrame(uint16_t bitmapId) {
 }
 
 void replaceSpriteFrame(uint16_t bitmapId) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	auto bitmap = getBitmap(bitmapId);
 	if (!bitmap) {
@@ -172,17 +180,20 @@ inline bool hasActiveSprites() {
 }
 
 void nextSpriteFrame() {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->nextFrame();
 }
 
 void previousSpriteFrame() {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	auto frame = sprite->currentFrame;
 	sprite->setFrame(frame ? frame - 1 : sprite->framesCount - 1);
 }
 
 void setSpriteFrame(uint8_t n) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	if (n < sprite->framesCount) {
 		sprite->setFrame(n);
@@ -190,31 +201,37 @@ void setSpriteFrame(uint8_t n) {
 }
 
 void showSprite() {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->visible = 1;
 }
 
 void hideSprite(uint8_t s = current_sprite) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite(s);
 	sprite->visible = 0;
 }
 
 void setSpriteHardware() {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->hardware = 1;
 }
 
 void setSpriteSoftware() {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->hardware = 0;
 }
 
 void moveSprite(int x, int y) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->moveTo(x, y);
 }
 
 void moveSpriteBy(int x, int y) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	sprite->moveBy(x, y);
 }
@@ -240,6 +257,7 @@ void resetSprites() {
 	hideAllSprites();
 	bool autoHardwareSprites = isVDPVariableSet(TESTFLAG_HW_SPRITES) && isVDPVariableSet(VDPVAR_AUTO_HW_SPRITES);
 	for (auto n = 0; n < MAX_SPRITES; n++) {
+		AGON_STOCK_NATIVE_GUARD;
 		auto sprite = getSprite(n);
 		sprite->hardware = autoHardwareSprites ? 1 : 0;
 		clearSpriteFrames(n);
@@ -249,6 +267,7 @@ void resetSprites() {
 }
 
 void setSpritePaintMode(uint8_t mode) {
+	AGON_STOCK_NATIVE_GUARD;
 	auto sprite = getSprite();
 	if (mode <= 7) {
 		sprite->paintOptions.mode = static_cast<fabgl::PaintMode>(mode);

@@ -1,0 +1,190 @@
+PASS VGA2 dimensions
+PASS VGA2 packed pixels across groups
+PASS VGA2 single-buffer alias
+PASS VGA2 clear/fill
+PASS VGA2 clear/fill
+PASS VGA2 paint selection 0
+PASS VGA2 paint selection 1
+PASS VGA2 paint selection 2
+PASS VGA2 paint selection 3
+PASS VGA2 paint selection 4
+PASS VGA2 paint selection 5
+PASS VGA2 paint selection 6
+PASS VGA2 paint selection 7
+PASS VGA2 full-width VScroll
+PASS VGA2 VScroll permutes row pointers
+PASS VGA2 full-width VScroll
+PASS VGA2 VScroll permutes row pointers
+PASS VGA2 aligned partial viewport vertical scroll -3; outside preserved
+PASS VGA2 aligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA2 aligned partial viewport vertical scroll +3; outside preserved
+PASS VGA2 aligned partial viewport horizontal scroll +3; outside preserved
+Mismatch VGA2 unaligned partial viewport vertical scroll -3; outside preserved row 2 expected/actual: 4a/4a aa/aa aa/aa aa/aa aa/aa aa/aa aa/aa b5/4a
+FAIL VGA2 unaligned partial viewport vertical scroll -3; outside preserved
+PASS VGA2 unaligned partial viewport horizontal scroll -3; outside preserved
+Mismatch VGA2 unaligned partial viewport vertical scroll +3; outside preserved row 2 expected/actual: 5f/5f ff/ff ff/ff ff/ff ff/ff ff/ff ff/ff f5/ea
+FAIL VGA2 unaligned partial viewport vertical scroll +3; outside preserved
+PASS VGA2 unaligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA2 overlapping copyRect
+PASS VGA2 overlapping copyRect
+PASS VGA2 oversized bitmap in one-row viewport
+PASS VGA2 public RGBA2222 capture
+PASS VGA2 glyph through native pixel path
+PASS VGA2 transformed bitmap in task context
+PASS VGA2 software-sprite native byte-per-pixel background
+PASS VGA2 software-sprite native background restoration
+PASS VGA2 double-buffer distinct planes
+PASS VGA2 original swap exchanges planes
+PASS VGA2 original width/height quanta
+VGA2 completed
+PASS VGA4 dimensions
+PASS VGA4 packed pixels across groups
+PASS VGA4 single-buffer alias
+PASS VGA4 clear/fill
+PASS VGA4 clear/fill
+PASS VGA4 paint selection 0
+PASS VGA4 paint selection 1
+PASS VGA4 paint selection 2
+PASS VGA4 paint selection 3
+PASS VGA4 paint selection 4
+PASS VGA4 paint selection 5
+PASS VGA4 paint selection 6
+PASS VGA4 paint selection 7
+PASS VGA4 full-width VScroll
+PASS VGA4 VScroll permutes row pointers
+PASS VGA4 full-width VScroll
+PASS VGA4 VScroll permutes row pointers
+PASS VGA4 aligned partial viewport vertical scroll -3; outside preserved
+PASS VGA4 aligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA4 aligned partial viewport vertical scroll +3; outside preserved
+PASS VGA4 aligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA4 unaligned partial viewport vertical scroll -3; outside preserved
+PASS VGA4 unaligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA4 unaligned partial viewport vertical scroll +3; outside preserved
+PASS VGA4 unaligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA4 overlapping copyRect
+PASS VGA4 overlapping copyRect
+PASS VGA4 oversized bitmap in one-row viewport
+PASS VGA4 public RGBA2222 capture
+PASS VGA4 glyph through native pixel path
+PASS VGA4 transformed bitmap in task context
+PASS VGA4 software-sprite native byte-per-pixel background
+PASS VGA4 software-sprite native background restoration
+PASS VGA4 double-buffer distinct planes
+PASS VGA4 original swap exchanges planes
+PASS VGA4 original width/height quanta
+VGA4 completed
+PASS VGA8 dimensions
+PASS VGA8 packed pixels across groups
+PASS VGA8 single-buffer alias
+PASS VGA8 stock 01234567 bytes 773905
+PASS VGA8 clear/fill
+PASS VGA8 clear/fill
+PASS VGA8 paint selection 0
+PASS VGA8 paint selection 1
+PASS VGA8 paint selection 2
+PASS VGA8 paint selection 3
+PASS VGA8 paint selection 4
+PASS VGA8 paint selection 5
+PASS VGA8 paint selection 6
+PASS VGA8 paint selection 7
+PASS VGA8 full-width VScroll
+PASS VGA8 VScroll permutes row pointers
+PASS VGA8 full-width VScroll
+PASS VGA8 VScroll permutes row pointers
+PASS VGA8 aligned partial viewport vertical scroll -3; outside preserved
+PASS VGA8 aligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA8 aligned partial viewport vertical scroll +3; outside preserved
+PASS VGA8 aligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA8 unaligned partial viewport vertical scroll -3; outside preserved
+PASS VGA8 unaligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA8 unaligned partial viewport vertical scroll +3; outside preserved
+PASS VGA8 unaligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA8 overlapping copyRect
+PASS VGA8 overlapping copyRect
+PASS VGA8 oversized bitmap in one-row viewport
+PASS VGA8 public RGBA2222 capture
+PASS VGA8 glyph through native pixel path
+PASS VGA8 transformed bitmap in task context
+PASS VGA8 software-sprite native byte-per-pixel background
+PASS VGA8 software-sprite native background restoration
+PASS VGA8 double-buffer distinct planes
+PASS VGA8 original swap exchanges planes
+PASS VGA8 original width/height quanta
+VGA8 completed
+PASS VGA16 dimensions
+PASS VGA16 packed pixels across groups
+PASS VGA16 single-buffer alias
+PASS VGA16 clear/fill
+PASS VGA16 clear/fill
+PASS VGA16 paint selection 0
+PASS VGA16 paint selection 1
+PASS VGA16 paint selection 2
+PASS VGA16 paint selection 3
+PASS VGA16 paint selection 4
+PASS VGA16 paint selection 5
+PASS VGA16 paint selection 6
+PASS VGA16 paint selection 7
+PASS VGA16 full-width VScroll
+PASS VGA16 VScroll permutes row pointers
+PASS VGA16 full-width VScroll
+PASS VGA16 VScroll permutes row pointers
+PASS VGA16 aligned partial viewport vertical scroll -3; outside preserved
+PASS VGA16 aligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA16 aligned partial viewport vertical scroll +3; outside preserved
+PASS VGA16 aligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA16 unaligned partial viewport vertical scroll -3; outside preserved
+PASS VGA16 unaligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA16 unaligned partial viewport vertical scroll +3; outside preserved
+PASS VGA16 unaligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA16 overlapping copyRect
+PASS VGA16 overlapping copyRect
+PASS VGA16 oversized bitmap in one-row viewport
+PASS VGA16 public RGBA2222 capture
+PASS VGA16 glyph through native pixel path
+PASS VGA16 transformed bitmap in task context
+PASS VGA16 software-sprite native byte-per-pixel background
+PASS VGA16 software-sprite native background restoration
+PASS VGA16 double-buffer distinct planes
+PASS VGA16 original swap exchanges planes
+PASS VGA16 original width/height quanta
+VGA16 completed
+PASS VGA64 dimensions
+PASS VGA64 packed pixels across groups
+PASS VGA64 single-buffer alias
+PASS VGA64 stock sync bits and x XOR 2 lanes
+PASS VGA64 clear/fill
+PASS VGA64 clear/fill
+PASS VGA64 paint selection 0
+PASS VGA64 paint selection 1
+PASS VGA64 paint selection 2
+PASS VGA64 paint selection 3
+PASS VGA64 paint selection 4
+PASS VGA64 paint selection 5
+PASS VGA64 paint selection 6
+PASS VGA64 paint selection 7
+PASS VGA64 full-width VScroll
+PASS VGA64 VScroll permutes row pointers
+PASS VGA64 full-width VScroll
+PASS VGA64 VScroll permutes row pointers
+PASS VGA64 aligned partial viewport vertical scroll -3; outside preserved
+PASS VGA64 aligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA64 aligned partial viewport vertical scroll +3; outside preserved
+PASS VGA64 aligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA64 unaligned partial viewport vertical scroll -3; outside preserved
+PASS VGA64 unaligned partial viewport horizontal scroll -3; outside preserved
+PASS VGA64 unaligned partial viewport vertical scroll +3; outside preserved
+PASS VGA64 unaligned partial viewport horizontal scroll +3; outside preserved
+PASS VGA64 overlapping copyRect
+PASS VGA64 overlapping copyRect
+PASS VGA64 oversized bitmap in one-row viewport
+PASS VGA64 public RGBA2222 capture
+PASS VGA64 glyph through native pixel path
+PASS VGA64 transformed bitmap in task context
+PASS VGA64 software-sprite native byte-per-pixel background
+PASS VGA64 software-sprite native background restoration
+PASS VGA64 double-buffer distinct planes
+PASS VGA64 original swap exchanges planes
+PASS VGA64 original width/height quanta
+VGA64 completed
+Native-row comparisons: 182 checks, 2 failures

@@ -1,7 +1,7 @@
 // PORT-003 R1: select the original native-row implementation without the
 // classic ESP32 physical engine. Drawing/palette methods remain upstream.
-// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous and never deployable; R2
-// must bind independent output before this enters an ordinary console.
+// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous. STOCK_RUNTIME shares only
+// this native allocation/peripheral exclusion and binds its own worker/output.
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -37,7 +37,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "soc/i2s_struct.h"
 #include "soc/i2s_reg.h"
 #include "driver/periph_ctrl.h"
@@ -48,7 +48,7 @@
 
 #include "fabutils.h"
 #include "vga8controller.h"
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "devdrivers/swgenerator.h"
 #endif
 
@@ -59,7 +59,7 @@
 
 
 
-#if defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if defined(AGON_EXTENDER_STOCK_ROWS_PROOF) || defined(AGON_EXTENDER_STOCK_RUNTIME)
 #define AGON_EXTENDER_VGA_ISR(handler) nullptr
 #else
 #define AGON_EXTENDER_VGA_ISR(handler) handler
@@ -712,7 +712,7 @@ void VGA8Controller::directSetPixel(int x, int y, int value)
 }
 
 
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 void IRAM_ATTR VGA8Controller::ISRHandler(void * arg)
 {
   #if FABGLIB_VGAXCONTROLLER_PERFORMANCE_CHECK

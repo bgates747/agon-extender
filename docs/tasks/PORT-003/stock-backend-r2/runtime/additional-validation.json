@@ -1,0 +1,23 @@
+{
+  "snapshot_pool": {
+    "status": "pass",
+    "sanitizers": [
+      "address",
+      "undefined"
+    ],
+    "output": "snapshot-pool=pass",
+    "executable_sha256": "6035c8e61ca1b1125eb49b63fa1305b4321f97da1f19b976ef461afff824679d",
+    "source_sha256": {
+      "vdp/video/extender/display/presentation_snapshot_pool.cpp": "166d5a2bce4a53270a351575a430b03ea2bec4feaa8573942ac306b73fb1771f",
+      "docs/tasks/PORT-003/phase-f/tests/snapshot_pool_tests.cpp": "353e848456484808a5eec47d34d4ed022463c8285d31742919ddf56be68de662"
+    }
+  },
+  "existing_snapshot_controller": {
+    "status": "not runnable",
+    "reason": "Historical companion still calls executeFrameWork(8); the already changed controller takes no argument. Both files unchanged from f94c2e4. Not counted as a pass."
+  },
+  "versions": {
+    "artifact_registry_templates_vdp_identity": "pass",
+    "full_validator": "Pre-existing held light2-harness-r02 connectivity hash mismatch; both hardware inputs identical to f94c2e4. Not changed in this work."
+  }
+}

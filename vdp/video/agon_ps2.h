@@ -1,6 +1,9 @@
 #ifndef AGON_PS2_H
 #define AGON_PS2_H
 
+// P4 output binding: cursor-map mutation/retirement joins the native row guard.
+// Processed-input and mainboard routing behavior are unchanged.
+
 #include <vector>
 #include <algorithm>
 
@@ -63,7 +66,7 @@ void setupKeyboardAndMouse() {
 	kb->setCodePage(fabgl::CodePages::get(1252));
 	kb->setTypematicRateAndDelay(kbRepeatRate, kbRepeatDelay);
 	kbEnabled = true;
-	resetMousePositioner(canvasW, canvasH, _VGAController.get());
+	resetMousePositioner(canvasW, canvasH, activeDisplayController());
 }
 
 // Set keyboard layout
@@ -414,6 +417,7 @@ bool mouseMoved(MouseDelta * delta) {
 }
 
 void makeMouseCursor(uint16_t bitmapId, std::shared_ptr<Bitmap> bitmap, uint16_t hotX, uint16_t hotY) {
+	AGON_STOCK_NATIVE_GUARD;
 	fabgl::Cursor c;
 	c.bitmap = *bitmap;
 	c.hotspotX = std::min(static_cast<uint16_t>(std::max(static_cast<int>(hotX), 0)), static_cast<uint16_t>(bitmap->width - 1));
@@ -448,6 +452,7 @@ bool setMouseCursor(uint16_t cursor = mCursor) {
 }
 
 void clearMouseCursor(uint16_t cursor) {
+	AGON_STOCK_NATIVE_GUARD;
 	if (cursor == mCursor) {
 		mCursor = MOUSE_DEFAULT_CURSOR;
 		if (mouseVisible) {
@@ -461,6 +466,7 @@ void clearMouseCursor(uint16_t cursor) {
 }
 
 void resetMouseCursors() {
+	AGON_STOCK_NATIVE_GUARD;
 	if (!isSystemMouseCursor(mCursor)) {
 		mCursor = MOUSE_DEFAULT_CURSOR;
 		if (mouseVisible) {

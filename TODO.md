@@ -24,7 +24,7 @@ remains on hold.
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Priority one. R1 original five-controller build/native-row proof accepted; 180 checks pass and two upstream discrepancies remain unchanged. R2 independent worker/output integration authorized. No upstream bug fixes in the first pass; no hardware deployed by R1.
+  - Status: Priority one. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 deployment authorized, starting with a qualitative repaired-Nurples playtest. No upstream fixes; full hardware qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**

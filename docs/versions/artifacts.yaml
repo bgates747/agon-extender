@@ -1,18 +1,20 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r66
-updated_at: 2026-09-11T01:44:36Z
+registry_revision: r68
+updated_at: 2026-09-11T03:10:00Z
 
 artifacts:
   - artifact_id: stock-backend-binding
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: stock-backend-binding-r01
+    latest_identity: stock-backend-binding-r03
     status: experimental
     variants: []
-    description: Compile and native-row comparison proof for the original five VDP depth controllers on P4.
+    description: Compile and native-row/scanline comparison proofs for the original five VDP depth controllers on P4.
     notes:
+      - R2 r03 has 70 passing runtime checks, 42 stock scanline checks and 180 native comparisons with the same two inherited scroll observations; P4 display and ordinary-console compile/link proofs. Accepted PORT-003-R2-D001, standing preapproval and registry r68. No deployment or physical cadence qualification.
+      - R2 r02 proves original scanline composition with 42 passing quiescent host checks and a 14-unit P4 relocatable closure under standing preapproval; registry r67. That r02 build has no execution/output concurrency implementation or qualification; no deployment.
       - PORT-003 R1; no deployable image or hardware qualification. Standing Author version preapproval covers this identity and registry r66.
       - Preserve compilable upstream code unchanged, including suspected bugs; only compiler and processor/output binding changes belong in the first pass.
       - R1 target relocatable closure and 182 host comparisons recorded; 180 checks pass and two unchanged upstream narrow-scroll discrepancies are retained. Not bootable or hardware-qualified.

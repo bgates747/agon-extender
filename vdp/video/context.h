@@ -156,6 +156,7 @@ class Context {
 		void ensureCursorInViewport(Rect viewport);
 
 		inline void updateTextCursorPosition() {
+			AGON_STOCK_NATIVE_GUARD;
 			if (textCursorActive() && textCursorSprite != nullptr) {
 				textCursorSprite->moveTo(
 					fabgl::imin(fabgl::imax(activeCursor->X, 0), defaultViewport.X2 - (getFont()->width - 1)) + cursorHStart,
@@ -165,6 +166,7 @@ class Context {
 		}
 
 		inline void updateTextCursorVisibility() {
+			AGON_STOCK_NATIVE_GUARD;
 			if (textCursorSprite != nullptr) {
 				textCursorSprite->visible = cursorEnabled && textCursorActive();
 				cursorTemporarilyHidden = false;

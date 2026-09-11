@@ -5,9 +5,18 @@
 
 #include <cstdint>
 
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#include "displaycontroller.h"
+#else
 #include "extender/display/p4_display_controller.hpp"
+#endif
 
 namespace agon::extender::display {
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+using CursorDisplayController = fabgl::BitmappedDisplayController;
+#else
+using CursorDisplayController = P4DisplayController;
+#endif
 
 enum class CursorPositionResult : std::uint8_t {
   Ok,
@@ -19,7 +28,7 @@ enum class CursorPositionResult : std::uint8_t {
 class CursorPositionAdapter final {
  public:
   bool bind(std::uint16_t width, std::uint16_t height,
-            P4DisplayController *controller) noexcept;
+            CursorDisplayController *controller) noexcept;
   CursorPositionResult set(std::uint16_t x, std::uint16_t y) noexcept;
   std::uint16_t x() const noexcept;
   std::uint16_t y() const noexcept;
@@ -27,7 +36,7 @@ class CursorPositionAdapter final {
   std::uint16_t height() const noexcept;
 
  private:
-  P4DisplayController *controller_{};
+  CursorDisplayController *controller_{};
   std::uint16_t width_{};
   std::uint16_t height_{};
   std::uint16_t x_{};
@@ -42,7 +51,7 @@ CursorPositionAdapter &cursorPositionAdapter() noexcept;
 // and position the project adapter after agon_screen.h removes agon_ps2.h.
 inline bool resetMousePositioner(
     std::uint16_t width, std::uint16_t height,
-    agon::extender::display::P4DisplayController *controller) noexcept {
+    agon::extender::display::CursorDisplayController *controller) noexcept {
   return agon::extender::display::cursorPositionAdapter().bind(width, height,
                                                                controller);
 }

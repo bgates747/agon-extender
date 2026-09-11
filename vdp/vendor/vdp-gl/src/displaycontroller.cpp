@@ -174,6 +174,7 @@ Sprite::Sprite()
 
 Sprite::~Sprite()
 {
+  AGON_STOCK_NATIVE_GUARD;
   framesCount = 0;
   free(frames);
   free(savedBackground);
@@ -182,6 +183,7 @@ Sprite::~Sprite()
 
 void Sprite::clearBitmaps()
 {
+  AGON_STOCK_NATIVE_GUARD;
   framesCount = 0;
   auto framesPtr = frames;
   frames = nullptr;
@@ -191,6 +193,7 @@ void Sprite::clearBitmaps()
 
 Sprite * Sprite::addBitmap(Bitmap * bitmap)
 {
+  AGON_STOCK_NATIVE_GUARD;
   auto newFrames = (Bitmap**) realloc(frames, sizeof(Bitmap*) * (framesCount + 1));
   newFrames[framesCount] = bitmap;
   frames = newFrames;
@@ -201,6 +204,7 @@ Sprite * Sprite::addBitmap(Bitmap * bitmap)
 
 Sprite * Sprite::addBitmap(Bitmap * bitmap[], int count)
 {
+  AGON_STOCK_NATIVE_GUARD;
   auto newFrames = (Bitmap**) realloc(frames, sizeof(Bitmap*) * (framesCount + count));
   for (int i = 0; i < count; ++i)
     newFrames[framesCount + i] = bitmap[i];
@@ -212,6 +216,7 @@ Sprite * Sprite::addBitmap(Bitmap * bitmap[], int count)
 
 Sprite * Sprite::moveBy(int offsetX, int offsetY)
 {
+  AGON_STOCK_NATIVE_GUARD;
   x += offsetX;
   y += offsetY;
   return this;
@@ -220,6 +225,7 @@ Sprite * Sprite::moveBy(int offsetX, int offsetY)
 
 Sprite * Sprite::moveBy(int offsetX, int offsetY, int wrapAroundWidth, int wrapAroundHeight)
 {
+  AGON_STOCK_NATIVE_GUARD;
   x += offsetX;
   y += offsetY;
   if (x > wrapAroundWidth)
@@ -236,6 +242,7 @@ Sprite * Sprite::moveBy(int offsetX, int offsetY, int wrapAroundWidth, int wrapA
 
 Sprite * Sprite::moveTo(int x, int y)
 {
+  AGON_STOCK_NATIVE_GUARD;
   this->x = x;
   this->y = y;
   return this;
@@ -454,6 +461,7 @@ RGBA8888 Bitmap::getPixel8888(int x, int y) const {
 
 Bitmap::~Bitmap()
 {
+  AGON_STOCK_NATIVE_GUARD;
   if (dataAllocated)
     heap_caps_free((void*)data);
 }
@@ -524,6 +532,7 @@ void IRAM_ATTR BitmappedDisplayController::resetPaintState()
 
 void BitmappedDisplayController::addPrimitive(Primitive & primitive)
 {
+  AGON_STOCK_FOREGROUND_GUARD;
   if ((m_backgroundPrimitiveExecutionEnabled && m_doubleBuffered == false) || primitive.cmd == PrimitiveCmd::SwapBuffers) {
     primitiveReplaceDynamicBuffers(primitive);
     xQueueSendToBack(m_execQueue, &primitive, portMAX_DELAY);
@@ -621,6 +630,7 @@ void BitmappedDisplayController::primitivesExecutionWait()
 // Cannot be nested
 void BitmappedDisplayController::enableBackgroundPrimitiveExecution(bool value)
 {
+  AGON_STOCK_FOREGROUND_GUARD;
   if (value != m_backgroundPrimitiveExecutionEnabled) {
     if (value) {
       resumeBackgroundPrimitiveExecution();
@@ -637,6 +647,7 @@ void BitmappedDisplayController::enableBackgroundPrimitiveExecution(bool value)
 // Do not call inside ISR
 void IRAM_ATTR BitmappedDisplayController::processPrimitives()
 {
+  AGON_STOCK_FOREGROUND_GUARD;
   suspendBackgroundPrimitiveExecution();
   Rect updateRect = Rect(SHRT_MAX, SHRT_MAX, SHRT_MIN, SHRT_MIN);
   Primitive prim;
@@ -651,7 +662,10 @@ void IRAM_ATTR BitmappedDisplayController::processPrimitives()
 
 void BitmappedDisplayController::setSprites(Sprite * sprites, int count, int spriteSize)
 {
+  AGON_STOCK_FOREGROUND_GUARD;
   suspendBackgroundPrimitiveExecution();
+  { // AGON_STOCK_NATIVE_SCOPE
+  AGON_STOCK_NATIVE_GUARD;
   auto updateRect = Rect(0, 0, getViewPortWidth() - 1, getViewPortHeight() - 1);
   hideSprites(updateRect);
   m_spritesCount = 0;
@@ -678,6 +692,7 @@ void BitmappedDisplayController::setSprites(Sprite * sprites, int count, int spr
         sprite->savedBackground = (uint8_t*) realloc(sprite->savedBackground, reqBackBufferSize);
     }
   }
+  } // AGON_STOCK_NATIVE_SCOPE
   resumeBackgroundPrimitiveExecution();
   Primitive p(PrimitiveCmd::RefreshSprites);
   addPrimitive(p);
@@ -699,6 +714,7 @@ void BitmappedDisplayController::refreshSprites()
 
 void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 {
+  AGON_STOCK_NATIVE_GUARD;
   if (!m_spritesHidden) {
     m_spritesHidden = true;
 
@@ -725,6 +741,7 @@ void IRAM_ATTR BitmappedDisplayController::hideSprites(Rect & updateRect)
 
 void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
 {
+  AGON_STOCK_NATIVE_GUARD;
   if (m_spritesHidden) {
     m_spritesHidden = false;
     auto options = paintState().paintOptions;
@@ -761,6 +778,7 @@ void IRAM_ATTR BitmappedDisplayController::showSprites(Rect & updateRect)
 // cursor = nullptr -> disable mouse
 void BitmappedDisplayController::setMouseCursor(Cursor * cursor)
 {
+  AGON_STOCK_NATIVE_GUARD;
   if (cursor == nullptr || &cursor->bitmap != m_mouseCursor->getFrame()) {
     m_mouseCursor->visible = false;
     m_mouseCursor->clearBitmaps();
@@ -785,12 +803,14 @@ void BitmappedDisplayController::setMouseCursor(CursorName cursorName)
 
 void BitmappedDisplayController::setMouseCursorPos(int X, int Y)
 {
+  AGON_STOCK_NATIVE_GUARD;
   m_mouseCursor->moveTo(X - m_mouseHotspotX, Y - m_mouseHotspotY);
 }
 
 
 void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim, Rect & updateRect, bool insideISR)
 {
+  AGON_STOCK_NATIVE_GUARD;
   switch (prim.cmd) {
     case PrimitiveCmd::Flush:
       break;

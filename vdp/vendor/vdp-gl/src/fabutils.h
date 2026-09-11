@@ -49,6 +49,14 @@
 #endif
 
 
+// P4 task binding for the original dynamic primitive pool. Each alloc/free
+// is finite; the caller's retry/yield loop remains outside native exclusion.
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#include "extender/display/stock_native_access.hpp"
+#else
+#define AGON_STOCK_NATIVE_GUARD
+#endif
+
 namespace fabgl {
 
 
@@ -749,7 +757,7 @@ public:
   LightMemoryPool(int poolSize);
   ~LightMemoryPool();
   void * alloc(int size);
-  void free(void * mem) { if (mem) markFree((uint8_t*)mem - m_mem - 2); }
+  void free(void * mem) { AGON_STOCK_NATIVE_GUARD; if (mem) markFree((uint8_t*)mem - m_mem - 2); }
 
   bool memCheck();
   int totFree();      // get total free memory

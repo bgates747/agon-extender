@@ -1,0 +1,43 @@
+PASS VGA2 original packed row expansion and RGB222 normalization
+PASS VGA2 output row allocation boundaries
+PASS VGA2 Copper zero span, boundaries, final span and frame restart
+PASS VGA2 readback retains palette zero beneath Copper
+PASS VGA2 deleted palette's spans return to palette zero
+PASS VGA2 original text cursor XOR
+PASS VGA2 hardware sprite follows text cursor
+PASS VGA2 mouse follows hardware sprite
+PASS VGA2 decorators leave native framebuffer unchanged
+PASS VGA4 original packed row expansion and RGB222 normalization
+PASS VGA4 output row allocation boundaries
+PASS VGA4 Copper zero span, boundaries, final span and frame restart
+PASS VGA4 readback retains palette zero beneath Copper
+PASS VGA4 deleted palette's spans return to palette zero
+PASS VGA4 original text cursor XOR
+PASS VGA4 hardware sprite follows text cursor
+PASS VGA4 mouse follows hardware sprite
+PASS VGA4 decorators leave native framebuffer unchanged
+PASS VGA8 original packed row expansion and RGB222 normalization
+PASS VGA8 output row allocation boundaries
+PASS VGA8 Copper zero span, boundaries, final span and frame restart
+PASS VGA8 readback retains palette zero beneath Copper
+PASS VGA8 deleted palette's spans return to palette zero
+PASS VGA8 original text cursor XOR
+PASS VGA8 hardware sprite follows text cursor
+PASS VGA8 mouse follows hardware sprite
+PASS VGA8 decorators leave native framebuffer unchanged
+PASS VGA16 original packed row expansion and RGB222 normalization
+PASS VGA16 output row allocation boundaries
+PASS VGA16 Copper zero span, boundaries, final span and frame restart
+PASS VGA16 readback retains palette zero beneath Copper
+PASS VGA16 deleted palette's spans return to palette zero
+PASS VGA16 original text cursor XOR
+PASS VGA16 hardware sprite follows text cursor
+PASS VGA16 mouse follows hardware sprite
+PASS VGA16 decorators leave native framebuffer unchanged
+PASS VGA64 original packed row expansion and RGB222 normalization
+PASS VGA64 output row allocation boundaries
+PASS VGA64 original text cursor XOR
+PASS VGA64 hardware sprite follows text cursor
+PASS VGA64 mouse follows hardware sprite
+PASS VGA64 decorators leave native framebuffer unchanged
+Stock scanline comparisons: 42 checks, 0 failures

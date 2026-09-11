@@ -288,7 +288,11 @@ public:
 
   uint8_t createBlankRawPixel()                  { return m_HVSync; }
 
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  agon::extender::display::StockFrameCounter frameCounter;
+#else
   uint     frameCounter = 0;
+#endif
 
 
 protected:

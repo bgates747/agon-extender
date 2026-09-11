@@ -1,7 +1,7 @@
 #ifndef AGON_SCREEN_H
 #define AGON_SCREEN_H
 
-// AGON EXTENDER PATCH — PORT-003 Phase E
+// AGON EXTENDER PATCH — PORT-003 stock restoration (R2)
 // Upstream: agon-vdp v2.16.0, video/agon_screen.h.
 // Decisions: ADR-0013 decisions 16-18 and ADR-0015.
 // This is the one accepted narrow patch to the official screen facade. It
@@ -24,13 +24,30 @@ using fabgl::RGB888;
 #include "agon.h"								// Agon definitions
 #include "agon_palette.h"						// Colour lookup table
 #include "extender/display/cursor_position_adapter.hpp"
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#include "extender/display/stock_p4_service.hpp"
+#else
 #include "extender/display/p4_frame_service.hpp"
+#endif
 #include "extender/display/screen_facade_adapter.hpp"
 
 std::unique_ptr<fabgl::Canvas>	canvas;			// The canvas class
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+// Service/snapshots outlive each native depth. Only the parser changes modes;
+// detach joins both native owners before Canvas/controller replacement.
+std::unique_ptr<agon::extender::display::StockRuntimeController> _stockController;
+fabgl::VGAPalettedController * _VGAController = nullptr;
+std::unique_ptr<agon::extender::display::StockP4Service> _stockFrameService;
+inline fabgl::BitmappedDisplayController * activeDisplayController() { return _VGAController; }
+inline auto & displaySnapshotPool() { return _stockFrameService->snapshotPool(); }
+#else
 std::unique_ptr<agon::extender::display::P4DisplayController>	_VGAController;		// Upstream-shaped active controller owner
 std::unique_ptr<agon::extender::display::P4FrameService>	_P4FrameService;
 std::unique_ptr<agon::extender::display::ScreenFacadeAdapter>	_screenFacadeAdapter;
+
+inline fabgl::BitmappedDisplayController * activeDisplayController() { return _VGAController.get(); }
+inline auto & displaySnapshotPool() { return _VGAController->snapshotPool(); }
+#endif
 
 #include "agon_ttxt.h"
 
@@ -56,6 +73,7 @@ void setLegacyModes(bool legacy) {
 // Returns:
 // - A singleton instance of a VGAController class
 //
+#if !defined(AGON_EXTENDER_STOCK_RUNTIME)
 std::unique_ptr<agon::extender::display::P4DisplayController> getVGAController(uint8_t colours) {
 	agon::extender::display::NativePixelFormat format;
 	if (!agon::extender::display::nativeFormatForColourDepth(colours, format)) {
@@ -66,6 +84,7 @@ std::unique_ptr<agon::extender::display::P4DisplayController> getVGAController(u
 			agon::extender::display::defaultDisplayAllocator(),
 			agon::extender::display::defaultSnapshotAllocator()));
 }
+#endif
 
 // Update the internal FabGL LUT
 //
@@ -95,7 +114,11 @@ void deletePalette(uint16_t paletteId) {
 //
 void setItemInPalette(uint16_t paletteId, uint8_t index, RGB888 colour) {
 	if (_VGAColourDepth <= 16) {
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+		_VGAController->setItemInPalette(paletteId, index, colour);
+#else
 		_VGAController->setItemInPalette(paletteId, index, colour.R, colour.G, colour.B);
+#endif
 	}
 }
 
@@ -121,7 +144,11 @@ inline uint8_t getVGAColourDepth() {
 void setPaletteItem(uint8_t l, RGB888 c) {
 	auto depth = getVGAColourDepth();
 	if (l < depth && depth <= 16) {
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+		_VGAController->setItemInPalette(0, l, c);
+#else
 		_VGAController->setItemInPalette(0, l, c.R, c.G, c.B);
+#endif
 	}
 }
 
@@ -203,6 +230,26 @@ bool updateVGAController(uint8_t colours) {
 	if (!agon::extender::display::nativeFormatForColourDepth(colours, format)) {
 		return false;
 	}
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+	if (!_stockFrameService) {
+		using namespace agon::extender::display;
+		Allocator outputAllocator{nullptr,
+			[](void *, std::size_t n) -> void * { return heap_caps_malloc(n, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM); },
+			[](void *, void * p) { heap_caps_free(p); }};
+		_stockFrameService.reset(new StockP4Service(outputAllocator));
+	}
+	_stockFrameService->detach(); // clock continues through native mode allocation
+	resetMousePositioner(0, 0, nullptr);
+	canvas.reset();
+	if (!_stockController || colours != _VGAColourDepth) {
+		_VGAController = nullptr;
+		_stockController.reset(); // original native aliases require one active instance
+		_stockController = agon::extender::display::makeStockRuntimeController(colours);
+		if (!_stockController) return false;
+		_VGAController = &_stockController->paletted();
+		_VGAController->begin();
+	}
+#else
 	if (_VGAController) {
 		return true;
 	}
@@ -214,6 +261,8 @@ bool updateVGAController(uint8_t colours) {
 	_screenFacadeAdapter.reset(new agon::extender::display::ScreenFacadeAdapter(
 		*_VGAController,
 		agon::extender::display::bindFrameService(*_P4FrameService)));
+
+#endif
 
 	return true;
 }
@@ -238,17 +287,27 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 		debug_log("changeResolution: modeLine is null\n\r");
 		return 2;
 	}
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+	// Retain official modelines and their nominal output period. Original
+	// setResolution owns native geometry/allocation; official vdu_mode owns
+	// requested/old/mode-1 fallback. No generic storage or drawing conversion.
+	agon::extender::display::OfficialModeLine timing{};
+	if (!agon::extender::display::parseOfficialModeline(modeLine, timing)) return 2;
+	_VGAController->setResolution(modeLine, -1, -1, doubleBuffered);
+	if (!_stockFrameService->startClock(agon::extender::display::periodForRefresh(timing.refresh_hz))) return 2;
+#else
 	auto configureResult = _screenFacadeAdapter->configure(colours, modeLine, doubleBuffered);
 	if (configureResult != agon::extender::display::FacadeConfigureResult::Ok) {
 		debug_log("changeResolution: P4 configure failed %d\n\r", (int) configureResult);
 		return configureResult == agon::extender::display::FacadeConfigureResult::InvalidColourDepth ? 1 : 2;
 	}
+#endif
 	_VGAColourDepth = colours;
 
 	_VGAController->enableBackgroundPrimitiveExecution(true);
 	_VGAController->enableBackgroundPrimitiveTimeout(false);
 
-	canvas.reset(new fabgl::Canvas(_VGAController.get()));		// Create the new canvas
+	canvas.reset(new fabgl::Canvas(activeDisplayController()));		// Create the new canvas
 	debug_log("after change of canvas...\n\r");
 	debug_log("  free internal: %d\n\r  free 8bit: %d\n\r  free 32bit: %d\n\r",
 		heap_caps_get_free_size(MALLOC_CAP_INTERNAL),
@@ -268,6 +327,9 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	if (_VGAController->getScreenHeight() != _VGAController->getViewPortHeight()) {
 		return 2;
 	}
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+	if (!_stockFrameService->attach(*_stockController)) return 2;
+#endif
 	// Return with no errors
 	return 0;
 }

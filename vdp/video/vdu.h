@@ -329,7 +329,7 @@ void VDUStreamProcessor::vdu_mode(uint8_t mode) {
 	if (mouseVisible) {
 		showMouseCursor();
 	}
-	resetMousePositioner(canvasW, canvasH, _VGAController.get());
+	resetMousePositioner(canvasW, canvasH, activeDisplayController());
 	if (mouseVisible) {
 		// update mouse variables from potentially revised mouse position
 		updateMouseVars(nullptr);

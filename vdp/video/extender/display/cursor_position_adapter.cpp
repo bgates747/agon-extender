@@ -5,7 +5,7 @@
 namespace agon::extender::display {
 
 bool CursorPositionAdapter::bind(std::uint16_t width, std::uint16_t height,
-                                 P4DisplayController *controller) noexcept {
+                                 CursorDisplayController *controller) noexcept {
   if (width == 0 || height == 0 || controller == nullptr) {
     controller_ = nullptr;
     width_ = height_ = x_ = y_ = 0;
@@ -25,9 +25,14 @@ CursorPositionResult CursorPositionAdapter::set(std::uint16_t x,
   if (width_ == 0 || height_ == 0) return CursorPositionResult::InvalidBounds;
   x_ = std::min<std::uint16_t>(x, width_ - 1);
   y_ = std::min<std::uint16_t>(y, height_ - 1);
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  controller_->setMouseCursorPos(x_, y_);
+  return CursorPositionResult::Ok;
+#else
   return controller_->setDisplayCursorPosition(x_, y_)
              ? CursorPositionResult::Ok
              : CursorPositionResult::CursorUnavailable;
+#endif
 }
 
 std::uint16_t CursorPositionAdapter::x() const noexcept { return x_; }

@@ -222,6 +222,7 @@ void Context::ensureCursorInViewport(Rect viewport) {
 // Text cursor sprite functions
 
 void Context::deleteTextCursor() {
+	AGON_STOCK_NATIVE_GUARD;
 	debug_log("Deleting text cursor sprite and bitmap\n");
 	_VGAController->setTextCursor(nullptr);
 	if (textCursorSprite != nullptr) {
@@ -236,6 +237,7 @@ void Context::deleteTextCursor() {
 }
 
 void Context::updateTextCursorBitmap() {
+	AGON_STOCK_NATIVE_GUARD;
 	// TODO: Cursor - when we support custom cursor bitmaps/sprites
 	//   we should just ensure that the sprite is properly set up...
 	// but for teletext mode we should not support custom text cursors
@@ -345,6 +347,7 @@ void Context::doCursorFlash() {
 		if (ttxtMode) {
 			ttxt_instance.flash();
 		}
+		AGON_STOCK_NATIVE_GUARD;
 		if (textCursorActive() && cursorEnabled && textCursorSprite != nullptr) {
 			textCursorSprite->visible = !textCursorSprite->visible;
 		}
@@ -389,6 +392,7 @@ inline void Context::enableCursor(uint8_t enable) {
 	}
 }
 inline void Context::hideCursor() {
+	AGON_STOCK_NATIVE_GUARD;
 	// Temporarily hide the cursor if it's visible
 	if (!cursorTemporarilyHidden && (textCursorSprite != nullptr) && textCursorSprite->visible) {
 		textCursorSprite->visible = false;
@@ -397,6 +401,7 @@ inline void Context::hideCursor() {
 }
 
 inline void Context::showCursor() {
+	AGON_STOCK_NATIVE_GUARD;
 	// Restore the cursor visibility if it was temporarily hidden
 	if ((textCursorSprite != nullptr) && cursorTemporarilyHidden) {
 		textCursorSprite->visible = true;

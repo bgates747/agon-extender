@@ -280,7 +280,7 @@ void setup() {
 		} else {
 			browserVideoProvider.reset(
 				new agon::extender::web::BrowserVideoProvider(
-					_VGAController->snapshotPool()));
+					displaySnapshotPool()));
 			wiredNetworkService.reset(
 				new agon::extender::network::WiredNetworkService(
 					*browserVideoProvider));
@@ -308,7 +308,7 @@ void loop() {
 				agon::extender::transport::logP4QualificationStatus();
 				#endif
 				if (_VGAController != nullptr) {
-					auto const snapshot = _VGAController->snapshotPool().metrics();
+					auto const snapshot = displaySnapshotPool().metrics();
 					ESP_LOGI("extender_snapshot",
 						"enabled=%u alloc_fail=%u cadence=%u transition=%u "
 						"producer_busy=%u no_slot=%u compose_fail=%u "
@@ -559,7 +559,7 @@ bool processTerminal() {
 		case TerminalState::Enabling: {
 			// Turn on the terminal
 			Terminal = std::unique_ptr<fabgl::Terminal>(new fabgl::Terminal());
-			Terminal->begin(_VGAController.get());
+			Terminal->begin(activeDisplayController());
 			Terminal->connectSerialPort(VDPSerial);
 			Terminal->enableCursor(true);
 			// onVirtualKey is triggered whenever a key is pressed or released

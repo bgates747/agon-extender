@@ -1,7 +1,7 @@
 // PORT-003 R1: select the original native-row implementation without the
 // classic ESP32 physical engine. Drawing/palette methods remain upstream.
-// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous and never deployable; R2
-// must bind independent output before this enters an ordinary console.
+// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous. STOCK_RUNTIME shares only
+// this native allocation/peripheral exclusion and binds its own worker/output.
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -37,7 +37,7 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "soc/i2s_struct.h"
 #include "soc/i2s_reg.h"
 #include "driver/periph_ctrl.h"
@@ -48,7 +48,7 @@
 
 #include "fabutils.h"
 #include "vgapalettedcontroller.h"
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "devdrivers/swgenerator.h"
 #endif
 
@@ -129,7 +129,11 @@ void VGAPalettedController::checkViewPortSize()
 
 void VGAPalettedController::allocateViewPort()
 {
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  VGABaseController::allocateViewPort(MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+#else
   VGABaseController::allocateViewPort(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+#endif
 
   for (int i = 0; i < m_linesCount; ++i)
     m_lines[i] = (uint8_t*) heap_caps_malloc(m_viewPortWidth, MALLOC_CAP_DMA);
@@ -165,7 +169,7 @@ void VGAPalettedController::setResolution(VGATimings const& timings, int viewPor
   uint16_t signalList[2] = { 0, 0 };
   updateSignalList(signalList, 1);
 
-#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
   calculateAvailableCyclesForDrawings();
 
   // must be started before interrupt alloc
@@ -223,6 +227,7 @@ void VGAPalettedController::setPaletteItem(int index, RGB888 const & color)
 
 void VGAPalettedController::setItemInPalette(uint16_t paletteId, int index, RGB888 const & color)
 {
+  AGON_STOCK_NATIVE_GUARD;
   if (m_signalMaps.find(paletteId) == m_signalMaps.end()) {
     if (!createPalette(paletteId)) {
       return;
@@ -241,6 +246,7 @@ void VGAPalettedController::setItemInPalette(uint16_t paletteId, int index, RGB8
 // rebuild m_packedRGB222_to_PaletteIndex
 void VGAPalettedController::updateRGB2PaletteLUT()
 {
+  AGON_STOCK_NATIVE_GUARD;
   auto paletteSize = getPaletteSize();
   for (int r = 0; r < 4; ++r)
     for (int g = 0; g < 4; ++g)
@@ -270,6 +276,7 @@ void VGAPalettedController::updateRGB2PaletteLUT()
 
 bool VGAPalettedController::createPalette(uint16_t paletteId)
 {
+  AGON_STOCK_PALETTE_GUARD;
   if (m_signalTableSize == 0) {
     return false;
   }
@@ -294,6 +301,7 @@ bool VGAPalettedController::createPalette(uint16_t paletteId)
 
 void VGAPalettedController::deletePalette(uint16_t paletteId)
 {
+  AGON_STOCK_PALETTE_GUARD;
   if (paletteId == 0) {
     return;
   }
@@ -330,6 +338,7 @@ void VGAPalettedController::deleteSignalList(PaletteListItem * item)
 
 void VGAPalettedController::updateSignalList(uint16_t * rawList, int entries)
 {
+  AGON_STOCK_PALETTE_GUARD;
   // Walk list, updating existing signal list
   // creating new list if we exceed the current list,
   // deleting any remaining items if we have fewer entries

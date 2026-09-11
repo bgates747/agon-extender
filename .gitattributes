@@ -4,6 +4,9 @@
 vdp/video/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
 vdp/vendor/** whitespace=-blank-at-eol,-blank-at-eof,-space-before-tab
 vdp/video/extender/** whitespace=blank-at-eol,blank-at-eof,space-before-tab
+# The scanline extraction retains exact upstream bytes; its source-span verifier
+# checks that content. Do not strip inherited blank-line spaces from these bodies.
+vdp/video/extender/display/stock_scanline.cpp whitespace=-blank-at-eol
 
 # Qualification serial captures retain device-native bytes (including CRLF)
 # so their recorded evidence hashes remain meaningful.
