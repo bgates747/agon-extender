@@ -1,5 +1,11 @@
 # PORT-003 Phase B contracts
 
+Historical implementation contract. On 2026-09-10 the Author reopened the
+generic-controller, project-codec and fixed-row plane choices under
+[AUDIT-006](../../AUDIT-006.md). The definitions below remain tied to their
+original evidence; they do not constrain the fidelity audit's recommended
+backend. Current direction is recorded in ADR-0013/ADR-0015 and architecture.
+
 This document freezes the project-owned contracts required before Phase B
 implementation. It is scoped to synchronous logical storage and rendering;
 later phases may extend these contracts without weakening the behavior below.

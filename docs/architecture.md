@@ -79,18 +79,31 @@ waits and counters, callbacks, and mode failure/fallback behavior as closely as
 practical. The old GPIO-matrix, I2S1, DMA-chain, and VSync-ISR engine remains
 vendored reference material, not the P4 physical backend.
 
-The replacement is one project-owned `GenericBitmappedDisplayController`
-configured with the stock native pixel codecs. The initial compatibility
-backend retains packed 2-, 4-, 8-, and 16-color storage and the logical RGB222
-contract for 64-color modes; physical VGA sync bits do not belong to P4 logical
-storage. The official facade receives only narrow concrete-type,
-palette/Copper, frame-counter, and cursor-position binding adaptations.
+The video backend preserves stock framebuffer formats, memory organization,
+row access, rendering algorithms and fast paths as faithfully as possible.
+Reuse upstream code exactly wherever processor facilities and video-output
+interfaces permit it, including portable code within the old concrete VGA
+classes. Differences require a specific evidenced processor/output dependency;
+generic abstractions, browser serialization and an existing project design do
+not by themselves justify replacement.
+
+The current generic controller, project pixel codecs and flat logical planes
+are implementation choices subject to that rule, not mandatory architecture.
+Retain stock native packing, palette/Copper behavior, bitmap save/readback,
+sprites, cursors, buffering, completion and mode contracts. Contiguous allocation
+may coexist with a logical row-pointer table. Browser and later local-display
+adapters produce their required output representation at the output boundary;
+they do not require the drawing framebuffer to share that representation.
+ADR-0013 and ADR-0015 record the Author's fidelity direction. AUDIT-006 owns
+the source comparison and remaining concrete binding decisions.
 
 A periodic P4 logical frame clock and frame-service task advance official VDP
-time independently of every output sink. That service owns queued primitive
-execution through the unchanged common controller, logical frame progression,
-and presentation publication. Each recorded tick receives its own logical edge
-rather than being coalesced. Physical sink callbacks may recycle sink buffers
+time independently of every output sink. P4 preserves queued primitive
+execution through the unchanged common controller, logical frame progression
+and presentation publication, while maintaining stock's separation between
+drawing progress and periodic display progression. Frame counting/output
+opportunities must not wait for a continuously replenished drawing queue to
+empty. Physical sink callbacks may recycle sink buffers
 but do not advance the VDP frame counter or unblock logical swaps.
 On a service opportunity, P4 drains queued drawing in FIFO order until empty
 or suspended, matching stock VDP's background worker with its timeout disabled.

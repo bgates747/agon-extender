@@ -1,0 +1,414 @@
+{
+  "run_id": "AUDIT-006-2026-09-10-23-26-53Z",
+  "build_id": "uart-excom-console-r09-b2026-09-10-23-19-51Z",
+  "factory_sha256": "5c34449adf7369e6b9eddc554f39f586b2f61ca802946a60a9c1614445fbd2ec",
+  "emos_build": "agon-emos-v0.1.12-b2026-09-10-03-50-35Z",
+  "nurples_sha256": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088",
+  "raw_sha256": "472960b70ab7b4b9afe389da59ce42559c728119f1279c90aada6a1bf8038aaa",
+  "private_binding_sha256": "0ecab58cbf2673218a50f4b3c209ae5cc360e0d8a18e95758145c2fb3a3851cc",
+  "first_sample_at": "2026-09-10T23:26:53.216970+00:00",
+  "last_sample_at": "2026-09-10T23:29:54.574723+00:00",
+  "end": {
+    "kind": "end",
+    "host_at": "2026-09-10T23:29:54.776138+00:00",
+    "reason": "operator finished",
+    "samples": 179,
+    "failed_requests": 0,
+    "markers": 4
+  },
+  "valid_aggregate_samples": 178,
+  "http_median_ms": 4.479896,
+  "http_max_ms": 15.886335,
+  "monotonic_time_and_totals": true,
+  "loss": {
+    "completion_records_before": 12,
+    "completion_records_after": 18,
+    "overlapping_calls": 0,
+    "busy_reads": 1,
+    "history_overwritten": 3939,
+    "inconsistent_live_observations": 0
+  },
+  "phases": {
+    "frame": {
+      "delta": {
+        "count": 10316,
+        "total_us": 129153812,
+        "units": 338984
+      },
+      "maximum_completed_us": 41813418,
+      "maximum_started_us": 456380447,
+      "maximum_context": 1,
+      "maximum_observed_active_age_us": 41034005,
+      "last_active": {
+        "state": 2,
+        "generation": 29928,
+        "start_us": 499264644,
+        "context": 1,
+        "age_us": 9359157,
+        "consistent": true
+      }
+    },
+    "queue": {
+      "delta": {
+        "count": 5522,
+        "total_us": 104551399,
+        "units": 338984
+      },
+      "maximum_completed_us": 41758495,
+      "maximum_started_us": 456380455,
+      "maximum_context": 0,
+      "maximum_observed_active_age_us": 41033997,
+      "last_active": {
+        "state": 2,
+        "generation": 25134,
+        "start_us": 499264652,
+        "context": 0,
+        "age_us": 9359149,
+        "consistent": true
+      }
+    },
+    "sprites": {
+      "delta": {
+        "count": 5522,
+        "total_us": 32125,
+        "units": 0
+      },
+      "maximum_completed_us": 1014,
+      "maximum_started_us": 442997660,
+      "maximum_context": 0,
+      "maximum_observed_active_age_us": 0,
+      "last_active": {
+        "state": 0,
+        "generation": 25133,
+        "start_us": 499253640,
+        "context": 0,
+        "age_us": 0,
+        "consistent": true
+      }
+    },
+    "snapshot": {
+      "delta": {
+        "count": 469,
+        "total_us": 24492100,
+        "units": 0
+      },
+      "maximum_completed_us": 141683,
+      "maximum_started_us": 358692984,
+      "maximum_context": 307200,
+      "maximum_observed_active_age_us": 133453,
+      "last_active": {
+        "state": 0,
+        "generation": 469,
+        "start_us": 499198806,
+        "context": 196608,
+        "age_us": 0,
+        "consistent": true
+      }
+    },
+    "suspend": {
+      "delta": {
+        "count": 18,
+        "total_us": 67,
+        "units": 0
+      },
+      "maximum_completed_us": 6,
+      "maximum_started_us": 361215192,
+      "maximum_context": 1,
+      "maximum_observed_active_age_us": 0,
+      "last_active": {
+        "state": 0,
+        "generation": 22,
+        "start_us": 498993651,
+        "context": 1,
+        "age_us": 0,
+        "consistent": true
+      }
+    },
+    "parser": {
+      "delta": {
+        "count": 39513,
+        "total_us": 130378427,
+        "units": 1746328
+      },
+      "maximum_completed_us": 2040792,
+      "maximum_started_us": 363650565,
+      "maximum_context": 1,
+      "maximum_observed_active_age_us": 1301285,
+      "last_active": {
+        "state": 2,
+        "generation": 366313,
+        "start_us": 508615932,
+        "context": 1,
+        "age_us": 7869,
+        "consistent": true
+      }
+    },
+    "tx_enqueue": {
+      "delta": {
+        "count": 3388,
+        "total_us": 238814,
+        "units": 112052
+      },
+      "maximum_completed_us": 155510,
+      "maximum_started_us": 415545889,
+      "maximum_context": 30,
+      "maximum_observed_active_age_us": 0,
+      "last_active": {
+        "state": 0,
+        "generation": 3388,
+        "start_us": 508615901,
+        "context": 30,
+        "age_us": 0,
+        "consistent": true
+      }
+    },
+    "tx_complete": {
+      "delta": {
+        "count": 3387,
+        "total_us": 16945,
+        "units": 0
+      },
+      "maximum_completed_us": 34,
+      "maximum_started_us": 446896886,
+      "maximum_context": 0,
+      "maximum_observed_active_age_us": 0,
+      "last_active": {
+        "state": 0,
+        "generation": 3387,
+        "start_us": 508615890,
+        "context": 0,
+        "age_us": 0,
+        "consistent": true
+      }
+    }
+  },
+  "completed_drains_over_one_second": [
+    {
+      "phase": "queue",
+      "start_us": 381807223,
+      "duration_us": 21177398,
+      "context": 0,
+      "units": 17812
+    },
+    {
+      "phase": "queue",
+      "start_us": 417363013,
+      "duration_us": 24462100,
+      "context": 0,
+      "units": 95082
+    },
+    {
+      "phase": "queue",
+      "start_us": 445284747,
+      "duration_us": 9694773,
+      "context": 0,
+      "units": 38605
+    },
+    {
+      "phase": "queue",
+      "start_us": 456380455,
+      "duration_us": 41758495,
+      "context": 0,
+      "units": 163069
+    }
+  ],
+  "longest_drain_observed_interior": {
+    "first_host_at": "2026-09-10T23:29:02.603025+00:00",
+    "last_host_at": "2026-09-10T23:29:43.365398+00:00",
+    "valid_samples": 41,
+    "duration_us": 40762339,
+    "progress": {
+      "frame": {
+        "count": 0,
+        "units": 0
+      },
+      "queue": {
+        "count": 0,
+        "units": 0
+      },
+      "sprites": {
+        "count": 0,
+        "units": 0
+      },
+      "snapshot": {
+        "count": 0,
+        "units": 0
+      },
+      "suspend": {
+        "count": 0,
+        "units": 0
+      },
+      "parser": {
+        "count": 1356,
+        "units": 474404
+      },
+      "tx_enqueue": {
+        "count": 1343,
+        "units": 49382
+      },
+      "tx_complete": {
+        "count": 1343,
+        "units": 0
+      }
+    }
+  },
+  "markers": [
+    {
+      "index": 1,
+      "host_at": "2026-09-10T23:28:48.167225+00:00",
+      "note": "hang noticed",
+      "brackets": [
+        {
+          "side": "before",
+          "host_at": "2026-09-10T23:28:47.302209+00:00",
+          "now_us": 441351236,
+          "marker_offset_ms": -865.058335,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25001,
+            "start_us": 417363013,
+            "context": 0,
+            "age_us": 23988223,
+            "consistent": true
+          },
+          "snapshot_count": 436
+        },
+        {
+          "side": "after",
+          "host_at": "2026-09-10T23:28:48.315368+00:00",
+          "now_us": 442376430,
+          "marker_offset_ms": 148.105532,
+          "totals_valid": false,
+          "queue_active": {
+            "state": 2,
+            "generation": 25004,
+            "start_us": 442351324,
+            "context": 0,
+            "age_us": 25106,
+            "consistent": true
+          },
+          "snapshot_count": null
+        }
+      ]
+    },
+    {
+      "index": 2,
+      "host_at": "2026-09-10T23:28:53.272911+00:00",
+      "note": "hang noticed",
+      "brackets": [
+        {
+          "side": "before",
+          "host_at": "2026-09-10T23:28:52.402595+00:00",
+          "now_us": 446451797,
+          "marker_offset_ms": -870.363016,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25016,
+            "start_us": 445284747,
+            "context": 0,
+            "age_us": 1167050,
+            "consistent": true
+          },
+          "snapshot_count": 451
+        },
+        {
+          "side": "after",
+          "host_at": "2026-09-10T23:28:53.418873+00:00",
+          "now_us": 447467876,
+          "marker_offset_ms": 145.917063,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25016,
+            "start_us": 445284747,
+            "context": 0,
+            "age_us": 2183129,
+            "consistent": true
+          },
+          "snapshot_count": 451
+        }
+      ]
+    },
+    {
+      "index": 3,
+      "host_at": "2026-09-10T23:29:05.415826+00:00",
+      "note": "hang noticed",
+      "brackets": [
+        {
+          "side": "before",
+          "host_at": "2026-09-10T23:29:04.643522+00:00",
+          "now_us": 458692594,
+          "marker_offset_ms": -772.355428,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25083,
+            "start_us": 456380455,
+            "context": 0,
+            "age_us": 2312139,
+            "consistent": true
+          },
+          "snapshot_count": 461
+        },
+        {
+          "side": "after",
+          "host_at": "2026-09-10T23:29:05.659885+00:00",
+          "now_us": 459708924,
+          "marker_offset_ms": 244.007921,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25083,
+            "start_us": 456380455,
+            "context": 0,
+            "age_us": 3328469,
+            "consistent": true
+          },
+          "snapshot_count": 461
+        }
+      ]
+    },
+    {
+      "index": 4,
+      "host_at": "2026-09-10T23:29:52.551939+00:00",
+      "note": "hang noticed",
+      "brackets": [
+        {
+          "side": "before",
+          "host_at": "2026-09-10T23:29:52.535885+00:00",
+          "now_us": 506584886,
+          "marker_offset_ms": -16.104754,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25134,
+            "start_us": 499264652,
+            "context": 0,
+            "age_us": 7320234,
+            "consistent": true
+          },
+          "snapshot_count": 469
+        },
+        {
+          "side": "after",
+          "host_at": "2026-09-10T23:29:53.555007+00:00",
+          "now_us": 507604055,
+          "marker_offset_ms": 1003.01542,
+          "totals_valid": true,
+          "queue_active": {
+            "state": 2,
+            "generation": 25134,
+            "start_us": 499264652,
+            "context": 0,
+            "age_us": 8339403,
+            "consistent": true
+          },
+          "snapshot_count": 469
+        }
+      ]
+    }
+  ],
+  "compressed_raw_sha256": "faaa1a74e050c4c7a1297fc1eddfd6e04cb2cf927498881ad03dbc35314cf3d4"
+}

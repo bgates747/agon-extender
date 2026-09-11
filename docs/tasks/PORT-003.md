@@ -1,5 +1,22 @@
 # PORT-003 — Implement the P4 display backend and logical frame service
 
+## Governing priority — faithful upstream backend, 2026-09-10
+
+The Author has made [AUDIT-006](AUDIT-006.md) the first priority and expanded it
+to compare the entire stock video-generation backend with the selected P4
+implementation. Complete that source audit before choosing another local
+optimization or starting QUAL-003's benchmark. This task implements the
+subsequently accepted repair contract; it must not use the previous generic
+controller, flat planes or project pixel codecs as constraints on that review.
+
+Reuse upstream code exactly wherever processor facilities and video-output
+interfaces permit it. Portable algorithms within a VGA controller remain
+reuse candidates even when the physical engine cannot run on P4. Native memory
+layout, row operations and efficient execution are part of fidelity, beyond
+matching final pixels. ADR-0013/ADR-0015 and the architecture now make this
+explicit. Existing phase definitions/evidence describe their identified builds;
+their broader replacement choices are reopened under AUDIT-006-D001/D002.
+
 ## Active correction — stock queue draining, 2026-09-10
 
 **PORT-003-D013 — Accepted:** remove the P4 primitive-count limit. On each
@@ -35,6 +52,17 @@ core-affinity or drawing-budget change is authorized by these observations.
 The Author subsequently authorized [AUDIT-006](AUDIT-006.md) to instrument
 those intervals and reproduce the hang. It owns diagnostic deployment and
 evidence; this display task still owns the eventual reviewed correction.
+
+[AUDIT-006-F001](AUDIT-006/findings.md) now attributes the demonstrated freezes:
+one drawing-drain invocation lasted 41.758495 seconds while Agon UART traffic
+continued and no new snapshot completed. P4 ties publication and subsequent
+logical-frame service to emptying a continuously replenished drawing queue.
+The proposed correction is to separate periodic frame/output servicing from
+that condition, preserving FIFO, explicit completion/swap and snapshot ownership.
+This is a proposal for review, not an amendment of D013 or a selected budget/core
+change. The Author proposes deterministic callback-timed graphics comparisons
+under QUAL-003 as a measurement direction. The later fidelity-audit instruction
+above now takes precedence; the benchmark remains a draft on hold.
 
 ## Current increment — RGB222 browser video, 2026-09-10
 

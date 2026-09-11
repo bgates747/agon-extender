@@ -1,5 +1,10 @@
 # PORT-003 Phase F contracts
 
+Historical implementation contract. [AUDIT-006](../../AUDIT-006.md) now reviews
+the framebuffer-to-output boundary for maximum upstream reuse. Browser-facing
+snapshot layout does not dictate drawing-row organization. Existing evidence
+remains tied to this implementation; current direction is ADR-0013/ADR-0015.
+
 The Author accepted these contracts with the complete Phase F plan on
 2026-08-27. They govern implementation subject to the current
 [browser-video contract](../../../protocols/browser-video.md). The Author

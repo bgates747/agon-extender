@@ -1,10 +1,11 @@
 # ADR-0015 — P4 display backend and logical frame service
 
 - Status: Accepted
-- Completeness: Complete
+- Completeness: Partial
 - Date: 2026-08-22
 - Last amended: 2026-09-10
-- Related task: PORT-003
+- Related tasks: PORT-003, AUDIT-006
+- Open-decision tracker: AUDIT-006
 
 ## Context
 
@@ -22,17 +23,21 @@ swaps, callbacks, and a directly readable and writable 32-bit frame counter.
 
 The old implementation fuses those contracts to GPIO routing, I2S1, VGA sync
 bits, classic DMA descriptors, a physical VSYNC ISR, Xtensa coprocessor state,
-and cycle budgets tied to one core. None of those physical mechanisms is an
-appropriate P4 display abstraction. The P4 must also support no output sink,
+and cycle budgets tied to one core. Their hardware bindings require P4
+adaptation; portable rendering and memory algorithms remain reuse candidates
+even when located in the same classes. The P4 must also support no output sink,
 the guaranteed network/browser sink, and later local display sinks without
 creating separate VDP renderers or clocks.
 
 ## Decision
 
-1. Implement one Extender-owned concrete controller derived from
-   `fabgl::GenericBitmappedDisplayController`. Configure it with depth-specific
-   native pixel codecs rather than deriving it from the old
-   `VGABaseController`, `VGAPalettedController`, or five concrete VGA classes.
+1. Retain the maximum upstream video-backend code unchanged, including useful
+   concrete-controller state, native memory organization and fast operations.
+   Adapt only evidenced processor-facility and video-output-interface seams.
+   The prior requirement to implement one generic controller with project
+   pixel codecs is superseded by AUDIT-006-D001; it describes the existing
+   implementation, not a mandatory target structure. Exact P4 bindings follow
+   the source comparison and accepted dispositions tracked by AUDIT-006.
 2. Preserve the upstream `PALETTE2`, `PALETTE4`, `PALETTE8`, and `PALETTE16`
    packed formats for the initial compatible backend. Preserve the logical
    RGB222 and native-save contract for 64-color modes while excluding physical
@@ -54,16 +59,16 @@ creating separate VDP renderers or clocks.
    completion waiting, immediate double-buffered drawing, swap execution, and
    submitter-notification ordering unless a later compatibility decision
    explicitly authorizes different behavior.
-6. Process each recorded logical frame edge independently. At each edge,
-   advance the writable 32-bit compatibility counter by one, drain queued
-   drawing through the retained common controller until empty or suspended,
-   then publish the newest
-   presentation generation. Do not coalesce multiple elapsed ticks into one
-   renderer pass in the strict-compatible baseline. Sinks never own or block
-   logical time. Match the selected stock VDP background drain with its
-   timeout disabled: no fixed primitive-count or elapsed-time budget limits
-   that drain. Suspension is observed between primitive executions; immediate
-   completion and double-buffer/swap semantics remain unchanged.
+6. Preserve stock's distinction between drawing-queue execution and periodic
+   display progression. A continuously replenished drawing queue must not make
+   frame counting and output opportunities wait for global queue emptiness.
+   Sinks never own or block logical time. Match the selected stock background
+   drain with its timeout disabled; do not add a primitive-count or elapsed-time
+   budget. Preserve suspension, immediate completion and double-buffer/swap
+   semantics. The prior serial ordering of frame edge, complete queue drain and
+   publication is superseded where it violates this distinction, as demonstrated
+   by AUDIT-006-F001. This states the fidelity requirement; the concrete P4
+   execution arrangement remains under AUDIT-006's source review.
 7. Implement one central presentation compositor for every sink. It decodes
    native logical pixels, selects palette state by Copper scanline, converts
    to a requested output format, and adds hardware sprites and cursors without
@@ -119,11 +124,21 @@ AUDIT-005's point-workload accounting and wire measurements exposed its
 throughput cost. The Author selected stock drain behavior directly; tick
 accounting, core affinity and consumer policies are separate from this change.
 
+The subsequent 2026-09-10 fidelity clarification makes exact upstream reuse
+the default throughout video generation. Contiguous allocation does not require
+fixed logical row order, and a separate presentation snapshot does not require
+the drawing storage to match its wire layout. Functional pixel tests alone do
+not justify replacing native row operations with generic per-pixel code.
+Physical adaptation is a narrow dependency requirement, not blanket permission
+to redesign the concrete backend. Existing implementation and qualification
+records remain evidence of their identified builds.
+
 ## Consequences
 
-1. The P4 build will not link the classic VGA physical controllers even though
-   their complete tagged source remains vendored for provenance and merge
-   review.
+1. The P4 build excludes the classic-ESP32 physical output engines. Their
+   complete tagged source remains available for provenance, merge review and
+   exact reuse of portable controller code; file/class location alone does not
+   determine what is reusable.
 2. `agon_screen.h` requires a small, prominent P4 binding patch, and official
    frame-counter and cursor-position couplings require explicit compatibility
    seams.

@@ -1,5 +1,11 @@
 # PORT-003 Phase C contracts
 
+Historical implementation contract. The 2026-09-10 AUDIT-006 fidelity review
+reopens the execution/publication arrangement below. ADR-0015 now requires
+stock's separation of periodic display progression from queue draining;
+existing evidence retains its original ordering and does not establish that
+separation. See [AUDIT-006](../../AUDIT-006.md) for the current source-audit work.
+
 These contracts freeze logical frame behavior before implementation. They
 extend the qualified Phase B renderer without defining presentation pixels, an
 official mode facade, or an output sink.

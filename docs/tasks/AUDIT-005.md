@@ -2,7 +2,7 @@
 
 ## State
 
-- Status: W1–W9 findings accepted; W10 results and reported game regression frozen for the Author-authorized AUDIT-006 timing investigation. All 48 cases and Legacy keyboard pass, but ordinary-query stalls and substantial Nurples hangs remain. No corrective firmware change selected.
+- Status: W1–W9 findings accepted; W10 results and reported game regression preserved. AUDIT-006 has completed the bounded timing investigation and now owns the priority-one full video-backend fidelity audit. All 48 cases and Legacy keyboard pass, but ordinary-query stalls and substantial Nurples hangs remain. No further corrective firmware change selected.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
 - Finished: --

@@ -4,7 +4,7 @@
 - Completeness: Complete
 - Date: 2026-08-20
 - Last amended: 2026-09-10
-- Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-005, PORT-007, REMOTE-001
+- Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-003, PORT-005, PORT-007, REMOTE-001, AUDIT-006
 
 ## Context
 
@@ -100,9 +100,16 @@ ESP32-specific `esp32/ulp.h`.
     one output sink. Preserve stock mode dimensions, palette quantization,
     Copper scanline effects, sprite composition, readback, double buffering,
     frame waits and counters, callbacks, and mode failure/fallback behavior as
-    closely as practical. Reuse separable upstream algorithms where useful,
-    but do not retain the classic-ESP32 GPIO-matrix, I2S1, DMA-chain, or
-    VSync-ISR physical engine.
+    closely as practical. The Author clarified on 2026-09-10 that this means
+    retaining reusable code exactly as written, including native framebuffer
+    formats, row organization and fast paths inside concrete-controller files.
+    Replace only portions made unavailable by processor facilities or
+    video-output interfaces, such as classic GPIO-matrix, I2S1, DMA descriptor
+    and interrupt bindings. Excluding a physical engine does not exclude its
+    portable memory/rendering algorithms. A generic replacement controller or
+    browser-friendly drawing layout is not itself a requirement. AUDIT-006-D001
+    governs review of those earlier implementation choices; output adapters
+    consume the image without dictating a less faithful drawing backend.
 19. Omit vdp-gl's independently compiled `VGATextController` translation unit
     from Extender builds while retaining it unchanged in the complete vendored
     release. Official VDP text uses Canvas over the retained bitmapped path and

@@ -15,6 +15,16 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
+The Author's current first priority is a faithful stock video backend. Complete
+AUDIT-006's whole-backend source comparison before selecting further rendering
+changes or starting the proposed graphics/Nurples benchmark.
+
+- [ ] **AUDIT-006 — Audit stock video-backend fidelity and direct its restoration**
+  - Started: 2026-09-10
+  - Finished: --
+  - Status: Priority one. W6 first: audit the entire stock/P4 video backend, formats, memory organization and execution. Exact upstream reuse is required wherever processor/output differences permit it. Completed W1–W5 hang evidence remains part of this task.
+  - Details: [AUDIT-006](docs/tasks/AUDIT-006.md)
+
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
   - Started: 2026-09-10
   - Finished: --
@@ -27,21 +37,15 @@ initial Extender display. The USB schematic waits until 2026-09-10.
   - Status: W9/W10 measurements frozen for follow-up: point output improves but ordinary-query stalls remain and Nurples has large ExCom hangs. Further attribution moves to AUDIT-006; stock-reuse audit closure remains open.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
-- [ ] **AUDIT-006 — Measure P4 frame work during Nurples hangs**
-  - Started: 2026-09-10
-  - Finished: --
-  - Status: Authorized timing instrumentation, P4 diagnostic deployment and one game reproduction; no speculative scheduler or transport repair.
-  - Details: [AUDIT-006](docs/tasks/AUDIT-006.md)
-
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Stock drawing drain improves point throughput; full suite passes bounded checks, but ordinary-query stalls remain and Nurples now has substantial ExCom hangs. Gameplay regression under investigation; broader qualification open, no new budget/core/transport change selected.
+  - Status: Further backend changes follow the priority-one AUDIT-006 fidelity comparison. Generic-controller/flat-plane choices are under review; existing point results and publication-starvation finding remain valid evidence.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: EDP graphics-suite PASS accepted; mainboard BSP-28–30 artifacts recorded. Remaining: startup follow-up and generalized-callback/benchmark design. Wolf3D/audio parsing follow-up deferred to PORT-004.
+  - Status: EDP visual PASS retained. Draft graphics/Nurples benchmark is on hold behind AUDIT-006's full backend comparison; callback work and the input-pattern question are parked. Wolf3D/audio remains deferred.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**

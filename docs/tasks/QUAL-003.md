@@ -5,13 +5,18 @@
 Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.
 Mainboard BSP-28–30 artifacts are reference-display observations. A separate
 Wolf3D failure with EDP is deferred to PORT-004 at the Author's request.
-Startup follow-up and callback/benchmark design remain open. Author requested paired graphics fixtures after accepted
+Startup follow-up and callback/benchmark design remain open. The
+[draft benchmark contract](QUAL-003/benchmark-contract.md), including the
+Author's unattended one-minute Nurples request, is **on hold behind AUDIT-006's
+full stock/P4 video-backend fidelity audit**. Its input-pattern question and
+callback implementation are parked; it is not the current work contract.
+Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
 task silo, then render each page/stage on mainboard VDP first and EDP second,
 with one keypress pause after the pair. Native P4 USB remains the input source.
 The source checkout contains other active work and remains untouched.
 
-## Work items
+## Visual-comparison work items (accepted increment)
 
 1. Vendor exact source inputs with per-file provenance and preserve documented
    reference mismatches. Keep generated binaries/assets and review media local.
@@ -79,6 +84,23 @@ Capability discovery, cancellation/reset and stale-event behavior also require
 a contract. The Author explicitly requests further discussion; do not infer an
 event catalogue, arbitrary memory access, uploaded-code execution or a public
 ABI from the Pingo-specific carrier.
+
+The benchmark contract now proposes a bounded, experimental completion event
+and EMOS-owned mailbox as the initial measurement mechanism. This proposal
+requires review and does not settle the production callback model. The current
+EMOS rejection of the original Pingo keyboard carrier is documented below.
+
+QUAL-003-D004 — open, parked behind AUDIT-006: first unattended Nurples input pattern.
+Recommendation: ship centred in the visible playing field, stationary and
+firing off, with ordinary keyboard polling, scrolling, enemies and collision
+processing retained. This gives a repeatable first comparison without adding an
+input sequencer. Alternative: a fixed movement/fire script, which also exercises
+return UART traffic but adds sequencing and changes the workload. If selected,
+P4 must send ordinary keyboard packets through EMOS; the test must not write
+the game's key map or player controls directly. Revisit this after the audit;
+do not implement an assumed answer. The requested collision invulnerability,
+one-minute duration, automatic start/exit and disabled joystick are already
+part of the draft scope.
 
 ## Evidence and limits
 
@@ -328,3 +350,84 @@ while the task retains the named follow-ups. Firmware identities remain
 candidates; no measured performance result or broad game qualification is
 claimed. The generalized-callback direction is included in this checkpoint,
 with its interface still open for discussion.
+
+
+## Deterministic graphics timing revisited — 2026-09-10
+
+After the AUDIT-006 Nurples capture, the Author reports that delays were also
+visible in these graphics fixtures and proposes automating the deterministic
+suite and comparing completion times. The Author specifically proposes the
+Pingo-style callback mechanism on both renderers and recognizes that this
+requires temporary custom firmware on mainboard VDP and P4. This revisits the
+earlier deferred benchmark; the earlier statement that no mainboard replacement
+was implied describes that prior discussion, not a prohibition on this proposal.
+No benchmark implementation, mainboard build or flash has occurred here.
+
+The bounded proposal is to automate the vendored 24 Shapes pages and 123
+Bitmaps stages, execute the whole ordered suite on mainboard and then EDP,
+repeat from known per-renderer state, correlate each completion with its case,
+and save each result durably on the Agon SD. Remove interactive pauses and
+exclude deliberate settling, setup/asset I/O and file writes from the drawing
+interval while reporting their distinct costs where relevant. Preserve staged
+sprite/deferred-refresh/resource semantics. Time command submission separately
+from completion notification; renderer-local intervals need equivalent start/end
+boundaries and monotonic-clock conversion on each processor. Browser display
+arrival remains a different measurement. Small finite cases alone cannot prove
+that publication progresses under Nurples' sustained input.
+
+The [existing Pingo notification contract][pingo-notify] and its source emit a
+10-byte `P3DR` payload inside packet `0x81`, after a Pingo 3D render/output
+finishes. Its request token, sequence and application mailbox are useful
+precedent. Applying it to ordinary 2D drawing requires a verified queued-work
+completion boundary; simply invoking the existing Pingo render callback does
+not cover these fixtures or hardware-sprite scanout.
+
+One material integration constraint was verified against the installed EMOS
+v0.1.12 manifest: [emos_keyboard.c][emos-keyboard] validates mainboard key data
+before invoking the user callback, so the `P3DR` down byte is rejected. Its
+P4 receiver also faults a `0x81` packet whose length is not four. Consequently,
+reusing the Pingo carrier verbatim requires an EMOS receive change as well as
+mainboard/P4 instrumentation. Select an explicit completion-event carrier and
+EMOS dispatch under D003; do not weaken ordinary keyboard validation or invent
+a bypass to EMOS routing. The generalized callback product ABI remains open.
+
+Prepare the mainboard reference from its selected stock source with only the
+reviewed diagnostic changes, retain the current P4 behavior for the initial
+comparison, and preserve exact original images/configuration for restoration.
+Label both as instrumented builds. Do not replace the stock reference with a
+broad unrelated Pingo development branch merely to obtain its hook. The exact
+firmware changes, completion/clock semantics, EMOS integration and rollback
+sequence belong in the next reviewed work contract before deployment.
+
+### Nurples benchmark added; approval pending
+
+The Author requested adding the repaired game to the suite: centred ship,
+collision invulnerability, one minute of gameplay and automatic exit, no
+confirmation/joystick steps, keyboard polling retained. The
+[draft work contract](QUAL-003/benchmark-contract.md) records the bounded source
+review, finite scroll/clipping cases, low-traffic completion strategy, source
+and asset provenance, timing/output requirements and B1–B4 execution gates.
+It supersedes the earlier deferral of this benchmark variant, but authorizes
+only planning until the Author reviews the contract and D004.
+
+The Author clarified that the modern source is `nurples-repair`. Read-only
+verification confirms the installed game binary and containers used in the
+hang capture match its committed `dev` state, including the joystick fix.
+Newer uncommitted artwork remains outside this first comparison. P4's
+per-pixel scrolling differs from mainboard's row-swapping path; the retained
+viewport and bitmap paths appear to admit one-scanline clipping. Both require
+measured comparison, not a speculative repair. No game or firmware source,
+build, hardware state or removable media was changed during this review.
+
+### Superseding priority — stock backend fidelity
+
+The Author subsequently directed the whole stock/P4 video-generation comparison
+to become priority one within AUDIT-006. This benchmark draft is retained for
+later targeted verification; its earlier requests do not authorize implementation
+while that source audit is the current task. No input-pattern answer is needed
+to start the audit, and no temporary mainboard/P4 callback firmware is being
+prepared. Revise the benchmark after the audit identifies the actual reuse and
+adaptation boundaries.
+
+[pingo-notify]: ../../../agon-vdp-pingo-v216-promotion/docs/pingo-render-completion.md
+[emos-keyboard]: ../../../agon-emos/src/emos_keyboard.c

@@ -1,5 +1,11 @@
 # PORT-003 Phase D contracts
 
+Historical implementation contract. [AUDIT-006](../../AUDIT-006.md) now audits
+the native-plane/composition and overlay arrangements against stock scanline
+behavior under ADR-0013/ADR-0015's fidelity requirement. Existing definitions
+and evidence remain tied to their original implementation; the new audit is
+not constrained to its project-owned interfaces.
+
 These contracts freeze Phase D behavior before production implementation.
 They extend the qualified logical renderer/frame service without defining an
 official mode facade, a durable consumer lease, or a physical output sink.
