@@ -486,3 +486,14 @@ and graphics fixture r01 inputs to candidates under registry r70, then build
 from clean commits. Preserve the mainboard's actual flash before replacing it.
 Physical timing and restoration remain pending; the known native timeout and
 two inherited pixel-probe disagreements retain their recorded limits.
+
+## Timing candidates deployed — 2026-09-11
+
+Clean candidate builds and deployment hashes are in
+[timing/candidate-deployment.json](QUAL-003/timing/candidate-deployment.json).
+P4 and the mainboard timing application were written and independently verified.
+The complete installed mainboard flash was first read and independently verified;
+the application update preserved its bootloader, partitions and persistent state.
+EMOS v0.1.13 and all benchmark files are staged on SD; the one-time installer
+runs first. Author confirmation of that flash and the later benchmark handoff
+remain pending. No hardware timing result exists yet.

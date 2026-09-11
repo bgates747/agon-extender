@@ -1,0 +1,33 @@
+{
+  "recorded_at": "2026-09-11T05:48:40.577700+00:00",
+  "source_commit": "49553c54a193bbb5a3ccaa5a95672c4ae9580050",
+  "emos_commit": "e48d4312907882ee77ab971a3bce956f7a5a8447",
+  "builder_commit": "2b7884ceb7b2cfa803f87e03ebe39ebe10d97723",
+  "p4": {
+    "build_id": "uart-excom-console-r11-b2026-09-11-05-41-23Z",
+    "sha256": "7f1ee39059fd8d80c9d556bf5479d4900bbcad15038399bb8dccf39c812889c6",
+    "state": "flashed, independently verified, USB startup and HTTP 200 observed"
+  },
+  "mainboard": {
+    "build_id": "graphics-timing-probe-r01-b2026-09-11-05-42-28Z",
+    "sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
+    "state": "application flashed and independently verified; physical MOS handshake pending",
+    "original_flash_sha256": "76c67b0a1a84b884da26c0bc22b2f98d60769352a51e64f05c91bdc7d9f7b060",
+    "notes": [
+      "Installed and candidate partition tables match; existing bootloader, NVS and OTA selection preserved.",
+      "Serial startup retains Arduino disableCore1WDT diagnostic; no panic or reset loop observed in bounded capture."
+    ]
+  },
+  "emos": {
+    "build_id": "agon-emos-v0.1.13-b2026-09-11-05-41-23Z",
+    "sha256": "a46dc6b580aba955f4b873be69c4f5f323d10cd3e67adcb28701da4802227dae",
+    "size": 130344,
+    "state": "one-time SD installer staged; not flashed"
+  },
+  "fixture": {
+    "build_id": "graphics-timing-probe-r01-b2026-09-11-05-41-24Z",
+    "sha256": "dd9871ed64cbf04f9e205c88a9584e09c91ba3dcb14e31e0982ca213386a51ea",
+    "state": "64 cases and cleanup staged; benchmark autoexec not armed"
+  },
+  "hardware_timing": "not measured"
+}
