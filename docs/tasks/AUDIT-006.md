@@ -2,10 +2,13 @@
 
 ## State and authority
 
-Status: **priority one**, expanded by the Author on 2026-09-10. The first
-current work item is **W6: audit the complete stock video-generation backend
-against the selected P4 implementation**. W1–W5 remain completed diagnostic
-work with preserved failure evidence; this task is not closed or abandoned.
+Status: **complete, accepted 2026-09-10**. W6 source comparison, W7 repair
+contract and W8 disposition review are complete. PORT-003 R1 is authorized.
+The [full comparison](AUDIT-006/video-backend-audit.md) and
+[accepted PORT-003 contract](PORT-003/stock-backend-restoration.md) recommend
+restoring the original concrete depth controllers behind narrow P4 bindings.
+W1–W5 remain completed diagnostic
+work with preserved failure evidence. Audit closure does not qualify the repair.
 The mission is the most faithful practical port of mainboard framebuffer
 formats, storage organization and rendering behavior, with exact upstream code
 reuse wherever processor and video-output interfaces permit it. PORT-003 owns
@@ -44,22 +47,33 @@ necessity. Preserve native formats and efficient memory operations as well as
 visible results. Do not treat all code inside a physical-driver file as
 hardware-specific. ADR-0013, ADR-0015 and the architecture carry this direction.
 
-**AUDIT-006-D002 — open, owned by W6/W7:** identify the smallest P4 binding and
+**AUDIT-006-D002 — accepted, 2026-09-10:** identify the smallest P4 binding and
 storage/execution arrangement that preserves the maximum actual upstream code.
 The existing generic-controller/flat-plane design is a candidate under audit,
 not a fixed constraint on the answer. Determine which row access, native byte
 layout, allocation, cache/DMA and scanout dependencies really need adaptation.
-Record concrete options only after mapping the stock path; do not preselect a
-new clean-sheet backend or assume stock pointer swapping requires fragmented
-allocations. This question needs source evidence before an Author decision.
+The completed source comparison recommends the original five concrete classes
+with narrowly adapted lifecycle/output bindings; verbatim method extraction
+is a fallback only for a demonstrated source-unit dependency. Preserve row
+tables and native byte order, and normalize output only at the sink. The first
+repair increment proves this binding with target compilation and stock-derived
+row comparisons. No clean-sheet backend or fragmented allocation is required.
+The detailed alternatives, dependencies and validation criteria are in the
+linked repair contract; R1 proves the accepted source-binding direction before later integration.
 
-The audit is read-only with respect to firmware, games, media and running
+**AUDIT-006-D003 — accepted, 2026-09-10:** no upstream bug fixes in the first
+pass. If upstream code compiles on the selected target, use it unchanged.
+Record suspected or encountered upstream defects; defer fixes. Only necessary
+compiler/processor/output binding changes belong in PORT-003 R1. This
+supersedes the earlier proposed F009 remedies in the supporting reviews.
+
+The completed audit was read-only with respect to firmware, games, media and running
 devices. It does not begin the held benchmark or authorize an unreviewed
 framebuffer replacement, mainboard flash, core change or new drawing budget.
 
 ## Current work — first priority
 
-6. [ ] **W6 — Audit the whole stock video-generation backend first.** Trace
+6. [x] **W6 — Audit the whole stock video-generation backend first.** Trace
    the selected official mode/command facade through Canvas and the common
    renderer, concrete depth controllers, framebuffer storage and video output;
    compare every applicable region with the actual P4 build selection, not
@@ -94,7 +108,7 @@ framebuffer replacement, mainboard flash, core change or new drawing budget.
    Deliver `AUDIT-006/video-backend-audit.md` with this coverage ledger, a compact
    execution/storage map and stable findings after the review is performed.
    Separate measured defects, source-proven departures and timing hypotheses.
-7. [ ] **W7 — Rank departures and contract the smallest faithful repair.**
+7. [x] **W7 — Rank departures and contract the smallest faithful repair.**
    Account for every W6 finding: retain exact upstream, narrowly adapt with
    evidenced processor/output necessity, restore upstream code/arrangement,
    or leave an explicitly unresolved finding with owner and missing evidence.
@@ -105,7 +119,7 @@ framebuffer replacement, mainboard flash, core change or new drawing budget.
    contract before changing executable behavior. Use QUAL-003 selectively to
    verify the chosen boundaries; do not require a new callback infrastructure
    merely to recognize unjustified source divergence.
-8. [ ] **W8 — Close the audit with traceable dispositions.** The Author reviews
+8. [x] **W8 — Close the audit with traceable dispositions.** The Author reviews
    the full comparison and repair contract. PORT-003 receives each accepted
    implementation item and QUAL-003 receives necessary measurements. Keep
    unresolved or unaccepted findings open here; do not call them completed
@@ -114,6 +128,34 @@ framebuffer replacement, mainboard flash, core change or new drawing budget.
    verification criterion. Retain W1–W5 evidence and the final audit together.
 
 ## Audit inputs and initial leads
+
+### Completed source review
+
+Work-in-progress checkpoint `047ffe8` froze all prior open changes and this
+contract before source review began. The resulting
+[audit](AUDIT-006/video-backend-audit.md) consolidates four independent-area
+reviews, complete coverage and stable F001–F009 dispositions. Its
+[source binding](AUDIT-006/video-source-baseline.json) verifies the selected
+sources remain identical to that checkpoint. No firmware, build, SD or hardware
+operation occurred during W6/W7. No claim of improved performance follows from
+the source audit.
+
+Key departures are native byte layout in two depths, missing row-table and
+concrete bulk paths, duplicated palette/scanline algorithms, RGB888 expansion
+before RGB222 output, serialized frame-time/publication and changed execution
+assumptions. Official command/common rendering/text/Teletext bodies are largely
+retained. Possible inherited edge defects receive narrow validation/remedy
+requirements rather than becoming excuses for wholesale replacement.
+
+PORT-003's first proposed increment is original-class binding and native-row
+comparison, followed by independent output integration and qualification.
+QUAL-003's broad callback benchmark remains on hold. The Author accepted this concrete contract and D002, directed its freeze and
+R1 execution, and explicitly prohibited upstream bug fixes in the first pass.
+F009 remains a deferred observation with no first-pass remedy. F001–F008 have
+accepted PORT-003 owners and verification criteria; R1/R2/R3 track actual
+implementation and qualification.
+
+### Pinned inputs
 
 Use the selected reference identities already bound by AUDIT-005 and the
 QUAL-003 draft: official VDP v2.16.0 at

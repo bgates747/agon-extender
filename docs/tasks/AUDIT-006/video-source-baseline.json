@@ -1,0 +1,486 @@
+{
+  "edp_commit": "047ffe8caade708a4b867381fff7e8f0023f3782",
+  "official_vdp_commit": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "vdp_gl_commit": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "source_selection_sha256": "b481c1dca2cf18cb05278388bd54cdd4b7bc9b2d19c9f4b8d6f8b1a57f70c8bd",
+  "selected_source_files_unchanged_since_checkpoint": true,
+  "generated_application_cmake_matches_selection": true,
+  "qualification": "Source correspondence only; excluded concrete controllers are not linked. No build or runtime test.",
+  "selected_source_sha256": {
+    "vdp/pio/select_sources.py": "43873a1931cced2b0f537d311d2d134c673a6320f0c0d93c69d10dad8431ded0",
+    "vdp/vendor/ESP32Time/ESP32Time.cpp": "5ec4e65a010a1490434709d50e81b7438f3fd0d0d98d35e30d399d909ec14f88",
+    "vdp/vendor/vdp-gl/src/canvas.cpp": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "vdp/vendor/vdp-gl/src/codepages.cpp": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+    "vdp/video/agon_screen.h": "abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a",
+    "vdp/video/agon_ttxt.h": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+    "vdp/video/buffers.h": "f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751",
+    "vdp/video/context.h": "960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232",
+    "vdp/video/extender/boot/p4_browser_vdp.cpp": "73bbe513e7c4bc615129b1d62b76253564a8e30371f9820b632fcd4b9cb3e3d0",
+    "vdp/video/extender/boot/p4_console.cpp": "8587f423d4f84ae79908d32b4e37918cdc2a97b55c36bf06a278590b13b71d92",
+    "vdp/video/extender/compat/p4_vdp_gl.hpp": "9832c9d0c48572a352a979723f2d650604965a0bc51107f2cb7dd35dcda78a30",
+    "vdp/video/extender/diagnostics/frame_timing.cpp": "9528b5287b7f101b2a71ab012a7d87eafa4bc3802bebb283defe3e5225ee0086",
+    "vdp/video/extender/display/cursor_position_adapter.cpp": "5d8a720ed521c3ee50b5525f8afb246dba8350992cf7c1a5c265a260d4e47155",
+    "vdp/video/extender/display/cursor_position_adapter.hpp": "b9eff7588d635e87c9d1f73a74a8eb5d7515edb4c9f072fc12bf450c9450acb4",
+    "vdp/video/extender/display/logical_frame_service.cpp": "9ff9377d3f68328bcdb1c07a9beeec5ee34891d302ec35ced167acba83df881a",
+    "vdp/video/extender/display/logical_frame_service.hpp": "2ef395d599370fc42d5873ad834425b5fb0902650fe24458c24345c4b1785c49",
+    "vdp/video/extender/display/native_pixel_codec.cpp": "5afdc4f92098c413ee635529ed60756e4588a1f7a02d2877100ed9351a9039d2",
+    "vdp/video/extender/display/native_pixel_codec.hpp": "b613bcae014620d15fc91d00edf271d39484461151ee1f9a2b8ef90d8f2a14c5",
+    "vdp/video/extender/display/p4_display_controller.cpp": "489e1606b5a8205b4d975a3cf5be1f1c0ed56ce449d62ee2ad8722252d527798",
+    "vdp/video/extender/display/p4_display_controller.hpp": "546db2985f12c7402b57704796eb72f14ddcb7208aefd4338543809c337e6de2",
+    "vdp/video/extender/display/p4_frame_service.cpp": "dd698dee9a9ec09db667689df49f25819a951bfc1de371f14a79b17107fd7747",
+    "vdp/video/extender/display/p4_frame_service.hpp": "4c8ecad2f91fb73c125fd30db278219a560eb95a666505766a99e4d7aa2a8a21",
+    "vdp/video/extender/display/palette_state.cpp": "174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245",
+    "vdp/video/extender/display/palette_state.hpp": "cda22f17973cc5a4fa6bc273cdb5236a23fa744ccc737a6fd7a97a640e3fc1cf",
+    "vdp/video/extender/display/plane_storage.cpp": "6ec63a8d3ab4bf0d03f31862d3638a20f5ac90648daaec20a24fb20df4440257",
+    "vdp/video/extender/display/plane_storage.hpp": "a07df1398849149c44dec2d0386f49f4f02a0f5ba0a17f256fec515bbe667aa3",
+    "vdp/video/extender/display/presentation_compositor.cpp": "aa7fe400adf12e2e90783b1f8cf6c2c7dbe15c6d9b98b56b1eecf814d16edb4d",
+    "vdp/video/extender/display/presentation_compositor.hpp": "664f9dde8269b0d4e5322dfd273c0ca24faf0fc9c9d5124809824ddf2a9e6c2d",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "0461bfa96a2fd4b3e6cdabcc39870310d42073f23f565182a63d50d13a40a640",
+    "vdp/video/extender/display/presentation_snapshot_pool.hpp": "1723bd17c1fd9f1228f8f7a6d60d690caaa4eff6a8fdb82ace8419f3b388ce28",
+    "vdp/video/extender/display/screen_facade_adapter.cpp": "0f894c19aa09b27096fa7893edd709fbc1c9a866680bcf155e8e4739f45a91fb",
+    "vdp/video/extender/display/screen_facade_adapter.hpp": "cf7be4e0581472e2c618f82f406b164fd2c279b1b97648d9b930e1c4b0eb5620",
+    "vdp/video/extender/display/screen_facade_p4_binding.cpp": "8ad984ba31d5edb658385a57327c821dc8fbeb2ce5e3a2197d118db8f9e87309",
+    "vdp/video/extender/network/browser_video_service_core.cpp": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08",
+    "vdp/video/extender/network/opaque_message.cpp": "02c318042167bf6fe7711b82c2a85c4ffe6d38679ec9d51d0e9ada925c4e7cc3",
+    "vdp/video/extender/network/wired_network_service.cpp": "0cc6f82d81a8f84ebb154d5901fcdea4f54b2dedf704c204446cd01884bc9a0c",
+    "vdp/video/extender/port/fabutils_port.cpp": "e1f8718c2c69fd0e422574d5aa08f63897dc0857b9ba3f157520d3cf94bd5536",
+    "vdp/video/extender/port/p4_task_watchdog.cpp": "4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64",
+    "vdp/video/extender/transport/console_hardware.inc": "5472c065adf63d3a6b465621d88b8440260fe36fcead2e5af7d6c43c4e5bc3b7",
+    "vdp/video/extender/web/app.js": "61fdccf8f621486c3d1fc886dc2d30555d561194d9bf2336744662738182ed9f",
+    "vdp/video/extender/web/browser_video_provider.cpp": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+    "vdp/video/extender/web/embedded_assets.cpp": "aeae43bd98f08fe97043e6d276ac5d74cce65ba707faae9a189440575cf9ae89",
+    "vdp/video/extender/web/frame_protocol.js": "63f49a65e021dc5595d0c2e713b9e9d8585eb9f3f053463227e1c60d83b235a4",
+    "vdp/video/extender/web/index.html": "90233bc969aa4c736183fbdf66eac269191281008262c970eb85efe0f2977b03",
+    "vdp/video/extender/web/style.css": "c234e810f5db82dbd8a34af69f0aef1ba8a843d9b9b5e95bdc612d64a62c487c",
+    "vdp/video/extender/web/webgl2_presenter.js": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2",
+    "vdp/video/vdp_variables.h": "2bb0237f750b99c157fdacaad294b522495143c7c7fa236e09ea37c12d4a8485",
+    "vdp/video/vdu.h": "d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926",
+    "vdp/video/vdu_buffered.h": "dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd",
+    "vdp/video/vdu_context.h": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+    "vdp/video/vdu_fonts.h": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+    "vdp/video/vdu_layers.h": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+    "vdp/video/vdu_sprites.h": "f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b",
+    "vdp/video/vdu_stream_processor.h": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "vdp/video/vdu_sys.h": "9d214daaf24a2784e4f6799e3ddb44748e484fac2781877c9d88abf0d7e5d280",
+    "vdp/video/video.ino": "61f50fda22ba5966f467fb0471f79bc0004f2d773c785103111a6e7b69f44e09"
+  },
+  "official_video_files": [
+    {
+      "file": "video/OneWire_direct_gpio.h",
+      "stock_sha256": "e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4",
+      "edp_sha256": "e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4",
+      "byte_identical": true
+    },
+    {
+      "file": "video/agon.h",
+      "stock_sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+      "edp_sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+      "byte_identical": true
+    },
+    {
+      "file": "video/agon_audio.h",
+      "stock_sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+      "edp_sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+      "byte_identical": true
+    },
+    {
+      "file": "video/agon_fonts.h",
+      "stock_sha256": "e95bf9a7d172797fc57c49d83f031cd899a4a95a6a10f076e72817a5d04a533c",
+      "edp_sha256": "b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63",
+      "byte_identical": false
+    },
+    {
+      "file": "video/agon_palette.h",
+      "stock_sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "edp_sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "byte_identical": true
+    },
+    {
+      "file": "video/agon_ps2.h",
+      "stock_sha256": "76dd5fd87e4be895e9a017d648e6f2de64b3273d98da876235ff9868b6ed66b6",
+      "edp_sha256": "76dd5fd87e4be895e9a017d648e6f2de64b3273d98da876235ff9868b6ed66b6",
+      "byte_identical": true
+    },
+    {
+      "file": "video/agon_screen.h",
+      "stock_sha256": "648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343",
+      "edp_sha256": "abf39d2c25d0383e812f5aee4350bf06d2932c07f9a0192620ff498978b5c82a",
+      "byte_identical": false
+    },
+    {
+      "file": "video/agon_ttxt.h",
+      "stock_sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+      "edp_sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+      "byte_identical": true
+    },
+    {
+      "file": "video/audio_channel.h",
+      "stock_sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+      "edp_sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+      "byte_identical": true
+    },
+    {
+      "file": "video/audio_sample.h",
+      "stock_sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+      "edp_sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+      "byte_identical": true
+    },
+    {
+      "file": "video/buffer_stream.h",
+      "stock_sha256": "6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d",
+      "edp_sha256": "6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d",
+      "byte_identical": true
+    },
+    {
+      "file": "video/buffers.h",
+      "stock_sha256": "f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751",
+      "edp_sha256": "f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751",
+      "byte_identical": true
+    },
+    {
+      "file": "video/compression.h",
+      "stock_sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+      "edp_sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+      "byte_identical": true
+    },
+    {
+      "file": "video/context/cursor.h",
+      "stock_sha256": "e0ced4b531dfef9957411dd30be458c431921c2c2be3e2e5f8a7a4ed863ceb8f",
+      "edp_sha256": "87d25957388c6fb1d090f7016f47345646b34e3d773ffc49897fbd6e6d05fcce",
+      "byte_identical": false
+    },
+    {
+      "file": "video/context/fonts.h",
+      "stock_sha256": "27acda3a7c8e41f0a6b1c8e1f1a611f7ce3e7d9f8796ca023ee71868976e6ad4",
+      "edp_sha256": "ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3",
+      "byte_identical": false
+    },
+    {
+      "file": "video/context/graphics.h",
+      "stock_sha256": "eba700bc2b988af484784c4d90ebc8233a008687f1e5d5b65ab61cc7e6433d2a",
+      "edp_sha256": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+      "byte_identical": false
+    },
+    {
+      "file": "video/context/viewport.h",
+      "stock_sha256": "2f69546602eb5b765719b8186688edece1e38b3b0bb0e276325391887451d5ff",
+      "edp_sha256": "1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd",
+      "byte_identical": false
+    },
+    {
+      "file": "video/context.h",
+      "stock_sha256": "5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e",
+      "edp_sha256": "960c6a026adb1ee4cf4a95e10ef351510bac433405a23c9eda6208a82e1d3232",
+      "byte_identical": false
+    },
+    {
+      "file": "video/enhanced_samples_generator.h",
+      "stock_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+      "edp_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+      "byte_identical": true
+    },
+    {
+      "file": "video/envelopes/adsr.h",
+      "stock_sha256": "2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73",
+      "edp_sha256": "2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73",
+      "byte_identical": true
+    },
+    {
+      "file": "video/envelopes/frequency.h",
+      "stock_sha256": "f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425",
+      "edp_sha256": "f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425",
+      "byte_identical": true
+    },
+    {
+      "file": "video/envelopes/multiphase_adsr.h",
+      "stock_sha256": "1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf",
+      "edp_sha256": "1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf",
+      "byte_identical": true
+    },
+    {
+      "file": "video/envelopes/types.h",
+      "stock_sha256": "d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29",
+      "edp_sha256": "d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29",
+      "byte_identical": true
+    },
+    {
+      "file": "video/hexload.h",
+      "stock_sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+      "edp_sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+      "byte_identical": true
+    },
+    {
+      "file": "video/mem_helpers.h",
+      "stock_sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+      "edp_sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+      "byte_identical": true
+    },
+    {
+      "file": "video/multi_buffer_stream.h",
+      "stock_sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+      "edp_sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+      "byte_identical": true
+    },
+    {
+      "file": "video/span.h",
+      "stock_sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+      "edp_sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+      "byte_identical": true
+    },
+    {
+      "file": "video/sprites.h",
+      "stock_sha256": "a8a9e7a2039b0bd31645482953477c3060d640c2b4d841da71d81f6ba4e5d7ea",
+      "edp_sha256": "6f42bcfa7989e7e7a82aaba5326f44f8b38ffa09cb79f3d0d304492136cdf9d6",
+      "byte_identical": false
+    },
+    {
+      "file": "video/ttxtfont.h",
+      "stock_sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+      "edp_sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+      "byte_identical": true
+    },
+    {
+      "file": "video/types.h",
+      "stock_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+      "edp_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+      "byte_identical": true
+    },
+    {
+      "file": "video/updater.h",
+      "stock_sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+      "edp_sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+      "byte_identical": true
+    },
+    {
+      "file": "video/utils/thread_safe_variant_deque.h",
+      "stock_sha256": "689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3",
+      "edp_sha256": "689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdp_protocol.h",
+      "stock_sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+      "edp_sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdp_variables.h",
+      "stock_sha256": "d1fefa381cfebff4fcd7446accac30d6649317711a885d3a31bd37572b9c4fa7",
+      "edp_sha256": "2bb0237f750b99c157fdacaad294b522495143c7c7fa236e09ea37c12d4a8485",
+      "byte_identical": false
+    },
+    {
+      "file": "video/vdu.h",
+      "stock_sha256": "24923b53a83d77ebf729795d7ecb7343e6f2fed0e9d748d48fc83c8b75e805cb",
+      "edp_sha256": "d6571a935f487b003803fa833ddea79e8ebb10d480060b3e8d1db5e79c34d926",
+      "byte_identical": false
+    },
+    {
+      "file": "video/vdu_audio.h",
+      "stock_sha256": "6a479afd49dbb7111a6b3637cad62f3bfacb8fc8ea514799f89431810ee4ba67",
+      "edp_sha256": "6a479afd49dbb7111a6b3637cad62f3bfacb8fc8ea514799f89431810ee4ba67",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdu_buffered.h",
+      "stock_sha256": "b9d9d93295ddc5fb05c802071057e32ed9755837f029ce381340072352c262f0",
+      "edp_sha256": "dfe0a83847588dfacef2c7d3538e6d272c91d7a7d6e0140f7ab5d3c23ca522dd",
+      "byte_identical": false
+    },
+    {
+      "file": "video/vdu_context.h",
+      "stock_sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+      "edp_sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdu_fonts.h",
+      "stock_sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+      "edp_sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdu_layers.h",
+      "stock_sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+      "edp_sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+      "byte_identical": true
+    },
+    {
+      "file": "video/vdu_sprites.h",
+      "stock_sha256": "53b0fe1474ba20565cfc31afae993f88eb44084ab8b3c4181d5261a59db3c1eb",
+      "edp_sha256": "f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b",
+      "byte_identical": false
+    },
+    {
+      "file": "video/vdu_stream_processor.h",
+      "stock_sha256": "b714a640a7108aec0a242069c5c96b529347655a0d9133e28cd01092bae84753",
+      "edp_sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+      "byte_identical": false
+    },
+    {
+      "file": "video/vdu_sys.h",
+      "stock_sha256": "29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77",
+      "edp_sha256": "9d214daaf24a2784e4f6799e3ddb44748e484fac2781877c9d88abf0d7e5d280",
+      "byte_identical": false
+    },
+    {
+      "file": "video/version.h",
+      "stock_sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+      "edp_sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+      "byte_identical": true
+    },
+    {
+      "file": "video/video.ino",
+      "stock_sha256": "ce37b9bb557eba621a97ca4d8fb860e2a7af0284ed177a81d0af86391e6a224b",
+      "edp_sha256": "61f50fda22ba5966f467fb0471f79bc0004f2d773c785103111a6e7b69f44e09",
+      "byte_identical": false
+    },
+    {
+      "file": "video/ymodem.h",
+      "stock_sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+      "edp_sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+      "byte_identical": true
+    },
+    {
+      "file": "video/zdi.h",
+      "stock_sha256": "89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e",
+      "edp_sha256": "89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e",
+      "byte_identical": true
+    }
+  ],
+  "vendor_comparison": [
+    {
+      "file": "src/canvas.cpp",
+      "stock_sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+      "edp_sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+      "byte_identical": true
+    },
+    {
+      "file": "src/canvas.h",
+      "stock_sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+      "edp_sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+      "byte_identical": true
+    },
+    {
+      "file": "src/codepages.cpp",
+      "stock_sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+      "edp_sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+      "byte_identical": true
+    },
+    {
+      "file": "src/displaycontroller.cpp",
+      "stock_sha256": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+      "edp_sha256": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+      "byte_identical": true
+    },
+    {
+      "file": "src/displaycontroller.h",
+      "stock_sha256": "603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23",
+      "edp_sha256": "603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23",
+      "byte_identical": true
+    },
+    {
+      "file": "src/fabutils.cpp",
+      "stock_sha256": "0906c9b846ea60a710f4301c3972d883ce3986600408d35f9ad718c56c8a0aec",
+      "edp_sha256": "0906c9b846ea60a710f4301c3972d883ce3986600408d35f9ad718c56c8a0aec",
+      "byte_identical": true
+    },
+    {
+      "file": "src/fabutils.h",
+      "stock_sha256": "9badf4ab1a47e4d1e8ede9dc3a93b10f9ffc6f1b2b18616562b483e257e6836d",
+      "edp_sha256": "9badf4ab1a47e4d1e8ede9dc3a93b10f9ffc6f1b2b18616562b483e257e6836d",
+      "byte_identical": true
+    },
+    {
+      "file": "src/fabglconf.h",
+      "stock_sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+      "edp_sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vgabasecontroller.cpp",
+      "stock_sha256": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+      "edp_sha256": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vgabasecontroller.h",
+      "stock_sha256": "b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b",
+      "edp_sha256": "b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vgapalettedcontroller.cpp",
+      "stock_sha256": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49",
+      "edp_sha256": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vgapalettedcontroller.h",
+      "stock_sha256": "d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa",
+      "edp_sha256": "d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga2controller.cpp",
+      "stock_sha256": "bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c",
+      "edp_sha256": "bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga2controller.h",
+      "stock_sha256": "d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6",
+      "edp_sha256": "d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga4controller.cpp",
+      "stock_sha256": "bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51",
+      "edp_sha256": "bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga4controller.h",
+      "stock_sha256": "2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd",
+      "edp_sha256": "2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga8controller.cpp",
+      "stock_sha256": "fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98",
+      "edp_sha256": "fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga8controller.h",
+      "stock_sha256": "badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3",
+      "edp_sha256": "badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga16controller.cpp",
+      "stock_sha256": "2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60",
+      "edp_sha256": "2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga16controller.h",
+      "stock_sha256": "7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28",
+      "edp_sha256": "7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga64controller.cpp",
+      "stock_sha256": "8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b",
+      "edp_sha256": "8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b",
+      "byte_identical": true
+    },
+    {
+      "file": "src/dispdrivers/vga64controller.h",
+      "stock_sha256": "ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101",
+      "edp_sha256": "ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101",
+      "byte_identical": true
+    }
+  ]
+}

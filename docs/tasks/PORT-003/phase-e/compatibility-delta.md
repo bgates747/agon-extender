@@ -1,5 +1,12 @@
 # PORT-003 Phase E compatibility delta
 
+Historical Phase E implementation record. AUDIT-006's
+[whole-backend audit](../../AUDIT-006/video-backend-audit.md) retains the official
+mode/command behavior below but reopens the one-controller/label-parser binding.
+Descriptions of a required P4 adaptation here record the original choice;
+they do not establish processor/output necessity under the current fidelity
+contract. Later selected console patches are outside this phase's file count.
+
 ## Retained observable behavior
 
 The official Agon VDP `v2.16.0` mode table, mode IDs, modelines, dimensions,

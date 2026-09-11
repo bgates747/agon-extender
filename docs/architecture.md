@@ -94,8 +94,12 @@ sprites, cursors, buffering, completion and mode contracts. Contiguous allocatio
 may coexist with a logical row-pointer table. Browser and later local-display
 adapters produce their required output representation at the output boundary;
 they do not require the drawing framebuffer to share that representation.
-ADR-0013 and ADR-0015 record the Author's fidelity direction. AUDIT-006 owns
-the source comparison and remaining concrete binding decisions.
+ADR-0013 and ADR-0015 record the Author's fidelity direction. The accepted
+AUDIT-006 comparison selects original depth classes with narrow P4 bindings;
+PORT-003 owns implementation. First-pass restoration preserves compilable
+upstream behavior unchanged, including suspected bugs; fixes are deferred.
+Stock lane ordering and inert sync bytes may remain in native storage, with
+normalization confined to the output boundary.
 
 A periodic P4 logical frame clock and frame-service task advance official VDP
 time independently of every output sink. P4 preserves queued primitive
@@ -130,8 +134,8 @@ Pingo's mainboard-tested callback supplies a precedent without prescribing the
 general callback mechanism or ABI. See
 [ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md).
 
-One central presentation compositor decodes native pixels, applies Copper
-palettes by scanline, and adds hardware sprites and cursors without changing
+One shared output path reuses stock per-depth packed row expansion, palette
+tables, Copper traversal and sprite/cursor decoration without changing
 logical framebuffer state or readback. Network/browser and later local-display
 sinks receive fixed-capacity latest-generation mailboxes through a common
 consumer contract. The frame service never invokes sink code; sinks poll from

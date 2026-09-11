@@ -15,15 +15,16 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
-The Author's current first priority is a faithful stock video backend. Complete
-AUDIT-006's whole-backend source comparison before selecting further rendering
-changes or starting the proposed graphics/Nurples benchmark.
+The Author's current first priority is a faithful stock video backend.
+AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
+Execute the original-controller binding first; the graphics/Nurples benchmark
+remains on hold.
 
-- [ ] **AUDIT-006 — Audit stock video-backend fidelity and direct its restoration**
-  - Started: 2026-09-10
+- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
+  - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Priority one. W6 first: audit the entire stock/P4 video backend, formats, memory organization and execution. Exact upstream reuse is required wherever processor/output differences permit it. Completed W1–W5 hang evidence remains part of this task.
-  - Details: [AUDIT-006](docs/tasks/AUDIT-006.md)
+  - Status: Priority one. Accepted stock-backend restoration R1: bind original five depth classes and verify native rows. No upstream bug fixes in the first pass; no hardware deployment in R1.
+  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
   - Started: 2026-09-10
@@ -36,12 +37,6 @@ changes or starting the proposed graphics/Nurples benchmark.
   - Finished: --
   - Status: W9/W10 measurements frozen for follow-up: point output improves but ordinary-query stalls remain and Nurples has large ExCom hangs. Further attribution moves to AUDIT-006; stock-reuse audit closure remains open.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
-
-- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: 2026-08-22 10:14 EDT
-  - Finished: --
-  - Status: Further backend changes follow the priority-one AUDIT-006 fidelity comparison. Generic-controller/flat-plane choices are under review; existing point results and publication-starvation finding remain valid evidence.
-  - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09

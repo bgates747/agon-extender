@@ -1,11 +1,10 @@
 # ADR-0015 — P4 display backend and logical frame service
 
 - Status: Accepted
-- Completeness: Partial
+- Completeness: Complete
 - Date: 2026-08-22
 - Last amended: 2026-09-10
 - Related tasks: PORT-003, AUDIT-006
-- Open-decision tracker: AUDIT-006
 
 ## Context
 
@@ -36,12 +35,15 @@ creating separate VDP renderers or clocks.
    Adapt only evidenced processor-facility and video-output-interface seams.
    The prior requirement to implement one generic controller with project
    pixel codecs is superseded by AUDIT-006-D001; it describes the existing
-   implementation, not a mandatory target structure. Exact P4 bindings follow
-   the source comparison and accepted dispositions tracked by AUDIT-006.
+   implementation, not a mandatory target structure. AUDIT-006-D002 accepts
+   the original five depth classes with narrow P4 base/lifecycle/output binding.
+   Prefer their original source bodies; verbatim extraction is the fallback
+   only for a demonstrated source-unit dependency.
 2. Preserve the upstream `PALETTE2`, `PALETTE4`, `PALETTE8`, and `PALETTE16`
    packed formats for the initial compatible backend. Preserve the logical
-   RGB222 and native-save contract for 64-color modes while excluding physical
-   H/V sync bits from authoritative logical storage. A canonical one-byte
+   RGB222 and native-save contract for 64-color modes, including stock row
+   addressing and inert sync-bearing bytes where this preserves exact code.
+   Normalize lane/sync representation at the output boundary. A canonical one-byte
    storage profile may be considered later only as an explicitly qualified
    non-strict optimization.
 3. Keep the official `agon_screen.h` facade, names, mode table, fallback,
@@ -68,10 +70,10 @@ creating separate VDP renderers or clocks.
    semantics. The prior serial ordering of frame edge, complete queue drain and
    publication is superseded where it violates this distinction, as demonstrated
    by AUDIT-006-F001. This states the fidelity requirement; the concrete P4
-   execution arrangement remains under AUDIT-006's source review.
-7. Implement one central presentation compositor for every sink. It decodes
-   native logical pixels, selects palette state by Copper scanline, converts
-   to a requested output format, and adds hardware sprites and cursors without
+   execution arrangement follows the accepted PORT-003 restoration contract.
+7. Reuse stock per-depth row expansion, palette tables, Copper traversal and
+   sprite/cursor decoration for every sink. A narrow output binding converts
+   final stock rows to the requested sink format without
    modifying logical framebuffer state. Logical readback excludes those
    overlays. Software sprites remain in the retained framebuffer path.
 8. Expose a project-owned, sink-neutral consumer contract consisting of frame
@@ -104,6 +106,13 @@ creating separate VDP renderers or clocks.
     separate decision before patching retained common code. Source reasoning or
     a theoretically possible interleaving alone does not block forward-
     transport establishment.
+12. For the first stock-backend restoration pass, do not fix upstream bugs.
+    If the selected upstream code compiles, retain it unchanged. Only necessary
+    compiler/processor/output binding changes are included. Suspected or
+    encountered upstream defects remain deferred observations, even when a
+    local improvement appears obvious. This Author instruction supersedes
+    the earlier audit proposal to remedy edge cases during restoration and
+    takes precedence over decision 11 for this first pass.
 
 ## Rationale
 

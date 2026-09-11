@@ -4,8 +4,8 @@
 
 The Author has made [AUDIT-006](AUDIT-006.md) the first priority and expanded it
 to compare the entire stock video-generation backend with the selected P4
-implementation. Complete that source audit before choosing another local
-optimization or starting QUAL-003's benchmark. This task implements the
+implementation. The source audit is accepted; execute its accepted R1 contract before another
+local optimization or QUAL-003's benchmark. This task implements the
 subsequently accepted repair contract; it must not use the previous generic
 controller, flat planes or project pixel codecs as constraints on that review.
 
@@ -16,6 +16,16 @@ layout, row operations and efficient execution are part of fidelity, beyond
 matching final pixels. ADR-0013/ADR-0015 and the architecture now make this
 explicit. Existing phase definitions/evidence describe their identified builds;
 their broader replacement choices are reopened under AUDIT-006-D001/D002.
+
+AUDIT-006 W6/W7 now provide the completed
+[source comparison](AUDIT-006/video-backend-audit.md) and
+[accepted restoration contract](PORT-003/stock-backend-restoration.md).
+The authorized first coding increment binds the original five depth classes,
+preserves their native row layout and compares their operations with stock.
+Independent output/clock integration follows with explicit shared-state
+ownership; no new drawing budget is proposed. The Author accepted W8/D002 and authorized R1 after freezing the contract.
+No upstream bug fixes belong in this first pass: use otherwise compilable
+upstream code unchanged. R1 is a build/comparison proof; no flash is authorized.
 
 ## Active correction — stock queue draining, 2026-09-10
 
