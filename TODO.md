@@ -17,9 +17,9 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 
 The Author's current first priority is a faithful stock video backend.
 AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
-The original-controller R1 build/comparison is accepted. R2 independent
-drawing/output integration is authorized; the graphics/Nurples benchmark
-remains on hold.
+The original-controller R1/R2 implementation is accepted. R3 starts with
+a P4-only deployment and qualitative repaired-Nurples playtest; the formal
+graphics/Nurples benchmark remains on hold.
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT

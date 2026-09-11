@@ -127,7 +127,9 @@ what this proof establishes.
    suspension would reintroduce the coupling and is not the default solution.
    Join native-memory readers and drawing owners before freeing source state;
    already leased output snapshots keep their separate lifetime.
-3. [ ] **R3 — Qualify the integrated replacement.** Run the boundary checks
+3. [ ] **R3 — Qualify the integrated replacement (deployment authorized).** Follow
+   the [first hardware review](stock-backend-r3/README.md), starting with a
+   qualitative repaired-Nurples playtest. Run the boundary checks
    below and build the selected ordinary console with existing identity and
    deployment rules. Prepare a reviewed candidate and rollback before any
    flash. Use the existing deterministic graphics/UART evidence machinery and

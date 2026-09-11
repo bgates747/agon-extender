@@ -1,7 +1,7 @@
 {
   "schema_version": "1.0.0",
   "environment": "p4-console",
-  "diagnostic_status": "PORT-008 explicit ExCom UART console plus native USB keyboard and retained browser video",
+  "diagnostic_status": "PORT-003 R3 original VDP depth controllers, native packed scanlines, independent P4 frame service; ExCom UART console and native USB keyboard",
   "generated_build_files": [
     "video/CMakeLists.txt",
     "video/idf_component.yml",
@@ -15,20 +15,16 @@
     "video/extender/boot/p4_console.cpp",
     "video/extender/diagnostics/frame_timing.cpp",
     "video/extender/display/cursor_position_adapter.cpp",
-    "video/extender/display/logical_frame_service.cpp",
-    "video/extender/display/native_pixel_codec.cpp",
-    "video/extender/display/p4_display_controller.cpp",
-    "video/extender/display/p4_frame_service.cpp",
-    "video/extender/display/palette_state.cpp",
-    "video/extender/display/plane_storage.cpp",
-    "video/extender/display/presentation_compositor.cpp",
     "video/extender/display/presentation_snapshot_pool.cpp",
     "video/extender/display/screen_facade_adapter.cpp",
-    "video/extender/display/screen_facade_p4_binding.cpp",
+    "video/extender/display/stock_native_access.cpp",
+    "video/extender/display/stock_p4_service.cpp",
+    "video/extender/display/stock_runtime_controller.cpp",
+    "video/extender/display/stock_scanline.cpp",
     "video/extender/network/browser_video_service_core.cpp",
     "video/extender/network/opaque_message.cpp",
     "video/extender/network/wired_network_service.cpp",
-    "video/extender/port/fabutils_port.cpp",
+    "video/extender/port/stock_render_utils.cpp",
     "video/extender/port/p4_task_watchdog.cpp",
     "video/extender/web/browser_video_provider.cpp",
     "video/extender/web/embedded_assets.cpp",
@@ -36,12 +32,29 @@
   ],
   "forbidden_project_translation_units": [
     "video/extender/boot/p4_parallel_qualification_vdp.cpp",
-    "video/extender/transport/p4_parallel_qualification.cpp"
+    "video/extender/transport/p4_parallel_qualification.cpp",
+    "video/extender/display/logical_frame_service.cpp",
+    "video/extender/display/native_pixel_codec.cpp",
+    "video/extender/display/p4_display_controller.cpp",
+    "video/extender/display/p4_frame_service.cpp",
+    "video/extender/display/palette_state.cpp",
+    "video/extender/display/plane_storage.cpp",
+    "video/extender/display/presentation_compositor.cpp",
+    "video/extender/display/screen_facade_p4_binding.cpp",
+    "video/extender/port/fabutils_port.cpp"
   ],
   "vendored_translation_units": [
     "vendor/vdp-gl/src/canvas.cpp",
     "vendor/vdp-gl/src/codepages.cpp",
-    "vendor/vdp-gl/src/displaycontroller.cpp"
+    "vendor/vdp-gl/src/displaycontroller.cpp",
+    "vendor/vdp-gl/src/fabfonts.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+    "vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp"
   ],
   "embedded_text_files": [
     "video/extender/web/index.html",
@@ -91,6 +104,7 @@
   },
   "dependency_lock": "pio/p4-console-dependencies.lock",
   "component_compile_definitions": [
-    "AGON_EXTENDER_FRAME_TIMING=1"
+    "AGON_EXTENDER_FRAME_TIMING=1",
+    "AGON_EXTENDER_STOCK_RUNTIME=1"
   ]
 }

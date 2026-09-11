@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r09",
+  "source_identity": "uart-excom-console-r10",
   "status": "candidate",
-  "note": "AUDIT-006 fixed-RAM frame timing. Recorder/HTTP host tests, retained frame and presentation checks, and P4 compilation pass. Candidate for one authorized diagnostic deployment and manual Nurples reproduction; no scheduling repair or gameplay qualification."
+  "note": "PORT-003 R3 original stock depth controllers and scanline output with independent P4 frame service. Complete draft image, native-body verification, source selection and image layout pass. Candidate for the authorized P4-only deployment and qualitative repaired-Nurples playtest; EMOS unchanged, physical qualification pending."
 }

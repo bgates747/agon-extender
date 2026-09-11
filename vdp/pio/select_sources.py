@@ -198,15 +198,17 @@ if lock:
 else:
     root_path.write_text(ordinary_root)
 
+# Original depth controllers live in dispdrivers/. Keep exact file allowlisting;
+# never discover or enable the rest of the classic-ESP32 driver family.
 vendored_root = project_dir / "vendor/vdp-gl/src"
 selected_names = []
 for relative in selection["vendored_translation_units"]:
     source = project_dir / relative
-    if source.parent != vendored_root:
+    if source.resolve().parent not in (vendored_root.resolve(), (vendored_root / "dispdrivers").resolve()):
         raise RuntimeError(f"vendored source is outside the reviewed root: {source}")
     if not source.is_file():
         raise FileNotFoundError(source)
-    selected_names.append(source.name)
+    selected_names.append(source.relative_to(vendored_root).as_posix())
 
 env.BuildSources(  # type: ignore[name-defined]
     env.subst("$BUILD_DIR") + "/selected-vdp-gl",  # type: ignore[name-defined]

@@ -35,7 +35,7 @@ headers/common files and utility bodies are source-verified. R2's independent
 worker/output integration is prepared below; the ordinary console still selects its
 existing backend, and no performance improvement is claimed yet.
 
-**R2 accepted; R3 deployment authorized:** the [runtime binding and evidence](PORT-003/stock-backend-r2/README.md)
+**R2 accepted; [R3 deployment authorized](PORT-003/stock-backend-r3/README.md):** the [runtime binding and evidence](PORT-003/stock-backend-r2/README.md)
 records 70 passing concurrency/lifetime checks, 42 passing stock scanline
 checks, and 180 native comparisons with the same two inherited discrepancies.
 The 20-unit P4 display closure and ordinary console integration compile/link
