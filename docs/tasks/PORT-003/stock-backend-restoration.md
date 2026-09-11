@@ -1,8 +1,12 @@
 # PORT-003 — Restore the stock video backend
 
-Status: **accepted; R1 authorized**, 2026-09-10. The Author accepted the repair
-with the first-pass rule below and directed a contract freeze followed by R1.
-Existing version preapproval applies. R2/R3 remain subsequent work boundaries.
+Status: **accepted; R1 accepted and R2 authorized**, 2026-09-10. Commit `a773b19`
+froze the accepted no-fix rule before R1. The original five-controller binding
+now has target compile/link and host native-row evidence in the
+[R1 review](stock-backend-r1/README.md): 180 checks pass and two reproduce
+unchanged upstream narrow-scroll behavior. The Author accepted this result,
+directed a freeze, and authorized R2. Existing version preapproval applies.
+R3 remains a subsequent qualification boundary; no hardware was changed by R1.
 
 ## Governing first-pass rule
 
@@ -67,7 +71,7 @@ what this proof establishes.
 
 ## Work and completion boundaries
 
-1. [ ] **R1 — Bind the original concrete family.** Keep the stock classes,
+1. [x] **R1 — Bind the original concrete family.** Keep the stock classes,
    native depth accessors, row-paint selection, copy/fill/scroll/bitmap bodies,
    palette tables and common renderer. Separate classic I2S/GPIO/DMA/ISR setup
    from portable operations. Preserve width/height quanta, row aliases and

@@ -1,3 +1,7 @@
+// PORT-003 R1: select the original native-row implementation without the
+// classic ESP32 physical engine. Drawing/palette methods remain upstream.
+// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous and never deployable; R2
+// must bind independent output before this enters an ordinary console.
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -33,16 +37,20 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "soc/i2s_struct.h"
 #include "soc/i2s_reg.h"
 #include "driver/periph_ctrl.h"
 #include "soc/rtc.h"
 #include "esp_spi_flash.h"
+#endif
 #include "esp_heap_caps.h"
 
 #include "fabutils.h"
 #include "vgapalettedcontroller.h"
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "devdrivers/swgenerator.h"
+#endif
 
 
 
@@ -157,6 +165,7 @@ void VGAPalettedController::setResolution(VGATimings const& timings, int viewPor
   uint16_t signalList[2] = { 0, 0 };
   updateSignalList(signalList, 1);
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   calculateAvailableCyclesForDrawings();
 
   // must be started before interrupt alloc
@@ -169,6 +178,7 @@ void VGAPalettedController::setResolution(VGATimings const& timings, int viewPor
     I2S1.int_clr.val     = 0xFFFFFFFF;
     I2S1.int_ena.out_eof = 1;
   }
+#endif
 
   resumeBackgroundPrimitiveExecution();
 }

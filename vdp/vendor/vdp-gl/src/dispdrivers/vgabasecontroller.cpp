@@ -1,3 +1,7 @@
+// PORT-003 R1: select the original native-row implementation without the
+// classic ESP32 physical engine. Drawing/palette methods remain upstream.
+// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous and never deployable; R2
+// must bind independent output before this enters an ordinary console.
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -33,13 +37,17 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "soc/i2s_struct.h"
 #include "soc/i2s_reg.h"
 #include "driver/periph_ctrl.h"
 #include "soc/rtc.h"
+#endif
 
 #include "fabutils.h"
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "devdrivers/swgenerator.h"
+#endif
 #include "dispdrivers/vgabasecontroller.h"
 
 
@@ -83,10 +91,13 @@ void VGABaseController::init()
   m_primitiveExecTask            = nullptr;
   m_processPrimitivesOnBlank     = false;
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   m_GPIOStream.begin();
+#endif
 }
 
 // initializer for 64 colors configuration
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::begin(gpio_num_t red1GPIO, gpio_num_t red0GPIO, gpio_num_t green1GPIO, gpio_num_t green0GPIO, gpio_num_t blue1GPIO, gpio_num_t blue0GPIO, gpio_num_t HSyncGPIO, gpio_num_t VSyncGPIO)
 {
   init();
@@ -109,15 +120,23 @@ void VGABaseController::begin(gpio_num_t red1GPIO, gpio_num_t red0GPIO, gpio_num
   RGB222::lowBitOnly = false;
   m_bitsPerChannel = 2;
 }
+#endif
 
 
 // initializer for default configuration
 void VGABaseController::begin()
 {
+#if defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+  init();
+  RGB222::lowBitOnly = false;
+  m_bitsPerChannel = 2;
+#else
   begin(GPIO_NUM_22, GPIO_NUM_21, GPIO_NUM_19, GPIO_NUM_18, GPIO_NUM_5, GPIO_NUM_4, GPIO_NUM_23, GPIO_NUM_15);
+#endif
 }
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::end()
 {
   if (m_DMABuffers) {
@@ -137,15 +156,28 @@ void VGABaseController::end()
     m_taskProcessingPrimitives = false;
   }
 }
+#else
+// No output task or DMA exists in R1. Retire only the allocated native rows.
+void VGABaseController::end()
+{
+  if (m_viewPort) {
+    suspendBackgroundPrimitiveExecution();
+    freeViewPort();
+  }
+}
+#endif
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::setupGPIO(gpio_num_t gpio, int bit, gpio_mode_t mode)
 {
   configureGPIO(gpio, mode);
   gpio_matrix_out(gpio, I2S1O_DATA_OUT0_IDX + bit, false, false);
 }
+#endif
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::freeBuffers()
 {
   if (m_DMABuffersCount > 0) {
@@ -157,6 +189,7 @@ void VGABaseController::freeBuffers()
     setDMABuffersCount(0);
   }
 }
+#endif
 
 
 void VGABaseController::freeViewPort()
@@ -180,6 +213,7 @@ void VGABaseController::freeViewPort()
 // Can be used to change buffers count, maintainig already set pointers.
 // If m_doubleBufferOverDMA = true, uses m_DMABuffersHead and m_DMABuffersVisible to implement
 // double buffer on DMA level.
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 bool VGABaseController::setDMABuffersCount(int buffersCount)
 {
   if (buffersCount == 0) {
@@ -236,6 +270,7 @@ bool VGABaseController::setDMABuffersCount(int buffersCount)
 
   return true;
 }
+#endif
 
 
 // modeline syntax:
@@ -359,10 +394,12 @@ void VGABaseController::resumeBackgroundPrimitiveExecution()
 }
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::startGPIOStream()
 {
   m_GPIOStream.play(m_timings.frequency, m_DMABuffers);
 }
+#endif
 
 
 void VGABaseController::setResolution(char const * modeline, int viewPortWidth, int viewPortHeight, bool doubleBuffered)
@@ -389,8 +426,10 @@ void VGABaseController::setResolution(VGATimings const& timings, int viewPortWid
 
   m_HLineSize = m_timings.HFrontPorch + m_timings.HSyncPulse + m_timings.HBackPorch + m_timings.HVisibleArea;
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   m_HBlankLine_withVSync = (uint8_t*) heap_caps_malloc(m_HLineSize, MALLOC_CAP_DMA);
   m_HBlankLine           = (uint8_t*) heap_caps_malloc(m_HLineSize, MALLOC_CAP_DMA);
+#endif
 
   m_viewPortWidth  = ~3 & (viewPortWidth <= 0 || viewPortWidth >= m_timings.HVisibleArea ? m_timings.HVisibleArea : viewPortWidth); // view port width must be 32 bit aligned
   m_viewPortHeight = viewPortHeight <= 0 || viewPortHeight >= m_timings.VVisibleArea ? m_timings.VVisibleArea : viewPortHeight;
@@ -410,8 +449,10 @@ void VGABaseController::setResolution(VGATimings const& timings, int viewPortWid
   s_scanWidth = m_viewPortWidth;
   s_viewPortHeight = m_viewPortHeight;
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   // allocate DMA descriptors
   setDMABuffersCount(calcRequiredDMABuffersCount(m_viewPortHeight));
+#endif
 
   // allocate the viewport
   allocateViewPort();
@@ -419,21 +460,25 @@ void VGABaseController::setResolution(VGATimings const& timings, int viewPortWid
   // adjust again view port size if necessary
   checkViewPortSize();
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   // this may free space if m_viewPortHeight has been reduced
   setDMABuffersCount(calcRequiredDMABuffersCount(m_viewPortHeight));
 
   // fill buffers
   fillVertBuffers(0);
   fillHorizBuffers(0);
+#endif
 
   resetPaintState();
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   if (m_doubleBufferOverDMA)
     m_DMABuffersHead->qe.stqe_next = (lldesc_t*) &m_DMABuffersVisible[0];
 
   if (m_primitiveExecTask == nullptr) {
     xTaskCreatePinnedToCore(primitiveExecTask, "" , FABGLIB_VGAPALETTEDCONTROLLER_PRIMTASK_STACK_SIZE, this, FABGLIB_VGAPALETTEDCONTROLLER_PRIMTASK_PRIORITY, &m_primitiveExecTask, CoreUsage::quietCore());
   }
+#endif
 }
 
 
@@ -501,6 +546,7 @@ uint8_t IRAM_ATTR VGABaseController::preparePixelWithSync(RGB222 rgb, bool HSync
 }
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 int VGABaseController::calcRequiredDMABuffersCount(int viewPortHeight)
 {
   int rightPadSize = m_timings.HVisibleArea - m_viewPortWidth - m_viewPortCol;
@@ -741,8 +787,10 @@ int VGABaseController::fill(uint8_t volatile * buffer, int startPos, int length,
     VGA_PIXELINROW(buffer, startPos) = pattern;
   return startPos;
 }
+#endif
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::moveScreen(int offsetX, int offsetY)
 {
   suspendBackgroundPrimitiveExecution();
@@ -750,6 +798,7 @@ void VGABaseController::moveScreen(int offsetX, int offsetY)
   fillHorizBuffers(offsetX);
   resumeBackgroundPrimitiveExecution();
 }
+#endif
 
 
 void VGABaseController::shrinkScreen(int shrinkX, int shrinkY)
@@ -769,15 +818,18 @@ void VGABaseController::shrinkScreen(int shrinkX, int shrinkY)
 void IRAM_ATTR VGABaseController::swapBuffers()
 {
   tswap(m_viewPort, m_viewPortVisible);
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
   if (m_doubleBufferOverDMA) {
     tswap(m_DMABuffers, m_DMABuffersVisible);
     m_DMABuffersHead->qe.stqe_next = (lldesc_t*) &m_DMABuffersVisible[0];
   }
+#endif
 }
 
 
 // we can use getCycleCount here because primitiveExecTask is pinned to a specific core (so cycle counter is the same)
 // getCycleCount() requires 0.07us, while esp_timer_get_time() requires 0.78us
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::primitiveExecTask(void * arg)
 {
   auto ctrl = (VGABaseController *) arg;
@@ -804,9 +856,11 @@ void VGABaseController::primitiveExecTask(void * arg)
   }
 
 }
+#endif
 
 
 // calculates number of CPU cycles usable to draw primitives
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void VGABaseController::calculateAvailableCyclesForDrawings()
 {
   int availtime_us;
@@ -822,6 +876,7 @@ void VGABaseController::calculateAvailableCyclesForDrawings()
 
   m_primitiveExecTimeoutCycles = getCPUFrequencyMHz() * availtime_us;  // at 240Mhz, there are 240 cycles every microsecond
 }
+#endif
 
 } // end of namespace
 

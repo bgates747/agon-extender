@@ -27,6 +27,14 @@ ownership; no new drawing budget is proposed. The Author accepted W8/D002 and au
 No upstream bug fixes belong in this first pass: use otherwise compilable
 upstream code unchanged. R1 is a build/comparison proof; no flash is authorized.
 
+**R1 accepted; R2 authorized:** the original five classes and shared renderer
+compile/link as a nondeployable P4 closure. The
+[native-row evidence](PORT-003/stock-backend-r1/README.md) records 180 passing
+checks and two preserved upstream two-colour scroll discrepancies. Original
+headers/common files and utility bodies are source-verified. R2's independent
+worker/output integration is next; the ordinary console still selects its
+existing backend, and no performance improvement is claimed yet.
+
 ## Active correction — stock queue draining, 2026-09-10
 
 **PORT-003-D013 — Accepted:** remove the P4 primitive-count limit. On each

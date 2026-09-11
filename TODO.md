@@ -17,13 +17,14 @@ initial Extender display. The USB schematic waits until 2026-09-10.
 
 The Author's current first priority is a faithful stock video backend.
 AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
-Execute the original-controller binding first; the graphics/Nurples benchmark
+The original-controller R1 build/comparison is accepted. R2 independent
+drawing/output integration is authorized; the graphics/Nurples benchmark
 remains on hold.
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Priority one. Accepted stock-backend restoration R1: bind original five depth classes and verify native rows. No upstream bug fixes in the first pass; no hardware deployment in R1.
+  - Status: Priority one. R1 original five-controller build/native-row proof accepted; 180 checks pass and two upstream discrepancies remain unchanged. R2 independent worker/output integration authorized. No upstream bug fixes in the first pass; no hardware deployed by R1.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**

@@ -1,3 +1,7 @@
+// PORT-003 R1: select the original native-row implementation without the
+// classic ESP32 physical engine. Drawing/palette methods remain upstream.
+// AGON_EXTENDER_STOCK_ROWS_PROOF is synchronous and never deployable; R2
+// must bind independent output before this enters an ordinary console.
 /*
   Created by Fabrizio Di Vittorio (fdivitto2013@gmail.com) - <http://www.fabgl.com>
   Copyright (c) 2019-2022 Fabrizio Di Vittorio.
@@ -33,16 +37,20 @@
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "soc/i2s_struct.h"
 #include "soc/i2s_reg.h"
 #include "driver/periph_ctrl.h"
 #include "soc/rtc.h"
 #include "esp_spi_flash.h"
+#endif
 #include "esp_heap_caps.h"
 
 #include "fabutils.h"
 #include "vga2controller.h"
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 #include "devdrivers/swgenerator.h"
+#endif
 
 
 
@@ -50,6 +58,12 @@
 
 
 
+
+#if defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
+#define AGON_EXTENDER_VGA_ISR(handler) nullptr
+#else
+#define AGON_EXTENDER_VGA_ISR(handler) handler
+#endif
 
 namespace fabgl {
 
@@ -91,7 +105,7 @@ VGA2Controller * VGA2Controller::s_instance = nullptr;
 
 
 VGA2Controller::VGA2Controller()
-  : VGAPalettedController(VGA2_LinesCount, VGA2_COLUMNSQUANTUM, NativePixelFormat::PALETTE2, 8, 1, ISRHandler, 256 * sizeof(uint64_t))
+  : VGAPalettedController(VGA2_LinesCount, VGA2_COLUMNSQUANTUM, NativePixelFormat::PALETTE2, 8, 1, AGON_EXTENDER_VGA_ISR(ISRHandler), 256 * sizeof(uint64_t))
 {
   s_instance = this;
 }
@@ -715,6 +729,7 @@ void VGA2Controller::rawDrawBitmapWithMatrix_RGBA8888(int destX, int destY, Rect
 }
 
 
+#if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF)
 void IRAM_ATTR VGA2Controller::ISRHandler(void * arg)
 {
   #if FABGLIB_VGAXCONTROLLER_PERFORMANCE_CHECK
@@ -791,6 +806,7 @@ void IRAM_ATTR VGA2Controller::ISRHandler(void * arg)
 
   I2S1.int_clr.val = I2S1.int_st.val;
 }
+#endif
 
 
 

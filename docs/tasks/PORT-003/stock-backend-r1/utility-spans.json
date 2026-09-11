@@ -1,0 +1,51 @@
+{
+  "commit": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "path": "src/fabutils.cpp",
+  "spans": [
+    {
+      "first": 85,
+      "last": 104,
+      "sha256": "577b6117bee78ed3bcb3847475966a80edb61f5f2146d92f91a1de80ffea4022"
+    },
+    {
+      "first": 143,
+      "last": 146,
+      "sha256": "da216b9e47fa32ad52e1c312bc02ad44c234ce34ae7541d38cba1d910386a464"
+    },
+    {
+      "first": 268,
+      "last": 333,
+      "sha256": "4ff0ce4bafe25fba4be06305e1c277a2eef11d7257649e572b3061c4dd1d994f"
+    },
+    {
+      "first": 365,
+      "last": 381,
+      "sha256": "a454a8e7695471e792b607bc381b60889afd15b52aa8a9db75a5fb34a2c046b2"
+    },
+    {
+      "first": 384,
+      "last": 438,
+      "sha256": "45a6f517d4b27fd1e64f3224f454d91fdb4776c76af92e181fca65f87e11998d"
+    },
+    {
+      "first": 443,
+      "last": 461,
+      "sha256": "4716346be4d49fdd702798f357c3f9bf5096b5967453e56c309cc39cb6a0e015"
+    },
+    {
+      "first": 1416,
+      "last": 1536,
+      "sha256": "1548a7164e3d1a0565cd966c38dddcdc9f4b1603f317c9e675f73ca150ad0961"
+    },
+    {
+      "first": 1547,
+      "last": 1547,
+      "sha256": "63cdd4d45e6c589ca7a08ec5385a37d79b90de9ad39ef3e0cb869fca995f1ccf"
+    },
+    {
+      "first": 1559,
+      "last": 1559,
+      "sha256": "46b40af0911970765ed45dc8aacbb1ed494be227ad7ca0d983eb99baac3a17cd"
+    }
+  ]
+}

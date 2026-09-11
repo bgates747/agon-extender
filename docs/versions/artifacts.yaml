@@ -1,10 +1,21 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r65
-updated_at: 2026-09-10T23:11:57Z
+registry_revision: r66
+updated_at: 2026-09-11T01:44:36Z
 
 artifacts:
+  - artifact_id: stock-backend-binding
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: stock-backend-binding-r01
+    status: experimental
+    variants: []
+    description: Compile and native-row comparison proof for the original five VDP depth controllers on P4.
+    notes:
+      - PORT-003 R1; no deployable image or hardware qualification. Standing Author version preapproval covers this identity and registry r66.
+      - Preserve compilable upstream code unchanged, including suspected bugs; only compiler and processor/output binding changes belong in the first pass.
+      - R1 target relocatable closure and 182 host comparisons recorded; 180 checks pass and two unchanged upstream narrow-scroll discrepancies are retained. Not bootable or hardware-qualified.
   - artifact_id: uart-path-capture
     kind: test_procedure
     identity_scheme: revision

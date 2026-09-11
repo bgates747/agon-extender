@@ -69,8 +69,8 @@ sprites, cursors, readback, completion, and buffering contracts. Direct
 assumptions about the old Xtensa VGA-ISR environment may receive narrow P4
 adaptations; those changes do not authorize unrelated renderer redesign.
 
-The classic-ESP32 concrete VGA controller family is replaced by an
-Extender-owned concrete bitmapped controller. It produces framebuffer state and
+The original VGA2/4/8/16/64 concrete controller family is retained behind a
+narrow P4 processor/output binding. It produces native framebuffer state and
 logical frame progression independently of any one physical output sink, so
 the guaranteed network/browser path and later P4-native local displays consume
 one rendering model. Preserve stock mode dimensions, palette quantization,

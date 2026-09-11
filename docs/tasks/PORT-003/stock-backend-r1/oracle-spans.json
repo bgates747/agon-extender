@@ -1,0 +1,42 @@
+[
+  {
+    "source": "src/dispdrivers/vga2controller.cpp",
+    "symbol": "VGA2_SETPIXELINROW",
+    "sha256": "61169c5a7e01cfba84dc5aae676e8cdb648e2e727330b5837db10128c7430ba0"
+  },
+  {
+    "source": "src/dispdrivers/vga2controller.cpp",
+    "symbol": "VGA2_GETPIXELINROW",
+    "sha256": "0537613d7d537ad8bf33ecc3b3cb30cba2060327cbaf3ce8f53b1a850b62165f"
+  },
+  {
+    "source": "src/dispdrivers/vga4controller.cpp",
+    "symbol": "VGA4_SETPIXELINROW",
+    "sha256": "2fefe91ccb530f12f81edc050ae434f5e655e7264f6802298a6d438e2586b16a"
+  },
+  {
+    "source": "src/dispdrivers/vga4controller.cpp",
+    "symbol": "VGA4_GETPIXELINROW",
+    "sha256": "79e11cdd9ed31b455043a5094bdcd0b10a7890ca4e1402d5c6635edfc0d9fb65"
+  },
+  {
+    "source": "src/dispdrivers/vga8controller.cpp",
+    "symbol": "VGA8_SETPIXELINROW",
+    "sha256": "dd26218a428766f714183a69fea561832be5552e541aa4569bfe5ae37c6ef4e6"
+  },
+  {
+    "source": "src/dispdrivers/vga8controller.cpp",
+    "symbol": "VGA8_GETPIXELINROW",
+    "sha256": "00efa9336c919d9239a7ea5d78956283ebc181c6dbe527a1565813e3fb80409b"
+  },
+  {
+    "source": "src/dispdrivers/vga16controller.cpp",
+    "symbol": "VGA16_SETPIXELINROW",
+    "sha256": "c9da7708ad909fc18264b7fb7a0c0c1e982e67e6fe5713ceb04f535fbe640ca5"
+  },
+  {
+    "source": "src/dispdrivers/vga16controller.cpp",
+    "symbol": "VGA16_GETPIXELINROW",
+    "sha256": "f4d9c3cbb38bb5a2150cddc92b9821d0bc88e5800cf0943725cbd73ecd616e3c"
+  }
+]
