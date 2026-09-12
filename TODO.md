@@ -5,7 +5,22 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current priority — Exclusive Compatible console and EDP
+## Current priority — Mainboard SD read/write access
+
+On 2026-09-12 the Author made PORT-017 the first priority, ahead of all other
+development. Establish the wire protocol and EMOS contracts, then qualify
+bidirectional mainboard SD access using the existing Extender wiring. Only
+prerequisites needed for that service may precede it. Implementation remains
+paused pending release of the planning gate; task registration is not a restart.
+
+- [ ] **PORT-017 — Mainboard SD read/write access through Extender**
+  - Started: 2026-09-12 (planning).
+  - Status: Priority one. Local task on active main; freeze protocol first,
+    preserve keyboard input, prove physical read/write integrity and unattended
+    recovery. Blocks other development, including Rally performance work.
+  - Details: [PORT-017](docs/tasks/PORT-017.md)
+
+## Queued after PORT-017 — Exclusive Compatible console and EDP
 
 Native USB keyboard bring-up is complete: ordinary MOS commands and gameplay
 work in Legacy. On 2026-09-09 the Author deferred further keyboard refinements
@@ -15,11 +30,11 @@ observed Legacy return and re-entry. Build on that working UART console. Use the
 transport stays on hold. Browser input remains deferred; browser video is the
 initial Extender display. The USB schematic waits until 2026-09-10.
 
-The Author's current first priority is a faithful stock video backend.
+The previous first priority was a faithful stock video backend.
 AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
 The original-controller R1/R2 implementation is accepted. R3 starts with
 the completed P4-only deployment and qualitative repaired-Nurples review.
-The Author now selects QUAL-003's curated finite graphics timing tranche;
+That prior sequence selected QUAL-003's curated finite graphics timing tranche;
 deterministic Nurples and separate typing measurements are deferred.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
@@ -31,7 +46,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Priority one. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
+  - Status: Queued after PORT-017 and QUAL-003. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
