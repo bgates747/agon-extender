@@ -11,7 +11,7 @@
   "mainboard": {
     "build_id": "graphics-timing-probe-r01-b2026-09-11-05-42-28Z",
     "sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
-    "state": "application flashed and independently verified; physical MOS handshake pending",
+    "state": "Diagnostic firmware remains installed; first pass ran through BSP30_21, then scanout corruption and completion timeout reported at BSP30_22",
     "original_flash_sha256": "76c67b0a1a84b884da26c0bc22b2f98d60769352a51e64f05c91bdc7d9f7b060",
     "notes": [
       "Installed and candidate partition tables match; existing bootloader, NVS and OTA selection preserved.",
@@ -22,12 +22,13 @@
     "build_id": "agon-emos-v0.1.13-b2026-09-11-05-41-23Z",
     "sha256": "a46dc6b580aba955f4b873be69c4f5f323d10cd3e67adcb28701da4802227dae",
     "size": 130344,
-    "state": "one-time SD installer staged; not flashed"
+    "state": "Author reports successful flash; installed SD payload hash matches the candidate",
+    "author_confirmation_at": "2026-09-11T05:52:01.474497+00:00"
   },
   "fixture": {
     "build_id": "graphics-timing-probe-r01-b2026-09-11-05-41-24Z",
     "sha256": "dd9871ed64cbf04f9e205c88a9584e09c91ba3dcb14e31e0982ca213386a51ea",
-    "state": "64 cases and cleanup staged; benchmark autoexec not armed"
+    "state": "First partial result collected; automatic benchmark rerun disabled on SD"
   },
-  "hardware_timing": "not measured"
+  "hardware_timing": "Incomplete first mainboard timing-off pass: 114 successful intervals, then BSP30_22 completion timeout; no EDP workload cases reached"
 }

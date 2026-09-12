@@ -1,0 +1,33 @@
+{
+  "classification": "Incomplete hardware comparison; explicit timed failure durably recorded",
+  "successful_intervals": 114,
+  "failed_intervals": 1,
+  "saved_intervals": 115,
+  "metric_rows": 920,
+  "complete_cases": 57,
+  "failed_case": "BSP30_22",
+  "failed_variant": "Eight 34x34 RGBA8888 hardware sprites aligned on a common scanline band",
+  "last_completed_case": "BSP30_21: four RGBA8888 hardware sprites",
+  "repetition": 0,
+  "route": "mainboard UART0",
+  "detail": 0,
+  "stage_bytes": 260,
+  "submission_ticks": 0,
+  "submission_note": "Below coarse MOS tick resolution; not zero transmission time",
+  "completion_reply_wait_ticks": 1200,
+  "nominal_reply_wait_seconds": 10,
+  "terminal_status": 15,
+  "terminal_status_name": "FR_TIMEOUT",
+  "terminal_record_present": true,
+  "edp_cases_executed": 0,
+  "probe_mismatches": [
+    "# probe,rep=0,route=0,case=SHP23,index=1,expected=255/255/255,actual=0/0/0,match=0"
+  ],
+  "ordering_and_record_integrity": "Complete expected prefix, metrics 1..8 per interval, correct corpus byte counts and terminal summary",
+  "limits": [
+    "No untouched-stock baseline: detail=0 retains hook admission locks and fences.",
+    "No measured CPU aggregates in this off pass.",
+    "Failure localizes the unanswered completion fence; it does not establish why mainboard did not complete.",
+    "A final on-screen message may be hidden or blocked by mainboard output failure; CSV proves terminal-result persistence."
+  ]
+}

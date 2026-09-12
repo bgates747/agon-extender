@@ -1,0 +1,8 @@
+{
+  "collected_at": "2026-09-11T06:22:24.567948+00:00",
+  "file": "GQT001.CSV",
+  "size_bytes": 41356,
+  "sha256": "498828f4d1dc18c5dc012fbf77eff870e2913906b501683522741052232c5ef6",
+  "run_started_at": null,
+  "note": "SD timestamp is not a reliable wall-clock start; collection timestamp is not execution time."
+}

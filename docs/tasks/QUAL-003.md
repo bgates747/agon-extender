@@ -497,3 +497,101 @@ the application update preserved its bootloader, partitions and persistent state
 EMOS v0.1.13 and all benchmark files are staged on SD; the one-time installer
 runs first. Author confirmation of that flash and the later benchmark handoff
 remain pending. No hardware timing result exists yet.
+
+## EMOS installation accepted; benchmark armed — 2026-09-11
+
+The Author reports a successful EMOS flash. The returned SD contains the
+expected v0.1.13 payload in EMDONE.BIN and no unconsumed EMNEW.BIN. Replace
+the one-time installer startup with the reviewed eight-command benchmark
+startup. Preserve all existing results and rollback images. The physical run
+now awaits the Author’s reset with one browser video client connected; collect
+the closed CSV after MOS returns, including an incomplete result if it fails.
+
+## QUAL-003-I004 — Mainboard population-stage stall observation
+
+Status: open; physical result collection pending. On 2026-09-11 the Author
+reports that the mainboard appears stuck at BSP-30, caption “8 active; two
+aligned scanline groups,” with stationary sprites and scanout corruption.
+The SD is not mounted on the workstation at this observation. No running-board
+reset, flash or serial open was performed in response. Whether the browser
+continues the paired workload is not yet confirmed.
+
+1. The population stages intentionally contain no animation. The same caption
+   occurs at BSP30_04/_10/_16/_22 (software/hardware, RGBA2222/RGBA8888).
+   The photograph cannot identify which variant or repetition stopped. Recover
+   the closed CSV before assigning an exact failing interval.
+2. The selected official Bitmaps API’s “Hardware sprite limitations” section
+   explains that too many sprite pixels on one scanline can overrun VGA
+   generation. I002 already records abnormal mainboard BSP-30 output before
+   this timing firmware existed. This is relevant precedent, not proof of the
+   present cause or a reason to suppress this failure.
+3. The added Scope constructor acquires the shared portMUX on every
+   drawSpriteScanLine entry even with detail=0. Enabled timing also reads the
+   timer and updates counters. Off therefore retains scanline overhead and
+   cannot isolate untouched-stock behavior near its VGA timing limit. Review
+   instrumentation interference before trusting this stage’s performance.
+4. The diagnostic’s ten-second bounds apply to its explicit completion/reply
+   waits. They do not bound the reused stock UART0 blocking output path:
+   serial.asm UART0_wait_CTS loops until ready. If mainboard stops consuming,
+   the SD app may remain inside an ordinary MOS output call and never reach
+   its own timeout or final message. This is a possible mechanism, not a
+   measured diagnosis; do not silently change stock MOS to address it.
+5. Preserve the partial CSV and exact deployed images. Distinguish a display
+   left unchanged after a route switch from a stalled application. The next
+   repair/retest decision follows that evidence. No rerun or replacement
+   firmware has been deployed in response to this observation.
+
+### I004 result recovered — first physical timing attempt
+
+[Preserved CSV and analysis](QUAL-003/timing/results/first-hardware-attempt/partial-analysis.json)
+identify BSP30_22: **eight 34×34 RGBA8888 hardware sprites sharing a scanline
+band**, after BSP30_21 (four sprites) completes. The file contains the exact
+expected prefix: 114 successful intervals, one failed interval, 920 metric
+rows, and a terminal FR_TIMEOUT (15) record. EMOS waited 1200 raw ticks
+(nominal ten seconds) for completion after submitting the 260-byte stage.
+The successful submission is below tick resolution, not literally zero-time.
+
+All records belong to repeat 0, mainboard, detail=0. No EDP workload case or
+enabled-duration pass was reached. The preceding software populations and
+RGBA2222 hardware populations completed; the one pixel mismatch is the known
+SHP23 expectation. This is an informative failed comparison, not a performance
+pass or evidence that EDP stalled. The earlier possible unbounded UART wait
+is not established as the cause: the CSV proves the application reached its
+own timeout and persisted the terminal result. Its final screen message may
+have been blocked or obscured by mainboard output failure.
+
+Off still retains scanline hook locking and completion fences. The leading
+hypothesis is mainboard scanout overload at this aligned RGBA8888 population,
+potentially aggravated by instrumentation; it is not yet a measured causal
+conclusion. The next proposed isolation is this exact population sequence in
+mode 20 with the preserved original mainboard image and ordinary VDU traffic,
+without private timing requests. Use that control to decide the safe workload
+bound and required instrumentation correction before repeating the paired run.
+Do not repair upstream rendering or silently omit the failed stage.
+
+The original CSV remains on SD and is copied into tracked evidence. Autoexec
+now retains mode/input setup and the benchmark working directory, but omits
+LOAD/RUN to avoid unattended repeats. No processor was reset or reflashed.
+
+## Author diversion: PingoWolf with Extender keyboard — 2026-09-11
+
+The Author pauses the benchmark and requests the latest PingoWolf mainboard
+VDP. The initial stock MOS 3.0.2 request was superseded by the explicit need
+to retain Extender keyboard input. EMOS v0.1.13 and P4 console r11 therefore
+remain installed. No stock MOS installer was staged.
+
+The mainboard now runs `pingowolf-v0.1.0-alpha.1-b2026-09-11-09-40-21Z`, built from
+the latest local committed pingowolf branch `1a78d9886005b7bdc5eee759d24150a16a22a321`
+with vdp-gl ac2dd598 (the upstream dependency at that branch’s date).
+Later audio_fix work was excluded and left untouched. Only the build stamp
+and local dependency resolution differ from that committed source. Its
+application SHA-256 is `8128cbebecef6393d32767480a8632101e8ae6002331e8e89df8a997afba7c40`.
+The previous diagnostic application and partition/OTA layout were checked
+before writing; the new application was independently flash-verified.
+
+The Author’s current autoexec had Extender input commented out. Re-enable
+`EMOS KEYINPUT extender` after `SET KEYBOARD 1`, preserving the chosen
+Aginvadors directory and LOAD without adding RUN. Leave the SD mounted per
+the Author. The timing suite remains disabled: PingoWolf has no private
+graphics timing command, so the paired timing procedure requires its recorded
+diagnostic mainboard image restored before a future authorized run.
