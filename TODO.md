@@ -10,8 +10,8 @@ item is removed.
 On 2026-09-12 the Author made PORT-017 the first priority, ahead of all other
 development. Establish the wire protocol and EMOS contracts, then qualify
 bidirectional mainboard SD access using the existing Extender wiring. Only
-prerequisites needed for that service may precede it. Implementation remains
-paused pending release of the planning gate; task registration is not a restart.
+prerequisites needed for that service may precede it. The Author released PORT-017 implementation on 2026-09-12. Other development
+remains queued until its acceptance; freeze the protocol before coding it.
 
 - [ ] **PORT-017 — Mainboard SD read/write access through Extender**
   - Started: 2026-09-12 (planning).

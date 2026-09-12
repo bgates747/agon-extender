@@ -6,9 +6,10 @@ Created 2026-09-12 at the Author's direction. **Highest priority, before all
 other Extender implementation and before Rally optimization.** Work belongs on
 this project's active `main` branch, not an isolated Rally worktree. This task
 is self-contained; returning agents need not visit Rally to discover its scope.
-Task registration is authorized now. Implementation remains paused pending the
-Author's release of the existing planning gate. Do not mistake reprioritization
-for permission to start builds, firmware changes or hardware experiments.
+The Author released implementation on 2026-09-12 after freezing prior work.
+Both boards are hot; Extender Ethernet responds and its Pi sees the expected
+USB device. Rally is running Fuji demo. Initial inspection does not reset or
+open serial. Begin with the protocol gate below, then bootstrap and qualification.
 
 The project TODO owns task ordering. The phases below own this task's detailed
 progress; Rally RALLY-20 consumes its acceptance result rather than maintaining
