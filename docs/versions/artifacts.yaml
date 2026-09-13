@@ -1,10 +1,28 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r70
-updated_at: 2026-09-11T05:39:58Z
+registry_revision: r71
+updated_at: 2026-09-13T01:05:46Z
 
 artifacts:
+  - artifact_id: sdserve
+    kind: application
+    identity_scheme: semantic_version
+    latest_identity: sdserve-v0.1.0
+    status: candidate
+    variants: []
+    description: Foreground mainboard SD service through the owned EMOS gateway.
+    notes:
+      - PORT-017 commissioning proposal followed by Author card-preparation instruction; registry r71. Physical qualification pending.
+  - artifact_id: mainboard-sd-qualification
+    kind: test_procedure
+    identity_scheme: revision
+    latest_identity: mainboard-sd-qualification-r01
+    status: candidate
+    variants: []
+    description: Bootstrap, integrity, recovery, keyboard coexistence and ten unattended cycles.
+    notes:
+      - Defined in docs/tasks/PORT-017/QUALIFICATION.md; commissioning candidate, no hardware pass claimed.
   - artifact_id: graphics-timing-probe
     kind: test_fixture
     identity_scheme: revision
@@ -95,7 +113,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.13
+    latest_identity: agon-emos-v0.1.14
     status: candidate
     variants:
       - port008-forward
@@ -459,7 +477,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r11
+    latest_identity: uart-excom-console-r12
     status: candidate
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.

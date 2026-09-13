@@ -11,6 +11,13 @@ Both boards are hot; Extender Ethernet responds and its Pi sees the expected
 USB device. Rally is running Fuji demo. Initial inspection does not reset or
 open serial. Begin with the protocol gate below, then bootstrap and qualification.
 
+Current checkpoint: protocol/resource gate complete; provisional implementation
+and headless raw-FAT transfers pass through 131731 bytes. The Author returned
+the card and directed commissioning preparation following the candidate-freeze
+and identity proposal. Freeze the candidate inputs and follow
+`PORT-017/BOOTSTRAP.md` and `PORT-017/QUALIFICATION.md`. Hardware acceptance is
+pending; summon only once the verified card can be returned to Agon.
+
 The project TODO owns task ordering. The phases below own this task's detailed
 progress; Rally RALLY-20 consumes its acceptance result rather than maintaining
 a second independent SD-service implementation checklist.

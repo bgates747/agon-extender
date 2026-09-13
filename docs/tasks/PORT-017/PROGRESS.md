@@ -60,3 +60,59 @@ or release status is claimed for these exploratory builds.
 Machine-specific build logs, provisional bundles and raw captures are in the
 ignored project build/profile trees. Final acceptance will preserve selected
 evidence and exact committed candidate provenance in the tracked task silo.
+
+## Provisional headless result and commissioning handover
+
+The compiled EMOS and eZ80 service now pass actual FatFS/raw-image transfers at
+0, 1, 212, 213, 65537 and 131731 bytes through the maintained P4 queue and host
+HTTP client. Each stage and activated file was read back and compared. One WRITE
+response was deliberately dropped; the application replayed it successfully.
+The full run took 347.14 seconds; its 131731-byte cycle took 229.98 seconds,
+including upload, Agon verification, host stage readback, activation verification
+and host target readback. These are emulator pipeline times, not physical UART
+throughput. The ignored long CPU flag was ineffective; this run was CPU-limited.
+
+After the first-upload orphan recovery clarification, a fresh short raw-FAT run
+passes recovery of a pre-existing valid journal/partial file without any target
+or backup. A further focused run checks real target STAT and LIST alongside
+write/read/activation and lost-response recovery. No changes to the official
+reference runtime or official MOS/VDP checkouts were needed.
+
+Latest EMOS host suite: 87 tests pass. Nine Extender wire/queue/client tests
+pass, plus the retained console-session tests and target network-adapter fault
+checks for both six-route and eight-route configurations. The final P4 compile
+passes after the partial-envelope fault fix. The current eZ80 application is
+18939 bytes. Provisional firmware/application hashes and source snapshots are
+preserved in ignored `agents/port-017/review-ready`; raw headless evidence is
+under `.emulator/port017`. These dirty exploratory inputs are not deployable
+candidate identities or qualified evidence.
+
+`BOOTSTRAP.md` defines the proposed single initial card handover, payload paths,
+normal startup, host commands, rollback boundary and remaining approval gates.
+The service cannot install its own initial EMOS gateway over an old gateway
+that does not exist. No hardware has changed. Firmware, tests, tooling and
+emulator-coupled documentation remain uncommitted pending the Author's
+commissioning/commit disposition. Physical qualification and ten uninterrupted
+cycles remain open; no dependent Rally/Golem work has started.
+
+## Candidate freeze and returned card — 2026-09-13 UTC
+
+The Author returned the card and directed preparation after the concrete
+identity/commit proposal. The candidate freeze proceeds for EMOS v0.1.14,
+console r12, sdserve v0.1.0 and mainboard-sd-qualification r01; physical and
+human acceptance remain pending. The service gets an identified build wrapper.
+The card was backed up before changes. Guarded IFTHERE/EXEC installation consumes
+its trigger before FLASH, so the following boot starts the service without a
+second card trip. Historical EMDONE and accepted Rally files stay intact.
+
+Fresh EMOS host suite: 89 tests pass. Extender wire/queue/client checks pass.
+Writable paths now reserve the eight-byte sibling suffix; invalid current-session
+transfers use BAD_REQUEST, preserving STALE for unaccepted sessions. These
+clarifications were frozen in 3c350df before implementation. Exact identified
+builds and headless smoke follow the freeze.
+
+The complete registry validator currently stops at a pre-existing hash mismatch
+in hardware/designs/light2-harness-r02/profile.yaml for connectivity.yaml
+(expected 560ab589..., actual c68e4d4f...). Neither input is changed by PORT-017.
+The artifact-registry validation itself passes independently. Do not silently
+rewrite that hardware integrity record to make this service gate green.

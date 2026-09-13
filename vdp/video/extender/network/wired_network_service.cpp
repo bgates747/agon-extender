@@ -1,9 +1,13 @@
-// Video-only service restored after retiring browser keyboard capture.
+// Video service plus optional PORT-017 SD RPC; browser input stays retired.
 // Keep F003 complete writes and F012 failed-stop containment; no input lease,
 // browser-keyboard callback belongs in this service. AUDIT-006 alone enables
 // a read-only frame-timing endpoint; it does not reinstate browser input.
 #include "extender/network/wired_network_service.hpp"
 #include "extender/diagnostics/frame_timing.hpp"
+#if defined(AGON_EXTENDER_SD_SERVICE)
+#include "extender/storage/sd_target.hpp"
+#include <cstdio>
+#endif
 
 #include <array>
 #include <cstring>
@@ -258,11 +262,53 @@ esp_err_t timingHandler(httpd_req_t *request) {
 }
 #endif
 
+#if defined(AGON_EXTENDER_SD_SERVICE)
+namespace {
+std::uint32_t sdNow() { return std::uint32_t(esp_timer_get_time()/1000); }
+esp_err_t sdStatusHandler(httpd_req_t *request) {
+  bool online,pending;std::uint32_t boot;
+  storage::sdStatus(sdNow(),online,pending,boot);
+  char body[100];
+  const int n=snprintf(body,sizeof(body),
+      "{\"protocol\":1,\"online\":%s,\"pending\":%s,\"boot\":%lu}",
+      online?"true":"false",pending?"true":"false",(unsigned long)boot);
+  httpd_resp_set_type(request,"application/json");
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  return httpd_resp_send(request,body,n);
+}
+esp_err_t sdRpcHandler(httpd_req_t *request) {
+  if(request->content_len<SD_HEADER || request->content_len>SD_MAX_RECORD)
+    return httpd_resp_send_err(request,HTTPD_400_BAD_REQUEST,"Invalid record length");
+  std::uint8_t input[SD_MAX_RECORD],output[SD_MAX_RECORD];
+  unsigned received=0,out_length=0;
+  const auto started=esp_timer_get_time();
+  // Only receive this small HTTP body here. Filesystem/UART completion is
+  // asynchronous; repeated identical POSTs retrieve the cached result.
+  while(received<request->content_len) {
+    const int n=httpd_req_recv(request,reinterpret_cast<char *>(input+received),
+                               request->content_len-received);
+    if(n<=0 || esp_timer_get_time()-started>3000000) return ESP_FAIL;
+    received+=unsigned(n);
+  }
+  const unsigned status=storage::sdPost(input,received,output,out_length,sdNow());
+  const char *label=status==200?"200 OK":status==202?"202 Accepted":
+      status==409?"409 Conflict":status==503?"503 Service Unavailable":"400 Bad Request";
+  httpd_resp_set_status(request,label);
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  httpd_resp_set_type(request,"application/octet-stream");
+  return httpd_resp_send(request,reinterpret_cast<const char *>(output),out_length);
+}
+}
+#endif
+
 bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
   config.max_uri_handlers = 6;
+#if defined(AGON_EXTENDER_SD_SERVICE)
+  config.max_uri_handlers += 2;
+#endif
 #if defined(AGON_EXTENDER_FRAME_TIMING)
   ++config.max_uri_handlers; // five assets + video + diagnostic GET
 #endif
@@ -320,6 +366,15 @@ bool WiredNetworkService::startHttp() noexcept {
     stopHttp();
     increment(http_start_failures_);
     return false;
+  }
+#endif
+#if defined(AGON_EXTENDER_SD_SERVICE)
+  httpd_uri_t sd_status{},sd_rpc{};
+  sd_status.uri="/sd/status";sd_status.method=HTTP_GET;sd_status.handler=&sdStatusHandler;
+  sd_rpc.uri="/sd/rpc";sd_rpc.method=HTTP_POST;sd_rpc.handler=&sdRpcHandler;
+  if(httpd_register_uri_handler(server,&sd_status)!=ESP_OK ||
+     httpd_register_uri_handler(server,&sd_rpc)!=ESP_OK) {
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
   }
 #endif
   http_fault_=false;

@@ -7,6 +7,9 @@
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
 #include "../diagnostics/frame_timing.hpp"
+#if defined(AGON_EXTENDER_SD_SERVICE)
+#include "../storage/sd_target.hpp"
+#endif
 namespace {
 ConsoleStream *console_stream;
 QueueHandle_t console_events;
@@ -69,8 +72,9 @@ void runConsole(VDUStreamProcessor *processor) {
   auto &s=*console_stream;
   auto &keyboard=console_keyboard;
   auto emit=[](agon::extender::input::ProcessedKey k){if(!console_keys.push(k))console_overload=true;};
-  uint8_t incoming[3+CONSOLE_SIZE]{};
+  uint8_t incoming[244]{};
   unsigned used=0,need=3;
+  unsigned discard=0;
   uint32_t partial_at=0,tx_at=0;
   bool transmitting=false;
   for(;;) {
@@ -136,21 +140,42 @@ void runConsole(VDUStreamProcessor *processor) {
         // Minimal preactivation recognizer: stock keyboard setup/poll exception
         // and fixed control envelope only. No ordinary VDU is reachable here.
         for(unsigned budget=0;budget<32 && uart_read_bytes(UART_NUM_1,&b,1,0)==1;++budget) {
+          if(discard) { --discard;continue; }
           if(!used) {if(b!=23)continue;partial_at=now;need=3;}
           incoming[used++]=b;
           if(used==2 && b!=0){used=0;continue;}
           if(used==3) {
             if(b==CONSOLE_OPCODE)need=3+CONSOLE_SIZE;
+#if defined(AGON_EXTENDER_SD_SERVICE)
+            else if(b==0xF6)need=4;
+#endif
             else if(b==0x80 || b==0x81)need=4;
             else {used=0;continue;}
           }
+#if defined(AGON_EXTENDER_SD_SERVICE)
+          if(used==4 && incoming[2]==0xF6) {
+            if(b<SD_HEADER || b>SD_MAX_RECORD) {discard=b;used=0;continue;}
+            need=4+b;
+          }
+#endif
           if(used==need) {
             if(incoming[2]==CONSOLE_OPCODE)consoleControl(processor,incoming+3);
+#if defined(AGON_EXTENDER_SD_SERVICE)
+            else if(incoming[2]==0xF6)
+              agon::extender::storage::sdReceive(incoming+4,incoming[3],now);
+#endif
             else {s.feed(incoming);processor->processNext();}
             used=0;break;
           }
         }
-        if(used && uint32_t(now-partial_at)>=250)used=0;
+        if((used || discard) && uint32_t(now-partial_at)>=250) {
+#if defined(AGON_EXTENDER_SD_SERVICE)
+          // A partial SD envelope has lost framing; require owned transport
+          // recovery instead of interpreting its late body as console input.
+          if(discard || (used>=3 && incoming[2]==0xF6))s.fail("incomplete SD envelope");
+#endif
+          used=discard=0;
+        }
         // Cursor/event housekeeping still belongs to the retained processor.
         if(!used)processor->processNext();
       }
@@ -159,6 +184,16 @@ void runConsole(VDUStreamProcessor *processor) {
 #endif
     }
     keyboard.tick(now,emit);
+#if defined(AGON_EXTENDER_SD_SERVICE)
+    // Service records wait behind complete keyboard/reply packets. Only this
+    // task touches the UART queue; HTTP callbacks never send bytes themselves.
+    if(!s.session.active() && !used && !discard && console_keys.empty() &&
+       !s.count && !transmitting && !console_admit_pending) {
+      uint8_t record[SD_MAX_RECORD];
+      unsigned n=agon::extender::storage::sdTake(record,now);
+      if(n) {s.write(0x8D);s.write(uint8_t(n));s.write(record,n);}
+    }
+#endif
     if(s.failure) {
       keyboard.pause();console_cancel_tx();
       ESP_ERROR_CHECK(uart_set_hw_flow_ctrl(UART_NUM_1,UART_HW_FLOWCTRL_CTS,0));

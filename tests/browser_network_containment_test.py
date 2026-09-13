@@ -26,6 +26,14 @@ def main():
 template<typename... T> void trace(T...) {}
 using httpd_handle_t=void *; using esp_err_t=int;
 constexpr int ESP_OK=0, HTTP_GET=0, HTTPD_SOCK_ERR_TIMEOUT=-2, HTTPD_SOCK_ERR_FAIL=-1;
+constexpr int HTTP_POST=1;
+#if defined(AGON_EXTENDER_SD_SERVICE)
+static int sdStatusHandler(void*) { return 0; }
+static int sdRpcHandler(void*) { return 0; }
+constexpr int route_count=8;
+#else
+constexpr int route_count=6;
+#endif
 #define ESP_LOGE(...) ((void)0)
 #define ESP_LOGI(...) ((void)0)
 constexpr int kVideoSendWaitSeconds=5;
@@ -60,7 +68,7 @@ int main() {
  assert(completeSend(nullptr,1,data,12,0)==HTTPD_SOCK_ERR_TIMEOUT);
  clock_step=100;send_error=0;
  // Each registration position: five assets and the video endpoint.
- for(int failure=1;failure<=6;++failure) {
+ for(int failure=1;failure<=route_count;++failure) {
   starts=stops=registrations=0;fail_at=failure;stop_error=-1;
   WiredNetworkService s;
   assert(!s.startHttp()); assert(starts==1&&stops==1&&s.server_!=nullptr&&s.http_fault_);
@@ -70,11 +78,13 @@ int main() {
   fail_at=0;registrations=0;assert(s.startHttp());assert(starts==2);
   assert(s.startHttp()&&starts==2);s.stopHttp();assert(s.server_==nullptr);
  }
- puts("PASS: positive short writes complete; all six video-only registration failures retain live handles across failed stop/retry");
+ printf("PASS: positive short writes complete; all %d registration failures retain live handles across failed stop/retry\n",route_count);
 }
 '''
     with tempfile.TemporaryDirectory() as temp:
         p=Path(temp);(p/'test.cpp').write_text(fake+'\n'.join(parts)+checks)
-        subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',str(p/'test.cpp'),'-o',str(p/'test')],check=True)
-        subprocess.run([str(p/'test')],check=True)
+        for sd_service in (False,True):
+            flags=['-DAGON_EXTENDER_SD_SERVICE=1'] if sd_service else []
+            subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',*flags,str(p/'test.cpp'),'-o',str(p/'test')],check=True)
+            subprocess.run([str(p/'test')],check=True)
 if __name__=='__main__':main()
