@@ -57,7 +57,7 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
 
 ## Implementation gate and ordered phases
 
-1. [ ] **P17-01 — Freeze the protocol before implementing it.** Inspect existing
+1. [x] **P17-01 — Freeze the protocol before implementing it.** Inspect existing
    transport and EMOS APIs; record capability/firmware identities and budgets.
    Specify sender/receiver, framing, version negotiation, message dispatch,
    transfer/session/request IDs, explicit offsets, chunk limits, flow control,
@@ -65,6 +65,8 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
    timeouts, duplicate/retry handling and cancellation. Define exactly when an
    ACK means received, written, closed or independently verified. Establish
    ROM/RAM fit and foreground execution. Freeze the contract locally first.
+   Initial wire freeze: 51917e6. Compile and host boundary proof is recorded in
+   `PORT-017/PROGRESS.md`; this completes the contract/resource gate only.
 2. [ ] **P17-02 — Resolve bootstrap and recovery.** Identify how the initial
    eZ80 service gets installed and invoked; do not assume an SD loader exists.
    Preserve good game/startup/firmware copies. Prefer supported RAM/service APIs;
