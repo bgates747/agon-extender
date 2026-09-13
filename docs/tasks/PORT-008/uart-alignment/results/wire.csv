@@ -1,0 +1,7 @@
+# uart-data-probe-r01-b2026-09-13-21-30-31Z (experimental)
+repeat,route,direction,pattern,length,send_ticks,reply_ticks,elapsed_us,expected_bytes,actual_bytes,errors,status
+0,0,forward,3,65535,72,2,589724,65535,65535,0,0
+0,1,forward,3,65535,252,2,2100970,65535,65535,0,0
+0,0,reverse,3,256,0,10,85140,2048,2048,0,0
+0,1,reverse,3,256,0,12,596,2048,2048,0,0
+# terminal,status=0,saved=4,recovery=0

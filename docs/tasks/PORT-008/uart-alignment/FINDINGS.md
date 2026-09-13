@@ -124,3 +124,42 @@ P4 flash was untouched; explicit resume restored its installed application.
 Exact original startup and its pre-test backup were restored with readback;
 the one-shot marker was confirmed consumed. Local captures/ROM/SD journals
 retain private evidence; `results/pinwalk-map.json` records public findings.
+
+## U12 — pure UART wire attribution
+
+Full720million samples at24MHz; both independent decoders agree, all65,535
+forward bytes and2,048return payload bytes match the PRNG, all257return
+records have the expected sequence/completion, all four application rows pass
+and recovery0. The oracle rejects eight injected loss/corruption/reorder/
+missing-completion/framing variants. No browser, serial observer or rendering.
+
+The following columns partition each P4-wire payload span. Positive permission
+means the receiver holds its active-low handshake low. These are elapsed wire
+measurements, not sampled CPU instruction timings. Largest total first.
+
+| P4 UART direction | Span ms | Byte occupancy ms | Idle with permission ms | Idle under receiver backpressure ms |
+| --- | ---: | ---: | ---: | ---: |
+| Agon → P4,65,535bytes | 2099.394 | 568.880 | 1530.514 | 0.000 |
+| P4 → Agon,4,626wire bytes | 109.609 | 40.132 | 0.140 | 69.336 |
+
+1. **Forward:** P4 RTS stayed permitting throughout the65,535byte payload;
+   zero receiver backpressure. The1,530.514ms idle therefore cannot be assigned
+   to P4 receive throttling or rendering. Destination elapsed2,100.970ms agrees
+   with the2,099.394ms wire span plus probe/header overhead. Current EMOS still
+   runs the layered C per-byte sender identified by AUDIT-005; this is a concrete
+   next software lead, not an instruction-level attribution from the sniffer.
+2. **Return:**99.80% of inter-byte idle overlaps Agon RTS withholding permission.
+   P4 spends only0.140ms idle while permitted across the full reply burst.
+   Request-to-final-byte is111.055ms; the P4 enqueue counter is0.596ms and must
+   not be presented as completion. Stock's corresponding request-to-reply
+   measurement is approximately83.3ms on MOS's coarse timer; UART0 is not on
+   these probes, so no invented stock wire-span comparison is made.
+3. Neither direction starts a measured byte while its receiver withholds
+   permission. Exact decode and no measured framing errors supply no evidence
+   for cable corruption here; they do not qualify analogue signal integrity.
+4. P4-only tuning cannot remove sender-created forward gaps or Agon-controlled
+   reverse pauses. Preserve this result instead of rewriting stock VDP logic.
+   U11 will now repeat the paired rendering workload with these UART changes.
+   Any EMOS transport work requires a separately bounded stock-reuse contract
+   accounting for resident ownership/deadlines and its existing dirty work;
+   this finding does not silently extend the current port patch into EMOS.

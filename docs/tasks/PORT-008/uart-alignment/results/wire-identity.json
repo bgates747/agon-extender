@@ -1,0 +1,26 @@
+{
+  "status": "experimental pure UART wire attribution pass",
+  "app": "uart-data-probe-r01-b2026-09-13-21-30-31Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-21-13-50Z",
+  "rows": 4,
+  "errors": 0,
+  "recovery": 0,
+  "csv_sha256": "bb02dc3c038fad32c0ca238367eedb3059a14c1274b90e5098bad3d72861dbd0",
+  "app_sha256": "7fd452a40912b103d21a1c0dcedaa56351b692ef25c78ebdae427c3a4f017fdc",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "803905e615e46a78aca831ab5a10365c60ab707ce1abe243210cc1e3171b0520",
+  "source_commit": "f2444b42676f0896f3bacab1be905f958725e75d",
+  "capture_sha256": "c0c53d92b36dca551a36c8d040755467688ad5c9ef2b46715462b6be20e48c2c",
+  "capture_run_id": "PORT-008-2026-09-13-21-34-16Z",
+  "oracle_negative_tests": [
+    "Rejected: forward loss",
+    "Rejected: forward extra",
+    "Rejected: forward corrupt",
+    "Rejected: reverse loss",
+    "Rejected: reverse reorder",
+    "Rejected: reverse corrupt",
+    "Rejected: reverse completion missing",
+    "Rejected: framing"
+  ]
+}

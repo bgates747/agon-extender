@@ -1,0 +1,35 @@
+{
+  "complete": true,
+  "rows": 4,
+  "errors": [],
+  "comparison": [
+    {
+      "direction": "forward",
+      "length": 65535,
+      "vdp": {
+        "send_ticks": 72,
+        "reply_ticks": 2,
+        "elapsed_us": 589724
+      },
+      "edp": {
+        "send_ticks": 252,
+        "reply_ticks": 2,
+        "elapsed_us": 2100970
+      }
+    },
+    {
+      "direction": "reverse",
+      "length": 256,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 10,
+        "elapsed_us": 85140
+      },
+      "edp": {
+        "send_ticks": 0,
+        "reply_ticks": 12,
+        "elapsed_us": 596
+      }
+    }
+  ]
+}
