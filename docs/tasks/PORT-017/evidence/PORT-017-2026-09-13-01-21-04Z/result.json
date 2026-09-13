@@ -1,0 +1,107 @@
+{
+  "run_id": "PORT-017-2026-09-13-01-21-04Z",
+  "started_at": "2026-09-13T01:21:04.917612+00:00",
+  "outcome": "pass",
+  "source_commit": "02e62e4e5ef2cba8409d55393fe4dd391331610a",
+  "source_dirty": false,
+  "source_sha256": {
+    "scripts/qualify_sdcard.py": "2d1ea759be0c76739fb48af8d34706d47dc7574bcf89e55584313246b24d20a5",
+    "scripts/sdcard.py": "b5c3bf28286206b17a4bff543ce516596ea4c9d6994959ce73f0377a725567d4"
+  },
+  "target": "/extender/sdtest/p17-20260913-012104.bin",
+  "error_target": "/extender/sdtest/p17-20260913-012104-err.bin",
+  "cycles": [
+    {
+      "cycle": 1,
+      "size": 0,
+      "transfer": 3188288016,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "seconds": 1.9448012719949475
+    },
+    {
+      "cycle": 2,
+      "size": 1,
+      "transfer": 2052014503,
+      "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+      "seconds": 2.3781670030002715
+    },
+    {
+      "cycle": 3,
+      "size": 211,
+      "transfer": 3757807059,
+      "sha256": "6354f104ede90c65606f3ab7ea3c6decd6623d2235a8df3d901dfd23524e262a",
+      "seconds": 2.472258523994242
+    },
+    {
+      "cycle": 4,
+      "size": 212,
+      "transfer": 1457902518,
+      "sha256": "7287c57325d566a2affb643d6e5afcbd4418c4a0742614d3ba22e4ad83ef4501",
+      "seconds": 2.505137280008057
+    },
+    {
+      "cycle": 5,
+      "size": 213,
+      "transfer": 783056884,
+      "sha256": "d63bf294f10bb32c9391bdf205f662dc1b36075bc891ebf397c479f81e09b23f",
+      "seconds": 2.720626236012322
+    },
+    {
+      "cycle": 6,
+      "size": 4096,
+      "transfer": 1659247340,
+      "sha256": "25da4889ea0cd58f9a5d0002b4f66244d6b7c60f19dc7d0942f900f7dbd63b4d",
+      "seconds": 11.346705104006105
+    },
+    {
+      "cycle": 7,
+      "size": 65535,
+      "transfer": 1604959434,
+      "sha256": "86f0d609dadf17ce0bbab2865714ea3c85ec34e8df6b4df689f4ca495ae77fea",
+      "seconds": 155.10842050200154
+    },
+    {
+      "cycle": 8,
+      "size": 65536,
+      "transfer": 1742845694,
+      "sha256": "2ef7c2e9feba2ba10e3c55fd39be2c72139bd81a1387d3eb09cac22397ff468b",
+      "seconds": 206.3607858739997
+    },
+    {
+      "cycle": 9,
+      "size": 65537,
+      "transfer": 2055291927,
+      "sha256": "af53ab78eb5ef8922bbf0ac69dfaf0621689723c98771db8ec9f537447ee92ca",
+      "seconds": 205.96903933900467
+    },
+    {
+      "cycle": 10,
+      "size": 131731,
+      "transfer": 3495414476,
+      "sha256": "7a505a8285fee18f6c174be919b65f242b75fac6c26971fcd85a9a2eed114241",
+      "seconds": 360.38079900000594
+    }
+  ],
+  "limits": [
+    "Host-injected response loss; no physical cable or power interruption.",
+    "No induced physical disk-full, media fault or power loss.",
+    "Keyboard observation and user acceptance recorded separately.",
+    "Times include multiple readbacks, sync and host audit/state writes."
+  ],
+  "initial_status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389896933
+  },
+  "boot": 389896933,
+  "error_checks": "pass",
+  "durable_retry_count": 1,
+  "final_status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389896933
+  },
+  "ended_at": "2026-09-13T01:37:00.906458+00:00"
+}

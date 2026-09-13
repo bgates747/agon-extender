@@ -1,0 +1,133 @@
+{
+  "commissioning": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "cycles": [
+      {
+        "size": 0,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.5838830830034567
+      },
+      {
+        "size": 213,
+        "sha256": "fa8c8cc8ab1b50bed4f54676b09340ec81027b2b278bd49c08a4fa151071fc65",
+        "seconds": 1.3084236389986472
+      }
+    ],
+    "orphan_recovery": true,
+    "service_exit_response": true,
+    "original_evidence_sha256": "d1a0c7f9ab501d1d2dcf89f4d12a9bc6d2225654250515ecab7aba6194c8d7b3"
+  },
+  "controller-smoke": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "cycles": [
+      {
+        "cycle": 1,
+        "size": 0,
+        "transfer": 2509774369,
+        "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+        "seconds": 0.5185140990070067
+      },
+      {
+        "cycle": 2,
+        "size": 1,
+        "transfer": 3030953162,
+        "sha256": "ca978112ca1bbdcafac231b39a23dc4da786eff8147c4e72b9807785afee48bb",
+        "seconds": 0.7060903540113941
+      },
+      {
+        "cycle": 3,
+        "size": 211,
+        "transfer": 1058880467,
+        "sha256": "6354f104ede90c65606f3ab7ea3c6decd6623d2235a8df3d901dfd23524e262a",
+        "seconds": 0.9200400190020446
+      },
+      {
+        "cycle": 4,
+        "size": 212,
+        "transfer": 3295071853,
+        "sha256": "7287c57325d566a2affb643d6e5afcbd4418c4a0742614d3ba22e4ad83ef4501",
+        "seconds": 0.9718961040052818
+      },
+      {
+        "cycle": 5,
+        "size": 213,
+        "transfer": 3450450340,
+        "sha256": "d63bf294f10bb32c9391bdf205f662dc1b36075bc891ebf397c479f81e09b23f",
+        "seconds": 1.0261847259971546
+      },
+      {
+        "cycle": 6,
+        "size": 256,
+        "transfer": 61249651,
+        "sha256": "c816b9f76d2693ccca1e6623eef82d15a3861d0735566ccb1fe0bd8b64d91364",
+        "seconds": 1.2047473190032179
+      },
+      {
+        "cycle": 7,
+        "size": 512,
+        "transfer": 4249311650,
+        "sha256": "70930ca04d99ede97ccfb2cf78110cb1b7e995aaf09968259f2a12a1578c60df",
+        "seconds": 1.538635777993477
+      },
+      {
+        "cycle": 8,
+        "size": 1000,
+        "transfer": 3240836330,
+        "sha256": "bfe154b5bb068def3c158d232a5d732788f82d4c5970d4be821a9745651931c0",
+        "seconds": 2.4801581219944637
+      },
+      {
+        "cycle": 9,
+        "size": 212,
+        "transfer": 1394429616,
+        "sha256": "fa389ba31514655252458a654759723af2d3983cab15410b0a76643f0ad7f743",
+        "seconds": 1.2869221529981587
+      },
+      {
+        "cycle": 10,
+        "size": 213,
+        "transfer": 3721100751,
+        "sha256": "1807e1b23c35477b3e8e6ad9c142913476febfddfbd0aa5688a5007a0328d3d5",
+        "seconds": 0.9790093170013279
+      }
+    ],
+    "orphan_recovery": true,
+    "service_exit_response": true,
+    "original_evidence_sha256": "e6a908f4e49b03cfcc3e85ef365437a2505ba1d0a434da5ce1842e7218fa7b8d"
+  },
+  "disk-full": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "cycles": [],
+    "orphan_recovery": true,
+    "service_exit_response": true,
+    "disk_full_error": {
+      "status": 6,
+      "fatfs": "07"
+    },
+    "disk_full_partial_bytes": 26624,
+    "disk_full_recovery": "pass",
+    "original_evidence_sha256": "f9a5973a2e3b8492781887a8527c539b53e02fa9b6aa4fed8f6d37d856c5b2e7"
+  },
+  "keyboard-root": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response",
+      "scheduled mapped Escape and typed RUN"
+    ],
+    "cycles": [],
+    "original_evidence_sha256": "193ec2ef1f35beef0a802f2352aea27f0e5184b698c121480b67175cc838082f"
+  }
+}

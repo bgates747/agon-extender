@@ -165,3 +165,18 @@ the couch; summon only when a concrete physical observation is needed.
 Freeze the physical ten-cycle controller and its headless controller smoke
 before running it. Independent errors stop with durable state retained; the
 runner never automatically resets or reflashes.
+
+## Ten physical cycles pass
+
+All ten physical transfer/readback cycles passed without further card movement
+or reset, through 131731 bytes, including previous-version verification and
+one durable host-response-loss retry. Selected evidence is under
+`evidence/PORT-017-2026-09-13-01-21-04Z/`. The final 131731-byte cycle took 360.381 seconds;
+this includes multiple complete readbacks and verification, not just upload.
+The exact-candidate raw-FAT disk-full test also passes (26624-byte partial file,
+FR_DENIED, old target preserved, explicit recovery). Keyboard observer smoke
+passes actual mapped Escape and typed `RUN . /` on the headless eZ80.
+
+The next assistance cue is only for the physical native-keyboard test during
+traffic and direct CLI restart with whole-card scope. No new firmware or card
+movement is required. Ten-cycle success is not yet full task acceptance.
