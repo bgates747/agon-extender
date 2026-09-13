@@ -1,0 +1,245 @@
+{
+  "complete": true,
+  "rows": 336,
+  "errors": [],
+  "comparison": [
+    {
+      "direction": "forward",
+      "length": 0,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 442.0
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 1875.5
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 1,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 688.0
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 2100.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 63,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 1186.5
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 4158.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 64,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 1163.5
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 4186.5
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 65,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 1160.0
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 5013.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 255,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 2789.5
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 11033.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 256,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 2793.5
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 11027.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 257,
+      "vdp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 2819.0
+      },
+      "edp": {
+        "send_ticks": 0.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 11026.5
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 4095,
+      "vdp": {
+        "send_ticks": 4.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 37306.5
+      },
+      "edp": {
+        "send_ticks": 16.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 134027.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 4096,
+      "vdp": {
+        "send_ticks": 4.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 37317.0
+      },
+      "edp": {
+        "send_ticks": 16.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 134028.5
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 4097,
+      "vdp": {
+        "send_ticks": 4.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 37321.5
+      },
+      "edp": {
+        "send_ticks": 16.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 134028.0
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 32768,
+      "vdp": {
+        "send_ticks": 36.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 295121.5
+      },
+      "edp": {
+        "send_ticks": 126.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 1052036.5
+      }
+    },
+    {
+      "direction": "forward",
+      "length": 65535,
+      "vdp": {
+        "send_ticks": 70.0,
+        "reply_ticks": 2.0,
+        "elapsed_us": 589385.5
+      },
+      "edp": {
+        "send_ticks": 252.0,
+        "reply_ticks": 0.0,
+        "elapsed_us": 2101072.5
+      }
+    },
+    {
+      "direction": "reverse",
+      "length": 1,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 0,
+        "elapsed_us": 319
+      },
+      "edp": {
+        "send_ticks": 0,
+        "reply_ticks": 0,
+        "elapsed_us": 4
+      }
+    },
+    {
+      "direction": "reverse",
+      "length": 8,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 0,
+        "elapsed_us": 2671
+      },
+      "edp": {
+        "send_ticks": 0,
+        "reply_ticks": 0,
+        "elapsed_us": 20
+      }
+    },
+    {
+      "direction": "reverse",
+      "length": 64,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 2,
+        "elapsed_us": 21231
+      },
+      "edp": {
+        "send_ticks": 0,
+        "reply_ticks": 4,
+        "elapsed_us": 147
+      }
+    },
+    {
+      "direction": "reverse",
+      "length": 256,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 10,
+        "elapsed_us": 84975
+      },
+      "edp": {
+        "send_ticks": 0,
+        "reply_ticks": 18,
+        "elapsed_us": 586
+      }
+    }
+  ]
+}

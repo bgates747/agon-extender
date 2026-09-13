@@ -50,3 +50,11 @@ Return256packets remains10ticks stock and18ticks EDP. The missing override is
 a stock API difference, but this measurement does **not** establish it as the
 throughput bottleneck. Retain the faithful bulk primitive and continue to the
 separate RX interrupt timeout experiment. No wiring fault inferred.
+
+## U08a — stock RX idle interrupt timeout
+
+Again336/336exact cases and recovery0. The65535byte forward interval is
+589.385ms stock and2101.073ms EDP.
+The RX idle timeout2 change does not materially close the large-payload gap.
+It restores stock configuration; neither RX candidate established the cause.
+Return256packets remains10versus18ticks. Next is the frozen FIFO-refill change.
