@@ -1,0 +1,128 @@
+{
+  "recorded_at": "2026-09-13T04:29:30.245114+00:00",
+  "status": "provisional; attended review pending",
+  "p4_build": {
+    "artifact_id": "uart-excom-console",
+    "source_identity": "uart-excom-console-r13",
+    "build_id": "uart-excom-console-r13-b2026-09-13-04-16-31Z",
+    "status": "draft",
+    "created_at": "2026-09-13T04:16:31.160920+00:00"
+  },
+  "p4_outputs": [
+    {
+      "filename": "uart-excom-console-r13-b2026-09-13-04-16-31Z.bin",
+      "sha256": "f8128e7b0e7906c8582047e2e4d0e09cc1eb3f2e2b8ad6c14f2e8cf081f557dc",
+      "size_bytes": 1447440
+    },
+    {
+      "filename": "uart-excom-console-r13-b2026-09-13-04-16-31Z.elf",
+      "sha256": "8c5c2181f503a1a1c969f2e6344572bab1e617539fe83d32f6f339a3a245000b",
+      "size_bytes": 27900956
+    },
+    {
+      "filename": "uart-excom-console-r13-b2026-09-13-04-16-31Z.factory.bin",
+      "sha256": "3b7fc2798b2029c80810c0276bc0cb73fbae22c76cf5a4a86ca1c707c6b6abe6",
+      "size_bytes": 1578512
+    },
+    {
+      "filename": "dependencies.lock",
+      "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+      "size_bytes": 8845
+    }
+  ],
+  "build_parent_commit": "fb6bd8b7035a6ffe2f57eec6ff3a454e7b645a29",
+  "build_worktree_dirty": true,
+  "p4_source_sha256": {
+    "vdp/platformio.ini": "148ade8d1d363ed1c67a00cac8915b74ff5fef8a3fca277145b61509c677a158",
+    "vdp/pio/p4-console-identity.json": "e57cb10b5f7e3ddfcc9fd742b77c9be95a5c1c9ae26887683c438b877678fb17",
+    "vdp/video/extender/input/remote_keyboard.hpp": "5698c338d505286eaaeac4a13f66ffe66c85d2aff7db9d83a4fe3ca9ed839a8c",
+    "vdp/video/extender/input/remote_target.hpp": "20ccbfd79415c39fc0fad24eb5ba15ac9dd893d943230193a414877f1ec00dbb",
+    "vdp/video/extender/input/usb_cli_keyboard.hpp": "182372f0ca04ead44a51163b018e6049e956bf5d32c497833b7488f27df6e358",
+    "vdp/video/extender/transport/console_hardware.inc": "054451d1c93e3642d841dbfcf58f05198fff7dfab3431a35cd83d4bb17a416ef",
+    "vdp/video/extender/network/wired_network_service.cpp": "684b8e2c483060c103cfef715afcb914d9a46b1b216b01bf1404b2cfdacfa8b1"
+  },
+  "physical_flash": {
+    "full_image_write_and_independent_verify": "pass",
+    "boot_build_identity": "observed",
+    "native_USB_host_and_keyboard": "enumerated; attended takeover pending"
+  },
+  "mainboard_changes": "No EMOS or onboard VDP firmware changes in this task",
+  "receiver_binary_sha256": "4f5ce3274c80eb2af31e596692a9344cd1fd6966c0225d4f164ac523a9627057",
+  "headless": {
+    "outcome": "pass",
+    "seconds": 17.249733147997176,
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "keyboard": {
+      "outcome": "pass",
+      "scope": "Actual EMOS receiver and ordinary CLI via host keyboard",
+      "events": [],
+      "receiver": "remote-keyboard receiver, complete=1, events=28\r\n0,2,117,1,1\r\n65,2,48,1,2\r\n65,2,48,0,1\r\n0,0,117,0,0\r\n97,0,22,1,1\r\n97,0,22,0,0\r\n0,2,117,1,1\r\n63,2,103,1,1\r\n63,2,103,0,1\r\n0,0,117,0,0\r\n0,2,117,1,1\r\n64,2,96,1,2\r\n64,2,96,0,1\r\n0,0,117,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n10,0,152,1,1\r\n10,0,152,0,0\r\n11,0,150,1,1\r\n11,0,150,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n13,0,143,1,1\r\n13,0,143,0,0\r\n",
+      "cli_copy_edit_and_service_launch": "pass",
+      "service_before": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 389896509
+      },
+      "service_after": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 389897257
+      },
+      "sd_roundtrip_bytes": 536
+    },
+    "uart_sha256": "d68ef6025b26f5c951104f02d9440a045d139016af38274c22b9e1eb3cbcefa5",
+    "limitation": "Actual eZ80/EMOS/FatFS; P4 portable queue and keyboard engine; ordered byte peer does not model physical UART baud or P4 scheduling"
+  },
+  "hardware": {
+    "outcome": "pass",
+    "scope": "Actual EMOS receiver and ordinary CLI via host keyboard",
+    "events": [],
+    "typed_target": "/extender/key-203131.txt",
+    "receiver": "remote-keyboard receiver, complete=1, events=28\r\n0,2,117,1,1\r\n65,2,48,1,2\r\n65,2,48,0,1\r\n0,0,117,0,0\r\n97,0,22,1,1\r\n97,0,22,0,0\r\n0,2,117,1,1\r\n63,2,103,1,1\r\n63,2,103,0,1\r\n0,0,117,0,0\r\n0,2,117,1,1\r\n64,2,96,1,2\r\n64,2,96,0,1\r\n0,0,117,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n10,0,152,1,1\r\n10,0,152,0,0\r\n11,0,150,1,1\r\n11,0,150,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n13,0,143,1,1\r\n13,0,143,0,0\r\n",
+    "cli_copy_edit_and_service_launch": "pass",
+    "service_before": {
+      "protocol": 1,
+      "online": true,
+      "pending": false,
+      "boot": 389897543
+    },
+    "service_after": {
+      "protocol": 1,
+      "online": true,
+      "pending": false,
+      "boot": 389894553
+    },
+    "sd_roundtrip_bytes": 536
+  },
+  "review_voice_headless": {
+    "outcome": "pass",
+    "seconds": 22.117769503005547,
+    "cycles": [
+      {
+        "stage": 4,
+        "receipt": "stage=4\r\naudio_commands=pass\r\n",
+        "sha256": "fd5ccff1005ffada0fed06a70f839e5afe20b3232b7bd91ae265052efd54b61e"
+      }
+    ],
+    "uart_sha256": "2740827d96f2ce749ba48926d07003acf5a374269e6ffcbc7045674ff34e6254",
+    "human_listening": "not claimed"
+  },
+  "useful_failures": [
+    {
+      "condition": "Escape from first service continued the surrounding autoexec into its second receiver",
+      "result": "CLI COPY check failed; second receiver captured the would-be command",
+      "fix": "Known finite final service return and normalized startup"
+    },
+    {
+      "condition": "P4 old ready state survived Pi mainboard reset",
+      "result": "One event handed to console; 13 unsent events discarded on transport timeout; session invalidated",
+      "fix": "Controller waits for ready and changed EMOS admission epoch before starting input"
+    }
+  ],
+  "attended_review": "Pending spoken cue and subsequent chat reply; no live demonstration yet"
+}

@@ -27,6 +27,15 @@ DISCORD_STAGE = (3, "Hello, Agon Discord!", "A proper British hello to all our f
 DISCORD_SPEECH = ("Hello to all my friends on the Agon Discord! This is a real Agon speaking. "
                   "My voice arrived over Ethernet, straight onto the SD card. "
                   "Cheers, lads, and happy hacking!")
+KEYBOARD_STAGE = (4, "Your remote keyboard is ready", "The Agon can now receive host keystrokes.",
+                  "keyboard", "Reply in chat when you are ready to watch me type.", 2)
+KEYBOARD_SPEECH = ("Your Agon's remote keyboard is ready for inspection. "
+                   "Please reply in the chat when you are ready to watch me type. "
+                   "I'll wait for you. No need to leave the couch.")
+KEYBOARD_FIXED_STAGE = (5, "Keyboard timer fixed", "The corrected firmware passed its hardware tests.",
+                        "keyfixed", "Reply in chat when you are back at the bench.", 2)
+KEYBOARD_FIXED_SPEECH = ("The clock gremlin is fixed. Your Agon is ready again. "
+                         "Please reply in the chat when you're back at the bench.")
 
 
 def main():
@@ -35,14 +44,17 @@ def main():
     parser.add_argument("--output", type=Path, required=True)
     parser.add_argument("--speech", action="store_true")
     parser.add_argument("--discord", action="store_true", help="Build only the filming greeting")
+    parser.add_argument("--keyboard-review", action="store_true", help="Build the remote-keyboard review cue")
+    parser.add_argument("--keyboard-fixed", action="store_true", help="Build the corrected-keyboard review cue")
     parser.add_argument("--jukebox", type=Path)
     args = parser.parse_args()
     output = args.output.resolve()
     output.mkdir(parents=True, exist_ok=True)
     (EXAMPLE / "build").mkdir(exist_ok=True)
     manifest = {"status": "unversioned development demonstration", "builds": []}
-    stages = [DISCORD_STAGE] if args.discord else STAGES
-    speech = {"discord": DISCORD_SPEECH} if args.discord else SPEECH
+    if sum((args.discord,args.keyboard_review,args.keyboard_fixed))>1:parser.error('Select one greeting')
+    stages = [KEYBOARD_FIXED_STAGE] if args.keyboard_fixed else [KEYBOARD_STAGE] if args.keyboard_review else [DISCORD_STAGE] if args.discord else STAGES
+    speech = {"keyfixed":KEYBOARD_FIXED_SPEECH} if args.keyboard_fixed else {"keyboard":KEYBOARD_SPEECH} if args.keyboard_review else {"discord": DISCORD_SPEECH} if args.discord else SPEECH
     for stage, title, message, voice, next_text, hold in stages:
         header = (f'#define HELLO_STAGE {stage}\n#define HELLO_TITLE "{title}"\n'
                   f'#define HELLO_MESSAGE "{message}"\n'

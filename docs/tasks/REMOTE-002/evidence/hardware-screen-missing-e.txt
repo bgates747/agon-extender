@@ -1,0 +1,30 @@
+Keyboard input: extender
+Remote keyboard receiver ready. Bounded automatic test.
+Receiver finished; receipt saved.
+sdserve-v0.1.0-b2026-09-13-01-07-48Z (candidate), root /
+Escape returns to MOS.
+SD service stopped.
+/ *COPY /extender/key-source.txt /extender/key-4d8175.txt
+Copying /extender/key-source.txt to /extender/key-4d8175.txt
+/ *XEC /extender/key-run-4d8175.txt
+
+Invalid command
+/ *
+Escape
+/ *EXEC /extender/key-run-4d8175.txt
+sdserve-v0.1.0-b2026-09-13-01-07-48Z (candidate), root /
+Escape returns to MOS.
+SD service stopped.
+/ *EXEC /extender/key-screen-run.txt
+
+
+
+
+
+
+
+
+
+
+
+

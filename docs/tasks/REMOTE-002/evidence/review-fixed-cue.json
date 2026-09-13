@@ -1,0 +1,52 @@
+{
+  "triggered_at": "2026-09-13T05:21:30.303637+00:00",
+  "before_service": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389893017
+  },
+  "before_keys": {
+    "protocol": 1,
+    "boot": 4019083041,
+    "session": 3883228702,
+    "sequence": 3,
+    "emitted": 76,
+    "accepted": 76,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 1
+  },
+  "outcome": "pass",
+  "live_demo": "WAIT for Author chat reply; no keys sent by this observer",
+  "receipt": "stage=5\r\naudio_commands=pass\r\n",
+  "after_service": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389894371
+  },
+  "after_keys": {
+    "protocol": 1,
+    "boot": 4019083042,
+    "session": 3883228702,
+    "sequence": 3,
+    "emitted": 76,
+    "accepted": 76,
+    "discarded": 0,
+    "pending": 0,
+    "held": 0,
+    "locale": 1,
+    "ready": true,
+    "physical_neutral": true,
+    "caps": false,
+    "reason": 1
+  },
+  "finished_at": "2026-09-13T05:21:54.132664+00:00",
+  "human_hearing": "Awaiting Author response"
+}

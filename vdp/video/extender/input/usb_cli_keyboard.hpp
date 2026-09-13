@@ -29,6 +29,7 @@ inline ProcessedKey mapUsbCliKey(uint8_t usage,uint8_t mods,uint8_t locale) {
 }
 class UsbCliKeyboard {
  public:
+  bool neutral() const { return decoder_.neutral(); }
   uint8_t locale{};
   uint16_t repeat_delay{500},repeat_rate{100};
   template<class Emit> void report(const uint8_t *data,size_t size,uint32_t now,Emit emit) {

@@ -1,11 +1,15 @@
-// Video service plus optional PORT-017 SD RPC; browser input stays retired.
-// Keep F003 complete writes and F012 failed-stop containment; no input lease,
-// browser-keyboard callback belongs in this service. AUDIT-006 alone enables
-// a read-only frame-timing endpoint; it does not reinstate browser input.
+// Video, SD RPC and explicit host keyboard requests; browser input stays retired.
+// Keep F003 complete writes and F012 failed-stop containment; no browser input
+// lease or browser-keyboard callback belongs here. Optional timing endpoints
+// are read-only diagnostics; they do not reinstate browser input.
 #include "extender/network/wired_network_service.hpp"
 #include "extender/diagnostics/frame_timing.hpp"
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/sd_target.hpp"
+#include <cstdio>
+#endif
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+#include "extender/input/remote_target.hpp"
 #include <cstdio>
 #endif
 
@@ -262,6 +266,7 @@ esp_err_t timingHandler(httpd_req_t *request) {
 }
 #endif
 
+
 #if defined(AGON_EXTENDER_SD_SERVICE)
 namespace {
 std::uint32_t sdNow() { return std::uint32_t(esp_timer_get_time()/1000); }
@@ -301,11 +306,55 @@ esp_err_t sdRpcHandler(httpd_req_t *request) {
 }
 #endif
 
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+namespace {
+std::uint32_t keyboardNow() { return std::uint32_t(esp_timer_get_time()/1000); }
+esp_err_t keyboardReply(httpd_req_t *request,unsigned code) {
+  const auto s=input::remoteLocked([](auto &r){return r.status(keyboardNow());});
+  char body[450];
+  const int n=snprintf(body,sizeof(body),
+    "{\"protocol\":1,\"boot\":%lu,\"session\":%lu,\"sequence\":%lu,"
+    "\"emitted\":%lu,\"accepted\":%lu,\"discarded\":%lu,\"pending\":%u,\"held\":%u,\"locale\":%u,"
+    "\"ready\":%s,\"physical_neutral\":%s,\"caps\":%s,\"reason\":%u}",
+    (unsigned long)s.boot,(unsigned long)s.session,(unsigned long)s.sequence,
+    (unsigned long)s.emitted,(unsigned long)s.accepted,(unsigned long)s.discarded,s.pending,s.held,s.locale,s.ready?"true":"false",
+    s.physical_neutral?"true":"false",s.caps?"true":"false",unsigned(s.reason));
+  httpd_resp_set_status(request,code==200?"200 OK":code==409?"409 Conflict":
+      code==503?"503 Service Unavailable":"400 Bad Request");
+  httpd_resp_set_type(request,"application/json");
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  return httpd_resp_send(request,body,n);
+}
+esp_err_t keyboardStatusHandler(httpd_req_t *request) { return keyboardReply(request,200); }
+esp_err_t keyboardRpcHandler(httpd_req_t *request) {
+  // Intent header plus no browser Origin keeps the retired browser input path
+  // unavailable. This is a local bench endpoint, not an Internet-auth service.
+  char intent[4]{};
+  if(httpd_req_get_hdr_value_len(request,"Origin") ||
+     httpd_req_get_hdr_value_str(request,"X-Agon-Keyboard",intent,sizeof(intent))!=ESP_OK ||
+     std::strcmp(intent,"1") || request->content_len<input::REMOTE_HEADER ||
+     request->content_len>input::REMOTE_MAX)return httpd_resp_send_err(request,HTTPD_400_BAD_REQUEST,"Invalid keyboard request");
+  uint8_t body[input::REMOTE_MAX];unsigned used=0;const auto began=esp_timer_get_time();
+  while(used<request->content_len) {
+    int n=httpd_req_recv(request,reinterpret_cast<char *>(body+used),request->content_len-used);
+    if(n<=0 || esp_timer_get_time()-began>3000000)return ESP_FAIL;
+    used+=unsigned(n);
+  }
+  auto code=input::remoteLocked([&](auto &r){return r.post(body,used,keyboardNow());});
+  return keyboardReply(request,code);
+}
+}
+#endif
+
+
 bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
   config.max_uri_handlers = 6;
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+  config.max_uri_handlers += 2;
+#endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
   config.max_uri_handlers += 2;
 #endif
@@ -377,6 +426,15 @@ bool WiredNetworkService::startHttp() noexcept {
     http_fault_=true;stopHttp();increment(http_start_failures_);return false;
   }
 #endif
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+  httpd_uri_t key_status{},key_rpc{};
+  key_status.uri="/keyboard/status";key_status.method=HTTP_GET;key_status.handler=&keyboardStatusHandler;
+  key_rpc.uri="/keyboard/rpc";key_rpc.method=HTTP_POST;key_rpc.handler=&keyboardRpcHandler;
+  if(httpd_register_uri_handler(server,&key_status)!=ESP_OK ||
+     httpd_register_uri_handler(server,&key_rpc)!=ESP_OK) {
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
+  }
+#endif
   http_fault_=false;
   increment(http_starts_);
   ESP_LOGI(kTag, "HTTP browser service ready");
@@ -384,6 +442,9 @@ bool WiredNetworkService::startHttp() noexcept {
 }
 
 void WiredNetworkService::stopHttp() noexcept {
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+  input::remoteLocked([](auto &r){r.cancel(input::RemoteKeyboard::disconnected);return 0;});
+#endif
   auto const server = server_.load(std::memory_order_acquire);
   if (server == nullptr) return;
   if (httpd_stop(server) == ESP_OK) {

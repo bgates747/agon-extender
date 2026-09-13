@@ -1,0 +1,14 @@
+{
+  "/extender/keyboard.wav": {
+    "bytes": 181710,
+    "sha256": "5086fd4ac749637fbbbaf2783c86bef565b2ff93ea21a2858a747c4650f8aeba"
+  },
+  "/extender/key-ready.bin": {
+    "bytes": 10466,
+    "sha256": "fd5ccff1005ffada0fed06a70f839e5afe20b3232b7bd91ae265052efd54b61e"
+  },
+  "/autoexec.txt": {
+    "bytes": 122,
+    "sha256": "fb9d72360b1355ff26202c10a2fa34cf11044619046008c0d590ab4d225da75a"
+  }
+}

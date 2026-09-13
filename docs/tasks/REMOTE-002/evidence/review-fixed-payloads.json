@@ -1,0 +1,33 @@
+{
+  "files": {
+    "/extender/keyfixed.wav": {
+      "bytes": 130638,
+      "sha256": "f83d71ff52eedfa0ccc539fd459b1d47d0bf7bfade7da8281e2fbbeca35bb524"
+    },
+    "/extender/key-fixed.bin": {
+      "bytes": 10460,
+      "sha256": "902da3c6e6d6998c53fa8deb88749bb287961cfb103bcda64dfc22372bd9facc"
+    },
+    "/autoexec.txt": {
+      "bytes": 122,
+      "sha256": "7e730f23b684598f88019b48e7ee49085eed70b5051f928534b81ad64ddef15d"
+    },
+    "/extender/key-fuji-demo.txt": {
+      "bytes": 59,
+      "sha256": "57aca0cdcafdf746383390ed44eb92c20e9af8e53376c008d9d70c8f4f995ffe",
+      "purpose": "Finite LOAD/RUN ordering after renewed attended review reply; not launched"
+    }
+  },
+  "before": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389893017
+  },
+  "after": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389893017
+  }
+}

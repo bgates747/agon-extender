@@ -1,0 +1,143 @@
+{
+  "recorded_at": "2026-09-13T05:17:51.332690+00:00",
+  "status": "provisional draft; renewed attended review pending",
+  "p4_build": {
+    "artifact_id": "uart-excom-console",
+    "source_identity": "uart-excom-console-r15",
+    "build_id": "uart-excom-console-r15-b2026-09-13-04-55-55Z",
+    "status": "draft",
+    "created_at": "2026-09-13T04:55:55.018702+00:00"
+  },
+  "p4_outputs": [
+    {
+      "filename": "uart-excom-console-r15-b2026-09-13-04-55-55Z.bin",
+      "sha256": "a8b124f4b98fae84c253455dfdc8d36756ef2adcfe6b8988e92d2cbd8f95c760",
+      "size_bytes": 1447456
+    },
+    {
+      "filename": "uart-excom-console-r15-b2026-09-13-04-55-55Z.elf",
+      "sha256": "ea9d721f517d932fe3baacc1afe48120da6ad816d7ed5370c770ad0d395cbace",
+      "size_bytes": 27900956
+    },
+    {
+      "filename": "uart-excom-console-r15-b2026-09-13-04-55-55Z.factory.bin",
+      "sha256": "f8ea486a47f8f0192e03dbe713e26921b343b754a3ae356e12ac72da947b24dd",
+      "size_bytes": 1578528
+    },
+    {
+      "filename": "dependencies.lock",
+      "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+      "size_bytes": 8845
+    }
+  ],
+  "build_parent_commit": "fb6bd8b7035a6ffe2f57eec6ff3a454e7b645a29",
+  "build_worktree_dirty": true,
+  "p4_source_sha256": {
+    "vdp/platformio.ini": "148ade8d1d363ed1c67a00cac8915b74ff5fef8a3fca277145b61509c677a158",
+    "vdp/pio/p4-console-identity.json": "0a30f19d04d6d459d9e43e48b05afbad12fefcf3d5e3f8d5358839f2f9d864d0",
+    "vdp/video/extender/input/remote_keyboard.hpp": "1e7df6a2d5c5584a1eebb7ada77df4773a45b31fa6156717589edc7c7d54f158",
+    "vdp/video/extender/input/remote_target.hpp": "20ccbfd79415c39fc0fad24eb5ba15ac9dd893d943230193a414877f1ec00dbb",
+    "vdp/video/extender/input/usb_cli_keyboard.hpp": "182372f0ca04ead44a51163b018e6049e956bf5d32c497833b7488f27df6e358",
+    "vdp/video/extender/transport/console_hardware.inc": "054451d1c93e3642d841dbfcf58f05198fff7dfab3431a35cd83d4bb17a416ef",
+    "vdp/video/extender/network/wired_network_service.cpp": "684b8e2c483060c103cfef715afcb914d9a46b1b216b01bf1404b2cfdacfa8b1"
+  },
+  "physical_flash": {
+    "full_image_write_and_independent_verify": "pass",
+    "native_USB_host_and_keyboard": "enumerated; attended takeover pending"
+  },
+  "mainboard_firmware_changes": "None; unchanged EMOS and onboard VDP",
+  "headless": {
+    "outcome": "pass",
+    "scope": "Bounded real eZ80/EMOS/FatFS run with the maintained P4 queue and host client.\n\nAlways headless, even when the canonical review wrapper supplies --graphical.\nThat argument is accepted solely for wrapper compatibility; no visual claim.\nThe peer models bytes/CTS, not physical baud, FIFO overrun or P4 scheduling.\n",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "keyboard": {
+      "outcome": "pass",
+      "scope": "Actual EMOS receiver and ordinary CLI via host keyboard",
+      "events": [],
+      "typed_target": "/extender/key-b4f5dc.txt",
+      "receiver": "remote-keyboard receiver, complete=1, events=28\r\n0,2,117,1,1\r\n65,2,48,1,2\r\n65,2,48,0,1\r\n0,0,117,0,0\r\n97,0,22,1,1\r\n97,0,22,0,0\r\n0,2,117,1,1\r\n63,2,103,1,1\r\n63,2,103,0,1\r\n0,0,117,0,0\r\n0,2,117,1,1\r\n64,2,96,1,2\r\n64,2,96,0,1\r\n0,0,117,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n10,0,152,1,1\r\n10,0,152,0,0\r\n11,0,150,1,1\r\n11,0,150,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n13,0,143,1,1\r\n13,0,143,0,0\r\n",
+      "launch_batch": "/extender/key-run-b4f5dc.txt",
+      "cursor_batches": 80,
+      "cli_copy_edit_and_service_launch": "pass",
+      "service_before": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 389896503
+      },
+      "service_after": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 389894669
+      },
+      "launch_order": "Typed EXEC; MOS batch runs LOAD to completion before RUN; final service holds only this helper batch open",
+      "sd_roundtrip_bytes": 536
+    },
+    "seconds": 20.771468160004588,
+    "uart_sha256": "b6a9703459728906ae00bfc64cf8a8b2accda8fa775fc3d03adda1dead7a0cc0"
+  },
+  "hardware": {
+    "outcome": "pass",
+    "scope": "Actual EMOS receiver and ordinary CLI via host keyboard",
+    "events": [],
+    "typed_target": "/extender/key-fe20b7.txt",
+    "receiver": "remote-keyboard receiver, complete=1, events=28\r\n0,2,117,1,1\r\n65,2,48,1,2\r\n65,2,48,0,1\r\n0,0,117,0,0\r\n97,0,22,1,1\r\n97,0,22,0,0\r\n0,2,117,1,1\r\n63,2,103,1,1\r\n63,2,103,0,1\r\n0,0,117,0,0\r\n0,2,117,1,1\r\n64,2,96,1,2\r\n64,2,96,0,1\r\n0,0,117,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n10,0,152,1,1\r\n10,0,152,0,0\r\n11,0,150,1,1\r\n11,0,150,0,0\r\n8,0,154,1,1\r\n8,0,154,0,0\r\n21,0,156,1,1\r\n21,0,156,0,0\r\n13,0,143,1,1\r\n13,0,143,0,0\r\n",
+    "launch_batch": "/extender/key-run-fe20b7.txt",
+    "cursor_batches": 80,
+    "cli_copy_edit_and_service_launch": "pass",
+    "service_before": {
+      "protocol": 1,
+      "online": true,
+      "pending": false,
+      "boot": 389897547
+    },
+    "service_after": {
+      "protocol": 1,
+      "online": true,
+      "pending": false,
+      "boot": 389893017
+    },
+    "launch_order": "Typed EXEC; MOS batch runs LOAD to completion before RUN; final service holds only this helper batch open",
+    "sd_roundtrip_bytes": 536
+  },
+  "qualifier_sha256": "b7838c7777db3b2e68a8b25fd02bb903ac5dccec23d4dcb905ed00ffb17946b7",
+  "regressions": {
+    "stale_console_timestamp": "Reproducing test fails r13; signed modular comparison passes, retaining true expiry and wrap checks",
+    "inter_batch_spacing": "Reproducing test fails r14; r15 preserves 20 ms deadline between event batches"
+  },
+  "prompt_handover": {
+    "captured_command": "XEC /extender/key-run-4d8175.txt",
+    "captured_error": "Invalid command",
+    "edited_COPY": "Previously verified correct",
+    "correction": "Two-second post-command pause in bounded fixture; EXEC helper orders LOAD then RUN",
+    "limitation": "This fixture delay is not general MOS completion acknowledgement"
+  },
+  "screen_fixture": {
+    "identity": "keyboard-screen-r01-b2026-09-13-05-06-54Z",
+    "sha256": {
+      "examples/keyboard-screen/src/main.c": "945c975f6c96e6dc6a9c806973dba0445c44cede213651d49f02759b6d1c0209",
+      "examples/keyboard-screen/Makefile": "961c253227a8ee629d3c0ccfb08c60e5778cef55bfa66af36b0e519a014dd04a",
+      "examples/keyboard-screen/build/identity.h": "8a1eebc7bff82816b54dccc0c60212c1c02a7ae20077e4e5c333668f65f163ad",
+      "examples/keyboard-screen/bin/keyscreen.bin": "45d75610545ea7d00d92c8e11ac889d14f149cbd10e9933d6e2baef7ca6e8021"
+    }
+  },
+  "stage5_headless": {
+    "outcome": "pass",
+    "cycles": [
+      {
+        "stage": 5,
+        "receipt": "stage=5\r\naudio_commands=pass\r\n",
+        "sha256": "902da3c6e6d6998c53fa8deb88749bb287961cfb103bcda64dfc22372bd9facc"
+      }
+    ],
+    "seconds": 18.16783151999698,
+    "uart_sha256": "a536e24cb496b4871deb8177813d9e48f515590c82a21b5a2d874ea92a5bcc65"
+  },
+  "human_review": "Initial messages/editing received positive feedback; stopped r13 cursor demonstration not full acceptance; renewed cue/reply required",
+  "publication": "All implementation after fb6bd8b remains uncommitted; no push",
+  "version_validator": "Blocked by pre-existing hardware/designs/light2-harness-r02/profile.yaml connectivity.yaml hash mismatch; unrelated files preserved"
+}

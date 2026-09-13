@@ -7,6 +7,9 @@
 #include "../input/usb_cli_keyboard.hpp"
 #include "../input/usb_key_queue.hpp"
 #include "../diagnostics/frame_timing.hpp"
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+#include "../input/remote_target.hpp"
+#endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "../storage/sd_target.hpp"
 #endif
@@ -26,6 +29,9 @@ void console_cancel_tx() {
 }
 }
 void consoleLayout(int region) {
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+  agon::extender::input::remoteLocked([](auto &r){r.boundary();return 0;});
+#endif
   if (!console_keys.releaseAll()) console_stream->fail("layout release capacity");
   console_keyboard.admissionBoundary();
   console_keyboard.locale=region;
@@ -51,6 +57,9 @@ void consoleControl(VDUStreamProcessor *processor, const uint8_t *p) {
   printf("ExCom control op=%u active=%u\n",p[3],console_stream->session.active());
 }
 ConsoleStream *beginConsole() {
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+  agon::extender::input::remoteLocked([](auto &r){r.begin(esp_random());return 0;});
+#endif
   for(int pin:{9,10,11,12,13,14,15,17,20,21,22,23,32,33}) {
     ESP_ERROR_CHECK(gpio_reset_pin(gpio_num_t(pin)));
     ESP_ERROR_CHECK(gpio_set_direction(gpio_num_t(pin),GPIO_MODE_INPUT));
@@ -71,7 +80,17 @@ void runConsole(VDUStreamProcessor *processor) {
   namespace timing = agon::extender::diagnostics;
   auto &s=*console_stream;
   auto &keyboard=console_keyboard;
-  auto emit=[](agon::extender::input::ProcessedKey k){if(!console_keys.push(k))console_overload=true;};
+  auto emit=[](agon::extender::input::ProcessedKey k){
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+    agon::extender::input::remoteLocked([&](auto &r){
+      r.physicalKey(k);
+      agon::extender::input::ProcessedKey up;
+      while(r.release(up))if(!console_keys.push(up))console_overload=true;
+      return 0;
+    });
+#endif
+    if(!console_keys.push(k))console_overload=true;
+  };
   uint8_t incoming[244]{};
   unsigned used=0,need=3;
   unsigned discard=0;
@@ -81,9 +100,20 @@ void runConsole(VDUStreamProcessor *processor) {
     const uint32_t now=millis();s.session.expire(now);
     agon::extender::input::usbhost::pump(
       [&](const uint8_t *p,size_t n){keyboard.report(p,n,now,emit);},
-      [&](bool attached){if(!attached)keyboard.disconnect(emit);},
+      [&](bool attached){if(!attached) {
+        keyboard.disconnect(emit);
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+        agon::extender::input::remoteLocked([](auto &r){r.physicalLost();return 0;});
+#endif
+      }},
       [&](){keyboard.lost(emit);});
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+    agon::extender::input::remoteLocked([&](auto &r){r.physicalNeutral(keyboard.neutral());r.tick(now);return 0;});
+#endif
     if(console_overload) {
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+      agon::extender::input::remoteLocked([](auto &r){r.cancel(agon::extender::input::RemoteKeyboard::transport);return 0;});
+#endif
       if(!console_keys.releaseAll())s.fail("key release capacity");
       keyboard.lost([](agon::extender::input::ProcessedKey){});console_overload=false;
     }
@@ -101,6 +131,9 @@ void runConsole(VDUStreamProcessor *processor) {
       else if(now-tx_at>=5000) {
         console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();
         console_keys.reset();keyboard.admissionBoundary();
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+        agon::extender::input::remoteLocked([](auto &r){r.boundary(agon::extender::input::RemoteKeyboard::transport);return 0;});
+#endif
         console_locale_pending=console_admit_pending=false;
         printf("ExCom UART blocked; awaiting fresh admission\n");
       }
@@ -115,6 +148,9 @@ void runConsole(VDUStreamProcessor *processor) {
     }
     if(console_admit_pending && !s.count && !transmitting) {
       keyboard.admit();console_admit_pending=console_locale_pending=false;
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+      agon::extender::input::remoteLocked([&](auto &r){r.admit(keyboard.locale);return 0;});
+#endif
       printf("ExCom native keyboard admitted\n");
     }
     // Leave enough reply capacity for one bounded stock parser invocation.
@@ -128,7 +164,12 @@ void runConsole(VDUStreamProcessor *processor) {
       const auto rx_before = s.diagnostic_rx_bytes;
 #endif
       agon::extender::input::ProcessedKey key;
-      if(console_keys.pop(key)) {
+      bool have_key=console_keys.pop(key);
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+      if(!have_key && !s.count && !transmitting)
+        have_key=agon::extender::input::remoteLocked([&](auto &r){return r.take(key,now);});
+#endif
+      if(have_key) {
         if(!agon::extender::input::processedKeyboard().push(key))s.fail("processed key queue");
         processor->processNext();
       } else if(s.session.active()) {
@@ -195,6 +236,9 @@ void runConsole(VDUStreamProcessor *processor) {
     }
 #endif
     if(s.failure) {
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+      agon::extender::input::remoteLocked([](auto &r){r.boundary(agon::extender::input::RemoteKeyboard::transport);return 0;});
+#endif
       keyboard.pause();console_cancel_tx();
       ESP_ERROR_CHECK(uart_set_hw_flow_ctrl(UART_NUM_1,UART_HW_FLOWCTRL_CTS,0));
       ESP_ERROR_CHECK(uart_set_rts(UART_NUM_1,1));

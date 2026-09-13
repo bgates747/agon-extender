@@ -80,6 +80,10 @@ class ConsoleModeLifecycleTests(unittest.TestCase):
     def test_prepare_initializes_context_before_ack_and_repeat(self):
         source, _ = lifecycle.harness_source(ROOT / 'vdp')
         source = source[:source.index('int main(')]
+        # R2 selected the active depth controller through this accessor. The
+        # inherited standalone harness still owns one controlled fake display.
+        marker='std::unique_ptr<FakeController> _VGAController(new FakeController());'
+        source=source.replace(marker,marker+'\nFakeController *activeDisplayController() { return _VGAController.get(); }')
         control, *_ = lifecycle.extract_function_text(
             ROOT / 'vdp/video/extender/transport/console_hardware.inc', 'consoleControl')
         with tempfile.TemporaryDirectory() as tmp:
