@@ -64,3 +64,22 @@ on both. No pure-transport claim from graphics-loaded historical results.
 After each firmware pair, verify keyboard neutral admission and SD read/write;
 return through Legacy mode and restore ordinary startup. Retain failures once,
 diagnose before continuing, and do not reset repeatedly without evidence.
+
+## U10 bounded simultaneous-traffic extension
+
+Before rendering, add an optional application `duplex` mode using the existing
+probe and ordinary commands. No firmware/protocol change. For each destination,
+three repeats of257/4096/65535random forward bytes overlap an outstanding request
+for256reply packets (2048verified return bytes). Arm forward observation and wait
+for its admission, request the return burst, immediately submit the stock buffer
+write while the existing ISR accepts replies, then verify both directions.
+Store two rows per trial: duplex-forward and duplex-reverse,36rows total.
+Exact forward bytes, exact return sequence/content/count, terminal status and
+Legacy/SD recovery must pass. The destinations retain stock command ordering;
+this does not promise simultaneous parser execution.
+
+Forward destination elapsed includes handling the preceding return command and
+its scheduling; label it mixed-traffic completion, not pure upload rate. Return
+eZ80 timing ends at its final reply, with the same coarse timer. No SD access
+or additional producer input during either timed interval. Keep the original
+336case invocation unchanged so its comparisons remain repeatable.

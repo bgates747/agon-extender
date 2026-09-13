@@ -152,3 +152,15 @@ Reported host milliseconds are simulated scheduling checks, not hardware data.
 U08a candidate changes only uart_set_rx_timeout(UART_NUM_1,2), matching stock
 HardwareSerial initialization. Bulk-read candidate remains in place. No RX ring,
 RTS/FIFO threshold, baud, parser, return or rendering changes.
+
+## Sender-side lead after U08's negative result
+
+Read-only recheck confirms AUDIT-005 differences-and-reuse.md still describes
+the ExCom C sender: each byte attempts deadline arithmetic and a separately
+locked UART write. Legacy uses the retained assembly loop. Earlier wire evidence
+contains0.764s CTS-permitted idle for32768bytes plus0.284s byte occupancy; that
+combined scale is close to the current pure-transfer1.090s. This is a lead,
+not a cross-run subtraction or causal proof. A fresh pure-data wire capture
+should distinguish sender-idle from receiver backpressure before changing
+EMOS or attributing the gap to cables. EMOS's current dirty telemetry work
+was inspected read-only and is preserved; no changes there in this increment.
