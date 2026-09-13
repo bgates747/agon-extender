@@ -62,7 +62,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U07 Make the smallest stock-alignment change for forward bulk reception; verify stream semantics and build, then commit.
 - [x] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
 - [x] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
-- [ ] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
+- [x] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
 - [ ] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
 - [ ] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
 - [ ] U12 If gaps remain, capture existing UART/handshake wiring after channel verification; attribute or bound remaining causes without circuit changes.
@@ -85,7 +85,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U09 next: both RX candidates pass336cases with no material rate change. Implement the frozen FIFO-refill adaptation, then run pure and simultaneous-traffic checks. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U10 next: FIFO-refill candidate builds and host ordering/CTS recovery tests pass. Run identical336case pure matrix plus36mixed-traffic rows before graphics. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested

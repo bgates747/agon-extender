@@ -164,3 +164,11 @@ not a cross-run subtraction or causal proof. A fresh pure-data wire capture
 should distinguish sender-idle from receiver backpressure before changing
 EMOS or attributing the gap to cables. EMOS's current dirty telemetry work
 was inspected read-only and is preserved; no changes there in this increment.
+
+U09 candidate passed the maintained-owner tests with FIFO refills, exact bytes
+and unchanged CTS cancellation/readmission. Isolated P4 build passed at ab8b14c:
+uart-excom-console-r17-b2026-09-13-20-55-52Z, factory
+20b22756044efa4a63bfac6aa3442429bb3314fd7e81e8ea476b0f04c32538cf.
+U10 duplex app builds as uart-data-probe-r01-b2026-09-13-20-54-53Z; its analyzer
+accepts a complete synthetic record and rejects truncation, row reordering and
+wrong byte counts. Real baseline CSV still validates. No physical duplex claim yet.
