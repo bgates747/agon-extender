@@ -1,0 +1,63 @@
+{
+  "complete": true,
+  "rows": 36,
+  "errors": [],
+  "comparison": [
+    {
+      "direction": "duplex-forward",
+      "length": 257,
+      "vdp": {
+        "send_ticks": 0,
+        "reply_ticks": 10,
+        "elapsed_us": 86849
+      },
+      "edp": {
+        "send_ticks": 14,
+        "reply_ticks": 14,
+        "elapsed_us": 115999
+      }
+    },
+    {
+      "direction": "duplex-forward",
+      "length": 4096,
+      "vdp": {
+        "send_ticks": 16,
+        "reply_ticks": 12,
+        "elapsed_us": 120928
+      },
+      "edp": {
+        "send_ticks": 28,
+        "reply_ticks": 12,
+        "elapsed_us": 239025
+      }
+    },
+    {
+      "direction": "duplex-forward",
+      "length": 65535,
+      "vdp": {
+        "send_ticks": 80,
+        "reply_ticks": 10,
+        "elapsed_us": 672854
+      },
+      "edp": {
+        "send_ticks": 264,
+        "reply_ticks": 14,
+        "elapsed_us": 2207098
+      }
+    },
+    {
+      "direction": "duplex-reverse",
+      "length": 256,
+      "vdp": {
+        "send_ticks": 16,
+        "reply_ticks": 10,
+        "elapsed_us": 85060
+      },
+      "edp": {
+        "send_ticks": 28,
+        "reply_ticks": 14,
+        "elapsed_us": 590
+      }
+    }
+  ]
+}

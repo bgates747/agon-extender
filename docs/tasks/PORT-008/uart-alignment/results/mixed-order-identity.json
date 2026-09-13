@@ -1,0 +1,14 @@
+{
+  "status": "experimental simultaneous-traffic pass after stock reply ordering restoration",
+  "app": "uart-data-probe-r01-b2026-09-13-20-54-53Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-21-13-50Z",
+  "rows": 36,
+  "errors": 0,
+  "recovery": 0,
+  "csv_sha256": "5ec48c4566226e63d55aefb76c485a1d4741fe0bd8f2610c3bc41c7c3e28e4e3",
+  "app_sha256": "2a9130efbebef7e034f3ef4a9496c9934769722307541b77f2ca241ee31aff60",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "803905e615e46a78aca831ab5a10365c60ab707ce1abe243210cc1e3171b0520",
+  "source_commit": "f2444b42676f0896f3bacab1be905f958725e75d"
+}

@@ -83,3 +83,11 @@ failure timing agree; test the minimal stock ordering restoration next. Do not
 change EMOS's deadline. Failed CSV and exact candidate identities remain here.
 A subsequent P4 serial-open reset limits its late boot log to recovery evidence;
 it cannot identify the original failure. No serial observers in further runs.
+
+U10a ordering candidate passes all36mixed rows with exact forward bytes and
+all2048return bytes in every trial; natural Legacy/SD recovery0. Mainboard
+remains unchanged. The host model's induced partial-reply gap falls400ms→1ms;
+physical EDP65535byte mixed trials now finish in about2207ms instead of aborting
+at~267ms. This confirms the adapter ordering defect within this tested scope.
+Stock's reply-before-next-command ordering is restored; EMOS remains unchanged.
+The full original336case regression is still required before this step closes.
