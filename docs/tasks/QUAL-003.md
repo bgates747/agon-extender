@@ -1,5 +1,7 @@
 # QUAL-003 — Compare mainboard VDP and Extender EDP graphics
 
+Current execution amendment: [framebuffer-first hardware pass](QUAL-003/timing/framebuffer-pass.md). The 2026-09-13 exploratory pass is complete and awaiting Author review: 624/624 intervals in the stable 39-case selection, no P4 video snapshots, and ordinary mainboard firmware/keyboard/SD restored. Two earlier population-stress failures remain preserved; see the amendment for exact scope and limits.
+
 ## State and scope
 
 Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.
@@ -12,8 +14,9 @@ audit/restoration and qualitative r10 playtest. Its
 [curated inventory](QUAL-003/curated-timing-cases.json) targets sprites, clipping
 and finite scrolling; the whole tour and deterministic Nurples are deferred
 until these results are reviewed. Temporary mainboard/P4 hooks, bounded EMOS
-receive integration and the automated durable-result runner remain to be
-implemented and validated. This is the current measurement work; no separate
+receive integration and the automated durable-result runner now have exploratory
+hardware evidence in the linked framebuffer-first amendment; broader
+qualification and the omitted population-stress investigation remain open. This is the current measurement work; no separate
 typing-timing increment is underway.
 Author requested paired graphics fixtures after accepted
 ExCom console/Nurples gameplay. Vendor agon-utils Shapes and Bitmaps in this
@@ -595,3 +598,22 @@ Aginvadors directory and LOAD without adding RUN. Leave the SD mounted per
 the Author. The timing suite remains disabled: PingoWolf has no private
 graphics timing command, so the paired timing procedure requires its recorded
 diagnostic mainboard image restored before a future authorized run.
+
+## QUAL-003-I005 — Visible completion summary requested — 2026-09-13
+
+Status: open, deferred until after the current framebuffer-first run. The
+Author requests a clear on-screen message when tests end, with compact
+pass/fail totals. Do not show a detailed test-by-test list: it will not fit.
+The summary should identify completion versus an incomplete/failed run and
+point to the detailed saved results. Display it outside measured intervals,
+and ensure it remains visible after route changes and recovery. This is a
+future fixture change, explicitly not part of the run already in progress.
+
+- [ ] Add and validate the compact completion summary in a subsequent fixture revision.
+
+
+The Author has video evidence of the second framebuffer-pass BSP30 stage 17
+scanout failure and intends to provide it. The [video findings](QUAL-003/timing/results/framebuffer-first/author-video.md)
+now record the received clip; it complements the preserved callback timeout and the report of
+stage16 scanout errors. Receipt of the video does not block the independently
+scoped 39-case baseline run with the full population-stress page excluded.

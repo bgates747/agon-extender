@@ -54,14 +54,14 @@ deterministic Nurples and separate typing measurements are deferred.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: EDP visual PASS retained. Curated finite graphics timing tranche reactivated after restored-backend playtest. Prepare temporary mainboard/P4 hooks, bounded EMOS reception and automated SD results. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
+  - Status: EDP visual PASS retained. Framebuffer-first exploratory results ready for Author review: 39-case baseline completed 624/624 intervals with zero P4 snapshots; known SHP23 probe differences only. BSP30 stress page excluded after two preserved mainboard timeouts/scanout artifacts. Primitive gains and upload/submission slowdown recorded; ordinary mainboard firmware and keyboard/SD recovered. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
 
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; paired QUAL-003 stays held.
+  - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; QUAL-003 now owns the separately authorized framebuffer-first rerun.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**

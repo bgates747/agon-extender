@@ -1,5 +1,7 @@
 # Paired graphics and Nurples benchmark contract
 
+Current execution amendment: [framebuffer-first hardware pass](timing/framebuffer-pass.md). The Author resumed hardware testing on 2026-09-13, with the failed sprite sequence excluded and no P4 video output during this pass.
+
 Status: **finite graphics benchmark preparation reactivated by the Author,
 2026-09-11**. Owning task: [QUAL-003](../QUAL-003.md). The stock-backend audit
 and R1/R2 restoration are complete; r10 is deployed and qualitatively improved.

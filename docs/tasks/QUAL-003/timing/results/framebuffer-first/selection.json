@@ -1,0 +1,48 @@
+{
+  "mode": 20,
+  "resolution": [
+    512,
+    384
+  ],
+  "colours": 64,
+  "buffering": "single",
+  "video_output": "no P4 browser client; retained counters checked separately",
+  "first": {
+    "excluded": [
+      "BSP30_22",
+      "BSP30_23",
+      "BSP30_24"
+    ],
+    "cases": 61,
+    "result_sha256": "65c14dd07e91afaaa125b89a661f1e13cc989e7badd9f7660d81580da29fa360",
+    "build": "graphics-timing-probe-r01-framebuffer-b2026-09-13-18-31-38Z"
+  },
+  "second": {
+    "excluded": [
+      "BSP30_22",
+      "BSP30_23",
+      "BSP30_24",
+      "BSP30_25"
+    ],
+    "cases": 60,
+    "expected_intervals": 960,
+    "binary_sha256": "732f2d77c6d852e2b0fbf642d6eb796e79c05d08a7e441140c161bf23eaaee77",
+    "build": "graphics-timing-probe-r01-framebuffer-b2026-09-13-18-51-50Z",
+    "status": "partial: BSP30_17 mainboard detail1 timeout; off pair completed",
+    "result_sha256": "fe70ac82646ab403bc7cc36663c2a1881c9d125aec50bd84e28f7795e7212865"
+  },
+  "mainboard_diagnostic_sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
+  "p4_build": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+  "private_recovery_evidence": "agents/graphics-timing/framebuffer-pass/",
+  "third": {
+    "cases": 39,
+    "expected_intervals": 624,
+    "excluded": "all BSP30_01 through BSP30_25",
+    "status": "complete: 624/624 intervals; eight known SHP23 probe differences only",
+    "build": "graphics-timing-probe-r01-framebuffer-b2026-09-13-19-00-37Z",
+    "binary_sha256": "be39dd91e939b3e1c861136b50d83528882b0d1c90b697d2f18bc15590a0777a",
+    "result_sha256": "af876cbffd578434073e7e8ffd33a061763d430d4c4c3ea47d749058525a9693",
+    "p4_snapshot_delta": 0
+  },
+  "qualification": "Exploratory dirty-tree variant; not a qualified or released build"
+}
