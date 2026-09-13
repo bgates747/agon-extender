@@ -91,3 +91,18 @@ physical EDP65535byte mixed trials now finish in about2207ms instead of aborting
 at~267ms. This confirms the adapter ordering defect within this tested scope.
 Stock's reply-before-next-command ordering is restored; EMOS remains unchanged.
 The full original336case regression is still required before this step closes.
+
+## U10/U10a — separate regression after ordering restoration
+
+All336 original separate-transfer cases pass, with exact bytes and recovery0;
+combined with the36mixed rows, the ordering candidate passes both frozen
+matrices. No rendering, EMOS change, browser or serial observer.
+
+| Largest transfer | VDP ms | EDP ms | Time change (VDP baseline) |
+| --- | ---: | ---: | ---: |
+| forward: 65,535 payload bytes | 589.424 | 2101.057 | +256.5% |
+| reverse: 2,048 payload bytes | 83.333 | 116.667 | +40.0% |
+
+Return timing remains quantized to16.7ms. Source/build identity and raw
+CRLF bytes are retained beside `order-full-analysis.json`. The forward gap
+remains: U12 will distinguish permission-to-send idle from P4 backpressure.

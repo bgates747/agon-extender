@@ -1,0 +1,14 @@
+{
+  "status": "experimental separate-transfer regression pass after stock reply ordering restoration",
+  "app": "uart-data-probe-r01-b2026-09-13-20-26-53Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-21-13-50Z",
+  "rows": 336,
+  "errors": 0,
+  "recovery": 0,
+  "csv_sha256": "5de5634087a3d6412117770df71ffea8c16c6c7072208e82dc7f3c2861a5fc87",
+  "app_sha256": "58a154264d6ddf1077bccb8c86d7e9ac721075f37469ca0fda965bb129c2930e",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "803905e615e46a78aca831ab5a10365c60ab707ce1abe243210cc1e3171b0520",
+  "source_commit": "f2444b42676f0896f3bacab1be905f958725e75d"
+}

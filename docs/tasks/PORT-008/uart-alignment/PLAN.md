@@ -63,8 +63,8 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
 - [x] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
 - [x] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
-- [ ] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
-- [ ] U10a Restore stock reply-before-next-command ordering if the reproduced mixed-traffic failure confirms a queued partial reply can be stranded; rerun separate and mixed checks before proceeding.
+- [x] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
+- [x] U10a Restore stock reply-before-next-command ordering if the reproduced mixed-traffic failure confirms a queued partial reply can be stranded; rerun separate and mixed checks before proceeding.
 - [ ] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
 - [ ] U12 If gaps remain, capture existing UART/handshake wiring after channel verification; attribute or bound remaining causes without circuit changes.
 - [ ] U13 Restore/finalize the reviewed recoverable bench state, verify keyboard/SD/startup, summarize tabular evidence and unresolved limits, commit and stop for Author review.
@@ -86,7 +86,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U10 in progress: separate336case pass; mixed traffic failed. Recover evidence, reproduce the queued-reply/blocking-read ordering defect, then execute U10a. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U10/U10a complete: mixed36 and separate336 both pass with recovery0 after the stock reply-ordering restoration. U12 channel verification/pure-data wire attribution is next, before U11 rendering load. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested
