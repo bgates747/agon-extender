@@ -116,3 +116,26 @@ U07 isolated P4 build passed at source bf1232c, uart-excom-console-r17-b2026-09-
 Factory SHA256 d8889fa3e93e237ca3fd290ef5478cee76119b2e5694fad56336104501e10a20.
 Comparison against archived measured inputs confirms only the two declared
 transport changes plus the unchanged paired probe. No other source overlay.
+
+## U09 implementation decision frozen before editing TX
+
+The actual stock HardwareSerial writer calls IDF uart_write_bytes with TX
+software buffering disabled. IDF repeatedly fills available FIFO space while
+previous bytes transmit; it does not wait for wire-empty after each128bytes.
+The P4 owner adds exactly that empty-FIFO barrier. Its bounded sender is still
+necessary for existing five-second CTS-stall cancellation and one-owner packet
+ordering: the stock driver call itself has an unbounded semaphore wait.
+
+The smallest next adaptation is to let the existing uart_tx_chars refill FIFO
+space while transmission is active. Keep the owner, staging queue, loop delay,
+physical CTS, packet order, completion observation and cancellation path. Reset
+the blocked-progress timer only when bytes enter the FIFO. No new task, ISR,
+protocol, renderer change or arbitrary delay tuning. Before physical use, compile
+the maintained console owner unchanged against deterministic UART/USB boundaries
+and check exact packet ordering, partial writes, short stalls, long-stall
+cancellation/readmission, and final hardware-idle admission. Pure hardware
+measurements follow the separately measured RX changes.
+
+The existing8192byte reply staging limit remains a known adapter limitation;
+these bounded diagnostics do not qualify arbitrary larger synchronous replies.
+Do not silently expand this increment into redesigning the reply subsystem.
