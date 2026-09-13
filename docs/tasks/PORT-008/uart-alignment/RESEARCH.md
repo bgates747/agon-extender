@@ -139,3 +139,12 @@ measurements follow the separately measured RX changes.
 The existing8192byte reply staging limit remains a known adapter limitation;
 these bounded diagnostics do not qualify arbitrary larger synchronous replies.
 Do not silently expand this increment into redesigning the reply subsystem.
+
+U09 pre-change owner tests pass under address/undefined sanitizers. The complete
+maintained console_hardware.inc is copied byte-for-byte to a temporary harness;
+only driver and USB acquisition boundaries plus the VDU reply producer are fake.
+A4626byte sequence crosses staging-ring wrap, exercises FIFO partial writes,
+short CTS pause, and a stopped receiver beyond5seconds. Exact output and idle
+admission pass; the long stall clears all stale output and accepts a fresh
+lease. Run tests/owner.py0 for the old barrier and1 for the planned refill path.
+Reported host milliseconds are simulated scheduling checks, not hardware data.
