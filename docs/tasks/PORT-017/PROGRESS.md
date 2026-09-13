@@ -180,3 +180,12 @@ passes actual mapped Escape and typed `RUN . /` on the headless eZ80.
 The next assistance cue is only for the physical native-keyboard test during
 traffic and direct CLI restart with whole-card scope. No new firmware or card
 movement is required. Ten-cycle success is not yet full task acceptance.
+
+The physical keyboard observer reached its five-minute window without an
+interruption and cancelled its own staged upload. Follow-up readback verifies
+the original target is intact with no stage/journal/backup residue, and the
+service remains online in the same incarnation. This is bounded cancellation
+evidence, not a failed keyboard action or a keyboard pass. The Author's native
+Escape/typed-RUN observation remains pending; do not repeat the attention cue
+or restart a timed-out test without a fresh readiness indication. No further
+card movement or firmware flash is required.
