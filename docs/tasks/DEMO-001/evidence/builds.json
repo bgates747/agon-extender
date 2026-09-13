@@ -1,0 +1,42 @@
+{
+  "status": "unversioned development demonstration",
+  "builds": [
+    {
+      "stage": 1,
+      "bytes": 10439,
+      "sha256": "52bc576d4e474f61a4e5b7607d1d0ba79a65162d8dd7fa62b5f730681171e910"
+    },
+    {
+      "stage": 2,
+      "bytes": 10453,
+      "sha256": "612ecdd2f1924857df45e2cd0269e6cc3b44fdf0fb456e03c231de141a10616a"
+    }
+  ],
+  "speech": {
+    "engine": "gTTS 2.5.4",
+    "language": "en",
+    "tld": "co.uk",
+    "converter": "AgonJukebox/scripts/make_wav.py --sample-rate 16000 --compress",
+    "validation": {
+      "updated.wav": {
+        "sample_rate": 16000,
+        "data_size": 122880,
+        "payload_offset": 78,
+        "sha256": "73af6443da992f765a2a879015f8936c929938f6520a0157f486f5878c920109",
+        "duration_seconds": 7.68
+      },
+      "attention.wav": {
+        "sample_rate": 16000,
+        "data_size": 117120,
+        "payload_offset": 78,
+        "sha256": "5b1f9ea81a068e280a79598c122ebace2dd204bd37d33f8fadb143ff50c86de8",
+        "duration_seconds": 7.32
+      }
+    }
+  },
+  "source_sha256": {
+    "examples/network-hello/src/main.c": "4352755a474d3d3f6fe04ed9d4651d579a75d00e5ca193aed4a31da232d15ff9",
+    "examples/network-hello/build_demo.py": "b0b45b786c661c41a64b3c7352f2f910a747d2b4b54ae57c39b52f128e052cec",
+    "scripts/run_hello_demo.py": "4355b99819e431817f9fc29a19056cffe58fcb167563c1340b962d03817a4c0c"
+  }
+}

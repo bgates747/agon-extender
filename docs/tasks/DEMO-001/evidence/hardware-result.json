@@ -1,0 +1,36 @@
+{
+  "started_at": "2026-09-13T02:40:30.094884+00:00",
+  "outcome": "pass",
+  "human_visual_audio_confirmation": "pending",
+  "events": [
+    {
+      "stage": 1,
+      "receipt": "stage=1\r\naudio_commands=pass\r\n",
+      "status": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 390008933
+      }
+    },
+    {
+      "stage": 2,
+      "receipt": "stage=2\r\naudio_commands=pass\r\n",
+      "status": {
+        "protocol": 1,
+        "online": true,
+        "pending": false,
+        "boot": 390017701
+      }
+    }
+  ],
+  "initial_status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389897897
+  },
+  "phase": "Both hardware execution receipts pass; service online, original startup and first binary retained",
+  "second_sha256": "612ecdd2f1924857df45e2cd0269e6cc3b44fdf0fb456e03c231de141a10616a",
+  "ended_at": "2026-09-13T02:43:40.123369+00:00"
+}

@@ -1,0 +1,13 @@
+{
+  "service": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389891933
+  },
+  "receipt": "stage=3\r\naudio_commands=pass\r\n",
+  "author_ground_correction": "i misiwred ground. now i am filming. try it yourself now",
+  "author_confirmation": "yay",
+  "pulse": "One 100 ms Pi GPIO17 assertion, then input/pull-down; command exit 0",
+  "qualification_limit": "Functional reset and human audio observation; no oscilloscope timing or component continuity qualification"
+}

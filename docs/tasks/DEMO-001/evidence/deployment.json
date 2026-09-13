@@ -1,0 +1,50 @@
+{
+  "started_at": "2026-09-13T02:31:00.358260+00:00",
+  "initial_status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389897897
+  },
+  "outcome": "ready for initial CLI handover",
+  "files": [
+    {
+      "path": "/extender/hello.bin",
+      "size": 10439,
+      "sha256": "52bc576d4e474f61a4e5b7607d1d0ba79a65162d8dd7fa62b5f730681171e910",
+      "seconds": 20.14827539899852
+    },
+    {
+      "path": "/extender/attention.wav",
+      "size": 117198,
+      "sha256": "5b1f9ea81a068e280a79598c122ebace2dd204bd37d33f8fadb143ff50c86de8",
+      "seconds": 232.0853507790016
+    },
+    {
+      "path": "/extender/updated.wav",
+      "size": 122958,
+      "sha256": "73af6443da992f765a2a879015f8936c929938f6520a0157f486f5878c920109",
+      "seconds": 236.37727733599604
+    },
+    {
+      "path": "/extender/hello-boot.txt",
+      "size": 186,
+      "sha256": "e13a5b18c492659b2e57a3aa8700f93709c7331618c2828c4200e703be09f0c4",
+      "seconds": 1.4464582479995443
+    },
+    {
+      "path": "/extender/hello-start.txt",
+      "size": 114,
+      "sha256": "3d5dbedf25522ce60692e911b1d84e7cc71629439b85becebfb7058f0d37f6a1",
+      "seconds": 1.4360417340067215
+    }
+  ],
+  "autoexec_original_sha256": "816a8b8e4d94004e8cc02911ad1e3be8b20e882b5070d1341023801dc138c870",
+  "autoexec_unchanged_while_open": true,
+  "final_status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389897897
+  }
+}

@@ -1,0 +1,45 @@
+{
+  "network-hello": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "cycles": [
+      {
+        "stage": 1,
+        "receipt": "stage=1\r\naudio_commands=pass\r\n"
+      },
+      {
+        "stage": 2,
+        "receipt": "stage=2\r\naudio_commands=pass\r\n",
+        "sha256": "612ecdd2f1924857df45e2cd0269e6cc3b44fdf0fb456e03c231de141a10616a"
+      }
+    ],
+    "seconds": 83.31816696299938,
+    "uart_sha256": "5750375cffd1da3dea7307ddc29d860ab8ceb2c0fa6f58c02271c491d46e0101"
+  },
+  "network-hello-installer": {
+    "outcome": "pass",
+    "events": [
+      "keyboard admitted",
+      "mapped Escape and EXEC installer at native CLI",
+      "keyboard admitted",
+      "dropped one WRITE response"
+    ],
+    "cycles": [
+      {
+        "stage": 1,
+        "receipt": "stage=1\r\naudio_commands=pass\r\n"
+      },
+      {
+        "stage": 2,
+        "receipt": "stage=2\r\naudio_commands=pass\r\n",
+        "sha256": "612ecdd2f1924857df45e2cd0269e6cc3b44fdf0fb456e03c231de141a10616a"
+      }
+    ],
+    "seconds": 86.95359856900177,
+    "uart_sha256": "3a2b78ebd8a5673f90f4af1223d24c104b3d7c77f4b7f1cf52bb9103b0fce611",
+    "installer_and_startup_readback": "pass"
+  }
+}

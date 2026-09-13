@@ -1,0 +1,44 @@
+{
+  "outcome": "pass",
+  "scope": "Bounded real eZ80/EMOS/FatFS run with the maintained P4 queue and host client.\n\nAlways headless, even when the canonical review wrapper supplies --graphical.\nThat argument is accepted solely for wrapper compatibility; no visual claim.\nThe peer models bytes/CTS, not physical baud, FIFO overrun or P4 scheduling.\n",
+  "events": [
+    "keyboard admitted"
+  ],
+  "cycles": [
+    {
+      "stage": 3,
+      "receipt": "stage=3\r\naudio_commands=pass\r\n",
+      "sha256": "344c9ecd4b3d921881f655574df4e8ee90bd693f80d0b18b3bed88d02c2da76f"
+    }
+  ],
+  "seconds": 59.67943910699978,
+  "uart_sha256": "461afc2466effa8f6ce1b05b172b7665f0eec8df021ad004597f24794e60ba32",
+  "audio": {
+    "sample_rate": 16000,
+    "data_size": 243456,
+    "payload_offset": 78,
+    "file_bytes": 243534,
+    "seconds": 15.216,
+    "sha256": "c46cfa1adaff63c399f97002081e0d808356f8e6c459c268a3ec9cc11012314e"
+  },
+  "build": {
+    "status": "unversioned development demonstration",
+    "builds": [
+      {
+        "stage": 3,
+        "bytes": 10440,
+        "sha256": "344c9ecd4b3d921881f655574df4e8ee90bd693f80d0b18b3bed88d02c2da76f"
+      }
+    ],
+    "speech": {
+      "engine": "gTTS 2.5.4",
+      "language": "en",
+      "tld": "co.uk",
+      "text": {
+        "discord": "Hello to all my friends on the Agon Discord! This is a real Agon speaking. My voice arrived over Ethernet, straight onto the SD card. Cheers, lads, and happy hacking!"
+      },
+      "format": "RIFF/WAVE, PCM u8 mono, 16000 Hz"
+    }
+  },
+  "hardware_playback": "not triggered"
+}

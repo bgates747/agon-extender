@@ -1,0 +1,28 @@
+{
+  "state": "ready; awaiting reset-circuit wiring verification and filming clearance",
+  "binary": {
+    "path": "/extender/hello.bin",
+    "bytes": 10440,
+    "sha256": "344c9ecd4b3d921881f655574df4e8ee90bd693f80d0b18b3bed88d02c2da76f"
+  },
+  "audio": {
+    "path": "/extender/discord.wav",
+    "bytes": 243534,
+    "sha256": "c46cfa1adaff63c399f97002081e0d808356f8e6c459c268a3ec9cc11012314e",
+    "readback": "pass",
+    "hardware_playback": "not triggered"
+  },
+  "preserved": {
+    "/extender/hello-one.bin": "52bc576d4e474f61a4e5b7607d1d0ba79a65162d8dd7fa62b5f730681171e910",
+    "/extender/hello.bin.p17bak": "612ecdd2f1924857df45e2cd0269e6cc3b44fdf0fb456e03c231de141a10616a"
+  },
+  "autoexec_sha256": "e13a5b18c492659b2e57a3aa8700f93709c7331618c2828c4200e703be09f0c4",
+  "hardware_playback": "not triggered",
+  "reset": "not requested",
+  "service": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 390017701
+  }
+}
