@@ -100,7 +100,7 @@ Use fresh owned SD binary/batch names, verify startup remains unchanged and
 read back the staged app/batch before execution. Both displays are mode20,
 512×384,64colours,singlebuffered; external MOS batch selects modes before the
 fixture. The39case selection omits all BSP30 population stress; four repeats,
-two routes, load/draw phases produce624intervals. Eight known paired SHP23
+two routes, draw/output phases produce624intervals. Eight known paired SHP23
 probe differences remain recorded as baseline mismatches, not new failures.
 
 No browser/video output or serial observer. Save P4 frame-timing counters
@@ -115,3 +115,10 @@ Temporarily replace only the mainboard app region after checking the installed
 pure-probe identity and partition table. Final stock restoration must cover
 **all erase sectors touched by either temporary image**, using the actual
 pre-test4MiB backup; the graphics diagnostic is larger than the pure probe.
+
+Documentation correction during preparation/collection: the retained fixture's
+two phases are `draw` and `output`, as its unchanged protocol, validator and
+original baseline specify. An earlier paragraph here called them load/draw.
+Loading-heavy stages remain inside those intervals; there is no isolated load
+timestamp. No program, procedure execution, metric or hardware changed for
+this naming correction.
