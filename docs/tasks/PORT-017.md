@@ -14,16 +14,11 @@ service is online. Ten unattended physical transfer/readback cycles pass through
 and fault-injection evidence is recorded in `PORT-017/PROGRESS.md` and the
 linked run. No dependent Rally/Golem work has started.
 
-**Waiting for the Author's physical keyboard check.** The bounded keyboard
-observer finished without an interruption, cancelled its stage, and verified
-that the old target survived. A later read-only status check confirms the same
-service incarnation remains online. Do not repeat the pending emulator cue,
-reflash, request the card, or silently re-arm that ended test. When the Author
-is ready, follow `PORT-017/QUALIFICATION.md` for Escape during traffic and typed
-`RUN . /`, then verify interrupted-file recovery and whole-card scope. Final
-acceptance/promotion remains dependent on that result. `PORT-017/OPERATIONS.md`
-is the current commissioning quick-start; BOOTSTRAP.md preserves installation
-and rollback instructions.
+The Author has confirmed the fresh native-keyboard check, and physical
+interrupted-file recovery passes with all 45368 acknowledged bytes retained.
+P17-02 and P17-04 are complete within the evidence's declared scope. P17-05
+local documentation/whole-card delivery is being finalized. No further reset,
+firmware flash or card handover is needed for this acceptance.
 
 The project TODO owns task ordering. The phases below own this task's detailed
 progress; Rally RALLY-20 consumes its acceptance result rather than maintaining
@@ -81,7 +76,7 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
    ROM/RAM fit and foreground execution. Freeze the contract locally first.
    Initial wire freeze: 51917e6. Compile and host boundary proof is recorded in
    `PORT-017/PROGRESS.md`; this completes the contract/resource gate only.
-2. [ ] **P17-02 — Resolve bootstrap and recovery.** Identify how the initial
+2. [x] **P17-02 — Resolve bootstrap and recovery.** Identify how the initial
    eZ80 service gets installed and invoked; do not assume an SD loader exists.
    Preserve good game/startup/firmware copies. Prefer supported RAM/service APIs;
    put maintained EMOS changes in agon-emos with its own linked task. Establish
@@ -96,7 +91,7 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
    an old runnable file until the candidate verifies. Do not call FAT rename
    power-failure atomic: document recoverable states and activation journal or
    selection scheme. Never overwrite a file being executed or held open.
-4. [ ] **P17-04 — Qualify on emulator and physical hardware.** Verify exact
+4. [x] **P17-04 — Qualify on emulator and physical hardware.** Verify exact
    reads and writes of empty files, arbitrary binary bytes, chunk boundaries,
    and files larger than 64 KiB, including a roughly 132 KiB game binary.
    Read back and compare against the host bytes/digest. Exercise dropped ACKs,

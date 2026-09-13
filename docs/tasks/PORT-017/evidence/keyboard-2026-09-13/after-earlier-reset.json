@@ -1,0 +1,15 @@
+{
+  "observed_at": "2026-09-13T02:01:38.889970+00:00",
+  "status": {
+    "protocol": 1,
+    "online": true,
+    "pending": false,
+    "boot": 389895723
+  },
+  "root_scope_read": "pass",
+  "autoexec_sha256": "736a84d2ca07cf2df988d2bd7fc1573334dbc6d7d9043abbc3dd2d1165b89a2b",
+  "old_target_preserved_after_reset": true,
+  "recovery_state": "01",
+  "author_observation": "Reset the board reflexively, then followed Escape and typed RUN instructions after reboot; appears to work as intended.",
+  "limit": "Previous timed observer had already cancelled; this does not establish Escape during a staged write."
+}

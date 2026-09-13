@@ -1,0 +1,26 @@
+{
+  "started_at": "2026-09-13T02:02:48.610839+00:00",
+  "outcome": "pass",
+  "target": "/extender/sdtest/p17-key-20260913-020248.bin",
+  "source_commit": "03f5fad82bba69c7d8ada4e22b4dcaede6f36aab",
+  "source_sha256": {
+    "scripts/qualify_sd_keyboard.py": "60d7cb995caa4b37d7e059fbac153d582a637080f0089d7343d5cd5197cdce15",
+    "scripts/sdcard.py": "b5c3bf28286206b17a4bff543ce516596ea4c9d6994959ce73f0377a725567d4"
+  },
+  "human_keyboard_confirmation": "pending",
+  "limitation": "A changed incarnation may also follow a reset; require Author confirmation of Escape and typed RUN.",
+  "phase": "recovery_pass",
+  "initial_boot": 389895723,
+  "transfer": 1972577346,
+  "acknowledged": 45368,
+  "interruption_status": {
+    "protocol": 1,
+    "online": false,
+    "pending": false,
+    "boot": 389895723
+  },
+  "restarted_boot": 389883407,
+  "partial_size": 45368,
+  "partial_sha256": "9be013ed8cdad8a635a66cad95ff534d759de26a05fdef6e7d1e012aef825c9e",
+  "ended_at": "2026-09-13T02:03:54.148526+00:00"
+}

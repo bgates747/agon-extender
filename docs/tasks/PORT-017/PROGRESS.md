@@ -189,3 +189,25 @@ evidence, not a failed keyboard action or a keyboard pass. The Author's native
 Escape/typed-RUN observation remains pending; do not repeat the attention cue
 or restart a timed-out test without a fresh readiness indication. No further
 card movement or firmware flash is required.
+
+## Physical input and restart recovery accepted
+
+The Author first reported a reflexive reset followed by successful Escape and
+typed RUN after reboot. Whole-card read of the unchanged autoexec and the
+retained test target confirms that path. That event was kept separate from the
+earlier timed-out observer and from the ten uninterrupted transfer cycles.
+
+A fresh live transfer then observed the service go offline and return in a new
+incarnation. All 45368 acknowledged bytes are an exact preserved prefix; the
+old target is unchanged. Explicit orphan recovery and a fresh verified upload
+pass. The Author replied, "keys worked fine" to this fresh cue. Evidence is in
+`evidence/keyboard-2026-09-13/`, with machine results and the human confirmation
+kept separate. P17-02 bootstrap/cooperative return/reconnect/cancellation and
+P17-04 scoped emulator/physical qualification are complete. Hard-hang reset
+and arbitrary physical-media/power-failure recovery are not newly claimed.
+
+Final local delivery promotes the protocol and operating guide to role-named
+documents, preserves rollback and switches normal service startup from the
+commissioning test root to whole-card scope over the now-working network path.
+The service was directly restarted at the CLI before replacing autoexec, so
+that old batch file was closed. Accepted Rally files are not write targets.
