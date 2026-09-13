@@ -13,8 +13,8 @@ Extender is licensed under:
 SPDX-License-Identifier: GPL-3.0-only
 ```
 
-A repository published under this policy should also contain a root `LICENSE`
-file with the complete text of the GNU General Public License version 3.
+The root [LICENSE](LICENSE) contains the complete text of the GNU General
+Public License version 3.
 
 This document describes the project's licensing and attribution policy. It does
 not replace the full text of the GPL or any third-party license notice.
@@ -111,7 +111,7 @@ SPDX-License-Identifier: GPL-3.0-only
 
 Portions derived from FabGL/vdp-gl.
 Copyright (c) 2019-2022 Fabrizio Di Vittorio.
-See LICENCE.md for provenance and licensing details.
+See LICENSING.md for provenance and licensing details.
 ```
 
 This is only a template. Existing upstream notices should be preserved rather
@@ -151,7 +151,7 @@ Third-party material should:
 - be documented when its provenance or license is not obvious from the file
   itself.
 
-Do not assume that the presence of this `LICENCE.md` overrides a third-party
+Do not assume that the presence of this `LICENSING.md` overrides a third-party
 license.
 
 ---

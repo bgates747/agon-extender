@@ -28,6 +28,11 @@ traceability without copying task history into the production interface.
 
 ## Actor-explicit proposals
 
+The `TRS-80-NNN` namespace owns Extender integration work for TRS-80-derived
+software and systems. `TRS-80-001` begins with TRS-OS on Agon; the namespace
+does not imply that physical TRS-80 hardware or every TRS-80 model is supported.
+`TODO.md` remains the sole authoritative unfinished-task index.
+
 Every proposed contract, decision, task, procedure, and failure path must name
 the actor performing each material action. Identify the applicable eZ80/MOS
 component, onboard VDP/Pico-D4 firmware, EDP/P4 firmware, hardware circuit,

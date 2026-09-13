@@ -1,0 +1,131 @@
+{
+  "recorded_at": "2026-09-13T05:27:50.591237+00:00",
+  "repositories": [
+    {
+      "directory": "DrPitre--DriveWire",
+      "url": "https://github.com/DrPitre/DriveWire.git",
+      "commit": "a795310089b00710d797ebc7d0eb0942e439572d",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-docs",
+      "url": "https://github.com/FujiNetWIFI/fujinet-docs.git",
+      "commit": "a8243a6f3ab95ed5d26c1d7dec84524f1b52cdea",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-emulator-bridge",
+      "url": "https://github.com/FujiNetWIFI/fujinet-emulator-bridge.git",
+      "commit": "999a9494c92ac9f789779ad6a04571426db7172f",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-firmware",
+      "url": "https://github.com/FujiNetWIFI/fujinet-firmware.git",
+      "commit": "49ca88a0d6b5789d35208b7afa89345a989725aa",
+      "branch": "master",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-hardware",
+      "url": "https://github.com/FujiNetWIFI/fujinet-hardware.git",
+      "commit": "4516c401389e4b70b35f6d24368d53909653c61f",
+      "branch": "master",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-lib",
+      "url": "https://github.com/FujiNetWIFI/fujinet-lib.git",
+      "commit": "515f7b1370afdb88d7ed8649db18c04788f79eff",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-lib-examples",
+      "url": "https://github.com/FujiNetWIFI/fujinet-lib-examples.git",
+      "commit": "a15f2df7c136eb4e6b0eb526c7c62bdd2c7af395",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--fujinet-pc",
+      "url": "https://github.com/FujiNetWIFI/fujinet-pc.git",
+      "commit": "cdf9273cb1e9e7e43e373a06b70064139ff7d246",
+      "branch": "fujinet-pc",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "FujiNetWIFI--tnfsd",
+      "url": "https://github.com/FujiNetWIFI/tnfsd.git",
+      "commit": "e357708bcb079e0fe5f4cf7ae5194b0fdc003dc2",
+      "branch": "master",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "NHACP-IF--NHACP-specification",
+      "url": "https://github.com/NHACP-IF/NHACP-specification.git",
+      "commit": "8ff34b341a3ce484c2b2a63132927e239dffe6ce",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "rlucente-retro--trs-os-agon",
+      "url": "https://github.com/rlucente-retro/trs-os-agon.git",
+      "commit": "5b302c15fe981df8e11ad306a34460552095d2f2",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "sijnstra--agon-projects",
+      "url": "https://github.com/sijnstra/agon-projects.git",
+      "commit": "ed135a709fc398929943658e7dbf1f1a2c28212c",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "spectrumero--tnfsd",
+      "url": "https://github.com/spectrumero/tnfsd.git",
+      "commit": "bac37dc6321e154b428b1307aebe9a678d2a2936",
+      "branch": "master",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    },
+    {
+      "directory": "thorpej--nabud",
+      "url": "https://github.com/thorpej/nabud.git",
+      "commit": "45fae3009738a133f25ad32476fada8fac3ef3c8",
+      "branch": "main",
+      "shallow": "false",
+      "status": "",
+      "submodules": ""
+    }
+  ]
+}
