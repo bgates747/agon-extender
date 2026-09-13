@@ -18,8 +18,13 @@ The service and games run at different times; remote game launching is not part
 of this interface. Candidate qualification is distinct from general release.
 
 Native USB keyboard input and the ordinary ExCom console remain working
-foundations. Browser input is deferred. [TODO.md](TODO.md) owns the remaining
-queue; SD acceptance does not automatically start another development task.
+foundations. A separate [host keyboard API](docs/remote-keyboard.md) now passes
+bounded physical EMOS input, CLI editing/command execution and SD coexistence
+checks in a provisional P4 build. It joins the retained processed-key path,
+with paced input, retry protection and physical-keyboard takeover. Attended
+review and remaining qualification are recorded under [REMOTE-002](docs/tasks/REMOTE-002.md). Browser input
+remains deferred. The [Pi reset circuit](docs/bench-reset.md) is independent of
+Extender control. [TODO.md](TODO.md) owns the remaining queue.
 
 ## Hardware
 

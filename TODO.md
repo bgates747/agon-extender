@@ -5,13 +5,29 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current goal — Host-controlled typing
+## Current goal — Resident Rally telemetry and driving
+
+- [ ] **BENCH-001 — Initial experiments**
+  - Started: 2026-09-13 UTC
+  - Status: Local work frozen in commits by explicit Author instruction. No new
+    experiments until the next graphics-suite contract is agreed. Resident telemetry/driving and bounded physical practice are
+    machine-complete; the hour is exhausted. Final native v2 integration passes
+    with the explicit TEST-002 UART1 model correction; original failures remain
+    preserved. Human review is open. Unattended full-game continuation is
+    sequenced in AgonArcade RALLY-22, then video speed and faithful VDP coverage.
+    No overnight progress alerts; human review/commit approval remain separate.
+  - Details: [BENCH-001](docs/tasks/BENCH-001.md)
+
+## Host-controlled typing — Implementation review
 
 - [ ] **REMOTE-002 — Type commands through the existing Extender keyboard path**
   - Started: 2026-09-13 UTC
-  - Status: Contract frozen before implementation; autonomous firmware/SD/reset
-    qualification authorized. Bespoke spoken hardware cue, then await chat reply
-    before the live typing demonstration. DEMO-001 is accepted and closed.
+  - Status: Contract committed; host/headless and physical input/CLI/SD checks pass.
+    First attended typing received positive feedback, but exposed a stale-clock
+    lease bug. r15 clock/pacing fixes and extended physical cursor/CLI/SD retest
+    pass. Author returned and is convinced typing works; requested practical
+    CLI experiments under BENCH-001 instead of another typing demonstration.
+    Uncommitted; remaining review disposition and commit approval not recorded.
   - Details: [REMOTE-002](docs/tasks/REMOTE-002.md)
 
 ## Remaining queue — Exclusive Compatible console and EDP
@@ -45,7 +61,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Queued after QUAL-003. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
+  - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; paired QUAL-003 stays held.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
@@ -64,7 +80,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-008 — Implement and qualify the compatibility transport**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
-  - Status: First ExCom hardware console and Nurples gameplay accepted as a major milestone; native USB input and retained browser graphics work over UART. Entry/return/re-entry logs show no prior crash; N002 closed. Wider qualification remains open; r02 hardware/parallel work stays on hold.
+  - Status: First ExCom hardware console and Nurples gameplay accepted; native USB input and browser graphics work over UART. Selected font, bitmap/affine, context, palette/depth, staged sprite and Copper cases preserve stock native pixels on physical P4, with Legacy/SD recovery. Inherited reflected-edge and active sprite-kind conversion failures remain explicit; guarded conversion passes. Copper reconnect snapshots retain the preceding state before fresh output. Local review pending. N002 remains closed. Wider command qualification is open; r02 hardware/parallel work stays on hold.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 
