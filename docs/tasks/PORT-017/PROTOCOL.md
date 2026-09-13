@@ -105,6 +105,10 @@ The following payload layouts are frozen. `path` is a one-byte byte-count
 followed by 1..120 ASCII bytes; `u16`/`u32` have the endian convention above.
 No implicit terminator or structure padding is transmitted.
 
+Staged target paths are at most 112 bytes, leaving eight bytes for `.p17part`
+and `.p17meta` within the general 120-byte READ path limit. Reject longer write
+or recovery targets before creating any sibling files.
+
 | Operation | Request payload | Successful response payload |
 | --- | --- | --- |
 | HELLO | empty | boot:u32, max-data:u16, features:u16 |
@@ -130,6 +134,13 @@ operation 0 online, operation 1 closing. Status codes: 0 OK, 1 bad request,
 byte underlying FatFS result; otherwise it is empty. Sequence validation errors
 do not advance the expected sequence. Other accepted operations, including
 filesystem failures, do advance and are cached. CRC-invalid records are dropped.
+Status 4 is exclusively a stale session. An invalid/inactive transfer ID within
+the current session returns bad request (1), advancing and caching normally;
+it must not be confused with a session rejection that did not execute.
+
+Pre-deployment clarification, 2026-09-13: the staged-path bound and transfer-ID
+status above prevent unreadable long-named stages and ambiguity in the client's
+retry/sequence recovery. Wire fields and numeric statuses remain unchanged.
 
 Paths use bounded ASCII byte strings, resolved to absolute MOS paths;
 reject embedded NUL, traversal and overlength rather than truncating. The
