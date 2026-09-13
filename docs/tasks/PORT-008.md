@@ -1,5 +1,16 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## Current priority — stock UART alignment, 2026-09-13
+
+The Author authorized [the granular UART plan](PORT-008/uart-alignment/PLAN.md)
+without an additional plan-review stop: restore stock-compatible forward and
+return transport, prove pure-data rates/correctness, then introduce rendering.
+Use compiling stock code; make only necessary platform adaptations. No unrelated
+improvements or bug fixes. Legacy scripts/results are research with obsolete
+wiring/protocol assumptions, not drop-in current contracts. Commit granularly,
+keep experimental code unpushed, and preserve working bench recovery.
+This sequence supersedes ordinary command expansion until the Author reviews it.
+
 ## Unattended ordinary command expansion — 2026-09-13
 
 Following the Author's video-speed-first sequence, PORT-003's bounded delivery

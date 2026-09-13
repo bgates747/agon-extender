@@ -5,7 +5,13 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current goal — Resident Rally telemetry and driving
+## First priority — Stock UART alignment
+
+- [ ] **PORT-008 — Stock-compatible UART performance and correctness**
+  - Status: Author authorized unattended stock-faithful alignment of both UART directions; pure data first, then rendering load. Granular plan frozen before implementation; legacy evidence must be inspected with old wiring/protocol differences explicit. No experimental push.
+  - Details: [PORT-008](docs/tasks/PORT-008.md), [bounded plan](docs/tasks/PORT-008/uart-alignment/PLAN.md)
+
+## Previous goal — Resident Rally telemetry and driving
 
 - [ ] **BENCH-001 — Initial experiments**
   - Started: 2026-09-13 UTC
@@ -77,7 +83,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
 
 
-- [ ] **PORT-008 — Implement and qualify the compatibility transport**
+**PORT-008 retained compatibility context (active priority above)**
   - Started: 2026-08-29 19:12 EDT
   - Finished: --
   - Status: First ExCom hardware console and Nurples gameplay accepted; native USB input and browser graphics work over UART. Selected font, bitmap/affine, context, palette/depth, staged sprite and Copper cases preserve stock native pixels on physical P4, with Legacy/SD recovery. Inherited reflected-edge and active sprite-kind conversion failures remain explicit; guarded conversion passes. Copper reconnect snapshots retain the preceding state before fresh output. Local review pending. N002 remains closed. Wider command qualification is open; r02 hardware/parallel work stays on hold.
