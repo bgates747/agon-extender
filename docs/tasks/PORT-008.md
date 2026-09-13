@@ -20,7 +20,8 @@ and timeout behavior, FIFO refill, and reply-before-next-command ordering.
 No renderer, EMOS, wiring, game or emulator changed. The first graphics run
 timed out on the mainboard; an unchanged retry completed all 624 intervals.
 Neither that retry nor the eight unchanged pixel differences establish general
-qualification. U13 owns final physical restoration and the attention cue.
+qualification. U13 records completed firmware/startup restoration, SD/CLI checks and neutral
+keyboard admission; the bench is ready for Author review.
 
 Remaining throughput work belongs at the EMOS sender/receiver boundary:
 65,535 forward bytes spent 1,530.514 ms idle with continuous P4 permission;

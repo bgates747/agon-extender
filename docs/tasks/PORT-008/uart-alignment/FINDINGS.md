@@ -194,3 +194,26 @@ The retained renderer's measured scopes remain essentially at prior values;
 the transport change does not turn the loading gap into a rendering defect.
 Software-sprite comparisons include matching call counts only; unequal
 batching totals remain in the adjacent JSON, not a false per-operation table.
+
+## U13 — restored review checkpoint
+
+Original mainboard VDP app-region sectors were restored from the independently
+verified actual pre-test flash backup; all0x108000affected bytes verify. The
+exact pre-test P4 console13:07 image was restored and flash/USB startup verified.
+Its historical dirty-build manifest remains unchanged; rollback is not a new
+clean-build or qualification claim. The privateEE probe is no longer installed.
+EMOS, wiring, production Rally and emulator profiles were untouched.
+
+Original root startup and its previous backup match byte-for-byte. The pinwalk
+marker is gone. SD upload/readback, a keyboard-launched CLI COPY receipt and
+normal boot admission pass. Final state is Legacy mode3 at the CLI, keyboard
+ready/neutral/released; no test, browser, serial observer or capture remains
+active. A short completion/statistics summary is on mainboard VGA. Full local
+recovery journals remain ignored; portable evidence is `results/restoration.json`.
+
+All experimental changes and findings are committed locally, with no push.
+Human review remains pending; no broader graphics, physical-keyboard or output
+qualification is inferred. The next material throughput work is the documented
+EMOS sender/receiver stock-reuse boundary, under a separate frozen contract.
+The intermittent mainboard diagnostic timeout and existing8KiB reply-staging
+limit remain open. No stock renderer bug was fixed or algorithm improved.

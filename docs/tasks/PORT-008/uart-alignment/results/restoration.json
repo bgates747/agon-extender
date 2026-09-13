@@ -1,0 +1,24 @@
+{
+  "mainboard": "actual pre-test stock VDP image restored",
+  "mainboard_original_flash_sha256": "9137ff197ea57dc3d40d7b90f0ef88946434e62a6911d7fbe5328d53e2e5dd23",
+  "mainboard_restored_region": {
+    "expected_sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
+    "target_sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e",
+    "restoration_extent": 1081344,
+    "verified": true
+  },
+  "restored_p4": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+  "restored_p4_factory_sha256": "5bddd14bc5611c99c6b1e90b18fc0f2ed7167298a499199c6248dd8b1fbb489c",
+  "p4_readback_and_usb_startup_verified": true,
+  "startup_sha256": "f02deab9a21fa23ca19cb7c3ee6e733d1049abf001854f8d63df2c8040414218",
+  "prior_startup_backup_sha256": "735a37f21922e4642856ec5fc62d7e19e22b0c0ce84eaeeb524e204c03d76a4d",
+  "startup_and_prior_backup_exact": true,
+  "one_shot_consumed": true,
+  "sd_write_readback": true,
+  "cli_copy_readback": true,
+  "keyboard_ready_neutral_released": true,
+  "final_route": "Legacy mode3 CLI",
+  "new_experimental_firmware_left_installed": false,
+  "publication": "local commits only; no push",
+  "human_review": "pending; machine timing evidence is not visual acceptance"
+}
