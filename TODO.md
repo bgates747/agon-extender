@@ -5,6 +5,15 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Current goal — Host-controlled typing
+
+- [ ] **REMOTE-002 — Type commands through the existing Extender keyboard path**
+  - Started: 2026-09-13 UTC
+  - Status: Contract frozen before implementation; autonomous firmware/SD/reset
+    qualification authorized. Bespoke spoken hardware cue, then await chat reply
+    before the live typing demonstration. DEMO-001 is accepted and closed.
+  - Details: [REMOTE-002](docs/tasks/REMOTE-002.md)
+
 ## Remaining queue — Exclusive Compatible console and EDP
 
 PORT-017 was accepted on 2026-09-13 UTC and removed from the unfinished list.
