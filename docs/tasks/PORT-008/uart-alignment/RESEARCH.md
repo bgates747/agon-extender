@@ -111,3 +111,8 @@ light2-harness-r02 connectivity integrity mismatch. No hardware definition
 changed in this work; record the failure without repairing unrelated wiring
 documents. Raw CSV evidence uses CRLF; use core.whitespace=cr-at-eol for diff
 checks without altering evidence bytes.
+
+U07 isolated P4 build passed at source bf1232c, uart-excom-console-r17-b2026-09-13-20-38-44Z.
+Factory SHA256 d8889fa3e93e237ca3fd290ef5478cee76119b2e5694fad56336104501e10a20.
+Comparison against archived measured inputs confirms only the two declared
+transport changes plus the unchanged paired probe. No other source overlay.
