@@ -55,6 +55,8 @@ separate RX interrupt timeout experiment. No wiring fault inferred.
 
 Again336/336exact cases and recovery0. The65535byte forward interval is
 589.385ms stock and2101.073ms EDP.
-The RX idle timeout2 change does not materially close the large-payload gap.
+The RX idle timeout2 change reduces EDP elapsed by3.5% versus the bulk-only
+candidate, while leaving it256.5% slower than stock. It does not close the
+large-payload gap.
 It restores stock configuration; neither RX candidate established the cause.
 Return256packets remains10versus18ticks. Next is the frozen FIFO-refill change.

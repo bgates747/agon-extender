@@ -144,7 +144,10 @@ void runConsole(VDUStreamProcessor *processor) {
         printf("ExCom UART blocked; awaiting fresh admission\n");
       }
     }
-    if(!transmitting && s.count) {
+    // Stock's IDF writer refills available FIFO space before wire-idle.
+    // Keep this owner nonblocking so its existing CTS-stall cancellation,
+    // keyboard ordering and admission lifecycle can still run.
+    if(s.count) {
       timing::Scope enqueue(timing::Phase::TxEnqueue, s.count);
       unsigned n=std::min<unsigned>(128,std::min<unsigned>(s.count,sizeof(s.output)-s.read_pos));
       int sent=uart_tx_chars(UART_NUM_1,reinterpret_cast<const char *>(s.output+s.read_pos),n);
