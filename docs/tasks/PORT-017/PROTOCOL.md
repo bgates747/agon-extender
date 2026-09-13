@@ -161,11 +161,14 @@ cleanup. There is no automatic execution or deletion of the previous version.
 
 RECOVER action 0 inspects (state bits: target=1, part=2, metadata=4, backup=8;
 metadata-invalid=16), action 1 restores backup only when the target is absent,
-action 2 abandons a stage/metadata only when no transfer is active and the
-target is present, and action 3 removes a previous backup only after the current
+action 2 explicitly abandons a stage/metadata when no transfer is active and
+either the target is present or valid metadata exists with both target and
+backup absent, and action 3 removes a previous backup only after the current
 target can be opened/read and the host explicitly requests cleanup. Never remove
 an existing target as a side effect of recovery. Invalid/ambiguous metadata
-reports recovery required and preserves files. Missing target plus valid backup
+reports recovery required and preserves files. The absent-target action-2 case
+allows an interrupted first upload to be discarded and retried; it never removes
+a target or backup. Missing target plus valid backup
 is recoverable even if power failed before the new target rename. If a new
 target exists alongside metadata, compare its identity before retiring metadata;
 never infer success just from filename presence. This is a recoverable scheme,
@@ -173,6 +176,12 @@ not a guarantee against physical media failure. FAT rename is not assumed atomic
 against power failure. Do not delete the only good copy or report ACTIVE on an
 uncertain close/rename. Cancellation cleans only the identified stage; recovery
 never follows an unvalidated pointer/path from a damaged record.
+
+Pre-deployment clarification, 2026-09-13: action 2 includes the explicit
+absent-target/no-backup case above. Otherwise interrupting a first upload would
+leave an unrecoverable orphan despite the host retaining its original bytes.
+The wire layout and action numbers do not change; no deployed implementation
+has consumed the earlier wording.
 
 Service responses identify bad input, unsupported operation, busy, stale session,
 sequence conflict, file error, integrity failure and recovery-required distinctly.
