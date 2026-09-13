@@ -1,0 +1,15 @@
+{
+  "note": "Supplemental tool provenance for the completed wire capture; no change to original run result",
+  "python": "3.14.6 (main, Jun 23 2026, 15:18:23) [Clang 22.1.3 ]",
+  "numpy": "2.5.2",
+  "capture_and_decode_sigrok_cli": "0.7.2",
+  "capture_and_decode_libsigrok": "0.5.2/5:1:1",
+  "independent_decoder_libsigrokdecode": "0.5.3/6:1:2",
+  "inputs": {
+    "docs/tasks/PORT-008/uart-alignment/scripts/analyze_wire.py": "1c63829e3d87b48e338809e647a264828ecd6281ca5d50594f88fa0d13f72bd1",
+    "docs/tasks/PORT-008/uart-alignment/scripts/capture_wire.py": "ed4829e52d1b41025d9fe99af289986837a2440fab3fae58094057a4ed26a2ce",
+    "docs/tasks/PORT-008/uart-alignment/scripts/test_wire_oracle.py": "ee08a72a9b588805ee953baed06a2ef86986c23ccbb3e299ee9861c7a60f63e4",
+    "docs/tasks/AUDIT-005/scripts/analyze_trace.py": "835762ab8f200c7b9c80ee15b50da77fb01c30dd22b0e7ed12639eea485dc07c",
+    "docs/tasks/AUDIT-005/scripts/capture_trace.py": "8faa1881b43b1169b73953abb2662d57a346850eae3f6f24d7bf0bc73ed5624d"
+  }
+}
