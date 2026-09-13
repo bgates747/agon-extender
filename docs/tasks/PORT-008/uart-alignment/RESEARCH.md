@@ -83,3 +83,15 @@ and `System-Commands.md`. Current EMOS `src/emos_console.c` and
 `src/vdp_protocol.asm` establish the16-byte diagnostic admission and unchanged
 source/magic checks. Temporary fixtures may consume these accepted records;
 new production packet types or ISR behavior are not part of the first pass.
+
+
+### Additional U06 discovery: UART interrupt timeout
+
+Stock Arduino2.0.14 HardwareSerial initializes `_rxTimeout(2)` and applies
+`uart_set_rx_timeout` at begin. P4 ConsoleStream installs the IDF5.5.5 driver
+and leaves its default RX timeout threshold10. Both configure the high-baud
+RX-full threshold120 and flow-control threshold64. Thus an early RTS pause
+can be followed by different idle-to-RX-interrupt delays. This is a confirmed
+configuration difference, not measured attribution. Freeze a separate change
+after the bulk-read comparison if needed to restore the stock timeout2; do
+not combine it with the first bulk-read candidate and obscure causality.

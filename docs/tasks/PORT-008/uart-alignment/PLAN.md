@@ -61,6 +61,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [ ] U06 Run baseline pure-data measurements on stock mainboard and existing EDP; preserve raw results and exact configurations.
 - [ ] U07 Make the smallest stock-alignment change for forward bulk reception; verify stream semantics and build, then commit.
 - [ ] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
+- [ ] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
 - [ ] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
 - [ ] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
 - [ ] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
@@ -84,8 +85,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U06 next: build/smoke the frozen fixture and isolated baseline images, then run physical pure data. PROCEDURE.md owns exact boundaries. No production transport change yet. Prior mainboard VDP restored;
-P4 remains the measured r17 13:07:24Z image. Detailed private bench identities
+U06 active: full pure-data baseline follows the corrected smoke. Both temporary probe images are installed (20:18:15Z mainboard,20:18:27Z P4), with verified rollback. PROCEDURE.md owns boundaries. No production transport change yet. Detailed private bench identities
 and admission are in HARDWARE.local.md and existing ignored run journals.
 
 
@@ -96,3 +96,7 @@ returns EMOS_BUSY31 for that request; the documented application exception is
 already used between routes. The external batch recovered SD normally. This
 is a fixture invocation correction, not a stock/EMOS bug or transport change.
 Rebuild app and run the full matrix before accepting the baseline.
+
+U06 discovery amendment: stock HardwareSerial sets RX interrupt timeout2, whereas
+P4 direct IDF setup leaves default10. Added U08a for a separately measured
+stock-setting restoration after the bulk-read comparison; no arbitrary tuning.
