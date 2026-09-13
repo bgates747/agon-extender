@@ -68,3 +68,24 @@ is a temporary ownership safeguard for the existing fixture, not a production
 GPIO or UART API. Stable USB/specimen identity and exact host commands remain
 in the ignored bench record. If input verification, acquisition or recovery
 fails, preserve the state and diagnose before repeating a reset or capture.
+
+### Short invocation frozen before acquisition
+
+Use optional `wire` selection of the existing application: one repetition,
+PRNG pattern3, one65535byte forward upload per route followed by one256packet
+return per route. The existing forward/reverse functions, seed0x12345678,
+probe requests, EMOS APIs, deadlines and recovery remain unchanged. Expected
+CSV order is forward/Legacy, forward/ExCom, reverse/Legacy, reverse/ExCom;
+four exact rows and terminal recovery0 are required. Token2 identifies the
+ExCom forward window; token4 identifies the ExCom return window. Both are
+visible in the existing privateEE requests, so no extra UART marker is added.
+
+The external batch configures both displays to mode20, loads the fixture and
+returns to foreground sdserve. Capture starts before its CLI EXEC and requires
+24MHz ×720million samples. Use the newly verified map, preserve physical bit
+positions, write uncompressed samples during acquisition, then archive them.
+No reset, browser, serial observer or SD service traffic during timed sections.
+Run control and result collection happen outside those sections. Decode and
+check all65535forward bytes, the three relevant reply records, and all257return
+records; exclude unrelated keyboard/lease traffic by packet type and window.
+All captured valid-frame payloads must agree with the independent decoder.
