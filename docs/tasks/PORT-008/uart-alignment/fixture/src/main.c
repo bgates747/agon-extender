@@ -118,7 +118,15 @@ int main(int argc,char **argv) {
     mos_setkbvector(graphics_callback,0);
     const unsigned lengths[]={0,1,63,64,65,255,256,257,4095,4096,4097,32768,65535};
     const unsigned returns[]={1,8,64,256};
-    if(argc>1 && !strcmp(argv[1],"duplex")) {
+    if(argc>1 && !strcmp(argv[1],"wire")) {
+      /* Same transfer primitives; a bounded, uniquely tokened capture window. */
+      repeat=0;pattern=3;
+      for(unsigned direction=0;direction<2 && !status;++direction)
+        for(route=0;route<2 && !status;++route) {
+          strcpy(command,route?"emos excom --keep-display":"emos legacy --keep-display");status=mos_oscli(command,NULL,0);
+          if(!status){length=direction?256:65535;status=direction?reverse():forward();}
+        }
+    } else if(argc>1 && !strcmp(argv[1],"duplex")) {
       const unsigned mixed_lengths[]={257,4096,65535};
       for(route=0;route<2 && !status;++route) {
         strcpy(command,route?"emos excom --keep-display":"emos legacy --keep-display");status=mos_oscli(command,NULL,0);
