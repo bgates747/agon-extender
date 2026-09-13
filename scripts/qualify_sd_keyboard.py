@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Bounded keyboard/foreground-restart test for the already commissioned SD service.
 
-The Author presses Escape during WRITE traffic, then types RUN . /extender/sdtest
+The Author presses Escape during WRITE traffic, then types RUN . /
 at MOS. This observer never injects keys, executes commands, resets or flashes.
 Only a fresh test target is modified. Human confirmation of the input action is
 separate evidence; a changed service incarnation alone cannot prove keystrokes.
@@ -66,7 +66,7 @@ def main():
         require(acknowledgement == struct.pack('<II', tid, 212), 'Unexpected first WRITE identity')
         offset = 212
         checkpoint(phase='ready_for_escape', initial_boot=boot, transfer=tid, acknowledged=offset)
-        print('Ready: press Escape during traffic, then type RUN . /extender/sdtest at MOS.', flush=True)
+        print('Ready: press Escape during traffic, then type RUN . / at MOS.', flush=True)
         deadline = time.monotonic()+args.window
         while time.monotonic() < deadline:
             try:

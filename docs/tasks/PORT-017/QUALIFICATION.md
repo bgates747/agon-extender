@@ -63,3 +63,24 @@ not represent a physical UART loss. The separate headless peer drops a reply
 before the P4 queue receives it, exercising actual eZ80 replay. Its
 `--qualification-smoke` profile option runs the controller against actual
 eZ80/EMOS/raw FAT using ten smaller files before a physical run.
+
+After the ten-cycle test, `scripts/qualify_sd_keyboard.py` prepares a fresh
+old target and streams a longer staged file while waiting for Escape. Publish
+its readiness marker before the emulator cue. The Author then types `RUN . /`
+at MOS: the already loaded service restarts with whole-card scope for subsequent
+authorized development. Its host observer verifies a changed incarnation, exact
+partial prefix, preserved old target, explicit orphan recovery and a new verified
+upload. The host never sends keys or commands to hardware. Require the Author
+to confirm that native USB Escape and typed RUN worked without a reset.
+
+The observer bounds each human action to 180 seconds (configurable 10..600).
+If Escape never arrives it cancels its own staged transfer and records partial
+evidence. An unexplained transport error is preserved, not counted as a keyboard
+pass. The headless keyboard smoke uses packets from the maintained USB mapper.
+
+A service launched by a MOS EXEC/OBEY file runs while that batch file remains
+open: MOS closes it only after the application returns. Do not replace that
+active batch file. The requested Escape then direct CLI RUN closes the initial
+autoexec and permits a later explicitly verified startup update. Preserve the
+service filename exclusion and do not overwrite other files known to be held
+open. The protocol is cooperative file access, not an OS-wide file-lock monitor.

@@ -13,7 +13,7 @@ int main() {
         return true;
     };
     if(!key(41))return 1; // Escape
-    for(char c: "run . /extender/sdtest\r") {
+    for(char c: "run . /\r") {
         if(!c)break;
         unsigned usage=c>='a' && c<='z'?4+c-'a':c==' '?44:c=='.'?55:c=='/'?56:c=='\r'?40:0;
         if(!key(usage))return 1;
