@@ -76,7 +76,11 @@ emulator changes uncommitted unless already authorized and validated.
 
 ## Discovery amendments
 
-None at freeze. Do not silently replace the plan when scope changes.
+U06 preflight amendment: prior graphics diagnostics documented burst-reply loss.
+Run both forward matrices before either return matrix, so a return-path failure
+cannot prevent the independent EDP forward baseline. This changes fixture order
+only; no production path or payload change. First app and both images build;
+rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 

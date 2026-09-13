@@ -96,14 +96,18 @@ int main(int argc,char **argv) {
     mos_setkbvector(graphics_callback,0);
     const unsigned lengths[]={0,1,63,64,65,255,256,257,4095,4096,4097,32768,65535};
     const unsigned returns[]={1,8,64,256};
-    for(route=0;route<2 && !status;++route){
+    for(unsigned direction=0;direction<2 && !status;++direction)
+      for(route=0;route<2 && !status;++route){
         strcpy(command,route?"emos excom --keep-display":"emos legacy --keep-display");status=mos_oscli(command,NULL,0);if(status)break;
         for(repeat=0;repeat<(smoke?1:3) && !status;++repeat){
-            for(pattern=0;pattern<4 && !status;++pattern)for(unsigned i=0;i<sizeof lengths/sizeof *lengths && !status;++i){
-                length=lengths[i];if(smoke && length!=0 && length!=257 && length!=65535)continue;status=forward();}
-            pattern=3;for(unsigned i=0;i<sizeof returns/sizeof *returns && !status;++i){length=returns[i];status=reverse();}
+            if(!direction) {
+                for(pattern=0;pattern<4 && !status;++pattern)for(unsigned i=0;i<sizeof lengths/sizeof *lengths && !status;++i){
+                    length=lengths[i];if(smoke && length!=0 && length!=257 && length!=65535)continue;status=forward();}
+            } else {
+                pattern=3;for(unsigned i=0;i<sizeof returns/sizeof *returns && !status;++i){length=returns[i];status=reverse();}
+            }
         }
-    }
+      }
     armed=0;mos_setkbvector(NULL,0);strcpy(command,"emos legacy");unsigned recovery=mos_oscli(command,NULL,0);
     snprintf(line,sizeof line,"# terminal,status=%u,saved=%u,recovery=%u\r\n",status,saved,recovery);unsigned persisted=append(line);
     printf("UART data test %s. %u cases saved to %s.\r\n",status||persisted||recovery?"incomplete":"complete",saved,filename);

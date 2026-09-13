@@ -43,7 +43,7 @@ firmware is needed for the initial baseline.
 Patterns: zero,FF,alternating55/AA, and xorshift32 with initial state12345678hex
 (each byte uses the next state low8bits; unsigned32 wrap). Forward lengths:
 0,1,63,64,65,255,256,257,4095,4096,4097,32768,65535. Three measured repetitions,
-first allmainboard then allP4. Return counts1/8/64/256 with pseudorandom bytes.
+first allmainboard forward then allP4 forward, then both return passes. Return counts1/8/64/256 with pseudorandom bytes.
 A short smoke selects a subset before the full matrix. A failure closes/syncs
 its CSV, releases the callback, attempts Legacy return and leaves the result
 visible. Fixture returns zero to let the recovery EXEC continue; its terminal
