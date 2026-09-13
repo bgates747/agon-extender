@@ -179,3 +179,22 @@ host-socket assembly, not a physical baud or end-to-end latency measurement.
 The final fixed drive proves coherent manual snapshots, later guest key
 release and normal application exit. Old200/350ms failures remain historical
 failures, physical300ms policy stays unchanged, and human review remains open.
+
+## Attended full-game application profile
+
+RALLY-22 R22-11 owns a separate optional full-game producer and host adapter.
+It preserves the140-byte v2 framing/CRC and all mandatory reserved bytes, so
+current EMOS16/P4 transport requires no change. Flags byte3 upper nibble carries
+the game phase0..9; running bit0 is set only during controllable qualifying/race,
+and low demo/assist/audio bits retain their meaning. INT32_MIN distance plus
+zero lateral/speed denotes an absent opponent slot, including qualifying.
+The old bench host rejects these absent records; `scripts/rally_race.py` owns
+the explicit full-game parser, phases and active-slot filtering. Actual active
+traffic retains slot order and exact Q8 lateral/route speed. Counter84 counts
+real game crash starts rather than bench overlap-only observations.
+
+This is an attended Fuji arcade attempt requested after the earlier pause,
+not release of Extender video/backlog work or a renewed practice programme.
+The parser retains raw wire evidence, reuses the existing bound validation and
+PassingDriver, releases controls outside manual phases and on expiry/takeover.
+No score writes, firmware updates or direct car-state controls are introduced.
