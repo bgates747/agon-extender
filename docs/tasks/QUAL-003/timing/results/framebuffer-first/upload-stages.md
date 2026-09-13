@@ -217,3 +217,15 @@ Use the exact recorded image archive when its source differs from the worktree.
 | Stock scanout and worker | Selected vdp-gl `src/dispdrivers/vga2controller.cpp`, `ISRHandler()`; `vgabasecontroller.cpp`, `primitiveExecTask()` |
 | Accelerated stock stream reads | Mainboard Arduino ESP32 2.0.14 `cores/esp32/HardwareSerial.cpp` and `esp32-hal-uart.c` |
 | Generic P4 stream fallback | P4 Arduino ESP32 3.3.11 `cores/esp32/Stream.cpp`, `readBytes()` / `timedRead()` |
+
+## Controlled UART-alignment follow-up
+
+The [paired graphics rerun](../../../../PORT-008/uart-alignment/results/graphics-comparison.md)
+retains the same39cases and exact assets. Its unchanged retry completes624
+intervals with8known probe mismatches andzero P4 snapshots; the preceding
+mainboard BSP21_01 timeout remains preserved in the UART findings. Seven
+upload-heavy EDP stages improve3.1–3.9%, while the smallest is effectively
+unchanged. The native rendering scopes remain close to their prior timings.
+See the linked table for current stock/EDP ms and baseline percentage changes.
+This supports the pure-data wire attribution above; it does not establish
+universal fixture reliability or complete EDP output qualification.

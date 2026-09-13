@@ -1,0 +1,423 @@
+{
+  "cases": [
+    {
+      "name": "EMPTY",
+      "group": 0,
+      "bytes": 0,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "2b7dad2bdc53bbd41f0e9232a283c9d42248e0e399ee404e5fe70cdf39e41882"
+    },
+    {
+      "name": "SHP20",
+      "group": 20,
+      "bytes": 478,
+      "setup_bytes": 311,
+      "probes": 12,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c0b22e806d80828c5ee290c4074ba29be74ba5b9c6a3ec89710d6acbddca71a3"
+    },
+    {
+      "name": "SHP23",
+      "group": 23,
+      "bytes": 1247,
+      "setup_bytes": 311,
+      "probes": 3,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f8747af71c2983eddb30cbfd2c8a8e962c0378a6de08598aac4548386bbc1b9e"
+    },
+    {
+      "name": "BSP03_01",
+      "group": 103,
+      "bytes": 94683,
+      "setup_bytes": 311,
+      "probes": 4,
+      "quiet": false,
+      "upload_bytes": 93788,
+      "sha256": "1bc37a39664bf4c2a3b0d42a47baa89cf964d2f68aad7f1b3d599f9f75954d29"
+    },
+    {
+      "name": "BSP07_01",
+      "group": 107,
+      "bytes": 9765,
+      "setup_bytes": 311,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 9248,
+      "sha256": "4ceb8664dc3f68d8db49ba524d5d90859c275f7f82b987bb8b21b5b81f8df7c6"
+    },
+    {
+      "name": "BSP07_02",
+      "group": 107,
+      "bytes": 372,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "647ce371375c94a352a1217da5fe23fbe6968aaa88ebd2f3ac76370b0c778a04"
+    },
+    {
+      "name": "BSP07_03",
+      "group": 107,
+      "bytes": 337,
+      "setup_bytes": 0,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f5902d63eb1817e3852e2cb740864a52fb04719640aea314d7884ac41c316021"
+    },
+    {
+      "name": "BSP21_01",
+      "group": 121,
+      "bytes": 43203,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 42644,
+      "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed"
+    },
+    {
+      "name": "BSP21_02",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "5b15f5bbbb76e5c27d8f7ba8d82bd5e4b4d2d3cf7b237296bbb64c68fdd965eb"
+    },
+    {
+      "name": "BSP21_03",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c9f7a75f6f1e7d7fd66c9609635f13a01c765f721aefed6f0b7f1c3075b7ad51"
+    },
+    {
+      "name": "BSP21_04",
+      "group": 121,
+      "bytes": 290,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "6674cb6e9511396ed0d929d3967d1c1d54d11adc12bcf98adcb08164b00e7fca"
+    },
+    {
+      "name": "BSP21_05",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f605bcd7241553ae7ddbc124a8eb67fbf4fd9f84d2925e4eb245cf6b3a2f308c"
+    },
+    {
+      "name": "BSP21_06",
+      "group": 121,
+      "bytes": 324,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c6f7239020b228b4e6ef6c01e999b1d1905fe0e46a4954a7ab3da23e94b24993"
+    },
+    {
+      "name": "BSP22_01",
+      "group": 122,
+      "bytes": 26195,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 25732,
+      "sha256": "906cdb521a2f2a2db99b4725a859a47f1f781ea25f27f740025f3f51c2c8ca78"
+    },
+    {
+      "name": "BSP22_02",
+      "group": 122,
+      "bytes": 11,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "011b46ce235474034f9a73eba5be5fe18260be7b456eccc04620d31ee169e29c"
+    },
+    {
+      "name": "BSP22_03",
+      "group": 122,
+      "bytes": 3,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "8c85bce2a3c8d5e6887d530ebe91901f940e43a066ddb5bfeba9ba8f12cdff10"
+    },
+    {
+      "name": "BSP22_04",
+      "group": 122,
+      "bytes": 22,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "66e51af6df00a56b1155b06b5410e9b14c38f87a65fc99ef079ffea63c5a4193"
+    },
+    {
+      "name": "BSP22_05",
+      "group": 122,
+      "bytes": 6,
+      "setup_bytes": 0,
+      "probes": 2,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "46c6918cfa6b18c66cd46b86f6a52d4dad45f9d3fe9258cc39c5d07a1ab540e4"
+    },
+    {
+      "name": "BSP25_01",
+      "group": 125,
+      "bytes": 30006,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 29476,
+      "sha256": "28f74781a958acd0f07f0b833fdc985568780ab82b56c02bc636b7af4a5ee174"
+    },
+    {
+      "name": "BSP25_02",
+      "group": 125,
+      "bytes": 285,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "79dc36405310812252d06b4e0a04b190c3c66bec865aec7f72c9242fe36e462c"
+    },
+    {
+      "name": "BSP25_03",
+      "group": 125,
+      "bytes": 289,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "64a71ceaf29248bdb24b6091da11717a683b9dedeb22e21dca604bdf9394ee87"
+    },
+    {
+      "name": "BSP25_04",
+      "group": 125,
+      "bytes": 315,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "55fc06047250124c5ee4ed1ea84f7df158517d6181009b6bb7390668a2d686b0"
+    },
+    {
+      "name": "BSP25_05",
+      "group": 125,
+      "bytes": 284,
+      "setup_bytes": 0,
+      "probes": 1,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f43113abcfefc454774b6474eade99d9caa4329707586780089723c15b14a808"
+    },
+    {
+      "name": "BSP26_01",
+      "group": 126,
+      "bytes": 61406,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 60712,
+      "sha256": "331e000a63fcefbe66d916662be0c51e1d6f0922fe2858fae5a2f934c845781b"
+    },
+    {
+      "name": "BSP26_02",
+      "group": 126,
+      "bytes": 308,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "9525bb86440a3e5c851fa78798022dec9717b1263af0885d1ceac55bbf5feeb0"
+    },
+    {
+      "name": "BSP26_03",
+      "group": 126,
+      "bytes": 268,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "675f2a9e415132722bd6a758d1e35033da1c8d4815916056f8445cbe1888c5a0"
+    },
+    {
+      "name": "BSP26_04",
+      "group": 126,
+      "bytes": 295,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c11ce1e7471986b18724419fce55db221370f5c11f9c3af6e247f99691c9b19c"
+    },
+    {
+      "name": "BSP27_01",
+      "group": 127,
+      "bytes": 49420,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 48852,
+      "sha256": "fa9866ee74f429057703f07e40b7d6e5e9520c33d155aeafab5c0ad36b41fced"
+    },
+    {
+      "name": "BSP27_02",
+      "group": 127,
+      "bytes": 285,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "ee37fbd72c82b9c22881a3e4bbf10d450a069ba20b411afc32b9303d4b3114a4"
+    },
+    {
+      "name": "BSP27_03",
+      "group": 127,
+      "bytes": 263,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "0a9222e40cf1403f9b289e531247b2b5cca95019d105ea9df2e8f4326d4cd367"
+    },
+    {
+      "name": "BSP27_04",
+      "group": 127,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "66e44b323317c44ff719babd80a7680c8af17b9b2a539ef931238483d4faa549"
+    },
+    {
+      "name": "BSP29_01",
+      "group": 129,
+      "bytes": 25701,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 24276,
+      "sha256": "1159cdf9576c0f650dda2f96b1b48fd29bb847cddf49128e7142d6e93bacfd45"
+    },
+    {
+      "name": "BSP29_02",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "93094e6767f267c11f9b037d73034d06b1a517582638bdbc127b1359814123af"
+    },
+    {
+      "name": "BSP29_03",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "ffb3a115cceb1e896f796d4a53316c7d9a17fb1e675f7ca5cf9bb0513075d460"
+    },
+    {
+      "name": "BSP29_04",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "b7280dfc0a7e963623e004d55c43384185d3c07ad8a7ec5329e473874b21b33a"
+    },
+    {
+      "name": "BSP29_05",
+      "group": 129,
+      "bytes": 324,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "25062018bbc414456d9a7f4822430f46f88e74d49e971daedd0af8c891adf554"
+    },
+    {
+      "name": "SCROLL",
+      "group": 201,
+      "bytes": 320,
+      "setup_bytes": 4479,
+      "probes": 1,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "9f9f7a27d46b63da4d9ded2c1593d3f83b5005f120c891759d767b4fc14f397e"
+    },
+    {
+      "name": "CLIPROW",
+      "group": 202,
+      "bytes": 960,
+      "setup_bytes": 4479,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "e848483ebf72de3585a44d79b059e9a3a9c0f6391d4a4686971d94412738a4b0"
+    },
+    {
+      "name": "COMBINED",
+      "group": 203,
+      "bytes": 1856,
+      "setup_bytes": 4479,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "1055c422e7fce211be63d70450923ac24f5f52fce8055c9a66cd2abde3f1eb41"
+    }
+  ],
+  "total": 39,
+  "cleanup_size": 311,
+  "excluded": [
+    "BSP30_01",
+    "BSP30_02",
+    "BSP30_03",
+    "BSP30_04",
+    "BSP30_05",
+    "BSP30_06",
+    "BSP30_07",
+    "BSP30_08",
+    "BSP30_09",
+    "BSP30_10",
+    "BSP30_11",
+    "BSP30_12",
+    "BSP30_13",
+    "BSP30_14",
+    "BSP30_15",
+    "BSP30_16",
+    "BSP30_17",
+    "BSP30_18",
+    "BSP30_19",
+    "BSP30_20",
+    "BSP30_21",
+    "BSP30_22",
+    "BSP30_23",
+    "BSP30_24",
+    "BSP30_25"
+  ]
+}

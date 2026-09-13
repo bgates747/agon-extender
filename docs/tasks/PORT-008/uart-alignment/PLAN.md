@@ -65,7 +65,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
 - [x] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
 - [x] U10a Restore stock reply-before-next-command ordering if the reproduced mixed-traffic failure confirms a queued partial reply can be stranded; rerun separate and mixed checks before proceeding.
-- [ ] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
+- [x] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
 - [x] U12 If gaps remain, capture existing UART/handshake wiring after channel verification; attribute or bound remaining causes without circuit changes.
 - [ ] U13 Restore/finalize the reviewed recoverable bench state, verify keyboard/SD/startup, summarize tabular evidence and unresolved limits, commit and stop for Author review.
 
@@ -86,7 +86,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U10/U10a complete: mixed36 and separate336 both pass with recovery0 after the stock reply-ordering restoration. U12 complete: exact wire decoding isolates forward sender idle and reverse Agon backpressure. U11 paired rendering load is next; no speculative EMOS mutation. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U10/U10a complete: mixed36 and separate336 both pass with recovery0 after the stock reply-ordering restoration. U12 complete: exact wire decoding isolates forward sender idle and reverse Agon backpressure. U11 complete after one unchanged retry:624intervals,8unchanged probe differences,zero snapshots. The first483interval mainboard timeout remains recorded. U13 restoration/review is next; no speculative EMOS mutation. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested

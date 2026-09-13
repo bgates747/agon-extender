@@ -1,0 +1,16 @@
+{
+  "outcome": "completed paired graphics retry; prior intermittent mainboard timeout remains open",
+  "intervals": 624,
+  "probe_mismatches": 8,
+  "snapshot_delta": 0,
+  "app": "graphics-timing-probe-r01-framebuffer-b2026-09-13-19-00-37Z",
+  "app_sha256": "be39dd91e939b3e1c861136b50d83528882b0d1c90b697d2f18bc15590a0777a",
+  "mainboard_sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
+  "p4": "uart-excom-console-r17-b2026-09-13-21-13-50Z",
+  "p4_factory_sha256": "803905e615e46a78aca831ab5a10365c60ab707ce1abe243210cc1e3171b0520",
+  "p4_source_commit": "f2444b42676f0896f3bacab1be905f958725e75d",
+  "csv_sha256": "e1e9e64396d0a194bfc3847a267232b6dd71abe3caa55cff2dd7a20121213b91",
+  "corpus_sha256": "ea724491ae4122a1555227a033b802b12695c06b15412a3cb563ecd3d34154f3",
+  "baseline_csv_sha256": "af876cbffd578434073e7e8ffd33a061763d430d4c4c3ea47d749058525a9693",
+  "recovery": "normal foreground SD return, result collected, service exited"
+}

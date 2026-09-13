@@ -176,3 +176,21 @@ The exact failing operation is on the mainboard display route, whose firmware
 and fixture match the prior completed baseline. No claim of root cause or
 EDP regression is made. PLAN.md permits one unchanged retry after an explicit
 mainboard reset; no case exclusion, new firmware or timeout change.
+
+## U11 completed retry — loading and rendering stay distinct
+
+The identical retry completed all624intervals, with the same eight SHP23
+probe differences as the original baseline and zero P4 snapshots. Full strict
+sequence/count/byte metadata validation passed. The prior mainboard timeout
+is retained; this retry does not establish that the diagnostic is universally
+reliable. No firmware, asset, test case, timeout or renderer was changed.
+
+[Side-by-side graphics tables](results/graphics-comparison.md) show stock VDP,
+current EDP and prior EDP, in milliseconds with explicit percentage changes.
+Seven of eight upload-heavy stages improve by3.1–3.9%; the smallest is unchanged.
+The largest stage falls from3,165.200ms to3,048.353ms on EDP; stock is881.970ms.
+Primitive rendering in that scene is11.462ms on EDP versus37.443ms on stock.
+The retained renderer's measured scopes remain essentially at prior values;
+the transport change does not turn the loading gap into a rendering defect.
+Software-sprite comparisons include matching call counts only; unequal
+batching totals remain in the adjacent JSON, not a false per-operation table.
