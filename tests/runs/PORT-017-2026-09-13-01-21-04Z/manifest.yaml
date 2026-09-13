@@ -1,0 +1,77 @@
+schema_version: 1
+run:
+  run_id: PORT-017-2026-09-13-01-21-04Z
+  task_id: PORT-017
+  started_at: '2026-09-13T01:21:04.917612+00:00'
+  ended_at: '2026-09-13T01:37:00.906458+00:00'
+  outcome: partial
+  summary: Ten physical cycles and bounded file/error/recovery checks pass; procedure
+    keyboard and final delivery steps are separate.
+procedure:
+  artifact_id: mainboard-sd-qualification
+  identity: mainboard-sd-qualification-r01
+  deviations:
+  - This run executes the committed transfer controller, not every commissioning/keyboard/delivery
+    step.
+  - Host response-loss injection is not a physical UART disconnection.
+  - Separate headless raw-FAT/host-engine runs cover disk-full and media-operation
+    errors.
+artifacts_under_test:
+- artifact_id: agon-emos
+  identity: agon-emos-v0.1.14
+  build_id: agon-emos-v0.1.14-b2026-09-13-01-07-47Z
+  variant: null
+  sha256: eea1a479516df733688803f775d65c41a7c48a546927c7f07c0a489f8cd09808
+  source_commit: 71f362af4c64c8d2b74dd532f352358200a78f5c
+  source_dirty: false
+  build_manifest_sha256: 71208ec1e989c3dc3912fe20ca0b1ca240d321e9de4f1c12c5efc3ced274be13
+- artifact_id: sdserve
+  identity: sdserve-v0.1.0
+  build_id: sdserve-v0.1.0-b2026-09-13-01-07-48Z
+  variant: null
+  sha256: 8903bb934f26af914f31d92a92508bc5095d09f4c2fa027c7b05155a9544a317
+  source_commit: 71f362af4c64c8d2b74dd532f352358200a78f5c
+  source_dirty: false
+  build_manifest_sha256: 5f1242920d32763f7748245fdceef09ba3ee3315cafe64220ed45e32568efa44
+- artifact_id: uart-excom-console
+  identity: uart-excom-console-r12
+  build_id: uart-excom-console-r12-b2026-09-13-01-07-48Z
+  variant: null
+  sha256: ff1e0da79a844eed4a2a4c7bce3d346750610409f8a4d161129c3b599b26c7e0
+  source_commit: 69da46ac1795bbab748fefed22f9d73ffc96afcc
+  source_dirty: false
+  build_manifest_sha256: 63aa3d223eae26ad58706ab71ef28b2ad68bd94ae77280d95393e841fd7a9585
+base_hardware:
+- role: mainboard
+  manufacturer: null
+  model: null
+  manufacturer_revision: null
+  profile:
+    artifact_id: null
+    identity: null
+  specimen_alias: null
+- role: extender
+  manufacturer: Olimex
+  model: ESP32-P4-DevKit
+  manufacturer_revision: Rev D1
+  profile:
+    artifact_id: null
+    identity: null
+  specimen_alias: null
+observations:
+- All ten cycles passed without card movement or processor reset during this controller
+  run.
+- Source hashes for the executed host controller/client still match the frozen run-start
+  inputs.
+- Final service presence retained the initial incarnation; native input observation
+  remains separately pending.
+evidence:
+- filename: docs/tasks/PORT-017/evidence/PORT-017-2026-09-13-01-21-04Z/result.json
+  media_type: application/json
+  size_bytes: 3217
+  sha256: d79f7c086e68e7de26dcfb74f92e4bbb18fc26b7ec10d6c386b0ccd978fb282c
+- filename: docs/tasks/PORT-017/evidence/PORT-017-2026-09-13-01-21-04Z/requests.jsonl.gz
+  media_type: application/gzip
+  size_bytes: 1645966
+  sha256: 61afcd4d8059da11a60f325c410553ccb97013266ed62f66e7c563f8b0dc0d82
+corrections: []
