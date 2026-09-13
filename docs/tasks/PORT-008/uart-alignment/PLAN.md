@@ -64,6 +64,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
 - [x] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
 - [ ] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
+- [ ] U10a Restore stock reply-before-next-command ordering if the reproduced mixed-traffic failure confirms a queued partial reply can be stranded; rerun separate and mixed checks before proceeding.
 - [ ] U11 Run paired bitmap upload/create/plot measurements and bounded rendering load; preserve independent transport/render scopes and commit results.
 - [ ] U12 If gaps remain, capture existing UART/handshake wiring after channel verification; attribute or bound remaining causes without circuit changes.
 - [ ] U13 Restore/finalize the reviewed recoverable bench state, verify keyboard/SD/startup, summarize tabular evidence and unresolved limits, commit and stop for Author review.
@@ -85,7 +86,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U10 next: FIFO-refill candidate builds and host ordering/CTS recovery tests pass. Run identical336case pure matrix plus36mixed-traffic rows before graphics. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U10 in progress: separate336case pass; mixed traffic failed. Recover evidence, reproduce the queued-reply/blocking-read ordering defect, then execute U10a. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested
@@ -109,3 +110,13 @@ handshake timings; the current pinwalk needs explicit opposite-end inputs,
 not the running UART composition. Preserve/recover its temporary startup and
 processor state under a separately recorded procedure before physical use.
 No EMOS mutation is authorized by this discovery record alone.
+
+U10 failure amendment: mixed traffic dropped keyboard readiness and did not
+return SD. Preserve/recover its CSV before another run. The P4 adapter permits
+a blocking parser read while output remains in its software queue, unlike
+stock send_packet/HardwareSerial completion. Test that exact owner path with
+a simulated400ms read, measuring gaps inside18byte records. If confirmed,
+stop invoking the next parser command until all queued reply bytes have entered
+the hardware FIFO; its final FIFO may still drain independently, as with stock.
+Keep physical CTS and the existing bounded fault/recovery paths. Add no ISR,
+new scheduler or EMOS timeout relaxation. U10a closes only after hardware reruns.

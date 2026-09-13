@@ -172,3 +172,21 @@ uart-excom-console-r17-b2026-09-13-20-55-52Z, factory
 U10 duplex app builds as uart-data-probe-r01-b2026-09-13-20-54-53Z; its analyzer
 accepts a complete synthetic record and rejects truncation, row reordering and
 wrong byte counts. Real baseline CSV still validates. No physical duplex claim yet.
+
+## Mixed-traffic failure boundary
+
+The first duplex run lost P4 keyboard readiness and did not naturally return
+sdserve. Sparse post-failure HTTP counters show parser progress with no recent
+TX progress, consistent with bounded blocked-TX recovery. This is evidence of
+a failed concurrent run, not a successful throughput result. A later attempted
+P4 USB serial observation restarted P4, so its startup log is **not** the
+original failure trace. Do not use supposedly passive serial opens on either
+processor during tests or to recover their earlier volatile logs. Recovery
+uses explicit reset/admission and preserved SD records.
+
+Existing EMOS partial packets expire after30clock units (about250ms). Current
+P4 runConsole may enter readIntoBuffer while up to4095reply bytes remain in its
+software queue. A long read can therefore strand a partial packet after its
+FIFO empties. Stock send_packet/HardwareSerial finishes admitting its reply
+before the parser starts the next command. Test this specific ordering gap;
+do not remove EMOS's framing timeout or alter stock rendering.
