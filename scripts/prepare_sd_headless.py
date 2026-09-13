@@ -17,6 +17,8 @@ def main():
     for name in ('output','runtime','fab-root','firmware','firmware-map','application','mcopy','emos-root'):
         p.add_argument('--'+name,type=Path,required=True)
     p.add_argument('--quick',action='store_true',help='Focused recovery refinement; large-file baseline is separate')
+    p.add_argument('--qualification-smoke',action='store_true',
+                   help='Exercise the physical-run controller with ten small raw-FAT cycles')
     a=p.parse_args();output=a.output.absolute()
     if not output.is_relative_to(ROOT/'.emulator'):raise ValueError('Output must be in project .emulator')
     output.mkdir(parents=True,exist_ok=False)
@@ -36,11 +38,12 @@ def main():
     subprocess.run([str(a.mcopy),'-i',str(seed),'-s',str(media/'autoexec.txt'),str(media/'extender'),'::/'],check=True)
     subprocess.run(['c++','-std=c++17','-shared','-fPIC','-Wall','-Wextra','-Werror',
                     '-I'+str(ROOT/'vdp/video'),str(ROOT/'tests/sd_peer.cpp'),'-o',str(media/'sd-peer.so')],check=True)
-    for name in ('qualify_sd_headless.py','sdcard.py'):shutil.copyfile(ROOT/'scripts'/name,media/name)
+    for name in ('qualify_sd_headless.py','sdcard.py','qualify_sdcard.py'):shutil.copyfile(ROOT/'scripts'/name,media/name)
     shutil.copyfile(a.firmware,output/'MOS.bin');shutil.copyfile(a.firmware_map,output/'MOS.map')
     (media/'fixture.json').write_text(json.dumps({
         'status':'provisional, unqualified, no deployment',
         'sizes':[0,213] if a.quick else [0,1,212,213,65537,131731],
+        'qualification_smoke':a.qualification_smoke,
         'runtime_manifest_sha256':sha(runtime/'runtime-inputs.json'),
         'seed_sha256':sha(seed),'application_sha256':sha(a.application),'firmware_sha256':sha(a.firmware),
         'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),

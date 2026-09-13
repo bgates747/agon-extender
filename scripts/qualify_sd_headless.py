@@ -22,6 +22,7 @@ import tempfile
 import threading
 import time
 from sdcard import Client,path_payload
+from qualify_sdcard import AuditedClient,error_checks,exercise as qualify_cycles
 
 def run(a):
     media=a.sdcard.resolve();record={'outcome':'fail','scope':__doc__,'events':[]}
@@ -51,7 +52,10 @@ def run(a):
     def exercise():
         try:
             url=f'http://127.0.0.1:{server.server_port}'
-            client=Client(url,media/'client-state.json',timeout=30)
+            audit=(media/'qualification-audit.jsonl').open('w')
+            client=(AuditedClient(url,media/'client-state.json',audit,30)
+                    if config.get('qualification_smoke') else
+                    Client(url,media/'client-state.json',timeout=30))
             deadline=time.monotonic()+30
             while not client.status()['online']:
                 if time.monotonic()>deadline:raise TimeoutError('No service presence')
@@ -61,7 +65,12 @@ def run(a):
             if client.rpc(10,b'\0'+orphan)!=b'\x06':raise RuntimeError('Missing orphan fixture')
             if client.rpc(10,b'\x02'+orphan)!=b'\0':raise RuntimeError('Orphan recovery failed')
             record['orphan_recovery']=True
-            for i,size in enumerate(config['sizes']):
+            if config.get('qualification_smoke'):
+                error_checks(client,'/extender/sdtest/errors.bin')
+                qualify_cycles(client,'/extender/sdtest/cycles.bin',
+                               sizes=(0,1,211,212,213,256,512,1000,212,213),results=client_results)
+                record['qualification_controller_smoke']=True
+            for i,size in enumerate([] if config.get('qualification_smoke') else config['sizes']):
                 data=random.Random(size).randbytes(size);t=time.monotonic()
                 client.upload('/extender/sdtest/game.bin',data,True)
                 info=client.rpc(2,path_payload('/extender/sdtest/game.bin'))
@@ -72,6 +81,7 @@ def run(a):
                 client_results.append({'size':size,'sha256':hashlib.sha256(data).hexdigest(),'seconds':time.monotonic()-t})
                 print('Raw FAT cycle passed:',size,flush=True)
             client.rpc(11);record['service_exit_response']=True
+            client.lock.close();audit.close()
         except Exception as e:client_error.append(repr(e))
         finally:finished.set()
     proc=None;peer=None;transcript=bytearray();received=bytearray();dropped=False

@@ -45,3 +45,21 @@ evidence; authoritative phase completion remains in `../PORT-017.md`.
    commit phase completion only when its requirements pass. Human acceptance
    remains explicit; candidate build success is not qualification. No push or
    downstream Rally/Golem optimization is authorized by a partial result.
+
+The committed physical-run controller is `scripts/qualify_sdcard.py`. Supply a
+local `--url`, a new ignored `--output` directory and optional per-request
+`--timeout` (30 seconds by default). It leaves the service running and preserves
+client state/audit after failures. Its ten sizes are 0, 1, 211, 212, 213, 4096,
+65535, 65536, 65537 and 131731. Fresh timestamped test targets prevent reuse of
+old evidence. It verifies previous-version backups before explicit cleanup.
+
+The controller tests wire CRC rejection, request conflicts, unknown sessions,
+sequence gaps, path denial, invalid transfer, active-transfer busy/EXIT guards,
+out-of-order writes, early FINISH, cancellation and content-CRC failure with
+explicit orphan recovery. It deliberately discards one successful HTTP WRITE
+response before durable client acknowledgement and replays the exact saved
+request. This proves the host/P4 cache recovery path on real hardware; it does
+not represent a physical UART loss. The separate headless peer drops a reply
+before the P4 queue receives it, exercising actual eZ80 replay. Its
+`--qualification-smoke` profile option runs the controller against actual
+eZ80/EMOS/raw FAT using ten smaller files before a physical run.

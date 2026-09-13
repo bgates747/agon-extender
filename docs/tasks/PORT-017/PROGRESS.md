@@ -124,8 +124,8 @@ record clean source. Complete EMOS wrapper qualification/link/runtime checks
 pass; all 89 EMOS host tests and 10 Extender wire/queue/client tests pass.
 
 1. `agon-emos-v0.1.14-b2026-09-13-01-07-47Z`: 130919 bytes; SHA-256 `eea1a479516df733688803f775d65c41a7c48a546927c7f07c0a489f8cd09808`.
-1. `sdserve-v0.1.0-b2026-09-13-01-07-48Z`: 18974 bytes; SHA-256 `8903bb934f26af914f31d92a92508bc5095d09f4c2fa027c7b05155a9544a317`.
-1. `uart-excom-console-r12-b2026-09-13-01-07-48Z`: 1570272 bytes; SHA-256 `ff1e0da79a844eed4a2a4c7bce3d346750610409f8a4d161129c3b599b26c7e0`.
+2. `sdserve-v0.1.0-b2026-09-13-01-07-48Z`: 18974 bytes; SHA-256 `8903bb934f26af914f31d92a92508bc5095d09f4c2fa027c7b05155a9544a317`.
+3. `uart-excom-console-r12-b2026-09-13-01-07-48Z`: 1570272 bytes; SHA-256 `ff1e0da79a844eed4a2a4c7bce3d346750610409f8a4d161129c3b599b26c7e0`.
 
 The exact EMOS/application images pass a fresh headless raw-FAT smoke: empty
 and 213-byte uploads, full stage/target readback, orphan recovery, STAT/LIST,
@@ -154,3 +154,14 @@ the card, resets Agon and allows installation to finish. If FLASH asks for a
 reset instead of restarting automatically, one further reset is sufficient;
 the consumed trigger prevents reflash. Machine-local manifests, source hashes,
 backups and captures are retained under agents/port-017 and .emulator/port017.
+
+The Author subsequently reported a good flash and visually confirmed the
+backend observations. Physical HELLO/STAT/LIST now pass. A 1024-byte arbitrary
+binary upload, Agon verification, full host stage readback, activation and full
+target readback pass in 3.262 seconds. No keyboard-during-transfer acceptance
+is inferred from this installation observation. The Author has returned to
+the couch; summon only when a concrete physical observation is needed.
+
+Freeze the physical ten-cycle controller and its headless controller smoke
+before running it. Independent errors stop with durable state retained; the
+runner never automatically resets or reflashes.
