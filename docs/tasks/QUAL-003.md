@@ -2,6 +2,14 @@
 
 Current execution amendment: [framebuffer-first hardware pass](QUAL-003/timing/framebuffer-pass.md). The 2026-09-13 exploratory pass is complete and awaiting Author review: 624/624 intervals in the stable 39-case selection, no P4 video snapshots, and ordinary mainboard firmware/keyboard/SD restored. Two earlier population-stress failures remain preserved; see the amendment for exact scope and limits.
 
+The later [UART-aligned rerun](PORT-008/uart-alignment/FINDINGS.md) first timed
+out on mainboard BSP21_01 after 483 intervals. One identical retry completed
+624 intervals with the same 8 probe differences and zero P4 snapshots. Keep
+this intermittent diagnostic/stock-path timeout open alongside the earlier
+population-stress failures; do not treat a successful retry as its resolution.
+Current loading/rendering comparisons are linked from those findings. No
+renderer or test-case exclusion was introduced for the UART-aligned retry.
+
 ## State and scope
 
 Status: EDP graphics-suite hardware visual review PASS, accepted for freezing.

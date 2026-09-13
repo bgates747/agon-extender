@@ -11,6 +11,25 @@ wiring/protocol assumptions, not drop-in current contracts. Commit granularly,
 keep experimental code unpushed, and preserve working bench recovery.
 This sequence supersedes ordinary command expansion until the Author reviews it.
 
+The bounded implementation and measurements are now at a review checkpoint.
+[UART findings](PORT-008/uart-alignment/FINDINGS.md) retain exact pure-data
+matrices, verified channel mapping, independent wire decoding, failure/recovery
+evidence and [paired graphics tables](PORT-008/uart-alignment/results/graphics-comparison.md).
+The production patch changes only the two UART adapter files: stock bulk-read
+and timeout behavior, FIFO refill, and reply-before-next-command ordering.
+No renderer, EMOS, wiring, game or emulator changed. The first graphics run
+timed out on the mainboard; an unchanged retry completed all 624 intervals.
+Neither that retry nor the eight unchanged pixel differences establish general
+qualification. U13 owns final physical restoration and the attention cue.
+
+Remaining throughput work belongs at the EMOS sender/receiver boundary:
+65,535 forward bytes spent 1,530.514 ms idle with continuous P4 permission;
+almost all reverse idle overlapped Agon RTS stopping P4. Reuse AUDIT-005's
+stock-code analysis, preserve resident ownership/deadlines and existing EMOS
+work, and freeze a separate contract before changing that path. This finding
+does not authorize an unplanned stock VDP rewrite. Experimental local commits
+remain unpushed pending Author review.
+
 ## Unattended ordinary command expansion — 2026-09-13
 
 Following the Author's video-speed-first sequence, PORT-003's bounded delivery

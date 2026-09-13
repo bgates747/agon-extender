@@ -8,7 +8,7 @@ item is removed.
 ## First priority — Stock UART alignment
 
 - [ ] **PORT-008 — Stock-compatible UART performance and correctness**
-  - Status: Author authorized unattended stock-faithful alignment of both UART directions; pure data first, then rendering load. Granular plan frozen before implementation; legacy evidence must be inspected with old wiring/protocol differences explicit. No experimental push.
+  - Status: Bounded stock-alignment work is at its review checkpoint: 336 separate, 36 mixed and 4 wire-transfer rows pass; graphics retry completes 624 intervals with 8 unchanged probe differences. Pure wire evidence identifies forward eZ80 sender idle and reverse Agon backpressure; P4-only changes cannot remove those gaps. Earlier mainboard graphics timeout retained. Restoration is tracked in U13; no experimental push or automatic EMOS follow-up.
   - Details: [PORT-008](docs/tasks/PORT-008.md), [bounded plan](docs/tasks/PORT-008/uart-alignment/PLAN.md)
 
 ## Previous goal — Resident Rally telemetry and driving

@@ -1,5 +1,13 @@
 # AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs
 
+Later evidence: [PORT-008's pure UART findings](PORT-008/uart-alignment/FINDINGS.md)
+on 2026-09-13 now isolate 1,530.514 ms of sender-created idle in a 65,535-byte
+forward payload while P4 continuously permits transmission. Reverse idle
+mostly overlaps Agon RTS withholding permission. Both decoders and all payload
+checks pass. The current EMOS C sender still matches this audit's per-byte
+call/deadline lead; no EMOS change or instruction-level cost proof accompanies
+that measurement. A separately bounded stock-reuse follow-up remains necessary.
+
 ## State
 
 - Status: W1–W9 findings accepted; W10 results and reported game regression preserved. AUDIT-006 has completed the bounded timing investigation and now owns the priority-one full video-backend fidelity audit. All 48 cases and Legacy keyboard pass, but ordinary-query stalls and substantial Nurples hangs remain. No further corrective firmware change selected.
