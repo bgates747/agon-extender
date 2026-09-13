@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r71
-updated_at: 2026-09-13T01:05:46Z
+registry_revision: r79
+updated_at: 2026-09-13T08:46:00Z
 
 artifacts:
+  - artifact_id: keyboard-screen
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: keyboard-screen-r01
+    status: experimental
+    variants: []
+    description: Bounded ordinary eZ80 stock-VDP text readback for command diagnostics.
+    notes:
+      - REMOTE-002 standing test-hook and identity authorization. Source and reproduction instructions in examples/keyboard-screen; captured missing initial E after COPY. No EMOS or VDP firmware change.
   - artifact_id: sdserve
     kind: application
     identity_scheme: semantic_version
@@ -113,12 +122,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.14
-    status: candidate
+    latest_identity: agon-emos-v0.1.16
+    status: draft
     variants:
       - port008-forward
+      - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - BENCH-001 v0.1.16 selects 140-byte v2 traffic telemetry via port/bench-telemetry.mk, substituting UARTFLOW only in that composition. Physical installation, direct ROM identity readback, SD access and feedback driving passed scoped checks; the 200% practice block recorded102 clean laps and299 passes. Native emulator lacks TX-empty IRQ demand; its delayed v2 driving test remains an informative failure. Draft inputs are not qualified or released.
       - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
       - Author accepted the v0.1.11 mainboard graphical review and requested freeze/continue; candidate under standing version preapproval. Physical ExCom and native-reference glyph checks remain open.
       - Author accepted the native USB CLI graphical review and authorized paired deployment; v0.1.10 is candidate under standing version preapproval.
@@ -477,11 +488,15 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r12
-    status: candidate
+    latest_identity: uart-excom-console-r17
+    status: draft
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r17 selects BENCH-001 v2 six-opponent telemetry on the owned Legacy UART path. Physical flash/readback and native USB startup were verified; paired v0.1.16 driving and fresh-run/held-Escape exit checks pass. Prior images are retained. Draft inputs and exploratory driving do not constitute a qualified release; see BENCH-001 evidence.
+      - r15 retains the r14 clock correction and fixes inter-batch pacing; a new regression rejects r14's immediate next-batch event. Standing identity/deployment authorization applies; repeat physical review pending.
+      - r14 corrects stale console timestamps expiring a newly renewed HTTP keyboard session. Reproduced during attended REMOTE-002 review; regression fails r13 and passes signed modular elapsed-time correction. Standing identity/deployment authorization applies; repeat physical review pending.
+      - r13 adds host-controlled native keyboard input under REMOTE-002. Standing identity preapproval applies; the Author authorizes autonomous firmware and hardware testing. Identified development builds remain draft and uncommitted pending attended review; r12 remains the accepted rollback image.
       - r10 selects the original five stock depth controllers and packed scanline bodies with independent P4 clock/drawing/output. R2 accepted; standing identity approval covers r10 and registry r69. Complete draft image and selection/layout checks pass. Author authorizes P4-only deployment and a qualitative repaired-Nurples playtest; physical qualification pending.
       - r09 instruments frame phases and parser/reply progress for AUDIT-006. Standing version approval covers r09 and registry r65; execution request authorizes checked diagnostic deployment. No scheduling or gameplay repair.
       - r08 removes the frame primitive budget and drains until empty or suspended, matching stock under PORT-003-D013. Author directed implementation and one W9 comparison; standing identity approval covers r08 and registry r64. Physical deployment pending.

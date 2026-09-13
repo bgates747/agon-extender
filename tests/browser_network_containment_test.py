@@ -42,6 +42,9 @@ struct RemoteKeyboard { enum { disconnected }; void cancel(int) {} };
 template<class F> auto remoteLocked(F fn) { RemoteKeyboard r;return fn(r); }
 }
 #endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+static int telemetryHandler(void*) { return 0; }
+#endif
 #define ESP_LOGE(...) ((void)0)
 #define ESP_LOGI(...) ((void)0)
 constexpr int kVideoSendWaitSeconds=5;
@@ -80,6 +83,9 @@ int main() {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
  +2
 #endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+ +1
+#endif
  ;
  for(int failure=1;failure<=total_routes;++failure) {
   starts=stops=registrations=0;fail_at=failure;stop_error=-1;
@@ -100,6 +106,8 @@ int main() {
             flags=['-DAGON_EXTENDER_SD_SERVICE=1'] if sd_service else []
             for remote in (False,True):
                 selected=flags+(['-DAGON_EXTENDER_REMOTE_KEYBOARD=1'] if remote else [])
-                subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',*selected,str(p/'test.cpp'),'-o',str(p/'test')],check=True)
-                subprocess.run([str(p/'test')],check=True)
+                for telemetry in (False,True):
+                    options=selected+(['-DAGON_EXTENDER_TELEMETRY=1'] if telemetry else [])
+                    subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-fsanitize=address,undefined',*options,str(p/'test.cpp'),'-o',str(p/'test')],check=True)
+                    subprocess.run([str(p/'test')],check=True)
 if __name__=='__main__':main()

@@ -1,3 +1,6 @@
+#if defined(AGON_EXTENDER_TELEMETRY)
+#include "../telemetry/target.hpp"
+#endif
 // Single retained-parser owner for ordinary VDU, USB events and stock replies.
 // USB callbacks only queue reports. Neither ISR nor network task writes UART1.
 #include <driver/gpio.h>
@@ -190,6 +193,9 @@ void runConsole(VDUStreamProcessor *processor) {
 #if defined(AGON_EXTENDER_SD_SERVICE)
             else if(b==0xF6)need=4;
 #endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+            else if(b==0xF5)need=4;
+#endif
             else if(b==0x80 || b==0x81)need=4;
             else {used=0;continue;}
           }
@@ -199,11 +205,21 @@ void runConsole(VDUStreamProcessor *processor) {
             need=4+b;
           }
 #endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+          if(used==4 && incoming[2]==0xF5) {
+            if(b!=agon::extender::telemetry::SnapshotSize) {discard=b;used=0;continue;}
+            need=4+b;
+          }
+#endif
           if(used==need) {
             if(incoming[2]==CONSOLE_OPCODE)consoleControl(processor,incoming+3);
 #if defined(AGON_EXTENDER_SD_SERVICE)
             else if(incoming[2]==0xF6)
               agon::extender::storage::sdReceive(incoming+4,incoming[3],now);
+#endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+            else if(incoming[2]==0xF5)
+              agon::extender::telemetry::receive(incoming+4,incoming[3],now);
 #endif
             else {s.feed(incoming);processor->processNext();}
             used=0;break;
@@ -214,6 +230,9 @@ void runConsole(VDUStreamProcessor *processor) {
           // A partial SD envelope has lost framing; require owned transport
           // recovery instead of interpreting its late body as console input.
           if(discard || (used>=3 && incoming[2]==0xF6))s.fail("incomplete SD envelope");
+#endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+          if(discard || (used>=3 && incoming[2]==0xF5))s.fail("incomplete telemetry envelope");
 #endif
           used=discard=0;
         }
@@ -236,6 +255,9 @@ void runConsole(VDUStreamProcessor *processor) {
     }
 #endif
     if(s.failure) {
+#if defined(AGON_EXTENDER_TELEMETRY)
+      agon::extender::telemetry::reset();
+#endif
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
       agon::extender::input::remoteLocked([](auto &r){r.boundary(agon::extender::input::RemoteKeyboard::transport);return 0;});
 #endif

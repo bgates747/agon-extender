@@ -1,3 +1,6 @@
+#if defined(AGON_EXTENDER_TELEMETRY)
+#include "../telemetry/target.hpp"
+#endif
 // Video, SD RPC and explicit host keyboard requests; browser input stays retired.
 // Keep F003 complete writes and F012 failed-stop containment; no browser input
 // lease or browser-keyboard callback belongs here. Optional timing endpoints
@@ -346,12 +349,37 @@ esp_err_t keyboardRpcHandler(httpd_req_t *request) {
 }
 #endif
 
+#if defined(AGON_EXTENDER_TELEMETRY)
+namespace {
+esp_err_t telemetryHandler(httpd_req_t *request) {
+  const auto snapshot=telemetry::snapshot();
+  const auto now=std::uint32_t(esp_timer_get_time()/1000);
+  char hex[telemetry::SnapshotSize*2+1];
+  static const char digits[]="0123456789abcdef";
+  for(unsigned i=0;i<telemetry::SnapshotSize;++i) {
+    hex[i*2]=digits[snapshot.bytes[i]>>4];hex[i*2+1]=digits[snapshot.bytes[i]&15];
+  }
+  hex[telemetry::SnapshotSize*2]=0;
+  char body[440];
+  const int n=snprintf(body,sizeof(body),
+      "{\"online\":%s,\"age_ms\":%lu,\"received\":%lu,\"payload\":\"%s\"}",
+      snapshot.online(now)?"true":"false",(unsigned long)snapshot.age(now),
+      (unsigned long)snapshot.received,hex);
+  httpd_resp_set_type(request,"application/json");
+  httpd_resp_set_hdr(request,"Cache-Control","no-store");
+  return httpd_resp_send(request,body,n);
+}
+}
+#endif
 
 bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
   config.max_uri_handlers = 6;
+#if defined(AGON_EXTENDER_TELEMETRY)
+  ++config.max_uri_handlers;
+#endif
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   config.max_uri_handlers += 2;
 #endif
@@ -432,6 +460,14 @@ bool WiredNetworkService::startHttp() noexcept {
   key_rpc.uri="/keyboard/rpc";key_rpc.method=HTTP_POST;key_rpc.handler=&keyboardRpcHandler;
   if(httpd_register_uri_handler(server,&key_status)!=ESP_OK ||
      httpd_register_uri_handler(server,&key_rpc)!=ESP_OK) {
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
+  }
+#endif
+#if defined(AGON_EXTENDER_TELEMETRY)
+  httpd_uri_t telemetry_uri{};
+  telemetry_uri.uri="/telemetry/latest";telemetry_uri.method=HTTP_GET;
+  telemetry_uri.handler=&telemetryHandler;
+  if(httpd_register_uri_handler(server,&telemetry_uri)!=ESP_OK) {
     http_fault_=true;stopHttp();increment(http_start_failures_);return false;
   }
 #endif
