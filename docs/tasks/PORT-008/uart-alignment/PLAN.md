@@ -120,3 +120,13 @@ stop invoking the next parser command until all queued reply bytes have entered
 the hardware FIFO; its final FIFO may still drain independently, as with stock.
 Keep physical CTS and the existing bounded fault/recovery paths. Add no ISR,
 new scheduler or EMOS timeout relaxation. U10a closes only after hardware reruns.
+
+U11 failure amendment: the unchanged39case fixture timed out at repeat3,
+**mainboard route0**, BSP21_01 draw, after483saved intervals. Retain the full
+closed CSV before any reset. This is not evidence of an EDP rendering failure;
+mainboard firmware/app are the exact prior baseline, and the current P4 UART
+patch does not carry that route's display bytes. Add one bounded identical
+rerun after explicitly resetting the mainboard diagnostic and re-admitting
+EMOS. No exclusion, timer relaxation or renderer fix. If it fails again,
+retain both outcomes and stop broad graphics qualification; completed rows
+may be reported only with their partial-run limits. Do not manufacture a pass.
