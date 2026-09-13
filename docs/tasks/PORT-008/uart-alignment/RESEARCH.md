@@ -95,3 +95,19 @@ can be followed by different idle-to-RX-interrupt delays. This is a confirmed
 configuration difference, not measured attribution. Freeze a separate change
 after the bulk-read comparison if needed to restore the stock timeout2; do
 not combine it with the first bulk-read candidate and obscure causality.
+
+## U07 candidate boundary
+
+Added only the bulk `readBytes` overloads and stock200ms Stream timeout. UART
+interrupt timeout remains10 for the isolated comparison. Host tests exercise
+virtual dispatch, setup/peek ordering, partial reads, driver errors, inactive
+lease behavior and once-only RX diagnostic accounting. Build with C++17,
+-Wall -Wextra -Werror using tests/stubs and vdp include paths; run stream.cpp
+with and without AGON_EXTENDER_FRAME_TIMING. Both pass. Hardware timing and
+real IDF timeout behavior still require the candidate run.
+
+The repository version validator currently stops at the preexisting
+light2-harness-r02 connectivity integrity mismatch. No hardware definition
+changed in this work; record the failure without repairing unrelated wiring
+documents. Raw CSV evidence uses CRLF; use core.whitespace=cr-at-eol for diff
+checks without altering evidence bytes.

@@ -85,7 +85,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U07 next: minimal bulk-read adapter and stream-semantics checks. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U07 in progress: bulk-read adapter and mocked stream checks pass with and without diagnostic counters. Commit controlled inputs before the isolated P4 build; mark U07 complete only after that build. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested

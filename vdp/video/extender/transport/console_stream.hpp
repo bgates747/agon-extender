@@ -33,6 +33,28 @@ class ConsoleStream final : public Stream {
 #endif
     return received ? b : -1;
   }
+  // Stock HardwareSerial overrides Stream's byte-at-a-time fallback with an
+  // IDF block read. Preserve that path through this lease/setup/peek adapter;
+  // buffer uploads otherwise pay UART-driver/timer overhead for every byte.
+  size_t readBytes(uint8_t *p, size_t n) override {
+    if (!p || !n) return 0;
+    size_t used = 0;
+    while (pos < 4 && used < n) p[used++] = setup[pos++];
+    if (cached >= 0 && used < n) { p[used++] = uint8_t(cached); cached = -1; }
+    if (used == n || !session.active()) return used;
+    const int got = uart_read_bytes(UART_NUM_1, p + used, n - used,
+                                    pdMS_TO_TICKS(getTimeout()));
+    if (got > 0) {
+#if defined(AGON_EXTENDER_FRAME_TIMING)
+      diagnostic_rx_bytes += got;
+#endif
+      used += size_t(got);
+    }
+    return used;
+  }
+  size_t readBytes(char *p, size_t n) override {
+    return readBytes(reinterpret_cast<uint8_t *>(p), n);
+  }
   int peek() override { if(pos<4)return setup[pos];if(cached<0)cached=read();return cached; }
   void flush() override { /* Stream flush does not cancel pending UART bytes. */ }
   size_t write(uint8_t b) override {

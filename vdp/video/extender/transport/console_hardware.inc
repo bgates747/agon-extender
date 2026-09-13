@@ -75,6 +75,7 @@ ConsoleStream *beginConsole() {
   ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,12,22,11,23));
   ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1,4096,0,32,&console_events,0));
   console_stream=new ConsoleStream;
+  console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
   printf("ExCom console %s (%s), UART1 1152000 8N1 RTS/CTS\n",AGON_EXTENDER_BUILD_ID,AGON_EXTENDER_ARTIFACT_STATUS);
   return console_stream;

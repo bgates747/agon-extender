@@ -4,7 +4,7 @@ import argparse,configparser,hashlib,io,json,os,shutil,subprocess,tarfile
 from datetime import datetime,timezone
 from pathlib import Path
 TASK=Path(__file__).resolve().parents[1];ROOT=TASK.parents[3]
-p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);p.add_argument('--hardware-overlay',type=Path);a=p.parse_args()
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
 def git(repo,*args):return subprocess.check_output(['git','-C',str(repo),*args])
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -43,6 +43,8 @@ else:
   with (src/'platformio.ini').open('w') as f:c.write(f)
   if a.console_overlay:
    overlay=a.console_overlay.resolve();shutil.copy2(overlay,src/'video/extender/transport/console_stream.hpp');meta['console_overlay']={'path':str(overlay.relative_to(ROOT)),'sha256':sha(overlay)}
+  if a.hardware_overlay:
+   overlay=a.hardware_overlay.resolve();shutil.copy2(overlay,src/'video/extender/transport/console_hardware.inc');meta['hardware_overlay']={'path':str(overlay.relative_to(ROOT)),'sha256':sha(overlay)}
   meta['p4_parent']=old['build_id'];envname='p4-console';env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1')
  hook=src/'video/uart_data_probe.inc';shutil.copy2(TASK/'uart_probe.inc',hook)
  path=src/'video/vdu_sys.h';s=path.read_text();i=s.index('\tswitch (mode) {',s.index('void VDUStreamProcessor::vdu_sys_video()'))+len('\tswitch (mode) {');path.write_text(s[:i]+'\n#include "uart_data_probe.inc"\n'+s[i:])
