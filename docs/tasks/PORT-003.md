@@ -2822,3 +2822,12 @@ D012 resolves ADR-0015's open completeness question. F001, F002, F022, and
 H001 remain recorded follow-up observations. If a future isolating regression
 meets D012's trigger threshold, PORT-003 must return with the smallest proposed
 containment and exact upstream-delta impact before source changes.
+
+## Unattended continuation after Rally — 2026-09-13
+
+The Author now prioritizes measured video speed, then faithful command coverage,
+after RALLY-22's machine-complete game candidate. The bounded execution/précis is
+in [video-throughput/README.md](PORT-003/video-throughput/README.md). Existing
+R1/R2/R3 evidence and the held QUAL-003 failure remain scoped historical records.
+Experiments stay local; the live project's remote must not receive experimental
+code before explicit Author review. Preserve concurrent keyboard/SD/remote work.

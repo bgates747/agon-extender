@@ -39,7 +39,7 @@ int main() {
   controller.enableBackgroundPrimitiveExecution(true);
   display::PresentationSnapshotLease first{};
   require(!controller.snapshotPool().tryAcquireLatest(0, first), "first consumer requests production");
-  controller.executeFrameWork(8);
+  controller.executeFrameWork();
 
   require(controller.snapshotPool().tryAcquireLatest(0, first),
           "first boundary published");
@@ -56,7 +56,7 @@ int main() {
   seed(controller, 0, 0, 1);
   display::PresentationSnapshotLease second{};
   require(!controller.snapshotPool().tryAcquireLatest(1, second), "consumer requests second production");
-  controller.executeFrameWork(8);
+  controller.executeFrameWork();
   require(controller.snapshotPool().tryAcquireLatest(1, second),
           "second boundary published");
   require(second.view().generation == 2 && second.view().data[0] == 3 &&
@@ -71,7 +71,7 @@ int main() {
   controller.enableBackgroundPrimitiveExecution(true);
   display::PresentationSnapshotLease maximum{};
   require(!controller.snapshotPool().tryAcquireLatest(2, maximum), "consumer requests maximum production");
-  controller.executeFrameWork(8);
+  controller.executeFrameWork();
   require(controller.snapshotPool().tryAcquireLatest(2, maximum),
           "maximum boundary published");
   require(maximum.view().generation == 3 && maximum.view().width == 1024 &&

@@ -1,4 +1,5 @@
 #include "extender/display/stock_p4_service.hpp"
+#include "extender/diagnostics/video_timing.hpp"
 #include <cassert>
 
 namespace agon::extender::display {
@@ -152,6 +153,8 @@ void StockP4Service::publish() {
   if (snapshots_.tryBegin(display.getViewPortWidth(), display.getViewPortHeight(),
                           esp_timer_get_time(), view) != SnapshotBeginResult::Ok) return;
   assert(view.packed_pixels && !view.pixels);
+  diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::Snapshot,
+      (static_cast<std::uint32_t>(view.width) << 16) | view.height);
   alignas(8) std::uint8_t signal[kPresentationSnapshotMaximumWidth];
   bool complete = true;
   for (std::size_t y = 0; y < view.height; ++y) {
@@ -161,5 +164,6 @@ void StockP4Service::publish() {
         signal, view.packed_pixels + y * view.width, view.width);
   }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
+  timing.finish(complete ? view.width * view.height : 0);
 }
 } // namespace agon::extender::display

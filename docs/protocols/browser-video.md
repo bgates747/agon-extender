@@ -13,13 +13,14 @@ including palette, Copper, sprites and cursors. The browser decodes final
 pixel colours and presents them with WebGL2 nearest-neighbour sampling. It
 does not implement VDP rendering semantics. EMOS owns Agon output routing.
 
-The P4 snapshot pool allocates three fixed-capacity PSRAM slots large enough
-for the maximum 1024×768 RGB888 composition. The controller composes into an
-exclusive mutable slot. For RGB222 publication, the producer compacts that
-completed image in place before publication; a network lease never observes
-mutable bytes. The common compositor and its RGB888 interface remain usable
-by other presentation consumers. This increment reduces transmitted bytes,
-not the allocated composition-slot capacity.
+The accepted original-controller backend allocates three fixed-capacity PSRAM
+snapshot slots of one byte per pixel, up to 1024×768 RGB222 each (2.25 MiB
+combined). StockP4Service prepares native scanlines and normalizes directly into
+an exclusive mutable RGB222 slot before publication. Network leases never
+observe mutable bytes. This is the current stock-backend-r2/r3 implementation;
+the earlier generic compositor used an RGB888 intermediate and larger slots.
+That older interface remains available to its separate consumers but does not
+describe the selected ordinary console's allocation or conversion cost.
 
 ## EVF1 wire format
 

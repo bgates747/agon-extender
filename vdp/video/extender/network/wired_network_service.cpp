@@ -7,6 +7,7 @@
 // are read-only diagnostics; they do not reinstate browser input.
 #include "extender/network/wired_network_service.hpp"
 #include "extender/diagnostics/frame_timing.hpp"
+#include "extender/diagnostics/video_timing.hpp"
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/sd_target.hpp"
 #include <cstdio>
@@ -44,7 +45,14 @@ constexpr char kTag[] = "extender_net";
 // Keep complete-or-error writes (F003) without that experimental deadline.
 constexpr int kVideoSendWaitSeconds = 5;
 constexpr std::uint8_t kFrameRequest[] = {'f', 'r', 'a', 'm', 'e'};
-constexpr std::uint32_t kWorkerPollMilliseconds = 10;
+// PORT-003 isolated polling-latency comparison. Keep the ordinary value until
+// review; a shorter wait changes scheduling demand, not the frame/credit API.
+#ifndef AGON_EXTENDER_VIDEO_POLL_MS
+#define AGON_EXTENDER_VIDEO_POLL_MS 10
+#endif
+constexpr std::uint32_t kWorkerPollMilliseconds = AGON_EXTENDER_VIDEO_POLL_MS;
+static_assert(kWorkerPollMilliseconds >= 1 && kWorkerPollMilliseconds <= 10,
+              "Video polling experiment must stay within 1..10 ms");
 constexpr std::uint32_t kWorkerStackBytes = 8192;
 constexpr UBaseType_t kWorkerPriority = 3;
 
@@ -269,6 +277,17 @@ esp_err_t timingHandler(httpd_req_t *request) {
 }
 #endif
 
+#if defined(AGON_EXTENDER_VIDEO_TIMING)
+namespace {
+esp_err_t videoTimingHandler(httpd_req_t *request) {
+  const auto body = diagnostics::videoTimingJson();
+  if (body.empty()) return httpd_resp_send_500(request);
+  httpd_resp_set_type(request, "application/json");
+  httpd_resp_set_hdr(request, "Cache-Control", "no-store");
+  return httpd_resp_send(request, body.data(), body.size());
+}
+}
+#endif
 
 #if defined(AGON_EXTENDER_SD_SERVICE)
 namespace {
@@ -389,6 +408,9 @@ bool WiredNetworkService::startHttp() noexcept {
 #if defined(AGON_EXTENDER_FRAME_TIMING)
   ++config.max_uri_handlers; // five assets + video + diagnostic GET
 #endif
+#if defined(AGON_EXTENDER_VIDEO_TIMING)
+  ++config.max_uri_handlers;
+#endif
   config.open_fn = &socketOpened;
   config.send_wait_timeout = kVideoSendWaitSeconds;
   config.lru_purge_enable = false;
@@ -439,6 +461,18 @@ bool WiredNetworkService::startHttp() noexcept {
   timing.method = HTTP_GET;
   timing.handler = &timingHandler;
   if (httpd_register_uri_handler(server, &timing) != ESP_OK) {
+    http_fault_ = true;
+    stopHttp();
+    increment(http_start_failures_);
+    return false;
+  }
+#endif
+#if defined(AGON_EXTENDER_VIDEO_TIMING)
+  httpd_uri_t video_timing{};
+  video_timing.uri = "/diagnostics/video-timing";
+  video_timing.method = HTTP_GET;
+  video_timing.handler = &videoTimingHandler;
+  if (httpd_register_uri_handler(server, &video_timing) != ESP_OK) {
     http_fault_ = true;
     stopHttp();
     increment(http_start_failures_);
@@ -606,6 +640,8 @@ void WiredNetworkService::performQueuedSend() noexcept {
     return;
   }
 
+  diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::SocketSend,
+      static_cast<std::uint32_t>(view.segment_count));
   esp_err_t result = ESP_OK;
   for (std::size_t index = 0; index < view.segment_count; ++index) {
     httpd_ws_frame_t frame{};
@@ -618,6 +654,7 @@ void WiredNetworkService::performQueuedSend() noexcept {
     if (result != ESP_OK) break;
   }
 
+  timing.finish(result == ESP_OK ? view.total_bytes : 0);
   if (result == ESP_OK) {
     video_.complete(socket, OpaqueReleaseDisposition::Sent);
   } else {
