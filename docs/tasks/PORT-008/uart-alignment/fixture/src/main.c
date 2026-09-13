@@ -108,7 +108,7 @@ int main(int argc,char **argv) {
             }
         }
       }
-    armed=0;mos_setkbvector(NULL,0);strcpy(command,"emos legacy");unsigned recovery=mos_oscli(command,NULL,0);
+    armed=0;mos_setkbvector(NULL,0);strcpy(command,"emos legacy --keep-display");unsigned recovery=mos_oscli(command,NULL,0);
     snprintf(line,sizeof line,"# terminal,status=%u,saved=%u,recovery=%u\r\n",status,saved,recovery);unsigned persisted=append(line);
     printf("UART data test %s. %u cases saved to %s.\r\n",status||persisted||recovery?"incomplete":"complete",saved,filename);
     return 0; /* EXEC must resume SD recovery even after a saved failure. */

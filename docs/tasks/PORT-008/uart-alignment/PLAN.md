@@ -87,3 +87,12 @@ rebuild app for the committed order before hardware. No results discarded.
 U06 next: build/smoke the frozen fixture and isolated baseline images, then run physical pure data. PROCEDURE.md owns exact boundaries. No production transport change yet. Prior mainboard VDP restored;
 P4 remains the measured r17 13:07:24Z image. Detailed private bench identities
 and admission are in HARDWARE.local.md and existing ignored run journals.
+
+
+U06 smoke: all32transfer cases returned exact data, but the fixture requested
+plain `emos legacy` while an application was active. Existing EMOS deliberately
+returns EMOS_BUSY31 for that request; the documented application exception is
+`--keep-display`. Correct the fixture's final return to the same accepted form
+already used between routes. The external batch recovered SD normally. This
+is a fixture invocation correction, not a stock/EMOS bug or transport change.
+Rebuild app and run the full matrix before accepting the baseline.
