@@ -5,6 +5,14 @@ This report uses the existing physical `baseline39.csv` and
 `baseline39-corpus.json`; no new hardware activity was required. Compare the
 [rendering-only report](rendering-only.md) for drawing scopes.
 
+**Later controlled evidence:** the [UART alignment findings](../../../../PORT-008/uart-alignment/FINDINGS.md)
+supersede the quick audit's suspect ranking below. Restoring bulk reads alone
+did not materially improve throughput. A fresh, exactly decoded65,535byte
+pure upload spent1,530.514ms idle while P4 continuously permitted transmission;
+P4 applied zero backpressure during that payload. Reverse gaps mostly overlap
+Agon RTS withholding permission. The original audit is retained as the
+pre-experiment assessment; it is not the current causal conclusion.
+
 ## What was actually measured
 
 1. Each selected stage includes bitmap asset uploads plus its original buffer
