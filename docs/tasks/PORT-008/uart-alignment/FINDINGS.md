@@ -106,3 +106,21 @@ matrices. No rendering, EMOS change, browser or serial observer.
 Return timing remains quantized to16.7ms. Source/build identity and raw
 CRLF bytes are retained beside `order-full-analysis.json`. The forward gap
 remains: U12 will distinguish permission-to-send idle from P4 backpressure.
+
+## U12 — current probe-channel mapping
+
+ROM register readback verified all eight P4 endpoints as inputs before the
+Agon walk. Unchanged HW-002 assembly emitted exact pulse counts1through8;
+legacy analyzer independently checked the observed mapping. PC0..PC7 map to
+D1,D6,D3,D4,D5,D2,D7,D0 respectively. Thus UART forward isD1, returnD6,
+Agon RTS/P4 CTS isD3, and P4 RTS/Agon CTS isD4. No wiring moved.
+
+Acquisition limitation: fx2 returned3,038,208 of6,000,000 requested samples
+at100kHz,30.38208seconds, despite exit0. This is a partial acquisition, not
+a60second pass. Every PC pulse and9.73751seconds of quiet tail were present,
+so the observed channel mapping is established; full-duration acquisition is
+not claimed. High-speed UART capture must separately meet its exact extent.
+P4 flash was untouched; explicit resume restored its installed application.
+Exact original startup and its pre-test backup were restored with readback;
+the one-shot marker was confirmed consumed. Local captures/ROM/SD journals
+retain private evidence; `results/pinwalk-map.json` records public findings.

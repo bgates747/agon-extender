@@ -1,0 +1,156 @@
+{
+  "status": "PASS",
+  "sample_rate_hz": 100000,
+  "sample_count": 3038208,
+  "signals": [
+    {
+      "signal": "PC0",
+      "channel": "D1",
+      "expected_pulses": 1,
+      "observed_pulses": 1,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC1",
+      "channel": "D6",
+      "expected_pulses": 2,
+      "observed_pulses": 2,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC2",
+      "channel": "D3",
+      "expected_pulses": 3,
+      "observed_pulses": 3,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC3",
+      "channel": "D4",
+      "expected_pulses": 4,
+      "observed_pulses": 4,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC4",
+      "channel": "D5",
+      "expected_pulses": 5,
+      "observed_pulses": 5,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC5",
+      "channel": "D2",
+      "expected_pulses": 6,
+      "observed_pulses": 6,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC6",
+      "channel": "D7",
+      "expected_pulses": 7,
+      "observed_pulses": 7,
+      "status": "PASS"
+    },
+    {
+      "signal": "PC7",
+      "channel": "D0",
+      "expected_pulses": 8,
+      "observed_pulses": 8,
+      "status": "PASS"
+    }
+  ],
+  "errors": [],
+  "outcome": "partial acquisition; complete verified PC0-PC7 mapping and quiet tail",
+  "requested_samples": 6000000,
+  "minimum_observed_quiet_seconds": 9.73751,
+  "capture_sha256": "a38439a459edf6b66e6beca6eadfd288c453ea20c93d0fbe92715da28d1f9eac",
+  "p4_input_verification": {
+    "chip": "ESP32-P4 (revision v1.3)",
+    "inputs": [
+      {
+        "gpio": 22,
+        "matrix": 1280,
+        "mux": 6656,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 12,
+        "matrix": 1280,
+        "mux": 6656,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 23,
+        "matrix": 1280,
+        "mux": 6656,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 11,
+        "matrix": 1280,
+        "mux": 6912,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 32,
+        "matrix": 1280,
+        "mux": 6656,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 10,
+        "matrix": 1280,
+        "mux": 6912,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 33,
+        "matrix": 1280,
+        "mux": 6656,
+        "output_enabled": false,
+        "input_enabled": true
+      },
+      {
+        "gpio": 9,
+        "matrix": 1280,
+        "mux": 6912,
+        "output_enabled": false,
+        "input_enabled": true
+      }
+    ],
+    "flash_changed": false,
+    "application_running": false
+  },
+  "pinwalk": {
+    "build_id": "header-pinwalk-boot-r01-b2026-09-13-21-07-17Z",
+    "status": "experimental",
+    "variant": "one-shot external-mode input-verified entry",
+    "source_commit": "9a769e727ec3d703553b17af594b73241e4fb678",
+    "inputs": {
+      "LICENSE": "60ed075f693dc567ab4a3171a4ee5ab53f4e33e3869f2b7cd1098f32f6b994b9",
+      "Makefile": "5df2d11bba3957fc857d8e198f58e6f45c18b94ee1ee685033367b357ff2a74a",
+      "obj/pinwalk_wire.o": "0110ae4f964bf261bbf64f3f4d2a63a33737f79fdf4c2f228d778bc82e4ada35",
+      "obj/main.o": "533d7292a25569ac97530183b5c5c6af1d3a20155f08b4e980ec1a743fda9499",
+      "bin/PWBOOT.bin": "1bc7ac2831e9d858f337597e06e43b8085ec0533e8fd78316312f21231266a77",
+      "bin/PWBOOT.noname.bin": "e5f9c6ee6591eb618b680a892644905a4680c90c80da202190ebaf068e499235",
+      "bin/PWBOOT.map": "3a29b0f0c847b35695fdee0c61c986f759279edf051842baabd4821fa7940cdb",
+      "src/main.c": "84d09877948e1b29a3fa8d9331f4fa95c11b682547ec05e9d19312a41331e797",
+      "src/pinwalk_wire.h": "0ea92f9683f863d0ae50479c8c38d6d662e9a7511aa3bca933310912dd2fa325",
+      "src/pinwalk_wire.asm": "9636c231bb1f4c818166661b73ba58e99b12ff797bd38a216c2ea465cdad71a6",
+      "src/build_identity.h": "065731763edde6b5ebecc769244923473fec92f8ba349f09423515f8e52632df"
+    },
+    "binary_sha256": "1bc7ac2831e9d858f337597e06e43b8085ec0533e8fd78316312f21231266a77"
+  },
+  "startup_restoration": {
+    "startup_exact": true,
+    "prior_backup_exact": true,
+    "marker_consumed": true
+  }
+}
