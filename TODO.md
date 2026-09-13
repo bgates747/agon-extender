@@ -15,9 +15,9 @@ remains queued until its acceptance; freeze the protocol before coding it.
 
 - [ ] **PORT-017 — Mainboard SD read/write access through Extender**
   - Started: 2026-09-12 (planning).
-  - Status: Priority one. Local task on active main; freeze protocol first,
-    preserve keyboard input, prove physical read/write integrity and unattended
-    recovery. Blocks other development, including Rally performance work.
+  - Status: Priority one. Candidates installed; ten physical transfer/readback
+    cycles pass through 131731 bytes. Waiting for native-keyboard interruption
+    and typed restart before final acceptance. Blocks other development.
   - Details: [PORT-017](docs/tasks/PORT-017.md)
 
 ## Queued after PORT-017 — Exclusive Compatible console and EDP

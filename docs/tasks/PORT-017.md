@@ -7,16 +7,23 @@ other Extender implementation and before Rally optimization.** Work belongs on
 this project's active `main` branch, not an isolated Rally worktree. This task
 is self-contained; returning agents need not visit Rally to discover its scope.
 The Author released implementation on 2026-09-12 after freezing prior work.
-Both boards are hot; Extender Ethernet responds and its Pi sees the expected
-USB device. Rally is running Fuji demo. Initial inspection does not reset or
-open serial. Begin with the protocol gate below, then bootstrap and qualification.
+Current checkpoint, 2026-09-13 UTC: EMOS v0.1.14, console r12 and sdserve
+v0.1.0 are installed. The Author confirms the flash/visual startup; the physical
+service is online. Ten unattended physical transfer/readback cycles pass through
+131731 bytes, including error/retry/recovery checks. Exact candidate/raw-FAT
+and fault-injection evidence is recorded in `PORT-017/PROGRESS.md` and the
+linked run. No dependent Rally/Golem work has started.
 
-Current checkpoint: protocol/resource gate complete; provisional implementation
-and headless raw-FAT transfers pass through 131731 bytes. The Author returned
-the card and directed commissioning preparation following the candidate-freeze
-and identity proposal. Freeze the candidate inputs and follow
-`PORT-017/BOOTSTRAP.md` and `PORT-017/QUALIFICATION.md`. Hardware acceptance is
-pending; summon only once the verified card can be returned to Agon.
+**Waiting for the Author's physical keyboard check.** The bounded keyboard
+observer finished without an interruption, cancelled its stage, and verified
+that the old target survived. A later read-only status check confirms the same
+service incarnation remains online. Do not repeat the pending emulator cue,
+reflash, request the card, or silently re-arm that ended test. When the Author
+is ready, follow `PORT-017/QUALIFICATION.md` for Escape during traffic and typed
+`RUN . /`, then verify interrupted-file recovery and whole-card scope. Final
+acceptance/promotion remains dependent on that result. `PORT-017/OPERATIONS.md`
+is the current commissioning quick-start; BOOTSTRAP.md preserves installation
+and rollback instructions.
 
 The project TODO owns task ordering. The phases below own this task's detailed
 progress; Rally RALLY-20 consumes its acceptance result rather than maintaining
