@@ -1,0 +1,13 @@
+{
+  "status": "experimental physical baseline; not general qualification",
+  "app": "uart-data-probe-r01-b2026-09-13-20-26-53Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-20-18-27Z",
+  "rows": 336,
+  "errors": 0,
+  "recovery": 0,
+  "csv_sha256": "783245eab9d4b31bbfb56710194cc70e0d0ba7c95a0b336f18212a48f83a2e4c",
+  "app_sha256": "58a154264d6ddf1077bccb8c86d7e9ac721075f37469ca0fda965bb129c2930e",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "090988e8a370f744dc493b07f886b4fdbc9b085e0b58410ca34c0c9b9849aa11"
+}

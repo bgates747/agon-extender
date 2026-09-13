@@ -58,7 +58,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U03 Inspect legacy UART scripts, evidence and pinwalking; record reusable techniques and incompatible contracts.
 - [x] U04 Complete current-versus-stock forward/return API and scheduling précis; select exact minimal changes and test boundaries.
 - [x] U05 Freeze a reproducible pure-transfer fixture/procedure, correctness oracle, controls, source identities and recovery plan.
-- [ ] U06 Run baseline pure-data measurements on stock mainboard and existing EDP; preserve raw results and exact configurations.
+- [x] U06 Run baseline pure-data measurements on stock mainboard and existing EDP; preserve raw results and exact configurations.
 - [ ] U07 Make the smallest stock-alignment change for forward bulk reception; verify stream semantics and build, then commit.
 - [ ] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
 - [ ] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
@@ -85,8 +85,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U06 active: full pure-data baseline follows the corrected smoke. Both temporary probe images are installed (20:18:15Z mainboard,20:18:27Z P4), with verified rollback. PROCEDURE.md owns boundaries. No production transport change yet. Detailed private bench identities
-and admission are in HARDWARE.local.md and existing ignored run journals.
+U07 next: minimal bulk-read adapter and stream-semantics checks. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested

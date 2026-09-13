@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r79
+registry_revision: r80
 updated_at: 2026-09-13T08:46:00Z
 
 artifacts:
@@ -32,6 +32,15 @@ artifacts:
     description: Bootstrap, integrity, recovery, keyboard coexistence and ten unattended cycles.
     notes:
       - Defined in docs/tasks/PORT-017/QUALIFICATION.md; commissioning candidate, no hardware pass claimed.
+  - artifact_id: uart-data-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: uart-data-probe-r01
+    status: experimental
+    variants: []
+    description: Paired pure-data UART observation using stock buffer uploads and private bounded return packets.
+    notes:
+      - PORT-008 uart-alignment PROCEDURE.md was committed before physical tests; baseline has 336 exact-data cases and recovery zero. Not a production wire API or general qualification.
   - artifact_id: graphics-timing-probe
     kind: test_fixture
     identity_scheme: revision
