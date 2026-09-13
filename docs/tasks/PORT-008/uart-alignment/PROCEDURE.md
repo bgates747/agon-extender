@@ -83,3 +83,35 @@ its scheduling; label it mixed-traffic completion, not pure upload rate. Return
 eZ80 timing ends at its final reply, with the same coarse timer. No SD access
 or additional producer input during either timed interval. Keep the original
 336case invocation unchanged so its comparisons remain repeatable.
+
+## U11 paired rendering continuation
+
+After the complete pure-data matrices and wire attribution, reuse QUAL-003's
+exact framebuffer-first39case fixture and corpus: app SHA256
+be39dd91e939b3e1c861136b50d83528882b0d1c90b697d2f18bc15590a0777a,
+mainboard graphics diagnostic SHA256
+529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd.
+Both images and the original624interval baseline already exist; no fixture,
+renderer, corpus or timing algorithm is changed. Keep current P4 stock-UART
+ordering candidate; its existing graphics diagnostics are the same as the
+baseline and its extraEE pure probe is unused. Record both image identities.
+
+Use fresh owned SD binary/batch names, verify startup remains unchanged and
+read back the staged app/batch before execution. Both displays are mode20,
+512×384,64colours,singlebuffered; external MOS batch selects modes before the
+fixture. The39case selection omits all BSP30 population stress; four repeats,
+two routes, load/draw phases produce624intervals. Eight known paired SHP23
+probe differences remain recorded as baseline mismatches, not new failures.
+
+No browser/video output or serial observer. Save P4 frame-timing counters
+before/after and require zero new snapshots. SD file collection follows timed
+work, with a20minute bounded recovery wait. Validate exact row/metric/case
+sequence against the retained corpus, terminal result and known probe outcomes.
+Compare destination load, primitive draw and total draw separately to stock
+and to the earlier unchanged-P4 run. Do not subtract transport from rendering
+using unrelated clock scopes. Preserve raw results, failures and timing limits.
+
+Temporarily replace only the mainboard app region after checking the installed
+pure-probe identity and partition table. Final stock restoration must cover
+**all erase sectors touched by either temporary image**, using the actual
+pre-test4MiB backup; the graphics diagnostic is larger than the pure probe.
