@@ -32,8 +32,54 @@ errors. It is an older graphics-loaded P4 image/workload, not this pass's pure
 transport baseline. Reuse its decoder and timing attribution techniques only
 after verifying current sniffer channels and image identities.
 
-## U04 — current cursor
+## U04 — stock API and measurement boundaries
 
 Next: complete ordinary stock buffer/return APIs and EMOS receive semantics,
 then freeze the pure-data fixture before code or physical tests. The confirmed
 bulk-read divergence is already documented in QUAL-003's upload findings.
+
+
+Stock `Buffered-Commands-API.md` command0 stores arbitrary counted bytes and
+command2 clears them. This exercises the actual retained `bufferWrite()` and
+`readIntoBuffer()` path without bitmap creation/rendering. Stock buffer dump255
+prints to debug serial, not MOS; ordinary echo8A/8B is deliberately ignored by
+current stock/EMOS receive integration and ExCom packet admission. It cannot
+provide application byte-level readback without new MOS integration. Do not
+repurpose these commands or silently change MOS's ignored-echo behavior.
+
+A temporary paired diagnostic is therefore justified for observing pure data:
+use the existing private 16-byte 8C callback envelope accepted by installed
+EMOS16, with separate probe-only request opcode EE (unassigned in the selected
+stock system-command switch). No graphics fences, render hooks, keyboard map
+writes or direct eZ80 UART access. The probe requests stock buffer uploads and
+checks exact content after the timed interval. A bounded diagnostic return
+stream tests the same `send_packet`/Stream/UART path on both destinations.
+Its packet efficiency and EMOS ISR costs must be disclosed, not called raw
+115,200B/s application payload. It must record stream loss/sequence errors and
+retain a bounded sender size instead of silently overflowing current EDP's8KiB
+reply staging queue. The exact fixture wire format is frozen under U05.
+
+Forward alignment candidate: implement bulk `ConsoleStream::readBytes` using
+the same IDF bulk-read primitive as stock HardwareSerial, honoring setup/peek
+bytes, session admission and stock200ms timeout. Do not change parser or bitmap
+algorithms. Inherited P4 Stream currently has a1000ms timeout versus stock200ms;
+this is a confirmed semantic difference to preserve explicitly in baseline and
+align in the candidate. Test timeout/partial/cached-byte behavior on a mocked
+UART boundary before hardware.
+
+Return divergence: stock HardwareSerial writes to the IDF UART path; EDP queues
+up to8192bytes in ConsoleStream, then the outer loop offers at most128bytes,
+waits for wire completion, and returns through its unconditional1ms delay.
+A synchronous parser invocation cannot drain its own queued output; a response
+larger than the queue fails. The exact throughput effect is unmeasured and the
+existing five-second blocked-TX recovery/keyboard packet ordering must survive
+any necessary platform adaptation. Do not change EMOS or public reply grammar
+merely to improve measured rates. Baseline return tests start at bounded packet
+counts, report losses, and stop rather than force repeated overrun.
+
+Official references inspected read-only: stock VDP v2.16.0 `vdp_protocol.h`,
+`vdu_stream_processor.h`, `vdu_buffered.h`; `agon-docs/docs/vdp/Buffered-Commands-API.md`
+and `System-Commands.md`. Current EMOS `src/emos_console.c` and
+`src/vdp_protocol.asm` establish the16-byte diagnostic admission and unchanged
+source/magic checks. Temporary fixtures may consume these accepted records;
+new production packet types or ISR behavior are not part of the first pass.

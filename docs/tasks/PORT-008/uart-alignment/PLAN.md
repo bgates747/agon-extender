@@ -56,7 +56,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U01 Preserve current graphics/transport findings in a separate local commit (09583fd).
 - [x] U02 Freeze this plan, task priority and the Author's no-drift directive in a local commit.
 - [x] U03 Inspect legacy UART scripts, evidence and pinwalking; record reusable techniques and incompatible contracts.
-- [ ] U04 Complete current-versus-stock forward/return API and scheduling précis; select exact minimal changes and test boundaries.
+- [x] U04 Complete current-versus-stock forward/return API and scheduling précis; select exact minimal changes and test boundaries.
 - [ ] U05 Freeze a reproducible pure-transfer fixture/procedure, correctness oracle, controls, source identities and recovery plan.
 - [ ] U06 Run baseline pure-data measurements on stock mainboard and existing EDP; preserve raw results and exact configurations.
 - [ ] U07 Make the smallest stock-alignment change for forward bulk reception; verify stream semantics and build, then commit.
@@ -80,6 +80,6 @@ None at freeze. Do not silently replace the plan when scope changes.
 
 ## Current cursor
 
-U04 next: select exact stock API/return semantics and fixture boundaries. Legacy findings are in RESEARCH.md; no transport implementation started. Prior mainboard VDP restored;
+U05 next: freeze a small paired diagnostic using stock buffer uploads and existing private callback admission. Stock echo is not exposed to applications; discovery and return-queue limits are recorded in RESEARCH.md. No production transport change yet. Prior mainboard VDP restored;
 P4 remains the measured r17 13:07:24Z image. Detailed private bench identities
 and admission are in HARDWARE.local.md and existing ignored run journals.
