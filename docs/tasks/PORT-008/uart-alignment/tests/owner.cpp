@@ -17,7 +17,8 @@ constexpr int UART_FIFO_OVF=3,UART_FRAME_ERR=4,UART_PARITY_ERR=5,COMMS_TIMEOUT=2
 struct uart_config_t{int baud_rate,data_bits,parity,stop_bits,flow_ctrl,rx_flow_ctrl_thresh,source_clk;};
 struct uart_event_t{int type;};
 static unsigned now_ms,cancelled,refills,submitted_at,complete_at;
-static int scenario;static bool produced,expect_refill;
+static int scenario;static bool produced,expect_refill,read_started,expect_serial_reply;
+static unsigned last_byte_at,max_packet_gap;
 static std::deque<uint8_t> fifo;
 static std::vector<uint8_t> received,expected;
 struct Finished{};
@@ -27,7 +28,8 @@ static void delay(int n){
  for(int i=0;i<n;++i){
   ++now_ms;
   bool blocked=(scenario==1 && now_ms>=3 && now_ms<603)||(scenario==2 && now_ms<5300);
-  if(!blocked)for(unsigned k=0;k<100 && !fifo.empty();++k){received.push_back(fifo.front());fifo.pop_front();}
+  if(!blocked)for(unsigned k=0;k<100 && !fifo.empty();++k){if(received.size()%18)max_packet_gap=std::max(max_packet_gap,now_ms-last_byte_at);
+   last_byte_at=now_ms;received.push_back(fifo.front());fifo.pop_front();}
   if(!complete_at && produced && received==expected)complete_at=now_ms;
   if(now_ms>=6200)throw Finished{};
  }
@@ -46,7 +48,7 @@ static int uart_set_hw_flow_ctrl(int,int,int){return 0;}
 static int uart_set_rts(int,int){return 0;}
 static void uart_ll_txfifo_rst(int){fifo.clear();++cancelled;}
 static int xQueueReceive(int,uart_event_t*,int){return 0;}
-int uart_get_buffered_data_len(int,size_t*n){*n=0;return 0;}
+int uart_get_buffered_data_len(int,size_t*n){*n=(scenario==3 && produced && !read_started)?1:0;return 0;}
 int uart_read_bytes(int,void*,uint32_t,unsigned){return 0;}
 static int uart_wait_tx_done(int,int){return fifo.empty()?ESP_OK:ESP_ERR_TIMEOUT;}
 static int uart_tx_chars(int,const char*p,unsigned n){
@@ -71,7 +73,10 @@ void VDUStreamProcessor::processNext(){
   expected.resize(4626);for(unsigned i=0;i<expected.size();++i)expected[i]=uint8_t(i*37+13);
   console_stream->read_pos=8100;
   assert(console_stream->write(expected.data(),expected.size())==expected.size());
-  submitted_at=now_ms;produced=true;console_admit_pending=true;
+  submitted_at=now_ms;produced=true;console_admit_pending=true;return;
+ }
+ if(produced && scenario==3 && !read_started) {
+  read_started=true;delay(400); // Blocking next upload cannot pump queued reply bytes.
  }
  if(produced && !console_admit_pending)assert(fifo.empty() && console_stream->count==0);
 }
@@ -81,7 +86,7 @@ static void admit(ConsoleStream&s){
  assert(s.session.request(p,now_ms,42,reply));
 }
 int main(int argc,char**argv){
- assert(argc==3);scenario=std::stoi(argv[1]);expect_refill=std::stoi(argv[2]);
+ assert(argc==4);scenario=std::stoi(argv[1]);expect_refill=std::stoi(argv[2]);expect_serial_reply=std::stoi(argv[3]);
  auto*s=beginConsole();admit(*s);VDUStreamProcessor processor;
  try{runConsole(&processor);}catch(const Finished&){}
  assert(!s->failure && s->count==0 && fifo.empty());
@@ -91,7 +96,8 @@ int main(int argc,char**argv){
  }else{
   assert(cancelled==0 && received==expected && complete_at>submitted_at && !console_admit_pending);
   assert((refills>0)==expect_refill);
+  if(scenario==3)assert(read_started && (max_packet_gap<250)==expect_serial_reply);
  }
- std::printf("scenario=%d bytes=%zu completion_ms=%u refills=%u cancellations=%u\n",scenario,received.size(),complete_at-submitted_at,refills,cancelled);
+ std::printf("scenario=%d bytes=%zu completion_ms=%u refills=%u cancellations=%u max_packet_gap_ms=%u\n",scenario,received.size(),complete_at-submitted_at,refills,cancelled,max_packet_gap);
  delete s;
 }

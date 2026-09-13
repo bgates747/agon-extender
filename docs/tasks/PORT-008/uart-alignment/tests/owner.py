@@ -13,4 +13,4 @@ with tempfile.TemporaryDirectory() as d:
   f=p/n;f.parent.mkdir(exist_ok=True);f.write_text('// Boundary declared in harness.\n')
  binary=p/'owner-test'
  subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-Wno-unused-function','-fsanitize=address,undefined','-fno-sanitize-recover=all','-I'+d,str(TASK/'tests/owner.cpp'),'-o',str(binary)],check=True)
- for scenario in range(3):subprocess.run([str(binary),str(scenario),sys.argv[1]],check=True)
+ for scenario in range(4):subprocess.run([str(binary),str(scenario),sys.argv[1],sys.argv[2] if len(sys.argv)>2 else "0"],check=True)

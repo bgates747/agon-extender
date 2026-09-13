@@ -1,0 +1,14 @@
+{
+  "status": "failed simultaneous-traffic run; recovered SD after resets",
+  "app": "uart-data-probe-r01-b2026-09-13-20-54-53Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-20-55-52Z",
+  "rows": 24,
+  "errors": "failed EDP65535byte mixed case:240/2048reply bytes, status2",
+  "recovery": 35,
+  "csv_sha256": "18bebb150161d4e478d0e128fb403164a37d760d0b7134a647b1d195f76d9a02",
+  "app_sha256": "2a9130efbebef7e034f3ef4a9496c9934769722307541b77f2ca241ee31aff60",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "20b22756044efa4a63bfac6aa3442429bb3314fd7e81e8ea476b0f04c32538cf",
+  "source_commit": "ab8b14cb8dff8d72d9038d968f0d6c652fbcd297"
+}

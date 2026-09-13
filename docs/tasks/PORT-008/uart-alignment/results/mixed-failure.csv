@@ -1,0 +1,27 @@
+# uart-data-probe-r01-b2026-09-13-20-54-53Z (experimental)
+repeat,route,direction,pattern,length,send_ticks,reply_ticks,elapsed_us,expected_bytes,actual_bytes,errors,status
+0,0,duplex-forward,3,257,2,10,86908,257,257,0,0
+0,0,duplex-reverse,3,256,2,10,84981,2048,2048,0,0
+0,0,duplex-forward,3,4096,14,10,120875,4096,4096,0,0
+0,0,duplex-reverse,3,256,14,10,84970,2048,2048,0,0
+0,0,duplex-forward,3,65535,80,10,673125,65535,65535,0,0
+0,0,duplex-reverse,3,256,80,10,85016,2048,2048,0,0
+1,0,duplex-forward,3,257,0,10,86792,257,257,0,0
+1,0,duplex-reverse,3,256,0,10,85011,2048,2048,0,0
+1,0,duplex-forward,3,4096,14,10,120949,4096,4096,0,0
+1,0,duplex-reverse,3,256,14,10,85039,2048,2048,0,0
+1,0,duplex-forward,3,65535,82,10,673150,65535,65535,0,0
+1,0,duplex-reverse,3,256,82,10,85025,2048,2048,0,0
+2,0,duplex-forward,3,257,2,12,86887,257,257,0,0
+2,0,duplex-reverse,3,256,2,12,85098,2048,2048,0,0
+2,0,duplex-forward,3,4096,14,10,120944,4096,4096,0,0
+2,0,duplex-reverse,3,256,14,10,85114,2048,2048,0,0
+2,0,duplex-forward,3,65535,82,10,672541,65535,65535,0,0
+2,0,duplex-reverse,3,256,82,10,85049,2048,2048,0,0
+0,1,duplex-forward,3,257,2,14,120985,257,257,0,0
+0,1,duplex-reverse,3,256,2,14,616,2048,2048,0,0
+0,1,duplex-forward,3,4096,16,28,242996,4096,4096,0,0
+0,1,duplex-reverse,3,256,16,28,602,2048,2048,0,0
+0,1,duplex-forward,3,65535,32,2,0,65535,0,1,2
+0,1,duplex-reverse,3,256,32,2,0,2048,240,1,2
+# terminal,status=2,saved=24,recovery=35

@@ -68,3 +68,18 @@ drops from18to14MOS ticks (about150.0to116.7ms), a22.2% time reduction. Stock
 remains10ticks/about83.3ms: EDP is still40% slower at this coarse resolution.
 No throughput parity claim. Forward large-payload remains near the RX2 result.
 The simultaneous-traffic extension is next, followed by pure-data wire attribution.
+
+## U10 mixed-traffic failure and U10a ordering diagnosis
+
+UDT006 preserves24rows: all9mainboard trials pass, then EDP257/4096byte trials
+pass. The first EDP65535byte trial fails after32MOS ticks (~267ms), retaining
+only240of2048return bytes. Terminal status2 and Legacy recovery35; this is
+a failure. SD was recovered after reset, not a natural completed batch.
+
+The maintained-owner host test reproduces a400ms gap **inside an18byte reply**
+when a400ms next-command read begins with software output pending. EMOS's
+existing partial-packet deadline is about250ms. The source ordering and physical
+failure timing agree; test the minimal stock ordering restoration next. Do not
+change EMOS's deadline. Failed CSV and exact candidate identities remain here.
+A subsequent P4 serial-open reset limits its late boot log to recovery evidence;
+it cannot identify the original failure. No serial observers in further runs.
