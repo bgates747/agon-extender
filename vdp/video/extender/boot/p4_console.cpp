@@ -6,3 +6,6 @@
  "../../../.pio/build-identities/p4-console/build_identity.hpp"
 #include "p4_browser_vdp.cpp"
 #include "../transport/console_hardware.inc"
+#if defined(AGON_EXTENDER_MUTEX_PROBE)
+#include "../diagnostic/mutex_probe.hpp"
+#endif

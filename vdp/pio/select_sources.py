@@ -198,6 +198,16 @@ if lock:
 else:
     root_path.write_text(ordinary_root)
 
+# Local experimental compatibility selection; ordinary targets keep their
+# existing dependency source. The recipe checks the exact selected DSP source
+# and generates its derivative under CMake's build directory, never in the
+# managed component. PORT-003 owns the evidence and pending review gate.
+if os.environ.get("AGON_EXTENDER_DSP_LIFETIME_FIX") == "1":
+    if environment != "p4-console":
+        raise RuntimeError("DSP lifetime experiment is scoped to p4-console")
+    with root_path.open("a") as root_file:
+        root_file.write('include("${CMAKE_CURRENT_LIST_DIR}/pio/dsp_matrix_lifetime.cmake")\n')
+
 # Original depth controllers live in dispdrivers/. Keep exact file allowlisting;
 # never discover or enable the rest of the classic-ESP32 driver family.
 vendored_root = project_dir / "vendor/vdp-gl/src"
