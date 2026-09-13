@@ -162,9 +162,10 @@ void runConsole(VDUStreamProcessor *processor) {
 #endif
       printf("ExCom native keyboard admitted\n");
     }
-    // Leave enough reply capacity for one bounded stock parser invocation.
-    // Parser reads may wait for continuation, but driver RTS protects its RX.
-    if(s.count<4096) {
+    // Stock send_packet admits its full reply before the next parser command.
+    // A blocking read here must not strand a partial reply in software beyond
+    // the peer's framing timeout. The final FIFO can drain independently.
+    if(!s.count) {
       // Batch timing avoids timestamp/atomic overhead on each UART byte.
       // Context: 1 admitted ExCom, 0 preactivation. Counts are batch progress,
       // not a claim of complete commands, visible frames or eZ80 execution.
@@ -183,7 +184,7 @@ void runConsole(VDUStreamProcessor *processor) {
         processor->processNext();
       } else if(s.session.active()) {
         unsigned budget=64;
-        do {processor->processNext();} while(s.session.active() && s.available() && s.count<4096 && --budget);
+        do {processor->processNext();} while(s.session.active() && s.available() && !s.count && --budget);
       }
       else {
         uint8_t b;
