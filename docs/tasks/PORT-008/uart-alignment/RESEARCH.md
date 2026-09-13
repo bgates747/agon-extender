@@ -148,3 +148,7 @@ short CTS pause, and a stopped receiver beyond5seconds. Exact output and idle
 admission pass; the long stall clears all stale output and accepts a fresh
 lease. Run tests/owner.py0 for the old barrier and1 for the planned refill path.
 Reported host milliseconds are simulated scheduling checks, not hardware data.
+
+U08a candidate changes only uart_set_rx_timeout(UART_NUM_1,2), matching stock
+HardwareSerial initialization. Bulk-read candidate remains in place. No RX ring,
+RTS/FIFO threshold, baud, parser, return or rendering changes.

@@ -74,6 +74,8 @@ ConsoleStream *beginConsole() {
   ESP_ERROR_CHECK(uart_param_config(UART_NUM_1,&cfg));
   ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,12,22,11,23));
   ESP_ERROR_CHECK(uart_driver_install(UART_NUM_1,4096,0,32,&console_events,0));
+  // Stock Arduino HardwareSerial applies a two-symbol RX idle interrupt timeout.
+  ESP_ERROR_CHECK(uart_set_rx_timeout(UART_NUM_1,2));
   console_stream=new ConsoleStream;
   console_stream->setTimeout(COMMS_TIMEOUT); // match stock setupVDPProtocol (200 ms)
   if(!agon::extender::input::usbhost::begin()) console_stream->fail("USB host startup");
