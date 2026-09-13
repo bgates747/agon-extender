@@ -91,12 +91,40 @@ static unsigned reverse(void) {
     if(packets!=length || count[3]!=length)++errors;if(!s && errors)s=FR_INT_ERR;
     return row("reverse",sent,whole,value[3],length*8,packets*8,errors,s);
 }
+static unsigned duplex(void) {
+    const uint8_t clear[]={23,0,160,10,250,2};
+    unsigned n=length,s=send(clear,sizeof clear);if(s)return s;
+    pattern=3;rng=0x12345678UL;position=0;for(unsigned i=0;i<n;++i)data[i]=next_byte();
+    arm();s=request(1);if(!s)s=wait_for(0);if(s){armed=0;return s;}
+    if(value[0]!=n || count[0]!=3){armed=0;return FR_INT_ERR;}
+    uint24_t start=ticks();length=256;s=request(4);length=n;
+    const uint8_t header[]={23,0,160,10,250,0,n,n>>8};
+    if(!s)s=send(header,sizeof header);if(!s)s=send(data,n);
+    uint24_t sent=ticks()-start;
+    if(!s)s=wait_for(3);uint24_t reverse_ticks=last_rx-start;
+    if(!s)s=request(2);if(!s)s=wait_for(1);
+    if(!s)s=request(3);if(!s)s=wait_for(2);armed=0;
+    unsigned reverse_errors=0;rng=0x12345678UL;position=0;
+    for(unsigned i=0;i<packets*8;++i)if(returned[i]!=next_byte())++reverse_errors;
+    if(packets!=256 || count[3]!=256)++reverse_errors;
+    unsigned forward_errors=(unsigned)value[2];if(count[1]!=n)++forward_errors;
+    if(!s && (reverse_errors || forward_errors || bad))s=FR_INT_ERR;
+    unsigned a=row("duplex-forward",sent,reverse_ticks,value[1],n,(unsigned)count[1],forward_errors,s);
+    length=256;unsigned b=row("duplex-reverse",sent,reverse_ticks,value[3],2048,packets*8,reverse_errors,s);length=n;
+    return a?a:b;
+}
 int main(int argc,char **argv) {
     unsigned smoke=argc>1 && !strcmp(argv[1],"smoke"),status;sv=(volatile uint8_t*)mos_sysvars();status=create();if(status)return status;
     mos_setkbvector(graphics_callback,0);
     const unsigned lengths[]={0,1,63,64,65,255,256,257,4095,4096,4097,32768,65535};
     const unsigned returns[]={1,8,64,256};
-    for(unsigned direction=0;direction<2 && !status;++direction)
+    if(argc>1 && !strcmp(argv[1],"duplex")) {
+      const unsigned mixed_lengths[]={257,4096,65535};
+      for(route=0;route<2 && !status;++route) {
+        strcpy(command,route?"emos excom --keep-display":"emos legacy --keep-display");status=mos_oscli(command,NULL,0);
+        for(repeat=0;repeat<3 && !status;++repeat)for(unsigned i=0;i<3 && !status;++i){length=mixed_lengths[i];status=duplex();}
+      }
+    } else for(unsigned direction=0;direction<2 && !status;++direction)
       for(route=0;route<2 && !status;++route){
         strcpy(command,route?"emos excom --keep-display":"emos legacy --keep-display");status=mos_oscli(command,NULL,0);if(status)break;
         for(repeat=0;repeat<(smoke?1:3) && !status;++repeat){
