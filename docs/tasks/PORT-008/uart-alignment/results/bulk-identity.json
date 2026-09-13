@@ -1,0 +1,14 @@
+{
+  "status": "experimental physical bulk-read comparison; not general qualification",
+  "app": "uart-data-probe-r01-b2026-09-13-20-26-53Z",
+  "mainboard": "uart-data-probe-r01-b2026-09-13-20-18-15Z",
+  "p4": "uart-excom-console-r17-b2026-09-13-20-38-44Z",
+  "rows": 336,
+  "errors": 0,
+  "recovery": 0,
+  "csv_sha256": "5ebc63d4f904d0a1cbeb53e5cf461f509acbdc76ddc43dfdbd898357ea6d0694",
+  "app_sha256": "58a154264d6ddf1077bccb8c86d7e9ac721075f37469ca0fda965bb129c2930e",
+  "mainboard_sha256": "1c5b15b35d277e8f1af8f68023bea95807f11d120e557eff7d2cadb0655dd71d",
+  "p4_sha256": "d8889fa3e93e237ca3fd290ef5478cee76119b2e5694fad56336104501e10a20",
+  "source_commit": "bf1232c1a4a201b3f29d161ba7e07c9282d694c3"
+}

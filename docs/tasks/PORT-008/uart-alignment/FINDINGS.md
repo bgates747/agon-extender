@@ -35,3 +35,18 @@ recovered SD. The corrected full run uses documented --keep-display and has
 recovery0. This fixture mistake was corrected without firmware transport changes.
 Pure data already reproduces the large forward gap. There is no evidence here
 that bitmap rendering is necessary to cause it. No wiring fault is established.
+
+## U08 — bulk read and stock stream timeout
+
+All336cases pass with exact data and recovery0. Only bulk read plus200ms
+Stream timeout changed. The large-payload result is effectively unchanged:
+
+|65535byte forward scope|Stock VDP ms|EDP ms|EDP time change vs VDP|
+|---|---:|---:|---:|
+|Original adapter|589.410|2178.151|+269.5%|
+|Bulk-read adapter|589.423|2178.119|+269.5%|
+
+Return256packets remains10ticks stock and18ticks EDP. The missing override is
+a stock API difference, but this measurement does **not** establish it as the
+throughput bottleneck. Retain the faithful bulk primitive and continue to the
+separate RX interrupt timeout experiment. No wiring fault inferred.

@@ -60,7 +60,7 @@ it only when a recorded discovery invalidates an assumption or requires a step.
 - [x] U05 Freeze a reproducible pure-transfer fixture/procedure, correctness oracle, controls, source identities and recovery plan.
 - [x] U06 Run baseline pure-data measurements on stock mainboard and existing EDP; preserve raw results and exact configurations.
 - [x] U07 Make the smallest stock-alignment change for forward bulk reception; verify stream semantics and build, then commit.
-- [ ] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
+- [x] U08 Run identical pure-forward transfer checks on the candidate, compare rates/correctness and recovery; commit evidence.
 - [ ] U08a Align the discovered RX interrupt timeout10 to stock2 as a separate candidate; repeat the same pure-data checks and retain its isolated effect.
 - [ ] U09 Align the return path only where U04/U06 evidence shows divergence; verify framing, flow-control stalls and recovery; commit separately.
 - [ ] U10 Repeat forward/return and permitted concurrent pure transfers on the combined candidate; require no corruption before adding load.
@@ -85,7 +85,7 @@ rebuild app for the committed order before hardware. No results discarded.
 
 ## Current cursor
 
-U08 next: isolated bulk-read P4 build passes; run the identical336case matrix on hardware. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
+U08a next: bulk-read hardware matrix passes336cases but rates are unchanged. Test only the stock RX interrupt timeout2 restoration next. U06 completed336exact cases with recovery0; FINDINGS.md owns tables. Temporary probe images remain installed; private admission and SD journals remain authoritative.
 
 
 U06 smoke: all32transfer cases returned exact data, but the fixture requested
