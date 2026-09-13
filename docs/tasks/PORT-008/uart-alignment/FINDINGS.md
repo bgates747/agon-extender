@@ -60,3 +60,11 @@ candidate, while leaving it256.5% slower than stock. It does not close the
 large-payload gap.
 It restores stock configuration; neither RX candidate established the cause.
 Return256packets remains10versus18ticks. Next is the frozen FIFO-refill change.
+
+## U10 — combined candidate, separate-direction matrix
+
+All336cases pass, exact bytes/order and recovery0. The256packet return burst
+drops from18to14MOS ticks (about150.0to116.7ms), a22.2% time reduction. Stock
+remains10ticks/about83.3ms: EDP is still40% slower at this coarse resolution.
+No throughput parity claim. Forward large-payload remains near the RX2 result.
+The simultaneous-traffic extension is next, followed by pure-data wire attribution.
