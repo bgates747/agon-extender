@@ -99,3 +99,13 @@ Rebuild app and run the full matrix before accepting the baseline.
 U06 discovery amendment: stock HardwareSerial sets RX interrupt timeout2, whereas
 P4 direct IDF setup leaves default10. Added U08a for a separately measured
 stock-setting restoration after the bulk-read comparison; no arbitrary tuning.
+
+U10/U12 discovery amendment: RX alignment leaves the large forward gap, while
+the historical sender-idle scale closely matches current pure-data duration.
+After U10 correctness, bring the already-planned U12 **pure-data wire capture**
+ahead of U11 rendering load. This separates sender-idle from P4 backpressure
+without adding another candidate on speculation. Verify channels before using
+handshake timings; the current pinwalk needs explicit opposite-end inputs,
+not the running UART composition. Preserve/recover its temporary startup and
+processor state under a separately recorded procedure before physical use.
+No EMOS mutation is authorized by this discovery record alone.
