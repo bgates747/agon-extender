@@ -21,6 +21,10 @@ Native USB keyboard input and the ordinary ExCom console remain working
 foundations. Browser input is deferred. [TODO.md](TODO.md) owns the remaining
 queue; SD acceptance does not automatically start another development task.
 
+For the community TRS-OS discussion, start with the
+[source guide and portable sample kits](docs/tasks/TRS-80-002/COMMUNITY-GUIDE.md).
+TRS-OS integration remains an investigation; the kits run on a development host.
+
 ## Hardware
 
 - [Espressif ESP32-P4 product page](https://www.espressif.com/en/producttype/esp32-p4)
@@ -169,10 +173,9 @@ Agon Extender is distributed under the **GNU General Public License, version 3
 only** (`GPL-3.0-only`), except where individual files or third-party material
 carry their own compatible license notices.
 
-See [LICENCE.md](LICENCE.md) for the project licensing and attribution policy.
+See [LICENSING.md](LICENSING.md) for the project licensing and attribution policy.
 
-A public release should also contain a root `LICENSE` file with the complete
-GNU GPL version 3 text.
+See [LICENSE](LICENSE) for the complete GNU GPL version 3 text.
 
 Important upstream licensing includes:
 

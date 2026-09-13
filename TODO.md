@@ -59,6 +59,13 @@ deterministic Nurples and separate typing measurements are deferred.
   - Details: [PORT-008](docs/tasks/PORT-008.md)
 
 
+## TRS-80 integration
+
+- [ ] **TRS-80-001 — Design TRS-OS integration and reusable network storage for Extender**
+  - Started: 2026-09-13 (ecosystem survey and task definition).
+  - Status: Initial survey and Linux reference acquisition complete (14 repos, two archives); architecture and protocol selection open. Future owned TRS-80 project should prefer selected vendoring. Coordinate with current EMOS/Extender work before implementation; existing console/graphics queue remains in place.
+  - Details: [TRS-80-001](docs/tasks/TRS-80-001.md)
+
 ## Scheduled hardware documentation
 
 - [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
