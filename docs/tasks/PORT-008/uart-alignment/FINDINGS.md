@@ -163,3 +163,16 @@ measurements, not sampled CPU instruction timings. Largest total first.
    Any EMOS transport work requires a separately bounded stock-reuse contract
    accounting for resident ownership/deadlines and its existing dirty work;
    this finding does not silently extend the current port patch into EMOS.
+
+## U11 first graphics run — retained partial failure
+
+The unchanged39case fixture saved483intervals, then timed out at repeat3,
+mainboard/Legacy route0, BSP21_01 draw: status15, submission48rawticks,
+reply wait1200rawticks. Seven baseline probe mismatches had been recorded.
+P4 snapshot delta0. The application returned to foreground sdserve, its
+closed CSV was collected and service exited. This is not a complete paired
+graphics result; do not feed it into the full-pass comparison tables.
+The exact failing operation is on the mainboard display route, whose firmware
+and fixture match the prior completed baseline. No claim of root cause or
+EDP regression is made. PLAN.md permits one unchanged retry after an explicit
+mainboard reset; no case exclusion, new firmware or timeout change.

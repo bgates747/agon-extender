@@ -1,0 +1,10 @@
+{
+  "outcome": "partial mainboard timeout; not a full graphics pass",
+  "terminal": "# terminal,status=15,saved=483,probe_mismatches=7,phase=draw",
+  "p4": "uart-excom-console-r17-b2026-09-13-21-13-50Z",
+  "mainboard_sha256": "529808bd1d3f0e9ea04cb13ca1142032da8431fe26605932ffc46738d2dd17cd",
+  "app_sha256": "be39dd91e939b3e1c861136b50d83528882b0d1c90b697d2f18bc15590a0777a",
+  "csv_sha256": "cebd02b7e5b8252aee246290a2f5a58ad7a59e95b6ce5bf8f754355588219dce",
+  "snapshot_delta": 0,
+  "recovery": "foreground SD service returned; closed CSV collected; service exited"
+}
