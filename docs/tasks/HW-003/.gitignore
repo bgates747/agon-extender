@@ -1,0 +1,3 @@
+# Browser export includes unrelated scripts and potentially session data.
+*.html
+*_files/

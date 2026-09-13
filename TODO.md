@@ -86,6 +86,12 @@ deterministic Nurples and separate typing measurements are deferred.
 
 ## Scheduled hardware documentation
 
+- [ ] **HW-003 — Assess alternate ESP32-P4 development board**
+  - Started: 2026-09-13
+  - Finished: --
+  - Status: Desk assessment ready; promising full Waveshare kit, requires pin remapping and specimen qualification. Electrotux in Chile has decided to purchase a test unit; exact variant/revision and adaptation scope remain pending.
+  - Details: [HW-003](docs/tasks/HW-003.md)
+
 - [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
   - Started: 2026-09-07 17:36 EDT
   - Finished: --
