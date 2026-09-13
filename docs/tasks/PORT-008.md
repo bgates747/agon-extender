@@ -1,5 +1,37 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## Unattended ordinary command expansion — 2026-09-13
+
+Following the Author's video-speed-first sequence, PORT-003's bounded delivery
+increment is machine-complete, with review gates still open. The next finite
+coverage case is [font command coverage](PORT-008/font-coverage/README.md):
+ordinary MOS EXEC/VDU input, independent synthetic glyph expectations, stock
+headless reference, then ExCom output and Legacy/SD recovery. No publication or
+general qualification is implied; the paired QUAL-003 timing tranche stays held.
+
+After the font case passes its machine checks, the next slice is
+[bitmap and affine coverage](PORT-008/bitmap-coverage/README.md), using the same
+ordinary EXEC/VDU route and independent pixel expectations. The installed P4
+candidate and accepted production/startup remain unchanged.
+
+The completed bitmap slice is followed by
+[graphics-context coverage](PORT-008/context-coverage/README.md): all eight
+ordinary context operations, saved drawing state and global resource boundaries,
+with independent pixels and the same stock/P4 comparison and recovery gates.
+
+After those checks pass, [palette/depth coverage](PORT-008/palette-coverage/README.md)
+compares ordinary pixels and palette mutation across single-buffer modes8–11.
+The indexed-versus-direct-colour distinction is explicit in its pixel oracles.
+
+The next bounded slice is [sprite composition](PORT-008/sprite-coverage/README.md):
+software sprite state/backgrounds and hardware sprite output, including full
+colour over an indexed framebuffer. This preserves the retained algorithms and
+compares actual presented pixels before any broader compatibility claim.
+
+After the staged sprite checks, [Copper palette coverage](PORT-008/copper-coverage/README.md)
+checks indexed row selection, palette/list changes and sprite output colours.
+The finite stage plan precedes implementation and preserves the stock renderer.
+
 ## Generalized EDP callbacks — 2026-09-10
 
 The Author selected generalized callbacks as a production EDP capability in
