@@ -1,6 +1,6 @@
 # PORT-017 — Mainboard SD read/write access through Extender
 
-## State
+## State — completed 2026-09-13 UTC
 
 Created 2026-09-12 at the Author's direction. **Highest priority, before all
 other Extender implementation and before Rally optimization.** Work belongs on
@@ -16,9 +16,12 @@ linked run. No dependent Rally/Golem work has started.
 
 The Author has confirmed the fresh native-keyboard check, and physical
 interrupted-file recovery passes with all 45368 acknowledged bytes retained.
-P17-02 and P17-04 are complete within the evidence's declared scope. P17-05
-local documentation/whole-card delivery is being finalized. No further reset,
-firmware flash or card handover is needed for this acceptance.
+All five phases are complete within the evidence's declared scope. Whole-card
+startup was updated over the network and the accepted Rally binary was read back
+unchanged. See the [final acceptance](../qualification/mainboard-sd/2026-09-13.md)
+and maintained [operating guide](../mainboard-sd.md). The final startup update was
+not rebooted again; native CLI execution of the same command had already passed.
+No further reset, firmware flash or card handover is needed for this acceptance.
 
 The project TODO owns task ordering. The phases below own this task's detailed
 progress; Rally RALLY-20 consumes its acceptance result rather than maintaining
@@ -58,11 +61,12 @@ performs MOS/FatFS operations. No filesystem work in a keyboard callback/ISR,
 direct UART takeover, competing receiver, or simultaneous filesystem ownership.
 Return results through the same owned interface.
 
-Existing EMOS hooks are **not qualified as a bulk file channel**. QTG/8C timing
-replies have source/mode restrictions and do not establish arbitrary Legacy-mode
-file transport. Define the wire protocol and component contracts first, then
-extend supported interfaces as required. The mainboard keyboard circuit is
-damaged, so disabling Extender input is not an acceptable normal operating mode.
+At task entry, existing EMOS hooks were **not qualified as a bulk file channel**.
+QTG/8C timing replies have source/mode restrictions and do not establish arbitrary
+Legacy-mode file transport. P17-01 froze a separate owned contract before
+implementation; the accepted service now uses that F6/8D transport. The mainboard
+keyboard circuit is damaged, so disabling Extender input is not an acceptable
+normal operating mode.
 
 ## Implementation gate and ordered phases
 
@@ -100,7 +104,7 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
    no phantom/stuck keys or silent truncation. Use raw-image FAT tests where
    necessary: REMED-003 identifies directory-backed emulator write/sync defects.
    Physical success is required; emulator-only success cannot close this gate.
-5. [ ] **P17-05 — Deliver the reusable capability locally.** Demonstrate ten
+5. [x] **P17-05 — Deliver the reusable capability locally.** Demonstrate ten
    unattended write/read/verify cycles, including recoverable failures, without
    card movement or operator resets. Record throughput and recovery bounds,
    exact component versions, commands, evidence and any hard-hang limitation.

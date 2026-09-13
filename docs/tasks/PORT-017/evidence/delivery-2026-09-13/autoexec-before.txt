@@ -1,0 +1,6 @@
+VDU 22 3
+SET KEYBOARD 1
+IFTHERE /ESDNEW.BIN THEN EXEC /extender/sd-install.txt
+EMOS KEYINPUT extender
+LOAD /extender/sdserve.bin
+RUN . /extender/sdtest

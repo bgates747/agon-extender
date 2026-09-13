@@ -6,15 +6,20 @@ Agon Extender is an experimental hardware and firmware project for extending
 the capabilities of the Agon computer family with an external Espressif ESP32-P4
 coprocessor, by way of the Olimex ESP32-P4-DevKit (rev. D1). The intent is for Extender to operate as a wholly-independent video display processor (VDP) with enhanced performance and extended functionality over the stock VDP, while remaining fully backward-compatible with existing Agon software, but not limited to legacy software capabilities.
 
-## Current development priority
+## Current capability and development queue
 
-The next increment captures keyboard input while the browser display has
-focus. P4 processes those events into stock VDP keyboard packets and sends
-them to EMOS over existing UART1; EMOS maintains its normal keyboard sysvars,
-virtual keyboard map and application interfaces. Relevant configuration and
-query traffic also uses UART. Parallel transfer and a direct onboard-VDP link
-are outside this increment. See [TODO.md](TODO.md) for the ordered task slices;
-the documentation was accepted for freeze on 2026-09-08; implementation follows.
+The foreground mainboard SD service now supports host directory listing, reads,
+staged writes, verification and recoverable replacement over Ethernet, P4 and
+the EMOS-owned UART1 link. Ten unattended physical transfer cycles and native
+Extender keyboard interruption/restart checks pass. See the
+[operating guide](docs/mainboard-sd.md), [wire contract](docs/protocols/mainboard-sd.md)
+and [scoped acceptance](docs/qualification/mainboard-sd/2026-09-13.md).
+The service and games run at different times; remote game launching is not part
+of this interface. Candidate qualification is distinct from general release.
+
+Native USB keyboard input and the ordinary ExCom console remain working
+foundations. Browser input is deferred. [TODO.md](TODO.md) owns the remaining
+queue; SD acceptance does not automatically start another development task.
 
 ## Hardware
 

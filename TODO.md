@@ -5,22 +5,12 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current priority — Mainboard SD read/write access
+## Remaining queue — Exclusive Compatible console and EDP
 
-On 2026-09-12 the Author made PORT-017 the first priority, ahead of all other
-development. Establish the wire protocol and EMOS contracts, then qualify
-bidirectional mainboard SD access using the existing Extender wiring. Only
-prerequisites needed for that service may precede it. The Author released PORT-017 implementation on 2026-09-12. Other development
-remains queued until its acceptance; freeze the protocol before coding it.
-
-- [ ] **PORT-017 — Mainboard SD read/write access through Extender**
-  - Started: 2026-09-12 (planning).
-  - Status: Priority one. Candidates installed; ten physical transfer/readback
-    cycles pass through 131731 bytes. Waiting for native-keyboard interruption
-    and typed restart before final acceptance. Blocks other development.
-  - Details: [PORT-017](docs/tasks/PORT-017.md)
-
-## Queued after PORT-017 — Exclusive Compatible console and EDP
+PORT-017 was accepted on 2026-09-13 UTC and removed from the unfinished list.
+See [the dated log](docs/development/2026-09-13.md) and
+[SD operating guide](docs/mainboard-sd.md). The following order is retained;
+no downstream implementation was started as part of SD delivery.
 
 Native USB keyboard bring-up is complete: ordinary MOS commands and gameplay
 work in Legacy. On 2026-09-09 the Author deferred further keyboard refinements
@@ -46,7 +36,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
   - Started: 2026-08-22 10:14 EDT
   - Finished: --
-  - Status: Queued after PORT-017 and QUAL-003. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
+  - Status: Queued after QUAL-003. R1 accepted and frozen. R2 accepted: 70 runtime checks, 42 stock scanline checks and P4 console/display compile/link pass; the two inherited native-scroll discrepancies remain. R3 candidate r10 deployed and startup verified; qualitative repaired-Nurples playtest reports marked improvement, with residual jerkiness and sprite-heavy slowdown. No upstream fixes; full hardware qualification remains open.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**

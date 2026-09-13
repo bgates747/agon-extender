@@ -211,3 +211,24 @@ documents, preserves rollback and switches normal service startup from the
 commissioning test root to whole-card scope over the now-working network path.
 The service was directly restarted at the CLI before replacing autoexec, so
 that old batch file was closed. Accepted Rally files are not write targets.
+
+## Local delivery complete — 2026-09-13 UTC
+
+P17-05 is complete. Native-keyboard acceptance, ten uninterrupted physical
+cycles and final delivery are composed in
+[the acceptance record](../../qualification/mainboard-sd/2026-09-13.md).
+The protocol, operating guide and qualification procedure were promoted into
+role-named documents; task paths remain forwarding references. Registry r71
+and candidate identities are unchanged. No new source or firmware was built
+for this documentation closeout, and no general release/push is claimed.
+
+After the direct CLI restart closed the old MOS batch, `/autoexec.txt` was
+replaced through the verified network path to launch `RUN . /`. Its previous
+version remains `.p17bak`. Full physical readback of the 131731-byte Rally
+binary matches the accepted SHA-256; no game/track files were written. The last
+scope-only startup edit was not rebooted again. Exact evidence, rollback and
+limits are linked from the acceptance record. PORT-017 is removed from TODO;
+INTEG-013 is closed in its owner repository. No downstream work is started.
+
+EMOS component acceptance and maintained documentation are frozen in
+agon-emos af20d4e; no firmware bytes changed during this closeout.
