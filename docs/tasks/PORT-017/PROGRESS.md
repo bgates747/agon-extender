@@ -116,3 +116,41 @@ in hardware/designs/light2-harness-r02/profile.yaml for connectivity.yaml
 (expected 560ab589..., actual c68e4d4f...). Neither input is changed by PORT-017.
 The artifact-registry validation itself passes independently. Do not silently
 rewrite that hardware integrity record to make this service gate green.
+
+## Commissioning media ready — 2026-09-13 UTC
+
+Candidate inputs: Extender 69da46a; EMOS 71f362a. Both candidate builds
+record clean source. Complete EMOS wrapper qualification/link/runtime checks
+pass; all 89 EMOS host tests and 10 Extender wire/queue/client tests pass.
+
+1. `agon-emos-v0.1.14-b2026-09-13-01-07-47Z`: 130919 bytes; SHA-256 `eea1a479516df733688803f775d65c41a7c48a546927c7f07c0a489f8cd09808`.
+1. `sdserve-v0.1.0-b2026-09-13-01-07-48Z`: 18974 bytes; SHA-256 `8903bb934f26af914f31d92a92508bc5095d09f4c2fa027c7b05155a9544a317`.
+1. `uart-excom-console-r12-b2026-09-13-01-07-48Z`: 1570272 bytes; SHA-256 `ff1e0da79a844eed4a2a4c7bce3d346750610409f8a4d161129c3b599b26c7e0`.
+
+The exact EMOS/application images pass a fresh headless raw-FAT smoke: empty
+and 213-byte uploads, full stage/target readback, orphan recovery, STAT/LIST,
+EXIT and one deliberately lost WRITE reply. Larger-file evidence remains the
+earlier provisional run, not a claim that this exact candidate ran those sizes.
+
+P4 was physically flashed and independently verified. Boot capture contains
+the exact r12 build, USB HOST READY, USB KEYBOARD READY, Ethernet link and HTTP
+startup without the checked fault markers. The HTTP SD status endpoint reports
+protocol 1, offline as expected before the Agon service starts. This does not
+yet validate the mainboard data path or keyboard coexistence during transfers.
+
+The AGON card was backed up, staged and hash-verified, then safely unmounted.
+Its guarded one-shot installer uses ESDNEW.BIN -> ESDDONE.BIN; historical
+EMDONE.BIN is untouched and EMV0113.BIN preserves rollback. Autoexec then enables
+Extender keyboard and starts /extender/sdserve.bin rooted at /extender/sdtest.
+Accepted Rally binary/oval/Fuji data hashes remain unchanged. Onboard VDP was
+not opened, reset or flashed by this goal and remains the previously restored
+stock 2.16.0 by historical evidence; physical current boot verification awaits
+the Author's return of the card. No reset-breakout action.
+
+P17-03 implementation is complete with host and raw-FAT evidence. P17-02
+commissioning/recovery and P17-04/P17-05 physical qualification/delivery remain
+open. The labelled stock emulator is an attention cue only; the Author returns
+the card, resets Agon and allows installation to finish. If FLASH asks for a
+reset instead of restarting automatically, one further reset is sufficient;
+the consumed trigger prevents reflash. Machine-local manifests, source hashes,
+backups and captures are retained under agents/port-017 and .emulator/port017.

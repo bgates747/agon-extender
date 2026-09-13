@@ -83,7 +83,7 @@ damaged, so disabling Extender input is not an acceptable normal operating mode.
    files; the old reset circuit is electrically unresolved and must not be
    actuated until qualified. Exhaust supported alternatives before requesting
    one bundled physical intervention. No reset or firmware-flash loops.
-3. [ ] **P17-03 — Implement bidirectional file operations.** Provide bounded
+3. [x] **P17-03 — Implement bidirectional file operations.** Provide bounded
    host commands for capability/status, directory listing, chunked read, staged
    write, verification and activation, with cleanup/cancel behavior. Preserve
    an old runnable file until the candidate verifies. Do not call FAT rename
