@@ -18,6 +18,7 @@ import shutil
 import socket
 import struct
 import subprocess
+import sys
 import tempfile
 import threading
 import time
@@ -52,6 +53,20 @@ def run(a):
     def exercise():
         try:
             url=f'http://127.0.0.1:{server.server_port}'
+            if config.get('keyboard_smoke'):
+                # Wait for admission before starting the ordinary host observer.
+                deadline=time.monotonic()+30
+                while True:
+                    with lock:ready=lib.peer_online(now())
+                    if ready:break
+                    if time.monotonic()>deadline:raise TimeoutError('No service presence')
+                    time.sleep(.03)
+                subprocess.run([sys.executable,str(media/'qualify_sd_keyboard.py'),
+                                '--url',url,'--output',str(media/'keyboard-check'),'--window','15'],check=True)
+                result=json.loads((media/'keyboard-check/result.json').read_text())
+                if result['outcome']!='pass':raise RuntimeError('Keyboard observer did not complete recovery')
+                record['keyboard_observer']=result
+                return
             audit=(media/'qualification-audit.jsonl').open('w')
             client=(AuditedClient(url,media/'client-state.json',audit,30)
                     if config.get('qualification_smoke') else
@@ -103,6 +118,7 @@ def run(a):
         except Exception as e:client_error.append(repr(e))
         finally:finished.set()
     proc=None;peer=None;transcript=bytearray();received=bytearray();dropped=False
+    key_schedule=[];keys_scheduled=False
     with tempfile.TemporaryDirectory(prefix='sd-peer-') as tmp:
         listener=socket.socket(socket.AF_UNIX);sockpath=tmp+'/uart1';listener.bind(sockpath);listener.listen(1)
         log=(a.output.with_suffix('.log')).open('wb')
@@ -139,6 +155,19 @@ def run(a):
                         dropped=True;record['events'].append('dropped one WRITE response');continue
                     with lock:lib.peer_receive(data,len(data),now())
                 if peer:
+                    if config.get('keyboard_smoke') and not keys_scheduled:
+                        progress=media/'keyboard-check/progress.json'
+                        if progress.exists():
+                            try:phase=json.loads(progress.read_text()).get('phase')
+                            except json.JSONDecodeError:phase=None
+                            if phase=='ready_for_escape':
+                                packets=(media/'keyboard-packets.bin').read_bytes()
+                                for offset in range(0,len(packets),6):
+                                    delay=(offset//6)*.05 if offset<12 else .8+((offset-12)//6)*.05
+                                    key_schedule.append((time.monotonic()+delay,packets[offset:offset+6]))
+                                keys_scheduled=True;record['events'].append('scheduled mapped Escape and typed RUN')
+                    while key_schedule and key_schedule[0][0]<=time.monotonic():
+                        _,packet=key_schedule.pop(0);peer.sendall(packet)
                     out=C.create_string_buffer(240)
                     with lock:n=lib.peer_take(out,now())
                     if n:peer.sendall(bytes([0x8d,n])+out.raw[:n])

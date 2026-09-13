@@ -20,8 +20,9 @@ def main():
     p.add_argument('--qualification-smoke',action='store_true',
                    help='Exercise the physical-run controller with ten small raw-FAT cycles')
     p.add_argument('--disk-full',action='store_true',help='Leave twelve free FAT clusters and test write exhaustion/recovery')
+    p.add_argument('--keyboard-smoke',action='store_true',help='Replay mapped Escape and typed RUN while the keyboard observer executes')
     a=p.parse_args();output=a.output.absolute()
-    if a.disk_full and a.qualification_smoke:p.error('Select one qualification workload')
+    if sum((a.disk_full,a.qualification_smoke,a.keyboard_smoke))>1:p.error('Select one qualification workload')
     if not output.is_relative_to(ROOT/'.emulator'):raise ValueError('Output must be in project .emulator')
     output.mkdir(parents=True,exist_ok=False)
     runtime=a.runtime.resolve();manifest=json.loads((runtime/'runtime-inputs.json').read_text())
@@ -58,13 +59,19 @@ def main():
         filler.unlink()
     subprocess.run(['c++','-std=c++17','-shared','-fPIC','-Wall','-Wextra','-Werror',
                     '-I'+str(ROOT/'vdp/video'),str(ROOT/'tests/sd_peer.cpp'),'-o',str(media/'sd-peer.so')],check=True)
-    for name in ('qualify_sd_headless.py','sdcard.py','qualify_sdcard.py'):shutil.copyfile(ROOT/'scripts'/name,media/name)
+    if a.keyboard_smoke:
+        generator=media/'keyboard-packets'
+        subprocess.run(['c++','-std=c++17','-Wall','-Wextra','-Werror','-I'+str(ROOT/'vdp/video'),
+                        str(ROOT/'tests/sd_keyboard_packets.cpp'),'-o',str(generator)],check=True)
+        (media/'keyboard-packets.bin').write_bytes(subprocess.check_output([str(generator)]))
+    for name in ('qualify_sd_headless.py','sdcard.py','qualify_sdcard.py','qualify_sd_keyboard.py'):shutil.copyfile(ROOT/'scripts'/name,media/name)
     shutil.copyfile(a.firmware,output/'MOS.bin');shutil.copyfile(a.firmware_map,output/'MOS.map')
     (media/'fixture.json').write_text(json.dumps({
         'status':'provisional, unqualified, no deployment',
         'sizes':[0,213] if a.quick else [0,1,212,213,65537,131731],
         'qualification_smoke':a.qualification_smoke,
         'disk_full':a.disk_full,
+        'keyboard_smoke':a.keyboard_smoke,
         'runtime_manifest_sha256':sha(runtime/'runtime-inputs.json'),
         'seed_sha256':sha(seed),'application_sha256':sha(a.application),'firmware_sha256':sha(a.firmware),
         'source_commit':subprocess.check_output(['git','rev-parse','HEAD'],cwd=ROOT,text=True).strip(),
