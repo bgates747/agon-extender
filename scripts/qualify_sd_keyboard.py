@@ -41,7 +41,7 @@ def main():
     name = path_payload(target)
     result = {'started_at': now.isoformat(), 'outcome': 'fail', 'target': target,
               'source_commit': subprocess.check_output(['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True).strip(),
-              'source_sha256': {n: hashlib.sha256((ROOT/n).read_bytes()).hexdigest()
+              'source_sha256': {n: hashlib.sha256((Path(__file__).parent/Path(n).name).read_bytes()).hexdigest()
                                 for n in ('scripts/qualify_sd_keyboard.py', 'scripts/sdcard.py')},
               'human_keyboard_confirmation': 'pending',
               'limitation': 'A changed incarnation may also follow a reset; require Author confirmation of Escape and typed RUN.'}
