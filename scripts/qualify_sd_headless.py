@@ -21,7 +21,7 @@ import subprocess
 import tempfile
 import threading
 import time
-from sdcard import Client,path_payload
+from sdcard import Client,RemoteError,path_payload
 from qualify_sdcard import AuditedClient,error_checks,exercise as qualify_cycles
 
 def run(a):
@@ -65,12 +65,30 @@ def run(a):
             if client.rpc(10,b'\0'+orphan)!=b'\x06':raise RuntimeError('Missing orphan fixture')
             if client.rpc(10,b'\x02'+orphan)!=b'\0':raise RuntimeError('Orphan recovery failed')
             record['orphan_recovery']=True
+            if config.get('disk_full'):
+                path='/extender/sdtest/full.bin';name=path_payload(path)
+                old=b'previous preserved target\n'
+                if client.download(path)!=old:raise RuntimeError('Missing preserved-target fixture')
+                try:client.upload(path,random.Random(17).randbytes(131731),False)
+                except RemoteError as error:
+                    if error.status!=6 or error.detail!=b'\x07':raise
+                    record['disk_full_error']={'status':error.status,'fatfs':error.detail.hex()}
+                else:raise RuntimeError('Full volume unexpectedly accepted the complete write')
+                if client.download(path)!=old:raise RuntimeError('Disk full damaged the old target')
+                part=client.download(path+'.p17part')
+                if not 0<len(part)<131731:raise RuntimeError('No partial-write evidence')
+                record['disk_full_partial_bytes']=len(part)
+                if client.rpc(10,b'\0'+name)!=b'\x07':raise RuntimeError('Full-volume journal was not preserved')
+                if client.rpc(10,b'\x02'+name)!=b'\x01':raise RuntimeError('Full-volume recovery failed')
+                client.upload(path,b'new after full recovery',True)
+                if client.download(path+'.p17bak')!=old:raise RuntimeError('Recovery lost the previous target')
+                client.rpc(10,b'\x03'+name);record['disk_full_recovery']='pass'
             if config.get('qualification_smoke'):
                 error_checks(client,'/extender/sdtest/errors.bin')
                 qualify_cycles(client,'/extender/sdtest/cycles.bin',
                                sizes=(0,1,211,212,213,256,512,1000,212,213),results=client_results)
                 record['qualification_controller_smoke']=True
-            for i,size in enumerate([] if config.get('qualification_smoke') else config['sizes']):
+            for i,size in enumerate([] if config.get('qualification_smoke') or config.get('disk_full') else config['sizes']):
                 data=random.Random(size).randbytes(size);t=time.monotonic()
                 client.upload('/extender/sdtest/game.bin',data,True)
                 info=client.rpc(2,path_payload('/extender/sdtest/game.bin'))
