@@ -10,7 +10,7 @@ item is removed.
 - [ ] **PORT-008 — Stock-compatible UART performance and correctness**
   - Status: Bounded stock-alignment work is at its review checkpoint: 336 separate, 36 mixed and 4 wire-transfer rows pass; graphics retry completes 624 intervals with 8 unchanged probe differences. Pure wire evidence identifies forward eZ80 sender idle and reverse Agon backpressure; P4-only changes cannot remove those gaps. Earlier mainboard graphics timeout retained. Pre-test firmware/startup restored; SD and neutral CLI recovery verified. Awaiting Author review; no experimental push or automatic EMOS follow-up.
   - Details: [PORT-008](docs/tasks/PORT-008.md), [bounded plan](docs/tasks/PORT-008/uart-alignment/PLAN.md)
-  - Next: Sibling `agon-emos/docs/tasks/INTEG-014.md` E03 accepted; E04 controlled baseline authorised and running under EMOS procedure commit 7a09db5. Fixed probe pair, original EMOS, no browser output; E05 remains gated. Hardware notification after every numbered step. This task retains cross-component qualification ownership.
+  - Next: Sibling `agon-emos/docs/tasks/INTEG-014.md` E04 baseline complete at EMOS 66e9cac: 756 exact rows, three independent wire captures, zero snapshots. Original firmware/SD/CLI restored; 5% selected high-resolution improvement floor frozen. Supervised pause before E05. Hardware notification after every numbered step. This task retains cross-component qualification ownership.
 
 ## Previous goal — Resident Rally telemetry and driving
 

@@ -2205,3 +2205,18 @@ the graphics looked great by their visual assessment. The accepted milestone
 therefore includes real-game graphics/input beyond ordinary CLI output. The
 design-adjacent run record includes this additional operator observation; no
 exact game-binary identity, frame comparison or complete VDP parity is inferred.
+
+## Supervised EMOS E04 checkpoint — 2026-09-14
+
+INTEG-014 E04 completed at sibling EMOS commit66e9cac. The exact previous
+PORT-008 pure-data app and fixed mainboard/P4 probes were reused without EMOS
+changes: two full336, two mixed36 and three wire4 runs passed756exact rows.
+All three wire oracles and independent decoders passed, with zero snapshots.
+Original firmware restored and independently verified; native keyboard, SD
+read/write, CLI COPY and startup/backup preservation passed. Detailed tables,
+repeatability and thresholds belong in EMOS `docs/tasks/INTEG-014/E04.md`.
+
+The large forward gap and reverse Agon backpressure reproduce; this is baseline
+evidence, not a fix. Selected high-resolution metrics have a5% material-change
+floor under the frozen noise rule. E05 awaits the next supervised approval;
+no experimental push. Standard spoken hardware notification is the review cue.
