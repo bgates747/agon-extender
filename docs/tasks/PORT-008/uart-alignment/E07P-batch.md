@@ -25,3 +25,15 @@ that task remains the execution/authorization authority.
    This measures repeated end-to-end transfers including common setup/copies,
    not UART-only wire occupancy or graphics performance. Existing exact/mixed
    and three wire captures remain separate required controls.
+
+Build from committed clean inputs using the existing isolated builder:
+
+```sh
+.venv/bin/python docs/tasks/PORT-008/uart-alignment/scripts/build.py app --batch --output agents/integ-014/E07P/batch01
+```
+
+Run `UARTDATA.bin` with argument `batch`, using the same preselected 60 Hz modes
+and post-run Legacy/SD recovery batch as the original control. The analyzer
+`analyze_batch.py CSV --output result.json` rejects incomplete, duplicate,
+wrong-scope or corrupt records and reports conservative timing bounds. A passed
+byte check with overlapping bounds is explicitly not a parity pass.
