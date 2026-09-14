@@ -1,0 +1,192 @@
+{
+  "authority": "agon-emos/docs/tasks/INTEG-014/E07P-results/qualification.json",
+  "authority_sha256": "aedaeab86ffb38819c011c955530f3c285f836a4a9d1e5bb7db8d3e908de9126",
+  "both_profiles_pass": true,
+  "profiles": {
+    "bench": {
+      "forward": {
+        "0": {
+          "median_ms": 589.6565,
+          "min_ms": 589.554,
+          "max_ms": 589.766,
+          "n": 6
+        },
+        "1": {
+          "median_ms": 588.154,
+          "min_ms": 588.112,
+          "max_ms": 588.205,
+          "n": 6
+        }
+      },
+      "reverse": {
+        "0": {
+          "samples_ms": [
+            86.06770833333333,
+            86.06770833333333,
+            85.9375,
+            86.06770833333333,
+            86.06770833333333,
+            85.9375
+          ],
+          "median_ms": 86.06770833333333,
+          "min_ms": 85.9375,
+          "max_ms": 86.06770833333333,
+          "median_lower_ms": 85.9375,
+          "median_upper_ms": 86.19791666666666
+        },
+        "1": {
+          "samples_ms": [
+            85.28645833333333,
+            85.28645833333333,
+            85.28645833333333,
+            85.41666666666667,
+            85.28645833333333,
+            85.28645833333333
+          ],
+          "median_ms": 85.28645833333333,
+          "min_ms": 85.28645833333333,
+          "max_ms": 85.41666666666667,
+          "median_lower_ms": 85.15625,
+          "median_upper_ms": 85.41666666666666
+        }
+      },
+      "mixed_forward": {
+        "0": {
+          "median_ms": 672.747,
+          "min_ms": 672.72,
+          "max_ms": 672.792,
+          "n": 3
+        },
+        "1": {
+          "median_ms": 655.773,
+          "min_ms": 655.759,
+          "max_ms": 655.878,
+          "n": 3
+        }
+      },
+      "cases": 384,
+      "wire_captures": 3,
+      "budgets": {
+        "identity": "agon-emos-v0.1.17-b2026-09-14-15-43-02Z",
+        "sha256": "60729c6a7bd6d953e2311b933247b56b7e04bbf47c4e374058c8a82df22583ce",
+        "flash_occupied": 130091,
+        "flash_free": 981,
+        "static_sram": 6964,
+        "heap_arena": 7372,
+        "stack_reserve": 2048,
+        "map_sha256": "257ff0bcb1076a0d3f5d157bef16533c620de5f8fac03847bbb6d091d6fe8b80"
+      },
+      "short_forward": {
+        "0": {
+          "0": 0.438,
+          "1": 0.681,
+          "elapsed_difference_percent": 55.47945205479454
+        },
+        "256": {
+          "0": 2.802,
+          "1": 3.122,
+          "elapsed_difference_percent": 11.420413990007127
+        },
+        "4096": {
+          "0": 37.34,
+          "1": 37.535,
+          "elapsed_difference_percent": 0.5222281735404177
+        }
+      },
+      "reverse_per_transfer_uncertainty_ms": 0.13020833333333334
+    },
+    "ordinary": {
+      "forward": {
+        "0": {
+          "median_ms": 589.6700000000001,
+          "min_ms": 589.635,
+          "max_ms": 589.76,
+          "n": 6
+        },
+        "1": {
+          "median_ms": 588.0955,
+          "min_ms": 588.054,
+          "max_ms": 588.149,
+          "n": 6
+        }
+      },
+      "reverse": {
+        "0": {
+          "samples_ms": [
+            86.06770833333333,
+            86.06770833333333,
+            86.06770833333333,
+            86.06770833333333,
+            86.06770833333333,
+            86.06770833333333
+          ],
+          "median_ms": 86.06770833333333,
+          "min_ms": 86.06770833333333,
+          "max_ms": 86.06770833333333,
+          "median_lower_ms": 85.9375,
+          "median_upper_ms": 86.19791666666666
+        },
+        "1": {
+          "samples_ms": [
+            85.28645833333333,
+            85.15625,
+            85.15625,
+            85.28645833333333,
+            85.15625,
+            85.15625
+          ],
+          "median_ms": 85.15625,
+          "min_ms": 85.15625,
+          "max_ms": 85.28645833333333,
+          "median_lower_ms": 85.02604166666667,
+          "median_upper_ms": 85.28645833333333
+        }
+      },
+      "mixed_forward": {
+        "0": {
+          "median_ms": 672.608,
+          "min_ms": 672.583,
+          "max_ms": 673.152,
+          "n": 3
+        },
+        "1": {
+          "median_ms": 643.33,
+          "min_ms": 643.329,
+          "max_ms": 643.488,
+          "n": 3
+        }
+      },
+      "cases": 384,
+      "wire_captures": 3,
+      "budgets": {
+        "identity": "agon-emos-v0.1.17-b2026-09-14-16-10-16Z",
+        "sha256": "429f85ebb413bf3eed779307a71126b6cafb7bf884ad1824c6673e1814718b61",
+        "flash_occupied": 130936,
+        "flash_free": 136,
+        "static_sram": 6826,
+        "heap_arena": 7510,
+        "stack_reserve": 2048,
+        "map_sha256": "8550453af21b9b8d5aa3b5d1d9bc91d65e07f0335e85f6a3e5f793cf291e0bbb"
+      },
+      "short_forward": {
+        "0": {
+          "0": 0.44,
+          "1": 0.681,
+          "elapsed_difference_percent": 54.77272727272728
+        },
+        "256": {
+          "0": 2.793,
+          "1": 3.119,
+          "elapsed_difference_percent": 11.672037235947009
+        },
+        "4096": {
+          "0": 37.299,
+          "1": 37.539,
+          "elapsed_difference_percent": 0.6434488860291188
+        }
+      },
+      "reverse_per_transfer_uncertainty_ms": 0.13020833333333334
+    }
+  },
+  "limits": "Profile delta is not an isolated telemetry toggle: bench also replaces UARTFLOW. Short-command setup is still slower. No UART0 wire or graphics/output parity claim. Heap/stack figures are reservations, not high-water measurements."
+}

@@ -1,5 +1,21 @@
 # UART alignment findings
 
+## Executive summary — latest E07P qualification
+
+The frozen bulk-transfer targets now pass in both ordinary and bench EMOS
+profiles on physical hardware. Ordinary EMOS measures588.096ms P4 versus
+589.670ms mainboard forward, and85.156ms versus86.068ms for matched returns.
+Each profile passes384 exact/mixed/wire cases and three independent captures;
+long return intervals separate conservative timing bounds. This updates the
+transport conclusion only; historical graphics results below were not rerun.
+Short-command setup still costs about0.24–0.33ms extra. Original bench
+restoration is in progress; no experimental code has been pushed.
+
+[Current portable summary](results/e07p-transport.json), [minimal P4 owner
+change](E07P-owner.md), [symmetric timing scope](E07P-batch.md). EMOS
+`docs/tasks/INTEG-014/E07P-results/README.md` owns the full detailed report.
+
+
 ## U06 — pure-data baseline
 
 All336cases completed, exact byte counts/patterns matched, and application
@@ -217,3 +233,29 @@ qualification is inferred. The next material throughput work is the documented
 EMOS sender/receiver stock-reuse boundary, under a separate frozen contract.
 The intermittent mainboard diagnostic timeout and existing8KiB reply-staging
 limit remain open. No stock renderer bug was fixed or algorithm improved.
+
+
+## E07P — mainboard bulk parity after EMOS and stock-loop alignment
+
+EMOS retained the fused bounded transmitter, private byte parser/FIFO drain
+and proved private-call simplifications. The P4 change removes only the
+unconditional owner-loop sleep absent from stock VDP hardware. It changes no
+UART rule, baud, queue, service, renderer, priority, affinity or watchdog policy.
+Required SD and neutral keyboard admission survive exact controls and156
+seconds of idle. No wiring change was needed.
+
+| Ordinary transport scope | Mainboard route ms | P4 route ms | Elapsed difference |
+|---|---:|---:|---:|
+|65,535 random bytes forward|589.670|588.096|-0.27%|
+|2,048 useful return bytes in256packets|86.068|85.156|-1.06%|
+|65,535 forward bytes during return traffic|672.608|643.330|-4.35%|
+
+Forward has six observations and mixed three per profile. The128-transfer
+return intervals retain/verify every byte after timing and give±0.130208ms
+per-transfer uncertainty; P4 upper85.286ms is below mainboard lower85.938ms.
+Both profiles together verify6.75MiB of additional return data. No P4 enqueue
+versus mainboard blocking-time shortcut is used. Bench excess relative to
+ordinary is0.010% forward,0.153% return and1.934% mixed forward; those are
+profile differences, since bench also substitutes telemetry for UARTFLOW.
+Pure-data parity does not establish graphics, output or all-size latency
+parity. E08/E09 remain the next separate review/qualification boundary.
