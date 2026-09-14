@@ -25,7 +25,7 @@ unqualified pending a complete run. Historical evidence is unchanged.
 5. [x] Return to the batch even on detected failure; CSV status owns the verdict.
    The batch plays a non-clearing adaptation of the accepted British voice
    recording, then starts SD service. No host remains necessary for completion.
-6. [ ] Verify host control-flow/error paths, build, compare exact payload hashes,
+6. [x] Verify host control-flow/error paths, build, compare exact payload hashes,
    stage/read back the binaries and batch, preserve root startup and firmware.
 7. [ ] Send a preparation voice alert on hardware and stop. Do not run matrix.
 
@@ -71,3 +71,18 @@ SD service. A speech-command receipt is not proof the Author heard it.
 No firmware, renderer, EMOS transport, GPIO, recovery procedure, or emulator
 changes are part of this revision. Original diagnostic images remain pinned in
 EMOS E09; setup and eventual rollback are separate from autonomous execution.
+
+## Prepared candidate
+
+Fixture `graphics-timing-probe-r02-unattended-b2026-09-14-22-25-41Z`,
+15,687 bytes, built from e33ffce. All 39 case records and media bytes compare
+exactly with the prior framebuffer baseline. Three host control-flow cases pass:
+normal completion, SD checkpoint write failure, and detected VDP failure. Both
+Agon C17 builds pass with warnings treated as errors. No emulator was changed.
+
+SD files are activated and independently read back: `GQTUN.BIN`, `GQTVOICE.BIN`,
+`gqtun.txt`, and preparation-only `ready.txt`, all under `/extender/gqt`.
+`staging.json` records their hashes. The original firmware trio and root startup
+remain unchanged. The diagnostic trio must still be installed and verified as
+part of the future authorized launch; this is staged preparation, not a running
+benchmark. Start the phone timer only when the agent reports the matrix launched.

@@ -2,6 +2,11 @@
 
 ## Executive summary
 
+E09 follow-up: the Author requested an autonomous SD-journalled run with a
+scrolling mainboard P4 status log and completion voice. Preparation contract:
+[unattended fixture](../../QUAL-003/timing/unattended.md). No new matrix has
+started; previous incomplete results remain unchanged.
+
 E09 follow-up (2026-09-14): graphics qualification remains incomplete. First
 run hit the known mainboard timeout; one retry recovered550/624 status-zero
 intervals but no terminal before its unchanged deadline. Partial matched

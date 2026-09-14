@@ -1,0 +1,32 @@
+{
+  "files": {
+    "/extender/gqt/GQTUN.BIN": {
+      "bytes": 15687,
+      "sha256": "7958bd7dbe6633c39ea19a20ba42d428dbbf2709a7463463c60648e0f22a25e9",
+      "readback": true
+    },
+    "/extender/gqt/GQTVOICE.BIN": {
+      "bytes": 3961,
+      "sha256": "5afe3b4a07b9b8ab001fc3f0940e3a3e10cd1b418d1a502c2fa95dd3593c816f",
+      "readback": true
+    },
+    "/extender/gqt/gqtun.txt": {
+      "bytes": 240,
+      "sha256": "7b8f347c3d0e7803ac33b61e6f4acbae8932139cb98542bed267f5bf97ceee1a",
+      "readback": true
+    },
+    "/extender/gqt/ready.txt": {
+      "bytes": 167,
+      "sha256": "2191c9e4183b8529b377d82bb4e8091c3944212883a5448d9063af88303c08a1",
+      "readback": true
+    }
+  },
+  "corpus_equal": true,
+  "cases": 39,
+  "intervals": 624,
+  "startup_unchanged": true,
+  "firmware_unchanged": true,
+  "matrix_started": false,
+  "fixture_build": "graphics-timing-probe-r02-unattended-b2026-09-14-22-25-41Z",
+  "player_source_commit": "4056dea"
+}
