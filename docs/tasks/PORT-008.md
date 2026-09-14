@@ -1,5 +1,13 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## Executive summary
+
+EMOS E05 transmit experiments are authorised, followed conditionally by E06
+receive/dual-UART diagnosis. Reuse the frozen E04 baseline; preserve original
+firmware and working keyboard/SD recovery. Notify by spoken hardware cue after
+the pair and pause before E07. No experimental push. Implementation and results
+remain authoritative in sibling `agon-emos/docs/tasks/INTEG-014.md`.
+
 ## EMOS follow-up planning — 2026-09-13
 
 The Author reports pushing the previous 44 commits and requested an EMOS
