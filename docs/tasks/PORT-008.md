@@ -2,11 +2,17 @@
 
 ## Executive summary
 
-EMOS E05 transmit experiments are authorised, followed conditionally by E06
-receive/dual-UART diagnosis. Reuse the frozen E04 baseline; preserve original
-firmware and working keyboard/SD recovery. Notify by spoken hardware cue after
-the pair and pause before E07. No experimental push. Implementation and results
-remain authoritative in sibling `agon-emos/docs/tasks/INTEG-014.md`.
+EMOS E05 reduces large Extender upload time33.41%. E06's four-byte receive
+trigger saves only0.70% and is reverted;420native/candidate cases and three
+independent captures pass. The heavier IRQ observer has a retained failure
+and is not a native performance oracle. EMOS213a24e and its
+`docs/tasks/INTEG-014/E05.md` / `E06.md` own the results.
+
+**Physical recovery is incomplete.** Both original ESP images are independently
+verified, but original-ROM readback, fresh EMOS keyboard/SD admission and the
+spoken cue remain pending after reset checks failed. Stop further mutations
+and request one physical Agon reset/screen observation, using the authorised
+emulator attention fallback. E07 has not started; no experimental push.
 
 ## EMOS follow-up planning — 2026-09-13
 
