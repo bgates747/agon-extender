@@ -1,5 +1,7 @@
 # AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs
 
+OSboot assessment completed: [AUDIT-005-F008 — flash remapping and dual-VDP storage](AUDIT-005/mos-flash-remapping.md). Retain for possible environment switching; ordinary SD routing does not require it. No implementation or hardware change.
+
 Later evidence: [PORT-008's pure UART findings](PORT-008/uart-alignment/FINDINGS.md)
 on 2026-09-13 now isolate 1,530.514 ms of sender-created idle in a 65,535-byte
 forward payload while P4 continuously permits transmission. Reverse idle
