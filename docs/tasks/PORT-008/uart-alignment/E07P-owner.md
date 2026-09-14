@@ -74,3 +74,13 @@ owner retains refill and serial-reply ordering, with a1ms maximum virtual gap.
 These are synthetic behavioral observations, not physical throughput results.
 All12 scenarios preserve exact output, bounded CTS cancellation and fresh lease
 admission. Production owner bytes remain unchanged; O02's ordering gate remains.
+
+
+## Ordering checkpoint after RX03
+
+RX03 completed its isolated wire/batch comparison and was rejected: fewer idle
+instructions did not produce a demonstrated throughput gain. TX04 remains the
+retained EMOS baseline. O02 source preparation is now released. EMOS RX04 removes
+only redundant assembly-to-C argument marshaling relative to TX04 and can be
+prepared independently; O03 physical deployment waits for that candidate's
+selection, then holds its exact ROM fixed throughout the P4 comparison.
