@@ -45,7 +45,7 @@ authorization and EMOS INTEG-014 E07P; no experimental push.
    service call. Do not invent a new scheduler, transport, parser or wire rule.
    Run owner/stream and relevant service host tests, then build from the frozen
    original P4 baseline with only the maintained owner overlay changed.
-3. [ ] **O03 — Physical comparison.** Hold the selected EMOS ROM, mainboard VDP
+3. [x] **O03 — Physical comparison.** Hold the selected EMOS ROM, mainboard VDP
    and app05/batch fixtures fixed. Preserve current P4 prefix before deploying;
    verify exact flashed bytes, native admission and SD/CLI readiness. Measure
    all random lengths, both directions, exact/mixed controls and independent
@@ -109,3 +109,22 @@ changed file: `extender/transport/console_hardware.inc`. The stream overlay,
 probe, partition table and bootloader remain unchanged. The build manifest
 and source-difference receipt are preserved in ignored E07P/p4-owner01.
 No physical deployment yet; O03 still waits for RX04 disposition.
+
+
+## O03 physical evidence
+
+The factory image read back exactly and its native USB host startup was observed.
+Fresh EMOS admission and SD recovered with the selected RX04 ROM unchanged.
+All376 original full/mixed/wire cases and12 matched-batch rows passed exact
+bytes and recovery; independent wire decoding passed with zero snapshots.
+Four large-forward samples give P4 median588.147ms (588.113–588.186), mainboard
+589.595ms (589.550–589.710). Return wire remains85.957ms; request-to-first-byte
+fell1.397→0.749ms. Matched return remains slower:87.500 versus85.417ms (+2.44%).
+The endpoint scopes remain distinct; the reverse target is not passed.
+
+A257-byte SD upload/independent readback passed, root autoexec was unchanged,
+and more than120 seconds of subsequent idle preserved the same ready/neutral
+keyboard boot and online SD admission with zero browser snapshots. This is
+a bounded service/idle observation, not a long-term stability guarantee.
+Raw data, flash prefix/boot receipts and idle snapshots remain under ignored
+E07P; paired evidence is in agon-emos E07P-results/owner01.json and epob1.
