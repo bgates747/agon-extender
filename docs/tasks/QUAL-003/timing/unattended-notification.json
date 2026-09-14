@@ -1,0 +1,9 @@
+{
+  "receipt": "audio_commands=pass\r\n",
+  "fresh_sd_service": true,
+  "startup_unchanged": true,
+  "matrix_started": false,
+  "firmware_unchanged": true,
+  "state": "Legacy MOS prompt",
+  "human_hearing": "pending"
+}

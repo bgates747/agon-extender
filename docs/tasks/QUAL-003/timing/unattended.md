@@ -27,7 +27,7 @@ unqualified pending a complete run. Historical evidence is unchanged.
    recording, then starts SD service. No host remains necessary for completion.
 6. [x] Verify host control-flow/error paths, build, compare exact payload hashes,
    stage/read back the binaries and batch, preserve root startup and firmware.
-7. [ ] Send a preparation voice alert on hardware and stop. Do not run matrix.
+7. [x] Send a preparation voice alert on hardware and stop. Do not run matrix.
 
 ## Invocation and observation
 
@@ -86,3 +86,10 @@ SD files are activated and independently read back: `GQTUN.BIN`, `GQTVOICE.BIN`,
 remain unchanged. The diagnostic trio must still be installed and verified as
 part of the future authorized launch; this is staged preparation, not a running
 benchmark. Start the phone timer only when the agent reports the matrix launched.
+
+
+Preparation-only voice played on hardware, with a fresh SD-service receipt
+`audio_commands=pass` and unchanged startup verified. Returned to Legacy MOS
+prompt. The new player made no screen-clear/cursor-position call. Human hearing
+and visual review remain separate. No matrix, firmware deployment or collector
+was started. Preparation is stopped for Author review; nothing pushed.
