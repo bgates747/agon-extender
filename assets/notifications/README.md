@@ -35,7 +35,7 @@ Do not issue this while an application owns the foreground.
 The existing `examples/network-hello/src/main.c` player was reused unchanged,
 with generated message constants for stage 6 and zero post-playback hold.
 VDP audio acknowledgements passed and the player returned to the service;
-human hearing confirmation is pending. Both files were fully read back after
+the Author confirmed the spoken alert with “perfect.” Both files were fully read back after
 deployment. Root startup and firmware were unchanged. The test then exited
 the SD service, leaving the MOS prompt.
 
