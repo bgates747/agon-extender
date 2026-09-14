@@ -1,0 +1,15 @@
+{
+  "text": "The Extender agent requires your attention.",
+  "engine": "gTTS 2.5.4",
+  "language": "en",
+  "tld": "co.uk",
+  "voice_note": "Same British English synthesis settings as the Author-accepted earlier alerts; gTTS does not expose a named voice or gender selector.",
+  "format": "RIFF/WAVE, unsigned 8-bit PCM, mono",
+  "sample_rate": 16000,
+  "samples": 54912,
+  "duration_seconds": 3.432,
+  "file_bytes": 54990,
+  "sha256": "4a91905c3a6d08143cc32d95d96329b7900917f735d48468ae8800e8d3971b17",
+  "converter": "AgonJukebox/scripts/make_wav.py --sample-rate 16000 --compress",
+  "hardware_playback": "Not attempted; reusable asset preparation only."
+}
