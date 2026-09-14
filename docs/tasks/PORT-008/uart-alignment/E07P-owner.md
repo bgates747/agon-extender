@@ -33,7 +33,7 @@ authorization and EMOS INTEG-014 E07P; no experimental push.
 
 ## Ordered contract
 
-1. [ ] **O01 — Freeze and prepare independent-time owner tests.** Preserve the
+1. [x] **O01 — Freeze and prepare independent-time owner tests.** Preserve the
    old passing test output. Use a10µs deterministic observation quantum and the
    existing100-byte/ms virtual line rate; `delay(n)` adds its real n milliseconds.
    Run current owner and existing deliberate control variants. Preserve exact
@@ -61,3 +61,16 @@ authorization and EMOS INTEG-014 E07P; no experimental push.
 Each completed step/disposition receives a separate local commit. All source
 and firmware manifests remain reproducible; never edit generated build input
 silently. The existing current owner is retained until O02's ordering gate.
+
+
+## O01 host-model checkpoint
+
+The old owner test passed before editing. The revised independent10µs clock
+and100-byte/ms virtual UART pass all four scenarios with ASan/UBSan. Two explicit
+private-copy controls also pass their expected outcomes: disabling partial-FIFO
+refill produces zero refills, while allowing the next blocking parser command
+before queued replies drain produces a401ms intra-packet gap. The maintained
+owner retains refill and serial-reply ordering, with a1ms maximum virtual gap.
+These are synthetic behavioral observations, not physical throughput results.
+All12 scenarios preserve exact output, bounded CTS cancellation and fresh lease
+admission. Production owner bytes remain unchanged; O02's ordering gate remains.

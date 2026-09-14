@@ -16,24 +16,29 @@ constexpr int ESP_OK=0,ESP_ERR_TIMEOUT=1,pdTRUE=1;
 constexpr int UART_FIFO_OVF=3,UART_FRAME_ERR=4,UART_PARITY_ERR=5,COMMS_TIMEOUT=200;
 struct uart_config_t{int baud_rate,data_bits,parity,stop_bits,flow_ctrl,rx_flow_ctrl_thresh,source_clk;};
 struct uart_event_t{int type;};
-static unsigned now_ms,cancelled,refills,submitted_at,complete_at;
+static unsigned now_us,now_ms,cancelled,refills,submitted_at,complete_at;
 static int scenario;static bool produced,expect_refill,read_started,expect_serial_reply;
 static unsigned last_byte_at,max_packet_gap;
 static std::deque<uint8_t> fifo;
 static std::vector<uint8_t> received,expected;
 struct Finished{};
-static unsigned millis(){return now_ms;}
-static unsigned esp_random(){return 42;}
-static void delay(int n){
- for(int i=0;i<n;++i){
-  ++now_ms;
+// Independent deterministic wire/clock progress. One observation costs10us;
+// explicit delays add elapsed time. This is a behavior model, not a CPU benchmark.
+static void advance(unsigned us){
+ for(unsigned i=0;i<us;i+=10){
+  now_us+=10;now_ms=now_us/1000;
   bool blocked=(scenario==1 && now_ms>=3 && now_ms<603)||(scenario==2 && now_ms<5300);
-  if(!blocked)for(unsigned k=0;k<100 && !fifo.empty();++k){if(received.size()%18)max_packet_gap=std::max(max_packet_gap,now_ms-last_byte_at);
-   last_byte_at=now_ms;received.push_back(fifo.front());fifo.pop_front();}
+  if(!blocked && !fifo.empty()){
+   if(received.size()%18)max_packet_gap=std::max(max_packet_gap,now_ms-last_byte_at);
+   last_byte_at=now_ms;received.push_back(fifo.front());fifo.pop_front();
+  }
   if(!complete_at && produced && received==expected)complete_at=now_ms;
   if(now_ms>=6200)throw Finished{};
  }
 }
+static unsigned millis(){advance(10);return now_ms;}
+static unsigned esp_random(){return 42;}
+static void delay(int n){assert(n>=0);advance(unsigned(n)*1000);}
 static int gpio_reset_pin(int){return 0;}
 static int gpio_set_level(int,int){return 0;}
 static int gpio_set_direction(int,int){return 0;}
