@@ -59,7 +59,7 @@ bound to±0.130208ms per transfer; it does not change the parity threshold.
    changes, online CRC substitute, SD output or observer within the interval.
    Check analyzer deliberate wrong-scope, corruption, timing and terminal cases.
    Canonically build clean16 and128 variants and preserve maps/hashes.
-2. [ ] **B02b — Use only to resolve a close result.** Keep six alternating paired
+2. [x] **B02b — Use only to resolve a close result.** Keep six alternating paired
    intervals and the exact same request/arming/mailbox-copy work per transfer.
    First preserve the existing16-transfer result on the selected ROM/ESP pair.
    Then run the explicit longer variant on both routes, verify every retained
@@ -94,3 +94,17 @@ SHA256 `991e0dc1e0c4e295ceee22c6008407631fc5eba6f7525cc9e83ab07a73f336d5`.
 Build/run with `--batch --batch-rounds 128` and the unchanged `batch` launch
 argument; analyze with `--transfers 128`. Old app05/batch01 stay frozen and are
 still the primary controls. B02b remains unused until a close selected result.
+
+
+## B02b first physical result
+
+RX05 on the fixed owner01/mainboard01 pair first passed the original16-transfer
+byte checks but retained overlapping bounds (P4 85.417ms, mainboard85.938ms).
+The explicit128-transfer follow-up passes all12 exact rows and3145728 useful
+bytes, with Legacy/SD recovery. P4 median85.286ms (85.286–85.417), mainboard
+86.068ms, elapsed difference−0.91%. P4 upper bound85.417ms is below mainboard
+lower85.938ms; conservative parity passes. This is the matched return target,
+not a UART0 wire capture or graphics claim. Parent EMOS P07/P08 still own final
+repeats, ordinary-profile checks and exact original bench restoration.
+Evidence: EMOS E07P-results/ep5rlong-analysis.json and ep5rlong.csv; ignored
+Extender E07P retains the original result, stage/readback and recovery receipts.
