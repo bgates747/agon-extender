@@ -113,3 +113,19 @@ count was zero. No physical-device request was made after the launch command.
 The Author owns observation; there is no host collector, deadline or automatic
 restore. Diagnostic firmware remains installed. Await the Author's report before
 accessing progress/results or changing the bench. No outcome is inferred.
+
+## Duration capture after Author-observed completion
+
+The Author reports completion with approximately 1m30s left on a 30-minute phone
+timer started a few minutes after launch: roughly 28m30s after starting the timer,
+therefore plausibly somewhat over 30 minutes total. This is an approximate human
+observation, not an exact measured start-to-finish timestamp.
+
+Evaluate the preserved r02 run unchanged. Its 1,560 pre-operation clocks can
+establish a nominal checkpoint span and reusable per-case planning data; the
+last probe and terminal/audio tail are outside that span. Revision r03 adds an
+explicit start/end/raw elapsed timing comment, outside measured intervals,
+before the terminal record. It is a future fixture, not a replacement for the
+completed evidence, and must be built/identified separately. At 60Hz, MOS's
+2-tick VBLANK increment gives nominal 120 ticks/s; do not blindly call these
+centiseconds or mistake that conversion for independent wall-clock calibration.

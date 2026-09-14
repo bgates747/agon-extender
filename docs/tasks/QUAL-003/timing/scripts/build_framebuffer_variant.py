@@ -21,7 +21,7 @@ assert corpus['total']==64-len(excluded)
 for c in corpus['cases']:assert hashlib.sha256((dst/'media'/(c['name']+'.DAT')).read_bytes()).hexdigest()==c['sha256']
 for n in excluded:(dst/'media'/(n+'.DAT')).unlink()
 header=(src/'build/cases.h').read_text();header='\n'.join(line for line in header.splitlines() if not any('"'+n+'"' in line for n in excluded))+'\n';header=header.replace('#define CASE_COUNT 64',f'#define CASE_COUNT {corpus["total"]}');(dst/'build/cases.h').write_text(header)
-stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');build_id=('graphics-timing-probe-r02-unattended-b' if args.unattended else 'graphics-timing-probe-r01-framebuffer-b')+stamp
+stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');build_id=('graphics-timing-probe-r03-unattended-b' if args.unattended else 'graphics-timing-probe-r01-framebuffer-b')+stamp
 (dst/'build/build_identity.h').write_text('#define GRAPHICS_BUILD_ID "'+build_id+' (experimental reduced corpus)"\n')
 (dst/'build/corpus.json').write_text(json.dumps(corpus,indent=2)+'\n')
 with (out/'build.log').open('w') as log:subprocess.run(['make','all'],cwd=dst,stdout=log,stderr=subprocess.STDOUT,check=True)

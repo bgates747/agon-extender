@@ -46,6 +46,7 @@ uint24_t bench_count(const uint8_t*p,uint24_t n){
  return 0;
 }
 int main(int argc,char**argv){fail=argc>1?atoi(argv[1]):0;char *args[]={"test","unattended"};assert(fixture_main(2,args)==0);
+ assert(strstr(journal,"# timing,start_tick=") && strstr(journal,",nominal_hz=120"));
  assert(opens==closes && opens==syncs);assert(!active && !measuring);
  if(fail==2){assert(graphics_exit_status==FR_TIMEOUT && saved==1);assert(strstr(journal,"# terminal,status=15,saved=1"));}
  else if(fail){assert(graphics_exit_status==FR_DISK_ERR);assert(saved==1);assert(strstr(journal,"# terminal,status=1,saved=1"));}

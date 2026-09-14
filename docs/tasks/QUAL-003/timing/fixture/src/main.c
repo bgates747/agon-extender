@@ -18,6 +18,7 @@ static uint8_t data[MAX_CASE_BYTES];
 static FIL file;
 static char filename[32],line[640],command[64];
 static unsigned review,unattended;
+static uint24_t suite_start;
 static unsigned saved,route,repeat,case_index,detail,mismatches;
 static uint16_t token;
 static volatile uint8_t expected_source,armed,received[9],bad;
@@ -181,6 +182,7 @@ static unsigned probes(const Case *c) {
 int main(int argc,char **argv) {
     review=argc==2 && !strcmp(argv[1],"review");
     unattended=argc==2 && !strcmp(argv[1],"unattended");sv=(volatile uint8_t*)mos_sysvars();
+    suite_start=clock_now();
     unsigned status=create();if(status)goto done;
     mos_setkbvector(graphics_callback,0);
     /* One complete off pair followed by three on pairs: identical traffic/order. */
@@ -212,6 +214,17 @@ int main(int argc,char **argv) {
         }
     }
     armed=0;mos_setkbvector(NULL,0);
+    if(unattended) {
+        /* MOS increments by two per VBLANK: 120 ticks/s is nominal in mode20.
+         * Report raw time too; this is not a calibrated host wall clock.
+         * Modulo subtraction supports one low-24-bit wrap (<38.8h at 60Hz).
+         * Excludes final timing/terminal writes and the separate voice player. */
+        uint24_t finish=clock_now();
+        snprintf(line,sizeof line,"# timing,start_tick=%lu,end_tick=%lu,elapsed_ticks=%lu,nominal_hz=120\r\n",
+            (unsigned long)suite_start,(unsigned long)finish,
+            (unsigned long)((finish-suite_start)&0xFFFFFFUL));
+        unsigned s=append(line);if(!status)status=s;
+    }
     snprintf(line,sizeof line,"# terminal,status=%u,saved=%u,probe_mismatches=%u,phase=%s\r\n",status,saved,mismatches,phase);
     {unsigned s=append(line);if(!status)status=s;}
 done:
