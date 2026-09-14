@@ -4,7 +4,8 @@ import argparse,configparser,hashlib,io,json,os,shutil,subprocess,tarfile
 from datetime import datetime,timezone
 from pathlib import Path
 TASK=Path(__file__).resolve().parents[1];ROOT=TASK.parents[3]
-p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);p.add_argument('--hardware-overlay',type=Path);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--batch',action='store_true',help='build the E07P symmetric reverse batch app variant');p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);p.add_argument('--hardware-overlay',type=Path);a=p.parse_args()
+assert not a.batch or a.target=='app','--batch applies only to the app'
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
 def git(repo,*args):return subprocess.check_output(['git','-C',str(repo),*args])
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -17,10 +18,11 @@ meta={'source_commit':git(ROOT,'rev-parse','HEAD').decode().strip(),'dirty':bool
 if meta['dirty']:raise SystemExit('Commit controlled inputs before building')
 stamp=datetime.now(timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity=('uart-excom-console-r17' if a.target=='p4' else 'uart-data-probe-r01')+'-b'+stamp
 meta['build_id']=identity
+if a.batch:meta['variant']='reverse-batch'
 for f in TASK.rglob('*'):
  if f.is_file():meta['inputs'][str(f.relative_to(ROOT))]=sha(f)
 if a.target=='app':
- src=out/'fixture';shutil.copytree(TASK/'fixture',src);(src/'build').mkdir();(src/'build/build_identity.h').write_text('#define UART_BUILD_ID "'+identity+' (experimental)"\n')
+ src=out/'fixture';shutil.copytree(TASK/('batch-fixture' if a.batch else 'fixture'),src);(src/'build').mkdir();(src/'build/build_identity.h').write_text('#define UART_BUILD_ID "'+identity+' (experimental)"\n')
  run(['make','-C',str(src),'all'],'build.log');artifacts=list((src/'bin').glob('*'))
 else:
  if a.target=='mainboard':
