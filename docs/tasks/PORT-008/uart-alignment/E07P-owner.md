@@ -39,7 +39,7 @@ authorization and EMOS INTEG-014 E07P; no experimental push.
    Run current owner and existing deliberate control variants. Preserve exact
    ring-wrap output, CTS stalls, five-second cancellation, fresh admission,
    parser/reply ordering and no stale tail. No firmware change in this step.
-2. [ ] **O02 — Minimal stock-shaped candidate.** After the isolated EMOS
+2. [x] **O02 — Minimal stock-shaped candidate.** After the isolated EMOS
    TX03/TX04/RX03 comparisons, remove only the unconditional owner `delay(1)`.
    Retain the whole owner loop and every guard, timestamp, queue, deadline and
    service call. Do not invent a new scheduler, transport, parser or wire rule.
@@ -96,3 +96,16 @@ telemetry; the USB keyboard checks also execute in that host invocation.
 No other production source changed. The clean-input P4 build follows; O02 stays
 unchecked until its artifact and exact overlay provenance are verified. O03
 still waits for the new EMOS receiver's isolated disposition.
+
+
+## O02 artifact checkpoint
+
+Clean source3a0f05e built identity15:14:56Z. The factory image is1578288 bytes,
+SHA256 `368ff0a00e798f598964471656608d8a944a24cc062434c918e71cda203f91c5`.
+The app is1447216 bytes, SHA256
+`fbbc4500cbb6ce5d0aae9c906367d9fa723ab18e9fe13849c29ce570d71c9a72`.
+An exhaustive comparison of the two prepared video trees finds exactly one
+changed file: `extender/transport/console_hardware.inc`. The stream overlay,
+probe, partition table and bootloader remain unchanged. The build manifest
+and source-difference receipt are preserved in ignored E07P/p4-owner01.
+No physical deployment yet; O03 still waits for RX04 disposition.
