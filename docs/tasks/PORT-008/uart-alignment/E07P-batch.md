@@ -48,7 +48,7 @@ do not change the baseline clock, packet or useful work. Prepare explicit
 interval cannot establish the close result.128 reduces the same conservative
 bound to±0.130208ms per transfer; it does not change the parity threshold.
 
-1. [ ] **B02a — Implement and check scope.** Build-time rounds may be16,31 or128,
+1. [x] **B02a — Implement and check scope.** Build-time rounds may be16,31 or128,
    default16. Record rounds and retained useful bytes in the build manifest and
    require matching analyzer scope explicitly. Preserve every returned byte
    until validation outside the timed interval.31 fits existing65535-byte
@@ -80,3 +80,17 @@ scopes, exact byte counts, wrong scope, corrupt/status/odd-clock/output/terminal
 controls and overlapping bounds. The128 variant retains262144 useful bytes per
 interval; the link-map guard requires128KiB free between BSS and stack. Clean
 16/128 builds and actual map evidence follow before B02a is checked.
+
+
+## B02a build proof
+
+Both clean variants pass. The rebuilt default16 binary is byte-identical to
+the original frozen batch01 after replacing only its build identity string.
+The128 build ends BSS at0x847de, leaving178210 bytes (174.03KiB) below the
+0xb0000 stack top, exceeding the128KiB guard. It retains262144 useful bytes
+per interval and3145728 across twelve exact rows. No reserved MOS memory is
+used. The final long-interval image is15575 bytes, identityuart-data-probe-r01-b2026-09-14-16-06-09Z,
+SHA256 `991e0dc1e0c4e295ceee22c6008407631fc5eba6f7525cc9e83ab07a73f336d5`.
+Build/run with `--batch --batch-rounds 128` and the unchanged `batch` launch
+argument; analyze with `--transfers 128`. Old app05/batch01 stay frozen and are
+still the primary controls. B02b remains unused until a close selected result.
