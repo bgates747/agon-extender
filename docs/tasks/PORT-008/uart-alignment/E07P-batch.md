@@ -37,3 +37,35 @@ and post-run Legacy/SD recovery batch as the original control. The analyzer
 `analyze_batch.py CSV --output result.json` rejects incomplete, duplicate,
 wrong-scope or corrupt records and reports conservative timing bounds. A passed
 byte check with overlapping bounds is explicitly not a parity pass.
+
+
+## B02 — finer symmetric intervals, frozen before implementation
+
+The remaining return gap is now comparable to the16-transfer interval's
+±1.042ms per-transfer quantization bound. Preserve batch01 and all its evidence;
+do not change the baseline clock, packet or useful work. Prepare explicit
+31- and128-transfer build variants, used only if the final composition's short
+interval cannot establish the close result.128 reduces the same conservative
+bound to±0.130208ms per transfer; it does not change the parity threshold.
+
+1. [ ] **B02a — Implement and check scope.** Build-time rounds may be16,31 or128,
+   default16. Record rounds and retained useful bytes in the build manifest and
+   require matching analyzer scope explicitly. Preserve every returned byte
+   until validation outside the timed interval.31 fits existing65535-byte
+   storage;128 uses262144 bytes of ordinary application RAM. The old app's
+   bss_end is0x547dd, stack0xb0000; the projected128 variant leaves about178KiB
+   between BSS and stack. Require the actual map to retain at least128KiB and
+   bound the storage product at compile time. No MOS/on-chip reserved-memory
+   changes, online CRC substitute, SD output or observer within the interval.
+   Check analyzer deliberate wrong-scope, corruption, timing and terminal cases.
+   Canonically build clean16 and128 variants and preserve maps/hashes.
+2. [ ] **B02b — Use only to resolve a close result.** Keep six alternating paired
+   intervals and the exact same request/arming/mailbox-copy work per transfer.
+   First preserve the existing16-transfer result on the selected ROM/ESP pair.
+   Then run the explicit longer variant on both routes, verify every retained
+   byte and recovery, and apply non-overlapping conservative bounds. Record
+   length, duration, RAM use and limits; never turn an overlapping bound into a
+   pass. Original app05 matrices and independent wire captures remain required.
+
+This is a diagnostic application change under the parent's unattended authority;
+no production firmware/protocol change and no new emulator profile.
