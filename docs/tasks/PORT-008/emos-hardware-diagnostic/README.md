@@ -1,5 +1,9 @@
 # PORT-008 EMOS hardware-failure diagnostic
 
+Current recovery authority: [Maintained MOS recovery protocol](../../../mos-recovery.md).
+The retirement below applies to these historical implementations and embedded
+payloads, not to the P4/ZDI recovery method or the maintained protocol.
+
 > **Retired historical record — do not execute.** This diagnostic and its
 > one-shot recovery variant completed their bounded predecessor roles. Their
 > PlatformIO source selections and payload generator now fail closed. The

@@ -96,6 +96,7 @@ compile_commands.json
 # Temporary hardware-recovery payloads embed exact firmware binaries and are
 # regenerated from hash-gated authorities; never make them a source authority.
 /vdp/video/extender/diagnostic/generated/
+/vdp/video/extender/recovery/generated/
 
 # Debugger and profiling output
 *.dSYM/
