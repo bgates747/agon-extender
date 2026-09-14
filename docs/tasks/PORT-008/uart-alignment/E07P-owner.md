@@ -51,7 +51,7 @@ authorization and EMOS INTEG-014 E07P; no experimental push.
    all random lengths, both directions, exact/mixed controls and independent
    wire timing with no browser output. Observe ordinary service responsiveness
    and long idle stability so a throughput gain does not hide starvation.
-4. [ ] **O04 — Disposition.** Retain only demonstrated improvement with correct
+4. [x] **O04 — Disposition.** Retain only demonstrated improvement with correct
    required services. Restore the old P4 image if behavior regresses; record any
    necessary platform adaptation before trying it. Update EMOS E07P results and
    the PORT-008 record. Final qualification and original bench restoration stay
@@ -128,3 +128,13 @@ keyboard boot and online SD admission with zero browser snapshots. This is
 a bounded service/idle observation, not a long-term stability guarantee.
 Raw data, flash prefix/boot receipts and idle snapshots remain under ignored
 E07P; paired evidence is in agon-emos E07P-results/owner01.json and epob1.
+
+
+## O04 disposition
+
+Retain the minimal stock-loop alignment: repeatable forward/setup gains,
+unchanged return wire, exact/mixed data and required services pass. This does
+not complete the two-direction goal. Hold this P4 owner01 image fixed while
+EMOS RX05 removes the caller-proven private fault recheck. Parent P07 still
+owns final repeats and ordinary-profile qualification; P08 restores the exact
+original bench images. No experimental push or human gameplay claim.
