@@ -2234,3 +2234,16 @@ The large forward gap and reverse Agon backpressure reproduce; this is baseline
 evidence, not a fix. Selected high-resolution metrics have a5% material-change
 floor under the frozen noise rule. E05 awaits the next supervised approval;
 no experimental push. Standard spoken hardware notification is the review cue.
+
+
+## E07P — qualified bulk parity, restored review checkpoint
+
+EMOS E07P is complete: ordinary and bench profiles each pass384 exact controls,
+three independent captures and strict symmetric return timing. Ordinary forward
+588.096ms versus589.670ms and return85.156ms versus86.068ms meet the frozen
+mainboard targets. [Current findings](PORT-008/uart-alignment/FINDINGS.md) own
+the cross-component summary and link portable qualification/restoration data.
+The exact pre-run EMOS/VDP/P4/startup is restored; CLI/SD/input checks pass and
+the hardware voice command has a fresh receipt. Human hearing/review remains
+open. No experimental push or new graphics qualification. Stop for Author
+review before EMOS E08 correctness stress and E09 rendering.

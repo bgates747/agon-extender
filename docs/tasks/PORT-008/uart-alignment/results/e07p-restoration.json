@@ -1,5 +1,5 @@
 {
-  "state": "Exact pre-run firmware restored; Legacy MOS prompt; final voice pending",
+  "state": "Exact pre-run firmware restored; hardware voice acknowledged; Legacy MOS prompt",
   "emos": {
     "image_identity": "agon-emos-v0.1.16-b2026-09-13-07-31-36Z",
     "image_bytes": 130071,
@@ -50,5 +50,12 @@
   "experimental_push_performed": false,
   "zdi_recovery_needed": false,
   "human_visual_review": "pending",
-  "notification": "pending"
+  "notification": {
+    "receipt": "stage=6\r\naudio_commands=pass\r\n",
+    "fresh_service_boot": true,
+    "startup_unchanged": true,
+    "state": "Legacy MOS prompt",
+    "cue": "Standard British spoken attention cue",
+    "human_hearing": "pending"
+  }
 }

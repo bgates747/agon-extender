@@ -9,7 +9,8 @@ Each profile passes384 exact/mixed/wire cases and three independent captures;
 long return intervals separate conservative timing bounds. This updates the
 transport conclusion only; historical graphics results below were not rerun.
 Short-command setup still costs about0.24–0.33ms extra. The exact pre-run bench
-images and startup are restored and verified; the voice cue is pending.
+images and startup are restored and verified; the hardware voice command has
+a fresh completion receipt and human review remains pending.
 No experimental code has been pushed.
 
 [Current portable summary](results/e07p-transport.json), [minimal P4 owner
@@ -270,4 +271,6 @@ and the exact original P4 prefix including its old tail. Fresh reset/admission,
 257-byte SD roundtrip, keyboard-launched CLI COPY, unchanged root startup and
 backup, and neutral input pass. The bench is at the Legacy MOS prompt.
 Qualified candidates are preserved; original working firmware is installed
-for review. No ZDI recovery or experimental push. Final voice cue pending.
+for review. No ZDI recovery or experimental push. The hardware voice command has a fresh
+completion receipt and returned to the MOS prompt; human hearing remains
+unconfirmed.
