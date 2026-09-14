@@ -93,3 +93,14 @@ Preparation-only voice played on hardware, with a fresh SD-service receipt
 prompt. The new player made no screen-clear/cursor-position call. Human hearing
 and visual review remain separate. No matrix, firmware deployment or collector
 was started. Preparation is stopped for Author review; nothing pushed.
+
+
+## Launch authorization
+
+The Author now authorizes installing the pinned diagnostic trio and launching
+the staged test. Verify installation and launch prerequisites, emit the single
+launch command, then stop all host progress monitoring. Do not run a collector,
+query test progress, fetch results, set a host deadline, reset, or restore while
+the unattended run is in the Author's hands. The Author starts a 30-minute phone
+timer after seeing the test running and will report an apparent hang. Completion
+voice and SD journalling belong to the fixture/batch, not a host process.
