@@ -1,5 +1,22 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## EMOS follow-up planning — 2026-09-13
+
+The Author reports pushing the previous 44 commits and requested an EMOS
+diagnosis/fix plan. The implementation plan now lives in sibling
+`agon-emos/docs/tasks/INTEG-014.md`, promoted to that repository's first TODO
+priority. It reuses AUDIT-005, compares stock and linked EMOS code, isolates
+TX/RX and dual-UART costs, and measures C versus assembly on speed and flash
+size. C/C++ is preferred for negligible timing differences. This task retains
+paired qualification ownership. No new implementation or hardware test began
+during planning; historical unpushed/review statements below describe the prior
+checkpoint, not the Author's newly reported publication.
+
+The Author subsequently authorised supervised execution: complete one numbered
+INTEG-014 step, notify on hardware and pause for their response. E01 first
+preserves current source/evidence and verifies bench access and recovery;
+firmware optimisation and new diagnostic deployments belong to later steps.
+
 ## Current priority — stock UART alignment, 2026-09-13
 
 The Author authorized [the granular UART plan](PORT-008/uart-alignment/PLAN.md)
