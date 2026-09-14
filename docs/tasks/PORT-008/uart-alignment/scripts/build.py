@@ -4,8 +4,9 @@ import argparse,configparser,hashlib,io,json,os,shutil,subprocess,tarfile
 from datetime import datetime,timezone
 from pathlib import Path
 TASK=Path(__file__).resolve().parents[1];ROOT=TASK.parents[3]
-p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--batch',action='store_true',help='build the E07P symmetric reverse batch app variant');p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);p.add_argument('--hardware-overlay',type=Path);a=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('target',choices=['app','mainboard','p4']);p.add_argument('--batch',action='store_true',help='build the E07P symmetric reverse batch app variant');p.add_argument('--batch-rounds',type=int,choices=[16,31,128],default=16);p.add_argument('--output',type=Path,required=True);p.add_argument('--p4-baseline',type=Path);p.add_argument('--console-overlay',type=Path);p.add_argument('--hardware-overlay',type=Path);a=p.parse_args()
 assert not a.batch or a.target=='app','--batch applies only to the app'
+assert a.batch or a.batch_rounds==16,'--batch-rounds requires --batch'
 out=a.output.resolve();out.mkdir(parents=True,exist_ok=False)
 def git(repo,*args):return subprocess.check_output(['git','-C',str(repo),*args])
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
@@ -18,12 +19,22 @@ meta={'source_commit':git(ROOT,'rev-parse','HEAD').decode().strip(),'dirty':bool
 if meta['dirty']:raise SystemExit('Commit controlled inputs before building')
 stamp=datetime.now(timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity=('uart-excom-console-r17' if a.target=='p4' else 'uart-data-probe-r01')+'-b'+stamp
 meta['build_id']=identity
-if a.batch:meta['variant']='reverse-batch'
+if a.batch:meta.update(variant='reverse-batch',transfers_per_interval=a.batch_rounds,retained_useful_bytes=a.batch_rounds*2048)
 for f in TASK.rglob('*'):
  if f.is_file():meta['inputs'][str(f.relative_to(ROOT))]=sha(f)
 if a.target=='app':
  src=out/'fixture';shutil.copytree(TASK/('batch-fixture' if a.batch else 'fixture'),src);(src/'build').mkdir();(src/'build/build_identity.h').write_text('#define UART_BUILD_ID "'+identity+' (experimental)"\n')
+ if a.batch:
+  with (src/'build/build_identity.h').open('a') as f:f.write('#define UART_BATCH_ROUNDS '+str(a.batch_rounds)+'\n')
  run(['make','-C',str(src),'all'],'build.log');artifacts=list((src/'bin').glob('*'))
+ if a.batch:
+  import re
+  linked=(src/'bin/UARTDATA.map').read_text()
+  bss=int(re.search(r'0x([0-9a-f]+)\s+bss_end =',linked)[1],16)
+  stack=int(re.search(r'0x([0-9a-f]+)\s+__stack =',linked)[1],16)
+  assert stack-bss>=128*1024,'Insufficient application stack/heap headroom'
+  meta['application_ram']={'bss_end':bss,'stack':stack,'free_between_bss_stack':stack-bss}
+
 else:
  if a.target=='mainboard':
   stock=Path.home()/'Agon/agon-vdp';src=out/'source';v='c7ac293d2aa81ddfa693390549bcd909069c8fc3';g='ac2dd5986daf496c43ae8e7fe41836274aec54a0'

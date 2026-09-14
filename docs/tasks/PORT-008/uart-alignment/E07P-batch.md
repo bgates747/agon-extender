@@ -53,7 +53,7 @@ bound to±0.130208ms per transfer; it does not change the parity threshold.
    require matching analyzer scope explicitly. Preserve every returned byte
    until validation outside the timed interval.31 fits existing65535-byte
    storage;128 uses262144 bytes of ordinary application RAM. The old app's
-   bss_end is0x547dd, stack0xb0000; the projected128 variant leaves about178KiB
+   bss_end is0x547dd, stack0xb0000; the projected128 variant leaves about174KiB
    between BSS and stack. Require the actual map to retain at least128KiB and
    bound the storage product at compile time. No MOS/on-chip reserved-memory
    changes, online CRC substitute, SD output or observer within the interval.
@@ -69,3 +69,14 @@ bound to±0.130208ms per transfer; it does not change the parity threshold.
 
 This is a diagnostic application change under the parent's unattended authority;
 no production firmware/protocol change and no new emulator profile.
+
+
+## B02 source freeze
+
+The builder now records explicit16/31/128 rounds and retained byte count; only
+the batch variant receives that compile-time scope. The analyzer requires a
+matching `--transfers` selection (default16). Four host tests cover all three
+scopes, exact byte counts, wrong scope, corrupt/status/odd-clock/output/terminal
+controls and overlapping bounds. The128 variant retains262144 useful bytes per
+interval; the link-map guard requires128KiB free between BSS and stack. Clean
+16/128 builds and actual map evidence follow before B02a is checked.

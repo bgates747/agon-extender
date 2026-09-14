@@ -11,7 +11,13 @@ extern uint24_t bench_clock(const volatile uint8_t *);
 extern uint24_t bench_count(const uint8_t *,uint24_t);
 extern void graphics_callback(void);
 static volatile uint8_t *sv;
-static uint8_t data[65535],returned[2048];
+#ifndef UART_BATCH_ROUNDS
+#define UART_BATCH_ROUNDS 16
+#endif
+_Static_assert(UART_BATCH_ROUNDS == 16 || UART_BATCH_ROUNDS == 31 || UART_BATCH_ROUNDS == 128, "frozen batch scope");
+#define UART_BATCH_BYTES (UART_BATCH_ROUNDS * 2048U)
+_Static_assert(UART_BATCH_BYTES <= 262144U, "bounded application storage");
+static uint8_t data[UART_BATCH_BYTES > 65535U ? UART_BATCH_BYTES : 65535U],returned[2048];
 static volatile uint8_t armed,bad,seen[4],source;
 static volatile uint16_t owner,packets;
 static volatile uint32_t value[4],count[4];
@@ -95,7 +101,7 @@ static unsigned reverse(void) {
 static unsigned reverse_batch(void) {
     unsigned s=0,rounds=0,errors=0;length=256;pattern=3;
     uint24_t start=ticks();
-    for(;rounds<16;++rounds) {
+    for(;rounds<UART_BATCH_ROUNDS;++rounds) {
         arm();s=request(4);if(!s)s=wait_for(3);armed=0;
         if(s || bad || packets!=256 || count[3]!=256){++errors;break;}
         memcpy(data+rounds*2048,returned,2048);
@@ -105,8 +111,8 @@ static unsigned reverse_batch(void) {
         rng=0x12345678UL;position=0;
         for(unsigned i=0;i<2048;++i)if(data[r*2048+i]!=next_byte())++errors;
     }
-    if(!s && (rounds!=16 || errors))s=FR_INT_ERR;
-    return row("reverse-batch",0,whole,0,32768,rounds*2048,errors,s);
+    if(!s && (rounds!=UART_BATCH_ROUNDS || errors))s=FR_INT_ERR;
+    return row("reverse-batch",0,whole,0,UART_BATCH_BYTES,rounds*2048,errors,s);
 }
 static unsigned duplex(void) {
     const uint8_t clear[]={23,0,160,10,250,2};
