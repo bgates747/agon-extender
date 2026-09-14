@@ -1,6 +1,15 @@
 # UART alignment findings
 
-## Executive summary — latest E07P qualification
+## Executive summary
+
+E09 follow-up (2026-09-14): graphics qualification remains incomplete. First
+run hit the known mainboard timeout; one retry recovered550/624 status-zero
+intervals but no terminal before its unchanged deadline. Partial matched
+repeats show largest bitmap elapsed864.936ms P4 versus882.518ms mainboard
+(priorP43048.396ms). These are exploratory figures, not a full pass. Original
+bench restored/verified; hardware voice sent. EMOS INTEG-014/E09 owns the
+complete evidence and review boundary.
+ — latest E07P qualification
 
 The frozen bulk-transfer targets now pass in both ordinary and bench EMOS
 profiles on physical hardware. Ordinary EMOS measures588.096ms P4 versus
