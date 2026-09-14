@@ -104,3 +104,12 @@ query test progress, fetch results, set a host deadline, reset, or restore while
 the unattended run is in the Author's hands. The Author starts a 30-minute phone
 timer after seeing the test running and will report an apparent hang. Completion
 voice and SD journalling belong to the fixture/batch, not a host process.
+
+
+Launch command sent at 2026-09-14 23:20:09 UTC after exact installed EMOS
+readback, verified P4/mainboard diagnostic flash, fresh keyboard/SD admission,
+unchanged startup and fixture/batch readback. The prelaunch browser snapshot
+count was zero. No physical-device request was made after the launch command.
+The Author owns observation; there is no host collector, deadline or automatic
+restore. Diagnostic firmware remains installed. Await the Author's report before
+accessing progress/results or changing the bench. No outcome is inferred.
