@@ -1,0 +1,54 @@
+{
+  "state": "Exact pre-run firmware restored; Legacy MOS prompt; final voice pending",
+  "emos": {
+    "image_identity": "agon-emos-v0.1.16-b2026-09-13-07-31-36Z",
+    "image_bytes": 130071,
+    "image_sha256": "1da8330462eed54317e5889cf3f09cb1abaca8b478f7d92b88a3a1d74c9fc70c",
+    "full_rom_bytes": 131072,
+    "full_rom_sha256": "1cd65eac21780a8a7c82e14209737c38796e24f32300524e58a93e5c44e096d8",
+    "byte_exact": true
+  },
+  "mainboard_vdp": {
+    "release": "official2.16.0",
+    "source_flash_backup_sha256": "702da19ef1276f9496f35b1b814232976cb00127c58abe5b8cfc407785a58359",
+    "restored_offset": 65536,
+    "restored_bytes": 1081344,
+    "restored_region_sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e",
+    "scope": "Complete application erase sectors affected by diagnostic image",
+    "device_verify_pass": true
+  },
+  "p4": {
+    "build_id": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+    "restored_prefix_bytes": 2097152,
+    "restored_prefix_sha256": "4b1e99f05d2d81660351056c9ed37fd4af1e1e87ece18a9893f61d68c08ed7ef",
+    "scope": "Exact pre-run2MiB prefix, including old tail beyond factory image",
+    "device_verify_pass": true,
+    "native_usb_host_startup": true
+  },
+  "services": {
+    "sd_roundtrip_bytes": 257,
+    "sd_roundtrip_exact": true,
+    "keyboard_launched_cli_copy": true,
+    "startup_unchanged": true,
+    "backup_unchanged": true,
+    "startup_sha256": "f02deab9a21fa23ca19cb7c3ee6e733d1049abf001854f8d63df2c8040414218",
+    "backup_sha256": "735a37f21922e4642856ec5fc62d7e19e22b0c0ce84eaeeb524e204c03d76a4d",
+    "keyboard_ready": true,
+    "physical_neutral": true,
+    "held_keys": 0,
+    "pending_keys": 0,
+    "state": "Legacy MOS prompt"
+  },
+  "generic_outputs": {
+    "pre_run_source_files_unchanged": 129,
+    "generated_files_byte_exact": 136,
+    "original_archive_sha256": "0ab7a16003f8f2d02958ed5c1a6af92dd9b832c1461418e76e9aecf68a038caf",
+    "current_outputs_preserved": "generated-after",
+    "git_refs_unchanged": true
+  },
+  "qualified_images_preserved": true,
+  "experimental_push_performed": false,
+  "zdi_recovery_needed": false,
+  "human_visual_review": "pending",
+  "notification": "pending"
+}

@@ -8,8 +8,9 @@ profiles on physical hardware. Ordinary EMOS measures588.096ms P4 versus
 Each profile passes384 exact/mixed/wire cases and three independent captures;
 long return intervals separate conservative timing bounds. This updates the
 transport conclusion only; historical graphics results below were not rerun.
-Short-command setup still costs about0.24–0.33ms extra. Original bench
-restoration is in progress; no experimental code has been pushed.
+Short-command setup still costs about0.24–0.33ms extra. The exact pre-run bench
+images and startup are restored and verified; the voice cue is pending.
+No experimental code has been pushed.
 
 [Current portable summary](results/e07p-transport.json), [minimal P4 owner
 change](E07P-owner.md), [symmetric timing scope](E07P-batch.md). EMOS
@@ -259,3 +260,14 @@ ordinary is0.010% forward,0.153% return and1.934% mixed forward; those are
 profile differences, since bench also substitutes telemetry for UARTFLOW.
 Pure-data parity does not establish graphics, output or all-size latency
 parity. E08/E09 remain the next separate review/qualification boundary.
+
+
+## E07P restoration checkpoint
+
+The [portable restoration record](results/e07p-restoration.json) verifies the
+full pre-run EMOS ROM, all mainboard application sectors touched by diagnostics,
+and the exact original P4 prefix including its old tail. Fresh reset/admission,
+257-byte SD roundtrip, keyboard-launched CLI COPY, unchanged root startup and
+backup, and neutral input pass. The bench is at the Legacy MOS prompt.
+Qualified candidates are preserved; original working firmware is installed
+for review. No ZDI recovery or experimental push. Final voice cue pending.
