@@ -1,0 +1,63 @@
+# E07P owner scheduling — bounded stock-alignment comparison
+
+## Executive summary
+
+The current P4 console owner sleeps one millisecond on every pass, including
+passes that have just queued a reply. Official VDP 2.16.0's hardware process
+loop does not. This is a concrete divergence worth measuring after the already
+frozen EMOS comparisons. Keep the UART, parser, keyboard, SD, admission and
+cancellation behavior intact. This remains under the Author's unattended parity
+authorization and EMOS INTEG-014 E07P; no experimental push.
+
+## Read-only baseline and precise hypothesis
+
+1. Official read-only VDP tag v2.16.0, commit
+   c7ac293d2aa81ddfa693390549bcd909069c8fc3: `video/video.ino`, `processLoop`.
+   The stock hardware loop continuously calls `processor->processNext()`;
+   its occasional delay belongs only to the USERSPACE build.
+2. Maintained `vdp/video/extender/transport/console_hardware.inc` ends its owner
+   loop with unconditional `delay(1)`. SHA256
+   59529e79291d6b2c79e1423d6d976c97038876efda499e6ad094c85762ae940a
+   exactly matches the frozen installed diagnostic P4 owner overlay.
+3. Both stock and retained P4 create the process task on core0 at priority3.
+   The existing P4 watchdog adapter already preserves stock's disabled IDLE-task
+   watchdog policy. Do not change priorities, affinity or watchdog configuration.
+4. The observed small-transfer elapsed excess is roughly1.4–2.2ms in RX02.
+   Queued READY versus stock blocking READY is one known scope difference;
+   the sleep is a causal hypothesis, not a measured attribution yet.
+5. Existing owner host tests advance virtual time only in `delay()`. They would
+   hang if production delay disappeared. Fix this modeling limitation first:
+   model independent clock/UART progress at a small deterministic quantum on
+   time observation, retaining real simulated delays as additional elapsed time.
+   These tests prove behavior, never physical performance.
+
+## Ordered contract
+
+1. [ ] **O01 — Freeze and prepare independent-time owner tests.** Preserve the
+   old passing test output. Use a10µs deterministic observation quantum and the
+   existing100-byte/ms virtual line rate; `delay(n)` adds its real n milliseconds.
+   Run current owner and existing deliberate control variants. Preserve exact
+   ring-wrap output, CTS stalls, five-second cancellation, fresh admission,
+   parser/reply ordering and no stale tail. No firmware change in this step.
+2. [ ] **O02 — Minimal stock-shaped candidate.** After the isolated EMOS
+   TX03/TX04/RX03 comparisons, remove only the unconditional owner `delay(1)`.
+   Retain the whole owner loop and every guard, timestamp, queue, deadline and
+   service call. Do not invent a new scheduler, transport, parser or wire rule.
+   Run owner/stream and relevant service host tests, then build from the frozen
+   original P4 baseline with only the maintained owner overlay changed.
+3. [ ] **O03 — Physical comparison.** Hold the selected EMOS ROM, mainboard VDP
+   and app05/batch fixtures fixed. Preserve current P4 prefix before deploying;
+   verify exact flashed bytes, native admission and SD/CLI readiness. Measure
+   all random lengths, both directions, exact/mixed controls and independent
+   wire timing with no browser output. Observe ordinary service responsiveness
+   and long idle stability so a throughput gain does not hide starvation.
+4. [ ] **O04 — Disposition.** Retain only demonstrated improvement with correct
+   required services. Restore the old P4 image if behavior regresses; record any
+   necessary platform adaptation before trying it. Update EMOS E07P results and
+   the PORT-008 record. Final qualification and original bench restoration stay
+   under the parent's P07/P08 gates; hardware voice only at the final checkpoint
+   or a physical-assistance blocker.
+
+Each completed step/disposition receives a separate local commit. All source
+and firmware manifests remain reproducible; never edit generated build input
+silently. The existing current owner is retained until O02's ordering gate.
