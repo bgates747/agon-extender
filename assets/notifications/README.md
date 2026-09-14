@@ -23,3 +23,22 @@ Preparing this asset does not deploy it, alter startup, interrupt an application
 or play it. Use the existing hardware playback path when the foreground state
 permits it; record actual playback separately. The EMOS supervised review gates
 remain in force.
+
+## Installed bench playback
+
+Tested on the physical Agon on 2026-09-14 UTC. From the ordinary Legacy MOS
+prompt, `EXEC /extender/attention.txt` runs `/extender/attention.bin`, plays
+`/extender/attention.wav` once, then starts the foreground SD service. The host
+can collect `/extender/hello-seen.txt` and exit the service to return to MOS.
+Do not issue this while an application owns the foreground.
+
+The existing `examples/network-hello/src/main.c` player was reused unchanged,
+with generated message constants for stage 6 and zero post-playback hold.
+VDP audio acknowledgements passed and the player returned to the service;
+human hearing confirmation is pending. Both files were fully read back after
+deployment. Root startup and firmware were unchanged. The test then exited
+the SD service, leaving the MOS prompt.
+
+Private build, deployment and execution receipts are retained under
+`agents/attention-audio-2026-09-14/`. Player SHA-256:
+`83db4034a6e955ca56a950f5650991a58a789416f2a81aef793471bc803ffcf2`.
