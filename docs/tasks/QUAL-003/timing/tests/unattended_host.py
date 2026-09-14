@@ -21,7 +21,7 @@ harness='''#include <assert.h>
 static char journal[50000],screen[50000];static unsigned jlen,slen,opens,closes,syncs,active,measuring,fail;
 static uint8_t vars[20]={0,20};
 unsigned ffs_fopen(FIL*f,const char*p,unsigned flags){(void)f;(void)p;(void)flags;assert(!measuring);++opens;return 0;}
-unsigned ffs_fwrite(FIL*f,const char*p,unsigned n){(void)f;assert(!measuring);if(fail && strstr(p,"next=output"))return 0;memcpy(journal+jlen,p,n);jlen+=n;journal[jlen]=0;return n;}
+unsigned ffs_fwrite(FIL*f,const char*p,unsigned n){(void)f;assert(!measuring);if(fail==1 && strstr(p,"next=output"))return 0;memcpy(journal+jlen,p,n);jlen+=n;journal[jlen]=0;return n;}
 unsigned ffs_fsync(FIL*f){(void)f;++syncs;return 0;}
 unsigned ffs_fclose(FIL*f){(void)f;++closes;return 0;}
 uint8_t mos_fopen(const char*p,unsigned f){(void)p;(void)f;assert(!measuring);return 1;}
@@ -38,7 +38,7 @@ uint24_t bench_count(const uint8_t*p,uint24_t n){
  if(n==7 && p[0]==23 && p[2]==0xEF){
   assert(active==route);
   if(p[3]==1){assert(!measuring);measuring=1;received[0]=1;}
-  else if(p[3]==2 || p[3]==3){assert(measuring);measuring=0;received[1]=1;receive_done=clock_now();}
+  else if(p[3]==2 || p[3]==3){assert(measuring);measuring=0;if(fail==2)return FR_TIMEOUT;received[1]=1;receive_done=clock_now();}
   else {assert(p[3]==4);received[p[6]]=1;}
  }else if(n && p[0]=='P'){
   assert(!active && !measuring);memcpy(screen+slen,p,n);slen+=n;screen[slen]=0;
@@ -47,7 +47,8 @@ uint24_t bench_count(const uint8_t*p,uint24_t n){
 }
 int main(int argc,char**argv){fail=argc>1?atoi(argv[1]):0;char *args[]={"test","unattended"};assert(fixture_main(2,args)==0);
  assert(opens==closes && opens==syncs);assert(!active && !measuring);
- if(fail){assert(graphics_exit_status==FR_DISK_ERR);assert(saved==1);assert(strstr(journal,"# terminal,status=1,saved=1"));}
+ if(fail==2){assert(graphics_exit_status==FR_TIMEOUT && saved==1);assert(strstr(journal,"# terminal,status=15,saved=1"));}
+ else if(fail){assert(graphics_exit_status==FR_DISK_ERR);assert(saved==1);assert(strstr(journal,"# terminal,status=1,saved=1"));}
  else {assert(!graphics_exit_status && saved==16);assert(strstr(journal,"# terminal,status=0,saved=16"));assert(strstr(screen,"P4 test 4/4 ONLY probe [16/16]"));}
  assert(strstr(journal,"next=draw") && strstr(journal,"next=setup"));
  return 0;
@@ -59,5 +60,5 @@ with tempfile.TemporaryDirectory() as tmp:
  (p/'cases.h').write_text('typedef struct {const char*name;unsigned group,setup,bytes,probes,uploads;} Case;\nstatic const Case cases[]={{"ONLY",0,0,0,0,0}};\n#define CASE_COUNT 1\n#define MAX_CASE_BYTES 1\n')
  (p/'test.c').write_text(harness)
  subprocess.run(['cc','-std=c17','-I'+tmp,str(p/'test.c'),'-o',str(p/'test')],check=True)
- for fault in ('0','1'):subprocess.run([str(p/'test'),fault],check=True)
-print('PASS: complete run; SD-write failure; synced journal; no status IO inside measurements; batch continuation; Legacy return')
+ for fault in ('0','1','2'):subprocess.run([str(p/'test'),fault],check=True)
+print('PASS: complete run; SD-write failure; VDP failure; synced journal; no status IO inside measurements; batch continuation; Legacy return')
