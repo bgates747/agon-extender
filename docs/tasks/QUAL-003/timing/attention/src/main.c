@@ -98,7 +98,7 @@ int main(void) {
     puts(audio?"Speech playback completed.":"Speech playback failed: attention required.");
     const char *receipt=audio?"audio_commands=pass\r\n":"audio_commands=fail\r\n";
     uint8_t f=mos_fopen("/extender/gqt/voice.txt",FA_WRITE|FA_CREATE_ALWAYS);
-    if(f) { mos_fwrite(f,receipt,strlen(receipt));mos_fclose(f); }
+    if(f) { mos_fwrite(f,(char *)receipt,strlen(receipt));mos_fclose(f); }
     /* Always permit the launch script to restore foreground SD service. */
     return 0;
 }
