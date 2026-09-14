@@ -17,7 +17,7 @@ static volatile uint8_t *sv;
 static uint8_t data[MAX_CASE_BYTES];
 static FIL file;
 static char filename[32],line[640],command[64];
-static unsigned review;
+static unsigned review,unattended;
 static unsigned saved,route,repeat,case_index,detail,mismatches;
 static uint16_t token;
 static volatile uint8_t expected_source,armed,received[9],bad;
@@ -132,6 +132,33 @@ static unsigned switch_route(void) {
     s=mos_waitforvdpflags(16);if(s)return s;
     return sv[sysvar_scrMode]==20?0:FR_INVALID_PARAMETER;
 }
+/* Unattended checkpoints are synced and closed before the named operation.
+ * The mainboard text log is updated only while P4 owns the graphics test;
+ * public EMOS routing returns to P4 before any measured interval. Never clear
+ * or home the text cursor: normal scrolling preserves the visible history.
+ * Mainboard graphics cases necessarily overwrite their own screen. */
+static unsigned checkpoint(const char *next) {
+    phase=next;
+    if(!unattended)return 0;
+    snprintf(line,sizeof line,"# progress,tick=%lu,rep=%u,route=%u,case=%s,next=%s,saved=%u/%u\r\n",
+        (unsigned long)clock_now(),repeat,route,cases[case_index].name,next,saved,CASE_COUNT*16);
+    unsigned s=append(line);if(s)return s;
+    if(route) {
+        strcpy(command,"emos legacy --keep-display");
+        s=mos_oscli(command,NULL,0);if(s)return s;
+        const uint8_t text[]={26,4,15,17,63,17,128};
+        s=send_bytes(text,sizeof text);
+        if(!s) {
+            snprintf(line,sizeof line,"P4 test %u/4 %s %s [%u/%u]\r\n",
+                repeat+1,cases[case_index].name,next,saved,CASE_COUNT*16);
+            s=send_bytes((const uint8_t*)line,strlen(line));
+        }
+        strcpy(command,"emos excom --keep-display");
+        unsigned back=mos_oscli(command,NULL,0);
+        if(!s)s=back;
+    }
+    return s;
+}
 static unsigned settle(void) {
     uint24_t start=clock_now();uint32_t budget=8000000UL;
     while(clock_now()-start<(review?6:120) && --budget) {} /* raw MOS ticks; local us recorded */
@@ -152,7 +179,8 @@ static unsigned probes(const Case *c) {
     return 0;
 }
 int main(int argc,char **argv) {
-    review=argc==2 && !strcmp(argv[1],"review");sv=(volatile uint8_t*)mos_sysvars();
+    review=argc==2 && !strcmp(argv[1],"review");
+    unattended=argc==2 && !strcmp(argv[1],"unattended");sv=(volatile uint8_t*)mos_sysvars();
     unsigned status=create();if(status)goto done;
     mos_setkbvector(graphics_callback,0);
     /* One complete off pair followed by three on pairs: identical traffic/order. */
@@ -161,20 +189,25 @@ int main(int argc,char **argv) {
         for(route=0;route<2 && !status;++route) {
             phase="route";status=switch_route();if(status)break;
             for(case_index=0;case_index<CASE_COUNT && !status;++case_index) {
-                const Case *c=&cases[case_index];phase="preload";status=load_case(c);if(status)break;
-                phase="setup";status=c->setup?send_bytes(data,c->setup):0;if(status)break;
+                const Case *c=&cases[case_index];status=checkpoint("preload");if(status)break;
+                status=load_case(c);if(status)break;
+                status=checkpoint("setup");if(status)break;
+                status=c->setup?send_bytes(data,c->setup):0;if(status)break;
                 /* Do not emit a zero-sized RST18: MOS interprets zero as string mode. */
-                phase="draw";status=begin();if(status)break;
+                status=checkpoint("draw");if(status)break;
+                status=begin();if(status)break;
                 uint24_t t=clock_now();if(c->bytes)status=send_bytes(data+c->setup,c->bytes);
                 send_ticks=clock_now()-t;
                 if(!status)status=end(2);
                 status=save(status);if(status)break;
                 /* Recurring output window: no VDU refresh, queries or SD traffic. */
-                phase="output";status=begin();if(status)break;
+                status=checkpoint("output");if(status)break;
+                status=begin();if(status)break;
                 status=settle();send_ticks=0;
                 if(!status)status=end(3);
                 status=save(status);if(status)break;
-                phase="probe";status=probes(c);
+                status=checkpoint("probe");if(status)break;
+                status=probes(c);
             }
         }
     }
@@ -182,6 +215,13 @@ int main(int argc,char **argv) {
     snprintf(line,sizeof line,"# terminal,status=%u,saved=%u,probe_mismatches=%u,phase=%s\r\n",status,saved,mismatches,phase);
     {unsigned s=append(line);if(!status)status=s;}
 done:
+    if(unattended) {
+        strcpy(command,"emos legacy --keep-display");
+        unsigned returned=mos_oscli(command,NULL,0);
+        if(!status)status=returned;
+        const uint8_t text[]={26,4,15,17,63,17,128};
+        (void)send_bytes(text,sizeof text);
+    }
     graphics_exit_status=status;
     if(review) {
         strcpy(command,"emos legacy --keep-display");
@@ -197,5 +237,6 @@ done:
                       "Native times are functional evidence only.\r\n"
                       "Hardware performance remains unmeasured.\r\n");
     graphics_done();
-    return status;
+    /* The launcher plays audio on both complete and failed runs. CSV owns verdict. */
+    return unattended?0:status;
 }

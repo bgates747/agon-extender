@@ -1,0 +1,14 @@
+EMOS KEYINPUT extender
+EMOS LEGACY
+VDU 22 20
+EMOS EXCOM
+VDU 22 20
+EMOS LEGACY --keep-display
+CD /extender/gqt
+LOAD GQTUN.BIN
+RUN . unattended
+EMOS LEGACY --keep-display
+LOAD GQTVOICE.BIN
+RUN
+LOAD /extender/sdserve.bin
+RUN . /
