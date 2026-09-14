@@ -274,6 +274,8 @@ void runConsole(VDUStreamProcessor *processor) {
       printf("ExCom fault: %s; reset P4 before retry\n",s.failure);
       for(;;)delay(1000);
     }
-    delay(1);
+    // E07P: stock VDP 2.16.0 processLoop has no hardware-path sleep here.
+    // Keep the same continuously serviced owner; unconditional delay delayed
+    // newly queued replies. Existing stock-shaped IDLE watchdog policy remains.
   }
 }

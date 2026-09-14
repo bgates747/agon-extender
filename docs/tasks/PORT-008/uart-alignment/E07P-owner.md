@@ -84,3 +84,15 @@ retained EMOS baseline. O02 source preparation is now released. EMOS RX04 remove
 only redundant assembly-to-C argument marshaling relative to TX04 and can be
 prepared independently; O03 physical deployment waits for that candidate's
 selection, then holds its exact ROM fixed throughout the P4 comparison.
+
+
+## O02 source freeze before the build
+
+The candidate removes only the unconditional owner sleep and explains its stock
+reference beside the loop. All twelve owner/control scenarios pass with ASan
+and UBSan, as do the stream cases in both counter-enabled and ordinary forms.
+Five service tests pass for console admission, remote input, SD lifecycle and
+telemetry; the USB keyboard checks also execute in that host invocation.
+No other production source changed. The clean-input P4 build follows; O02 stays
+unchecked until its artifact and exact overlay provenance are verified. O03
+still waits for the new EMOS receiver's isolated disposition.
