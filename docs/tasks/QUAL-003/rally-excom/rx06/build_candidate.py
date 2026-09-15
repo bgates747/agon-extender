@@ -16,8 +16,8 @@ def main():
  for name,digest in original['inputs'].items():assert sha(tree/name)==digest,name
  patch=subprocess.check_output(['git','diff','966345e',commit,'--','vdp/video/vdu_buffered.h'],cwd=ROOT)
  assert patch
- subprocess.run(['git','apply','--check','-'],input=patch,cwd=tree,check=True)
- subprocess.run(['git','apply','-'],input=patch,cwd=tree,check=True)
+ subprocess.run(['patch','--dry-run','--batch','-p1'],input=patch,cwd=tree,check=True)
+ subprocess.run(['patch','--batch','-p1'],input=patch,cwd=tree,check=True)
  (out/'repair.patch').write_bytes(patch)
  for name in ('vdp/video/extender/port/fixed_conversion.hpp','vdp/pio/p4-console-identity.json'):
   dest=tree/name;dest.parent.mkdir(parents=True,exist_ok=True);shutil.copy2(ROOT/name,dest)
