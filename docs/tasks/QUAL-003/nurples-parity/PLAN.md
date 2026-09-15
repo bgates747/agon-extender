@@ -1218,3 +1218,12 @@ N04ad-i ready: analyzer identity matches, Pi has42GiB free; startup restored
 and verified before capture. Initial USB helper staging omitted its identity
 module and stopped before serial open/reset. Resume supplies the unchanged
 identity helper; this was preparation only, not a failed game/capture run.
+
+N04ad acquisition failed its80second extent: sigrok exited0 with68.856704seconds
+of samples. Preserve that failure. AGENT-ASSIGNED diagnostic follow-up (not
+separately Author-approved): inspect the retained partial capture only if both
+fresh nonce markers, all2400 refreshes, valid framing, and an independent decode
+fit completely inside its actual extent. This does not relabel the acquisition
+as passing or provide qualification evidence. A complete marked window can
+still distinguish wire versus parser spacing; otherwise prepare a new bounded
+capture after diagnosing the collection failure. Do not blindly rerun/reset.
