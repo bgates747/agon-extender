@@ -917,3 +917,35 @@ unfenced binaries; their submission60Hz ceiling is separately scoped from the
 P4 completion trace and previous stock completion-query controls. No same-probe
 mainboard microsecond completion trace is claimed. Deployment/readback remains
 the prerequisite to N04w-iii hardware execution.
+
+### N04x — Match completion timestamp precision on the mainboard
+
+AGENT-ASSIGNED, not separately Author-approved. First r38 SW completes all2400
+refreshes at60.06FPS, but microsecond p95 is30.673ms. The older mainboard result
+uses synchronous queries and120Hz quantization; it cannot establish the stock
+unfenced completion-spacing distribution at this finer precision. Do not relax
+the smoothness gate or change scheduling based on this asymmetric comparison.
+
+1. [ ] N04x-i: Reuse the maintained mainboard diagnostic builder pattern to
+   archive exact official VDP2.16.0 c7ac293 and vdp-gl ac2dd598. Add only the same
+   optional refresh recorder, enqueue/completion hooks and consumed/discarded
+   markers as r38. No graphics-timing scopes/private fence opcode, renderer
+   changes, UART algorithm changes or MOS changes. Build isolated mainboard
+   refresh-trace-r01 with full source/output hashes and explicit diagnostic ID.
+2. [ ] N04x-ii: After current four-case controller releases the bench, restore
+   safe startup, preserve actual onboard VDP flash, verify expected stock image
+   and stable USB identity, then install/read back the diagnostic application.
+   Capture mainboard UART0 passively before invocation. Run the same r05 SW/HW
+   fixtures with fresh nonces. Mainboard output is physical VGA; do not mistake
+   a stale P4 browser image for mainboard rendering evidence.
+3. [ ] N04x-iii: Compare matched high-resolution completion distributions and
+   counts. Repeat apparent parity on both targets; retain load/state/image
+   checks. Restore exact affected mainboard flash sectors and verify normal
+   boot/SD/input before conclusion. No firmware remains altered merely to
+   gather a convenient baseline, and no experimental image is pushed.
+
+Existing reusable pattern: timing/scripts/build_mainboard.py archives the same
+release/dependency and preserves official checkouts. Machine-local deployment
+reference: agents/uart-alignment/control/graphics-mainboard.py. Refresh timestamp
+hooks sit in the original primitive execution task in VGA64 mode, not scanout;
+this scope must remain identical in both reports. No physical wiring changes.
