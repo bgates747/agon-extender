@@ -5,11 +5,12 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
-## Current Author-directed work — Overnight debrief
+## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-Audit existing evidence and official documentation, propose focused next steps,
-then hardware voice and stop. Nurples experiments remain paused pending review.
+The [full debrief](docs/tasks/QUAL-003/OVERNIGHT-DEBRIEF.md) and proposed P01–P06
+sequence are ready; hardware voice completed. Nurples experiments remain paused
+pending review. Golem testing is explicitly on hold until further notice.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
@@ -80,7 +81,7 @@ deterministic Nurples and separate typing measurements are deferred.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: EDP visual PASS retained. Framebuffer-first exploratory results ready for Author review: 39-case baseline completed 624/624 intervals with zero P4 snapshots; known SHP23 probe differences only. BSP30 stress page excluded after two preserved mainboard timeouts/scanout artifacts. Primitive gains and upload/submission slowdown recorded; ordinary mainboard firmware and keyboard/SD recovered. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
+  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. Proposed P01–P06 sequence is review-only; experiments paused, Golem on hold. Hardware voice completed, Legacy CLI restored; no experimental push.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
   - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: RX06 repair eliminates all 14 road-section differences; 80/80 samples now match stock. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). RX07 enumeration complete: [inventory](docs/tasks/QUAL-003/rally-excom/rx07/README.md). RX08 approved N02–N06; [RX09/RX10 guards and stock comparisons](docs/tasks/QUAL-003/rally-excom/rx09/PLAN.md) pass machine checks; human review pending. RX11 reusable import protection complete; [results](docs/tasks/QUAL-003/rally-excom/rx11/README.md). Golem excluded.
 

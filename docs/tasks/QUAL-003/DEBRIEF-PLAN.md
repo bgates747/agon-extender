@@ -26,7 +26,7 @@ benchmarks, emulator changes or experimental pushes during this debrief.
    then append ranked first investigations to its executive summary. Put the
    granular proposed actions and decision gates in this task's review plan;
    do not execute them before review.
-5. [ ] D05: Check calculations/references, commit documentation in discrete
+5. [x] D05: Check calculations/references, commit documentation in discrete
    local steps, notify through the accepted hardware voice path and stop.
 
 Deliverable: `OVERNIGHT-DEBRIEF.md` beside this contract, with reproducible
@@ -173,3 +173,13 @@ follow-up notes except a demonstrated portability adaptation needed for parity.
 3. [ ] P06c: Any encoding/damage/credit change is a separately reviewed output
    contract. Never obtain a rendering-parity pass by reducing game workload,
    resolution, sprite count or silently displaying stale frames.
+
+## Debrief delivery
+
+D01–D05 complete. The report, official-source audit, reproducible tables and
+P01–P06 proposals are committed locally. The accepted British hardware voice
+completed with a fresh replacement receipt; unchanged startup and neutral
+keyboard readiness verified, SD service exited to Legacy MOS. See
+`debrief/notification.json`. Human hearing/review is pending. No performance
+experiment, firmware flash/reset, Golem test, emulator change or push occurred.
+Only the documentation/research goal is complete; parity remains unproved.

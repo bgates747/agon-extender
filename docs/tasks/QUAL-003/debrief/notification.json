@@ -1,0 +1,11 @@
+{
+  "audio_commands": "pass",
+  "fresh_pending_receipt_replaced": true,
+  "accepted_british_voice": true,
+  "startup_unchanged": true,
+  "sd_service_exited": true,
+  "keyboard_ready_neutral": true,
+  "firmware_reset_or_flash": false,
+  "bench_state": "Legacy MOS prompt",
+  "human_hearing": "pending"
+}

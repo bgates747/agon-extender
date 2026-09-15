@@ -1,5 +1,23 @@
 # QUAL-003 — Compare mainboard VDP and Extender EDP graphics
 
+## Executive summary — current review, 2026-09-15
+
+The [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md) is ready for Author review,
+with [official-source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) and a
+[focused proposed sequence](QUAL-003/DEBRIEF-PLAN.md#proposed-investigation-sequence).
+Recorded P4 native execution scopes are faster than mainboard, but streamed
+Nurples completion spacing has not passed repeated parity. Current Rally
+hardware FPS is unmeasured. Hardware voice completed; bench returned to Legacy
+MOS. Experiments remain paused, proposed steps require review, and Golem testing
+is explicitly on hold until further notice. No experimental push.
+
+## Earlier execution amendments and scope records
+
+The sections below preserve earlier contracts and checkpoints. Their older
+"current"/"deferred" wording does not supersede the dated review above or the
+nonce-validated Nurples evidence.
+
+
 Current application continuation: [Rally Legacy/ExCom r01](QUAL-003/rally-excom/PLAN.md), authorized after E09 review. Targeted diagnosis precedes broad reruns; first clear defect is a review stop.
 
 Current execution amendment: [framebuffer-first hardware pass](QUAL-003/timing/framebuffer-pass.md). The 2026-09-13 exploratory pass is complete and awaiting Author review: 624/624 intervals in the stable 39-case selection, no P4 video snapshots, and ordinary mainboard firmware/keyboard/SD restored. Two earlier population-stress failures remain preserved; see the amendment for exact scope and limits.
