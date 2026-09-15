@@ -575,3 +575,26 @@ implementation changes. r29 build is the frozen N04n one-variable experiment.
 N04n-i passed: r29 built from committed inputs; disassembly of attach shows
 priority5 for stock-draw and priority2 for stock-output at their respective
 xTaskCreatePinnedToCore calls. Baseline renderer source and frame format retained.
+
+### N04o — Measure row admission versus row composition
+
+AGENT-ASSIGNED, not separately Author-approved. The first r29 SW streaming
+result improves to51.0796FPS but still has33.3333ms p95. Finish its existing
+paired/repeated controls. Do not make another scheduling guess.
+
+1. [ ] N04o-i: Add default-off output-only row timing to the P4 binding,
+   aggregating per-frame microseconds waiting for the native mutex and inside
+   retained row preparation. Publish two aggregate phases once per snapshot;
+   no per-row logging/network calls or recorder atomics. Preserve default code
+   behavior, source primitives, row boundaries and image format. Timer overhead
+   makes this a diagnostic image, not parity evidence. Verify host aggregation
+   and build/identity before deployment.
+2. [ ] N04o-ii: After r29 controls finish, preserve/restore safe startup and P4
+   rollback, deploy/verify the isolated probe. One production browser remains
+   connected during deterministic game initialization; capture a drained10-second
+   counter window beginning about40seconds after reset, verify512x384 and retain
+   an EVF image. No second WebSocket owner. Compare aggregate lock wait, row work
+   and snapshot residual; reject incomplete/lost/overlapping windows.
+3. [ ] N04o-iii: Select the next smallest output correction from those measured
+   costs; record observation versus inference. Do not optimize MOS further while
+   the same workload already completes at60FPS with output disconnected.
