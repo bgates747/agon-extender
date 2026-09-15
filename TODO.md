@@ -8,11 +8,11 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-The [full debrief](docs/tasks/QUAL-003/OVERNIGHT-DEBRIEF.md) and proposed P01–P06
-sequence are ready; hardware voice completed. Nurples experiments remain paused
-pending review. Author-requested P00 adds a focused inherited FabGL timing audit
-before selecting scheduling changes. Golem testing is explicitly on hold until
-further notice.
+P00's focused timing audit and [P01a/b matched output controls](docs/tasks/QUAL-003/debrief/P01/README.md)
+are complete. Removing output removes the SW timing tail in both repeats;
+streamed repeats remain uneven. Hardware voice delivered; paused for review.
+Recommend existing P02 composition-versus-network isolation next, not yet
+approved. Conditional P01c/d instrumentation is deferred. Golem remains on hold.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
