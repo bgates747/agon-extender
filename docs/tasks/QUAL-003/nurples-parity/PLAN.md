@@ -485,7 +485,7 @@ retain that as a possible procedural cause, not an established diagnosis.
    r28 P4 flash, verify programmer deployment, capture complete pre-erase ROM
    and target identity, restore baseline once with independent byte readback.
    Use docs/mos-recovery.md unchanged. No automatic retry or wiring change.
-2. [ ] N04l-R2: Restore/verify P4 r28 before one controlled mainboard reset.
+2. [x] N04l-R2: Restore/verify P4 r28 before one controlled mainboard reset.
    Prove fresh native input and SD access with original safe startup. Inspect
    failed-ROM bytes to distinguish incomplete programming from a valid image
    failing to boot. Freeze a new step before any further EMOS installation;
@@ -496,3 +496,17 @@ remaining88756bytes all FF. Recovery restored the exact known-good full ROM;
 P4 r28 restored/readback. This supports premature controller reset as cause.
 The ordinary updater's automatic reboot is now the completion guard documented
 in maintained recovery guidance. Physical input/SD readmission remains pending.
+
+### N04l-R3 — Corrected updater completion (AGENT-ASSIGNED, not separately Author-approved)
+
+Known-good ROM/P4/native keyboard/SD/original startup all restored and verified.
+The failed image is an exact candidate prefix followed by erased bytes, so the
+corrective experiment changes controller completion handling only.
+
+1. [ ] N04l-R3a: Invoke the same already-verified on-card candidate once. Wait
+   up to120seconds for the updater's own fresh EMOS keyboard admission. Never
+   issue an external reset during this wait. Lost keyboard session at reboot is
+   expected; it is not grounds to resend FLASH. If no fresh boot, stop/inspect.
+2. [ ] N04l-R3b: After automatic reboot, save to a new ROM-dump filename and
+   compare full ROM against candidate plus erased padding. Verify safe startup
+   and native CLI/SD, then release the queued matched game comparisons.
