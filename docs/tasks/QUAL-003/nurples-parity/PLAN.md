@@ -541,3 +541,28 @@ N04l-iii: four fresh matched streaming cases completed with identical workload
 states under verified ordinary EMOS. Mainboard SW58.7119FPS, P4SW49.0987FPS,
 P4HW50.7196FPS; complete numbers in verified-emos17-analysis.json. No parity
 claim. Qualified-EMOS output-off pair is now running; no other hardware owner.
+
+### N04n — Isolate snapshot worker priority
+
+AGENT-ASSIGNED, not separately Author-approved. Under qualified EMOS, fresh
+SW output-off is exactly60FPS across all2279 post-warmup intervals, versus
+49.0987FPS with streaming. Output counters show no output during the off run.
+The remaining deficit is therefore output-path interference for this workload.
+
+StockP4Service currently assigns CPU snapshot output core1/priority6, above
+parser core0/priority3 and drawing core0/priority5. Native access uses a recursive
+FreeRTOS mutex with priority inheritance per row. A higher-priority snapshot
+worker may interfere with parser/draw admission; this is a hypothesis, not a
+measured lock-wait result. The original scanline/drawing algorithms stay intact.
+
+1. [ ] N04n-i: Add a default-off test flag selecting output priority2 instead
+   of6; retain clock, draw/parser priorities, row boundaries, source algorithms,
+   pixel format, resolution and all prior candidate flags. Build an isolated
+   r29 with exact source/hash/linked-code checks.
+2. [ ] N04n-ii: After output-off HW releases the bench, restore safe startup,
+   preserve r28 rollback, flash/verify r29 and input/SD. Keep verified EMOS and
+   onboard VDP unchanged. Run nonce-verified SW/HW streaming comparisons.
+3. [ ] N04n-iii: If improved, repeat SW and record actual browser delivery as
+   well as game completion. No parity claim from lower browser quality or
+   repeated snapshots. If insufficient, retain the result and profile output
+   locking/copying before another scheduling change.
