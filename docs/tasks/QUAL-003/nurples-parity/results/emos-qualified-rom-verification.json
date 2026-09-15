@@ -1,0 +1,7 @@
+{
+  "candidate_sha256": "429f85ebb413bf3eed779307a71126b6cafb7bf884ad1824c6673e1814718b61",
+  "rom_sha256": "f9229e93cd178de4f1045d4464d1173eee2fb0086157a391b72bfa816a569618",
+  "byte_exact": true,
+  "external_reset": false,
+  "safe_startup": true
+}

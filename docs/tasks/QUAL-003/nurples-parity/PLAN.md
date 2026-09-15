@@ -450,12 +450,12 @@ v0.1.17-b2026-09-14-16-10-16Z,130936bytes, SHA256
 429f85ebb413bf3eed779307a71126b6cafb7bf884ad1824c6673e1814718b61.
 The earlier qualification proves bulk transport only; fresh game tests are needed.
 
-1. [ ] N04l-i: Finish output-off HW control. Exit child SD, launch SD directly,
+1. [x] N04l-i: Finish output-off HW control. Exit child SD, launch SD directly,
    restore/read back original safe startup. SAVE current full128KiB ROM to an
    absent destination and retrieve it. Require exact preserved baseline match.
    Verify candidate bytes on SD and existing rollback bytes before flashing.
    Preserve r28 P4 rollback and maintained ZDI recovery readiness.
-2. [ ] N04l-ii: Invoke FLASH exactly once through accepted native CLI, then one
+2. [x] N04l-ii: Invoke FLASH exactly once through accepted native CLI, then one
    mainboard reset and fresh keyboard admission. SAVE/read back entire ROM to
    another absent name and compare candidate prefix byte-exactly. Do not call
    an emitted command a successful flash. No mainboard VDP/source changes.
@@ -507,7 +507,7 @@ corrective experiment changes controller completion handling only.
    up to120seconds for the updater's own fresh EMOS keyboard admission. Never
    issue an external reset during this wait. Lost keyboard session at reboot is
    expected; it is not grounds to resend FLASH. If no fresh boot, stop/inspect.
-2. [ ] N04l-R3b: After automatic reboot, save to a new ROM-dump filename and
+2. [x] N04l-R3b: After automatic reboot, save to a new ROM-dump filename and
    compare full ROM against candidate plus erased padding. Verify safe startup
    and native CLI/SD, then release the queued matched game comparisons.
 
@@ -517,3 +517,9 @@ was premature. First post-boot SAVE did not create its file, while following
 LOAD/RUN established SD service; input admission alone did not prove startup
 commands had finished. Exit that proven direct service and repeat only the
 ROM SAVE/readback with a fresh name; do not repeat FLASH or reset.
+
+N04l-R3b: full131072-byte installed ROM equals qualified ordinary candidate
+plus erased padding; SHA256f9229e93cd178de4f1045d4464d1173eee2fb0086157a391b72bfa816a569618.
+Safe startup and native CLI/SD verified. The same candidate boots when allowed
+to finish programming; the earlier failure was the premature-reset procedure.
+P4 r28 remains fixed. Four fresh route/sprite comparisons now own the bench.
