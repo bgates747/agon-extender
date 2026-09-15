@@ -2,11 +2,18 @@
 import argparse,json,statistics,hashlib
 from pathlib import Path
 
-def parse(path, variant="fenced-sw"):
+def parse(path, variant="fenced-sw", nonce=None, expected_capacity=None):
  assert variant in ("fenced-sw", "fenced-hw", "unfenced-sw")
- b=path.read_bytes();sustained=b[:4]==b'NP03'
- header,stride,capacity=(9,12,2400) if sustained else (8,11,600)
- assert len(b)==header+capacity*stride and b[:4] in (b'NP01',b'NP03'),(path,len(b),b[:9])
+ b=path.read_bytes();verified=b[:4]==b'NP04';sustained=b[:4] in (b'NP03',b'NP04')
+ if verified:
+  assert len(b)>=24 and nonce is not None and len(nonce)==8 and expected_capacity in (600,2400),'NP04 requires expected nonce/capacity'
+  header,stride,capacity=24,b[13],int.from_bytes(b[10:13],'little')
+  assert b[14:22]==nonce and b[22:24]==b'\0\0','Run nonce/reserved mismatch'
+  assert b[9]=={'fenced-sw':1,'fenced-hw':3,'unfenced-sw':0}[variant],'Fixture variant mismatch'
+  assert stride==12 and capacity==expected_capacity,'Fixture capacity/stride mismatch'
+ else:
+  header,stride,capacity=(9,12,2400) if sustained else (8,11,600)
+ assert len(b)==header+capacity*stride and b[:4] in (b'NP01',b'NP03',b'NP04'),(path,len(b),b[:24])
  count=int.from_bytes(b[4:7],'little');assert 122<=count<=capacity and b[7]==0,(count,b[7])
  reason=b[8] if sustained else 0
  assert (reason==0 and count==capacity) or (sustained and reason in (1,2)),(count,reason)
@@ -14,7 +21,7 @@ def parse(path, variant="fenced-sw"):
  ticks=[int.from_bytes(x[:3],'little') for x in rows]
  delta=[(ticks[i]-ticks[i-1])&0xffffff for i in range(121,count)]
  ordered=sorted(delta);p95=ordered[(len(ordered)*95+99)//100-1]
- result=dict(file=path.name,count=count,failed=b[7],warmup_boundaries=120,intervals=len(delta),
+ result=dict(file=path.name,provenance="nonce_verified" if verified else "legacy_unverified_save; not a fresh-run comparison",nonce=nonce.hex() if verified else None,count=count,failed=b[7],warmup_boundaries=120,intervals=len(delta),
   elapsed_ticks=sum(delta),mean_frame_ms=statistics.mean(delta)*1000/120,
   completed_fps=len(delta)*120/sum(delta),p95_frame_ms=p95*1000/120,
   maximum_frame_ms=max(delta)*1000/120,
@@ -29,6 +36,6 @@ def parse(path, variant="fenced-sw"):
  return result
 
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);p.add_argument('--variant',choices=['fenced-sw','fenced-hw','unfenced-sw'],default='fenced-sw');a=p.parse_args()
- results=[parse(f,a.variant) for f in a.files];s=json.dumps(results,indent=2);print(s)
+ p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);p.add_argument('--nonce');p.add_argument('--capacity',type=int,choices=[600,2400]);p.add_argument('--variant',choices=['fenced-sw','fenced-hw','unfenced-sw'],default='fenced-sw');a=p.parse_args()
+ results=[parse(f,a.variant,bytes.fromhex(a.nonce) if a.nonce else None,a.capacity) for f in a.files];s=json.dumps(results,indent=2);print(s)
  if a.output:a.output.write_text(s+'\n')

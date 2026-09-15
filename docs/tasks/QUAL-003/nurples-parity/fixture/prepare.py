@@ -21,44 +21,11 @@ f=a.output/'timer.inc';s=f.read_text();s=re.sub(r'ld (hl|de),\(ix\+sysvar_time\)
 replace('vdu.inc','vdu_vblank:', 'vdu_vblank:\n    call bench_boundary')
 # End is handled at the boundary, including frames inside death animations.
 # Timing routine and real vblank pacing otherwise remain unchanged.
-bench=(Path(__file__).parent/'bench.inc').read_text().replace('bench_hw: db 0', 'bench_hw: db '+str(int(a.hardware))).replace('bench_fenced: db 1','bench_fenced: db '+str(int(not a.unfenced)))
-if a.sustained:
-    # r03 has a reason byte and one live-sprite count per record. Same native
-    # game logic, fixed input/clock and completion probe as the pilot.
-    replace('state.inc','\ngame_over:\n','\ngame_over:\n    jp bench_game_over\n')
-    replace('state.inc','\ngame_victory:\n','\ngame_victory:\n    jp bench_game_victory\n')
-    bench=bench.replace('probe-r02','probe-r03').replace('"NP01"','"NP03"')
-    bench=bench.replace('ld bc,600','ld bc,2400').replace('ds 600*11','ds 2400*12')
-    bench=bench.replace('bench_records: ds', 'bench_end_reason: db 0\nbench_records: ds')
-    bench=bench.replace('jp nz,bench_finish','jp nz,bench_init_exit',1)
-    bench=bench.replace('    ld de,11\n', """    ; Twenty allocated sprite records; count the native alive flag, read-only.
-    ld iy,table_base
-    ld b,table_num_records
-    ld c,0
-    ld de,table_record_size
-@count_live:
-    bit sprite_alive,(iy+sprite_collisions)
-    jr z,@count_next
-    inc c
-@count_next:
-    add iy,de
-    djnz @count_live
-    ld (ix+11),c
-    ld de,12
-""")
-    bench += """
-bench_game_over:
-    ld a,1
-    jr bench_early_end
-bench_game_victory:
-    ld a,2
-    jr bench_early_end
-bench_init_exit:
-    ld a,3
-bench_early_end:
-    ld (bench_end_reason),a
-    jp bench_finish
-"""
+replace('state.inc','\ngame_over:\n','\ngame_over:\n    jp bench_game_over\n')
+replace('state.inc','\ngame_victory:\n','\ngame_victory:\n    jp bench_game_victory\n')
+bench=(Path(__file__).parent/'verified_bench.inc').read_text()
+bench=bench.replace('BENCH_CAPACITY',str(2400 if a.sustained else 600)).replace('BENCH_VARIANT',str(int(not a.unfenced)|(int(a.hardware)<<1)))
+bench=bench.replace('bench_hw: db 0','bench_hw: db '+str(int(a.hardware))).replace('bench_fenced: db 1','bench_fenced: db '+str(int(not a.unfenced)))
 (a.output/'bench.inc').write_text(bench)
-(a.output/'manifest.json').write_text(json.dumps(dict(source_sha256=manifest,fixture='nurples-parity-probe-r03' if a.sustained else 'nurples-parity-probe-r02',sustained=a.sustained,hardware=a.hardware,fenced=not a.unfenced,limits=('2400 boundaries or terminal game state; live-sprite counts; ' if a.sustained else '600 boundaries; ')+'simulated two ticks per boundary, fixed seed and held fire, optional pixel completion query'),indent=2)+'\n')
+(a.output/'manifest.json').write_text(json.dumps(dict(source_sha256=manifest,fixture='nurples-parity-probe-r04',run_nonce_required=True,sustained=a.sustained,hardware=a.hardware,fenced=not a.unfenced,limits=('2400 boundaries or terminal game state; live-sprite counts; ' if a.sustained else '600 boundaries; ')+'simulated two ticks per boundary, fixed seed and held fire, optional pixel completion query'),indent=2)+'\n')
 subprocess.run(['ez80asm','-l','nurples.asm','NPBENCH.bin'],cwd=a.output,check=True)
