@@ -147,7 +147,15 @@ void VGAPalettedController::allocateViewPort()
   const size_t required = size_t(m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul)
                         * m_viewPortHeight * (isDoubleBuffered() ? 2u : 1u);
   const size_t available = heap_caps_get_largest_free_block(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
-  if (available >= required + FABGLIB_MINFREELARGESTBLOCK)
+  bool eligible = true;
+#if defined(AGON_EXTENDER_INTERNAL_GAME_MODE)
+  // N04q: do not consume internal memory for preceding startup modes. This
+  // is a bounded mode20 comparison, not a general mode-capacity policy.
+  eligible = m_viewPortWidth == 512 && m_viewPortHeight == 384
+          && !isDoubleBuffered()
+          && m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul == 512;
+#endif
+  if (eligible && available >= required + FABGLIB_MINFREELARGESTBLOCK)
     caps = MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL;
   ESP_LOGI("np-fb-memory", "width=%d height=%d bytes=%u largest=%u selected=%s",
            m_viewPortWidth, m_viewPortHeight, unsigned(required), unsigned(available),
