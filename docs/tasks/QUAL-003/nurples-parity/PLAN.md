@@ -895,3 +895,12 @@ RefreshSprites; its execPrimitive case completes hideSprites/showSprites before
 returning. Existing graphics_timing scopes aggregate calls but lack per-refresh
 completion timestamps, so they cannot answer this interval question. The new
 recorder remains diagnostic, not a new supported VDU command or renderer change.
+
+N04w source refinement (AGENT-ASSIGNED): Nurples does not explicitly call
+VDU23,27,15 each ordinary frame; it relies on normal queue-batch sprite refresh.
+The new isolated fixture will append one documented sprite-refresh command at
+each boundary before recording time. This supplies an ordered, observable
+completion marker, with identical added work on both targets. Disclose its
+additional hide/show cost; it is a conservative structured workload, not an
+unchanged production-frame measurement. Check whether game sprite activation
+adds further RefreshSprites commands before assuming exactly2400 completions.
