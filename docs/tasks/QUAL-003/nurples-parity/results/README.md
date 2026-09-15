@@ -214,3 +214,20 @@ maximum50ms, with13 live sprites at peak. This establishes repeatability of
 this instrumented workload, not mainboard parity or unfenced normal-game FPS.
 See verified-two-run-identity.json and NPV4E1.BIN/NPV4E2.BIN. Initial staging plus
 the two bounded browser runs took494.767seconds.
+
+## Fresh software-sprite comparison (NP04, r27 P4 / unchanged bench EMOS)
+
+Worst elapsed-time excess first. Every case has2400records, the same state
+fingerprint and13 live sprites at peak. P4 production web is connected throughout.
+
+| Boundary | Mainboard mean ms | P4 mean ms | P4 elapsed excess | Mainboard FPS | P4 FPS |
+|---|---:|---:|---:|---:|---:|
+| Per-frame query/drawing fence | 17.018 | 33.816 | +98.71% | 58.76 | 29.57 |
+| Unfenced submission/vblank | 16.667 | 29.530 | +77.18% | 60.00 | 33.86 |
+
+Thus the gap is not solely the completion query. These are fresh nonce-verified
+records; do not substitute old pilot data. The running P4/EMOS images predate
+the qualified E07P UART changes that were subsequently restored away. A bounded
+P4-only comparison will reapply the already-maintained owner/stream alignment
+while holding MOS fixed; no new UART algorithm is proposed. HW comparisons
+remain in progress. See verified-sw-controls-r27.json.
