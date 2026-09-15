@@ -94,3 +94,15 @@ Pinned SDK sources consulted: `components/esp_http_server/include/esp_http_serve
 `libraries/Ethernet/src/ETH.cpp`. Distinguish the priority3 network worker from
 the priority5 HTTP task that executes queued sends. Moving lwIP alone would
 not isolate all these actors. No affinity change is selected by this inventory.
+
+## Run admission failure retained separately
+
+The first prebuilt attempt (`p02-prebuilt4`) saved NP04 count0/error15,
+with the expected fresh nonce, and never produced an NPTRACE/NPOUT begin block.
+The unchanged r05 fixture calls its pixel-query fence before its start marker;
+a failed fence saves that status and terminates. Thus no prebuilt workload
+was admitted, and this run supplies no prebuilt timing evidence. The underlying
+reason for the initial query failure is not established. Preserve the failed
+record; do not label it a prebuilt-renderer failure or discard it as a pass.
+An unchanged retry and a second discard control were selected within I03.
+No firmware, query timeout, renderer or fixture change was made for the retry.
