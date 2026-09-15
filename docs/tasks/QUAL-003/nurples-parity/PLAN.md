@@ -598,3 +598,10 @@ paired/repeated controls. Do not make another scheduling guess.
 3. [ ] N04o-iii: Select the next smallest output correction from those measured
    costs; record observation versus inference. Do not optimize MOS further while
    the same workload already completes at60FPS with output disconnected.
+
+Controller correction: r29's first result was retrieved, then the next status
+request timed out after browser close. Later read-only status succeeded without
+reset. P4 video-send timeout is5seconds, host SD-status timeout3seconds. This
+is not proof of a permanent deadlock. Resume remaining unique cases with a
+bounded30-second read-only readiness grace; never replay uncertain mutations.
+Earlier HTTP-stall observations remain unresolved where recovery was not observed.
