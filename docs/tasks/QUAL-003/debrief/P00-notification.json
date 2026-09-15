@@ -1,0 +1,8 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "startup_unchanged": true,
+  "state": "Legacy MOS prompt",
+  "human_hearing": "pending",
+  "purpose": "P00 audit ready for review; no performance tests"
+}
