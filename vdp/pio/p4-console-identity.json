@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r18",
+  "source_identity": "uart-excom-console-r19",
   "status": "draft",
-  "note": "QUAL-003 RX06: checked signed fixed-point result conversion; installed r17 rollback retained. Physical comparison pending; no audio implementation."
+  "note": "NET-001: newest video viewer replaces previous connection; retains RX06 numeric repair. Hardware takeover validation pending."
 }

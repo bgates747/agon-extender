@@ -33,6 +33,9 @@ therefore causes intermediate P4 generations to collapse into the newest
 snapshot; it cannot create a browser or server frame queue.
 
 Malformed data closes only that WebSocket connection with protocol error 1002.
-The first tranche admits one video client; another receives bounded busy close
-1013. Internal service failure uses 1011. The trusted private bench-LAN service
+The service admits one video client. A new successful WebSocket handshake
+replaces the existing viewer, closing the previous socket with code 1000 and
+reason `Viewer replaced`. The old webpage stays open; reconnect explicitly
+with Connect to become the active viewer again. There is no automatic reconnect.
+Pending old frame credit/leases are discarded, not transferred to the newcomer. Internal service failure uses 1011. The trusted private bench-LAN service
 has no TLS or authentication claim.

@@ -518,6 +518,11 @@ void WiredNetworkService::stopHttp() noexcept {
   auto const server = server_.load(std::memory_order_acquire);
   if (server == nullptr) return;
   if (httpd_stop(server) == ESP_OK) {
+    // HTTP task has terminated; no queued callback can still use these fields.
+    { std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
+      video_send_queued_ = false;
+      queued_video_client_ = kNoVideoClient;
+    }
     server_.store(nullptr,std::memory_order_release);
     http_fault_=false;
     increment(http_stops_);
@@ -533,6 +538,23 @@ esp_err_t WiredNetworkService::videoPostHandshake(
   auto *service = static_cast<WiredNetworkService *>(request->user_ctx);
   if (service == nullptr) return ESP_FAIL;
   auto const socket = httpd_req_to_sockfd(request);
+  std::lock_guard<std::mutex> guard(service->video_dispatch_mutex_);
+  auto const previous = service->video_.client();
+  if (previous >= 0 && previous != socket) {
+    // Handshake and actual sends execute on the same HTTP task. The dispatch
+    // mutex also excludes worker acquisition; releasing the old lease cannot
+    // race a send. Old queued work is retained but cannot target the new client.
+    service->video_.disconnect(previous);
+    const std::uint8_t payload[] = {0x03, 0xe8, 'V','i','e','w','e','r',' ',
+      'r','e','p','l','a','c','e','d'};
+    httpd_ws_frame_t close{};
+    close.type = HTTPD_WS_TYPE_CLOSE;
+    close.payload = const_cast<std::uint8_t *>(payload);
+    close.len = sizeof(payload);
+    httpd_ws_send_frame_async(request->handle, previous, &close);
+    httpd_sess_trigger_close(request->handle, previous);
+    ESP_LOGI(kTag, "video viewer replaced fd=%d by fd=%d", previous, socket);
+  }
   if (service->video_.connect(socket) == VideoConnectResult::Accepted) {
     ESP_LOGI(kTag, "video client accepted fd=%d", socket);
     return ESP_OK;
@@ -596,6 +618,8 @@ esp_err_t WiredNetworkService::videoHandler(httpd_req_t *request) noexcept {
 }
 
 void WiredNetworkService::attemptVideoSend() noexcept {
+  std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
+  if (video_send_queued_) return;
   auto const prepared = video_.tryPrepare(provider_);
   if (prepared == VideoPrepareResult::NoCredit ||
       prepared == VideoPrepareResult::NoNewMessage ||
@@ -622,6 +646,8 @@ void WiredNetworkService::attemptVideoSend() noexcept {
       httpd_sess_trigger_close(server, socket);
     return;
   }
+  queued_video_client_ = video_.client();
+  video_send_queued_ = true;
   increment(queued_sends_);
 }
 
@@ -630,7 +656,11 @@ void WiredNetworkService::queuedSend(void *context) noexcept {
 }
 
 void WiredNetworkService::performQueuedSend() noexcept {
-  auto const socket = video_.client();
+  std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
+  if (!video_send_queued_) return;
+  auto const socket = queued_video_client_;
+  video_send_queued_ = false;
+  queued_video_client_ = kNoVideoClient;
   auto const view = video_.sendingView(socket);
   auto const server = server_.load(std::memory_order_acquire);
   if (server == nullptr || socket < 0 || !view.valid() ||

@@ -87,6 +87,12 @@ class WiredNetworkService final {
 
   OpaqueMessageProvider &provider_;
   BrowserVideoServiceCore video_{};
+  // NET-001: serialize worker acquisition/queueing with HTTP-task takeover.
+  // Keep at most one queued callback; it belongs to its original socket, never
+  // whichever client happens to be current when the callback runs.
+  std::mutex video_dispatch_mutex_;
+  bool video_send_queued_{};
+  VideoClientId queued_video_client_{kNoVideoClient};
   std::atomic<WiredServiceState> state_{WiredServiceState::Stopped};
   std::atomic<std::uint32_t> pending_events_{};
   std::atomic<bool> stop_requested_{};

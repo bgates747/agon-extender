@@ -15,6 +15,7 @@ def main():
     parts=[function(source,s) for s in ('int completeSend(', 'bool WiredNetworkService::startHttp(', 'void WiredNetworkService::stopHttp(')]
     fake=r'''
 #include <cassert>
+#include <mutex>
 #include <atomic>
 #include <cstdint>
 #include <cstddef>
@@ -25,6 +26,7 @@ def main():
 #include <cstring>
 template<typename... T> void trace(T...) {}
 using httpd_handle_t=void *; using esp_err_t=int;
+constexpr int kNoVideoClient=-1;
 constexpr int ESP_OK=0, HTTP_GET=0, HTTPD_SOCK_ERR_TIMEOUT=-2, HTTPD_SOCK_ERR_FAIL=-1;
 constexpr int HTTP_POST=1;
 #if defined(AGON_EXTENDER_SD_SERVICE)
@@ -64,6 +66,7 @@ int httpd_register_uri_handler(void*,httpd_uri_t*) { return ++registrations==fai
 namespace web { struct EmbeddedAsset { const char *route; }; EmbeddedAsset assets[5]={{"a"},{"b"},{"c"},{"d"},{"e"}}; auto &embeddedBrowserAssets(){return assets;} }
 class WiredNetworkService {
  public:
+ std::mutex video_dispatch_mutex_;bool video_send_queued_{};int queued_video_client_{-1};
  std::atomic<void*> server_{}; bool http_fault_{};
  std::atomic<unsigned> http_starts_{},http_stops_{},http_start_failures_{};
  void increment(std::atomic<unsigned>&n){++n;}
