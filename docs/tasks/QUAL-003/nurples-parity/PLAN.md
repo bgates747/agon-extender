@@ -503,10 +503,17 @@ Known-good ROM/P4/native keyboard/SD/original startup all restored and verified.
 The failed image is an exact candidate prefix followed by erased bytes, so the
 corrective experiment changes controller completion handling only.
 
-1. [ ] N04l-R3a: Invoke the same already-verified on-card candidate once. Wait
+1. [x] N04l-R3a: Invoke the same already-verified on-card candidate once. Wait
    up to120seconds for the updater's own fresh EMOS keyboard admission. Never
    issue an external reset during this wait. Lost keyboard session at reboot is
    expected; it is not grounds to resend FLASH. If no fresh boot, stop/inspect.
 2. [ ] N04l-R3b: After automatic reboot, save to a new ROM-dump filename and
    compare full ROM against candidate plus erased padding. Verify safe startup
    and native CLI/SD, then release the queued matched game comparisons.
+
+N04l-R3a: updater automatic reboot produced fresh keyboard admission after
+19.286seconds, with no external reset. The prior roughly seven-second reset
+was premature. First post-boot SAVE did not create its file, while following
+LOAD/RUN established SD service; input admission alone did not prove startup
+commands had finished. Exit that proven direct service and repeat only the
+ROM SAVE/readback with a fresh name; do not repeat FLASH or reset.
