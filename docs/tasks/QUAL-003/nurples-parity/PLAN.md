@@ -757,3 +757,16 @@ MOS flash was needed. Recovery replay is excluded from performance evidence.
 N04s host checks pass ASan/UBSan: existing pool/lease ownership, bounded
 lookahead, RGB222 publication and concurrent immutable leases. Producer still
 uses try_lock once; no fairness/RTOS-priority claim derives from host threads.
+
+N04s first SW case completed its180second observer and post-close keyboard/SD
+readiness, then advanced to HW without reset.47.58FPS (mean21.018ms,p9533.333ms)
+is slower than r32's first case; mutex safety does not imply performance gain.
+Remaining HW/repeat controls retain sole bench ownership.
+
+N04r refresh — AGENT-ASSIGNED, not separately Author-approved:
+1. [ ] N04r-i2: Build r35 with both corrected snapshot mutex and outputcore0;
+   otherwise identical r34 flags. This activates the already frozen affinity
+   change on the corrected parent. r33 stays unflashed because it has the spin
+   hazard. Verify linked lock/try-lock and outputcore0/priority2 arguments.
+2. Hardware N04r-ii still waits for N04s controls and usable post-close services.
+   Abort that sequence if a new freeze/invalid result needs diagnosis first.
