@@ -36,17 +36,17 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    client owns staging, independent readbacks and recovery journals. No host
    polling during transfers; later human follow-up reads local evidence.
    Interrupted/uncertain results must not be labelled success or blindly retried.
-2. [ ] RX02: Inventory comparable historical evidence and trace current game's
+2. [x] RX02: Inventory comparable historical evidence and trace current game's
    VDU operations. Prioritize protected HUD clipping/scrolling with alternating
    pages, then near-player span/kerb coordinate clipping and affine traffic.
    Use official docs and retained stock source as semantic baseline.
-3. [ ] RX03: Prepare minimal deterministic paired reproductions using current
+3. [x] RX03: Prepare minimal deterministic paired reproductions using current
    game's operations and identical inputs. Begin with framebuffer correctness;
    separate browser capture/output from framebuffer/transport timings. Record
    binary/firmware hashes, mode136, input schedule, frame count and clock scope.
    Reuse existing finite graphics infrastructure where it fits; do not run the
    entire matrix first. Fixtures choose modes through startup, not internally.
-4. [ ] RX04: Run the prioritized tests on Legacy then ExCom. Record pixel/probe
+4. [x] RX04: Run the prioritized tests on Legacy then ExCom. Record pixel/probe
    mismatches and timings side by side in ms, worst first, percentage difference
    (ExCom-Legacy)/Legacy*100. Browser FPS alone is not rendering FPS. Retain
    durable progress/duration and fail state. No inference of throughput parity
@@ -103,3 +103,11 @@ findings or intervention. This amendment changes no diagnosis/fix review gate.
 See results/r01/README.md:64/64pixel checks on each path, identical CSVs.
 No defect found. Next bounded probe adds direct clipped bitmap drawing and
 negative-left road triangles. Keep r01 immutable. No timing conclusion.
+
+## Actionable stop — r03
+
+RX02–RX04 complete for the prioritized tranche: r01 and r02 matched; the current
+road-section buffer stream differs at14/80samples, seven left-edge locations on
+each page. See FINDINGS.md and results/r03. Stop before fixes or wider tests.
+RX05 restoration/voice closes this run; RX06 awaits review. The full HUD issue
+and performance comparisons remain open, not waived by this finding.

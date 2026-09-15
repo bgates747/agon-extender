@@ -1,0 +1,32 @@
+{
+  "game_commit": "9e75196770ec14bf6826f27237f08c99176d6840",
+  "fixtures": [
+    {
+      "fixture": "r01",
+      "source_commit": "9e3f46a",
+      "binary_sha256": "cf3855ecfccf9fd2f3231d5ca654662bfaf7b532131c309d43d9985b92b93556",
+      "bytes": 11087,
+      "mode": 136,
+      "firmware_changed": false,
+      "checks_per_path": 64
+    },
+    {
+      "fixture": "r02",
+      "source_commit": "2d08daf",
+      "binary_sha256": "87c30bd9edf42a909aef0bdf04f2c7653f0357ad6bb24c5cc8f8be58bef60deb",
+      "bytes": 11554,
+      "mode": 136,
+      "firmware_changed": false,
+      "checks_per_path": 68
+    },
+    {
+      "fixture": "r03",
+      "source_commit": "2ed4ae6",
+      "binary_sha256": "1723fc7b7252bb9d6d421eff0d03066ae6659071f9cec1d898a418a7bcda81e2",
+      "bytes": 11885,
+      "mode": 136,
+      "firmware_changed": false,
+      "checks_per_path": 80
+    }
+  ]
+}
