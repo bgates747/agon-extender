@@ -589,13 +589,13 @@ paired/repeated controls. Do not make another scheduling guess.
    behavior, source primitives, row boundaries and image format. Timer overhead
    makes this a diagnostic image, not parity evidence. Verify host aggregation
    and build/identity before deployment.
-2. [ ] N04o-ii: After r29 controls finish, preserve/restore safe startup and P4
+2. [x] N04o-ii: After r29 controls finish, preserve/restore safe startup and P4
    rollback, deploy/verify the isolated probe. One production browser remains
    connected during deterministic game initialization; capture a drained10-second
    counter window beginning about40seconds after reset, verify512x384 and retain
    an EVF image. No second WebSocket owner. Compare aggregate lock wait, row work
    and snapshot residual; reject incomplete/lost/overlapping windows.
-3. [ ] N04o-iii: Select the next smallest output correction from those measured
+3. [x] N04o-iii: Select the next smallest output correction from those measured
    costs; record observation versus inference. Do not optimize MOS further while
    the same workload already completes at60FPS with output disconnected.
 
@@ -633,3 +633,33 @@ the window only if both endpoints are idle/consistent/totals-valid, all error
 counter deltas are zero, all six phase counts match and all units are exact.
 Test rejection of injected loss, active endpoints and incomplete units. This
 permits diagnostic attribution only, never a gameplay parity claim.
+
+N04o completed under the explicit window-local clarification:242 matching
+completed snapshots/sends, no new recorder losses, no active endpoints, exact
+units, no socket/JS errors.512x384 EVF visually inspected as Nurples gameplay.
+Snapshot13.508ms includes row-lock wait4.940ms and row-work3.360ms; residual
+5.208ms includes normalization, loop/scheduling/timer overhead. Send20.074ms,
+credit-to-ready4.265ms, ready-to-send0.190ms. These discontiguous aggregate
+wall times do not measure renderer waiting on output directly. Original
+observer failed on historical loss1; retained, not rewritten as a passing run.
+
+### N04p — Restore stock framebuffer memory capability where capacity permits
+
+AGENT-ASSIGNED, not separately Author-approved. Output-off reaches60FPS, and
+row copying plus normalization occupies appreciable time with both native
+framebuffer and snapshots in PSRAM. PORT-003 stock-backend-r2 explicitly
+changed native allocation from upstream INTERNAL to SPIRAM. Hypothesis:
+internal native framebuffer may reduce shared PSRAM contention. No proof yet.
+
+1. [ ] N04p-i: Add default-off allocation-capability experiment. Only select
+   INTERNAL when one free block can hold the entire current framebuffer plus
+   stock reserve; otherwise retain PSRAM and explicitly log the fallback.
+   Keep stock pool allocator, row packing, rendering, resolution, colours and
+   snapshot format unchanged. Build isolated r31 from r29 flags, no row timers.
+2. [ ] N04p-ii: Preserve r30 rollback and safe startup, flash/readback and
+   verify input/SD; run SW/HW fixed fixtures with streamed output and unique
+   nonces. Retain boot/runtime allocation evidence; reject mode shrink or
+   fallback as evidence of internal-memory benefit. Capture complete image.
+3. [ ] N04p-iii: Compare fresh game timings and repeat any apparent parity.
+   If capacity prevents experiment or parity is absent, record that result
+   before selecting another output correction. No new MOS changes.

@@ -1,0 +1,39 @@
+{
+  "scope": "Window-local output diagnosis only; original observer verdict retained; not game FPS",
+  "original_status": "failed",
+  "historical_losses": 1,
+  "new_losses": 0,
+  "phases": [
+    {
+      "phase": "snapshot",
+      "count": 242,
+      "mean_ms": 13.50838429752066
+    },
+    {
+      "phase": "socket_send",
+      "count": 242,
+      "mean_ms": 20.07369421487603
+    },
+    {
+      "phase": "credit_to_ready",
+      "count": 242,
+      "mean_ms": 4.264971074380165
+    },
+    {
+      "phase": "ready_to_send",
+      "count": 242,
+      "mean_ms": 0.18960743801652893
+    },
+    {
+      "phase": "row_wait_sum",
+      "count": 242,
+      "mean_ms": 4.939847107438017
+    },
+    {
+      "phase": "row_work_sum",
+      "count": 242,
+      "mean_ms": 3.360086776859504
+    }
+  ],
+  "received_fps": 24.024562872637198
+}

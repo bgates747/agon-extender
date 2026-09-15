@@ -49,7 +49,10 @@ maintained recovery guide now explicitly prohibits timed FLASH resets.
 
 Lowering output priority (r29) produced SW51.08FPS then47.63FPS on repeat,
 and HW52.21FPS: no repeatable improvement or parity established. See
-verified-r29-analysis.json. Row-wait/composition diagnostics are next.
+verified-r29-analysis.json. Row diagnosis measured13.508ms snapshot time, including4.940ms native-lock
+wait and3.360ms row preparation; see row-r30-window.json and its explicit
+historical-loss scope. A bounded internal-framebuffer allocation experiment
+is selected next; no rendering algorithm changes.
 
 Independent output results remain valid within their scopes; wired-host WebGL
 readback matches all512x384 pixels with zero GL errors. The parity goal has not passed.
