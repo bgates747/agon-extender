@@ -118,7 +118,7 @@ deterministic Nurples and separate typing measurements are deferred.
 ## Other active work
 
 - [ ] **NET-001 — Replace the active video viewer on a new connection**
-  - Author requested newest-viewer takeover without closing the existing webpage.
+  - Implemented on r20; six hardware connections/five takeovers passed. Hardware voice sent; awaiting Author browser acceptance.
   - Details: [NET-001](docs/tasks/NET-001.md); preserve one-client bounded delivery and RX06 repair.
 
 
