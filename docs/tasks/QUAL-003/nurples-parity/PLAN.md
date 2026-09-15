@@ -1141,3 +1141,27 @@ N04ab-i complete: r42 built with exact source/partition checks and no old timing
 symbols. Actual stock allocation/free methods pass ASan/UBSan cases for
 contiguous/fragmented success, insufficient total, and partial-height cleanup
 with PSRAM retry. All384 rows are exercised; no leaks or double frees.
+
+### N04ac — Remove inherited parser/frame recorder from the parity image
+
+AGENT-ASSIGNED, not separately Author-approved. r42 SW used the full INTERNAL
+framebuffer but p9529.253ms still fails; queue latency p954.131ms, arrival
+p9529.964ms. Finish HW/output before deployment; no repeat on this SW failure.
+The inherited AGON_EXTENDER_FRAME_TIMING recorder remains active independently
+of the old graphics scopes removed in r41. frame_timing.hpp Scope calls
+FrameRecorder::begin/end and timestamps every parser batch; frame_recorder.hpp
+performs atomic publication/aggregation even without an HTTP reader. Its cost
+is unmeasured, not an established cause. Stock reference has only refresh trace.
+
+1. [ ] N04ac-i: Build isolated r43 with r42 behavior and only FRAME_TIMING
+   instrumentation removed: remove its selected translation unit and compile
+   definition. Verify generated CMake differs only by those removals and prior
+   graphics-probe removal. Require frameRecorder/timingJson symbols absent,
+   independent refresh trace and video counters present. No game, transport,
+   renderer, memory-policy, priority or scheduler changes.
+2. [ ] N04ac-ii: Wait for r42 completion/release, preserve rollback, flash/readback
+   r43 and run same SW/HW full traces plus180second streams and service checks.
+   Confirm actual memory/dimensions. Repeat only initial mean/p95 passes.
+3. [ ] N04ac-iii: Verify pixels and deterministic work, compare every run with
+   stock; N05 only on repeated parity. If unsuccessful, preserve evidence and
+   instrument the remaining ingress/dispatch delay rather than raising cadence.
