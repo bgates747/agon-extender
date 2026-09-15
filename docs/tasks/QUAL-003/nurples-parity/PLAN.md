@@ -713,9 +713,12 @@ placing priority2 output on core0 avoids cross-core row/primitive handoffs and
 lets higher-priority drawing/parser run first. This is scheduling-only, not a
 change to retained primitives, sprite algorithms, frame rate or image content.
 
-1. [ ] N04r-i: Add a default-off output-core0 flag, retaining priority2 and all
+1. [x] N04r-i: Add a default-off output-core0 flag, retaining priority2 and all
    r32 flags. Build isolated r33, no row timers; verify linked task affinity.
 2. [ ] N04r-ii: Only after r32 controls/recovery release the bench, preserve
    rollback/startup, deploy/verify and run the same SW/HW streaming controls.
 3. [ ] N04r-iii: Compare/repeat any apparent parity; require unchanged full
    workload and usable live output. Record failure instead of changing load.
+
+N04r-i passed build and linked task-argument inspection: drawingcore0/priority5,
+outputcore0/priority2. Unflashed until r32 comparison/recovery releases bench.
