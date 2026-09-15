@@ -246,3 +246,12 @@ destination alignment combinations, preserving canaries and input bytes. Target
 GCC assembly confirms aligned LW/SW accesses and halfword swap/mask; the unaligned
 path retains byte accesses. Stock scanline bodies remain unchanged. Hardware
 snapshot-cost attribution still awaits the r26 comparison.
+
+3. [ ] N04f (agent-assigned): Run the deterministic game with the wired production
+   client active before mainboard reset and throughout gameplay. The laptop's
+   slow Wi-Fi stream cannot exercise the faster output candidate adequately.
+   Add an optional first-frame readiness receipt to the reusable headless
+   observer; default observation behavior remains unchanged. Stage/verify the
+   fixture first, wait for that receipt, then issue exactly one reset. Retain
+   browser connection/errors, game timings/state and run durations separately.
+   A completed no-web pilot/static output test does not substitute for this run.
