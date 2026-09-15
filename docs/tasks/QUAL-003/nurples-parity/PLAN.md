@@ -1153,7 +1153,7 @@ FrameRecorder::begin/end and timestamps every parser batch; frame_recorder.hpp
 performs atomic publication/aggregation even without an HTTP reader. Its cost
 is unmeasured, not an established cause. Stock reference has only refresh trace.
 
-1. [ ] N04ac-i: Build isolated r43 with r42 behavior and only FRAME_TIMING
+1. [x] N04ac-i: Build isolated r43 with r42 behavior and only FRAME_TIMING
    instrumentation removed: remove its selected translation unit and compile
    definition. Verify generated CMake differs only by those removals and prior
    graphics-probe removal. Require frameRecorder/timingJson symbols absent,
@@ -1170,3 +1170,8 @@ N04ab complete: both r42 runs selected full INTERNAL framebuffer. SW p95
 29.253ms fails; HW20.978ms passes initially. Both~60FPS,2400 matched records,
 pending<=1, full streams/services and terminal pixel agreement pass. No repeats
 because the pair fails. Internal allocation is demonstrated, timing parity is not.
+
+N04ac-i complete: r43 build passes exact generated-source/partition checks;
+frameRecorder/timingJson and graphics timing symbols absent, independent
+refresh/output recorders retained. No source/algorithm change beyond the
+explicit instrument selection. r42 released the bench with services passing.
