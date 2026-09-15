@@ -813,7 +813,7 @@ sets VGA64_LinesCount=4; ISRHandler in vga64controller.cpp prepares LinesCount/2
 rows per interrupt. The retained span ledger in PORT-003 stock-backend-r2 owns
 upstream row-body provenance. P4 adapter currently locks each row separately.
 
-1. [ ] N04u-i: Add default-off two-row output batching on the r34 configuration
+1. [x] N04u-i: Add default-off two-row output batching on the r34 configuration
    (outputcore1/priority2, corrected snapshot mutex, full internal framebuffer).
    Hold native exclusion for two original row preparations; normalize both after
    releasing it. Preserve row order, original bodies, palette-revision handling,
@@ -829,3 +829,6 @@ N04t complete: SW35.33FPS/HW34.23FPS, full workloads and post-output
 service checks passed. Reject shared-core priority4 for performance.
 N04u host comparison passes31 single/pair/tail windows using actual retained
 VGA64 controller, hardware sprite boundary and independent pixel/canary checks.
+
+N04u-i r37 built; stock two-row constant checked at compile time; original row
+bodies retained. Host byte/canary/sprite checks passed before build.

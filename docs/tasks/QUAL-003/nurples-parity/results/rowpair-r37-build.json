@@ -1,0 +1,58 @@
+{
+  "build_id": "uart-excom-console-r37-b2026-09-15-14-17-52Z",
+  "status": "draft",
+  "parent_build_id": "uart-excom-console-r22-b2026-09-15-07-01-47Z",
+  "parent_app_sha256": "ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7",
+  "contract_commit": "8f2d23d153d1835071e1eff8db53f8afd0f19c48",
+  "rows_per_batch": 2,
+  "blocking_snapshot_consumer": true,
+  "output_task_core": 1,
+  "internal_game_mode_only": true,
+  "internal_framebuffer_enabled": true,
+  "row_timing_enabled": false,
+  "output_task_priority": 2,
+  "uart_alignment_enabled": true,
+  "dispatch_timing_enabled": true,
+  "lookahead_enabled": true,
+  "packed_row_enabled": true,
+  "source_change": "identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization",
+  "probe_sha256": {
+    "vdp/video/extender/network/wired_network_service.cpp": "99c4378f19a277ce35d4dca3a5ee7fcd848cf32217e590a8c89d1fff840ecf3f",
+    "vdp/video/extender/display/stock_p4_service.cpp": "f2e928588ad733c23a1cfdabe216810bfc3780f49401a2a40ae754ed8db2b190",
+    "vdp/video/extender/diagnostics/video_timing.hpp": "f3d56e3092e14ef5966bbd0805e069c6f7b4b42586afa1cf87b4485c007c50dc",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp": "f9c03d2e4a66d3fc9448e4baa52728ac582107f63eee3f6fa24213c062ad4039",
+    "vdp/video/extender/display/stock_runtime_controller.hpp": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "vdp/video/extender/display/presentation_snapshot_pool.hpp": "ace23a0f2ab3993bcc41d1a31e5785ac69756160a8930cc95ca4071ea8ef22e4",
+    "vdp/video/extender/display/stock_scanline.hpp": "d8dc6e90613bd72c76d3144e546b49b013edd97eae4824150f3a05e833e6084c",
+    "vdp/video/extender/display/rgb222_row.hpp": "ee5d65a266bf5d989d4784369a7cc3fe641c9eb92e777d19132adec384547c70",
+    "vdp/video/extender/network/wired_network_service.hpp": "9e971770bd9e717328974f92df0180d8c4d26e3009f994346d89b1a62982573f",
+    "vdp/video/extender/transport/console_hardware.inc": "692c4256c83c8d2bc782c301eb85e65630d14e9b656e9c4033d464c0a40e64ef",
+    "vdp/video/extender/transport/console_stream.hpp": "837a8c4940f94fcf77498616c3b756d5ac7a5c0380610d7e90089e5bf0a082db"
+  },
+  "configuration_change": "enable existing AGON_EXTENDER_VIDEO_TIMING=1",
+  "scope": "bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes",
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1454880,
+      "sha256": "2d8f755f5d8103c93c5f4e319baba3161ab229104d572d5ee60aa78015f202e8"
+    },
+    "firmware.elf": {
+      "bytes": 28251640,
+      "sha256": "af2a32fe80d1980c1efd1cd2410159f47643b45bff8c00ae444a1fb3353efba3"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1585952,
+      "sha256": "17978ee1134a3cf06171b6e46fadcbed4e88c63655fa848ab807c1d13ee5acd1"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "644a4131624d5cb2cf8c459f559cf8951c4e13b0f8033bbd4769fba9d3d080b3"
+    }
+  },
+  "build_complete": true
+}
