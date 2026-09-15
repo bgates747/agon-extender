@@ -42,7 +42,7 @@ synthesis, unrelated optimizations or experimental push.
 1. [x] G01: Record approval and freeze this behavior before implementation.
 2. [x] G02: Implement N02/N03/N06 parser guards and focused host tests; commit.
 3. [x] G03: Implement N04/N05 renderer guards and focused host tests; commit.
-4. [ ] G04: Run target compile/source checks and existing relevant regressions;
+4. [x] G04: Run target compile/source checks and existing relevant regressions;
    prepare deterministic eZ80 fixture and controlled installed-parent candidate.
 5. [ ] G05: Build/identify, flash/verify P4, deploy/read back fixture and startup;
    run paired valid cases and P4 rejection cases with durable results. Keep
@@ -85,3 +85,12 @@ Existing audio framing15,120cases/source guard and fixed encoding65,764checks
 still pass. r22 is a controlled derivative of the same installed-source parent,
 with unchanged UART/frame/output settings, not a rebuild from newer transport
 experiments on main. Full target compilation is the next G04 check.
+
+
+G04 completed: controlled r22 firmware build passes (123.00seconds including
+preparation), registry validation passes, fixture builds with warnings-as-errors.
+The compiled source carries both parser and stock-runtime renderer guards.
+Build identity/hashes and historical-parent qualification limits are retained in
+results/build.json. No hardware pass is claimed yet. The collector's10minute
+service-wait limit stops only host collection, never the fixture or either board;
+it is a diagnostic bound far beyond the small-fixture estimate, not a reset.
