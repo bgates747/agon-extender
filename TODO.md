@@ -117,6 +117,11 @@ deterministic Nurples and separate typing measurements are deferred.
 
 ## Other active work
 
+- [ ] **NET-001 — Replace the active video viewer on a new connection**
+  - Author requested newest-viewer takeover without closing the existing webpage.
+  - Details: [NET-001](docs/tasks/NET-001.md); preserve one-client bounded delivery and RX06 repair.
+
+
 - [ ] **PORT-006 — Implement the Extender network foundation and update service**
   - Started: 2026-08-27 19:13 EDT
   - Finished: --
