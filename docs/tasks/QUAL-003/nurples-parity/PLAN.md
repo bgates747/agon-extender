@@ -779,3 +779,25 @@ both post-close keyboard/SD readiness passed. No parity. Inherited controller
 skips SW repeat when first SW<50FPS; that repeat did not run (correcting the
 progress-message assumption). Preserve this early rejection rule for cases
 clearly outside parity; repeat all apparent parity results. Proceed to r35.
+
+N04r r35 rejected at pre-game browser readiness: zero published/acquired frames,
+repeated no-new polls, no fixture reset/run occurred. The maintained UART owner
+is continuously runnable oncore0/priority3; outputcore0/priority2 can starve.
+Do not report a game FPS for this candidate. Native CLI remains the recovery
+path; current startup is staged r35SW, but it has not executed.
+
+### N04t — Place same-core output between parser and drawing priorities
+
+AGENT-ASSIGNED, not separately Author-approved. Revise only the scheduling
+hypothesis after the r35 readiness failure. Keep the blocking snapshot mutex,
+complete internal framebuffer and original drawing/row algorithms.
+
+1. [ ] N04t-i: Build r36: outputcore0/priority4, parsercore0/priority3 and
+   drawingcore0/priority5. Its bounded output task must block between snapshot
+   notifications; no added parser sleeps or UART algorithm changes. Verify
+   linked arguments and flags before deployment.
+2. [ ] N04t-ii: Restore safe startup through native CLI/SD, preserve r35,
+   deploy/verify. Require live output before launching fresh SW/HW fixtures;
+  180second observers plus post-close keyboard/SD readiness remain mandatory.
+3. [ ] N04t-iii: Compare/repeat apparent parity. Reject starvation, missing
+   workload, changed mode dimensions or unusable output instead of relaxing gates.
