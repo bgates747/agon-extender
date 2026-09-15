@@ -5,6 +5,18 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Current Author-directed sequence — Audits before game benchmarks
+
+Complete the numeric-conversion audit and unsupported-command audit before
+benchmarking games. RX07 enumerates only; RX08 retains mandatory Author review
+before RX09 corrections, RX10 deterministic stock comparisons and RX11 reusable
+gates. PORT-003 UC01–UC07 covers the wider command-consumption audit; its audio
+slice now has Author visual acceptance. Then QUAL-003 owns matched current Rally
+and a bespoke deterministic Nurples fixture on mainboard VDP and P4 EDP.
+See [the sequencing contract](docs/tasks/QUAL-003/rally-excom/PLAN.md#audit-first-game-benchmark-sequence).
+Earlier priority headings below preserve historical context and do not override
+this sequence. Golem and actual P4 audio synthesis remain excluded.
+
 ## First priority — Stock UART alignment
 
 - [ ] **PORT-008 — Stock-compatible UART performance and correctness**

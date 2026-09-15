@@ -82,3 +82,10 @@ Hardware spoken attention playback replaced a fresh pending marker with
 `audio_commands=pass`. Original autoexec was restored and read back unchanged;
 the Agon returned to the Legacy MOS prompt. Human hearing/full-game acceptance
 is pending. See notification.json. All source/results are committed locally.
+
+
+### Author visual acceptance — 2026-09-15
+
+After launching current Rally unmuted in ExCom, the Author confirmed: “ok
+confirmed fixed.” This closes the pending Rally visual review for this repair;
+it does not qualify actual P4 audio output or measured hardware game FPS.

@@ -175,3 +175,33 @@ RX06's controlled physical result is documented in rx06/README.md: zero paired
 differences at 80 samples, versus 14 before repair. Stock values are unchanged.
 The installed-parent build limitation is explicit there. Stop after RX06 for
 review; RX07 enumeration and the separate no-op work remain unstarted.
+
+
+## Audit-first game benchmark sequence
+
+Author direction, 2026-09-15: finish the previously discussed audits before
+Rally performance work. Author confirms the unmuted Rally visual problem is
+fixed on the installed candidate; this is visual acceptance, not FPS evidence.
+
+1. [ ] Complete RX07 enumeration and RX08 Author review; perform only approved
+   RX09 corrections, RX10 stock comparisons and RX11 reusable import gates.
+2. [ ] Complete PORT-003 UC01–UC07 wider unsupported-command consumption work,
+   preserving its contract/review gates and accepted audio-first repair.
+3. [ ] After those audit/correction gates, freeze a matched physical benchmark
+   contract for current Rally and a bespoke deterministic Nurples fixture.
+   Reuse seeded pseudorandom behavior where available, but verify that fixed
+   seed, initialization, input schedule, tick count and random-call ordering
+   reproduce the same workload. Do not assume the seed alone proves that.
+4. [ ] Run identical identified fixtures on mainboard stock VDP and P4 EDP.
+   Measure completed rendering separately from submission, transport and browser
+   delivery. First measure P4 framebuffer work without browser output, then
+   quantify output cost. Record actual completed-frame counts, elapsed time,
+   frame-time variation, exact seeds/input streams, workload checks and hashes.
+   Report side-by-side ms/frame and FPS with stock as percentage baseline.
+5. [ ] Preserve results and suite durations, then request human Rally/Nurples
+   review with the established hardware spoken notification protocol.
+
+The future benchmark contract must define a completion observation that does
+not mistake video refreshes or submitted commands for completed game frames,
+and disclose instrumentation overhead. No new benchmark or Nurples source
+change is started by this sequencing record. Existing RX08 review is retained.
