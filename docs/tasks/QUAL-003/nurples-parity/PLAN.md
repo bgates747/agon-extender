@@ -347,3 +347,12 @@ This finds no pacing change at60Hz; it does not measure zero probe CPU cost.
    drawing-buffer discard; report this as an offline renderer check, not physical
    display or FPS. Run on the wired observer host only after gameplay measurements
    have released its CPU; do not contend with a timing run.
+
+N02g repair checkpoint:
+
+1. [x] N02g-i: NP04 checked-I/O and nonce/variant/capacity validation pass host
+   rejection checks and two consecutive P4 runs. Nonces differ, both contain
+   2400records and the same deterministic state fingerprint. Means29.5718 and
+   29.5654 fencedFPS; p95 33.333ms/max50ms. Live sprites peak13.
+2. [ ] N02g-ii: Fresh matched mainboard, unfenced and HW comparisons are still
+   required. The corrected queued matrix is active; do not restore old claims.

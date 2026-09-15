@@ -204,3 +204,13 @@ See unfenced-r02-pair.json, NPFL2.BIN and NPFE2.BIN. No pacing difference is
 observable at this clock granularity; query CPU/transport cost may fit within
 vblank slack. These timestamps are explicitly not per-frame drawing completion.
 Initial fixture deployment plus the two observation runs took307.460seconds.
+
+## Verified repeated P4 SW runs
+
+NP04 uses distinct expected per-run nonces and checked file operations. Both
+2400-record runs pass identity/size/variant/capacity checks and yield the same
+state fingerprint. Their fenced means are29.5718 and29.5654FPS, p95 33.333ms,
+maximum50ms, with13 live sprites at peak. This establishes repeatability of
+this instrumented workload, not mainboard parity or unfenced normal-game FPS.
+See verified-two-run-identity.json and NPV4E1.BIN/NPV4E2.BIN. Initial staging plus
+the two bounded browser runs took494.767seconds.
