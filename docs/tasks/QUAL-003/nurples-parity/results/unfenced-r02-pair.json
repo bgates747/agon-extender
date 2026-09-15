@@ -1,0 +1,96 @@
+{
+  "legacy": {
+    "game": [
+      {
+        "file": "NPFL2.BIN",
+        "count": 600,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 479,
+        "elapsed_ticks": 958,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 479
+        },
+        "state_sha256": "a740583265bd2fee6d50ef2de309e1a6e907c007b59bfcce00595cc9cca661f0",
+        "variant": "unfenced-sw",
+        "completion_scope": "submission/vblank boundary; terminal fence only"
+      }
+    ],
+    "coverage": {
+      "reset_to_terminal_seconds": 43.62997207103763,
+      "observer_running_at_terminal": true
+    },
+    "browser_summary": {
+      "received": 2228,
+      "received_fps": 24.731803744752682,
+      "median_receive_interval_ms": 33.40000009536743,
+      "maximum_receive_interval_ms": 83.60000002384186,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 2228
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "page_errors": [],
+    "closes": []
+  },
+  "excom": {
+    "game": [
+      {
+        "file": "NPFE2.BIN",
+        "count": 600,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 479,
+        "elapsed_ticks": 958,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 479
+        },
+        "state_sha256": "a740583265bd2fee6d50ef2de309e1a6e907c007b59bfcce00595cc9cca661f0",
+        "variant": "unfenced-sw",
+        "completion_scope": "submission/vblank boundary; terminal fence only"
+      }
+    ],
+    "coverage": {
+      "reset_to_terminal_seconds": 49.48831897601485,
+      "observer_running_at_terminal": true
+    },
+    "browser_summary": {
+      "received": 2358,
+      "received_fps": 26.1576160057462,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 1237.0999999046326,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 2358
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "page_errors": [],
+    "closes": []
+  }
+}

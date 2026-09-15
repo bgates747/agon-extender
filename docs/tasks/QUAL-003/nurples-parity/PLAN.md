@@ -298,7 +298,7 @@ before expanding output contracts.
 
 ### Remaining matched workload controls — AGENT-ASSIGNED, not separately Author-approved
 
-1. [ ] N02d: Deploy the existing corrected r02 unfenced SW fixture under a new
+1. [x] N02d: Deploy the existing corrected r02 unfenced SW fixture under a new
    filename, verify both readbacks, run on mainboard and P4 with wired production
    output. Use explicit unfenced timing labels and compare deterministic state
    with fenced pilots. Ordinary vblank remains; matching60Hz can bound an effect
@@ -316,3 +316,8 @@ eZ80 work equally to both routes; it is not normal-game CPU cost. It stops
 before interactive game-over/victory and records that reason. Both SW/HW
 variants assemble. NP03 records include capacity/count and are analyzed
 separately from NP01; no sustained hardware result is claimed yet.
+
+N02d complete: corrected r02 unfenced SW control on both routes records
+600boundaries, all479 measured intervals two ticks, and the same fingerprint
+as fenced pilots. Terminal fences pass and P4 wired web remains connected.
+This finds no pacing change at60Hz; it does not measure zero probe CPU cost.

@@ -182,3 +182,12 @@ Headless browser screenshot capture on the wired Pi yielded a white canvas,
 while the retained EVF pixel payload decodes to the expected Nurples scenery
 and terminal text. Do not use that screenshot as visual proof; decoded EVF and
 human browser presentation are distinct evidence.
+
+## Unfenced pilot control
+
+Both routes retain60Hz submission/vblank boundaries and the same600-record
+state fingerprint without the per-frame query. Corrected terminal fences pass.
+See unfenced-r02-pair.json, NPFL2.BIN and NPFE2.BIN. No pacing difference is
+observable at this clock granularity; query CPU/transport cost may fit within
+vblank slack. These timestamps are explicitly not per-frame drawing completion.
+Initial fixture deployment plus the two observation runs took307.460seconds.
