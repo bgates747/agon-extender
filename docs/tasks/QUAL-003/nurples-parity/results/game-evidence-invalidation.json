@@ -1,0 +1,64 @@
+{
+  "recorded_at": "2026-09-15T11:01:24.992632+00:00",
+  "cause": "Fixture ignored mos_SAVE errors; FA_CREATE_NEW refuses to replace NPRES.BIN. Later COPY commands can copy the first saved pilot.",
+  "scope": "Gameplay timing/state comparisons. Independent browser, EVF and clean output-recorder/packet measurements are not invalidated by this issue.",
+  "raw_game_records": [
+    {
+      "file": "NPE1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPE2.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPFE2.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPFL2.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPHA1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPHE1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPHL1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPHP1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPHW26.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPL1.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    },
+    {
+      "file": "NPSW26.BIN",
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e",
+      "status": "unverified run provenance; unusable for subsequent matched gameplay comparisons"
+    }
+  ],
+  "also_affected": "Historical paired-game JSON summaries and game fields embedded in output comparison summaries; use README correction as their overriding interpretation.",
+  "replacement_requirement": "NP04 expected per-run nonce, mode/capacity/length validation and checked MOS I/O."
+}
