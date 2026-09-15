@@ -1078,7 +1078,7 @@ This runs per primitive and per sprite scanline. The stock completion baseline
 has only the independent refresh recorder. Magnitude is unknown; test rather
 than assume causation. Source: diagnostics/graphics_timing.hpp Scope constructor.
 
-1. [ ] N04aa-i: Build isolated r41 from the same r40 settings with only the old
+1. [x] N04aa-i: Build isolated r41 from the same r40 settings with only the old
    AGON_GRAPHICS_TIMING define removed. Retain refresh trace, output counters,
    geometry, locks, task priorities, four drawing opportunities and unchanged
    fixture. Assert old timing symbols absent and refresh recorder present.
@@ -1092,3 +1092,9 @@ than assume causation. Source: diagnostics/graphics_timing.hpp Scope constructor
    than VGABaseController::allocateViewPort, which supports multiple pools.
    Any experiment must preserve full height with clean fallback; no such
    allocation change is included in r41.
+
+N04aa-i complete: r41 compiled with no old graphics timing symbols; independent
+refresh/output observers remain. The first build was rejected because a second
+component-definition source retained the flag. The corrected build then required
+the integrity checker to allow exactly the generated CMake definition deletion;
+all other unselected source hashes remain pinned. Neither rejected image flashed.
