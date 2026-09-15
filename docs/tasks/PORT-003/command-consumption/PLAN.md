@@ -9,7 +9,7 @@ benchmark or experimental push. UC02/UC03 decisions remain a subsequent chunk.
 
 1. [x] C01: Identify selected sources and unavailable adapter/parser entry points;
    retain source hashes and distinguish installed r22 from current checkout.
-2. [ ] C02: Record command/subcommand grammar, variable lengths and replies;
+2. [x] C02: Record command/subcommand grammar, variable lengths and replies;
    classify consumption gaps, supported behavior and unresolved contracts.
 3. [ ] C03: Record findings and next decisions, commit, hardware voice and stop.
 
