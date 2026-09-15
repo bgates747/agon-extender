@@ -30,7 +30,7 @@ static int probe(unsigned frame,int x,int y,unsigned r,unsigned g,unsigned b){
     snprintf(line,sizeof line,"probe,%u,%d,%d,%u,%u,%u,%u,%u,%u,%u\r\n",frame,x,y,r,g,b,a,c,d,match);
     return append(line);
 }
-/* numeric-guard-probe-r01: stock receives valid cases only; rejection mode is P4 only.
+/* numeric-guard-probe-r02: stock receives valid cases only; rejection mode is P4 only.
  * Caller selects mode136/route in autoexec. Counts are correctness probes;
  * raw120Hz elapsed includes serial queries and SD writes, not renderer FPS. */
 #define SRC 1200
@@ -56,11 +56,11 @@ int main(int argc,char **argv){
  if(argc!=3)return 2;output=argv[1];sv=mos_sysvars();int reject=!strcmp(argv[2],"reject");if(!reject&&strcmp(argv[2],"valid"))return 2;
  uint8_t existing=mos_fopen(output,FA_READ);if(existing){mos_fclose(existing);return 3;}
  uint8_t q[]={23,0,134};mos_clearvdpflags(16);send(q,sizeof q);if(mos_waitforvdpflags(16))return 4;if((sv[sysvar_scrMode]&127)!=8)return 5;
- started=getsysvar_time();if(!append("numeric-guard-probe-r01,correctness-only,raw-ticks-120Hz\r\n"))return 6;
+ started=getsysvar_time();if(!append("numeric-guard-probe-r02,correctness-only,raw-ticks-120Hz\r\n"))return 6;
  const uint8_t init[]={23,0,192,0,23,1,0,23,0,248,1,0,1,0};send(init,sizeof init);
  const uint8_t swap[]={23,0,195};unsigned id=0;
  for(unsigned page=0;page<2;page++)for(unsigned fmt=0;fmt<3;fmt++)for(unsigned kind=0;kind<(reject?5u:3u);kind++){
-  transform(65535);viewport(0,0,319,239);rect(0,0,319,239,0);rect(0,0,319,23,1);colour(63);source(fmt);
+  transform(65535);viewport(0,0,319,239);rect(0,0,319,239,0);rect(0,0,319,23,1);colour(15);source(fmt); /* default palette15 is white;63 is pale yellow */
   uint32_t mat[9];memcpy(mat,identity,sizeof mat);matrix(mat,0);selectbm(SRC);
   snprintf(line,sizeof line,"begin,%u,page=%u,format=%u,kind=%u\r\n",id,page,fmt,kind);if(!append(line))return 7;
   if(!reject){

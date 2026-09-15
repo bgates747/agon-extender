@@ -94,3 +94,13 @@ Build identity/hashes and historical-parent qualification limits are retained in
 results/build.json. No hardware pass is claimed yet. The collector's10minute
 service-wait limit stops only host collection, never the fixture or either board;
 it is a diagnostic bound far beyond the small-fixture estimate, not a reset.
+
+
+G05 fixture correction: r01 stock run completed342 probes in10,772 raw120Hz
+ticks (89.77seconds), with six incorrect expected-white assertions for mask
+bitmaps. Official v2.16.0 agon_palette.h maps logical63 to RGB255,255,170;
+logical15 is white. r02 selects15 before drawing. No firmware change follows
+this fixture error. Stock MOS stops EXEC on a nonzero program return, explaining
+why ExCom never started and the terminal service never ran. Direct CLI service
+launch retrieved the completed stock CSV without reset. New output names keep
+evidence separate. Estimate roughly5minutes for all three corrected runs.

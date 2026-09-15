@@ -1,14 +1,14 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r85
+registry_revision: r86
 updated_at: 2026-09-15T06:59:25Z
 
 artifacts:
   - artifact_id: numeric-guard-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: numeric-guard-probe-r01
+    latest_identity: numeric-guard-probe-r02
     status: draft
     variants: []
     description: Paired valid bitmap transform streams and separate P4 numeric rejection controls.
