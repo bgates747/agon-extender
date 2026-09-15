@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/port/numeric_conversion.hpp"
+#endif
 #ifndef _VDU_SPRITES_H_
 #define _VDU_SPRITES_H_
 
@@ -338,6 +341,11 @@ void VDUStreamProcessor::createBitmapFromBuffer(uint16_t bufferId, uint8_t forma
 	// Check that our stream length matches the expected length
 	auto streamLength = stream->size();
 	auto widthInBytes = std::ceil((double)width * bytesPerPixel);
+#ifdef AGON_EXTENDER_P4_BOOT
+    // RX09 N06: a wire-valid uint16 size can exceed uint32 in RGBA8888.
+    // Data already resides in the buffer; reject before publishing a bitmap.
+    if (!agon::extender::port::fitsBitmapByteCount(widthInBytes * height)) return;
+#endif
 	uint32_t expectedLength = widthInBytes * height;
 	if (streamLength != expectedLength) {
 		debug_log("vdu_sys_sprites: buffer %d - stream length %d does not match expected length %d\n\r", bufferId, streamLength, expectedLength);

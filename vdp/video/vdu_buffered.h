@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "extender/port/numeric_conversion.hpp"
+#endif
 #ifndef VDU_BUFFERED_H
 #define VDU_BUFFERED_H
 
@@ -1752,6 +1755,12 @@ void VDUStreamProcessor::bufferAffineTransform(uint16_t bufferId, uint8_t comman
 			if (!readFloatArguments(translateXY, dimensions, useBufferValue, useAdvancedOffsets, useMultiFormat)) {
 				return;
 			}
+#ifdef AGON_EXTENDER_P4_BOOT
+            // RX09 N02: preserve stock truncation before logical scaling;
+            // all arguments were consumed, and no matrix is published yet.
+            if (!agon::extender::port::fitsTruncatedInt16(translateXY[0]) ||
+                !agon::extender::port::fitsTruncatedInt16(translateXY[1])) return;
+#endif
 			auto scaled = context->scale(translateXY[0], translateXY[1]);
 			transform[dimensions] = scaled.X;
 			transform[size.columns + dimensions] = scaled.Y;
@@ -2129,6 +2138,11 @@ void VDUStreamProcessor::bufferTransformBitmap(uint16_t bufferId, uint8_t option
 		float pos[3] = { 0.0f, 0.0f, 1.0f };
 		float transformed[3];
 		dspm_mult_3x3x1_f32(transform, pos, transformed);
+#ifdef AGON_EXTENDER_P4_BOOT
+        // RX09 N03: reject before corner narrowing/allocation/publication.
+        if (!agon::extender::port::fitsTruncatedInt32(transformed[0]) ||
+            !agon::extender::port::fitsTruncatedInt32(transformed[1])) return;
+#endif
 		minX = fabgl::imin(minX, (int)transformed[0]);
 		minY = fabgl::imin(minY, (int)transformed[1]);
 		maxX = fabgl::imax(maxX, (int)transformed[0]);
@@ -2136,6 +2150,11 @@ void VDUStreamProcessor::bufferTransformBitmap(uint16_t bufferId, uint8_t option
 
 		pos[0] = srcWidthF;
 		dspm_mult_3x3x1_f32(transform, pos, transformed);
+#ifdef AGON_EXTENDER_P4_BOOT
+        // RX09 N03: reject before corner narrowing/allocation/publication.
+        if (!agon::extender::port::fitsTruncatedInt32(transformed[0]) ||
+            !agon::extender::port::fitsTruncatedInt32(transformed[1])) return;
+#endif
 		minX = fabgl::imin(minX, (int)transformed[0]);
 		minY = fabgl::imin(minY, (int)transformed[1]);
 		maxX = fabgl::imax(maxX, (int)transformed[0]);
@@ -2143,6 +2162,11 @@ void VDUStreamProcessor::bufferTransformBitmap(uint16_t bufferId, uint8_t option
 
 		pos[1] = srcHeightF;
 		dspm_mult_3x3x1_f32(transform, pos, transformed);
+#ifdef AGON_EXTENDER_P4_BOOT
+        // RX09 N03: reject before corner narrowing/allocation/publication.
+        if (!agon::extender::port::fitsTruncatedInt32(transformed[0]) ||
+            !agon::extender::port::fitsTruncatedInt32(transformed[1])) return;
+#endif
 		minX = fabgl::imin(minX, (int)transformed[0]);
 		minY = fabgl::imin(minY, (int)transformed[1]);
 		maxX = fabgl::imax(maxX, (int)transformed[0]);
@@ -2150,6 +2174,11 @@ void VDUStreamProcessor::bufferTransformBitmap(uint16_t bufferId, uint8_t option
 
 		pos[0] = 0.0f;
 		dspm_mult_3x3x1_f32(transform, pos, transformed);
+#ifdef AGON_EXTENDER_P4_BOOT
+        // RX09 N03: reject before corner narrowing/allocation/publication.
+        if (!agon::extender::port::fitsTruncatedInt32(transformed[0]) ||
+            !agon::extender::port::fitsTruncatedInt32(transformed[1])) return;
+#endif
 		minX = fabgl::imin(minX, (int)transformed[0]);
 		minY = fabgl::imin(minY, (int)transformed[1]);
 		maxX = fabgl::imax(maxX, (int)transformed[0]);

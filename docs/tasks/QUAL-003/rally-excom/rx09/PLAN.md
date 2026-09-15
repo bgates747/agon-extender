@@ -40,7 +40,7 @@ synthesis, unrelated optimizations or experimental push.
 ## Checklist
 
 1. [x] G01: Record approval and freeze this behavior before implementation.
-2. [ ] G02: Implement N02/N03/N06 parser guards and focused host tests; commit.
+2. [x] G02: Implement N02/N03/N06 parser guards and focused host tests; commit.
 3. [ ] G03: Implement N04/N05 renderer guards and focused host tests; commit.
 4. [ ] G04: Run target compile/source checks and existing relevant regressions;
    prepare deterministic eZ80 fixture and controlled installed-parent candidate.
@@ -55,3 +55,11 @@ unchanged official v2.16.0 and current EMOS; no mainboard flash is planned.
 Future RX11 reusable import gates and UC01–UC07 inventory remain sequenced
 before game benchmarks. If validation exposes an unrelated defect, preserve
 it and stop rather than broaden this approved work silently.
+
+
+G02: Parser guards added; retained logical-translation case, full bitmap
+transform body and full bitmap-creation body pass65,931 host cases with
+undefined/float-cast-overflow sanitizers. The bitmap-creation API already clears
+its previous bitmap at entry; N06 preserves that stock behavior rather than
+promising destination preservation the original command does not provide.
+Numeric source dependencies stay P4-only. Target/hardware validation is pending.
