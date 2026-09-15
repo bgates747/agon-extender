@@ -1799,7 +1799,23 @@ void IRAM_ATTR BitmappedDisplayController::drawBitmapWithTransform(BitmapTransfo
   int maxY = INT_MIN;
   float pos[3] = { (float)originalBox.X1, (float)originalBox.Y1, 1.0f };
   float transformed[3];
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  // RX09 N04: guard stock corner casts before clipping or framebuffer work.
+  // Invalid transforms own the same two allocations as the clipped-empty path.
+  auto validCorner = [&]() {
+    if (agon::extender::port::fitsTruncatedInt32(transformed[0]) &&
+        agon::extender::port::fitsTruncatedInt32(transformed[1])) return true;
+    if (drawingInfo.freeMatrix) {
+      m_primDynMemPool.free((void*)drawingInfo.transformMatrix);
+      m_primDynMemPool.free((void*)drawingInfo.transformInverse);
+    }
+    return false;
+  };
+#endif
   dspm_mult_3x3x1_f32(transformMatrix, pos, transformed);
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  if (!validCorner()) return;
+#endif
   minX = imin(minX, (int)transformed[0]);
   minY = imin(minY, (int)transformed[1]);
   maxX = imax(maxX, (int)transformed[0]);
@@ -1807,6 +1823,9 @@ void IRAM_ATTR BitmappedDisplayController::drawBitmapWithTransform(BitmapTransfo
 
   pos[0] = (float)originalBox.X2;
   dspm_mult_3x3x1_f32(transformMatrix, pos, transformed);
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  if (!validCorner()) return;
+#endif
   minX = imin(minX, (int)transformed[0]);
   minY = imin(minY, (int)transformed[1]);
   maxX = imax(maxX, (int)transformed[0]);
@@ -1815,6 +1834,9 @@ void IRAM_ATTR BitmappedDisplayController::drawBitmapWithTransform(BitmapTransfo
   pos[0] = (float)originalBox.X1;
   pos[1] = (float)originalBox.Y2;
   dspm_mult_3x3x1_f32(transformMatrix, pos, transformed);
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  if (!validCorner()) return;
+#endif
   minX = imin(minX, (int)transformed[0]);
   minY = imin(minY, (int)transformed[1]);
   maxX = imax(maxX, (int)transformed[0]);
@@ -1822,6 +1844,9 @@ void IRAM_ATTR BitmappedDisplayController::drawBitmapWithTransform(BitmapTransfo
 
   pos[0] = (float)originalBox.X2;
   dspm_mult_3x3x1_f32(transformMatrix, pos, transformed);
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+  if (!validCorner()) return;
+#endif
   minX = imin(minX, (int)transformed[0]);
   minY = imin(minY, (int)transformed[1]);
   maxX = imax(maxX, (int)transformed[0]);

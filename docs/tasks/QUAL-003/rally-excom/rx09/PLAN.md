@@ -41,7 +41,7 @@ synthesis, unrelated optimizations or experimental push.
 
 1. [x] G01: Record approval and freeze this behavior before implementation.
 2. [x] G02: Implement N02/N03/N06 parser guards and focused host tests; commit.
-3. [ ] G03: Implement N04/N05 renderer guards and focused host tests; commit.
+3. [x] G03: Implement N04/N05 renderer guards and focused host tests; commit.
 4. [ ] G04: Run target compile/source checks and existing relevant regressions;
    prepare deterministic eZ80 fixture and controlled installed-parent candidate.
 5. [ ] G05: Build/identify, flash/verify P4, deploy/read back fixture and startup;
@@ -63,3 +63,10 @@ undefined/float-cast-overflow sanitizers. The bitmap-creation API already clears
 its previous bitmap at entry; N06 preserves that stock behavior rather than
 promising destination preservation the original command does not provide.
 Numeric source dependencies stay P4-only. Target/hardware validation is pending.
+
+
+G03: Renderer guards added. Exact corner method and three pixel template bodies
+pass146guarded host cases with address/undefined/float-cast-overflow sanitizers;
+36defined-path control cases produce the same sampling hash with P4 guards
+compiled out. Invalid corners release owned matrices once and leave borrowed
+matrices/updateRect/framebuffer callbacks alone. Target and hardware are pending.

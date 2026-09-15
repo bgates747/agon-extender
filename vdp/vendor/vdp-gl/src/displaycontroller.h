@@ -55,6 +55,7 @@
 // AGON EXTENDER: native-state entry guards for the accepted P4 CPU reader.
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "extender/display/stock_native_access.hpp"
+#include "extender/port/numeric_conversion.hpp"
 #else
 #define AGON_STOCK_NATIVE_GUARD
 #define AGON_STOCK_PALETTE_GUARD
@@ -2819,8 +2820,15 @@ protected:
         pos[1] = y;
         dspm_mult_3x3x1_f32(invMatrix, pos, srcPos);
 
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+        // RX09 N05: stock's negative rejection admits NaN. A positive
+        // bounds predicate rejects it before casts and source addressing.
+        if (!(srcPos[0] >= 0.0f && srcPos[0] < widthF &&
+              srcPos[1] >= 0.0f && srcPos[1] < heightF)) continue;
+#else
         if (srcPos[0] < 0.0f || srcPos[0] >= widthF || srcPos[1] < 0 || srcPos[1] >= heightF)
           continue;
+#endif
 
         auto srcRow = data + (int)srcPos[1] * rowlen;
         int srcXint = (int)srcPos[0];
@@ -2856,8 +2864,15 @@ protected:
         pos[1] = y;
         dspm_mult_3x3x1_f32(invMatrix, pos, srcPos);
 
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+        // RX09 N05: stock's negative rejection admits NaN. A positive
+        // bounds predicate rejects it before casts and source addressing.
+        if (!(srcPos[0] >= 0.0f && srcPos[0] < widthF &&
+              srcPos[1] >= 0.0f && srcPos[1] < heightF)) continue;
+#else
         if (srcPos[0] < 0.0f || srcPos[0] >= widthF || srcPos[1] < 0 || srcPos[1] >= heightF)
           continue;
+#endif
 
         auto src = data + (int)srcPos[1] * width + (int)srcPos[0];
         if (*src & 0xc0)  // alpha > 0 ?
@@ -2892,8 +2907,15 @@ protected:
         pos[1] = y;
         dspm_mult_3x3x1_f32(invMatrix, pos, srcPos);
 
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+        // RX09 N05: stock's negative rejection admits NaN. A positive
+        // bounds predicate rejects it before casts and source addressing.
+        if (!(srcPos[0] >= 0.0f && srcPos[0] < widthF &&
+              srcPos[1] >= 0.0f && srcPos[1] < heightF)) continue;
+#else
         if (srcPos[0] < 0.0f || srcPos[0] >= widthF || srcPos[1] < 0 || srcPos[1] >= heightF)
           continue;
+#endif
 
         auto src = data + (int)srcPos[1] * width + (int)srcPos[0];
         if (src->A)
