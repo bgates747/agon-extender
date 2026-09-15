@@ -142,8 +142,9 @@ void VGAPalettedController::allocateViewPort()
 #if defined(AGON_EXTENDER_INTERNAL_FRAMEBUFFER)
   // QUAL-003 N04p, optional diagnostic: upstream uses INTERNAL here. The P4
   // port chose PSRAM for mode capacity. Try the stock capability only when a
-  // whole framebuffer fits one block plus stock reserve; never trade away rows
-  // to report a speedup. Fallback is explicit and is not evidence of benefit.
+  // whole framebuffer fits one block plus stock reserve in the original control.
+  // N04ab optionally uses stock pools below; neither policy trades away rows.
+  // Fallback is explicit and is not evidence of internal-memory benefit.
   const size_t required = size_t(m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul)
                         * m_viewPortHeight * (isDoubleBuffered() ? 2u : 1u);
   const size_t available = heap_caps_get_largest_free_block(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
@@ -155,13 +156,35 @@ void VGAPalettedController::allocateViewPort()
           && !isDoubleBuffered()
           && m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul == 512;
 #endif
+#if defined(AGON_EXTENDER_INTERNAL_POOLS)
+  // QUAL-003 N04ab: the unchanged stock allocator accepts multiple pools.
+  // A shortened attempt must be discarded before any row pointers publish.
+  const size_t total = heap_caps_get_free_size(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
+  if (eligible && total >= required + FABGLIB_MINFREELARGESTBLOCK
+      && available >= FABGLIB_MINFREELARGESTBLOCK)
+    caps = MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL;
+  const int requestedHeight = m_viewPortHeight;
+  VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  if ((caps & MALLOC_CAP_INTERNAL) && m_viewPortHeight != requestedHeight) {
+    VGABaseController::freeViewPort();
+    m_viewPortHeight = requestedHeight;
+    caps = MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM;
+    VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  }
+  ESP_LOGI("np-fb-pools", "requested=%d actual=%d free_before=%u free_after=%u",
+           requestedHeight, m_viewPortHeight, unsigned(total),
+           unsigned(heap_caps_get_free_size(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL)));
+#else
   if (eligible && available >= required + FABGLIB_MINFREELARGESTBLOCK)
     caps = MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL;
+#endif
   ESP_LOGI("np-fb-memory", "width=%d height=%d bytes=%u largest=%u selected=%s",
            m_viewPortWidth, m_viewPortHeight, unsigned(required), unsigned(available),
            caps & MALLOC_CAP_INTERNAL ? "internal" : "psram-fallback");
 #endif
+#if !defined(AGON_EXTENDER_INTERNAL_POOLS)
   VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+#endif
 #else
   VGABaseController::allocateViewPort(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
 #endif
