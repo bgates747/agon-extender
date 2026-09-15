@@ -1,0 +1,8 @@
+{
+  "run_id": "PORT-004-2026-09-15-05-55-46Z",
+  "build_id": "uart-excom-console-r21-b2026-09-15-05-53-11Z",
+  "factory_sha256": "05b9c855e4af0c6158260bab86734ed9ac074360bafb13dda4915fbe74d946dc",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "mainboard_sd_commissioning": "pending"
+}

@@ -1,0 +1,19 @@
+{
+  "completed_at": "2026-09-15T05:58:43.811397+00:00",
+  "collection_elapsed_seconds": 118.38767466903664,
+  "scope": "correctness; elapsed includes boot, fixture, SD and retrieval",
+  "terminals": [
+    "complete,probes=144,failures=0",
+    "complete,probes=144,failures=0"
+  ],
+  "pixel_counts": [
+    144,
+    144
+  ],
+  "audio_counts": [
+    48,
+    48
+  ],
+  "pixel_mismatches": [],
+  "pass": true
+}

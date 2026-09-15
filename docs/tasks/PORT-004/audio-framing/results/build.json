@@ -1,0 +1,42 @@
+{
+  "build_id": "uart-excom-console-r21-b2026-09-15-05-53-11Z",
+  "status": "draft",
+  "patch_commit": "e086893b0fc9dfc9c8c952641489e1c1fb468bd6",
+  "parent_build_id": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+  "parent_historical_dirty": true,
+  "parent_archive_sha256": "dfd57e331bebfeb5ce4edad1fa28135a366f73dec7d500dd2b5e624e29191ad0",
+  "changed_parent_inputs": {
+    "vdp/pio/p4-console-identity.json": "9c792a6f52693d3b8a98d4c6cb0aed3161c09f22df42e79ea70660e38e1b8d6b",
+    "vdp/video/extender/audio/unavailable_audio_adapter.hpp": "695200508e9b8d3a7d36a1083e40a50b4f8dbbaa8b7d06eb67a9e5b670a25cff",
+    "vdp/video/extender/network/wired_network_service.cpp": "c7a2aa606c7d0d7426b0e4858b8bded066a2652cc8d06fa616a964a5d2de1dab",
+    "vdp/video/extender/network/wired_network_service.hpp": "bd03c5965cca5197a03cfaab5d648d14e6fbc4117eee4901a52918e806b4aeb3",
+    "vdp/video/vdu.h": "b326130a85259a18064d4443ae4cd833cf4aa814c9cfb06b17c70b801839915c",
+    "vdp/video/vdu_audio.h": "3c657e3a598d63a36ec1ed644f918cae49c51c829a0b1fb2f23d8b0869c2474b",
+    "vdp/video/vdu_buffered.h": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb"
+  },
+  "helper_sha256": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+  "scope": "PORT-004 stock audio dispatcher with unavailable backend; retains NET-001 and RX06 atop installed-source parent; no newer UART changes",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "394dceb0f40eb3f570f34624921c9f5cad731f4e24b3fbd2b17847d963c83f40",
+      "bytes": 1447120
+    },
+    "firmware.elf": {
+      "sha256": "903ac1cc8f8b368523e5e63574758d15c657c47c809895904104c2ec7c1adceb",
+      "bytes": 28071420
+    },
+    "firmware.factory.bin": {
+      "sha256": "05b9c855e4af0c6158260bab86734ed9ac074360bafb13dda4915fbe74d946dc",
+      "bytes": 1578192
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    },
+    "bootloader.bin": {
+      "sha256": "7156dfe4114a28009f72764f1710aec2ce36b2a8e9273f782a1cec8391ce13d7",
+      "bytes": 24256
+    }
+  },
+  "build_complete": true
+}

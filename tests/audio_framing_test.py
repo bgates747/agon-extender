@@ -67,6 +67,12 @@ int main(){
   Case sample{{255,5,0,uint8_t(size),uint8_t(size>>8),uint8_t(size>>16)},0};for(unsigned i=0;i<size;++i)sample.bytes.push_back(uint8_t(i));cases.push_back(std::move(sample));
  }
  for(auto &c:cases)for(size_t chunk:{1,3,17,64})check(c,chunk);
+ // Retained timeout reply distinction: missing outer fields have no reply;
+ // a completed envelope/sample header delegates failure back to the dispatcher.
+ for(const Case &c:std::vector<Case>{{{0},-1},{{0,0,12,1},-1},{{0,14,128,12},-1},{{0,6,1},0},{{255,5,0,3,0,0,12},0}}){
+  VDUStreamProcessor t;t.bytes=c.bytes;replies.clear();callbacks=0;t.vdu_sys_audio();
+  assert(t.at==t.bytes.size());if(c.status<0)assert(replies.empty());else assert(replies.size()==1&&replies[0][1]==unsigned(c.status));
+ }
  // Back-to-back Wolf3D-style enable, sample selection and play: no gap or marker search.
  VDUStreamProcessor stream;std::vector<Case> wolf={{{0,8},0},{{0,4,8,12,16},0},{{0,0,64,12,16,1,0},0}};
  for(auto &c:wolf)stream.bytes.insert(stream.bytes.end(),c.bytes.begin(),c.bytes.end());stream.bytes.push_back('Z');replies.clear();callbacks=0;

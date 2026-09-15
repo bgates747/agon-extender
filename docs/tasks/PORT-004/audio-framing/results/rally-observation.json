@@ -1,0 +1,10 @@
+{
+  "scope": "visual/frame delivery observation, not renderer performance",
+  "frames_received": 314,
+  "observed_wall_seconds": 20.174751471960917,
+  "startup": "RUN without mute; default attract",
+  "initial_snapshot": "retained preceding fixture image; final image is live unmuted Rally",
+  "game_identity_source": "prior independently verified deployment agents/rally-grip200-deploy/deployment.json; no game file changed during this task",
+  "game_sha256": "4be88dd1c8efbb6f7cddbdce1b98ee8805572f47550cda5d8c0ef3207189395b",
+  "human_review": "pending"
+}

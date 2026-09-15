@@ -16,7 +16,7 @@ of the wider unimplemented-command inventory. Existing broader items remain.
 1. [x] AF01: Pin grammar/source, return values and malformed-input limits; freeze.
 2. [x] AF02: Retain stock dispatcher/reply path, bind bounded unavailable backend.
 3. [x] AF03: Host tests for all branches, lengths, sentinels, truncation and replies.
-4. [ ] AF04: Install identified candidate; test unmuted Rally and deterministic
+4. [x] AF04: Install identified candidate; test unmuted Rally and deterministic
    graphics/audio sentinel streams against unchanged stock mainboard VDP.
 5. [ ] AF05: Preserve results/usable startup, hardware voice and review stop.
 
