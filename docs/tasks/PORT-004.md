@@ -150,3 +150,8 @@ Official contract: Agon documentation `docs/vdp/Enhanced-Audio-API.md`,
 command framing and status replies; retained stock-shaped implementation in
 `vdp/video/vdu_audio.h`. No audio sink choice, code change or hardware operation
 accompanies this deferral.
+
+
+## Audio-first execution resumed
+
+The Author authorizes [framing repair and tests](PORT-004/audio-framing/PLAN.md), with hardware voice at review. This supersedes earlier planning-only/framing deferrals for this bounded slice; synthesis remains deferred.

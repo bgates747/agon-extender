@@ -2896,3 +2896,8 @@ resumes; synthesis and output remain deferred.
 PORT-004 retains audio-specific obligations; PORT-008 retains transport/reply
 reachability. This task owns the executable parser binding and generic discard
 behavior. TODO.md remains the single authoritative work index.
+
+
+## Audio-first execution resumed
+
+The Author authorizes the [audio framing execution contract](PORT-004/audio-framing/PLAN.md), implementation and hardware tests with spoken notification. Broader unimplemented-command inventory and audio synthesis remain separate.
