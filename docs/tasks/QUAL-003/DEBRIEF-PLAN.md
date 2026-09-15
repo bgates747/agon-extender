@@ -37,7 +37,7 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**P00a–P00d approved for unattended research; P01–P06 remain proposals.**
+**P00 complete. P01 approved; P02–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
@@ -98,7 +98,10 @@ preparations per ISR is not sufficient evidence that the pertinent inherited
 scheduling mechanisms have been fully audited. Golem remains on hold.
 
 P00a–P00d completed: [source-linked timing audit and next checks](debrief/OFFICIAL-RESEARCH.md#9-p00--focused-fabgl-timing-audit).
-No immediate fix is established. Await Author review before P01 execution.
+No immediate fix is established. Author approved P01a/b and conditional P01c/d
+unattended, with hardware voice notification at an actionable conclusion or
+need for assistance. Preserve original startup, known firmware rollback and
+existing fixtures. No Golem, MOS experiment or downstream execution.
 
 ### P01 — Establish current comparison and diagnostic accounting
 
