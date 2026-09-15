@@ -25,3 +25,21 @@ Initial asset/fixture staging with both staging and final readbacks took
 **1636.1 seconds (27.27 minutes)**. This is deployment time, not gameplay time.
 All files activated and read back successfully. Subsequent runs reuse the pinned
 assets; do not repeat the large upload without a reason.
+
+## First matched P4 control (no web output)
+
+| Same r01 SW workload | Mainboard | P4, no web client | P4 elapsed difference |
+|---|---:|---:|---:|
+| Mean completed frame (ms) | 16.667 | 16.667 | 0.00% |
+| Completed frames/s | 60.0 | 60.0 | 0.00% |
+| p95 completed frame (ms) | 16.667 | 16.667 | 0.00% |
+
+Both600-record fingerprints match exactly. Every479 post-warmup interval is two
+clock ticks on each route. This does not measure spare CPU budget or establish
+parity with web streaming/heavier sprite loads. Evidence: no-output-pair.json
+and raw NPL1.BIN/NPE1.BIN.
+
+Collector correction: after reset, use a fresh SD client state. The first host
+collector reused its pre-reset state and correctly refused the changed service
+identity. A fresh client retrieved the completed result without rerunning or
+resetting the game. This was not a gameplay/firmware failure.
