@@ -124,3 +124,25 @@ was fully read back after closing the old MOS batch. The final scope change was
 not rebooted again; the same command had passed the native CLI restart check.
 The accepted Rally binary was read in full and is unchanged. See the acceptance
 record for hashes, recovery evidence and the firmware rollback identity.
+
+## Detached host deployment jobs
+
+For an already prepared service, run the existing verified deployment command
+through `scripts/bench_job.py`, using the project-local Python for both commands:
+
+```sh
+.venv/bin/python scripts/bench_job.py --output agents/my-deployment-job -- \
+  .venv/bin/python scripts/sdcard.py --url "$EXTENDER_URL" \
+  --state agents/my-deployment-state.json put /path/to/input.bin /target.bin --activate
+```
+
+Use a fresh ignored job directory and preserve the SD recovery journal. Launch
+returns immediately. Stop monitoring; inspect `result.json` and `output.log` on
+later Author follow-up. The worker records start/end UTC and monotonic elapsed
+seconds, return code and success/failure; `request.json` preserves exact argv
+and working directory. Success means the wrapped command returned zero; the SD
+client verifies staged and activated bytes before doing so. There is no automatic
+retry, cleanup, service exit, reset, firmware flash or game launch. Wrap a prepared
+deployment script when additional verified steps are required. A running record
+without a terminal result after host interruption is unknown, not success.
+Only one SD client may use the service at a time, even with different journals.

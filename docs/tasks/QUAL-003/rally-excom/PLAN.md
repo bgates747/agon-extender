@@ -31,7 +31,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
 
 ## Execution checklist
 
-1. [ ] RX01: Add detached deployment execution with durable command log,
+1. [x] RX01: Add detached deployment execution with durable command log,
    start/end time, terminal success/failure and exact invocation. Existing SD
    client owns staging, independent readbacks and recovery journals. No host
    polling during transfers; later human follow-up reads local evidence.
@@ -81,3 +81,9 @@ verified. Alerts distinguish notification from test evidence.
 - AgonArcade rally-game/README.md and docs/specifications/rally-full-game.md.
 - Official agon-docs/docs/vdp/VDU-Commands.md, VDU23,7 graphics-viewport scroll;
   current game hud.hpp and drawScenery use protected viewports and page caching.
+
+## RX01 evidence
+
+Detached worker host checks returned success/0 and failure/7, with terminal
+JSON and monotonic duration, without bench access. SD verified upload semantics
+are unchanged. Physical detached deployment remains to be exercised.
