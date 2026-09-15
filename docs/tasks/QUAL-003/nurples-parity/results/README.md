@@ -5,23 +5,32 @@
 **Parity has not passed.** Both sprite paths now complete roughly60 refreshes
 per second with streaming active, but frame spacing still misses the frozen
 smoothness gate. The matched stock observer confirms a real P4 timing deficit.
-The four-opportunity adapter candidate is building; no threshold was relaxed.
+The four-opportunity candidate failed its hardware-sprite repeat; no threshold was relaxed.
 
-| Sprite path / candidate | Stock mean ms | P4 mean ms | Stock p95 ms | P4 p95 ms |
-|---|---:|---:|---:|---:|
-| HW, r38 (one opportunity) | 16.664 | 16.645 | 17.021 | 31.036 |
-| SW, r38 (one opportunity) | 16.687 | 16.651 | 17.063 | 30.673 |
-| HW, r39 (two opportunities) | 16.664 | 16.642 | 17.021 | 26.692 |
-| SW, r39 (two opportunities) | 16.687 | 16.651 | 17.063 | 25.092 |
+| r40 run | Stock mean ms | P4 mean ms | Mean difference | Stock p95 ms | P4 p95 ms |
+|---|---:|---:|---:|---:|---:|
+| HW repeat |16.664|16.718|+0.32%|17.021|32.989|
+| SW repeat |16.687|16.654|−0.20%|17.063|25.016|
+| SW first |16.687|16.662|−0.15%|17.063|24.975|
+| HW first |16.664|16.653|−0.07%|17.021|21.288|
 
-Worst p95 deficit first. Mean duration is already comparable; the p95 gate is
-stock plus8.333ms. r39 HW misses that gate. Every case completes2400 refreshes
-with the same deterministic workload. These are explicit command completions,
-not60 distinct browser images or hardware scanouts. Web delivery remains around
-28FPS, separately recorded in verified-r39-output.json. Production WebGL
-readback matches all captured pixels on both paths; screenshot canvas discard
-is a separate headless screenshot limitation. Stock mainboard VDP has been
-restored/readback-verified after its diagnostic measurements.
+Ranked by worst p95 first. Difference is duration relative to stock; lower is
+better. The p95 gate is stock plus8.333ms. HW repeat fails. All2400 refreshes
+complete in every run; pending never exceeds1. These are explicit command
+completions, not60 distinct browser images or physical scanouts. Browser
+streaming and post-stream services passed all four180second controls.
+See verified-r40-output.json and refresh-r40.log.
+
+Actual allocation evidence is material: **all r40 game runs used PSRAM**.
+The configuration requested internal memory but its single-largest-block guard
+rejected it. r39 SW selected internal memory; HW fell back. Treat configuration
+flags separately from measured allocation selection. The stock base allocator
+supports multiple pools; this guard is stricter than that stock behavior.
+
+The next isolated control removes inherited, inactive graphics timing scopes,
+which still enter critical sections, while retaining the independent completion
+recorder used on stock. This is an instrumentation-cost hypothesis, not an
+established cause. Stock mainboard VDP remains restored and verified.
 
 ## Measurement provenance and earlier comparisons
 

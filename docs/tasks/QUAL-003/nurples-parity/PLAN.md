@@ -1021,11 +1021,11 @@ or run redundant r39 repeats. Finish its current output/service control.
    for isolated r40. Logical/output cadence stays60Hz. No new queue wake source,
    game/renderer algorithm or lock change. Host-check1/2/4 opportunities with
    odd periods and delayed callbacks; preserve original1 and r39's2 behavior.
-2. [ ] N04z-ii: After r39 releases hardware, preserve it and deploy/verify r40.
+2. [x] N04z-ii: After r39 releases hardware, preserve it and deploy/verify r40.
    Run unchanged r05 SW/HW completion traces with180second streams and health
    checks; repeat both only if initial mean/p95 gates pass. Reject a regression
    in logical period, images, workload count, input or sustained output.
-3. [ ] N04z-iii: Compare to the same stock baseline and retain all results.
+3. [x] N04z-iii: Compare to the same stock baseline and retain all results.
    If repeated parity passes, finish N05 restoration/report/voice and stop.
    Otherwise record the failure and identify the remaining measured cause
    before selecting another change; do not indefinitely raise the divisor.
@@ -1060,3 +1060,35 @@ approval or a relaxation of the measurement contract.
 4. [ ] N05d: Send the accepted hardware spoken attention cue and verify its fresh
    completion receipt (not proof the Author heard it). Mark the goal complete
    only after all required work passes; stop rather than start more optimisation.
+
+
+N04z complete, parity rejected: all four180second streams and service checks
+finished. HW repeat p9532.989ms fails against stock17.021+8.333ms despite
+59.816 completedFPS and pending<=1. Its enqueue p9530.925ms accounts for most
+of the variation; enqueue-to-completion p953.933ms. No higher divisor selected.
+Actual allocation logs show all r40 game runs used PSRAM, despite the internal
+allocation option. Earlier configured-memory descriptions are not proof of
+selected memory. r39 SW was internal but HW fell back to PSRAM.
+
+### N04aa — Remove unused historical graphics instrumentation
+
+AGENT-ASSIGNED, not separately Author-approved. The inherited r22 build enables
+AGON_GRAPHICS_TIMING; even disabled Scope instances enter a critical section.
+This runs per primitive and per sprite scanline. The stock completion baseline
+has only the independent refresh recorder. Magnitude is unknown; test rather
+than assume causation. Source: diagnostics/graphics_timing.hpp Scope constructor.
+
+1. [ ] N04aa-i: Build isolated r41 from the same r40 settings with only the old
+   AGON_GRAPHICS_TIMING define removed. Retain refresh trace, output counters,
+   geometry, locks, task priorities, four drawing opportunities and unchanged
+   fixture. Assert old timing symbols absent and refresh recorder present.
+2. [ ] N04aa-ii: Preserve r40, deploy/readback-verify r41, then run matched SW/HW
+   traces with180second live output and service checks. Repeat both only if
+   first mean/p95 pass. Record actual framebuffer selection, not just flags.
+3. [ ] N04aa-iii: Retain all comparisons, check images and workload integrity.
+   If repeated parity passes proceed to N05; otherwise investigate measured
+   costs without changing the gate. Stock multi-pool internal allocation is a
+   separate pending hypothesis: the local largest-block preflight is stricter
+   than VGABaseController::allocateViewPort, which supports multiple pools.
+   Any experiment must preserve full height with clean fallback; no such
+   allocation change is included in r41.
