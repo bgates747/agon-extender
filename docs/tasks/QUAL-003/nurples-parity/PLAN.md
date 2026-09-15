@@ -803,3 +803,24 @@ complete internal framebuffer and original drawing/row algorithms.
    workload, changed mode dimensions or unusable output instead of relaxing gates.
 
 N04t-i r36 build passed; linked outputcore0/priority4 verified.
+
+### N04u — Match stock VGA64 two-row composition granularity
+
+AGENT-ASSIGNED, not separately Author-approved. First r36SW is35.33FPS, worse
+than separate-core r34. Finish its current HW control, then reject same-core
+priority4 for performance. Source: vendor/vdp-gl/src/dispdrivers/vga64controller.h
+sets VGA64_LinesCount=4; ISRHandler in vga64controller.cpp prepares LinesCount/2
+rows per interrupt. The retained span ledger in PORT-003 stock-backend-r2 owns
+upstream row-body provenance. P4 adapter currently locks each row separately.
+
+1. [ ] N04u-i: Add default-off two-row output batching on the r34 configuration
+   (outputcore1/priority2, corrected snapshot mutex, full internal framebuffer).
+   Hold native exclusion for two original row preparations; normalize both after
+   releasing it. Preserve row order, original bodies, palette-revision handling,
+   tail bounds, image bytes and384row count. No row timing combination yet.
+   Validate batch/single-row equivalence and build isolated r37.
+2. [ ] N04u-ii: After current controls release the bench, restore startup,
+   preserve rollback, flash/verify and run unchanged SW/HW streaming fixtures
+   with post-output service checks. Reject corrupted images or incomplete rows.
+3. [ ] N04u-iii: Repeat any apparent parity; measure rather than assume a benefit
+   from fewer mutex handoffs. This does not authorize upstream renderer rewrites.
