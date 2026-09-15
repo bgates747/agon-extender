@@ -17,6 +17,12 @@ constexpr unsigned kOutputTaskPriority = 2;
 #else
 constexpr unsigned kOutputTaskPriority = 6;
 #endif
+// N04r: keep drawing/parser priorities and all row locks; isolate CPU affinity.
+#if defined(AGON_EXTENDER_OUTPUT_DRAW_CORE)
+constexpr unsigned kOutputTaskCore = 0;
+#else
+constexpr unsigned kOutputTaskCore = 1;
+#endif
 } // namespace
 StockP4Service::StockP4Service(Allocator allocator)
     : snapshots_(allocator, SnapshotPixelFormat::RGB222, 0, true, true, kSnapshotLookahead) {
@@ -107,7 +113,7 @@ bool StockP4Service::attach(StockRuntimeController &controller) {
     controller_ = nullptr; stopping_.store(true); return false;
   }
   draw_task_.store(drawing, std::memory_order_release);
-  if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, 1) != pdPASS) {
+  if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, kOutputTaskCore) != pdPASS) {
     detach(); return false;
   }
   output_task_.store(output, std::memory_order_release);
