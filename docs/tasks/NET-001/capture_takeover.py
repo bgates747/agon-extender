@@ -24,10 +24,17 @@ try:
     else:closed=None
     current.wait_for_timeout(1000)
     frame=current.evaluate('__videoObservation.frames.slice(-1)[0]');assert frame['width']==320 and frame['height']==240 and frame['payload']==frame['height']*frame['stride'] and frame['bytes']==32+frame['payload'],frame
+    current.screenshot(path=str(r/f'turn-{turn}.png'))
     results.append(dict(turn=turn,viewer='AB'[turn%2],previous_close=closed,frame=frame))
    pages[1].screenshot(path=str(r/'browser.png'))
    (r/'last.evf').write_bytes(bytes(pages[1].evaluate('Array.from(new Uint8Array(__videoObservation.last))')))
-  finally:browser.close()
+  finally:
+   for i,page in enumerate(pages):
+    try:
+     (r/f'viewer-{i}.json').write_text(json.dumps(page.evaluate('({frames:__videoObservation.frames,closes:__videoObservation.closes,state:document.querySelector("#state").textContent})'),indent=2)+'\n')
+     page.screenshot(path=str(r/f'viewer-{i}.png'))
+    except Exception:pass
+   browser.close()
  (r/'result.json').write_text(json.dumps(dict(status='pass',handovers=5,connections=6,results=results,elapsed_seconds=time.monotonic()-start,ended_utc=datetime.datetime.now(datetime.timezone.utc).isoformat()),indent=2)+'\n')
  print('PASS: six connections, five replacements, explicit reconnect in both directions, valid320x240 frames',flush=True)
 except Exception as e:
