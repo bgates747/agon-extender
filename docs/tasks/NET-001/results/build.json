@@ -1,0 +1,39 @@
+{
+  "build_id": "uart-excom-console-r20-b2026-09-15-04-18-49Z",
+  "status": "draft",
+  "patch_commit": "1dedf1f28f303ac64d7fac8196b9820f01c85efc",
+  "parent_build_id": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+  "parent_historical_dirty": true,
+  "parent_archive_sha256": "dfd57e331bebfeb5ce4edad1fa28135a366f73dec7d500dd2b5e624e29191ad0",
+  "changed_parent_inputs": {
+    "vdp/pio/p4-console-identity.json": "7a21e4394de7eb9dd598c09c5fdc542d863467bba48e9ecd3c951b4ce8a97dc7",
+    "vdp/video/extender/network/wired_network_service.cpp": "c7a2aa606c7d0d7426b0e4858b8bded066a2652cc8d06fa616a964a5d2de1dab",
+    "vdp/video/extender/network/wired_network_service.hpp": "bd03c5965cca5197a03cfaab5d648d14e6fbc4117eee4901a52918e806b4aeb3",
+    "vdp/video/vdu_buffered.h": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb"
+  },
+  "helper_sha256": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+  "scope": "NET-001 viewer takeover plus RX06 repair atop installed-source parent; no newer UART changes",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "e122d87db3e259a6c44fe99f487f9fa0e07baf1e4282354dc8228fa38760000c",
+      "bytes": 1445520
+    },
+    "firmware.elf": {
+      "sha256": "b7bd9e1be5c77ba6984ea635da276112294a9cdcc952b6552ead21a868175ee1",
+      "bytes": 28056048
+    },
+    "firmware.factory.bin": {
+      "sha256": "cd88376195bae5ad709b9b3a7c026f9289ff7ef653d5555662db86d981695e07",
+      "bytes": 1576592
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    },
+    "bootloader.bin": {
+      "sha256": "036c54a6831fe75407af80f1a7ad2ed10ff9878734e21eaa86b06bfe7454e524",
+      "bytes": 24256
+    }
+  },
+  "build_complete": true
+}

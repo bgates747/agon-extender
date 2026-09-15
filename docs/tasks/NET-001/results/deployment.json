@@ -1,0 +1,8 @@
+{
+  "run_id": "NET-001-2026-09-15-04-21-11Z",
+  "build_id": "uart-excom-console-r20-b2026-09-15-04-18-49Z",
+  "factory_sha256": "cd88376195bae5ad709b9b3a7c026f9289ff7ef653d5555662db86d981695e07",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "mainboard_sd_commissioning": "pending"
+}
