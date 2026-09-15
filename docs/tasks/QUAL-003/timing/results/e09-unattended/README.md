@@ -14,11 +14,12 @@ load. It is not a production FPS, browser-output or scanout qualification.
 The Author observed completion about 28m30s after starting a phone timer several
 minutes after launch, supporting **somewhat over 30 minutes total**. The saved
 MOS-clock checkpoint span converts nominally to **27m13.267s**, and is not a
-reliable wall-time measurement of this run. The old 20-minute host deadline was
-inadequate; this successful run does not prove what the earlier interrupted run
+reliable wall-time measurement of this run. A 20-minute host deadline would be too short for this revision; this
+successful run does not prove what the earlier interrupted run
 would have done, nor resolve the earlier intermittent mainboard BSP21_01 timeout.
 
-Restoration and the review voice receipt are recorded below when complete.
+Original EMOS ROM and both ESP images are restored and independently verified;
+SD read/write and unchanged startup pass. The hardware review voice is next.
 E10 production qualification remains a separate next step; no new full-suite
 rerun, renderer change, wiring change or production-performance claim occurred.
 
@@ -123,3 +124,12 @@ Pinned diagnostic images:
 Installed EMOS ROM and both ESP writes were independently verified. Original
 root startup remained unchanged. Machine-local deployment/recovery journals are
 retained separately; no private bench topology is required to read these results.
+
+
+## Restored bench
+
+[Restoration receipt](restoration.json): original EMOS full-ROM SHA256
+`1cd65eac21780a8a7c82e14209737c38796e24f32300524e58a93e5c44e096d8`,
+mainboard original affected flash sectors verified, P4 original 2MiB prefix
+verified, fresh keyboard admission/CLI SAVE, SD257-byte roundtrip, unchanged
+root startup. No r03 deployment, new matrix, wiring change or E10 execution.

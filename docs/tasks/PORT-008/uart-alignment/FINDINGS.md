@@ -16,7 +16,7 @@ The Author observed somewhat over 30 minutes total; the journal's nominal
 35 minutes provisionally for this same prepared suite, separate setup/retrieval,
 and avoid an automatic deadline based on that estimate. A new, undeployed fixture
 revision adds explicit elapsed ticks; independent wall-clock calibration remains
-needed for precise estimates. The old 20-minute collection limit was inadequate.
+needed for precise estimates. A 20-minute collection limit would be too short for this revision.
 
 E07P's bulk targets remain qualified in both EMOS profiles. Ordinary forward:
 588.096 ms P4 versus 589.670 ms mainboard; matched return: 85.156 ms versus

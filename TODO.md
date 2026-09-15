@@ -11,7 +11,7 @@ item is removed.
   - Status: E07P bulk parity qualified in ordinary and bench EMOS: each passes384 exact controls, three captures and strict symmetric return timing. Exact original bench firmware/startup restored; CLI/SD/input verified and hardware voice acknowledged. Graphics and short-command latency are not included in that parity claim. No experimental push.
   - Details: [PORT-008](docs/tasks/PORT-008.md), [bounded plan](docs/tasks/PORT-008/uart-alignment/PLAN.md)
   - Companion: [E07P owner scheduling](docs/tasks/PORT-008/uart-alignment/E07P-owner.md) is complete; minimal stock-loop alignment retained. [Current findings](docs/tasks/PORT-008/uart-alignment/FINDINGS.md) link qualification/restoration evidence.
-  - Next: Author review of the qualified parity candidates, then EMOS INTEG-014 E08 correctness stress and E09 rendering under their contracts. No automatic follow-up or experimental push.
+  - Next: Author review of completed E08 correctness and E09 rendering evidence, then explicit EMOS INTEG-014 E10 authorization. No automatic follow-up or experimental push.
 
 ## Previous goal — Resident Rally telemetry and driving
 

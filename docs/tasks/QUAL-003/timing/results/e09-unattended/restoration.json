@@ -1,0 +1,10 @@
+{
+  "emos_rom_sha256": "1cd65eac21780a8a7c82e14209737c38796e24f32300524e58a93e5c44e096d8",
+  "emos_byte_exact": true,
+  "mainboard_flash_restored_verified": true,
+  "p4_prefix_restored_verified": true,
+  "sd_roundtrip": true,
+  "startup_unchanged": true,
+  "firmware": "Original pre-run images",
+  "new_fixture_deployed": false
+}
