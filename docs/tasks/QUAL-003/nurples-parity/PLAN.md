@@ -1268,3 +1268,8 @@ N04ae-i complete: r44 source/partition/symbol checks pass. Host ASan/UBSan
 checks pass recursive/contended locks, parser-only ownership, exclusion of the
 foreground mutex, bounded records, re-arm and disabled behavior. Existing
 refresh-trace bounds/nonce/marker tests pass with the optional probe on and off.
+
+Native acquisition clock clarification: elapsed time around mutex.lock includes
+preemption as well as contention; it must not be labelled pure blocked time.
+The probe localizes elapsed cost to that region without proving its scheduler
+versus mutex cause by itself.

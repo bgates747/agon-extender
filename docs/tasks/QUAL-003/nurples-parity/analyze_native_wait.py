@@ -14,7 +14,7 @@ def read(text,nonce,expected=2400):
  assert len(rows)==expected and [r[0] for r in rows]==list(range(expected))
  assert all(r[2]<=r[1] and (r[3]>0 or r[1]==r[2]==0) for r in rows)
  window=rows[120:]
- return dict(scope='Diagnostic parser-native mutex acquisition and RX backlog; probe overhead excludes parity qualification',completion_trace=trace,native_wait_ms=summarize([r[1]/1000 for r in window]),largest_acquisition_ms=summarize([r[2]/1000 for r in window]),native_acquisitions_per_refresh=summarize([r[3] for r in window]),rx_buffered_bytes_at_enqueue=summarize([r[4] for r in window]),worst_wait_rows=sorted(rows,key=lambda r:r[1],reverse=True)[:12]),rows
+ return dict(scope='Diagnostic parser-native mutex acquisition wall time (including preemption) and RX backlog; not pure blocked time; probe overhead excludes parity qualification',completion_trace=trace,native_wait_ms=summarize([r[1]/1000 for r in window]),largest_acquisition_ms=summarize([r[2]/1000 for r in window]),native_acquisitions_per_refresh=summarize([r[3] for r in window]),rx_buffered_bytes_at_enqueue=summarize([r[4] for r in window]),worst_wait_rows=sorted(rows,key=lambda r:r[1],reverse=True)[:12]),rows
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('capture',type=Path);p.add_argument('--nonce',required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
  result,rows=read(a.capture.read_text(errors='replace'),a.nonce)
