@@ -695,3 +695,27 @@ N04p ended after first SW control: explicit PSRAM fallback; no benefit claim,
 remaining redundant fallback cases cancelled. Later read-only SD retry recovered
 without reset; nonce-verified file retained. Browser saw50.612second gap.
 N04q-i built isolated r32 with game-mode eligibility flag; no row timers.
+
+N04q first streamed SW run uses INTERNAL at full512x384, nonce/state match,
+53.54FPS mean18.678ms p9533.333ms. Not parity. After its observer ended,
+HTTP became unreachable from both laptop and wired observer host; remaining
+cases did not start. Preserve last USB log and perform one explicit P4-only
+reset with unchanged firmware/readiness verification, then resume fresh cases.
+No MOS flash/reset is selected unless readiness requires the documented path.
+
+### N04r — Isolate cross-core native-mutex handoff
+
+AGENT-ASSIGNED, not separately Author-approved. The original row diagnostic
+measured4.94ms cumulative lock wait per snapshot. Memory placement improves
+first-run SW completion but leaves missed refresh boundaries. Output core1
+continually takes the same recursive mutex as parser/drawing core0. Hypothesis:
+placing priority2 output on core0 avoids cross-core row/primitive handoffs and
+lets higher-priority drawing/parser run first. This is scheduling-only, not a
+change to retained primitives, sprite algorithms, frame rate or image content.
+
+1. [ ] N04r-i: Add a default-off output-core0 flag, retaining priority2 and all
+   r32 flags. Build isolated r33, no row timers; verify linked task affinity.
+2. [ ] N04r-ii: Only after r32 controls/recovery release the bench, preserve
+   rollback/startup, deploy/verify and run the same SW/HW streaming controls.
+3. [ ] N04r-iii: Compare/repeat any apparent parity; require unchanged full
+   workload and usable live output. Record failure instead of changing load.
