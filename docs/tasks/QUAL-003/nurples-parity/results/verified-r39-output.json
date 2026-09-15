@@ -1,0 +1,106 @@
+{
+  "free": {
+    "browser_summary": {
+      "received": 5003,
+      "received_fps": 27.78594049186635,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 90.69999992847443,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4740
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 263
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180533.20000004768,
+    "post_output_services_passed": true,
+    "completion_trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "3d86167b0d9b23cd",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 2,
+      "warmup": 120,
+      "completed_fps": 60.05498918351409,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65140587977183,
+        "p95_ms": 25.092,
+        "max_ms": 40.215
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 4.262235964912281,
+        "p95_ms": 7.6,
+        "max_ms": 21.768
+      },
+      "elapsed_first_to_last_ms": 39948.834
+    }
+  },
+  "freehw": {
+    "browser_summary": {
+      "received": 5018,
+      "received_fps": 27.86941979722781,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 290.5,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 5017
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 1
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180455.19999992847,
+    "post_output_services_passed": true,
+    "completion_trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "3b99148e810e715b",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 2,
+      "warmup": 120,
+      "completed_fps": 60.0898853983846,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.641735849056605,
+        "p95_ms": 26.692,
+        "max_ms": 42.247
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 4.857648684210526,
+        "p95_ms": 8.406,
+        "max_ms": 24.679
+      },
+      "elapsed_first_to_last_ms": 39941.807
+    }
+  }
+}

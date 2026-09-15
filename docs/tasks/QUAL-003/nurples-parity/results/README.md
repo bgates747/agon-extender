@@ -2,19 +2,26 @@
 
 ## Executive summary
 
-**Parity has not passed.** With live streaming, the new independent P4
-completion trace measures60.06FPS software sprites and60.08FPS hardware sprites,
-with all2400 refresh commands completed and at most3 pending. Both retain the
-same deterministic gameplay fingerprint. However, p95 completion intervals are
-30.673ms and31.036ms. A matched mainboard timestamp baseline is now being
-prepared; the older query/tick measurements do not establish this distribution.
-See verified-r38-output.json and refresh-r38.log for the bounded trace.
+**Parity has not passed.** Both sprite paths now complete roughly60 refreshes
+per second with streaming active, but frame spacing still misses the frozen
+smoothness gate. The matched stock observer confirms a real P4 timing deficit.
+The four-opportunity adapter candidate is building; no threshold was relaxed.
 
-These are explicit refresh-command completions, not proof of60 distinct browser
-images or hardware scanouts. Web delivery remains separately measured, around
-28FPS. Per-frame synchronous queries materially reduced earlier P4 results.
-All four latest180second observer/service controls passed; stock-route browser
-images are not evidence of what physical mainboard VGA displayed.
+| Sprite path / candidate | Stock mean ms | P4 mean ms | Stock p95 ms | P4 p95 ms |
+|---|---:|---:|---:|---:|
+| HW, r38 (one opportunity) | 16.664 | 16.645 | 17.021 | 31.036 |
+| SW, r38 (one opportunity) | 16.687 | 16.651 | 17.063 | 30.673 |
+| HW, r39 (two opportunities) | 16.664 | 16.642 | 17.021 | 26.692 |
+| SW, r39 (two opportunities) | 16.687 | 16.651 | 17.063 | 25.092 |
+
+Worst p95 deficit first. Mean duration is already comparable; the p95 gate is
+stock plus8.333ms. r39 HW misses that gate. Every case completes2400 refreshes
+with the same deterministic workload. These are explicit command completions,
+not60 distinct browser images or hardware scanouts. Web delivery remains around
+28FPS, separately recorded in verified-r39-output.json. Production WebGL
+readback matches all captured pixels on both paths; screenshot canvas discard
+is a separate headless screenshot limitation. Stock mainboard VDP has been
+restored/readback-verified after its diagnostic measurements.
 
 ## Measurement provenance and earlier comparisons
 

@@ -986,11 +986,11 @@ not a discovered stock VDP bug or permission to rewrite rendering algorithms.
    primitive queue order/bodies, priorities, native locks, geometry and output
    bytes. No parser notification shortcut, altered game workload or MOS change.
    Host-check opportunity vs logical-clock arithmetic and link/build settings.
-2. [ ] N04y-ii: Wait for the mainboard diagnostic controller to finish and
+2. [x] N04y-ii: Wait for the mainboard diagnostic controller to finish and
    restore exact stock VDP before P4 deployment. Preserve r38, install/verify
    r39, run the identical SW/HW traces with full180second live output and
    service checks. Reject missing work/corruption or changed60Hz logical period.
-3. [ ] N04y-iii: Repeat both paths if first results meet the original mean/p95
+3. [x] N04y-iii: Repeat both paths if first results meet the original mean/p95
    criteria against the matched mainboard trace. Otherwise retain failure and
    choose the next evidenced investigation. Do not claim distinct browser-frame
    parity from completed commands. This adapter option remains experimental
@@ -1029,3 +1029,7 @@ or run redundant r39 repeats. Finish its current output/service control.
    If repeated parity passes, finish N05 restoration/report/voice and stop.
    Otherwise record the failure and identify the remaining measured cause
    before selecting another change; do not indefinitely raise the divisor.
+
+N04y controls complete: both full streams and services passed, workload/counts
+match. SW initially meets mean/p95 limits; HW misses p95. Repeats were skipped
+as contracted. N04z owns the next bounded opportunity-cadence test.
