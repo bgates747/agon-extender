@@ -8,6 +8,9 @@
 #include <condition_variable>
 #include <cstdint>
 #include <mutex>
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+#include "../diagnostics/native_wait_trace.hpp"
+#endif
 
 namespace agon::extender::display {
 
@@ -18,7 +21,25 @@ namespace agon::extender::display {
 std::recursive_mutex &stockNativeMutex();
 std::recursive_mutex &stockForegroundMutex();
 std::uint32_t &stockPaletteRevision();  // accessed only under the native mutex
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+// N04ae: retain the same recursive mutex and acquisition/release semantics.
+// Only the parser measures waiting; drawing/output never update its counters.
+class StockNativeGuard {
+ std::recursive_mutex &mutex_;
+ public:
+ explicit StockNativeGuard(std::recursive_mutex &mutex):mutex_(mutex){
+  const bool measure=agon_native_wait::observing() && &mutex==&stockNativeMutex();
+  const auto start=measure ? agon_native_wait::now() : 0;
+  mutex_.lock();
+  if(measure)agon_native_wait::acquired(agon_native_wait::now()-start);
+ }
+ ~StockNativeGuard(){mutex_.unlock();}
+ StockNativeGuard(const StockNativeGuard&)=delete;
+ StockNativeGuard& operator=(const StockNativeGuard&)=delete;
+};
+#else
 using StockNativeGuard = std::lock_guard<std::recursive_mutex>;
+#endif
 
 struct StockPaletteGuard {
   StockNativeGuard guard{stockNativeMutex()};

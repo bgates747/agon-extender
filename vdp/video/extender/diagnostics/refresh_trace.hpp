@@ -6,6 +6,9 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+#include "native_wait_trace.hpp"
+#endif
 #ifdef NP_TRACE_HOST
 #include <cstdlib>
 #include <mutex>
@@ -53,7 +56,12 @@ inline portMUX_TYPE mux=portMUX_INITIALIZER_UNLOCKED;
 struct Guard { Guard(){portENTER_CRITICAL(&mux);} ~Guard(){portEXIT_CRITICAL(&mux);} };
 inline uint32_t now(){return uint32_t(esp_timer_get_time());}
 #endif
-inline void enqueue(){Guard guard;recorder.enqueue(now());}
+inline void enqueue(){
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+ agon_native_wait::boundary(); // UART driver query stays outside trace critical section.
+#endif
+ Guard guard;recorder.enqueue(now());
+}
 inline void complete(){Guard guard;recorder.complete(now());}
 // Called solely by the parser, after all marker bytes have been consumed.
 inline void marker(const uint8_t *data, unsigned size) {
@@ -68,11 +76,23 @@ inline void marker(const uint8_t *data, unsigned size) {
    storage=static_cast<Sample*>(heap_caps_calloc(Capacity,sizeof(Sample),MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
 #endif
   }
-  Guard guard; (void)recorder.begin(data+8,storage); return;
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+  agon_native_wait::prepare(); // outside active observation, explicitly PSRAM
+#endif
+  bool began;{Guard guard;began=recorder.begin(data+8,storage);}
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+  if(began)agon_native_wait::arm();
+#else
+  (void)began;
+#endif
+  return;
  }
  bool stopped;
  {Guard guard;stopped=recorder.stop(data+8);}
  if(!stopped)return;
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+ agon_native_wait::stop();
+#endif
  // No further records admitted. Parser owns marker processing, so another
  // start cannot overlap this dump. USB output is strictly after terminal fence.
  std::printf("\nNPTRACE begin ");
@@ -84,6 +104,9 @@ inline void marker(const uint8_t *data, unsigned size) {
    (unsigned long)recorder.samples[i].complete_us);
  std::printf("NPTRACE end ");for(auto b:recorder.nonce)std::printf("%02x",unsigned(b));
  std::printf("\n");
+#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+ agon_native_wait::dump(recorder.nonce);
+#endif
 }
 }
 #endif
