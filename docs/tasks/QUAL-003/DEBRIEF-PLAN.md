@@ -110,7 +110,7 @@ existing fixtures. No Golem, MOS experiment or downstream execution.
    the archived r43 behavior parent, retaining optional completion observation
    but excluding the r44 native-acquisition probe for the reference. No MOS
    experiment. Do not infer installed options from repository defaults.
-2. [ ] P01b: Run the existing r05 SW fixture with a fresh nonce and full180second
+2. [x] P01b: Run the existing r05 SW fixture with a fresh nonce and full180second
    wired production observer, then the same fixture without output. Record
    completion spacing, enqueue spacing, pending counts, whole-game coverage,
    terminal pixels and service health. Reverse order for one repeat if the
@@ -140,6 +140,12 @@ cause and follow the earliest measured divergence. Stop for review if a clear
 fix is identified. Estimated existing controls:3minutes observer each, about
 40seconds game work, plus setup/retrieval; diagnostic preparation has no tested
 duration yet. Do not turn estimates into resets.
+
+**P01a/b review checkpoint:** [matched-run results](debrief/P01/README.md).
+Two output-off controls remove the tail; both streamed controls worsen it.
+P01c/d remain unchecked and deferred: recommend existing P02a/b isolation before
+adding broad instrumentation. This is an evidence-driven sequencing proposal,
+not authorization to start P02. No immediate fix or parity pass is claimed.
 
 ### P02 — Separate output composition from network scheduling, if warranted
 

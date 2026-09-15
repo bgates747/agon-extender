@@ -1,0 +1,362 @@
+{
+  "p01-on1": {
+    "trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "93cba832ab17e63d",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.05949183872148,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.650157525230362,
+        "p95_ms": 28.879,
+        "max_ms": 37.651
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.651791136463363,
+        "p95_ms": 27.0,
+        "max_ms": 37.536
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.50852149122807,
+        "p95_ms": 4.077,
+        "max_ms": 19.932
+      },
+      "elapsed_first_to_last_ms": 39941.709
+    },
+    "game": {
+      "file": "P01R1.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "93cba832ab17e63d",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "browser": {
+      "scope": "production browser receive/WebGL submission; no scanout/VDP execution timing claim",
+      "summary": {
+        "received": 5044,
+        "received_fps": 27.987714930436766,
+        "median_receive_interval_ms": 33.39999997615814,
+        "maximum_receive_interval_ms": 95.39999997615814,
+        "layouts": [
+          {
+            "width": 512,
+            "height": 384,
+            "stride": 512,
+            "format": 2,
+            "frames": 4780
+          },
+          {
+            "width": 640,
+            "height": 480,
+            "stride": 640,
+            "format": 2,
+            "frames": 264
+          }
+        ],
+        "observed_logical_period_us": [
+          16667
+        ],
+        "sequence_gaps": 0
+      },
+      "status": "bounded video delivery observed; workload and human interpretation remain separate",
+      "page_errors": [],
+      "observed_wall_seconds": 180.18203627504408,
+      "browser_version": "151.0.7922.173"
+    }
+  },
+  "p01-off2": {
+    "trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "64bf495b31862756",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.05359500082149,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65179245283019,
+        "p95_ms": 16.981,
+        "max_ms": 21.156
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.652685827117153,
+        "p95_ms": 17.312,
+        "max_ms": 18.812
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.3040548245614034,
+        "p95_ms": 3.908,
+        "max_ms": 4.4
+      },
+      "elapsed_first_to_last_ms": 39940.858
+    },
+    "game": {
+      "file": "P01R2.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "64bf495b31862756",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    }
+  },
+  "p01-off3": {
+    "trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "d434aa3dc46dfffa",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.051112218269644,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.652480912681,
+        "p95_ms": 16.949,
+        "max_ms": 20.931
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.652563405002194,
+        "p95_ms": 17.301,
+        "max_ms": 19.916
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.3163473684210527,
+        "p95_ms": 3.899,
+        "max_ms": 4.439
+      },
+      "elapsed_first_to_last_ms": 39947.052
+    },
+    "game": {
+      "file": "P01R3.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "d434aa3dc46dfffa",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    }
+  },
+  "p01-on4": {
+    "trace": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "db5f813a4d058bf8",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.05812751829408,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.650535761298816,
+        "p95_ms": 24.89,
+        "max_ms": 37.304
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.651086002632734,
+        "p95_ms": 22.936,
+        "max_ms": 34.109
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.6081228070175437,
+        "p95_ms": 4.13,
+        "max_ms": 18.482
+      },
+      "elapsed_first_to_last_ms": 39934.373
+    },
+    "game": {
+      "file": "P01R4.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "db5f813a4d058bf8",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "browser": {
+      "scope": "production browser receive/WebGL submission; no scanout/VDP execution timing claim",
+      "summary": {
+        "received": 5166,
+        "received_fps": 28.664219617322217,
+        "median_receive_interval_ms": 33.39999997615814,
+        "maximum_receive_interval_ms": 271.0,
+        "layouts": [
+          {
+            "width": 512,
+            "height": 384,
+            "stride": 512,
+            "format": 2,
+            "frames": 5164
+          },
+          {
+            "width": 640,
+            "height": 480,
+            "stride": 640,
+            "format": 2,
+            "frames": 2
+          }
+        ],
+        "observed_logical_period_us": [
+          16667
+        ],
+        "sequence_gaps": 0
+      },
+      "status": "bounded video delivery observed; workload and human interpretation remain separate",
+      "page_errors": [],
+      "observed_wall_seconds": 180.15868444996886,
+      "browser_version": "151.0.7922.173"
+    }
+  },
+  "stock_historical": {
+    "scope": "mainboard completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+    "nonce": "f651e6aa1036ba63",
+    "submitted": 2400,
+    "completed": 2400,
+    "maximum_pending_refreshes": 2,
+    "warmup": 120,
+    "completed_fps": 59.9265519773961,
+    "completion_intervals": {
+      "count": 2279,
+      "mean_ms": 16.6870939008337,
+      "p95_ms": 17.063,
+      "max_ms": 31.816
+    },
+    "enqueue_to_completion": {
+      "count": 2280,
+      "mean_ms": 6.433276754385965,
+      "p95_ms": 8.435,
+      "max_ms": 14.245
+    },
+    "elapsed_first_to_last_ms": 40014.852
+  }
+}

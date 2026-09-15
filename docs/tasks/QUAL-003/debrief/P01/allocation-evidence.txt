@@ -1,0 +1,4 @@
+I (66314) np-fb-memory: width=512 height=384 bytes=196608 largest=188416 selected=internal
+I (286225) np-fb-memory: width=512 height=384 bytes=196608 largest=184320 selected=internal
+I (504213) np-fb-memory: width=512 height=384 bytes=196608 largest=180224 selected=internal
+I (723299) np-fb-memory: width=512 height=384 bytes=196608 largest=176128 selected=internal
