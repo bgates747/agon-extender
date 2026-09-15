@@ -97,7 +97,7 @@ nonces, full counts and zero failure status. Normal keyboard readiness and SD
 access passed after each run.
 
 [comparison.json](comparison.json) contains the paired summaries and historical
-baseline; `refresh.log` contains only the four nonce-tagged trace blocks, without
+baseline; `refresh.txt` contains only the four nonce-tagged trace blocks, without
 private boot/network details. `P01R1.BIN` through `P01R4.BIN` are fixture result
 records, not executable images or artwork. [evidence-sha256.json](evidence-sha256.json)
 records their hashes. Existing `nurples-parity/analyze.py` and
