@@ -722,3 +722,34 @@ change to retained primitives, sprite algorithms, frame rate or image content.
 
 N04r-i passed build and linked task-argument inspection: drawingcore0/priority5,
 outputcore0/priority2. Unflashed until r32 comparison/recovery releases bench.
+
+### N04s — Remove snapshot consumer priority inversion
+
+AGENT-ASSIGNED, not separately Author-approved; takes priority over further
+N04q/N04r hardware cases. Source finding: PresentationSnapshotPool::lockConsumer
+busy-spins on atomic_flag. r29 lowered output producer topriority2 while network
+runs priority3 and can share its core. A consumer preempting that producer
+inside its short transition lock never blocks; the producer cannot resume to
+release it. This is a concrete scheduler hazard. Existing post-run freezes are
+consistent with it, but no captured task backtrace proves their exact cause.
+The mistake is in the P4 output adapter, not an upstream VDP drawing algorithm.
+
+1. [ ] N04s-i: Replace the transition spin flag with a task mutex. Producer
+   uses try_lock once (still non-blocking); consumers block on the mutex.
+   Pinned IDF pthread.c creates FreeRTOS mutexes with priority inheritance.
+   No ISR uses this frame-task interface. Preserve every slot/lease/state rule,
+   ownership bound and immutable frame byte. Run existing snapshot/network
+   ownership tests with sanitizers; add concurrency coverage if absent.
+2. [ ] N04s-ii: Build isolated r34 with r32 flags plus mutex correction, core1
+   output unchanged. Keep r33 unflashed so correctness and affinity changes
+   remain separately attributable. Preserve safe startup/rollback, deploy,
+   verify, repeat SW/HW cases with full180second live-output observation and
+   explicit post-close keyboard/SD readiness. No freezes may count as parity.
+3. [ ] N04s-iii: If stable, evaluate game timings; then choose whether to repeat
+   parity or refresh the separately frozen core-affinity experiment. Do not
+   mask freezes by resetting within measured windows.
+
+Bench recovery: P4-only reset restored SD but native keyboard needed mainboard
+boot admission. Existing-result COPY stopped that recovery startup before SD;
+after bounded fixture interval native CLI restored Legacy and direct SD. No
+MOS flash was needed. Recovery replay is excluded from performance evidence.
