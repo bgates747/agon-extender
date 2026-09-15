@@ -2,18 +2,18 @@
 
 ## Executive summary
 
-**A small hardware test reproduces the left-road defect: ExCom differs from
-Legacy at 14 of 80 sampled pixels using current Rally's exact buffered road-section
-program.** The same seven left-side locations disagree on both pages. Simpler
-scroll, page-retention, raw triangle and direct bitmap tests match. Stop here for
-Author review, before changing firmware or running a larger suite.
+**The immediate numeric repair passes the unchanged hardware reproduction:
+ExCom now matches stock at all 80 samples, eliminating the previous 14 pixel
+differences.** The stock results remain unchanged. The P4-only checked signed
+conversion therefore resolves this reproduced left-road defect. See
+[RX06 evidence](rx06/README.md) for the controlled installed-parent build,
+raw results, limits and exact hashes.
 
-The leading cause is an inherited float-to-unsigned conversion whose behavior
-is not portable between Xtensa and RISC-V. That source is identical to stock;
-this is a compatibility adaptation candidate, not permission to improve stock
-VDP. A controlled correction/rerun is still needed to establish causation.
-The full HUD flicker remains unresolved. These are pixel-correctness results,
-not frame-rate or throughput measurements.
+The full HUD flicker remains unresolved, and no performance improvement is
+claimed. The broader conversion enumeration and unimplemented-command no-op
+work have not started. Human full-game acceptance remains pending.
+
+The following table preserves the original diagnostic run before repair.
 
 ## Most informative results first
 

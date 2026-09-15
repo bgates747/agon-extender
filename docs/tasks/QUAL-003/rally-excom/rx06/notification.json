@@ -1,0 +1,10 @@
+{
+  "audio_commands": "pass",
+  "pending_receipt_replaced": true,
+  "fresh_service_verified": true,
+  "startup_restored": true,
+  "mainboard_firmware_unchanged": true,
+  "p4_candidate_retained": true,
+  "state": "Legacy MOS prompt",
+  "human_hearing": "not yet confirmed"
+}

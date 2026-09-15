@@ -4,7 +4,7 @@
 
 Candidate adds a narrow P4-only checked conversion at buffered command41's
 fixed-point result boundary. All65,764 host checks pass with undefined-behavior
-and float-cast-overflow sanitizers. Physical r03 comparison remains pending.
+and float-cast-overflow sanitizers. Physical unchanged r03 now matches stock at all 80 samples (previously 14 differed); the stock results remain identical to the prior baseline.
 The wider enumeration and no-op audio work have not started.
 
 ## Selected semantics and scope
@@ -50,3 +50,44 @@ Global version validation remains blocked by the pre-existing light2-harness-r02
 connectivity hash mismatch (hardware files unchanged since4cd4ae3). Registry,
 templates and VDP identity checks pass separately. No hardware record is repaired
 as part of this numeric work; no claim of full qualification.
+
+## Physical result — 2026-09-15 UTC
+
+| Same r03 fixture, mode 136 | Stock mainboard VDP | P4 ExCom | Differences |
+|---|---:|---:|---:|
+| Original r17 | 80 samples | 80 samples | 14 (17.5%) |
+| Controlled numeric repair r18 | 80 samples | 80 samples | 0 (0%) |
+
+Both pages are included. Stock values are unchanged from the earlier run.
+The controlled repair eliminates the reproduced left-road discrepancy; it does
+not establish full Rally visual acceptance, HUD correctness or performance.
+No audio handler was changed. Wider conversion enumeration has not started.
+
+The deployed build is `uart-excom-console-r18-b2026-09-15-02-58-20Z`.
+See manifest.json for exact input/output identities and raw CSV/comparison files
+beside this document. The same r03 binary was read back before invocation.
+Factory flash was independently verified; matching startup and USB host readiness
+were observed. Original mainboard VDP and EMOS were not flashed.
+
+The isolated build took 113.4 seconds; deployment/verification took 47.70 seconds.
+The collection job took 58.46 seconds from immediately after reset through
+retrieval, including boot, both probes and downloads. This is an operational
+estimate for repeating this small probe, **not renderer timing or FPS**.
+Host checks validate the helper; physical samples validate the normal road path.
+Invalid-transform destination preservation is established by code inspection,
+not a dedicated physical malformed-input probe.
+
+The installed-source archive was a historical dirty build. The candidate keeps
+its dependency lock and DSP derivative unchanged and adds the committed numeric
+patch and identity only. This is controlled exploratory evidence, not a clean
+release qualification. The affected translation unit has no unsafe math flags.
+
+## Review state
+
+Original load-only Nurples autoexec was restored and independently read back;
+the historical backup was preserved. The P4 numeric candidate remains installed
+for review. Mainboard VDP and EMOS remain unchanged. The British hardware voice
+player replaced a fresh pending marker with `audio_commands=pass`; hearing is
+not yet human-confirmed. The bench returned to the Legacy MOS prompt.
+No experimental changes were pushed. RX06 is complete for this bounded defect;
+stop before RX07. Full-game visual acceptance remains pending.

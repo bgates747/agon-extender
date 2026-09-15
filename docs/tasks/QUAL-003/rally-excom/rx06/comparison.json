@@ -1,0 +1,9 @@
+{
+  "paired_mismatches": [],
+  "legacy_terminal": "complete,probes=80,failures=0",
+  "excom_terminal": "complete,probes=80,failures=0",
+  "collection_elapsed_seconds": 58.416348171944264,
+  "completed_at": "2026-09-15T03:06:05.531725+00:00",
+  "scope": "correctness; observer elapsed is not rendering timing",
+  "legacy_reference_unchanged": true
+}

@@ -56,7 +56,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    restore usable bench if required and play hardware British voice alert
    (spoken emulator fallback only if hardware unavailable). Otherwise expand
    through the existing relevant suite until a defect emerges or it completes.
-6. [ ] RX06: Fix and test the immediate buffered-road conversion problem using
+6. [x] RX06: Fix and test the immediate buffered-road conversion problem using
    the smallest compatibility adaptation. Preserve stock signed fixed-point
    semantics, explicit representable ranges and truncation; never rely on a
    compiler flag to define an invalid float-to-unsigned cast. Test finite
@@ -165,3 +165,13 @@ no-op handlers, with audio obligations retained in PORT-004. Do not mix that
 change into the numeric correction candidate. Rally mute/audio A/B and command
 framing probes belong to that tranche; the proposed relationship to HUD flicker
 remains a hypothesis.
+
+## Execution resumed — RX06
+
+The Author subsequently requested: “freeze contracts and proceed with the first
+work,” with hardware voice at attention stops. Contract commit 966345e freezes
+the staged sequence. This supersedes the preceding planning-only hold for RX06.
+RX06's controlled physical result is documented in rx06/README.md: zero paired
+differences at 80 samples, versus 14 before repair. Stock values are unchanged.
+The installed-parent build limitation is explicit there. Stop after RX06 for
+review; RX07 enumeration and the separate no-op work remain unstarted.

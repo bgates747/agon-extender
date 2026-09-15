@@ -1,0 +1,43 @@
+{
+  "build_id": "uart-excom-console-r18-b2026-09-15-02-58-20Z",
+  "status": "draft",
+  "patch_commit": "119ece4734152e0692b1e157e63911eb5342446f",
+  "parent_build_id": "uart-excom-console-r17-b2026-09-13-13-07-24Z",
+  "parent_historical_dirty": true,
+  "parent_archive_sha256": "dfd57e331bebfeb5ce4edad1fa28135a366f73dec7d500dd2b5e624e29191ad0",
+  "changed_parent_inputs": {
+    "vdp/pio/p4-console-identity.json": "4cdce66461d13087d399c715a7561bf1317e35352e58561e8ce4b29879d5709d",
+    "vdp/video/vdu_buffered.h": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb"
+  },
+  "helper_sha256": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+  "scope": "numeric repair only atop installed-source parent; no newer UART changes",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "9cf969567c653e2313e39519c416c9084cdcb63bb7c66663398199e4e58586e0",
+      "bytes": 1445008
+    },
+    "firmware.elf": {
+      "sha256": "d3bad3af73a3cc3055b7dca68ba7f083aafdf8c4f5fa44a17a011fc1afcf14de",
+      "bytes": 28049920
+    },
+    "firmware.factory.bin": {
+      "sha256": "de9a286254d36cae6f8a6b51be2b351cb678ecf4e27539a2937b6ee8b9255b40",
+      "bytes": 1576080
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    },
+    "bootloader.bin": {
+      "sha256": "a0b0c028705da80d1c0d7516d5285932401f8b3a19388574eb452ad54a81173a",
+      "bytes": 24256
+    }
+  },
+  "build_complete": true,
+  "fixture_sha256": "1723fc7b7252bb9d6d421eff0d03066ae6659071f9cec1d898a418a7bcda81e2",
+  "deployment_write_verified": true,
+  "mainboard_firmware": "stock VDP 2.16.0; EMOS v0.1.16-b2026-09-13-07-31-36Z unchanged",
+  "run_started_at": "2026-09-15T03:05:07.073823+00:00",
+  "run_outcome": "pass",
+  "qualification": "bounded exploratory pixel comparison, not release qualification"
+}
