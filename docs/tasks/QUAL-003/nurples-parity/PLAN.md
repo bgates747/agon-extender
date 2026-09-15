@@ -764,9 +764,12 @@ is slower than r32's first case; mutex safety does not imply performance gain.
 Remaining HW/repeat controls retain sole bench ownership.
 
 N04r refresh — AGENT-ASSIGNED, not separately Author-approved:
-1. [ ] N04r-i2: Build r35 with both corrected snapshot mutex and outputcore0;
+1. [x] N04r-i2: Build r35 with both corrected snapshot mutex and outputcore0;
    otherwise identical r34 flags. This activates the already frozen affinity
    change on the corrected parent. r33 stays unflashed because it has the spin
    hazard. Verify linked lock/try-lock and outputcore0/priority2 arguments.
 2. Hardware N04r-ii still waits for N04s controls and usable post-close services.
    Abort that sequence if a new freeze/invalid result needs diagnosis first.
+
+N04r-i2 built r35; linked output task core0/priority2, corrected mutex retained.
+Unflashed pending r34 controls and final service readiness.
