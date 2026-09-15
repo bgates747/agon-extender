@@ -76,3 +76,27 @@ result are saved; timed frame records remain in RAM to avoid per-frame SD cost.
 Source patching is isolated; reference worktree untouched. N02 validates the
 pilot on hardware before it can support conclusions. Archive dirty reference
 assets locally; do not rebuild them from older tracked art.
+
+### N02 measurement-path clarification (agent-assigned, not separately Author-approved)
+
+Source review confirms stock `sendScreenPixel` explicitly calls
+`waitPlotCompletion(false)`. The downstream `processPrimitives` drains the queue
+and calls `showSprites`; `readScreen` alone does neither. Thus the query is a
+software-drawing completion boundary, not proof of hardware-sprite scanout.
+Reference: official 2.16.0 `video/vdu_sys.h`, `video/agon_screen.h`, and FabGL
+`displaycontroller.cpp`; corresponding port paths retain these calls.
+
+The repair AGNB image loader requires RGBA2222, a supported hardware-sprite
+format. The isolated HW variant enables the documented test flag and marks
+sprites with command19 after normal initialization. Normal game source/assets
+remain unchanged. Verify visibility in actual output before crediting the HW
+variant; keep software and hardware comparisons separate.
+
+The first pilot remains frozen. Before relying on its unfenced sibling for
+probe-overhead conclusions, propagate the final-query failure into the terminal
+record and make the analyzer's variant/scope explicit. Those are fixture issues,
+not evidence of a VDP defect. Retain the original pilot identity/results.
+
+Installed r22 includes `AGON_GRAPHICS_TIMING=1`. Dormant scopes still enter a
+critical section. This is a candidate measurement cost, not yet a diagnosed
+bottleneck; do not change firmware on that hypothesis alone.
