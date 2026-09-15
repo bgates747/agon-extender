@@ -404,3 +404,10 @@ Allow one mainboard reset to replay the retained terminal-returning autoexec;
 this is recovery, not a new timed comparison. Wait for its terminal SD service,
 then exit it and restore startup through a directly launched service. Do not
 use the rerun result as fresh benchmark evidence. No MOS flash is involved.
+
+The recovery reset completed the game, then COPY correctly refused the existing
+archived destination and aborted autoexec at line11. A decoded EVF capture
+showed the saved-result message, access-denied error and responsive ExCom MOS
+prompt. This explains absent terminal SD service; it is not a hung game.
+Native CLI now selects Legacy and launches SD directly. Future recovery must
+expect COPY's create-new behavior too; never classify missing SD alone as hang.
