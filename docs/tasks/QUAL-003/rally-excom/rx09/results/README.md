@@ -4,7 +4,8 @@
 
 N02–N06 are implemented and pass focused host checks and a full P4 build.
 Hardware r22 matches stock on342/342 valid samples and passes570/570 rejection
-checks. Startup restoration and the final unmuted Rally smoke are pending.
+checks. Original startup is restored and verified. A20second unmuted current-Rally
+capture retains the HUD, sky, road and car. Human review remains separate.
 The initial stock run exposed a fixture palette mistake, corrected in r02.
 No game benchmark, mainboard firmware change or experimental push is included.
 
@@ -78,3 +79,23 @@ Fixture r02:13,054bytes, SHA256
 Corrected fixture/startup staging and verification took36.90seconds. Exact
 pixel rows and terminal records are retained here with hardware.json. Run
 started2026-09-15T07:16:54Z and collection ended07:23:20Z.
+
+## Restoration and current-Rally smoke
+
+Original89-byte load-only Nurples startup restored and independently read back;
+SHA256 `38f0a73389c584b0884b5a718a20cb9c610bd4f249a3af447912c0415ec5678e`.
+CLI/SD service exit and relaunch succeeded. The current deployed Rally was
+launched with no game switches in ExCom. The final frame of a20second capture
+shows intact HUD/title, sky, road, kerbs and car at displayed speed224.
+No mute switch was used. This bounds a visual smoke, not full-game acceptance
+or completed hardware-frame measurement. [Retained final image](rally-smoke.png).
+The browser received339frames in20seconds (delivery only).
+
+No mainboard firmware changes, experimental push, new benchmark or unrelated
+conversion fixes. RX11 reusable import protections and the separate wider
+unsupported-command audit remain ahead of game benchmarking.
+
+Hardware notification: accepted British female voice player completed with a
+fresh audio_commands=pass receipt, original startup reverified, SD service
+exited to Legacy MOS. This verifies playback commands, not human hearing.
+Human review is pending; no further work or experimental push follows.

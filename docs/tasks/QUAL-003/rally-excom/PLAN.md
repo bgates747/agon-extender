@@ -78,7 +78,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
 8. [x] RX08: Present the enumeration to the Author, notify on hardware and STOP.
    Each disposition must identify which findings may be corrected. Silence or
    completion of the search does not authorize bulk edits.
-9. [ ] RX09: Only after enumeration review, correct the approved findings in
+9. [x] RX09: Only after enumeration review, correct the approved findings in
    discrete commits with minimal platform adaptations and regression tests.
    Keep unapproved findings open. Do not modify official reference checkouts.
 10. [ ] RX10: Exercise those corrections deterministically against the pinned
@@ -218,3 +218,11 @@ Author approved the recommended N02–N06 dispositions and instructed proceeding
 [RX09/RX10 execution contract](rx09/PLAN.md) freezes behavior and validation.
 Notify on hardware when finished or assistance is needed. N07/N08 and dormant
 findings are not included; no repeated approval request is needed for N02–N06.
+
+
+RX09 approved N02–N06 corrections completed. RX10 machine checks pass:342/342
+valid pixels match stock,570/570 P4 rejection samples pass; current unmuted
+Rally visual smoke passes. [Detailed results](rx09/results/README.md). Original
+startup restored and hardware voice receipt verified. RX10 remains open for
+its human review gate; no game benchmark or RX11 work started in this step.
+The older HUD-open wording is historical; audio framing was already accepted.

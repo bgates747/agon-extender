@@ -47,7 +47,7 @@ synthesis, unrelated optimizations or experimental push.
 5. [x] G05: Build/identify, flash/verify P4, deploy/read back fixture and startup;
    run paired valid cases and P4 rejection cases with durable results. Keep
    mode selection in autoexec. Record fixture/runtime and preparation durations.
-6. [ ] G06: Restore startup, verify CLI/SD and unmuted Rally rendering; record
+6. [x] G06: Restore startup, verify CLI/SD and unmuted Rally rendering; record
    results/limits, commit and send hardware voice. Human review is separate.
 
 The earlier RX07 baseline and source inventory are authoritative inputs. Use
@@ -109,3 +109,10 @@ evidence separate. Estimate roughly5minutes for all three corrected runs.
 G05 passed: r02 valid samples342/342 match stock exactly; P4 rejection570/570
 pass. Three fixture sections total333.47seconds; boot/collection386.30seconds.
 See results/hardware.json and retained CSVs. Restore/smoke/voice are next.
+
+
+G06 completed: original startup independently restored/read back; CLI/SD exit
+and relaunch pass. Current unmuted Rally20second final capture retains HUD,
+sky, road and car. Accepted hardware voice player replaced the fresh pending
+receipt with audio_commands=pass; startup unchanged; service exited to Legacy
+MOS. Human hearing and full-game review remain separate. No experimental push.
