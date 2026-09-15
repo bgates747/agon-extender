@@ -15,8 +15,8 @@ def main():
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
- revision='r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
- assert not a.blocking_consumer or (a.internal_game_mode and not a.output_draw_core)
+ revision='r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ assert not a.blocking_consumer or a.internal_game_mode
  assert not a.output_draw_core or a.internal_game_mode
  assert not a.internal_game_mode or a.internal_framebuffer
  assert not a.internal_framebuffer or (a.output_below_parser and not a.row_timing)
