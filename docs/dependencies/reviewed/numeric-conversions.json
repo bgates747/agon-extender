@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "review_reference": "docs/tasks/QUAL-003/rally-excom/rx11/PLAN.md",
+  "implementation_checkpoint": "61e6f27",
+  "upstream": {
+    "agon_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+    "vdp_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0"
+  },
+  "scope": "Bounded numeric review receipt, not source-selection authority or complete conversion inventory. Known graph/console drift remains unresolved.",
+  "inputs": {
+    "vdp/video/vdu_buffered.h": "edbbd07e85cba5e6061c20523ff3bf4138608c5af7f164ed4b2be8f3b9f9cc4f",
+    "vdp/video/vdu_sprites.h": "95aeb568f8ec1fad96ffe320e506c13be32b1fb0404dce5a072a26ca8041bb78",
+    "vdp/video/vdu_stream_processor.h": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "vdp/video/types.h": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+    "vdp/video/extender/port/fixed_conversion.hpp": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+    "vdp/video/extender/port/numeric_conversion.hpp": "9d57225449b76d5af8b373a671cd5024d302740e55f732afdf8cef1627b12ff2",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "ac1c3abfe9c55f8bee2adef4ce65e704265a4959dcd550a7e7a1ad3fd405664b",
+    "vdp/vendor/vdp-gl/src/displaycontroller.h": "378f0dd54e11e8e8cea60b24fc1d9b944a75a3ecefce8558bb318b9326ba6fd1",
+    "vdp/pio/select_sources.py": "ff0f6ba375bc4c70d64c38a60e62e93b41c6976a525f68d9ffec7358dd731893",
+    "vdp/pio/p4-console-source-selection.json": "febe64bb543c9a2d579681640d370a3c6a27084ab92d7dbdfee3c1c5a547de37",
+    "vdp/platformio.ini": "52aae2b2a86babd8806e40adf82336d64f8577d34931d8b5e0ad834773ff12ee",
+    "tests/fixed_conversion_test.cpp": "5c364c143896882a1bf409bbdb56f9879c6de77bf1fc9cae198e353d97a9bb18",
+    "tests/numeric_parser_test.py": "8cb5a9955916ee5f6c396512ec5d590161816b6043f0740fbe61c6ad1d0b4786",
+    "tests/numeric_renderer_test.py": "bd546faa0b2dddc49d6e0bc5deabd3fffede06fd1e6acd0853d907be48fa7223",
+    "tests/processed_keyboard_test.py": "5ebafa9db1097302f5ce639ecc3732109b49ccd986f1a31a6c531b42d25784ba",
+    "scripts/check_numeric_port.py": "e9aa30c49fe201c9f405bc373b27d4251787912cc858d0a977288b03a9a40bec",
+    "tests/numeric_import_gate_test.py": "4009652921d641f78ef3debc91d2a3275680d0451e37f6bd89a567d1a06f199f",
+    "docs/dependencies/generated/code-graph.yaml": "ae26a7136624413f78ce563bef2f163348897d15668f74d87c8d31a5591f2db3"
+  }
+}

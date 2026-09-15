@@ -11,7 +11,7 @@ unsupported-command audit, benchmark or experimental push.
 
 1. [x] I01: Record the approved N01–N06 adaptation map, upstream identities,
    behaviors, executable tests and removal criteria in a durable import procedure.
-2. [ ] I02: Add a single local validation entry point: reject drift in reviewed
+2. [x] I02: Add a single local validation entry point: reject drift in reviewed
    source/helpers/tests/build-selection inputs, then run existing sanitized tests.
    Hashes are review tripwires, not semantic proof. No automatic rebaseline option.
    Keep code-graph.yaml the sole source-selection authority; the new record is
