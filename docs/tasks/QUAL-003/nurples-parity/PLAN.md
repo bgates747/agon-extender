@@ -116,3 +116,21 @@ N02 pilot checkpoints (agent-assigned subdivisions of the frozen paired work):
    streaming. Compare state fingerprints before interpreting timing differences.
 3. [ ] N02c: Hardware-sprite variant on both routes, with P4 output captures.
    Follow with corrected unfenced controls and repeats needed for conclusions.
+
+### Output-gap investigation — AGENT-ASSIGNED, not separately Author-approved
+
+The first P4 SW run with the production browser connected also completes60FPS,
+with the identical600-record state fingerprint. However, browser delivery is
+only7.79FPS across the run, about7.66FPS over its last10seconds. A static
+receive-only control gives8.93FPS. These are clearly insufficient viewing
+performance even though the initial completed-work criterion is satisfied.
+Do NOT declare the goal achieved from this pilot. Investigate snapshot/send/
+client presentation costs under N03; preserve the separate game-work metric.
+Hardware-sprite comparison and heavier/repeated loads remain required.
+
+Start with existing static output and receive-only controls, source review and
+host-side network timing if available. Only add/flash bounded snapshot/send
+probes if existing evidence cannot isolate the cost. Keep all such additions
+agent-assigned, retain r22 rollback, and never change stock drawing semantics
+just to make output easier. No EMOS change is currently justified: the P4
+no-output and active-output completed-work pilot both match mainboard.

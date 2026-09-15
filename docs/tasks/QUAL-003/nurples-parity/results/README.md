@@ -43,3 +43,22 @@ Collector correction: after reset, use a fresh SD client state. The first host
 collector reused its pre-reset state and correctly refused the changed service
 identity. A fresh client retrieved the completed result without rerunning or
 resetting the game. This was not a gameplay/firmware failure.
+
+## Active web pilot: game work matches, viewing does not
+
+The r01 P4 SW pilot with the production web client connected again records600
+successful boundaries, the same state fingerprint, and60.0 completedFPS. The
+browser remained connected through reset/loading/gameplay/terminal service,
+without page errors or socket closure. Raw NPE2.BIN and web-pair.json retained.
+
+| Output observation | Received FPS | Scope |
+|---|---:|---|
+| Production client, whole pilot observation | 7.79 | Includes loading and terminal surface |
+| Production client, last10seconds | 7.66 | Window near gameplay end; not an exact game-only boundary |
+| Static terminal surface, receive-only10s | 8.93 | Bypasses presentation, same512x384 RGB222 payload |
+
+No parity success is claimed. Low visible delivery remains material despite
+matched game completion. Output and then heavier/repeated workloads require
+further work. Headless production observation and EVF captures remain in ignored
+bench evidence, with served web assets and observer hashes. The terminal capture
+shows Nurples scenery/HUD plus fixture/MOS completion text.
