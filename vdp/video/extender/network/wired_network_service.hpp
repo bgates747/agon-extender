@@ -91,6 +91,11 @@ class WiredNetworkService final {
   // Keep at most one queued callback; it belongs to its original socket, never
   // whichever client happens to be current when the callback runs.
   std::mutex video_dispatch_mutex_;
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+  // Diagnostic-only: no storage or clock reads in ordinary production builds.
+  std::atomic<std::uint32_t> video_credit_at_{};
+  std::uint32_t video_queued_at_{}; // guarded by video_dispatch_mutex_
+#endif
   bool video_send_queued_{};
   VideoClientId queued_video_client_{kNoVideoClient};
   std::atomic<WiredServiceState> state_{WiredServiceState::Stopped};

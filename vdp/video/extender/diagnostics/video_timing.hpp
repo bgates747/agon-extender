@@ -14,6 +14,9 @@
 
 namespace agon::extender::diagnostics {
 enum class VideoPhase { Snapshot, SocketSend };
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING) && !defined(AGON_EXTENDER_VIDEO_TIMING)
+#error "Dispatch timing requires the optional output recorder"
+#endif
 
 #if defined(AGON_EXTENDER_VIDEO_TIMING)
 inline FrameRecorder videoRecorder;
@@ -42,6 +45,17 @@ class VideoTimingScope {
   Token token_;
 };
 
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+// Completed intervals only. Callers publish timestamps before credit admission
+// and while holding the dispatch mutex, respectively. These units count one
+// dispatch, not pixels/bytes, and are rejected if any recorder loss occurs.
+inline void videoDispatchTiming(Phase phase, std::uint32_t start) noexcept {
+  const auto end = videoTimingNow();
+  auto token = videoRecorder.begin(phase, start);
+  videoRecorder.end(token, end, 1);
+}
+#endif
+
 // HTTP task only. A separate instance avoids enabling old parser/primitive
 // probes merely to measure two output boundaries. No runtime reset endpoint.
 inline std::string videoTimingJson() {
@@ -59,9 +73,17 @@ inline std::string videoTimingJson() {
       "\"lost_completions\":%u,\"overlapping_calls\":%u,\"busy_reads\":%u,\"phases\":[",
       s->now_us, s->totals_valid ? "true" : "false", s->lost_completions,
       s->overlapping_calls, s->busy_reads);
-  const Phase phases[] = {Phase::Snapshot, Phase::TxComplete};
-  const char *names[] = {"snapshot", "socket_send"};
-  for (unsigned i = 0; i < 2; ++i) {
+  const Phase phases[] = {Phase::Snapshot, Phase::TxComplete
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+      , Phase::Queue, Phase::TxEnqueue
+#endif
+  };
+  const char *names[] = {"snapshot", "socket_send"
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+      , "credit_to_ready", "ready_to_send"
+#endif
+  };
+  for (unsigned i = 0; i < sizeof(phases)/sizeof(phases[0]); ++i) {
     const auto index = static_cast<unsigned>(phases[i]);
     const auto &t = s->totals[index];
     const auto &a = s->active[index];

@@ -613,6 +613,11 @@ esp_err_t WiredNetworkService::videoHandler(httpd_req_t *request) noexcept {
     return ESP_OK;
   }
 
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+  // Publish before admission makes the credit visible to the network worker.
+  // Invalid/duplicate requests invalidate the diagnostic run, never change VDU.
+  service->video_credit_at_.store(diagnostics::videoTimingNow(), std::memory_order_release);
+#endif
   auto const credit = service->video_.requestFrame(socket);
   if (credit != VideoCreditResult::Accepted) {
     ESP_LOGW(kTag, "duplicate or invalid video credit fd=%d", socket);
@@ -652,6 +657,11 @@ void WiredNetworkService::attemptVideoSend() noexcept {
       httpd_sess_trigger_close(server, socket);
     return;
   }
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+  diagnostics::videoDispatchTiming(diagnostics::Phase::Queue,
+      video_credit_at_.load(std::memory_order_acquire));
+  video_queued_at_ = diagnostics::videoTimingNow();
+#endif
   queued_video_client_ = video_.client();
   video_send_queued_ = true;
   increment(queued_sends_);
@@ -676,6 +686,9 @@ void WiredNetworkService::performQueuedSend() noexcept {
     return;
   }
 
+#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
+  diagnostics::videoDispatchTiming(diagnostics::Phase::TxEnqueue, video_queued_at_);
+#endif
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::SocketSend,
       static_cast<std::uint32_t>(view.segment_count));
   esp_err_t result = ESP_OK;

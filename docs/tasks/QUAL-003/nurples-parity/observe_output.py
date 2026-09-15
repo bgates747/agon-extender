@@ -55,7 +55,7 @@ def main():
    rows=[]
    for b,e in zip(record['before']['phases'],record['after']['phases']):
     assert b['name']==e['name'];n=e['count']-b['count'];units=e['units']-b['units'];us=e['total_us']-b['total_us'];assert n>0
-    expected=512*384+(32 if e['name']=='socket_send' else 0);assert units==n*expected,(e['name'],n,units,expected)
+    expected={'snapshot':512*384,'socket_send':512*384+32,'credit_to_ready':1,'ready_to_send':1}[e['name']];assert units==n*expected,(e['name'],n,units,expected)
     rows.append({'phase':e['name'],'count':n,'units':units,'mean_ms':us/n/1000})
    frames=[f for f in record['gate']['frames'] if f['ms']>=record['start_ms']];assert len(frames)>1 and all((f['width'],f['height'],f['bytes'])==(512,384,196640) for f in frames)
    record['summary']={'phases':rows,'received_fps':(len(frames)-1)*1000/(frames[-1]['ms']-frames[0]['ms']),'frames':len(frames)};record['status']='pass'
