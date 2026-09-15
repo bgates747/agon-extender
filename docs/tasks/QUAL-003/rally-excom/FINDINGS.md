@@ -9,9 +9,12 @@ conversion therefore resolves this reproduced left-road defect. See
 [RX06 evidence](rx06/README.md) for the controlled installed-parent build,
 raw results, limits and exact hashes.
 
-The full HUD flicker remains unresolved, and no performance improvement is
-claimed. The broader conversion enumeration and unimplemented-command no-op
-work have not started. Human full-game acceptance remains pending.
+The Author has now accepted the unmuted Rally HUD/sky repair through the
+[stock audio dispatcher/no-op backend](../../PORT-004/audio-framing/results/README.md).
+The [RX07 numeric inventory](rx07/README.md) is complete and awaiting RX08
+Author disposition before corrections. The broader unsupported-command audit
+remains open. No measured hardware game FPS or performance improvement is
+claimed. Historical sections below retain the original diagnostic progression.
 
 The following table preserves the original diagnostic run before repair.
 

@@ -157,3 +157,12 @@ they contain system paths, expanded library code and redundant template nodes.
 The checked-in summary, input hashes, source locations and methods are the
 review record. This tool supplements manual range/call inspection; it does not
 automatically classify hazards or replace the reusable RX11 import gate.
+
+
+## Hardware notification and stop
+
+The established hardware voice player replaced a fresh pending receipt with
+`audio_commands=pass`; original autoexec was read back unchanged. Rally was
+exited for the spoken cue and the bench is at the Legacy MOS prompt. No
+firmware changed. Human hearing and RX08 finding dispositions remain pending.
+See notification.json. Stop here; do not start RX09 or game benchmarks.

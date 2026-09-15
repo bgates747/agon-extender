@@ -73,7 +73,7 @@ render timing. No reset/retry was needed for that run.
 
 ## Remaining scope
 
-Human unmuted Rally/Nurples review, full Wolf3D acceptance, broader unimplemented
+Human Nurples review, full Wolf3D acceptance, broader unimplemented
 command inventory and the numeric audit remain separate. Audio synthesis stays
 deferred. Experimental changes remain local until review.
 
