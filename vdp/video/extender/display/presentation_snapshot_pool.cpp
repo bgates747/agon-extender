@@ -56,7 +56,9 @@ PresentationSnapshotPool::PresentationSnapshotPool(
     : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us),
       on_demand_(on_demand), direct_rgb222_(direct_rgb222),
       lookahead_(on_demand && lookahead) {
+#if !defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
   transition_lock_.clear(std::memory_order_release);
+#endif
   if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr ||
       (direct_rgb222_ && format_ != SnapshotPixelFormat::RGB222)) {
     increment(allocation_failures_);
@@ -91,16 +93,32 @@ void PresentationSnapshotPool::increment(
 }
 
 bool PresentationSnapshotPool::tryLockProducer() noexcept {
+#if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
+  return transition_lock_.try_lock();
+#else
   return !transition_lock_.test_and_set(std::memory_order_acquire);
+#endif
 }
 
 void PresentationSnapshotPool::lockConsumer() noexcept {
+#if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
+  // N04s: a spinning higher-priority consumer can preempt the task holding
+  // this lock and starve it forever. IDF's task mutex blocks and inherits
+  // priority; producer admission above still tries only once. No ISR caller.
+  transition_lock_.lock();
+#else
+  // Historical binding requires producer scheduling above its consumers.
   while (transition_lock_.test_and_set(std::memory_order_acquire)) {
   }
+#endif
 }
 
 void PresentationSnapshotPool::unlock() noexcept {
+#if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
+  transition_lock_.unlock();
+#else
   transition_lock_.clear(std::memory_order_release);
+#endif
 }
 
 int PresentationSnapshotPool::findLocked(SlotState state) const noexcept {

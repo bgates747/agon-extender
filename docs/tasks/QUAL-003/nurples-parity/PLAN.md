@@ -753,3 +753,7 @@ Bench recovery: P4-only reset restored SD but native keyboard needed mainboard
 boot admission. Existing-result COPY stopped that recovery startup before SD;
 after bounded fixture interval native CLI restored Legacy and direct SD. No
 MOS flash was needed. Recovery replay is excluded from performance evidence.
+
+N04s host checks pass ASan/UBSan: existing pool/lease ownership, bounded
+lookahead, RGB222 publication and concurrent immutable leases. Producer still
+uses try_lock once; no fairness/RTOS-priority claim derives from host threads.

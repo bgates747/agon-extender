@@ -11,6 +11,9 @@
 #include <atomic>
 #include <cstddef>
 #include <cstdint>
+#if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
+#include <mutex>
+#endif
 
 #include "extender/display/plane_storage.hpp"
 #include "extender/display/presentation_compositor.hpp"
@@ -178,7 +181,11 @@ class PresentationSnapshotPool final {
   bool lookahead_;
   std::atomic<bool> requested_{false};
   std::array<Slot, kPresentationSnapshotSlotCount> slots_{};
+#if defined(AGON_EXTENDER_SNAPSHOT_MUTEX)
+  std::mutex transition_lock_;
+#else
   mutable std::atomic_flag transition_lock_ = ATOMIC_FLAG_INIT;
+#endif
   bool enabled_{};
   int producer_slot_{-1};
   PendingAction pending_action_{PendingAction::None};
