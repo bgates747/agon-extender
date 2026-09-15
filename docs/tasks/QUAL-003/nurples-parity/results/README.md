@@ -76,3 +76,17 @@ text. A single terminal image is not a complete animation/scanout oracle.
 
 These HW timestamps are command/drawing boundaries, not measured physical
 hardware-sprite scanout; retain this distinction in summaries and comparisons.
+
+## Wired host control, same static HW surface
+
+| Consumer | Laptop Wi-Fi receivedFPS | Wired Pi receivedFPS |
+|---|---:|---:|
+| Production presentation | 7.12 (last10s of HW run) | 19.93 (static10s) |
+| Immediate credit, no presentation | 8.93 (prior SW static surface) | 28.91 (HW static10s) |
+
+The laptop/Pi comparison changes host and network; the left observations are not
+identical static HW windows. It nevertheless rules out treating7–9FPS as an
+intrinsic P4 drawing rate. The stronger paired Pi control uses the same static
+HW surface and10second windows. Exact records/served assets remain in ignored
+bench evidence. Both Pi captures report512x384 RGB222, no sequence gaps, and
+no observer errors. This still does not achieve60FPS visible output.

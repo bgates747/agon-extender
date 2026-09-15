@@ -138,3 +138,30 @@ no-output and active-output completed-work pilot both match mainboard.
 N02b complete: SW600-record fingerprints and measured60FPS match on both P4
 controls. N02c hardware pair also completes with the same fingerprint; corrected
 unfenced controls, heavier workload validation and repeats remain outstanding.
+
+### N03 bounded output investigation (AGENT-ASSIGNED, not separately Author-approved)
+
+1. [x] N03a: Separate host/network/presentation controls without firmware changes.
+   Wired Pi static HW surface:19.93FPS production,28.91FPS receive-only; laptop
+   Wi-Fi:about7–9FPS. Do not attribute the whole gap to P4 rendering. Retained
+   prior video-throughput research already documents the same host-path effect.
+2. [ ] N03b: Build an isolated r23 diagnostic variant of the exact installed r22
+   source, enabling only the existing bounded `AGON_EXTENDER_VIDEO_TIMING`
+   snapshot/send recorder. Pin source/config/tool/output hashes; preserve r22
+   rollback. Flash/verify through the established deployment helper. Collect
+   snapshot/send deltas on a static512x384 surface over wired production and
+   receive-only clients. Compare observable output rates to the uninstrumented
+   controls; do not silently subtract probe cost.
+3. [ ] N03c: Use those durations and stock/output contracts to choose one bounded
+   correction. The current browser returns credit after RAF presentation; the
+   producer then waits for demand at a logical frame boundary before capture,
+   and sends the full frame. Serial waits are a hypothesis, not a completed
+   diagnosis. Any lookahead/credit experiment must retain bounded storage,
+   correct ownership/disconnection/mode-change handling and no starvation of
+   parser/network tasks; historical RGB-4 continuous-output starvation remains
+   a regression constraint. No drawing-algorithm rewrite is authorized by this
+   hypothesis. Freeze the selected change before implementation.
+
+Host packet capture was unavailable without a password; no privilege or wiring
+change is needed. Use the existing wired Pi and bounded timing hooks instead.
+Do not request the sleeping Author's attention for this optional diagnostic.
