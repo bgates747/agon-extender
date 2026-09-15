@@ -1,0 +1,439 @@
+{
+  "scope": "NP04 verified boundary intervals; query/unfenced and HW scanout limits remain explicit",
+  "cases": {
+    "mainboard-free": {
+      "summary": {
+        "file": "NPMTS1.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "f651e6aa1036ba63",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4564,
+        "mean_frame_ms": 16.6886061137926,
+        "completed_fps": 59.92112182296231,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 33.333333333333336,
+        "tick_histogram": {
+          "2": 2276,
+          "4": 3
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-sw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.68750868417396,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 33.333333333333336
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.705010224948875,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 33.333333333333336
+        }
+      }
+    },
+    "mainboard-freehw": {
+      "summary": {
+        "file": "NPMTH1.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "686a2e4a55f9372f",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4558,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 2279
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-hw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        }
+      }
+    },
+    "p4-free": {
+      "summary": {
+        "file": "NP40S1.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "6826dd5ff2869dea",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4558,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 2279
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-sw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        }
+      }
+    },
+    "p4-freehw": {
+      "summary": {
+        "file": "NP40H1.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "b025783cc710debc",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4558,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 2279
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-hw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        }
+      }
+    },
+    "p4-repeat-free": {
+      "summary": {
+        "file": "NP40S2.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "d3497d380eba28cb",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4558,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 2279
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-sw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        }
+      }
+    },
+    "p4-repeat-freehw": {
+      "summary": {
+        "file": "NP40H2.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "4630f76a642fd0c3",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 4578,
+        "mean_frame_ms": 16.739798157086444,
+        "completed_fps": 59.737876802096984,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 33.333333333333336,
+        "tick_histogram": {
+          "2": 2269,
+          "4": 10
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "unfenced-hw",
+        "completion_scope": "submission/vblank boundary; terminal fence only",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 16.73614005835765,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 33.333333333333336
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 16.666666666666668,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 16.666666666666668
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 16.70424652386321,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 33.333333333333336
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 16.768916155419223,
+          "p95_ms": 16.666666666666668,
+          "max_ms": 33.333333333333336
+        }
+      }
+    }
+  }
+}

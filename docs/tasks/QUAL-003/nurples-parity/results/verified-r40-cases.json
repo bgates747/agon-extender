@@ -1,0 +1,44 @@
+[
+  {
+    "label": "mainboard-free",
+    "file": "NPMTS1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "f651e6aa1036ba63",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-freehw",
+    "file": "NPMTH1.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "686a2e4a55f9372f",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-free",
+    "file": "NP40S1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "6826dd5ff2869dea",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-freehw",
+    "file": "NP40H1.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "b025783cc710debc",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-repeat-free",
+    "file": "NP40S2.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "d3497d380eba28cb",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-repeat-freehw",
+    "file": "NP40H2.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "4630f76a642fd0c3",
+    "capacity": 2400
+  }
+]
