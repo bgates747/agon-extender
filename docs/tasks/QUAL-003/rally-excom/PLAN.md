@@ -97,3 +97,9 @@ back for later human follow-up, not this newly authorized continuous run. Push
 existing changes, confirm installation, then proceed. The Author closed the
 browser and granted exclusive P4 web-socket access. Hardware voice at actionable
 findings or intervention. This amendment changes no diagnosis/fix review gate.
+
+## First probe completed
+
+See results/r01/README.md:64/64pixel checks on each path, identical CSVs.
+No defect found. Next bounded probe adds direct clipped bitmap drawing and
+negative-left road triangles. Keep r01 immutable. No timing conclusion.
