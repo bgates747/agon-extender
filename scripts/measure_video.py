@@ -50,7 +50,7 @@ OBSERVER=r'''(() => {
  });
 })();'''
 
-def collect(url,seconds,out,label,receive_only=False,browser_executable=None):
+def collect(url,seconds,out,label,receive_only=False,browser_executable=None,signal_ready=False):
     out=out.resolve();assert out.is_relative_to(ROOT/'agents') and not out.exists()
     out.mkdir(parents=True)
     record={'run':'PORT-003-'+datetime.now(timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ'),
@@ -78,6 +78,12 @@ def collect(url,seconds,out,label,receive_only=False,browser_executable=None):
                         ws.binaryType='arraybuffer';ws.onopen=()=>ws.send('frame');
                         ws.onmessage=()=>ws.send('frame');window.__receiveOnly=ws; }""")
                 else:page.click('#connect')
+                if signal_ready:
+                    page.wait_for_function('__videoObservation.frames.length>0',timeout=20000)
+                    (out/'ready.json').write_text(json.dumps({
+                        'first_frame_received':True,
+                        'ready_at':datetime.now(timezone.utc).isoformat(),
+                        'browser_ms':page.evaluate('performance.now()')},indent=2)+'\n')
                 start=time.monotonic()
                 while time.monotonic()-start<seconds:
                     page.wait_for_timeout(200)
@@ -126,6 +132,6 @@ def collect(url,seconds,out,label,receive_only=False,browser_executable=None):
 if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--url',required=True)
     p.add_argument('--seconds',type=float,default=20);p.add_argument('--output',type=Path,required=True)
-    p.add_argument('--label',required=True);p.add_argument('--receive-only',action='store_true');p.add_argument('--browser-executable');a=p.parse_args()
+    p.add_argument('--label',required=True);p.add_argument('--receive-only',action='store_true');p.add_argument('--browser-executable');p.add_argument('--signal-ready',action='store_true');a=p.parse_args()
     assert 1<=a.seconds<=60 and a.url.startswith('http://')
-    collect(a.url.rstrip('/'),a.seconds,a.output,a.label,a.receive_only,a.browser_executable)
+    collect(a.url.rstrip('/'),a.seconds,a.output,a.label,a.receive_only,a.browser_executable,a.signal_ready)
