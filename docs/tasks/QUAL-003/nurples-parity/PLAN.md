@@ -843,7 +843,7 @@ current r37, with the same seed/workload, unique nonce and180second stream.
 1. [x] N04v-i: After N04u controls release hardware, run fresh unfenced SW and
    retain terminal completion fence, state fingerprint and output/service checks.
    No application/fixture/firmware edits are required for this existing variant.
-2. [ ] N04v-ii: Compare to mainboard unfenced60FPS and current fenced SW. Label
+2. [x] N04v-ii: Compare to mainboard unfenced60FPS and current fenced SW. Label
    submission/vblank boundaries separately from completed drawing; an unfenced
    improvement alone is not parity proof. If instrumentation dominates, select
    an independently validated completion-throughput measurement before claiming
@@ -878,7 +878,7 @@ measure the actual retained renderer's RefreshSprites completions.
    result validation; new code addresses require fresh matched comparisons.
    Include SW and HW unfenced variants. Test recorder bounds/nonce/state and
    verify linked hooks before building/flashing identified r38.
-3. [ ] N04w-iii: Run paired stock/P4 SW and HW with unique nonces and180second
+3. [x] N04w-iii: Run paired stock/P4 SW and HW with unique nonces and180second
    live observers. Capture USB before the run; analyze only complete matching
    traces. Compare completion count with fixture/source refresh count, mean,
    p95 and backlog behavior. Hardware refresh completion still does not prove
@@ -954,3 +954,8 @@ N04x-i built mainboard-refresh-trace-r01-b2026-09-15-15-10-44Z. The
 recorder hash matches the installed r38 P4 recorder exactly. Stock archive
 changes are limited to the two hook files, build flags/local dependencies and
 diagnostic version string; stock renderer and transport bodies are retained.
+
+N04v/N04w measurement controls complete. Both P4 paths complete2400refreshes
+at~60.06–60.08Hz; p95~30.7–31.0ms. All four NP04 nonce/state/output/service
+controls passed. No parity declaration: N04x now supplies the matched stock
+completion-spacing baseline before deciding repetition or scheduler changes.

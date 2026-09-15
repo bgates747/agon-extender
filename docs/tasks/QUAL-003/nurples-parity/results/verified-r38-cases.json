@@ -1,0 +1,30 @@
+[
+  {
+    "label": "excom-free",
+    "file": "NP38S1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "9ffba9ef68361cfb",
+    "capacity": 2400
+  },
+  {
+    "label": "excom-freehw",
+    "file": "NP38H1.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "686d1b003f4c9d72",
+    "capacity": 2400
+  },
+  {
+    "label": "legacy-free",
+    "file": "NP38L1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "5032c7ef8867fb60",
+    "capacity": 2400
+  },
+  {
+    "label": "legacy-freehw",
+    "file": "NP38L2.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "5da00f89f45be631",
+    "capacity": 2400
+  }
+]

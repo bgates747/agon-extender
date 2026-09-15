@@ -1,0 +1,156 @@
+{
+  "excom-free": {
+    "browser_summary": {
+      "received": 4665,
+      "received_fps": 25.910060314210295,
+      "median_receive_interval_ms": 33.5,
+      "maximum_receive_interval_ms": 130.89999997615814,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4428
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 237
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180468.20000004768,
+    "post_output_services_passed": true,
+    "scope": "P4 streaming game",
+    "completion_trace": {
+      "scope": "P4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "9ffba9ef68361cfb",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 3,
+      "warmup": 120,
+      "completed_fps": 60.05602576311273,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65111847301448,
+        "p95_ms": 30.673,
+        "max_ms": 47.793
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 9.4689600877193,
+        "p95_ms": 18.653,
+        "max_ms": 28.464
+      },
+      "elapsed_first_to_last_ms": 39947.51
+    }
+  },
+  "excom-freehw": {
+    "browser_summary": {
+      "received": 4996,
+      "received_fps": 27.736778802093315,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 258.89999997615814,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4995
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 1
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180497.20000004768,
+    "post_output_services_passed": true,
+    "scope": "P4 streaming game",
+    "completion_trace": {
+      "scope": "P4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "686d1b003f4c9d72",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 3,
+      "warmup": 120,
+      "completed_fps": 60.07877780310864,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.644812637121543,
+        "p95_ms": 31.036,
+        "max_ms": 48.159
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 9.21001052631579,
+        "p95_ms": 19.123,
+        "max_ms": 33.426
+      },
+      "elapsed_first_to_last_ms": 39946.778
+    }
+  },
+  "legacy-free": {
+    "browser_summary": {
+      "received": 5028,
+      "received_fps": 27.90900122195198,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 90.39999997615814,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 5028
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180603.20000004768,
+    "post_output_services_passed": true,
+    "scope": "P4 observer does not show mainboard VGA"
+  },
+  "legacy-freehw": {
+    "browser_summary": {
+      "received": 4959,
+      "received_fps": 27.51069798823461,
+      "median_receive_interval_ms": 33.39999997615814,
+      "maximum_receive_interval_ms": 90.60000002384186,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4959
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180666.10000002384,
+    "post_output_services_passed": true,
+    "scope": "P4 observer does not show mainboard VGA"
+  }
+}

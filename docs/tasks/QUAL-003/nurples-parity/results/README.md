@@ -2,17 +2,19 @@
 
 ## Executive summary
 
-**Parity has not passed.** Current r37 reaches60 unfenced submission/vblank
-boundaries per second with web streaming active. Per-frame completion queries
-reduce the same workload to49.08FPS with software sprites and52.33FPS with
-hardware sprites. This makes probe overhead a material uncertainty; the next
-measurement must establish completed rendering without stalling every frame.
-Browser delivery is separately measured at27.69FPS, not60 distinct displayed
-frames/s. See verified-r37-free-analysis.json and verified-r37-free-output.json.
+**Parity has not passed.** With live streaming, the new independent P4
+completion trace measures60.06FPS software sprites and60.08FPS hardware sprites,
+with all2400 refresh commands completed and at most3 pending. Both retain the
+same deterministic gameplay fingerprint. However, p95 completion intervals are
+30.673ms and31.036ms. A matched mainboard timestamp baseline is now being
+prepared; the older query/tick measurements do not establish this distribution.
+See verified-r38-output.json and refresh-r38.log for the bounded trace.
 
-The snapshot mutex correction has now passed paired180second streaming runs
-and post-close keyboard/SD checks. Both sprite paths previously reached60FPS
-with output disconnected. No stock VDP drawing algorithm has been changed.
+These are explicit refresh-command completions, not proof of60 distinct browser
+images or hardware scanouts. Web delivery remains separately measured, around
+28FPS. Per-frame synchronous queries materially reduced earlier P4 results.
+All four latest180second observer/service controls passed; stock-route browser
+images are not evidence of what physical mainboard VGA displayed.
 
 ## Measurement provenance and earlier comparisons
 
