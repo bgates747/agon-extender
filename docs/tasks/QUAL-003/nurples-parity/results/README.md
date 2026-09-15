@@ -2,6 +2,21 @@
 
 ## Executive summary
 
+**Parity has not passed.** Latest first-run SW result with the full native
+framebuffer in internal RAM is53.54FPS (18.678ms mean), versus mainboard58.71FPS
+(17.032ms); its p95 remains33.333ms. Both sprite paths reach60FPS when web output
+is disconnected. Qualified EMOS UART code produced the largest earlier gain;
+the remaining work is P4 output interference and reliability.
+
+A concrete snapshot-adapter priority-inversion hazard is now identified:
+a higher-priority consumer busy-spins on a lock held by a preempted lower-priority
+producer. Recent post-run freezes are consistent with that hazard, without a
+captured task backtrace proving attribution. The isolated mutex correction
+passes host ownership/concurrency/pixel tests; physical qualification is next.
+Producer transitions remain non-blocking. No VDP drawing algorithm is changed.
+
+## Measurement provenance and earlier comparisons
+
 **Historical NP01/NP03 gameplay parity claims are invalidated.** The fixture used MOS SAVE
 without checking its return value. Stock MOS and installed EMOS open with
 `FA_CREATE_NEW`; an existing NPRES.BIN is not replaced. Later COPY commands

@@ -734,7 +734,7 @@ release it. This is a concrete scheduler hazard. Existing post-run freezes are
 consistent with it, but no captured task backtrace proves their exact cause.
 The mistake is in the P4 output adapter, not an upstream VDP drawing algorithm.
 
-1. [ ] N04s-i: Replace the transition spin flag with a task mutex. Producer
+1. [x] N04s-i: Replace the transition spin flag with a task mutex. Producer
    uses try_lock once (still non-blocking); consumers block on the mutex.
    Pinned IDF pthread.c creates FreeRTOS mutexes with priority inheritance.
    No ISR uses this frame-task interface. Preserve every slot/lease/state rule,
