@@ -354,8 +354,9 @@ N02g repair checkpoint:
    rejection checks and two consecutive P4 runs. Nonces differ, both contain
    2400records and the same deterministic state fingerprint. Means29.5718 and
    29.5654 fencedFPS; p95 33.333ms/max50ms. Live sprites peak13.
-2. [ ] N02g-ii: Fresh matched mainboard, unfenced and HW comparisons are still
-   required. The corrected queued matrix is active; do not restore old claims.
+2. [x] N02g-ii: Fresh mainboard/P4 SW, unfenced and HW comparisons completed.
+   All six variants match the same 2400-record state fingerprint; expected
+   unique nonces and checked saves validate provenance. See verified-r27-cases.json.
 
 ### Qualified UART changes absent from the running baseline
 
@@ -395,3 +396,11 @@ out from both bench hosts. No pending SD mutation or observer remains.
    succeeds, resume the already frozen safe-startup restoration and r28 pipeline.
 2. [ ] N04j-R2: Preserve this unresolved HTTP failure as a separate reliability
    observation; do not attribute it to a UART or graphics defect without evidence.
+
+Recovery observation: the one P4 reset restored HTTP and SD immediately, but
+keyboard admission was lost (ready=false, locale0) because EMOS had not repeated
+its startup handshake. Child SD exit succeeded before this was discovered.
+Allow one mainboard reset to replay the retained terminal-returning autoexec;
+this is recovery, not a new timed comparison. Wait for its terminal SD service,
+then exit it and restore startup through a directly launched service. Do not
+use the rerun result as fresh benchmark evidence. No MOS flash is involved.
