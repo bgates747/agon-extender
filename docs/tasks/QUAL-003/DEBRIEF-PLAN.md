@@ -70,7 +70,7 @@ corrections; retain the existing numbered items and evidence.
    current web-output backend without generating VGA. The Author does not want
    bit-banged VGA as the solution; this audit does not authorize adding it.
    Preserve stock rendering/API semantics and the minimal-port rule.
-4. [ ] P00d: Produce a source-linked stock-versus-P4 timing map and identify
+4. [x] P00d: Produce a source-linked stock-versus-P4 timing map and identify
    the smallest discriminating tests or adaptations supported by it. Reconcile
    the proposal with prior failed scheduler controls and the measured
    wire/enqueue/completion gap. Update P01–P03 only where the audit provides a
@@ -97,6 +97,9 @@ with explicit unresolved questions and proposed tests. Finding two row
 preparations per ISR is not sufficient evidence that the pertinent inherited
 scheduling mechanisms have been fully audited. Golem remains on hold.
 
+P00a–P00d completed: [source-linked timing audit and next checks](debrief/OFFICIAL-RESEARCH.md#9-p00--focused-fabgl-timing-audit).
+No immediate fix is established. Await Author review before P01 execution.
+
 ### P01 — Establish current comparison and diagnostic accounting
 
 1. [ ] P01a: Verify current P4/EMOS/mainboard identities and actual memory/task
@@ -113,7 +116,9 @@ scheduling mechanisms have been fully audited. Golem remains on hold.
 3. [ ] P01c: If pre-enqueue variation remains, define one bounded diagnostic
    build that measures the missing intervals: parser/owner runnable and blocked
    time, RX driver buffered work, software reply-gate duration, UART driver
-   activity, foreground/native/input-lock acquisition, timer wake lateness.
+   activity, foreground/native/input-lock acquisition, timer wake lateness. Include foreground admission, dynamic-payload/queue
+   waits and worker notification-take/gate outcomes where applicable; distinguish
+   callback lateness from runnable delay (P00 findings).
    Prefer existing SDK task tracing or a bounded event buffer; determine its
    actual support, memory cost and interruption overhead before selecting it.
    Aggregate around owner batches, not a timestamp or print per UART byte.
@@ -151,7 +156,9 @@ duration yet. Do not turn estimates into resets.
    TCP/IP affinity control while preserving parser/draw/snapshot placement.
    Verify the actual SDK task and Ethernet interrupt placement; moving lwIP
    alone need not move the driver or network worker. If snapshot/memory work
-   dominates instead, investigate that measured path. No blanket priority raises.
+   dominates instead, investigate that measured path. No blanket priority raises. P00 found no missing active stock blanking budget;
+   do not restore that disabled policy or increase wake frequency without
+   measured justification.
 
 **Decision gate:** Reproduce or remove the pre-enqueue tail while accounting for
 unchanged work. Return to the baseline after a failed control. Do not retry the
@@ -198,7 +205,9 @@ follow-up notes except a demonstrated portability adaptation needed for parity.
 1. [ ] P05a: Pin the current `rally-game` binary/source, eZ80 projection, assets,
    track/poses/traffic/audio settings and mode136. Make a deterministic fixed-pose
    fixture without timing-dependent trajectory changes. Keep existing RX06
-   road and audio/HUD regressions as correctness gates.
+   road and audio/HUD regressions as correctness gates. Include a bounded
+   alternating-frame swap/snapshot-coherence control if evaluating double-buffer
+   output: P00 found row-batch safety does not establish whole-frame coherence.
 2. [ ] P05b: Start with the most informative full-scene/curve cases on Legacy
    and ExCom with the same image/workload. Separate eZ80 preparation/submission,
    renderer completion, protected horizontal scrolling, buffered section

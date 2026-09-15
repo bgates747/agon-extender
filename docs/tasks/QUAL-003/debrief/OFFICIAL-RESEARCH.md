@@ -9,6 +9,12 @@ candidate uses ESP-IDF5.5.5; general SDK contracts below use official5.5-family
 pages, with installed5.5.5 source/configuration checked where material. No
 upstream files were changed and no hardware experiment ran for this audit.
 
+P00 is now complete: section9 traces stock and P4 timing, classifies the
+required contracts, and ranks the next discriminating checks. Stock Agon
+disables the optional drawing budget; no immediate scheduling fix is established.
+Prioritize pre-enqueue accounting, with snapshot/swap coherence as a separate
+correctness check. P01–P06 remain unexecuted proposals.
+
 ## 1. Reference identities and boundaries
 
 | Reference | Verified local revision | Role |
@@ -310,3 +316,49 @@ web output. None is permission to improve upstream behavior in this port.
 Potential snapshot mixing is a source-level interleaving, not a newly observed
 pixel failure or a proven cause of the current performance issue. Avoid a
 whole-frame native lock as an unmeasured remedy: it could worsen parser stalls.
+
+### P00d — Reconcile measurements and select the next evidence
+
+No new timing statistics were collected. These values retain the scope and
+provenance documented in the debrief and its generated tables.
+
+| Existing evidence | What this audit permits us to conclude |
+|---|---|
+| r43 wire refresh spacing p95 17.381ms; enqueue p95 30.294ms; completion p95 29.325ms in the captured SW run | The earliest observed tail grows before enqueue. A background wake after enqueue cannot alone explain that. Worker/output scheduling can still affect parser runnable time, so it is not exonerated. |
+| r43 enqueue-to-completion p95 4.130ms; four drawing opportunities per nominal frame | A roughly4.167ms opportunity interval is consistent with modest post-enqueue phase waiting. It is not a hard bound under preemption, nor proof of the cause of other gaps. Do not subtract unrelated percentiles. |
+| r44 interval884 enqueue gap34.043ms, measured native acquisition0.383ms; interval506 gap31.777ms, native7.891ms | Native acquisition contributes in some intervals but does not account for every long gap. Foreground admission, submission/pool/queue costs, owner/reply service and scheduling remain unmeasured portions. These are another run, not a timestamp-aligned attribution of the r43 wire trace. |
+| r40 four-opportunity first pair appeared to pass; repeated HW p95 32.989ms; r43 HW p95 29.278ms versus stock17.021ms | Higher wake frequency did not establish parity. Repeat requirements and the tail gate remain necessary. |
+| r42 full internal memory and earlier same-core output scheduling did not solve the tail | Do not revive those remedies without new discriminating evidence. Memory placement and priority lists alone are insufficient explanations. |
+
+Recommended sequence, owned by the existing plan rather than a new checklist:
+
+1. **P01b first:** matched r43 full-output/off controls with the same observer.
+   Preserve fixture, credit policy and complete-work checks. This answers whether
+   output is causally material on the current parent before adding instruments.
+2. **P01c if needed:** record one bounded same-run timeline from parser runnable/
+   blocked state through foreground entry, allocation/queue admission, refresh
+   enqueue, worker wake/drain and completion. Include callback time, notification
+   take, gate outcome and suspension depth. Separate clock lateness from worker
+   runnable delay; inspect reply service rather than guessing every stall is a
+   mutex. Prefer existing instrumentation and batch counters; no per-byte logs.
+   Finding large queue or pool wait would justify tracing its producer/consumer;
+   finding timely callbacks but late worker execution would distinguish scheduler
+   delay from timer dispatch. First compare without and with the probe.
+3. **P02 remains conditional:** use the existing composition-discard/prebuilt-send
+   controls if output matters. A timer/row phase experiment is justified only
+   after the same-run timeline implicates it. No new frequency or priority change
+   is selected now, and P03's evidence-first correction rule is unchanged.
+4. **P05 correctness adjunct:** for double-buffer Rally, a minimal alternating
+   full-frame identifier/pattern with swaps can detect mixed snapshot rows.
+   Check the decoded full payload as well as the visible image; unique row/frame
+   identifiers distinguish interleaving from client reuse. First specify what
+   stock swap acknowledges and what browser coherence is required. This is a
+   diagnostic proposal, not evidence that Rally is currently failing it. P02/P06
+   still own output throughput controls, so do not duplicate their benchmark.
+
+Review conclusion: approve P01b as the next bounded performance step, with P01c
+conditional on its result. The broader audit is still required; this focused
+result supplies its first dependency map but does not schedule AUDIT-007.
+Golem remains excluded. No implementation, flash, reset, emulator work or
+benchmark was undertaken; the only planned bench action is the requested
+spoken review notification.
