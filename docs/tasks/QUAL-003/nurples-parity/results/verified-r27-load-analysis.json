@@ -365,6 +365,80 @@
           "max_ms": 33.333333333333336
         }
       }
+    },
+    "p4-hw": {
+      "summary": {
+        "file": "NPV4EH.BIN",
+        "provenance": "nonce_verified",
+        "nonce": "662a699521a56a5a",
+        "count": 2400,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 2279,
+        "elapsed_ticks": 9196,
+        "mean_frame_ms": 33.62585929501243,
+        "completed_fps": 29.739016963897345,
+        "p95_frame_ms": 33.333333333333336,
+        "maximum_frame_ms": 50.0,
+        "tick_histogram": {
+          "2": 12,
+          "4": 2215,
+          "6": 52
+        },
+        "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+        "variant": "fenced-hw",
+        "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof",
+        "end_reason": "boundary_limit",
+        "live_sprites_max": 13,
+        "live_sprites_mean": 8.29875,
+        "live_sprites_histogram": {
+          "1": 1,
+          "2": 7,
+          "3": 7,
+          "4": 95,
+          "5": 284,
+          "6": 190,
+          "7": 219,
+          "8": 293,
+          "9": 475,
+          "10": 439,
+          "11": 293,
+          "12": 85,
+          "13": 12
+        }
+      },
+      "first_120_intervals": {
+        "intervals": 120,
+        "mean_ms": 33.05555555555556,
+        "p95_ms": 33.333333333333336,
+        "max_ms": 50.0
+      },
+      "all_intervals": {
+        "intervals": 2399,
+        "mean_ms": 33.59733222175907,
+        "p95_ms": 33.333333333333336,
+        "max_ms": 50.0
+      },
+      "post_warmup_by_live_sprites": {
+        "0-4": {
+          "intervals": 88,
+          "mean_ms": 32.00757575757576,
+          "p95_ms": 33.333333333333336,
+          "max_ms": 50.0
+        },
+        "5-8": {
+          "intervals": 887,
+          "mean_ms": 33.671552048102214,
+          "p95_ms": 33.333333333333336,
+          "max_ms": 50.0
+        },
+        "9-20": {
+          "intervals": 1304,
+          "mean_ms": 33.70398773006135,
+          "p95_ms": 33.333333333333336,
+          "max_ms": 50.0
+        }
+      }
     }
   }
 }

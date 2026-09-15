@@ -382,3 +382,16 @@ about optimal UART algorithms or blindly import unrelated maintained changes.
    the same nonce-verified workload with wired output. Compare before making a
    new rendering or MOS change. Firmware recovery remains available, not a
    reason to flash MOS speculatively. No experimental push.
+
+### Control-service recovery before N04j (AGENT-ASSIGNED, not separately Author-approved)
+
+The r27 matched matrix completed and all result bytes were retrieved. The next
+controller stopped before any flash: P4 responds to ICMP but HTTP status times
+out from both bench hosts. No pending SD mutation or observer remains.
+
+1. [ ] N04j-R1: Perform one identified P4-only USB reset with firmware unchanged,
+   capture its startup, and re-establish HTTP/SD ownership. Do not reset MOS or
+   overwrite autoexec while its child SD service is executing. If recovery
+   succeeds, resume the already frozen safe-startup restoration and r28 pipeline.
+2. [ ] N04j-R2: Preserve this unresolved HTTP failure as a separate reliability
+   observation; do not attribute it to a UART or graphics defect without evidence.

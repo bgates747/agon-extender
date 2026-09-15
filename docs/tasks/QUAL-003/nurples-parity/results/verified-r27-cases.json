@@ -33,5 +33,12 @@
     "variant": "unfenced-sw",
     "nonce": "6636ae111c6bc315",
     "capacity": 2400
+  },
+  {
+    "label": "p4-hw",
+    "file": "NPV4EH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "662a699521a56a5a",
+    "capacity": 2400
   }
 ]
