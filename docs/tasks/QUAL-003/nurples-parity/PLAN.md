@@ -865,7 +865,7 @@ AGENT-ASSIGNED, not separately Author-approved. N04v shows that synchronous
 queries materially affect the result. Before further performance changes,
 measure the actual retained renderer's RefreshSprites completions.
 
-1. [ ] N04w-i: Add a default-off P4 diagnostic recorder to the r37 candidate.
+1. [x] N04w-i: Add a default-off P4 diagnostic recorder to the r37 candidate.
    Record bounded refresh enqueue/completion counts and completion timestamps
    in PSRAM; no per-frame output, allocation, query or scheduling change.
    Start/stop only through exact nonce-bearing markers in stock buffer WRITE
@@ -904,3 +904,8 @@ completion marker, with identical added work on both targets. Disclose its
 additional hide/show cost; it is a conservative structured workload, not an
 unchanged production-frame measurement. Check whether game sprite activation
 adds further RefreshSprites commands before assuming exactly2400 completions.
+
+N04w-i implemented: host sanitizer tests pass bounds, nonce rejection, lifecycle,
+imbalance and malformed-marker checks. Enqueue and completion timestamps share
+a bounded4096-entry PSRAM array. No per-frame output. r05 SW/HW assemble from
+identical r04-pinned repair sources; candidate build/link verification is next.

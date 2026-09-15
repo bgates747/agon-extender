@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_REFRESH_TRACE
+#include "extender/diagnostics/refresh_trace.hpp"
+#endif
 #ifdef AGON_GRAPHICS_TIMING
 #include "extender/diagnostics/graphics_timing.hpp"
 #else
@@ -538,6 +541,9 @@ void IRAM_ATTR BitmappedDisplayController::resetPaintState()
 void BitmappedDisplayController::addPrimitive(Primitive & primitive)
 {
   AGON_STOCK_FOREGROUND_GUARD;
+#ifdef AGON_EXTENDER_REFRESH_TRACE
+  if (primitive.cmd == PrimitiveCmd::RefreshSprites) agon_refresh_trace::enqueue();
+#endif
   if ((m_backgroundPrimitiveExecutionEnabled && m_doubleBuffered == false) || primitive.cmd == PrimitiveCmd::SwapBuffers) {
     primitiveReplaceDynamicBuffers(primitive);
     xQueueSendToBack(m_execQueue, &primitive, portMAX_DELAY);
@@ -958,6 +964,9 @@ void IRAM_ATTR BitmappedDisplayController::execPrimitive(Primitive const & prim,
     case PrimitiveCmd::RefreshSprites:
       hideSprites(updateRect);
       showSprites(updateRect);
+#ifdef AGON_EXTENDER_REFRESH_TRACE
+      agon_refresh_trace::complete();
+#endif
       break;
     case PrimitiveCmd::SwapBuffers:
       swapBuffers();

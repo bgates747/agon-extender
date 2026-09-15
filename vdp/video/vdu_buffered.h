@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_REFRESH_TRACE
+#include "extender/diagnostics/refresh_trace.hpp"
+#endif
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/port/numeric_conversion.hpp"
 #endif
@@ -323,6 +326,9 @@ uint32_t VDUStreamProcessor::bufferWrite(uint16_t bufferId, uint32_t length) {
 	}
 
 	if (bufferId == 65535) {
+#ifdef AGON_EXTENDER_REFRESH_TRACE
+		agon_refresh_trace::marker(bufferStream->getBuffer(), length);
+#endif
 		// buffer ID of -1 (65535) reserved so we don't store it
 		debug_log("bufferWrite: ignoring buffer 65535\n\r");
 		return remaining;
