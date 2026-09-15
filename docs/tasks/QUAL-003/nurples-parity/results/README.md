@@ -32,6 +32,19 @@ which still enter critical sections, while retaining the independent completion
 recorder used on stock. This is an instrumentation-cost hypothesis, not an
 established cause. Stock mainboard VDP remains restored and verified.
 
+## Dormant-probe control r41
+
+| Path | Stock mean ms | P4 mean ms | Mean difference | Stock p95 ms | P4 p95 ms |
+|---|---:|---:|---:|---:|---:|
+| HW |16.664|16.642|−0.13%|17.021|28.967|
+| SW |16.687|16.651|−0.22%|17.063|23.874|
+
+HW still fails the same tail gate. No repeats; full180second streams and
+services passed both paths. Workload/nonces/counts validate against stock.
+Both allocations were PSRAM. Removing the old graphics probe did not resolve
+parity; the next isolated control tests stock multi-pool internal allocation
+with complete-height fallback. See verified-r41-output.json and refresh-r41.log.
+
 ## Measurement provenance and earlier comparisons
 
 **Historical NP01/NP03 gameplay parity claims are invalidated.** The fixture used MOS SAVE

@@ -1082,10 +1082,10 @@ than assume causation. Source: diagnostics/graphics_timing.hpp Scope constructor
    AGON_GRAPHICS_TIMING define removed. Retain refresh trace, output counters,
    geometry, locks, task priorities, four drawing opportunities and unchanged
    fixture. Assert old timing symbols absent and refresh recorder present.
-2. [ ] N04aa-ii: Preserve r40, deploy/readback-verify r41, then run matched SW/HW
+2. [x] N04aa-ii: Preserve r40, deploy/readback-verify r41, then run matched SW/HW
    traces with180second live output and service checks. Repeat both only if
    first mean/p95 pass. Record actual framebuffer selection, not just flags.
-3. [ ] N04aa-iii: Retain all comparisons, check images and workload integrity.
+3. [x] N04aa-iii: Retain all comparisons, check images and workload integrity.
    If repeated parity passes proceed to N05; otherwise investigate measured
    costs without changing the gate. Stock multi-pool internal allocation is a
    separate pending hypothesis: the local largest-block preflight is stricter
@@ -1131,3 +1131,8 @@ our experiment's constraint, not an upstream requirement.
 3. [ ] N04ab-iii: Compare all results and repeat apparent parity under N05.
    If allocation still falls back, do not claim internal-memory performance.
    If timing still fails, record the result before choosing another hypothesis.
+
+N04aa complete: r41 first SW60.056FPS/p9523.874ms; HW60.088FPS/p9528.967ms.
+HW still fails; repeats skipped. Both2400 records match stock, pending<=1,
+180second output and services pass. Both select PSRAM. Removing dormant
+probe overhead did not establish parity. N04ab now isolates memory placement.
