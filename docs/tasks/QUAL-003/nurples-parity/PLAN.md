@@ -671,3 +671,22 @@ N04p deployment note: native USB capture open restarted P4; first controller
 reset the Agon before HTTP was ready, so no game began. Resume waits for
 P4 HTTP readiness with capture already open, then performs one Agon reset.
 Firmware write/readback passed; no reflash is needed for this setup correction.
+
+### N04q — Reserve internal allocation for the measured game mode
+
+AGENT-ASSIGNED, not separately Author-approved. r31 runtime logs select
+INTERNAL for startup640x480 (153600bytes), then report largest188416bytes
+when512x384 needs196608+4000. Game therefore falls back to PSRAM. This is
+not evidence of internal-framebuffer performance. Initial internal allocation
+may constrain later capacity; do not change lifecycle or stock pool logic.
+
+1. [ ] N04q-i: Add a second default-off test flag permitting internal allocation
+   only for512x384 single-buffer rows of512bytes (the measured64colour mode).
+   Other modes retain baseline PSRAM. Keep the existing full-block guard and
+   explicit selection/fallback log. Build isolated r32; all r29 runtime flags,
+   no row timers. r31 controls may finish against their immutable image.
+2. [ ] N04q-ii: After r31 releases the bench, restore safe startup, preserve
+   rollback, deploy/verify and capture allocation choice before benchmarking.
+   Repeat SW/HW fixed streaming cases only as internal capacity permits.
+3. [ ] N04q-iii: Verify complete image/workload, compare and repeat any parity;
+   no general mode-capacity/product qualification follows from this experiment.
