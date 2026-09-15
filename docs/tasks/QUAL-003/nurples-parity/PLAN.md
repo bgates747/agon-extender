@@ -651,7 +651,7 @@ framebuffer and snapshots in PSRAM. PORT-003 stock-backend-r2 explicitly
 changed native allocation from upstream INTERNAL to SPIRAM. Hypothesis:
 internal native framebuffer may reduce shared PSRAM contention. No proof yet.
 
-1. [ ] N04p-i: Add default-off allocation-capability experiment. Only select
+1. [x] N04p-i: Add default-off allocation-capability experiment. Only select
    INTERNAL when one free block can hold the entire current framebuffer plus
    stock reserve; otherwise retain PSRAM and explicitly log the fallback.
    Keep stock pool allocator, row packing, rendering, resolution, colours and
@@ -663,3 +663,6 @@ internal native framebuffer may reduce shared PSRAM contention. No proof yet.
 3. [ ] N04p-iii: Compare fresh game timings and repeat any apparent parity.
    If capacity prevents experiment or parity is absent, record that result
    before selecting another output correction. No new MOS changes.
+
+N04p-i built r31; linked allocator retains capacity query and stock allocator.
+Row timing is disabled. Runtime capability/complete image checks remain pending.
