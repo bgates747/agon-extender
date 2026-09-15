@@ -27,10 +27,10 @@ rejected it. r39 SW selected internal memory; HW fell back. Treat configuration
 flags separately from measured allocation selection. The stock base allocator
 supports multiple pools; this guard is stricter than that stock behavior.
 
-The next isolated control removes inherited, inactive graphics timing scopes,
-which still enter critical sections, while retaining the independent completion
-recorder used on stock. This is an instrumentation-cost hypothesis, not an
-established cause. Stock mainboard VDP remains restored and verified.
+Removing inherited inactive graphics scopes in r41 did not resolve the HW
+tail (28.967ms p95). The next isolated control exercises stock multi-pool
+internal allocation, with full-height fallback. Stock mainboard VDP remains
+restored and verified.
 
 ## Dormant-probe control r41
 
