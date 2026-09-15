@@ -1,0 +1,31 @@
+{
+  "build_id": "mainboard-refresh-trace-r01-b2026-09-15-15-10-44Z",
+  "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "contract_commit": "e3ba0cb37cee8f1d09b32334dacc986501a31b61",
+  "changed_stock_files": [
+    "local-libs/vdp-gl/src/displaycontroller.cpp",
+    "platformio.ini",
+    "video/vdu_buffered.h",
+    "video/version.h"
+  ],
+  "recorder_sha256": "9ec71d3ea9722edb950c5540584b43abc9d799e9151a4feb8434779f43729bc9",
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1078848,
+      "sha256": "2515462ac9691cf30cc3f932d8f343b3d94cc971eeb5599096b59fc04144d9b6"
+    },
+    "firmware.elf": {
+      "bytes": 24748136,
+      "sha256": "4d2e8e60f98be38a5789326693b4e9fb8fd1f4b37679c838aaddf04f98f75c4d"
+    },
+    "bootloader.bin": {
+      "bytes": 18992,
+      "sha256": "f2dfacdea6ae72d0aeeb7c30e525c4c6fc768a041849feac694cbb2ee2224448"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    }
+  }
+}

@@ -926,7 +926,7 @@ uses synchronous queries and120Hz quantization; it cannot establish the stock
 unfenced completion-spacing distribution at this finer precision. Do not relax
 the smoothness gate or change scheduling based on this asymmetric comparison.
 
-1. [ ] N04x-i: Reuse the maintained mainboard diagnostic builder pattern to
+1. [x] N04x-i: Reuse the maintained mainboard diagnostic builder pattern to
    archive exact official VDP2.16.0 c7ac293 and vdp-gl ac2dd598. Add only the same
    optional refresh recorder, enqueue/completion hooks and consumed/discarded
    markers as r38. No graphics-timing scopes/private fence opcode, renderer
@@ -949,3 +949,8 @@ release/dependency and preserves official checkouts. Machine-local deployment
 reference: agents/uart-alignment/control/graphics-mainboard.py. Refresh timestamp
 hooks sit in the original primitive execution task in VGA64 mode, not scanout;
 this scope must remain identical in both reports. No physical wiring changes.
+
+N04x-i built mainboard-refresh-trace-r01-b2026-09-15-15-10-44Z. The
+recorder hash matches the installed r38 P4 recorder exactly. Stock archive
+changes are limited to the two hook files, build flags/local dependencies and
+diagnostic version string; stock renderer and transport bodies are retained.
