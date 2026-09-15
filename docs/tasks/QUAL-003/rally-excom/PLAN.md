@@ -75,7 +75,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    candidates and reviewed nonissues. Record search methods, exclusions and
    limits; text search alone does not prove exhaustiveness. Make no additional
    conversion corrections during enumeration.
-8. [ ] RX08: Present the enumeration to the Author, notify on hardware and STOP.
+8. [x] RX08: Present the enumeration to the Author, notify on hardware and STOP.
    Each disposition must identify which findings may be corrected. Silence or
    completion of the search does not authorize bulk edits.
 9. [ ] RX09: Only after enumeration review, correct the approved findings in
@@ -212,3 +212,9 @@ Compiler-backed analysis covers the28current port/render units plus8DSP matrix
 units; no firmware source correction or hardware benchmark was performed.
 RX08 is now pending Author review. Audio-framing visual acceptance is recorded
 in PORT-004; the earlier HUD-open notes above are historical, not current state.
+
+
+Author approved the recommended N02–N06 dispositions and instructed proceeding.
+[RX09/RX10 execution contract](rx09/PLAN.md) freezes behavior and validation.
+Notify on hardware when finished or assistance is needed. N07/N08 and dormant
+findings are not included; no repeated approval request is needed for N02–N06.
