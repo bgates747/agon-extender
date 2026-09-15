@@ -416,3 +416,19 @@ Recovery checkpoint: native CLI/SD admission and exact original startup readback
 passed. P4-only r28 deployment has resumed with preserved r27 rollback. The
 HTTP stall remains unresolved; no throughput result depends on its recovery
 replay. N03i build/identity checks and complete fresh baseline are now done.
+
+### N04k — Separate output contention from remaining transport cost
+
+AGENT-ASSIGNED, not separately Author-approved. The first fresh r28 SW result
+is30.0066 fencedFPS versus r27's29.5718. The maintained P4 UART changes alone
+have not explained the gap. Finish the immutable three-case streaming matrix.
+
+1. [ ] N04k-i: If streaming controls still miss parity, run the same NP04 SW/HW
+   fenced workload with no browser connected, fresh nonces and result names,
+   unchanged P4/EMOS/assets. Read drained output-recorder counters before/after
+   and require no snapshot/socket work during the game. This diagnostic does
+   not satisfy the goal's active-streaming requirement. No MOS flash yet.
+2. [ ] N04k-ii: Compare the fresh output-off records to matched streaming records.
+   A remaining gap directs investigation toward EMOS/command/render timing; a
+   disappearing gap directs investigation toward snapshot/render contention.
+   Freeze the next correction only after this distinction is measured.
