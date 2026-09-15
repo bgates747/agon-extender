@@ -1,0 +1,9 @@
+{
+  "exact_candidate_prefix_bytes": 42316,
+  "tail_all_ff": true,
+  "erased_bytes": 89652,
+  "total": 131072,
+  "interpretation": "Programming stopped after an exact42316-byte candidate prefix; rest erased. Controller reset before observed completion is the leading procedural cause, not evidence of candidate logic failure.",
+  "restored_sha256": "1cd65eac21780a8a7c82e14209737c38796e24f32300524e58a93e5c44e096d8",
+  "p4_restored_verified": true
+}

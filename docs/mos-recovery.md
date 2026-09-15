@@ -227,3 +227,17 @@ The Author subsequently confirmed Rally works and retained the P4/ZDI leads,
 Pi5 reset, sniffers and full normal harness for future recovery use. Treat this
 as the standing bench arrangement until notified otherwise; do not require
 repeated wiring setup. Current machine details remain in HARDWARE.local.md.
+
+## Ordinary FLASH completion guard
+
+Do not reset the mainboard after a fixed delay from typing `FLASH`. Native
+keyboard emission confirms only input delivery, not flash completion. Official
+agon-docs `Updating-Firmware.md` specifies the updater's automatic reboot.
+Wait for that fresh boot and independently verify the installed ROM; if boot
+does not arrive, stop and inspect rather than send another flash or reset.
+
+The Nurples parity run on2026-09-15 reset roughly seven seconds after command
+delivery. ZDI later found an exact42316-byte candidate prefix followed entirely
+by erased bytes. This strongly indicates interrupted programming; it does not
+show a logic defect in the candidate. Known-good full ROM and P4 restoration
+were independently verified. See QUAL-003/nurples-parity/results/emos-update-recovery.json.

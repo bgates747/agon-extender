@@ -480,7 +480,7 @@ No test ran. This does not prove a candidate logic defect. The controller's
 three-second post-command delay did not prove flash completion before reset;
 retain that as a possible procedural cause, not an established diagnosis.
 
-1. [ ] N04l-R1: Reuse the verified maintained connected-harness recovery image,
+1. [x] N04l-R1: Reuse the verified maintained connected-harness recovery image,
    bound to the exact saved pre-run131072-byte known-good ROM. Preserve current
    r28 P4 flash, verify programmer deployment, capture complete pre-erase ROM
    and target identity, restore baseline once with independent byte readback.
@@ -490,3 +490,9 @@ retain that as a possible procedural cause, not an established diagnosis.
    failed-ROM bytes to distinguish incomplete programming from a valid image
    failing to boot. Freeze a new step before any further EMOS installation;
    never repeat a blind delay-and-reset FLASH sequence.
+
+N04l-R1: complete failed-ROM capture shows exact42316-byte candidate prefix,
+remaining88756bytes all FF. Recovery restored the exact known-good full ROM;
+P4 r28 restored/readback. This supports premature controller reset as cause.
+The ordinary updater's automatic reboot is now the completion guard documented
+in maintained recovery guidance. Physical input/SD readmission remains pending.
