@@ -1,0 +1,44 @@
+[
+  {
+    "label": "mainboard-sw",
+    "file": "NP17LS.BIN",
+    "variant": "fenced-sw",
+    "nonce": "7c9c61d34479a6c3",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-hw",
+    "file": "NP17LH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "b36c12904341f540",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-sw",
+    "file": "NP17ES.BIN",
+    "variant": "fenced-sw",
+    "nonce": "7f661411e1f79b10",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-hw",
+    "file": "NP17EH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "acf3497ddce029bc",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-off-sw",
+    "file": "NP17OS.BIN",
+    "variant": "fenced-sw",
+    "nonce": "925ad79f62b808ab",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-off-hw",
+    "file": "NP17OH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "dde005a049c6e331",
+    "capacity": 2400
+  }
+]

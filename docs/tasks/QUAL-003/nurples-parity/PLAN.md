@@ -530,10 +530,10 @@ AGENT-ASSIGNED, not separately Author-approved. First fresh qualified-EMOS
 streaming SW run measures49.0987FPS,20.3671ms mean,33.3333ms p95, with the
 same nonce-verified workload. This is a large gain over30.0066FPS, but not parity.
 
-1. [ ] N04m-i: After the four matched route/sprite cases finish, repeat the
+1. [x] N04m-i: After the four matched route/sprite cases finish, repeat the
    existing output-off SW/HW procedure with the new EMOS and unique nonces/files.
    Keep P4 unchanged and verify no output-counter increments.
-2. [ ] N04m-ii: Attribute the remaining gap from these controls before selecting
+2. [x] N04m-ii: Attribute the remaining gap from these controls before selecting
    a further correction. Preserve rendering versus output versus UART scopes;
    no additional MOS implementation is authorized by inference from this result.
 
@@ -566,3 +566,8 @@ measured lock-wait result. The original scanline/drawing algorithms stay intact.
    well as game completion. No parity claim from lower browser quality or
    repeated snapshots. If insufficient, retain the result and profile output
    locking/copying before another scheduling change.
+
+N04m completed: both SW and HW output-off are exactly60FPS, p95/max16.6667ms
+across all2279 post-warmup intervals. Matching state/nonces and zero output
+work validated. Select P4 output scheduling investigation; no further MOS
+implementation changes. r29 build is the frozen N04n one-variable experiment.
