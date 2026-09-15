@@ -965,3 +965,34 @@ readback on the wired Pi matches all512x384 pixels, zero GL errors. Headless
 screenshot canvas discard remains a screenshot limitation, not evidence of a
 white received framebuffer. SW/HW terminal pixels match outside four diagnostic
 filename glyphs. Offline checks ran after the live observers released Pi CPU.
+
+### N04y — Separate P4 drawing opportunities from logical frame cadence
+
+AGENT-ASSIGNED, not separately Author-approved. Matched stock SW completion
+trace:59.93Hz, p9517.063ms, versus P4~60.06Hz,p9530.673ms. Stock pending refreshes
+peak2, P4 peak3. Thus average throughput is adequate but smoothness fails.
+
+Source: stock VGA64 ISR notifies its primitive task at physical vertical sync.
+The P4 adapter replaces this with an independent16667us timer, while the eZ80
+continues its existing pacing. `stock_p4_service.cpp::timerEntry` currently
+admits drawing only when the logical frame clock advances. No physical VGA
+blanking interval exists on P4's snapshot/web path. A missed queue arrival can
+wait another whole logical period. This is an adapter-scheduling hypothesis,
+not a discovered stock VDP bug or permission to rewrite rendering algorithms.
+
+1. [ ] N04y-i: Build default-off r39 on r38 with twice-per-logical-frame drawing
+   opportunities. Preserve logical frame-counter/output cadence60Hz; only the
+   adapter's drawing-task notifications occur at half-period. Preserve stock
+   primitive queue order/bodies, priorities, native locks, geometry and output
+   bytes. No parser notification shortcut, altered game workload or MOS change.
+   Host-check opportunity vs logical-clock arithmetic and link/build settings.
+2. [ ] N04y-ii: Wait for the mainboard diagnostic controller to finish and
+   restore exact stock VDP before P4 deployment. Preserve r38, install/verify
+   r39, run the identical SW/HW traces with full180second live output and
+   service checks. Reject missing work/corruption or changed60Hz logical period.
+3. [ ] N04y-iii: Repeat both paths if first results meet the original mean/p95
+   criteria against the matched mainboard trace. Otherwise retain failure and
+   choose the next evidenced investigation. Do not claim distinct browser-frame
+   parity from completed commands. This adapter option remains experimental
+   pending human review; future physical output binding must reconsider the
+   drawing-opportunity policy against its actual blanking/timing requirements.
