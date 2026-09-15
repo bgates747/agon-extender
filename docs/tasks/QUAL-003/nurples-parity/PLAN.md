@@ -356,3 +356,29 @@ N02g repair checkpoint:
    29.5654 fencedFPS; p95 33.333ms/max50ms. Live sprites peak13.
 2. [ ] N02g-ii: Fresh matched mainboard, unfenced and HW comparisons are still
    required. The corrected queued matrix is active; do not restore old claims.
+
+### Qualified UART changes absent from the running baseline
+
+AGENT-ASSIGNED, not separately Author-approved. Fresh NP04 measurements now
+show a real scoped gap: stock58.7624 fencedFPS, P4 repeat29.5718/29.5654FPS,
+with identical2400-record workload state and13 live sprites maximum. Inspecting
+actual archived P4 source reveals that r22–r27 still contain the pre-E07P
+console owner/stream: unconditional delay(1), old RX timeout/default Stream
+block reads, old reply admission/refill policy. Maintained source contains the
+previously qualified stock-aligned changes, but the restored running baseline
+did not. Installed EMOS is also the earlier restored image; E07P qualified
+v0.1.17 profiles were restored away. See agon-emos INTEG-014/E07P-results/README.md
+and machine-local restoration records. Do not mistake these for new discoveries
+about optimal UART algorithms or blindly import unrelated maintained changes.
+
+1. [ ] N03i: Finish the current immutable r27 matched controls. In parallel, build
+   an isolated r28 comparison which transplants ONLY the maintained, previously
+   qualified console_hardware.inc/console_stream.hpp UART changes into r27's
+   selected source composition. Record hashes/diff; keep all current output
+   options and mainboard firmwares fixed. Build-time identity and sanity checks
+   must prove the selected image actually contains this change.
+2. [ ] N04j: After the active matrix releases the bench, restore safe startup,
+   preserve r27 full rollback, flash/verify r28, verify native input/SD and rerun
+   the same nonce-verified workload with wired output. Compare before making a
+   new rendering or MOS change. Firmware recovery remains available, not a
+   reason to flash MOS speculatively. No experimental push.
