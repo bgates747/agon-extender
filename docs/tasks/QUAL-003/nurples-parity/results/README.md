@@ -164,3 +164,21 @@ The simultaneous recorder window was rejected for a pre-existing lost completion
 count; no firmware-duration conclusion comes from that failed diagnostic window.
 Actual ELF confirms a1ms worker wait and packed word accesses. CMake's compile
 database omits relevant SCons flags and must not substitute for that inspection.
+
+## Dispatch diagnosis (r27)
+
+| Wired client | Snapshot mean ms | Socket mean ms | Credit to ready mean ms | Ready to send mean ms | Received FPS |
+|---|---:|---:|---:|---:|---:|
+| Production | 9.247 | 18.940 | 0.589 | 0.105 | 23.79 |
+| Immediate credit | 10.171 | 18.022 | 3.905 | 0.219 | 32.15 |
+
+Clean drained accounting passes. HTTP dispatch queue waiting is small; these
+results do not justify changing its scheduler. Production delivery varies from
+the prior29.69FPS run, so that gain is provisional. The same no-web HW pilot
+retains60Hz/state equality. No stock drawing logic changed. See dispatch-r27.json.
+Host recorder/optional interval tests pass, including32-bit clock wraparound.
+
+Headless browser screenshot capture on the wired Pi yielded a white canvas,
+while the retained EVF pixel payload decodes to the expected Nurples scenery
+and terminal text. Do not use that screenshot as visual proof; decoded EVF and
+human browser presentation are distinct evidence.

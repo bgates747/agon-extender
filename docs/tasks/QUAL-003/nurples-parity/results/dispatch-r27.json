@@ -1,0 +1,70 @@
+{
+  "production": {
+    "summary": {
+      "phases": [
+        {
+          "phase": "snapshot",
+          "count": 239,
+          "units": 46989312,
+          "mean_ms": 9.246728033472804
+        },
+        {
+          "phase": "socket_send",
+          "count": 239,
+          "units": 46996960,
+          "mean_ms": 18.939983263598325
+        },
+        {
+          "phase": "credit_to_ready",
+          "count": 239,
+          "units": 239,
+          "mean_ms": 0.5885481171548117
+        },
+        {
+          "phase": "ready_to_send",
+          "count": 239,
+          "units": 239,
+          "mean_ms": 0.10467782426778242
+        }
+      ],
+      "received_fps": 23.78549085052447,
+      "frames": 239
+    },
+    "status": "pass",
+    "errors": []
+  },
+  "receive": {
+    "summary": {
+      "phases": [
+        {
+          "phase": "snapshot",
+          "count": 321,
+          "units": 63111168,
+          "mean_ms": 10.171433021806854
+        },
+        {
+          "phase": "socket_send",
+          "count": 321,
+          "units": 63121440,
+          "mean_ms": 18.02161370716511
+        },
+        {
+          "phase": "credit_to_ready",
+          "count": 321,
+          "units": 321,
+          "mean_ms": 3.9049532710280372
+        },
+        {
+          "phase": "ready_to_send",
+          "count": 321,
+          "units": 321,
+          "mean_ms": 0.2188006230529595
+        }
+      ],
+      "received_fps": 32.1491721587399,
+      "frames": 321
+    },
+    "status": "pass",
+    "errors": []
+  }
+}

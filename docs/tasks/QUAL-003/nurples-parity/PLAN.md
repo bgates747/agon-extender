@@ -280,10 +280,32 @@ excluded from the preceding payload tail. Host offload coalesces some packets.
 The diagnostic HTTP totals were rejected because one historical lost completion
 was already present; this does not invalidate the independent packet timestamps.
 
-2. [ ] N04h: Add opt-in bounded credit-to-ready and ready-to-socket dispatch
+2. [x] N04h: Add opt-in bounded credit-to-ready and ready-to-socket dispatch
    durations to the existing output recorder. No routing/credit/drawing changes.
    Inspect actual ELF (not CMake's incomplete compile database): current network
    worker wait is1tick/1ms and packed-row loop uses word accesses. Measure where
    the observed post-credit delay occurs before choosing another correction.
    Preserve rollback, build/verify, drain clean windows and reject incomplete
    accounting; production builds must retain zero probe state/cost when disabled.
+
+N04h completed: r27 validates deployment/input/SD/HW pilot and clean four-phase
+windows. Immediate-credit means: credit-to-ready3.905ms, ready-to-send0.219ms,
+snapshot10.171ms, socket18.022ms,32.15receivedFPS. Production varies to23.79FPS
+with9.247ms capture,18.940ms send,0.589ms credit-to-ready,0.105ms dispatch.
+HTTP work-queue dispatch is not the dominant delay; more queue optimizations
+are not justified. Preserve this distinction and run remaining workload controls
+before expanding output contracts.
+
+### Remaining matched workload controls — AGENT-ASSIGNED, not separately Author-approved
+
+1. [ ] N02d: Deploy the existing corrected r02 unfenced SW fixture under a new
+   filename, verify both readbacks, run on mainboard and P4 with wired production
+   output. Use explicit unfenced timing labels and compare deterministic state
+   with fenced pilots. Ordinary vblank remains; matching60Hz can bound an effect
+   at that pacing, not prove zero CPU probe overhead.
+2. [ ] N02e: Extend only the isolated fixture to a bounded2400-boundary workload,
+   allowing substantially more enemy/game progression. End with an explicit
+   reason before interactive game-over rather than hanging on synthetic time.
+   Preserve native gameplay updates/assets; record completed count/state and
+   refuse a heavy-load claim if progression is insufficient. Use matched SW/HW
+   routes, a longer bounded browser observer and retained output captures.
