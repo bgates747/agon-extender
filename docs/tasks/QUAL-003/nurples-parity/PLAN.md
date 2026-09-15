@@ -980,7 +980,7 @@ blanking interval exists on P4's snapshot/web path. A missed queue arrival can
 wait another whole logical period. This is an adapter-scheduling hypothesis,
 not a discovered stock VDP bug or permission to rewrite rendering algorithms.
 
-1. [ ] N04y-i: Build default-off r39 on r38 with twice-per-logical-frame drawing
+1. [x] N04y-i: Build default-off r39 on r38 with twice-per-logical-frame drawing
    opportunities. Preserve logical frame-counter/output cadence60Hz; only the
    adapter's drawing-task notifications occur at half-period. Preserve stock
    primitive queue order/bodies, priorities, native locks, geometry and output
@@ -1003,3 +1003,9 @@ repeats were correctly skipped. Exact affected mainboard flash sectors restored
 and verified; safe startup, keyboard and SD pass. Startup admission initially
 changed during CLI input; a fresh admission after settling recovered it without
 MOS flashing. That attempt launched no game and contributes no timing data.
+
+N04y-i built r39-b2026-09-15-15-26-31Z. Host tests execute the actual
+StockClock with half-period observations, odd periods and delayed callbacks;
+logical counters remain elapsed-time based and are never doubled. P4 output
+notifications remain conditional on a logical frame edge; only drawing gets
+additional opportunities. Mainboard restoration/readiness is verified.
