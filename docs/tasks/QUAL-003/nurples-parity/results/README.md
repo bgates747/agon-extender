@@ -10,20 +10,28 @@ therefore reused the first saved pilot. The repeated600-record fingerprints and
 Retain them as invalid evidence, not performance results. The r03 longer trial
 exposed the flaw by returning the old NP01/600-record file.
 
-The first corrected NP04 run verifies its expected nonce, sprite mode, capacity
-and size:2,400 fenced P4 SW boundaries,29.57FPS mean,33.333ms p95,50ms maximum,
-and13 live sprites maximum. This includes the per-frame completion query;
-the repeat matches. Fresh mainboard measures58.76 fencedFPS. Unfenced
-boundaries are60.00FPS mainboard versus33.86FPS P4, with matching game state.
-The current images predate qualified UART optimizations; a bounded P4-only
-comparison is next after HW controls. No parity claim is restored yet.
-See verified-sw-controls-r27.json for the fresh paired evidence.
+Fresh NP04 records now validate six matched cases with unique staged nonces,
+checked file replacement and the same 2400-record gameplay fingerprint. These
+are valid comparisons; the older NP01/NP03 game results remain invalid.
 
-Independent browser/EVF, packet and drained P4 output-recorder measurements
-remain valid within their stated scopes. Their output improvements do not prove
-game parity. Next: checked fixture I/O, unique per-run nonce and format/variant
-validation, then fresh matched runs. This is a benchmark-harness defect, not
-an identified MOS/VDP port defect. No firmware API change is warranted.
+| Boundary measurement | Mainboard FPS | P4 r27 FPS | Mainboard mean ms | P4 mean ms | P4 duration above baseline |
+|---|---:|---:|---:|---:|---:|
+| Hardware sprites, fenced | 59.92 | 29.74 | 16.689 | 33.626 | +101.49% |
+| Software sprites, fenced | 58.76 | 29.57 | 17.018 | 33.816 | +98.71% |
+| Software sprites, unfenced | 60.00 | 33.86 | 16.667 | 29.530 | +77.18% |
+
+Ranked by mean-duration penalty, mainboard baseline. Fenced timings include a
+completion query; hardware-sprite scanout is not established by that query.
+Unfenced timings measure submission/vblank boundaries, not completed drawing.
+All cases have the same game state and live-sprite distribution (maximum13).
+See `verified-r27-cases.json` and `verified-r27-load-analysis.json` for raw-file
+identities, nonces, warmup/whole-run and load-stratified results.
+
+The installed P4 and EMOS images predate qualified UART optimizations. An
+isolated P4-only reapplication is the next comparison; mainboard firmware stays
+fixed. Independent browser/EVF, packet and drained output-recorder measurements
+remain valid within their scopes, but do not establish game parity. The goal
+has not passed.
 
 The historical sections below preserve what was reported and must be read with
 this correction.
