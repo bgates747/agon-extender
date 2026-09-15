@@ -8,14 +8,15 @@ from pathlib import Path
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');p.add_argument('--draw-twice',action='store_true');a=p.parse_args()
  assert a.lookahead, 'Use the frozen d007496 builder for r24; current source is the r25 lookahead experiment'
  root=Path.cwd();parent=a.parent.resolve();out=a.output.resolve()
  assert not subprocess.check_output(['git','status','--porcelain'],text=True)
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
- revision='r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ revision='r39' if a.draw_twice else 'r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ assert not a.draw_twice or a.refresh_trace
  assert not a.refresh_trace or a.row_pair
  assert not a.row_pair or (a.blocking_consumer and not a.output_draw_core and not a.row_timing)
  assert not a.output_between_tasks or (a.blocking_consumer and a.output_draw_core)
@@ -31,7 +32,7 @@ def main():
  shutil.copytree(source,tree,ignore=shutil.ignore_patterns('.pio','managed_components','__pycache__'))
  pinned={str(f.relative_to(source)):sha(f) for f in source.rglob('*') if f.is_file() and '.pio' not in f.parts and 'managed_components' not in f.parts and '__pycache__' not in f.parts}
  assert all(sha(tree/n)==h for n,h in pinned.items())
- probe_files=('vdp/video/extender/network/wired_network_service.cpp','vdp/video/extender/display/stock_p4_service.cpp','vdp/video/extender/diagnostics/video_timing.hpp')
+ probe_files=('vdp/video/extender/network/wired_network_service.cpp','vdp/video/extender/display/stock_p4_service.cpp','vdp/video/extender/diagnostics/video_timing.hpp','vdp/video/extender/display/drawing_cadence.hpp')
  if a.internal_framebuffer:probe_files+=('vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp',)
  if a.row_timing or a.row_pair:probe_files+=('vdp/video/extender/display/stock_runtime_controller.hpp',)
  if a.lookahead:probe_files+=('vdp/video/extender/display/presentation_snapshot_pool.cpp','vdp/video/extender/display/presentation_snapshot_pool.hpp')
@@ -52,6 +53,7 @@ def main():
  cfg['platformio']['build_dir']=str(out/'build');cfg['env:p4-console']['board_build.esp-idf.sdkconfig_path']=str(out/'sdkconfig')
  assert 'AGON_EXTENDER_VIDEO_TIMING' not in cfg['env:p4-console']['build_flags']
  cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_TIMING=1'
+ if a.draw_twice:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_DRAW_TWICE=1'
  if a.refresh_trace:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_REFRESH_TRACE=1'
  if a.row_pair:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_OUTPUT_ROW_PAIR=1'
  if a.output_between_tasks:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_OUTPUT_BETWEEN_TASKS=1'
@@ -66,7 +68,7 @@ def main():
  if a.dispatch_timing:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1'
  with (out/'platformio.ini').open('w') as f:cfg.write(f)
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-'+revision+'-b'+stamp
- manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
+ manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'draw_twice_enabled':a.draw_twice,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)
