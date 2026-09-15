@@ -1,0 +1,15 @@
+{
+  "status": "prepared, capture not yet run",
+  "p4_build": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+  "fixture": "nurples-parity-probe-r05 SW unchanged",
+  "sample_rate_hz": 24000000,
+  "requested_samples": 1920000000,
+  "analyzer_identity_checked": true,
+  "disk_free_gib_approx": 42,
+  "script_sha256": {
+    "capture_wire.py": "d3e78ed2b5505a40cd52a2ed90d5ee31b937d8a5214f9454f65f51024379088c",
+    "capture_trace.py": "8faa1881b43b1169b73953abb2662d57a346850eae3f6f24d7bf0bc73ed5624d",
+    "wire43-pipeline.py": "86c13869017852321ce3e2122174db962d8ab31cf0241d9bf9c39adf474017e3",
+    "wire43-game.py": "ba49831c555a6a78cb58a92881360e06c1fc7c6d06c1d3b46155becd8f340cb7"
+  }
+}
