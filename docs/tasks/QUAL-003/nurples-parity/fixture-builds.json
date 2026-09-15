@@ -1,0 +1,14 @@
+{
+  "sw01": {
+    "bytes": 36927,
+    "sha256": "ab1a6c52bd208e64dca134f7140d8ae9f5bb9b197ec5886e102b6be0094ec828"
+  },
+  "hw01": {
+    "bytes": 36927,
+    "sha256": "550458798b22a92f7180deb32021aede544648b96328fe841d80d2902be0b6d4"
+  },
+  "swfree01": {
+    "bytes": 36927,
+    "sha256": "3b51a89d3c1f1db8ab491ddb15124909b7a9cfbe4f8f56fdf006cd8d22112520"
+  }
+}

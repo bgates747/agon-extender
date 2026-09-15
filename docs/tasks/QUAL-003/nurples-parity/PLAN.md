@@ -37,7 +37,7 @@ resolution, sprite-count or gameplay reduction may be used to claim parity.
 
 ## Work checklist
 
-1. [ ] N01: Pin current game/assets/bench, inspect timing and deterministic seams;
+1. [x] N01: Pin current game/assets/bench, inspect timing and deterministic seams;
    freeze a reproducible fixture with durable progress and completion outputs.
 2. [ ] N02: Validate fixture workload/oracles, deploy/read back and run paired
    stock/P4 controls plus active web streaming. Retain timings and correctness.
@@ -53,3 +53,26 @@ No completion claim from historical emulator FPS. Notify rather than guess if
 an essential measurement/behavior contract needs human disposition. Source
 porting remains minimal stock logic; recovery readiness is not a reason to
 flash MOS needlessly. Existing r22 and both mainboard firmwares are baseline.
+
+## Author steering and agent-assigned fixture details
+
+Author explicitly selects the dirty `nurples-repair` working tree and generated
+assets as the good reference. Preserve them; note bugs without unrelated fixes.
+Author permits structured comparable-load stress fixtures and requests hardware
+sprites in addition to the game's current software-sprite path. This supersedes
+the initial older Nurples checkout selection. No old-checkout fixture was deployed.
+
+AGENT-ASSIGNED (not separately Author-approved): start with a600-boundary pilot,
+120-boundary warmup, fixed held-fire input, synthetic two-tick simulation clock,
+stock pixel-query completion fence and per-boundary state/timing records. Use
+independent SW/HW sprite variants; do not conflate their parity results. Pin
+reference source/dirty asset hashes and keep generated copies in ignored storage.
+If a query cannot observe scanline sprite decoration, report that limit and use
+output captures for visibility; never count that query as hardware scanout proof.
+
+N01: selected repair sources/dirty packed assets pinned in reference.json. Three
+fixture variants assemble with ez80asm. A start receipt and fixed-size terminal
+result are saved; timed frame records remain in RAM to avoid per-frame SD cost.
+Source patching is isolated; reference worktree untouched. N02 validates the
+pilot on hardware before it can support conclusions. Archive dirty reference
+assets locally; do not rebuild them from older tracked art.
