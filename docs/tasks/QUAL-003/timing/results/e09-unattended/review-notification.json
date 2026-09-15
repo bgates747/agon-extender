@@ -1,0 +1,8 @@
+{
+  "receipt": "audio_commands=pass\r\n",
+  "replaced_pending_receipt": true,
+  "fresh_service_boot": true,
+  "startup_unchanged": true,
+  "state": "Legacy MOS prompt",
+  "human_hearing": "pending"
+}

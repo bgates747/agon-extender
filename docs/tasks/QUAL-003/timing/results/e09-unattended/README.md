@@ -19,7 +19,8 @@ successful run does not prove what the earlier interrupted run
 would have done, nor resolve the earlier intermittent mainboard BSP21_01 timeout.
 
 Original EMOS ROM and both ESP images are restored and independently verified;
-SD read/write and unchanged startup pass. The hardware review voice is next.
+SD read/write and unchanged startup pass. The hardware review voice completed
+with a fresh receipt; the bench is at the Legacy MOS prompt.
 E10 production qualification remains a separate next step; no new full-suite
 rerun, renderer change, wiring change or production-performance claim occurred.
 
@@ -133,3 +134,9 @@ retained separately; no private bench topology is required to read these results
 mainboard original affected flash sectors verified, P4 original 2MiB prefix
 verified, fresh keyboard admission/CLI SAVE, SD257-byte roundtrip, unchanged
 root startup. No r03 deployment, new matrix, wiring change or E10 execution.
+
+
+[Review notification](review-notification.json): the accepted British voice
+completed on hardware, replacing a deliberately pending receipt. Fresh service
+return and unchanged startup were checked, then the SD service exited to MOS.
+Human hearing is separate. Local discrete commits are preserved; nothing pushed.
