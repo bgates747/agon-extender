@@ -459,7 +459,7 @@ The earlier qualification proves bulk transport only; fresh game tests are neede
    mainboard reset and fresh keyboard admission. SAVE/read back entire ROM to
    another absent name and compare candidate prefix byte-exactly. Do not call
    an emitted command a successful flash. No mainboard VDP/source changes.
-3. [ ] N04l-iii: With P4 r28 fixed, repeat nonce-verified SW/HW streaming cases
+3. [x] N04l-iii: With P4 r28 fixed, repeat nonce-verified SW/HW streaming cases
    and matching mainboard controls under the same EMOS image. Compare before
    selecting any additional implementation. If no material gain, preserve the
    result and investigate command/render latency rather than rewriting MOS.
@@ -536,3 +536,8 @@ same nonce-verified workload. This is a large gain over30.0066FPS, but not parit
 2. [ ] N04m-ii: Attribute the remaining gap from these controls before selecting
    a further correction. Preserve rendering versus output versus UART scopes;
    no additional MOS implementation is authorized by inference from this result.
+
+N04l-iii: four fresh matched streaming cases completed with identical workload
+states under verified ordinary EMOS. Mainboard SW58.7119FPS, P4SW49.0987FPS,
+P4HW50.7196FPS; complete numbers in verified-emos17-analysis.json. No parity
+claim. Qualified-EMOS output-off pair is now running; no other hardware owner.
