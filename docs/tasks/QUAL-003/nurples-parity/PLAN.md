@@ -174,3 +174,12 @@ counters while still connected before closing. Use the same quiescent boundary
 before the timed window. Reject lost/overlapping/incomplete or mixed-layout
 counts. This closes that existing measurement gap on current512x384 Nurples;
 it is not a claim of discovering those timing hooks anew.
+
+N03b correction: r23 source archive predates the optional output hooks; enabling
+the flag alone yielded a healthy firmware with no timing endpoint (404). No
+timing conclusion is drawn. The reviewed parent-to-maintained delta in exactly
+two source files is only the optional scopes/endpoint; transplant those and the
+existing video_timing.hpp into isolated r24. Require both endpoint bytes and
+videoRecorder symbol in the final image before deployment. No drawing/transport
+algorithm delta is present. This correction is agent-assigned, not separately
+Author-approved. r23 and its rollback evidence remain identified locally.
