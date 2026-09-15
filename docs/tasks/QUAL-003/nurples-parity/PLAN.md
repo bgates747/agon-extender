@@ -1017,7 +1017,7 @@ p95 gate25.092ms, but HW p9526.692ms exceeds stock17.021+8.333ms. Both average
 ~60Hz with balanced2400 completions and pending<=2. Do not relax the threshold
 or run redundant r39 repeats. Finish its current output/service control.
 
-1. [ ] N04z-i: Generalize the same default-off adapter opportunity divisor to4
+1. [x] N04z-i: Generalize the same default-off adapter opportunity divisor to4
    for isolated r40. Logical/output cadence stays60Hz. No new queue wake source,
    game/renderer algorithm or lock change. Host-check1/2/4 opportunities with
    odd periods and delayed callbacks; preserve original1 and r39's2 behavior.
@@ -1033,3 +1033,7 @@ or run redundant r39 repeats. Finish its current output/service control.
 N04y controls complete: both full streams and services passed, workload/counts
 match. SW initially meets mean/p95 limits; HW misses p95. Repeats were skipped
 as contracted. N04z owns the next bounded opportunity-cadence test.
+
+N04z-i built uart-excom-console-r40-b2026-09-15-15-38-38Z. The actual clock host checks
+pass1/2/4 opportunities, odd periods and skipped observations. Logical/output
+notifications remain60Hz; the four-opportunity flag is default-off.
