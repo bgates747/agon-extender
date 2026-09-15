@@ -106,3 +106,13 @@ generated manifest. SW, HW and unfenced SW assemble successfully. This fixture
 revision is agent-assigned under the unattended adjustment authorization; it
 does not change or replace the in-flight r01 pilot. The r01 binary hashes remain
 in fixture-builds.json; r02 hashes are in fixture-builds-r02.json.
+
+N02 pilot checkpoints (agent-assigned subdivisions of the frozen paired work):
+
+1. [x] N02a: Legacy r01 SW pilot:600 records, no query error, live gameplay/PRNG
+   progression; measured60.0 completedFPS. See results/README.md. Full staging
+   and both readbacks passed; reuse assets for subsequent runs.
+2. [ ] N02b: Same r01 SW binary on P4 without output, then with production web
+   streaming. Compare state fingerprints before interpreting timing differences.
+3. [ ] N02c: Hardware-sprite variant on both routes, with P4 output captures.
+   Follow with corrected unfenced controls and repeats needed for conclusions.
