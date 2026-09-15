@@ -321,3 +321,10 @@ N02d complete: corrected r02 unfenced SW control on both routes records
 600boundaries, all479 measured intervals two ticks, and the same fingerprint
 as fenced pilots. Terminal fences pass and P4 wired web remains connected.
 This finds no pacing change at60Hz; it does not measure zero probe CPU cost.
+
+3. [ ] N02f (agent-assigned): Resolve the white headless screenshot limitation
+   with a direct WebGL readback of the retained EVF, using unchanged served
+   production parser/presenter assets. Compare all pixels after present, before
+   drawing-buffer discard; report this as an offline renderer check, not physical
+   display or FPS. Run on the wired observer host only after gameplay measurements
+   have released its CPU; do not contend with a timing run.
