@@ -19,10 +19,10 @@ benchmarks, emulator changes or experimental pushes during this debrief.
    per-operation/batch rendering, queue completion, paced game cycles, uploads,
    snapshots, socket sends and browser delivery. State baseline, counts,
    quantization, instrumentation and percentage convention.
-3. [ ] D03: Research pinned official Agon/FabGL and Espressif documentation and
+3. [x] D03: Research pinned official Agon/FabGL and Espressif documentation and
    source for scheduling, task priorities/affinity, UART buffering/flow control,
    framebuffer memory and output behavior. Distinguish cause from hypothesis.
-4. [ ] D04: Write the full debrief, review contradictions and evidence gaps,
+4. [x] D04: Write the full debrief, review contradictions and evidence gaps,
    then append ranked first investigations to its executive summary. Put the
    granular proposed actions and decision gates in this task's review plan;
    do not execute them before review.
