@@ -65,7 +65,7 @@ corrections; retain the existing numbered items and evidence.
    phase coupling, notification coalescing, and any omitted or duplicated waits.
    Separate source-confirmed behavior from timing hypotheses. Audit existing
    mechanisms before inventing another scheduler or increasing wake frequency.
-3. [ ] P00c: Classify which stock mechanisms protect rendering correctness or
+3. [x] P00c: Classify which stock mechanisms protect rendering correctness or
    workload ordering, which exist only for VGA scanout, and which can serve the
    current web-output backend without generating VGA. The Author does not want
    bit-banged VGA as the solution; this audit does not authorize adding it.

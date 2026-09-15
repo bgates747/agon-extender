@@ -291,3 +291,22 @@ several historical frames. The P4 task notification counters used by drawing,
 output and the submitting swap caller belong to different tasks. This trace
 found no duplicated swap wait that establishes a30Hz restriction. It does not
 prove the parser never uses its notification slot for another subsystem.
+
+### P00c — What must survive the port
+
+| Classification | Mechanisms | Disposition |
+|---|---|---|
+| API/work ordering | FIFO primitives, dynamic-payload lifetime, immediate versus queued execution, swap caller acknowledgement, suspend/resume nesting, foreground drain | Retain. Queue empty, command complete, row composition complete and client presentation are distinct boundaries. |
+| Correctness adaptation | Native exclusion, foreground serialization, mode/task lifetime joins, palette cursor revision checks | P4 tasks can be preempted between rows and overlap on separate cores. Do not delete these protections to imitate an ISR or reduce measured time. Measure their costs and narrow them only with evidence. |
+| Physical VGA only | I2S DMA descriptor ring, GPIO signal generation, sync/porch bytes and rolling refill deadline | Do not add VGA output. Preserve required pixel/row semantics while replacing the physical consumer. |
+| Reusable but target-dependent | Logical period, worker notification, batching, explicit completion and swap boundary | Preserve observable contracts; qualify scheduler mapping separately. Two rows per call alone does not restore physical timing. |
+| Inherited optional policy | Blank-only/half-frame execution budget | Not active in stock Agon mode setup. Restoring it as a presumed missing optimization would change the baseline. |
+| Deferred broader coverage | Other controller families, all compile-time branches and API interactions beyond these call paths | AUDIT-007 remains required and unscheduled. P00 is not an exhaustive FabGL certificate. |
+
+Subtle limitations retained explicitly: stock queue-empty waiting does not prove
+last-operation completion; notifications coalesce on both targets; ordinary
+double-buffer drawing is immediate; and swap acknowledgement does not await
+web output. None is permission to improve upstream behavior in this port.
+Potential snapshot mixing is a source-level interleaving, not a newly observed
+pixel failure or a proven cause of the current performance issue. Avoid a
+whole-frame native lock as an unmeasured remedy: it could worsen parser stalls.
