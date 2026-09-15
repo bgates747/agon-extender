@@ -12,7 +12,10 @@ constexpr bool kSnapshotLookahead = false;
 // QUAL-003 N04n: isolate CPU snapshot interference with parser/drawing.
 // Default preserves the retained binding. This flag changes scheduling only;
 // original native operations and row locking remain unchanged.
-#if defined(AGON_EXTENDER_OUTPUT_BELOW_PARSER)
+#if defined(AGON_EXTENDER_OUTPUT_BETWEEN_TASKS)
+// N04t: core0 parser stays runnable; output must outrank it to make progress.
+constexpr unsigned kOutputTaskPriority = 4;
+#elif defined(AGON_EXTENDER_OUTPUT_BELOW_PARSER)
 constexpr unsigned kOutputTaskPriority = 2;
 #else
 constexpr unsigned kOutputTaskPriority = 6;
