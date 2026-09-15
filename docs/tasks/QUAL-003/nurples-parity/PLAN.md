@@ -555,7 +555,7 @@ FreeRTOS mutex with priority inheritance per row. A higher-priority snapshot
 worker may interfere with parser/draw admission; this is a hypothesis, not a
 measured lock-wait result. The original scanline/drawing algorithms stay intact.
 
-1. [ ] N04n-i: Add a default-off test flag selecting output priority2 instead
+1. [x] N04n-i: Add a default-off test flag selecting output priority2 instead
    of6; retain clock, draw/parser priorities, row boundaries, source algorithms,
    pixel format, resolution and all prior candidate flags. Build an isolated
    r29 with exact source/hash/linked-code checks.
@@ -571,3 +571,7 @@ N04m completed: both SW and HW output-off are exactly60FPS, p95/max16.6667ms
 across all2279 post-warmup intervals. Matching state/nonces and zero output
 work validated. Select P4 output scheduling investigation; no further MOS
 implementation changes. r29 build is the frozen N04n one-variable experiment.
+
+N04n-i passed: r29 built from committed inputs; disassembly of attach shows
+priority5 for stock-draw and priority2 for stock-output at their respective
+xTaskCreatePinnedToCore calls. Baseline renderer source and frame format retained.

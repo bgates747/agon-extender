@@ -1,0 +1,55 @@
+{
+  "build_id": "uart-excom-console-r29-b2026-09-15-12-37-55Z",
+  "status": "draft",
+  "parent_build_id": "uart-excom-console-r22-b2026-09-15-07-01-47Z",
+  "parent_app_sha256": "ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7",
+  "contract_commit": "5510dee66f54a3d4cf8cf6b9d112bcfd9e337106",
+  "output_task_priority": 2,
+  "uart_alignment_enabled": true,
+  "dispatch_timing_enabled": true,
+  "lookahead_enabled": true,
+  "packed_row_enabled": true,
+  "source_change": "identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization",
+  "probe_sha256": {
+    "vdp/video/extender/network/wired_network_service.cpp": "99c4378f19a277ce35d4dca3a5ee7fcd848cf32217e590a8c89d1fff840ecf3f",
+    "vdp/video/extender/display/stock_p4_service.cpp": "2b9738d47570c8bed51dd3053420e41c7d5ca59d6fd75ae83262796f4bcec7e3",
+    "vdp/video/extender/diagnostics/video_timing.hpp": "7a3e7b653850e30bcc20fe6f4c3ad453ea804e284e7c3d81c97e299b0f4253d9",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "118df20ea1cd0318fbbcf893f931b35f0ab56f44634407128cbfcc17f7a82e81",
+    "vdp/video/extender/display/presentation_snapshot_pool.hpp": "240b3f3bb6c0f2569ab35605bd078a69e103648f1139c195c82f5ea786d070c0",
+    "vdp/video/extender/display/stock_scanline.hpp": "d8dc6e90613bd72c76d3144e546b49b013edd97eae4824150f3a05e833e6084c",
+    "vdp/video/extender/display/rgb222_row.hpp": "ee5d65a266bf5d989d4784369a7cc3fe641c9eb92e777d19132adec384547c70",
+    "vdp/video/extender/network/wired_network_service.hpp": "9e971770bd9e717328974f92df0180d8c4d26e3009f994346d89b1a62982573f",
+    "vdp/video/extender/transport/console_hardware.inc": "692c4256c83c8d2bc782c301eb85e65630d14e9b656e9c4033d464c0a40e64ef",
+    "vdp/video/extender/transport/console_stream.hpp": "837a8c4940f94fcf77498616c3b756d5ac7a5c0380610d7e90089e5bf0a082db"
+  },
+  "configuration_change": "enable existing AGON_EXTENDER_VIDEO_TIMING=1",
+  "scope": "bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes",
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1452816,
+      "sha256": "d5a11976048a5459d80a201f05f653bb5b8449bcc130b0ddf88ce2440d28f0b6"
+    },
+    "firmware.elf": {
+      "bytes": 28226940,
+      "sha256": "af124797ed5dfc7b32a668b462928db4d10af2d26c1349c54030cdf7b0b07fda"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1583888,
+      "sha256": "8f26856f3b29f6173a143459a9965427ae88b8e813ee80d851a2d55a55847283"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "041ef207c9c8094848a7528e55940c5ca75f29a4269c03deb9c1bc27e9823a96"
+    }
+  },
+  "build_complete": true,
+  "linked_priority_check": {
+    "output_priority": 2,
+    "draw_priority": 5,
+    "linked_code": true
+  }
+}
