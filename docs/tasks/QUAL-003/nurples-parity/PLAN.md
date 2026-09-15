@@ -309,3 +309,10 @@ before expanding output contracts.
    Preserve native gameplay updates/assets; record completed count/state and
    refuse a heavy-load claim if progression is insufficient. Use matched SW/HW
    routes, a longer bounded browser observer and retained output captures.
+
+N02e fixture detail: r03 adds a terminal-reason byte and read-only native
+live-sprite count (20allocated records) per boundary. This instrumentation adds
+eZ80 work equally to both routes; it is not normal-game CPU cost. It stops
+before interactive game-over/victory and records that reason. Both SW/HW
+variants assemble. NP03 records include capacity/count and are analyzed
+separately from NP01; no sustained hardware result is claimed yet.
