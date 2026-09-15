@@ -1,0 +1,26 @@
+{
+  "scope": "Server sequence-space bytes outstanding as observed on the wired client; header-only capture",
+  "server_bytes": 65878551,
+  "server_data_packets": 46189,
+  "server_packet_sizes": {
+    "129": 1,
+    "2": 336,
+    "1440": 45267,
+    "2250": 82,
+    "2528": 20,
+    "1088": 227,
+    "1514": 27,
+    "2880": 3,
+    "74": 60,
+    "1162": 55,
+    "810": 105,
+    "426": 2,
+    "1866": 4
+  },
+  "flight_bytes_median": 1442,
+  "flight_bytes_p95": 2880,
+  "flight_bytes_max": 20160,
+  "detected_evf_headers": 335,
+  "median_evf_interval_ms": 26.523947715759277,
+  "full_sized_packet_count": 45267
+}

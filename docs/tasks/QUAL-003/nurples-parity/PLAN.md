@@ -267,8 +267,23 @@ before reset through terminal service. Browser receipt remains below60FPS.
 
 ### Remaining output gap — AGENT-ASSIGNED, not separately Author-approved
 
-1. [ ] N04g: Capture a bounded header-only TCP trace on the wired Pi during the
+1. [x] N04g: Capture a bounded header-only TCP trace on the wired Pi during the
    existing drained static output control. Reuse prior packet accounting; retain
    browser timing separately. Inspect frame-start/end, credit and ACK timing to
    distinguish wire occupancy from idle time before selecting another firmware
    change. No source, baud, quality or transport-contract change in this step.
+
+N04g: wired trace retained69,785packets with zero kernel drops. Median frame
+payload span17.10ms, last payload to next EVF7.19ms, browser credit0.80ms after
+payload tail, next EVF6.30ms after credit. Two-byte next-message WS headers are
+excluded from the preceding payload tail. Host offload coalesces some packets.
+The diagnostic HTTP totals were rejected because one historical lost completion
+was already present; this does not invalidate the independent packet timestamps.
+
+2. [ ] N04h: Add opt-in bounded credit-to-ready and ready-to-socket dispatch
+   durations to the existing output recorder. No routing/credit/drawing changes.
+   Inspect actual ELF (not CMake's incomplete compile database): current network
+   worker wait is1tick/1ms and packed-row loop uses word accesses. Measure where
+   the observed post-credit delay occurs before choosing another correction.
+   Preserve rollback, build/verify, drain clean windows and reject incomplete
+   accounting; production builds must retain zero probe state/cost when disabled.

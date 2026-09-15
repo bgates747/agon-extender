@@ -147,3 +147,17 @@ active through terminal service; no socket closure or page error. Whole-window
 FPS includes loading and the terminal surface and is not game-only scanout.
 See wired-active-r26.json for separate timing scopes and coverage. The two-run
 preparation/game/retrieval pipeline took165.231seconds.
+
+## Wired packet timing control
+
+Header-only receive-only capture retains69,785packets, zero kernel drops.
+Median payload span17.10ms; median payload-tail to next EVF7.19ms. Browser
+credit follows the payload tail by0.80ms, and next EVF follows credit by6.30ms.
+These suggest further server-side waiting, rather than attributing the entire
+gap to wire capacity. Two-byte WS headers belonging to the next message are
+excluded from the preceding payload span; host offload coalesces some packets.
+Raw capture is ignored; aggregate evidence is tcp-cycles.json/tcp-analysis-r26.json.
+The simultaneous recorder window was rejected for a pre-existing lost completion
+count; no firmware-duration conclusion comes from that failed diagnostic window.
+Actual ELF confirms a1ms worker wait and packed word accesses. CMake's compile
+database omits relevant SCons flags and must not substitute for that inspection.

@@ -1,0 +1,42 @@
+{
+  "scope": "wired receive-only TCP trace; host offload may coalesce packets; EVF-to-EVF cycles include tail and credit",
+  "frames": 334,
+  "metrics": {
+    "frame_ms": {
+      "mean": 31.317347537971543,
+      "median": 26.523947715759277,
+      "min": 20.282983779907227,
+      "max": 149.38902854919434
+    },
+    "tx_span_ms": {
+      "mean": 24.089677605086457,
+      "median": 17.100095748901367,
+      "min": 16.396045684814453,
+      "max": 64.74018096923828
+    },
+    "tail_to_next_ms": {
+      "mean": 7.227669932885084,
+      "median": 7.192492485046387,
+      "min": 3.0889511108398438,
+      "max": 130.2509307861328
+    },
+    "tx_bytes": {
+      "mean": 196650,
+      "median": 196650.0,
+      "min": 196650,
+      "max": 196650
+    },
+    "credit_after_tail_ms": {
+      "mean": 1.283757700891552,
+      "median": 0.8039474487304688,
+      "min": 0.7519721984863281,
+      "max": 128.0229091644287
+    },
+    "next_after_credit_ms": {
+      "mean": 5.943912231993532,
+      "median": 6.302833557128906,
+      "min": 2.2280216217041016,
+      "max": 10.947942733764648
+    }
+  }
+}
