@@ -559,10 +559,10 @@ measured lock-wait result. The original scanline/drawing algorithms stay intact.
    of6; retain clock, draw/parser priorities, row boundaries, source algorithms,
    pixel format, resolution and all prior candidate flags. Build an isolated
    r29 with exact source/hash/linked-code checks.
-2. [ ] N04n-ii: After output-off HW releases the bench, restore safe startup,
+2. [x] N04n-ii: After output-off HW releases the bench, restore safe startup,
    preserve r28 rollback, flash/verify r29 and input/SD. Keep verified EMOS and
    onboard VDP unchanged. Run nonce-verified SW/HW streaming comparisons.
-3. [ ] N04n-iii: If improved, repeat SW and record actual browser delivery as
+3. [x] N04n-iii: If improved, repeat SW and record actual browser delivery as
    well as game completion. No parity claim from lower browser quality or
    repeated snapshots. If insufficient, retain the result and profile output
    locking/copying before another scheduling change.
@@ -610,3 +610,8 @@ N04o-i: host aggregate/reset/wrap/overflow checks pass ASan/UBSan; isolated
 r30 build and linked priority checks pass. Microsecond timer calls add overhead;
 row_wait_sum/row_work_sum count one aggregate per completed snapshot and carry
 row units. This image is diagnostic only.
+
+N04n completed: SW first51.08FPS, repeat47.63FPS, HW52.21FPS.
+Priority reduction does not establish a repeatable improvement or parity.
+All nonce-verified states match; retain r29 as the fixed diagnostic parent,
+not a qualified optimization. Row timing remains the selected next measurement.

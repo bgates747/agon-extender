@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-**Gameplay parity claims below are invalidated.** The fixture used MOS SAVE
+**Historical NP01/NP03 gameplay parity claims are invalidated.** The fixture used MOS SAVE
 without checking its return value. Stock MOS and installed EMOS open with
 `FA_CREATE_NEW`; an existing NPRES.BIN is not replaced. Later COPY commands
 therefore reused the first saved pilot. The repeated600-record fingerprints and
@@ -36,7 +36,9 @@ All fresh cases match the pinned gameplay state. See verified-r28-off-analysis.j
 The qualified ordinary E07P EMOS image is now installed with full ROM readback.
 With P4 r28 unchanged, fresh streaming SW measures49.10FPS versus58.71 on
 mainboard; P4 HW measures50.72FPS. This is a large gain, but not parity. The
-same-EMOS output-off pair is running to isolate the remaining gap. See
+same-EMOS output-off pair now reaches exactly60FPS on both sprite paths,
+with zero snapshot/socket work. This isolates the remaining gap to output
+interference under this workload. See
 verified-emos17-analysis.json and the frozen N04m contract.
 
 The first updater attempt was interrupted by a premature controller reset;
@@ -44,6 +46,10 @@ ZDI preserved the partial ROM and restored the exact baseline. Waiting for the
 updater's own reboot (19.286seconds observed) allowed the same candidate to boot
 and pass complete readback. No candidate source defect was established. The
 maintained recovery guide now explicitly prohibits timed FLASH resets.
+
+Lowering output priority (r29) produced SW51.08FPS then47.63FPS on repeat,
+and HW52.21FPS: no repeatable improvement or parity established. See
+verified-r29-analysis.json. Row-wait/composition diagnostics are next.
 
 Independent output results remain valid within their scopes; wired-host WebGL
 readback matches all512x384 pixels with zero GL errors. The parity goal has not passed.
