@@ -1188,7 +1188,7 @@ Use installed r43 and unchanged r05 SW fixture to distinguish wire arrival
 spacing from parser/VDP enqueue spacing. This is a diagnostic run, not a new
 qualification repetition: analyzer acquisition shares the wired observer host.
 
-1. [ ] N04ad-i: Prepare a bounded80second24MHz passive capture of the four
+1. [x] N04ad-i: Prepare a bounded80second24MHz passive capture of the four
    existing UART signals using maintained AUDIT-005 acquisition/packing and
    decoder helpers. Reuse the measured PORT-008 pinwalk mapping (D1 forward,
    D6 reverse; D3/D4 handshakes); no GPIO drive, rewiring or new firmware.
@@ -1213,3 +1213,8 @@ The older pure-data invocation is not reused; only its verified passive tools
 and physical channel mapping. Startup/USB handling follow this goal's already
 verified controllers. Estimated acquisition80seconds, game about40seconds after
 roughly27seconds startup/assets, browser180seconds, then decoding/retrieval.
+
+N04ad-i ready: analyzer identity matches, Pi has42GiB free; startup restored
+and verified before capture. Initial USB helper staging omitted its identity
+module and stopped before serial open/reset. Resume supplies the unchanged
+identity helper; this was preparation only, not a failed game/capture run.
