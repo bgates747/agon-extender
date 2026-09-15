@@ -2,12 +2,15 @@
 
 ## Executive summary
 
-Both software- and hardware-sprite pilots record600 successful boundaries on
-mainboard and P4. Their gameplay fingerprints match. Fenced software drawing
-completes at60FPS even with web output active, but the laptop browser receives
-only about7–8FPS. Hardware sprites do not remove that visible-output gap.
-This is not a parity success: output diagnosis, heavier loads and controls remain.
-Hardware-sprite scanout is not certified by the pixel-query boundary.
+Both software- and hardware-sprite pilots retain60Hz measured boundaries and
+identical600-record gameplay fingerprints on mainboard and P4, including wired
+production web streaming. Browser delivery remains slower: bounded lookahead
+and packed-row output raise the static wired production result from20.00 to
+29.69FPS; whole gameplay/loading windows receive26–27FPS. These are provisional
+output gains, not final parity. Heavier/repeated loads and unfenced controls
+remain required. Packet timing identifies additional post-credit server waiting;
+optional dispatch probes are the next bounded diagnostic. No MOS changes or
+experimental publication.
 
 ## Pilot validation
 
