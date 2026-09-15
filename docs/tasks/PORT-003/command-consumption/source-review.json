@@ -1,0 +1,276 @@
+{
+  "scope": "Header/adapter fingerprint and r22 source comparison, not a compiled call graph",
+  "installed": "uart-excom-console-r22-b2026-09-15-07-01-47Z",
+  "files": [
+    {
+      "path": "vdp/pio/p4-console-source-selection.json",
+      "sha256": "febe64bb543c9a2d579681640d370a3c6a27084ab92d7dbdfee3c1c5a547de37",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/OneWire_direct_gpio.h",
+      "sha256": "e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon.h",
+      "sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_audio.h",
+      "sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_fonts.h",
+      "sha256": "b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_palette.h",
+      "sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_ps2.h",
+      "sha256": "f3ea3503cf08ef73b2e20200121988649ae59111476604b77d4b683ba63d78bc",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_screen.h",
+      "sha256": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/agon_ttxt.h",
+      "sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/audio_channel.h",
+      "sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/audio_sample.h",
+      "sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/buffer_stream.h",
+      "sha256": "c524c5cfc3a150db63762f6385f7f01560acf9c2be879be6ee99742b23e83e4c",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/buffers.h",
+      "sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/compression.h",
+      "sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/context.h",
+      "sha256": "d117f765b149a00260c95c9de031cf1039a4f0818faa6e93df0a0e9a3abb2700",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/enhanced_samples_generator.h",
+      "sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/audio/unavailable_audio_adapter.hpp",
+      "sha256": "695200508e9b8d3a7d36a1083e40a50b4f8dbbaa8b7d06eb67a9e5b670a25cff",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/boot/p4_console.cpp",
+      "sha256": "a94c855ac972779eb390d04a4fd22adf72d7e87004eb14e326b7498398febb17",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/display/cursor_position_adapter.hpp",
+      "sha256": "3e4edd566200500b4c163ade17d41ef0fce00430fec8dbea211f7c402342c01b",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/display/screen_facade_adapter.hpp",
+      "sha256": "cf7be4e0581472e2c618f82f406b164fd2c279b1b97648d9b930e1c4b0eb5620",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/input/unavailable_input_adapter.hpp",
+      "sha256": "a1aab896ab35ad2ccaf1ae94453dc7101fafbbcc7dd488730acd44c66596ad53",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/extender/maintenance/unavailable_maintenance_adapter.hpp",
+      "sha256": "e86c4943f4981a6997724f05451f710aab77e207a3da3a1fc9ef136c7317f9d2",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/hexload.h",
+      "sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/mem_helpers.h",
+      "sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/multi_buffer_stream.h",
+      "sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/span.h",
+      "sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/sprites.h",
+      "sha256": "02dbe5921f2651b113530dbeb2f8d8b85d47f3f25b33488adf3cbc2ae9e44904",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/ttxtfont.h",
+      "sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/types.h",
+      "sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/updater.h",
+      "sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdp_protocol.h",
+      "sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdp_variables.h",
+      "sha256": "2bb0237f750b99c157fdacaad294b522495143c7c7fa236e09ea37c12d4a8485",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu.h",
+      "sha256": "b326130a85259a18064d4443ae4cd833cf4aa814c9cfb06b17c70b801839915c",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_audio.h",
+      "sha256": "3c657e3a598d63a36ec1ed644f918cae49c51c829a0b1fb2f23d8b0869c2474b",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_buffered.h",
+      "sha256": "edbbd07e85cba5e6061c20523ff3bf4138608c5af7f164ed4b2be8f3b9f9cc4f",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_context.h",
+      "sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_fonts.h",
+      "sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_layers.h",
+      "sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_sprites.h",
+      "sha256": "95aeb568f8ec1fad96ffe320e506c13be32b1fb0404dce5a072a26ca8041bb78",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_stream_processor.h",
+      "sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/vdu_sys.h",
+      "sha256": "12073c06c063901c48638c0985cb8182866294b70c0d523a7a794958fd29087f",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/version.h",
+      "sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/video.ino",
+      "sha256": "28d94663070c34837a1c6df6411f428bea5be0a74eb63c0728b07bf49f0fa0c8",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/ymodem.h",
+      "sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    },
+    {
+      "path": "vdp/video/zdi.h",
+      "sha256": "89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e",
+      "installed_snapshot_present": false,
+      "matches_installed": false
+    }
+  ]
+}
