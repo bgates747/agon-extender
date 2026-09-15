@@ -523,3 +523,16 @@ plus erased padding; SHA256f9229e93cd178de4f1045d4464d1173eee2fb0086157a391b72bf
 Safe startup and native CLI/SD verified. The same candidate boots when allowed
 to finish programming; the earlier failure was the premature-reset procedure.
 P4 r28 remains fixed. Four fresh route/sprite comparisons now own the bench.
+
+### N04m — Repeat output isolation under qualified EMOS
+
+AGENT-ASSIGNED, not separately Author-approved. First fresh qualified-EMOS
+streaming SW run measures49.0987FPS,20.3671ms mean,33.3333ms p95, with the
+same nonce-verified workload. This is a large gain over30.0066FPS, but not parity.
+
+1. [ ] N04m-i: After the four matched route/sprite cases finish, repeat the
+   existing output-off SW/HW procedure with the new EMOS and unique nonces/files.
+   Keep P4 unchanged and verify no output-counter increments.
+2. [ ] N04m-ii: Attribute the remaining gap from these controls before selecting
+   a further correction. Preserve rendering versus output versus UART scopes;
+   no additional MOS implementation is authorized by inference from this result.

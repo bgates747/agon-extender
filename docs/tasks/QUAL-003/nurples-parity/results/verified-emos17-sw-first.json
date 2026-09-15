@@ -1,0 +1,42 @@
+[
+  {
+    "file": "NP17ES.BIN",
+    "provenance": "nonce_verified",
+    "nonce": "7f661411e1f79b10",
+    "count": 2400,
+    "failed": 0,
+    "warmup_boundaries": 120,
+    "intervals": 2279,
+    "elapsed_ticks": 5570,
+    "mean_frame_ms": 20.367120081907267,
+    "completed_fps": 49.09874326750449,
+    "p95_frame_ms": 33.333333333333336,
+    "maximum_frame_ms": 50.0,
+    "tick_histogram": {
+      "2": 1783,
+      "4": 486,
+      "6": 10
+    },
+    "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+    "variant": "fenced-sw",
+    "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof",
+    "end_reason": "boundary_limit",
+    "live_sprites_max": 13,
+    "live_sprites_mean": 8.29875,
+    "live_sprites_histogram": {
+      "1": 1,
+      "2": 7,
+      "3": 7,
+      "4": 95,
+      "5": 284,
+      "6": 190,
+      "7": 219,
+      "8": 293,
+      "9": 475,
+      "10": 439,
+      "11": 293,
+      "12": 85,
+      "13": 12
+    }
+  }
+]
