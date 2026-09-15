@@ -468,3 +468,25 @@ N04k results: zero output-counter increments and matching nonce-verified state
 for both SW32.6504FPS and HW32.1968FPS. Streaming costs some throughput, but
 the large mainboard gap persists without it. N04l ROM-preservation/comparison
 therefore proceeds; no new MOS source changes are selected.
+
+### N04l-R — Recover failed ordinary FLASH attempt
+
+AGENT-ASSIGNED, not separately Author-approved; recovery use is within the
+Author's unattended hot-bench goal authorization. Baseline full ROM matched
+1cd65eac21780a8a7c82e14209737c38796e24f32300524e58a93e5c44e096d8 before
+FLASH. After one FLASH and reset, no fresh keyboard admission appeared; a
+bounded CLI probe lost admission with reason6 and emitted only its first event.
+No test ran. This does not prove a candidate logic defect. The controller's
+three-second post-command delay did not prove flash completion before reset;
+retain that as a possible procedural cause, not an established diagnosis.
+
+1. [ ] N04l-R1: Reuse the verified maintained connected-harness recovery image,
+   bound to the exact saved pre-run131072-byte known-good ROM. Preserve current
+   r28 P4 flash, verify programmer deployment, capture complete pre-erase ROM
+   and target identity, restore baseline once with independent byte readback.
+   Use docs/mos-recovery.md unchanged. No automatic retry or wiring change.
+2. [ ] N04l-R2: Restore/verify P4 r28 before one controlled mainboard reset.
+   Prove fresh native input and SD access with original safe startup. Inspect
+   failed-ROM bytes to distinguish incomplete programming from a valid image
+   failing to boot. Freeze a new step before any further EMOS installation;
+   never repeat a blind delay-and-reset FLASH sequence.
