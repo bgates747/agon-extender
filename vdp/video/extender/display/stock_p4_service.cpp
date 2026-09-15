@@ -9,6 +9,14 @@ constexpr bool kSnapshotLookahead = true;
 #else
 constexpr bool kSnapshotLookahead = false;
 #endif
+// QUAL-003 N04n: isolate CPU snapshot interference with parser/drawing.
+// Default preserves the retained binding. This flag changes scheduling only;
+// original native operations and row locking remain unchanged.
+#if defined(AGON_EXTENDER_OUTPUT_BELOW_PARSER)
+constexpr unsigned kOutputTaskPriority = 2;
+#else
+constexpr unsigned kOutputTaskPriority = 6;
+#endif
 } // namespace
 StockP4Service::StockP4Service(Allocator allocator)
     : snapshots_(allocator, SnapshotPixelFormat::RGB222, 0, true, true, kSnapshotLookahead) {
@@ -90,15 +98,16 @@ bool StockP4Service::attach(StockRuntimeController &controller) {
   stopping_.store(false, std::memory_order_release);
   TaskHandle_t drawing{}, output{};
   // Retain the stock parser/drawing relationship: parser core 0 priority 3;
-  // drawing core 0 priority 5. CPU output runs core 1 priority 6 so a row waiter
-  // has precedence over the next primitive after native-mutex release. Pinned
+  // drawing core 0 priority 5. CPU output normally runs core 1 priority 6 so a
+  // row waiter has precedence over the next primitive after mutex release.
+  // The bounded N04n test selects priority 2 to measure output interference. Pinned
   // IDF esp_timer task runs priority 22/core 0 and never waits for that mutex.
   if (xTaskCreatePinnedToCore(drawEntry, "stock-draw", 8192, this, 5, &drawing, 0) != pdPASS) {
     controller_->display().enableBackgroundPrimitiveExecution(false);
     controller_ = nullptr; stopping_.store(true); return false;
   }
   draw_task_.store(drawing, std::memory_order_release);
-  if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, 6, &output, 1) != pdPASS) {
+  if (xTaskCreatePinnedToCore(outputEntry, "stock-output", 8192, this, kOutputTaskPriority, &output, 1) != pdPASS) {
     detach(); return false;
   }
   output_task_.store(output, std::memory_order_release);
