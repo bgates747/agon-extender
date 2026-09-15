@@ -33,12 +33,20 @@ SW reaches32.65FPS and HW32.20FPS; drained counters prove zero output work.
 Thus output contributes some cost but does not explain the large remaining gap.
 All fresh cases match the pinned gameplay state. See verified-r28-off-analysis.json.
 
-The installed EMOS remains the restored pre-E07P image. The next bounded
-comparison reuses the exact already-qualified ordinary E07P EMOS image while
-keeping P4 r28 fixed, preserving/reading back both ROMs and safe startup first.
-No new MOS implementation is selected. Independent output results remain valid
-within their scopes; wired-host WebGL readback matches all512x384 pixels with
-zero GL errors. The parity goal has not passed.
+The qualified ordinary E07P EMOS image is now installed with full ROM readback.
+With P4 r28 unchanged, fresh streaming SW measures49.10FPS versus58.71 on
+mainboard; P4 HW measures50.72FPS. This is a large gain, but not parity. The
+same-EMOS output-off pair is running to isolate the remaining gap. See
+verified-emos17-analysis.json and the frozen N04m contract.
+
+The first updater attempt was interrupted by a premature controller reset;
+ZDI preserved the partial ROM and restored the exact baseline. Waiting for the
+updater's own reboot (19.286seconds observed) allowed the same candidate to boot
+and pass complete readback. No candidate source defect was established. The
+maintained recovery guide now explicitly prohibits timed FLASH resets.
+
+Independent output results remain valid within their scopes; wired-host WebGL
+readback matches all512x384 pixels with zero GL errors. The parity goal has not passed.
 
 The historical sections below preserve what was reported and must be read with
 this correction.
