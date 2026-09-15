@@ -582,7 +582,7 @@ AGENT-ASSIGNED, not separately Author-approved. The first r29 SW streaming
 result improves to51.0796FPS but still has33.3333ms p95. Finish its existing
 paired/repeated controls. Do not make another scheduling guess.
 
-1. [ ] N04o-i: Add default-off output-only row timing to the P4 binding,
+1. [x] N04o-i: Add default-off output-only row timing to the P4 binding,
    aggregating per-frame microseconds waiting for the native mutex and inside
    retained row preparation. Publish two aggregate phases once per snapshot;
    no per-row logging/network calls or recorder atomics. Preserve default code
@@ -605,3 +605,8 @@ reset. P4 video-send timeout is5seconds, host SD-status timeout3seconds. This
 is not proof of a permanent deadlock. Resume remaining unique cases with a
 bounded30-second read-only readiness grace; never replay uncertain mutations.
 Earlier HTTP-stall observations remain unresolved where recovery was not observed.
+
+N04o-i: host aggregate/reset/wrap/overflow checks pass ASan/UBSan; isolated
+r30 build and linked priority checks pass. Microsecond timer calls add overhead;
+row_wait_sum/row_work_sum count one aggregate per completed snapshot and carry
+row units. This image is diagnostic only.
