@@ -260,9 +260,15 @@ esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
     return httpd_resp_send_500(request);
   httpd_resp_set_type(request, asset->media_type);
   httpd_resp_set_hdr(request, "Cache-Control", "no-store");
-  return httpd_resp_send(request,
+  // NET-001: idle page-download keep-alives can occupy all seven HTTP slots,
+  // preventing a replacement viewer from even reaching its WS handshake.
+  // Assets are finite responses; release their sockets, never the live stream.
+  httpd_resp_set_hdr(request, "Connection", "close");
+  auto const result = httpd_resp_send(request,
                          reinterpret_cast<char const *>(asset->data),
                          static_cast<ssize_t>(asset->size));
+  if (result != ESP_OK) return result;
+  return httpd_sess_trigger_close(request->handle, httpd_req_to_sockfd(request));
 }
 
 #if defined(AGON_EXTENDER_FRAME_TIMING)

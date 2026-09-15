@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r82
+registry_revision: r83
 updated_at: 2026-09-13T08:46:00Z
 
 artifacts:
@@ -497,7 +497,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r19
+    latest_identity: uart-excom-console-r20
     status: draft
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.

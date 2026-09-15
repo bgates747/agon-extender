@@ -39,3 +39,6 @@ reason `Viewer replaced`. The old webpage stays open; reconnect explicitly
 with Connect to become the active viewer again. There is no automatic reconnect.
 Pending old frame credit/leases are discarded, not transferred to the newcomer. Internal service failure uses 1011. The trusted private bench-LAN service
 has no TLS or authentication claim.
+
+Static page assets close their HTTP connections after sending the response,
+so idle page downloads do not occupy the limited slots needed for a new viewer.

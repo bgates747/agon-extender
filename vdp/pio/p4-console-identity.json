@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r19",
+  "source_identity": "uart-excom-console-r20",
   "status": "draft",
-  "note": "NET-001: newest video viewer replaces previous connection; retains RX06 numeric repair. Hardware takeover validation pending."
+  "note": "NET-001: newest video viewer replaces previous connection; finite static HTTP responses release admission slots; retains RX06 numeric repair. Hardware takeover validation pending."
 }

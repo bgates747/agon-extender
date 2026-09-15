@@ -34,7 +34,7 @@ def main():
  config['platformio']['build_dir']=str(out/'build')
  config['env:p4-console']['board_build.esp-idf.sdkconfig_path']=str(out/'sdkconfig')
  with (out/'platformio.ini').open('w') as f:config.write(f)
- stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-r19-b'+stamp
+ stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-r20-b'+stamp
  manifest=dict(build_id=identity,status='draft',patch_commit=commit,parent_build_id=original['build_id'],parent_historical_dirty=original['dirty'],parent_archive_sha256=sha(parent/'source.tar.gz'),changed_parent_inputs=changed,helper_sha256=sha(ROOT/'vdp/video/extender/port/fixed_conversion.hpp'),scope='NET-001 viewer takeover plus RX06 repair atop installed-source parent; no newer UART changes')
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(ROOT/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
