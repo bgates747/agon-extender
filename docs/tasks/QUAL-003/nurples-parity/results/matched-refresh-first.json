@@ -1,0 +1,98 @@
+{
+  "free": {
+    "mainboard": {
+      "scope": "mainboard completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "f651e6aa1036ba63",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 2,
+      "warmup": 120,
+      "completed_fps": 59.9265519773961,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.6870939008337,
+        "p95_ms": 17.063,
+        "max_ms": 31.816
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 6.433276754385965,
+        "p95_ms": 8.435,
+        "max_ms": 14.245
+      },
+      "elapsed_first_to_last_ms": 40014.852
+    },
+    "p4_r38": {
+      "scope": "P4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "9ffba9ef68361cfb",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 3,
+      "warmup": 120,
+      "completed_fps": 60.05602576311273,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65111847301448,
+        "p95_ms": 30.673,
+        "max_ms": 47.793
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 9.4689600877193,
+        "p95_ms": 18.653,
+        "max_ms": 28.464
+      },
+      "elapsed_first_to_last_ms": 39947.51
+    },
+    "p4_mean_duration_percent_above_mainboard": -0.21558833451174042,
+    "p4_p95_duration_percent_above_mainboard": 79.76323038152728
+  },
+  "freehw": {
+    "mainboard": {
+      "scope": "mainboard completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "686a2e4a55f9372f",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 2,
+      "warmup": 120,
+      "completed_fps": 60.007811284464964,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.664497147871874,
+        "p95_ms": 17.021,
+        "max_ms": 31.483
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 6.364680701754386,
+        "p95_ms": 8.355,
+        "max_ms": 12.463
+      },
+      "elapsed_first_to_last_ms": 39977.709
+    },
+    "p4_r38": {
+      "scope": "P4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "686d1b003f4c9d72",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 3,
+      "warmup": 120,
+      "completed_fps": 60.07877780310864,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.644812637121543,
+        "p95_ms": 31.036,
+        "max_ms": 48.159
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 9.21001052631579,
+        "p95_ms": 19.123,
+        "max_ms": 33.426
+      },
+      "elapsed_first_to_last_ms": 39946.778
+    },
+    "p4_mean_duration_percent_above_mainboard": -0.1181224406332837,
+    "p4_p95_duration_percent_above_mainboard": 82.33946301627401
+  }
+}

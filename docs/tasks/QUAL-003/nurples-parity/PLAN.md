@@ -932,13 +932,13 @@ the smoothness gate or change scheduling based on this asymmetric comparison.
    markers as r38. No graphics-timing scopes/private fence opcode, renderer
    changes, UART algorithm changes or MOS changes. Build isolated mainboard
    refresh-trace-r01 with full source/output hashes and explicit diagnostic ID.
-2. [ ] N04x-ii: After current four-case controller releases the bench, restore
+2. [x] N04x-ii: After current four-case controller releases the bench, restore
    safe startup, preserve actual onboard VDP flash, verify expected stock image
    and stable USB identity, then install/read back the diagnostic application.
    Capture mainboard UART0 passively before invocation. Run the same r05 SW/HW
    fixtures with fresh nonces. Mainboard output is physical VGA; do not mistake
    a stale P4 browser image for mainboard rendering evidence.
-3. [ ] N04x-iii: Compare matched high-resolution completion distributions and
+3. [x] N04x-iii: Compare matched high-resolution completion distributions and
    counts. Repeat apparent parity on both targets; retain load/state/image
    checks. Restore exact affected mainboard flash sectors and verify normal
    boot/SD/input before conclusion. No firmware remains altered merely to
@@ -996,3 +996,10 @@ not a discovered stock VDP bug or permission to rewrite rendering algorithms.
    parity from completed commands. This adapter option remains experimental
    pending human review; future physical output binding must reconsider the
    drawing-opportunity policy against its actual blanking/timing requirements.
+
+N04x complete: stock SW/HW both account for2400 refreshes, pending<=2. P4
+r38 averages match, but its completion p95 is materially worse. Conditional
+repeats were correctly skipped. Exact affected mainboard flash sectors restored
+and verified; safe startup, keyboard and SD pass. Startup admission initially
+changed during CLI input; a fresh admission after settling recovered it without
+MOS flashing. That attempt launched no game and contributes no timing data.
