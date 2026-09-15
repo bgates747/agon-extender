@@ -1009,3 +1009,23 @@ StockClock with half-period observations, odd periods and delayed callbacks;
 logical counters remain elapsed-time based and are never doubled. P4 output
 notifications remain conditional on a logical frame edge; only drawing gets
 additional opportunities. Mainboard restoration/readiness is verified.
+
+### N04z — Bound the remaining phase wait to a quarter frame
+
+AGENT-ASSIGNED, not separately Author-approved. r39 first SW passes the initial
+p95 gate25.092ms, but HW p9526.692ms exceeds stock17.021+8.333ms. Both average
+~60Hz with balanced2400 completions and pending<=2. Do not relax the threshold
+or run redundant r39 repeats. Finish its current output/service control.
+
+1. [ ] N04z-i: Generalize the same default-off adapter opportunity divisor to4
+   for isolated r40. Logical/output cadence stays60Hz. No new queue wake source,
+   game/renderer algorithm or lock change. Host-check1/2/4 opportunities with
+   odd periods and delayed callbacks; preserve original1 and r39's2 behavior.
+2. [ ] N04z-ii: After r39 releases hardware, preserve it and deploy/verify r40.
+   Run unchanged r05 SW/HW completion traces with180second streams and health
+   checks; repeat both only if initial mean/p95 gates pass. Reject a regression
+   in logical period, images, workload count, input or sustained output.
+3. [ ] N04z-iii: Compare to the same stock baseline and retain all results.
+   If repeated parity passes, finish N05 restoration/report/voice and stop.
+   Otherwise record the failure and identify the remaining measured cause
+   before selecting another change; do not indefinitely raise the divisor.
