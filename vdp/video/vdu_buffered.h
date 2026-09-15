@@ -17,6 +17,7 @@
 #include "agon.h"
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/audio/unavailable_audio_adapter.hpp"
+#include "extender/port/fixed_conversion.hpp"
 #include "extender/input/unavailable_input_adapter.hpp"
 #else
 #include "agon_ps2.h"
@@ -2377,7 +2378,20 @@ void VDUStreamProcessor::bufferTransformData(uint16_t bufferId, uint8_t options,
 			// apply the transform and write back to the buffer
 			dspm_mult_f32(transform, srcData, transformed, transformSize.rows, transformSize.columns, 1);
 			for (int i = 0; i < dataSize; i++) {
-				auto value = convertFloatToValue(transformed[i], is16Bit, isFixed, shift);
+				uint32_t value;
+#ifdef AGON_EXTENDER_P4_BOOT
+                // Signed fixed-point compatibility seam: stock's negative
+                // float-to-unsigned cast is architecture-dependent. Work is
+                // still in temporary streams; reject invalid results before
+                // publishing any replacement destination buffer.
+                if (isFixed) {
+                    if (!agon::extender::port::encodeFixed(transformed[i], is16Bit, shift, value)) {
+                        debug_log("bufferTransformData: unrepresentable fixed-point result\n\r");
+                        return;
+                    }
+                } else
+#endif
+                    value = convertFloatToValue(transformed[i], is16Bit, isFixed, shift);
 				bufferStream->writeBuffer((uint8_t *)&value, bytesPerValue, workingOffset.blockOffset + (i * bytesPerValue));
 			}
 			workingOffset.blockOffset += stride;

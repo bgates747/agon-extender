@@ -1,7 +1,7 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r80
+registry_revision: r81
 updated_at: 2026-09-13T08:46:00Z
 
 artifacts:
@@ -497,11 +497,12 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r17
+    latest_identity: uart-excom-console-r18
     status: draft
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r18 adds the QUAL-003 RX06 checked fixed-point conversion seam. Physical candidate preserves installed r17 parent settings; hardware comparison pending. Standing identity/deployment authorization applies.
       - r17 selects BENCH-001 v2 six-opponent telemetry on the owned Legacy UART path. Physical flash/readback and native USB startup were verified; paired v0.1.16 driving and fresh-run/held-Escape exit checks pass. Prior images are retained. Draft inputs and exploratory driving do not constitute a qualified release; see BENCH-001 evidence.
       - r15 retains the r14 clock correction and fixes inter-batch pacing; a new regression rejects r14's immediate next-batch event. Standing identity/deployment authorization applies; repeat physical review pending.
       - r14 corrects stale console timestamps expiring a newly renewed HTTP keyboard session. Reproduced during attended REMOTE-002 review; regression fails r13 and passes signed modular elapsed-time correction. Standing identity/deployment authorization applies; repeat physical review pending.
