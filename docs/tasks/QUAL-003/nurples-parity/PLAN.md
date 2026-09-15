@@ -14,6 +14,25 @@ This goal supersedes the earlier audit-first sequence for work unrelated to the
 Nurples workload. UC02–UC07 remain recorded; pull in only demonstrated blockers.
 No Golem or unrelated backlog work. No destructive wiring experiments.
 
+## Current correction — highest priority
+
+AGENT-ASSIGNED, not separately Author-approved: r03 revealed stale NPRES.BIN.
+MOS/EMOS SAVE uses FA_CREATE_NEW, and the fixture ignored its error. All later
+copied game records lack fresh-run provenance; retract those game timing/state
+comparisons. Independent output/packet measurements remain separately valid.
+Stop the old sequence; no further NP01/NP03 comparison is accepted.
+
+1. [ ] N02g: Correct fixture output handling. Delete only its owned result/progress
+   files, check every MOS load/save/delete result, and embed a newly staged8-byte
+   per-run nonce plus fixture variant/capacity in the result. Host must reject
+   nonce, format, variant, count, size or save-error mismatches. Preserve old
+   evidence as invalid; reuse original game/assets without changes. First prove
+   two distinct runs replace output with distinct expected nonces before restoring
+   any gameplay-parity claim. Then rerun matched SW/HW and unfenced/sustained work.
+
+Official reference: agon-mos src/mos.c mos_SAVE uses FA_CREATE_NEW; current
+agon-emos src/mos.c retains that behavior. This needs no firmware alteration.
+
 ## Measurement contract
 
 Use the same deterministic Nurples workload and assets on both routes in native
@@ -109,10 +128,10 @@ in fixture-builds.json; r02 hashes are in fixture-builds-r02.json.
 
 N02 pilot checkpoints (agent-assigned subdivisions of the frozen paired work):
 
-1. [x] N02a: Legacy r01 SW pilot:600 records, no query error, live gameplay/PRNG
+1. [ ] N02a: Legacy r01 SW pilot:600 records, no query error, live gameplay/PRNG
    progression; measured60.0 completedFPS. See results/README.md. Full staging
    and both readbacks passed; reuse assets for subsequent runs.
-2. [x] N02b: Same r01 SW binary on P4 without output, then with production web
+2. [ ] N02b: Same r01 SW binary on P4 without output, then with production web
    streaming. Compare state fingerprints before interpreting timing differences.
 3. [ ] N02c: Hardware-sprite variant on both routes, with P4 output captures.
    Follow with corrected unfenced controls and repeats needed for conclusions.
@@ -247,7 +266,7 @@ GCC assembly confirms aligned LW/SW accesses and halfword swap/mask; the unalign
 path retains byte accesses. Stock scanline bodies remain unchanged. Hardware
 snapshot-cost attribution still awaits the r26 comparison.
 
-3. [x] N04f (agent-assigned): Run the deterministic game with the wired production
+3. [ ] N04f (agent-assigned): Run the deterministic game with the wired production
    client active before mainboard reset and throughout gameplay. The laptop's
    slow Wi-Fi stream cannot exercise the faster output candidate adequately.
    Add an optional first-frame readiness receipt to the reusable headless
@@ -298,7 +317,7 @@ before expanding output contracts.
 
 ### Remaining matched workload controls — AGENT-ASSIGNED, not separately Author-approved
 
-1. [x] N02d: Deploy the existing corrected r02 unfenced SW fixture under a new
+1. [ ] N02d: Deploy the existing corrected r02 unfenced SW fixture under a new
    filename, verify both readbacks, run on mainboard and P4 with wired production
    output. Use explicit unfenced timing labels and compare deterministic state
    with fenced pilots. Ordinary vblank remains; matching60Hz can bound an effect

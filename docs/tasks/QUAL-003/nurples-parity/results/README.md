@@ -2,15 +2,22 @@
 
 ## Executive summary
 
-Both software- and hardware-sprite pilots retain60Hz measured boundaries and
-identical600-record gameplay fingerprints on mainboard and P4, including wired
-production web streaming. Browser delivery remains slower: bounded lookahead
-and packed-row output raise the static wired production result from20.00 to
-29.69FPS; whole gameplay/loading windows receive26–27FPS. These are provisional
-output gains, not final parity. Heavier/repeated loads and unfenced controls
-remain required. Packet timing identifies additional post-credit server waiting;
-optional dispatch probes are the next bounded diagnostic. No MOS changes or
-experimental publication.
+**Gameplay parity claims below are invalidated.** The fixture used MOS SAVE
+without checking its return value. Stock MOS and installed EMOS open with
+`FA_CREATE_NEW`; an existing NPRES.BIN is not replaced. Later COPY commands
+therefore reused the first saved pilot. The repeated600-record fingerprints and
+60Hz timing comparisons do not establish subsequent game execution/timing.
+Retain them as invalid evidence, not performance results. The r03 longer trial
+exposed the flaw by returning the old NP01/600-record file.
+
+Independent browser/EVF, packet and drained P4 output-recorder measurements
+remain valid within their stated scopes. Their output improvements do not prove
+game parity. Next: checked fixture I/O, unique per-run nonce and format/variant
+validation, then fresh matched runs. This is a benchmark-harness defect, not
+an identified MOS/VDP port defect. No firmware API change is warranted.
+
+The historical sections below preserve what was reported and must be read with
+this correction.
 
 ## Pilot validation
 
