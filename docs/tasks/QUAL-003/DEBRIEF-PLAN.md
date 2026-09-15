@@ -53,13 +53,13 @@ by this audit authorization. Escalate a scope decision or physical intervention.
 Complete this audit before choosing P01 instrumentation or P02/P03 scheduling
 corrections; retain the existing numbered items and evidence.
 
-1. [ ] P00a: Trace the pinned stock Agon vdp-gl/FabGL timing implementation,
+1. [x] P00a: Trace the pinned stock Agon vdp-gl/FabGL timing implementation,
    consulting official documentation first. Identify primitive-task wakeups,
    vertical-sync notifications, queue draining/budgets, completion waits,
    suspension/resumption, buffer swaps and foreground execution. Follow the
    relevant controller/base classes and callers, not just VGA64 ISRHandler.
    Record exact revisions, symbols, call paths and execution contexts.
-2. [ ] P00b: Compare those mechanisms with the retained P4 adapter. Map each
+2. [x] P00b: Compare those mechanisms with the retained P4 adapter. Map each
    hardware interrupt, timer, task notification, semaphore, queue and clock to
    its owner and replacement. Identify implicit physical-blanking assumptions,
    phase coupling, notification coalescing, and any omitted or duplicated waits.

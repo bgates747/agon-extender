@@ -1,0 +1,51 @@
+{
+  "mainboard_upstream_revision_from_build_manifest": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "p4_audit_commit": "8254dde20f1becd209d8012a20f4ab133143c0e3",
+  "files": {
+    "retained_mainboard/canvas.cpp": {
+      "sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271"
+    },
+    "retained_mainboard/canvas.h": {
+      "sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9"
+    },
+    "retained_mainboard/displaycontroller.cpp": {
+      "sha256": "6aa61db30c938f3aee9ee984706507d2871cda49b26b061b153d8d4d921575d0"
+    },
+    "retained_mainboard/dispdrivers/vgabasecontroller.cpp": {
+      "sha256": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa"
+    },
+    "retained_mainboard/dispdrivers/vga64controller.cpp": {
+      "sha256": "8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b"
+    },
+    "retained_mainboard/dispdrivers/vgapalettedcontroller.cpp": {
+      "sha256": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49"
+    },
+    "retained_mainboard/dispdrivers/vgacontroller.cpp": {
+      "sha256": "77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541"
+    },
+    "vdp/video/extender/display/stock_p4_service.cpp": {
+      "sha256": "24b6324e0e274e599c05ba4f0d172fdffa0c3ce85dc398770153ebd316d63808",
+      "matches_r44_contract": true
+    },
+    "vdp/video/extender/display/stock_runtime_controller.hpp": {
+      "sha256": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+      "matches_r44_contract": true
+    },
+    "vdp/video/extender/display/stock_native_access.cpp": {
+      "sha256": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238",
+      "matches_r44_contract": true
+    },
+    "vdp/video/extender/display/stock_native_access.hpp": {
+      "sha256": "bd300ff0dcd949fb9653e85e8bf12b2e0551f83341b8158baf951f9562760332",
+      "matches_r44_contract": true
+    },
+    "vdp/video/extender/display/stock_scanline.cpp": {
+      "sha256": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+      "matches_r44_contract": true
+    },
+    "vdp/video/extender/display/drawing_cadence.hpp": {
+      "sha256": "4803ca0e0a652d4fae856bd8ae36fb3c477865931c1bc0ffcabb83156a4224f0",
+      "matches_r44_contract": true
+    }
+  }
+}

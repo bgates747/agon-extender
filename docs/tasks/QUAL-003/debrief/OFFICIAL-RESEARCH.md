@@ -204,3 +204,90 @@ of creating a duplicate suite. The browser-local pattern does not test P4
 output. API compliance, custom frame protocol overhead and visible presentation
 cadence remain separate questions. No new experiment or compliance conclusion
 is implied by this planning amendment.
+
+## 9. P00 — Focused FabGL timing audit
+
+### Executive findings
+
+P00 finds no justified immediate performance fix. The missing blanking-time
+budget is **not a divergence from ordinary Agon operation**: stock VDP disables
+that optional budget. The consequential differences are task-driven row output,
+its native-state exclusion, and timer-driven drawing opportunities independent
+of physical scanout. None alone explains the measured pre-enqueue tail.
+Investigate the earliest missing interval, including foreground admission and
+reply service, before changing scheduling again. A separate correctness risk
+is that a complete snapshot is not necessarily one coherent displayed frame.
+No implementation or new performance measurements were performed.
+
+### P00a — Stock call paths and execution contexts
+
+References: official VDP v2.16.0 at the revision in section1; mainboard trace
+build's retained vdp-gl at `ac2dd5986daf496c43ae8e7fe41836274aec54a0`.
+The retained library is a source copy, not an independent Git checkout: running
+`git rev-parse` inside it resolves the containing Extender repository and must
+not be mistaken for its upstream identity. [P00-sources.json](P00-sources.json)
+records read-file hashes and verifies the six P4 adapter sources against the
+r44 contract commit. The mainboard trace manifest identifies its limited hooks;
+the library's inherited timing bodies remain the stock comparison.
+
+Official Agon command documentation and the retained `canvas.h` API documentation
+were read before following implementation. The latter explicitly defines
+`waitCompletion` in terms of an empty drawing queue. Its name must not be
+upgraded to a physical-presentation fence.
+
+| Mechanism | Source and complete relevant path | Consequence |
+|---|---|---|
+| Drawing setup | VDP `agon_screen.h::changeResolution` → controller resolution → `enableBackgroundPrimitiveExecution(true)` and `enableBackgroundPrimitiveTimeout(false)` | Optional blanking/half-frame budget is disabled by Agon, not accidentally omitted only on P4. |
+| Worker creation | `VGABaseController::setResolution` → `primitiveExecTask`, priority5, `CoreUsage::quietCore()` | Follow paletted controller inheritance; do not substitute generic `VGAController::VSyncInterrupt`, which executes primitives inside an ISR. |
+| Scanout wake | `VGA64Controller::ISRHandler` → DMA descriptor/reset tracking → two row copies/decorations → frameCounter increment and `vTaskNotifyGiveFromISR` | Wake occurs at the scanline threshold near the end of active output, not a timer independent of row progress. Cache-enabled and suspension checks gate notification. |
+| Primitive worker | `VGABaseController::primitiveExecTask` → nonblocking `getPrimitive` → `execPrimitive` until empty/suspended (timeout disabled) → `showSprites` → `ulTaskNotifyTake(pdTRUE)` | Worker drains once before its first wait. Notifications accumulate then clear together; they are not a queue of renderable frames. |
+| Single-buffer submission | `BitmappedDisplayController::addPrimitive` → dynamic payload copy → blocking queue send | Full queue or dynamic pool exhaustion can hold the submitting task before subsequent commands reach enqueue. |
+| Immediate drawing | Background disabled, or ordinary double-buffer primitive → `execPrimitive` + `showSprites` in submitting task | Double buffering does not mean all drawing waits in the background queue. |
+| Explicit completion | `Canvas::waitCompletion(true)` → `primitivesExecutionWait` checks queue occupancy; false → `processPrimitives` suspends worker, executes queue, shows sprites, resumes, submits Refresh | Empty queue can coexist with the last dequeued primitive executing. The false form actively changes execution, so per-frame readback is intrusive. |
+| Swap | `Canvas::swapBuffers` records caller task → queued SwapBuffers → pointer/visible-alias swap → task notification → caller continues | Retain the acknowledgement, not just pointer swapping. This acknowledges execution, not browser delivery; no inherent30Hz cap follows. |
+| Suspension | Nested suspend count plus active-worker wait; resume decrements count | Suspending then filling the queue can deadlock; documented foreground drain is needed. Do not add waits while holding locks the worker needs. |
+
+Source navigation in this repository (use symbols as stable anchors):
+[Canvas](../../../../vdp/vendor/vdp-gl/src/canvas.cpp),
+[queue/execution](../../../../vdp/vendor/vdp-gl/src/displaycontroller.cpp),
+[base worker](../../../../vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp),
+[VGA64 ISR](../../../../vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp),
+[paletted swap and sprite decoration](../../../../vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp).
+These are the retained, conditionally adapted sources; use the pinned mainboard
+copy/hash when distinguishing original bodies from P4 guards. Stock VDP setup:
+[official source](https://github.com/AgonPlatform/agon-vdp/blob/c7ac293d2aa81ddfa693390549bcd909069c8fc3/video/agon_screen.h).
+
+### P00b — Replacement timing and synchronization map
+
+| Stock owner/mechanism | P4 owner/replacement | Source-confirmed difference and limit |
+|---|---|---|
+| DMA EOF ISR, rolling row deadlines | `StockP4Service::publish` on output task, snapshot credit/pool admission | Copies rows only for an admitted snapshot. Two-row locking matches batch size, not ISR timing, preemption or uninterrupted frame ownership. |
+| Scanout frame counter | `StockClock::observe` on ESP timer task; atomic shared counter | Counts elapsed logical periods even if no frame was composed/sent. Late callbacks advance multiple ticks once; never interpret this as realized output FPS. |
+| ISR gives worker notification | Timer callback notifies drawing; logical edge also notifies output | Same-tick drawing and output become runnable without a completion dependency. On separate cores their order is not guaranteed. |
+| Once-per-scanout opportunity | r44 four opportunities per logical period, default one | `drawingTimerPeriodUs` rounds up. This is experimental scheduling, not four logical frames. No new frequency increase is warranted by source inspection. |
+| Drain then wait, including initial pass | `drawLoop` waits then `StockBoundController::drain` | Initial pass may wait for first timer opportunity. After that both coalesce pending notifications. Startup difference cannot explain a sustained40second tail by itself. |
+| Stock suspension flags/spin wait | `StockExecutionGate`: mutex, condition variable, nested atomic depth | Suspender blocks until worker exits; worker checks suspension after each primitive. Timer never takes this gate or native lock. |
+| Foreground and scanout assumptions | Recursive foreground lock around submission/flush; native lock per primitive or output row batch | Worker does not hold foreground lock. Output can contend with execution; r44 probe measures only parser native acquisition, not foreground/gate/driver waits or total hold time. |
+| Hardware mode teardown | Service stop flags, completion semaphores, timer sentinel, delete tasks, retained disable/flush | Explicit joins protect controller lifetime. These are mode-boundary costs, not ordinary per-frame waits. |
+| Scanline visible alias updated on swap | Retained swap updates aliases under primitive's native guard; later row batches read current alias | Swap can occur between snapshot row batches. Native safety is not whole-snapshot coherence. Requires a controlled visual/content test, especially for double-buffer Rally. |
+
+Bindings:
+[service](../../../../vdp/video/extender/display/stock_p4_service.cpp),
+[worker and row access](../../../../vdp/video/extender/display/stock_runtime_controller.hpp),
+[gates and logical clock](../../../../vdp/video/extender/display/stock_native_access.cpp).
+
+The official [ESP timer documentation](https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32p4/api-reference/system/esp_timer.html)
+says task-dispatched callbacks are serialized and should remain short and
+nonblocking. Our callback accounts time and posts notifications, rather than
+rendering. Serialized dispatch still has measurable lateness; its configured
+period is not a deadline guarantee. This supports measuring callback-to-worker
+latency, not automatically replacing it with an ISR.
+
+[IDF FreeRTOS](https://docs.espressif.com/projects/esp-idf/en/v5.5/esp32p4/api-reference/system/freertos_idf.html)
+documents affinity-constrained priority scheduling and notification semantics.
+Both stock and P4 clear accumulated notification counts when taking a wake.
+A wake while draining permits a subsequent pass; several wakes do not replay
+several historical frames. The P4 task notification counters used by drawing,
+output and the submitting swap caller belong to different tasks. This trace
+found no duplicated swap wait that establishes a30Hz restriction. It does not
+prove the parser never uses its notification slot for another subsystem.
