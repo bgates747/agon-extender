@@ -438,3 +438,28 @@ HW30.7696FPS. All expected nonces and2400-record gameplay states match. No
 parity; output-off controls now own the bench. The wired-host offline WebGL
 readback also passes every pixel with zero GL errors using retained EVF data;
 that validates decoding/presentation pixels, not physical display cadence.
+
+### N04l — Reapply the qualified EMOS UART profile
+
+AGENT-ASSIGNED, not separately Author-approved. Fresh r28 SW output-off measures
+32.6504FPS with no output-counter increments; streaming measures30.0066FPS.
+Most of the gap persists without output. Installed EMOS remains the restored
+pre-E07P image. Reuse the exact already-qualified ordinary E07P image, not a new
+MOS implementation: agon-emos INTEG-014/E07P-results/README.md, ordinary profile
+v0.1.17-b2026-09-14-16-10-16Z,130936bytes, SHA256
+429f85ebb413bf3eed779307a71126b6cafb7bf884ad1824c6673e1814718b61.
+The earlier qualification proves bulk transport only; fresh game tests are needed.
+
+1. [ ] N04l-i: Finish output-off HW control. Exit child SD, launch SD directly,
+   restore/read back original safe startup. SAVE current full128KiB ROM to an
+   absent destination and retrieve it. Require exact preserved baseline match.
+   Verify candidate bytes on SD and existing rollback bytes before flashing.
+   Preserve r28 P4 rollback and maintained ZDI recovery readiness.
+2. [ ] N04l-ii: Invoke FLASH exactly once through accepted native CLI, then one
+   mainboard reset and fresh keyboard admission. SAVE/read back entire ROM to
+   another absent name and compare candidate prefix byte-exactly. Do not call
+   an emitted command a successful flash. No mainboard VDP/source changes.
+3. [ ] N04l-iii: With P4 r28 fixed, repeat nonce-verified SW/HW streaming cases
+   and matching mainboard controls under the same EMOS image. Compare before
+   selecting any additional implementation. If no material gain, preserve the
+   result and investigate command/render latency rather than rewriting MOS.
