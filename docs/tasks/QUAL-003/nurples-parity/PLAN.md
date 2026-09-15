@@ -1159,10 +1159,10 @@ is unmeasured, not an established cause. Stock reference has only refresh trace.
    graphics-probe removal. Require frameRecorder/timingJson symbols absent,
    independent refresh trace and video counters present. No game, transport,
    renderer, memory-policy, priority or scheduler changes.
-2. [ ] N04ac-ii: Wait for r42 completion/release, preserve rollback, flash/readback
+2. [x] N04ac-ii: Wait for r42 completion/release, preserve rollback, flash/readback
    r43 and run same SW/HW full traces plus180second streams and service checks.
    Confirm actual memory/dimensions. Repeat only initial mean/p95 passes.
-3. [ ] N04ac-iii: Verify pixels and deterministic work, compare every run with
+3. [x] N04ac-iii: Verify pixels and deterministic work, compare every run with
    stock; N05 only on repeated parity. If unsuccessful, preserve evidence and
    instrument the remaining ingress/dispatch delay rather than raising cadence.
 
@@ -1175,3 +1175,41 @@ N04ac-i complete: r43 build passes exact generated-source/partition checks;
 frameRecorder/timingJson and graphics timing symbols absent, independent
 refresh/output recorders retained. No source/algorithm change beyond the
 explicit instrument selection. r42 released the bench with services passing.
+
+N04ac complete: r43 SW60.045FPS/p9524.718ms; HW60.028FPS/p9529.278ms.
+HW fails; repeats skipped. Full traces, matching deterministic work,180second
+streams, terminal pixels and services pass. Removing both old recorders does
+not establish parity. Both original timing records remain distinct from output.
+
+### N04ad — Passive wire attribution under the unchanged Nurples workload
+
+AGENT-ASSIGNED, not separately Author-approved. Stop configuration changes.
+Use installed r43 and unchanged r05 SW fixture to distinguish wire arrival
+spacing from parser/VDP enqueue spacing. This is a diagnostic run, not a new
+qualification repetition: analyzer acquisition shares the wired observer host.
+
+1. [ ] N04ad-i: Prepare a bounded80second24MHz passive capture of the four
+   existing UART signals using maintained AUDIT-005 acquisition/packing and
+   decoder helpers. Reuse the measured PORT-008 pinwalk mapping (D1 forward,
+   D6 reverse; D3/D4 handshakes); no GPIO drive, rewiring or new firmware.
+   Verify analyzer identity and disk capacity; begin only after r43 releases
+   its captures. Preserve current startup before staging the fresh nonce/run.
+2. [ ] N04ad-ii: Open existing passive P4 USB observer before an ordinary safe
+   restart; establish native input/SD readiness. Stage unchanged SW fixture with
+   fresh NP04 nonce/result. Start production browser, then sniffer with confirmed
+   delivered samples, then reset once to launch. Require complete80second extent,
+   all2400 refreshes and both nonce-bound wire markers, valid UART framing and
+   post-run services. Missing extent is inconclusive; never silently restart.
+3. [ ] N04ad-iii: Decode both directions at1152000/8N1 with preserved physical
+   bit positions; independently cross-check sigrok. Compare last-stop-bit refresh
+   arrivals with their ordered P4 enqueue/completion records, keeping clocks and
+   offset uncertainty explicit. Attribute gaps with P4/eZ80 permission separately.
+   No analogue signal-integrity claim. Record evidence and next bounded action
+   before changing code. Retain qualifying mean/p95 gates unchanged.
+
+References: PORT-008/uart-alignment/WIRE-PROCEDURE.md and
+results/pinwalk-map.json; AUDIT-005/scripts/capture_trace.py and analyze_trace.py.
+The older pure-data invocation is not reused; only its verified passive tools
+and physical channel mapping. Startup/USB handling follow this goal's already
+verified controllers. Estimated acquisition80seconds, game about40seconds after
+roughly27seconds startup/assets, browser180seconds, then decoding/retrieval.

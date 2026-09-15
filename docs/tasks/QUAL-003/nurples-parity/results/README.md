@@ -29,8 +29,9 @@ supports multiple pools; this guard is stricter than that stock behavior.
 
 Removing inherited inactive graphics scopes in r41 did not resolve the HW
 tail (28.967ms p95). Stock multi-pool allocation in r42 succeeds, but software p9529.253ms
-still fails. The next isolated control removes the inherited parser/frame
-recorder while keeping the independent stock-matched completion trace. Stock mainboard VDP remains
+still fails. Removing the parser/frame recorder in r43 also fails the HW tail (29.278ms).
+The next step is passive UART capture under the unchanged workload to locate
+the remaining arrival-to-enqueue variation. Stock mainboard VDP remains
 restored and verified.
 
 ## Dormant-probe control r41
@@ -58,6 +59,18 @@ no repeats. Full output/services and terminal pixel agreement pass. See
 verified-r42-output.json, framebuffer-selection-r42.txt and refresh-r42.log.
 Removing the inherited active parser/frame recorder is the next isolated control;
 its atomic/timestamp overhead was not present in the stock completion baseline.
+
+## Parser-recorder control r43
+
+| Path | Stock mean ms | P4 mean ms | Mean difference | Stock p95 ms | P4 p95 ms |
+|---|---:|---:|---:|---:|---:|
+| HW |16.664|16.659|−0.03%|17.021|29.278|
+| SW |16.687|16.654|−0.20%|17.063|24.718|
+
+HW still fails; no repeats. Both2400-record workloads, streams, terminal pixels
+and services pass. Removing inherited parser/frame instrumentation did not
+resolve the tail. The next step is passive UART arrival/handshake attribution,
+with no new rendering/transport change. See verified-r43-output.json.
 
 ## Measurement provenance and earlier comparisons
 
