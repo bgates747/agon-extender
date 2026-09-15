@@ -174,3 +174,33 @@ primitive; hardware sprite composition also happens during snapshot generation.
 5. Some official5.5.5 web pages were unavailable to the browser. The5.5-family
    docs and locally pinned5.5.5 headers/source supplied those contracts. No
    master/latest SDK behavior was substituted as proof of the installed build.
+
+## 7. Author-requested follow-up: completeness of the FabGL timing audit
+
+The Author identifies item2.8 above as a reason to audit inherited FabGL timing
+more thoroughly. The ISR row count and vertical-sync notification describe only
+part of the path; they do not establish that all pertinent completion, queue,
+worker and synchronization mechanisms have been examined for the web backend.
+[P00 in the owning review plan](../DEBRIEF-PLAN.md#p00--audit-inherited-fabgl-timing-before-selecting-scheduling-changes)
+records that follow-up ahead of proposed scheduling changes. No audit execution,
+VGA-output implementation or hardware experiment was started by this addition.
+
+The Author subsequently made the broader commitment unconditional:
+[AUDIT-007](../../AUDIT-007.md) owns an exhaustive fork/port completeness audit,
+currently unscheduled pending the immediate research. A successful timing fix
+is not a prerequisite for doing it; research findings determine sequencing.
+
+## 8. Output-path follow-up and network provenance
+
+The Author reports that the development workstation recently changed from
+wired Ethernet to Wi-Fi. Treat that as a possible latency/jitter confounder,
+not a measured regression. Recent r43/r44 browser evidence used the wired Pi;
+earlier laptop/Pi contrasts changed both receiving host and network path.
+
+[QUAL-003 P06](../DEBRIEF-PLAN.md#p06--browser-delivery-audit-and-isolated-pattern-benchmark)
+owns the requested official networking API audit and P4-local animated-pattern
+benchmark. It reuses P02's existing composition/prebuilt-frame controls instead
+of creating a duplicate suite. The browser-local pattern does not test P4
+output. API compliance, custom frame protocol overhead and visible presentation
+cadence remain separate questions. No new experiment or compliance conclusion
+is implied by this planning amendment.

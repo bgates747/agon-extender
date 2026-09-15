@@ -10,7 +10,9 @@ item is removed.
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
 The [full debrief](docs/tasks/QUAL-003/OVERNIGHT-DEBRIEF.md) and proposed P01–P06
 sequence are ready; hardware voice completed. Nurples experiments remain paused
-pending review. Golem testing is explicitly on hold until further notice.
+pending review. Author-requested P00 adds a focused inherited FabGL timing audit
+before selecting scheduling changes. Golem testing is explicitly on hold until
+further notice.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
@@ -133,6 +135,14 @@ deterministic Nurples and separate typing measurements are deferred.
   - Finished: --
   - Status: USB keyboard addition specified; schematic/model update deferred until 2026-09-10. Existing endpoint review remains open.
   - Details: [HW-002](docs/tasks/HW-002.md)
+
+## Required audits — currently unscheduled
+
+- [ ] **AUDIT-007 — Exhaustive Agon FabGL port completeness audit**
+  - Status: Author-required, unscheduled pending QUAL-003 P00 immediate timing
+    research. Required regardless of whether that research produces a fix;
+    the dependency controls sequencing, not scope or commitment. Not started.
+  - Details: [AUDIT-007](docs/tasks/AUDIT-007.md)
 
 ## Other active work
 

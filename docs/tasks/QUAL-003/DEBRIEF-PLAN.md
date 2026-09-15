@@ -37,12 +37,65 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**AGENT-PROPOSED for this Author-requested review; not yet approved for execution.**
+**P00a–P00d approved for unattended research; P01–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
 Review one chunk at a time; an actionable finding is a stopping point for a
 hardware voice report, not permission to consume the entire backlog.
+
+### P00 — Audit inherited FabGL timing before selecting scheduling changes
+
+**Author-approved unattended audit**, prompted by official-research item8.
+Complete P00a–P00d together and notify by hardware voice for review. No
+implementation, performance experiments or downstream task execution is approved
+by this audit authorization. Escalate a scope decision or physical intervention.
+Complete this audit before choosing P01 instrumentation or P02/P03 scheduling
+corrections; retain the existing numbered items and evidence.
+
+1. [ ] P00a: Trace the pinned stock Agon vdp-gl/FabGL timing implementation,
+   consulting official documentation first. Identify primitive-task wakeups,
+   vertical-sync notifications, queue draining/budgets, completion waits,
+   suspension/resumption, buffer swaps and foreground execution. Follow the
+   relevant controller/base classes and callers, not just VGA64 ISRHandler.
+   Record exact revisions, symbols, call paths and execution contexts.
+2. [ ] P00b: Compare those mechanisms with the retained P4 adapter. Map each
+   hardware interrupt, timer, task notification, semaphore, queue and clock to
+   its owner and replacement. Identify implicit physical-blanking assumptions,
+   phase coupling, notification coalescing, and any omitted or duplicated waits.
+   Separate source-confirmed behavior from timing hypotheses. Audit existing
+   mechanisms before inventing another scheduler or increasing wake frequency.
+3. [ ] P00c: Classify which stock mechanisms protect rendering correctness or
+   workload ordering, which exist only for VGA scanout, and which can serve the
+   current web-output backend without generating VGA. The Author does not want
+   bit-banged VGA as the solution; this audit does not authorize adding it.
+   Preserve stock rendering/API semantics and the minimal-port rule.
+4. [ ] P00d: Produce a source-linked stock-versus-P4 timing map and identify
+   the smallest discriminating tests or adaptations supported by it. Reconcile
+   the proposal with prior failed scheduler controls and the measured
+   wire/enqueue/completion gap. Update P01–P03 only where the audit provides a
+   concrete reason, then stop for review before implementation or hardware tests.
+
+P00e has been promoted to [AUDIT-007](../AUDIT-007.md), the required exhaustive
+Agon FabGL port completeness audit. It is currently **unscheduled pending this
+immediate research**. The Author clarified that the dependency controls
+sequencing only: the exhaustive audit is required whether or not P00 produces
+a fix. AUDIT-007 owns its checklist; do not maintain a duplicate here.
+
+Author's rationale: the Author reports that human experts maintaining Agon's
+fork describe FabGL as notoriously convoluted. Machine-assisted tracing can
+follow long call chains, but that does not guarantee recognition of implicit
+contracts or subtle cross-subsystem effects. The audit must explicitly look
+for those effects and challenge earlier omissions instead of assuming that
+successful compilation, visible output or the present feature scope proves
+that all necessary code was ported. This records the Author's assessment and
+required follow-up; the exhaustive audit has not started, and no execution
+begins with this documentation change.
+
+Deliverable: a focused FabGL timing section in the official-research writeup,
+with explicit unresolved questions and proposed tests. Finding two row
+preparations per ISR is not sufficient evidence that the pertinent inherited
+scheduling mechanisms have been fully audited. Golem remains on hold.
 
 ### P01 — Establish current comparison and diagnostic accounting
 
@@ -161,18 +214,46 @@ follow-up notes except a demonstrated portability adaptation needed for parity.
    and a synthetic torture test each have their own limits; neither replaces
    the other. Full suite rerun is downstream of informative cases, not step1.
 
-### P06 — Separate browser-delivery optimization, only if selected
+### P06 — Browser-delivery audit and isolated pattern benchmark
 
-1. [ ] P06a: Decide with the Author what unique visible frame cadence is required
-   after rendering parity. Existing goal requires streaming active; it does not
-   turn nominal60Hz metadata into60 distinct browser frames.
-2. [ ] P06b: Measure actual link rate, full payload/header bytes, snapshot count,
-   socket acceptance, browser receipt/presentation and host scheduling. Reuse
-   drained-credit controls. At512×384×1byte×60, payload alone is94.37Mbit/s;
-   output bandwidth must be budgeted rather than inferred from renderer speed.
-3. [ ] P06c: Any encoding/damage/credit change is a separately reviewed output
-   contract. Never obtain a rendering-parity pass by reducing game workload,
-   resolution, sprite count or silently displaying stale frames.
+Author-requested follow-up, awaiting execution scheduling. This extends the
+existing output investigation; it does not create another performance task.
+P02 owns the four composition/network isolation controls. Reuse those results
+here rather than repeat them. P00 owns FabGL timing; AUDIT-007 owns exhaustive
+port coverage. This section owns network API/protocol and client delivery.
+
+1. [ ] P06a: Record each receiving host and wired/wireless path, negotiated link
+   rate, payload/header bytes and credit policy. The Author reports this
+   workstation has used Wi-Fi for several days after earlier wired operation:
+   possible latency/jitter confounder, not an established cause. Recent r43/r44
+   approximately28FPS browser measurements used the wired Pi, so this change
+   cannot be assigned as their explanation. Earlier laptop/Pi comparisons
+   changed both host and network. Where useful, isolate wired versus wireless
+   on the same host, binary, client and workload.
+2. [ ] P06b: Audit the actual pinned Espressif Ethernet, lwIP/socket and HTTP
+   server/WebSocket APIs against official documentation and examples. Trace our
+   custom framing, buffering/copies, send completion, backpressure/credit,
+   worker scheduling and client handling. Distinguish supported transport APIs
+   from custom video payload conventions; do not assume one officially approved
+   video protocol exists. Document adaptations and discrepancies before fixes.
+3. [ ] P06c: Extend P02's prebuilt-frame control with a deterministic animated
+   pattern generated locally by the P4, visually distinct from the browser-local
+   pattern. Bypass Agon submission and VDP drawing, retain the tested resolution,
+   pixel format and full-frame payload, and include unique frame identifiers and
+   a content oracle. Compare pre-generated and live-generated frames to isolate
+   generation cost. Compare the current sender with a minimal official-example
+   based sender only with matched transport, payload, receiver and credit policy.
+   A browser-local animation alone cannot exercise P4 output or the wire.
+4. [ ] P06d: Report generation/composition/copy time, socket acceptance time,
+   wire throughput, client receipt and unique presentation cadence separately.
+   Reuse P02 and drained-credit evidence. A raw transport throughput control is
+   not a browser-video result. At512×384×1byte×60, payload alone is94.37Mbit/s;
+   measure negotiated link speed and account for protocol overhead before
+   interpreting a limit. Label whole-window versus game-only FPS explicitly.
+5. [ ] P06e: Review the demonstrated bottleneck and desired visible cadence with
+   the Author before changing encoding, damage updates or credit contracts.
+   Never obtain a rendering-parity pass by reducing game workload, resolution,
+   sprite count or silently displaying stale frames. Golem remains excluded.
 
 ## Debrief delivery
 
