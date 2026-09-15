@@ -423,12 +423,12 @@ AGENT-ASSIGNED, not separately Author-approved. The first fresh r28 SW result
 is30.0066 fencedFPS versus r27's29.5718. The maintained P4 UART changes alone
 have not explained the gap. Finish the immutable three-case streaming matrix.
 
-1. [ ] N04k-i: If streaming controls still miss parity, run the same NP04 SW/HW
+1. [x] N04k-i: If streaming controls still miss parity, run the same NP04 SW/HW
    fenced workload with no browser connected, fresh nonces and result names,
    unchanged P4/EMOS/assets. Read drained output-recorder counters before/after
    and require no snapshot/socket work during the game. This diagnostic does
    not satisfy the goal's active-streaming requirement. No MOS flash yet.
-2. [ ] N04k-ii: Compare the fresh output-off records to matched streaming records.
+2. [x] N04k-ii: Compare the fresh output-off records to matched streaming records.
    A remaining gap directs investigation toward EMOS/command/render timing; a
    disappearing gap directs investigation toward snapshot/render contention.
    Freeze the next correction only after this distinction is measured.
@@ -463,3 +463,8 @@ The earlier qualification proves bulk transport only; fresh game tests are neede
    and matching mainboard controls under the same EMOS image. Compare before
    selecting any additional implementation. If no material gain, preserve the
    result and investigate command/render latency rather than rewriting MOS.
+
+N04k results: zero output-counter increments and matching nonce-verified state
+for both SW32.6504FPS and HW32.1968FPS. Streaming costs some throughput, but
+the large mainboard gap persists without it. N04l ROM-preservation/comparison
+therefore proceeds; no new MOS source changes are selected.
