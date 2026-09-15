@@ -45,3 +45,8 @@ Tests cover every signed16 integer, fractional sign/truncation, both widths,
 all encoded shifts -32..31, adjacent signed limits, nonfinite values, scale
 failure and unchanged output on rejection. Host results do not establish P4
 execution or buffer publication behavior; unchanged physical r03 is required.
+
+Global version validation remains blocked by the pre-existing light2-harness-r02
+connectivity hash mismatch (hardware files unchanged since4cd4ae3). Registry,
+templates and VDP identity checks pass separately. No hardware record is repaired
+as part of this numeric work; no claim of full qualification.
