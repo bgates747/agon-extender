@@ -28,8 +28,9 @@ flags separately from measured allocation selection. The stock base allocator
 supports multiple pools; this guard is stricter than that stock behavior.
 
 Removing inherited inactive graphics scopes in r41 did not resolve the HW
-tail (28.967ms p95). The next isolated control exercises stock multi-pool
-internal allocation, with full-height fallback. Stock mainboard VDP remains
+tail (28.967ms p95). Stock multi-pool allocation in r42 succeeds, but software p9529.253ms
+still fails. The next isolated control removes the inherited parser/frame
+recorder while keeping the independent stock-matched completion trace. Stock mainboard VDP remains
 restored and verified.
 
 ## Dormant-probe control r41
@@ -44,6 +45,19 @@ services passed both paths. Workload/nonces/counts validate against stock.
 Both allocations were PSRAM. Removing the old graphics probe did not resolve
 parity; the next isolated control tests stock multi-pool internal allocation
 with complete-height fallback. See verified-r41-output.json and refresh-r41.log.
+
+## Internal-pool control r42
+
+| Path | Stock mean ms | P4 mean ms | Mean difference | Stock p95 ms | P4 p95 ms |
+|---|---:|---:|---:|---:|---:|
+| SW |16.687|16.654|−0.20%|17.063|29.253|
+| HW |16.664|16.644|−0.12%|17.021|20.978|
+
+Both use full INTERNAL framebuffer despite fragmented free memory. SW fails;
+no repeats. Full output/services and terminal pixel agreement pass. See
+verified-r42-output.json, framebuffer-selection-r42.txt and refresh-r42.log.
+Removing the inherited active parser/frame recorder is the next isolated control;
+its atomic/timestamp overhead was not present in the stock completion baseline.
 
 ## Measurement provenance and earlier comparisons
 

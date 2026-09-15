@@ -1,0 +1,10 @@
+I (1755) np-fb-pools: requested=480 actual=480 free_before=484235 free_after=481763
+I (1755) np-fb-memory: width=640 height=480 bytes=153600 largest=335872 selected=psram-fallback
+I (78216) np-fb-pools: requested=480 actual=480 free_before=389379 free_after=386907
+I (78216) np-fb-memory: width=640 height=480 bytes=153600 largest=225280 selected=psram-fallback
+I (78276) np-fb-pools: requested=384 actual=384 free_before=389643 free_after=190939
+I (78276) np-fb-memory: width=512 height=384 bytes=196608 largest=188416 selected=internal
+I (284667) np-fb-pools: requested=480 actual=480 free_before=293979 free_after=291507
+I (284667) np-fb-memory: width=640 height=480 bytes=153600 largest=184320 selected=psram-fallback
+I (284729) np-fb-pools: requested=384 actual=384 free_before=294299 free_after=95727
+I (284730) np-fb-memory: width=512 height=384 bytes=196608 largest=155648 selected=internal

@@ -1,0 +1,30 @@
+[
+  {
+    "label": "mainboard-free",
+    "file": "NPMTS1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "f651e6aa1036ba63",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-freehw",
+    "file": "NPMTH1.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "686a2e4a55f9372f",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-free",
+    "file": "NP42S1.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "a46c637a0c64fb7d",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-freehw",
+    "file": "NP42H1.BIN",
+    "variant": "unfenced-hw",
+    "nonce": "cf612993f7623835",
+    "capacity": 2400
+  }
+]

@@ -1,0 +1,11 @@
+{
+  "pixels_compared": 196352,
+  "excluded_rectangle": [
+    200,
+    280,
+    232,
+    288
+  ],
+  "exclusion": "Four diagnostic filename glyphs only, no gameplay region",
+  "differences_outside_filename": 0
+}

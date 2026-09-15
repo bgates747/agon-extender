@@ -1123,12 +1123,12 @@ our experiment's constraint, not an upstream requirement.
    Keep r41 observer, scheduler, locks and workload unchanged. Host exercise
    successful fragmented allocation and insufficient/partial fallback with
    cleanup checks; verify candidate build and full dimensions on hardware.
-2. [ ] N04ab-ii: After r41 finishes, preserve/verify its rollback and install r42.
+2. [x] N04ab-ii: After r41 finishes, preserve/verify its rollback and install r42.
    Identical paired SW/HW180second streaming controls and health checks; retain
    actual memory selection per run. Repeat only initial timing passes. Reject
    missing rows, allocation errors, bad pixels, input/service regression or
    incomplete traces; no production promotion or experimental push.
-3. [ ] N04ab-iii: Compare all results and repeat apparent parity under N05.
+3. [x] N04ab-iii: Compare all results and repeat apparent parity under N05.
    If allocation still falls back, do not claim internal-memory performance.
    If timing still fails, record the result before choosing another hypothesis.
 
@@ -1165,3 +1165,8 @@ is unmeasured, not an established cause. Stock reference has only refresh trace.
 3. [ ] N04ac-iii: Verify pixels and deterministic work, compare every run with
    stock; N05 only on repeated parity. If unsuccessful, preserve evidence and
    instrument the remaining ingress/dispatch delay rather than raising cadence.
+
+N04ab complete: both r42 runs selected full INTERNAL framebuffer. SW p95
+29.253ms fails; HW20.978ms passes initially. Both~60FPS,2400 matched records,
+pending<=1, full streams/services and terminal pixel agreement pass. No repeats
+because the pair fails. Internal allocation is demonstrated, timing parity is not.
