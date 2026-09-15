@@ -87,3 +87,13 @@ verified. Alerts distinguish notification from test evidence.
 Detached worker host checks returned success/0 and failure/7, with terminal
 JSON and monotonic duration, without bench access. SD verified upload semantics
 are unchanged. Physical detached deployment remains to be exercised.
+
+## Author amendment — unattended iterations
+
+The Author explicitly permits and recommends monitoring deployment jobs when
+they are prerequisites within unattended development/testing iterations. Keep
+durable detached jobs; the no-monitoring policy remains for transfers handed
+back for later human follow-up, not this newly authorized continuous run. Push
+existing changes, confirm installation, then proceed. The Author closed the
+browser and granted exclusive P4 web-socket access. Hardware voice at actionable
+findings or intervention. This amendment changes no diagnosis/fix review gate.
