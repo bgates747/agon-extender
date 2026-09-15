@@ -13,8 +13,11 @@ exposed the flaw by returning the old NP01/600-record file.
 The first corrected NP04 run verifies its expected nonce, sprite mode, capacity
 and size:2,400 fenced P4 SW boundaries,29.57FPS mean,33.333ms p95,50ms maximum,
 and13 live sprites maximum. This includes the per-frame completion query;
-repeat, matched mainboard and corrected unfenced controls are still pending.
-See verified-first-p4.json and NPV4E1.BIN. No parity claim is restored yet.
+the repeat matches. Fresh mainboard measures58.76 fencedFPS. Unfenced
+boundaries are60.00FPS mainboard versus33.86FPS P4, with matching game state.
+The current images predate qualified UART optimizations; a bounded P4-only
+comparison is next after HW controls. No parity claim is restored yet.
+See verified-sw-controls-r27.json for the fresh paired evidence.
 
 Independent browser/EVF, packet and drained P4 output-recorder measurements
 remain valid within their stated scopes. Their output improvements do not prove
