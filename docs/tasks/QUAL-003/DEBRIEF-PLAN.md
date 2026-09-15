@@ -37,7 +37,7 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**P00 complete. P01 approved; P02–P06 remain proposals.**
+**P00 complete. P01a/b complete. P02 approved; P03–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
@@ -148,6 +148,11 @@ adding broad instrumentation. This is an evidence-driven sequencing proposal,
 not authorization to start P02. No immediate fix or parity pass is claimed.
 
 ### P02 — Separate output composition from network scheduling, if warranted
+
+Author approved unattended P02 execution with hardware voice notification.
+[Diagnostic execution contract](debrief/P02/README.md) freezes the four controls,
+measurement limits, rollback and review boundary before implementation.
+
 
 1. [ ] P02a: On one frozen diagnostic image, compare four explicitly labelled
    controls: output off; complete snapshot composition with local discard;
