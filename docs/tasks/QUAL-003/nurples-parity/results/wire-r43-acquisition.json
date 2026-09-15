@@ -1,0 +1,21 @@
+{
+  "procedure": "QUAL-003 N04ad passive Nurples attribution",
+  "started_utc": "2026-09-15T16:54:11.694664+00:00",
+  "sample_rate_hz": 24000000,
+  "expected_samples": 1920000000,
+  "script_sha256": "d3e78ed2b5505a40cd52a2ed90d5ee31b937d8a5214f9454f65f51024379088c",
+  "helper_sha256": "8faa1881b43b1169b73953abb2662d57a346850eae3f6f24d7bf0bc73ed5624d",
+  "acquisition_pass": false,
+  "acquisition_wall_seconds": 73.70609712600708,
+  "exit_code": 0,
+  "raw_sha256": "a77d47a7fdb7616e4ba7bf57c2dfbc06c9e53dd506610eb3a7511f61939e2056",
+  "acquisition": {
+    "samples": 1652560896,
+    "sample_rate_hz": 24000000,
+    "seconds": 68.856704,
+    "expected_samples": 1920000000,
+    "acquisition_pass": false,
+    "sha256": "7be5a8c68cba8e0b34567fd12d54d87cac34b6d1f210f03df9c7dcdae131083a"
+  },
+  "ended_utc": "2026-09-15T16:55:38.946095+00:00"
+}

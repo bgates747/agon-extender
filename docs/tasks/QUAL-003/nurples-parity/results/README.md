@@ -30,8 +30,8 @@ supports multiple pools; this guard is stricter than that stock behavior.
 Removing inherited inactive graphics scopes in r41 did not resolve the HW
 tail (28.967ms p95). Stock multi-pool allocation in r42 succeeds, but software p9529.253ms
 still fails. Removing the parser/frame recorder in r43 also fails the HW tail (29.278ms).
-The next step is passive UART capture under the unchanged workload to locate
-the remaining arrival-to-enqueue variation. Stock mainboard VDP remains
+Passive UART capture locates the variation after wire arrival and before
+P4 enqueue. The next observation measures parser native-lock waits and RX depth. Stock mainboard VDP remains
 restored and verified.
 
 ## Dormant-probe control r41
@@ -71,6 +71,29 @@ HW still fails; no repeats. Both2400-record workloads, streams, terminal pixels
 and services pass. Removing inherited parser/frame instrumentation did not
 resolve the tail. The next step is passive UART arrival/handshake attribution,
 with no new rendering/transport change. See verified-r43-output.json.
+
+## Passive wire attribution on r43
+
+The80second acquisition **failed its extent gate** at68.856704seconds. The
+retained capture nevertheless contains the complete nonce-marked gameplay
+window, all2400 refreshes and valid framing. Independent sigrok agrees with
+the sample decoder in both directions. This is diagnostic evidence, not parity
+qualification or a relabelled passing acquisition.
+
+| Stage in the same P4 run | Mean interval ms | p95 interval ms | p95 above wire arrival |
+|---|---:|---:|---:|
+| P4 enqueue |16.656|30.294|+74.29%|
+| P4 completion |16.656|29.325|+68.72%|
+| UART refresh arrival |16.657|17.381|baseline|
+
+These are different stages of one ordered workload, not device performance
+ratios. P4 withheld receive permission for0ms in the complete game window.
+The varying delay occurs after UART delivery and before enqueue. Independent
+clock epochs prevent an absolute ingress-latency claim; offset-normalized
+variation spans81.895ms, so the earlier enqueue-only pending count did not
+measure the preceding receive/parser backlog. Next: parser native-lock waiting
+and RX depth, without a behavior change. See wire-r43-analysis.json and
+wire-r43-acquisition.json. Ordinary startup/input/SD are restored.
 
 ## Measurement provenance and earlier comparisons
 

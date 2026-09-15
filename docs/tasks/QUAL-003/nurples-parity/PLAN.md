@@ -1194,13 +1194,13 @@ qualification repetition: analyzer acquisition shares the wired observer host.
    D6 reverse; D3/D4 handshakes); no GPIO drive, rewiring or new firmware.
    Verify analyzer identity and disk capacity; begin only after r43 releases
    its captures. Preserve current startup before staging the fresh nonce/run.
-2. [ ] N04ad-ii: Open existing passive P4 USB observer before an ordinary safe
+2. [x] N04ad-ii: Open existing passive P4 USB observer before an ordinary safe
    restart; establish native input/SD readiness. Stage unchanged SW fixture with
    fresh NP04 nonce/result. Start production browser, then sniffer with confirmed
    delivered samples, then reset once to launch. Require complete80second extent,
    all2400 refreshes and both nonce-bound wire markers, valid UART framing and
    post-run services. Missing extent is inconclusive; never silently restart.
-3. [ ] N04ad-iii: Decode both directions at1152000/8N1 with preserved physical
+3. [x] N04ad-iii: Decode both directions at1152000/8N1 with preserved physical
    bit positions; independently cross-check sigrok. Compare last-stop-bit refresh
    arrivals with their ordered P4 enqueue/completion records, keeping clocks and
    offset uncertainty explicit. Attribute gaps with P4/eZ80 permission separately.
@@ -1227,3 +1227,39 @@ fit completely inside its actual extent. This does not relabel the acquisition
 as passing or provide qualification evidence. A complete marked window can
 still distinguish wire versus parser spacing; otherwise prepare a new bounded
 capture after diagnosing the collection failure. Do not blindly rerun/reset.
+
+N04ad resolved:80second acquisition gate failed, retained explicitly. Its
+68.856704second extent contains both nonce markers and all2400 refreshes;
+sample decoder and independent sigrok agree on all game-window bytes in both
+directions with valid framing. SW wire interval p9517.381ms, enqueue30.294ms,
+completion29.325ms; P4 receive permission never withheld. Offset-normalized
+wire-to-enqueue delay varies up to81.895ms (uncalibrated independent clocks;
+not absolute latency). Thus the remaining variable delay occurs after wire
+arrival and before enqueue. Full observer ended, services and original startup
+restored. This diagnostic does not satisfy or relax qualification gates.
+
+### N04ae — Attribute parser native-lock waiting without another behavior change
+
+AGENT-ASSIGNED, not separately Author-approved. Wire evidence justifies a
+bounded P4-local observation. AGON_STOCK_NATIVE_GUARD serializes parser sprite
+mutation, drawing and snapshot scanline work. Queue timestamps omit parser
+work/waits before enqueue. Empty drawing drains do not unconditionally redraw
+all sprites: stock showSprites checks m_spritesHidden, so do not assume that
+raising opportunity frequency multiplied full sprite rendering cost.
+
+1. [ ] N04ae-i: Build diagnostic-only r44 from r43. Optional native guard probe
+   measures acquisition wait only for the parser task, identified at the existing
+   nonce-arm marker. Aggregate parser-owned wait total/max/call count between
+   refresh enqueues, plus RX buffered-byte depth at each enqueue. Keep original
+   lock, ownership, ordering, rendering and scheduling. No per-byte timing,
+   per-frame UART/log output, live SD or allocation. Dump bounded PSRAM records
+   only after the terminal fence; preserve existing completion-trace format.
+   Host-check parser ownership, lock behavior, aggregation and disabled behavior.
+2. [ ] N04ae-ii: With original startup/readiness restored, preserve r43 and
+   install/readback r44. Run unchanged SW diagnostic with full180second browser,
+   nonce/workload/completion checks and services. No sniffer is required for this
+   attribution because N04ad already established the wire/dispatch distinction.
+   This probe's overhead excludes it from parity qualification.
+3. [ ] N04ae-iii: Compare per-frame wait, RX backlog and enqueue variation. Only
+   then select a minimal evidenced correction or the next narrower measurement.
+   Keep the stock-port rule and unchanged final mean/p95/output/correctness gates.

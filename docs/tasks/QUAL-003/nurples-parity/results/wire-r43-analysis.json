@@ -1,0 +1,214 @@
+{
+  "acquisition_pass": false,
+  "partial_acquisition_inspection": true,
+  "scope": "Passive unchanged SW game; wire stop-bit arrivals versus P4 enqueue/completion, not absolute latency or analogue integrity",
+  "game": {
+    "file": "NPW43S1.BIN",
+    "provenance": "nonce_verified",
+    "nonce": "e8db70387d26adaa",
+    "count": 2400,
+    "failed": 0,
+    "warmup_boundaries": 120,
+    "intervals": 2279,
+    "elapsed_ticks": 4558,
+    "mean_frame_ms": 16.666666666666668,
+    "completed_fps": 60.0,
+    "p95_frame_ms": 16.666666666666668,
+    "maximum_frame_ms": 16.666666666666668,
+    "tick_histogram": {
+      "2": 2279
+    },
+    "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+    "variant": "unfenced-sw",
+    "completion_scope": "submission/vblank boundary; terminal fence only",
+    "end_reason": "boundary_limit",
+    "live_sprites_max": 13,
+    "live_sprites_mean": 8.29875,
+    "live_sprites_histogram": {
+      "1": 1,
+      "2": 7,
+      "3": 7,
+      "4": 95,
+      "5": 284,
+      "6": 190,
+      "7": 219,
+      "8": 293,
+      "9": 475,
+      "10": 439,
+      "11": 293,
+      "12": 85,
+      "13": 12
+    }
+  },
+  "completion_trace": {
+    "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+    "nonce": "e8db70387d26adaa",
+    "submitted": 2400,
+    "completed": 2400,
+    "maximum_pending_refreshes": 1,
+    "warmup": 120,
+    "completed_fps": 60.03975163722923,
+    "completion_intervals": {
+      "count": 2279,
+      "mean_ms": 16.65563185607723,
+      "p95_ms": 29.325,
+      "max_ms": 37.608
+    },
+    "enqueue_intervals": {
+      "count": 2279,
+      "mean_ms": 16.655652040368583,
+      "p95_ms": 30.294,
+      "max_ms": 37.657
+    },
+    "enqueue_to_completion": {
+      "count": 2280,
+      "mean_ms": 2.5973491228070174,
+      "p95_ms": 4.13,
+      "max_ms": 20.607
+    },
+    "elapsed_first_to_last_ms": 39954.161
+  },
+  "wire_refresh_intervals": {
+    "count": 2279,
+    "mean_ms": 16.656905751791722,
+    "p95_ms": 17.381291666664765,
+    "max_ms": 18.688291666665464,
+    "min_ms": 13.283333333332848
+  },
+  "offset_normalized_ingress_delay_variation": {
+    "count": 2280,
+    "mean_ms": 15.493668950997092,
+    "p95_ms": 37.578333333309274,
+    "max_ms": 81.8947499999922,
+    "min_ms": 0.0
+  },
+  "clock_limit": "Independent clocks/epochs; constant offset removed, oscillator drift not calibrated. Variation is not absolute ingress latency.",
+  "forward_bytes": 1010740,
+  "reverse_bytes": 77726,
+  "measured_seconds": 39.97642961111111,
+  "forward_gaps": {
+    "wire_span_seconds": 39.96816272222222,
+    "estimated_byte_time_seconds": 8.76688119387365,
+    "idle_seconds": 31.20128152834857,
+    "idle_cts_high_seconds": 0.0,
+    "idle_cts_low_seconds": 31.20128152834857,
+    "cts_high_seconds": 0.0,
+    "idle_cts_high_fraction": 0.0,
+    "longest_gaps": [
+      {
+        "start_seconds": 25.43252338888889,
+        "duration_seconds": 0.012943652777776123,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.466519722222223,
+        "duration_seconds": 0.012253902777776122,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.533143138888892,
+        "duration_seconds": 0.012253902777776122,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.49984563888889,
+        "duration_seconds": 0.012240027777776122,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.549934055555557,
+        "duration_seconds": 0.012118569444442789,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.48331413888889,
+        "duration_seconds": 0.012115361111109455,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.45013876388889,
+        "duration_seconds": 0.011978944444442788,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.63342943055556,
+        "duration_seconds": 0.011902694444442788,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.650084972222224,
+        "duration_seconds": 0.011902694444442788,
+        "cts_high_seconds": 0.0
+      },
+      {
+        "start_seconds": 25.600124222222224,
+        "duration_seconds": 0.011896152777776121,
+        "cts_high_seconds": 0.0
+      }
+    ]
+  },
+  "reverse_gaps": {
+    "wire_span_seconds": 39.97522384722222,
+    "estimated_byte_time_seconds": 0.6743041110667835,
+    "idle_seconds": 39.300919736155436,
+    "idle_cts_high_seconds": 0.8004465972572417,
+    "idle_cts_low_seconds": 38.500473138898194,
+    "cts_high_seconds": 0.921103972222219,
+    "idle_cts_high_fraction": 0.020367121243751948,
+    "longest_gaps": [
+      {
+        "start_seconds": 44.571935180555556,
+        "duration_seconds": 0.03028965277777612,
+        "cts_high_seconds": 6.194444444278875e-05
+      },
+      {
+        "start_seconds": 43.638966555555555,
+        "duration_seconds": 0.02912065277777612,
+        "cts_high_seconds": 6.002777777612209e-05
+      },
+      {
+        "start_seconds": 55.46492847222222,
+        "duration_seconds": 0.028463194444447757,
+        "cts_high_seconds": 6.002777778108915e-05
+      },
+      {
+        "start_seconds": 42.04241572222222,
+        "duration_seconds": 0.028102611111109455,
+        "cts_high_seconds": 6.006944444278876e-05
+      },
+      {
+        "start_seconds": 59.60018072222222,
+        "duration_seconds": 0.027324819444447757,
+        "cts_high_seconds": 6.0277777781089147e-05
+      },
+      {
+        "start_seconds": 63.34679388888888,
+        "duration_seconds": 0.027286444444447756,
+        "cts_high_seconds": 6.006944444775581e-05
+      },
+      {
+        "start_seconds": 61.17862863888889,
+        "duration_seconds": 0.026852319444447756,
+        "cts_high_seconds": 6.023611111442248e-05
+      },
+      {
+        "start_seconds": 53.08136984722222,
+        "duration_seconds": 0.02666486111111442,
+        "cts_high_seconds": 6.0194444447755813e-05
+      },
+      {
+        "start_seconds": 42.64307251388889,
+        "duration_seconds": 0.02655340277777612,
+        "cts_high_seconds": 6.027777777612209e-05
+      },
+      {
+        "start_seconds": 39.84252713888889,
+        "duration_seconds": 0.026495861111109454,
+        "cts_high_seconds": 6.002777777612209e-05
+      }
+    ]
+  },
+  "p4_withheld_permission_ms": 0.0,
+  "ez80_withheld_permission_ms": 921.1604166666667,
+  "independent_decode_pass": true
+}
