@@ -1,0 +1,118 @@
+{
+  "sw": {
+    "game": [
+      {
+        "file": "NPSW26.BIN",
+        "count": 600,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 479,
+        "elapsed_ticks": 958,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 479
+        },
+        "state_sha256": "a740583265bd2fee6d50ef2de309e1a6e907c007b59bfcce00595cc9cca661f0",
+        "variant": "fenced-sw",
+        "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof"
+      }
+    ],
+    "coverage": {
+      "reset_to_terminal_seconds": 60.04813424899476,
+      "observer_running_at_terminal": true
+    },
+    "browser": {
+      "summary": {
+        "received": 1630,
+        "received_fps": 27.096349228495278,
+        "median_receive_interval_ms": 33.39999997615814,
+        "maximum_receive_interval_ms": 234.30000007152557,
+        "layouts": [
+          {
+            "width": 512,
+            "height": 384,
+            "stride": 512,
+            "format": 2,
+            "frames": 1629
+          },
+          {
+            "width": 640,
+            "height": 480,
+            "stride": 640,
+            "format": 2,
+            "frames": 1
+          }
+        ],
+        "observed_logical_period_us": [
+          16667
+        ],
+        "sequence_gaps": 0
+      },
+      "status": "bounded video delivery observed; workload and human interpretation remain separate",
+      "page_errors": [],
+      "closes": [],
+      "observed_wall_seconds": 60.09382012404967
+    }
+  },
+  "hw": {
+    "game": [
+      {
+        "file": "NPHW26.BIN",
+        "count": 600,
+        "failed": 0,
+        "warmup_boundaries": 120,
+        "intervals": 479,
+        "elapsed_ticks": 958,
+        "mean_frame_ms": 16.666666666666668,
+        "completed_fps": 60.0,
+        "p95_frame_ms": 16.666666666666668,
+        "maximum_frame_ms": 16.666666666666668,
+        "tick_histogram": {
+          "2": 479
+        },
+        "state_sha256": "a740583265bd2fee6d50ef2de309e1a6e907c007b59bfcce00595cc9cca661f0",
+        "variant": "fenced-hw",
+        "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof"
+      }
+    ],
+    "coverage": {
+      "reset_to_terminal_seconds": 58.260449331020936,
+      "observer_running_at_terminal": true
+    },
+    "browser": {
+      "summary": {
+        "received": 1592,
+        "received_fps": 26.483694467034162,
+        "median_receive_interval_ms": 33.40000009536743,
+        "maximum_receive_interval_ms": 207.79999995231628,
+        "layouts": [
+          {
+            "width": 512,
+            "height": 384,
+            "stride": 512,
+            "format": 2,
+            "frames": 1591
+          },
+          {
+            "width": 640,
+            "height": 480,
+            "stride": 640,
+            "format": 2,
+            "frames": 1
+          }
+        ],
+        "observed_logical_period_us": [
+          16667
+        ],
+        "sequence_gaps": 0
+      },
+      "status": "bounded video delivery observed; workload and human interpretation remain separate",
+      "page_errors": [],
+      "closes": [],
+      "observed_wall_seconds": 60.06876390695106
+    }
+  }
+}

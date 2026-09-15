@@ -138,3 +138,12 @@ not active wired gameplay qualification. The optimization reduces snapshot cost
 but leaves substantial output overhead. See packed-row-comparison.json and
 NPHP1.BIN. Build/deploy/game/output pipeline elapsed185.114seconds; this includes
 preparation and retrieval, not just gameplay.
+
+## Active wired gameplay (r26)
+
+Both sprite variants retain600 records and60Hz boundaries with identical state
+fingerprints. The production browser receives frames before reset and remains
+active through terminal service; no socket closure or page error. Whole-window
+FPS includes loading and the terminal surface and is not game-only scanout.
+See wired-active-r26.json for separate timing scopes and coverage. The two-run
+preparation/game/retrieval pipeline took165.231seconds.

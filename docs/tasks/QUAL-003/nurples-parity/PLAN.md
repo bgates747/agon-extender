@@ -247,7 +247,7 @@ GCC assembly confirms aligned LW/SW accesses and halfword swap/mask; the unalign
 path retains byte accesses. Stock scanline bodies remain unchanged. Hardware
 snapshot-cost attribution still awaits the r26 comparison.
 
-3. [ ] N04f (agent-assigned): Run the deterministic game with the wired production
+3. [x] N04f (agent-assigned): Run the deterministic game with the wired production
    client active before mainboard reset and throughout gameplay. The laptop's
    slow Wi-Fi stream cannot exercise the faster output candidate adequately.
    Add an optional first-frame readiness receipt to the reusable headless
@@ -260,3 +260,15 @@ N04e complete: r26 snapshot mean9.163ms/production29.69FPS and
 10.180ms/immediate-credit33.45FPS. Accounting passes and no-web HW pilot
 retains60Hz/state equality. Snapshot cost fell but is not the entire bottleneck.
 N04f active wired gameplay is next; no parity claim.
+
+N04f complete: both SW and HW retain60Hz/all479 measured intervals at two
+ticks and matching fingerprints, with the wired production observer active
+before reset through terminal service. Browser receipt remains below60FPS.
+
+### Remaining output gap — AGENT-ASSIGNED, not separately Author-approved
+
+1. [ ] N04g: Capture a bounded header-only TCP trace on the wired Pi during the
+   existing drained static output control. Reuse prior packet accounting; retain
+   browser timing separately. Inspect frame-start/end, credit and ACK timing to
+   distinguish wire occupancy from idle time before selecting another firmware
+   change. No source, baud, quality or transport-contract change in this step.
