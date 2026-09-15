@@ -18,4 +18,6 @@ passes. No blind hash refresh option is provided. Passing fingerprints/tests
 does not replace new-site enumeration, target builds or hardware/human gates.
 
 RX10 manual review remains open. The wider unsupported-command inventory and
-game benchmarks have not started. Hardware spoken notification is next.
+game benchmarks have not started. Hardware spoken notification completed with a fresh verified receipt; startup
+unchanged, Legacy MOS prompt. Human hearing remains separate. Changes committed
+locally; no push. Stopped before the next chunk.

@@ -89,7 +89,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
     differences relative to stock only for comparable measurements. Finish with
     the Author's manual Rally/Nurples review. HUD remains open unless reproduced
     and resolved; linked no-op framing work has its own scope and evidence.
-11. [ ] RX11: Promote accepted conversion protections and upstream-update gates
+11. [x] RX11: Promote accepted conversion protections and upstream-update gates
     into existing docs/procedures and docs/dependencies infrastructure. Link
     each adaptation to its upstream location, rationale and executable tests;
     require reconciliation and fresh conversion-site review on upstream import.
@@ -226,3 +226,10 @@ Rally visual smoke passes. [Detailed results](rx09/results/README.md). Original
 startup restored and hardware voice receipt verified. RX10 remains open for
 its human review gate; no game benchmark or RX11 work started in this step.
 The older HUD-open wording is historical; audio framing was already accepted.
+
+
+RX11 completed under the Author's one-chunk authorization: reusable
+[numeric import procedure](../../../procedures/numeric-upstream-import-r01.md),
+review tripwire and sanitized entry point pass. [Results](rx11/README.md).
+Hardware voice receipt verified; stop before unsupported-command inventory.
+RX10 human review remains open; no additional firmware validation is claimed.

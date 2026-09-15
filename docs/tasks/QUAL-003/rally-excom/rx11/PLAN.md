@@ -19,7 +19,7 @@ unsupported-command audit, benchmark or experimental push.
 3. [x] I03: Test acceptance and rejection of changed/missing inputs; run the
    complete entry point. Document required fresh compiler-backed conversion
    enumeration and physical checks on upstream changes. Link from upstream-watch.
-4. [ ] I04: Commit results, update task status and notify with hardware voice.
+4. [x] I04: Commit results, update task status and notify with hardware voice.
    Preserve RX10 human review; stop before the wider unsupported-command audit.
 
 ## Inputs and limits
@@ -40,3 +40,7 @@ checks,65,931 parser cases,146 guarded renderer cases and36 stock controls.
 Two gate tests verify acceptance plus changed/missing/path-invalid rejection.
 Artifact registry validation passes. No target build is required for this
 tooling-only change; no firmware/source-selection change or qualification claim.
+
+I04: hardware voice fresh receipt verified; startup unchanged; SD service
+exited to Legacy MOS. No firmware/reset/browser action, no experimental push.
+Stop for Author review before the next chunk.
