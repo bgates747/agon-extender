@@ -8,14 +8,15 @@ from pathlib import Path
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');p.add_argument('--draw-twice',action='store_true');p.add_argument('--draw-four',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');p.add_argument('--draw-twice',action='store_true');p.add_argument('--draw-four',action='store_true');p.add_argument('--no-graphics-timing',action='store_true');a=p.parse_args()
  assert a.lookahead, 'Use the frozen d007496 builder for r24; current source is the r25 lookahead experiment'
  root=Path.cwd();parent=a.parent.resolve();out=a.output.resolve()
  assert not subprocess.check_output(['git','status','--porcelain'],text=True)
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
- revision='r40' if a.draw_four else 'r39' if a.draw_twice else 'r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ revision='r41' if a.no_graphics_timing else 'r40' if a.draw_four else 'r39' if a.draw_twice else 'r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ assert not a.no_graphics_timing or a.draw_four
  assert not a.draw_four or a.draw_twice
  assert not a.draw_twice or a.refresh_trace
  assert not a.refresh_trace or a.row_pair
@@ -54,6 +55,11 @@ def main():
  cfg['platformio']['build_dir']=str(out/'build');cfg['env:p4-console']['board_build.esp-idf.sdkconfig_path']=str(out/'sdkconfig')
  assert 'AGON_EXTENDER_VIDEO_TIMING' not in cfg['env:p4-console']['build_flags']
  cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_TIMING=1'
+ if a.no_graphics_timing:
+  # N04aa: match the stock completion observer without inherited dormant scopes.
+  old='-D AGON_GRAPHICS_TIMING=1'
+  assert cfg['env:p4-console']['build_flags'].count(old)==1
+  cfg['env:p4-console']['build_flags']=cfg['env:p4-console']['build_flags'].replace(old,'')
  if a.draw_four:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_DRAW_FOUR=1'
  if a.draw_twice:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_DRAW_TWICE=1'
  if a.refresh_trace:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_REFRESH_TRACE=1'
@@ -70,7 +76,7 @@ def main():
  if a.dispatch_timing:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1'
  with (out/'platformio.ini').open('w') as f:cfg.write(f)
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-'+revision+'-b'+stamp
- manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'drawing_opportunities_per_frame':4 if a.draw_four else 2 if a.draw_twice else 1,'draw_twice_enabled':a.draw_twice,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
+ manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'historical_graphics_timing_enabled':not a.no_graphics_timing,'drawing_opportunities_per_frame':4 if a.draw_four else 2 if a.draw_twice else 1,'draw_twice_enabled':a.draw_twice,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)
@@ -86,6 +92,7 @@ def main():
  if a.row_timing:assert b'row_wait_sum' in (out/'firmware.bin').read_bytes() and b'row_work_sum' in (out/'firmware.bin').read_bytes()
  if a.dispatch_timing:assert b'credit_to_ready' in (out/'firmware.bin').read_bytes() and b'ready_to_send' in (out/'firmware.bin').read_bytes()
  symbols=subprocess.check_output(['nm','-C',str(out/'firmware.elf')],text=True)
+ if a.no_graphics_timing:assert 'agon_graphics_timing::' not in symbols
  assert 'agon::extender::diagnostics::videoRecorder' in symbols
  if a.uart_alignment:
   assert 'ConsoleStream::readBytes(' in symbols
