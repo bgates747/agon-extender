@@ -22,7 +22,7 @@ OBSERVER=r'''(() => {
     const b=event.data;if(!(b instanceof ArrayBuffer)||b.byteLength<32)return;
     const d=new DataView(b),a=new Uint8Array(b);
     if(String.fromCharCode(...a.slice(0,4))!=='EVF1')return;
-    if(observation.frames.length>=6000){observation.overflow=true;return;}
+    if(observation.frames.length>=12000){observation.overflow=true;return;}
     observation.frames.push({ms:performance.now(),version:d.getUint8(4),header:d.getUint8(5),
       format:d.getUint8(6),flags:d.getUint8(7),sequence:d.getUint32(8,true),
       width:d.getUint16(12,true),height:d.getUint16(14,true),stride:d.getUint32(16,true),
@@ -133,5 +133,5 @@ if __name__=='__main__':
     p=argparse.ArgumentParser(description=__doc__);p.add_argument('--url',required=True)
     p.add_argument('--seconds',type=float,default=20);p.add_argument('--output',type=Path,required=True)
     p.add_argument('--label',required=True);p.add_argument('--receive-only',action='store_true');p.add_argument('--browser-executable');p.add_argument('--signal-ready',action='store_true');a=p.parse_args()
-    assert 1<=a.seconds<=60 and a.url.startswith('http://')
+    assert 1<=a.seconds<=180 and a.url.startswith('http://')
     collect(a.url.rstrip('/'),a.seconds,a.output,a.label,a.receive_only,a.browser_executable,a.signal_ready)
