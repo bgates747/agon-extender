@@ -2,6 +2,7 @@
 // Timer callbacks never acquire native state or execute drawing/output work.
 #pragma once
 #include <atomic>
+#include "extender/diagnostics/output_isolation.hpp"
 #include "esp_timer.h"
 #include "freertos/FreeRTOS.h"
 #include "freertos/task.h"
@@ -34,6 +35,10 @@ class StockP4Service {
   void timerBarrier();
   void stopClock();
 
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  agon_output_isolation::PrebuiltSlots prebuilt_;
+  std::uint64_t discard_generation_{};
+#endif
   PresentationSnapshotPool snapshots_; // survives every replaceable native mode
   StockClock clock_;
   StockRuntimeController *controller_{}; // stable until both tasks have joined

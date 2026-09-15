@@ -1,3 +1,6 @@
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+#include "extender/diagnostics/output_isolation.hpp"
+#endif
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
 #endif
@@ -629,6 +632,9 @@ esp_err_t WiredNetworkService::videoHandler(httpd_req_t *request) noexcept {
 }
 
 void WiredNetworkService::attemptVideoSend() noexcept {
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  if (agon_output_isolation::blocksNetwork()) return;
+#endif
   std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
   if (video_send_queued_) return;
   auto const prepared = video_.tryPrepare(provider_);
@@ -691,6 +697,9 @@ void WiredNetworkService::performQueuedSend() noexcept {
 #endif
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::SocketSend,
       static_cast<std::uint32_t>(view.segment_count));
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  agon_output_isolation::Scope isolatedSend(agon_output_isolation::Phase::Send);
+#endif
   esp_err_t result = ESP_OK;
   for (std::size_t index = 0; index < view.segment_count; ++index) {
     httpd_ws_frame_t frame{};
@@ -704,6 +713,9 @@ void WiredNetworkService::performQueuedSend() noexcept {
   }
 
   timing.finish(result == ESP_OK ? view.total_bytes : 0);
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  isolatedSend.finish(result == ESP_OK ? view.total_bytes : 0, result == ESP_OK);
+#endif
   if (result == ESP_OK) {
     video_.complete(socket, OpaqueReleaseDisposition::Sent);
   } else {

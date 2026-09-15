@@ -6,6 +6,9 @@
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+#include "output_isolation.hpp"
+#endif
 #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
 #include "native_wait_trace.hpp"
 #endif
@@ -85,6 +88,9 @@ inline void marker(const uint8_t *data, unsigned size) {
 #else
   (void)began;
 #endif
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  if(began)agon_output_isolation::begin(data+8);
+#endif
   return;
  }
  bool stopped;
@@ -92,6 +98,9 @@ inline void marker(const uint8_t *data, unsigned size) {
  if(!stopped)return;
 #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
  agon_native_wait::stop();
+#endif
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+ agon_output_isolation::stop(data+8);
 #endif
  // No further records admitted. Parser owns marker processing, so another
  // start cannot overlap this dump. USB output is strictly after terminal fence.

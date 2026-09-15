@@ -52,10 +52,16 @@ Author-specified product requirements.
 
 ## Execution checklist
 
-1. [ ] I01: Implement and host-check default-off controls; freeze candidate source.
+1. [x] I01: Implement and host-check default-off controls; freeze candidate source.
 2. [ ] I02: Build/hash/preserve/deploy/verify candidate and fixture readiness.
 3. [ ] I03: Run and validate four controls, repeat informative contrast as needed.
 4. [ ] I04: Interpret per-operation/output and paced completion separately;
    select at most one justified P02c change or stop with a proposed next step.
 5. [ ] I05: Restore baseline/startup, verify service/input, commit evidence,
    deliver hardware voice notification and pause.
+
+I01 host checks passed with C++17, warnings-as-errors and pthread support:
+invalid selectors, repeated arm rejection, phase accounting, in-flight stop
+join, producer-only cache reuse/invalidation, geometry bounds and slot capacity.
+The stop dump copies counters under exclusion and prints only after releasing
+it. Normal/prebuilt keep the existing network sender and browser protocol.

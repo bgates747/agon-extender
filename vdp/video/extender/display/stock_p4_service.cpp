@@ -187,10 +187,33 @@ void StockP4Service::outputLoop() {
 
 void StockP4Service::publish() {
   auto &display = controller_->display();
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  const auto isolation = agon_output_isolation::mode.load();
+  if (isolation == agon_output_isolation::Mode::Off) return;
+  if (isolation == agon_output_isolation::Mode::Discard) {
+    // Synthetic local demand at the same logical opportunities, no network.
+    PresentationSnapshotLease lease;
+    if (snapshots_.tryAcquireLatest(discard_generation_, lease)) {
+      discard_generation_ = lease.view().generation;
+      lease.release();
+    }
+  }
+#endif
   MutableSnapshotView view{};
   if (snapshots_.tryBegin(display.getViewPortWidth(), display.getViewPortHeight(),
                           esp_timer_get_time(), view) != SnapshotBeginResult::Ok) return;
   assert(view.packed_pixels && !view.pixels);
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  if (isolation == agon_output_isolation::Mode::Prebuilt) {
+    agon_output_isolation::Scope scope(agon_output_isolation::Phase::Prebuilt);
+    const bool ok = prebuilt_.prepare(view.packed_pixels, view.width, view.height);
+    snapshots_.finish(ok ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
+    scope.finish(ok ? view.width*view.height : 0, ok);
+    return;
+  }
+  prebuilt_.invalidate(view.packed_pixels);
+  agon_output_isolation::Scope composition(agon_output_isolation::Phase::Compose);
+#endif
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   controller_->outputRowTiming().reset();
 #endif
@@ -220,6 +243,9 @@ void StockP4Service::publish() {
   }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  composition.finish(complete ? view.width*view.height : 0, complete);
+#endif
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   if (complete) controller_->outputRowTiming().publish(
       (static_cast<std::uint32_t>(view.width) << 16) | view.height);
