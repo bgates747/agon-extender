@@ -372,7 +372,7 @@ v0.1.17 profiles were restored away. See agon-emos INTEG-014/E07P-results/README
 and machine-local restoration records. Do not mistake these for new discoveries
 about optimal UART algorithms or blindly import unrelated maintained changes.
 
-1. [ ] N03i: Finish the current immutable r27 matched controls. In parallel, build
+1. [x] N03i: Finish the current immutable r27 matched controls. In parallel, build
    an isolated r28 comparison which transplants ONLY the maintained, previously
    qualified console_hardware.inc/console_stream.hpp UART changes into r27's
    selected source composition. Record hashes/diff; keep all current output
@@ -390,11 +390,11 @@ The r27 matched matrix completed and all result bytes were retrieved. The next
 controller stopped before any flash: P4 responds to ICMP but HTTP status times
 out from both bench hosts. No pending SD mutation or observer remains.
 
-1. [ ] N04j-R1: Perform one identified P4-only USB reset with firmware unchanged,
+1. [x] N04j-R1: Perform one identified P4-only USB reset with firmware unchanged,
    capture its startup, and re-establish HTTP/SD ownership. Do not reset MOS or
    overwrite autoexec while its child SD service is executing. If recovery
    succeeds, resume the already frozen safe-startup restoration and r28 pipeline.
-2. [ ] N04j-R2: Preserve this unresolved HTTP failure as a separate reliability
+2. [x] N04j-R2: Preserve this unresolved HTTP failure as a separate reliability
    observation; do not attribute it to a UART or graphics defect without evidence.
 
 Recovery observation: the one P4 reset restored HTTP and SD immediately, but
@@ -411,3 +411,8 @@ showed the saved-result message, access-denied error and responsive ExCom MOS
 prompt. This explains absent terminal SD service; it is not a hung game.
 Native CLI now selects Legacy and launches SD directly. Future recovery must
 expect COPY's create-new behavior too; never classify missing SD alone as hang.
+
+Recovery checkpoint: native CLI/SD admission and exact original startup readback
+passed. P4-only r28 deployment has resumed with preserved r27 rollback. The
+HTTP stall remains unresolved; no throughput result depends on its recovery
+replay. N03i build/identity checks and complete fresh baseline are now done.
