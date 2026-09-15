@@ -341,7 +341,7 @@ N02d complete: corrected r02 unfenced SW control on both routes records
 as fenced pilots. Terminal fences pass and P4 wired web remains connected.
 This finds no pacing change at60Hz; it does not measure zero probe CPU cost.
 
-3. [ ] N02f (agent-assigned): Resolve the white headless screenshot limitation
+3. [x] N02f (agent-assigned): Resolve the white headless screenshot limitation
    with a direct WebGL readback of the retained EVF, using unchanged served
    production parser/presenter assets. Compare all pixels after present, before
    drawing-buffer discard; report this as an offline renderer check, not physical
@@ -959,3 +959,9 @@ N04v/N04w measurement controls complete. Both P4 paths complete2400refreshes
 at~60.06–60.08Hz; p95~30.7–31.0ms. All four NP04 nonce/state/output/service
 controls passed. No parity declaration: N04x now supplies the matched stock
 completion-spacing baseline before deciding repetition or scheduler changes.
+
+N02f completed with fresh r38 SW/HW terminal EVFs: production WebGL presenter
+readback on the wired Pi matches all512x384 pixels, zero GL errors. Headless
+screenshot canvas discard remains a screenshot limitation, not evidence of a
+white received framebuffer. SW/HW terminal pixels match outside four diagnostic
+filename glyphs. Offline checks ran after the live observers released Pi CPU.

@@ -1,0 +1,23 @@
+{
+  "scope": "Offline production WebGL presenter readback on observer host, not FPS or physical display",
+  "cases": {
+    "free": {
+      "width": 512,
+      "height": 384,
+      "stride": 512,
+      "differences": 0,
+      "first": null,
+      "gl_error": 0,
+      "renderer": "WebKit WebGL"
+    },
+    "freehw": {
+      "width": 512,
+      "height": 384,
+      "stride": 512,
+      "differences": 0,
+      "first": null,
+      "gl_error": 0,
+      "renderer": "WebKit WebGL"
+    }
+  }
+}
