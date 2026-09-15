@@ -145,14 +145,14 @@ unfenced controls, heavier workload validation and repeats remain outstanding.
    Wired Pi static HW surface:19.93FPS production,28.91FPS receive-only; laptop
    Wi-Fi:about7–9FPS. Do not attribute the whole gap to P4 rendering. Retained
    prior video-throughput research already documents the same host-path effect.
-2. [ ] N03b: Build an isolated r23 diagnostic variant of the exact installed r22
+2. [x] N03b: Build an isolated r23 diagnostic variant of the exact installed r22
    source, enabling only the existing bounded `AGON_EXTENDER_VIDEO_TIMING`
    snapshot/send recorder. Pin source/config/tool/output hashes; preserve r22
    rollback. Flash/verify through the established deployment helper. Collect
    snapshot/send deltas on a static512x384 surface over wired production and
    receive-only clients. Compare observable output rates to the uninstrumented
    controls; do not silently subtract probe cost.
-3. [ ] N03c: Use those durations and stock/output contracts to choose one bounded
+3. [x] N03c: Use those durations and stock/output contracts to choose one bounded
    correction. The current browser returns credit after RAF presentation; the
    producer then waits for demand at a logical frame boundary before capture,
    and sends the full frame. Serial waits are a hypothesis, not a completed
@@ -183,3 +183,31 @@ existing video_timing.hpp into isolated r24. Require both endpoint bytes and
 videoRecorder symbol in the final image before deployment. No drawing/transport
 algorithm delta is present. This correction is agent-assigned, not separately
 Author-approved. r23 and its rollback evidence remain identified locally.
+
+N03b passes on r24 with drained counters: production201 snapshots/sends and
+receive-only297 snapshots/sends, all complete units; no recorder loss/overlap.
+Means are11.4ms snapshot and15.8ms socket send. Wired received20.0FPS production,
+29.7FPS immediate-credit. The diagnostic rates reproduce uninstrumented controls.
+N03c selects overlap of these currently sequential stages as the next experiment.
+
+### N04 first correction contract — AGENT-ASSIGNED, not separately Author-approved
+
+1. [ ] N04a: Add opt-in, one-frame snapshot lookahead to the project-owned pool.
+   A successful consumer lease may arm one future snapshot only if no producer
+   is already active. Repeated polls with an existing lease cannot rearm it.
+   Keep fixed slot allocation, immutable leased bytes, monotonic generations,
+   mode/detach ownership and logical-boundary capture. If credit stops or the
+   client disconnects, at most the already-armed future capture may finish;
+   there must be no continuous no-demand composition/starvation. Existing pool
+   defaults remain unchanged; only an explicit experimental stock-service build
+   flag enables lookahead. No stock primitive/scanline algorithm or wire-format
+   changes, extra browser credits, or resolution/quality reductions.
+2. [ ] N04b: Exercise lease immutability, bounded demand, producer overlap and
+   default behavior on the host. Build an isolated r25 comparison atop current
+   r24 diagnostics, preserve rollback, deploy/verify, rerun the same wired output
+   windows and Nurples workload. Retain raw timings and frame/state records.
+3. [ ] N04c: Evaluate the measured improvement and remaining gap before any
+   further change. Browser-credit timing is a separate possible next experiment,
+   not part of this one. Stop/restore if input, rendering, lifecycle, or output
+   correctness regresses. Performance success does not waive heavier/repeated
+   gameplay and unfenced controls or human acceptance.

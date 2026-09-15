@@ -90,3 +90,18 @@ intrinsic P4 drawing rate. The stronger paired Pi control uses the same static
 HW surface and10second windows. Exact records/served assets remain in ignored
 bench evidence. Both Pi captures report512x384 RGB222, no sequence gaps, and
 no observer errors. This still does not achieve60FPS visible output.
+
+## Drained output timings (r24 diagnostic, wired Pi)
+
+| Client | Snapshot mean(ms) | Socket-send mean(ms) | Complete snapshot/send counts | ReceivedFPS |
+|---|---:|---:|---:|---:|
+| Production | 11.413 | 15.731 | 201/201 | 20.00 |
+| Immediate credit | 11.439 | 15.824 | 297/297 | 29.70 |
+
+All pixel/message unit totals match complete512x384 work; no loss/overlap/errors.
+These socket times measure acceptance by complete-send calls, not network ACK
+or monitor presentation. Credits were gated and the final granted frame drained
+before reading counters and closing. This resolves the prior large-surface
+incomplete-send accounting gap. Rates reproduce the uninstrumented wired
+controls closely. Snapshot and send currently serialize; bounded lookahead is
+the next agent-assigned experiment. No optimization success yet.
