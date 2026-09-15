@@ -1,0 +1,56 @@
+{
+  "build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "parent_build_id": "uart-excom-console-r22-b2026-09-15-07-01-47Z",
+  "parent_app_sha256": "ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7",
+  "contract_commit": "dd5d027bde0c7774f6ace8d176a30bfce279c8bd",
+  "output_isolation_enabled": true,
+  "native_wait_probe_enabled": false,
+  "historical_frame_timing_enabled": false,
+  "historical_graphics_timing_enabled": false,
+  "drawing_opportunities_per_frame": 4,
+  "output_task_core": 1,
+  "output_task_priority": 2,
+  "probe_sha256": {
+    "vdp/video/extender/network/wired_network_service.cpp": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca",
+    "vdp/video/extender/display/stock_p4_service.cpp": "e5165e5de390ce0d692f12f09053bc3712afe07f01176ed7a62a16a2740b945e",
+    "vdp/video/extender/diagnostics/video_timing.hpp": "f3d56e3092e14ef5966bbd0805e069c6f7b4b42586afa1cf87b4485c007c50dc",
+    "vdp/video/extender/display/drawing_cadence.hpp": "4803ca0e0a652d4fae856bd8ae36fb3c477865931c1bc0ffcabb83156a4224f0",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp": "d4a52c125c0c10b82f55a3ab153d03895ee94845c115916dbbf9c86338b594cc",
+    "vdp/video/extender/display/stock_runtime_controller.hpp": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "vdp/video/extender/display/presentation_snapshot_pool.hpp": "ace23a0f2ab3993bcc41d1a31e5785ac69756160a8930cc95ca4071ea8ef22e4",
+    "vdp/video/extender/display/stock_scanline.hpp": "d8dc6e90613bd72c76d3144e546b49b013edd97eae4824150f3a05e833e6084c",
+    "vdp/video/extender/display/rgb222_row.hpp": "ee5d65a266bf5d989d4784369a7cc3fe641c9eb92e777d19132adec384547c70",
+    "vdp/video/extender/network/wired_network_service.hpp": "9e971770bd9e717328974f92df0180d8c4d26e3009f994346d89b1a62982573f",
+    "vdp/video/extender/transport/console_hardware.inc": "692c4256c83c8d2bc782c301eb85e65630d14e9b656e9c4033d464c0a40e64ef",
+    "vdp/video/extender/transport/console_stream.hpp": "837a8c4940f94fcf77498616c3b756d5ac7a5c0380610d7e90089e5bf0a082db",
+    "vdp/video/extender/diagnostics/refresh_trace.hpp": "7eeb1ab52032456e819158857bd8d411a089a4c44b3a13516fa766cb374cbadc",
+    "vdp/video/vdu_buffered.h": "e27c95a5d587eebe7f64b3213a6cf5c1464b7953343d6556eca7c3da67dbd78d",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "07f6354bf63c8f497c698beabd4eadc702516b420bc3bf6b49da55aea1dfa3d2",
+    "vdp/video/extender/diagnostics/output_isolation.hpp": "6c4d6640d5e58f316339ad0fdfc91380b66e51813152163f8b8e9731a1c3bdcd",
+    "vdp/video/extender/display/stock_p4_service.hpp": "7f03916e3d21d414fbda9fc218b603a7e47d927e88534e674d2afbde1c4ea713"
+  },
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1451520,
+      "sha256": "94def3f06a72b4a494b8ecf3169385e50b8228e4a5f1674f9d78cce955afea12"
+    },
+    "firmware.elf": {
+      "bytes": 28166164,
+      "sha256": "8b189c18561613b92fa558b6735405e67f6f841e12d9f37eaa84ea2e2262f984"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1582592,
+      "sha256": "751e833ea383059743d4658b0e1b6d656fcadc79549c0eb6146b8826976e1940"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "042555c8318ec39819e45b3cc4fcd8cde5be422b0e9bbbb175b7e438c33fa8e9"
+    }
+  },
+  "build_complete": true
+}
