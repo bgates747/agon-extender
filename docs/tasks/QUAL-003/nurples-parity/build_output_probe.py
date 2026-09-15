@@ -88,7 +88,10 @@ def main():
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)
  assert all(sha(source/n)==h for n,h in pinned.items())
- assert all(sha(tree/n)==h for n,h in pinned.items() if n!='vdp/pio/p4-console-identity.json' and n not in probe_files and not (a.no_graphics_timing and n==selection_name))
+ if a.no_graphics_timing:
+  generated='vdp/video/CMakeLists.txt'
+  assert (tree/generated).read_text()==(source/generated).read_text().replace('  AGON_GRAPHICS_TIMING=1\n','')
+ assert all(sha(tree/n)==h for n,h in pinned.items() if n!='vdp/pio/p4-console-identity.json' and n not in probe_files and not (a.no_graphics_timing and n in (selection_name,'vdp/video/CMakeLists.txt')))
  outputs={}
  for n in ('firmware.bin','firmware.elf','firmware.factory.bin','partitions.bin','bootloader.bin'):
   shutil.copy2(out/'build/p4-console'/n,out/n);outputs[n]={'bytes':(out/n).stat().st_size,'sha256':sha(out/n)}
