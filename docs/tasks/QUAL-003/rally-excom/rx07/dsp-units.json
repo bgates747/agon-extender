@@ -1,0 +1,42 @@
+[
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/mul/float/dspm_mult_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/mul/float/dspm_mult_ex_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/mul/fixed/dspm_mult_s16_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/add/float/dspm_add_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/addc/float/dspm_addc_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/mulc/float/dspm_mulc_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "source/vdp/managed_components/espressif__esp-dsp/modules/matrix/sub/float/dspm_sub_f32_ansi.c",
+    "returncode": 0,
+    "float_warnings": 0
+  },
+  {
+    "file": "build/p4-console/agon-extender-dsp/mat.cpp",
+    "returncode": 0,
+    "float_warnings": 1
+  }
+]

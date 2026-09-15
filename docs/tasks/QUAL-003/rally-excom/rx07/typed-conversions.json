@@ -1,0 +1,884 @@
+{
+  "scope": "GCC original-tree FIX_TRUNC_EXPR, including explicit and implicit conversions; nodes are compiler expressions, not unique source sites",
+  "application_and_render_dependency_functions": {
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int)>] (null)": {
+      "max_nodes_in_unit": 4,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, uint8_t)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA16Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, const fabgl::RGBA8888&)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int)>] (null)": {
+      "max_nodes_in_unit": 4,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, uint8_t)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA2Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, const fabgl::RGBA8888&)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int)>] (null)": {
+      "max_nodes_in_unit": 4,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, uint8_t)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA4Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, const fabgl::RGBA8888&)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int)>] (null)": {
+      "max_nodes_in_unit": 4,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, uint8_t)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA64Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, const fabgl::RGBA8888&)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_Mask(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_Mask(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int)>] (null)": {
+      "max_nodes_in_unit": 4,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA2222(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_RGBA2222(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, uint8_t)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw"
+      ]
+    },
+    "void fabgl::GenericBitmappedDisplayController::genericRawDrawTransformedBitmap_RGBA8888(int, int, fabgl::Rect, const fabgl::Bitmap*, const float*, TRawGetRow, TRawSetPixelInRow) [with TRawGetRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(int)>; TRawSetPixelInRow = fabgl::VGA8Controller::rawDrawBitmapWithMatrix_RGBA8888(int, int, fabgl::Rect&, const fabgl::Bitmap*, const float*)::<lambda(uint8_t*, int, const fabgl::RGBA8888&)>] (null)": {
+      "max_nodes_in_unit": 8,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw"
+      ]
+    },
+    "static bool fabgl::VGABaseController::convertModelineToTimings(const char*, fabgl::VGATimings*) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw"
+      ]
+    },
+    "void fabgl::VGAPalettedController::updateRGB2PaletteLUT() (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw"
+      ]
+    },
+    "fabgl::BitmappedDisplayController::fillEllipseSheared(const fabgl::EllipseShearedParams&, fabgl::Rect&)::<lambda(float)> (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw"
+      ]
+    },
+    "void fabgl::BitmappedDisplayController::drawBitmapWithTransform(const fabgl::BitmapTransformedDrawingInfo&, fabgl::Rect&) (null)": {
+      "max_nodes_in_unit": 16,
+      "units": [
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw"
+      ]
+    },
+    "uint32_t convertFloatToValue(float, bool, bool, int8_t) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "void Context::plotCircle(bool) (null)": {
+      "max_nodes_in_unit": 6,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "fabgl::Point Context::invScale(fabgl::Point) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "void Context::setLogicalCoords(bool) (null)": {
+      "max_nodes_in_unit": 6,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "fabgl::Point Context::scale(int16_t, int16_t) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "fabgl::Point Context::toCurrentCoordinates(int16_t, int16_t) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "bool agon::extender::port::encodeFixed(float, bool, int, uint32_t&) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "void VDUStreamProcessor::bufferAffineTransform(uint16_t, uint8_t, bool) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "void VDUStreamProcessor::bufferTransformBitmap(uint16_t, uint8_t, uint16_t, uint16_t) (null)": {
+      "max_nodes_in_unit": 18,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    },
+    "void VDUStreamProcessor::createBitmapFromBuffer(uint16_t, uint8_t, uint16_t, uint16_t) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-video_extender_boot_p4_console.cpp.raw"
+      ]
+    }
+  },
+  "standard_library_functions_outside_port_audit": {
+    "constexpr long long int std::__size_to_integer(float) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_diagnostics_frame_timing.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_presentation_snapshot_pool.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_native_access.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_browser_video_service_core.cpp.raw",
+        "unit-video_extender_network_opaque_message.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw",
+        "unit-video_extender_web_browser_video_provider.cpp.raw",
+        "unit-video_extender_web_embedded_assets.cpp.raw"
+      ]
+    },
+    "constexpr long long int std::__size_to_integer(double) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_diagnostics_frame_timing.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_presentation_snapshot_pool.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_native_access.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_browser_video_service_core.cpp.raw",
+        "unit-video_extender_network_opaque_message.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw",
+        "unit-video_extender_web_browser_video_provider.cpp.raw",
+        "unit-video_extender_web_embedded_assets.cpp.raw"
+      ]
+    },
+    "constexpr long long int std::__size_to_integer(long double) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_diagnostics_frame_timing.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_presentation_snapshot_pool.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_native_access.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_browser_video_service_core.cpp.raw",
+        "unit-video_extender_network_opaque_message.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw",
+        "unit-video_extender_web_browser_video_provider.cpp.raw",
+        "unit-video_extender_web_embedded_assets.cpp.raw"
+      ]
+    },
+    "constexpr int std::ilogb(_Float16) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "constexpr long long int std::llrint(_Float16) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "constexpr long long int std::llround(_Float16) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "constexpr long int std::lrint(_Float16) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "constexpr long int std::lround(_Float16) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_1(_Tp, _Tp) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_1(_Tp, _Tp) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_2(_Tp, _Tp) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_2(_Tp, _Tp) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_3(_Tp, _Tp, _Tp) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__ellint_3(_Tp, _Tp, _Tp) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "void std::__detail::__bessel_ik(_Tp, _Tp, _Tp&, _Tp&, _Tp&, _Tp&) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "void std::__detail::__bessel_ik(_Tp, _Tp, _Tp&, _Tp&, _Tp&, _Tp&) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "void std::__detail::__bessel_jn(_Tp, _Tp, _Tp&, _Tp&, _Tp&, _Tp&) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "void std::__detail::__bessel_jn(_Tp, _Tp, _Tp&, _Tp&, _Tp&, _Tp&) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__hyperg_reflect(_Tp, _Tp, _Tp, _Tp) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__hyperg_reflect(_Tp, _Tp, _Tp, _Tp) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__psi(_Tp) [with _Tp = float] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "_Tp std::__detail::__psi(_Tp) [with _Tp = long double] (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "dsp-mat.cpp.raw",
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "std::size_t std::__detail::_Prime_rehash_policy::_M_bkt_for_elements(std::size_t) const (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "std::size_t std::__detail::_Power2_rehash_policy::_M_next_bkt(std::size_t) (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "std::size_t std::__detail::_Power2_rehash_policy::_M_bkt_for_elements(std::size_t) const (null)": {
+      "max_nodes_in_unit": 1,
+      "units": [
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "std::pair<bool, unsigned int> std::__detail::_Power2_rehash_policy::_M_need_rehash(std::size_t, std::size_t, std::size_t) (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-vendor_ESP32Time_ESP32Time.cpp.raw",
+        "unit-vendor_vdp-gl_src_canvas.cpp.raw",
+        "unit-vendor_vdp-gl_src_codepages.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_displaycontroller.cpp.raw",
+        "unit-vendor_vdp-gl_src_fabfonts.cpp.raw",
+        "unit-video_extender_boot_p4_console.cpp.raw",
+        "unit-video_extender_display_cursor_position_adapter.cpp.raw",
+        "unit-video_extender_display_screen_facade_adapter.cpp.raw",
+        "unit-video_extender_display_stock_p4_service.cpp.raw",
+        "unit-video_extender_display_stock_runtime_controller.cpp.raw",
+        "unit-video_extender_display_stock_scanline.cpp.raw",
+        "unit-video_extender_network_wired_network_service.cpp.raw",
+        "unit-video_extender_port_stock_render_utils.cpp.raw"
+      ]
+    },
+    "fabgl::GenericBitmappedDisplayController::genericDrawEllipseSheared<std::function<unsigned char(const fabgl::RGB888&)>, std::function<void(int, int, unsigned char)> >(const fabgl::EllipseShearedParams&, fabgl::Rect&, std::function<unsigned char(const fabgl::RGB888&)>, std::function<void(int, int, unsigned char)>)::<lambda(float)> (null)": {
+      "max_nodes_in_unit": 2,
+      "units": [
+        "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.raw",
+        "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.raw"
+      ]
+    }
+  }
+}

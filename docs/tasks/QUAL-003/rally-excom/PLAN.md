@@ -65,7 +65,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    unchanged r03 against stock mainboard VDP, with clean committed candidates
    and exact firmware hashes. If it does not converge, report and reassess the
    hypothesis before expanding fixes. No Golem or unrelated changes.
-7. [ ] RX07: After RX06, search and ENUMERATE ONLY every instance of this
+7. [x] RX07: After RX06, search and ENUMERATE ONLY every instance of this
    conversion hazard in code already ported/selected for P4, including retained
    upstream dependencies, adapters, implicit conversions and equivalent helper
    paths. Use the existing dependency/source-selection authority to define the
@@ -205,3 +205,10 @@ The future benchmark contract must define a completion observation that does
 not mistake video refreshes or submitted commands for completed game frames,
 and disclose instrumentation overhead. No new benchmark or Nurples source
 change is started by this sequencing record. Existing RX08 review is retained.
+
+
+RX07 enumeration completed: [inventory and proposed dispositions](rx07/README.md).
+Compiler-backed analysis covers the28current port/render units plus8DSP matrix
+units; no firmware source correction or hardware benchmark was performed.
+RX08 is now pending Author review. Audio-framing visual acceptance is recorded
+in PORT-004; the earlier HUD-open notes above are historical, not current state.

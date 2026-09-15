@@ -1,0 +1,198 @@
+[
+  {
+    "file": "video/extender/boot/p4_console.cpp",
+    "sha256": "a94c855ac972779eb390d04a4fd22adf72d7e87004eb14e326b7498398febb17",
+    "returncode": 0,
+    "log": "unit-video_extender_boot_p4_console.cpp.txt",
+    "warnings": 21
+  },
+  {
+    "file": "video/extender/diagnostics/frame_timing.cpp",
+    "sha256": "9528b5287b7f101b2a71ab012a7d87eafa4bc3802bebb283defe3e5225ee0086",
+    "returncode": 0,
+    "log": "unit-video_extender_diagnostics_frame_timing.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/cursor_position_adapter.cpp",
+    "sha256": "f5315a210cb727d253d754fcb79746042924b1721346354eabf162563b193167",
+    "returncode": 0,
+    "log": "unit-video_extender_display_cursor_position_adapter.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/presentation_snapshot_pool.cpp",
+    "sha256": "166d5a2bce4a53270a351575a430b03ea2bec4feaa8573942ac306b73fb1771f",
+    "returncode": 0,
+    "log": "unit-video_extender_display_presentation_snapshot_pool.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/screen_facade_adapter.cpp",
+    "sha256": "34561a2b96800edb6242fc19304a2ff209e21944c7fcfcd9193094c0045d7ad8",
+    "returncode": 0,
+    "log": "unit-video_extender_display_screen_facade_adapter.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/stock_native_access.cpp",
+    "sha256": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238",
+    "returncode": 0,
+    "log": "unit-video_extender_display_stock_native_access.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/stock_p4_service.cpp",
+    "sha256": "c9ad7fa28d2cc6eb3290a0cfe9890ed436131c526f5bc7c139576a5143beb222",
+    "returncode": 0,
+    "log": "unit-video_extender_display_stock_p4_service.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/stock_runtime_controller.cpp",
+    "sha256": "5696e46ee73487bb97c0c77923574ca4aade111ac249c1d97a1642811f3a97a1",
+    "returncode": 0,
+    "log": "unit-video_extender_display_stock_runtime_controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/display/stock_scanline.cpp",
+    "sha256": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+    "returncode": 0,
+    "log": "unit-video_extender_display_stock_scanline.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/network/browser_video_service_core.cpp",
+    "sha256": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08",
+    "returncode": 0,
+    "log": "unit-video_extender_network_browser_video_service_core.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/network/opaque_message.cpp",
+    "sha256": "02c318042167bf6fe7711b82c2a85c4ffe6d38679ec9d51d0e9ada925c4e7cc3",
+    "returncode": 0,
+    "log": "unit-video_extender_network_opaque_message.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/network/wired_network_service.cpp",
+    "sha256": "c7a2aa606c7d0d7426b0e4858b8bded066a2652cc8d06fa616a964a5d2de1dab",
+    "returncode": 0,
+    "log": "unit-video_extender_network_wired_network_service.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/port/stock_render_utils.cpp",
+    "sha256": "f46c946ee449862eec12aadc5c38d9581292fabcf2039c31b188660c32d69851",
+    "returncode": 0,
+    "log": "unit-video_extender_port_stock_render_utils.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/port/p4_task_watchdog.cpp",
+    "sha256": "4f429bb147e4dd05123d3cbd16f06fc0937e4fc35139e29918b1082628fdfe64",
+    "returncode": 0,
+    "log": "unit-video_extender_port_p4_task_watchdog.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/web/browser_video_provider.cpp",
+    "sha256": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+    "returncode": 0,
+    "log": "unit-video_extender_web_browser_video_provider.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "video/extender/web/embedded_assets.cpp",
+    "sha256": "aeae43bd98f08fe97043e6d276ac5d74cce65ba707faae9a189440575cf9ae89",
+    "returncode": 0,
+    "log": "unit-video_extender_web_embedded_assets.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/ESP32Time/ESP32Time.cpp",
+    "sha256": "5ec4e65a010a1490434709d50e81b7438f3fd0d0d98d35e30d399d909ec14f88",
+    "returncode": 0,
+    "log": "unit-vendor_ESP32Time_ESP32Time.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/canvas.cpp",
+    "sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_canvas.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/codepages.cpp",
+    "sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_codepages.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/displaycontroller.cpp",
+    "sha256": "825d09d2583316995028665cce05b7c1d7f43ea00a50636f35d9675ca31c0212",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_displaycontroller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/fabfonts.cpp",
+    "sha256": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_fabfonts.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+    "sha256": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vga2controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+    "sha256": "0a82d8a4d35b783dbe6d397433808c7ce981f7c274eb27edcef9e9907102fd85",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vga4controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+    "sha256": "575626e044d79b31682ba4197fd9dcd029dc31c6089785f43c40e61369724a96",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vga8controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+    "sha256": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vga16controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+    "sha256": "c106c53979d2dc1239636e2ccf98916944cac38d325b24b1e5fabdbb7bccd4ba",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vga64controller.cpp.txt",
+    "warnings": 0
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+    "sha256": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vgabasecontroller.cpp.txt",
+    "warnings": 1
+  },
+  {
+    "file": "vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+    "sha256": "0b471c8b5375ec213556a2275c3cf68288033f00fe55ae83eeb2f8bb9806217c",
+    "returncode": 0,
+    "log": "unit-vendor_vdp-gl_src_dispdrivers_vgapalettedcontroller.cpp.txt",
+    "warnings": 1
+  }
+]

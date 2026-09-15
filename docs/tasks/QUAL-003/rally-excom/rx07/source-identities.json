@@ -1,0 +1,92 @@
+[
+  {
+    "file": "vdp/video/types.h",
+    "installed_source_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+    "worktree_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/vdu_buffered.h",
+    "installed_source_sha256": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb",
+    "worktree_sha256": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/vdu_sprites.h",
+    "installed_source_sha256": "f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b",
+    "worktree_sha256": "f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/context/graphics.h",
+    "installed_source_sha256": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+    "worktree_sha256": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/context/viewport.h",
+    "installed_source_sha256": "1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd",
+    "worktree_sha256": "1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/enhanced_samples_generator.h",
+    "installed_source_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+    "worktree_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/extender/port/fixed_conversion.hpp",
+    "installed_source_sha256": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+    "worktree_sha256": "2563b60128f0710a4af9a5b00b4156d70b4f9938b76e4f62fab4b22ac90c2dd8",
+    "identical": true
+  },
+  {
+    "file": "vdp/vendor/vdp-gl/src/displaycontroller.cpp",
+    "installed_source_sha256": "825d09d2583316995028665cce05b7c1d7f43ea00a50636f35d9675ca31c0212",
+    "worktree_sha256": "825d09d2583316995028665cce05b7c1d7f43ea00a50636f35d9675ca31c0212",
+    "identical": true
+  },
+  {
+    "file": "vdp/vendor/vdp-gl/src/displaycontroller.h",
+    "installed_source_sha256": "c335063ab14b884d49c3be3ae610c25a4c753e2582e78600f19e569bbe1f4d70",
+    "worktree_sha256": "c335063ab14b884d49c3be3ae610c25a4c753e2582e78600f19e569bbe1f4d70",
+    "identical": true
+  },
+  {
+    "file": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+    "installed_source_sha256": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+    "worktree_sha256": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+    "identical": true
+  },
+  {
+    "file": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+    "installed_source_sha256": "0b471c8b5375ec213556a2275c3cf68288033f00fe55ae83eeb2f8bb9806217c",
+    "worktree_sha256": "0b471c8b5375ec213556a2275c3cf68288033f00fe55ae83eeb2f8bb9806217c",
+    "identical": true
+  },
+  {
+    "file": "vdp/vendor/vdp-gl/src/fabutils.cpp",
+    "installed_source_sha256": "c279c0ba6712f66402fb3ea355aa70569c0b152093ea24eb63659e8d703a279d",
+    "worktree_sha256": "c279c0ba6712f66402fb3ea355aa70569c0b152093ea24eb63659e8d703a279d",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/extender/display/palette_state.cpp",
+    "installed_source_sha256": "174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245",
+    "worktree_sha256": "174b876f47c41c86070805376eb9c8476816c54fef50b2882e3c9ae0b6dae245",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/vdu_stream_processor.h",
+    "installed_source_sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "worktree_sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "identical": true
+  },
+  {
+    "file": "vdp/video/buffers.h",
+    "installed_source_sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+    "worktree_sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+    "identical": true
+  }
+]

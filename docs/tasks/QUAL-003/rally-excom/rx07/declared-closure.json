@@ -1,0 +1,905 @@
+[
+  {
+    "id": "file:CRC:src/CRC.cpp",
+    "file": "vdp/vendor/CRC/src/CRC.cpp",
+    "exists": true,
+    "sha256": "91959fa616d3909c6af9a4c57bdaec887fb4261f2040858e84b8ce4ca573f24b",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CRC.h",
+    "file": "vdp/vendor/CRC/src/CRC.h",
+    "exists": true,
+    "sha256": "979cb1ea9652b48eddf3fb1944295873ec96b76cbaa18d3d34b1fc149b8ebe25",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC12.cpp",
+    "file": "vdp/vendor/CRC/src/CRC12.cpp",
+    "exists": true,
+    "sha256": "f2155cd759784507b8510289e39d915fd287264127f647bbf2b47f5cca752437",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC12.h",
+    "file": "vdp/vendor/CRC/src/CRC12.h",
+    "exists": true,
+    "sha256": "52711d6c7d9cfe67d0521a5fef3905147bf75b07944694ca7b82fd0e83accfdc",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CRC16.cpp",
+    "file": "vdp/vendor/CRC/src/CRC16.cpp",
+    "exists": true,
+    "sha256": "4e404d70829e7a424425e900abb87032ff93e466f6d368d2c80e72fb4ffb4c79",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC16.h",
+    "file": "vdp/vendor/CRC/src/CRC16.h",
+    "exists": true,
+    "sha256": "b538d87ff74eebe8a5d01c3e6e3072ba4260eda9b652c2fbadb366d4d3c54526",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CRC32.cpp",
+    "file": "vdp/vendor/CRC/src/CRC32.cpp",
+    "exists": true,
+    "sha256": "78396b233bd669b9a4e094fdd1ba0a318856f2ba4a47ca918b7ded432bfbe5f1",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC32.h",
+    "file": "vdp/vendor/CRC/src/CRC32.h",
+    "exists": true,
+    "sha256": "30d6eb990b2fb79a4baed14c281807c372de77fcdb1fd4d5be44ff3862bae634",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CRC64.cpp",
+    "file": "vdp/vendor/CRC/src/CRC64.cpp",
+    "exists": true,
+    "sha256": "bd765d7b3b9cd5a01754370c496000d79693d2dcf6a1dd2f96cc42a45d47144c",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC64.h",
+    "file": "vdp/vendor/CRC/src/CRC64.h",
+    "exists": true,
+    "sha256": "c0b188861ce4f9c3531e37353c78c51e50baabd09a61690dfa9e3ad3227b3251",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CRC8.cpp",
+    "file": "vdp/vendor/CRC/src/CRC8.cpp",
+    "exists": true,
+    "sha256": "7aeeb3fff8f6fb6f319c4507db82148927a05405bf0bbb9926b38d334c728cac",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/CRC8.h",
+    "file": "vdp/vendor/CRC/src/CRC8.h",
+    "exists": true,
+    "sha256": "105b45259a95553ad218c1dd36bee58090beb25cb538d5f7c130401790abeac5",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CrcDefines.h",
+    "file": "vdp/vendor/CRC/src/CrcDefines.h",
+    "exists": true,
+    "sha256": "6132e38022287a44db383210cd40fdc4b202ed69fe4ca93cd63920ccf1285813",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CrcFastReverse.cpp",
+    "file": "vdp/vendor/CRC/src/CrcFastReverse.cpp",
+    "exists": true,
+    "sha256": "1217dd0a4e15c52468b1611c81c20b17887b0747401b26e4a68dc5e9e4eef007",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CrcFastReverse.h",
+    "file": "vdp/vendor/CRC/src/CrcFastReverse.h",
+    "exists": true,
+    "sha256": "a6a8df0b6879942a3e0c35d76d5761a3794c870640fddc22e290e0bd1c843d0c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/CrcParameters.h",
+    "file": "vdp/vendor/CRC/src/CrcParameters.h",
+    "exists": true,
+    "sha256": "9d11b581a76d83626c790485be06ba363b88f41c44ab32e33ec81a84af0090a8",
+    "float_candidate": false
+  },
+  {
+    "id": "file:CRC:src/FastCRC32.cpp",
+    "file": "vdp/vendor/CRC/src/FastCRC32.cpp",
+    "exists": true,
+    "sha256": "35c3358ec65717ab5ae892fa8304941a3e07f97c2cde1dc94dc93b16ca42e986",
+    "float_candidate": true
+  },
+  {
+    "id": "file:CRC:src/FastCRC32.h",
+    "file": "vdp/vendor/CRC/src/FastCRC32.h",
+    "exists": true,
+    "sha256": "361ef66b6e28d57b5ef781d872f6557ad83afa2e19f3bec8ba8d7811c523cd3c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:ESP32Time:ESP32Time.cpp",
+    "file": "vdp/vendor/ESP32Time/ESP32Time.cpp",
+    "exists": true,
+    "sha256": "5ec4e65a010a1490434709d50e81b7438f3fd0d0d98d35e30d399d909ec14f88",
+    "float_candidate": false
+  },
+  {
+    "id": "file:ESP32Time:ESP32Time.h",
+    "file": "vdp/vendor/ESP32Time/ESP32Time.h",
+    "exists": true,
+    "sha256": "188d966adb8af045642dbe8357e6b4ac7c354189cc68590bf62f4a7fc0a7802a",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/agon.h",
+    "file": "vdp/video/agon.h",
+    "exists": true,
+    "sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/agon_audio.h",
+    "file": "vdp/video/agon_audio.h",
+    "exists": true,
+    "sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/agon_fonts.h",
+    "file": "vdp/video/agon_fonts.h",
+    "exists": true,
+    "sha256": "b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/agon_palette.h",
+    "file": "vdp/video/agon_palette.h",
+    "exists": true,
+    "sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/agon_ps2.h",
+    "file": "vdp/video/agon_ps2.h",
+    "exists": true,
+    "sha256": "f3ea3503cf08ef73b2e20200121988649ae59111476604b77d4b683ba63d78bc",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/agon_screen.h",
+    "file": "vdp/video/agon_screen.h",
+    "exists": true,
+    "sha256": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/agon_ttxt.h",
+    "file": "vdp/video/agon_ttxt.h",
+    "exists": true,
+    "sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/audio_channel.h",
+    "file": "vdp/video/audio_channel.h",
+    "exists": true,
+    "sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/audio_sample.h",
+    "file": "vdp/video/audio_sample.h",
+    "exists": true,
+    "sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/buffer_stream.h",
+    "file": "vdp/video/buffer_stream.h",
+    "exists": true,
+    "sha256": "c524c5cfc3a150db63762f6385f7f01560acf9c2be879be6ee99742b23e83e4c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/buffers.h",
+    "file": "vdp/video/buffers.h",
+    "exists": true,
+    "sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/compression.h",
+    "file": "vdp/video/compression.h",
+    "exists": true,
+    "sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/context.h",
+    "file": "vdp/video/context.h",
+    "exists": true,
+    "sha256": "d117f765b149a00260c95c9de031cf1039a4f0818faa6e93df0a0e9a3abb2700",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/context/cursor.h",
+    "file": "vdp/video/context/cursor.h",
+    "exists": true,
+    "sha256": "c747a1c8e4cf3533b820f9e613f861631090afd9a4fe8f0cc4a8c13be33c69a7",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/context/fonts.h",
+    "file": "vdp/video/context/fonts.h",
+    "exists": true,
+    "sha256": "ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/context/graphics.h",
+    "file": "vdp/video/context/graphics.h",
+    "exists": true,
+    "sha256": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/context/viewport.h",
+    "file": "vdp/video/context/viewport.h",
+    "exists": true,
+    "sha256": "1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/enhanced_samples_generator.h",
+    "file": "vdp/video/enhanced_samples_generator.h",
+    "exists": true,
+    "sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/envelopes/adsr.h",
+    "file": "vdp/video/envelopes/adsr.h",
+    "exists": true,
+    "sha256": "2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/envelopes/frequency.h",
+    "file": "vdp/video/envelopes/frequency.h",
+    "exists": true,
+    "sha256": "f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/envelopes/multiphase_adsr.h",
+    "file": "vdp/video/envelopes/multiphase_adsr.h",
+    "exists": true,
+    "sha256": "1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/envelopes/types.h",
+    "file": "vdp/video/envelopes/types.h",
+    "exists": true,
+    "sha256": "d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/hexload.h",
+    "file": "vdp/video/hexload.h",
+    "exists": true,
+    "sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/mem_helpers.h",
+    "file": "vdp/video/mem_helpers.h",
+    "exists": true,
+    "sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/multi_buffer_stream.h",
+    "file": "vdp/video/multi_buffer_stream.h",
+    "exists": true,
+    "sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/span.h",
+    "file": "vdp/video/span.h",
+    "exists": true,
+    "sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/sprites.h",
+    "file": "vdp/video/sprites.h",
+    "exists": true,
+    "sha256": "02dbe5921f2651b113530dbeb2f8d8b85d47f3f25b33488adf3cbc2ae9e44904",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/ttxtfont.h",
+    "file": "vdp/video/ttxtfont.h",
+    "exists": true,
+    "sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/types.h",
+    "file": "vdp/video/types.h",
+    "exists": true,
+    "sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/updater.h",
+    "file": "vdp/video/updater.h",
+    "exists": true,
+    "sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/utils/thread_safe_variant_deque.h",
+    "file": "vdp/video/utils/thread_safe_variant_deque.h",
+    "exists": true,
+    "sha256": "689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdp_protocol.h",
+    "file": "vdp/video/vdp_protocol.h",
+    "exists": true,
+    "sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdp_variables.h",
+    "file": "vdp/video/vdp_variables.h",
+    "exists": true,
+    "sha256": "2bb0237f750b99c157fdacaad294b522495143c7c7fa236e09ea37c12d4a8485",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/vdu.h",
+    "file": "vdp/video/vdu.h",
+    "exists": true,
+    "sha256": "b326130a85259a18064d4443ae4cd833cf4aa814c9cfb06b17c70b801839915c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_audio.h",
+    "file": "vdp/video/vdu_audio.h",
+    "exists": true,
+    "sha256": "3c657e3a598d63a36ec1ed644f918cae49c51c829a0b1fb2f23d8b0869c2474b",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_buffered.h",
+    "file": "vdp/video/vdu_buffered.h",
+    "exists": true,
+    "sha256": "937073f798b7ba9d79b8d3057efb5742995901ea3b0e3ddc8c41c01cacfa63bb",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_context.h",
+    "file": "vdp/video/vdu_context.h",
+    "exists": true,
+    "sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_fonts.h",
+    "file": "vdp/video/vdu_fonts.h",
+    "exists": true,
+    "sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_layers.h",
+    "file": "vdp/video/vdu_layers.h",
+    "exists": true,
+    "sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_sprites.h",
+    "file": "vdp/video/vdu_sprites.h",
+    "exists": true,
+    "sha256": "f77ddcc0dc3090ea3e2e6c2ce4eca6efc95df6b714c488381901beacae53333b",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_stream_processor.h",
+    "file": "vdp/video/vdu_stream_processor.h",
+    "exists": true,
+    "sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/vdu_sys.h",
+    "file": "vdp/video/vdu_sys.h",
+    "exists": true,
+    "sha256": "12073c06c063901c48638c0985cb8182866294b70c0d523a7a794958fd29087f",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/version.h",
+    "file": "vdp/video/version.h",
+    "exists": true,
+    "sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+    "float_candidate": false
+  },
+  {
+    "id": "file:agon-vdp:video/video.ino",
+    "file": "vdp/video/video.ino",
+    "exists": true,
+    "sha256": "28d94663070c34837a1c6df6411f428bea5be0a74eb63c0728b07bf49f0fa0c8",
+    "float_candidate": true
+  },
+  {
+    "id": "file:agon-vdp:video/ymodem.h",
+    "file": "vdp/video/ymodem.h",
+    "exists": true,
+    "sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/canvas.cpp",
+    "file": "vdp/vendor/vdp-gl/src/canvas.cpp",
+    "exists": true,
+    "sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/canvas.h",
+    "file": "vdp/vendor/vdp-gl/src/canvas.h",
+    "exists": true,
+    "sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/codepages.cpp",
+    "file": "vdp/vendor/vdp-gl/src/codepages.cpp",
+    "exists": true,
+    "sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/codepages.h",
+    "file": "vdp/vendor/vdp-gl/src/codepages.h",
+    "exists": true,
+    "sha256": "48d4512c6152a914bf8dce74ac810154622a9f6b5e6a8ffef54b681906297210",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/collisiondetector.cpp",
+    "file": "vdp/vendor/vdp-gl/src/collisiondetector.cpp",
+    "exists": true,
+    "sha256": "e4c11b507622a13e962c9f9ef501d443ae19e8aeb295cf40f439a02922963feb",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/collisiondetector.h",
+    "file": "vdp/vendor/vdp-gl/src/collisiondetector.h",
+    "exists": true,
+    "sha256": "37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/comdrivers/ps2device.cpp",
+    "file": "vdp/vendor/vdp-gl/src/comdrivers/ps2device.cpp",
+    "exists": true,
+    "sha256": "b93dbd9fedff65d3a2602e9760a082b7dffa9424f1ab4b3e8cca1b25d0fce2b6",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/comdrivers/ps2device.h",
+    "file": "vdp/vendor/vdp-gl/src/comdrivers/ps2device.h",
+    "exists": true,
+    "sha256": "6bdf20a01ab67860c7a79d12cd02319aa353bb85191d6bcc1befab88d408048f",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/devdrivers/soundgen.cpp",
+    "file": "vdp/vendor/vdp-gl/src/devdrivers/soundgen.cpp",
+    "exists": true,
+    "sha256": "0ba6e855a4327a7e01c500e9fee221b7c55e4452bcfa40180abeef687b114c0f",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/devdrivers/soundgen.h",
+    "file": "vdp/vendor/vdp-gl/src/devdrivers/soundgen.h",
+    "exists": true,
+    "sha256": "610ad2de4eb81b00e3d920e1dd35d6719ccce567cb66060c55bcdeb2114ca816",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/devdrivers/swgenerator.cpp",
+    "file": "vdp/vendor/vdp-gl/src/devdrivers/swgenerator.cpp",
+    "exists": true,
+    "sha256": "4f2340264b226ccf99cfe1758f2ca11ac500a53301a53a1fccbe17c9cc0c5f21",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/devdrivers/swgenerator.h",
+    "file": "vdp/vendor/vdp-gl/src/devdrivers/swgenerator.h",
+    "exists": true,
+    "sha256": "a2bd02e1e9e8ebbe0783e9fee9530c5032a0dc8e44edbb35a4f29acd3ec80aba",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/displaycontroller.cpp",
+    "file": "vdp/vendor/vdp-gl/src/displaycontroller.cpp",
+    "exists": true,
+    "sha256": "825d09d2583316995028665cce05b7c1d7f43ea00a50636f35d9675ca31c0212",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/displaycontroller.h",
+    "file": "vdp/vendor/vdp-gl/src/displaycontroller.h",
+    "exists": true,
+    "sha256": "c335063ab14b884d49c3be3ae610c25a4c753e2582e78600f19e569bbe1f4d70",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fabfonts.cpp",
+    "file": "vdp/vendor/vdp-gl/src/fabfonts.cpp",
+    "exists": true,
+    "sha256": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fabfonts.h",
+    "file": "vdp/vendor/vdp-gl/src/fabfonts.h",
+    "exists": true,
+    "sha256": "859b5112319f10305681036d17561c57522ce819b10d35dd3649c692afca61b3",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fabgl.h",
+    "file": "vdp/vendor/vdp-gl/src/fabgl.h",
+    "exists": true,
+    "sha256": "2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fabglconf.h",
+    "file": "vdp/vendor/vdp-gl/src/fabglconf.h",
+    "exists": true,
+    "sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fabutils.cpp",
+    "file": "vdp/vendor/vdp-gl/src/fabutils.cpp",
+    "exists": true,
+    "sha256": "c279c0ba6712f66402fb3ea355aa70569c0b152093ea24eb63659e8d703a279d",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fabutils.h",
+    "file": "vdp/vendor/vdp-gl/src/fabutils.h",
+    "exists": true,
+    "sha256": "7c52c0383364ad2917c7e0eaa014e011f230049b789ebd23656899e4bbef8651",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_10x20.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_10x20.h",
+    "exists": true,
+    "sha256": "5518036c2c7eacf9fa38ffafdab482a4bcfefa535d7612ee5990b985343b2211",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_4x6.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_4x6.h",
+    "exists": true,
+    "sha256": "174c235844a3c138debc99676657f7908690de5dcb0231d68ff8d96feff251eb",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_5x7.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_5x7.h",
+    "exists": true,
+    "sha256": "a1414b1594bd6b8c8c06896d7180be59c45f0c9181c650f65fb65c7a38e7b339",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_5x8.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_5x8.h",
+    "exists": true,
+    "sha256": "d8219b5c42c70848ed1c234f3c53b18dead1728618e07dfcd9b9aee7f5af420f",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_6x10.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_6x10.h",
+    "exists": true,
+    "sha256": "f5640cb5b4d1b31c04f08575d19596f182555db68122e9fa8ecf7fb4c1212b0e",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_6x12.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_6x12.h",
+    "exists": true,
+    "sha256": "d3abda14f52b1331b4d449647f83a02ef2bb83e8a538000a96ee585666564306",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_6x13.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_6x13.h",
+    "exists": true,
+    "sha256": "ce0bad12ea5c3ea132f7d6cf411ff4dc4bdb939486bbfa7cc0a08cde99e8aa5d",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_6x8.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_6x8.h",
+    "exists": true,
+    "sha256": "d52f022fe461133e00aec000b0071187ad86e210de49aabb4e48846bf50246be",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_6x9.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_6x9.h",
+    "exists": true,
+    "sha256": "ade7aaaf33c9a1cab52957118f57542c9947780665c2c7b94b55bf867703cdf8",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_7x13.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_7x13.h",
+    "exists": true,
+    "sha256": "360fead4806ffa3dd58af9454f08498a04a5b9a5b670b859bcded55f0bbfcc26",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_7x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_7x14.h",
+    "exists": true,
+    "sha256": "4bde680c0c2a87040efb1132bf4f6104c9de742cd5c24ccd94c73aa1ce890b79",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x13.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x13.h",
+    "exists": true,
+    "sha256": "f346d4bca71915c1f3c3a65f4b423f89b35823633d62a8a5926117a74a087fc3",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x14.h",
+    "exists": true,
+    "sha256": "46ea71695561322a260f29bcc2233377a09654f1eb42e85e22ebae4769c4309e",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x16.h",
+    "exists": true,
+    "sha256": "2b1ad44d7ed12f7b6855668dcbca87c1914d9107e59270b2ba4192249b8f5969",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x19.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x19.h",
+    "exists": true,
+    "sha256": "01c69982547e571dae12aa0c5f4415a5fce14d58ef004d40c611f91c22ac6e17",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x8.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x8.h",
+    "exists": true,
+    "sha256": "485dd330c4faf5703b219d9c600d88a9d7276e497b5da45565cf23e69f02c6e3",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_8x9.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_8x9.h",
+    "exists": true,
+    "sha256": "0bce90585a6b62a770cac0dd0ecb7e69bad77e8e40a58f956d80aa6d23353e72",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_9x15.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_9x15.h",
+    "exists": true,
+    "sha256": "41ea90a012b0f979d320d9c290a3858c3eaa8e10494d8ad62e54696b7a083414",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_9x18.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_9x18.h",
+    "exists": true,
+    "sha256": "669ce4cacf2c9630de885a26d2d453dd9dc3fe3937563fc4ecee169ce831e35a",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_bigserif_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_bigserif_8x14.h",
+    "exists": true,
+    "sha256": "9762f308ac726788951f5447b7441f6669820e9f930d23b28267bd94b09543cd",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_bigserif_8x16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_bigserif_8x16.h",
+    "exists": true,
+    "sha256": "12c5f1544694e2b7e9dd9f7094e2569fd3eec481f4326bb792102a40c3c28f2b",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_block_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_block_8x14.h",
+    "exists": true,
+    "sha256": "015a1dbb076f503d84a52096befc6b274d7b7dc19486679ce332aefedf24899c",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_broadway_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_broadway_8x14.h",
+    "exists": true,
+    "sha256": "c3583b4ec5ea781f14e60f27a6e8d6dda542b2faeb73b76407ae47a04a7b374e",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_computer_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_computer_8x14.h",
+    "exists": true,
+    "sha256": "e5cc19b707f9c3aa3b484582e89d52e2a414757f5a1b78ac41b4082b264f89de",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_courier_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_courier_8x14.h",
+    "exists": true,
+    "sha256": "f7e124e395e0981048030380b6d591f6b6ee2e5110a9e78fe7e4bcefa9163fa4",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_lcd_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_lcd_8x14.h",
+    "exists": true,
+    "sha256": "dd885138a12f8d42d59e15e9852e336657c0708a01454275cee2444216781ebb",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_oldengl_8x16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_oldengl_8x16.h",
+    "exists": true,
+    "sha256": "50a15366cddf31e9185ec4c1a0c4ee2bacdf6dd94a1f9cceb90f20867d505914",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_sanserif_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_sanserif_8x14.h",
+    "exists": true,
+    "sha256": "1b0b795746cb99df87aa00bcb8aceee0d286b4ff55a607fa5e73074f47233c32",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_sanserif_8x16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_sanserif_8x16.h",
+    "exists": true,
+    "sha256": "f8e6b3283ee31673c89b7e57d85b28209c3c2603f65b95235c25521f144184de",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_slant_8x14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_slant_8x14.h",
+    "exists": true,
+    "sha256": "3f4ed550943adbcf784db848ccaf8b2966fc8d99fb572110865be3bd26f34309",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_12.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_12.h",
+    "exists": true,
+    "sha256": "07a94d88274600fdec3b210d257e3f285dd76762b89b41237047335ab9a90a20",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_14.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_14.h",
+    "exists": true,
+    "sha256": "8216599c4bcd9448345720327b09421324881de7d287ce67e36154a76ca90293",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_15.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_15.h",
+    "exists": true,
+    "sha256": "606349455b1a4ece5da0ac24ccb90f57da2ee73b652f078d7a5efd4a2ab7c3f4",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_16.h",
+    "exists": true,
+    "sha256": "d43d10efecd0bca63c944b7142dd3182415d56271ecbbf7bf7c8effb50bb09ba",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_17.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_17.h",
+    "exists": true,
+    "sha256": "e498750266a32587aaa0c379679613094c7fd0399cb8d6b9528e2d91a2e3a2d1",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_18.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_18.h",
+    "exists": true,
+    "sha256": "b2b34d952ce445bc333714161fa8b3a5ad195fc0337f6c9072d03f44454ba2ac",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_22.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_22.h",
+    "exists": true,
+    "sha256": "a9a71b003d0cf1228a8d19c5d6596d7f3cda9c1b7276cbffaa6256ecfc6b7190",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_std_24.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_std_24.h",
+    "exists": true,
+    "sha256": "a556e5dcb842076678e55acb830df92beceb92ff4e33a5a39b1e032e54008692",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/fonts/font_wiggly_8x16.h",
+    "file": "vdp/vendor/vdp-gl/src/fonts/font_wiggly_8x16.h",
+    "exists": true,
+    "sha256": "a1515a391aa223ed5bd0680131dbe31e996f80ac8d34c978a1a09578da963d1b",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/images/cursors.h",
+    "file": "vdp/vendor/vdp-gl/src/images/cursors.h",
+    "exists": true,
+    "sha256": "11c77aee31557c396777e6958ee2bf44039928c373bdb3253e2712fd79b8dfa2",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/terminal.cpp",
+    "file": "vdp/vendor/vdp-gl/src/terminal.cpp",
+    "exists": true,
+    "sha256": "a9edb1ee0ca2bdc3a186410f0a6035ef8f7763c8007f48c74639b78af74a8cbc",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/terminal.h",
+    "file": "vdp/vendor/vdp-gl/src/terminal.h",
+    "exists": true,
+    "sha256": "ce2e21566864b615e1ef379eb9123458942c2ac58a51f3f75eb605906f9d041d",
+    "float_candidate": true
+  },
+  {
+    "id": "file:vdp-gl:src/terminfo.cpp",
+    "file": "vdp/vendor/vdp-gl/src/terminfo.cpp",
+    "exists": true,
+    "sha256": "20b60a942131534576be21cf9509bd053e1a4990d254c775f8aae56045a8d1d7",
+    "float_candidate": false
+  },
+  {
+    "id": "file:vdp-gl:src/terminfo.h",
+    "file": "vdp/vendor/vdp-gl/src/terminfo.h",
+    "exists": true,
+    "sha256": "f0eb209afb347c2524e826406171345788f6dbd9d5a53dfde31b28bb42fcfb0a",
+    "float_candidate": false
+  }
+]
