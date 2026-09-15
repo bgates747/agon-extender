@@ -70,3 +70,27 @@ I02 candidate r45 built successfully; installed r43 was preserved and matched
 before writing. Candidate flash was readback verified and boot/native USB
 startup identity observed. Original startup and r05 fixture were read back.
 P01's full asset readback is reused with no intervening asset writes.
+
+## P02c source inventory — before selecting an affinity change
+
+The selected candidate's `project_description.json` resolves SDK and Arduino to
+the project-local `.pio/packages` paths, not an unrelated global installation.
+The following is source/configuration evidence, not measured runnable time:
+
+| Owner | Priority | Affinity/configuration evidence |
+|---|---:|---|
+| Parser |3|Explicit core0 in `video.ino::setup`|
+| Drawing |5|Explicit core0 in `stock_p4_service.cpp`|
+| Snapshot |2|Explicit core1 in selected experimental configuration|
+| Network worker |3|`xTaskCreate`, unpinned|
+| HTTP server/send task |5|`HTTPD_DEFAULT_CONFIG`, unpinned; project does not override priority/core|
+| lwIP TCP/IP |18|Selected SDK config has NO_AFFINITY|
+| Ethernet RX task |15|`ETH_MAC_DEFAULT_CONFIG` flags0; Arduino ETH changes reset timeout/stack but not pin flag|
+| EMAC interrupt |Not a task priority|Allocated in MAC creation via `esp_intr_alloc`; setup call path and Arduino core1 configuration suggest core1, not independently observed|
+
+Pinned SDK sources consulted: `components/esp_http_server/include/esp_http_server.h`,
+`components/lwip/Kconfig`, `components/esp_eth/include/esp_eth_mac.h`, and
+`components/esp_eth/src/mac/esp_eth_mac_esp.c`; selected Arduino
+`libraries/Ethernet/src/ETH.cpp`. Distinguish the priority3 network worker from
+the priority5 HTTP task that executes queued sends. Moving lwIP alone would
+not isolate all these actors. No affinity change is selected by this inventory.
