@@ -129,3 +129,9 @@ before the terminal record. It is a future fixture, not a replacement for the
 completed evidence, and must be built/identified separately. At 60Hz, MOS's
 2-tick VBLANK increment gives nominal 120 ticks/s; do not blindly call these
 centiseconds or mistake that conversion for independent wall-clock calibration.
+
+The Author also clarified readiness and alerts: all firmware flashing, readback,
+fixture deployment and service/input setup must be finished before announcing
+“ready”; only invocation remains. Emulator attention cues must include speech,
+not just startup beeps. Do not send another cue while the Author is present.
+These standing requirements are also recorded in the local agent instructions.

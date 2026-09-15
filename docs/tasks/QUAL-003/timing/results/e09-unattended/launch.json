@@ -1,0 +1,9 @@
+{
+  "command": "EXEC /extender/gqt/gqtun.txt",
+  "sent_at": "2026-09-14T23:20:09.186862+00:00",
+  "input_receipt": true,
+  "actual_test_progress": "not observed by host, by Author request",
+  "collector_started": false,
+  "host_deadline": false,
+  "automatic_restore": false
+}

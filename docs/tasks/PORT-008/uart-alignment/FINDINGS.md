@@ -2,35 +2,27 @@
 
 ## Executive summary
 
-E09 follow-up: the Author requested an autonomous SD-journalled run with a
-scrolling mainboard P4 status log and completion voice. Preparation contract:
-[unattended fixture](../../QUAL-003/timing/unattended.md). No new matrix has
-started; previous incomplete results remain unchanged.
+The completed E09 graphics run now supplies the missing full comparison:
+624/624 intervals, all statuses zero, exactly eight unchanged probe differences,
+and zero P4 browser snapshots. Every upload-containing stage is faster on P4.
+Largest bitmap elapsed: **866.038 ms P4 versus 883.707 ms mainboard**, down from
+3,048.353 ms on the prior P4 configuration. Worst remaining elapsed excess:
+0.632 ms / 3.86%. [Full result and tables](../../QUAL-003/timing/results/e09-unattended/README.md).
+This is instrumented transport/framebuffer evidence, not production FPS or output
+qualification. Earlier timeout evidence remains preserved. E10 is not started.
 
-E09 follow-up (2026-09-14): graphics qualification remains incomplete. First
-run hit the known mainboard timeout; one retry recovered550/624 status-zero
-intervals but no terminal before its unchanged deadline. Partial matched
-repeats show largest bitmap elapsed864.936ms P4 versus882.518ms mainboard
-(priorP43048.396ms). These are exploratory figures, not a full pass. Original
-bench restored/verified; hardware voice sent. EMOS INTEG-014/E09 owns the
-complete evidence and review boundary.
- — latest E07P qualification
+The Author observed somewhat over 30 minutes total; the journal's nominal
+27m13s MOS-clock span is not an independent wall-time measurement. Use roughly
+35 minutes provisionally for this same prepared suite, separate setup/retrieval,
+and avoid an automatic deadline based on that estimate. A new, undeployed fixture
+revision adds explicit elapsed ticks; independent wall-clock calibration remains
+needed for precise estimates. The old 20-minute collection limit was inadequate.
 
-The frozen bulk-transfer targets now pass in both ordinary and bench EMOS
-profiles on physical hardware. Ordinary EMOS measures588.096ms P4 versus
-589.670ms mainboard forward, and85.156ms versus86.068ms for matched returns.
-Each profile passes384 exact/mixed/wire cases and three independent captures;
-long return intervals separate conservative timing bounds. This updates the
-transport conclusion only; historical graphics results below were not rerun.
-Short-command setup still costs about0.24–0.33ms extra. The exact pre-run bench
-images and startup are restored and verified; the hardware voice command has
-a fresh completion receipt and human review remains pending.
-No experimental code has been pushed.
-
-[Current portable summary](results/e07p-transport.json), [minimal P4 owner
-change](E07P-owner.md), [symmetric timing scope](E07P-batch.md). EMOS
-`docs/tasks/INTEG-014/E07P-results/README.md` owns the full detailed report.
-
+E07P's bulk targets remain qualified in both EMOS profiles. Ordinary forward:
+588.096 ms P4 versus 589.670 ms mainboard; matched return: 85.156 ms versus
+86.068 ms, with the previously documented nominal-clock and reverse-bound limits.
+[Transport summary](results/e07p-transport.json), [P4 owner change](E07P-owner.md),
+[symmetric scope](E07P-batch.md). EMOS INTEG-014 owns the next review boundary.
 
 ## U06 — pure-data baseline
 
