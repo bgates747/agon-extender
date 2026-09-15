@@ -666,3 +666,8 @@ internal native framebuffer may reduce shared PSRAM contention. No proof yet.
 
 N04p-i built r31; linked allocator retains capacity query and stock allocator.
 Row timing is disabled. Runtime capability/complete image checks remain pending.
+
+N04p deployment note: native USB capture open restarted P4; first controller
+reset the Agon before HTTP was ready, so no game began. Resume waits for
+P4 HTTP readiness with capture already open, then performs one Agon reset.
+Firmware write/readback passed; no reflash is needed for this setup correction.
