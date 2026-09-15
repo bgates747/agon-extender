@@ -858,3 +858,40 @@ N04v-i complete: fresh unfenced SW reaches60 submission/vblank boundaries/s,
 with180second live output and post-close services verified. The controller
 collection wait was too short; its observer completed independently. This is
 not proof of completed-render parity. N04v-ii investigates probe overhead.
+
+### N04w — Observe completed refreshes without per-frame UART replies
+
+AGENT-ASSIGNED, not separately Author-approved. N04v shows that synchronous
+queries materially affect the result. Before further performance changes,
+measure the actual retained renderer's RefreshSprites completions.
+
+1. [ ] N04w-i: Add a default-off P4 diagnostic recorder to the r37 candidate.
+   Record bounded refresh enqueue/completion counts and completion timestamps
+   in PSRAM; no per-frame output, allocation, query or scheduling change.
+   Start/stop only through exact nonce-bearing markers in stock buffer WRITE
+   commands to65535, whose documented behavior is consume/discard. Stop after
+   the existing terminal pixel fence, then dump the bounded trace to native
+   USB. Reject overflow, nonce mismatch, unbalanced counts and malformed markers.
+2. [ ] N04w-ii: Create isolated r05 fixture variants from the same pinned repair
+   source. Add one initial drain before the start marker and an end marker
+   after the existing terminal fence. Preserve fixed simulation/input and NP04
+   result validation; new code addresses require fresh matched comparisons.
+   Include SW and HW unfenced variants. Test recorder bounds/nonce/state and
+   verify linked hooks before building/flashing identified r38.
+3. [ ] N04w-iii: Run paired stock/P4 SW and HW with unique nonces and180second
+   live observers. Capture USB before the run; analyze only complete matching
+   traces. Compare completion count with fixture/source refresh count, mean,
+   p95 and backlog behavior. Hardware refresh completion still does not prove
+   physical scanout. Repeat apparent parity and inspect images/service health.
+   Use observer duration plus elapsed-time-aware grace for collection; do not
+   reset a running fixture because a collection estimate expires.
+
+Research: official agon-docs commit f9806bd3cbff6ed5d1c08bef1d51fed11764b86b,
+`docs/vdp/Buffered-Commands-API.md`, command0 explicitly discards WRITE data for
+buffer65535. Official agon-vdp v2.16.0 is the pinned read-only source reference.
+Retained `vdp/video/vdu_buffered.h::bufferWrite` consumes bytes before that
+special-case return. Retained `displaycontroller.cpp::addPrimitive` queues each
+RefreshSprites; its execPrimitive case completes hideSprites/showSprites before
+returning. Existing graphics_timing scopes aggregate calls but lack per-refresh
+completion timestamps, so they cannot answer this interval question. The new
+recorder remains diagnostic, not a new supported VDU command or renderer change.
