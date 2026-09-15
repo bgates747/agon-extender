@@ -2846,7 +2846,7 @@ This turn is planning-only, followed by hardware voice and stop. The earlier
 PORT-004 deferral is lifted only for this framing/no-op tranche when execution
 resumes; synthesis and output remain deferred.
 
-1. [ ] UC01: Inventory every unimplemented function reachable through the
+1. [x] UC01: Inventory every unimplemented function reachable through the
    selected P4 VDU parser, including audio, updater and other selected adapters.
    Reuse PORT-008 F004 reachability and PORT-004's existing audio grammar work.
    For each command/subcommand record selected official version, exact grammar,
@@ -2907,3 +2907,10 @@ Audio-first slice complete for review: [PORT-004 results](PORT-004/audio-framing
 144paired pixels and48audio replies pass per route; unmuted Rally capture shows
 intact HUD/sky. This does not check off the full UC01 inventory, all unsupported
 functions, full Wolf3D acceptance or synthesis. Hardware voice sent.
+
+
+UC01 inventory completed under one-chunk authorization. [Findings and grammar](PORT-003/command-consumption/README.md)
+identify empty updater consumption and missing virtual-key query reply, separate
+interactive loader release contracts, and mouse reply discrepancies. All45
+reviewed source fingerprints match installed r22. No handlers changed;
+UC02/UC03 contract work is next. Earlier audio completion remains scoped.

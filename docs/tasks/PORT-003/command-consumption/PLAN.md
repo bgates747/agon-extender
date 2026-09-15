@@ -11,7 +11,7 @@ benchmark or experimental push. UC02/UC03 decisions remain a subsequent chunk.
    retain source hashes and distinguish installed r22 from current checkout.
 2. [x] C02: Record command/subcommand grammar, variable lengths and replies;
    classify consumption gaps, supported behavior and unresolved contracts.
-3. [ ] C03: Record findings and next decisions, commit, hardware voice and stop.
+3. [x] C03: Record findings and next decisions, commit, hardware voice and stop.
 
 Use PORT-008 F004 and PORT-004 audio framing records. Preserve official reference
 checkouts. Exact grammar includes conditional fields and interactive protocol
@@ -20,3 +20,6 @@ truncated streams can be resynchronized. The canonical dependency graph remains
 authoritative for declared selection; inspect current console selection and
 includes to distinguish real reachability from dormant source. No claim of full
 VDP support follows from consuming its command bytes.
+
+Completed: source/grammar review recorded; hardware voice fresh receipt verified,
+startup unchanged and SD exited to Legacy MOS. No runtime changes or push.

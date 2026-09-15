@@ -168,3 +168,7 @@ remain separate and were not exercised.
 This completes UC01's selected unavailable-function inventory. UC02–UC07 remain
 open; existing audio work is retained as scoped prior evidence. No runtime code,
 mainboard/Extender firmware, startup or benchmark was changed. Notify and stop.
+
+Hardware voice notification completed with a fresh audio_commands=pass receipt;
+original startup reverified unchanged; SD service exited to Legacy MOS.
+Human hearing is separate. All changes committed locally; no push.
