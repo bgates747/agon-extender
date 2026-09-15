@@ -2901,3 +2901,9 @@ behavior. TODO.md remains the single authoritative work index.
 ## Audio-first execution resumed
 
 The Author authorizes the [audio framing execution contract](PORT-004/audio-framing/PLAN.md), implementation and hardware tests with spoken notification. Broader unimplemented-command inventory and audio synthesis remain separate.
+
+
+Audio-first slice complete for review: [PORT-004 results](PORT-004/audio-framing/results/README.md).
+144paired pixels and48audio replies pass per route; unmuted Rally capture shows
+intact HUD/sky. This does not check off the full UC01 inventory, all unsupported
+functions, full Wolf3D acceptance or synthesis. Hardware voice sent.

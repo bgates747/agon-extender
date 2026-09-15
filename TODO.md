@@ -72,7 +72,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Finished: --
   - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; QUAL-003 now owns the separately authorized framebuffer-first rerun.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
-  - Planned separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), audio first with PORT-004; exact framing/replies, deterministic sentinels, hardware review. Audio-first repair now authorized: [contract](docs/tasks/PORT-004/audio-framing/PLAN.md).
+  - Planned separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), audio first with PORT-004; exact framing/replies, deterministic sentinels, hardware review. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
   - Started: 2026-09-10
@@ -190,7 +190,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
   - Started: --
   - Finished: --
-  - Status: Audio synthesis/output deferred. Interim command framing/no-op work reprioritized under PORT-003 UC01–UC07; retains audio reply and Wolf3D regression obligations. Audio-first repair now authorized: [contract](docs/tasks/PORT-004/audio-framing/PLAN.md).
+  - Status: Audio synthesis/output deferred. Interim command framing/no-op work reprioritized under PORT-003 UC01–UC07; retains audio reply and Wolf3D regression obligations. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
   - Details: [PORT-004](docs/tasks/PORT-004.md)
 
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**

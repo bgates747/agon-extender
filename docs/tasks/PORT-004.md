@@ -1,5 +1,13 @@
 # PORT-004 — Implement the P4 PCM scheduler and network audio sink
 
+## Current result — audio framing only
+
+The [framing repair](PORT-004/audio-framing/results/README.md) passed paired
+hardware144pixel/48reply checks and an unmuted Rally capture. Installed P4 r21
+retains stock dispatch/replies and returns unavailable statuses; no synthesis.
+Hardware voice sent, Legacy MOS prompt, human full-game review pending.
+Older deferrals below are historical and superseded only for this bounded slice.
+
 ## Current framing-only amendment
 
 The Author has reprioritized safe consumption of unimplemented commands under

@@ -18,7 +18,7 @@ of the wider unimplemented-command inventory. Existing broader items remain.
 3. [x] AF03: Host tests for all branches, lengths, sentinels, truncation and replies.
 4. [x] AF04: Install identified candidate; test unmuted Rally and deterministic
    graphics/audio sentinel streams against unchanged stock mainboard VDP.
-5. [ ] AF05: Preserve results/usable startup, hardware voice and review stop.
+5. [x] AF05: Preserve results/usable startup, hardware voice and review stop.
 
 ## Grammar and implementation policy
 
@@ -106,3 +106,9 @@ validation remain AF04. Fixture source is fixture/src/main.c (AFPROBE-r01):
 It takes `<output.csv> stock|unavailable`; this changes only reply expectations,
 not bytes sent to the VDP. Caller must select mode136. Existing output files
 cause refusal; retain failed journals rather than overwriting them.
+
+
+AF04/AF05 complete: [results](results/README.md). Paired hardware correctness and
+unmuted Rally capture pass. Original startup restored and read back; fresh
+hardware voice receipt passes; Legacy MOS prompt. Human full-game acceptance
+and promotion of reusable gates remain pending. No experimental push.

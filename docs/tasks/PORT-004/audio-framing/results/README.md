@@ -76,3 +76,9 @@ render timing. No reset/retry was needed for that run.
 Human unmuted Rally/Nurples review, full Wolf3D acceptance, broader unimplemented
 command inventory and the numeric audit remain separate. Audio synthesis stays
 deferred. Experimental changes remain local until review.
+
+
+Hardware spoken attention playback replaced a fresh pending marker with
+`audio_commands=pass`. Original autoexec was restored and read back unchanged;
+the Agon returned to the Legacy MOS prompt. Human hearing/full-game acceptance
+is pending. See notification.json. All source/results are committed locally.
