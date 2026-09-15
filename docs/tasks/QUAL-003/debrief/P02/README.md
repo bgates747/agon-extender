@@ -53,7 +53,7 @@ Author-specified product requirements.
 ## Execution checklist
 
 1. [x] I01: Implement and host-check default-off controls; freeze candidate source.
-2. [ ] I02: Build/hash/preserve/deploy/verify candidate and fixture readiness.
+2. [x] I02: Build/hash/preserve/deploy/verify candidate and fixture readiness.
 3. [ ] I03: Run and validate four controls, repeat informative contrast as needed.
 4. [ ] I04: Interpret per-operation/output and paced completion separately;
    select at most one justified P02c change or stop with a proposed next step.
@@ -65,3 +65,8 @@ invalid selectors, repeated arm rejection, phase accounting, in-flight stop
 join, producer-only cache reuse/invalidation, geometry bounds and slot capacity.
 The stop dump copies counters under exclusion and prints only after releasing
 it. Normal/prebuilt keep the existing network sender and browser protocol.
+
+I02 candidate r45 built successfully; installed r43 was preserved and matched
+before writing. Candidate flash was readback verified and boot/native USB
+startup identity observed. Original startup and r05 fixture were read back.
+P01's full asset readback is reused with no intervening asset writes.
