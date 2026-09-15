@@ -2,10 +2,12 @@
 
 ## Executive summary
 
-The first stock-mainboard software-sprite pilot completes all600 boundaries with
-no query error. After120 warmup boundaries, all479 measured intervals are two
-120Hz ticks: **16.667ms / 60.0 completed frames per second**. This establishes a
-scoped pilot baseline, not a parity result. P4 comparisons remain in progress.
+Both software- and hardware-sprite pilots record600 successful boundaries on
+mainboard and P4. Their gameplay fingerprints match. Fenced software drawing
+completes at60FPS even with web output active, but the laptop browser receives
+only about7–8FPS. Hardware sprites do not remove that visible-output gap.
+This is not a parity success: output diagnosis, heavier loads and controls remain.
+Hardware-sprite scanout is not certified by the pixel-query boundary.
 
 ## Pilot validation
 
@@ -62,3 +64,15 @@ matched game completion. Output and then heavier/repeated workloads require
 further work. Headless production observation and EVF captures remain in ignored
 bench evidence, with served web assets and observer hashes. The terminal capture
 shows Nurples scenery/HUD plus fixture/MOS completion text.
+
+## Hardware-sprite pilot
+
+Both routes complete600 boundaries without query failures. The479 post-warmup
+intervals are all16.667ms, and both state fingerprints equal the SW pilot.
+Evidence: hardware-sprite-pair.json and NPHL1.BIN/NPHE1.BIN. P4 production
+web capture remains connected throughout both runs; its final10second delivery
+is7.12FPS. The terminal output shows the expected same scene, plus test/MOS
+text. A single terminal image is not a complete animation/scanout oracle.
+
+These HW timestamps are command/drawing boundaries, not measured physical
+hardware-sprite scanout; retain this distinction in summaries and comparisons.

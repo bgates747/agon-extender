@@ -112,7 +112,7 @@ N02 pilot checkpoints (agent-assigned subdivisions of the frozen paired work):
 1. [x] N02a: Legacy r01 SW pilot:600 records, no query error, live gameplay/PRNG
    progression; measured60.0 completedFPS. See results/README.md. Full staging
    and both readbacks passed; reuse assets for subsequent runs.
-2. [ ] N02b: Same r01 SW binary on P4 without output, then with production web
+2. [x] N02b: Same r01 SW binary on P4 without output, then with production web
    streaming. Compare state fingerprints before interpreting timing differences.
 3. [ ] N02c: Hardware-sprite variant on both routes, with P4 output captures.
    Follow with corrected unfenced controls and repeats needed for conclusions.
@@ -134,3 +134,7 @@ probes if existing evidence cannot isolate the cost. Keep all such additions
 agent-assigned, retain r22 rollback, and never change stock drawing semantics
 just to make output easier. No EMOS change is currently justified: the P4
 no-output and active-output completed-work pilot both match mainboard.
+
+N02b complete: SW600-record fingerprints and measured60FPS match on both P4
+controls. N02c hardware pair also completes with the same fingerprint; corrected
+unfenced controls, heavier workload validation and repeats remain outstanding.
