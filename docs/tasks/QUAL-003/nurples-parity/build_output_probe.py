@@ -8,14 +8,15 @@ from pathlib import Path
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');p.add_argument('--draw-twice',action='store_true');p.add_argument('--draw-four',action='store_true');p.add_argument('--no-graphics-timing',action='store_true');p.add_argument('--internal-pools',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');p.add_argument('--output-below-parser',action='store_true');p.add_argument('--row-timing',action='store_true');p.add_argument('--internal-framebuffer',action='store_true');p.add_argument('--internal-game-mode',action='store_true');p.add_argument('--output-draw-core',action='store_true');p.add_argument('--blocking-consumer',action='store_true');p.add_argument('--output-between-tasks',action='store_true');p.add_argument('--row-pair',action='store_true');p.add_argument('--refresh-trace',action='store_true');p.add_argument('--draw-twice',action='store_true');p.add_argument('--draw-four',action='store_true');p.add_argument('--no-graphics-timing',action='store_true');p.add_argument('--internal-pools',action='store_true');p.add_argument('--no-frame-timing',action='store_true');a=p.parse_args()
  assert a.lookahead, 'Use the frozen d007496 builder for r24; current source is the r25 lookahead experiment'
  root=Path.cwd();parent=a.parent.resolve();out=a.output.resolve()
  assert not subprocess.check_output(['git','status','--porcelain'],text=True)
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
- revision='r42' if a.internal_pools else 'r41' if a.no_graphics_timing else 'r40' if a.draw_four else 'r39' if a.draw_twice else 'r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ revision='r43' if a.no_frame_timing else 'r42' if a.internal_pools else 'r41' if a.no_graphics_timing else 'r40' if a.draw_four else 'r39' if a.draw_twice else 'r38' if a.refresh_trace else 'r37' if a.row_pair else 'r36' if a.output_between_tasks else 'r35' if a.blocking_consumer and a.output_draw_core else 'r34' if a.blocking_consumer else 'r33' if a.output_draw_core else 'r32' if a.internal_game_mode else 'r31' if a.internal_framebuffer else 'r30' if a.row_timing else ('r29' if a.output_below_parser else ('r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))))
+ assert not a.no_frame_timing or a.internal_pools
  assert not a.internal_pools or (a.no_graphics_timing and a.internal_game_mode)
  assert not a.no_graphics_timing or a.draw_four
  assert not a.draw_four or a.draw_twice
@@ -55,6 +56,12 @@ def main():
   definitions=selection['component_compile_definitions']
   assert definitions.count('AGON_GRAPHICS_TIMING=1')==1
   definitions.remove('AGON_GRAPHICS_TIMING=1')
+  if a.no_frame_timing:
+   assert definitions.count('AGON_EXTENDER_FRAME_TIMING=1')==1
+   definitions.remove('AGON_EXTENDER_FRAME_TIMING=1')
+   units=selection['project_translation_units']
+   assert units.count('video/extender/diagnostics/frame_timing.cpp')==1
+   units.remove('video/extender/diagnostics/frame_timing.cpp')
   (tree/selection_name).write_text(json.dumps(selection,indent=2)+'\n')
  (tree/'vdp/.pio').mkdir();(tree/'vdp/.pio/packages').symlink_to(root/'vdp/.pio/packages',target_is_directory=True)
  shutil.copytree(source/'vdp/managed_components',tree/'vdp/managed_components')
@@ -85,14 +92,17 @@ def main():
  if a.dispatch_timing:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1'
  with (out/'platformio.ini').open('w') as f:cfg.write(f)
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-'+revision+'-b'+stamp
- manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'internal_multiple_pools':a.internal_pools,'historical_graphics_timing_enabled':not a.no_graphics_timing,'drawing_opportunities_per_frame':4 if a.draw_four else 2 if a.draw_twice else 1,'draw_twice_enabled':a.draw_twice,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
+ manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'historical_frame_timing_enabled':not a.no_frame_timing,'internal_multiple_pools':a.internal_pools,'historical_graphics_timing_enabled':not a.no_graphics_timing,'drawing_opportunities_per_frame':4 if a.draw_four else 2 if a.draw_twice else 1,'draw_twice_enabled':a.draw_twice,'refresh_trace_enabled':a.refresh_trace,'rows_per_batch':2 if a.row_pair else 1,'blocking_snapshot_consumer':a.blocking_consumer,'output_task_core':0 if a.output_draw_core else 1,'internal_game_mode_only':a.internal_game_mode,'internal_framebuffer_enabled':a.internal_framebuffer,'row_timing_enabled':a.row_timing,'output_task_priority':4 if a.output_between_tasks else 2 if a.output_below_parser else 6,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)
  assert all(sha(source/n)==h for n,h in pinned.items())
  if a.no_graphics_timing:
   generated='vdp/video/CMakeLists.txt'
-  assert (tree/generated).read_text()==(source/generated).read_text().replace('  AGON_GRAPHICS_TIMING=1\n','')
+  expected=(source/generated).read_text().replace('  AGON_GRAPHICS_TIMING=1\n','')
+  if a.no_frame_timing:
+   expected=expected.replace('  AGON_EXTENDER_FRAME_TIMING=1\n','').replace('    "${CMAKE_CURRENT_LIST_DIR}/extender/diagnostics/frame_timing.cpp"\n','')
+  assert (tree/generated).read_text()==expected
  assert all(sha(tree/n)==h for n,h in pinned.items() if n!='vdp/pio/p4-console-identity.json' and n not in probe_files and not (a.no_graphics_timing and n in (selection_name,'vdp/video/CMakeLists.txt')))
  outputs={}
  for n in ('firmware.bin','firmware.elf','firmware.factory.bin','partitions.bin','bootloader.bin'):
@@ -105,6 +115,9 @@ def main():
  if a.dispatch_timing:assert b'credit_to_ready' in (out/'firmware.bin').read_bytes() and b'ready_to_send' in (out/'firmware.bin').read_bytes()
  symbols=subprocess.check_output(['nm','-C',str(out/'firmware.elf')],text=True)
  if a.no_graphics_timing:assert 'agon_graphics_timing::' not in symbols
+ if a.no_frame_timing:
+  assert 'agon::extender::diagnostics::frameRecorder' not in symbols
+  assert 'agon::extender::diagnostics::timingJson' not in symbols
  assert 'agon::extender::diagnostics::videoRecorder' in symbols
  if a.uart_alignment:
   assert 'ConsoleStream::readBytes(' in symbols
