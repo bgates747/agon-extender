@@ -1098,3 +1098,36 @@ refresh/output observers remain. The first build was rejected because a second
 component-definition source retained the flag. The corrected build then required
 the integrity checker to allow exactly the generated CMake definition deletion;
 all other unselected source hashes remain pinned. Neither rejected image flashed.
+
+### N04ab — Exercise the stock multi-pool internal allocator
+
+AGENT-ASSIGNED, not separately Author-approved. r41 HW first still misses the
+p95 gate28.967ms; do not repeat it. Both first cases selected PSRAM. Finish
+its current observer/service control before deployment. This allocation control
+changes P4 memory placement only, preserving the stock rendering implementation.
+
+Research baseline remains official VDP2.16.0 c7ac293d2aa81ddfa693390549bcd909069c8fc3,
+VDP-GL ac2dd5986daf496c43ae8e7fe41836274aec54a0. Its
+src/dispdrivers/vgapalettedcontroller.cpp::allocateViewPort requests INTERNAL;
+vgabasecontroller.cpp::allocateViewPort uses multiple pools and may shorten
+height on exhaustion. freeViewPort frees pools and row pointers, nulling them.
+No stock source change is proposed. The P4 whole-largest-block preflight was
+our experiment's constraint, not an upstream requirement.
+
+1. [ ] N04ab-i: Add a default-off isolated r42 option using the unchanged stock
+   INTERNAL multi-pool allocator only for eligible512x384 single-buffer mode.
+   Require sufficient total free memory for framebuffer plus stock reserve
+   before attempting; if actual height is short, free the partial viewport,
+   restore requested height, and retry PSRAM before publishing row pointers.
+   Preserve all rows; log actual selection/height and free-memory evidence.
+   Keep r41 observer, scheduler, locks and workload unchanged. Host exercise
+   successful fragmented allocation and insufficient/partial fallback with
+   cleanup checks; verify candidate build and full dimensions on hardware.
+2. [ ] N04ab-ii: After r41 finishes, preserve/verify its rollback and install r42.
+   Identical paired SW/HW180second streaming controls and health checks; retain
+   actual memory selection per run. Repeat only initial timing passes. Reject
+   missing rows, allocation errors, bad pixels, input/service regression or
+   incomplete traces; no production promotion or experimental push.
+3. [ ] N04ab-iii: Compare all results and repeat apparent parity under N05.
+   If allocation still falls back, do not claim internal-memory performance.
+   If timing still fails, record the result before choosing another hypothesis.
