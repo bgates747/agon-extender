@@ -64,7 +64,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Started: 2026-09-09
   - Status: EDP visual PASS retained. Framebuffer-first exploratory results ready for Author review: 39-case baseline completed 624/624 intervals with zero P4 snapshots; known SHP23 probe differences only. BSP30 stress page excluded after two preserved mainboard timeouts/scanout artifacts. Primitive gains and upload/submission slowdown recorded; ordinary mainboard firmware and keyboard/SD recovered. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
-  - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: current road-section stream differs at 14/80 samples; simpler probes pass. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). Startup restored, hardware voice passed; fixes await review. Golem excluded.
+  - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: current road-section stream differs at 14/80 samples; simpler probes pass. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). Next: RX06 immediate correction/test, RX07 enumeration only, RX08 mandatory Author review, then approved corrections and deterministic stock comparisons. Current turn planning only. Golem excluded.
 
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
@@ -72,6 +72,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Finished: --
   - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; QUAL-003 now owns the separately authorized framebuffer-first rerun.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
+  - Planned separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), audio first with PORT-004; exact framing/replies, deterministic sentinels, hardware review. Planning only this turn.
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
   - Started: 2026-09-10
@@ -184,7 +185,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
   - Started: --
   - Finished: --
-  - Status: Deferred by the Author until audio implementation is requested; includes audio-command framing defect and Wolf3D retest.
+  - Status: Audio synthesis/output deferred. Interim command framing/no-op work reprioritized under PORT-003 UC01–UC07; retains audio reply and Wolf3D regression obligations. Planning only this turn.
   - Details: [PORT-004](docs/tasks/PORT-004.md)
 
 - [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**

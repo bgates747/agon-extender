@@ -2247,3 +2247,12 @@ The exact pre-run EMOS/VDP/P4/startup is restored; CLI/SD/input checks pass and
 the hardware voice command has a fresh receipt. Human hearing/review remains
 open. No experimental push or new graphics qualification. Stop for Author
 review before EMOS E08 correctness stress and E09 rendering.
+
+## Planned F004 consumption continuation
+
+The Author reprioritized the existing F004 reachability obligation through
+[PORT-003 UC01–UC07](PORT-003.md#unimplemented-command-consumption-tranche),
+with audio grammar/status authority in PORT-004. Reuse EMOS-owned routing and
+normal reply paths; do not add transport bypasses. The current turn only updates
+tasks and issues the hardware voice notification, then stops. No transport or
+firmware implementation is started by this note.

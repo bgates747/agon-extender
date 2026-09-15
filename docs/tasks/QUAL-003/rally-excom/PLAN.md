@@ -56,10 +56,44 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    restore usable bench if required and play hardware British voice alert
    (spoken emulator fallback only if hardware unavailable). Otherwise expand
    through the existing relevant suite until a defect emerges or it completes.
-6. [ ] RX06: After Author review, implement minimal fixes in discrete commits,
-   repeat failed cases then broaden relevant suite; preserve regression evidence.
-   End with Author's manual Rally/Nurples review. No experimental push without
-   review. This item is gated, not automatically released by diagnosis.
+6. [ ] RX06: Fix and test the immediate buffered-road conversion problem using
+   the smallest compatibility adaptation. Preserve stock signed fixed-point
+   semantics, explicit representable ranges and truncation; never rely on a
+   compiler flag to define an invalid float-to-unsigned cast. Test finite
+   negative/zero/positive values, boundaries, widths and shifts; explicitly
+   disposition NaN/infinity/overflow without inventing stock behavior. Rerun
+   unchanged r03 against stock mainboard VDP, with clean committed candidates
+   and exact firmware hashes. If it does not converge, report and reassess the
+   hypothesis before expanding fixes. No Golem or unrelated changes.
+7. [ ] RX07: After RX06, search and ENUMERATE ONLY every instance of this
+   conversion hazard in code already ported/selected for P4, including retained
+   upstream dependencies, adapters, implicit conversions and equivalent helper
+   paths. Use the existing dependency/source-selection authority to define the
+   audited closure. Record stable finding IDs, file/function/line, source hash,
+   upstream origin, source/destination types, range assumptions, risk, stock
+   behavior evidence, proposed test and confidence. Separate confirmed issues,
+   candidates and reviewed nonissues. Record search methods, exclusions and
+   limits; text search alone does not prove exhaustiveness. Make no additional
+   conversion corrections during enumeration.
+8. [ ] RX08: Present the enumeration to the Author, notify on hardware and STOP.
+   Each disposition must identify which findings may be corrected. Silence or
+   completion of the search does not authorize bulk edits.
+9. [ ] RX09: Only after enumeration review, correct the approved findings in
+   discrete commits with minimal platform adaptations and regression tests.
+   Keep unapproved findings open. Do not modify official reference checkouts.
+10. [ ] RX10: Exercise those corrections deterministically against the pinned
+    stock VDP on hardware, with identical input streams, explicit oracles,
+    boundary/negative cases and retained failures. Start with each finding's
+    regression, then relevant broader graphics cases and current Rally. Keep
+    rendering, transport and browser timing separate; report ms and percentage
+    differences relative to stock only for comparable measurements. Finish with
+    the Author's manual Rally/Nurples review. HUD remains open unless reproduced
+    and resolved; linked no-op framing work has its own scope and evidence.
+11. [ ] RX11: Promote accepted conversion protections and upstream-update gates
+    into existing docs/procedures and docs/dependencies infrastructure. Link
+    each adaptation to its upstream location, rationale and executable tests;
+    require reconciliation and fresh conversion-site review on upstream import.
+    Keep this task's raw evidence in place; do not create competing authorities.
 
 ## Execution policy
 
@@ -115,3 +149,19 @@ and performance comparisons remain open, not waived by this finding.
 RX05 complete: original startup restored/read back, older backup preserved,
 Legacy MOS prompt, hardware voice command receipt passed. RX06 remains gated
 for Author review of the actionable road defect.
+
+## Author sequencing amendment — planning-only turn
+
+The Author selected RX06 immediate repair/test, then RX07 enumeration only,
+then the mandatory RX08 review stop, then approved RX09 corrections and RX10
+stock-comparison testing. This amendment supersedes the earlier generic RX06
+hold for the future work sequence, but **this turn authorizes task-document
+changes and the voice notification only**. Do not implement, enumerate source
+sites, build, flash or run tests until execution resumes after this stop.
+No experimental push without review. Hardware voice at required review stops.
+
+Separately, PORT-003's unimplemented-command consumption tranche owns safe
+no-op handlers, with audio obligations retained in PORT-004. Do not mix that
+change into the numeric correction candidate. Rally mute/audio A/B and command
+framing probes belong to that tranche; the proposed relationship to HUD flicker
+remains a hypothesis.

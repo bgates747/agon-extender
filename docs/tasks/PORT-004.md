@@ -1,5 +1,18 @@
 # PORT-004 — Implement the P4 PCM scheduler and network audio sink
 
+## Current framing-only amendment
+
+The Author has reprioritized safe consumption of unimplemented commands under
+[PORT-003 UC01–UC07](PORT-003.md#unimplemented-command-consumption-tranche).
+This supersedes the prior prohibition on interim audio framing repair **only
+for that tranche**. Audio synthesis, PCM scheduling and sink implementation
+remain deferred. Current turn: task documents and hardware voice only, then
+stop; no implementation or tests. Reuse the existing grammar/reply/framing
+obligations below rather than creating a parallel audio task. Safe no-op execution
+must still consume exact payloads and handle required status replies; it must
+not pretend unavailable audio played. Rally HUD/audio causation requires the
+planned matched mute/enabled and framing tests.
+
 ## State
 
 - Status: Deferred by the Author on 2026-09-10 until the Author chooses to begin audio implementation

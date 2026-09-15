@@ -1,5 +1,7 @@
 # PORT-003 — Implement the P4 display backend and logical frame service
 
+Current planned addition: [unimplemented-command consumption](#unimplemented-command-consumption-tranche). Task documents only in the current turn; no implementation started.
+
 ## Governing priority — faithful upstream backend, 2026-09-10
 
 The Author has made [AUDIT-006](AUDIT-006.md) the first priority and expanded it
@@ -2831,3 +2833,66 @@ in [video-throughput/README.md](PORT-003/video-throughput/README.md). Existing
 R1/R2/R3 evidence and the held QUAL-003 failure remain scoped historical records.
 Experiments stay local; the live project's remote must not receive experimental
 code before explicit Author review. Preserve concurrent keyboard/SD/remote work.
+
+## Unimplemented-command consumption tranche
+
+### Executive summary
+
+The Author requests safe no-op treatment for unimplemented VDP functions:
+P4 EDP must consume each complete command payload without allowing argument
+bytes to become subsequent VDU commands. This is protocol compatibility work,
+not implementation of audio synthesis, a new sink, or an upstream redesign.
+This turn is planning-only, followed by hardware voice and stop. The earlier
+PORT-004 deferral is lifted only for this framing/no-op tranche when execution
+resumes; synthesis and output remain deferred.
+
+1. [ ] UC01: Inventory every unimplemented function reachable through the
+   selected P4 VDU parser, including audio, updater and other selected adapters.
+   Reuse PORT-008 F004 reachability and PORT-004's existing audio grammar work.
+   For each command/subcommand record selected official version, exact grammar,
+   optional/variable lengths, terminators, command-dependent fields, required
+   response packets and parser ownership. Do not assume fixed lengths or infer
+   boundaries from whether a byte looks like another command.
+2. [ ] UC02: Freeze the no-op contract before coding. Preserve the official
+   parser wherever it compiles; replace only unavailable execution/backend
+   effects with a bounded discard sink. Consume streaming payloads without
+   allocating the full payload merely to discard it. Complete legitimate
+   command framing before resuming top-level parsing. Preserve already
+   implemented behavior; stubs must not disable functional commands.
+3. [ ] UC03: Specify replies/status and malformed/truncated behavior per command.
+   No rendering/audio side effect does not necessarily mean no reply: preserve
+   required protocol replies through EMOS so applications do not hang, using
+   documented unsupported/failure behavior rather than claiming successful
+   playback. Record gaps for review. With an unframed byte stream, do not claim
+   arbitrary truncation/unknown commands can be resynchronized by guessing or
+   swallowing the next valid command. Match stock grammar/timeouts where
+   applicable and explicitly disposition unsupported recovery cases.
+4. [ ] UC04: Implement reviewed handlers with narrowly scoped commits. P4
+   consumes/discards the payload; EMOS remains route/reply authority. No
+   unsolicited audio forwarding to mainboard and no new sink architecture.
+   Keep numeric-conversion fixes in separate candidates for attribution.
+5. [ ] UC05: Deterministic parser tests: every command followed immediately by
+   a known graphics/text/query sentinel; back-to-back commands, payload bytes
+   that resemble VDU controls, optional fields, zero/boundary lengths and
+   split transport chunks. Exercise malformed/truncated input under UC03's
+   explicit contract. Verify exact consumed byte counts, sentinel recognition,
+   required responses, bounded memory and absence of unavailable side effects.
+   Compare parsing/reply obligations against pinned stock, not missing output.
+6. [ ] UC06: Verify whether current Rally mute suppresses all initialization,
+   gameplay and shutdown audio commands. Run the same identified binary with
+   audio enabled and muted on ExCom, with matching Legacy controls. Then test
+   the corrected stub using the enabled stream and deterministic sentinels.
+   The Author's HUD/audio hypothesis is plausible; the empty audio handler is
+   already documented in PORT-004, but causation for Rally HUD loss remains
+   unproved. Preserve measurements and snapshots without calling browser FPS
+   renderer FPS. Include the retained Wolf3D framing regression when applicable.
+7. [ ] UC07: Hardware voice and review stop with exact candidates/results and
+   a usable restored bench. Human Rally/Nurples validation remains required.
+   Promote accepted grammar/stub obligations into existing compatibility and
+   upstream-update checks so future imports cannot silently restore empty
+   handlers. Do not mark full audio support complete or push experimental
+   firmware before review.
+
+PORT-004 retains audio-specific obligations; PORT-008 retains transport/reply
+reachability. This task owns the executable parser binding and generic discard
+behavior. TODO.md remains the single authoritative work index.
