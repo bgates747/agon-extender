@@ -872,7 +872,7 @@ measure the actual retained renderer's RefreshSprites completions.
    commands to65535, whose documented behavior is consume/discard. Stop after
    the existing terminal pixel fence, then dump the bounded trace to native
    USB. Reject overflow, nonce mismatch, unbalanced counts and malformed markers.
-2. [ ] N04w-ii: Create isolated r05 fixture variants from the same pinned repair
+2. [x] N04w-ii: Create isolated r05 fixture variants from the same pinned repair
    source. Add one initial drain before the start marker and an end marker
    after the existing terminal fence. Preserve fixed simulation/input and NP04
    result validation; new code addresses require fresh matched comparisons.
@@ -909,3 +909,11 @@ N04w-i implemented: host sanitizer tests pass bounds, nonce rejection, lifecycle
 imbalance and malformed-marker checks. Enqueue and completion timestamps share
 a bounded4096-entry PSRAM array. No per-frame output. r05 SW/HW assemble from
 identical r04-pinned repair sources; candidate build/link verification is next.
+
+N04w-ii build/link checks passed: r38-b2026-09-15-14-52-15Z includes
+recorder and markers; source delta to r22 for the two added hook files is
+strictly optional observation code. Fresh stock controls use the same r05
+unfenced binaries; their submission60Hz ceiling is separately scoped from the
+P4 completion trace and previous stock completion-query controls. No same-probe
+mainboard microsecond completion trace is claimed. Deployment/readback remains
+the prerequisite to N04w-iii hardware execution.

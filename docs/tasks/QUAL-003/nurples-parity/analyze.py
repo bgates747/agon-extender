@@ -3,13 +3,13 @@ import argparse,json,statistics,hashlib
 from pathlib import Path
 
 def parse(path, variant="fenced-sw", nonce=None, expected_capacity=None):
- assert variant in ("fenced-sw", "fenced-hw", "unfenced-sw")
+ assert variant in ("fenced-sw", "fenced-hw", "unfenced-sw", "unfenced-hw")
  b=path.read_bytes();verified=b[:4]==b'NP04';sustained=b[:4] in (b'NP03',b'NP04')
  if verified:
   assert len(b)>=24 and nonce is not None and len(nonce)==8 and expected_capacity in (600,2400),'NP04 requires expected nonce/capacity'
   header,stride,capacity=24,b[13],int.from_bytes(b[10:13],'little')
   assert b[14:22]==nonce and b[22:24]==b'\0\0','Run nonce/reserved mismatch'
-  assert b[9]=={'fenced-sw':1,'fenced-hw':3,'unfenced-sw':0}[variant],'Fixture variant mismatch'
+  assert b[9]=={'fenced-sw':1,'fenced-hw':3,'unfenced-sw':0,'unfenced-hw':2}[variant],'Fixture variant mismatch'
   assert stride==12 and capacity==expected_capacity,'Fixture capacity/stride mismatch'
  else:
   header,stride,capacity=(9,12,2400) if sustained else (8,11,600)
@@ -28,7 +28,7 @@ def parse(path, variant="fenced-sw", nonce=None, expected_capacity=None):
   tick_histogram={str(k):delta.count(k) for k in sorted(set(delta))},
   state_sha256=hashlib.sha256(b''.join(x[3:] for x in rows)).hexdigest(),
   variant=variant,
-  completion_scope=('submission/vblank boundary; terminal fence only' if variant=='unfenced-sw' else 'pixel-query drawing completion boundary; no hardware-sprite scanout proof'))
+  completion_scope=('submission/vblank boundary; terminal fence only' if variant.startswith('unfenced-') else 'pixel-query drawing completion boundary; no hardware-sprite scanout proof'))
 
  if sustained:
   live=[x[11] for x in rows]
@@ -36,6 +36,6 @@ def parse(path, variant="fenced-sw", nonce=None, expected_capacity=None):
  return result
 
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);p.add_argument('--nonce');p.add_argument('--capacity',type=int,choices=[600,2400]);p.add_argument('--variant',choices=['fenced-sw','fenced-hw','unfenced-sw'],default='fenced-sw');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);p.add_argument('--nonce');p.add_argument('--capacity',type=int,choices=[600,2400]);p.add_argument('--variant',choices=['fenced-sw','fenced-hw','unfenced-sw','unfenced-hw'],default='fenced-sw');a=p.parse_args()
  results=[parse(f,a.variant,bytes.fromhex(a.nonce) if a.nonce else None,a.capacity) for f in a.files];s=json.dumps(results,indent=2);print(s)
  if a.output:a.output.write_text(s+'\n')
