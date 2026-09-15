@@ -169,6 +169,9 @@ void StockP4Service::publish() {
   if (snapshots_.tryBegin(display.getViewPortWidth(), display.getViewPortHeight(),
                           esp_timer_get_time(), view) != SnapshotBeginResult::Ok) return;
   assert(view.packed_pixels && !view.pixels);
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+  controller_->outputRowTiming().reset();
+#endif
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::Snapshot,
       (static_cast<std::uint32_t>(view.width) << 16) | view.height);
   alignas(8) std::uint8_t signal[kPresentationSnapshotMaximumWidth];
@@ -181,5 +184,9 @@ void StockP4Service::publish() {
   }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+  if (complete) controller_->outputRowTiming().publish(
+      (static_cast<std::uint32_t>(view.width) << 16) | view.height);
+#endif
 }
 } // namespace agon::extender::display

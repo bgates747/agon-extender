@@ -18,7 +18,7 @@ GATE=r'''(() => {
    this.addEventListener('message',e=>{
     if(!(e.data instanceof ArrayBuffer))return;
     const b=new DataView(e.data);if(b.byteLength<32 || b.getUint32(0)!==0x45564631)return;
-    g.inflight--;g.received++;g.frames.push({ms:performance.now(),sequence:b.getUint32(8,true),width:b.getUint16(12,true),height:b.getUint16(14,true),bytes:b.byteLength});
+    g.lastFrame=e.data;g.inflight--;g.received++;g.frames.push({ms:performance.now(),sequence:b.getUint32(8,true),width:b.getUint16(12,true),height:b.getUint16(14,true),bytes:b.byteLength});
    });
    this.addEventListener('close',e=>g.closes.push({code:e.code,reason:e.reason}));
   }
@@ -27,8 +27,8 @@ GATE=r'''(() => {
 })();'''
 
 def main():
- p=argparse.ArgumentParser();p.add_argument('--url',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--seconds',type=float,default=10);p.add_argument('--receive-only',action='store_true');p.add_argument('--browser-executable');a=p.parse_args()
- assert 1<=a.seconds<=60;a.output.mkdir(parents=True,exist_ok=False);url=a.url.rstrip('/');record={'scope':'quiescent snapshot/socket counter deltas; browser received FPS separately','receive_only':a.receive_only,'observer_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
+ p=argparse.ArgumentParser();p.add_argument('--url',required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--seconds',type=float,default=10);p.add_argument('--receive-only',action='store_true');p.add_argument('--browser-executable');p.add_argument('--signal-ready',action='store_true');p.add_argument('--start-delay',type=float,default=0);a=p.parse_args()
+ assert 1<=a.seconds<=60 and 0<=a.start_delay<=60;a.output.mkdir(parents=True,exist_ok=False);url=a.url.rstrip('/');record={'scope':'quiescent snapshot/socket counter deltas; browser received FPS separately','receive_only':a.receive_only,'observer_sha256':hashlib.sha256(Path(__file__).read_bytes()).hexdigest()}
  def read():
   with urlopen(url+'/diagnostics/video-timing',timeout=5) as r:return json.load(r)
  for name in ('index.html','app.js','frame_protocol.js','webgl2_presenter.js'):
@@ -44,7 +44,10 @@ def main():
    page.goto(url,wait_until='domcontentloaded')
    if a.receive_only:page.evaluate("() => {const w=new WebSocket('ws://'+location.host+'/video');w.binaryType='arraybuffer';w.onopen=()=>w.send('frame');w.onmessage=()=>w.send('frame');}")
    else:page.click('#connect')
-   page.wait_for_function('__outputGate.received>=10',timeout=20000);stop();record['before']=read()
+   page.wait_for_function('__outputGate.received>=10',timeout=20000)
+   if a.signal_ready:(a.output/'ready.json').write_text(json.dumps({'connected':True})+'\n')
+   if a.start_delay:page.wait_for_timeout(a.start_delay*1000)
+   stop();record['before']=read()
    record['start_ms']=page.evaluate('performance.now()');record['start_received']=page.evaluate('__outputGate.received')
    page.evaluate("__outputGate.stop=false;__outputGate.socket.send('frame')")
    page.wait_for_timeout(a.seconds*1000);stop();record['end_ms']=page.evaluate('performance.now()');record['after']=read()
@@ -55,10 +58,11 @@ def main():
    rows=[]
    for b,e in zip(record['before']['phases'],record['after']['phases']):
     assert b['name']==e['name'];n=e['count']-b['count'];units=e['units']-b['units'];us=e['total_us']-b['total_us'];assert n>0
-    expected={'snapshot':512*384,'socket_send':512*384+32,'credit_to_ready':1,'ready_to_send':1}[e['name']];assert units==n*expected,(e['name'],n,units,expected)
+    expected={'snapshot':512*384,'socket_send':512*384+32,'credit_to_ready':1,'ready_to_send':1,'row_wait_sum':384,'row_work_sum':384}[e['name']];assert units==n*expected,(e['name'],n,units,expected)
     rows.append({'phase':e['name'],'count':n,'units':units,'mean_ms':us/n/1000})
    frames=[f for f in record['gate']['frames'] if f['ms']>=record['start_ms']];assert len(frames)>1 and all((f['width'],f['height'],f['bytes'])==(512,384,196640) for f in frames)
    record['summary']={'phases':rows,'received_fps':(len(frames)-1)*1000/(frames[-1]['ms']-frames[0]['ms']),'frames':len(frames)};record['status']='pass'
+   (a.output/'last.evf').write_bytes(bytes(page.evaluate('Array.from(new Uint8Array(__outputGate.lastFrame))')))
   except Exception as e:record['status']='failed';record['error']=str(e);raise
   finally:
    record['errors']=errors;(a.output/'result.json').write_text(json.dumps(record,indent=2)+'\n');browser.close()

@@ -18,6 +18,10 @@ enum class VideoPhase { Snapshot, SocketSend };
 #error "Dispatch timing requires the optional output recorder"
 #endif
 
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING) && !defined(AGON_EXTENDER_VIDEO_TIMING)
+#error "Row timing requires the optional output recorder"
+#endif
+
 #if defined(AGON_EXTENDER_VIDEO_TIMING)
 inline FrameRecorder videoRecorder;
 inline std::uint32_t videoTimingNow() noexcept {
@@ -44,6 +48,31 @@ class VideoTimingScope {
  private:
   Token token_;
 };
+
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+// QUAL-003 N04o: one output-task-owned accumulator, no per-row recorder traffic.
+// These are sums of discontiguous wall-time intervals, not continuous spans.
+// Timer reads perturb this diagnostic image; never use it to qualify parity.
+struct VideoRowTotals {
+  std::uint64_t wait_us{}, work_us{};
+  std::uint32_t rows{};
+  void reset() noexcept { wait_us = work_us = 0; rows = 0; }
+  void add(std::uint32_t wait, std::uint32_t work) noexcept {
+    wait_us += wait; work_us += work; ++rows;
+  }
+  void publish(std::uint32_t context) noexcept {
+    const auto end = videoTimingNow();
+    const Phase phases[] = {Phase::Parser, Phase::Sprites};
+    const std::uint64_t sums[] = {wait_us, work_us};
+    for (unsigned i = 0; i < 2; ++i) {
+      const bool valid = sums[i] <= UINT32_MAX;
+      const auto duration = valid ? static_cast<std::uint32_t>(sums[i]) : 0u;
+      auto token = videoRecorder.begin(phases[i], end - duration, context);
+      videoRecorder.end(token, end, valid ? rows : 0);
+    }
+  }
+};
+#endif
 
 #if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
 // Completed intervals only. Callers publish timestamps before credit admission
@@ -77,10 +106,16 @@ inline std::string videoTimingJson() {
 #if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
       , Phase::Queue, Phase::TxEnqueue
 #endif
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+      , Phase::Parser, Phase::Sprites
+#endif
   };
   const char *names[] = {"snapshot", "socket_send"
 #if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
       , "credit_to_ready", "ready_to_send"
+#endif
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+      , "row_wait_sum", "row_work_sum"
 #endif
   };
   for (unsigned i = 0; i < sizeof(phases)/sizeof(phases[0]); ++i) {

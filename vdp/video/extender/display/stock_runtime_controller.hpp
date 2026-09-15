@@ -7,6 +7,9 @@
 #include <memory>
 #include "extender/display/stock_scanline.hpp"
 #include "extender/display/stock_native_access.hpp"
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+#include "extender/diagnostics/video_timing.hpp"
+#endif
 
 namespace agon::extender::display {
 class StockRuntimeController {
@@ -16,6 +19,9 @@ class StockRuntimeController {
   virtual fabgl::VGAPalettedController &paletted() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+  virtual diagnostics::VideoRowTotals &outputRowTiming() noexcept = 0;
+#endif
 };
 
 template<class Depth>
@@ -63,8 +69,19 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
     return count;
   }
 
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+  diagnostics::VideoRowTotals &outputRowTiming() noexcept override { return row_timing_; }
+#endif
   void prepareRow(int y, std::uint8_t *signal) override {
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    const auto before = diagnostics::videoTimingNow();
+    std::uint32_t acquired{}, finished{};
+#endif
+    {
     AGON_STOCK_NATIVE_GUARD;
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    acquired = diagnostics::videoTimingNow();
+#endif
     // A task can be descheduled between rows, unlike the physical rolling
     // scanout deadline. Palette/list mutation may retire its saved Copper
     // node. Rebind only after such a mutation; ordinary rows keep the exact
@@ -75,8 +92,18 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
       palette_revision_ = stockPaletteRevision();
     }
     this->prepareStockRowQuiescent(y, signal);
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    finished = diagnostics::videoTimingNow();
+#endif
+    }
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    row_timing_.add(acquired - before, finished - acquired);
+#endif
   }
  private:
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+  diagnostics::VideoRowTotals row_timing_;
+#endif
   StockExecutionGate execution_;
   std::uint32_t palette_revision_{UINT32_MAX};
 };
