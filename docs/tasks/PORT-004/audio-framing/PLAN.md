@@ -13,9 +13,9 @@ of the wider unimplemented-command inventory. Existing broader items remain.
 
 ## Checklist
 
-1. [ ] AF01: Pin grammar/source, return values and malformed-input limits; freeze.
-2. [ ] AF02: Retain stock dispatcher/reply path, bind bounded unavailable backend.
-3. [ ] AF03: Host tests for all branches, lengths, sentinels, truncation and replies.
+1. [x] AF01: Pin grammar/source, return values and malformed-input limits; freeze.
+2. [x] AF02: Retain stock dispatcher/reply path, bind bounded unavailable backend.
+3. [x] AF03: Host tests for all branches, lengths, sentinels, truncation and replies.
 4. [ ] AF04: Install identified candidate; test unmuted Rally and deterministic
    graphics/audio sentinel streams against unchanged stock mainboard VDP.
 5. [ ] AF05: Preserve results/usable startup, hardware voice and review stop.
@@ -91,3 +91,18 @@ compare framing/graphics and verify P4 failure replies separately. Muted Legacy
 and ExCom visual baselines already accepted by Author; retain those limitations.
 Do not claim browser FPS is renderer throughput. End for human unmuted Rally
 review; no requirement to implement audible P4 synthesis for this tranche.
+
+
+AF01 baseline is pinned in baseline.json. The initial host run passes15,120
+framing/truncation cases. The retained sampleRate unsigned comparison to -1
+produces a sign-compare warning; the host harness permits that existing warning
+rather than changing unrelated stock code. Its unsigned sentinel comparison is
+preserved. This is not the queued floating-point enumeration.
+
+
+AF02/AF03 implementation and host checks complete. The target build and physical
+validation remain AF04. Fixture source is fixture/src/main.c (AFPROBE-r01):
+24 audio commands per page, two pages,48 replies and144 persistent-pixel checks.
+It takes `<output.csv> stock|unavailable`; this changes only reply expectations,
+not bytes sent to the VDP. Caller must select mode136. Existing output files
+cause refusal; retain failed journals rather than overwriting them.

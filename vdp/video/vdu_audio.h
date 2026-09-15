@@ -7,6 +7,10 @@
 #ifndef VDU_AUDIO_H
 #define VDU_AUDIO_H
 
+#ifdef AGON_EXTENDER_P4_BOOT
+#include "agon.h"
+#include "extender/audio/unavailable_audio_adapter.hpp"
+#else
 #include <memory>
 #include <vector>
 #include <unordered_map>
@@ -21,6 +25,7 @@
 #include "envelopes/frequency.h"
 #include "types.h"
 #include "vdu_stream_processor.h"
+#endif
 
 // Audio VDU command support (VDU 23, 0, &85, <args>)
 //
@@ -138,6 +143,8 @@ void VDUStreamProcessor::vdu_sys_audio() {
 
 				case AUDIO_SAMPLE_DEBUG_INFO: {
 					auto bufferId = readWord_t();	if (bufferId == -1) return;
+					#ifndef AGON_EXTENDER_P4_BOOT
+					// P4 has no sample backend. Its debug command still consumes bufferId.
 					debug_log("Sample info: %d\n\r", bufferId);
 					debug_log("  samples count: %d\n\r", samples.size());
 					debug_log("  free mem: %d\n\r", heap_caps_get_free_size(MALLOC_CAP_8BIT));
@@ -157,6 +164,9 @@ void VDUStreamProcessor::vdu_sys_audio() {
 					if (buffer.size() > 0) {
 						debug_log("  data first byte: %d\n\r", buffer[0]->getBuffer()[0]);
 					}
+					#else
+					(void)bufferId;
+					#endif
 				} break;
 
 				default: {
@@ -243,6 +253,7 @@ void VDUStreamProcessor::sendAudioStatus(uint8_t channel, uint8_t status) {
 	send_packet(PACKET_AUDIO, sizeof packet, packet);
 }
 
+#ifndef AGON_EXTENDER_P4_BOOT
 // Load a sample
 //
 uint8_t VDUStreamProcessor::loadSample(uint16_t bufferId, uint32_t length) {
@@ -393,5 +404,7 @@ uint8_t VDUStreamProcessor::setParameter(uint8_t channel, uint8_t parameter, uin
 	}
 	return 0;
 }
+
+#endif // stock audio backend
 
 #endif // VDU_AUDIO_H

@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r20",
+  "source_identity": "uart-excom-console-r21",
   "status": "draft",
-  "note": "NET-001: newest video viewer replaces previous connection; finite static HTTP responses release admission slots; retains RX06 numeric repair. Hardware takeover validation pending."
+  "note": "PORT-004 audio framing-only backend with retained stock dispatcher; preserves NET-001 viewer takeover and RX06 road fix. No P4 synthesis."
 }

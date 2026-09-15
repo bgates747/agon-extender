@@ -1,10 +1,18 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r83
+registry_revision: r84
 updated_at: 2026-09-13T08:46:00Z
 
 artifacts:
+  - artifact_id: audio-framing-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: audio-framing-probe-r01
+    status: draft
+    variants: []
+    description: Paired mode136 persistent-pixel and audio-reply correctness fixture.
+
   - artifact_id: keyboard-screen
     kind: test_fixture
     identity_scheme: revision
@@ -497,7 +505,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r20
+    latest_identity: uart-excom-console-r21
     status: draft
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.

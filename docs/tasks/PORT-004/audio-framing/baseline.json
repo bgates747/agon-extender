@@ -1,0 +1,12 @@
+{
+  "tag": "v2.16.0",
+  "commit": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "files": {
+    "video/vdu_audio.h": "6a479afd49dbb7111a6b3637cad62f3bfacb8fc8ea514799f89431810ee4ba67",
+    "video/agon_audio.h": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+    "video/agon.h": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4"
+  },
+  "docs_commit": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b",
+  "docs_file": "docs/vdp/Enhanced-Audio-API.md",
+  "docs_sha256": "9cc58623859c3320008728569c76b3a630851d53348add5e07f4fd29333c27e2"
+}
