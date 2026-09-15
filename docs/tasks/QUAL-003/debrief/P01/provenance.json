@@ -25,5 +25,26 @@
     "reference-assets/fonts/Lat38-VGA8_8x8.font": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
   },
   "mainboard_identity_limit": "Uses retained verified stock VDP restoration and qualified EMOS provenance; no new mainboard flash readback or change.",
-  "observer_path": "Wired Pi, eth0 carrier1 speed1000Mbps; this is receiver link, not P4 negotiated link."
+  "observer_path": "Wired Pi, eth0 carrier1 speed1000Mbps; this is receiver link, not P4 negotiated link.",
+  "asset_readback": {
+    "matched_reference_assets": true,
+    "hashes": {
+      "game.agnb": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98",
+      "ui.agnb": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b",
+      "fonts/Lat38-VGA8_8x8.font": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
+    },
+    "seconds": 415.9337059739046
+  },
+  "observed_game_allocation": "I (66314) np-fb-memory: width=512 height=384 bytes=196608 largest=188416 selected=internal",
+  "scheduling_configuration": {
+    "parser_core": 0,
+    "parser_priority": 3,
+    "drawing_core": 0,
+    "drawing_priority": 5,
+    "output_core": 1,
+    "output_priority": 2,
+    "drawing_opportunities": 4,
+    "logical_period_us": 16667,
+    "source_and_archived_binary_provenance_not_runtime_scheduler_trace": true
+  }
 }

@@ -105,7 +105,7 @@ existing fixtures. No Golem, MOS experiment or downstream execution.
 
 ### P01 — Establish current comparison and diagnostic accounting
 
-1. [ ] P01a: Verify current P4/EMOS/mainboard identities and actual memory/task
+1. [x] P01a: Verify current P4/EMOS/mainboard identities and actual memory/task
    settings, source/assets/fixture hashes, safe startup and rollback. Select
    the archived r43 behavior parent, retaining optional completion observation
    but excluding the r44 native-acquisition probe for the reference. No MOS
