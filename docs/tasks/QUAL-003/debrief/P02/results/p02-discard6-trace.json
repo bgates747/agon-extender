@@ -1,0 +1,28 @@
+{
+  "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+  "nonce": "50303202726345d2",
+  "submitted": 2400,
+  "completed": 2400,
+  "maximum_pending_refreshes": 1,
+  "warmup": 120,
+  "completed_fps": 52.551034514039095,
+  "completion_intervals": {
+    "count": 2279,
+    "mean_ms": 19.029121105748136,
+    "p95_ms": 45.509,
+    "max_ms": 54.228
+  },
+  "enqueue_intervals": {
+    "count": 2279,
+    "mean_ms": 19.02988152698552,
+    "p95_ms": 44.339,
+    "max_ms": 53.275
+  },
+  "enqueue_to_completion": {
+    "count": 2280,
+    "mean_ms": 2.5337837719298246,
+    "p95_ms": 4.123,
+    "max_ms": 6.176
+  },
+  "elapsed_first_to_last_ms": 45812.909
+}

@@ -1,0 +1,37 @@
+{
+  "scope": "production browser receive/WebGL submission; no scanout/VDP execution timing claim",
+  "receive_only": false,
+  "seconds_requested": 180.0,
+  "started_utc": "2026-09-15T23:43:55.840825+00:00",
+  "observer_sha256": "3a5a1d43047a7a08a82db00573fb85e1b0b37fb1c8b8f99552ed3faa5c003561",
+  "observed_wall_seconds": 180.18587525596377,
+  "closes": [],
+  "overflow": false,
+  "summary": {
+    "received": 595,
+    "received_fps": 3.29638496448938,
+    "median_receive_interval_ms": 35.09999996423721,
+    "maximum_receive_interval_ms": 2118.5999999046326,
+    "layouts": [
+      {
+        "width": 512,
+        "height": 384,
+        "stride": 512,
+        "format": 2,
+        "frames": 594
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "stride": 640,
+        "format": 2,
+        "frames": 1
+      }
+    ],
+    "observed_logical_period_us": [
+      16667
+    ],
+    "sequence_gaps": 0
+  },
+  "page_errors": []
+}

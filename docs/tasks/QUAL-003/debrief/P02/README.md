@@ -106,3 +106,66 @@ reason for the initial query failure is not established. Preserve the failed
 record; do not label it a prebuilt-renderer failure or discard it as a pass.
 An unchanged retry and a second discard control were selected within I03.
 No firmware, query timeout, renderer or fixture change was made for the retry.
+
+## Measurement interpretation
+
+1. Refresh completion spacing measures the P4's ordered explicit RefreshSprites
+   boundaries, not physical scanout, unique browser pictures or exclusive CPU
+   rendering time. Use the microsecond completion trace rather than the coarser
+   MOS tick intervals. All admitted runs must match the r05 2400-state hash.
+2. Snapshot composition and network-send means include preemption and waits.
+   Their wall-time scopes can overlap; adding their means is not a measured
+   single-frame critical path. Network units count the 32-byte EVF header plus
+   196608 RGB222 bytes; TCP/Ethernet/WebSocket overhead is additional.
+3. Composition-only can attain more output opportunities than credit-paced
+   network output. That is intentional diagnostic evidence, not equal-output
+   work or a production optimization. Normal/discard execute the same native
+   composition routine; prebuilt does not establish image correctness.
+4. Browser summaries cover the entire 180-second observer window, including
+   setup and terminal text. NPOUT counters cover the approximately40-second
+   game window. Report both without treating whole-window delivery as pure
+   gameplay FPS. Observer closure may generate a final socket-send failure
+   after the measured window; distinguish it from admitted NPOUT failures.
+5. Mainboard timing is the retained historical stock software-sprite baseline,
+   not a newly flashed or remeasured reference. No Rally, Golem or hardware-
+   sprite qualification is performed in this tranche.
+
+## Next investigation boundary
+
+1. **Agent recommendation, not a newly approved experiment:** first resolve the
+   discard-repeat variance with matched P4 boot/order and snapshot-pool placement
+   evidence. Both game framebuffer allocations report internal memory, but that
+   does not establish equal pool placement or task/lock timing. Then trace or
+   bound HTTP/lwIP/Ethernet work alongside parser admission and composition locks;
+   keep parser/draw/snapshot placement unchanged until the cause is localized.
+   Start with the selected SDK/source inventory below rather than assuming
+   that the priority3 worker performs the full socket send itself.
+2. P02c authorizes at most one supported scheduling control. No such change is
+   selected in this tranche: source affinity alone is not evidence of which
+   runnable task caused a particular stall. A narrowly justified affinity
+   control should preserve payload, browser credits and full gameplay work,
+   and compare against the normal baseline with repeated completion traces.
+3. Reuse P06's existing protocol/delivery audit for sender/API/credit limits;
+   do not create a duplicate output-throughput project. The prebuilt control
+   does not isolate TCP/IP CPU cost from driver, socket blocking or receiver
+   flow control. An approximately28FPS sender result is not a measured raw
+   Ethernet ceiling.
+4. Full SW/HW streaming parity and human visual validation remain downstream.
+   The initial query failure also remains a reliability observation to retain;
+   do not silently expand this performance tranche into a MOS recovery task.
+
+## Important contradictory repeat
+
+`p02-discard6` completed all2400 states with the same state hash, zero admitted
+network sends and pending refreshes bounded at1, but averaged52.551 completion/s
+and p9545.509ms. `p02-discard3` was60.053/s and p9517.318ms. Composition mean
+changed from6.429 to13.537ms. Both512×384 game framebuffer allocation records
+say internal; this excludes an observed framebuffer PSRAM fallback but not
+snapshot-pool placement, timing/locking or persistent run-state differences.
+
+Do not discard this as an outlier or report composition as cleared. It prevents
+a clean network-only attribution. The second run's enqueue p9544.339ms is also
+bad, whereas enqueue-to-completion p954.123ms is comparatively small. These
+are separate distributions, not subtractable estimates of CPU cost. The game
+was already delayed before RefreshSprites admission. Mainboard resets do not
+establish a fresh P4 boot for each control; the raw logs preserve that distinction.

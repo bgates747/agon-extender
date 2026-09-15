@@ -1,0 +1,35 @@
+{
+  "nonce": "50303202726345d2",
+  "mode": "discard",
+  "window_seconds": 45.851259,
+  "pending": 0,
+  "invalid": 0,
+  "phases": {
+    "compose": {
+      "calls": 2472,
+      "units": 486014976,
+      "wall_ms_sum": 33462.577,
+      "mean_operation_ms": 13.536641181229772,
+      "operations_per_window_second": 53.91345960641997,
+      "unit_kind": "RGB222_pixels"
+    },
+    "prebuilt": {
+      "calls": 0,
+      "units": 0,
+      "wall_ms_sum": 0.0,
+      "mean_operation_ms": null,
+      "operations_per_window_second": 0.0,
+      "unit_kind": "RGB222_pixels"
+    },
+    "send": {
+      "calls": 0,
+      "units": 0,
+      "wall_ms_sum": 0.0,
+      "mean_operation_ms": null,
+      "operations_per_window_second": 0.0,
+      "unit_kind": "EVF_header_plus_payload_bytes"
+    }
+  },
+  "boundary_composition_carryover": 0,
+  "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+}
