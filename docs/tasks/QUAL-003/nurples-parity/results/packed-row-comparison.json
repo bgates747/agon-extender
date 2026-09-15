@@ -1,0 +1,156 @@
+{
+  "scope": "static wired output, complete drained windows; no-web HW game pilot separate",
+  "variants": {
+    "r24-production": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 201,
+            "units": 39518208,
+            "mean_ms": 11.412930348258705
+          },
+          {
+            "phase": "socket_send",
+            "count": 201,
+            "units": 39524640,
+            "mean_ms": 15.731462686567163
+          }
+        ],
+        "received_fps": 19.9998000019523,
+        "frames": 201
+      },
+      "status": "pass",
+      "errors": []
+    },
+    "r24-receive": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 297,
+            "units": 58392576,
+            "mean_ms": 11.43922558922559
+          },
+          {
+            "phase": "socket_send",
+            "count": 297,
+            "units": 58402080,
+            "mean_ms": 15.824491582491582
+          }
+        ],
+        "received_fps": 29.697407496446736,
+        "frames": 297
+      },
+      "status": "pass",
+      "errors": []
+    },
+    "r25-production": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 247,
+            "units": 48562176,
+            "mean_ms": 12.819712550607289
+          },
+          {
+            "phase": "socket_send",
+            "count": 247,
+            "units": 48570080,
+            "mean_ms": 19.02436842105263
+          }
+        ],
+        "received_fps": 24.64460673796068,
+        "frames": 247
+      },
+      "status": "pass",
+      "errors": []
+    },
+    "r25-receive": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 328,
+            "units": 64487424,
+            "mean_ms": 14.316923780487805
+          },
+          {
+            "phase": "socket_send",
+            "count": 328,
+            "units": 64497920,
+            "mean_ms": 18.069612804878048
+          }
+        ],
+        "received_fps": 32.66863810733906,
+        "frames": 328
+      },
+      "status": "pass",
+      "errors": []
+    },
+    "r26-production": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 297,
+            "units": 58392576,
+            "mean_ms": 9.162760942760942
+          },
+          {
+            "phase": "socket_send",
+            "count": 297,
+            "units": 58402080,
+            "mean_ms": 16.464070707070707
+          }
+        ],
+        "received_fps": 29.693236763366176,
+        "frames": 297
+      },
+      "status": "pass",
+      "errors": []
+    },
+    "r26-receive": {
+      "summary": {
+        "phases": [
+          {
+            "phase": "snapshot",
+            "count": 335,
+            "units": 65863680,
+            "mean_ms": 10.180146268656715
+          },
+          {
+            "phase": "socket_send",
+            "count": 335,
+            "units": 65874400,
+            "mean_ms": 17.92906567164179
+          }
+        ],
+        "received_fps": 33.45252045687803,
+        "frames": 335
+      },
+      "status": "pass",
+      "errors": []
+    }
+  },
+  "r26_game": [
+    {
+      "file": "NPHP1.BIN",
+      "count": 600,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 479,
+      "elapsed_ticks": 958,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 479
+      },
+      "state_sha256": "a740583265bd2fee6d50ef2de309e1a6e907c007b59bfcce00595cc9cca661f0",
+      "completion_scope": "one pixel query per frame in fenced variant; no hardware-sprite scanout proof"
+    }
+  ]
+}

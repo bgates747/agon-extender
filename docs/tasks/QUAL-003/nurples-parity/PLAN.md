@@ -233,7 +233,7 @@ and repeats; static output progress alone is insufficient.
    be checked before compiler alignment assumptions. No stock scanline body,
    palette, sprite, framebuffer, resolution or wire-format changes. Keep this
    separately opt-in for comparison; retain r25 lookahead and diagnostics.
-2. [ ] N04e: Host-check byte equality across colours, row widths and alignment
+2. [x] N04e: Host-check byte equality across colours, row widths and alignment
    offsets, with canaries/sanitizers; inspect target compilation as useful. Build
    and identify the isolated r26 variant, preserve/verify rollback, repeat the
    same drained wired measurements and workload. If snapshot cost does not
@@ -255,3 +255,8 @@ snapshot-cost attribution still awaits the r26 comparison.
    fixture first, wait for that receipt, then issue exactly one reset. Retain
    browser connection/errors, game timings/state and run durations separately.
    A completed no-web pilot/static output test does not substitute for this run.
+
+N04e complete: r26 snapshot mean9.163ms/production29.69FPS and
+10.180ms/immediate-credit33.45FPS. Accounting passes and no-web HW pilot
+retains60Hz/state equality. Snapshot cost fell but is not the entire bottleneck.
+N04f active wired gameplay is next; no parity claim.

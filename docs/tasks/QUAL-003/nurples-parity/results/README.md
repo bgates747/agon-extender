@@ -123,3 +123,18 @@ loads remain required; this is provisional output progress, not goal completion.
 Host orchestration needed two routine corrections: wait for actual keyboard
 readiness after reset, and wait for a detached job's initial result file to exist.
 Both resumed without rerunning/resetting the in-flight game.
+
+## Second correction: packed RGB222 rows (r26 diagnostic)
+
+| Wired client | r25 received FPS | r26 received FPS | FPS change | r26 snapshot mean (ms) | r26 socket mean (ms) |
+|---|---:|---:|---:|---:|---:|
+| Production | 24.64 | 29.69 | +20.48% | 9.163 | 16.464 |
+| Immediate credit | 32.67 | 33.45 | +2.40% | 10.180 | 17.929 |
+
+Complete drained counts are297/297 and335/335 respectively, without recorder
+or observer errors. The same no-web hardware-sprite pilot retains60Hz and the
+matching state fingerprint. These are static output and no-web game results,
+not active wired gameplay qualification. The optimization reduces snapshot cost
+but leaves substantial output overhead. See packed-row-comparison.json and
+NPHP1.BIN. Build/deploy/game/output pipeline elapsed185.114seconds; this includes
+preparation and retrieval, not just gameplay.
