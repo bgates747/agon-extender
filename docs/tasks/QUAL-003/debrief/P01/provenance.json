@@ -1,0 +1,29 @@
+{
+  "candidate": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+  "rollback": "uart-excom-console-r44-b2026-09-15-17-06-32Z",
+  "deployment": {
+    "run_id": "QUAL-003-2026-09-15-22-33-28Z",
+    "build_id": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+    "factory_sha256": "6b981b28474c24ca2b7b1ff0294ab236f6f18f01fd55a08f3ba86de389cac9b3",
+    "write_verified": true,
+    "usb_host_startup_observed": true,
+    "mainboard_sd_commissioning": "pending"
+  },
+  "fixture": {
+    "r05_sw_sha256": "8e81bfeb7ca01cf6ad9f68c502a42969c5763c45033dc80f55d1a97d7880d13b",
+    "startup_verified": true
+  },
+  "inputs": {
+    "noframetiming01/firmware.bin": "25d635a22c21429c66d1f4f6463d30b1f30934c386761f95260a7dbf15db89c7",
+    "noframetiming01/firmware.factory.bin": "6b981b28474c24ca2b7b1ff0294ab236f6f18f01fd55a08f3ba86de389cac9b3",
+    "noframetiming01/firmware.elf": "5bd8794333522ddfe7f49ab2a170b47bbe19e6cfe9131abb96b5e3f0615e211d",
+    "noframetiming01/platformio.ini": "bb4418e3ca109c7b0ed9b9f80aa5b535eaa8bc293aade4359ef0569339466c72",
+    "noframetiming01/sdkconfig": "ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5",
+    "tracesw05/manifest.json": "934918e9c4d8728208951dbc38cb04fc55d8ad2bb7232fae6728b0b8e887eb5c",
+    "reference-assets/game.agnb": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98",
+    "reference-assets/ui.agnb": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b",
+    "reference-assets/fonts/Lat38-VGA8_8x8.font": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
+  },
+  "mainboard_identity_limit": "Uses retained verified stock VDP restoration and qualified EMOS provenance; no new mainboard flash readback or change.",
+  "observer_path": "Wired Pi, eth0 carrier1 speed1000Mbps; this is receiver link, not P4 negotiated link."
+}
