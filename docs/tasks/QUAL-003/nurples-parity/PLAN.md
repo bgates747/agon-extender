@@ -819,10 +819,10 @@ upstream row-body provenance. P4 adapter currently locks each row separately.
    releasing it. Preserve row order, original bodies, palette-revision handling,
    tail bounds, image bytes and384row count. No row timing combination yet.
    Validate batch/single-row equivalence and build isolated r37.
-2. [ ] N04u-ii: After current controls release the bench, restore startup,
+2. [x] N04u-ii: After current controls release the bench, restore startup,
    preserve rollback, flash/verify and run unchanged SW/HW streaming fixtures
    with post-output service checks. Reject corrupted images or incomplete rows.
-3. [ ] N04u-iii: Repeat any apparent parity; measure rather than assume a benefit
+3. [x] N04u-iii: Repeat any apparent parity; measure rather than assume a benefit
    from fewer mutex handoffs. This does not authorize upstream renderer rewrites.
 
 N04t complete: SW35.33FPS/HW34.23FPS, full workloads and post-output
@@ -848,3 +848,8 @@ current r37, with the same seed/workload, unique nonce and180second stream.
    improvement alone is not parity proof. If instrumentation dominates, select
    an independently validated completion-throughput measurement before claiming
    either a rendering deficit or success. Do not change thresholds to pass.
+
+N04u complete: both180second SW/HW output/service controls passed; no parity.
+SW49.08FPS. Terminal SW image matches r34 outside the four changing diagnostic
+filename glyphs, including all gameplay pixels. N04v now owns hardware for
+the existing unfenced control; no further firmware change is selected yet.

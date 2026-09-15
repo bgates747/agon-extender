@@ -1,0 +1,30 @@
+[
+  {
+    "label": "mainboard-sw",
+    "file": "NP17LS.BIN",
+    "variant": "fenced-sw",
+    "nonce": "7c9c61d34479a6c3",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-hw",
+    "file": "NP17LH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "b36c12904341f540",
+    "capacity": 2400
+  },
+  {
+    "label": "fenced-sw",
+    "file": "NP37S1.BIN",
+    "variant": "fenced-sw",
+    "nonce": "6c1dcfded20a8ba2",
+    "capacity": 2400
+  },
+  {
+    "label": "fenced-hw",
+    "file": "NP37H1.BIN",
+    "variant": "fenced-hw",
+    "nonce": "5f4ae02221d0c071",
+    "capacity": 2400
+  }
+]

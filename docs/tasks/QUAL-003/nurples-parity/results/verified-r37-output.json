@@ -1,0 +1,55 @@
+{
+  "np-verified-r37-excom-sw01": {
+    "browser_summary": {
+      "received": 4960,
+      "received_fps": 27.532256989939818,
+      "median_receive_interval_ms": 33.40000009536743,
+      "maximum_receive_interval_ms": 138.40000009536743,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4717
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 243
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180590.20000004768,
+    "post_output_services_passed": true
+  },
+  "np-verified-r37-excom-hw01": {
+    "browser_summary": {
+      "received": 4937,
+      "received_fps": 27.412719146255153,
+      "median_receive_interval_ms": 33.40000009536743,
+      "maximum_receive_interval_ms": 225.29999995231628,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4937
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180537.70000004768,
+    "post_output_services_passed": true
+  }
+}
