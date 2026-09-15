@@ -23,9 +23,11 @@ try:
      assert closed['code']==1000 and closed['reason']=='Viewer replaced',closed
     else:closed=None
     current.wait_for_timeout(1000)
+    received=current.evaluate('__videoObservation.frames.length')-count
+    assert received>=2,('No sustained delivery',turn,received)
     frame=current.evaluate('__videoObservation.frames.slice(-1)[0]');assert frame['width']==320 and frame['height']==240 and frame['payload']==frame['height']*frame['stride'] and frame['bytes']==32+frame['payload'],frame
     current.screenshot(path=str(r/f'turn-{turn}.png'))
-    results.append(dict(turn=turn,viewer='AB'[turn%2],previous_close=closed,frame=frame))
+    results.append(dict(turn=turn,viewer='AB'[turn%2],previous_close=closed,frames_received=received,frame=frame))
    pages[1].screenshot(path=str(r/'browser.png'))
    (r/'last.evf').write_bytes(bytes(pages[1].evaluate('Array.from(new Uint8Array(__videoObservation.last))')))
   finally:
