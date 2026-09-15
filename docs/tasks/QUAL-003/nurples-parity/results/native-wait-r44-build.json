@@ -1,0 +1,30 @@
+{
+  "build_id": "uart-excom-console-r44-b2026-09-15-17-06-32Z",
+  "contract_commit": "0e9b06b289441693b9ccd5d3c8ccecca6c597b01",
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1458576,
+      "sha256": "dca9624cdf2f3cdcec4de247520b5a6c2a292a9c1395c4b9d583e77a8b87ac48"
+    },
+    "firmware.elf": {
+      "bytes": 28225588,
+      "sha256": "6ce4076302c4f5e93634b9048a7d671c099e3e97819040500928eec1529f0826"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1589648,
+      "sha256": "06bad5cf1ed940077e3719f2e7a54800160d9c91ec50e59e6c5ec05685b977ac"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "a03f9e1811231210faacb06ae0d021b7217873ba52a1ba4b80e1ae8d69c492b0"
+    }
+  },
+  "native_wait_probe_enabled": true,
+  "historical_frame_timing_enabled": false,
+  "historical_graphics_timing_enabled": false,
+  "drawing_opportunities_per_frame": 4
+}

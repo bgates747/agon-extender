@@ -1247,7 +1247,7 @@ work/waits before enqueue. Empty drawing drains do not unconditionally redraw
 all sprites: stock showSprites checks m_spritesHidden, so do not assume that
 raising opportunity frequency multiplied full sprite rendering cost.
 
-1. [ ] N04ae-i: Build diagnostic-only r44 from r43. Optional native guard probe
+1. [x] N04ae-i: Build diagnostic-only r44 from r43. Optional native guard probe
    measures acquisition wait only for the parser task, identified at the existing
    nonce-arm marker. Aggregate parser-owned wait total/max/call count between
    refresh enqueues, plus RX buffered-byte depth at each enqueue. Keep original
@@ -1263,3 +1263,8 @@ raising opportunity frequency multiplied full sprite rendering cost.
 3. [ ] N04ae-iii: Compare per-frame wait, RX backlog and enqueue variation. Only
    then select a minimal evidenced correction or the next narrower measurement.
    Keep the stock-port rule and unchanged final mean/p95/output/correctness gates.
+
+N04ae-i complete: r44 source/partition/symbol checks pass. Host ASan/UBSan
+checks pass recursive/contended locks, parser-only ownership, exclusion of the
+foreground mutex, bounded records, re-arm and disabled behavior. Existing
+refresh-trace bounds/nonce/marker tests pass with the optional probe on and off.
