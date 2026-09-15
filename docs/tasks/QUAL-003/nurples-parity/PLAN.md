@@ -656,11 +656,11 @@ internal native framebuffer may reduce shared PSRAM contention. No proof yet.
    stock reserve; otherwise retain PSRAM and explicitly log the fallback.
    Keep stock pool allocator, row packing, rendering, resolution, colours and
    snapshot format unchanged. Build isolated r31 from r29 flags, no row timers.
-2. [ ] N04p-ii: Preserve r30 rollback and safe startup, flash/readback and
+2. [x] N04p-ii: Preserve r30 rollback and safe startup, flash/readback and
    verify input/SD; run SW/HW fixed fixtures with streamed output and unique
    nonces. Retain boot/runtime allocation evidence; reject mode shrink or
    fallback as evidence of internal-memory benefit. Capture complete image.
-3. [ ] N04p-iii: Compare fresh game timings and repeat any apparent parity.
+3. [x] N04p-iii: Compare fresh game timings and repeat any apparent parity.
    If capacity prevents experiment or parity is absent, record that result
    before selecting another output correction. No new MOS changes.
 
@@ -680,7 +680,7 @@ when512x384 needs196608+4000. Game therefore falls back to PSRAM. This is
 not evidence of internal-framebuffer performance. Initial internal allocation
 may constrain later capacity; do not change lifecycle or stock pool logic.
 
-1. [ ] N04q-i: Add a second default-off test flag permitting internal allocation
+1. [x] N04q-i: Add a second default-off test flag permitting internal allocation
    only for512x384 single-buffer rows of512bytes (the measured64colour mode).
    Other modes retain baseline PSRAM. Keep the existing full-block guard and
    explicit selection/fallback log. Build isolated r32; all r29 runtime flags,
@@ -690,3 +690,8 @@ may constrain later capacity; do not change lifecycle or stock pool logic.
    Repeat SW/HW fixed streaming cases only as internal capacity permits.
 3. [ ] N04q-iii: Verify complete image/workload, compare and repeat any parity;
    no general mode-capacity/product qualification follows from this experiment.
+
+N04p ended after first SW control: explicit PSRAM fallback; no benefit claim,
+remaining redundant fallback cases cancelled. Later read-only SD retry recovered
+without reset; nonce-verified file retained. Browser saw50.612second gap.
+N04q-i built isolated r32 with game-mode eligibility flag; no row timers.

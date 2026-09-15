@@ -1,0 +1,72 @@
+{
+  "file": "NP31S1.BIN",
+  "provenance": "nonce_verified",
+  "nonce": "a95e4f8af4296b96",
+  "count": 2400,
+  "failed": 0,
+  "warmup_boundaries": 120,
+  "intervals": 2279,
+  "elapsed_ticks": 5854,
+  "mean_frame_ms": 21.40558724586807,
+  "completed_fps": 46.716774854800136,
+  "p95_frame_ms": 33.333333333333336,
+  "maximum_frame_ms": 50.0,
+  "tick_histogram": {
+    "2": 1652,
+    "4": 606,
+    "6": 21
+  },
+  "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+  "variant": "fenced-sw",
+  "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof",
+  "end_reason": "boundary_limit",
+  "live_sprites_max": 13,
+  "live_sprites_mean": 8.29875,
+  "live_sprites_histogram": {
+    "1": 1,
+    "2": 7,
+    "3": 7,
+    "4": 95,
+    "5": 284,
+    "6": 190,
+    "7": 219,
+    "8": 293,
+    "9": 475,
+    "10": 439,
+    "11": 293,
+    "12": 85,
+    "13": 12
+  },
+  "allocation_lines": [
+    "I (1753) np-fb-memory: width=640 height=480 bytes=153600 largest=335872 selected=internal",
+    "I (60465) np-fb-memory: width=640 height=480 bytes=153600 largest=188416 selected=internal",
+    "I (60526) np-fb-memory: width=512 height=384 bytes=196608 largest=188416 selected=psram-fallback"
+  ],
+  "scope": "PSRAM fallback: not internal-memory performance; browser had50.612second stall; original collection timed out, later read-only readiness recovered and raw result retrieved",
+  "observer_summary": {
+    "received": 2331,
+    "received_fps": 12.93349408611135,
+    "median_receive_interval_ms": 34.60000002384186,
+    "maximum_receive_interval_ms": 50612.199999928474,
+    "layouts": [
+      {
+        "width": 512,
+        "height": 384,
+        "stride": 512,
+        "format": 2,
+        "frames": 2093
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "stride": 640,
+        "format": 2,
+        "frames": 238
+      }
+    ],
+    "observed_logical_period_us": [
+      16667
+    ],
+    "sequence_gaps": 0
+  }
+}
