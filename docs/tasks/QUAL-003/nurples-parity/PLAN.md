@@ -832,3 +832,19 @@ VGA64 controller, hardware sprite boundary and independent pixel/canary checks.
 
 N04u-i r37 built; stock two-row constant checked at compile time; original row
 bodies retained. Host byte/canary/sprite checks passed before build.
+
+### N04v — Refresh completion-probe overhead control
+
+AGENT-ASSIGNED, not separately Author-approved. The existing unfenced P4
+comparison predates qualified EMOS installation and later output corrections.
+Before more renderer changes, exercise the already-built NPVFR4 fixture against
+current r37, with the same seed/workload, unique nonce and180second stream.
+
+1. [ ] N04v-i: After N04u controls release hardware, run fresh unfenced SW and
+   retain terminal completion fence, state fingerprint and output/service checks.
+   No application/fixture/firmware edits are required for this existing variant.
+2. [ ] N04v-ii: Compare to mainboard unfenced60FPS and current fenced SW. Label
+   submission/vblank boundaries separately from completed drawing; an unfenced
+   improvement alone is not parity proof. If instrumentation dominates, select
+   an independently validated completion-throughput measurement before claiming
+   either a rendering deficit or success. Do not change thresholds to pass.
