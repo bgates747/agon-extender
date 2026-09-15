@@ -70,3 +70,18 @@ pass146guarded host cases with address/undefined/float-cast-overflow sanitizers;
 36defined-path control cases produce the same sampling hash with P4 guards
 compiled out. Invalid corners release owned matrices once and leave borrowed
 matrices/updateRect/framebuffer callbacks alone. Target and hardware are pending.
+
+
+G04 preparation: numeric-guard-probe-r01 uses mode136 and two pages, all three
+bitmap formats. Valid mode has18cases/342pixel queries covering logical
+fractional translation, mirrored plots, and transformed bitmap creation.
+P4-only rejection mode has30cases/570queries covering each approved family.
+Only valid mode runs on stock. End records raw120Hz elapsed ticks including
+queries/SD; no FPS interpretation. First-run estimate is a few minutes for the
+three small runs plus preparation/retrieval, not an automatic kill deadline.
+Each case appends progress; terminal screen shows aggregate completion.
+
+Existing audio framing15,120cases/source guard and fixed encoding65,764checks
+still pass. r22 is a controlled derivative of the same installed-source parent,
+with unchanged UART/frame/output settings, not a rebuild from newer transport
+experiments on main. Full target compilation is the next G04 check.

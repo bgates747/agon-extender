@@ -1,10 +1,18 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r84
-updated_at: 2026-09-13T08:46:00Z
+registry_revision: r85
+updated_at: 2026-09-15T06:59:25Z
 
 artifacts:
+  - artifact_id: numeric-guard-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: numeric-guard-probe-r01
+    status: draft
+    variants: []
+    description: Paired valid bitmap transform streams and separate P4 numeric rejection controls.
+
   - artifact_id: audio-framing-probe
     kind: test_fixture
     identity_scheme: revision
@@ -505,7 +513,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r21
+    latest_identity: uart-excom-console-r22
     status: draft
     variants: []
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
