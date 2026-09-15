@@ -1,0 +1,65 @@
+[
+  {
+    "label": "mainboard-sw",
+    "file": "NPV4LS.BIN",
+    "variant": "fenced-sw",
+    "nonce": "1649216aa8875e09",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-hw",
+    "file": "NPV4LH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "3fc68a5f3cd44edc",
+    "capacity": 2400
+  },
+  {
+    "label": "mainboard-unfenced",
+    "file": "NPV4LF.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "48dca55e94655f18",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-sw",
+    "file": "NPV4E1.BIN",
+    "variant": "fenced-sw",
+    "nonce": "42a6fcb4630416f4",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-unfenced",
+    "file": "NPV4EF.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "6636ae111c6bc315",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-hw",
+    "file": "NPV4EH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "662a699521a56a5a",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-r28-sw",
+    "file": "NPV8ES.BIN",
+    "variant": "fenced-sw",
+    "nonce": "23caf4b2cc7eed2a",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-r28-free",
+    "file": "NPV8EF.BIN",
+    "variant": "unfenced-sw",
+    "nonce": "a98271bc6a3dd14e",
+    "capacity": 2400
+  },
+  {
+    "label": "p4-r28-hw",
+    "file": "NPV8EH.BIN",
+    "variant": "fenced-hw",
+    "nonce": "8307476ce1c74560",
+    "capacity": 2400
+  }
+]

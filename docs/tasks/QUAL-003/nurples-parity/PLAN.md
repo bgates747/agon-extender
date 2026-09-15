@@ -22,7 +22,7 @@ copied game records lack fresh-run provenance; retract those game timing/state
 comparisons. Independent output/packet measurements remain separately valid.
 Stop the old sequence; no further NP01/NP03 comparison is accepted.
 
-1. [ ] N02g: Correct fixture output handling. Delete only its owned result/progress
+1. [x] N02g: Correct fixture output handling. Delete only its owned result/progress
    files, check every MOS load/save/delete result, and embed a newly staged8-byte
    per-run nonce plus fixture variant/capacity in the result. Host must reject
    nonce, format, variant, count, size or save-error mismatches. Preserve old
@@ -378,7 +378,7 @@ about optimal UART algorithms or blindly import unrelated maintained changes.
    selected source composition. Record hashes/diff; keep all current output
    options and mainboard firmwares fixed. Build-time identity and sanity checks
    must prove the selected image actually contains this change.
-2. [ ] N04j: After the active matrix releases the bench, restore safe startup,
+2. [x] N04j: After the active matrix releases the bench, restore safe startup,
    preserve r27 full rollback, flash/verify r28, verify native input/SD and rerun
    the same nonce-verified workload with wired output. Compare before making a
    new rendering or MOS change. Firmware recovery remains available, not a
@@ -432,3 +432,9 @@ have not explained the gap. Finish the immutable three-case streaming matrix.
    A remaining gap directs investigation toward EMOS/command/render timing; a
    disappearing gap directs investigation toward snapshot/render contention.
    Freeze the next correction only after this distinction is measured.
+
+N04j completed: r28 streaming SW30.0066FPS, unfenced34.0319 boundaries/s,
+HW30.7696FPS. All expected nonces and2400-record gameplay states match. No
+parity; output-off controls now own the bench. The wired-host offline WebGL
+readback also passes every pixel with zero GL errors using retained EVF data;
+that validates decoding/presentation pixels, not physical display cadence.
