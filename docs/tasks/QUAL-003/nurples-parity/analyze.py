@@ -2,7 +2,8 @@
 import argparse,json,statistics,hashlib
 from pathlib import Path
 
-def parse(path):
+def parse(path, variant="fenced-sw"):
+ assert variant in ("fenced-sw", "fenced-hw", "unfenced-sw")
  b=path.read_bytes();assert len(b)==6608 and b[:4]==b'NP01',(path,len(b),b[:8])
  count=int.from_bytes(b[4:7],'little');assert count==600 and b[7]==0,(count,b[7])
  rows=[b[8+i*11:19+i*11] for i in range(count)]
@@ -15,9 +16,10 @@ def parse(path):
   maximum_frame_ms=max(delta)*1000/120,
   tick_histogram={str(k):delta.count(k) for k in sorted(set(delta))},
   state_sha256=hashlib.sha256(b''.join(x[3:] for x in rows)).hexdigest(),
-  completion_scope='one pixel query per frame in fenced variant; no hardware-sprite scanout proof')
+  variant=variant,
+  completion_scope=('submission/vblank boundary; terminal fence only' if variant=='unfenced-sw' else 'pixel-query drawing completion boundary; no hardware-sprite scanout proof'))
 
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);a=p.parse_args()
- results=[parse(f) for f in a.files];s=json.dumps(results,indent=2);print(s)
+ p=argparse.ArgumentParser();p.add_argument('files',type=Path,nargs='+');p.add_argument('--output',type=Path);p.add_argument('--variant',choices=['fenced-sw','fenced-hw','unfenced-sw'],default='fenced-sw');a=p.parse_args()
+ results=[parse(f,a.variant) for f in a.files];s=json.dumps(results,indent=2);print(s)
  if a.output:a.output.write_text(s+'\n')
