@@ -1,0 +1,2499 @@
+{
+  "scope": "quiescent snapshot/socket counter deltas; browser received FPS separately",
+  "receive_only": true,
+  "observer_sha256": "ef176ee57f7ee0194554ab0ba50fadc4fb40d7adf190bf0cd9b42503387e7b7d",
+  "before": {
+    "schema": 1,
+    "clock_bits": 32,
+    "now_us": 257848593,
+    "totals_valid": true,
+    "lost_completions": 0,
+    "overlapping_calls": 0,
+    "busy_reads": 0,
+    "phases": [
+      {
+        "name": "snapshot",
+        "count": 270,
+        "total_us": 3502194,
+        "units": 53084160,
+        "max_us": 24164,
+        "last_us": 15309,
+        "last_at_us": 257713180,
+        "max_context": 33554816,
+        "active": {
+          "state": 0,
+          "generation": 270,
+          "context": 33554816,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "socket_send",
+        "count": 269,
+        "total_us": 5160517,
+        "units": 52896160,
+        "max_us": 28339,
+        "last_us": 19993,
+        "last_at_us": 257711963,
+        "max_context": 2,
+        "active": {
+          "state": 0,
+          "generation": 269,
+          "context": 2,
+          "age_us": 0,
+          "consistent": true
+        }
+      }
+    ]
+  },
+  "start_ms": 823.1999999284744,
+  "start_received": 11,
+  "end_ms": 10966.799999952316,
+  "after": {
+    "schema": 1,
+    "clock_bits": 32,
+    "now_us": 267997593,
+    "totals_valid": true,
+    "lost_completions": 0,
+    "overlapping_calls": 0,
+    "busy_reads": 0,
+    "phases": [
+      {
+        "name": "snapshot",
+        "count": 598,
+        "total_us": 8198145,
+        "units": 117571584,
+        "max_us": 28971,
+        "last_us": 12675,
+        "last_at_us": 267863252,
+        "max_context": 33554816,
+        "active": {
+          "state": 0,
+          "generation": 598,
+          "context": 33554816,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "socket_send",
+        "count": 597,
+        "total_us": 11087350,
+        "units": 117394080,
+        "max_us": 36736,
+        "last_us": 20222,
+        "last_at_us": 267861795,
+        "max_context": 2,
+        "active": {
+          "state": 0,
+          "generation": 597,
+          "context": 2,
+          "age_us": 0,
+          "consistent": true
+        }
+      }
+    ]
+  },
+  "gate": {
+    "sent": 339,
+    "received": 339,
+    "inflight": 0,
+    "closes": [],
+    "frames": [
+      {
+        "ms": 324.5,
+        "sequence": 259,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 365.59999990463257,
+        "sequence": 260,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 391.39999997615814,
+        "sequence": 261,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 458.5,
+        "sequence": 262,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 479,
+        "sequence": 263,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 509.89999997615814,
+        "sequence": 264,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 542.2999999523163,
+        "sequence": 265,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 582,
+        "sequence": 266,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 615.5,
+        "sequence": 267,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 682.6999999284744,
+        "sequence": 268,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 706,
+        "sequence": 269,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 845.7999999523163,
+        "sequence": 270,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 872.3999999761581,
+        "sequence": 271,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 892.1999999284744,
+        "sequence": 272,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 922.5999999046326,
+        "sequence": 273,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 998.7999999523163,
+        "sequence": 274,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1022.3999999761581,
+        "sequence": 275,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1041.8999999761581,
+        "sequence": 276,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1072.5999999046326,
+        "sequence": 277,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1106.1999999284744,
+        "sequence": 278,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1126.2999999523163,
+        "sequence": 279,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1174.8999999761581,
+        "sequence": 280,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1238.6999999284744,
+        "sequence": 281,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1258.5999999046326,
+        "sequence": 282,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1289.6999999284744,
+        "sequence": 283,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1324,
+        "sequence": 284,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1343.6999999284744,
+        "sequence": 285,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1370.0999999046326,
+        "sequence": 286,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1442.5999999046326,
+        "sequence": 287,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1462.5,
+        "sequence": 288,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1497.1999999284744,
+        "sequence": 289,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1562.2999999523163,
+        "sequence": 290,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1584.3999999761581,
+        "sequence": 291,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1604,
+        "sequence": 292,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1637.5,
+        "sequence": 293,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1658.1999999284744,
+        "sequence": 294,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1688.6999999284744,
+        "sequence": 295,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1722.3999999761581,
+        "sequence": 296,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1742.6999999284744,
+        "sequence": 297,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1773.5999999046326,
+        "sequence": 298,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1804.6999999284744,
+        "sequence": 299,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1837.3999999761581,
+        "sequence": 300,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1856.8999999761581,
+        "sequence": 301,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1887.5999999046326,
+        "sequence": 302,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1918.6999999284744,
+        "sequence": 303,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1953.2999999523163,
+        "sequence": 304,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 1973,
+        "sequence": 305,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2004.1999999284744,
+        "sequence": 306,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2037.0999999046326,
+        "sequence": 307,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2057,
+        "sequence": 308,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2087.5,
+        "sequence": 309,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2107.0999999046326,
+        "sequence": 310,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2139.0999999046326,
+        "sequence": 311,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2158.5999999046326,
+        "sequence": 312,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2189.5999999046326,
+        "sequence": 313,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2262.7999999523163,
+        "sequence": 314,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2287.899999976158,
+        "sequence": 315,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2350.7999999523163,
+        "sequence": 316,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2370.6999999284744,
+        "sequence": 317,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2405.5999999046326,
+        "sequence": 318,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2425.2999999523163,
+        "sequence": 319,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2454.5999999046326,
+        "sequence": 320,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2485.7999999523163,
+        "sequence": 321,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2511.6999999284744,
+        "sequence": 322,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2548.6999999284744,
+        "sequence": 323,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2575.5999999046326,
+        "sequence": 324,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2606.6999999284744,
+        "sequence": 325,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2637.5999999046326,
+        "sequence": 326,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2657.1999999284744,
+        "sequence": 327,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2688.6999999284744,
+        "sequence": 328,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2720.1999999284744,
+        "sequence": 329,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2745.5999999046326,
+        "sequence": 330,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2772.5999999046326,
+        "sequence": 331,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2803.5999999046326,
+        "sequence": 332,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2823.2999999523163,
+        "sequence": 333,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2856.2999999523163,
+        "sequence": 334,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2888.399999976158,
+        "sequence": 335,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2921.1999999284744,
+        "sequence": 336,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2941.0999999046326,
+        "sequence": 337,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 2972.5999999046326,
+        "sequence": 338,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3006.399999976158,
+        "sequence": 339,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3033.2999999523163,
+        "sequence": 340,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3067.6999999284744,
+        "sequence": 341,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3087.399999976158,
+        "sequence": 342,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3121.2999999523163,
+        "sequence": 343,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3141,
+        "sequence": 344,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3171.2999999523163,
+        "sequence": 345,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3203.2999999523163,
+        "sequence": 346,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3222.7999999523163,
+        "sequence": 347,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3249.7999999523163,
+        "sequence": 348,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3275.5999999046326,
+        "sequence": 349,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3305.5,
+        "sequence": 350,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3325.1999999284744,
+        "sequence": 351,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3355,
+        "sequence": 352,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3374.5999999046326,
+        "sequence": 353,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3405.5999999046326,
+        "sequence": 354,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3437.1999999284744,
+        "sequence": 355,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3470.5999999046326,
+        "sequence": 356,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3490.2999999523163,
+        "sequence": 357,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3521.6999999284744,
+        "sequence": 358,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3555.2999999523163,
+        "sequence": 359,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3574.899999976158,
+        "sequence": 360,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3604.5999999046326,
+        "sequence": 361,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3638.5,
+        "sequence": 362,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3702.899999976158,
+        "sequence": 363,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3722.7999999523163,
+        "sequence": 364,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3754.1999999284744,
+        "sequence": 365,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3782.6999999284744,
+        "sequence": 366,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3813.6999999284744,
+        "sequence": 367,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3839.5999999046326,
+        "sequence": 368,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3871.2999999523163,
+        "sequence": 369,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3891.0999999046326,
+        "sequence": 370,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3921.5,
+        "sequence": 371,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3941,
+        "sequence": 372,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 3972,
+        "sequence": 373,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4000.5999999046326,
+        "sequence": 374,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4032.5999999046326,
+        "sequence": 375,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4055.7999999523163,
+        "sequence": 376,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4075.399999976158,
+        "sequence": 377,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4101.699999928474,
+        "sequence": 378,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4132.799999952316,
+        "sequence": 379,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4155.299999952316,
+        "sequence": 380,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4174.799999952316,
+        "sequence": 381,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4205.699999928474,
+        "sequence": 382,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4237.099999904633,
+        "sequence": 383,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4257.199999928474,
+        "sequence": 384,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4288.599999904633,
+        "sequence": 385,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4318.599999904633,
+        "sequence": 386,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4349.599999904633,
+        "sequence": 387,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4376.699999928474,
+        "sequence": 388,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4404.699999928474,
+        "sequence": 389,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4438.299999952316,
+        "sequence": 390,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4457.899999976158,
+        "sequence": 391,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4488.599999904633,
+        "sequence": 392,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4562.899999976158,
+        "sequence": 393,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4586.199999928474,
+        "sequence": 394,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4605.799999952316,
+        "sequence": 395,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4639.399999976158,
+        "sequence": 396,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4659.899999976158,
+        "sequence": 397,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4687.799999952316,
+        "sequence": 398,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4721.599999904633,
+        "sequence": 399,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4748.5,
+        "sequence": 400,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4772.399999976158,
+        "sequence": 401,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4846.5,
+        "sequence": 402,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4868.899999976158,
+        "sequence": 403,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4888.5,
+        "sequence": 404,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4921.399999976158,
+        "sequence": 405,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4941.199999928474,
+        "sequence": 406,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4971.5,
+        "sequence": 407,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 4991.099999904633,
+        "sequence": 408,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5021.599999904633,
+        "sequence": 409,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5055.5,
+        "sequence": 410,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5075.099999904633,
+        "sequence": 411,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5104.199999928474,
+        "sequence": 412,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5126.299999952316,
+        "sequence": 413,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5155.299999952316,
+        "sequence": 414,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5183.199999928474,
+        "sequence": 415,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5205.799999952316,
+        "sequence": 416,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5225.599999904633,
+        "sequence": 417,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5256.699999928474,
+        "sequence": 418,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5287.899999976158,
+        "sequence": 419,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5362.899999976158,
+        "sequence": 420,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5386.299999952316,
+        "sequence": 421,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5406.699999928474,
+        "sequence": 422,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5438,
+        "sequence": 423,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5467.899999976158,
+        "sequence": 424,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5496.799999952316,
+        "sequence": 425,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5527.899999976158,
+        "sequence": 426,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5554.599999904633,
+        "sequence": 427,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5574.699999928474,
+        "sequence": 428,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5605.799999952316,
+        "sequence": 429,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5639.5,
+        "sequence": 430,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5659.299999952316,
+        "sequence": 431,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5690.799999952316,
+        "sequence": 432,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5762.5,
+        "sequence": 433,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5826.399999976158,
+        "sequence": 434,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5846.199999928474,
+        "sequence": 435,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5873.799999952316,
+        "sequence": 436,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5905.399999976158,
+        "sequence": 437,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5925.899999976158,
+        "sequence": 438,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5956.699999928474,
+        "sequence": 439,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 5987.699999928474,
+        "sequence": 440,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6021.199999928474,
+        "sequence": 441,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6041,
+        "sequence": 442,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6071.5,
+        "sequence": 443,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6091.899999976158,
+        "sequence": 444,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6122.699999928474,
+        "sequence": 445,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6157.699999928474,
+        "sequence": 446,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6218.899999976158,
+        "sequence": 447,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6239,
+        "sequence": 448,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6270.299999952316,
+        "sequence": 449,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6296.099999904633,
+        "sequence": 450,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6316.599999904633,
+        "sequence": 451,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6341.799999952316,
+        "sequence": 452,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6372.699999928474,
+        "sequence": 453,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6407.299999952316,
+        "sequence": 454,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6427.099999904633,
+        "sequence": 455,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6457.799999952316,
+        "sequence": 456,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6488.699999928474,
+        "sequence": 457,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6562.5,
+        "sequence": 458,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6626.899999976158,
+        "sequence": 459,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6691,
+        "sequence": 460,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6711,
+        "sequence": 461,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6742,
+        "sequence": 462,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6772.5,
+        "sequence": 463,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6792.399999976158,
+        "sequence": 464,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6821.899999976158,
+        "sequence": 465,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6854.299999952316,
+        "sequence": 466,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6874.199999928474,
+        "sequence": 467,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6905.5,
+        "sequence": 468,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6925.399999976158,
+        "sequence": 469,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6956.799999952316,
+        "sequence": 470,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 6987.599999904633,
+        "sequence": 471,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7017.699999928474,
+        "sequence": 472,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7047.799999952316,
+        "sequence": 473,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7119,
+        "sequence": 474,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7139,
+        "sequence": 475,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7166.799999952316,
+        "sequence": 476,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7246.899999976158,
+        "sequence": 477,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7266.799999952316,
+        "sequence": 478,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7289.299999952316,
+        "sequence": 479,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7309.099999904633,
+        "sequence": 480,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7340.299999952316,
+        "sequence": 481,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7360,
+        "sequence": 482,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7390.799999952316,
+        "sequence": 483,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7462.699999928474,
+        "sequence": 484,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7526.599999904633,
+        "sequence": 485,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7550.5,
+        "sequence": 486,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7573.199999928474,
+        "sequence": 487,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7593.099999904633,
+        "sequence": 488,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7619.799999952316,
+        "sequence": 489,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7642.099999904633,
+        "sequence": 490,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7673.599999904633,
+        "sequence": 491,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7704.699999928474,
+        "sequence": 492,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7735.799999952316,
+        "sequence": 493,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7758.5,
+        "sequence": 494,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7787.699999928474,
+        "sequence": 495,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7821.199999928474,
+        "sequence": 496,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7840.799999952316,
+        "sequence": 497,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7871.599999904633,
+        "sequence": 498,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7905,
+        "sequence": 499,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7924.599999904633,
+        "sequence": 500,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7950.599999904633,
+        "sequence": 501,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 7981.599999904633,
+        "sequence": 502,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8010.599999904633,
+        "sequence": 503,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8038.599999904633,
+        "sequence": 504,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8071.099999904633,
+        "sequence": 505,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8091.199999928474,
+        "sequence": 506,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8122.599999904633,
+        "sequence": 507,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8155.399999976158,
+        "sequence": 508,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8175.799999952316,
+        "sequence": 509,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8202.799999952316,
+        "sequence": 510,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8233.599999904633,
+        "sequence": 511,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8260.599999904633,
+        "sequence": 512,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8291.699999928474,
+        "sequence": 513,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8321.099999904633,
+        "sequence": 514,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8343,
+        "sequence": 515,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8370.099999904633,
+        "sequence": 516,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8434.799999952316,
+        "sequence": 517,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8454.699999928474,
+        "sequence": 518,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8489.5,
+        "sequence": 519,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8554.699999928474,
+        "sequence": 520,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8574.599999904633,
+        "sequence": 521,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8606.099999904633,
+        "sequence": 522,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8625.699999928474,
+        "sequence": 523,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8656.599999904633,
+        "sequence": 524,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8687.799999952316,
+        "sequence": 525,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8721.099999904633,
+        "sequence": 526,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8742.5,
+        "sequence": 527,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8773.699999928474,
+        "sequence": 528,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8805.299999952316,
+        "sequence": 529,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8824.899999976158,
+        "sequence": 530,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8855.599999904633,
+        "sequence": 531,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8930.899999976158,
+        "sequence": 532,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8954.599999904633,
+        "sequence": 533,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 8974.5,
+        "sequence": 534,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9005.299999952316,
+        "sequence": 535,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9024.899999976158,
+        "sequence": 536,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9055.599999904633,
+        "sequence": 537,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9090.299999952316,
+        "sequence": 538,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9109.899999976158,
+        "sequence": 539,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9140.699999928474,
+        "sequence": 540,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9170.399999976158,
+        "sequence": 541,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9189.899999976158,
+        "sequence": 542,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9221.299999952316,
+        "sequence": 543,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9248.599999904633,
+        "sequence": 544,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9272.5,
+        "sequence": 545,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9304.299999952316,
+        "sequence": 546,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9330.599999904633,
+        "sequence": 547,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9406.699999928474,
+        "sequence": 548,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9426.5,
+        "sequence": 549,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9457.799999952316,
+        "sequence": 550,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9488.5,
+        "sequence": 551,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9523.099999904633,
+        "sequence": 552,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9542.799999952316,
+        "sequence": 553,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9573.699999928474,
+        "sequence": 554,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9604.599999904633,
+        "sequence": 555,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9636.899999976158,
+        "sequence": 556,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9656.5,
+        "sequence": 557,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9688.399999976158,
+        "sequence": 558,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9717.699999928474,
+        "sequence": 559,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9749,
+        "sequence": 560,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9771.199999928474,
+        "sequence": 561,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9793,
+        "sequence": 562,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9824.299999952316,
+        "sequence": 563,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9852.799999952316,
+        "sequence": 564,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9884.099999904633,
+        "sequence": 565,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9904.199999928474,
+        "sequence": 566,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9938.399999976158,
+        "sequence": 567,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 9957.899999976158,
+        "sequence": 568,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10030.5,
+        "sequence": 569,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10054,
+        "sequence": 570,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10075.5,
+        "sequence": 571,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10106.599999904633,
+        "sequence": 572,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10140.399999976158,
+        "sequence": 573,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10160.299999952316,
+        "sequence": 574,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10191.599999904633,
+        "sequence": 575,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10218.599999904633,
+        "sequence": 576,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10248.599999904633,
+        "sequence": 577,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10322.799999952316,
+        "sequence": 578,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10342.599999904633,
+        "sequence": 579,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10372.299999952316,
+        "sequence": 580,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10391.899999976158,
+        "sequence": 581,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10422.599999904633,
+        "sequence": 582,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10454.199999928474,
+        "sequence": 583,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10480.599999904633,
+        "sequence": 584,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10510.699999928474,
+        "sequence": 585,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10541.599999904633,
+        "sequence": 586,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10572.5,
+        "sequence": 587,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10605.099999904633,
+        "sequence": 588,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10624.599999904633,
+        "sequence": 589,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10655.599999904633,
+        "sequence": 590,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10687.099999904633,
+        "sequence": 591,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10710.399999976158,
+        "sequence": 592,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10739.599999904633,
+        "sequence": 593,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10774.199999928474,
+        "sequence": 594,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10793.799999952316,
+        "sequence": 595,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10821.699999928474,
+        "sequence": 596,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      },
+      {
+        "ms": 10855.399999976158,
+        "sequence": 597,
+        "width": 512,
+        "height": 384,
+        "bytes": 196640
+      }
+    ]
+  },
+  "summary": {
+    "phases": [
+      {
+        "phase": "snapshot",
+        "count": 328,
+        "units": 64487424,
+        "mean_ms": 14.316923780487805
+      },
+      {
+        "phase": "socket_send",
+        "count": 328,
+        "units": 64497920,
+        "mean_ms": 18.069612804878048
+      }
+    ],
+    "received_fps": 32.66863810733906,
+    "frames": 328
+  },
+  "status": "pass",
+  "errors": []
+}

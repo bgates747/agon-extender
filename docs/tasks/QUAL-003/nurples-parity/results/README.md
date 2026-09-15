@@ -105,3 +105,21 @@ before reading counters and closing. This resolves the prior large-surface
 incomplete-send accounting gap. Rates reproduce the uninstrumented wired
 controls closely. Snapshot and send currently serialize; bounded lookahead is
 the next agent-assigned experiment. No optimization success yet.
+
+## First correction: bounded lookahead (r25 diagnostic)
+
+| Wired client | r24 receivedFPS | r25 receivedFPS | FPS change |
+|---|---:|---:|---:|
+| Production | 20.00 | 24.64 | +23.22% |
+| Immediate credit | 29.70 | 32.67 | +10.01% |
+
+Drained accounting passes. In the receive-only window, snapshot time rises to
+14.317ms and socket-send wall time to18.070ms while stages overlap. This suggests
+shared-resource/scheduling costs limit the benefit; it does not identify their
+individual CPU costs. The no-web Nurples HW pilot still completes600 boundaries
+at60FPS with the identical state fingerprint. Active wired gameplay and heavier
+loads remain required; this is provisional output progress, not goal completion.
+
+Host orchestration needed two routine corrections: wait for actual keyboard
+readiness after reset, and wait for a detached job's initial result file to exist.
+Both resumed without rerunning/resetting the in-flight game.

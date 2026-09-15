@@ -202,11 +202,11 @@ N03c selects overlap of these currently sequential stages as the next experiment
    defaults remain unchanged; only an explicit experimental stock-service build
    flag enables lookahead. No stock primitive/scanline algorithm or wire-format
    changes, extra browser credits, or resolution/quality reductions.
-2. [ ] N04b: Exercise lease immutability, bounded demand, producer overlap and
+2. [x] N04b: Exercise lease immutability, bounded demand, producer overlap and
    default behavior on the host. Build an isolated r25 comparison atop current
    r24 diagnostics, preserve rollback, deploy/verify, rerun the same wired output
    windows and Nurples workload. Retain raw timings and frame/state records.
-3. [ ] N04c: Evaluate the measured improvement and remaining gap before any
+3. [x] N04c: Evaluate the measured improvement and remaining gap before any
    further change. Browser-credit timing is a separate possible next experiment,
    not part of this one. Stop/restore if input, rendering, lifecycle, or output
    correctness regresses. Performance success does not waive heavier/repeated
@@ -217,3 +217,25 @@ checks pass for default demand behavior, held-byte immutability,100 repeated
 blocked polls without rearming, disconnect/reconnect during production, bounded
 three-slot storage and unchanged legacy snapshot-pool regressions. No hardware
 performance claim yet. r25 build will enable the option only for comparison.
+
+N04b/c scoped results: r25 output improves to24.64FPS production/32.67 immediate
+credit. Complete accounting and no-web600-boundary60FPS/state equality pass.
+The goal still requires active wired gameplay, heavier loads, unfenced controls
+and repeats; static output progress alone is insufficient.
+
+### Next bounded correction — AGENT-ASSIGNED, not separately Author-approved
+
+1. [ ] N04d: Optimize only the P4-owned RGB222 row normalization, currently one
+   scalar read/XOR/mask/store per pixel. For aligned four-byte groups, swap the
+   two16-bit halves and mask each byte's high two bits using alias-safe memcpy.
+   This must reproduce `out[x]=signal[x^2]&63` exactly, preserve supported row
+   bounds, and fall back safely for unaligned addresses. Runtime alignment must
+   be checked before compiler alignment assumptions. No stock scanline body,
+   palette, sprite, framebuffer, resolution or wire-format changes. Keep this
+   separately opt-in for comparison; retain r25 lookahead and diagnostics.
+2. [ ] N04e: Host-check byte equality across colours, row widths and alignment
+   offsets, with canaries/sanitizers; inspect target compilation as useful. Build
+   and identify the isolated r26 variant, preserve/verify rollback, repeat the
+   same drained wired measurements and workload. If snapshot cost does not
+   materially improve, do not claim this loop caused the gap. Evaluate before
+   choosing further pipeline/client changes.
