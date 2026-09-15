@@ -122,3 +122,40 @@ were unchanged. Legacy MOS prompt is available. The accepted British hardware
 voice player replaced a fresh pending receipt with audio_commands=pass and
 returned through a fresh SD service; the service was then exited. Human hearing
 is not yet confirmed. No firmware correction or wider suite was started.
+
+
+## Author visual review and HUD trace — 2026-09-15 UTC
+
+The Author confirms the roadway looks correct after RX06. The Author reports
+black sky on straights and sky repaint/sideways scrolling during turns; HUD
+remains incorrect. This is visual acceptance of the road correction, not of the
+whole game or P4 port.
+
+Current Rally does not clear the entire HUD each frame. `rally-game/include/hud.hpp`
+initializes rows 0–23 separately on each page, then emits changed text cells only.
+`src/main.cpp::drawScenery` clips scrolling below row24 (below88 with a panel).
+`rally-production/include/scenery.hpp` retains each page on unchanged heading;
+turns scroll and repaint exposed strips. A bottom scenery strip is refreshed
+regularly. An unexpected erase therefore leaves static HUD cells and most sky
+absent, while changing values and exposed scenery strips reappear.
+
+P4's selected `unavailable_audio_adapter.hpp::vdu_sys_audio` is empty and does
+not consume channel, operation or operands. Rally's `Engine::update` emits
+`23,0,0x85,0,3,freqLo,freqHi`. Those remaining bytes can become ordinary VDU
+commands. For example speed94/95 produces268Hz, with low byte12 (`CLS`);
+speed96/97 produces272Hz, low byte16 (`CLG`). Context::cls clears the text
+viewport, independent of the road graphics clip. These are concrete unsafe
+parser paths, not proof that those exact speeds caused the observed erasure;
+other escaped bytes can also alter parser/display state.
+
+The existing `mute` option prevents Engine::start, leaving active=false, so
+update and stop emit no audio. The next discriminating physical comparison is
+the unchanged game on ExCom with/without `mute`, with the existing Legacy
+control (PORT-003 UC06). Do not compensate by repainting retained areas every
+frame. No new hardware test or firmware/game source change was performed during
+this code trace. Safe audio payload consumption remains the separate planned
+no-op work, not completed audio synthesis.
+
+The Author subsequently tested `mute` and reports that it eliminates the HUD/sky
+problem. This strengthens the audio-framing diagnosis; a corrected unmuted
+firmware test remains required before closing that defect.
