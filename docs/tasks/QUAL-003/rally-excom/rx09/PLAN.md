@@ -44,7 +44,7 @@ synthesis, unrelated optimizations or experimental push.
 3. [x] G03: Implement N04/N05 renderer guards and focused host tests; commit.
 4. [x] G04: Run target compile/source checks and existing relevant regressions;
    prepare deterministic eZ80 fixture and controlled installed-parent candidate.
-5. [ ] G05: Build/identify, flash/verify P4, deploy/read back fixture and startup;
+5. [x] G05: Build/identify, flash/verify P4, deploy/read back fixture and startup;
    run paired valid cases and P4 rejection cases with durable results. Keep
    mode selection in autoexec. Record fixture/runtime and preparation durations.
 6. [ ] G06: Restore startup, verify CLI/SD and unmuted Rally rendering; record
@@ -104,3 +104,8 @@ this fixture error. Stock MOS stops EXEC on a nonzero program return, explaining
 why ExCom never started and the terminal service never ran. Direct CLI service
 launch retrieved the completed stock CSV without reset. New output names keep
 evidence separate. Estimate roughly5minutes for all three corrected runs.
+
+
+G05 passed: r02 valid samples342/342 match stock exactly; P4 rejection570/570
+pass. Three fixture sections total333.47seconds; boot/collection386.30seconds.
+See results/hardware.json and retained CSVs. Restore/smoke/voice are next.
