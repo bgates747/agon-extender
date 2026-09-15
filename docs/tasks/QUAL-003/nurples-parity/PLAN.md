@@ -165,3 +165,12 @@ unfenced controls, heavier workload validation and repeats remain outstanding.
 Host packet capture was unavailable without a password; no privilege or wiring
 change is needed. Use the existing wired Pi and bounded timing hooks instead.
 Do not request the sleeping Author's attention for this optional diagnostic.
+
+N03b reuses the prior LARGE-SURFACE.md investigation rather than repeating its
+implementation. Its640x480 snapshot mean was16.660ms, but socket accounting
+was invalidated by closing with an in-flight response. The new observer MUST
+stop granting credits, receive/drain the last granted response, and read final
+counters while still connected before closing. Use the same quiescent boundary
+before the timed window. Reject lost/overlapping/incomplete or mixed-layout
+counts. This closes that existing measurement gap on current512x384 Nurples;
+it is not a claim of discovering those timing hooks anew.
