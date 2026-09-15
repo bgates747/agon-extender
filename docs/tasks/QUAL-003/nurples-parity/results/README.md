@@ -10,6 +10,12 @@ therefore reused the first saved pilot. The repeated600-record fingerprints and
 Retain them as invalid evidence, not performance results. The r03 longer trial
 exposed the flaw by returning the old NP01/600-record file.
 
+The first corrected NP04 run verifies its expected nonce, sprite mode, capacity
+and size:2,400 fenced P4 SW boundaries,29.57FPS mean,33.333ms p95,50ms maximum,
+and13 live sprites maximum. This includes the per-frame completion query;
+repeat, matched mainboard and corrected unfenced controls are still pending.
+See verified-first-p4.json and NPV4E1.BIN. No parity claim is restored yet.
+
 Independent browser/EVF, packet and drained P4 output-recorder measurements
 remain valid within their stated scopes. Their output improvements do not prove
 game parity. Next: checked fixture I/O, unique per-run nonce and format/variant

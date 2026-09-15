@@ -1,0 +1,49 @@
+{
+  "scope": "fresh NP04 P4 SW fenced run; no matched mainboard comparison yet",
+  "game": [
+    {
+      "file": "NPV4E1.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "42a6fcb4630416f4",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 9248,
+      "mean_frame_ms": 33.816001170103846,
+      "completed_fps": 29.57179930795848,
+      "p95_frame_ms": 33.333333333333336,
+      "maximum_frame_ms": 50.0,
+      "tick_histogram": {
+        "2": 5,
+        "4": 2203,
+        "6": 71
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "fenced-sw",
+      "completion_scope": "pixel-query drawing completion boundary; no hardware-sprite scanout proof",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    }
+  ],
+  "coverage": {
+    "reset_to_terminal_seconds": 121.78714027703973,
+    "observer_running_at_terminal": true
+  }
+}
