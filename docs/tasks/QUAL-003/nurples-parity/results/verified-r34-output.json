@@ -1,0 +1,111 @@
+{
+  "np-verified-r34-excom-sw01": {
+    "browser_summary": {
+      "received": 4640,
+      "received_fps": 25.75270739282868,
+      "median_receive_interval_ms": 33.700000047683716,
+      "maximum_receive_interval_ms": 185.89999997615814,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4398
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 242
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180595.70000004768,
+    "observed_wall_seconds": 180.12250676902477,
+    "post_output_readiness": {
+      "keyboard/status": {
+        "protocol": 1,
+        "sequence": 12,
+        "emitted": 84,
+        "accepted": 84,
+        "discarded": 0,
+        "pending": 0,
+        "held": 0,
+        "locale": 1,
+        "ready": true,
+        "physical_neutral": true,
+        "caps": false,
+        "reason": 1
+      },
+      "sd/status": {
+        "protocol": 1,
+        "online": true,
+        "pending": false
+      }
+    }
+  },
+  "np-verified-r34-excom-hw01": {
+    "browser_summary": {
+      "received": 4940,
+      "received_fps": 27.422009118838556,
+      "median_receive_interval_ms": 33.40000009536743,
+      "maximum_receive_interval_ms": 289.39999997615814,
+      "layouts": [
+        {
+          "width": 512,
+          "height": 384,
+          "stride": 512,
+          "format": 2,
+          "frames": 4939
+        },
+        {
+          "width": 640,
+          "height": 480,
+          "stride": 640,
+          "format": 2,
+          "frames": 1
+        }
+      ],
+      "observed_logical_period_us": [
+        16667
+      ],
+      "sequence_gaps": 0
+    },
+    "last_frame_ms": 180587.60000002384,
+    "observed_wall_seconds": 180.10065774596296,
+    "post_output_readiness": {
+      "keyboard/status": {
+        "protocol": 1,
+        "sequence": 12,
+        "emitted": 84,
+        "accepted": 84,
+        "discarded": 0,
+        "pending": 0,
+        "held": 0,
+        "locale": 1,
+        "ready": true,
+        "physical_neutral": true,
+        "caps": false,
+        "reason": 1
+      },
+      "sd/status": {
+        "protocol": 1,
+        "online": true,
+        "pending": false
+      }
+    }
+  },
+  "allocation_lines": [
+    "I (1754) np-fb-memory: width=640 height=480 bytes=153600 largest=335872 selected=psram-fallback",
+    "I (60385) np-fb-memory: width=640 height=480 bytes=153600 largest=188416 selected=psram-fallback",
+    "I (60449) np-fb-memory: width=512 height=384 bytes=196608 largest=188416 selected=psram-fallback",
+    "I (266122) np-fb-memory: width=640 height=480 bytes=153600 largest=98304 selected=psram-fallback",
+    "I (266188) np-fb-memory: width=512 height=384 bytes=196608 largest=94208 selected=psram-fallback"
+  ]
+}

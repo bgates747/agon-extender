@@ -740,12 +740,12 @@ The mistake is in the P4 output adapter, not an upstream VDP drawing algorithm.
    No ISR uses this frame-task interface. Preserve every slot/lease/state rule,
    ownership bound and immutable frame byte. Run existing snapshot/network
    ownership tests with sanitizers; add concurrency coverage if absent.
-2. [ ] N04s-ii: Build isolated r34 with r32 flags plus mutex correction, core1
+2. [x] N04s-ii: Build isolated r34 with r32 flags plus mutex correction, core1
    output unchanged. Keep r33 unflashed so correctness and affinity changes
    remain separately attributable. Preserve safe startup/rollback, deploy,
    verify, repeat SW/HW cases with full180second live-output observation and
    explicit post-close keyboard/SD readiness. No freezes may count as parity.
-3. [ ] N04s-iii: If stable, evaluate game timings; then choose whether to repeat
+3. [x] N04s-iii: If stable, evaluate game timings; then choose whether to repeat
    parity or refresh the separately frozen core-affinity experiment. Do not
    mask freezes by resetting within measured windows.
 
@@ -773,3 +773,9 @@ N04r refresh — AGENT-ASSIGNED, not separately Author-approved:
 
 N04r-i2 built r35; linked output task core0/priority2, corrected mutex retained.
 Unflashed pending r34 controls and final service readiness.
+
+N04s completed two180second streaming cases: SW47.58FPS,HW50.07FPS;
+both post-close keyboard/SD readiness passed. No parity. Inherited controller
+skips SW repeat when first SW<50FPS; that repeat did not run (correcting the
+progress-message assumption). Preserve this early rejection rule for cases
+clearly outside parity; repeat all apparent parity results. Proceed to r35.
