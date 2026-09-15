@@ -840,7 +840,7 @@ comparison predates qualified EMOS installation and later output corrections.
 Before more renderer changes, exercise the already-built NPVFR4 fixture against
 current r37, with the same seed/workload, unique nonce and180second stream.
 
-1. [ ] N04v-i: After N04u controls release hardware, run fresh unfenced SW and
+1. [x] N04v-i: After N04u controls release hardware, run fresh unfenced SW and
    retain terminal completion fence, state fingerprint and output/service checks.
    No application/fixture/firmware edits are required for this existing variant.
 2. [ ] N04v-ii: Compare to mainboard unfenced60FPS and current fenced SW. Label
@@ -853,3 +853,8 @@ N04u complete: both180second SW/HW output/service controls passed; no parity.
 SW49.08FPS. Terminal SW image matches r34 outside the four changing diagnostic
 filename glyphs, including all gameplay pixels. N04v now owns hardware for
 the existing unfenced control; no further firmware change is selected yet.
+
+N04v-i complete: fresh unfenced SW reaches60 submission/vblank boundaries/s,
+with180second live output and post-close services verified. The controller
+collection wait was too short; its observer completed independently. This is
+not proof of completed-render parity. N04v-ii investigates probe overhead.

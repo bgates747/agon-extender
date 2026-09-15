@@ -2,18 +2,17 @@
 
 ## Executive summary
 
-**Parity has not passed.** Latest first-run SW result with the full native
-framebuffer in internal RAM is53.54FPS (18.678ms mean), versus mainboard58.71FPS
-(17.032ms); its p95 remains33.333ms. Both sprite paths reach60FPS when web output
-is disconnected. Qualified EMOS UART code produced the largest earlier gain;
-the remaining work is P4 output interference and reliability.
+**Parity has not passed.** Current r37 reaches60 unfenced submission/vblank
+boundaries per second with web streaming active. Per-frame completion queries
+reduce the same workload to49.08FPS with software sprites and52.33FPS with
+hardware sprites. This makes probe overhead a material uncertainty; the next
+measurement must establish completed rendering without stalling every frame.
+Browser delivery is separately measured at27.69FPS, not60 distinct displayed
+frames/s. See verified-r37-free-analysis.json and verified-r37-free-output.json.
 
-A concrete snapshot-adapter priority-inversion hazard is now identified:
-a higher-priority consumer busy-spins on a lock held by a preempted lower-priority
-producer. Recent post-run freezes are consistent with that hazard, without a
-captured task backtrace proving attribution. The isolated mutex correction
-passes host ownership/concurrency/pixel tests; physical qualification is next.
-Producer transitions remain non-blocking. No VDP drawing algorithm is changed.
+The snapshot mutex correction has now passed paired180second streaming runs
+and post-close keyboard/SD checks. Both sprite paths previously reached60FPS
+with output disconnected. No stock VDP drawing algorithm has been changed.
 
 ## Measurement provenance and earlier comparisons
 

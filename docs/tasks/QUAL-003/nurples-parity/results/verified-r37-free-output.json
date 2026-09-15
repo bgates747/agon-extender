@@ -1,0 +1,37 @@
+{
+  "scope": "Unfenced submission/vblank timing, not completed rendering proof",
+  "browser_summary": {
+    "received": 4988,
+    "received_fps": 27.694985302824307,
+    "median_receive_interval_ms": 33.39999997615814,
+    "maximum_receive_interval_ms": 255.59999990463257,
+    "layouts": [
+      {
+        "width": 512,
+        "height": 384,
+        "stride": 512,
+        "format": 2,
+        "frames": 4987
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "stride": 640,
+        "format": 2,
+        "frames": 1
+      }
+    ],
+    "observed_logical_period_us": [
+      16667
+    ],
+    "sequence_gaps": 0
+  },
+  "last_frame_ms": 180489,
+  "page_errors": [],
+  "post_output_services_passed": true,
+  "coverage": {
+    "reset_to_terminal_seconds": 67.71053648198722,
+    "observer_running_at_terminal": true
+  },
+  "collection_correction": "Original controller failed its fixed 90-second observer wait after the fast game. The unchanged independent 180-second observer completed normally; evidence was retrieved afterward. Preserve original controller failure; no hardware rerun was needed."
+}
