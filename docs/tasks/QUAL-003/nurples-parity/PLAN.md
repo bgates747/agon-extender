@@ -621,3 +621,15 @@ credit did not drain within15seconds. No timing result accepted.
 AGENT-ASSIGNED refinement: retain gate state/frame evidence even on failure,
 then run one fresh nonce-verified diagnostic with a25second pre-window delay.
 This remains diagnostic only and does not relax drain/counter validity checks.
+
+### N04o window-scope clarification
+
+AGENT-ASSIGNED, not separately Author-approved. Attempt2 drained all881
+credits without close or JS error. Its original observer rejected a historical
+lost-completion count of1, unchanged across the entire242-snapshot window.
+The recorder source makes this a cumulative counter, not a latched corruption
+of subsequent totals. Preserve the original failed verdict. Separately analyze
+the window only if both endpoints are idle/consistent/totals-valid, all error
+counter deltas are zero, all six phase counts match and all units are exact.
+Test rejection of injected loss, active endpoints and incomplete units. This
+permits diagnostic attribution only, never a gameplay parity claim.
