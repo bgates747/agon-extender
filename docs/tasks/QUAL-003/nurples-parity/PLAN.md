@@ -1114,7 +1114,7 @@ height on exhaustion. freeViewPort frees pools and row pointers, nulling them.
 No stock source change is proposed. The P4 whole-largest-block preflight was
 our experiment's constraint, not an upstream requirement.
 
-1. [ ] N04ab-i: Add a default-off isolated r42 option using the unchanged stock
+1. [x] N04ab-i: Add a default-off isolated r42 option using the unchanged stock
    INTERNAL multi-pool allocator only for eligible512x384 single-buffer mode.
    Require sufficient total free memory for framebuffer plus stock reserve
    before attempting; if actual height is short, free the partial viewport,
@@ -1136,3 +1136,8 @@ N04aa complete: r41 first SW60.056FPS/p9523.874ms; HW60.088FPS/p9528.967ms.
 HW still fails; repeats skipped. Both2400 records match stock, pending<=1,
 180second output and services pass. Both select PSRAM. Removing dormant
 probe overhead did not establish parity. N04ab now isolates memory placement.
+
+N04ab-i complete: r42 built with exact source/partition checks and no old timing
+symbols. Actual stock allocation/free methods pass ASan/UBSan cases for
+contiguous/fragmented success, insufficient total, and partial-height cleanup
+with PSRAM retry. All384 rows are exercised; no leaks or double frees.
