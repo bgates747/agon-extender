@@ -64,7 +64,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Started: 2026-09-09
   - Status: EDP visual PASS retained. Framebuffer-first exploratory results ready for Author review: 39-case baseline completed 624/624 intervals with zero P4 snapshots; known SHP23 probe differences only. BSP30 stress page excluded after two preserved mainboard timeouts/scanout artifacts. Primitive gains and upload/submission slowdown recorded; ordinary mainboard firmware and keyboard/SD recovered. Deterministic Nurples and its input-pattern question remain deferred. Wolf3D/audio remains deferred.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
-  - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Author-authorized targeted tests first; stop on a clear provisional defect. Golem excluded; detached deployments.
+  - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: current road-section stream differs at 14/80 samples; simpler probes pass. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). Startup restored, hardware voice passed; fixes await review. Golem excluded.
 
 
 - [ ] **PORT-003 — Implement the P4 display backend and logical frame service**

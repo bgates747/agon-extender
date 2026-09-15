@@ -51,7 +51,7 @@ remains the Author's acceptance gate. No improvement is yet claimed.
    (ExCom-Legacy)/Legacy*100. Browser FPS alone is not rendering FPS. Retain
    durable progress/duration and fail state. No inference of throughput parity
    from unlike firmware or workloads.
-5. [ ] RX05: If a clear provisional defect emerges, preserve reproduction and
+5. [x] RX05: If a clear provisional defect emerges, preserve reproduction and
    explain stock divergence, evidence and uncertainty. Stop before correction,
    restore usable bench if required and play hardware British voice alert
    (spoken emulator fallback only if hardware unavailable). Otherwise expand
@@ -111,3 +111,7 @@ road-section buffer stream differs at14/80samples, seven left-edge locations on
 each page. See FINDINGS.md and results/r03. Stop before fixes or wider tests.
 RX05 restoration/voice closes this run; RX06 awaits review. The full HUD issue
 and performance comparisons remain open, not waived by this finding.
+
+RX05 complete: original startup restored/read back, older backup preserved,
+Legacy MOS prompt, hardware voice command receipt passed. RX06 remains gated
+for Author review of the actionable road defect.
