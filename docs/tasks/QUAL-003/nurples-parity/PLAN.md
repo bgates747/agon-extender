@@ -192,7 +192,7 @@ N03c selects overlap of these currently sequential stages as the next experiment
 
 ### N04 first correction contract — AGENT-ASSIGNED, not separately Author-approved
 
-1. [ ] N04a: Add opt-in, one-frame snapshot lookahead to the project-owned pool.
+1. [x] N04a: Add opt-in, one-frame snapshot lookahead to the project-owned pool.
    A successful consumer lease may arm one future snapshot only if no producer
    is already active. Repeated polls with an existing lease cannot rearm it.
    Keep fixed slot allocation, immutable leased bytes, monotonic generations,
@@ -211,3 +211,9 @@ N03c selects overlap of these currently sequential stages as the next experiment
    not part of this one. Stop/restore if input, rendering, lifecycle, or output
    correctness regresses. Performance success does not waive heavier/repeated
    gameplay and unfenced controls or human acceptance.
+
+N04a implemented behind the explicit lookahead option/build flag. Sanitized host
+checks pass for default demand behavior, held-byte immutability,100 repeated
+blocked polls without rearming, disconnect/reconnect during production, bounded
+three-slot storage and unchanged legacy snapshot-pool regressions. No hardware
+performance claim yet. r25 build will enable the option only for comparison.

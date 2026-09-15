@@ -3,8 +3,15 @@
 #include <cassert>
 
 namespace agon::extender::display {
+namespace {
+#if defined(AGON_EXTENDER_SNAPSHOT_LOOKAHEAD)
+constexpr bool kSnapshotLookahead = true;
+#else
+constexpr bool kSnapshotLookahead = false;
+#endif
+} // namespace
 StockP4Service::StockP4Service(Allocator allocator)
-    : snapshots_(allocator, SnapshotPixelFormat::RGB222, 0, true, true) {
+    : snapshots_(allocator, SnapshotPixelFormat::RGB222, 0, true, true, kSnapshotLookahead) {
   barrier_done_ = xSemaphoreCreateBinary();
   draw_done_ = xSemaphoreCreateBinary();
   output_done_ = xSemaphoreCreateBinary();

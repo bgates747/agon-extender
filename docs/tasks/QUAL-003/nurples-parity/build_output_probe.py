@@ -8,22 +8,25 @@ from pathlib import Path
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');a=p.parse_args()
+ assert a.lookahead, 'Use the frozen d007496 builder for r24; current source is the r25 lookahead experiment'
  root=Path.cwd();parent=a.parent.resolve();out=a.output.resolve()
  assert not subprocess.check_output(['git','status','--porcelain'],text=True)
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
+ revision='r25' if a.lookahead else 'r24'
  source=parent/'source';tree=out/'source'
  shutil.copytree(source,tree,ignore=shutil.ignore_patterns('.pio','managed_components','__pycache__'))
  pinned={str(f.relative_to(source)):sha(f) for f in source.rglob('*') if f.is_file() and '.pio' not in f.parts and 'managed_components' not in f.parts and '__pycache__' not in f.parts}
  assert all(sha(tree/n)==h for n,h in pinned.items())
  probe_files=('vdp/video/extender/network/wired_network_service.cpp','vdp/video/extender/display/stock_p4_service.cpp','vdp/video/extender/diagnostics/video_timing.hpp')
+ if a.lookahead:probe_files+=('vdp/video/extender/display/presentation_snapshot_pool.cpp','vdp/video/extender/display/presentation_snapshot_pool.hpp')
  # Reviewed parent-to-maintained delta is ONLY the optional two scopes/endpoint.
  # r23 proved the archived source lacks them: a flag alone was insufficient.
  for n in probe_files:shutil.copy2(root/n,tree/n)
  assert (tree/probe_files[2]).is_file()
- identity_file=tree/'vdp/pio/p4-console-identity.json';record=json.loads(identity_file.read_text());record.update(source_identity='uart-excom-console-r24',status='draft',note='Agent-assigned Nurples output timing only; exact installed r22 drawing and transport retained.')
+ identity_file=tree/'vdp/pio/p4-console-identity.json';record=json.loads(identity_file.read_text());record.update(source_identity='uart-excom-console-'+revision,status='draft',note='Agent-assigned bounded snapshot lookahead with output timing; stock drawing retained.')
  identity_file.write_text(json.dumps(record,indent=2)+'\n')
  (tree/'vdp/.pio').mkdir();(tree/'vdp/.pio/packages').symlink_to(root/'vdp/.pio/packages',target_is_directory=True)
  shutil.copytree(source/'vdp/managed_components',tree/'vdp/managed_components')
@@ -32,9 +35,10 @@ def main():
  cfg['platformio']['build_dir']=str(out/'build');cfg['env:p4-console']['board_build.esp-idf.sdkconfig_path']=str(out/'sdkconfig')
  assert 'AGON_EXTENDER_VIDEO_TIMING' not in cfg['env:p4-console']['build_flags']
  cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_TIMING=1'
+ if a.lookahead:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1'
  with (out/'platformio.ini').open('w') as f:cfg.write(f)
- stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-r24-b'+stamp
- manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'source_change':'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'snapshot/send timing; no VDP algorithm or MOS changes'}
+ stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-'+revision+'-b'+stamp
+ manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'lookahead_enabled':a.lookahead,'source_change':'identity, optional output timing hooks, and opt-in bounded lookahead' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)

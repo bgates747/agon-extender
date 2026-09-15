@@ -51,9 +51,11 @@ void PresentationSnapshotLease::release() noexcept {
 
 PresentationSnapshotPool::PresentationSnapshotPool(
     Allocator allocator, SnapshotPixelFormat format,
-    std::uint64_t minimum_interval_us, bool on_demand, bool direct_rgb222) noexcept
+    std::uint64_t minimum_interval_us, bool on_demand, bool direct_rgb222,
+    bool lookahead) noexcept
     : allocator_(allocator), format_(format), minimum_interval_us_(minimum_interval_us),
-      on_demand_(on_demand), direct_rgb222_(direct_rgb222) {
+      on_demand_(on_demand), direct_rgb222_(direct_rgb222),
+      lookahead_(on_demand && lookahead) {
   transition_lock_.clear(std::memory_order_release);
   if (allocator_.allocate == nullptr || allocator_.deallocate == nullptr ||
       (direct_rgb222_ && format_ != SnapshotPixelFormat::RGB222)) {
@@ -287,6 +289,12 @@ bool PresentationSnapshotPool::tryAcquireLatest(
   }
   auto &slot = slots_[static_cast<std::size_t>(latest)];
   slot.state = SlotState::Leased;
+  // Optional one-frame lookahead overlaps capture with this lease's send.
+  // Only a successful acquisition arms it: retries/held leases cannot create
+  // continuous no-demand composition (the historical RGB-4 starvation bug).
+  // An already active producer supplies the next frame and must not be rearmed.
+  if (lookahead_ && findLocked(SlotState::Producer) < 0)
+    requested_.store(true, std::memory_order_release);
   ImmutableSnapshotView view{
       reinterpret_cast<std::uint8_t const *>(slot.pixels),
       slot.payload_bytes,

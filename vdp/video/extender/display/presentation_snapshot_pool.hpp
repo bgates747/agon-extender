@@ -118,7 +118,8 @@ class PresentationSnapshotPool final {
       Allocator allocator,
       SnapshotPixelFormat format = SnapshotPixelFormat::RGB888,
       std::uint64_t minimum_interval_us = kPresentationSnapshotMinimumIntervalUs,
-      bool on_demand = false, bool direct_rgb222 = false) noexcept;
+      bool on_demand = false, bool direct_rgb222 = false,
+      bool lookahead = false) noexcept;
   ~PresentationSnapshotPool();
 
   PresentationSnapshotPool(PresentationSnapshotPool const &) = delete;
@@ -174,6 +175,7 @@ class PresentationSnapshotPool final {
   std::uint64_t minimum_interval_us_;
   bool on_demand_;
   bool direct_rgb222_;
+  bool lookahead_;
   std::atomic<bool> requested_{false};
   std::array<Slot, kPresentationSnapshotSlotCount> slots_{};
   mutable std::atomic_flag transition_lock_ = ATOMIC_FLAG_INIT;
