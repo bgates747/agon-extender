@@ -615,3 +615,9 @@ N04n completed: SW first51.08FPS, repeat47.63FPS, HW52.21FPS.
 Priority reduction does not establish a repeatable improvement or parity.
 All nonce-verified states match; retain r29 as the fixed diagnostic parent,
 not a qualified optimization. Row timing remains the selected next measurement.
+
+N04o-ii diagnostic attempt1 failed before its counter window: outstanding
+credit did not drain within15seconds. No timing result accepted.
+AGENT-ASSIGNED refinement: retain gate state/frame evidence even on failure,
+then run one fresh nonce-verified diagnostic with a25second pre-window delay.
+This remains diagnostic only and does not relax drain/counter validity checks.

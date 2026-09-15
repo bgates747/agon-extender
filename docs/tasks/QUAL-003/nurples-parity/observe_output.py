@@ -65,6 +65,8 @@ def main():
    (a.output/'last.evf').write_bytes(bytes(page.evaluate('Array.from(new Uint8Array(__outputGate.lastFrame))')))
   except Exception as e:record['status']='failed';record['error']=str(e);raise
   finally:
+   record['gate_final']=page.evaluate('({sent:__outputGate.sent,received:__outputGate.received,inflight:__outputGate.inflight,closes:__outputGate.closes,frames:__outputGate.frames})')
+   if page.evaluate('!!__outputGate.lastFrame'):(a.output/'last.evf').write_bytes(bytes(page.evaluate('Array.from(new Uint8Array(__outputGate.lastFrame))')))
    record['errors']=errors;(a.output/'result.json').write_text(json.dumps(record,indent=2)+'\n');browser.close()
  print(json.dumps(record['summary'],indent=2))
 if __name__=='__main__':main()
