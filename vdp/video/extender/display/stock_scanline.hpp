@@ -28,6 +28,9 @@
 // verbatim in stock_scanline.cpp. Caller must hold native-state quiescence.
 // Independent reader scheduling/lifetime is deliberately not implied here.
 #pragma once
+#if defined(AGON_EXTENDER_PACKED_ROW)
+#include "extender/display/rgb222_row.hpp"
+#endif
 #include <cstdint>
 #include "dispdrivers/vga2controller.h"
 #include "dispdrivers/vga4controller.h"
@@ -47,7 +50,11 @@ class StockScanlineController : public DepthController {
   // existing EVF1 RGB222 bytes. Source and destination must not overlap.
   static void normalizeRow(std::uint8_t const *signalRow,
                            std::uint8_t *rgb222, int width) {
+#if defined(AGON_EXTENDER_PACKED_ROW)
+    normalizeRgb222Row(signalRow, rgb222, width);
+#else
     for (int x = 0; x < width; ++x) rgb222[x] = signalRow[x ^ 2] & 63;
+#endif
   }
 };
 } // namespace agon::extender::display

@@ -225,7 +225,7 @@ and repeats; static output progress alone is insufficient.
 
 ### Next bounded correction — AGENT-ASSIGNED, not separately Author-approved
 
-1. [ ] N04d: Optimize only the P4-owned RGB222 row normalization, currently one
+1. [x] N04d: Optimize only the P4-owned RGB222 row normalization, currently one
    scalar read/XOR/mask/store per pixel. For aligned four-byte groups, swap the
    two16-bit halves and mask each byte's high two bits using alias-safe memcpy.
    This must reproduce `out[x]=signal[x^2]&63` exactly, preserve supported row
@@ -239,3 +239,10 @@ and repeats; static output progress alone is insufficient.
    same drained wired measurements and workload. If snapshot cost does not
    materially improve, do not claim this loop caused the gap. Evaluate before
    choosing further pipeline/client changes.
+
+N04d implemented as a separately selected output-adapter helper.65,792 sanitized
+scalar-equivalence cases pass over native row widths, byte patterns and16 source/
+destination alignment combinations, preserving canaries and input bytes. Target
+GCC assembly confirms aligned LW/SW accesses and halfword swap/mask; the unaligned
+path retains byte accesses. Stock scanline bodies remain unchanged. Hardware
+snapshot-cost attribution still awaits the r26 comparison.
