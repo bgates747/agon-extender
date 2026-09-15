@@ -259,3 +259,5 @@ deterministic Nurples and separate typing measurements are deferred.
   - Finished: --
   - Status: Long-term capability requested by Author, 2026-09-10. Implementation deferred; inclusion in v1 remains undecided. Not a dependency of the current performance investigation.
   - Details: [PORT-016](docs/tasks/PORT-016.md)
+
+Current Author goal: [Nurples hardware parity with active web streaming](docs/tasks/QUAL-003/nurples-parity/PLAN.md). This takes priority over unrelated audit continuations; existing gates remain recorded.
