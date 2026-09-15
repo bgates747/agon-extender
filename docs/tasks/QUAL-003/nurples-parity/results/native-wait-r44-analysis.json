@@ -1,0 +1,141 @@
+{
+  "scope": "Diagnostic parser-native mutex acquisition wall time (including preemption) and RX backlog; not pure blocked time; probe overhead excludes parity qualification",
+  "completion_trace": {
+    "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+    "nonce": "b4bcc755f4fc1cec",
+    "submitted": 2400,
+    "completed": 2400,
+    "maximum_pending_refreshes": 1,
+    "warmup": 120,
+    "completed_fps": 60.04116099530172,
+    "completion_intervals": {
+      "count": 2279,
+      "mean_ms": 16.65524089512944,
+      "p95_ms": 21.821,
+      "max_ms": 33.561
+    },
+    "enqueue_intervals": {
+      "count": 2279,
+      "mean_ms": 16.656213251426063,
+      "p95_ms": 22.541,
+      "max_ms": 34.043
+    },
+    "enqueue_to_completion": {
+      "count": 2280,
+      "mean_ms": 2.466080701754386,
+      "p95_ms": 4.09,
+      "max_ms": 16.823
+    },
+    "elapsed_first_to_last_ms": 39949.109
+  },
+  "native_wait_ms": {
+    "count": 2280,
+    "mean": 0.7228324561403509,
+    "p95": 1.688,
+    "maximum": 10.086
+  },
+  "largest_acquisition_ms": {
+    "count": 2280,
+    "mean": 0.18635350877192983,
+    "p95": 1.028,
+    "maximum": 9.599
+  },
+  "native_acquisitions_per_refresh": {
+    "count": 2280,
+    "mean": 123.53815789473684,
+    "p95": 153,
+    "maximum": 201
+  },
+  "rx_buffered_bytes_at_enqueue": {
+    "count": 2280,
+    "mean": 17.208333333333332,
+    "p95": 148,
+    "maximum": 715
+  },
+  "worst_wait_rows": [
+    [
+      297,
+      10086,
+      9599,
+      80,
+      249
+    ],
+    [
+      1455,
+      10077,
+      8756,
+      126,
+      437
+    ],
+    [
+      2348,
+      8729,
+      8363,
+      127,
+      412
+    ],
+    [
+      42,
+      8012,
+      7616,
+      86,
+      249
+    ],
+    [
+      506,
+      7891,
+      7539,
+      105,
+      340
+    ],
+    [
+      685,
+      7171,
+      6679,
+      104,
+      115
+    ],
+    [
+      1427,
+      4822,
+      4228,
+      116,
+      0
+    ],
+    [
+      418,
+      4552,
+      4241,
+      85,
+      0
+    ],
+    [
+      2284,
+      4437,
+      3222,
+      147,
+      408
+    ],
+    [
+      2235,
+      4010,
+      2191,
+      138,
+      0
+    ],
+    [
+      1346,
+      3963,
+      3030,
+      152,
+      0
+    ],
+    [
+      2118,
+      3900,
+      1729,
+      150,
+      0
+    ]
+  ]
+}

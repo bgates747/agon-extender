@@ -1255,7 +1255,7 @@ raising opportunity frequency multiplied full sprite rendering cost.
    per-frame UART/log output, live SD or allocation. Dump bounded PSRAM records
    only after the terminal fence; preserve existing completion-trace format.
    Host-check parser ownership, lock behavior, aggregation and disabled behavior.
-2. [ ] N04ae-ii: With original startup/readiness restored, preserve r43 and
+2. [x] N04ae-ii: With original startup/readiness restored, preserve r43 and
    install/readback r44. Run unchanged SW diagnostic with full180second browser,
    nonce/workload/completion checks and services. No sniffer is required for this
    attribution because N04ad already established the wire/dispatch distinction.
@@ -1273,3 +1273,14 @@ Native acquisition clock clarification: elapsed time around mutex.lock includes
 preemption as well as contention; it must not be labelled pure blocked time.
 The probe localizes elapsed cost to that region without proving its scheduler
 versus mutex cause by itself.
+
+N04ae-ii complete: r44 single SW run validates nonce, all2400 completions,
+workload fingerprint,180second browser coverage, terminal pixels and services.
+See results/native-wait-r44-analysis.json and verified-r44-output.json.
+Native acquisition wall time averages0.723ms, p951.688ms; not sufficient to
+explain the larger recurring pre-enqueue variation. N04ae-iii remains open:
+analysis preserved, next measurement/correction not selected. Author requested
+pause; original startup restored/read back, SD service exited, neutral ready
+keyboard verified. No further experiment begins until resumed. r44 diagnostic
+remains installed, probe inactive. Scheduler/TCP-IP contention is an unproven
+candidate for future investigation, not a new approved step.

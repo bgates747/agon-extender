@@ -31,8 +31,10 @@ Removing inherited inactive graphics scopes in r41 did not resolve the HW
 tail (28.967ms p95). Stock multi-pool allocation in r42 succeeds, but software p9529.253ms
 still fails. Removing the parser/frame recorder in r43 also fails the HW tail (29.278ms).
 Passive UART capture locates the variation after wire arrival and before
-P4 enqueue. The next observation measures parser native-lock waits and RX depth. Stock mainboard VDP remains
-restored and verified.
+P4 enqueue. The r44 diagnostic found native-lock acquisition usually small (0.723ms mean,
+1.688ms p95 per refresh), including preemption. This does not explain the larger
+recurring pre-enqueue variation. Work is paused at the Author’s request; no
+parity claim or further experiment. Stock mainboard VDP remains restored and verified.
 
 ## Dormant-probe control r41
 
@@ -94,6 +96,42 @@ variation spans81.895ms, so the earlier enqueue-only pending count did not
 measure the preceding receive/parser backlog. Next: parser native-lock waiting
 and RX depth, without a behavior change. See wire-r43-analysis.json and
 wire-r43-acquisition.json. Ordinary startup/input/SD are restored.
+
+## Native-lock attribution r44 and requested pause
+
+The single software-sprite diagnostic completed all2400 refreshes with the
+matched state fingerprint, pending≤1, a full180second browser observation,
+no browser errors/closes/gaps, and matching terminal pixels outside the fixture
+filename. Completion mean16.655ms (60.041FPS), p9521.821ms. This instrumented
+single run is not qualification evidence or proof of repeatable parity.
+
+| Parser observation per refresh | Mean | p95 | Maximum |
+|---|---:|---:|---:|
+| Native mutex acquisition wall time, ms |0.723|1.688|10.086|
+| RX buffered bytes at enqueue |17.208|148|715|
+
+Acquisition wall time includes preemption, not just blocked mutex time. Typical
+cost is too small to account for the larger recurring pre-enqueue variation;
+occasional longer acquisitions remain. Browser receive averaged28.22FPS across
+the whole observation, including startup; this is separate from completed
+refresh throughput. See native-wait-r44-analysis.json, verified-r44-output.json
+and native-wait-r44.txt.
+
+The retained r43 wire return stream contains7772 mode/viewport information
+packets (0x86,8-byte payload) and one terminal pixel packet (0x84,4-byte
+payload), exactly77726bytes. These are retained stock behavior, not a per-frame
+pixel fence. Do not suppress stock replies as an optimization.
+
+Potential next investigation, **unproven and not started**: the high-priority
+TCP/IP task has no core affinity, whereas the parser is core0 priority3 and
+drawing is core0 priority5. Scheduling/network interference is a hypothesis,
+not an established cause or an approved correction.
+
+At the Author’s pause request, original startup was restored and read back,
+the SD service exited, and keyboard readiness/neutrality verified. No new
+firmware was flashed for cleanup: r44 remains installed with its nonce-scoped
+probe inactive. Qualified EMOS and stock mainboard VDP remain unchanged.
+Results and changes stay local pending review; no experimental push.
 
 ## Measurement provenance and earlier comparisons
 

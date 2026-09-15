@@ -1,0 +1,10 @@
+{
+  "original_startup_verified": true,
+  "original_startup_sha256": "38f0a73389c584b0884b5a718a20cb9c610bd4f249a3af447912c0415ec5678e",
+  "sd_service_exited": true,
+  "keyboard_ready": true,
+  "keyboard_neutral": true,
+  "held_keys": 0,
+  "pending_keys": 0,
+  "firmware_unchanged_during_pause": true
+}
