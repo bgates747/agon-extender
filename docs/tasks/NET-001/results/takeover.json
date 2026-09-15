@@ -1,0 +1,191 @@
+{
+  "status": "pass",
+  "handovers": 5,
+  "connections": 6,
+  "results": [
+    {
+      "turn": 0,
+      "viewer": "A",
+      "previous_close": null,
+      "frames_received": 18,
+      "frame": {
+        "ms": 3818.199999988079,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 18,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    },
+    {
+      "turn": 1,
+      "viewer": "B",
+      "previous_close": {
+        "ms": 3934.899999976158,
+        "code": 1000,
+        "reason": "Viewer replaced"
+      },
+      "frames_received": 20,
+      "frame": {
+        "ms": 2306,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 39,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    },
+    {
+      "turn": 2,
+      "viewer": "A",
+      "previous_close": {
+        "ms": 2434,
+        "code": 1000,
+        "reason": "Viewer replaced"
+      },
+      "frames_received": 20,
+      "frame": {
+        "ms": 6106.199999988079,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 60,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    },
+    {
+      "turn": 3,
+      "viewer": "B",
+      "previous_close": {
+        "ms": 6203.899999976158,
+        "code": 1000,
+        "reason": "Viewer replaced"
+      },
+      "frames_received": 18,
+      "frame": {
+        "ms": 4602.599999964237,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 79,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    },
+    {
+      "turn": 4,
+      "viewer": "A",
+      "previous_close": {
+        "ms": 4718,
+        "code": 1000,
+        "reason": "Viewer replaced"
+      },
+      "frames_received": 18,
+      "frame": {
+        "ms": 8561.399999976158,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 98,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    },
+    {
+      "turn": 5,
+      "viewer": "B",
+      "previous_close": {
+        "ms": 8640.100000023842,
+        "code": 1000,
+        "reason": "Viewer replaced"
+      },
+      "frames_received": 19,
+      "frame": {
+        "ms": 7054.599999964237,
+        "version": 1,
+        "header": 32,
+        "format": 2,
+        "flags": 3,
+        "sequence": 118,
+        "width": 320,
+        "height": 240,
+        "stride": 320,
+        "payload": 76800,
+        "period": 16667,
+        "reserved": 0,
+        "bytes": 76832,
+        "marker": {
+          "code": 0,
+          "complement": 0,
+          "decoded": 0,
+          "valid": false
+        }
+      }
+    }
+  ],
+  "elapsed_seconds": 10.44690936099505,
+  "ended_utc": "2026-09-15T04:23:09.576297+00:00"
+}
