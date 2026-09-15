@@ -8,14 +8,15 @@ from pathlib import Path
 
 def sha(p):return hashlib.sha256(p.read_bytes()).hexdigest()
 def main():
- p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--parent',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--lookahead',action='store_true');p.add_argument('--packed-row',action='store_true');p.add_argument('--dispatch-timing',action='store_true');p.add_argument('--uart-alignment',action='store_true');a=p.parse_args()
  assert a.lookahead, 'Use the frozen d007496 builder for r24; current source is the r25 lookahead experiment'
  root=Path.cwd();parent=a.parent.resolve();out=a.output.resolve()
  assert not subprocess.check_output(['git','status','--porcelain'],text=True)
  meta=json.loads((parent/'manifest.json').read_text());assert meta['build_id']=='uart-excom-console-r22-b2026-09-15-07-01-47Z'
  assert sha(parent/'firmware.bin')=='ccb96bf7e2e9de172732118d5ee93c01d2f6c4ae4b3b953a98881c58c622cdd7'
  out.mkdir(parents=True,exist_ok=False)
- revision='r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25')
+ revision='r28' if a.uart_alignment else ('r27' if a.dispatch_timing else ('r26' if a.packed_row else 'r25'))
+ assert not a.uart_alignment or a.dispatch_timing
  assert not a.dispatch_timing or a.packed_row
  source=parent/'source';tree=out/'source'
  shutil.copytree(source,tree,ignore=shutil.ignore_patterns('.pio','managed_components','__pycache__'))
@@ -25,6 +26,7 @@ def main():
  if a.lookahead:probe_files+=('vdp/video/extender/display/presentation_snapshot_pool.cpp','vdp/video/extender/display/presentation_snapshot_pool.hpp')
  if a.packed_row:probe_files+=('vdp/video/extender/display/stock_scanline.hpp','vdp/video/extender/display/rgb222_row.hpp')
  if a.dispatch_timing:probe_files+=('vdp/video/extender/network/wired_network_service.hpp',)
+ if a.uart_alignment:probe_files+=('vdp/video/extender/transport/console_hardware.inc','vdp/video/extender/transport/console_stream.hpp')
  # Parent-to-maintained changes are the explicitly selected output experiments.
  # r23 proved the archived source lacks them: a flag alone was insufficient.
  for n in probe_files:shutil.copy2(root/n,tree/n)
@@ -43,7 +45,7 @@ def main():
  if a.dispatch_timing:cfg['env:p4-console']['build_flags']+='\n-D AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1'
  with (out/'platformio.ini').open('w') as f:cfg.write(f)
  stamp=datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ');identity='uart-excom-console-'+revision+'-b'+stamp
- manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
+ manifest={'build_id':identity,'status':'draft','parent_build_id':meta['build_id'],'parent_app_sha256':sha(parent/'firmware.bin'),'contract_commit':subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip(),'parent_source_sha256':pinned,'uart_alignment_enabled':a.uart_alignment,'dispatch_timing_enabled':a.dispatch_timing,'lookahead_enabled':a.lookahead,'packed_row_enabled':a.packed_row,'source_change':'identity, optional output timing hooks, bounded lookahead, and optional packed-row normalization' if a.lookahead else 'identity and reviewed optional snapshot/send hooks only','probe_sha256':{n:sha(tree/n) for n in probe_files},'configuration_change':'enable existing AGON_EXTENDER_VIDEO_TIMING=1','scope':'bounded snapshot lookahead and output timing; no VDP drawing algorithm or MOS changes'}
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n')
  cmd=[str(root/'.venv/bin/pio'),'run','-d',str(tree/'vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console']
  with (out/'build.log').open('w') as log:subprocess.run(cmd,env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=log,stderr=subprocess.STDOUT,check=True)
@@ -57,6 +59,10 @@ def main():
  if a.dispatch_timing:assert b'credit_to_ready' in (out/'firmware.bin').read_bytes() and b'ready_to_send' in (out/'firmware.bin').read_bytes()
  symbols=subprocess.check_output(['nm','-C',str(out/'firmware.elf')],text=True)
  assert 'agon::extender::diagnostics::videoRecorder' in symbols
+ if a.uart_alignment:
+  assert 'ConsoleStream::readBytes(' in symbols
+  assert '    delay(1);' not in (tree/'vdp/video/extender/transport/console_hardware.inc').read_text()
+  assert 'disableRetainedVdpIdleWatchdogs' in (tree/'vdp/video/video.ino').read_text()
  assert all(sha(root/n)==sha(tree/n) for n in probe_files)
  assert sha(out/'partitions.bin')==sha(parent/'partitions.bin')
  manifest.update(outputs=outputs,build_complete=True);(out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print(identity+' built; unflashed',flush=True)
