@@ -1,0 +1,38 @@
+{
+  "started_at": "2026-09-15T07:32:25.752469+00:00",
+  "scope": "bounded numeric review and host regressions, not target qualification",
+  "passed": true,
+  "tests": [
+    {
+      "name": "fixed_compile",
+      "exit_code": 0,
+      "elapsed_seconds": 0.2987146250088699,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "name": "fixed",
+      "exit_code": 0,
+      "elapsed_seconds": 0.002659966005012393,
+      "stdout": "65764 conversion checks passed\n",
+      "stderr": ""
+    },
+    {
+      "name": "parser",
+      "exit_code": 0,
+      "elapsed_seconds": 0.948539612989407,
+      "stdout": "numeric parser: 65931 cases passed\n",
+      "stderr": ""
+    },
+    {
+      "name": "renderer",
+      "exit_code": 0,
+      "elapsed_seconds": 0.9787227460183203,
+      "stdout": "guarded valid sampling hash 12193972632595109770\nrenderer cases 146\nstock valid sampling hash 12193972632595109770\nrenderer cases 36\n",
+      "stderr": ""
+    }
+  ],
+  "review_sha256": "4fcb64c27e2c4fa83a1240a42e1b8d6d801186786dab9f4690c49f6bc54d4275",
+  "drift": [],
+  "elapsed_seconds": 2.2867914569796994
+}

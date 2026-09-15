@@ -16,7 +16,7 @@ unsupported-command audit, benchmark or experimental push.
    Hashes are review tripwires, not semantic proof. No automatic rebaseline option.
    Keep code-graph.yaml the sole source-selection authority; the new record is
    only a bounded numeric-review fingerprint, explicitly not a replacement graph.
-3. [ ] I03: Test acceptance and rejection of changed/missing inputs; run the
+3. [x] I03: Test acceptance and rejection of changed/missing inputs; run the
    complete entry point. Document required fresh compiler-backed conversion
    enumeration and physical checks on upstream changes. Link from upstream-watch.
 4. [ ] I04: Commit results, update task status and notify with hardware voice.
@@ -33,3 +33,10 @@ Those do not enumerate future sites or prove an entire firmware build selection.
 The current declared graph and narrower console selector have documented drift;
 record that limit rather than silently regenerate away unresolved dispositions.
 No new API behavior is introduced by this tooling/documentation chunk.
+
+
+I03 results: full entry point passes in2.29seconds with no drift:65,764 fixed
+checks,65,931 parser cases,146 guarded renderer cases and36 stock controls.
+Two gate tests verify acceptance plus changed/missing/path-invalid rejection.
+Artifact registry validation passes. No target build is required for this
+tooling-only change; no firmware/source-selection change or qualification claim.
