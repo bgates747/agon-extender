@@ -792,7 +792,7 @@ AGENT-ASSIGNED, not separately Author-approved. Revise only the scheduling
 hypothesis after the r35 readiness failure. Keep the blocking snapshot mutex,
 complete internal framebuffer and original drawing/row algorithms.
 
-1. [ ] N04t-i: Build r36: outputcore0/priority4, parsercore0/priority3 and
+1. [x] N04t-i: Build r36: outputcore0/priority4, parsercore0/priority3 and
    drawingcore0/priority5. Its bounded output task must block between snapshot
    notifications; no added parser sleeps or UART algorithm changes. Verify
    linked arguments and flags before deployment.
@@ -801,3 +801,5 @@ complete internal framebuffer and original drawing/row algorithms.
   180second observers plus post-close keyboard/SD readiness remain mandatory.
 3. [ ] N04t-iii: Compare/repeat apparent parity. Reject starvation, missing
    workload, changed mode dimensions or unusable output instead of relaxing gates.
+
+N04t-i r36 build passed; linked outputcore0/priority4 verified.
