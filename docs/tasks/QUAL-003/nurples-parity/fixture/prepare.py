@@ -23,5 +23,5 @@ replace('vdu.inc','vdu_vblank:', 'vdu_vblank:\n    call bench_boundary')
 # Timing routine and real vblank pacing otherwise remain unchanged.
 bench=(Path(__file__).parent/'bench.inc').read_text().replace('bench_hw: db 0', 'bench_hw: db '+str(int(a.hardware))).replace('bench_fenced: db 1','bench_fenced: db '+str(int(not a.unfenced)))
 (a.output/'bench.inc').write_text(bench)
-(a.output/'manifest.json').write_text(json.dumps(dict(source_sha256=manifest,fixture='nurples-parity-probe-r01',limits='600 boundaries, simulated two ticks per boundary, fixed seed and held fire, one pixel completion query'),indent=2)+'\n')
+(a.output/'manifest.json').write_text(json.dumps(dict(source_sha256=manifest,fixture='nurples-parity-probe-r02',hardware=a.hardware,fenced=not a.unfenced,limits='600 boundaries, simulated two ticks per boundary, fixed seed and held fire, one pixel completion query'),indent=2)+'\n')
 subprocess.run(['ez80asm','-l','nurples.asm','NPBENCH.bin'],cwd=a.output,check=True)

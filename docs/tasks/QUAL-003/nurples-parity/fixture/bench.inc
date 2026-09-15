@@ -1,4 +1,4 @@
-; nurples-parity-probe-r01. Fixture-only hooks, never normal gameplay.
+; nurples-parity-probe-r02. Fixture-only hooks, never normal gameplay.
 bench_active: db 0
 bench_sp: dl 0
 bench_time: dl 0
@@ -140,6 +140,10 @@ bench_finish:
     rst.lil $18
     ld c,4
     MOSCALL $41
+    or a
+    jr z,@final_ready
+    ld (bench_failed),a ; preserve a failed terminal query, including unfenced control
+@final_ready:
     ld hl,(bench_count)
     ld (bench_header_count),hl
     ld a,(bench_failed)

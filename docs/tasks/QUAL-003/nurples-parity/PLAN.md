@@ -100,3 +100,9 @@ not evidence of a VDP defect. Retain the original pilot identity/results.
 Installed r22 includes `AGON_GRAPHICS_TIMING=1`. Dormant scopes still enter a
 critical section. This is a candidate measurement cost, not yet a diagnosed
 bottleneck; do not change firmware on that hypothesis alone.
+
+Probe r02 propagates terminal-query failures and records variant flags in the
+generated manifest. SW, HW and unfenced SW assemble successfully. This fixture
+revision is agent-assigned under the unattended adjustment authorization; it
+does not change or replace the in-flight r01 pilot. The r01 binary hashes remain
+in fixture-builds.json; r02 hashes are in fixture-builds-r02.json.

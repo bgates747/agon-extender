@@ -1,0 +1,17 @@
+{
+  "sw02": {
+    "fixture": "nurples-parity-probe-r02",
+    "bytes": 36934,
+    "sha256": "fede2db03737782194dfe08473ae56705d798b399bec55ef573d900c9db4a676"
+  },
+  "hw02": {
+    "fixture": "nurples-parity-probe-r02",
+    "bytes": 36934,
+    "sha256": "e73a66e26c28aa1993b1f04cf8c0bc4000d214fc306544bc6a52bf5ad71ed45e"
+  },
+  "swfree02": {
+    "fixture": "nurples-parity-probe-r02",
+    "bytes": 36934,
+    "sha256": "e9a81105f50535fce7c735689cac4acbdd2900cc2c4e0315e6fe2b738dc9a871"
+  }
+}
