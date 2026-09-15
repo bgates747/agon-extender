@@ -1037,3 +1037,26 @@ as contracted. N04z owns the next bounded opportunity-cadence test.
 N04z-i built uart-excom-console-r40-b2026-09-15-15-38-38Z. The actual clock host checks
 pass1/2/4 opportunities, odd periods and skipped observations. Logical/output
 notifications remain60Hz; the four-opportunity flag is default-off.
+
+### N05 closeout subdivisions — conditional on repeated candidate parity
+
+AGENT-ASSIGNED execution detail of the existing N05 gate, not a new Author
+approval or a relaxation of the measurement contract.
+
+1. [ ] N05a: Require two fresh P4 runs per sprite path satisfying the mean/p95
+   gates with180second live streams, complete nonce-bound workload/trace records,
+   unchanged logical period and post-stream services. Verify terminal pixels.
+2. [ ] N05b: Once candidate repetitions pass, repeat the matched stock SW/HW
+   completion baseline using the identical cached diagnostic image. Verify and
+   preserve only its affected app sectors against the earlier full backup;
+   mismatch stops before write. Restore exact sectors immediately afterward and
+   verify startup/keyboard/SD. Compare every candidate repetition with both
+   stock baselines, not whichever baseline makes the candidate look best.
+3. [ ] N05c: Freeze a concise executive report and side-by-side ms/FPS/percentage
+   table, including output-delivery limits, peak workload and experimental flags.
+   Restore original startup and a usable Legacy CLI. Keep benchmark switches out
+   of normal Nurples; no experimental push or production promotion before human
+   review. Preserve dirty repair source/assets and maintained bench recovery.
+4. [ ] N05d: Send the accepted hardware spoken attention cue and verify its fresh
+   completion receipt (not proof the Author heard it). Mark the goal complete
+   only after all required work passes; stop rather than start more optimisation.
