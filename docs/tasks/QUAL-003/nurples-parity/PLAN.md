@@ -796,10 +796,10 @@ complete internal framebuffer and original drawing/row algorithms.
    drawingcore0/priority5. Its bounded output task must block between snapshot
    notifications; no added parser sleeps or UART algorithm changes. Verify
    linked arguments and flags before deployment.
-2. [ ] N04t-ii: Restore safe startup through native CLI/SD, preserve r35,
+2. [x] N04t-ii: Restore safe startup through native CLI/SD, preserve r35,
    deploy/verify. Require live output before launching fresh SW/HW fixtures;
   180second observers plus post-close keyboard/SD readiness remain mandatory.
-3. [ ] N04t-iii: Compare/repeat apparent parity. Reject starvation, missing
+3. [x] N04t-iii: Compare/repeat apparent parity. Reject starvation, missing
    workload, changed mode dimensions or unusable output instead of relaxing gates.
 
 N04t-i r36 build passed; linked outputcore0/priority4 verified.
@@ -824,3 +824,8 @@ upstream row-body provenance. P4 adapter currently locks each row separately.
    with post-output service checks. Reject corrupted images or incomplete rows.
 3. [ ] N04u-iii: Repeat any apparent parity; measure rather than assume a benefit
    from fewer mutex handoffs. This does not authorize upstream renderer rewrites.
+
+N04t complete: SW35.33FPS/HW34.23FPS, full workloads and post-output
+service checks passed. Reject shared-core priority4 for performance.
+N04u host comparison passes31 single/pair/tail windows using actual retained
+VGA64 controller, hardware sprite boundary and independent pixel/canary checks.

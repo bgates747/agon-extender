@@ -1,0 +1,26 @@
+{
+  "scope": "actual retained VGA64 controller;31 single/pair windows including final-row tail and hardware sprite crossing;padding sentinels;independent red/background pixel assertions",
+  "passed": true,
+  "sources": {
+    "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.cpp": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.cpp": "0a82d8a4d35b783dbe6d397433808c7ce981f7c274eb27edcef9e9907102fd85",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.cpp": "575626e044d79b31682ba4197fd9dcd029dc31c6089785f43c40e61369724a96",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.cpp": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp": "c106c53979d2dc1239636e2ccf98916944cac38d325b24b1e5fabdbb7bccd4ba",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp": "f9c03d2e4a66d3fc9448e4baa52728ac582107f63eee3f6fa24213c062ad4039",
+    "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+    "vdp/vendor/vdp-gl/src/canvas.cpp": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": "ac1c3abfe9c55f8bee2adef4ce65e704265a4959dcd550a7e7a1ad3fd405664b",
+    "vdp/vendor/vdp-gl/src/codepages.cpp": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+    "vdp/vendor/vdp-gl/src/fabfonts.cpp": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+    "vdp/video/extender/port/stock_render_utils.cpp": "f46c946ee449862eec12aadc5c38d9581292fabcf2039c31b188660c32d69851",
+    "vdp/video/extender/display/stock_scanline.cpp": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+    "vdp/video/extender/display/stock_native_access.cpp": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238",
+    "vdp/video/extender/display/stock_runtime_controller.cpp": "5696e46ee73487bb97c0c77923574ca4aade111ac249c1d97a1642811f3a97a1",
+    "vdp/video/extender/display/stock_p4_service.cpp": "7d2a227fa67753a1af441012e7dcddd7e25a954bd7714f17c2f9428db981a0eb",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "vdp/video/extender/display/cursor_position_adapter.cpp": "f5315a210cb727d253d754fcb79746042924b1721346354eabf162563b193167",
+    "vdp/video/extender/display/screen_facade_adapter.cpp": "34561a2b96800edb6242fc19304a2ff209e21944c7fcfcd9193094c0045d7ad8",
+    "docs/tasks/QUAL-003/nurples-parity/row_pair_test.cpp": "bd87921c7b0d8a020ca800b2bff8513e05eb9225742ae24970c2a2a7ba57dde8"
+  }
+}

@@ -19,6 +19,11 @@ class StockRuntimeController {
   virtual fabgl::VGAPalettedController &paletted() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+  virtual void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) {
+    for (unsigned i=0;i<count;++i) prepareRow(y+i, signal+i*stride);
+  }
+#endif
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   virtual diagnostics::VideoRowTotals &outputRowTiming() noexcept = 0;
 #endif
@@ -82,6 +87,25 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
     acquired = diagnostics::videoTimingNow();
 #endif
+    prepareRowLocked(y, signal);
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    finished = diagnostics::videoTimingNow();
+#endif
+    }
+#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
+    row_timing_.add(acquired - before, finished - acquired);
+#endif
+  }
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+  void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) override {
+    // N04u: stock VGA64 ISR composes two rows per interrupt. Only the adapter
+    // exclusion granularity changes; each original row body runs in order.
+    AGON_STOCK_NATIVE_GUARD;
+    for (unsigned i=0;i<count;++i) prepareRowLocked(y+i, signal+i*stride);
+  }
+#endif
+ private:
+  void prepareRowLocked(int y, std::uint8_t *signal) {
     // A task can be descheduled between rows, unlike the physical rolling
     // scanout deadline. Palette/list mutation may retire its saved Copper
     // node. Rebind only after such a mutation; ordinary rows keep the exact
@@ -92,15 +116,7 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
       palette_revision_ = stockPaletteRevision();
     }
     this->prepareStockRowQuiescent(y, signal);
-#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
-    finished = diagnostics::videoTimingNow();
-#endif
-    }
-#if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
-    row_timing_.add(acquired - before, finished - acquired);
-#endif
   }
- private:
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
   diagnostics::VideoRowTotals row_timing_;
 #endif

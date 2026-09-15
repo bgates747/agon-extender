@@ -183,13 +183,27 @@ void StockP4Service::publish() {
 #endif
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::Snapshot,
       (static_cast<std::uint32_t>(view.width) << 16) | view.height);
-  alignas(8) std::uint8_t signal[kPresentationSnapshotMaximumWidth];
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+  static_assert(VGA64_LinesCount / 2 == 2, "Recheck stock scanline batch contract");
+  constexpr unsigned rowsPerBatch = 2;
+#else
+  constexpr unsigned rowsPerBatch = 1;
+#endif
+  alignas(8) std::uint8_t signal[rowsPerBatch * kPresentationSnapshotMaximumWidth];
   bool complete = true;
-  for (std::size_t y = 0; y < view.height; ++y) {
+  for (std::size_t y = 0; y < view.height; y += rowsPerBatch) {
     if (stopping_.load(std::memory_order_acquire)) { complete = false; break; }
-    controller_->prepareRow(y, signal); // native lock covers only this row
-    StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
-        signal, view.packed_pixels + y * view.width, view.width);
+    const unsigned count = view.height-y < rowsPerBatch ? view.height-y : rowsPerBatch;
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+    controller_->prepareRows(y, count, signal, kPresentationSnapshotMaximumWidth);
+#else
+    controller_->prepareRow(y, signal);
+#endif
+    // Normalization remains outside native exclusion, in exact row order.
+    for (unsigned i=0;i<count;++i)
+      StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
+          signal+i*kPresentationSnapshotMaximumWidth,
+          view.packed_pixels+(y+i)*view.width, view.width);
   }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
