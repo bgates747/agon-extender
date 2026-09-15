@@ -44,3 +44,10 @@ Attention tiers are:
 
 Hash-equal moves are reported only as rename candidates. Identity continuity
 requires Git or reviewed source evidence; the comparator does not invent it.
+
+## Numeric adaptation gate
+
+Every VDP import must follow [numeric-upstream-import-r01](../procedures/numeric-upstream-import-r01.md).
+Run the numeric regression entry point and reconcile its bounded review
+fingerprints, then perform fresh compiler-backed conversion enumeration and
+target/hardware validation. Hash updates alone do not satisfy review.

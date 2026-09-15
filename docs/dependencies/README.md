@@ -135,3 +135,10 @@ Every changed file appears once in Tier A–D with all applicable reasons. New
 files, selection drift, boundaries, public headers, build metadata, and
 licenses receive mandatory Tier A review. Hash-equal moves are suggestions,
 not invented rename identity.
+
+## Numeric adaptation gate
+
+Every VDP import must follow [numeric-upstream-import-r01](../procedures/numeric-upstream-import-r01.md).
+Run the numeric regression entry point and reconcile its bounded review
+fingerprints, then perform fresh compiler-backed conversion enumeration and
+target/hardware validation. Hash updates alone do not satisfy review.

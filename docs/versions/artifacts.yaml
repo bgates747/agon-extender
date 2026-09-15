@@ -1,10 +1,18 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r86
+registry_revision: r87
 updated_at: 2026-09-15T06:59:25Z
 
 artifacts:
+  - artifact_id: numeric-upstream-import
+    kind: procedure
+    identity_scheme: revision
+    latest_identity: numeric-upstream-import-r01
+    status: draft
+    variants: []
+    description: Reviewed numeric adaptation reconciliation and regression gate for upstream imports.
+
   - artifact_id: numeric-guard-probe
     kind: test_fixture
     identity_scheme: revision

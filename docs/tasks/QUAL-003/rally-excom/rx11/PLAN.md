@@ -9,7 +9,7 @@ unsupported-command audit, benchmark or experimental push.
 
 ## Frozen contract
 
-1. [ ] I01: Record the approved N01–N06 adaptation map, upstream identities,
+1. [x] I01: Record the approved N01–N06 adaptation map, upstream identities,
    behaviors, executable tests and removal criteria in a durable import procedure.
 2. [ ] I02: Add a single local validation entry point: reject drift in reviewed
    source/helpers/tests/build-selection inputs, then run existing sanitized tests.
