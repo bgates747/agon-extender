@@ -5,6 +5,12 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Current Author-directed work — Overnight debrief
+
+QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
+Audit existing evidence and official documentation, propose focused next steps,
+then hardware voice and stop. Nurples experiments remain paused pending review.
+
 ## Current Author-directed sequence — Audits before game benchmarks
 
 Complete the numeric-conversion audit and unsupported-command audit before
