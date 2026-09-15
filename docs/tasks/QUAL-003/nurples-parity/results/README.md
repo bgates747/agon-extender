@@ -27,11 +27,18 @@ All cases have the same game state and live-sprite distribution (maximum13).
 See `verified-r27-cases.json` and `verified-r27-load-analysis.json` for raw-file
 identities, nonces, warmup/whole-run and load-stratified results.
 
-The installed P4 and EMOS images predate qualified UART optimizations. An
-isolated P4-only reapplication is the next comparison; mainboard firmware stays
-fixed. Independent browser/EVF, packet and drained output-recorder measurements
-remain valid within their scopes, but do not establish game parity. The goal
-has not passed.
+Applying the previously qualified P4 UART changes (r28) gives30.01FPS SW,
+30.77FPS HW, and34.03 unfenced submission boundaries/s. With output disconnected,
+SW reaches32.65FPS and HW32.20FPS; drained counters prove zero output work.
+Thus output contributes some cost but does not explain the large remaining gap.
+All fresh cases match the pinned gameplay state. See verified-r28-off-analysis.json.
+
+The installed EMOS remains the restored pre-E07P image. The next bounded
+comparison reuses the exact already-qualified ordinary E07P EMOS image while
+keeping P4 r28 fixed, preserving/reading back both ROMs and safe startup first.
+No new MOS implementation is selected. Independent output results remain valid
+within their scopes; wired-host WebGL readback matches all512x384 pixels with
+zero GL errors. The parity goal has not passed.
 
 The historical sections below preserve what was reported and must be read with
 this correction.
