@@ -13,6 +13,7 @@ def qualify(manifest,minimum=2):
  for c in cases:
   assert c['nonce'] not in nonces,'Repeated run identity';nonces.add(c['nonce'])
   game=parse(manifest.parent/c['file'],c['variant'],bytes.fromhex(c['nonce']),2400)
+  assert game['count']==2400,'Closeout requires the complete sustained workload'
   trace=analyze((manifest.parent/c['trace_file']).read_text(),c['nonce'],game['count'],c['target'])
   results.append(dict(label=c['label'],target=c['target'],variant=c['variant'],game=game,trace=trace))
  assert len({r['game']['state_sha256'] for r in results})==1,'Different workloads'
