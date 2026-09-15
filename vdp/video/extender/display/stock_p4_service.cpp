@@ -6,13 +6,15 @@
 namespace agon::extender::display {
 namespace {
 // N04y: the P4 has no physical VGA blanking interval. Offer its unchanged
-// drawing worker two opportunities per logical frame to reduce phase waiting.
+// drawing worker extra opportunities per logical frame to reduce phase waiting.
 // Logical frameCounter and snapshot/output cadence still use period_us_.
 // Experimental/default-off; reconsider when binding a physical scanout engine.
-#if defined(AGON_EXTENDER_DRAW_TWICE)
-constexpr bool kDrawTwice = true;
+#if defined(AGON_EXTENDER_DRAW_FOUR)
+constexpr unsigned kDrawingOpportunities = 4;
+#elif defined(AGON_EXTENDER_DRAW_TWICE)
+constexpr unsigned kDrawingOpportunities = 2;
 #else
-constexpr bool kDrawTwice = false;
+constexpr unsigned kDrawingOpportunities = 1;
 #endif
 #if defined(AGON_EXTENDER_SNAPSHOT_LOOKAHEAD)
 constexpr bool kSnapshotLookahead = true;
@@ -75,7 +77,7 @@ bool StockP4Service::startClock(std::uint32_t period_us) {
   args.name = "stock-clock";
   args.skip_unhandled_events = true; // elapsed time is accounted from esp_timer_get_time
   if (esp_timer_create(&args, &timer_) != ESP_OK) { timer_ = nullptr; return false; }
-  if (esp_timer_start_periodic(timer_, drawingTimerPeriodUs(period_us, kDrawTwice)) == ESP_OK) return true;
+  if (esp_timer_start_periodic(timer_, drawingTimerPeriodUs(period_us, kDrawingOpportunities)) == ESP_OK) return true;
   esp_timer_delete(timer_);
   timer_ = nullptr;
   return false;
@@ -103,7 +105,7 @@ void StockP4Service::barrierEntry(void *semaphore) { xSemaphoreGive(static_cast<
 void StockP4Service::timerEntry(void *context) {
   auto &self = *static_cast<StockP4Service *>(context);
   const bool logicalFrame = self.clock_.observe(esp_timer_get_time()) != 0;
-  if (!logicalFrame && !kDrawTwice) return;
+  if (!logicalFrame && kDrawingOpportunities == 1) return;
   // Coalesced task notifications carry opportunities, not a backlog of frames.
   auto drawing = self.draw_task_.load(std::memory_order_acquire);
   auto output = self.output_task_.load(std::memory_order_acquire);

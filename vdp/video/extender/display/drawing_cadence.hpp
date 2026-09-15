@@ -3,7 +3,7 @@
 #pragma once
 #include <cstdint>
 namespace agon::extender::display {
-constexpr std::uint32_t drawingTimerPeriodUs(std::uint32_t logical, bool twice) {
- return twice ? logical/2+logical%2 : logical;
+constexpr std::uint32_t drawingTimerPeriodUs(std::uint32_t logical, unsigned opportunities) {
+ return opportunities ? logical/opportunities+(logical%opportunities!=0) : 0;
 }
 }
