@@ -3,8 +3,8 @@
 ## Executive summary
 
 Acquisition and deployment are in progress. No whole-image pass is claimed yet.
-The first tranche is62 static scenes at512×384×64 colours: calibration,39 retained
-finite cases, and22 additional existing shape pages. Each needs paired physical
+The first tranche is63 static scenes at512×384×64 colours: calibration,39 retained
+finite cases, 22 additional existing shape pages, and the retained custom-font case. Each needs paired physical
 captures; preparing a command file does not constitute testing it.
 
 | Family | Planned source scenes | Current classification |
@@ -23,7 +23,7 @@ captures; preparing a command file does not constitute testing it.
 | Alpha and bitmap cutouts | BSP03 | Awaiting hardware run |
 | Software sprite movement/update/layers | BSP21/22/25 | Awaiting hardware run |
 | Hardware and mixed sprites | BSP26/27 | Awaiting composed scanout comparison |
-| Custom font creation/selection variants | No additional scene selected yet | Not covered yet; not labelled unimplemented |
+| Custom font creation/selection/mutation/deletion | FONT01, retained PORT-008 case | Awaiting hardware run |
 | All bitmap storage formats and conversions | Partial existing scenes | Coverage gaps to enumerate after first tranche |
 | Lower-depth palette modes, static Copper | Capture tap extension needed | Not covered yet; not labelled unimplemented |
 | Double buffering/displayed versus drawing page | Additional mode136 scene needed | Not covered yet; not labelled unimplemented |

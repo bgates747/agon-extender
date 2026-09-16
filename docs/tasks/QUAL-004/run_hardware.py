@@ -19,7 +19,7 @@ def get_images(token,start):
  deadline=time.monotonic()+100
  while time.monotonic()<deadline:
   raw=(R/'serial.bin').read_bytes()[start:]
-  if f'Q4END {token} '.encode() in raw:
+  if any(f'Q4END {token} {status}\n'.encode() in raw for status in (0,1)):
    found=decode(raw);assert len(found)==1 and found[0]['token']==token
    return found[0],raw
   time.sleep(.5)
