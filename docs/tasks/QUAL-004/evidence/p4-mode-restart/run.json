@@ -1,0 +1,16 @@
+{
+  "case": {
+    "name": "COP16_EDIT",
+    "file": "COP16_EDIT.vdu",
+    "bytes": 630,
+    "mode": 9,
+    "sha256": "e3e98e7a5efc4c8b138445e1992079314cf0ca058a074ec938975ab811bcc41b",
+    "source": "PORT-008 copper-coverage",
+    "stage": "edit",
+    "scope": "Static row palettes and composed SW/HW sprites"
+  },
+  "start": 1789574177.245134,
+  "status": "invalid_p4_restart",
+  "end": 1789574190.6084607,
+  "reason": "P4 HTTP timed out during fresh-start SD admission before case commands; keyboard boot nonce changed and counters restarted. Cause not established."
+}

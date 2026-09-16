@@ -85,3 +85,12 @@ fresh-start retry per case, retain both attempts, and leave a twice-failed case
 unqualified while continuing independent cases. Unknown failures still stop.
 This is test orchestration, not a stock/P4 fix or permission to erase failures.
 Use the unchanged committed per-case image procedure with fresh startup isolation.
+
+Self-assigned bounded P4 setup response: after COP16_SETUP passed, P4 restarted
+while the next mainboard boot re-selected P4 mode9; HTTP timed out and its keyboard
+boot identity changed. No COP16_EDIT image was acquired. Cause is unproven. Retain
+that mode-transition failure; do not qualify mode changes with active Copper.
+For the remaining static Copper pairs, use ordinary Copper reset and sprite
+cleanup after the P4 capture, before the next startup/mode selection. This is
+fixture teardown only, not a firmware correction. Stop on another unexplained
+restart; restore the original bench rather than chase implementation changes.

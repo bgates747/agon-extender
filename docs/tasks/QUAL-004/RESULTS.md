@@ -98,3 +98,16 @@ the trailing capture command in default640×480 mode. The dated run correction
 and full preceding crash text are retained. Restart isolation therefore reduces
 live-replay exposure but does not eliminate this failure. Its timing relationship
 to the diagnostic build remains unqualified; no renderer fix is attempted.
+
+## P4 restart between Copper scenes
+
+PAL16 and COP16_SETUP completed with exact full-image parity. During the next
+mainboard startup (which re-selects mode9 on P4), HTTP timed out; P4's keyboard
+boot identity changed and counters returned to zero. COP16_EDIT had not sent its
+scene commands. This proves a P4 restart in that interval, not its root cause.
+The prior Copper scene contained active software/hardware sprites and row palettes.
+No serial panic trace was acquired, and no P4 firmware change is made.
+
+Retain the failure as an unqualified mode-transition path. The next bounded
+static-scene control explicitly resets Copper and sprites after capture before
+re-selecting a mode. Such cleanup must not be described as fixing the P4 restart.

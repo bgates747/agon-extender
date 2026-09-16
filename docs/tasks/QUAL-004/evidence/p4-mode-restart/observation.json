@@ -1,0 +1,9 @@
+{
+  "at": "2026-09-16T16:00:48.706407+00:00",
+  "boot_identity_changed": true,
+  "keyboard_emitted_after": 0,
+  "keyboard_ready_after": false,
+  "firmware_flash_in_this_event": false,
+  "preceding_completed_scene": "COP16_SETUP",
+  "phase": "Mainboard reset and startup, including P4 mode9 re-selection"
+}
