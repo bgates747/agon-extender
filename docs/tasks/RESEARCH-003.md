@@ -49,7 +49,7 @@ performance. Avoid external camera/LCD requirements absent on this bench.
 5. [x] R05 — Report rendering ms, completed/received unique fps, payload Mbit/s,
    p50/p95/max intervals, drops, correctness and elapsed durations. Do not claim
    browser presentation from a socket receiver or VDP parity from a new workload.
-6. [ ] R06 — Record results, limits and installed firmware identity; notify
+6. [x] R06 — Record results, limits and installed firmware identity; notify
    through an emulator with the accepted spoken cue and stop for review.
    Preserve a healthy test image for review rather than restoring Extender
    solely to obtain Agon control for notification. Keep verified rollback ready;
@@ -84,4 +84,5 @@ QUAL-003/P01g. Hardware details stay in ignored local records.
 Twelve runs complete; [results](RESEARCH-003/RESULTS.md) show47.02–47.29fps
 combined exact raw output,49.59–49.60send-only,60render-only. All30fps cases
 pass without drops.60fps delivery target unmet. Healthy standalone image remains
-installed; emulator voice closeout pending. No production edits or push.
+installed; emulator spoken cue issued with stage6/audio_commands=pass receipt.
+Emulator left open; human hearing unconfirmed. No production edits or push.

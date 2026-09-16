@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment**
-  - Status: Twelve standalone runs complete:47.02–47.29fps exact full-frame output while rendering;60fps delivery unmet. Candidate left installed for review with rollback retained; emulator voice closeout pending.
+  - Status: Twelve standalone runs complete:47.02–47.29fps exact full-frame output while rendering;60fps delivery unmet. Candidate left installed for review with rollback retained; emulator spoken cue verified; awaiting Author review.
   - Details: [RESEARCH-003](docs/tasks/RESEARCH-003.md)
 
 - [ ] **RESEARCH-002 — Espressif P4 board network-video throughput claims**

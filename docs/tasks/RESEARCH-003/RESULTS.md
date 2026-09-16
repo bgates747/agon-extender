@@ -129,3 +129,7 @@ No source proven to advertise our exact target was silently labelled a match;
 no lossy codec, hidden frame duplication or game-specific sparse redraw was
 used to improve the numbers. No physical monitor or browser presentation
 claim is made. Golem and the P01h compressor remain unexecuted.
+
+Completion cue: emulator spoken alert issued; stage6/audio_commands=pass receipt
+verified. Window left open, human hearing unconfirmed. Physical test image was
+not replaced for notification. See [receipt](NOTIFICATION.json).
