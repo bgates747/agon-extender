@@ -18,7 +18,7 @@ priority experiment, not an approved production scheduling policy.
    archive r45 source and overlay only this change. Select experimental r48
    explicitly for this task, no production identity increment. Build once using
    pinned SDK/config and record hashes. No owner/lock-wake probe flags.
-3. [ ] S03: Verify current r43 and unchanged startup/fixture; deploy/readback
+3. [x] S03: Verify current r43 and unchanged startup/fixture; deploy/readback
    candidate and check boot/input. Same wired-Pi observer and r05 fixture.
 4. [ ] S04: Run control/treatment/treatment/control, identical Agon-reset startup,
    warm P4 as in B, fresh nonces,180second observers. Require2400states/completions,
