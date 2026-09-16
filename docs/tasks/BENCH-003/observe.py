@@ -14,7 +14,7 @@ patch="""
    if(this.__creditPending)throw Error('duplicate deferred credit');
    this.__creditPending=true;
    const emit=()=>{
-    const now=performance.now(); const remain=34-(now-(this.__lastCredit ?? -Infinity));
+    const now=performance.now(); const remain=(1000/30)-(now-(this.__lastCredit ?? -Infinity));
     if(remain>0){setTimeout(emit,Math.ceil(remain));return;}
     this.__creditPending=false;
     if(this.readyState!==Original.OPEN)return;
