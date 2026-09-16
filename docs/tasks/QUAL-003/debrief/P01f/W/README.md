@@ -36,7 +36,7 @@ restoration and the required hardware notification complete this chunk below.
    failure; no retries or relaxed timeout/gates. Preserve failure diagnostics.
    Compare p50/p95/p99/max, snapshot/send wall ms and actual output rates across
    repeats. Differing control behavior bars causal/parity claims.
-6. [ ] W06: Restore/readback original autoexec and exact r43, observe boot, verify
+6. [x] W06: Restore/readback original autoexec and exact r43, observe boot, verify
    neutral keyboard/SD and return to Legacy MOS. Commit discrete results, tables
    and final disposition; standard British hardware voice plus visible banner.
    Stop for Author review; no experimental push or follow-on redesign.
@@ -91,3 +91,15 @@ W03 complete: exact installed r43 preserved/checked before write, candidate
 independently flash-verified; matching boot/native USB observed. Mainboard reset
 and fresh keyboard/SD readiness verified, unchanged startup read back. Paired
 sequence now runs under the durable controller; no result yet.
+
+## Closeout
+
+Exact r43 independently flash-readback verified and boot/native USB observed.
+Original autoexec restored/read back; input/SD checks passed and SD exited to
+Legacy MOS. Standard British voice produced a fresh stage6/audio-pass receipt;
+completion banner input acknowledged and final keyboard neutral. Human hearing
+unconfirmed. No live observer/capture/controller remains. Evidence hashes and
+compressed native records independently rechecked; local commits only, no push.
+
+W04 remains stopped at its failure gate; do not check it off as four successful
+runs. No performance parity or complete root-cause claim. Await Author review.

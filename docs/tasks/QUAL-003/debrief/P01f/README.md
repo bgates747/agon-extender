@@ -2,22 +2,20 @@
 
 ## Executive summary
 
-**Current work: W snapshot-wide priority test is underway**, authorized after A
-review. [Frozen contract and progress](W/README.md). No result yet; r43 is the
-verified rollback. The A audit summary below remains its historical conclusion.
+**W also failed; the priority remedy is rejected.** The first snapshot-wide
+priority19 treatment failed terminal pixel query15 and slowed to36.671native
+refresh/s,58.299ms p95. Same-image control passed60.052/s,29.019ms. Remaining
+repeats stopped at the frozen failure gate. [W results](W/TABLES.md).
 
-**A ownership audit complete; ready for review.** The port adds a shared native
-mutex between snapshot composition, parser and drawing. Mainboard row preparation
-runs in an ISR. Actual socket sending already uses immutable data outside that
-mutex. S introduced192 scheduler-yield requests,384priority changes and768priority
-queries per384-row snapshot; inherited priority can persist through other held
-mutexes. These source-proven mechanisms do not completely attribute S's failure.
+Removing per-row priority transitions did not make the boost viable. Enqueue
+spacing worsened to56.977ms p95, whereas enqueue-to-completion was5.487ms p95;
+pre-enqueue/parser/ownership delay is the next design focus. These separate
+percentiles do not apportion one stall. No further priority sweep or redesign
+started. Exact r43/startup restored and keyboard/SD verified. Golem excluded.
 
-[A findings and proposed experiment](A/FINDINGS.md) recommend testing one ceiling
-scope per admitted snapshot, retaining row locks and all original rendering.
-Normalization priority also changes and is an explicit confound. No new firmware
-or performance work in A; baseline r43 retained. Stop for review before another
-implementation/test contract. Golem excluded. Prior B/S evidence follows.
+[A audit](A/FINDINGS.md) remains valid source evidence of shared native ownership,
+ISR/task differences and the per-row scheduler cost; W shows that removing the
+repeated transitions is insufficient. No performance fix or parity claim.
 
 ## B findings — 2026-09-16
 
@@ -163,3 +161,12 @@ neutral keyboard and SD exit verified. Source-only; r43 retained. Await review.
 Author directed proceeding with the proposed experiment. [W contract](W/README.md)
 owns one snapshot-wide scope and repeated controls. A remains the source audit;
 W is now active. No wider redesign or production promotion in this chunk.
+
+## W review stop
+
+First treatment failed; sequence stopped after two runs. Evidence and outcome
+in W/. Exact r43/startup restored, neutral keyboard and SD verified. Offline
+terminal-frame WebGL readback passed for both captures. Await Author review.
+
+W closeout: fresh hardware voice receipt and completion banner verified; no
+active controller/observer. Worktree changes committed locally; no push.

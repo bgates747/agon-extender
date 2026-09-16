@@ -15,14 +15,13 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md): B passed; S failed
-and remains rejected. A source-only ownership audit is complete: shared native
-mutex dependency and192per-snapshot yield requests in S identified. No full
-causal attribution or performance fix. [Findings/next proposal](docs/tasks/QUAL-003/debrief/P01f/A/FINDINGS.md)
-recommend one priority scope per admitted snapshot, preserving original row locks.
-Author authorized [snapshot-wide scope W](docs/tasks/QUAL-003/debrief/P01f/W/README.md);
-contract frozen before implementation. W is the current chunk; r43 rollback retained; Golem
-excluded, chunking fallback only, no experimental push.
+[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md): W snapshot-wide
+priority test failed terminal query15, diagnostic36.671refresh/s and58.299ms p95;
+control passed60.052/s,29.019ms. Remaining repeats stopped. Per-row and snapshot-
+wide priority remedies rejected; no fix/parity claim. [Results](docs/tasks/QUAL-003/debrief/P01f/W/TABLES.md).
+Exact r43/startup restored; next review concerns parser/pre-enqueue delay and a
+concrete ownership-handoff design, not another priority sweep. Golem excluded,
+chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

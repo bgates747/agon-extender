@@ -1,0 +1,9 @@
+{
+  "width": 512,
+  "height": 384,
+  "stride": 512,
+  "differences": 0,
+  "first": null,
+  "gl_error": 0,
+  "renderer": "WebKit WebGL"
+}

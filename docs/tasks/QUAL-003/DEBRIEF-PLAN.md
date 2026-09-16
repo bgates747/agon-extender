@@ -37,7 +37,7 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**P00/P01/P02 prior chunks retained. Latest P01f A source audit complete; review pending. P03–P06 remain proposals.**
+**P00/P01/P02 prior chunks retained. Latest P01f W stopped at first treatment failure; review pending. P03–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
@@ -474,3 +474,9 @@ is proposed for review, not started; no firmware change during A.
 
 P01f W now authorized: freeze and execute the proposed snapshot-wide ceiling
 experiment in debrief/P01f/W/README.md, followed by restoration/voice/review stop.
+
+P01f W result: first treatment terminal-query15,36.671refresh/s and58.299ms p95;
+control60.052/s,29.019ms. Remaining repeats not run. Once-per-snapshot priority
+remedy rejected; no further numeric priority experiments. [Report](debrief/P01f/W/TABLES.md)
+recommends reviewing pre-enqueue/parser ownership before a concrete handoff design.
+Exact r43/startup restored with input/SD health; no next implementation underway.

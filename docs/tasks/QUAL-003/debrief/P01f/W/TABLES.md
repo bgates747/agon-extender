@@ -91,3 +91,9 @@ full serial, flash and browser bundles remain under agents/p01fw/. Full-run
 collection duration is in each duration.json; both observers request180seconds.
 The controller now saves duration/trace before strict NP04 rejection, so an
 informative failure does not lose its collection-time record.
+
+Offline check outcome: both captured terminal frames pass exact WebGL readback
+(512×384, zero differing pixels, GL error0) using saved presenter assets on the
+same Pi browser. No P4 connection or timed-window work was added. This validates
+those payload-to-renderer conversions; the blank PNGs remain unsuitable visual
+evidence, and no physical display/whole-game pixel-parity claim is made.

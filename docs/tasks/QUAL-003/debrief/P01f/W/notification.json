@@ -1,0 +1,10 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "startup_unchanged": true,
+  "state": "Legacy MOS prompt",
+  "cue": "Standard British spoken attention cue",
+  "human_hearing": "pending",
+  "keyboard_neutral": true,
+  "banner_input_acknowledged": true
+}

@@ -2,20 +2,16 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
-**W snapshot-wide priority experiment is active** after Author authorization.
-[Contract](QUAL-003/debrief/P01f/W/README.md); no result or fix claimed yet.
+[P01f W](QUAL-003/debrief/P01f/W/README.md) stopped at first snapshot-wide
+priority19 treatment failure: terminal pixel-query15, diagnostic36.671native
+refresh/s,58.299ms p95 versus passing control60.052/s,29.019ms. No remaining
+repeats or adoption. [Tables and limits](QUAL-003/debrief/P01f/W/TABLES.md).
 
-[P01f A ownership audit](QUAL-003/debrief/P01f/A/README.md) completed after S's
-failed priority treatment. The port's task-held native mutex couples snapshot
-composition to parser/drawing; mainboard rows run in an ISR. Sending already uses
-immutable leases outside that mutex. S's per-row priority scope adds192yield
-requests,384sets and768queries per384-row snapshot, with possible propagated
-inheritance beyond native unlock. Mechanisms established; complete causality not.
-
-[Detailed findings and next proposal](QUAL-003/debrief/P01f/A/FINDINGS.md) recommend
-one ceiling scope per admitted snapshot with repeated correctness/pacing gates.
-No new firmware or benchmark during A; r43 retained. Stop for review before
-implementation. S failure and B valid baseline remain explicitly distinguished.
+Removing per-row transitions did not cure the priority remedy. Native enqueue
+spacing also worsened; review parser/graphics ownership and pre-enqueue delay
+before a concrete handoff design. No next implementation started. Exact r43 and
+startup restored; keyboard/SD and offline terminal WebGL conversion verified.
+A's source audit remains valid; neither A nor W establishes the complete cause.
 
 ## Prior diagnostic finding
 
