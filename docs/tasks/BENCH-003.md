@@ -11,9 +11,9 @@ No Golem, firmware experiments, compression or scheduler changes.
 
 ## Frozen work contract — 2026-09-16
 
-1. [ ] Finish BENCH-002 consolidation: repair assets; normal production pacing;
+1. [x] Finish BENCH-002 consolidation: repair assets; normal production pacing;
    independent 30fps Nurples and current Rally bundles beneath `/test`.
-2. [ ] Prepare a task-owned diagnostic derivative of the current repair source:
+2. [x] Prepare a task-owned diagnostic derivative of the current repair source:
    retain two-vblank pacing; bounded in-RAM frame timestamps and phase records,
    no per-frame serial logging. Automate loading prompts only in this derivative;
    stop safely at the bounded frame limit or game over. Record every source edit

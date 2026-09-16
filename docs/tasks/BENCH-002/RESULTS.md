@@ -48,3 +48,26 @@ matched byte-for-byte. Required assets retained, autoexec unchanged.
 receipt. [Launch record](LAUNCH.JSON): EMOS EXCOM, current Nurples path, LOAD/RUN
 commands acknowledged. Human visual acceptance is pending; no ongoing driver
 or SD service. Changes committed locally, unrelated dirty artwork preserved.
+
+## Corrected repair installation and test separation — 2026-09-16
+
+The Author identified the version ambiguity after the initial visual review.
+A full read-only SD directory scan completed15,515 entries with status0. The
+obsolete playable `/nurples` installation (40,707-byte executable,476 total
+entries) was removed through an explicit MOS batch; subsequent STAT confirmed
+its directory absent. Historical source under `/mystuff/agon-testing/nurples`
+was preserved; its22-byte scratch binary is not a playable Nurples installation.
+
+The normal repair build and current dirty repair assets now live in
+`/mystuff/nurples`. Production uses one vblank; `/test/nurples` has the exact
+previous two-vblank build with independent matching assets. All four runtime
+files in both installations received full readback verification. Independent
+Rally copies at `/test/arcade/rally` match the three production runtime files;
+production Rally and autoexec were unchanged. Exact hashes and transfer duration
+are in `REPAIR-DEPLOYMENT.json`. Verification/copy/deletion took2,305.933 seconds,
+excluding earlier inventory and local preparation. This is deployment time,
+not game or rendering performance.
+
+The earlier observation—Nurples consistently choppy, Rally looking good—does
+not identify which old installation the Author ran. Do not assign it to the new
+fully matched bundle. BENCH-003 now measures an explicitly identified derivative.

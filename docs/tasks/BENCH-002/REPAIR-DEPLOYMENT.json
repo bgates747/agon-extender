@@ -1,0 +1,75 @@
+{
+  "files": [
+    {
+      "path": "/mystuff/nurples/nurples.bin",
+      "sha256": "63c89d2676f6645631b2240f23002b8b68d45069979a4804ca7d14f34e720088",
+      "bytes": 36439,
+      "full_readback": true
+    },
+    {
+      "path": "/mystuff/nurples/game.agnb",
+      "sha256": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98",
+      "bytes": 367168,
+      "full_readback": true
+    },
+    {
+      "path": "/mystuff/nurples/ui.agnb",
+      "sha256": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b",
+      "bytes": 246844,
+      "full_readback": true
+    },
+    {
+      "path": "/mystuff/nurples/fonts/Lat38-VGA8_8x8.font",
+      "sha256": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69",
+      "bytes": 2048,
+      "full_readback": true
+    },
+    {
+      "path": "/test/nurples/nurples.bin",
+      "sha256": "e7850b78db8c3c5ae1a232836f58f68dcbd56af3066049be8ee335325909b3b0",
+      "bytes": 36443,
+      "full_readback": true
+    },
+    {
+      "path": "/test/nurples/game.agnb",
+      "sha256": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98",
+      "bytes": 367168,
+      "full_readback": true
+    },
+    {
+      "path": "/test/nurples/ui.agnb",
+      "sha256": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b",
+      "bytes": 246844,
+      "full_readback": true
+    },
+    {
+      "path": "/test/nurples/fonts/Lat38-VGA8_8x8.font",
+      "sha256": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69",
+      "bytes": 2048,
+      "full_readback": true
+    },
+    {
+      "path": "/test/arcade/rally/rally.bin",
+      "sha256": "4be88dd1c8efbb6f7cddbdce1b98ee8805572f47550cda5d8c0ef3207189395b",
+      "bytes": 171080,
+      "matches_production": true
+    },
+    {
+      "path": "/test/arcade/rally/oval.road",
+      "sha256": "a433e692f75e086bc0b20f80442cb55f5dda2b445a291fd3537bf951e02cf625",
+      "bytes": 20584,
+      "matches_production": true
+    },
+    {
+      "path": "/test/arcade/rally/fuji.road",
+      "sha256": "72f835b888a79f3130e2d8c73c9ab8a80e3dcdc04991ea223038e43ce0d4269e",
+      "bytes": 116800,
+      "matches_production": true
+    }
+  ],
+  "removed_installation": "/nurples",
+  "removed_entries": 476,
+  "source_archive_preserved": "/mystuff/agon-testing/nurples",
+  "autoexec_unchanged": true,
+  "elapsed_s": 2305.9325846630018
+}
