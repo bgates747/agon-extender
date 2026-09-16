@@ -14,7 +14,7 @@ time from elapsed scopes. Golem excluded; no MOS/mainboard VDP modifications.
    Bounded in-memory aggregates only, no timed-window prints, SD or polling.
    Distinguish coalesced notification age from scheduler runnable delay: these
    hooks alone cannot measure the latter exclusively. Retain baseline semantics.
-2. [ ] D02: Host-check recorder/lifecycle, build isolated candidate from retained
+2. [x] D02: Host-check recorder/lifecycle, build isolated candidate from retained
    P02 configuration, verify hashes/rollback/readback. Retain r43 restored firmware
    as rollback. Agent-selected candidate revision r46 within this approved
    diagnostic work; identity is experimental, never a production parity pass.
@@ -43,3 +43,27 @@ Application output capture must remain full-size with normal browser credit.
 Composition-only may do more work: compare rates/counts, never subtract unrelated
 means as exclusive costs. Current source/hardware baseline inspected before
 execution. Firmware installation preserves rollback and startup before writing.
+
+## Probe interpretation
+
+1. Parser, drawing and output task owners are registered explicitly. Native
+   recursive mutex semantics are retained. Only outermost acquisitions contribute
+   wait/hold samples; nested work belongs to that outer hold. Foreground admission
+   and execution-gate waits are not instrumented in this first bounded tranche.
+2. Wait starts just before native mutex acquisition; hold starts after acquisition
+   and ends just after release. These elapsed scopes include preemption. Aggregate
+   bookkeeping uses a short internal spinlock outside the native lock after release.
+   Instrumentation can itself create contention; on/off pairs are mandatory.
+3. Wake age begins at the earliest recorded timer notification and ends after
+   the worker takes a notification. Coalesced wakes and previously running work
+   contribute; it is not exclusively runnable-to-scheduled latency.
+4. Eight fixed aggregates include count, sum, maximum and logarithmic histograms.
+   Histogram percentiles are bucket upper bounds, not exact percentiles. Raw
+   microseconds are reported as milliseconds. No per-operation event list exists.
+5. Counts/summed durations span the marker window and admitted scope drain;
+   completion-spacing summaries retain the established warmup convention. Do
+   not equate their populations or sum concurrent owner times into CPU usage.
+6. Six controls execute in order normal-off, disabled-off, compose-off,
+   compose-on, disabled-on, normal-on. Here the final suffix denotes probes,
+   not output. Single samples and ordered runs cannot establish an exclusive
+   causal explanation or rule out boot/allocation variability.
