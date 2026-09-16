@@ -22,3 +22,11 @@ Stop for an unexpected fault; do not silently repair the renderer in this test.
 
 Completed: see [RESULTS.md](RESULTS.md). Baseline restored; hardware voice
 commands acknowledged with fresh receipt. Human hearing remains unverified.
+
+## Missing raw control — Author authorized
+
+Run only the missing raw-streaming condition with the identical r06 firmware,
+cadence60 binary, assets, Linux receiver and nominal30Hz browser credit cap.
+Do not rerun off/RLE2 conditions. Validate1800 cycles and faults, add its row to
+the same results, restore baseline and notify. Single sequential trials remain
+subject to changing network conditions.
