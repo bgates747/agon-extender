@@ -253,3 +253,16 @@ investigation yields insufficient improvement. Canonical consideration lives
 under QUAL-003 DEBRIEF-PLAN P06e: pace capture before doing the work, retain game
 cadence, choose targets from measured tails and steady presentation. No
 implementation authorized and no change to the candidate/RLE sequence.
+
+### C4 — authorized GMF esp_player source review
+
+Author approved medium-effort source-only review. Clear mainboard at start;
+accepted hardware voice and completion banner at end. No builds, firmware
+execution, flash, reset or benchmark. C5 and RLE remain deferred.
+
+25. [ ] C4-01: Trace pinned player buffer ownership, queue bounds, wait/lock
+    boundaries and renderer completion; distinguish wrapper from underlying bus.
+26. [ ] C4-02: Trace clock pacing, late-frame/drop behavior and overload; compare
+    with Extender and record applicable mechanisms versus semantic mismatches.
+27. [ ] C4-03: Verify source-linked findings and provenance, commit, hardware
+    voice with fresh receipt and visible completion cue, then stop for review.
