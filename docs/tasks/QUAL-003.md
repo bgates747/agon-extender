@@ -8,7 +8,7 @@ output-off stayed near historical mainboard pacing. Instrumentation materially
 perturbed output, so this is a lead for narrower owner/scheduler correlation,
 not a performance fix or attribution to one network task. See the executive
 tables and retained raw records. Original r43/startup restored and keyboard/SD
-verified; hardware attention cue follows report completion. No experimental push.
+verified; hardware voice receipt and visible completion banner delivered. No experimental push.
 
 The [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md),
 [official-source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) and

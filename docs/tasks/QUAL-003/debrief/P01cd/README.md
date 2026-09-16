@@ -83,7 +83,7 @@ captures and build/rollback scripts remain in `agents/p01cd/`.
    scopes include preemption. If instrumentation materially alters the contrast,
    mark attribution limited and narrow probes rather than claim causality. Stop
    before speculative priority, cache, codec or rendering changes.
-5. [ ] D05: Restore r43 and original startup; verify input/SD, commit evidence,
+5. [x] D05: Restore r43 and original startup; verify input/SD, commit evidence,
    hardware voice and visible completion cue. No experimental push.
 
 Use existing P02 nonce mode selector; reserve nonce byte4 as explicit probe
@@ -196,3 +196,12 @@ execution. Firmware installation preserves rollback and startup before writing.
 4. Only after ownership is attributed, propose one actor-specific scheduling or
    snapshot-lock change for review. Retain stock rendering logic. No Golem,
    MOS, compression, game-specific bezel shortcut or task-priority guess.
+
+## Closeout
+
+r43 flash bytes and identity restored/verified; original autoexec verified;
+keyboard neutral and SD service exited to Legacy MOS. Accepted British voice
+command completed with a fresh stage6/audio-pass receipt; visible completion
+banner emitted. Human hearing remains unconfirmed. Start-screen clear was sent
+before work. No active collector/controller; no MOS/mainboard VDP changes.
+Local commits preserve contract, implementation, evidence and closeout; no push.
