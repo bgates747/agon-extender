@@ -1,0 +1,11 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "startup_unchanged": true,
+  "state": "Legacy MOS prompt",
+  "cue": "Standard British spoken attention cue",
+  "human_hearing": "pending",
+  "start_clear": "VDU 12 emitted through admitted CLI",
+  "completion_banner": "C3 research complete. Ready for review. emitted through admitted CLI",
+  "visual_readback": "not independently observed"
+}
