@@ -1,0 +1,10 @@
+--- two-vblank/nurples.asm
++++ one-vblank/nurples.asm
+@@ -126,7 +126,6 @@
+     jp nz,@state_exit
+ ; Production pacing: one vblank. Two-vblank review lives in /test/nurples.
+     call vdu_vblank
+-    call vdu_vblank
+     call bench_record
+ ; poll keyboard for escape keypress
+     ld a, $08 ; code to send to MOS

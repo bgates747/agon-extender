@@ -8,7 +8,7 @@ Measure application cadence separately from browser delivery. Keep the existing
 Use candidate r06 and a one-vblank derivative of the exact retained repair-based
 1800-cycle fixture. Production applications remain untouched.
 
-1. [ ] Build isolated fixture by removing only its second vblank wait; preserve
+1. [x] Build isolated fixture by removing only its second vblank wait; preserve
    source/binary hashes and compare against the retained two-vblank fixture.
 2. [ ] Clear the hardware screen, deploy/readback r06 reversibly, upload the new
    fixture under /test/nurples, and run output-disabled then RLE2 web controls.
