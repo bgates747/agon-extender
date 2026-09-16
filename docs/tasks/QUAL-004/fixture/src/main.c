@@ -7,7 +7,9 @@
 #include <stdint.h>
 static FIL file;
 static uint8_t data[131072];
-extern unsigned bench_count(const uint8_t *,unsigned);
+static unsigned bench_count(const uint8_t *p,unsigned n) {
+ mos_puts((const char *)p,n,0);return 0;
+}
 int main(int argc,char **argv) {
  if(argc<2)return 19;
  unsigned e=ffs_fopen(&file,argv[1],FA_READ);if(e)return e;

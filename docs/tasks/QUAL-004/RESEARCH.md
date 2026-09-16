@@ -58,3 +58,9 @@ row palettes and hardware sprites without calling an alternative compositor.
 Build as mainboard-image-capture-r02. Do not deploy during an active image run;
 retain r01 evidence separately and restore all affected original erase sectors.
 Existing PORT-008 palette/Copper fixtures provide literal colour oracles.
+
+The final fixture uses public mos_puts rather than interpreting A after RST18.
+The earlier timing fixture's A=0 convention is specific to a pinned EMOS build;
+it is not part of stock MOS's documented void output API. Removing that check
+avoids a false test failure if the Mac MOS experiment changed incidental register
+returns. Full capture/protocol validation remains the output-success evidence.
