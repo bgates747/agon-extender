@@ -135,7 +135,8 @@ Machine-private full serial/bench receipts remain under the ignored agent record
 
 Exact r43 and original startup are restored/read back; input and SD health
 verified, SD service exited to Legacy MOS. See `restoration.json`. Hardware
-voice receipt follows at closeout. P01h remains
+voice receipt and completion banner are verified in `notification.json`; human
+hearing remains unconfirmed. P01h remains
 queued for review; no next experiment starts automatically.
 
 [Near-square timing graph](ladder.svg). Lines guide the eye between measured

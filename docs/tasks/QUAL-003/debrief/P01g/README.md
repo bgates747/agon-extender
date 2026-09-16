@@ -30,7 +30,7 @@ P01h remains queued after review; no compression implementation has started.
    the first degrading interval. If integrity passes, refine once at midpoint.
    Repeat informative endpoints through browser receive-only transport; ordinary
    full-frame browser rendering is a separate scope, not a partial-frame viewer.
-6. [ ] G06: Produce tabular results, uncertainty and next recommendation. Restore
+6. [x] G06: Produce tabular results, uncertainty and next recommendation. Restore
    exact r43/startup, verify keyboard/SD and send standard hardware voice plus
    visible completion banner. Commit granular work; no push, stop for review.
 
@@ -119,3 +119,11 @@ writes split the multi-call terminal nonce. Every character and all2400samples
 were present. `normalize_trace.py` removes only complete writes from the four
 known periodic tags before the unchanged strict trace validator. Retain raw
 logs; never synthesize missing characters or suppress unknown fault messages.
+
+## Closeout
+
+Exact r43/startup restoration and SD/input checks passed. Standard British
+hardware voice produced a fresh stage6/audio-pass receipt, completion banner
+was issued and keyboard left neutral at Legacy MOS. Human hearing unconfirmed.
+No active capture/receiver/controller remains. Local commits only; no push.
+G04/G05 remain stopped under the correctness gate, not falsely completed.
