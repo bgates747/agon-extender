@@ -19,24 +19,25 @@ def main():
  for manifest in sorted(a.scenes.glob('mode*/manifest.json')):
   mode=int(manifest.parent.name[4:])
   for scene in json.loads(manifest.read_text())['cases']:
-   name=scene['name'];images=a.runs/f'mode{mode}-run01'/name/'images'
+   name=scene['name']
    for device in ('mainboard','p4'):
-    image=images/(device+'.png')
-    if not image.exists():
+    captures=sorted(a.runs.glob(f'mode{mode}-run*/{name}/images/{device}.png'))
+    if not captures:
      results.append(dict(case=name,device=device,status='not captured'));continue
-    with Image.open(image) as pixels:
-     assert pixels.size==(320,240),'No resizing of literal oracle'
-     if name.startswith('PAGE_'):
-      bg=tuple(scene['expected_background_rgb']);x1,y1,x2,y2=scene['expected_white_rectangle']
-      mismatch=sum(pixels.getpixel((x,y))!=((255,255,255) if x1<=x<=x2 and y1<=y<=y2 else bg)
-                   for y in range(240) for x in range(320))
-      result=dict(passed=mismatch==0,mismatches=mismatch,pixels=76800)
-     else:
-      oracle=(manifest.parent/'oracle/oracle.json' if name.startswith('PAL') else
-              manifest.parent/'copper-oracle'/(scene['stage']+'-oracle.json'))
-      result=check(oracle,image)
-      result.pop('oracle',None);result.pop('capture',None)
-    results.append(dict(case=name,device=device,status='pass' if result['passed'] else 'ideal mismatch',result=result))
+    for image in captures:
+     with Image.open(image) as pixels:
+      assert pixels.size==(320,240),'No resizing of literal oracle'
+      if name.startswith('PAGE_'):
+       bg=tuple(scene['expected_background_rgb']);x1,y1,x2,y2=scene['expected_white_rectangle']
+       mismatch=sum(pixels.getpixel((x,y))!=((255,255,255) if x1<=x<=x2 and y1<=y<=y2 else bg)
+                    for y in range(240) for x in range(320))
+       result=dict(passed=mismatch==0,mismatches=mismatch,pixels=76800)
+      else:
+       oracle=(manifest.parent/'oracle/oracle.json' if name.startswith('PAL') else
+               manifest.parent/'copper-oracle'/(scene['stage']+'-oracle.json'))
+       result=check(oracle,image)
+       result.pop('oracle',None);result.pop('capture',None)
+     results.append(dict(case=name,device=device,cohort=image.parents[2].name,status='pass' if result['passed'] else 'ideal mismatch',result=result))
  a.output.write_text(json.dumps(results,indent=2)+'\n')
  print(json.dumps({s:sum(r['status']==s for r in results) for s in ('pass','ideal mismatch','not captured')}))
 
