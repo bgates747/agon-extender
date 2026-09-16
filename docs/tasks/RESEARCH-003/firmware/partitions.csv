@@ -1,0 +1,10 @@
+# Project-authored table required by ADR-0007; this is not generated output.
+# Keep its selection synchronized in both platformio.ini and sdkconfig.defaults
+# or PlatformIO packaging and ESP-IDF flash_args can disagree about offsets.
+# Name,     Type, SubType, Offset,   Size,     Flags
+nvs,        data, nvs,     0x9000,   0x6000,
+otadata,    data, ota,     0xF000,   0x2000,
+coredump,   data, coredump,0x11000,  0xF000,
+ota_0,      app,  ota_0,   0x20000,  0x700000,
+ota_1,      app,  ota_1,   0x720000, 0x700000,
+reserved,   data, 0x40,    0xE20000, 0x1E0000,

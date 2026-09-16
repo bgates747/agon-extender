@@ -1,0 +1,6 @@
+firmware/.pio/
+firmware/sdkconfig
+firmware/sdkconfig.old
+firmware/managed_components/
+private/
+__pycache__/

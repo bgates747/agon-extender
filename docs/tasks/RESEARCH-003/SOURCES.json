@@ -1,0 +1,15 @@
+{
+  "review_date": "2026-09-16",
+  "reused_api_examples": [
+    {
+      "source": "framework-arduinoespressif32/libraries/Ethernet/examples/ETH_LAN8720/ETH_LAN8720.ino",
+      "sha256": "a76d0076633010d1adaef02547a056a55450e41bd80ef91a1a02489a24d5fbf9"
+    },
+    {
+      "source": "framework-espidf/examples/protocols/http_server/simple/main/main.c",
+      "sha256": "6691c523df4a2b2e688c2a7e1d581000026dac36ffbd93937ea9413442547f23"
+    }
+  ],
+  "sdk": "ESP-IDF 5.5.5 / Arduino-ESP32 3.3.11",
+  "note": "Example API patterns adapted; standalone fixture is project-authored, not an upstream benchmark."
+}
