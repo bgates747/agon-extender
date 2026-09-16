@@ -35,3 +35,10 @@ The serial row tap currently covers64-colour scanout only. Static raster effects
 are eligible if repeats match; time-varying effects require coherent-frame
 capture and are deferred. Optional lower-depth support is diagnostic capture
 work, never permission to implement missing video APIs.
+
+Before the first image run, after SD staging completes and the SD service exits,
+independently verify the P4 application against the preserved r43 image using
+esptool verify_flash. This writes no flash but resets P4, so wait for application
+startup and reset/readmit eZ80 into the preserved test startup before continuing.
+A changed P4 boot counter since the previous session makes this fresh identity
+check preferable to relying solely on historical restoration records.
