@@ -164,9 +164,13 @@ if separately authorized, and evidence-based disposition.
     identify already-present mechanisms, actionable differences and unknowns.
 14. [x] C1-04: Write source-linked findings and disposition with the smallest
     proposed discriminating check. No invented performance numbers or build.
-15. [ ] C1-05: Verify documentation, commit, hardware voice with fresh receipt,
+15. [x] C1-05: Verify documentation, commit, hardware voice with fresh receipt,
     then stop for Author review. C2–C5 remain pending authorization.
 
 C1 source findings: [review report](RESEARCH-001/C1/README.md). No immediate
 throughput fix established; preserve useful ownership/LCD contracts and propose
 P01c/d wait attribution. Source review complete, measurements not authorized.
+
+C1 closeout: [fresh hardware voice receipt](RESEARCH-001/C1/notification.json)
+verified; startup unchanged, SD service exited to Legacy MOS. Human hearing and
+review pending. Local commits only; stopped before C2 and all firmware work.
