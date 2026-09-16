@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: C4 GMF source review authorized and active. No firmware experiments; C5 and RLE deferred.
+  - Status: C4 source review complete; findings in RESEARCH-001/C4/README.md. Hardware voice receipt verified. Await review before C5; RLE deferred.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 

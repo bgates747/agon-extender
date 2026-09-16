@@ -264,9 +264,13 @@ execution, flash, reset or benchmark. C5 and RLE remain deferred.
     boundaries and renderer completion; distinguish wrapper from underlying bus.
 26. [x] C4-02: Trace clock pacing, late-frame/drop behavior and overload; compare
     with Extender and record applicable mechanisms versus semantic mismatches.
-27. [ ] C4-03: Verify source-linked findings and provenance, commit, hardware
+27. [x] C4-03: Verify source-linked findings and provenance, commit, hardware
     voice with fresh receipt and visible completion cue, then stop for review.
 
 C4 findings: [review](RESEARCH-001/C4/README.md). Bounded handoffs plus
 blocking/presentation discard, not a missing speedup; pacing occurs after frame
 production. Renderer has an additional limiter; no firmware changes/tests.
+
+C4 closed: findings44899f3, source hashes verified. Fresh hardware audio receipt
+verified; startup unchanged, Legacy MOS completion banner emitted. Human hearing/
+visual readback pending. No build/test/flash or push; paused for review.
