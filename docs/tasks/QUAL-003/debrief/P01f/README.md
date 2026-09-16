@@ -104,7 +104,9 @@ Author authorized proceeding after B. [Frozen S details](S/README.md) govern thi
 3. [x] S03: Decide whether the intervention supports causality, including adverse
    network effects. No adoption based only on a faster favorable average.
 
-## A — focused FabGL/port architecture audit (subsequent chunk)
+## A — focused FabGL/port architecture audit (current chunk)
+
+Author directed proceeding; [A contract](A/README.md) owns this source-only work.
 
 1. [ ] A01: Map parser, primitive execution, snapshot producer, HTTP sender and
    network stack ownership; every queue, mutex and notification on that path.

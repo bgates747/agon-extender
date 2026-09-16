@@ -461,3 +461,6 @@ priority19 experiment and same-image repeated controls. Stop/notify after S.
 P01f S review stop: first treatment terminal-query15 and degraded diagnostic
 timing; remaining repeats stopped, no adoption. r43/startup restored/verified,
 voice/banner delivered. Next focused audit A; see S/TABLES.md.
+
+P01f A now authorized: source-only ownership/scheduling audit after failed S.
+See debrief/P01f/A/README.md; no firmware experiments in this chunk.
