@@ -1,5 +1,6 @@
 """Collect matched ladder scopes; application pacing is not native completion."""
 import argparse,json,re,statistics
+from normalize_trace import normalize
 from pathlib import Path
 
 def load(p):return json.loads(p.read_text()) if p.exists() else None
@@ -14,6 +15,9 @@ def summarize(root):
   if not h:continue
   n=bytes.fromhex(nonce);row={'case':name,'nonce':nonce,'fixture_error':h['error'],'fixture_count':h['count'],'requested_payload_bytes':n[5]*12288 if n[4]==1 else 0,'application':g[0] if g else None,'native':t,'output':o,'receiver':None}
   if t:
+   sources=[root/(name+'-raw-trace.log'),root/'off-raw.log',tracefile]
+   text=next((normalize(q.read_text(errors='replace')) for q in sources if q.exists() and 'NPTRACE begin '+nonce in normalize(q.read_text(errors='replace'))),'')
+   assert text, 'Missing raw trace source for '+nonce
    part=text.split('NPTRACE begin '+nonce,1)[1].split('NPTRACE end '+nonce,1)[0]
    raw=[tuple(map(int,v)) for v in re.findall(r'NPTRACE row (\d+) (\d+) (\d+)',part)]
    times=[((raw[i][2]-raw[i-1][2])&0xffffffff)/1000 for i in range(121,len(raw))];ts=sorted(times)
