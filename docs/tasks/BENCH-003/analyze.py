@@ -22,7 +22,10 @@ def browser(path):
  assert len(f)>10
  # Drop loading/mode-edge frames. Report timing only for the interior game window.
  lo,hi=f[0]['ms']+500,f[-1]['ms']-500;f=[r for r in f if lo<=r['ms']<=hi]
- p=[r for r in d['presentations'] if lo<=r['ms']<=hi]
+ p=[];last_count=0
+ for row in d['presentations']:
+  if row['count']>last_count and lo<=row['ms']<=hi:p.append(row)
+  last_count=row['count']
  req=[r['requestMs'] for r in f]
  assert min(y-x for x,y in zip(req,req[1:]))>=33.333,'Credit limit violated'
  return {'frames':len(f),'receive_intervals':stats([y['ms']-x['ms'] for x,y in zip(f,f[1:])]),'submission_intervals':stats([y['ms']-x['ms'] for x,y in zip(p,p[1:])]),'request_intervals':stats([y-x for x,y in zip(req,req[1:])]),'identical_adjacent_pixel_hashes':sum(x['pixelHash']==y['pixelHash'] for x,y in zip(f,f[1:])),'scope':'Wired Pi headless Chromium; WebGL submission, not panel scanout; FNV equality is a content fingerprint, not a game frame identifier.'}
