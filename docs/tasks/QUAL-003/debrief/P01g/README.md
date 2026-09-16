@@ -103,3 +103,9 @@ output resumes; assert exact patch placement and re-run controls on a new r51
 identity. This self-assigned preparation correction does not relax any runtime
 correctness gate. Preserve the three r50 controls as provisional only. Also use
 the separate variable-payload accounting parser, not P02's fixed-frame validator.
+
+Collection preparation note: the repeated mainboard fixture reached its save,
+but COPY could not overwrite a result left by the provisional run. Its fresh
+/NPRES.BIN was retrieved and passed nonce/count/state checks. Subsequent targets
+use a distinct prefix and must be absent before launch. No fixture timing gate
+was relaxed and no stale result was substituted.
