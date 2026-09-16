@@ -278,3 +278,10 @@ writeup. The only hardware action for closure is the established spoken cue.
 [amp-report]: https://github.com/espressif/esp-amp/blob/e1b48925e7ef0f214f5465c1a0a2cb43446a7ffc/README.md
 
 [fpu-report]: https://github.com/ctag-fh-kiel/esp32p4_fpu_benchmark/blob/df707faec5fd73a82ad2e358716f3c62a266239a/README.md
+
+## C1 investigation status
+
+[Source-only C1 report](C1/README.md) completes the authorized first investigation.
+No immediate throughput fix established; Extender already has key ownership
+mechanisms. Proposed wait attribution remains under P01c/d. Future MIPI utility
+retained; no sample build/test. Await review before C2; RLE remains deferred.

@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: Source scouting complete: five ranked P4 candidates and proposed checks in RESEARCH-001/CANDIDATES.md; awaiting Author review. No sample build/flash/test performed or authorized before review.
+  - Status: C1 source investigation complete; report in RESEARCH-001/C1/README.md. No drop-in fix or new benchmark. Await Author review before C2; RLE deferred until C1–C5 dispositions.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 

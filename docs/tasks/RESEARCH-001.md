@@ -156,13 +156,17 @@ Apply the same evaluation structure to each later authorized candidate:
 question, mechanism trace, local comparison, discriminating check, measurements
 if separately authorized, and evidence-based disposition.
 
-11. [ ] C1-01: Freeze scope and pin source/baseline; define the rendering/output
+11. [x] C1-01: Freeze scope and pin source/baseline; define the rendering/output
     contention question and distinguish LCD scheduling from web delivery.
-12. [ ] C1-02: Trace buffer ownership, locks/waits, task/ISR scheduling, memory,
+12. [x] C1-02: Trace buffer ownership, locks/waits, task/ISR scheduling, memory,
     completion and overload through the adapter's relevant paths.
-13. [ ] C1-03: Compare with Extender and retained P02 source/configuration;
+13. [x] C1-03: Compare with Extender and retained P02 source/configuration;
     identify already-present mechanisms, actionable differences and unknowns.
-14. [ ] C1-04: Write source-linked findings and disposition with the smallest
+14. [x] C1-04: Write source-linked findings and disposition with the smallest
     proposed discriminating check. No invented performance numbers or build.
 15. [ ] C1-05: Verify documentation, commit, hardware voice with fresh receipt,
     then stop for Author review. C2–C5 remain pending authorization.
+
+C1 source findings: [review report](RESEARCH-001/C1/README.md). No immediate
+throughput fix established; preserve useful ownership/LCD contracts and propose
+P01c/d wait attribution. Source review complete, measurements not authorized.

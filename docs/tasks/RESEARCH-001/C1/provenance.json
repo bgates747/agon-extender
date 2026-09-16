@@ -1,0 +1,35 @@
+{
+  "review_utc": "2026-09-16T01:23:35.016059+00:00",
+  "scope": "source-only; no build or benchmark",
+  "local_commit": "9646e9a",
+  "upstream_commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+  "local_files": {
+    "vdp/video/extender/display/stock_p4_service.cpp": "e5165e5de390ce0d692f12f09053bc3712afe07f01176ed7a62a16a2740b945e",
+    "vdp/video/extender/display/stock_runtime_controller.hpp": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "vdp/video/extender/web/browser_video_provider.cpp": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+    "vdp/video/agon_screen.h": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+    "vdp/.pio/packages/framework-espidf/components/esp_lcd/dsi/include/esp_lcd_mipi_dsi.h": "603aecb410f2a1ab1e494482ea3b31fa71fb2daf5d0152ab4ff1f02306cf6efc"
+  },
+  "p02_settings": {
+    "build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+    "output_task_core": 1,
+    "output_task_priority": 2,
+    "lookahead_enabled": true,
+    "packed_row_enabled": true,
+    "draw_twice_enabled": true,
+    "internal_framebuffer_enabled": true
+  },
+  "additional_sources": [
+    {
+      "path": "CMakeLists.txt",
+      "url": "https://github.com/espressif/esp-iot-solution/blob/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/CMakeLists.txt",
+      "sha256": "9007fa9cf691c53b7a5f0b1575a0d772e840ebb4f31a9d5a019a43765c3dd6a4"
+    },
+    {
+      "path": "include/esp_lv_adapter.h",
+      "url": "https://github.com/espressif/esp-iot-solution/blob/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/include/esp_lv_adapter.h",
+      "sha256": "ae5520679cc1614267fdf0bc58685500b4db6816bdf9e747a43e32529ffbe22c"
+    }
+  ]
+}
