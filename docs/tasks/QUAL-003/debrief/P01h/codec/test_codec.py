@@ -7,6 +7,8 @@ lib=C.CDLL(str(Path(a.library).resolve()));u=C.POINTER(C.c_ubyte)
 lib.encode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t),C.c_int]
 lib.encode_fast.argtypes=lib.encode.argtypes
 lib.decode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t)]
+lib.encode_words.argtypes=lib.encode.argtypes
+lib.decode_words.argtypes=lib.decode.argtypes
 def call(fn,src,cap,*args):
  s=(C.c_ubyte*len(src)).from_buffer_copy(src);d=(C.c_ubyte*(cap+16))();d[cap:]=[0xa5]*16;o=C.c_size_t()
  status=fn(s,len(src),d,cap,C.byref(o),*args)
@@ -25,9 +27,11 @@ def reference_encode(src):
 def test(src,opaque=False):
  st,enc=call(lib.encode,src,len(src)+14,int(opaque));assert st==0
  assert call(lib.encode_fast,src,len(src)+14,int(opaque))==(st,enc)
+ assert call(lib.encode_words,src,len(src)+14,int(opaque))==(st,enc)
  expected=bytes(v|192 for v in src) if opaque else src
  assert enc==reference_encode(expected)
  st,dec=call(lib.decode,enc,len(src));assert st==0 and dec==expected
+ assert call(lib.decode_words,enc,len(src))==(0,expected)
  assert len(enc)<=len(src)+14
  return enc
 checks=0
@@ -47,7 +51,7 @@ assert call(lib.decode,valid,129)[0]!=0
 for _ in range(10000):
  n=rng.randrange(100);src=bytes(rng.randrange(256) for _ in range(n))
  if n>=14 and rng.randrange(2):src=b'Cmpr'+struct.pack('<I',rng.randrange(200))+b'RLE2\1\0'+src[14:]
- call(lib.decode,src,200)
+ assert call(lib.decode,src,200)==call(lib.decode_words,src,200)
 rows=[];seen=set()
 root=Path('docs/tasks/QUAL-004/evidence')
 inputs=[]

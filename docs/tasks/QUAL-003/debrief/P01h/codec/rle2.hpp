@@ -65,4 +65,39 @@ inline Result encode_fast(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool opa
  return {Status::ok,o};
 }
 
+// Iteration3: four-token literals; memcpy avoids undefined unaligned accesses.
+inline Result decode_words(const uint8_t*s,size_t n,uint8_t*d,size_t cap) {
+ auto h=inspect(s,n);if(!h)return h;
+ if(h.bytes>cap)return {Status::capacity,0};
+ size_t i=14,o=0;
+ while(i<n){
+  if(n-i>=4 && h.bytes-o>=4){uint32_t word;std::memcpy(&word,s+i,4);
+   if((word&0x80808080u)==0x80808080u){word=(word&0x7f7f7f7fu)|((word&0x40404040u)<<1);std::memcpy(d+o,&word,4);i+=4;o+=4;continue;}}
+
+  uint8_t t=s[i++];
+  if(t&128){if(o==h.bytes)return {Status::length,0};d[o++]=uint8_t((t&63)|((t&64)?192:0));}
+  else {size_t count=size_t(t)+3;if(i==n)return {Status::truncated,0};
+   if(count>h.bytes-o)return {Status::length,0};
+   std::memset(d+o,s[i++],count);o+=count;}
+ }
+ return o==h.bytes?Result{Status::ok,o}:Result{Status::length,0};
+}
+inline Result encode_words(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool opaque_rgb=false) {
+ if(n>UINT32_MAX || n>std::numeric_limits<size_t>::max()-14)return {Status::length,0};
+ if(cap<n+14)return {Status::capacity,0};
+ std::memcpy(d,"Cmpr",4);put32(d+4,uint32_t(n));std::memcpy(d+8,"RLE2\1\0",6);
+ size_t i=0,o=14;
+ while(i<n){
+  if(opaque_rgb && n-i>=5 && s[i]!=s[i+1] && s[i+1]!=s[i+2] && s[i+2]!=s[i+3] && s[i+3]!=s[i+4]){
+   uint32_t word;std::memcpy(&word,s+i,4);if(word&0xc0c0c0c0u)return {Status::alpha,0};word|=0xc0c0c0c0u;std::memcpy(d+o,&word,4);i+=4;o+=4;continue;}
+  uint8_t v=s[i];
+  if(opaque_rgb ? v>63 : ((v&192)!=0&&(v&192)!=192))return {Status::alpha,0};
+  uint8_t pixel=opaque_rgb?uint8_t(v|192):v;
+  if(n-i<3 || s[i+1]!=v || s[i+2]!=v){d[o++]=uint8_t(128|(pixel&63)|((pixel&192)==192?64:0));++i;continue;}
+  size_t run=3;while(run<130 && run<n-i && s[i+run]==v)++run;
+  d[o++]=uint8_t(run-3);d[o++]=pixel;i+=run;
+ }
+ return {Status::ok,o};
+}
+
 }
