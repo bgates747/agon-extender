@@ -2,6 +2,11 @@
 
 ## Executive summary
 
+**A matched Nurples trial recovered30 application fps with RLE2 versus12.8fps
+with raw web output; output-disabled control also ran30fps. Browser receipt rose
+from4.7 to29.2fps.** One run per condition on a Wi-Fi receiver; see [tables](TABLES.md)
+for scope and uncertainty.
+
 Candidate implements **both** P4 RLE2 asset decompression and negotiated web-frame
 compression. Historical generic command65/header dispatch is retained; codec code
 is new. Host golden/malformed tests, physical asset-image controls, negotiated

@@ -1,0 +1,90 @@
+{
+  "off": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 33.333333333333336,
+        "median_ms": 33.333333333333336,
+        "p95_ms": 33.333333333333336,
+        "max_ms": 33.333333333333336,
+        "effective_fps": 29.999999999999996
+      },
+      "histogram_ms": {
+        "33.333": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    }
+  },
+  "raw": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 78.26570316842691,
+        "median_ms": 83.33333333333333,
+        "p95_ms": 116.66666666666667,
+        "max_ms": 516.6666666666666,
+        "effective_fps": 12.776988636363635
+      },
+      "histogram_ms": {
+        "33.333": 63,
+        "516.667": 1,
+        "400.0": 1,
+        "50.0": 193,
+        "66.667": 523,
+        "83.333": 610,
+        "100.0": 319,
+        "116.667": 81,
+        "133.333": 7,
+        "150.0": 1
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "browser": {
+      "frames": 660,
+      "fps": 4.728084896028565,
+      "mean_message_bytes": 196640,
+      "median_interval_ms": 209.5,
+      "p95_interval_ms": 297.6000000089407,
+      "p99_interval_ms": 327.0,
+      "request_min_ms": 32.900000005960464,
+      "errors": []
+    }
+  },
+  "rle": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 33.333333333333336,
+        "median_ms": 33.333333333333336,
+        "p95_ms": 33.333333333333336,
+        "max_ms": 33.333333333333336,
+        "effective_fps": 29.999999999999996
+      },
+      "histogram_ms": {
+        "33.333": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "browser": {
+      "frames": 1718,
+      "fps": 29.17825073243608,
+      "mean_message_bytes": 37674.764842840515,
+      "median_interval_ms": 33.599999994039536,
+      "p95_interval_ms": 42.599999994039536,
+      "p99_interval_ms": 49.3999999910593,
+      "request_min_ms": 32.30000001192093,
+      "errors": []
+    }
+  },
+  "scope": "One run per condition; same r05 candidate and cadence binary/assets. Linux receiver Wi-Fi, P4 wired Ethernet. MOS ticks nominal120Hz. Browser counts are received snapshots, not distinct game frames or monitor scanout. 500ms trimmed at 512x384 interval edges. No randomized repeat order.",
+  "fixture_sha256": "572d1911a4ae40cec62881a7e6b790d73c6f97f782124b6d301fee0f3efe08df"
+}
