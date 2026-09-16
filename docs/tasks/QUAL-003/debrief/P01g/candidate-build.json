@@ -25,5 +25,8 @@
       "bytes": 3072
     }
   },
-  "build_complete": true
+  "build_complete": true,
+  "host_checks": "HOST-CHECKS.md",
+  "bounded_delta": "candidate.patch",
+  "source_parent": "P02 archived r45; retained source identities in P01f/A/SOURCES.json"
 }

@@ -9,9 +9,9 @@ P01f W rejected priority boosting; this experiment changes load, not priorities.
 
 ## Frozen contract
 
-1. [ ] G01: Freeze this contract and the subsequent P01h contract; preserve W
+1. [x] G01: Freeze this contract and the subsequent P01h contract; preserve W
    evidence, current r43 rollback and startup. Clear mainboard via admitted CLI.
-2. [ ] G02: Prepare an isolated default-off r45-derived diagnostic candidate.
+2. [x] G02: Prepare an isolated default-off r45-derived diagnostic candidate.
    Reuse the deterministic r05 SW2400 Nurples fixture (same commands and assets,
    512x384, 60 Hz pacing). No game, Golem, MOS or mainboard VDP source changes.
    Validate protocol/receiver and all bounds on host before physical deployment.
