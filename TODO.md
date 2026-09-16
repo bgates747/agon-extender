@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: Research complete; no confirmed matching upstream defect. P4-specific reports and general IDF mechanisms ranked for review; hardware voice closeout pending.
+  - Status: Research complete; no confirmed matching upstream defect. P4-specific reports and general IDF mechanisms ranked for review; hardware voice delivered and Legacy MOS restored; awaiting Author review.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 

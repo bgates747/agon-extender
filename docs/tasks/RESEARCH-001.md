@@ -38,7 +38,7 @@ No specific known upstream cause is assumed. P02 details remain authoritative.
 4. [x] R04: Compare promising explanations against P02 and selected local code;
    record supporting/contradictory facts, affected/fixed versions where known,
    and a falsifiable next check. Do not upgrade dependencies or implement fixes.
-5. [ ] R05: Write executive findings, source ledger and ranked investigation
+5. [x] R05: Write executive findings, source ledger and ranked investigation
    sequence; deduplicate against P00/P01/P02/P06 and AUDIT-007. Commit research,
    deliver accepted hardware voice, record receipt, then stop for review.
 
@@ -61,3 +61,8 @@ root cause or drop-in fix found. Clarified that snapshot slots are explicitly
 PSRAM; the framebuffer is internal. Investigate real affinity/priority/locks,
 PSRAM/cache interactions, and HTTP/socket/credit pacing under the existing
 QUAL-003 ownership. No new performance measurements or firmware changes.
+
+Hardware closeout: accepted British voice invoked, fresh stage6/audio receipt
+verified, original startup unchanged, SD service exited to Legacy MOS. See
+[notification receipt](RESEARCH-001/notification.json). Human hearing/review
+pending. All research steps complete; no hardware performance experiments.
