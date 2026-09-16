@@ -46,3 +46,22 @@ buffered command65. Web transport integration remains a separate gate.
    consumers. Frame dimensions, decoded size and sequence must agree; compressed
    frame only when total message smaller than raw. No delta state. Exact envelope
    implementation and negotiation remain H03 work, not frozen bytes yet.
+
+## Web candidate protocol — EVR1 v1 (iteration3)
+
+An upgraded client requests `/video?rle2=1`; ordinary `/video` remains EVF1 raw.
+For that connection, server may send raw EVF1 or compressed EVR1. EVR1 retains
+EVF1's32-byte metadata layout/version1, but magic is EVR1 and payload is a full
+RLE2 v1.0 file. Header payloadBytes continues to mean **decoded** stride×height;
+compressed length is WebSocket message length minus32. Only RGB222 format2 is
+eligible; at most196608 decoded bytes and tightly packed stride=width. Every
+frame independent. Browser validates compressed header, dimensions, decoded
+length and token bounds, strips opaque alpha, reconstructs EVF1 metadata/pixels,
+and applies existing parser validation. Raw fallback if encoded file is not
+smaller, mode is ineligible, or preallocation failed. Reconnect resets eligibility.
+
+Allocate196622-byte PSRAM encoder output once at HTTP startup, reuse only on
+serialized HTTP send task; immutable snapshot lease survives through synchronous
+send. No graphics locks added. Existing dispatch lock remains unchanged. Browser
+requests no faster than30Hz; late frames do not produce catch-up bursts. Candidate
+web UI opts in for qualification only; not a production default promotion.
