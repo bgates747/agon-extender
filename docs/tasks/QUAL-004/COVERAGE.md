@@ -36,3 +36,15 @@ marked **not implemented**, with its command and evidence. Do not equate a
 missing test or unsupported capture mode with a missing API implementation.
 Existing hardware-overlay format restrictions require comparison to stock;
 a format unsupported by both devices is not automatically a port defect.
+
+## Explicit second-pass implementation boundary
+
+| Feature | Classification | Source evidence / disposition |
+|---|---|---|
+| Physical mouse cursor creation/display, including bitmap cursor command `23,27,&40` | **Not implemented** in the retained unavailable-input adapter | `makeMouseCursor()` is empty; `showMouseCursor()` leaves `mouseVisible=false` in `vdp/video/extender/input/unavailable_input_adapter.hpp`. Existing command-consumption inventory also records this. No implementation in QUAL-004. |
+| Audio synthesis | **Not implemented**, outside graphics-image scope | Existing unavailable audio backend and PORT-004 framing work; correct byte consumption does not imply sound generation. No work here. |
+| Native LCD/MIPI output | **Not implemented** in this qualified web-output configuration | Output roadmap, not a framebuffer parity claim or a test failure. No work here. |
+
+This is an explicit known-gap list, not an exhaustive declaration that every
+other API is implemented. Runtime evidence below will classify tested operations;
+missing coverage and acquisition failures remain separate from missing features.
