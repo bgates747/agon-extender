@@ -65,3 +65,9 @@ mainboard reset into the verified test startup before each mainboard replay.
 This avoids resetting a live sprite collection from the preceding replay.
 Record it as a distinct cohort; it cannot qualify live sprite teardown, and a
 repeat failure must remain a failure. Preserve the original crash evidence.
+
+The first restart-isolated BSP21_01 comparison passed: mainboard repeats were
+identical and all196608 pixels matched P4. This is evidence for static sprite
+composition under fresh setup, not clearance of the live-replay crash. The
+remaining55-scene cohort is proceeding with actual SD-startup readiness checked
+after each reset rather than a fixed boot-delay assumption.
