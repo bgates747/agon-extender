@@ -1,0 +1,10 @@
+{
+  "flash_verified": true,
+  "boot_identity_observed": true,
+  "native_keyboard_ready": true,
+  "sd_ready": true,
+  "startup_unchanged": true,
+  "build_id": "uart-excom-console-r50-b2026-09-16-07-17-57Z",
+  "factory_sha256": "cb4194ab7e060559e95ac9a34ae226193f36aea9c7150beb33d3c7ca5378d150",
+  "rollback": "retained r43; original startup preserved; no MOS/mainboard VDP flash"
+}
