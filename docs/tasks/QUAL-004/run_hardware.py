@@ -8,10 +8,17 @@ sys.path.insert(0,'docs/tasks/QUAL-004')
 from capture import decode
 from compare import evf,compare
 from web_capture import capture
-out=R/'runs01';out.mkdir(exist_ok=False)
+import argparse
+p=argparse.ArgumentParser();p.add_argument('--output',default='runs01');p.add_argument('--cases');p.add_argument('--token-base',type=int,default=100);args=p.parse_args()
+out=R/args.output;out.mkdir(exist_ok=False)
+original_cli=cli
+def cli(name,*commands):return original_cli(out.name+'-'+name,*commands)
 cases=json.loads((R/'cases01/manifest.json').read_text())['cases']+json.loads((R/'shapes01/manifest.json').read_text())['cases']
+if args.cases:
+ selected=args.cases.split(',');lookup={c['name']:c for c in cases};cases=[lookup[n] for n in selected]
+assert 0<args.token_base<65535-len(cases)*2
 def escape(name):
- k=KB(URL,R/(name+'-key.json'))
+ k=KB(URL,out/(name+'-key.json'))
  try:
   st=k.status();k.open(st);k.send([(41,1),(41,0)]);Path('agents/video-throughput/cli-latest.json').write_text(json.dumps(k.cancel()))
  finally:k.lock.close()
@@ -25,7 +32,7 @@ def get_images(token,start):
   time.sleep(.5)
  raise TimeoutError('No completed mainboard capture '+str(token))
 # Do not run until queued deployment and startup are complete.
-c=SD(URL,R/'run-start-sd.json')
+c=SD(URL,out/'start-sd.json')
 try:c.connect();assert c.download('/autoexec.txt')==(R/'test-autoexec.txt').read_bytes();c.rpc(11)
 finally:c.lock.close()
 results=[]
@@ -37,7 +44,7 @@ for index,case in enumerate(cases):
  print('BEGIN',index,name,flush=True)
  images=[]
  for repeat in range(2):
-  token=100+index*2+repeat;offset=(R/'serial.bin').stat().st_size
+  token=args.token_base+index*2+repeat;offset=(R/'serial.bin').stat().st_size
   cli(f'{name}-m{repeat}','EMOS LEGACY --keep-display','LOAD /test/qual004/q4draw.bin',f'RUN . /test/qual004/{case["file"]} {token}')
   image,raw=get_images(token,offset);images.append(image);(dest/f'mainboard-{repeat}.serial').write_bytes(raw)
   escape(f'{name}-m{repeat}');time.sleep(1)
