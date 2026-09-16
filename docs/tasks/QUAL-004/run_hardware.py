@@ -11,7 +11,8 @@ from web_capture import capture
 import argparse
 p=argparse.ArgumentParser();p.add_argument('--output',default='runs01');p.add_argument('--cases');p.add_argument('--token-base',type=int,default=100)
 p.add_argument('--manifest',type=Path);p.add_argument('--startup',type=Path);p.add_argument('--serial',type=Path)
-p.add_argument('--fresh-mainboard',action='store_true');args=p.parse_args()
+p.add_argument('--fresh-mainboard',action='store_true')
+p.add_argument('--copper-cleanup',action='store_true');args=p.parse_args()
 out=R/args.output;out.mkdir(exist_ok=False)
 original_cli=cli
 def cli(name,*commands):return original_cli(out.name+'-'+name,*commands)
@@ -70,6 +71,10 @@ for index,case in enumerate(cases):
  record.update(status='pass' if result['match'] else 'mismatch',comparison=result,end=time.time(),mainboard_repeat_equal=True,p4_repeat_equal=True)
  (dest/'run.json').write_text(json.dumps(record,indent=2));results.append(record);(out/'results.json').write_text(json.dumps(results,indent=2))
  escape(name+'-p');time.sleep(1)
+ if args.copper_cleanup and name.startswith('COP'):
+  # Only after captured evidence is complete; Copper is enabled by these cases.
+  # This avoids qualifying mode changes with an active Copper list by accident.
+  cli(name+'-cleanup','VDU 23 0 196 4 23 27 7 0 23 27 17 23 0 202')
  print('END',name,record['status'],result['mismatches'],flush=True)
  # Mismatches are retained and enumerated, not repaired or silently waived.
 cli('suite-finish','EMOS LEGACY --keep-display','LOAD /extender/sdserve.bin','RUN . /')
