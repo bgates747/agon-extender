@@ -109,3 +109,11 @@ but COPY could not overwrite a result left by the provisional run. Its fresh
 /NPRES.BIN was retrieved and passed nonce/count/state checks. Subsequent targets
 use a distinct prefix and must be absent before launch. No fixture timing gate
 was relaxed and no stale result was substituted.
+
+Host collection hardening: USB capture reopening resets P4 on this bench; retain
+the prescribed startup wait, mainboard reset/readmission and fresh service state
+files before timing. During corrected off-control collection, periodic ESP log
+writes split the multi-call terminal nonce. Every character and all2400samples
+were present. `normalize_trace.py` removes only complete writes from the four
+known periodic tags before the unchanged strict trace validator. Retain raw
+logs; never synthesize missing characters or suppress unknown fault messages.
