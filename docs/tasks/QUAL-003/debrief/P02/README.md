@@ -82,7 +82,7 @@ Author-specified product requirements.
 3. [x] I03: Run and validate four controls, repeat informative contrast as needed.
 4. [x] I04: Interpret per-operation/output and paced completion separately;
    select at most one justified P02c change or stop with a proposed next step.
-5. [ ] I05: Restore baseline/startup, verify service/input, commit evidence,
+5. [x] I05: Restore baseline/startup, verify service/input, commit evidence,
    deliver hardware voice notification and pause.
 
 I01 host checks passed with C++17, warnings-as-errors and pthread support:
@@ -230,5 +230,6 @@ Archived r43 is restored with flash verification and observed boot identity.
 Original startup was read back unchanged, SD service exited to Legacy MOS and
 native keyboard admission is ready/neutral. Mainboard VDP/MOS are unchanged.
 See `restoration.json`; diagnostic r45 and before-flash evidence are preserved
-privately. Hardware voice receipt will be added on delivery. Human hearing and
+privately. The accepted hardware voice was invoked and a fresh service/audio receipt
+verified (`notification.json`); SD exited back to MOS. Human hearing and
 review remain separate from successful audio-command acknowledgement.

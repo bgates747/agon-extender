@@ -13,7 +13,7 @@ are collected for review. Prebuilt transmission retains a timing tail, but a
 contradictory composition-only repeat prevents network-only attribution.
 Recommend resolving boot/order/pool-placement and scheduling variance before
 an affinity change. No performance fix or parity pass claimed. Golem remains
-on hold; P02 hardware restoration/notification is the remaining closeout.
+on hold. Verified r43/startup restored, hardware voice delivered, paused for review.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
