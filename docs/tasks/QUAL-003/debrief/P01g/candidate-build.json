@@ -1,0 +1,29 @@
+{
+  "build_id": "uart-excom-console-r50-b2026-09-16-07-17-57Z",
+  "parent_build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "status": "experimental",
+  "contract_commit": "d95fee0a3778b33d70b2d519b00614f098a4085e",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "57dc9f79253be4502117cd0f3cfd359779729abca7fee36fa5e40f534c1f877a",
+      "bytes": 1452304
+    },
+    "firmware.factory.bin": {
+      "sha256": "cb4194ab7e060559e95ac9a34ae226193f36aea9c7150beb33d3c7ca5378d150",
+      "bytes": 1583376
+    },
+    "firmware.elf": {
+      "sha256": "032829fb4a450bda484fa86f549b1b22988cfdfdd806b8fe5944495c84c01a44",
+      "bytes": 28178320
+    },
+    "bootloader.bin": {
+      "sha256": "f9f67aa878ec400e39585792c47b9cdd315e14c7140078f06b737a344c1e8df0",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "build_complete": true
+}
