@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "CLIPROW",
+    "file": "CLIPROW.vdu",
+    "group": 202,
+    "bytes": 5439,
+    "sha256": "06280998b32013ac0b0fc96aa7da7d91f01e29b583a02256ba7c473c2ffba47f",
+    "source": {
+      "name": "CLIPROW",
+      "group": 202,
+      "bytes": 960,
+      "setup_bytes": 4479,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "e848483ebf72de3585a44d79b059e9a3a9c0f6391d4a4686971d94412738a4b0"
+    }
+  },
+  "start": 1789570366.2822313,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "1b81899288f6329a51eb9af3fa5cbb495601dab673bccd35338e1c6edc44c0b9",
+    "p4_sha256": "1b81899288f6329a51eb9af3fa5cbb495601dab673bccd35338e1c6edc44c0b9"
+  },
+  "end": 1789570477.508195,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP15",
+    "file": "SHP15.vdu",
+    "bytes": 674,
+    "sha256": "f43a331d5cc544d9b7b41cc9db5eefbcc5fbf1348102e1962d6348fdeccac52a",
+    "source_sha256": "ff5e702357b5175a50599ee0df255a6f1bf4f8af85c798c7699d04cecc385247"
+  },
+  "start": 1789572569.572905,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "3e2fd3b4ad7cd96150f7d9ef20f8fac48cdb074bda570d82a0f7fb01e7e80f0c",
+    "p4_sha256": "3e2fd3b4ad7cd96150f7d9ef20f8fac48cdb074bda570d82a0f7fb01e7e80f0c"
+  },
+  "end": 1789572679.7983043,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

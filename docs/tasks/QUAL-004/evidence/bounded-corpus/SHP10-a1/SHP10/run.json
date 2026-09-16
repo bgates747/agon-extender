@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP10",
+    "file": "SHP10.vdu",
+    "bytes": 662,
+    "sha256": "1478493cbc1dbfced484dc193917792d8e88811f18bff59a4b518b20948a3d37",
+    "source_sha256": "4584ac9e7cf3f55b400ef36a7abd7b96063bee5bf07110d276af5e36d41aebc9"
+  },
+  "start": 1789571882.675458,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "d427b821c214d53fb5adb34f063f61e9dce0c8387ecf4f692e287f4ba22d8df2",
+    "p4_sha256": "d427b821c214d53fb5adb34f063f61e9dce0c8387ecf4f692e287f4ba22d8df2"
+  },
+  "end": 1789571992.2321053,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

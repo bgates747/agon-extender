@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP14",
+    "file": "SHP14.vdu",
+    "bytes": 761,
+    "sha256": "7aeaa05bb5cd15a31c3a9e065c25ab339bbb71a8455783b6e667c88c08093fda",
+    "source_sha256": "4b4f93af815e4fbf8f52286e0a5448eab14273e26e59f76cec174d90fad98afd"
+  },
+  "start": 1789572431.8655605,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "b6bf43931c4f06e3f0655164af1df6596e72f718ef3e6675d83f7fff76160c11",
+    "p4_sha256": "b6bf43931c4f06e3f0655164af1df6596e72f718ef3e6675d83f7fff76160c11"
+  },
+  "end": 1789572541.833991,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

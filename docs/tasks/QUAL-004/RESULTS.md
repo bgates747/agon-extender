@@ -2,13 +2,14 @@
 
 ## Executive summary
 
-Twenty-four distinct mode20 scenes now have valid mainboard/P4 comparisons,
+All63 distinct mode20 scenes now have valid mainboard/P4 comparisons,
 with zero differing pixels across each complete512×384 image. Three mainboard
 attempts have also crashed in stock sprite scanout, outside the capture command;
 they remain invalid attempts even where a fresh retry later passes. The original
 unfenced alpha replay was unstable; an explicitly fenced control matched.
 
-The remaining cases and lower-depth/page controls are still running. This is
+The mode20 corpus is complete; lower-depth/page controls and independent public
+pixel queries are still pending. This is
 not yet a blanket API-parity conclusion. Missing functionality is recorded in
 [COVERAGE.md](COVERAGE.md) and will not be implemented in this pass. Exact
 artifact identities are in [ARTIFACTS.json](ARTIFACTS.json).

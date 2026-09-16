@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP16",
+    "file": "SHP16.vdu",
+    "bytes": 928,
+    "sha256": "6e5a8da58967e3d6c6af5a43b9f64d15a78c99b8b7c307270a73709e8256a264",
+    "source_sha256": "6bf079105ffdf2fc55fd3f6504a0e48f97d3fc5a749d2cff85f403c4aa928c37"
+  },
+  "start": 1789572707.4118488,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "900dee6fec830641445f27729403d59e70bada3fcde4d8ba683c4b3cb3014de2",
+    "p4_sha256": "900dee6fec830641445f27729403d59e70bada3fcde4d8ba683c4b3cb3014de2"
+  },
+  "end": 1789572817.0484016,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

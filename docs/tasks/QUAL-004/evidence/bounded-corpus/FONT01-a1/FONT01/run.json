@@ -1,0 +1,25 @@
+{
+  "case": {
+    "name": "FONT01",
+    "file": "FONT01.vdu",
+    "bytes": 356,
+    "sha256": "82cf10a498dadac358db5b1d5ea7fe75c6043a88431a800fedd77653fae89c52",
+    "source": "PORT-008 font-coverage",
+    "adaptation": "binary VDU transport; mode20 instead of8, same8x8 pixel geometry; omit ECHO"
+  },
+  "start": 1789573669.0875404,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "3e9300d6cf5b0d6bfbc614b5c99c917f242dad9f43a5f15d1f1f0f594f8da6e0",
+    "p4_sha256": "3e9300d6cf5b0d6bfbc614b5c99c917f242dad9f43a5f15d1f1f0f594f8da6e0"
+  },
+  "end": 1789573779.1272252,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

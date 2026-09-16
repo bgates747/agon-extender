@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP18",
+    "file": "SHP18.vdu",
+    "bytes": 1655,
+    "sha256": "ac53e3617bff4f7c2fdc8543e686b9c94ee830f8b96e1de2c40f3064d64703a1",
+    "source_sha256": "00dc56dae08d8e9bafed7190e8bab9205febb2afa9e49c3f208a21e76d7a8078"
+  },
+  "start": 1789572982.3599179,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "7b06d4626f597a2f7a75a9911347396e5ca8277f74a244e7617bf35cea99c81e",
+    "p4_sha256": "7b06d4626f597a2f7a75a9911347396e5ca8277f74a244e7617bf35cea99c81e"
+  },
+  "end": 1789573091.8446438,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

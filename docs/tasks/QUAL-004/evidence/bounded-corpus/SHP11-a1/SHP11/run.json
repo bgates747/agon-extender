@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP11",
+    "file": "SHP11.vdu",
+    "bytes": 1006,
+    "sha256": "b478b4c1a8bcb2e186d35630caf5107bb583d572a5dee0a6630c87a4ba5ded10",
+    "source_sha256": "15ea78a3a959c3ac7457c07dd3ae5a8a92c0d219df249f599bad45ee0427572f"
+  },
+  "start": 1789572019.8574538,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "f51b5786528d73e0139eefabb06cc43c1b0d38fe204a16ba1f069fc975d067c3",
+    "p4_sha256": "f51b5786528d73e0139eefabb06cc43c1b0d38fe204a16ba1f069fc975d067c3"
+  },
+  "end": 1789572129.3740902,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

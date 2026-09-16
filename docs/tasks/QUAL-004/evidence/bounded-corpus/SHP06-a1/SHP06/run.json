@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP06",
+    "file": "SHP06.vdu",
+    "bytes": 744,
+    "sha256": "19836822c667ab7451bc870621f9479bcef9bd1f540ce552ab2a84923ac69a23",
+    "source_sha256": "01fb2bcdd4a73972364a9a10a992885d5f48ad328d9a684ee9c359e1a385e2af"
+  },
+  "start": 1789571332.6662352,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "d49efff4406d8ca8b1bff46b2aca15c04b094b1378c4060b62923b1d6ab2f767",
+    "p4_sha256": "d49efff4406d8ca8b1bff46b2aca15c04b094b1378c4060b62923b1d6ab2f767"
+  },
+  "end": 1789571442.797171,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP03",
+    "file": "SHP03.vdu",
+    "bytes": 1108,
+    "sha256": "1e056ac8234bca57292a1251e3d2a34df60e248e1e8d2f61a0dbcb4cb654d660",
+    "source_sha256": "9b8b36dd688d16126f89b21f2469a19d9b0638a561608f4842a9426806a84a5c"
+  },
+  "start": 1789570920.46246,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "bfa206733de6074436886cadce28c8f2f857d32976e989985d0786d755ce7f1f",
+    "p4_sha256": "bfa206733de6074436886cadce28c8f2f857d32976e989985d0786d755ce7f1f"
+  },
+  "end": 1789571030.598177,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP17",
+    "file": "SHP17.vdu",
+    "bytes": 1290,
+    "sha256": "5874fc72bd76b947a2a5647f8892194274c2544ec766047f51360a6d92f2b228",
+    "source_sha256": "46b2afeb4ea1398eedd0796ac07eebef22a6751c8823004b7d624a1aaa427b9c"
+  },
+  "start": 1789572844.7792284,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "0cd5726a4b8882bbf4e49a46ffc7ada30e336a7fdbb928ca535d8bbaed09d0e8",
+    "p4_sha256": "0cd5726a4b8882bbf4e49a46ffc7ada30e336a7fdbb928ca535d8bbaed09d0e8"
+  },
+  "end": 1789572954.6639636,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

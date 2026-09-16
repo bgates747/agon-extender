@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP12",
+    "file": "SHP12.vdu",
+    "bytes": 941,
+    "sha256": "a513b18b262bcfad93602cf442eca2d924f56a922e762e135225441ae79a9e99",
+    "source_sha256": "f869df1110f81cb8932bad0bb49ca316abdd8e7b9998e138aae5f52e49c5aff3"
+  },
+  "start": 1789572157.093725,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "638b604f620df92bead34f3d1321b368bda8142e382ce379a68d73d24743cdaf",
+    "p4_sha256": "638b604f620df92bead34f3d1321b368bda8142e382ce379a68d73d24743cdaf"
+  },
+  "end": 1789572266.6425493,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

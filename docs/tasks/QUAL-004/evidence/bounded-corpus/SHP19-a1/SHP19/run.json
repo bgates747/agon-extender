@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP19",
+    "file": "SHP19.vdu",
+    "bytes": 869,
+    "sha256": "6774dc7258ec3a7110c632576230514a25f1748f34cc3076bac2555a0262ffc5",
+    "source_sha256": "4a57ea48ff4b9f5998953347c9a118ad572300a5d04c7ef581239eec2a5fa9e8"
+  },
+  "start": 1789573119.5918558,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "da42f0e3e18a9c91f4322b61f85a8c5a403d2ee1d1810739e196b5ac534ac344",
+    "p4_sha256": "da42f0e3e18a9c91f4322b61f85a8c5a403d2ee1d1810739e196b5ac534ac344"
+  },
+  "end": 1789573229.1435256,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

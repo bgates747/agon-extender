@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP13",
+    "file": "SHP13.vdu",
+    "bytes": 840,
+    "sha256": "8192a6093ca59a4896ea8b433f5dfefe2405d1b7b26f2e7a0985e0fa0a76c6d9",
+    "source_sha256": "0b2e87bc0da134d54f22bc6b712eb18872a39f9f28df435641cd45c52716a9be"
+  },
+  "start": 1789572294.3082035,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "4c129c3d2624c573dfa27bf5791623ef3aca89735703183f736bfa7167be5e0e",
+    "p4_sha256": "4c129c3d2624c573dfa27bf5791623ef3aca89735703183f736bfa7167be5e0e"
+  },
+  "end": 1789572404.1271636,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

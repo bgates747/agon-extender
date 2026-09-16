@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP08",
+    "file": "SHP08.vdu",
+    "bytes": 681,
+    "sha256": "648ab6d43ee140426054ab87f764b54aaee874e615c24e819637b37a7264f636",
+    "source_sha256": "7466f6c8da7f7a5084f48f8478694a023f343bd61ac226fef1d93ee010105a6a"
+  },
+  "start": 1789571607.7178106,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "1fdb63098d75a672764a313166d8f4836147c8fddb39f8a091029ae39ef0de14",
+    "p4_sha256": "1fdb63098d75a672764a313166d8f4836147c8fddb39f8a091029ae39ef0de14"
+  },
+  "end": 1789571717.8166847,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

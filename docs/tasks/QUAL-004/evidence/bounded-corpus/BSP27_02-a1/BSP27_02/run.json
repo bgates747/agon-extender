@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP27_02",
+    "file": "BSP27_02.vdu",
+    "group": 127,
+    "bytes": 50016,
+    "sha256": "c0c77d701ec04e71a3075550138dfa917cfc04ec9cb57b7439b49d31c326b945",
+    "source": {
+      "name": "BSP27_02",
+      "group": 127,
+      "bytes": 285,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "ee37fbd72c82b9c22881a3e4bbf10d450a069ba20b411afc32b9303d4b3114a4"
+    }
+  },
+  "start": 1789569115.4976768,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "aac6d77273ac36034c81955a7ae95ccba90b782851d4d209fe90380248f8e2be",
+    "p4_sha256": "aac6d77273ac36034c81955a7ae95ccba90b782851d4d209fe90380248f8e2be"
+  },
+  "end": 1789569227.2763116,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

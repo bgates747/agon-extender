@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP24",
+    "file": "SHP24.vdu",
+    "bytes": 1663,
+    "sha256": "8819fd04faaf05bd3d23bc36deb5043d8126d39e780d96f3a53f4102cc78ec91",
+    "source_sha256": "17b4ea79957e990a3920459fe35bd1fd82a8f33d286d6d0d38cc03f78ff38746"
+  },
+  "start": 1789573531.7645845,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "672e871fc1537368703fc7d9d251945f7d1f5bf3654145972700244126bbc4fa",
+    "p4_sha256": "672e871fc1537368703fc7d9d251945f7d1f5bf3654145972700244126bbc4fa"
+  },
+  "end": 1789573641.3677444,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

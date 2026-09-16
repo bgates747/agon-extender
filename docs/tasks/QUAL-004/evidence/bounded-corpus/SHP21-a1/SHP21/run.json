@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP21",
+    "file": "SHP21.vdu",
+    "bytes": 779,
+    "sha256": "53378c5901c867cc1b26e88025cdf250de3227929773af51be23f9d04314de42",
+    "source_sha256": "98ad3e54414690e3933e3d337d3dbfb41ce36a4e363a7bc85b704e6fe9bbf2ed"
+  },
+  "start": 1789573256.7907865,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "c11cd6b9f712386cb5bc76e9b5bd432a5d26f1ecd242a44f92bc999763dc5fd5",
+    "p4_sha256": "c11cd6b9f712386cb5bc76e9b5bd432a5d26f1ecd242a44f92bc999763dc5fd5"
+  },
+  "end": 1789573366.6223907,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

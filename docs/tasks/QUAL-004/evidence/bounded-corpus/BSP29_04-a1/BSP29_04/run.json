@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP29_04",
+    "file": "BSP29_04.vdu",
+    "group": 129,
+    "bytes": 26966,
+    "sha256": "681a291665bf8bb4f9e12ef734cadf643ddab5fe03a2e60ff6ec0c88c4158178",
+    "source": {
+      "name": "BSP29_04",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "b7280dfc0a7e963623e004d55c43384185d3c07ad8a7ec5329e473874b21b33a"
+    }
+  },
+  "start": 1789569950.229074,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "f4e879272bcd5b23359703ed89702724065827e47664ee3eac03070c5e499b40",
+    "p4_sha256": "f4e879272bcd5b23359703ed89702724065827e47664ee3eac03070c5e499b40"
+  },
+  "end": 1789570061.3644962,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

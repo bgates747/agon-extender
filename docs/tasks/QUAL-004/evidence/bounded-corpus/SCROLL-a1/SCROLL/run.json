@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "SCROLL",
+    "file": "SCROLL.vdu",
+    "group": 201,
+    "bytes": 4799,
+    "sha256": "759dc6545c7a1da0c4bc5ace7defd0c462c0387abe92c4e20fb7efbbb9b7df55",
+    "source": {
+      "name": "SCROLL",
+      "group": 201,
+      "bytes": 320,
+      "setup_bytes": 4479,
+      "probes": 1,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "9f9f7a27d46b63da4d9ded2c1593d3f83b5005f120c891759d767b4fc14f397e"
+    }
+  },
+  "start": 1789570228.5478144,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "7e76533138391703a6e0edcc123c07cca68de4f2ab3ac27be1976a038266e177",
+    "p4_sha256": "7e76533138391703a6e0edcc123c07cca68de4f2ab3ac27be1976a038266e177"
+  },
+  "end": 1789570338.547969,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

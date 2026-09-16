@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "SHP07",
+    "file": "SHP07.vdu",
+    "bytes": 703,
+    "sha256": "2e351da0ca8b964d799502e39ec1edd3a59808dbb3e27159fd57502d3f43cc17",
+    "source_sha256": "c00eff26677aae8233c3da4b02c46f829f36c6c9fc8921d520673352541e026b"
+  },
+  "start": 1789571470.6041634,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "59eae07979620f8d33f9fe47328c558e92b2bdd014f5a7921022a9b6ad6eb931",
+    "p4_sha256": "59eae07979620f8d33f9fe47328c558e92b2bdd014f5a7921022a9b6ad6eb931"
+  },
+  "end": 1789571580.063084,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

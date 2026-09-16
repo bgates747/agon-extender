@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP26_04",
+    "file": "BSP26_04.vdu",
+    "group": 126,
+    "bytes": 62588,
+    "sha256": "0681c9de9c13e78beb7a5d72b4409a34292fd73b3eefffd0cbd0c2f752b16f5b",
+    "source": {
+      "name": "BSP26_04",
+      "group": 126,
+      "bytes": 295,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c11ce1e7471986b18724419fce55db221370f5c11f9c3af6e247f99691c9b19c"
+    }
+  },
+  "start": 1789568836.2698693,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "16cfe5fe482d4a9b2b7460aba5179f408bab70cdae3e8c228117deaaab7feab7",
+    "p4_sha256": "16cfe5fe482d4a9b2b7460aba5179f408bab70cdae3e8c228117deaaab7feab7"
+  },
+  "end": 1789568948.1787205,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}
