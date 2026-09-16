@@ -7,6 +7,10 @@ item is removed.
 
 ## Current Author-directed research
 
+- [ ] **RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment**
+  - Status: Authorized; contract frozen before implementation. Temporarily replace VDP on P4, measure independent rendering/output, restore baseline.
+  - Details: [RESEARCH-003](docs/tasks/RESEARCH-003.md)
+
 - [ ] **RESEARCH-002 — Espressif P4 board network-video throughput claims**
   - Status: Retrospective research complete; awaiting Author review. Link/encoder limits do not establish sustained frame-serving throughput.
   - Details: [RESEARCH-002](docs/tasks/RESEARCH-002.md)
