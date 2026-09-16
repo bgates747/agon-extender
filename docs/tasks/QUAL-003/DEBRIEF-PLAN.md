@@ -126,6 +126,13 @@ existing fixtures. No Golem, MOS experiment or downstream execution.
    actual support, memory cost and interruption overhead before selecting it.
    Aggregate around owner batches, not a timestamp or print per UART byte.
    Record task names, priorities, affinities and relevant ISR placement.
+   Include allocation/memory considerations from RESEARCH-001 C1-M: distinguish
+   preallocated snapshot access from runtime network allocation; record buffer
+   capabilities, alignment and lifetimes. Consider bounded allocation counts and
+   bytes by caller/task, internal/PSRAM free and largest-free-block measurements,
+   and startup allocation order. These are hypotheses, not established causes.
+   Select only probes needed for attribution; no per-allocation logging or heavy
+   heap tracing without measuring its overhead against the same control.
 4. [ ] P01d: Validate the probe against the same unmodified reference condition;
    a probe which makes the failure disappear gives only limited attribution.
    Save RAM records only after the terminal fence. No live SD, per-frame UART

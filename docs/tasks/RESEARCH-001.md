@@ -174,3 +174,21 @@ P01c/d wait attribution. Source review complete, measurements not authorized.
 C1 closeout: [fresh hardware voice receipt](RESEARCH-001/C1/notification.json)
 verified; startup unchanged, SD service exited to Legacy MOS. Human hearing and
 review pending. Local commits only; stopped before C2 and all firmware work.
+
+### C1 memory follow-up — Author authorized source-only execution
+
+Author requested allocation/cache considerations, then authorized this focused
+second pass and hardware voice closeout. Preserve C1's completed ownership review.
+No builds, firmware changes, flashes, resets or performance tests; C2 and RLE
+remain deferred. Reuse the pinned adapter revision and installed IDF5.5.5.
+
+16. [ ] C1-M01: Trace allocation lifetime, capabilities/alignment, failure and
+    cleanup paths, mode changes and any render-time allocation in selected
+    adapter paths. Separate safe allocation from fast subsequent access.
+17. [ ] C1-M02: Trace cache synchronization direction, ranges, buffer ownership
+    and DMA requirements against official IDF contracts. Compare Extender's
+    preallocated snapshots and HTTP/lwIP path; distinguish observed source
+    behavior from unmeasured allocation pressure or cache contention.
+18. [ ] C1-M03: Record findings, limits and ranked diagnostic considerations;
+    retain bounded instrumentation under P01c/d. Verify and commit documentation,
+    send hardware voice, then stop for review.
