@@ -167,6 +167,9 @@ Owner: P01c/d; output-only behavior remains P06. JPEG adoption is not proposed.
 
 ### C4 — GMF player: stage ownership and overload semantics
 
+Completed [focused review](C4/README.md): retain explicit outcome accounting;
+pacing/discard does not recover already-produced frame cost. No direct fix.
+
 [Data-bus wrapper][gmf-bus] tracks timestamps and remaining byte counts in a
 bounded metadata queue. It protects metadata with a mutex and delegates payload
 acquisition/release to GMF; inspected paths release the metadata lock before

@@ -1,0 +1,27 @@
+{
+  "review_utc": "2026-09-16T02:51:13.577845+00:00",
+  "contract": "94e6aee",
+  "upstream_commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+  "source_hashes": {
+    "LICENSE": "32395cf1ed0b65a896c6cdd93ba06ea08e5ef2349ea80b155bb1699af61efd30",
+    "README.md": "32cbae4c9d4ecf634fb1e0135f25285d093cc3b64cacd1e8956a897c634241aa",
+    "packages/esp_player/idf_component.yml": "a5f3000bd8441016b23fd3970f9c5a9ce6d8420e42083af727b355ef7429a145",
+    "packages/esp_player/README.md": "7483a7fa8a4412a0311c3892b83af12fc40c021ef7d6116f70389a2dc6832986",
+    "packages/esp_player/test_apps/sdkconfig.defaults.esp32p4": "8f6cd1ed68ce41d3acb0040765445af5a82f4322e8e3bbea711d9928b746c8f3",
+    "packages/esp_player/src/video/player_video_render.c": "53b6bcf97bc55669df20496415bc840db11dfaa78ec4143dd98f68b2d5ac6afa",
+    "packages/esp_player/src/sync/player_sync.c": "87aee6e011c925d4db9e6ef8c1ff8fd01dcbcf61d0f9bf2ce71a8de345b29bd9",
+    "packages/esp_player/src/sync/player_data_bus.c": "985678e4bdc24f618405c6817349e91f605ff785afe5fcb743077870ad237509",
+    "packages/esp_player/src/core/private_inc/player_defaults_cfg.h": "4ba77b9e0f3da54b88c5eafa738f6fc60b29db6eecf7eda588d3b4165b7e24d4",
+    "packages/esp_player/examples/video_player/README.md": "badaa51176eec4ea0e8c237a1bc64bfa674a78da35a795b9419a4c8ebe8e90bc",
+    "packages/esp_player/examples/video_player/sdkconfig.defaults.esp32p4": "60cbff146d6caf5ba64ff2b68f169c72c044d20106286f46ecf98aa138253c23",
+    "packages/esp_player/examples/video_player/main/idf_component.yml": "e78b9ebfabe2cd5690b0d8dd2a360f7e1cfe463c58636e0fc686c926fa62df88",
+    "packages/esp_player/test_apps/main/idf_component.yml": "5d3c0f71223fea8c5bfbf50f0427c8dd237683f0f2158cc199f206e367fceb74",
+    "packages/esp_player/test_apps/main/test_scenario.c": "b7f699938d56bf78cb45fa50e610d1a11e97d29967303ec10f2506274a04b3a7",
+    "packages/esp_video_render/include/esp_video_render.h": "43d35dd69455474a94590f87a2e1ebe4c205ea6410764891e2e6c23b237fb524",
+    "packages/esp_video_render/src/esp_video_render.c": "b42abb1c1e513f2f087760e8ad67fb020ef70c2d0a6d7c318e4f62ccf1aacac1",
+    "docs/en/gmf-framework/gmf-core/gmf-core-databus.rst": "878794edab543985485a440ee625a794f6565259e2ed2dc65ce270f4c041c01c",
+    "gmf_core/data_bus/esp_gmf_new_databus.c": "f8e0535d431c7db10ec33bb5865fe4d2d4d72a59c28829b9e809188a8b701aae",
+    "gmf_core/oal/esp_gmf_oal_mem.c": "f7864b75bb7038698be884b05abf8501b2ab73720084a5ce9f79c041c5e72dc9"
+  },
+  "scope": "source-only; no builds/tests"
+}

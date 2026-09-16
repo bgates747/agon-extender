@@ -260,9 +260,13 @@ Author approved medium-effort source-only review. Clear mainboard at start;
 accepted hardware voice and completion banner at end. No builds, firmware
 execution, flash, reset or benchmark. C5 and RLE remain deferred.
 
-25. [ ] C4-01: Trace pinned player buffer ownership, queue bounds, wait/lock
+25. [x] C4-01: Trace pinned player buffer ownership, queue bounds, wait/lock
     boundaries and renderer completion; distinguish wrapper from underlying bus.
-26. [ ] C4-02: Trace clock pacing, late-frame/drop behavior and overload; compare
+26. [x] C4-02: Trace clock pacing, late-frame/drop behavior and overload; compare
     with Extender and record applicable mechanisms versus semantic mismatches.
 27. [ ] C4-03: Verify source-linked findings and provenance, commit, hardware
     voice with fresh receipt and visible completion cue, then stop for review.
+
+C4 findings: [review](RESEARCH-001/C4/README.md). Bounded handoffs plus
+blocking/presentation discard, not a missing speedup; pacing occurs after frame
+production. Renderer has an additional limiter; no firmware changes/tests.
