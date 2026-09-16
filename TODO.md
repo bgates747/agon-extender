@@ -313,3 +313,9 @@ deterministic Nurples and separate typing measurements are deferred.
 Current Author goal: [Nurples hardware parity with active web streaming](docs/tasks/QUAL-003/nurples-parity/PLAN.md). This takes priority over unrelated audit continuations; existing gates remain recorded.
 
 - [ ] **BENCH-003** — Measure paced repair Nurples application versus web cadence; see [contract](docs/tasks/BENCH-003.md).
+
+## Current correctness qualification
+
+- [ ] **QUAL-004 — Whole-image graphics correctness on physical VDP and P4**
+  - Author-authorized eight-hour unattended run; correctness primary, timings
+    secondary, no notification. Bench released. Contract: [QUAL-004](docs/tasks/QUAL-004.md).
