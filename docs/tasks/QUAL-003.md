@@ -1,6 +1,12 @@
 # QUAL-003 — Compare mainboard VDP and Extender EDP graphics
 
-## Executive summary — current review, 2026-09-16
+## Executive summary — current continuation, 2026-09-16
+
+Author authorized [P01f](QUAL-003/debrief/P01f/README.md): recover a lower-overhead
+baseline, one bounded scheduling intervention, then focused FabGL/port ownership
+audit. Run discrete chunks and notify on hardware; B is the current chunk.
+
+## Prior diagnostic finding
 
 [P01e owner/scheduler trace](QUAL-003/debrief/P01e/README.md) captured a25.210ms
 snapshot lock hold during which TCP/IP `tiT` occupied the same core for24.737ms.

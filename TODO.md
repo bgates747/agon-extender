@@ -15,12 +15,11 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-P00/P01/P02 controls and [P01e owner trace](docs/tasks/QUAL-003/debrief/P01e/README.md)
-are at a review stop. P01e captures a25.210ms snapshot native hold with24.737ms
-TCP/IP task residency on the same core. Candidate baseline degraded and the
-instrumented fixture failed its terminal query; no parity or fix claim. Remaining
-controls stopped at the validity gate. Verified r43/startup restored. Golem on
-hold; load ramp deferred and chunking a fallback. No experimental push.
+[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md) is authorized:
+recover a lower-overhead baseline, test one scheduling intervention, then audit
+FabGL/port ownership and handoffs. Current chunk B repeats archived r45 controls;
+stop with hardware voice at chunk completion. P01e's failed benchmark remains
+preserved. Golem excluded, chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
@@ -91,7 +90,7 @@ deterministic Nurples and separate typing measurements are deferred.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. P00/P01/P02 bounded controls complete; P01c/d reveals streaming lock stalls with material probe sensitivity. P01e captured network-task displacement of the snapshot lock owner, but diagnostic overhead qualification failed. Review scheduling/exclusion follow-up before further experiments; Golem on hold, no experimental push.
+  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. P00/P01/P02 bounded controls complete; P01c/d reveals streaming lock stalls with material probe sensitivity. P01e captured network-task displacement of the snapshot lock owner, but diagnostic overhead qualification failed. P01f baseline/scheduling/audit continuation authorized in discrete chunks; Golem on hold, no experimental push.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
   - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: RX06 repair eliminates all 14 road-section differences; 80/80 samples now match stock. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). RX07 enumeration complete: [inventory](docs/tasks/QUAL-003/rally-excom/rx07/README.md). RX08 approved N02–N06; [RX09/RX10 guards and stock comparisons](docs/tasks/QUAL-003/rally-excom/rx09/PLAN.md) pass machine checks; human review pending. RX11 reusable import protection complete; [results](docs/tasks/QUAL-003/rally-excom/rx11/README.md). Golem excluded.
 
