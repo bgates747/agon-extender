@@ -15,6 +15,12 @@ encoding/decoding costs and contention savings remain unmeasured. P06 in the
 [work plan](../QUAL-003/DEBRIEF-PLAN.md#p06--browser-delivery-audit-and-isolated-pattern-benchmark)
 owns the optional experiment and review gate.
 
+**Deferred by the Author:** resume this investigation only after exhausting all
+five initial candidates C1–C5 in [CANDIDATES.md](CANDIDATES.md), with findings and
+dispositions recorded. This includes deferring the host-side codec prototype;
+completed scouting alone does not clear the dependency. Existing implementation
+and firmware-test review gates remain in force.
+
 ## Source and exact format
 
 Read-only reference: `bgates747/agon-utils` at

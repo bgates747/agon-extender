@@ -136,3 +136,13 @@ Author-directed follow-up: inspected agon-utils AGM/RLE sources read-only.
 [AGM-RLE.md](RESEARCH-001/AGM-RLE.md) records actual byte formats, non-expansion
 proof, unused delta helper and proposed P06 integration checks. No utility or
 firmware changes, build, execution or bench test.
+
+### Author-directed sequencing — candidates before RLE
+
+Exhaust the five initial candidates C1–C5 in CANDIDATES.md before resuming the
+AGM/RLE investigation, including its proposed host-side prototype. The completed
+scouting/source reads do not by themselves satisfy this dependency: record the
+findings and disposition of each candidate's relevant avenue. RLE is deferred,
+not discarded. Existing review gates still apply; this sequencing instruction
+does not authorize sample firmware builds, flashes or tests. P06 owns any later
+encoding experiment and retains the raw eight-bit full-frame performance goal.
