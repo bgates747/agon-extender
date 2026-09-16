@@ -72,3 +72,9 @@ scanout null-pointer crash while repeating BSP21_01. Permit normal mainboard
 reset/startup isolation before each remaining replay; this changes test setup,
 not graphics functionality. Keep the failed live-replay result and exclude live
 sprite teardown from any passing claim. Do not repair the suspected stock race.
+
+Static Copper coverage uses the existing PORT-008 literal oracle: setup/edit/
+replace/reset at16 colours, setup at4 and2 colours. These six additional small
+scenes accompany palette controls under the all-depth tap. Restart-isolate each
+mainboard replay because Copper includes both software and hardware sprites.
+This is the original graphics-coverage scope, not an implementation expansion.

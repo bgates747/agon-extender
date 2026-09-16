@@ -32,12 +32,22 @@ def save(folder, name, data, mode, **metadata):
 def main(output):
     output.mkdir(parents=True, exist_ok=False)
     make_palette = runpy.run_path(str(ROOT / 'docs/tasks/PORT-008/palette-coverage/make_case.py'))['make_case']
+    make_copper = runpy.run_path(str(ROOT / 'docs/tasks/PORT-008/copper-coverage/make_case.py'))['make_case']
     for depth, mode in ((16, 9), (4, 10), (2, 11)):
         folder = output / f'mode{mode}'
         make_palette(folder / 'oracle', depth)
         row = save(folder, f'PAL{depth}', binary((folder/'oracle/palette.txt').read_text()),
                    mode, source='PORT-008 palette-coverage', oracle='oracle/oracle.json')
-        (folder/'manifest.json').write_text(json.dumps({'cases': [row]}, indent=2)+'\n')
+        rows=[row]
+        make_copper(folder/'copper-oracle',depth)
+        accumulated=b''
+        for stage in ('setup','edit','replace','reset'):
+            accumulated+=binary((folder/'copper-oracle'/(stage+'.txt')).read_text())
+            if depth!=16 and stage!='setup':continue
+            rows.append(save(folder,f'COP{depth}_{stage.upper()}',accumulated,mode,
+                             source='PORT-008 copper-coverage',stage=stage,
+                             scope='Static row palettes and composed SW/HW sprites'))
+        (folder/'manifest.json').write_text(json.dumps({'cases': rows}, indent=2)+'\n')
     # Both pages are cleared before each independent case; no inherited pixels.
     initial = 'VDU 4 26 20 23 1 0 23 0 192 0 17 128 12 23 0 202 23 0 195 12 23 0 202 23 0 195\n'
     red_front = 'VDU 17 129 12 18 0 15 25 4 40; 40; 25 101 79; 79; 23 0 202 23 0 195\n'
