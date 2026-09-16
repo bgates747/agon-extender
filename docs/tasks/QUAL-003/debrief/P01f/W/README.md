@@ -2,13 +2,16 @@
 
 ## Executive summary
 
-Author authorized the proposed next experiment after the ownership audit, asking
-for greater scrutiny. Test a priority19 scope once per admitted snapshot, against
-base2 control, on one r45-derived image. Preserve the original two-row native
-locks. This removes the per-row priority transitions seen in S, but also raises
-normalization priority: this is a disclosed confound, not a pure yield-cost test.
-No adoption or wider redesign in this chunk. Restore r43/startup and hardware
-voice-notify at the discrete review stop, whether success or informative failure.
+**W stopped at the first treatment failure; no adoption.** Control passed at
+60.052refresh/s and29.019ms p95. Snapshot-wide priority19 produced diagnostic
+36.671/s,58.299ms p95 and terminal pixel-query error15. All2400states/native
+completions match, but the fixture failed and the remaining repeats were stopped.
+[Comparisons and findings](TABLES.md) separate failed diagnostics from benchmarks.
+
+Removing per-row transitions did not make this priority remedy viable. Review
+pre-enqueue delay and a concrete graphics-ownership handoff before further code;
+no priority sweep or redesign is authorized by these results. r43/startup
+restoration and the required hardware notification complete this chunk below.
 
 ## Frozen contract and source précis
 
@@ -22,11 +25,11 @@ voice-notify at the discrete review stop, whether success or informative failure
 3. [x] W03: Preserve/verify installed r43, deploy/readback r49, observe exact boot
    and USB identity, verify input/SD and fixture readiness. No MOS or mainboard
    VDP firmware change. Mode selected only by autoexec. Keep safe startup backup.
-4. [ ] W04: Run control/treatment/treatment/control with fresh nonces, same r05
+4. [ ] W04 (stopped after first treatment failure; remaining two runs not executed): Run control/treatment/treatment/control with fresh nonces, same r05
    SW2400 fixture, full-frame wired-Pi180second browser observer, identical Agon
    reset procedure and warm P4 ordering. Do not reset P4 between controls.
    Record durations, memory allocation, native traces and browser results.
-5. [ ] W05: Require2400matching deterministic states/ordered native completions,
+5. [x] W05: Require2400matching deterministic states/ordered native completions,
    successful terminal pixel query, correct geometry/full-byte accounting,
    no browser page errors/overflow/sequence gaps and post-run keyboard/SD health.
    First control must retain58–62refresh/s and p95 at least20ms. Stop at first

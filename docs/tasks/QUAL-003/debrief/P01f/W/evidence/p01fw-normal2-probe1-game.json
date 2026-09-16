@@ -1,0 +1,10 @@
+{
+  "count": 2400,
+  "failed": 15,
+  "end_reason_byte": 0,
+  "nonce": "50303200011c0d3c",
+  "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+  "raw_header_hex": "4e5030346009000f00006009000c50303200011c0d3c0000",
+  "qualified": false,
+  "scope": "failed fixture, raw-state fingerprint only; ordinary analyzer rejects this file"
+}
