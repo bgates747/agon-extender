@@ -1,0 +1,16 @@
+{
+  "review_utc": "2026-09-16T02:24:08.856806+00:00",
+  "contract": "26b1dea",
+  "upstream_commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+  "scope": "source-only; no build or benchmark",
+  "source_hashes": {
+    "tests/conformance/README.md": "acdd34a4de7e4217739425695d8fb27385287dab183b0bab4164c4e2ee33bdcb",
+    "examples/decode_benchmark/sdkconfig.defaults.esp32s3": "b0259d8e67216b28bdf183bf1e325597fc8e7553e691c88ebf11aa64753319e5",
+    "examples/decode_benchmark/platformio.ini": "1d749617e2d6a7ba763c2d8c465b740bf7edb79544581d6cad10cd0f40c2e4da",
+    "examples/decode_benchmark/README.md": "525a8aaba8f4054b3ed6828afaa8169a7bb58579eacd76ee16444e8a214da4da",
+    "examples/decode_benchmark/sdkconfig.defaults.esp32": "5cdcd65565399f0c21084ba0c64507d152f3be863110822826e1b4990cc71a26",
+    "examples/decode_benchmark/sdkconfig.defaults": "f8789df6dd35ea20eff8ea9892aea99a4039350cef87377b9c44f4f02ee8fe73",
+    "examples/decode_benchmark/sdkconfig.defaults.esp32p4": "986ac0eb6f231ff85d050e295709f525c5a199693f37bc106252cec41f6f833e",
+    "examples/decode_benchmark/main/decode_benchmark.cpp": "f64f5adceaca2b7eee810ff7c55c69adb859c30aab23dae44c2014469cd3eabd"
+  }
+}

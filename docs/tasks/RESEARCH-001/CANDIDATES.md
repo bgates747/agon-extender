@@ -111,6 +111,9 @@ handoff without proving that those contracts apply. Owner: P01c/d and P02.
 
 ### C2 — micro-mp3: best small concurrency experiment pattern
 
+Completed [focused review](C2/README.md): useful structure, but creation-failure
+result accounting and timing confounders rule out unmodified diagnostic reuse.
+
 [Benchmark source][mp3-code] creates independent decoder/output state, pins
 workers to alternating cores, records each decode duration, and uses a counting
 semaphore for completion. Heap deltas are trusted only during a single-worker

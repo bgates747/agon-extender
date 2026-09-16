@@ -207,11 +207,15 @@ Author accepted C2 on medium effort. Start by clearing the mainboard screen;
 finish with accepted hardware voice and stop for review. No build, firmware
 execution, flash, reset or benchmark. C3–C5 and RLE remain deferred.
 
-19. [ ] C2-01: Pin retained micro-mp3 sources; trace task startup, affinity,
+19. [x] C2-01: Pin retained micro-mp3 sources; trace task startup, affinity,
     timing boundaries, allocation, completion and correctness controls.
-20. [ ] C2-02: Assess published measurements and confounders; compare with our
+20. [x] C2-02: Assess published measurements and confounders; compare with our
     P02 evidence and propose the smallest discriminating diagnostic under
     existing P01/P02 ownership. Do not equate MP3 throughput with graphics FPS.
 21. [ ] C2-03: Record findings/provenance and verify documentation; commit,
     issue hardware voice with fresh receipt, preserve visible completion cue,
     then stop for review.
+
+C2 source findings: [report](RESEARCH-001/C2/README.md). Retain methodology,
+not unmodified harness: task-creation failure accounting defect and uncontrolled
+scheduling/placement confounders. No Extender fix or new measurement.
