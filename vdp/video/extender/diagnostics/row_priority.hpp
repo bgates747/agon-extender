@@ -1,6 +1,10 @@
-// QUAL-003 P01f S: diagnostic only. Priority changes surround an unlocked
-// caller's row operation; never save an inherited priority from inside a mutex.
+// QUAL-003 P01f S/W: diagnostic only. The caller selects row or snapshot scope;
+// never save an inherited priority from inside a mutex. Keep both experiments
+// distinct: combining the flags would invalidate the scope comparison.
 #pragma once
+#if defined(AGON_EXTENDER_ROW_PRIORITY) && defined(AGON_EXTENDER_SNAPSHOT_PRIORITY)
+#error "Select only one diagnostic priority scope"
+#endif
 namespace agon_row_priority {
 template<class Runtime> class Ceiling {
  unsigned previous_{}; bool changed_{};
@@ -23,7 +27,7 @@ template<class Runtime> class Ceiling {
  Ceiling& operator=(const Ceiling&)=delete;
 };
 }
-#ifdef AGON_EXTENDER_ROW_PRIORITY
+#if defined(AGON_EXTENDER_ROW_PRIORITY) || defined(AGON_EXTENDER_SNAPSHOT_PRIORITY)
 #include <atomic>
 #include <cstdint>
 #include <cstdio>

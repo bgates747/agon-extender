@@ -96,7 +96,7 @@ inline void marker(const uint8_t *data, unsigned size) {
 #endif
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   if(began)agon_output_isolation::begin(data+8);
-#ifdef AGON_EXTENDER_ROW_PRIORITY
+#if defined(AGON_EXTENDER_ROW_PRIORITY) || defined(AGON_EXTENDER_SNAPSHOT_PRIORITY)
   if(began)agon_row_priority::begin(data+8);
 #endif
 #ifdef AGON_EXTENDER_OWNER_TRACE
@@ -122,7 +122,7 @@ inline void marker(const uint8_t *data, unsigned size) {
  agon_owner_trace::enabled=false;agon_owner_trace::recording=false;
 #endif
  agon_output_isolation::stop(data+8);
-#ifdef AGON_EXTENDER_ROW_PRIORITY
+#if defined(AGON_EXTENDER_ROW_PRIORITY) || defined(AGON_EXTENDER_SNAPSHOT_PRIORITY)
  agon_row_priority::stop(data+8);
 #endif
 #ifdef AGON_EXTENDER_OWNER_TRACE

@@ -12,7 +12,7 @@ voice-notify at the discrete review stop, whether success or informative failure
 
 ## Frozen contract and source précis
 
-1. [ ] W01: Freeze contract and clear mainboard through fresh admitted CLI;
+1. [x] W01: Freeze contract and clear mainboard through fresh admitted CLI;
    establish unchanged startup, fixture, candidate parent and rollback identity.
 2. [ ] W02: Add default-off snapshot scope with mutual exclusion against the old
    row-priority flag. Host-check lifetime restoration; inspect actual source and
@@ -72,3 +72,8 @@ transitions; it does not isolate transition cost from higher-priority normalizat
 A failure rejects this remedy and ends this chunk. Do not sweep more priority
 numbers. Any single-owner/cooperative handoff design requires its own reviewed
 contract, including hardware sprites, parser flush and lifecycle semantics.
+
+W01 complete: fresh native clear; original startup and r05 fixture read back;
+r48 parent and r43 rollback archive output hashes verified. Host ceiling checks
+cover disabled/nested/early-exit/unwinding; source placement restores before
+publication. No new hardware measurement yet.

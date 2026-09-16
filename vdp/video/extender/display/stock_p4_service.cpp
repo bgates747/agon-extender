@@ -252,6 +252,13 @@ void StockP4Service::publish() {
 #endif
   alignas(8) std::uint8_t signal[rowsPerBatch * kPresentationSnapshotMaximumWidth];
   bool complete = true;
+  {
+#ifdef AGON_EXTENDER_SNAPSHOT_PRIORITY
+  // P01f W: one ceiling per admitted snapshot, outside every native lock.
+  // Normalization also runs at this priority; restore before publication.
+  // This is a diagnostic scope change, not a qualified scheduling policy.
+  agon_row_priority::Scope snapshotPriority(agon_row_priority::enabled.load());
+#endif
   for (std::size_t y = 0; y < view.height; y += rowsPerBatch) {
     if (stopping_.load(std::memory_order_acquire)) { complete = false; break; }
     const unsigned count = view.height-y < rowsPerBatch ? view.height-y : rowsPerBatch;
@@ -272,6 +279,7 @@ void StockP4Service::publish() {
       StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
           signal+i*kPresentationSnapshotMaximumWidth,
           view.packed_pixels+(y+i)*view.width, view.width);
+  }
   }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
