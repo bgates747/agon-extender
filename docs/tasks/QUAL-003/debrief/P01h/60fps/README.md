@@ -30,3 +30,6 @@ cadence60 binary, assets, Linux receiver and nominal30Hz browser credit cap.
 Do not rerun off/RLE2 conditions. Validate1800 cycles and faults, add its row to
 the same results, restore baseline and notify. Single sequential trials remain
 subject to changing network conditions.
+
+Raw-control amendment complete:1800 cycles, exact fixture readback, EVF1 receipts
+confirmed. Results now include all three conditions; no prior condition rerun.

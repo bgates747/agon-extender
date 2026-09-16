@@ -53,5 +53,40 @@
         "EVR1"
       ]
     }
+  },
+  "raw60": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "vdu_faults": 0,
+    "browser": {
+      "frames": 237,
+      "intervals": {
+        "n": 236,
+        "mean_ms": 121.27542372881356,
+        "median_ms": 120.99999999254942,
+        "p95_ms": 142.19999998807907,
+        "max_ms": 176.6000000089407,
+        "effective_fps": 8.245693721393382
+      },
+      "mean_message_bytes": 196640,
+      "magic": [
+        "EVF1"
+      ]
+    }
   }
 }

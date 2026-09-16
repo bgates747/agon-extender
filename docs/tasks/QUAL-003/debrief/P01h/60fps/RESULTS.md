@@ -2,25 +2,28 @@
 
 ## Executive summary
 
-**Nurples maintained 60 application cycles/s with RLE2 streaming enabled, matching
-the no-streaming control.** Browser receipts averaged **24.55 fps** against the
-unchanged 30fps output cap. RLE2 therefore preserved full-speed game execution in
-this trial; it did not deliver 60fps video or consistently achieve 30fps video.
+**RLE2 improved browser delivery from 8.25 to 24.55 fps—about 3×—while both
+raw and RLE2 runs maintained 60 application cycles/s.** The no-streaming control
+also held60fps. These matched-configuration single trials demonstrate a browser
+output benefit, not an application-rate improvement at this pacing.
 
 | Output | Application mean ms | Application fps | Application p95/max ms | Browser fps | Browser p95 ms |
 |---|---:|---:|---:|---:|---:|
 | Disabled | 16.667 | 60.00 | 16.667 / 16.667 | — | — |
+| Raw, capped at 30Hz | 16.667 | 60.00 | 16.667 / 16.667 | 8.25 | 142.20 |
 | RLE2, capped at 30Hz | 16.667 | 60.00 | 16.667 / 16.667 | 24.55 | 51.60 |
 
-Application elapsed interval difference versus disabled baseline: **0.0%** at
-MOS clock resolution. Each run recorded 1800 cycles, with all 1799 intervals two
-MOS ticks (nominal120Hz clock). Neither recorded a VDU fault; browser reported
-no page errors. Mean compressed message:37647 bytes. The browser's longest
-retained receive interval was68.5ms. All retained game-window messages used EVR1.
+Against raw streaming, RLE2 increased browser receipt rate197.7%, reduced mean
+receive interval66.4% (121.28 → 40.73ms), and reduced mean message size80.9%
+(196640 → 37647 bytes). Application interval difference:0.0% at MOS resolution.
+All three runs recorded1800 cycles; every one of1799 intervals was two MOS ticks.
+No VDU faults or browser page errors were reported. Raw game messages were EVF1;
+compressed game messages were EVR1. Longest retained browser intervals: raw176.6ms,
+RLE268.5ms. Web output remained capped at30fps in both streaming conditions.
 
 ## Scope and comparison
 
-One trial per condition, physical P4 candidate r06, Linux Wi-Fi receiver and
+One sequential trial per condition, physical P4 candidate r06, Linux Wi-Fi receiver and
 headless Chromium. Application pacing changed from two vblanks to one; the
 fixture patch preserves everything else from the retained repair-based cadence
 fixture. Production applications and the ordinary 30fps test executable were
@@ -43,3 +46,16 @@ The controller restores the exact pre-test P4 prefix and checks original startup
 Final restoration and notification receipts are retained alongside the results.
 No mainboard firmware changes or experimental push. Further output-rate changes
 require a separate experiment; the existing web cap remains30fps.
+
+## Raw-control amendment
+
+Only the missing raw condition was run for this amendment. The existing cadence60
+binary was read back byte-for-byte; firmware and browser implementation match the
+prior r06 runs. The raw observer removes the RLE2 negotiation query, leaving the
+same30Hz credit policy. Timing conditions were matched, but trials were sequential,
+not simultaneous or randomized; Wi-Fi variability remains a limitation.
+
+The older two-vblank r05 raw result (12.78 application fps) does not reproduce as
+an application slowdown here. Do not extrapolate that historical result to this
+single-vblank r06 test, or claim a cause without a separate investigation. No
+extra control or diagnostic run was added to this raw-only request.

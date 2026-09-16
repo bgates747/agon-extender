@@ -122,3 +122,7 @@ pending. Run completed in approximately 45 minutes, within the one-hour limit.
 The [60fps-paced Nurples run](60fps/RESULTS.md) maintained60 application fps
 with and without streaming. Browser receipts averaged24.55fps with its unchanged
 30Hz cap. See that report for final-candidate identity and comparison limits.
+
+The subsequently added raw60 control also held60 application fps, with8.25fps
+browser receipt versus24.55 with RLE2. At this pacing, the measured gain is browser
+delivery (about3×), not application execution rate; see the same follow-up report.
