@@ -14,7 +14,11 @@ def trace(path):
  from collections import Counter
  return {'frames_recorded':n,'intervals':stats(intervals),'histogram_ms':dict(Counter(round(t,3) for t in intervals)),'states':dict(Counter(hex(x['state']) for x in r)),'rows':r}
 def browser(path):
- d=json.loads(path.read_text());assert not d.get('error'),d.get('error');f=[r for r in d['frames'] if (r['width'],r['height'])==(512,384)]
+ d=json.loads(path.read_text());assert not d.get('error'),d.get('error');segments=[[]]
+ for row in d['frames']:
+  if (row['width'],row['height'])==(512,384):segments[-1].append(row)
+  elif segments[-1]:segments.append([])
+ f=max(segments,key=len)
  assert len(f)>10
  # Drop loading/mode-edge frames. Report timing only for the interior game window.
  lo,hi=f[0]['ms']+500,f[-1]['ms']-500;f=[r for r in f if lo<=r['ms']<=hi]
