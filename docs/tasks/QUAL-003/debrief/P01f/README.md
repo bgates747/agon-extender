@@ -50,7 +50,7 @@ locks/tasks and identify the original timing/ownership guarantee for each.
 
 ## B — unchanged lower-overhead baseline (current chunk)
 
-1. [ ] B01: Freeze contract and runners; clear mainboard through admitted CLI.
+1. [x] B01: Freeze contract and runners; clear mainboard through admitted CLI.
    Verify r45 and r43 archive hashes and inherited fixture/startup; record provenance.
 2. [ ] B02: Preserve/verify installed r43, deploy/readback exact archived r45,
    observe boot identity and input readiness. No compilation or source change.
