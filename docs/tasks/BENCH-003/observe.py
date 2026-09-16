@@ -30,5 +30,9 @@ m.OBSERVER=m.OBSERVER.replace('frames:[],closes:[]','requests:[],frames:[],close
 m.OBSERVER=m.OBSERVER.replace('const latest=observation.frames[observation.frames.length-1];','''const latest=observation.frames[observation.frames.length-1];
     let hash=2166136261;for(let i=32;i<a.length;i++)hash=Math.imul(hash^a[i],16777619)>>>0;
     latest.pixelHash=hash;
+    if(latest.width===512 && latest.height===384) {
+      observation.gameFrames=(observation.gameFrames||0)+1;
+      if(observation.gameFrames===100)latest.samplePixels=Array.from(a.slice(32));
+    } else observation.gameFrames=0;
     latest.requestMs=observation.requests.at(-1)?.ms;''')
 m.collect(a.url,a.seconds,a.output,'BENCH-003 paced repair diagnostic',browser_executable=a.browser_executable,signal_ready=True)
