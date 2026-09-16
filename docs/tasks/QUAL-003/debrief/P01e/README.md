@@ -72,3 +72,14 @@ stops and in-flight callbacks drain before dumping. Refresh submission sequence
 is sampled at hold acquisition; it identifies pipeline progress, not a direct
 one-to-one association between snapshot and game frame. Host tests cover disabled
 recording, ring wrap, recursive holds, trigger freeze and rearm.
+
+## Build validation
+
+Scheduler compile command includes owner_trace_hooks.h; its tasks.c object has
+an unresolved call to agon_owner_switch, resolved by the final application.
+ELF places callback at0x4ff058b6 and28,680byte rings at0x4ff21b84 (internal
+memory). Generator opt-in is AGON_EXTENDER_OWNER_TRACE=1 plus application build
+flag; ordinary builds are unchanged. The first isolated packaging attempt missed
+an inherited header and generated CMake discarded the initial injection; these
+were corrected before deployment and object-level checks added. No installed
+SDK source was edited. Host synthetic switched-out/resumed timeline checks pass.
