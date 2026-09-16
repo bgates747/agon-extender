@@ -74,3 +74,14 @@ Agon's own PASS and final MOS prompt remain separate operator observations.
 Apply this convention when preparing the next procedure revision. Previously
 frozen procedures and evidence, including uart-flow-probe-r02's 90-second
 serial window, retain their original definitions.
+
+## Production/test application separation — 2026-09-16
+
+Author directs Nurples experiments to `/test/nurples` and Rally experiments to
+`/test/arcade/rally`, with independent runtime assets. Keep production programs
+under `/mystuff` unchanged during qualification and performance work. The one-time
+BENCH-002 repair consolidation is explicitly authorized; production Nurples uses
+normal single-vblank pacing, and its 30fps review build belongs only under `/test`.
+Do not infer deployment targets from an old script's defaults. Existing historical
+fixture paths remain evidence; migrate deliberately, without deleting unrelated
+fixtures or rewriting frozen run records.
