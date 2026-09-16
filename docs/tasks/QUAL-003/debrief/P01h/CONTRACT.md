@@ -73,3 +73,13 @@ protection fault: the task-local3KiB JSON array plus call overhead exceeded the
 4KiB stack. Move response storage to checked temporary internal heap; preserve
 allocation outside codec timing. Do not increase production task stack or change
 scheduler policy. Repeat correctness/timing only on the corrected diagnostic.
+
+## Measured implementation selection
+
+P4 iteration3 improves dense-frame encode from approximately14.3ms to8.5–8.8ms
+and decode from13.2ms to7.7–7.9ms. Run-heavy frames favour the original simple
+encoder (approximately4.8–5.7ms). Iteration4 therefore samples496 adjacent pairs
+at evenly spaced positions to choose simple versus word-batched encode. Both
+emit identical full RLE2 bytes; sampling changes speed, never visual content or
+frame omission. Asset decode uses the bounds-checked word variant. Retain raw
+fallback and measure again before considering promotion.

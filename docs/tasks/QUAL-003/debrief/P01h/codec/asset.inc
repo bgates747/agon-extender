@@ -18,7 +18,7 @@ if(prefix_n==4 && std::memcmp(prefix,"Cmpr",4)==0) {
  if(!h || !h.bytes || h.bytes>1048576)return;
  auto output=make_shared_psram<BufferStream>(h.bytes);
  if(!output || !output->getBuffer())return;
- auto decoded=rle2::decode(packed->getBuffer(),total,output->getBuffer(),h.bytes);
+ auto decoded=rle2::decode_words(packed->getBuffer(),total,output->getBuffer(),h.bytes);
  if(!decoded)return;
  // sourceBuffer can refer to destination: all source use finishes before clear.
  bufferClear(bufferId);buffers[bufferId].push_back(output);

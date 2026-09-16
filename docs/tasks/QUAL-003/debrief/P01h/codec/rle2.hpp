@@ -100,4 +100,13 @@ inline Result encode_words(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool op
  return {Status::ok,o};
 }
 
+// Iteration4: bounded evenly spaced sample selects a measured implementation.
+// Sampling affects CPU cost only: both choices emit identical complete streams.
+inline Result encode_auto(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool opaque_rgb=false) {
+ if(n>UINT32_MAX)return {Status::length,0};
+ size_t repeated=0,checks=0;
+ if(n>=32)for(size_t k=0;k<16;++k){size_t start=(n-32)*k/15;for(size_t j=1;j<32;++j){repeated+=s[start+j]==s[start+j-1];++checks;}}
+ return repeated>checks/4?encode(s,n,d,cap,opaque_rgb):encode_words(s,n,d,cap,opaque_rgb);
+}
+
 }

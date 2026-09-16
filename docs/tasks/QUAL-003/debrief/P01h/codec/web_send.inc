@@ -9,7 +9,7 @@
     const size_t width=size_t(h[12])|(size_t(h[13])<<8);
     const size_t height=size_t(h[14])|(size_t(h[15])<<8);
     if(std::memcmp(h,"EVF1",4)==0 && h[6]==2 && n<=196608 && n==width*height && rle2::get32(h+16)==width && rle2::get32(h+20)==n){
-      auto begin=esp_timer_get_time();auto encoded=rle2::encode_fast(segments[1].data,n,rle2_scratch,196622,true);
+      auto begin=esp_timer_get_time();auto encoded=rle2::encode_auto(segments[1].data,n,rle2_scratch,196622,true);
       rle2_encode_us+=esp_timer_get_time()-begin;++rle2_attempts;
       if(encoded && encoded.bytes<n){
         std::memcpy(compressed_header,h,32);compressed_header[2]='R';

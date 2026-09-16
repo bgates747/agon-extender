@@ -7,6 +7,7 @@ lib=C.CDLL(str(Path(a.library).resolve()));u=C.POINTER(C.c_ubyte)
 lib.encode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t),C.c_int]
 lib.encode_fast.argtypes=lib.encode.argtypes
 lib.decode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t)]
+lib.encode_auto.argtypes=lib.encode.argtypes
 lib.encode_words.argtypes=lib.encode.argtypes
 lib.decode_words.argtypes=lib.decode.argtypes
 def call(fn,src,cap,*args):
@@ -28,6 +29,7 @@ def test(src,opaque=False):
  st,enc=call(lib.encode,src,len(src)+14,int(opaque));assert st==0
  assert call(lib.encode_fast,src,len(src)+14,int(opaque))==(st,enc)
  assert call(lib.encode_words,src,len(src)+14,int(opaque))==(st,enc)
+ assert call(lib.encode_auto,src,len(src)+14,int(opaque))==(st,enc)
  expected=bytes(v|192 for v in src) if opaque else src
  assert enc==reference_encode(expected)
  st,dec=call(lib.decode,enc,len(src));assert st==0 and dec==expected
