@@ -212,10 +212,14 @@ execution, flash, reset or benchmark. C3–C5 and RLE remain deferred.
 20. [x] C2-02: Assess published measurements and confounders; compare with our
     P02 evidence and propose the smallest discriminating diagnostic under
     existing P01/P02 ownership. Do not equate MP3 throughput with graphics FPS.
-21. [ ] C2-03: Record findings/provenance and verify documentation; commit,
+21. [x] C2-03: Record findings/provenance and verify documentation; commit,
     issue hardware voice with fresh receipt, preserve visible completion cue,
     then stop for review.
 
 C2 source findings: [report](RESEARCH-001/C2/README.md). Retain methodology,
 not unmodified harness: task-creation failure accounting defect and uncontrolled
 scheduling/placement confounders. No Extender fix or new measurement.
+
+C2 closeout: findings3bed03a, source hashes verified. Fresh hardware voice receipt
+verified; startup unchanged; returned to Legacy MOS and emitted completion
+banner without clearing it. Visual readback/human hearing pending. No push.
