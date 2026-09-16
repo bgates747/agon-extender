@@ -1,0 +1,11 @@
+{
+  "app_verified": true,
+  "boot_partition_nvs_written": false,
+  "build_id": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+  "hashes": {
+    "candidate.bin": "25d635a22c21429c66d1f4f6463d30b1f30934c386761f95260a7dbf15db89c7",
+    "baseline.bin": "e71fc56a7211e9f9889175b8c96954bcfc66d5501da827014ebf713a63cd75f4",
+    "partitions.bin": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+  },
+  "before_sha256": "02402b0ce5df9e79076c4eb0e4f468adb9a51bd1408cb09adbf1ce326e61856e"
+}

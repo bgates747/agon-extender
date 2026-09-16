@@ -1,0 +1,21 @@
+{
+  "nurples_commit": "2f0f0951ba7723a7992bdf00f4d990e4d5d6edbe",
+  "nurples_branch": "dev",
+  "rally_commit": "9e75196770ec14bf6826f27237f08c99176d6840",
+  "rally_existing_pacing": "main.cpp next=now+4; MOS vblank clock increments by2",
+  "files": {
+    "nurples.bin": {
+      "bytes": 36443,
+      "sha256": "e7850b78db8c3c5ae1a232836f58f68dcbd56af3066049be8ee335325909b3b0"
+    },
+    "nurples.symbols": {
+      "bytes": 48612,
+      "sha256": "2e359467f039970952c789a837451b7d03a69e3c8f70f295d078093acce1680b"
+    },
+    "rally.bin": {
+      "bytes": 171080,
+      "sha256": "4be88dd1c8efbb6f7cddbdce1b98ee8805572f47550cda5d8c0ef3207189395b"
+    }
+  },
+  "nurples_unrelated_dirty_artwork_preserved": true
+}
