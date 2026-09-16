@@ -5,6 +5,12 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Current game pacing work
+
+- [ ] **BENCH-002 — 30 fps Nurples/Rally human review**
+  - Details: [contract](docs/tasks/BENCH-002.md). Two vblanks per Nurples frame;
+    verify Rally30Hz, restore normal P4, narrow deployment, hardware voice.
+
 ## Accepted web-output contract
 
 512×384 web output is capped at30fps for normal fixtures. Native rendering may
