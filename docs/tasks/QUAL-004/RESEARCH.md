@@ -64,3 +64,21 @@ The earlier timing fixture's A=0 convention is specific to a pinned EMOS build;
 it is not part of stock MOS's documented void output API. Removing that check
 avoids a false test failure if the Mac MOS experiment changed incidental register
 returns. Full capture/protocol validation remains the output-success evidence.
+
+## First acquisition finding and bounded fixture remedy
+
+CAL, EMPTY, SHP20 and SHP23 pass complete-image comparison. BSP03_01 produces
+11600 differing pixels between two mainboard replays, confined to the checker
+background at x200..327/y112..207. Both serial records pass every row checksum.
+The source Stage.checker repeatedly loads the same TMP buffer then direct-draws
+it; subsequent loads clear/recreate it. Queued resource lifetime is therefore a
+candidate explanation, not yet a proved VDP defect or P4 discrepancy.
+
+Self-assigned test-only experiment: use the existing command-length parser to
+find top-level buffer clear operations, excluding opaque bitmap payload bytes.
+Supply small sidecar offset tables and make the fixture emit stock VDU23,0,CA
+before each clear. Original scene bytes remain unchanged and independently
+verified. Re-run BSP03_01 twice on mainboard before comparing P4. This is an
+explicit serialised correctness variant; it cannot establish correctness under
+unfenced mutable-resource reuse or be used as a performance improvement claim.
+No VDP source fix or missing API implementation is authorised by this remedy.
