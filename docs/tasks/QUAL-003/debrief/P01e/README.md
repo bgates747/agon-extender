@@ -10,9 +10,9 @@ No optimization or experimental push; Golem/MOS/mainboard VDP excluded.
 
 ## Frozen work contract
 
-1. [ ] E01: Check pinned SDK hook support; clear mainboard screen through admitted
+1. [x] E01: Check pinned SDK hook support; clear mainboard screen through admitted
    native CLI. Freeze task and implementation boundaries before coding.
-2. [ ] E02: Default-off probe: timestamp only snapshot outer native holds, record
+2. [x] E02: Default-off probe: timestamp only snapshot outer native holds, record
    bounded per-core scheduler switch rings, freeze at first >=8ms hold. Record
    task names/identities/priorities, holder and interval; retain explicit ring
    coverage/loss limits. No allocation or serial output in switch callbacks;
@@ -59,3 +59,16 @@ post-unlock aggregate, so preemption after unlock cannot inflate this hold.
 A rolling ring overwrites old history by design; reject causal interpretation
 if its retained interval does not cover the entire selected lock hold. Freeze
 at first long hold and stop collection safely before post-test dumping.
+
+## Implemented probe boundaries
+
+Snapshot-only outer hold timestamps end before unlock. Parser/draw acquisition
+histograms and the shared aggregate spinlock are absent. Hold count/sum/max
+continue through the whole marker window; scheduler rings freeze on the first
+hold>=8ms. Each core retains512switch-in/out records including copied16byte task
+names and effective priority. Static rings total28KiB; on/off controls reserve
+the same RAM. No allocation/logging/locks in the scheduler callbacks. Recording
+stops and in-flight callbacks drain before dumping. Refresh submission sequence
+is sampled at hold acquisition; it identifies pipeline progress, not a direct
+one-to-one association between snapshot and game frame. Host tests cover disabled
+recording, ring wrap, recursive holds, trigger freeze and rearm.

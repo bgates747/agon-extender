@@ -1,3 +1,7 @@
+#include "extender/diagnostics/owner_trace.hpp"
+#ifdef AGON_EXTENDER_OWNER_TRACE
+extern "C" IRAM_ATTR void agon_owner_switch(unsigned c,unsigned kind,void *task,const char *name,unsigned priority){agon_owner_trace::switched(c,kind,task,name,priority);}
+#endif
 #include "extender/diagnostics/lock_wake_trace.hpp"
 #include "extender/display/stock_p4_service.hpp"
 #include "extender/diagnostics/video_timing.hpp"
@@ -187,6 +191,9 @@ void StockP4Service::drawLoop() {
 }
 
 void StockP4Service::outputLoop() {
+#ifdef AGON_EXTENDER_OWNER_TRACE
+  agon_owner_trace::registerOutput();
+#endif
 #ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
   agon_lock_wake::registerWorker(2);
 #endif

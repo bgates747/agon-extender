@@ -4,6 +4,7 @@
 #pragma once
 #ifdef AGON_EXTENDER_REFRESH_TRACE
 #include "lock_wake_trace.hpp"
+#include "owner_trace.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -65,6 +66,9 @@ inline void enqueue(){
  agon_native_wait::boundary(); // UART driver query stays outside trace critical section.
 #endif
  Guard guard;recorder.enqueue(now());
+#ifdef AGON_EXTENDER_OWNER_TRACE
+ agon_owner_trace::refresh_sequence.store(recorder.submitted,std::memory_order_relaxed);
+#endif
 }
 inline void complete(){Guard guard;recorder.complete(now());}
 // Called solely by the parser, after all marker bytes have been consumed.
@@ -91,6 +95,9 @@ inline void marker(const uint8_t *data, unsigned size) {
 #endif
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   if(began)agon_output_isolation::begin(data+8);
+#ifdef AGON_EXTENDER_OWNER_TRACE
+  if(began)agon_owner_trace::begin(data+8);
+#endif
 #ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
   if(began)agon_lock_wake::begin(data+8);
 #endif
@@ -107,7 +114,13 @@ inline void marker(const uint8_t *data, unsigned size) {
 #ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
  agon_lock_wake::active=false; // stop admission at the terminal marker
 #endif
+#ifdef AGON_EXTENDER_OWNER_TRACE
+ agon_owner_trace::enabled=false;agon_owner_trace::recording=false;
+#endif
  agon_output_isolation::stop(data+8);
+#ifdef AGON_EXTENDER_OWNER_TRACE
+ agon_owner_trace::stop(data+8);
+#endif
 #ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
  agon_lock_wake::stop(data+8);
 #endif

@@ -8,6 +8,7 @@
 #include <condition_variable>
 #include <cstdint>
 #include <mutex>
+#include "../diagnostics/owner_trace.hpp"
 #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
 #include "../diagnostics/native_wait_trace.hpp"
 #endif
@@ -25,7 +26,20 @@ namespace agon::extender::display {
 std::recursive_mutex &stockNativeMutex();
 std::recursive_mutex &stockForegroundMutex();
 std::uint32_t &stockPaletteRevision();  // accessed only under the native mutex
-#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+#if defined(AGON_EXTENDER_OWNER_TRACE)
+class StockNativeGuard {
+ std::recursive_mutex &mutex_;
+ agon_owner_trace::Ticket ticket_;
+ public:
+ explicit StockNativeGuard(std::recursive_mutex &mutex):mutex_(mutex){
+  if(&mutex==&stockNativeMutex())ticket_.enter();
+  mutex_.lock();ticket_.acquired();
+ }
+ ~StockNativeGuard(){ticket_.beforeRelease();mutex_.unlock();ticket_.afterRelease();}
+ StockNativeGuard(const StockNativeGuard&)=delete;
+ StockNativeGuard& operator=(const StockNativeGuard&)=delete;
+};
+#elif defined(AGON_EXTENDER_LOCK_WAKE_TRACE)
 class StockNativeGuard {
  std::recursive_mutex &mutex_;
  agon_lock_wake::Ticket ticket_;
