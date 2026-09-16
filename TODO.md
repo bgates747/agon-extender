@@ -312,7 +312,7 @@ deterministic Nurples and separate typing measurements are deferred.
 
 Current Author goal: [Nurples hardware parity with active web streaming](docs/tasks/QUAL-003/nurples-parity/PLAN.md). This takes priority over unrelated audit continuations; existing gates remain recorded.
 
-- [ ] **BENCH-003** — Measure paced repair Nurples application versus web cadence; see [contract](docs/tasks/BENCH-003.md).
+- [ ] **BENCH-003** — Paused by Author: first Legacy acquisition timed out; no FPS conclusion. Do not resume automatically. See [record](docs/tasks/BENCH-003.md).
 
 ## Current correctness qualification
 
