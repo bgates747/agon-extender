@@ -274,3 +274,17 @@ production. Renderer has an additional limiter; no firmware changes/tests.
 C4 closed: findings44899f3, source hashes verified. Fresh hardware audio receipt
 verified; startup unchanged, Legacy MOS completion banner emitted. Human hearing/
 visual readback pending. No build/test/flash or push; paused for review.
+
+### C5 — authorized Vectrex source review
+
+Author approved medium-effort source-only investigation of final initial
+candidate. Clear mainboard at start; voice/banner at completion, then stop.
+No builds, firmware execution, flash, reset, benchmark or ROM download.
+RLE investigation remains next for review, not automatically implemented.
+
+28. [ ] C5-01: Trace pinned frame slots, producer/renderer ownership, synchronization,
+    sparse redraw and task/memory configuration.
+29. [ ] C5-02: Assess completion/drop counters and limits; compare with Extender,
+    record disposition and consolidate the five candidates' useful contributions.
+30. [ ] C5-03: Verify documentation/provenance, commit and hardware voice with
+    fresh receipt and visible completion cue; stop for Author review.
