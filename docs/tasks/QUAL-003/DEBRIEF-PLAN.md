@@ -454,3 +454,6 @@ hardware-notified chunks. [P01f](debrief/P01f/README.md) owns the substeps.
 Chunk B completed using archived r45: all three controls pass, streaming timing
 tail reproduced with repeat variability. r43/startup restored and voice/banner
 verified. S/A remain unexecuted at the discrete-work review stop. See P01f tables.
+
+P01f S authorized after B review; see P01f/S/README.md for frozen two-row
+priority19 experiment and same-image repeated controls. Stop/notify after S.

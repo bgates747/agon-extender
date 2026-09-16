@@ -87,7 +87,9 @@ locks/tasks and identify the original timing/ownership guarantee for each.
    exit to Legacy MOS, record results and commits, hardware voice plus visible
    completion banner. Stop for review before S.
 
-## S — one bounded scheduling experiment (next chunk)
+## S — one bounded scheduling experiment (current chunk)
+
+Author authorized proceeding after B. [Frozen S details](S/README.md) govern this chunk.
 
 1. [ ] S01: Using B, freeze a single priority intervention and comparable control.
    Inspect ESP-IDF priority inheritance and core placement before choosing scope;
