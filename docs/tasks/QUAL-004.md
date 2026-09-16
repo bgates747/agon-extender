@@ -109,3 +109,11 @@ Coverage and explicit **not implemented** entries: [COVERAGE.md](QUAL-004/COVERA
 Checkboxes indicate completion of the bounded qualification procedure, not blanket
 API acceptance. Second-pass implementation and unresolved investigations are not
 started by closing this run.
+
+## Author review disposition — 2026-09-16
+
+Author describes this first pass as overwhelmingly successful. Keep QUAL-004
+open pending review of the exceptions; completion of the bounded execution goal
+is not closure or blanket graphics acceptance. Review the three mainboard
+scanout crashes, two P4 transition restarts, original unfenced instability and
+remaining coverage before disposition. Missing implementations stay deferred.

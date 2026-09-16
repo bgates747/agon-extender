@@ -44,8 +44,8 @@ QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/
 stop:48KiB passes;96KiB fails terminal query15 with35.981native completions/s,
 55.710ms p95 and23.817Mbit/s delivered payload. [Results](docs/tasks/QUAL-003/debrief/P01g/RESULTS.md).
 Larger/repeated/browser rungs stopped. Exact r43/startup restored.
-[P01h AGM/SRLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) is frozen and queued
-for review; no compression work started. Golem excluded; no experimental push.
+[P01h AGM/SRLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) now contains the RLE2-first deployment plan, ready for review;
+no compression implementation started. Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 
@@ -317,6 +317,7 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
 ## Current correctness qualification
 
 - [ ] **QUAL-004 — Whole-image graphics correctness on physical VDP and P4**
-  - First pass complete; awaiting Author review.66 exact static scene pairs;
+  - Overwhelmingly successful first pass; remains open for exception review.
+    66 exact static scene pairs;
     scanout/restart findings and eight deferred controls retained. Bench restored.
     Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).

@@ -1,47 +1,107 @@
-# P01h — AGM SRLE2 compression and contention experiment
+# P01h — RLE2 web-frame deployment plan
 
 ## Executive summary
 
-Author-requested second experiment, frozen on2026-09-16 and queued after review
-of P01g. Do not implement or flash this during the ladder. Investigate the Author's
-AGM SRLE2 combination of bounded RGB222 RLE and subsequent “szip” entropy coding.
-Its exact format, implementation and cost must be established from agon-utils,
-not inferred from names or confused with an unrelated SZIP library.
+Author requested this plan on2026-09-16 after QUAL-004's overwhelmingly successful
+static-image comparison. Reuse this existing compression task rather than create
+a competing queue. **Planning complete; implementation/deployment not started.**
+Deploy the Author's RLE2 first as an optional, negotiated, lossless full-frame P4
+web transport. Preserve raw output and unchanged graphics semantics. Evaluate
+SRLE2 (RLE2 followed by szip) separately after measuring the simpler codec.
+The accepted target remains512×384 at30fps; no new60fps promise.
 
-## Frozen sequence
+## Naming and source observations
 
-1. [ ] H01: Locate and pin the AGM/SRLE2 encoder, decoder and container contracts
-   in agon-utils and relevant Jukebox sources. Record authorship, licensing,
-   format/version, supported palette, keyframe/delta rules, worst-case expansion,
-   memory ownership and scratch requirements. Source review before code reuse.
-2. [ ] H02: Reproduce lossless round trips on retained full-frame captures from
-   representative Nurples/Rally scenes plus changing/noise and all-solid inputs.
-   Compare raw, RLE-only, and exact SRLE2; report payload/header bytes and ratios.
-   Keep reference/copyright material ignored; Golem remains excluded.
-3. [ ] H03: Propose a bounded P4 timing experiment informed by G's threshold.
-   Measure encode-only cost independently from send-only and combined paths,
-   using preallocated bounded buffers and no graphics lock during encoding of
-   already immutable snapshots. Pin frame inputs and decoder behavior.
-4. [ ] H04: After review authorizes hardware execution, compare rendering cadence,
-   encode CPU/wall cost, memory use, transmitted bytes, send time and receiver
-   decode/presentation latency; include incompressible fallback and overload.
-   Compression may trade network contention for CPU/cache contention; prove
-   which changes, do not assume processor-heavy work is harmless.
-5. [ ] H05: Document results, restore accepted firmware/startup, commit and notify.
-   No promotion based solely on compressed size or favorable average throughput.
+1. `agon-utils/utils/rle/rle2.h` names the format RLE2 and describes RGBA2222
+   input. `rle2.c` writes `Cmpr` plus size and `RLE2` version1.0:14 header bytes.
+   Singleton tokens use spare high bits; runs3–130 use two bytes; a run of two
+   uses two singleton tokens. Payload is bounded by input length; the complete
+   file is bounded by input length plus14, not input length alone.
+2. `agon-utils/tests/test_images_compression.py::compress_with_srle2` invokes
+   `rle2 -c` followed by `szip -b41o3`. SRLE2 is that combined local format,
+   not another name for the RLE-only codec or an assumed generic SZIP library.
+3. The encoder comment and implementation need careful reconciliation: singleton
+   tokens distinguish fully opaque from non-opaque alpha, whereas run literals
+   retain the original byte. Do not claim arbitrary four-level alpha round trips.
+   Composed visible framebuffer pixels are opaque; explicitly map the captured
+   RGB222 colour layout to opaque RGBA2222 and back. Do not reinterpret raw
+   framebuffer palette indices as RGBA without proving the mapping.
+4. Existing allocation-returning encode/decode functions are reference contracts,
+   not permission to allocate/reallocate every frame in the P4 hot path. Preserve
+   the Author's attribution and check licensing before copying code.
 
-The longer-term goal remains performant full-frame one-byte-per-pixel transport
-and 256-colour support. RGB222 spare-bit RLE is not silently compatible with a
-256-colour alphabet. Palette/mode changes, reconnects and periodic recovery need
-explicit full-frame handling if deltas are tested. Preserve Author's original
-bounded-RLE attribution; distinguish zero-delta/no-change from palette index0.
+## Itemized execution plan
 
-This is the next experiment, not authorization to skip G review or broaden to
-JPEG/H.264, sparse game-specific redraw, redesign or Golem.
+1. [ ] H01 — Pin source commits/file hashes, licensing and exact wire semantics.
+   Inspect encoder, decoder and AGM/Jukebox use, including malformed-input
+   behaviour. Produce golden vectors for all64 colours, runs1/2/3/130/131,
+   alternating pixels and boundary lengths. Record source defects without
+   silently modifying agon-utils or unrelated port logic.
+2. [ ] H02 — Host round-trip qualification on retained QUAL-004 images plus
+   deterministic dense scrolling, sprite-heavy, solid and noise patterns.
+   Require byte-exact decoded canonical images. Report raw bytes, payload bytes,
+   total framed bytes and compression ratios separately. Validate truncation,
+   oversized runs, dimensions, lengths and decoder bounds. Retain reproducible
+   seeds and hashes; do not add third-party reference media to tracked files.
+3. [ ] H03 — Freeze a versioned web protocol extension before implementation.
+   P4 and browser negotiate RLE2 capability; old clients retain existing raw
+   frames. Define codec ID, dimensions, stride, colour interpretation, frame
+   sequence and exact decoded length. Decide explicitly whether the14-byte file
+   header is retained or omitted inside the web envelope; never label a variant
+   identical to the file format. Reject malformed messages; mode/palette changes
+   and reconnects invalidate prior state. Raw fallback when compression offers
+   no total-byte saving. Preserve the raw path for256-colour modes.
+4. [ ] H04 — Implement bounded encoder and browser decoder in the task silo first.
+   Encode an immutable snapshot after releasing graphics locks. Preallocate
+   capacity from validated mode dimensions, cap queued work and retain existing
+   frame ownership until the sender is done. Do not add per-frame malloc/realloc,
+   hold graphics locks while encoding/sending, or alter stock rendering commands.
+   Instrument snapshot, encode, send and browser decode separately with bounded
+   counters. Current raw receiver remains a compatibility control.
+5. [ ] H05 — Stage and verify a reversible P4 candidate and matching web client.
+   Preserve actual installed image/config/startup and record rollback commands.
+   Confirm bench ownership and serial-reset consequences. No MOS/mainboard VDP
+   changes required. Use /test/nurples and /test/arcade/rally, never production
+   replacements; use nurples-repair as the reference. No Golem. Clear mainboard
+   status when starting requested hardware-notification work.
+6. [ ] H06 — Matched raw versus RLE2 hardware trials with identical scene inputs,
+   rendering pace and browser connection. Cap frame sends at30fps. Include idle,
+   dense full-frame changes, steady scrolling, busy sprites and incompressible
+   data; no dependence on Nurples bezel or game-specific sparse updates. Record
+   host wired/Wi-Fi state. Capture decoded images for exact comparison, frame
+   sequence/drop counts, achieved cadence and p50/p95/p99 frame intervals.
+   Report snapshot/encode/send/decode ms separately, wire bytes/Mbit/s, heap
+   low-water, buffer use and rendering slowdown versus output-disabled baseline.
+   Use bounded repeat runs; do not infer rendering FPS from network delivery.
+7. [ ] H07 — Recovery and compatibility tests: connect/disconnect/takeover, mode
+   and palette changes, raw fallback, slow consumer, malformed payloads and
+   bounded memory under overload. Reproduce rather than hide QUAL-004's Copper
+   restart exception; stop if it invalidates the trial. No unrelated renderer
+   fix under this contract. Verify old/raw clients and supported colour modes.
+8. [ ] H08 — Report acceptance evidence and deployment decision. Require exact
+   images, no new resets/protocol errors, bounded memory and no material native
+   rendering regression; quantify headroom instead of promising universal30fps
+   on every network. Restore baseline if candidate is not ready. Author visual
+   review precedes default enablement/promotion; no experimental remote push.
+   Commit discrete owned changes and hardware voice-notify for review.
 
-## Accepted cadence amendment — 2026-09-16
+## Deferred follow-on experiments — not part of initial deployment
 
-Normal output controls in this experiment must now obey the30fps512×384 web
-ceiling (ADR-0020). Compression is evaluated for headroom/cost within that
-contract;60fps is not a required acceptance gate. Higher-rate stress work needs
-explicit authorization. Native rendering timing remains independent.
+1. Delta RLE2 needs explicit arithmetic/colour domain, prior-frame identity,
+   zero-delta semantics, reconnect/mode/palette keyframes, periodic recovery and
+   resynchronisation after a missed frame. Zero difference means unchanged, not
+   transparent black in the visible framebuffer. First establish full-frame RLE2.
+2. SRLE2 adds the exact AGM entropy stage only after source/license/memory/cost
+   review. Compare raw, RLE2 and SRLE2 encode CPU/wall time and wire savings;
+   do not assume additional CPU work reduces cache/scheduler contention.
+3.256-colour one-byte-per-pixel output remains a long-term goal. Spare-bit64-colour
+   coding cannot silently encode a256-colour alphabet. No lossy JPEG/H.264 or
+   game-specific redraw workaround is introduced by this plan.
+
+## Authority and status
+
+This revision refines the already frozen P01h compression experiment following
+explicit Author request for a deployment plan. It authorizes documentation and
+its hardware completion cue now, not automatic firmware implementation this turn.
+QUAL-004 remains open for exception review; its successful static pixels are
+reference evidence, not clearance of its unresolved transition failures.
