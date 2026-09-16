@@ -6,3 +6,5 @@ for(let c=0;c<64;c++){let a=frame([0,c|192]);let b=new Uint8Array(unpackRLE2Fram
 for(const a of [frame([0]),frame([127,192]),frame([0,192,192]),frame([128,128,128]),frame([0,0])])assert.throws(()=>unpackRLE2Frame(a.buffer));
 let a=frame([0,192]);for(let n=4;n<a.length;n++)assert.throws(()=>unpackRLE2Frame(a.slice(0,n).buffer));
 console.log('64 colours, malformed inputs and every truncated message: pass');
+// Validate retained physical compressed frames using the actual browser decoder.
+if(process.argv[2])for(const path of fs.readdirSync(process.argv[2]).filter(x=>x.endsWith('.frame'))){const file=fs.readFileSync(process.argv[2]+'/'+path);const input=file.buffer.slice(file.byteOffset,file.byteOffset+file.byteLength);const result=unpackRLE2Frame(input);assert.equal(Buffer.from(result).subarray(0,4).toString(),'EVF1');}
