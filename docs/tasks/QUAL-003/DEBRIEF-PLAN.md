@@ -457,3 +457,7 @@ verified. S/A remain unexecuted at the discrete-work review stop. See P01f table
 
 P01f S authorized after B review; see P01f/S/README.md for frozen two-row
 priority19 experiment and same-image repeated controls. Stop/notify after S.
+
+P01f S review stop: first treatment terminal-query15 and degraded diagnostic
+timing; remaining repeats stopped, no adoption. r43/startup restored/verified,
+voice/banner delivered. Next focused audit A; see S/TABLES.md.

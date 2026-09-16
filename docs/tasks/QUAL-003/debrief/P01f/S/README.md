@@ -2,13 +2,18 @@
 
 ## Executive summary
 
-Author authorized proceeding after B. Test only a temporary snapshot-task priority
-ceiling around each existing two-row prepareRows call, from base2 to19 (above
-TCP/IP18, below timer22); restore2 immediately after native exclusion ends, before
-normalizing pixels or sending. Interrupts stay enabled. Same experimental binary
-selects control/treatment using nonce byte4; no scheduler recorder or trace rings.
-This is an agent-selected experimental detail under the authorized bounded
-priority experiment, not an approved production scheduling policy.
+**The priority19 treatment failed and is not suitable for adoption.** Control
+passed at60.046refresh/s with21.345ms p95; treatment diagnostic timings fell to
+39.971/s with53.909ms p95 and its terminal pixel query failed15. The harness
+stopped before the remaining repeats. r43/startup restored and verified; standard
+hardware voice and completion banner delivered. Next: focused ownership audit A,
+not another unmeasured priority adjustment. See [results](TABLES.md).
+
+The tested intervention raised only snapshot row-call priority from2 to19 and
+restored2 after native exclusion, before normalization. Interrupts, renderer,
+other task priorities/affinities and full-frame browser payload were unchanged.
+Same binary selected control/treatment; this remains default-off experimental
+code, not a production scheduling policy.
 
 ## S review stop — failed treatment
 
@@ -38,7 +43,7 @@ and inheritance audit A before another scheduling intervention.
    time; require both directions rather than select favorable average. Same
    image control must retain approximately60refresh/s with streaming tail;
    if not, stop as changed baseline. No root-cause/parity claim from average alone.
-6. [ ] S06: Restore/readback r43/startup, verify SD/input, leave Legacy MOS;
+6. [x] S06: Restore/readback r43/startup, verify SD/input, leave Legacy MOS;
    commit results, standard hardware voice and visible banner. Stop before A.
 
 ## Source précis and exact scope
@@ -96,3 +101,12 @@ is tracked in vdp/video/extender/diagnostics/row_priority.hpp. No owner/lock-wak
 flags or scheduler hooks in candidate. One image serves all four controls;
 manifest retains exact source, SDK tasks and runner hashes. No production build
 flags or SDK installation were modified.
+
+## Closeout
+
+r43 flash readback/boot identity verified, original autoexec restored/read back,
+SD and neutral keyboard checked and SD exited to Legacy MOS. Accepted British
+voice produced fresh stage6/audio-pass receipt; visible failure/review banner
+sent. Human hearing unconfirmed. No active capture/observer/controller. Evidence
+hashes and both sanitized native traces independently rechecked. Granular local
+commits; no push. S04 remains stopped, not falsely checked off. Audit A not begun.

@@ -2,12 +2,11 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
-Author authorized [P01f](QUAL-003/debrief/P01f/README.md): recover a lower-overhead
-baseline, one bounded scheduling intervention, then focused FabGL/port ownership
-audit. B completed: all three unchanged-r45 controls passed, with near60.05/s
-refresh averages but streaming p95 24.990/29.291ms versus output-off 17.052ms.
-Representative baseline recovered, no fix yet. Original r43/startup restored;
-hardware voice/banner delivered. S/A remain unexecuted at this chunk review stop.
+[P01f S](QUAL-003/debrief/P01f/S/README.md) stopped at the first failed treatment:
+priority19 diagnostic39.971refresh/s,p95 53.909ms and terminal pixel-query15;
+same-image control passed60.046/s,p95 21.345ms. Baseline chunk B had passed.
+No adoption; remaining repeats unexecuted. r43/startup restored and hardware
+voice/banner delivered. Next recommend authorized focused audit A; not begun.
 
 ## Prior diagnostic finding
 

@@ -15,12 +15,12 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md) is authorized:
-recover a lower-overhead baseline, test one scheduling intervention, then audit
-FabGL/port ownership and handoffs. Chunk B passed all three archived r45 controls: streaming p95 24.990/29.291ms
-versus output-off 17.052ms, averages near60.05/s. Original r43/startup restored;
-hardware voice/banner delivered. At discrete-work review stop before S. P01e's failed benchmark remains
-preserved. Golem excluded, chunking fallback only, no experimental push.
+[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md): B passed; S stopped
+at first priority19 treatment failure (terminal query15, diagnostic39.971refresh/s
+and53.909ms p95). Same-image control passed60.046/s,21.345ms p95. Remaining
+repeats not run, intervention not adopted. r43/startup restored and verified;
+hardware voice/banner delivered. Focused ownership audit A is next, unstarted.
+Golem excluded, chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

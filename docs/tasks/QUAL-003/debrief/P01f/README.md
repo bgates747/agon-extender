@@ -2,12 +2,15 @@
 
 ## Executive summary
 
-Author authorized this continuation on 2026-09-16: freeze the contract, then
-execute in discrete chunks with hardware voice notification at each review stop.
-First recover a representative lower-overhead baseline; then test one bounded
-scheduling change; use the evidence to audit the port's ownership and handoffs
-against FabGL. This is experimental investigation, not authorization to rewrite
-upstream rendering, remove FreeRTOS or promote a firmware release.
+**S stopped at a failed treatment; baseline restored.** The bounded priority19
+experiment worsened diagnostic timings to39.971refresh/s,53.909ms p95 and failed
+its terminal pixel query. Same-image control passed60.046/s,21.345ms p95. No
+adoption or replicated causal claim. Standard hardware voice and review banner
+delivered after verified r43/startup restoration. [S report](S/README.md).
+
+Author authorized baseline recovery, one scheduling experiment and focused
+ownership audit in discrete notified chunks. B completed; S reached its failure
+stop; A is the next recommended work and has not begun. Golem remains excluded.
 
 ## B findings — 2026-09-16
 
