@@ -26,5 +26,5 @@ per-frame transport. Hardware results remain pending until the paired runs finis
    and vblank timeout flags invalidate a timing control.
 7. Full on-card read-only directory scan completed15,515 entries, status0. One
    obsolete playable installation exists at `/nurples`; source-only historical
-   `/mystuff/agon-testing/nurples` is preserved. Current repair artwork deployment
-   and independent test copies are verified before destructive cleanup.
+   `/mystuff/agon-testing/nurples` is preserved. Production repair files are verified before destructive cleanup; independent
+   test copies receive complete readback after the MOS copy batch.
