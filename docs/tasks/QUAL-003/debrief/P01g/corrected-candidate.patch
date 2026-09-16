@@ -1,0 +1,131 @@
+--- a/vdp/video/extender/diagnostics/ladder.hpp
++++ b/vdp/video/extender/diagnostics/ladder.hpp
+@@ -0,0 +1,30 @@
++// P01g diagnostic only. No production flag. Fixed payload and bounded admission.
++#pragma once
++#include <atomic>
++#include <cstdint>
++#include <cstring>
++#include <cstdio>
++#include <esp_heap_caps.h>
++#include <esp_timer.h>
++namespace agon_ladder {
++inline std::atomic<bool> enabled{false};
++inline uint8_t *pattern{}; inline uint32_t crcs[17]{};
++inline uint8_t nonce[8]{}; inline uint32_t length{},sequence{};
++inline uint64_t last_bucket=~uint64_t(0);
++inline bool prepare(const uint8_t *n) {
++ if(!pattern) {
++  pattern=(uint8_t*)heap_caps_malloc(196608,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
++  if(!pattern)return false;
++  uint32_t c=~0u;
++  for(unsigned i=0;i<196608;++i){pattern[i]=i&255;c^=pattern[i];for(unsigned k=0;k<8;++k)c=(c>>1)^(0xedb88320u&uint32_t(-int(c&1)));if((i+1)%12288==0)crcs[(i+1)/12288]=~c;}
++ }
++ // Preparation is outside the fixture observation window; no old send pending.
++ std::memcpy(nonce,n,8);length=unsigned(n[5])*12288;sequence=0;last_bucket=~uint64_t(0);
++ enabled.store(n[0]=='P'&&n[1]=='0'&&n[2]=='2'&&n[4]==1&&n[5]<=16);
++ return true;
++}
++inline bool admit(){if(!enabled.load())return true;auto bucket=uint64_t(esp_timer_get_time())/16667;if(bucket==last_bucket)return false;last_bucket=bucket;return true;}
++inline void put(uint8_t*p,uint32_t n){for(unsigned i=0;i<4;++i)p[i]=uint8_t(n>>(8*i));}
++inline void header(uint8_t*p){std::memcpy(p,"LDR1",4);put(p+4,1);std::memcpy(p+8,nonce,8);put(p+16,++sequence);put(p+20,length);put(p+24,uint32_t(esp_timer_get_time()));put(p+28,crcs[length/12288]);}
++inline void stop(){enabled.store(false);}
++}
+--- a/vdp/video/extender/diagnostics/refresh_trace.hpp
++++ b/vdp/video/extender/diagnostics/refresh_trace.hpp
+@@ -1,3 +1,4 @@
++#include "ladder.hpp"
+ // QUAL-003/N04w diagnostic only; disabled in normal builds. Stock buffer WRITE
+ // to65535 still consumes/discards its bytes. Exact markers only arm observation.
+ // No per-frame UART, allocation, logging, scheduling or drawing changes.
+@@ -82,6 +83,7 @@
+ #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+   agon_native_wait::prepare(); // outside active observation, explicitly PSRAM
+ #endif
++  if(!agon_ladder::prepare(data+8))return;
+   bool began;{Guard guard;began=recorder.begin(data+8,storage);}
+ #ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+   if(began)agon_native_wait::arm();
+--- a/vdp/video/extender/diagnostics/output_isolation.hpp
++++ b/vdp/video/extender/diagnostics/output_isolation.hpp
+@@ -1,6 +1,7 @@
+ // QUAL-003 P02 diagnostic only: existing nonce selects a bounded output control.
+ // No production flag, VDU extension, renderer change or altered browser credit.
+ #pragma once
++#include "ladder.hpp"
+ #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+ #include <array>
+ #include <atomic>
+@@ -65,6 +66,7 @@
+  std::printf(" %u %u %u\n",unsigned(duration),pending,unsigned(failed));
+  for(unsigned i=0;i<saved.size();++i){auto t=saved[i];std::printf("NPOUT row %u %u %u %u %u\n",i,t.calls,t.units,t.elapsed,t.failures);}
+  std::printf("NPOUT end\n");
++ agon_ladder::stop(); // P01g: join old sends, disarm before normal EVF resumes.
+  mode.store(Mode::Normal);
+ }
+ // Producer-owned slots only. Real composition invalidates cached content.
+--- a/vdp/video/extender/display/presentation_snapshot_pool.cpp
++++ b/vdp/video/extender/display/presentation_snapshot_pool.cpp
+@@ -1,3 +1,4 @@
++#include "extender/diagnostics/ladder.hpp"
+ // See presentation_snapshot_pool.hpp. The atomic guard protects only bounded
+ // state transitions; the producer never spins and the network owner never
+ // retains the guard while handling or transmitting pixel bytes.
+@@ -206,7 +207,7 @@
+   // full surfaces with no browser demand. That starved HTTP startup in r05.
+   // Consumer demand admits one snapshot at a logical boundary; no fixed fps
+   // cap or network wait is introduced into logical VDP work.
+-  if (on_demand_ && !requested_.load(std::memory_order_acquire))
++  if (on_demand_ && !agon_ladder::enabled.load() && !requested_.load(std::memory_order_acquire))
+     return SnapshotBeginResult::NotRequested;
+   if (has_publication_time_ &&
+       boundary_time_us - last_publication_time_us_ <
+--- a/vdp/video/extender/network/wired_network_service.cpp
++++ b/vdp/video/extender/network/wired_network_service.cpp
+@@ -1,3 +1,4 @@
++#include "extender/diagnostics/ladder.hpp"
+ #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+ #include "extender/diagnostics/output_isolation.hpp"
+ #endif
+@@ -637,6 +638,7 @@
+ #endif
+   std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
+   if (video_send_queued_) return;
++  if (!agon_ladder::admit()) return;
+   auto const prepared = video_.tryPrepare(provider_);
+   if (prepared == VideoPrepareResult::NoCredit ||
+       prepared == VideoPrepareResult::NoNewMessage ||
+@@ -701,6 +703,19 @@
+   agon_output_isolation::Scope isolatedSend(agon_output_isolation::Phase::Send);
+ #endif
+   esp_err_t result = ESP_OK;
++  std::size_t transmitted = view.total_bytes;
++  if (agon_ladder::enabled.load()) {
++    uint8_t header[32]; agon_ladder::header(header);
++    transmitted = 32 + agon_ladder::length;
++    for(unsigned i=0;i<2;++i) {
++      httpd_ws_frame_t frame{};frame.fragmented=true;frame.final=i==1;
++      frame.type=i==0?HTTPD_WS_TYPE_BINARY:HTTPD_WS_TYPE_CONTINUE;
++      frame.payload=i==0?header:agon_ladder::pattern;
++      frame.len=i==0?32:agon_ladder::length;
++      result=httpd_ws_send_frame_async(server,socket,&frame);
++      if(result!=ESP_OK)break;
++    }
++  } else {
+   for (std::size_t index = 0; index < view.segment_count; ++index) {
+     httpd_ws_frame_t frame{};
+     frame.fragmented = view.segment_count > 1;
+@@ -712,9 +727,11 @@
+     if (result != ESP_OK) break;
+   }
+ 
+-  timing.finish(result == ESP_OK ? view.total_bytes : 0);
++  }
++
++  timing.finish(result == ESP_OK ? transmitted : 0);
+ #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+-  isolatedSend.finish(result == ESP_OK ? view.total_bytes : 0, result == ESP_OK);
++  isolatedSend.finish(result == ESP_OK ? transmitted : 0, result == ESP_OK);
+ #endif
+   if (result == ESP_OK) {
+     video_.complete(socket, OpaqueReleaseDisposition::Sent);
