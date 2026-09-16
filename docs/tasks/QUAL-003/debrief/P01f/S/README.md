@@ -12,7 +12,7 @@ priority experiment, not an approved production scheduling policy.
 
 ## Frozen execution contract
 
-1. [ ] S01: Freeze source précis/intervention and clear hardware screen; review
+1. [x] S01: Freeze source précis/intervention and clear hardware screen; review
    RAII early-return/nesting restoration and default-off build boundary.
 2. [ ] S02: Implement default-off scope in project adapter, host-check, commit;
    archive r45 source and overlay only this change. Select experimental r48
@@ -69,3 +69,9 @@ layout constant but cannot cancel the cost of RTOS priority calls. If an early
 validity gate fails, save diagnostic records, stop and restore instead of
 claiming improvement from surviving counters. No P01e heavy probes in this pass.
 No full architecture audit, new game tests or production promotion in this chunk.
+
+S01 source check: priority guard surrounds prepareRows, outside native locks;
+recursive inner native calls unwind before restoration. Host tests cover disabled
+path, nested ceiling, early return and exception unwinding (firmware does not
+require exceptions). No per-row diagnostic counters/timestamps added. The
+post-window NPPRIO record verifies selector; it is not a measured CPU trace.

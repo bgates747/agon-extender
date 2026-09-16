@@ -1,3 +1,4 @@
+#include "extender/diagnostics/row_priority.hpp"
 #include "extender/diagnostics/owner_trace.hpp"
 #ifdef AGON_EXTENDER_OWNER_TRACE
 extern "C" IRAM_ATTR void agon_owner_switch(unsigned c,unsigned kind,void *task,const char *name,unsigned priority){agon_owner_trace::switched(c,kind,task,name,priority);}
@@ -254,11 +255,18 @@ void StockP4Service::publish() {
   for (std::size_t y = 0; y < view.height; y += rowsPerBatch) {
     if (stopping_.load(std::memory_order_acquire)) { complete = false; break; }
     const unsigned count = view.height-y < rowsPerBatch ? view.height-y : rowsPerBatch;
+    {
+#ifdef AGON_EXTENDER_ROW_PRIORITY
+    // P01f S: raise before acquisition; restore only after prepareRows releases
+    // native exclusion, before normalization. SDK inheritance stays intact.
+    agon_row_priority::Scope priority(agon_row_priority::enabled.load());
+#endif
 #if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
     controller_->prepareRows(y, count, signal, kPresentationSnapshotMaximumWidth);
 #else
     controller_->prepareRow(y, signal);
 #endif
+    }
     // Normalization remains outside native exclusion, in exact row order.
     for (unsigned i=0;i<count;++i)
       StockScanlineController<fabgl::VGA2Controller>::normalizeRow(

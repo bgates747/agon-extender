@@ -1,3 +1,4 @@
+#include "row_priority.hpp"
 // QUAL-003/N04w diagnostic only; disabled in normal builds. Stock buffer WRITE
 // to65535 still consumes/discards its bytes. Exact markers only arm observation.
 // No per-frame UART, allocation, logging, scheduling or drawing changes.
@@ -95,6 +96,9 @@ inline void marker(const uint8_t *data, unsigned size) {
 #endif
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   if(began)agon_output_isolation::begin(data+8);
+#ifdef AGON_EXTENDER_ROW_PRIORITY
+  if(began)agon_row_priority::begin(data+8);
+#endif
 #ifdef AGON_EXTENDER_OWNER_TRACE
   if(began)agon_owner_trace::begin(data+8);
 #endif
@@ -118,6 +122,9 @@ inline void marker(const uint8_t *data, unsigned size) {
  agon_owner_trace::enabled=false;agon_owner_trace::recording=false;
 #endif
  agon_output_isolation::stop(data+8);
+#ifdef AGON_EXTENDER_ROW_PRIORITY
+ agon_row_priority::stop(data+8);
+#endif
 #ifdef AGON_EXTENDER_OWNER_TRACE
  agon_owner_trace::stop(data+8);
 #endif
