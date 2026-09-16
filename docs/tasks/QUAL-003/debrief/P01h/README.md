@@ -38,3 +38,10 @@ bounded-RLE attribution; distinguish zero-delta/no-change from palette index0.
 
 This is the next experiment, not authorization to skip G review or broaden to
 JPEG/H.264, sparse game-specific redraw, redesign or Golem.
+
+## Accepted cadence amendment — 2026-09-16
+
+Normal output controls in this experiment must now obey the30fps512×384 web
+ceiling (ADR-0020). Compression is evaluated for headroom/cost within that
+contract;60fps is not a required acceptance gate. Higher-rate stress work needs
+explicit authorization. Native rendering timing remains independent.

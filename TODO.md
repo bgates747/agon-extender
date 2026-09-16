@@ -5,6 +5,14 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Accepted web-output contract
+
+512×384 web output is capped at30fps for normal fixtures. Native rendering may
+remain60Hz. QUAL-003 P06e-30 owns pacing/admission implementation and production
+qualification; higher-rate stress work needs explicit authorization. See
+[ADR-0020](docs/decisions/ADR-0020-web-output-30fps.md) and
+[work plan](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
+
 ## Current Author-directed research
 
 - [ ] **RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment**

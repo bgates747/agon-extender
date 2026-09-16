@@ -25,7 +25,7 @@ interpretation belongs in RESULTS.md when completed.
    and verified baseline directory. `bench.py deploy` preserves the installed
    prefix, rejects unexpected app/partitions, writes application only and
    independently verifies flash. Do not deploy from an unexpected baseline.
-4. `bench.py test` runs two repeats of600 logical frames at30/60Hz for render,
+4. `bench.py test` now runs two repeats of600 logical frames at30Hz for render,
    send and combined cases. Results persist individually; private progress/logs
    identify current case. About3minutes of timed windows plus reference creation,
    transfer and setup; preparation/flashing are separate. No browser viewer.
@@ -73,3 +73,8 @@ No control of Agon UART, GPIO bus, keyboard, SD, camera or LCD.
    produced frames; render-time summaries include all produced frames.
 7. Task fixture/SDK choices and memory layout differ from VDP. The comparison
    isolates removal of the entire VDP workload, not a single causal variable.
+
+Cadence amendment: historical evidence includes explicitly requested60Hz cases.
+The current runner is capped at30Hz under ADR-0020; it does not rerun those
+stress cases. Installed firmware still exposes its diagnostic60Hz option; no
+production limiter or new flash is claimed by this host-runner change.

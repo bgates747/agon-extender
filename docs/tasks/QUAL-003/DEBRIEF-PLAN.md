@@ -1,5 +1,21 @@
 # Overnight performance debrief — review contract
 
+## Author-approved cadence amendment — 2026-09-16
+
+[ADR-0020](../../decisions/ADR-0020-web-output-30fps.md) supersedes references
+below to60Hz as the required web-output target, and the earlier statement that
+no fallback rate has been selected. Current supported512×384 output is30fps.
+Historical experiments retain their original figures and identities.
+
+1. [ ] P06e-30: Apply30fps admission/pacing to current production browser and
+   fixture request/compose/send paths before normal qualification; preserve
+   native60Hz rendering. Verify deadlines, no catch-up bursts, bounded backlog,
+   delivered-frame counts and representative rendering tails. Record any
+   unchanged older fixture that still requests output faster than30fps as
+   unsuitable for normal acceptance until adapted. Do not silently rewrite
+   frozen evidence. Higher-rate stress runs require explicit authorization.
+
+
 ## Executive summary
 
 Author-directed on 2026-09-15: audit the completed overnight work, compare

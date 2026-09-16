@@ -6,6 +6,24 @@ RGB222 increment supersedes that phase's RGB888-only wire restriction and
 200 ms first-bench snapshot interval. Historical qualification records remain
 evidence for their recorded builds.
 
+## Accepted web-output ceiling — 2026-09-16
+
+At512×384, the supported web-output target is **30 complete frames per second**.
+Normal fixtures must pace output requests, snapshot admission/composition and
+transmission to no more than30fps, using absolute deadlines without catch-up
+bursts. Do not compose60 frames/s and discard half after doing the work.
+Bound pending output; slower clients must not accumulate an unbounded backlog.
+
+This does not cap native VDP rendering, application physics or display timing:
+those may remain60Hz and must be measured separately. Preserve all VDU command
+semantics. Thirty web frames/s is the current product contract, not a claim that
+all production scenes/browser paths are already qualified at that rate.
+Higher-rate output is outside normal acceptance and requires an explicitly
+approved stress experiment. The earlier60fps web target is deferred; eventual
+256-colour/one-byte-per-pixel support remains a goal.
+
+Authority: [ADR-0020](../decisions/ADR-0020-web-output-30fps.md).
+
 ## Ownership and presentation
 
 EDP on P4 interprets VDU commands and composes the complete displayed image,

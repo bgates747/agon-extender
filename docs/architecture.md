@@ -4,6 +4,14 @@ This document describes the current accepted architecture. Open questions and
 implementation work belong in `TODO.md` and the corresponding tracked files
 under `docs/tasks/` rather than here.
 
+## Web-output cadence
+
+The accepted512×384 web-output contract is30 complete frames/s. Normal test
+fixtures must cap snapshot/output admission at30fps, independently of native
+rendering and application cadence. See [browser-video contract](protocols/browser-video.md)
+and [ADR-0020](decisions/ADR-0020-web-output-30fps.md). This target still needs
+representative production/browser qualification; it is not a blanket measured guarantee.
+
 ## VDP firmware lineage
 
 Agon Extender's VDP firmware begins as a faithful port of the official Agon VDP

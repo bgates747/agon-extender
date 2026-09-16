@@ -24,7 +24,7 @@ if sys.argv[1]=='deploy':
 elif sys.argv[1]=='test':
  out=r/'evidence';out.mkdir(exist_ok=True)
  for repeat in range(2):
-  for fps in [30,60]:
+  for fps in [30]:  # ADR-0020: normal fixtures cap web output at30fps.
    for mode in ['render','send','combined']:
     name=f'{repeat}-{fps}-{mode}.json';print('RUN '+name,flush=True)
     progress={'state':'running','case':name,'started_utc':time.strftime('%Y-%m-%dT%H:%M:%SZ',time.gmtime())};(r/'private/progress.json').write_text(json.dumps(progress))
