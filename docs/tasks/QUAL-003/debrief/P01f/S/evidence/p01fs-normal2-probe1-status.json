@@ -1,0 +1,8 @@
+{
+  "nonce": "5030320001d938ac",
+  "count": 2400,
+  "error": 15,
+  "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+  "benchmark_pass": false,
+  "scope": "Raw failed status retained; never patch error byte or bypass the benchmark analyzer"
+}

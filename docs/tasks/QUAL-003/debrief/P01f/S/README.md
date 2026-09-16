@@ -10,6 +10,15 @@ selects control/treatment using nonce byte4; no scheduler recorder or trace ring
 This is an agent-selected experimental detail under the authorized bounded
 priority experiment, not an approved production scheduling policy.
 
+## S review stop — failed treatment
+
+Control passed at60.046 refresh/s,21.345ms p95. First priority19 treatment
+returned terminal query error15; diagnostic trace39.971refresh/s,53.909ms p95.
+Both2400-state hashes and completion traces match, but the treatment is not a
+passing benchmark. Stop gate fired; remaining two controls not run. No adoption.
+[Comparative results and limitations](TABLES.md). Recommend focused ownership
+and inheritance audit A before another scheduling intervention.
+
 ## Frozen execution contract
 
 1. [x] S01: Freeze source précis/intervention and clear hardware screen; review
@@ -20,12 +29,12 @@ priority experiment, not an approved production scheduling policy.
    pinned SDK/config and record hashes. No owner/lock-wake probe flags.
 3. [x] S03: Verify current r43 and unchanged startup/fixture; deploy/readback
    candidate and check boot/input. Same wired-Pi observer and r05 fixture.
-4. [ ] S04: Run control/treatment/treatment/control, identical Agon-reset startup,
+4. [ ] S04 (stopped at first treatment failure; repeats unexecuted): Run control/treatment/treatment/control, identical Agon-reset startup,
    warm P4 as in B, fresh nonces,180second observers. Require2400states/completions,
    state hash, terminal pixel query, no accounting failure, no browser decode
    error/overflow, keyboard/SD health. Stop at first failure; no automatic retry
    or timeout relaxation. Four collections ~14minutes plus build/staging/rollback.
-5. [ ] S05: Compare refresh spacing, output throughput and composition/send wall
+5. [x] S05: Compare refresh spacing, output throughput and composition/send wall
    time; require both directions rather than select favorable average. Same
    image control must retain approximately60refresh/s with streaming tail;
    if not, stop as changed baseline. No root-cause/parity claim from average alone.

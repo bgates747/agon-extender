@@ -91,14 +91,14 @@ locks/tasks and identify the original timing/ownership guarantee for each.
 
 Author authorized proceeding after B. [Frozen S details](S/README.md) govern this chunk.
 
-1. [ ] S01: Using B, freeze a single priority intervention and comparable control.
+1. [x] S01: Using B, freeze a single priority intervention and comparable control.
    Inspect ESP-IDF priority inheritance and core placement before choosing scope;
    priority restoration must remain correct across nested locks and all exits.
    Do not wait on locks with interrupts disabled. Avoid broad network starvation.
-2. [ ] S02: Build/hash/test control and intervention with minimal equal overhead;
+2. [ ] S02 (built/tested; paired sequence stopped at failed treatment): Build/hash/test control and intervention with minimal equal overhead;
    run deterministic paired/repeated controls, verify pixels, transfer integrity,
    refresh/output timing and keyboard/SD. Stop at failure; restore and notify.
-3. [ ] S03: Decide whether the intervention supports causality, including adverse
+3. [x] S03: Decide whether the intervention supports causality, including adverse
    network effects. No adoption based only on a faster favorable average.
 
 ## A — focused FabGL/port architecture audit (subsequent chunk)
@@ -127,3 +127,11 @@ Next chunk S is the authorized bounded priority causality experiment, with its
 precise intervention/control frozen before any build. Warm-run variability means
 it needs repeated controls. This notification is the discrete-work review stop
 requested by the Author; no priority/affinity change has yet occurred.
+
+## S outcome
+
+The first priority19 treatment failed its terminal pixel query and worsened
+refresh timing (39.971/s,53.909ms p95 versus control60.046/s,21.345ms). Two
+remaining runs were stopped. This is a rejected intervention, not a passing
+benchmark or replicated causal estimate. See S/TABLES.md. Chunk A ownership/
+inheritance audit is the recommended next work; no further scheduling guesses.

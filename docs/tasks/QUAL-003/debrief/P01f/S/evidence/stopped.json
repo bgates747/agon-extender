@@ -1,0 +1,8 @@
+{
+  "reason": "first treatment terminal pixel query FR_TIMEOUT15",
+  "runs_executed": 2,
+  "runs_planned": 4,
+  "remaining_runs_not_executed": true,
+  "optimization_accepted": false,
+  "raw_failure_preserved": true
+}
