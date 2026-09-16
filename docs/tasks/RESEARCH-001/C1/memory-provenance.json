@@ -1,0 +1,27 @@
+{
+  "review_utc": "2026-09-16T01:46:29.760863+00:00",
+  "contract": "1678332",
+  "scope": "source-only, no build/test",
+  "upstream_commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+  "upstream_files": {
+    "src/display/display_manager.c": "4ee9c430a18152401d5a1da3e5c5539f0f0033290763bce2dd0dc7a496ecefeb",
+    "src/display/bridge/v9/lvgl_bridge_v9.c": "0eacc6760a6056243ade1947374471c88ef377eef1dc075643f31cef25292b1e",
+    "src/display/bridge/common/display_bridge_common.c": "08708852483fa0996bc105683671325038c92b8b09459ee476d49959fad235ee",
+    "src/adapter/esp_lv_adapter.c": "3aaf0e1b79c8f89afb1224f5f08957aee3e76e1ae2d9d3ae626d717a6b42b2f5"
+  },
+  "local_files": {
+    "vdp/video/agon_screen.h": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "vdp/video/extender/network/wired_network_service.cpp": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca",
+    "vdp/.pio/packages/framework-espidf/components/esp_mm/include/esp_cache.h": "508ec06a9fbe859cc438cd718e06be9a2e42383351fb370cc5303065b1e0cf16",
+    "vdp/.pio/packages/framework-espidf/components/esp_mm/esp_cache_msync.c": "7617641c768d38c3f164a7facd4d6f1857c634a8d211f3c5c4c39ee4c6508102",
+    "vdp/.pio/packages/framework-espidf/components/esp_http_server/src/httpd_ws.c": "154140abc17f7699d43d9c0bb83e5bb8aec7ed7f0e00dc71568318c03d345585",
+    "vdp/.pio/packages/framework-espidf/components/esp_http_server/src/httpd_main.c": "08e9c91cbae17a9f70d40a07834f53cdd59a9b0be77a574b0a9109019d026eca",
+    "vdp/.pio/packages/framework-espidf/components/lwip/lwip/src/api/sockets.c": "861822d05ac60f68228279036a966c26acb1282b8f2f7bd0c4672129c7fd74a4",
+    "vdp/.pio/packages/framework-espidf/components/lwip/lwip/src/core/tcp_out.c": "f8d44fafd6f9dc81442317f9d196aec772f37e02bfdb8ef601601a73454e7660",
+    "vdp/.pio/packages/framework-espidf/components/lwip/lwip/src/core/pbuf.c": "dbf73163db7db38e398ac8bf1e1c3de3b5b200bc8910b2698bace53acbf339d3",
+    "vdp/.pio/packages/framework-espidf/components/esp_eth/src/mac/esp_eth_mac_esp.c": "56e862394613c77bde93180187f0f6e1b9f7706456cd9f354391b139d15f5e78",
+    "vdp/.pio/packages/framework-espidf/components/esp_eth/src/mac/esp_eth_mac_esp_dma.c": "393cd07f5fcf1bde93ae113975c2d1400d203f5730068dd59717f5f4899a1ff4",
+    "vdp/.pio/packages/framework-espidf/components/soc/esp32p4/include/soc/soc_caps.h": "4aba7eaad13804d97e6cf8ff4cfe965e4892438fab43eb1fc18193eb072ad651"
+  }
+}

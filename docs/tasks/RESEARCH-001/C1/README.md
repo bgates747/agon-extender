@@ -26,6 +26,10 @@ avenues have recorded dispositions.
 No build, sample execution, flash, reset, benchmark or firmware change occurred.
 The sole hardware action at closeout is the requested accepted voice cue.
 
+Focused second pass: [allocation/cache findings](MEMORY.md). It confirms SDK-owned
+Ethernet cache synchronization and lower-stack allocation/copy work, without
+establishing their runtime cost or an allocator defect.
+
 ## 1. Question and evidence scope
 
 Can the adapter reveal an omitted ownership, completion or scheduling mechanism
