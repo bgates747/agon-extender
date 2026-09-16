@@ -153,3 +153,9 @@ latest chunk; no further experiment is underway.
 
 A closeout: fresh hardware voice receipt and completion banner, unchanged startup,
 neutral keyboard and SD exit verified. Source-only; r43 retained. Await review.
+
+## W authorization
+
+Author directed proceeding with the proposed experiment. [W contract](W/README.md)
+owns one snapshot-wide scope and repeated controls. A remains the source audit;
+W is now active. No wider redesign or production promotion in this chunk.

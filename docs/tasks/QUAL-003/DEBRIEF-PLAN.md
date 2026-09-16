@@ -471,3 +471,6 @@ S made192yield requests per full snapshot in addition to priority calls; native
 mutex inheritance can extend beyond its immediate release. No source-proven
 deadlock or complete causal attribution. One snapshot-wide ceiling experiment
 is proposed for review, not started; no firmware change during A.
+
+P01f W now authorized: freeze and execute the proposed snapshot-wide ceiling
+experiment in debrief/P01f/W/README.md, followed by restoration/voice/review stop.

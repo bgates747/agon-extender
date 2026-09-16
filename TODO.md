@@ -20,8 +20,8 @@ and remains rejected. A source-only ownership audit is complete: shared native
 mutex dependency and192per-snapshot yield requests in S identified. No full
 causal attribution or performance fix. [Findings/next proposal](docs/tasks/QUAL-003/debrief/P01f/A/FINDINGS.md)
 recommend one priority scope per admitted snapshot, preserving original row locks.
-Hardware voice/banner verified. Await review before a new implementation/test
-contract. r43 retained; Golem
+Author authorized [snapshot-wide scope W](docs/tasks/QUAL-003/debrief/P01f/W/README.md);
+contract frozen before implementation. W is the current chunk; r43 rollback retained; Golem
 excluded, chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
