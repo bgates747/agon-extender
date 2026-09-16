@@ -1,0 +1,35 @@
+{
+  "build_id": "uart-excom-console-r46-b2026-09-16-03-39-07Z",
+  "status": "draft",
+  "parent_build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "commit": "a8e1368293a68487988d6d5f1fac57f2b9d1ef3d",
+  "changed": {
+    "vdp/video/extender/diagnostics/lock_wake_trace.hpp": "c68cd8fd72a22c4d412322982e2d6e15419b1821bba6beac9e9540c1d0ad1bd0",
+    "vdp/video/extender/diagnostics/refresh_trace.hpp": "fa96a359283dbd5868c0f7cd017e6e6ffabee6858b5c8194311f01e17d1e7108",
+    "vdp/video/extender/display/stock_native_access.hpp": "d118f774d57c6949a4dc2c82c77113d268272670ea43f13cf89c8c30be04a6df",
+    "vdp/video/extender/display/stock_p4_service.cpp": "8c30df9b5e9326e15db1a4bade80d33f75d8dde114f72b39de8ae3df7a21bf24"
+  },
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "42f7b8b55d242ffcbc0dfc19df07ba3390cf6ea91a4507601561b228e3afc3cf",
+      "bytes": 1489392
+    },
+    "firmware.factory.bin": {
+      "sha256": "8eeb3508d6cf2a6be0defe51212ef3cabc6b768586c88e43ccfee49386a0ec9e",
+      "bytes": 1620464
+    },
+    "firmware.elf": {
+      "sha256": "ca02d2d0e107d63f13cf8b8f4012b4fb96994935c2d1b76a16e6f1d7fed5b22d",
+      "bytes": 28606492
+    },
+    "bootloader.bin": {
+      "sha256": "c9febf67a6169213bc12d238ff519d8243b0971d5fdda09945455f15295a3d62",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "build_complete": true
+}

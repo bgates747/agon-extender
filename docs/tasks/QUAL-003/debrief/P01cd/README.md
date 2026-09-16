@@ -9,7 +9,7 @@ time from elapsed scopes. Golem excluded; no MOS/mainboard VDP modifications.
 
 ## Frozen contract
 
-1. [ ] D01: Add default-off diagnostic hooks for native lock wait/outermost hold
+1. [x] D01: Add default-off diagnostic hooks for native lock wait/outermost hold
    by parser/drawing/output owner and notification-to-worker-entry intervals.
    Bounded in-memory aggregates only, no timed-window prints, SD or polling.
    Distinguish coalesced notification age from scheduler runnable delay: these
