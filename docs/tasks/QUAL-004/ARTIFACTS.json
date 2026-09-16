@@ -1,0 +1,62 @@
+{
+  "mainboard01": {
+    "build_id": "mainboard-image-capture-r01-b2026-09-16-12-16-21Z",
+    "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+    "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+    "contract_commit": "b2f4149768646e29ac0998c21a8e4aa6a002d788",
+    "changed_stock_files": [
+      "platformio.ini",
+      "video/vdu_sys.h",
+      "video/version.h",
+      "local-libs/vdp-gl/src/dispdrivers/vga64controller.cpp"
+    ],
+    "outputs": {
+      "firmware.bin": "b2b331db6db84e347d4b4ffe1f227e87575abb8584e2e612ef18110da3f313c7",
+      "firmware.elf": "2457d9547e8cc55a48492adcb23a35d03573e69d7e4a9f1d0521d28a413ceb03",
+      "bootloader.bin": "f2dfacdea6ae72d0aeeb7c30e525c4c6fc768a041849feac694cbb2ee2224448",
+      "partitions.bin": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    },
+    "capture_source_hashes": {
+      "scanout_tap.h": "372388a4417340c1b40f100549346312c924b7cf88166838e867ac85150b692f",
+      "capture_command.inc": "934bd7d56b21cf22d58077eb5b8009444cf82934a6d8f588b6c673a8e4fad317"
+    }
+  },
+  "mainboard02": {
+    "build_id": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z",
+    "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+    "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+    "contract_commit": "6dc1490e75236db5660be6dd17cddfb9355e1c9f",
+    "changed_stock_files": [
+      "platformio.ini",
+      "video/vdu_sys.h",
+      "video/version.h",
+      "local-libs/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "local-libs/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "local-libs/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "local-libs/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "local-libs/vdp-gl/src/dispdrivers/vga2controller.cpp"
+    ],
+    "outputs": {
+      "firmware.bin": "810481994c38efbfdcc0f525acb8265508859944aba03f8edd4ffd3630c18a67",
+      "firmware.elf": "cac2c919b5154ccd9f1ae57353f6d67e54c3e8b964b057280557db3b4d3de938",
+      "bootloader.bin": "f2dfacdea6ae72d0aeeb7c30e525c4c6fc768a041849feac694cbb2ee2224448",
+      "partitions.bin": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1"
+    },
+    "capture_source_hashes": {
+      "scanout_tap.h": "372388a4417340c1b40f100549346312c924b7cf88166838e867ac85150b692f",
+      "capture_command.inc": "934bd7d56b21cf22d58077eb5b8009444cf82934a6d8f588b6c673a8e4fad317"
+    }
+  },
+  "p4": {
+    "build_id": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+    "sha256": "25d635a22c21429c66d1f4f6463d30b1f30934c386761f95260a7dbf15db89c7",
+    "role": "Unmodified installed Extender application; independently verified before comparison"
+  },
+  "fixture": {
+    "sha256": "f5d6bf461c3a7b60450d22d73634b934ac946a1eb93f492d389bd808732e78a2",
+    "bytes": 9050,
+    "source_commit": "4fe366a2bd6fb85d93aae5e9e6ab8a65a3c9a99a",
+    "scope": "Fenced scene player; no renderer changes"
+  },
+  "interpretation": "Artifact identity, not an assertion that every built image was deployed or passed. See run and restoration records."
+}
