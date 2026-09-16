@@ -10,7 +10,8 @@ from compare import evf,compare
 from web_capture import capture
 import argparse
 p=argparse.ArgumentParser();p.add_argument('--output',default='runs01');p.add_argument('--cases');p.add_argument('--token-base',type=int,default=100)
-p.add_argument('--manifest',type=Path);p.add_argument('--startup',type=Path);p.add_argument('--serial',type=Path);args=p.parse_args()
+p.add_argument('--manifest',type=Path);p.add_argument('--startup',type=Path);p.add_argument('--serial',type=Path)
+p.add_argument('--fresh-mainboard',action='store_true');args=p.parse_args()
 out=R/args.output;out.mkdir(exist_ok=False)
 original_cli=cli
 def cli(name,*commands):return original_cli(out.name+'-'+name,*commands)
@@ -47,6 +48,13 @@ for index,case in enumerate(cases):
  print('BEGIN',index,name,flush=True)
  images=[]
  for repeat in range(2):
+  if args.fresh_mainboard:
+   # Test isolation only: avoid inherited live sprite teardown during replay.
+   # Private bench adapter resets eZ80/VDP into the verified test SD startup.
+   reset_mainboard(f'{out.name}-{name}-{repeat}')
+   c=SD(URL,dest/f'reset-{repeat}-sd.json')
+   try:c.connect();assert c.download('/autoexec.txt')==(args.startup or R/'test-autoexec.txt').read_bytes();c.rpc(11)
+   finally:c.lock.close()
   token=args.token_base+index*2+repeat;offset=serial_path.stat().st_size
   cli(f'{name}-m{repeat}','EMOS LEGACY --keep-display','LOAD /test/qual004/q4draw.bin',f'RUN . /test/qual004/{case["file"]} {token}')
   image,raw=get_images(token,offset);images.append(image);(dest/f'mainboard-{repeat}.serial').write_bytes(raw)

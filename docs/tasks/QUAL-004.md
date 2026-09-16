@@ -66,3 +66,9 @@ bench permissions; release reconfirmed this turn. Any newly necessary experiment
 must be labelled self-assigned and documented before execution. Human validation
 is required for emulator changes before those changes are committed. No such
 changes are required for the primary hardware comparison.
+
+Self-assigned acquisition response: the first fenced cohort stopped on a stock
+scanout null-pointer crash while repeating BSP21_01. Permit normal mainboard
+reset/startup isolation before each remaining replay; this changes test setup,
+not graphics functionality. Keep the failed live-replay result and exclude live
+sprite teardown from any passing claim. Do not repair the suspected stock race.

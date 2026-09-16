@@ -43,3 +43,25 @@ mutable-resource ordering explanation; it does not establish which upstream
 contract, if any, the unfenced case violates. No renderer code was repaired.
 Proceed with the explicitly serialised63-scene correctness cohort; preserve the
 unfenced result rather than silently relabelling it a pass.
+
+## Mainboard sprite-replay acquisition failure
+
+The fenced cohort passed CAL, EMPTY, SHP20, SHP23, BSP03_01 and BSP07_01–03
+before stopping at BSP21_01. Its first mainboard capture completed; the second
+replay crashed mainboard VDP before any capture-begin marker for token2017.
+The ESP32 exception was `LoadProhibited`, address0x1c. The exact diagnostic ELF
+maps PC0x40083247 to stock `VGAPalettedController::drawSpriteScanLine`, line490,
+where the loop dereferences `sprite->hardware`; `getSprite(i)` appears null.
+The backtrace itself is marked corrupted, so deeper call-stack claims are withheld.
+
+Stock `setSprites` sets count0 before replacing its pointer, but a scanout loop
+may already have entered an iteration. This is a source-supported lifetime/race
+hypothesis, not a proven root cause. Capture instrumentation may affect timing.
+The crash occurred outside the capture command, and before the added row tap in
+that ISR path. No stock or port implementation is changed.
+
+Self-assigned isolation control: rerun the remaining cohort with a normal
+mainboard reset into the verified test startup before each mainboard replay.
+This avoids resetting a live sprite collection from the preceding replay.
+Record it as a distinct cohort; it cannot qualify live sprite teardown, and a
+repeat failure must remain a failure. Preserve the original crash evidence.
