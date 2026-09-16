@@ -53,3 +53,19 @@ Hardware voice stage6/audio_commands=pass verified with fresh service receipt;
 autoexec unchanged. Nurples ExCom launch commands acknowledged. Human hearing,
 visual smoothness and realized frame rate remain unconfirmed. Rally binary
 already matched the rebuilt maintained release and was not replaced.
+
+## Author-directed deployment correction — 2026-09-16
+
+The Author reports consistent but still choppy Nurples output under busy scenes,
+and good Rally presentation. These are qualitative observations, not measured
+frame intervals. The Author then requests the latest `nurples-repair` version,
+removal of duplicate Nurples installations from the physical SD card, and one
+canonical runtime at `/mystuff/nurples`.
+
+The earlier executable came from repair dev, but retained SD artwork differed
+from repair's current dirty runtime assets. This follow-up explicitly includes
+that complete repair runtime (binary, game/UI containers, required font), keeps
+the two-vblank pacing, and preserves unrelated applications/fixtures and startup.
+Use an explicit SD inventory and exact paths for deletion; retain host evidence
+of identities and validate the canonical runtime by complete readback. No firmware
+or rendering changes. Private automation/evidence: `agents/nurples-cleanup/`.
