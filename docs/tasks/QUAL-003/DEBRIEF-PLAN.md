@@ -305,6 +305,13 @@ protocol limit explicitly rather than silently reducing the acceptance target.
    not a browser-video result. At512×384×1byte×60, payload alone is94.37Mbit/s;
    measure negotiated link speed and account for protocol overhead before
    interpreting a limit. Label whole-window versus game-only FPS explicitly.
+Author-proposed pressure-relief candidate: lossless RLE of frame differences.
+[AGM source inspection](../RESEARCH-001/AGM-RLE.md) records the existing codecs,
+payload size proof, representation hazards, full-frame recovery rules and
+proposed matched controls. This changes transport only; raw eight-bit output
+remains a hard goal. Source inspection is complete; codec/protocol implementation
+and firmware testing still require review under P06e.
+
 5. [ ] P06e: Review the demonstrated bottleneck and desired visible cadence with
    the Author before changing encoding, damage updates or credit contracts.
    Never obtain a rendering-parity pass by reducing game workload, resolution,

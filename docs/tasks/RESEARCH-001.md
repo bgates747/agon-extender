@@ -131,3 +131,8 @@ and implementation review remain pending. Stopped; no experimental push.
 Author reaction during scouting: expressed interest in a future Vectrex console
 emulator project, then explicitly directed continuation of this research task.
 That interest does not authorize running the external Vectrex firmware now.
+
+Author-directed follow-up: inspected agon-utils AGM/RLE sources read-only.
+[AGM-RLE.md](RESEARCH-001/AGM-RLE.md) records actual byte formats, non-expansion
+proof, unused delta helper and proposed P06 integration checks. No utility or
+firmware changes, build, execution or bench test.
