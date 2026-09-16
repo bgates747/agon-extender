@@ -1,0 +1,23 @@
+{
+  "case": {
+    "name": "BSP26_01",
+    "file": "BSP26_01.vdu",
+    "group": 126,
+    "bytes": 61717,
+    "sha256": "331e000a63fcefbe66d916662be0c51e1d6f0922fe2858fae5a2f934c845781b",
+    "source": {
+      "name": "BSP26_01",
+      "group": 126,
+      "bytes": 61406,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 60712,
+      "sha256": "331e000a63fcefbe66d916662be0c51e1d6f0922fe2858fae5a2f934c845781b"
+    }
+  },
+  "start": 1789568033.9010763,
+  "status": "invalid_mainboard_crash",
+  "end": 1789568207.18222,
+  "reason": "Second fresh-start replay: matching stock scanout LoadProhibited0x40083247/address0x1c before capture"
+}

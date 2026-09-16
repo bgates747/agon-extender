@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP25_04",
+    "file": "BSP25_04.vdu",
+    "group": 125,
+    "bytes": 31206,
+    "sha256": "69c612baebaa1702a6a47b3c51a2744e61e5fa60f08affeaa447ea429e197df9",
+    "source": {
+      "name": "BSP25_04",
+      "group": 125,
+      "bytes": 315,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "55fc06047250124c5ee4ed1ea84f7df158517d6181009b6bb7390668a2d686b0"
+    }
+  },
+  "start": 1789567808.2916791,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "995b452e7a4f8f2fedf4965ca558bfaa9f2979cf909385a665a83c84e74e0640",
+    "p4_sha256": "995b452e7a4f8f2fedf4965ca558bfaa9f2979cf909385a665a83c84e74e0640"
+  },
+  "end": 1789567919.8941898,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

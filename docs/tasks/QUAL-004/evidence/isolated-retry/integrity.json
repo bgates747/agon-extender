@@ -1,0 +1,107 @@
+[
+  {
+    "file": "isolated03/BSP25_04/02.evf.gz",
+    "bytes": 2825,
+    "sha256": "678d29a83bec7d799428570c455832e9d194294a28ff534042fdb56b9cd743ee"
+  },
+  {
+    "file": "isolated03/BSP25_04/03.evf.gz",
+    "bytes": 2825,
+    "sha256": "dbee969bcd428d9c0d71cd1fbd2d29dbe4da651d0a18091ce824b8894cf9e3ba"
+  },
+  {
+    "file": "isolated03/BSP25_04/comparison.json",
+    "bytes": 283,
+    "sha256": "e3e76b2d7ee824096b076f557f125bbbdff746ed2c2f300892be591d51a747c6"
+  },
+  {
+    "file": "isolated03/BSP25_04/difference.png",
+    "bytes": 652,
+    "sha256": "598837f882359804db88260afd23fab2aa5b9674de07cedc9fde344e6dc6fc8b"
+  },
+  {
+    "file": "isolated03/BSP25_04/mainboard-0.serial.gz",
+    "bytes": 5159,
+    "sha256": "71c6a135618887acaeac141f414331d03b31b774dca3ac189a594b537592b6f6"
+  },
+  {
+    "file": "isolated03/BSP25_04/mainboard-1.serial.gz",
+    "bytes": 5159,
+    "sha256": "1ad1842c7f00872c65f09f7e840979815dd39c4a17e5825226f5da6130d515b1"
+  },
+  {
+    "file": "isolated03/BSP25_04/mainboard.png",
+    "bytes": 5063,
+    "sha256": "f7385a8ef218c5ac89f1bc07c5af998a09bec6cec3c900939611f356432cd099"
+  },
+  {
+    "file": "isolated03/BSP25_04/p4.png",
+    "bytes": 5063,
+    "sha256": "f7385a8ef218c5ac89f1bc07c5af998a09bec6cec3c900939611f356432cd099"
+  },
+  {
+    "file": "isolated03/BSP25_04/run.json",
+    "bytes": 911,
+    "sha256": "018ed16cab9bc29b5dda70919f9f901bd0b58259be4cbe3d1101f81083cd7a0f"
+  },
+  {
+    "file": "isolated03/BSP25_05/02.evf.gz",
+    "bytes": 1600,
+    "sha256": "c742dee0165d98f745f0f247cc18fa8f462fdb001f935a41b5d989e6c78794f5"
+  },
+  {
+    "file": "isolated03/BSP25_05/03.evf.gz",
+    "bytes": 1600,
+    "sha256": "b041bc4ea527e7739097ac21bf4f9d4904bbf58ae12d5377639740aed66b6fb8"
+  },
+  {
+    "file": "isolated03/BSP25_05/comparison.json",
+    "bytes": 283,
+    "sha256": "8221b8d3c9c30271ebd50b3d50085cb4193a02622d2b2ab48d922c6f459424a2"
+  },
+  {
+    "file": "isolated03/BSP25_05/difference.png",
+    "bytes": 652,
+    "sha256": "598837f882359804db88260afd23fab2aa5b9674de07cedc9fde344e6dc6fc8b"
+  },
+  {
+    "file": "isolated03/BSP25_05/mainboard-0.serial.gz",
+    "bytes": 3386,
+    "sha256": "8815d1aacd5741d51184e3a9227c3f2e03fcc2e96c9d1d84eeed3562329bc6fb"
+  },
+  {
+    "file": "isolated03/BSP25_05/mainboard-1.serial.gz",
+    "bytes": 3386,
+    "sha256": "4711e967302d081dd18d4ed7b1d095320d6015c18c3e70edff63377cb5da01a5"
+  },
+  {
+    "file": "isolated03/BSP25_05/mainboard.png",
+    "bytes": 2713,
+    "sha256": "b6c2a69e020eeb44cc6233293d173e2d4cb741d8664eeed9ceaede71e6369a8a"
+  },
+  {
+    "file": "isolated03/BSP25_05/p4.png",
+    "bytes": 2713,
+    "sha256": "b6c2a69e020eeb44cc6233293d173e2d4cb741d8664eeed9ceaede71e6369a8a"
+  },
+  {
+    "file": "isolated03/BSP25_05/run.json",
+    "bytes": 911,
+    "sha256": "419ec18c9e02f194052131d0029926840c1586a80b2d875671f68266621d1163"
+  },
+  {
+    "file": "isolated03/BSP26_01/failure.serial.gz",
+    "bytes": 443,
+    "sha256": "42e3b53a95ae65f76a0f30d17a254acbcd63a509295757c8421de5b1320975ab"
+  },
+  {
+    "file": "isolated03/BSP26_01/mainboard-0.serial.gz",
+    "bytes": 4460,
+    "sha256": "3d458901c9d63badf1844ef15d5cb6ae60a4b0a1ec164ee5baf11651c8e70838"
+  },
+  {
+    "file": "isolated03/BSP26_01/run.json",
+    "bytes": 674,
+    "sha256": "e70b330cc499124bd6dcca93b9d9bf0358a395c0c6369b3b66e19bc57a7c2566"
+  }
+]
