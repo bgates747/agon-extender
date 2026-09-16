@@ -5,6 +5,7 @@ from PIL import Image
 p=argparse.ArgumentParser();p.add_argument('--library',required=True);p.add_argument('--output',required=True);a=p.parse_args()
 lib=C.CDLL(str(Path(a.library).resolve()));u=C.POINTER(C.c_ubyte)
 lib.encode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t),C.c_int]
+lib.encode_fast.argtypes=lib.encode.argtypes
 lib.decode.argtypes=[u,C.c_size_t,u,C.c_size_t,C.POINTER(C.c_size_t)]
 def call(fn,src,cap,*args):
  s=(C.c_ubyte*len(src)).from_buffer_copy(src);d=(C.c_ubyte*(cap+16))();d[cap:]=[0xa5]*16;o=C.c_size_t()
@@ -23,6 +24,7 @@ def reference_encode(src):
  return bytes(out)
 def test(src,opaque=False):
  st,enc=call(lib.encode,src,len(src)+14,int(opaque));assert st==0
+ assert call(lib.encode_fast,src,len(src)+14,int(opaque))==(st,enc)
  expected=bytes(v|192 for v in src) if opaque else src
  assert enc==reference_encode(expected)
  st,dec=call(lib.decode,enc,len(src));assert st==0 and dec==expected

@@ -49,4 +49,20 @@ inline Result encode(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool opaque_r
  }
  return {Status::ok,o};
 }
+// Iteration2: bypass run scanning for singleton-heavy frames. Same wire bytes.
+inline Result encode_fast(const uint8_t*s,size_t n,uint8_t*d,size_t cap,bool opaque_rgb=false) {
+ if(n>UINT32_MAX || n>std::numeric_limits<size_t>::max()-14)return {Status::length,0};
+ if(cap<n+14)return {Status::capacity,0};
+ std::memcpy(d,"Cmpr",4);put32(d+4,uint32_t(n));std::memcpy(d+8,"RLE2\1\0",6);
+ size_t i=0,o=14;
+ while(i<n){uint8_t v=s[i];
+  if(opaque_rgb ? v>63 : ((v&192)!=0&&(v&192)!=192))return {Status::alpha,0};
+  uint8_t pixel=opaque_rgb?uint8_t(v|192):v;
+  if(n-i<3 || s[i+1]!=v || s[i+2]!=v){d[o++]=uint8_t(128|(pixel&63)|((pixel&192)==192?64:0));++i;continue;}
+  size_t run=3;while(run<130 && run<n-i && s[i+run]==v)++run;
+  d[o++]=uint8_t(run-3);d[o++]=pixel;i+=run;
+ }
+ return {Status::ok,o};
+}
+
 }
