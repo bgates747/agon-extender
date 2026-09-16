@@ -15,12 +15,14 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md): B passed; S stopped
-at first priority19 treatment failure (terminal query15, diagnostic39.971refresh/s
-and53.909ms p95). Same-image control passed60.046/s,21.345ms p95. Remaining
-repeats not run, intervention not adopted. r43/startup restored and verified;
-hardware voice/banner delivered. Focused ownership audit A is next, unstarted.
-Golem excluded, chunking fallback only, no experimental push.
+[P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md): B passed; S failed
+and remains rejected. A source-only ownership audit is complete: shared native
+mutex dependency and192per-snapshot yield requests in S identified. No full
+causal attribution or performance fix. [Findings/next proposal](docs/tasks/QUAL-003/debrief/P01f/A/FINDINGS.md)
+recommend one priority scope per admitted snapshot, preserving original row locks.
+Hardware voice/banner verified. Await review before a new implementation/test
+contract. r43 retained; Golem
+excluded, chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

@@ -37,7 +37,7 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**P00 complete. P01a/b complete. P02 SW controls collected; review pending. P03–P06 remain proposals.**
+**P00/P01/P02 prior chunks retained. Latest P01f A source audit complete; review pending. P03–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
@@ -464,3 +464,10 @@ voice/banner delivered. Next focused audit A; see S/TABLES.md.
 
 P01f A now authorized: source-only ownership/scheduling audit after failed S.
 See debrief/P01f/A/README.md; no firmware experiments in this chunk.
+
+P01f A completed source audit: [ownership](debrief/P01f/A/OWNERSHIP.md),
+[findings/proposed next test](debrief/P01f/A/FINDINGS.md), pinned source hashes.
+S made192yield requests per full snapshot in addition to priority calls; native
+mutex inheritance can extend beyond its immediate release. No source-proven
+deadlock or complete causal attribution. One snapshot-wide ceiling experiment
+is proposed for review, not started; no firmware change during A.

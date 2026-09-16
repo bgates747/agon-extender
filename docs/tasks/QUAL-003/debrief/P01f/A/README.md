@@ -18,7 +18,8 @@ This removes repeated priority transitions but also raises normalization priorit
 so that confound is explicit. No deadlock cycle established in the inspected
 steady-state path. Exhaustive AUDIT-007 remains separate; Golem excluded.
 
-Hardware completion notification and final preservation checks remain below.
+Standard hardware voice receipt and visible completion-banner input verified;
+startup unchanged, input neutral, SD exited to Legacy MOS. Await Author review.
 
 ## Frozen contract
 
@@ -40,7 +41,7 @@ Hardware completion notification and final preservation checks remain below.
    ownership diagram, indexed findings and one smallest discriminating next
    experiment with validity gates. No speculative fix by implication. If source
    inspection cannot establish cause, say precisely what observation is missing.
-6. [ ] A06: Update parent plan/TODO/log, commit granular results, accepted hardware
+6. [x] A06: Update parent plan/TODO/log, commit granular results, accepted hardware
    voice and visible banner; verify unchanged startup and neutral input/SD state.
    Stop for Author review. No push, emulator experiment or delegation.
 
@@ -70,3 +71,12 @@ A02/A03 completed in [OWNERSHIP.md](OWNERSHIP.md): actor/lock map, virtual
 gate dispatch, original ISR versus scheduled task differences, immutable network
 lease boundary, selected SDK send path, inherited allocation waits and scope
 limits. No closed cycle established in the inspected steady-state path.
+
+## Closeout
+
+[Notification receipt](notification.json) records fresh stage6/audio success,
+unchanged autoexec and neutral keyboard. Completion banner emitted without
+clearing it afterward; human hearing remains unconfirmed. Previous verified r43
+retained, no flash/reset/build/benchmark or active observer during this chunk.
+Documentation/source calculations checked; no runtime test is claimed. All
+changes committed locally in discrete documentation commits, no push.

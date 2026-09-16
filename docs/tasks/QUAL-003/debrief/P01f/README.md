@@ -2,15 +2,18 @@
 
 ## Executive summary
 
-**S stopped at a failed treatment; baseline restored.** The bounded priority19
-experiment worsened diagnostic timings to39.971refresh/s,53.909ms p95 and failed
-its terminal pixel query. Same-image control passed60.046/s,21.345ms p95. No
-adoption or replicated causal claim. Standard hardware voice and review banner
-delivered after verified r43/startup restoration. [S report](S/README.md).
+**A ownership audit complete; ready for review.** The port adds a shared native
+mutex between snapshot composition, parser and drawing. Mainboard row preparation
+runs in an ISR. Actual socket sending already uses immutable data outside that
+mutex. S introduced192 scheduler-yield requests,384priority changes and768priority
+queries per384-row snapshot; inherited priority can persist through other held
+mutexes. These source-proven mechanisms do not completely attribute S's failure.
 
-Author authorized baseline recovery, one scheduling experiment and focused
-ownership audit in discrete notified chunks. B completed; S reached its failure
-stop; A is the next recommended work and has not begun. Golem remains excluded.
+[A findings and proposed experiment](A/FINDINGS.md) recommend testing one ceiling
+scope per admitted snapshot, retaining row locks and all original rendering.
+Normalization priority also changes and is an explicit confound. No new firmware
+or performance work in A; baseline r43 retained. Stop for review before another
+implementation/test contract. Golem excluded. Prior B/S evidence follows.
 
 ## B findings — 2026-09-16
 
@@ -66,7 +69,7 @@ locks/tasks and identify the original timing/ownership guarantee for each.
    pending accounting. Retain failure and recover; no relaxed gates or automatic
    retry. A non-representative baseline is itself a review stop.
 
-## B — unchanged lower-overhead baseline (current chunk)
+## B — unchanged lower-overhead baseline (completed)
 
 1. [x] B01: Freeze contract and runners; clear mainboard through admitted CLI.
    Verify r45 and r43 archive hashes and inherited fixture/startup; record provenance.
@@ -90,7 +93,7 @@ locks/tasks and identify the original timing/ownership guarantee for each.
    exit to Legacy MOS, record results and commits, hardware voice plus visible
    completion banner. Stop for review before S.
 
-## S — one bounded scheduling experiment (current chunk)
+## S — one bounded scheduling experiment (stopped at failure)
 
 Author authorized proceeding after B. [Frozen S details](S/README.md) govern this chunk.
 
@@ -104,16 +107,16 @@ Author authorized proceeding after B. [Frozen S details](S/README.md) govern thi
 3. [x] S03: Decide whether the intervention supports causality, including adverse
    network effects. No adoption based only on a faster favorable average.
 
-## A — focused FabGL/port architecture audit (current chunk)
+## A — focused FabGL/port architecture audit (review-ready)
 
 Author directed proceeding; [A contract](A/README.md) owns this source-only work.
 
-1. [ ] A01: Map parser, primitive execution, snapshot producer, HTTP sender and
+1. [x] A01: Map parser, primitive execution, snapshot producer, HTTP sender and
    network stack ownership; every queue, mutex and notification on that path.
-2. [ ] A02: For each handoff document original upstream reason, current P4
+2. [x] A02: For each handoff document original upstream reason, current P4
    reason, timing guarantee lost/preserved and evidence. Separate observed
    defects from suspected unnecessary layers; consult pinned official SDK sources.
-3. [ ] A03: Recommend the smallest evidence-supported remedy; report prerequisites
+3. [x] A03: Recommend the smallest evidence-supported remedy; report prerequisites
    for any structural change. Link the already required exhaustive FabGL audit
    rather than duplicating it. Commit, notify and stop; no redesign by implication.
 
@@ -140,3 +143,13 @@ refresh timing (39.971/s,53.909ms p95 versus control60.046/s,21.345ms). Two
 remaining runs were stopped. This is a rejected intervention, not a passing
 benchmark or replicated causal estimate. See S/TABLES.md. Chunk A ownership/
 inheritance audit is the recommended next work; no further scheduling guesses.
+
+## A outcome
+
+Source-only ownership and pinned SDK audit completed; source hashes, lock map,
+comparative tables, uncertainty and one proposed bounded test live in A/. Prior
+B/S “next” statements above describe their historical review stops. A is now the
+latest chunk; no further experiment is underway.
+
+A closeout: fresh hardware voice receipt and completion banner, unchanged startup,
+neutral keyboard and SD exit verified. Source-only; r43 retained. Await review.

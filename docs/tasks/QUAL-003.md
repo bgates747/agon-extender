@@ -2,11 +2,17 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
-[P01f S](QUAL-003/debrief/P01f/S/README.md) stopped at the first failed treatment:
-priority19 diagnostic39.971refresh/s,p95 53.909ms and terminal pixel-query15;
-same-image control passed60.046/s,p95 21.345ms. Baseline chunk B had passed.
-No adoption; remaining repeats unexecuted. r43/startup restored and hardware
-voice/banner delivered. Next recommend authorized focused audit A; not begun.
+[P01f A ownership audit](QUAL-003/debrief/P01f/A/README.md) completed after S's
+failed priority treatment. The port's task-held native mutex couples snapshot
+composition to parser/drawing; mainboard rows run in an ISR. Sending already uses
+immutable leases outside that mutex. S's per-row priority scope adds192yield
+requests,384sets and768queries per384-row snapshot, with possible propagated
+inheritance beyond native unlock. Mechanisms established; complete causality not.
+
+[Detailed findings and next proposal](QUAL-003/debrief/P01f/A/FINDINGS.md) recommend
+one ceiling scope per admitted snapshot with repeated correctness/pacing gates.
+No new firmware or benchmark during A; r43 retained. Stop for review before
+implementation. S failure and B valid baseline remain explicitly distinguished.
 
 ## Prior diagnostic finding
 
