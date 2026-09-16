@@ -42,3 +42,9 @@ segments/sectors, fills, all eight GCOL operations, colour mapping, origins,
 viewports, scrolling/copy/move, graphics text and buffered/context/affine calls.
 This is test coverage expansion, not implementation of missing APIs. Keep
 unsupported experimental paths visibly separate from successful image matches.
+
+Filled-path documentation makes inter-command delays semantically significant.
+The fixture therefore preloads the entire scene before sending its bounded MOS
+chunks; no SD read occurs between graphics command bytes. The largest selected
+scene is below128KiB. This corrects the initial unexecuted streaming fixture
+before hardware image qualification; it is test instrumentation, not a VDP fix.
