@@ -31,7 +31,12 @@ def browser(path):
  return {'frames':len(f),'receive_intervals':stats([y['ms']-x['ms'] for x,y in zip(f,f[1:])]),'submission_intervals':stats([y['ms']-x['ms'] for x,y in zip(p,p[1:])]),'request_intervals':stats([y-x for x,y in zip(req,req[1:])]),'identical_adjacent_pixel_hashes':sum(x['pixelHash']==y['pixelHash'] for x,y in zip(f,f[1:])),'scope':'Wired Pi headless Chromium; WebGL submission, not panel scanout; FNV equality is a content fingerprint, not a game frame identifier.'}
 if __name__=='__main__':
  p=argparse.ArgumentParser();p.add_argument('root',type=Path);a=p.parse_args();out={}
- for f in a.root.glob('*-trace.bin'):out[f.stem]=trace(f)
+ for f in a.root.glob('*-trace.bin'):
+  out[f.stem]=trace(f)
+  t=f.with_name(f.name.replace('-trace.bin','-telemetry.bin')).read_bytes()
+  assert len(t)==80 and t[:4]==b'PNST'
+  out[f.stem]['terminal_telemetry']={'completed_frames':int.from_bytes(t[32:35],'little'),'fault_domains':int.from_bytes(t[60:62],'little'),'vdu_faults':t[68],'ships':t[73]}
+  assert out[f.stem]['terminal_telemetry']['completed_frames']==out[f.stem]['frames_recorded']
  for f in a.root.glob('browser*/result.json'):out[str(f.parent.name)]=browser(f)
  (a.root/'analysis.json').write_text(json.dumps(out,indent=2)+'\n')
  print(json.dumps({k:{x:y for x,y in v.items() if x!='rows'} for k,v in out.items()},indent=2))
