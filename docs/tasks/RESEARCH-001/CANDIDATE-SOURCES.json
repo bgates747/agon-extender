@@ -1,0 +1,617 @@
+{
+  "accessed_utc": "2026-09-16T00:35:54.041732+00:00",
+  "method": "Read-only GitHub API trees/history and pinned raw-source retrieval; no sample execution",
+  "repositories": [
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "commit_date": "2026-09-10T03:48:00Z",
+      "api_license": null,
+      "recent_history": [
+        {
+          "sha": "c7b34400f7373cad94caee7493413a8ec5b58864",
+          "subject": "chore: bump version to 2.0.25 [skip ci]"
+        },
+        {
+          "sha": "872311d8ca458900e7424345178bca273ff9a99a",
+          "subject": "Merge pull request #325 from chvvkumar/dev"
+        },
+        {
+          "sha": "bbb7c9d7ad5a7b6cb03da2349e9c4e96c69eec03",
+          "subject": "Merge pull request #324 from chvvkumar/snd"
+        },
+        {
+          "sha": "6f08d4152707cba76ca335945989878d18cf2c8a",
+          "subject": "fix(nina): exposure ring stepped back on the capture layouts; Night rail band"
+        },
+        {
+          "sha": "fd3ab68c13bee8be08a1ff6c9f1efd523d59e378",
+          "subject": "chore: bump version to 2.0.24 [skip ci]"
+        }
+      ]
+    },
+    {
+      "repo": "ctag-fh-kiel/esp32p4_fpu_benchmark",
+      "commit": "df707faec5fd73a82ad2e358716f3c62a266239a",
+      "commit_date": "2025-12-28T08:12:17Z",
+      "api_license": null,
+      "recent_history": [
+        {
+          "sha": "df707faec5fd73a82ad2e358716f3c62a266239a",
+          "subject": "references"
+        },
+        {
+          "sha": "efc6edabc131454c543a09426bb4bd03c14447ff",
+          "subject": "ai warning"
+        },
+        {
+          "sha": "541c9c9978ef04049e2a2d6397a5ef2c05360866",
+          "subject": "fixes and arm comparison"
+        },
+        {
+          "sha": "0359f4aa436bb894119d4871319825d4dfe52b54",
+          "subject": "readme + double precision"
+        },
+        {
+          "sha": "0d5038a57cb8d39cf52d0ba5e01e88231cc72a88",
+          "subject": "readme"
+        }
+      ]
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "commit_date": "2026-08-17T07:36:03Z",
+      "api_license": "Apache-2.0",
+      "recent_history": [
+        {
+          "sha": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+          "subject": "Bump actions/setup-python from 6.3.0 to 7.0.0 (#60)"
+        },
+        {
+          "sha": "a222865bf7864e8845170826cd980e247e20b402",
+          "subject": "Bump actions/checkout from 7.0.0 to 7.0.1 (#61)"
+        },
+        {
+          "sha": "123b2234b8e82f7827ce889b501515ac0b626a68",
+          "subject": "Bump release-drafter/release-drafter from 7.5.1 to 7.7.0 (#63)"
+        },
+        {
+          "sha": "fe994719b7984b959f4dcb8bbbd9d5091c747f32",
+          "subject": "Mint the release-drafter token with the app client-id (#65)"
+        },
+        {
+          "sha": "c0f6477fd7bebf65225a7308d993a58a88697e20",
+          "subject": "Ordering and documentation clarity improvements (#59)"
+        }
+      ]
+    },
+    {
+      "repo": "espressif/esp-amp",
+      "commit": "e1b48925e7ef0f214f5465c1a0a2cb43446a7ffc",
+      "commit_date": "2025-12-01T03:44:35Z",
+      "api_license": null,
+      "recent_history": [
+        {
+          "sha": "e1b48925e7ef0f214f5465c1a0a2cb43446a7ffc",
+          "subject": "Merge branch 'fix/subcore_rpc_client_timeout_fail' into 'main'"
+        },
+        {
+          "sha": "e26dbfce9bb6f644e96a4fc6669d4e8ff5e03092",
+          "subject": "test(rpc): fix stack use-after-return"
+        },
+        {
+          "sha": "e6117ea764d52716b1dfacdcd9ccee61fca614d8",
+          "subject": "example(rpc): replace atomic_flag with volatile boolean"
+        },
+        {
+          "sha": "1b08aa613f1a8908a6e7813640aaf35ec42171a8",
+          "subject": "example(rpc): fix stack use-after-return"
+        },
+        {
+          "sha": "c931e2a2bdb24df5740ae55a29dc12bab93f26ad",
+          "subject": "docs(rpc): update rpc doc to cover common pitfalls"
+        }
+      ]
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "commit_date": "2026-09-08T11:16:45Z",
+      "api_license": "NOASSERTION",
+      "recent_history": [
+        {
+          "sha": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+          "subject": "Merge branch 'bugfix/fixed_capture_encoded_aud_src_pts' into 'main'"
+        },
+        {
+          "sha": "dfdb6347c333cb2cf94790bcaecdc4dd662b4e28",
+          "subject": "bugfix(esp_capture): Fixed audio source output encoded format PTS calculation wrongly, add sink number kconfig and audio source async read control"
+        },
+        {
+          "sha": "5d1b30579c25165e70f0aa962a819a1058892860",
+          "subject": "Merge branch 'feature/gmf_fft_add_config_to_support_close_pie_on_s31' into 'main'"
+        },
+        {
+          "sha": "2b3849e795553a7c78f8c555830730fd1a91f96d",
+          "subject": "feat(gmf_fft): Update to v1.1"
+        },
+        {
+          "sha": "6a3c3553ebaa5e1d66ac7dd9ed30fb7c32f6e58c",
+          "subject": "Merge branch 'ci/fix_release_v6.1_tools_issues' into 'main'"
+        }
+      ]
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "commit_date": "2026-09-14T09:46:53Z",
+      "api_license": "Apache-2.0",
+      "recent_history": [
+        {
+          "sha": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+          "subject": "Merge branch 'bugfix/bq27220_profile_update' into 'master'"
+        },
+        {
+          "sha": "8eee17c20da66048faa20c683ffeb80bfa85d723",
+          "subject": "Merge branch 'fix/touch-cst9220-y' into 'master'"
+        },
+        {
+          "sha": "552454c05f1a11f4fbea73ab1665997a0766b099",
+          "subject": "fix(bq27220): harden profile updates"
+        },
+        {
+          "sha": "28cdb532ff7dbebd8ed843ee22b26e18a0b953f5",
+          "subject": "fix(touch): speed up CST9220 report path"
+        },
+        {
+          "sha": "2d289eb1f14431e345b345c3fd6fc299a555d770",
+          "subject": "Merge branch 'feat/update_lcd_touch_components' into 'master'"
+        }
+      ]
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "commit_date": "2026-08-17T21:23:19Z",
+      "api_license": null,
+      "recent_history": [
+        {
+          "sha": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+          "subject": "Clarify Bluetooth implementation and pairing instructions"
+        },
+        {
+          "sha": "ea8ef1b64cdbb297561cf7c3bf5eb76bb5c71e9f",
+          "subject": "Orientations added 'g' to switch"
+        },
+        {
+          "sha": "37c4e7e1556dc116147bb293f0cc46174a1be50a",
+          "subject": "Bluetooth versus SD"
+        },
+        {
+          "sha": "d884ea3e3597997fda285f7886bcdc62f6a8cabc",
+          "subject": "Bluetooth and SD ok"
+        },
+        {
+          "sha": "c27e2f4a979a9e679e8e4bdb10e77a5fda4a5cd5",
+          "subject": "Bluetooth versus SD"
+        }
+      ]
+    }
+  ],
+  "files": [
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "main/audio.i",
+      "sha256": "e38ee5456ab4bc172e29312cc157dbdfd9e76ad9568e83c292e67219246eb0ba",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/main/audio.i",
+      "bytes": 12224
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "main/main.c",
+      "sha256": "3bf379077c8c183f480827cced0b5c31a182a1210f146e1663e0c8cf5e4d0743",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/main/main.c",
+      "bytes": 71197
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "main/defines.h",
+      "sha256": "efc661693cc2a989bd7fbf580f663214d4d13b4b64db15e16a9af95071d497e9",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/main/defines.h",
+      "bytes": 11542
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "README.md",
+      "sha256": "376c585aec45ddd5ca94b7705635331e9e9203bd0c600c0b4e3df7344cc1ecb7",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/README.md",
+      "bytes": 31655
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "sdkconfig.defaults",
+      "sha256": "4e125ce9787193d68c95efb49552b54922f67b8d4e9e34f5534cb92a3c86f62d",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/sdkconfig.defaults",
+      "bytes": 3759
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "main/idf_component.yml",
+      "sha256": "7815890558ac12e5fd08781835385703f71ff7d89d54d550e902efa2fdbabe9b",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/main/idf_component.yml",
+      "bytes": 538
+    },
+    {
+      "repo": "malbanGit/ESP32_P4_Vectrex",
+      "commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+      "path": "main/hdmi.c",
+      "sha256": "5b1980afa515aa0e80b208ebc360c8f5c682edc5b21461fc0b01dfde5fd231a2",
+      "url": "https://raw.githubusercontent.com/malbanGit/ESP32_P4_Vectrex/caf2d9b77e1c9eaa5b7f8805fc0172650dbea051/main/hdmi.c",
+      "bytes": 8839
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "main/web_handlers_display.c",
+      "sha256": "70b421fcc87d665fffd11d4663a4080080bef7b46d5548ebc2a5fb01944d972b",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/main/web_handlers_display.c",
+      "bytes": 36654
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "README.md",
+      "sha256": "1946fac1e2bc4ad3983c43ce5140f2372d2277cd96fe97384ff3bcf796eef16c",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/README.md",
+      "bytes": 41972
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "sdkconfig.defaults",
+      "sha256": "03f04ffce537da63b2ee9fdc15af6454a1ecbb0acc5f6ba19592069c6d26c30e",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/sdkconfig.defaults",
+      "bytes": 6621
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "main/jpeg_utils.c",
+      "sha256": "5e3b88af364dc21787558f9d0799ebbb26385317306edfd2f0224210e77fc1c6",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/main/jpeg_utils.c",
+      "bytes": 41332
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "main/idf_component.yml",
+      "sha256": "9ab5eecadcc7c4961e65e0461d752750ed5094013bc2e70dcbcac80d70cacdbd",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/main/idf_component.yml",
+      "bytes": 913
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "main/perf_monitor.c",
+      "sha256": "832cc4be7b1a08178d76e078390b74b59c37de7533763a2d2dda7931f68eead5",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/main/perf_monitor.c",
+      "bytes": 50642
+    },
+    {
+      "repo": "espressif/esp-amp",
+      "commit": "e1b48925e7ef0f214f5465c1a0a2cb43446a7ffc",
+      "path": "README.md",
+      "sha256": "939dc602b4d0635db8a437b89ab97031374bb84ecdba8d1178016edbc7599fb2",
+      "url": "https://raw.githubusercontent.com/espressif/esp-amp/e1b48925e7ef0f214f5465c1a0a2cb43446a7ffc/README.md",
+      "bytes": 7644
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/idf_component.yml",
+      "sha256": "eaa609fe5cbac5343ccdf6cee96fbeffdb83bbba3db9e6235f6ad519cb7304ca",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/idf_component.yml",
+      "bytes": 1254
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/src/display/display_manager.c",
+      "sha256": "4ee9c430a18152401d5a1da3e5c5539f0f0033290763bce2dd0dc7a496ecefeb",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/src/display/display_manager.c",
+      "bytes": 79571
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/benchmark/main/idf_component.yml",
+      "sha256": "934eb20b4fcf8e462732fc078c59dc3176b1f351f565967d7726763cf2605c16",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/benchmark/main/idf_component.yml",
+      "bytes": 195
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/README.md",
+      "sha256": "2081fdf4d26966c850e3d2e8af40805f378560769890740481785cd488344c7c",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/README.md",
+      "bytes": 33513
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "README.md",
+      "sha256": "48584ea9ff2c75154772c50f0ac2681b01ca16b6594621de371946778991df01",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/README.md",
+      "bytes": 39964
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "LICENSE",
+      "sha256": "cfc7749b96f63bd31c3c42b5c471bf756814053e847c10f3eb003417bc523d30",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/LICENSE",
+      "bytes": 11358
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c",
+      "sha256": "0eacc6760a6056243ade1947374471c88ef377eef1dc075643f31cef25292b1e",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/src/display/bridge/v9/lvgl_bridge_v9.c",
+      "bytes": 142870
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/src/adapter/esp_lv_adapter.c",
+      "sha256": "3aaf0e1b79c8f89afb1224f5f08957aee3e76e1ae2d9d3ae626d717a6b42b2f5",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/src/adapter/esp_lv_adapter.c",
+      "bytes": 72534
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "commit": "6958385313b0e4fc1f3de259b1d677fca7d7d236",
+      "path": "components/display/tools/esp_lvgl_adapter/src/display/bridge/common/display_bridge_common.c",
+      "sha256": "08708852483fa0996bc105683671325038c92b8b09459ee476d49959fad235ee",
+      "url": "https://raw.githubusercontent.com/espressif/esp-iot-solution/6958385313b0e4fc1f3de259b1d677fca7d7d236/components/display/tools/esp_lvgl_adapter/src/display/bridge/common/display_bridge_common.c",
+      "bytes": 49465
+    },
+    {
+      "repo": "ctag-fh-kiel/esp32p4_fpu_benchmark",
+      "commit": "df707faec5fd73a82ad2e358716f3c62a266239a",
+      "path": "README_FPU_BENCHMARK.md",
+      "sha256": "0a83778afed100e6009bc0702480e3bb7bb61b4ac509386ab2d68d48de3d89dc",
+      "url": "https://raw.githubusercontent.com/ctag-fh-kiel/esp32p4_fpu_benchmark/df707faec5fd73a82ad2e358716f3c62a266239a/README_FPU_BENCHMARK.md",
+      "bytes": 6178
+    },
+    {
+      "repo": "ctag-fh-kiel/esp32p4_fpu_benchmark",
+      "commit": "df707faec5fd73a82ad2e358716f3c62a266239a",
+      "path": "main/hello_world_main.c",
+      "sha256": "99b1c804f014ef23f31ced75c984b8584621582fe7ee25c49b944d1d044b4a04",
+      "url": "https://raw.githubusercontent.com/ctag-fh-kiel/esp32p4_fpu_benchmark/df707faec5fd73a82ad2e358716f3c62a266239a/main/hello_world_main.c",
+      "bytes": 16842
+    },
+    {
+      "repo": "ctag-fh-kiel/esp32p4_fpu_benchmark",
+      "commit": "df707faec5fd73a82ad2e358716f3c62a266239a",
+      "path": "README.md",
+      "sha256": "6e3bd024ea81d5ecb6c3dbee7d32c46d7fd1854fabcafac54a16b786ec16de54",
+      "url": "https://raw.githubusercontent.com/ctag-fh-kiel/esp32p4_fpu_benchmark/df707faec5fd73a82ad2e358716f3c62a266239a/README.md",
+      "bytes": 10969
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/sdkconfig.defaults.esp32",
+      "sha256": "5cdcd65565399f0c21084ba0c64507d152f3be863110822826e1b4990cc71a26",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/sdkconfig.defaults.esp32",
+      "bytes": 185
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/sdkconfig.defaults",
+      "sha256": "f8789df6dd35ea20eff8ea9892aea99a4039350cef87377b9c44f4f02ee8fe73",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/sdkconfig.defaults",
+      "bytes": 498
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/platformio.ini",
+      "sha256": "1d749617e2d6a7ba763c2d8c465b740bf7edb79544581d6cad10cd0f40c2e4da",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/platformio.ini",
+      "bytes": 1135
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/main/decode_benchmark.cpp",
+      "sha256": "f64f5adceaca2b7eee810ff7c55c69adb859c30aab23dae44c2014469cd3eabd",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/main/decode_benchmark.cpp",
+      "bytes": 17684
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/sdkconfig.defaults.esp32p4",
+      "sha256": "986ac0eb6f231ff85d050e295709f525c5a199693f37bc106252cec41f6f833e",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/sdkconfig.defaults.esp32p4",
+      "bytes": 282
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "README.md",
+      "sha256": "1960b9dd79d8d39fa9353e65a1b55a0cb778c392d47d84667ba155e9cbd2ddd0",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/README.md",
+      "bytes": 12290
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "LICENSE",
+      "sha256": "0680adfab6fbe3f10940a4baa8f05c2e70150a8fcf41822c8f147451d0aee8f0",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/LICENSE",
+      "bytes": 10762
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/README.md",
+      "sha256": "525a8aaba8f4054b3ed6828afaa8169a7bb58579eacd76ee16444e8a214da4da",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/README.md",
+      "bytes": 13124
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "examples/decode_benchmark/sdkconfig.defaults.esp32s3",
+      "sha256": "b0259d8e67216b28bdf183bf1e325597fc8e7553e691c88ebf11aa64753319e5",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/examples/decode_benchmark/sdkconfig.defaults.esp32s3",
+      "bytes": 360
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/src/video/player_video_render.c",
+      "sha256": "53b6bcf97bc55669df20496415bc840db11dfaa78ec4143dd98f68b2d5ac6afa",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/src/video/player_video_render.c",
+      "bytes": 13430
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/src/sync/player_data_bus.c",
+      "sha256": "985678e4bdc24f618405c6817349e91f605ff785afe5fcb743077870ad237509",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/src/sync/player_data_bus.c",
+      "bytes": 6269
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/test_apps/sdkconfig.defaults.esp32p4",
+      "sha256": "8f6cd1ed68ce41d3acb0040765445af5a82f4322e8e3bbea711d9928b746c8f3",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/test_apps/sdkconfig.defaults.esp32p4",
+      "bytes": 856
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/src/core/private_inc/player_defaults_cfg.h",
+      "sha256": "4ba77b9e0f3da54b88c5eafa738f6fc60b29db6eecf7eda588d3b4165b7e24d4",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/src/core/private_inc/player_defaults_cfg.h",
+      "bytes": 2556
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/examples/video_player/main/idf_component.yml",
+      "sha256": "e78b9ebfabe2cd5690b0d8dd2a360f7e1cfe463c58636e0fc686c926fa62df88",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/examples/video_player/main/idf_component.yml",
+      "bytes": 811
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/idf_component.yml",
+      "sha256": "a5f3000bd8441016b23fd3970f9c5a9ce6d8420e42083af727b355ef7429a145",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/idf_component.yml",
+      "bytes": 1504
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/README.md",
+      "sha256": "7483a7fa8a4412a0311c3892b83af12fc40c021ef7d6116f70389a2dc6832986",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/README.md",
+      "bytes": 15424
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/examples/video_player/sdkconfig.defaults.esp32p4",
+      "sha256": "60cbff146d6caf5ba64ff2b68f169c72c044d20106286f46ecf98aa138253c23",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/examples/video_player/sdkconfig.defaults.esp32p4",
+      "bytes": 782
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "README.md",
+      "sha256": "32cbae4c9d4ecf634fb1e0135f25285d093cc3b64cacd1e8956a897c634241aa",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/README.md",
+      "bytes": 10713
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "LICENSE",
+      "sha256": "32395cf1ed0b65a896c6cdd93ba06ea08e5ef2349ea80b155bb1699af61efd30",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/LICENSE",
+      "bytes": 1169
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/test_apps/main/idf_component.yml",
+      "sha256": "5d3c0f71223fea8c5bfbf50f0427c8dd237683f0f2158cc199f206e367fceb74",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/test_apps/main/idf_component.yml",
+      "bytes": 1299
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/examples/video_player/README.md",
+      "sha256": "badaa51176eec4ea0e8c237a1bc64bfa674a78da35a795b9419a4c8ebe8e90bc",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/examples/video_player/README.md",
+      "bytes": 11885
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/src/sync/player_sync.c",
+      "sha256": "87aee6e011c925d4db9e6ef8c1ff8fd01dcbcf61d0f9bf2ce71a8de345b29bd9",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/src/sync/player_sync.c",
+      "bytes": 25750
+    },
+    {
+      "repo": "esphome-libs/micro-mp3",
+      "commit": "07c18fa2d045b89bcc19aa0c1dc5333ce69b39db",
+      "path": "tests/conformance/README.md",
+      "sha256": "acdd34a4de7e4217739425695d8fb27385287dab183b0bab4164c4e2ee33bdcb",
+      "url": "https://raw.githubusercontent.com/esphome-libs/micro-mp3/07c18fa2d045b89bcc19aa0c1dc5333ce69b39db/tests/conformance/README.md",
+      "bytes": 6050
+    },
+    {
+      "repo": "chvvkumar/ESP32-P4-NINA-Display",
+      "commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+      "path": "test/host/README.md",
+      "sha256": "e4bc491a4986d6c16a48ed1172bedc8c527c862f7da0a9812f0194bf153fae50",
+      "url": "https://raw.githubusercontent.com/chvvkumar/ESP32-P4-NINA-Display/c7b34400f7373cad94caee7493413a8ec5b58864/test/host/README.md",
+      "bytes": 3285
+    },
+    {
+      "repo": "espressif/esp-iot-solution",
+      "path": "components/display/tools/esp_lvgl_adapter/benchmark/README.md",
+      "error": "HTTP Error 404: Not Found"
+    },
+    {
+      "repo": "espressif/esp-gmf",
+      "commit": "4e477b7c5352a54e9a64cdafe3839abbaf143940",
+      "path": "packages/esp_player/test_apps/main/test_scenario.c",
+      "sha256": "b7f699938d56bf78cb45fa50e610d1a11e97d29967303ec10f2506274a04b3a7",
+      "url": "https://raw.githubusercontent.com/espressif/esp-gmf/4e477b7c5352a54e9a64cdafe3839abbaf143940/packages/esp_player/test_apps/main/test_scenario.c",
+      "bytes": 97247
+    }
+  ]
+}

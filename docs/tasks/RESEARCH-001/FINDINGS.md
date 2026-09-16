@@ -255,3 +255,10 @@ coverage. No blanket dependency upgrade, watchdog disable or speculative flush.
 
 The retained r43 firmware, startup and MOS state remain unchanged by research.
 Hardware voice notification and its fresh receipt are recorded separately.
+
+## Implementation scouting extension
+
+The Author-requested follow-up is in [CANDIDATES.md](CANDIDATES.md): five ranked
+P4 source candidates, discussion rationale, caveats and proposed discriminating
+checks. This extends discovery beyond HTTP; it does not replace this causal
+assessment or authorize firmware experiments.

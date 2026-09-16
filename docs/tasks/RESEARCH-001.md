@@ -80,18 +80,18 @@ Apply the same correctness and reproducibility standards to independent work.
 
 ### Frozen plan (continuation; no sample firmware execution)
 
-6. [ ] R06: Record this discussion, evaluation rubric and scope; freeze before
+6. [x] R06: Record this discussion, evaluation rubric and scope; freeze before
    investigating candidates. Search beyond HTTP: concurrent P4 multimedia,
    low-latency audio, emulators/graphics, memory-copy and driver pipelines.
-7. [ ] R07: Discover a broad candidate pool, then inspect source/history/tests
+7. [x] R07: Discover a broad candidate pool, then inspect source/history/tests
    of approximately five promising P4 implementations. Include vendor and
    independent work. Pin revisions and separate code inspection, author claims,
    published measurements and independent replication. Track negative findings.
-8. [ ] R08: Rank by relevance and evidence, not stars, affiliation or impressive
+8. [x] R08: Rank by relevance and evidence, not stars, affiliation or impressive
    demos. Trace memory placement, buffer ownership, lock duration, task/IRQ
    placement, backpressure, overload behavior and instrumentation where present.
    Describe unresolved gaps rather than invent a complete audit.
-9. [ ] R09: Write a reviewable shortlist with exact source links, applicability
+9. [x] R09: Write a reviewable shortlist with exact source links, applicability
    to our silicon/SDK, limitations and one proposed reproducible experiment per
    candidate. Distinguish copying a diagnostic technique from changing VDP
    semantics. Reuse QUAL-003 follow-ups rather than duplicate implementation tasks.
@@ -114,3 +114,18 @@ hardware experiments, reset, Golem work or experimental push. The sole hardware
 action is the already accepted attention voice at completed review readiness.
 Deliver `RESEARCH-001/CANDIDATES.md` plus query/provenance ledger; retain existing
 findings and make the relationship clear for someone without the chat history.
+
+### Scouting review checkpoint
+
+[CANDIDATES.md](RESEARCH-001/CANDIDATES.md) records the discussion, five ranked
+implementations, pinned source behavior, numerical caveats and proposed checks.
+[CANDIDATE-SOURCES.json](RESEARCH-001/CANDIDATE-SOURCES.json) preserves revisions,
+selected source hashes and history samples. First choices: adapter ownership
+contracts and micro-mp3's concurrency measurement method; no drop-in fix found.
+No sample built, run, flashed or tested. No dependency/source/bench changes.
+R06 contract was frozen in7909347 before inspection. R07–R09 complete; voice
+closeout follows documentation verification. Implementation awaits Author review.
+
+Author reaction during scouting: expressed interest in a future Vectrex console
+emulator project, then explicitly directed continuation of this research task.
+That interest does not authorize running the external Vectrex firmware now.
