@@ -1,0 +1,1107 @@
+[
+  {
+    "name": "CAL",
+    "file": "CAL.vdu",
+    "group": -1,
+    "bytes": 114,
+    "sha256": "03e21d231a2a7de58555bc192ed86bc890e7f99ead91023cb910937c3f60c5e5",
+    "barrier_sha256": "6ab6f5c1a50711d820f0a5f4629ae0cd1514637fd57bb1c4fa357a5ec82212bf",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "EMPTY",
+    "file": "EMPTY.vdu",
+    "group": 0,
+    "bytes": 311,
+    "sha256": "2b7dad2bdc53bbd41f0e9232a283c9d42248e0e399ee404e5fe70cdf39e41882",
+    "source": {
+      "name": "EMPTY",
+      "group": 0,
+      "bytes": 0,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "2b7dad2bdc53bbd41f0e9232a283c9d42248e0e399ee404e5fe70cdf39e41882"
+    },
+    "barrier_sha256": "37e9f3be8237a8c50bd2ebf47388cd17804eb1b8e344e59dd3c13d4a2f670636",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP20",
+    "file": "SHP20.vdu",
+    "group": 20,
+    "bytes": 789,
+    "sha256": "c83e8c9df3230a88479178fdf25957aab37a6804e8f03862bb0dfdf6e5059966",
+    "source": {
+      "name": "SHP20",
+      "group": 20,
+      "bytes": 478,
+      "setup_bytes": 311,
+      "probes": 12,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c0b22e806d80828c5ee290c4074ba29be74ba5b9c6a3ec89710d6acbddca71a3"
+    },
+    "barrier_sha256": "d3484538c7a0b8f92b5eba37851c324c72c3347034a17519f023dcee6ffb11b2",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP23",
+    "file": "SHP23.vdu",
+    "group": 23,
+    "bytes": 1558,
+    "sha256": "93b4237f0dfaa7ddb45739c18bf6c2a7f7fda4ee4ef1c8634dd8de87c13e6908",
+    "source": {
+      "name": "SHP23",
+      "group": 23,
+      "bytes": 1247,
+      "setup_bytes": 311,
+      "probes": 3,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f8747af71c2983eddb30cbfd2c8a8e962c0378a6de08598aac4548386bbc1b9e"
+    },
+    "barrier_sha256": "be51498b0fd33607e730fb7cfc21af713dbcddfa6172ff74c43decd7ca2d3eae",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP03_01",
+    "file": "BSP03_01.vdu",
+    "group": 103,
+    "bytes": 94994,
+    "sha256": "794c227a309221c8bd42277a187d621d635850f9f2b0fe41c9d636542e2417c8",
+    "source": {
+      "name": "BSP03_01",
+      "group": 103,
+      "bytes": 94683,
+      "setup_bytes": 311,
+      "probes": 4,
+      "quiet": false,
+      "upload_bytes": 93788,
+      "sha256": "1bc37a39664bf4c2a3b0d42a47baa89cf964d2f68aad7f1b3d599f9f75954d29"
+    },
+    "barrier_sha256": "8ffc98aaa933f716251afb90a620cb053f61e3ffea970642ced644deeedb60f8",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP07_01",
+    "file": "BSP07_01.vdu",
+    "group": 107,
+    "bytes": 10076,
+    "sha256": "b795be83a1159ab139a8abbd88ae844aea2244110699abe5e772c725de3043e6",
+    "source": {
+      "name": "BSP07_01",
+      "group": 107,
+      "bytes": 9765,
+      "setup_bytes": 311,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 9248,
+      "sha256": "4ceb8664dc3f68d8db49ba524d5d90859c275f7f82b987bb8b21b5b81f8df7c6"
+    },
+    "barrier_sha256": "024048d2dc111d520756cab08434ed220165ea92502d1ad736ba2a42ab5b68f2",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP07_02",
+    "file": "BSP07_02.vdu",
+    "group": 107,
+    "bytes": 10448,
+    "sha256": "aad4000f821cb6fd199819113c652f54037ab1aed2e5f2b42df5ff54e198a087",
+    "source": {
+      "name": "BSP07_02",
+      "group": 107,
+      "bytes": 372,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "647ce371375c94a352a1217da5fe23fbe6968aaa88ebd2f3ac76370b0c778a04"
+    },
+    "barrier_sha256": "47dba07701d4196cae7e283aaabb9734b6f505a5aaab6acd1f8a1e1aebd91de4",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP07_03",
+    "file": "BSP07_03.vdu",
+    "group": 107,
+    "bytes": 10785,
+    "sha256": "c89712c3e0bc8eeffa240f747d3824448fdc695229ba4c9f777855cf5b5f9d72",
+    "source": {
+      "name": "BSP07_03",
+      "group": 107,
+      "bytes": 337,
+      "setup_bytes": 0,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f5902d63eb1817e3852e2cb740864a52fb04719640aea314d7884ac41c316021"
+    },
+    "barrier_sha256": "1e646fb460eea09b3cb9b5eba37f582a013b1d32e1099ea81383008035742869",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_01",
+    "file": "BSP21_01.vdu",
+    "group": 121,
+    "bytes": 43514,
+    "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed",
+    "source": {
+      "name": "BSP21_01",
+      "group": 121,
+      "bytes": 43203,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 42644,
+      "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed"
+    },
+    "barrier_sha256": "c42d5fe594c275ff49e66f22b5d281827f4a205660382a7be31614ec78b51c43",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_02",
+    "file": "BSP21_02.vdu",
+    "group": 121,
+    "bytes": 43806,
+    "sha256": "cdabb75a863a320980dfa28e51c4f70bfc4ec5c9dfd78d9ea433df4175ae470d",
+    "source": {
+      "name": "BSP21_02",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "5b15f5bbbb76e5c27d8f7ba8d82bd5e4b4d2d3cf7b237296bbb64c68fdd965eb"
+    },
+    "barrier_sha256": "9efac445deea523d6c0382c14823b2f0a75b9b4f534fa109d7458e5d005fbdd0",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_03",
+    "file": "BSP21_03.vdu",
+    "group": 121,
+    "bytes": 44098,
+    "sha256": "27626c8c17c29b3da7c1bb8e432a911251f1052a36ba2b994a82826bb1bc922e",
+    "source": {
+      "name": "BSP21_03",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c9f7a75f6f1e7d7fd66c9609635f13a01c765f721aefed6f0b7f1c3075b7ad51"
+    },
+    "barrier_sha256": "33482e9c172ffa724b6e03b67aa75b0c3d93da1b5e05c8779ed6f1dd531918d8",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_04",
+    "file": "BSP21_04.vdu",
+    "group": 121,
+    "bytes": 44388,
+    "sha256": "6b4468e75bf64761a745be98410f6ec774a15dd47662c4d0c74ac102cb9ad10f",
+    "source": {
+      "name": "BSP21_04",
+      "group": 121,
+      "bytes": 290,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "6674cb6e9511396ed0d929d3967d1c1d54d11adc12bcf98adcb08164b00e7fca"
+    },
+    "barrier_sha256": "b263c6ae2fa330d307661b663ac43fb2ad7f781617354e67b3c29c135400c3ea",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_05",
+    "file": "BSP21_05.vdu",
+    "group": 121,
+    "bytes": 44680,
+    "sha256": "290a6bc0e1765e4e55c61451e1d921d662b652f6e4e82d01a078763e328a749e",
+    "source": {
+      "name": "BSP21_05",
+      "group": 121,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f605bcd7241553ae7ddbc124a8eb67fbf4fd9f84d2925e4eb245cf6b3a2f308c"
+    },
+    "barrier_sha256": "9d482cbbab9154fc07461eb51e4c97d87852591160b82c99cc6f2b391fcdc284",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP21_06",
+    "file": "BSP21_06.vdu",
+    "group": 121,
+    "bytes": 45004,
+    "sha256": "1ec07655d52a99ce846fb98d5e8f0a675f65c90d76f8810a76c24cb4db34cdf3",
+    "source": {
+      "name": "BSP21_06",
+      "group": 121,
+      "bytes": 324,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c6f7239020b228b4e6ef6c01e999b1d1905fe0e46a4954a7ab3da23e94b24993"
+    },
+    "barrier_sha256": "9cbb983d2abaaf9e959f889326cef573a1b3fb8b9557780a15252da42110996d",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP22_01",
+    "file": "BSP22_01.vdu",
+    "group": 122,
+    "bytes": 26506,
+    "sha256": "906cdb521a2f2a2db99b4725a859a47f1f781ea25f27f740025f3f51c2c8ca78",
+    "source": {
+      "name": "BSP22_01",
+      "group": 122,
+      "bytes": 26195,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 25732,
+      "sha256": "906cdb521a2f2a2db99b4725a859a47f1f781ea25f27f740025f3f51c2c8ca78"
+    },
+    "barrier_sha256": "7886cde1f9e4472a219dcfacd18c6319ea5a636a8b87548f3921fe3fbb747a78",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP22_02",
+    "file": "BSP22_02.vdu",
+    "group": 122,
+    "bytes": 26517,
+    "sha256": "3a91ee88e3c8d07ca79cb405f7b05b52ac62e2ae917ec93d53ec1d6f50439861",
+    "source": {
+      "name": "BSP22_02",
+      "group": 122,
+      "bytes": 11,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "011b46ce235474034f9a73eba5be5fe18260be7b456eccc04620d31ee169e29c"
+    },
+    "barrier_sha256": "2b8f1df9d6304582683fa20bf1e1ba5327609e0f14e3d1a4dfba12cb7bd26778",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP22_03",
+    "file": "BSP22_03.vdu",
+    "group": 122,
+    "bytes": 26520,
+    "sha256": "de519cada4609a00c9783166501e6692ad37d12497fb8b6e978d9ee5847f6cb8",
+    "source": {
+      "name": "BSP22_03",
+      "group": 122,
+      "bytes": 3,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "8c85bce2a3c8d5e6887d530ebe91901f940e43a066ddb5bfeba9ba8f12cdff10"
+    },
+    "barrier_sha256": "6d323b99c989ed8b5f396ca225afc2a97f58a2185f4b069193552d529a8cf825",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP22_04",
+    "file": "BSP22_04.vdu",
+    "group": 122,
+    "bytes": 26542,
+    "sha256": "c210b0f4062723865d5d54ea630d3095200bb913e9b643ac86268ba03f0eee13",
+    "source": {
+      "name": "BSP22_04",
+      "group": 122,
+      "bytes": 22,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "66e51af6df00a56b1155b06b5410e9b14c38f87a65fc99ef079ffea63c5a4193"
+    },
+    "barrier_sha256": "e4aceeec76dd184cf1d593a999c6fa1c0290020601bb340e9aefad27ead947d9",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP22_05",
+    "file": "BSP22_05.vdu",
+    "group": 122,
+    "bytes": 26548,
+    "sha256": "be7c4f914ee18a5957b0596c45f711a613963d0468c65fa09fdda9a3b4fd9a66",
+    "source": {
+      "name": "BSP22_05",
+      "group": 122,
+      "bytes": 6,
+      "setup_bytes": 0,
+      "probes": 2,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "46c6918cfa6b18c66cd46b86f6a52d4dad45f9d3fe9258cc39c5d07a1ab540e4"
+    },
+    "barrier_sha256": "c6150c3386ed3da9fde41b7fdecdf3457a1aab75b49be411a1ae19f79fbd909b",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP25_01",
+    "file": "BSP25_01.vdu",
+    "group": 125,
+    "bytes": 30317,
+    "sha256": "28f74781a958acd0f07f0b833fdc985568780ab82b56c02bc636b7af4a5ee174",
+    "source": {
+      "name": "BSP25_01",
+      "group": 125,
+      "bytes": 30006,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 29476,
+      "sha256": "28f74781a958acd0f07f0b833fdc985568780ab82b56c02bc636b7af4a5ee174"
+    },
+    "barrier_sha256": "44fa77ffb3f6ebcb828fe58a714b5b0c72cd0d1d8d3132c3003d5e2416e2c964",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP25_02",
+    "file": "BSP25_02.vdu",
+    "group": 125,
+    "bytes": 30602,
+    "sha256": "e03c382206fb08a11730abb01e4aa566a154db80d7fbd5851388726db69e77a4",
+    "source": {
+      "name": "BSP25_02",
+      "group": 125,
+      "bytes": 285,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "79dc36405310812252d06b4e0a04b190c3c66bec865aec7f72c9242fe36e462c"
+    },
+    "barrier_sha256": "8e1bad88a0666c9606e2a44525c5f59829823a0466c13b8e2c46c8cadb85dd40",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP25_03",
+    "file": "BSP25_03.vdu",
+    "group": 125,
+    "bytes": 30891,
+    "sha256": "6d1ddedf0dfecc70cc8da28b97ca3cbf55b8de092dee6b59413fc27d06b47486",
+    "source": {
+      "name": "BSP25_03",
+      "group": 125,
+      "bytes": 289,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "64a71ceaf29248bdb24b6091da11717a683b9dedeb22e21dca604bdf9394ee87"
+    },
+    "barrier_sha256": "6abb1ebcef7f9ab450f604f3bcd42401e2884dda74d214b03c9b74e02ba8baea",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP25_04",
+    "file": "BSP25_04.vdu",
+    "group": 125,
+    "bytes": 31206,
+    "sha256": "69c612baebaa1702a6a47b3c51a2744e61e5fa60f08affeaa447ea429e197df9",
+    "source": {
+      "name": "BSP25_04",
+      "group": 125,
+      "bytes": 315,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "55fc06047250124c5ee4ed1ea84f7df158517d6181009b6bb7390668a2d686b0"
+    },
+    "barrier_sha256": "47365a5c6da6addc12fceaf00082842a74835335823fc90f0e2d55c07d6c4cd8",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP25_05",
+    "file": "BSP25_05.vdu",
+    "group": 125,
+    "bytes": 31490,
+    "sha256": "e446197578daf8bcbf1bb5eab2ca3176dabe02cf3fdfe6c3fe779ab34e910d1f",
+    "source": {
+      "name": "BSP25_05",
+      "group": 125,
+      "bytes": 284,
+      "setup_bytes": 0,
+      "probes": 1,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f43113abcfefc454774b6474eade99d9caa4329707586780089723c15b14a808"
+    },
+    "barrier_sha256": "6cd82cda6c628a39f4b587f4f128d65b4d52fe81c02b938196d992143d3c19a2",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP26_01",
+    "file": "BSP26_01.vdu",
+    "group": 126,
+    "bytes": 61717,
+    "sha256": "331e000a63fcefbe66d916662be0c51e1d6f0922fe2858fae5a2f934c845781b",
+    "source": {
+      "name": "BSP26_01",
+      "group": 126,
+      "bytes": 61406,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 60712,
+      "sha256": "331e000a63fcefbe66d916662be0c51e1d6f0922fe2858fae5a2f934c845781b"
+    },
+    "barrier_sha256": "716539d1147aa24dd0539f10008f90f92665720ffdff28e33bdc335d79f54196",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP26_02",
+    "file": "BSP26_02.vdu",
+    "group": 126,
+    "bytes": 62025,
+    "sha256": "ea403b5af1bfbc0a88d30dfa91857c5ab104d06105e96e688140a74df02bd32b",
+    "source": {
+      "name": "BSP26_02",
+      "group": 126,
+      "bytes": 308,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "9525bb86440a3e5c851fa78798022dec9717b1263af0885d1ceac55bbf5feeb0"
+    },
+    "barrier_sha256": "07dd0363a89f7aab6505f4cdee07b903c3a14bd4e1323d64eda5ca5e76e3ae1e",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP26_03",
+    "file": "BSP26_03.vdu",
+    "group": 126,
+    "bytes": 62293,
+    "sha256": "631580df4e626f0d91da2e18de1b90a562cc0ff322b2baca5232ea738b8981a0",
+    "source": {
+      "name": "BSP26_03",
+      "group": 126,
+      "bytes": 268,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "675f2a9e415132722bd6a758d1e35033da1c8d4815916056f8445cbe1888c5a0"
+    },
+    "barrier_sha256": "3ea0f38747bba5f289b4af16d77f0aaa290d7dd8ac8fb49983344a7fa6de80bd",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP26_04",
+    "file": "BSP26_04.vdu",
+    "group": 126,
+    "bytes": 62588,
+    "sha256": "0681c9de9c13e78beb7a5d72b4409a34292fd73b3eefffd0cbd0c2f752b16f5b",
+    "source": {
+      "name": "BSP26_04",
+      "group": 126,
+      "bytes": 295,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "c11ce1e7471986b18724419fce55db221370f5c11f9c3af6e247f99691c9b19c"
+    },
+    "barrier_sha256": "23844fdb61e9ff819568916c55b995c9201f6407ba036163641d825cab3537aa",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP27_01",
+    "file": "BSP27_01.vdu",
+    "group": 127,
+    "bytes": 49731,
+    "sha256": "fa9866ee74f429057703f07e40b7d6e5e9520c33d155aeafab5c0ad36b41fced",
+    "source": {
+      "name": "BSP27_01",
+      "group": 127,
+      "bytes": 49420,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 48852,
+      "sha256": "fa9866ee74f429057703f07e40b7d6e5e9520c33d155aeafab5c0ad36b41fced"
+    },
+    "barrier_sha256": "ba8170f771c4d4293d8faff0044ae5a6cf50e5bc9716d85718ce870d8cb12198",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP27_02",
+    "file": "BSP27_02.vdu",
+    "group": 127,
+    "bytes": 50016,
+    "sha256": "c0c77d701ec04e71a3075550138dfa917cfc04ec9cb57b7439b49d31c326b945",
+    "source": {
+      "name": "BSP27_02",
+      "group": 127,
+      "bytes": 285,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "ee37fbd72c82b9c22881a3e4bbf10d450a069ba20b411afc32b9303d4b3114a4"
+    },
+    "barrier_sha256": "507746bb577b509fb4a6803be21ac6a3fd8fd84766aa53ed1774bdcba7276b6f",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP27_03",
+    "file": "BSP27_03.vdu",
+    "group": 127,
+    "bytes": 50279,
+    "sha256": "535e46d99f8e5e64b55f05dd65eb7b4d8c47fc0702bbb4c5b5a85a7c06d632c7",
+    "source": {
+      "name": "BSP27_03",
+      "group": 127,
+      "bytes": 263,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "0a9222e40cf1403f9b289e531247b2b5cca95019d105ea9df2e8f4326d4cd367"
+    },
+    "barrier_sha256": "59a0a21a0ef1efffcecf2f346a164d730efe7049478087963dc4a11aa86cd4ff",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP27_04",
+    "file": "BSP27_04.vdu",
+    "group": 127,
+    "bytes": 50571,
+    "sha256": "ea6169ac2f852bd2103322659ca650740dc73a672928886e757521460aec761d",
+    "source": {
+      "name": "BSP27_04",
+      "group": 127,
+      "bytes": 292,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "66e44b323317c44ff719babd80a7680c8af17b9b2a539ef931238483d4faa549"
+    },
+    "barrier_sha256": "7aec989eaa7f3ec5ce14865ce39782ba8a1715f7ae17d508654e46a5b17142dc",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP29_01",
+    "file": "BSP29_01.vdu",
+    "group": 129,
+    "bytes": 26012,
+    "sha256": "1159cdf9576c0f650dda2f96b1b48fd29bb847cddf49128e7142d6e93bacfd45",
+    "source": {
+      "name": "BSP29_01",
+      "group": 129,
+      "bytes": 25701,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 24276,
+      "sha256": "1159cdf9576c0f650dda2f96b1b48fd29bb847cddf49128e7142d6e93bacfd45"
+    },
+    "barrier_sha256": "cf7f68ba8be0e727fd612bf4320f3905081d69d63e246f551714ee9a1dd4fcc3",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP29_02",
+    "file": "BSP29_02.vdu",
+    "group": 129,
+    "bytes": 26330,
+    "sha256": "e0a30394978946f24ff02f66def14fff602423510b9bdd409c378d218339a2fc",
+    "source": {
+      "name": "BSP29_02",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "93094e6767f267c11f9b037d73034d06b1a517582638bdbc127b1359814123af"
+    },
+    "barrier_sha256": "7544ad62acc9a0d426ddc0308207b9521e509a5e10c86f37743c3ddee51e92c6",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP29_03",
+    "file": "BSP29_03.vdu",
+    "group": 129,
+    "bytes": 26648,
+    "sha256": "86bf7f0bd886a6a38879e6c0495fae0790b79e56cb5d69c9a110cc49d305831e",
+    "source": {
+      "name": "BSP29_03",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "ffb3a115cceb1e896f796d4a53316c7d9a17fb1e675f7ca5cf9bb0513075d460"
+    },
+    "barrier_sha256": "78772a3f1a0ce163595e0b89dc77a4ffacdd139b36903105b35efad9a649cc54",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP29_04",
+    "file": "BSP29_04.vdu",
+    "group": 129,
+    "bytes": 26966,
+    "sha256": "681a291665bf8bb4f9e12ef734cadf643ddab5fe03a2e60ff6ec0c88c4158178",
+    "source": {
+      "name": "BSP29_04",
+      "group": 129,
+      "bytes": 318,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "b7280dfc0a7e963623e004d55c43384185d3c07ad8a7ec5329e473874b21b33a"
+    },
+    "barrier_sha256": "dc2b1e8e5f1be0d2a614dccc9438abc0659f83f0b39206927a3293c7266bfdad",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "BSP29_05",
+    "file": "BSP29_05.vdu",
+    "group": 129,
+    "bytes": 27290,
+    "sha256": "e3b3c450e2296e2189811464ae62c009725a90f37354908b786fb33b38f70d87",
+    "source": {
+      "name": "BSP29_05",
+      "group": 129,
+      "bytes": 324,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "25062018bbc414456d9a7f4822430f46f88e74d49e971daedd0af8c891adf554"
+    },
+    "barrier_sha256": "d7cd8355e5d6adc8d62604089a821b32d38cabbf6c2a09d2ae7144571c0bad20",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SCROLL",
+    "file": "SCROLL.vdu",
+    "group": 201,
+    "bytes": 4799,
+    "sha256": "759dc6545c7a1da0c4bc5ace7defd0c462c0387abe92c4e20fb7efbbb9b7df55",
+    "source": {
+      "name": "SCROLL",
+      "group": 201,
+      "bytes": 320,
+      "setup_bytes": 4479,
+      "probes": 1,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "9f9f7a27d46b63da4d9ded2c1593d3f83b5005f120c891759d767b4fc14f397e"
+    },
+    "barrier_sha256": "406fb814cba4c120a98f5e3774c1adb325845ac63249590cd700a57937bfb09c",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "CLIPROW",
+    "file": "CLIPROW.vdu",
+    "group": 202,
+    "bytes": 5439,
+    "sha256": "06280998b32013ac0b0fc96aa7da7d91f01e29b583a02256ba7c473c2ffba47f",
+    "source": {
+      "name": "CLIPROW",
+      "group": 202,
+      "bytes": 960,
+      "setup_bytes": 4479,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "e848483ebf72de3585a44d79b059e9a3a9c0f6391d4a4686971d94412738a4b0"
+    },
+    "barrier_sha256": "06b9ecd1a8744e0f8cdfc51026533f7dedfef3242916826a8b12f867b2bc3a58",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COMBINED",
+    "file": "COMBINED.vdu",
+    "group": 203,
+    "bytes": 6335,
+    "sha256": "9c193165d33a396b70bb400c3bb13b2a6835191e5dfbfb149b460ef670b1e1d1",
+    "source": {
+      "name": "COMBINED",
+      "group": 203,
+      "bytes": 1856,
+      "setup_bytes": 4479,
+      "probes": 2,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "1055c422e7fce211be63d70450923ac24f5f52fce8055c9a66cd2abde3f1eb41"
+    },
+    "barrier_sha256": "b3a6c9f19b969e9430bbe9327e7bf7dd0ed7d08b78b349e51b86d5101a2b1b76",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP01",
+    "file": "SHP01.vdu",
+    "bytes": 4650,
+    "sha256": "42c4ba71f61fb24463a30ca0772f73575d94cbe8f7160c6c843fd5f173cd31ba",
+    "source_sha256": "0e4f2b0f03abdfa9679c85f9dd4ada565dbda7ea1776d5d184ac458107d59ca5",
+    "barrier_sha256": "69000fc1f57e1a0df1c5f2ef7539a62bf32ac9dced46b50b68c77dd70eeffac8",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP02",
+    "file": "SHP02.vdu",
+    "bytes": 1490,
+    "sha256": "cdc4ea6b697b538f0d63b882c4a23e7b4edab19440840e53a77a45d9f64776bf",
+    "source_sha256": "4f39a14ff220b70f17fa40da5174afffc6b1c877bf892ae3e1d90da0bc1cc0ab",
+    "barrier_sha256": "32df332aa11cc297d8859feceb47bb38503ae654d87f7b3ec23d9e4b6f93e7a5",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP03",
+    "file": "SHP03.vdu",
+    "bytes": 1108,
+    "sha256": "1e056ac8234bca57292a1251e3d2a34df60e248e1e8d2f61a0dbcb4cb654d660",
+    "source_sha256": "9b8b36dd688d16126f89b21f2469a19d9b0638a561608f4842a9426806a84a5c",
+    "barrier_sha256": "df36c51cb5bbd56ae57e080d3917886dd308fc89b0472737b22fcaa8f1af124a",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP04",
+    "file": "SHP04.vdu",
+    "bytes": 957,
+    "sha256": "f69bfcc622ee82bf7a41aca9b103e69e4a10f7ed4838f457c17322decd5afc9c",
+    "source_sha256": "38ee32a9b65a8cb95dcf4af1a4c2613ca515494c008c4249de42e44d68ce9adf",
+    "barrier_sha256": "31155e3dbdd37b128fac5ce87bcd16480c0c98e52358adf0503ffb5eea9e2662",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP05",
+    "file": "SHP05.vdu",
+    "bytes": 761,
+    "sha256": "9ac80c84afca76079cf48b1d51a674c39991a4669b097d1359e2cb795c8c6113",
+    "source_sha256": "21a44b4770f8e438bf557676f580eda9bf72ae8ff044b5300f1716c2fe9439c5",
+    "barrier_sha256": "84f83058ab4a062f7d85f7701a705b21c00aec4b2639397ed5f1ec1b61f940a6",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP06",
+    "file": "SHP06.vdu",
+    "bytes": 744,
+    "sha256": "19836822c667ab7451bc870621f9479bcef9bd1f540ce552ab2a84923ac69a23",
+    "source_sha256": "01fb2bcdd4a73972364a9a10a992885d5f48ad328d9a684ee9c359e1a385e2af",
+    "barrier_sha256": "af81da9e25b020edc245e0f03f1d25527b576931f60f1357726bb67e7f5c6548",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP07",
+    "file": "SHP07.vdu",
+    "bytes": 703,
+    "sha256": "2e351da0ca8b964d799502e39ec1edd3a59808dbb3e27159fd57502d3f43cc17",
+    "source_sha256": "c00eff26677aae8233c3da4b02c46f829f36c6c9fc8921d520673352541e026b",
+    "barrier_sha256": "c81a940489e51efd82375da3a63b3e937c485229db82b7994f991d0cdbaae175",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP08",
+    "file": "SHP08.vdu",
+    "bytes": 681,
+    "sha256": "648ab6d43ee140426054ab87f764b54aaee874e615c24e819637b37a7264f636",
+    "source_sha256": "7466f6c8da7f7a5084f48f8478694a023f343bd61ac226fef1d93ee010105a6a",
+    "barrier_sha256": "fa6231ddf46822d6bff10e1ce51bcfa5577e60bc7d3242d7f66256038cc5d1a7",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP09",
+    "file": "SHP09.vdu",
+    "bytes": 704,
+    "sha256": "a925ba5bf8567fff721955ce83d62b48584e0b11efe1645ba9a505093f0933e8",
+    "source_sha256": "6979f183e219b409ee264c81c3af45da6d7f8cb130420327a1946a0d27b265ad",
+    "barrier_sha256": "ee796fa41e66c98e027ab2358264b8f376645d9b2c195517ef6dd954e2940aa5",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP10",
+    "file": "SHP10.vdu",
+    "bytes": 662,
+    "sha256": "1478493cbc1dbfced484dc193917792d8e88811f18bff59a4b518b20948a3d37",
+    "source_sha256": "4584ac9e7cf3f55b400ef36a7abd7b96063bee5bf07110d276af5e36d41aebc9",
+    "barrier_sha256": "ef7f37bf4444ab766085a09980ad3b8a89c327ad2627776f851c324a6f93ae8b",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP11",
+    "file": "SHP11.vdu",
+    "bytes": 1006,
+    "sha256": "b478b4c1a8bcb2e186d35630caf5107bb583d572a5dee0a6630c87a4ba5ded10",
+    "source_sha256": "15ea78a3a959c3ac7457c07dd3ae5a8a92c0d219df249f599bad45ee0427572f",
+    "barrier_sha256": "58583a487dc618aa807899c57f31efef125cc1452915acaf100207bd0d47c12c",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP12",
+    "file": "SHP12.vdu",
+    "bytes": 941,
+    "sha256": "a513b18b262bcfad93602cf442eca2d924f56a922e762e135225441ae79a9e99",
+    "source_sha256": "f869df1110f81cb8932bad0bb49ca316abdd8e7b9998e138aae5f52e49c5aff3",
+    "barrier_sha256": "115e72492364c3be91520a2437fac6a3197d20986150100616dee3a5278e8172",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP13",
+    "file": "SHP13.vdu",
+    "bytes": 840,
+    "sha256": "8192a6093ca59a4896ea8b433f5dfefe2405d1b7b26f2e7a0985e0fa0a76c6d9",
+    "source_sha256": "0b2e87bc0da134d54f22bc6b712eb18872a39f9f28df435641cd45c52716a9be",
+    "barrier_sha256": "ba265d5a6c4f33f6db6f06493e25b7570994f665869d283b2fc726f83b68b558",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP14",
+    "file": "SHP14.vdu",
+    "bytes": 761,
+    "sha256": "7aeaa05bb5cd15a31c3a9e065c25ab339bbb71a8455783b6e667c88c08093fda",
+    "source_sha256": "4b4f93af815e4fbf8f52286e0a5448eab14273e26e59f76cec174d90fad98afd",
+    "barrier_sha256": "84f83058ab4a062f7d85f7701a705b21c00aec4b2639397ed5f1ec1b61f940a6",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP15",
+    "file": "SHP15.vdu",
+    "bytes": 674,
+    "sha256": "f43a331d5cc544d9b7b41cc9db5eefbcc5fbf1348102e1962d6348fdeccac52a",
+    "source_sha256": "ff5e702357b5175a50599ee0df255a6f1bf4f8af85c798c7699d04cecc385247",
+    "barrier_sha256": "bf1432f55b3f8f069d40695c831af20e6c1feeaeeb2aefde4adb3f6f5c0d0720",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP16",
+    "file": "SHP16.vdu",
+    "bytes": 928,
+    "sha256": "6e5a8da58967e3d6c6af5a43b9f64d15a78c99b8b7c307270a73709e8256a264",
+    "source_sha256": "6bf079105ffdf2fc55fd3f6504a0e48f97d3fc5a749d2cff85f403c4aa928c37",
+    "barrier_sha256": "91b4529807fb7f3dc5c7cefc4c0c3da07f17342f711fbf829083b4afca72449f",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP17",
+    "file": "SHP17.vdu",
+    "bytes": 1290,
+    "sha256": "5874fc72bd76b947a2a5647f8892194274c2544ec766047f51360a6d92f2b228",
+    "source_sha256": "46b2afeb4ea1398eedd0796ac07eebef22a6751c8823004b7d624a1aaa427b9c",
+    "barrier_sha256": "af2cc1e897faa8932155b298263525c810365f25fc8fb7615e34f94407e289bb",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP18",
+    "file": "SHP18.vdu",
+    "bytes": 1655,
+    "sha256": "ac53e3617bff4f7c2fdc8543e686b9c94ee830f8b96e1de2c40f3064d64703a1",
+    "source_sha256": "00dc56dae08d8e9bafed7190e8bab9205febb2afa9e49c3f208a21e76d7a8078",
+    "barrier_sha256": "24f6fa752b086dfa57c04cc7565e6191591e89de69410182071d2a00b6d6496b",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP19",
+    "file": "SHP19.vdu",
+    "bytes": 869,
+    "sha256": "6774dc7258ec3a7110c632576230514a25f1748f34cc3076bac2555a0262ffc5",
+    "source_sha256": "4a57ea48ff4b9f5998953347c9a118ad572300a5d04c7ef581239eec2a5fa9e8",
+    "barrier_sha256": "669f114b4f86ca5cc389aaf88a8985b5ac47f7cfdca0f6f72973131cdd82b760",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP21",
+    "file": "SHP21.vdu",
+    "bytes": 779,
+    "sha256": "53378c5901c867cc1b26e88025cdf250de3227929773af51be23f9d04314de42",
+    "source_sha256": "98ad3e54414690e3933e3d337d3dbfb41ce36a4e363a7bc85b704e6fe9bbf2ed",
+    "barrier_sha256": "a291eaa21f9df49152a1ece274ce55430ec0636ef35f561611d000b29061c4f7",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP22",
+    "file": "SHP22.vdu",
+    "bytes": 1581,
+    "sha256": "b05ab4ec4457347c8c981e05e5475233a232313aa1cb5efe8bbc2f3ce70b17a6",
+    "source_sha256": "58d1832761436b16eef28a480a30c40919131f1454ba1dbdf2cb5136a0d76a82",
+    "barrier_sha256": "3b13a238280be513fdd208c30f4cce6e982380cfff43bc83be266420abd75902",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "SHP24",
+    "file": "SHP24.vdu",
+    "bytes": 1663,
+    "sha256": "8819fd04faaf05bd3d23bc36deb5043d8126d39e780d96f3a53f4102cc78ec91",
+    "source_sha256": "17b4ea79957e990a3920459fe35bd1fd82a8f33d286d6d0d38cc03f78ff38746",
+    "barrier_sha256": "4bea16c118a379d9086347a5cdccd54825dbd03a5683954135bd5e9a95375264",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "FONT01",
+    "file": "FONT01.vdu",
+    "bytes": 356,
+    "sha256": "82cf10a498dadac358db5b1d5ea7fe75c6043a88431a800fedd77653fae89c52",
+    "source": "PORT-008 font-coverage",
+    "adaptation": "binary VDU transport; mode20 instead of8, same8x8 pixel geometry; omit ECHO",
+    "barrier_sha256": "8a35746710cd6517eaf04720479f7de7605cd769e39ad41df8f25711adb4ea84",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "PAL4",
+    "file": "PAL4.vdu",
+    "bytes": 559,
+    "mode": 10,
+    "sha256": "6b6df0307dbf0a9381eb36082e922bfcd765b9331e11ac44ef7e4e4067825a80",
+    "source": "PORT-008 palette-coverage",
+    "oracle": "oracle/oracle.json",
+    "barrier_sha256": "864b20a04158f2665156a530fd6dca2a70762d5fded150e8a9a83fb0884c39dd",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP4_SETUP",
+    "file": "COP4_SETUP.vdu",
+    "bytes": 482,
+    "mode": 10,
+    "sha256": "649a1ad4854a610e3ad6777b636b89fc4d3f1d3eee5825b9f97f60e7d6407d19",
+    "source": "PORT-008 copper-coverage",
+    "stage": "setup",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "85d77289125f25716b0d414f201bf6707fbfc7aee9a157bd584bb1f5f5b8a98b",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "PAL2",
+    "file": "PAL2.vdu",
+    "bytes": 547,
+    "mode": 11,
+    "sha256": "2e3e20bee9c1a7538c7c09f199efef9d2b8fc1fc8f18ce8c57e424d1be395e21",
+    "source": "PORT-008 palette-coverage",
+    "oracle": "oracle/oracle.json",
+    "barrier_sha256": "947f40bb652bbe514add1d4848a43fdc474481addd1d96f3afe09a27d297bd69",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP2_SETUP",
+    "file": "COP2_SETUP.vdu",
+    "bytes": 470,
+    "mode": 11,
+    "sha256": "422638f2a088298ce8786b895fd4c85706657b1860ecf89b210445e026a591f3",
+    "source": "PORT-008 copper-coverage",
+    "stage": "setup",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "d86d06cb151ec24ed670bd020399a02eb9ffa3b701c09f9ecfc3a08201713ca5",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "PAGE_FRONT",
+    "file": "PAGE_FRONT.vdu",
+    "bytes": 71,
+    "mode": 136,
+    "sha256": "a86dcec7e8bb646bd5cd1774e4908e52944e50ce6b10d03fcf53281be8d20f00",
+    "source": "QUAL-004 literal page control",
+    "expected_background_rgb": [
+      170,
+      0,
+      0
+    ],
+    "expected_white_rectangle": [
+      40,
+      40,
+      79,
+      79
+    ],
+    "barrier_sha256": "7c5eebcf37f5b6c770e63c6ae06ca6c453150ee0f95f228850d359ee45f4055d",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "PAGE_SWAP",
+    "file": "PAGE_SWAP.vdu",
+    "bytes": 74,
+    "mode": 136,
+    "sha256": "ce6dab839bb5f4c41616a6a5b43f472acd690c9e6c1c6b54c292d6f68c736b09",
+    "source": "QUAL-004 literal page control",
+    "expected_background_rgb": [
+      0,
+      170,
+      0
+    ],
+    "expected_white_rectangle": [
+      120,
+      100,
+      159,
+      139
+    ],
+    "barrier_sha256": "182364a52d6f8980f5decc1f0979b209fbd9c1f95b664533fce51e95cab1155e",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "PAL16",
+    "file": "PAL16.vdu",
+    "bytes": 631,
+    "mode": 9,
+    "sha256": "8b7c9c4c04780e67ce2f24f882c5c573504b4de12b54f8ed3d26925a268ca6e2",
+    "source": "PORT-008 palette-coverage",
+    "oracle": "oracle/oracle.json",
+    "barrier_sha256": "0c5ad0e3580d60d20ef68faf1529cd41b5d8f04c3e6265c2bb9ceeb665e6566d",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP16_SETUP",
+    "file": "COP16_SETUP.vdu",
+    "bytes": 554,
+    "mode": 9,
+    "sha256": "0c03248e544211fbc61998eddcf2ea5e4e0482cb1daeb74864aacff49e336fa6",
+    "source": "PORT-008 copper-coverage",
+    "stage": "setup",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "bb463e286fdcb48429bc5a3b5f9b910cfa7307af539ce7983245d2348467f263",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP16_EDIT",
+    "file": "COP16_EDIT.vdu",
+    "bytes": 630,
+    "mode": 9,
+    "sha256": "e3e98e7a5efc4c8b138445e1992079314cf0ca058a074ec938975ab811bcc41b",
+    "source": "PORT-008 copper-coverage",
+    "stage": "edit",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "127bc490179313f253a2cc5ecad37d33925c126cd8b06d61c0cc0cd6be09292d",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP16_REPLACE",
+    "file": "COP16_REPLACE.vdu",
+    "bytes": 687,
+    "mode": 9,
+    "sha256": "2f6f3b931e30959a78b386875c17685f473a6f1404a405b6812147658d5d67a3",
+    "source": "PORT-008 copper-coverage",
+    "stage": "replace",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "aabf4e62c792be3fde3a042379d457e405925f5bf4d0e660dd37f66741ef61c5",
+    "state": "prepared; execution outcome is in run records"
+  },
+  {
+    "name": "COP16_RESET",
+    "file": "COP16_RESET.vdu",
+    "bytes": 734,
+    "mode": 9,
+    "sha256": "af4edb82d1452d6551ab3eab28e08353a385c7a5fed533f30a87e5a390db70f0",
+    "source": "PORT-008 copper-coverage",
+    "stage": "reset",
+    "scope": "Static row palettes and composed SW/HW sprites",
+    "barrier_sha256": "35fe85f332dab4d8485156fce6a2a83634c8faf465f9a7df1ef7e027d5ec9931",
+    "state": "prepared; execution outcome is in run records"
+  }
+]
