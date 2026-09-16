@@ -344,6 +344,31 @@ cannot itself cure a long individual capture stall. Report render completions
 and browser presentation separately. This is a deferred contingency, not an
 authorized implementation or a change to C1–C5/RLE investigation sequencing.
 
+**Additional Author-requested fallback ideas:** investigate only if we cannot
+meet the current **512×384, 64-colour, 60 Hz** output target. This does not
+withdraw the longer-term 256-colour/eight-bit transport goal. P06e owns review;
+these are ideas, not authorized implementations or performance acceptance.
+
+1. Compare sustainable non-divisor capture rates such as24,32 and45 FPS with
+   evenly divisible30 or20 FPS on the Author's fixed60Hz monitor. Use absolute
+   deadlines with fractional time carried forward; distinguish throughput from
+   visible cadence. Assess uneven frame holds/judder using moving scenes.
+2. Evaluate refresh-synchronized browser presentation of complete frames first.
+   Verify actual browser/compositor behavior; do not assume automatic frame
+   interpolation, tear-free presentation or exact display synchronization.
+3. Consider optional client-side frame blending versus motion-estimated
+   interpolation. Measure added latency, client CPU/GPU cost, ghosting,
+   occlusion artifacts, HUD/palette fidelity and behavior on newly exposed
+   scenery. Synthesized frames must be reported separately from real captures
+   and must not count as60Hz rendering or transport parity.
+4. Game-state interpolation is a separate application-aware possibility, not
+   directly available to the generic pixel-only VDP viewer. Do not expand the
+   viewer/game protocol without a separately reviewed contract.
+
+Preserve actual game/render cadence and input responsiveness as independent
+metrics. No browser technique here establishes faster P4 rendering. Candidate
+review and the agreed subsequent RLE investigation retain their sequencing.
+
 ## Debrief delivery
 
 D01–D05 complete. The report, official-source audit, reproducible tables and
