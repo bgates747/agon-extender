@@ -49,5 +49,13 @@
     "notify.py": "b76f9aa26c39c98ba13e810fa812faa5f6199817a57ff96b6bc0f0cd6c3df667",
     "restore.py": "7de4ef2a0295c8a0a76477e9e38ac45d62d6600939fff0b6af33fb7926585a15"
   },
-  "procedure": "P01f B normal/off/normal; unchanged r45 image, r05 SW2400 and wired180second observer; no owner analyzer; fail closed"
+  "procedure": "P01f B normal/off/normal; unchanged r45 image, r05 SW2400 and wired180second observer; no owner analyzer; fail closed",
+  "analysis_sha256": {
+    "report.py": "d497d6c7b827fd5eb19ae32ba5c3f90844181515d2c9af4335a8001670609baf"
+  },
+  "fixture": {
+    "r05_sw_sha256": "8e81bfeb7ca01cf6ad9f68c502a42969c5763c45033dc80f55d1a97d7880d13b",
+    "startup_verified": true,
+    "asset_readback_reused_from": "P01; no intervening asset writes"
+  }
 }
