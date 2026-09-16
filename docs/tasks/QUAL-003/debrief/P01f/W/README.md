@@ -19,7 +19,7 @@ voice-notify at the discrete review stop, whether success or informative failure
    linked placement. Archive exact parent plus bounded delta, build/hash isolated
    experimental r49. Existing priority guard/nonce/accounting reused; no heavy
    trace rings, renderer edits or production flag changes.
-3. [ ] W03: Preserve/verify installed r43, deploy/readback r49, observe exact boot
+3. [x] W03: Preserve/verify installed r43, deploy/readback r49, observe exact boot
    and USB identity, verify input/SD and fixture readiness. No MOS or mainboard
    VDP firmware change. Mode selected only by autoexec. Keep safe startup backup.
 4. [ ] W04: Run control/treatment/treatment/control with fresh nonces, same r05
@@ -83,3 +83,8 @@ exclusive with per-row mode. Host lifetime tests passed. Linked publish has two
 priority-set and four priority-query call sites; selected source brackets the
 whole row/normalization loop and restores before finish. Candidate manifest and
 archived-parent.patch retain exact bounded delta. No heavy owner/lock-wake flags.
+
+W03 complete: exact installed r43 preserved/checked before write, candidate
+independently flash-verified; matching boot/native USB observed. Mainboard reset
+and fresh keyboard/SD readiness verified, unchanged startup read back. Paired
+sequence now runs under the durable controller; no result yet.

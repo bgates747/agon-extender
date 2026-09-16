@@ -2,6 +2,9 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
+**W snapshot-wide priority experiment is active** after Author authorization.
+[Contract](QUAL-003/debrief/P01f/W/README.md); no result or fix claimed yet.
+
 [P01f A ownership audit](QUAL-003/debrief/P01f/A/README.md) completed after S's
 failed priority treatment. The port's task-held native mutex couples snapshot
 composition to parser/drawing; mainboard rows run in an ISR. Sending already uses

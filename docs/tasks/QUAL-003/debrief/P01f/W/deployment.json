@@ -1,0 +1,21 @@
+{
+  "run_id": "QUAL-003-2026-09-16-06-36-07Z",
+  "build_id": "uart-excom-console-r49-b2026-09-16-06-33-21Z",
+  "factory_sha256": "bfa5083bfc19d681070484b58ca2ec55a0ffb39993003197971b284c7f280cfa",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "postflash": {
+    "flash_verified": true,
+    "boot_identity_observed": true,
+    "native_keyboard_ready": true,
+    "sd_ready": true,
+    "startup_unchanged": true,
+    "time": 1789540678.312663
+  },
+  "runner_sha256": {
+    "game.py": "c267e8d01342f0424907f026e7027c611af26f7e289e6ffe740857d1229804ae",
+    "run.py": "4e4fecc6e59c8ee707861998302f26e3a557c8b244eb1e562d0238f2a8ebbd4d",
+    "restore.py": "24b7bb9e4c46b9bc3dcf9d0d23190f2e78aebff8fb65db34bc09144a6daf1194",
+    "cleanup_failed.py": "7f80b064055240ddad30b7cccf99fa7d940127c62526058210e05354dd9a684b"
+  }
+}

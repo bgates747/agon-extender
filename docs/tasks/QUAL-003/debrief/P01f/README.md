@@ -2,6 +2,10 @@
 
 ## Executive summary
 
+**Current work: W snapshot-wide priority test is underway**, authorized after A
+review. [Frozen contract and progress](W/README.md). No result yet; r43 is the
+verified rollback. The A audit summary below remains its historical conclusion.
+
 **A ownership audit complete; ready for review.** The port adds a shared native
 mutex between snapshot composition, parser and drawing. Mainboard row preparation
 runs in an ISR. Actual socket sending already uses immutable data outside that
