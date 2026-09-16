@@ -205,3 +205,11 @@ qualification; freeze asset/web integration contracts. Hardware voice notificati
 at the chunk's review point. Subsequent integration retains H05–H08's hardware
 and default-promotion gates; no experimental push. Do not conflate passing host
 codec tests with deployed P4 or browser acceptance.
+
+## One-hour goal amendment — 2026-09-16 22:21:26 UTC
+
+Author now sets a hard one-hour execution limit, ending23:21:26 UTC. Develop,
+test and benchmark iteratively rather than only delivering a first implementation.
+Reserve final10minutes for rollback/report/voice notification. Prioritise codec
+correctness and measured P4 costs, then integration as time permits. Mark unfinished
+deployment gates explicitly; no passing host test substitutes for hardware evidence.
