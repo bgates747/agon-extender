@@ -32,3 +32,13 @@ This adds capture only, not a replacement renderer.
 6. First capture implementation targets64-colour modes. Lower-depth modes need
    taps after their palette expansion; defer if time reserve is reached. Missing
    graphics APIs are recorded not implemented; this task must not add them.
+
+## Coverage expansion within the frozen contract
+
+The prior39-case subset concentrates on sprite/bitmap execution costs. Reuse all
+24 existing SHP command pages (22 additional scenes) to cover line endpoints,
+dashes/thickness, triangles, rectangles/parallelograms, circles/ellipses/arcs,
+segments/sectors, fills, all eight GCOL operations, colour mapping, origins,
+viewports, scrolling/copy/move, graphics text and buffered/context/affine calls.
+This is test coverage expansion, not implementation of missing APIs. Keep
+unsupported experimental paths visibly separate from successful image matches.
