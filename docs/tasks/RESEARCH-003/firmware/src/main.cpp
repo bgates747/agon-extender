@@ -9,7 +9,7 @@
 #include <atomic>
 #include <algorithm>
 #include "pattern.h"
-static constexpr char ID[]="research003-reference-r01";
+static constexpr char ID[]=R3_BUILD_ID;
 static constexpr unsigned MAX=1800;
 struct Sample {uint32_t id,us;uint64_t done;};
 struct Slot {uint8_t *p;Sample s;};
