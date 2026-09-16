@@ -31,10 +31,10 @@ performance. Avoid external camera/LCD requirements absent on this bench.
 
 ## Itemized execution plan
 
-1. [ ] R01 — Reuse prior candidate evidence; inspect Espressif first then
+1. [x] R01 — Reuse prior candidate evidence; inspect Espressif first then
    independent P4 firmware. Record claims, target/revision, licence, dependencies,
    physical requirements and reasons for selection/rejection; pin reused code.
-2. [ ] R02 — Freeze selected design and exact build inputs in this silo.
+2. [x] R02 — Freeze selected design and exact build inputs in this silo.
    Use no VDP/FabGL/parser, no Agon control requirement. HTTP starts bounded
    tests and returns status/results; network receiver validates sequence and
    pixels. Separate deterministic rendering from immutable output ownership.
