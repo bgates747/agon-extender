@@ -2,10 +2,15 @@
 
 ## Executive summary
 
-**A matched Nurples trial recovered30 application fps with RLE2 versus12.8fps
-with raw web output; output-disabled control also ran30fps. Browser receipt rose
-from4.7 to29.2fps.** One run per condition on a Wi-Fi receiver; see [tables](TABLES.md)
-for scope and uncertainty.
+**RLE2 delivers an improvement worth keeping: retain this implementation.**
+In the matched Nurples trial, it restored application performance from **12.8 to
+30 fps** and increased browser receipt from **4.7 to 29.2 fps**, while completed
+image comparisons remained pixel-exact. Repeat the measurements and finish the
+remaining compatibility checks before making it the production default.
+
+The output-disabled control also ran at 30 fps. These figures represent one run
+per condition with a Wi-Fi receiver, not full performance qualification; see
+[tables](TABLES.md) for scope and uncertainty.
 
 Candidate implements **both** P4 RLE2 asset decompression and negotiated web-frame
 compression. Historical generic command65/header dispatch is retained; codec code
