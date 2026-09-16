@@ -19,6 +19,6 @@ s=s.replace('function sendCredit(request) {\n  if (socket && socket.readyState =
 function sendCredit(request) {
   const owner=socket;
   const delay=Math.max(0,lastCreditAt+1000/30-performance.now());
-  setTimeout(()=>{if(socket===owner && owner && owner.readyState===WebSocket.OPEN){lastCreditAt=performance.now();owner.send(request);}},delay);
+  setTimeout(()=>{if(socket===owner && owner && owner.readyState===WebSocket.OPEN){lastCreditAt=performance.now();owner.send(request);}},Math.ceil(delay));
 }''');f.write_text(s)
 m=json.loads((out/'manifest.json').read_text());m['build_id']=m['build_id'].replace('r01-','r02-');m['web_contract']='EVR1-v1-task-candidate';m['web_inputs']={n:hashlib.sha256((code/n).read_bytes()).hexdigest() for n in ('add_web.py','web_send.inc','web_decode.js')};(out/'manifest.json').write_text(json.dumps(m,indent=2)+'\n')
