@@ -20,6 +20,8 @@ def main():
             name=record['case']['name'];dest=args.output/run.name/name
             dest.mkdir(parents=True)
             shutil.copy2(src,dest/'run.json')
+            if (src.parent/'failure.serial.gz').exists():
+                shutil.copy2(src.parent/'failure.serial.gz',dest/'failure.serial.gz')
             for image in (src.parent/'images').glob('*'):
                 if image.suffix in ('.png','.json'):shutil.copy2(image,dest/image.name)
             captures=list(src.parent.glob('mainboard-*.serial'))
