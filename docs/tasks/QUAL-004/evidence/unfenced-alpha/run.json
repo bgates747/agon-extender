@@ -1,0 +1,30 @@
+{
+  "case": {
+    "name": "BSP03_01",
+    "file": "BSP03_01.vdu",
+    "group": 103,
+    "bytes": 94994,
+    "sha256": "794c227a309221c8bd42277a187d621d635850f9f2b0fe41c9d636542e2417c8",
+    "source": {
+      "name": "BSP03_01",
+      "group": 103,
+      "bytes": 94683,
+      "setup_bytes": 311,
+      "probes": 4,
+      "quiet": false,
+      "upload_bytes": 93788,
+      "sha256": "1bc37a39664bf4c2a3b0d42a47baa89cf964d2f68aad7f1b3d599f9f75954d29"
+    }
+  },
+  "start": 1789564277.970054,
+  "status": "invalid_mainboard_repeat",
+  "end": 1789564347.9996192,
+  "repeat_mismatches": 11600,
+  "repeat_bounds": [
+    200,
+    112,
+    327,
+    207
+  ],
+  "p4_comparison": "not run"
+}
