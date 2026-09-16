@@ -95,7 +95,7 @@ Apply the same correctness and reproducibility standards to independent work.
    to our silicon/SDK, limitations and one proposed reproducible experiment per
    candidate. Distinguish copying a diagnostic technique from changing VDP
    semantics. Reuse QUAL-003 follow-ups rather than duplicate implementation tasks.
-10. [ ] R10: Verify documentation/provenance, commit locally, deliver established
+10. [x] R10: Verify documentation/provenance, commit locally, deliver established
     hardware voice and record a fresh receipt, then stop for Author review.
 
 ### Rubric and authorization boundary
@@ -123,8 +123,10 @@ implementations, pinned source behavior, numerical caveats and proposed checks.
 selected source hashes and history samples. First choices: adapter ownership
 contracts and micro-mp3's concurrency measurement method; no drop-in fix found.
 No sample built, run, flashed or tested. No dependency/source/bench changes.
-R06 contract was frozen in7909347 before inspection. R07–R09 complete; voice
-closeout follows documentation verification. Implementation awaits Author review.
+R06 contract was frozen in7909347 before inspection. R07–R10 complete. Source hashes and document references verified. Hardware
+voice returned a fresh audio receipt; startup unchanged and Legacy MOS restored.
+See [scout notification](RESEARCH-001/scout-notification.json). Human hearing
+and implementation review remain pending. Stopped; no experimental push.
 
 Author reaction during scouting: expressed interest in a future Vectrex console
 emulator project, then explicitly directed continuation of this research task.
