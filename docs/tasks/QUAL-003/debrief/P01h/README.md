@@ -58,7 +58,7 @@ The accepted target remains512×384 at30fps; no new60fps promise.
    hold graphics locks while encoding/sending, or alter stock rendering commands.
    Instrument snapshot, encode, send and browser decode separately with bounded
    counters. Current raw receiver remains a compatibility control.
-5. [ ] H05 — Stage and verify a reversible P4 candidate and matching web client.
+5. [x] H05 — Stage and verify a reversible P4 candidate and matching web client.
    Preserve actual installed image/config/startup and record rollback commands.
    Confirm bench ownership and serial-reset consequences. No MOS/mainboard VDP
    changes required. Use /test/nurples and /test/arcade/rally, never production
