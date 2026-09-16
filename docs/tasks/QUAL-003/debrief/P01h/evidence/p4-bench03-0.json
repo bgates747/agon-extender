@@ -1,0 +1,80 @@
+{
+  "bytes": 196608,
+  "trials": 9,
+  "memory": "PSRAM",
+  "rows": [
+    {
+      "pattern": 0,
+      "variant": 0,
+      "encoded": 3040,
+      "encode_us": 4776,
+      "encode_max_us": 4818,
+      "decode_us": 2194,
+      "decode_max_us": 2263
+    },
+    {
+      "pattern": 0,
+      "variant": 1,
+      "encoded": 3040,
+      "encode_us": 5303,
+      "encode_max_us": 5336,
+      "decode_us": 2203,
+      "decode_max_us": 2246
+    },
+    {
+      "pattern": 1,
+      "variant": 0,
+      "encoded": 196564,
+      "encode_us": 14334,
+      "encode_max_us": 14636,
+      "decode_us": 13258,
+      "decode_max_us": 13615
+    },
+    {
+      "pattern": 1,
+      "variant": 1,
+      "encoded": 196564,
+      "encode_us": 10717,
+      "encode_max_us": 10754,
+      "decode_us": 13232,
+      "decode_max_us": 13280
+    },
+    {
+      "pattern": 2,
+      "variant": 0,
+      "encoded": 196622,
+      "encode_us": 14270,
+      "encode_max_us": 14307,
+      "decode_us": 13191,
+      "decode_max_us": 13213
+    },
+    {
+      "pattern": 2,
+      "variant": 1,
+      "encoded": 196622,
+      "encode_us": 10563,
+      "encode_max_us": 10615,
+      "decode_us": 13179,
+      "decode_max_us": 13207
+    },
+    {
+      "pattern": 3,
+      "variant": 0,
+      "encoded": 24590,
+      "encode_us": 5682,
+      "encode_max_us": 5728,
+      "decode_us": 3489,
+      "decode_max_us": 3589
+    },
+    {
+      "pattern": 3,
+      "variant": 1,
+      "encoded": 24590,
+      "encode_us": 6025,
+      "encode_max_us": 6031,
+      "decode_us": 3562,
+      "decode_max_us": 3603
+    }
+  ],
+  "exact": true
+}

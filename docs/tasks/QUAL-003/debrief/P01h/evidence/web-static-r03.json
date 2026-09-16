@@ -1,0 +1,65 @@
+[
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "?rle2=1",
+    "magic": "EVR1",
+    "bytes": 4368,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "?rle2=1",
+    "magic": "EVR1",
+    "bytes": 4368,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "?rle2=1",
+    "magic": "EVR1",
+    "bytes": 4368,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  },
+  {
+    "query": "",
+    "magic": "EVF1",
+    "bytes": 196640,
+    "decoded": 196640,
+    "exact": true
+  }
+]

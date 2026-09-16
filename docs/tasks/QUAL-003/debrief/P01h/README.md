@@ -32,18 +32,18 @@ The accepted target remains512×384 at30fps; no new60fps promise.
 
 ## Itemized execution plan
 
-1. [ ] H01 — Pin source commits/file hashes, licensing and exact wire semantics.
+1. [x] H01 — Pin source commits/file hashes, licensing and exact wire semantics.
    Inspect encoder, decoder and AGM/Jukebox use, including malformed-input
    behaviour. Produce golden vectors for all64 colours, runs1/2/3/130/131,
    alternating pixels and boundary lengths. Record source defects without
    silently modifying agon-utils or unrelated port logic.
-2. [ ] H02 — Host round-trip qualification on retained QUAL-004 images plus
+2. [x] H02 — Host round-trip qualification on retained QUAL-004 images plus
    deterministic dense scrolling, sprite-heavy, solid and noise patterns.
    Require byte-exact decoded canonical images. Report raw bytes, payload bytes,
    total framed bytes and compression ratios separately. Validate truncation,
    oversized runs, dimensions, lengths and decoder bounds. Retain reproducible
    seeds and hashes; do not add third-party reference media to tracked files.
-3. [ ] H03 — Freeze a versioned web protocol extension before implementation.
+3. [x] H03 — Freeze a versioned web protocol extension before implementation.
    P4 and browser negotiate RLE2 capability; old clients retain existing raw
    frames. Define codec ID, dimensions, stride, colour interpretation, frame
    sequence and exact decoded length. Decide explicitly whether the14-byte file
@@ -51,7 +51,7 @@ The accepted target remains512×384 at30fps; no new60fps promise.
    identical to the file format. Reject malformed messages; mode/palette changes
    and reconnects invalidate prior state. Raw fallback when compression offers
    no total-byte saving. Preserve the raw path for256-colour modes.
-4. [ ] H04 — Implement bounded encoder and browser decoder in the task silo first.
+4. [x] H04 — Implement bounded encoder and browser decoder in the task silo first.
    Encode an immutable snapshot after releasing graphics locks. Preallocate
    capacity from validated mode dimensions, cap queued work and retain existing
    frame ownership until the sender is done. Do not add per-frame malloc/realloc,
@@ -91,13 +91,13 @@ The P4 driver must support **RLE2 decoding as well as encoding**. Asset upload
 is a required deliverable, not a deferred optimisation. Keep its tests separate
 from web output so gains and failures are attributable.
 
-1. [ ] A01 — Alongside H01/H03, inspect stock buffered decompression commands and
+1. [x] A01 — Alongside H01/H03, inspect stock buffered decompression commands and
    compression-format dispatch before defining any extension. Identify whether
    stock already accepts this exact RLE2 format. Reuse stock contracts where
    available; otherwise explicitly document a capability-gated EDP extension,
    never silently reinterpret an existing VDP command. EMOS owns routing from
    the eZ80 to EDP through the established transport; no direct bypass.
-2. [ ] A02 — Freeze upload/decode/bitmap lifecycle: eZ80 supplies encoded buffer,
+2. [x] A02 — Freeze upload/decode/bitmap lifecycle: eZ80 supplies encoded buffer,
    P4 validates format/version and declared output length, decodes into bounded
    owned storage, and exposes decoded data through the applicable bitmap-create
    command. Specify source/destination buffer IDs, dimensions, pixel format,
@@ -105,7 +105,7 @@ from web output so gains and failures are attributable.
    Do not make clients consume partially decoded data. Allocation for asset
    creation is permitted when checked and bounded; the prohibition on hot-path
    per-frame allocation does not ban asset storage allocation.
-3. [ ] A03 — Implement P4 decoding using shared pinned RLE2 semantics and golden
+3. [x] A03 — Implement P4 decoding using shared pinned RLE2 semantics and golden
    vectors. Test opaque colours and exactly supported transparency separately;
    resolve the singleton/run alpha limitation before claiming RGBA2222 fidelity.
    Reject truncated headers/tokens, run overflow, invalid sizes and unsupported
@@ -213,3 +213,12 @@ test and benchmark iteratively rather than only delivering a first implementatio
 Reserve final10minutes for rollback/report/voice notification. Prioritise codec
 correctness and measured P4 costs, then integration as time permits. Mark unfinished
 deployment gates explicitly; no passing host test substitutes for hardware evidence.
+
+## Execution evidence so far
+
+H01–H04 and A01–A03 have candidate implementations/contracts and passing host
+checks. `CONTRACT.md` pins historical dispatcher, wire bytes and limitations.
+agon-utils is Unlicense; historical personal VDP is MIT. Clean-sheet codec uses
+format evidence, not copied legacy implementation. Evidence is under `evidence/`.
+Seven routed asset image cases and raw/compressed web static controls pass on
+candidate r03; these do not yet complete all A04/A05 or recovery/performance gates.

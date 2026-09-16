@@ -1,0 +1,116 @@
+{
+  "bytes": 196608,
+  "trials": 9,
+  "memory": "PSRAM",
+  "rows": [
+    {
+      "pattern": 0,
+      "variant": 0,
+      "encoded": 3040,
+      "encode_us": 4794,
+      "encode_max_us": 4832,
+      "decode_us": 2199,
+      "decode_max_us": 2257
+    },
+    {
+      "pattern": 0,
+      "variant": 1,
+      "encoded": 3040,
+      "encode_us": 5318,
+      "encode_max_us": 5910,
+      "decode_us": 2227,
+      "decode_max_us": 2328
+    },
+    {
+      "pattern": 0,
+      "variant": 2,
+      "encoded": 3040,
+      "encode_us": 5311,
+      "encode_max_us": 5318,
+      "decode_us": 2258,
+      "decode_max_us": 2313
+    },
+    {
+      "pattern": 1,
+      "variant": 0,
+      "encoded": 196564,
+      "encode_us": 14374,
+      "encode_max_us": 14403,
+      "decode_us": 13252,
+      "decode_max_us": 13289
+    },
+    {
+      "pattern": 1,
+      "variant": 1,
+      "encoded": 196564,
+      "encode_us": 10718,
+      "encode_max_us": 10743,
+      "decode_us": 13254,
+      "decode_max_us": 13313
+    },
+    {
+      "pattern": 1,
+      "variant": 2,
+      "encoded": 196564,
+      "encode_us": 8769,
+      "encode_max_us": 8825,
+      "decode_us": 7889,
+      "decode_max_us": 7937
+    },
+    {
+      "pattern": 2,
+      "variant": 0,
+      "encoded": 196622,
+      "encode_us": 14268,
+      "encode_max_us": 14362,
+      "decode_us": 13177,
+      "decode_max_us": 13193
+    },
+    {
+      "pattern": 2,
+      "variant": 1,
+      "encoded": 196622,
+      "encode_us": 10580,
+      "encode_max_us": 10599,
+      "decode_us": 13178,
+      "decode_max_us": 13194
+    },
+    {
+      "pattern": 2,
+      "variant": 2,
+      "encoded": 196622,
+      "encode_us": 8451,
+      "encode_max_us": 8503,
+      "decode_us": 7696,
+      "decode_max_us": 7718
+    },
+    {
+      "pattern": 3,
+      "variant": 0,
+      "encoded": 24590,
+      "encode_us": 5684,
+      "encode_max_us": 5765,
+      "decode_us": 3587,
+      "decode_max_us": 3622
+    },
+    {
+      "pattern": 3,
+      "variant": 1,
+      "encoded": 24590,
+      "encode_us": 6024,
+      "encode_max_us": 6077,
+      "decode_us": 3568,
+      "decode_max_us": 3612
+    },
+    {
+      "pattern": 3,
+      "variant": 2,
+      "encoded": 24590,
+      "encode_us": 5985,
+      "encode_max_us": 6007,
+      "decode_us": 3951,
+      "decode_max_us": 3976
+    }
+  ],
+  "exact": true
+}

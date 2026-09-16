@@ -1,0 +1,44 @@
+[
+  {
+    "case": "raw",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "rle",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "fragmented",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "inplace",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "invalid_version",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "truncated",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  },
+  {
+    "case": "overflow",
+    "exact": true,
+    "pixels": 196608,
+    "sha256": "d3e75083573e7d55d1528eb8d1fad5b6a835c4185d9846d4479b187faabc5e2b"
+  }
+]

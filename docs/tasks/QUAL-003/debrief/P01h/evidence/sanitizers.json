@@ -1,0 +1,6 @@
+{
+  "initial_iterations": 100000,
+  "word_iterations": 100000,
+  "asan_ubsan_pass": true,
+  "host_only": true
+}
