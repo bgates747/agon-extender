@@ -5,6 +5,13 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Current Author-directed research
+
+- [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
+  - Status: Authorized; P4-first search, widening to ESP-IDF/Arduino as needed.
+  - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
+  - Boundary: Research only; hardware voice at review, no firmware changes.
+
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
