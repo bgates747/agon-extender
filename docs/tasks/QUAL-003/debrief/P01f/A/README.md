@@ -2,13 +2,23 @@
 
 ## Executive summary
 
-Author directed proceeding with greater scrutiny after the failed priority
-experiment. This chunk traces ownership, blocking and handoffs from UART parser
-to graphics execution, snapshot and HTTP output, against the retained mainboard
-FabGL implementation and pinned ESP-IDF. Deliver a source-linked map, concrete
-findings, uncertainty ledger and one bounded next experiment. Hardware actions
-are limited to clearing the prior cue and the established completion voice/banner.
-No firmware edits/build/flash, performance tests or broad redesign in this chunk.
+**Focused audit complete; no firmware change.** The port's snapshot task shares
+native graphics exclusion with parser/drawing; immutable socket sending itself
+is outside that mutex. Mainboard row preparation runs in an ISR. The failed S
+experiment additionally requested a scheduler yield after each row pair:
+192 requests, 384 priority changes and 768 priority queries per full snapshot.
+Inherited priority can persist in another holder until its other mutexes release.
+These are verified mechanisms, not a complete causal attribution of the failure.
+
+[Findings, comparative tables and proposed next experiment](FINDINGS.md) and
+[ownership/FabGL map](OWNERSHIP.md) contain the detailed audit. Recommend testing
+the same ceiling once per admitted snapshot, with original row lock boundaries
+and strict repeated correctness/pacing gates; no implementation before review.
+This removes repeated priority transitions but also raises normalization priority,
+so that confound is explicit. No deadlock cycle established in the inspected
+steady-state path. Exhaustive AUDIT-007 remains separate; Golem excluded.
+
+Hardware completion notification and final preservation checks remain below.
 
 ## Frozen contract
 
@@ -22,11 +32,11 @@ No firmware edits/build/flash, performance tests or broad redesign in this chunk
    replacements. Explain which locks are inherited or port-added and which
    original timing/exclusion guarantees survive. Reuse P00; only add findings
    that resolve a gap or re-check an assumption. AUDIT-007 remains separate.
-4. [ ] A04: Reconstruct the S priority scope through pinned FreeRTOS priority
+4. [x] A04: Reconstruct the S priority scope through pinned FreeRTOS priority
    changes, recursive mutex inheritance/disinheritance and scheduler yields.
    Look for concrete contradictions, cycles, starving loops and lost guarantees.
    Distinguish source-proven mechanisms, measured evidence and hypotheses.
-5. [ ] A05: Review alternative explanations and negative evidence; produce an
+5. [x] A05: Review alternative explanations and negative evidence; produce an
    ownership diagram, indexed findings and one smallest discriminating next
    experiment with validity gates. No speculative fix by implication. If source
    inspection cannot establish cause, say precisely what observation is missing.
