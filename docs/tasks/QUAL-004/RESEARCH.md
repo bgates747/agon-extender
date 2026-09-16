@@ -48,3 +48,13 @@ The fixture therefore preloads the entire scene before sending its bounded MOS
 chunks; no SD read occurs between graphics command bytes. The largest selected
 scene is below128KiB. This corrects the initial unexecuted streaming fixture
 before hardware image qualification; it is test instrumentation, not a VDP fix.
+
+## Optional palette acquisition extension — self-assigned within coverage scope
+
+Stock VGA2/4/8/16 ISR paths expand palette indexes to their final signal bytes,
+then call decorateScanLinePixels(decpix, scanLine). Add the same bounded tap after
+that call, with the same physical x-XOR2 addressing. This captures Copper-selected
+row palettes and hardware sprites without calling an alternative compositor.
+Build as mainboard-image-capture-r02. Do not deploy during an active image run;
+retain r01 evidence separately and restore all affected original erase sectors.
+Existing PORT-008 palette/Copper fixtures provide literal colour oracles.
