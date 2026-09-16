@@ -189,10 +189,14 @@ remain deferred. Reuse the pinned adapter revision and installed IDF5.5.5.
     and DMA requirements against official IDF contracts. Compare Extender's
     preallocated snapshots and HTTP/lwIP path; distinguish observed source
     behavior from unmeasured allocation pressure or cache contention.
-18. [ ] C1-M03: Record findings, limits and ranked diagnostic considerations;
+18. [x] C1-M03: Record findings, limits and ranked diagnostic considerations;
     retain bounded instrumentation under P01c/d. Verify and commit documentation,
     send hardware voice, then stop for review.
 
 C1-M01/M02 source review complete: [memory follow-up](RESEARCH-001/C1/MEMORY.md).
 No missing snapshot flush or allocator defect established; lower-stack copying
 and packet allocation confirmed as source behavior, cost unmeasured.
+
+C1-M03 complete: findings committed at749db00; source hashes verified. Fresh
+hardware voice/service receipt verified; startup unchanged, returned to Legacy
+MOS. See C1/memory-notification.json. No build/test/flash or push; paused for review.
