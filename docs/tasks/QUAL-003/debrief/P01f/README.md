@@ -9,6 +9,21 @@ scheduling change; use the evidence to audit the port's ownership and handoffs
 against FabGL. This is experimental investigation, not authorization to rewrite
 upstream rendering, remove FreeRTOS or promote a firmware release.
 
+## B findings — 2026-09-16
+
+**Representative lower-overhead baseline recovered; streamed pacing tail remains.**
+All three controls passed. Streaming: 60.056/60.053 refresh completions/s,
+p95 spacing 24.990/29.291ms. Output disabled: 60.053/s, p95 17.052ms;
+historical mainboard p95 17.063ms. Web sends during game: 28.226/27.232 per second.
+No priority change or new firmware build was made.
+
+Mean snapshot wall time changed from 6.596 to 13.424ms across the two streaming
+runs while sending stayed 17.753/17.760ms. Baseline is representative, not
+variance-free. Next S should use repeated matched controls to test one priority
+intervention; no conclusion from one favorable average. P01e's slow diagnostic
+candidate is not the performance baseline. Restoration/notification recorded
+below when verified. [Detailed tables and limits](TABLES.md).
+
 ## Evidence and source précis
 
 P01e captured a snapshot native mutex held for 25.210ms while TCP/IP task tiT
@@ -54,14 +69,14 @@ locks/tasks and identify the original timing/ownership guarantee for each.
    Verify r45 and r43 archive hashes and inherited fixture/startup; record provenance.
 2. [x] B02: Preserve/verify installed r43, deploy/readback exact archived r45,
    observe boot identity and input readiness. No compilation or source change.
-3. [ ] B03: Run normal streaming, output disabled, normal streaming on the same
+3. [x] B03: Run normal streaming, output disabled, normal streaming on the same
    image with identical Agon reset procedure and fresh nonces. Each normal run
    has the retained 180s wired observer. Do not reset P4 between these controls;
    this reproduces historical warm-P4 ordering rather than claiming cold-boot
    equivalence. No browser observer in the disabled control. Record actual
    runtime and reset-to-collection duration. Approximately 10 minutes collection
    plus preparation/rollback; estimate is not a timeout-based reset policy.
-4. [ ] B04: Require fixture count 2400, matching deterministic state hash,
+4. [x] B04: Require fixture count 2400, matching deterministic state hash,
    terminal query success, 2400 native completions and valid output accounting.
    Tabulate refresh/s, spacing p50/p95/p99/max in ms, composition/send ms and
    game-window sends/s. Compare r45 historical and historical mainboard scopes

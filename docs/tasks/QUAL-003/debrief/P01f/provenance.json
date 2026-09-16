@@ -51,7 +51,7 @@
   },
   "procedure": "P01f B normal/off/normal; unchanged r45 image, r05 SW2400 and wired180second observer; no owner analyzer; fail closed",
   "analysis_sha256": {
-    "report.py": "d497d6c7b827fd5eb19ae32ba5c3f90844181515d2c9af4335a8001670609baf"
+    "analyze_baseline.py": "539fa1d6be56519d63841f74f51ccf4f28c4572d5b72289205c9c81053078689"
   },
   "fixture": {
     "r05_sw_sha256": "8e81bfeb7ca01cf6ad9f68c502a42969c5763c45033dc80f55d1a97d7880d13b",

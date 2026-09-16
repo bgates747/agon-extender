@@ -1,0 +1,55 @@
+{
+  "label": "p01f-normal1-probe0",
+  "scope": "production browser receive/WebGL submission; no scanout/VDP execution timing claim",
+  "seconds_requested": 180.0,
+  "started_utc": "2026-09-16T05:28:51.619068+00:00",
+  "observer_sha256": "3a5a1d43047a7a08a82db00573fb85e1b0b37fb1c8b8f99552ed3faa5c003561",
+  "assets": {
+    "index.html": {
+      "sha256": "90233bc969aa4c736183fbdf66eac269191281008262c970eb85efe0f2977b03",
+      "matches_local": true
+    },
+    "app.js": {
+      "sha256": "61fdccf8f621486c3d1fc886dc2d30555d561194d9bf2336744662738182ed9f",
+      "matches_local": true
+    },
+    "frame_protocol.js": {
+      "sha256": "63f49a65e021dc5595d0c2e713b9e9d8585eb9f3f053463227e1c60d83b235a4",
+      "matches_local": true
+    },
+    "webgl2_presenter.js": {
+      "sha256": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2",
+      "matches_local": true
+    }
+  },
+  "browser_version": "151.0.7922.173",
+  "observed_wall_seconds": 180.17767956794705,
+  "summary": {
+    "received": 5109,
+    "received_fps": 28.346439214424052,
+    "median_receive_interval_ms": 33.39999997615814,
+    "maximum_receive_interval_ms": 101.19999992847443,
+    "layouts": [
+      {
+        "width": 512,
+        "height": 384,
+        "stride": 512,
+        "format": 2,
+        "frames": 4838
+      },
+      {
+        "width": 640,
+        "height": 480,
+        "stride": 640,
+        "format": 2,
+        "frames": 271
+      }
+    ],
+    "observed_logical_period_us": [
+      16667
+    ],
+    "sequence_gaps": 0
+  },
+  "page_errors": [],
+  "overflow": false
+}
