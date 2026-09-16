@@ -69,3 +69,13 @@ the two-vblank pacing, and preserves unrelated applications/fixtures and startup
 Use an explicit SD inventory and exact paths for deletion; retain host evidence
 of identities and validate the canonical runtime by complete readback. No firmware
 or rendering changes. Private automation/evidence: `agents/nurples-cleanup/`.
+
+### Production/test separation approved
+
+Author selects `/test/nurples` and `/test/arcade/rally` for test installations,
+with independent assets. Production `/mystuff/nurples` restores single-vblank
+pacing; the two-vblank build is test-only. Preserve existing production Rally.
+Subsequent testing/deployment must explicitly target `/test`, not production.
+The canonical production Nurples repair bundle is updated once as requested
+above; subsequent experiments leave it alone. Preserve unrelated deterministic
+fixture evidence rather than classifying every Nurples-named test as a game.

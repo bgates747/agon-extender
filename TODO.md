@@ -311,3 +311,5 @@ deterministic Nurples and separate typing measurements are deferred.
   - Details: [PORT-016](docs/tasks/PORT-016.md)
 
 Current Author goal: [Nurples hardware parity with active web streaming](docs/tasks/QUAL-003/nurples-parity/PLAN.md). This takes priority over unrelated audit continuations; existing gates remain recorded.
+
+- [ ] **BENCH-003** — Measure paced repair Nurples application versus web cadence; see [contract](docs/tasks/BENCH-003.md).
