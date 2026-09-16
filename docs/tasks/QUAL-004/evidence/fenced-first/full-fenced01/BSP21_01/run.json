@@ -1,0 +1,23 @@
+{
+  "case": {
+    "name": "BSP21_01",
+    "file": "BSP21_01.vdu",
+    "group": 121,
+    "bytes": 43514,
+    "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed",
+    "source": {
+      "name": "BSP21_01",
+      "group": 121,
+      "bytes": 43203,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 42644,
+      "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed"
+    }
+  },
+  "start": 1789565628.2246706,
+  "status": "invalid_mainboard_crash",
+  "end": 1789565780.3970156,
+  "reason": "Second replay crashed before Q4BEGIN2017; LoadProhibited in stock drawSpriteScanLine"
+}

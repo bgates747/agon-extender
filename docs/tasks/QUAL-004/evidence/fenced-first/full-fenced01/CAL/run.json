@@ -1,0 +1,24 @@
+{
+  "case": {
+    "name": "CAL",
+    "file": "CAL.vdu",
+    "group": -1,
+    "bytes": 114,
+    "sha256": "03e21d231a2a7de58555bc192ed86bc890e7f99ead91023cb910937c3f60c5e5"
+  },
+  "start": 1789564904.4071512,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "836d8c80d4815660f692becde0dedc0e921cd60cc180079e5b3bc33122350108",
+    "p4_sha256": "836d8c80d4815660f692becde0dedc0e921cd60cc180079e5b3bc33122350108"
+  },
+  "end": 1789564993.1276262,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

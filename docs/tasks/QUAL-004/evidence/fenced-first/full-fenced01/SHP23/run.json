@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "SHP23",
+    "file": "SHP23.vdu",
+    "group": 23,
+    "bytes": 1558,
+    "sha256": "93b4237f0dfaa7ddb45739c18bf6c2a7f7fda4ee4ef1c8634dd8de87c13e6908",
+    "source": {
+      "name": "SHP23",
+      "group": 23,
+      "bytes": 1247,
+      "setup_bytes": 311,
+      "probes": 3,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "f8747af71c2983eddb30cbfd2c8a8e962c0378a6de08598aac4548386bbc1b9e"
+    }
+  },
+  "start": 1789565174.4377534,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "05d55bfebf97c93d96f21c3c3e1e5931ad2486c0dc0b8875fde56f20e8ac7c21",
+    "p4_sha256": "05d55bfebf97c93d96f21c3c3e1e5931ad2486c0dc0b8875fde56f20e8ac7c21"
+  },
+  "end": 1789565263.242968,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}
