@@ -90,3 +90,16 @@ Espressif video examples use completed-buffer ownership and compressed streaming
 these are not proof of our raw-frame throughput. P4 Fast Ethernet is100Mbit/s;
 512*384*60*8 =94.372Mbit/s payload alone. Keep wire saturation separate from
 rendering interference. No assumption that the full rung can sustain60 sends/s.
+
+## Self-assigned harness correction before first network rung
+
+The r50 mainboard/off/compose controls passed, but receiver admission before the
+first network reset rejected stale control framing. Inspection found the build
+script's stop-hook insertion had not matched its source indentation. The ladder
+stayed armed after the compose-only marker. This is an agent-authored diagnostic
+lifecycle defect, not evidence of EDP wire corruption or a measured network
+threshold. No first network fixture was launched. Correct disarm before normal
+output resumes; assert exact patch placement and re-run controls on a new r51
+identity. This self-assigned preparation correction does not relax any runtime
+correctness gate. Preserve the three r50 controls as provisional only. Also use
+the separate variable-payload accounting parser, not P02's fixed-frame validator.
