@@ -65,3 +65,11 @@ serialized HTTP send task; immutable snapshot lease survives through synchronous
 send. No graphics locks added. Existing dispatch lock remains unchanged. Browser
 requests no faster than30Hz; late frames do not produce catch-up bursts. Candidate
 web UI opts in for qualification only; not a production default promotion.
+
+## Diagnostic iteration — stack correction
+
+First P4 codec benchmark request caused a serial-confirmed HTTP-task stack
+protection fault: the task-local3KiB JSON array plus call overhead exceeded the
+4KiB stack. Move response storage to checked temporary internal heap; preserve
+allocation outside codec timing. Do not increase production task stack or change
+scheduler policy. Repeat correctness/timing only on the corrected diagnostic.

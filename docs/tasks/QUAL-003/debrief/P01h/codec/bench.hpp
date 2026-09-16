@@ -13,8 +13,10 @@ inline esp_err_t handler(httpd_req_t *req) {
  auto b=(uint8_t*)heap_caps_malloc(n+14,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
  auto c=(uint8_t*)heap_caps_malloc(n,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
  if(!a||!b||!c){free(a);free(b);free(c);return httpd_resp_send_500(req);}
- char reply[3000];size_t used=0;
- used+=snprintf(reply+used,sizeof(reply)-used,"{\"bytes\":%u,\"trials\":9,\"memory\":\"PSRAM\",\"rows\":[",unsigned(n));
+ auto reply=(char*)heap_caps_malloc(3000,MALLOC_CAP_INTERNAL|MALLOC_CAP_8BIT);
+ if(!reply){free(a);free(b);free(c);return httpd_resp_send_500(req);}
+ size_t used=0;
+ used+=snprintf(reply+used,3000-used,"{\"bytes\":%u,\"trials\":9,\"memory\":\"PSRAM\",\"rows\":[",unsigned(n));
  bool ok=true;
  for(unsigned pattern=0;pattern<4;++pattern){
   uint32_t rng=0x12345678;
@@ -30,10 +32,10 @@ inline esp_err_t handler(httpd_req_t *req) {
     if(trial){enc[trial-1]=t2-t;dec[trial-1]=t3-t2;}
    }
    std::sort(enc,enc+9);std::sort(dec,dec+9);
-   used+=snprintf(reply+used,sizeof(reply)-used,"%s{\"pattern\":%u,\"variant\":%u,\"encoded\":%u,\"encode_us\":%lld,\"encode_max_us\":%lld,\"decode_us\":%lld,\"decode_max_us\":%lld}",pattern||variant?",":"",pattern,variant,unsigned(bytes),(long long)enc[4],(long long)enc[8],(long long)dec[4],(long long)dec[8]);
+   used+=snprintf(reply+used,3000-used,"%s{\"pattern\":%u,\"variant\":%u,\"encoded\":%u,\"encode_us\":%lld,\"encode_max_us\":%lld,\"decode_us\":%lld,\"decode_max_us\":%lld}",pattern||variant?",":"",pattern,variant,unsigned(bytes),(long long)enc[4],(long long)enc[8],(long long)dec[4],(long long)dec[8]);
   }
  }
- used+=snprintf(reply+used,sizeof(reply)-used,"],\"exact\":%s}",ok?"true":"false");
- free(a);free(b);free(c);httpd_resp_set_type(req,"application/json");return httpd_resp_send(req,reply,used);
+ used+=snprintf(reply+used,3000-used,"],\"exact\":%s}",ok?"true":"false");
+ free(a);free(b);free(c);httpd_resp_set_type(req,"application/json");auto result=httpd_resp_send(req,reply,used);free(reply);return result;
 }
 }
