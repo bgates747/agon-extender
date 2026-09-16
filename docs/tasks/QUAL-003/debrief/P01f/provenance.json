@@ -1,0 +1,53 @@
+{
+  "control": {
+    "build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+    "outputs": {
+      "firmware.bin": {
+        "sha256": "94def3f06a72b4a494b8ecf3169385e50b8228e4a5f1674f9d78cce955afea12",
+        "bytes": 1451520
+      },
+      "firmware.factory.bin": {
+        "sha256": "751e833ea383059743d4658b0e1b6d656fcadc79549c0eb6146b8826976e1940",
+        "bytes": 1582592
+      },
+      "partitions.bin": {
+        "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+        "bytes": 3072
+      },
+      "bootloader.bin": {
+        "sha256": "042555c8318ec39819e45b3cc4fcd8cde5be422b0e9bbbb175b7e438c33fa8e9",
+        "bytes": 24256
+      }
+    }
+  },
+  "rollback": {
+    "build_id": "uart-excom-console-r43-b2026-09-15-16-34-12Z",
+    "outputs": {
+      "firmware.bin": {
+        "sha256": "25d635a22c21429c66d1f4f6463d30b1f30934c386761f95260a7dbf15db89c7",
+        "bytes": 1449744
+      },
+      "firmware.factory.bin": {
+        "sha256": "6b981b28474c24ca2b7b1ff0294ab236f6f18f01fd55a08f3ba86de389cac9b3",
+        "bytes": 1580816
+      },
+      "partitions.bin": {
+        "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+        "bytes": 3072
+      },
+      "bootloader.bin": {
+        "sha256": "cd19f5237069275835030dc1af1568198dc82bdff809ed0f97e53043d96ec059",
+        "bytes": 24256
+      }
+    }
+  },
+  "runner_sha256": {
+    "deploy.py": "39ce75c88a7cd8fbeea12312ec39a084f4bfc1bc020c24a47b9baf2b291dfdcb",
+    "run.py": "c71fcde9b8861692d83ab8b33f460075fdb6a5052e52805d21221d9f453fbcce",
+    "game.py": "dcbfe71b6ff4ac0cc79d465c5629ab9b93aab74ab5c94f193e5ccfbc16ebb46e",
+    "prepare.py": "8143c9dde9e43ccc90496f3d246e58f8c47e8a860edb008e78384fd319a687b6",
+    "notify.py": "b76f9aa26c39c98ba13e810fa812faa5f6199817a57ff96b6bc0f0cd6c3df667",
+    "restore.py": "7de4ef2a0295c8a0a76477e9e38ac45d62d6600939fff0b6af33fb7926585a15"
+  },
+  "procedure": "P01f B normal/off/normal; unchanged r45 image, r05 SW2400 and wired180second observer; no owner analyzer; fail closed"
+}
