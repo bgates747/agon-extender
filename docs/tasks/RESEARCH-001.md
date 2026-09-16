@@ -66,3 +66,51 @@ Hardware closeout: accepted British voice invoked, fresh stage6/audio receipt
 verified, original startup unchanged, SD service exited to Legacy MOS. See
 [notification receipt](RESEARCH-001/notification.json). Human hearing/review
 pending. All research steps complete; no hardware performance experiments.
+
+## Implementation scouting — Author-authorized extension
+
+The Author approved this extension after asking whether the search covered
+contention outside HTTP, how to identify excellent implementations whose
+quality is not advertised, and how to weigh Espressif examples. The accepted
+approach is to follow implementations and evidence back to their authors;
+reputation is supporting context, not proof of correctness or human authorship.
+Espressif examples receive serious consideration for API/hardware contracts,
+but may optimize isolated throughput or teaching rather than mixed workloads.
+Apply the same correctness and reproducibility standards to independent work.
+
+### Frozen plan (continuation; no sample firmware execution)
+
+6. [ ] R06: Record this discussion, evaluation rubric and scope; freeze before
+   investigating candidates. Search beyond HTTP: concurrent P4 multimedia,
+   low-latency audio, emulators/graphics, memory-copy and driver pipelines.
+7. [ ] R07: Discover a broad candidate pool, then inspect source/history/tests
+   of approximately five promising P4 implementations. Include vendor and
+   independent work. Pin revisions and separate code inspection, author claims,
+   published measurements and independent replication. Track negative findings.
+8. [ ] R08: Rank by relevance and evidence, not stars, affiliation or impressive
+   demos. Trace memory placement, buffer ownership, lock duration, task/IRQ
+   placement, backpressure, overload behavior and instrumentation where present.
+   Describe unresolved gaps rather than invent a complete audit.
+9. [ ] R09: Write a reviewable shortlist with exact source links, applicability
+   to our silicon/SDK, limitations and one proposed reproducible experiment per
+   candidate. Distinguish copying a diagnostic technique from changing VDP
+   semantics. Reuse QUAL-003 follow-ups rather than duplicate implementation tasks.
+10. [ ] R10: Verify documentation/provenance, commit locally, deliver established
+    hardware voice and record a fresh receipt, then stop for Author review.
+
+### Rubric and authorization boundary
+
+Prefer concurrent workloads, timing distributions/worst cases, explicit memory
+and ownership, bounded locks, correctness under load and independently repeated
+results. Average FPS, stars, screenshots, "optimized" claims and vendor branding
+alone are weak evidence. Record absent evidence. No inference that an author is
+human from writing style, and no use of AI-detection guesses as a quality filter.
+Source inspection may identify flaws but cannot certify firmware correctness.
+
+Read-only source acquisition into ignored local research material is allowed.
+Do not build, flash, run, benchmark or test any sample firmware before Author
+review. No dependency installation, SDK changes, production source edits, new
+hardware experiments, reset, Golem work or experimental push. The sole hardware
+action is the already accepted attention voice at completed review readiness.
+Deliver `RESEARCH-001/CANDIDATES.md` plus query/provenance ledger; retain existing
+findings and make the relationship clear for someone without the chat history.
