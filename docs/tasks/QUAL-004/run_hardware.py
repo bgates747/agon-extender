@@ -9,11 +9,14 @@ from capture import decode
 from compare import evf,compare
 from web_capture import capture
 import argparse
-p=argparse.ArgumentParser();p.add_argument('--output',default='runs01');p.add_argument('--cases');p.add_argument('--token-base',type=int,default=100);args=p.parse_args()
+p=argparse.ArgumentParser();p.add_argument('--output',default='runs01');p.add_argument('--cases');p.add_argument('--token-base',type=int,default=100)
+p.add_argument('--manifest',type=Path);p.add_argument('--startup',type=Path);p.add_argument('--serial',type=Path);args=p.parse_args()
 out=R/args.output;out.mkdir(exist_ok=False)
 original_cli=cli
 def cli(name,*commands):return original_cli(out.name+'-'+name,*commands)
 cases=json.loads((R/'cases01/manifest.json').read_text())['cases']+json.loads((R/'shapes01/manifest.json').read_text())['cases']
+if args.manifest:cases=json.loads(args.manifest.read_text())['cases']
+serial_path=args.serial or R/'serial.bin'
 if args.cases:
  selected=args.cases.split(',');lookup={c['name']:c for c in cases};cases=[lookup[n] for n in selected]
 assert 0<args.token_base<65535-len(cases)*2
@@ -25,7 +28,7 @@ def escape(name):
 def get_images(token,start):
  deadline=time.monotonic()+100
  while time.monotonic()<deadline:
-  raw=(R/'serial.bin').read_bytes()[start:]
+  raw=serial_path.read_bytes()[start:]
   if any(f'Q4END {token} {status}\n'.encode() in raw for status in (0,1)):
    found=decode(raw);assert len(found)==1 and found[0]['token']==token
    return found[0],raw
@@ -33,7 +36,7 @@ def get_images(token,start):
  raise TimeoutError('No completed mainboard capture '+str(token))
 # Do not run until queued deployment and startup are complete.
 c=SD(URL,out/'start-sd.json')
-try:c.connect();assert c.download('/autoexec.txt')==(R/'test-autoexec.txt').read_bytes();c.rpc(11)
+try:c.connect();assert c.download('/autoexec.txt')==(args.startup or R/'test-autoexec.txt').read_bytes();c.rpc(11)
 finally:c.lock.close()
 results=[]
 for index,case in enumerate(cases):
@@ -44,7 +47,7 @@ for index,case in enumerate(cases):
  print('BEGIN',index,name,flush=True)
  images=[]
  for repeat in range(2):
-  token=args.token_base+index*2+repeat;offset=(R/'serial.bin').stat().st_size
+  token=args.token_base+index*2+repeat;offset=serial_path.stat().st_size
   cli(f'{name}-m{repeat}','EMOS LEGACY --keep-display','LOAD /test/qual004/q4draw.bin',f'RUN . /test/qual004/{case["file"]} {token}')
   image,raw=get_images(token,offset);images.append(image);(dest/f'mainboard-{repeat}.serial').write_bytes(raw)
   escape(f'{name}-m{repeat}');time.sleep(1)

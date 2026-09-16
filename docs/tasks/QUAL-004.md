@@ -54,6 +54,13 @@ composition is acquired faithfully. No frame-rate requirement for extraction.
 
 ## Decisions and scope changes
 
+Self-assigned coverage refinement within the frozen scope: after the existing
+63-scene cohort, reuse PORT-008's literal palette cases in modes9/10/11 and
+add a small mode136 displayed/drawing-page control, if acquisition remains
+healthy. These require the already-built all-depth diagnostic tap, not renderer
+changes. Mode selection remains in startup. Cross-check calibration with the
+ordinary stock pixel-query API. Do not defer restoration to chase extra coverage.
+
 Author authorizes diagnostic flashing/testing through this request and previous
 bench permissions; release reconfirmed this turn. Any newly necessary experiment
 must be labelled self-assigned and documented before execution. Human validation
