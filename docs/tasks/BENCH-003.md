@@ -53,3 +53,14 @@ MOS3 directory walker, writing a new `/test/nscan.tsv` report. It traverses the
 card and emits Nurples/Rally paths plus root entries, an entry count and terminal
 status. No delete capability, firmware changes, or SD transport redesign. This
 support step is self-assigned under the Author's execution authorization.
+
+## Author-directed stop — 2026-09-16
+
+Author accepts the present web performance limitation and moves investigation to
+whole-image graphics correctness under QUAL-004. The first Legacy cadence control
+did not return to SD within the controller's240-second deadline; the controller
+stopped without resets or subsequent cases. This is an incomplete acquisition,
+not a measured frame-rate result. Raw state/logs remain in the ignored
+agents/nurples-cleanup/timing directory. No BENCH-003 controller remains active.
+Production/test separation and verified deployment remain valid independently.
+Do not resume this performance experiment automatically.
