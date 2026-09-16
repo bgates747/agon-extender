@@ -8,7 +8,7 @@ This is observed lock-holder preemption, not25ms of pixel computation. The
 candidate's probe-off baseline degraded; the probe-on run failed its terminal
 pixel query. Thus the captured event is diagnostic evidence, not a passing
 performance result. Remaining controls were stopped. Original r43/startup and
-keyboard/SD verified restored; voice cue follows report completion. No push.
+keyboard/SD verified restored; hardware voice receipt and visible review banner delivered. No push.
 
 The [itemized plan](QUAL-003/DEBRIEF-PLAN.md),
 [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md) and

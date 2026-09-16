@@ -82,7 +82,7 @@ between a valid captured event and an invalid benchmark run.
    switches from proof of runnable state. No claimed root cause without trace
    coverage. Stop at actionable diagnosis or documented measurement limit;
    further optimization requires review.
-6. [ ] E06: Restore and verify r43/startup, retain sanitized evidence, commit
+6. [x] E06: Restore and verify r43/startup, retain sanitized evidence, commit
    stages, hardware voice and visible completion banner. No experimental push.
 
 ## Source précis and constraints
@@ -199,3 +199,18 @@ Official tracing context: [Espressif5.5.5 application tracing](https://docs.espr
 This recorder uses retained FreeRTOS task-switch macros, not the SystemView
 wire format or live host streaming. SDK tasks.c hash is retained. The benchmark
 still emits inherited periodic service logs; no added in-window trace dump.
+
+## Closeout
+
+r43 firmware readback/startup identity verified, original autoexec restored and
+read back, keyboard neutral and SD service checked then exited. Accepted British
+voice cue produced a fresh stage6/audio-pass receipt; visible mainboard banner
+states P01 owner trace is ready for review. Human hearing unconfirmed. No active
+capture/controller. Local contract/code/evidence/closeout commits; nothing pushed.
+E04 remains explicitly incomplete after the failed gate; this tranche ends at
+its authorized actionable-diagnosis/measurement-limit review stop.
+
+Marker windows measured47.499933seconds probe-off and68.481027seconds probe-on;
+fixed host observer windows were180seconds each. These are not total preparation,
+collection, rollback or task durations. Failed-run host collection duration was
+not emitted because the harness rejected the fixture before that summary step.
