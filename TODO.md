@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: C2 source-only review complete; findings in RESEARCH-001/C2/README.md. Hardware voice receipt verified. Await review before C3; RLE deferred.
+  - Status: C3 NINA source-only review authorized and active; C1/C2 retained. No firmware experiment; C4/C5 and RLE deferred.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 

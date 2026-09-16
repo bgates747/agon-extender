@@ -223,3 +223,16 @@ scheduling/placement confounders. No Extender fix or new measurement.
 C2 closeout: findings3bed03a, source hashes verified. Fresh hardware voice receipt
 verified; startup unchanged; returned to Legacy MOS and emitted completion
 banner without clearing it. Visual readback/human hearing pending. No push.
+
+### C3 — authorized NINA source-only review
+
+Author approved medium-effort source review: clear mainboard screen at start,
+hardware voice at completion and stop. No build, firmware execution, flash,
+reset or benchmark. C4/C5 and RLE remain deferred.
+
+22. [ ] C3-01: Pin retained NINA sources and trace screenshot lock boundaries,
+    buffer ownership/lifetime, allocation fallback and JPEG/DMA requirements.
+23. [ ] C3-02: Compare capture/copy/encode/send and diagnostic overhead with
+    Extender; identify useful differences, limits and smallest proposed check.
+24. [ ] C3-03: Record and verify source-linked findings/provenance; commit,
+    hardware voice with fresh receipt and visible completion message, then stop.
