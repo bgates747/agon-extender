@@ -95,7 +95,7 @@ static esp_err_t run_handler(httpd_req_t *r){
  busy=false;return rc;
 }
 void setup(){
- Serial.begin(115200);Serial.printf("Standalone %s\n",ID);
+ printf("Standalone %s\n",ID); // SDK console is USB Serial/JTAG; do not initialize UART0.
  esp_ota_mark_app_valid_cancel_rollback();
  for(auto &s:slots){s.p=(uint8_t*)heap_caps_malloc(N,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);assert(s.p);}
  precomputed=(uint8_t*)heap_caps_malloc(64*N,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);assert(precomputed);
