@@ -15,7 +15,7 @@ P01f W rejected priority boosting; this experiment changes load, not priorities.
    Reuse the deterministic r05 SW2400 Nurples fixture (same commands and assets,
    512x384, 60 Hz pacing). No game, Golem, MOS or mainboard VDP source changes.
    Validate protocol/receiver and all bounds on host before physical deployment.
-3. [ ] G03: Verify candidate write/readback, identity, input and SD. Run output-off
+3. [x] G03: Verify candidate write/readback, identity, input and SD. Run output-off
    and full-compose/no-send controls, plus the same fixture on installed stock
    mainboard VDP. Mainboard NP04 application timing is not native P4 completion
    timing; preserve historical instrumented mainboard evidence separately.
