@@ -1,3 +1,4 @@
+#include "extender/diagnostics/lock_wake_trace.hpp"
 #include "extender/display/stock_p4_service.hpp"
 #include "extender/diagnostics/video_timing.hpp"
 #include <cassert>
@@ -109,6 +110,10 @@ void StockP4Service::timerEntry(void *context) {
   // Coalesced task notifications carry opportunities, not a backlog of frames.
   auto drawing = self.draw_task_.load(std::memory_order_acquire);
   auto output = self.output_task_.load(std::memory_order_acquire);
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+  if(drawing)agon_lock_wake::notify(0);
+  if(logicalFrame && output)agon_lock_wake::notify(1);
+#endif
   if (drawing) xTaskNotifyGive(drawing);
   if (logicalFrame && output) xTaskNotifyGive(output);
 }
@@ -165,8 +170,14 @@ void StockP4Service::drawEntry(void *p) { static_cast<StockP4Service *>(p)->draw
 void StockP4Service::outputEntry(void *p) { static_cast<StockP4Service *>(p)->outputLoop(); }
 
 void StockP4Service::drawLoop() {
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+  agon_lock_wake::registerWorker(1);
+#endif
   for (;;) {
     ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+    agon_lock_wake::entered(0);
+#endif
     if (stopping_.load(std::memory_order_acquire)) break;
     controller_->drain();
   }
@@ -176,8 +187,14 @@ void StockP4Service::drawLoop() {
 }
 
 void StockP4Service::outputLoop() {
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+  agon_lock_wake::registerWorker(2);
+#endif
   for (;;) {
     ulTaskNotifyTake(pdTRUE, portMAX_DELAY);
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+    agon_lock_wake::entered(1);
+#endif
     if (stopping_.load(std::memory_order_acquire)) break;
     publish();
   }

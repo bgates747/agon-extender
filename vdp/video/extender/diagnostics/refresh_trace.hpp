@@ -3,6 +3,7 @@
 // No per-frame UART, allocation, logging, scheduling or drawing changes.
 #pragma once
 #ifdef AGON_EXTENDER_REFRESH_TRACE
+#include "lock_wake_trace.hpp"
 #include <cstdint>
 #include <cstdio>
 #include <cstring>
@@ -90,6 +91,9 @@ inline void marker(const uint8_t *data, unsigned size) {
 #endif
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   if(began)agon_output_isolation::begin(data+8);
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+  if(began)agon_lock_wake::begin(data+8);
+#endif
 #endif
   return;
  }
@@ -100,7 +104,13 @@ inline void marker(const uint8_t *data, unsigned size) {
  agon_native_wait::stop();
 #endif
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+ agon_lock_wake::active=false; // stop admission at the terminal marker
+#endif
  agon_output_isolation::stop(data+8);
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+ agon_lock_wake::stop(data+8);
+#endif
 #endif
  // No further records admitted. Parser owns marker processing, so another
  // start cannot overlap this dump. USB output is strictly after terminal fence.

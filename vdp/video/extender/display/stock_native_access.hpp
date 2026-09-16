@@ -12,6 +12,10 @@
 #include "../diagnostics/native_wait_trace.hpp"
 #endif
 
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+#include "../diagnostics/lock_wake_trace.hpp"
+#endif
+
 namespace agon::extender::display {
 
 // One active stock display; the original native row aliases are static too.
@@ -21,7 +25,20 @@ namespace agon::extender::display {
 std::recursive_mutex &stockNativeMutex();
 std::recursive_mutex &stockForegroundMutex();
 std::uint32_t &stockPaletteRevision();  // accessed only under the native mutex
-#ifdef AGON_EXTENDER_NATIVE_WAIT_TRACE
+#ifdef AGON_EXTENDER_LOCK_WAKE_TRACE
+class StockNativeGuard {
+ std::recursive_mutex &mutex_;
+ agon_lock_wake::Ticket ticket_;
+ public:
+ explicit StockNativeGuard(std::recursive_mutex &mutex):mutex_(mutex){
+  if(&mutex==&stockNativeMutex())ticket_.enter();
+  mutex_.lock();ticket_.acquired();
+ }
+ ~StockNativeGuard(){mutex_.unlock();ticket_.released();}
+ StockNativeGuard(const StockNativeGuard&)=delete;
+ StockNativeGuard& operator=(const StockNativeGuard&)=delete;
+};
+#elif defined(AGON_EXTENDER_NATIVE_WAIT_TRACE)
 // N04ae: retain the same recursive mutex and acquisition/release semantics.
 // Only the parser measures waiting; drawing/output never update its counters.
 class StockNativeGuard {
