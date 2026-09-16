@@ -146,3 +146,23 @@ findings and disposition of each candidate's relevant avenue. RLE is deferred,
 not discarded. Existing review gates still apply; this sequencing instruction
 does not authorize sample firmware builds, flashes or tests. P06 owns any later
 encoding experiment and retains the raw eight-bit full-frame performance goal.
+
+### C1 investigation — authorized source-only review
+
+Author selected medium effort and one candidate at a time. Investigate
+esp_lvgl_adapter now; no build, firmware execution, flash or benchmark. Hardware
+voice is the only bench action. Stop after C1 for review; do not start C2 or RLE.
+Apply the same evaluation structure to each later authorized candidate:
+question, mechanism trace, local comparison, discriminating check, measurements
+if separately authorized, and evidence-based disposition.
+
+11. [ ] C1-01: Freeze scope and pin source/baseline; define the rendering/output
+    contention question and distinguish LCD scheduling from web delivery.
+12. [ ] C1-02: Trace buffer ownership, locks/waits, task/ISR scheduling, memory,
+    completion and overload through the adapter's relevant paths.
+13. [ ] C1-03: Compare with Extender and retained P02 source/configuration;
+    identify already-present mechanisms, actionable differences and unknowns.
+14. [ ] C1-04: Write source-linked findings and disposition with the smallest
+    proposed discriminating check. No invented performance numbers or build.
+15. [ ] C1-05: Verify documentation, commit, hardware voice with fresh receipt,
+    then stop for Author review. C2–C5 remain pending authorization.
