@@ -137,6 +137,9 @@ Do not run the external audio firmware on the bench as a substitute.
 
 ### C3 — NINA display: relevant snapshot separation, not a stream benchmark
 
+Completed [focused review](C3/README.md): ownership principle already present;
+input-alignment explanation needs qualification and instrumentation has limits.
+
 [The screenshot handler][nina-screen] serializes its reusable encoder buffers
 with a screenshot mutex, holds the display lock only while obtaining an owned
 LVGL snapshot, then unlocks before copying, JPEG encoding and HTTP sending.

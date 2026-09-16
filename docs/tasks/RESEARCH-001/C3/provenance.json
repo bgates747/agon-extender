@@ -1,0 +1,18 @@
+{
+  "review_utc": "2026-09-16T02:41:41.154112+00:00",
+  "contract": "1dfba3f",
+  "upstream_commit": "c7b34400f7373cad94caee7493413a8ec5b58864",
+  "source_hashes": {
+    "README.md": "1946fac1e2bc4ad3983c43ce5140f2372d2277cd96fe97384ff3bcf796eef16c",
+    "sdkconfig.defaults": "03f04ffce537da63b2ee9fdc15af6454a1ecbb0acc5f6ba19592069c6d26c30e",
+    "main/idf_component.yml": "9ab5eecadcc7c4961e65e0461d752750ed5094013bc2e70dcbcac80d70cacdbd",
+    "main/web_handlers_display.c": "70b421fcc87d665fffd11d4663a4080080bef7b46d5548ebc2a5fb01944d972b",
+    "main/jpeg_utils.c": "5e3b88af364dc21787558f9d0799ebbb26385317306edfd2f0224210e77fc1c6",
+    "main/perf_monitor.c": "832cc4be7b1a08178d76e078390b74b59c37de7533763a2d2dda7931f68eead5",
+    "test/host/README.md": "e4bc491a4986d6c16a48ed1172bedc8c527c862f7da0a9812f0194bf153fae50"
+  },
+  "local_sdk": {
+    "vdp/.pio/packages/framework-espidf/components/esp_driver_jpeg/jpeg_encode.c": "f13fce3ec165a1dcdb0bded5c360eda4f2da9baba19289e6fd18672afaa78b9a"
+  },
+  "scope": "source-only; no build or performance test"
+}

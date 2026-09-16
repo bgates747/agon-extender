@@ -230,9 +230,14 @@ Author approved medium-effort source review: clear mainboard screen at start,
 hardware voice at completion and stop. No build, firmware execution, flash,
 reset or benchmark. C4/C5 and RLE remain deferred.
 
-22. [ ] C3-01: Pin retained NINA sources and trace screenshot lock boundaries,
+22. [x] C3-01: Pin retained NINA sources and trace screenshot lock boundaries,
     buffer ownership/lifetime, allocation fallback and JPEG/DMA requirements.
-23. [ ] C3-02: Compare capture/copy/encode/send and diagnostic overhead with
+23. [x] C3-02: Compare capture/copy/encode/send and diagnostic overhead with
     Extender; identify useful differences, limits and smallest proposed check.
 24. [ ] C3-03: Record and verify source-linked findings/provenance; commit,
     hardware voice with fresh receipt and visible completion message, then stop.
+
+C3 findings: [review](RESEARCH-001/C3/README.md). Ownership separation already
+exists locally; JPEG input-alignment comment is not an SDK contract. Noted
+unhandled HTTP send return and timer-table collision deletion defect. No fix
+or benchmark performed; hardware closeout follows.
