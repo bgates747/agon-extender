@@ -78,3 +78,10 @@ replace/reset at16 colours, setup at4 and2 colours. These six additional small
 scenes accompany palette controls under the all-depth tap. Restart-isolate each
 mainboard replay because Copper includes both software and hardware sprites.
 This is the original graphics-coverage scope, not an implementation expansion.
+
+Self-assigned bounded acquisition handling: the same stock scanout null-pointer
+crash recurred during BSP26_01. For that exact known signature only, allow one
+fresh-start retry per case, retain both attempts, and leave a twice-failed case
+unqualified while continuing independent cases. Unknown failures still stop.
+This is test orchestration, not a stock/P4 fix or permission to erase failures.
+Use the unchanged committed per-case image procedure with fresh startup isolation.
