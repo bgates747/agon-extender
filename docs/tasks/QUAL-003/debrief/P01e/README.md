@@ -19,7 +19,7 @@ No optimization or experimental push; Golem/MOS/mainboard VDP excluded.
    no live transport during observation. Use compile-time SDK trace hooks in an
    isolated build, never edit installed SDK or official reference checkouts.
    If support differs, document the adjustment before proceeding.
-3. [ ] E03: Host-check recorder bounds/trigger/disabled behavior, build isolated
+3. [x] E03: Host-check recorder bounds/trigger/disabled behavior, build isolated
    candidate with r43 rollback retained, verify installation/readback. Selected
    experimental revision r47 is an agent implementation choice under this
    authorization; do not silently label it production or change other flags.

@@ -1,0 +1,8 @@
+{
+  "run_id": "QUAL-003-2026-09-16-04-46-10Z",
+  "build_id": "uart-excom-console-r47-b2026-09-16-04-45-15Z",
+  "factory_sha256": "30c8f17d7792a26abaa3d86e95d2db7b62400674e0e4e712f675b720f57c688b",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "mainboard_sd_commissioning": "pending"
+}
