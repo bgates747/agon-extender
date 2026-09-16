@@ -2,18 +2,19 @@
 
 ## Executive summary — current review, 2026-09-16
 
-[Bounded P01c/d diagnostics](QUAL-003/debrief/P01cd/README.md) completed six
-matched workload controls. Streaming native lock waits/holds reached22–23ms;
-output-off stayed near historical mainboard pacing. Instrumentation materially
-perturbed output, so this is a lead for narrower owner/scheduler correlation,
-not a performance fix or attribution to one network task. See the executive
-tables and retained raw records. Original r43/startup restored and keyboard/SD
-verified; hardware voice receipt and visible completion banner delivered. No experimental push.
+[P01e owner/scheduler trace](QUAL-003/debrief/P01e/README.md) captured a25.210ms
+snapshot lock hold during which TCP/IP `tiT` occupied the same core for24.737ms.
+This is observed lock-holder preemption, not25ms of pixel computation. The
+candidate's probe-off baseline degraded; the probe-on run failed its terminal
+pixel query. Thus the captured event is diagnostic evidence, not a passing
+performance result. Remaining controls were stopped. Original r43/startup and
+keyboard/SD verified restored; voice cue follows report completion. No push.
 
-The [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md),
-[official-source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) and
-[itemized plan](QUAL-003/DEBRIEF-PLAN.md) remain authoritative context. Current
-Rally hardware FPS is unmeasured in these controls; Golem remains on hold.
+The [itemized plan](QUAL-003/DEBRIEF-PLAN.md),
+[overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md) and
+[source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) preserve context.
+Review a representative lower-overhead control and bounded scheduling/exclusion
+experiment. Load ramp remains deferred, chunking fallback only; Golem excluded.
 
 ## Earlier execution amendments and scope records
 

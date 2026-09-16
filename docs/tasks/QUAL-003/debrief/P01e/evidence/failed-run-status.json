@@ -1,0 +1,10 @@
+{
+  "valid_comparison": false,
+  "failure_code": 15,
+  "count": 2400,
+  "nonce": "50303200013921a2",
+  "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+  "terminal_fence_failed": true,
+  "refresh_trace_separately_complete": true,
+  "remaining_planned_controls_not_run": true
+}

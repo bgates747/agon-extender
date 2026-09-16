@@ -1,0 +1,45 @@
+[
+  {
+    "file": "P1E1.BIN",
+    "provenance": "nonce_verified",
+    "nonce": "5030320000e79137",
+    "count": 2400,
+    "failed": 0,
+    "warmup_boundaries": 120,
+    "intervals": 2279,
+    "elapsed_ticks": 5442,
+    "mean_frame_ms": 19.89907854322071,
+    "completed_fps": 50.253583241455345,
+    "p95_frame_ms": 33.333333333333336,
+    "maximum_frame_ms": 116.66666666666667,
+    "tick_histogram": {
+      "2": 1912,
+      "4": 338,
+      "6": 14,
+      "10": 4,
+      "12": 6,
+      "14": 5
+    },
+    "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+    "variant": "unfenced-sw",
+    "completion_scope": "submission/vblank boundary; terminal fence only",
+    "end_reason": "boundary_limit",
+    "live_sprites_max": 13,
+    "live_sprites_mean": 8.29875,
+    "live_sprites_histogram": {
+      "1": 1,
+      "2": 7,
+      "3": 7,
+      "4": 95,
+      "5": 284,
+      "6": 190,
+      "7": 219,
+      "8": 293,
+      "9": 475,
+      "10": 439,
+      "11": 293,
+      "12": 85,
+      "13": 12
+    }
+  }
+]

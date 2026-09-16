@@ -440,3 +440,8 @@ Only the documentation/research goal is complete; parity remains unproved.
 
 Author approved narrower ownership/scheduler tracing on2026-09-16, retaining
 chunking as a fallback. [P01e contract](debrief/P01e/README.md) owns execution.
+
+P01e review stop: captured25.210ms pre-unlock hold,24.737ms `tiT` residency on
+owner core. First candidate control was already slow; probe-on terminal query
+timed out. Remaining controls not run. [Findings](debrief/P01e/README.md) retain
+both the event and failed qualification; no speculative scheduling change.

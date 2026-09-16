@@ -1,0 +1,25 @@
+{
+  "nonce": "5030320000e79137",
+  "valid": true,
+  "window_ms": 47544.001,
+  "holds": 0,
+  "hold_mean_ms": null,
+  "hold_max_ms": 0.0,
+  "triggered": false,
+  "rings": {
+    "0": {
+      "total": 0,
+      "retained": 0,
+      "overwritten": 0
+    },
+    "1": {
+      "total": 0,
+      "retained": 0,
+      "overwritten": 0
+    }
+  },
+  "events": [
+    [],
+    []
+  ]
+}
