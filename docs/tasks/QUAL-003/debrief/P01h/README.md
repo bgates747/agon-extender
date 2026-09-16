@@ -145,3 +145,41 @@ explicit Author request for a deployment plan. It authorizes documentation and
 its hardware completion cue now, not automatic firmware implementation this turn.
 QUAL-004 remains open for exception review; its successful static pixels are
 reference evidence, not clearance of its unresolved transition failures.
+
+## AGM wire-contract reuse — Author direction and initial archaeology
+
+Author requires reuse of the movie player's existing function contracts unless
+recent upstream assignments collide. This supersedes any suggestion to invent
+an unrelated EDP command before checking historical compatibility.
+
+Read-only inspection on2026-09-16 found two historical contracts in AgonJukebox:
+
+| Pinned source | Command bytes | Meaning evidenced by caller |
+|---|---|---|
+| `agm` at `39e800c01826b382a9498e0130e9dbb4e766fad2` (2025-02-15), `src/asm/vdu_buffered_api.inc` | `23,0,160,dstLo,dstHi,65,srcLo,srcHi` | TurboVega decompression |
+| Same source, plus `src/asm/agm.inc::pv_cmd_draw` | `23,0,160,dstLo,dstHi,67,srcLo,srcHi` | Custom szip decompression, adjacent to stock command65 |
+| Later `origin/agz` at `a8f1075c605a78e573d488dce46d1bfacee8d3a8` (2025-05-10), `src/asm/vdu_buffered_api.inc` and `agm.inc::agm_next_unit` | `23,0,160,dstLo,dstHi,65,srcLo,srcHi` | Generic decompression; same source/destination supported by caller; SRLE2 calls twice to unpack the two layers |
+
+Buffer IDs are16-bit little-endian. The wrapper's trailing padding byte is outside
+its transmitted `@end-@cmd` length. The later caller suggests compression-header
+dispatch through command65, rather than a separate opcode per codec. That is
+caller evidence; locate its matching custom VDP implementation before treating
+header dispatch, errors or in-place operation as fully recovered contracts.
+
+Upstream collision check: read-only `git ls-remote` on2026-09-16 returned
+`c7ac293d2aa81ddfa693390549bcd909069c8fc3` for AgonPlatform/agon-vdp HEAD/main,
+matching the inspected official checkout. `video/agon.h` assigns buffered0x40
+compression,0x41 decompression and0x48 bitmap expansion; no0x43 assignment was
+found there or in its buffered dispatcher. Thus the earlier67 slot has no observed
+collision in this pinned main, but remains historical **szip**, not an RLE2
+assignment to repurpose casually. Existing65 must retain stock TurboVega semantics.
+Upstream reference: https://github.com/AgonPlatform/agon-vdp/tree/c7ac293d2aa81ddfa693390549bcd909069c8fc3/video
+
+A01/A02 must now recover the later AGM custom-VDP decoder/header dispatch and
+inventory relevant upstream release/development assignments again before freezing
+implementation. Prefer the later compatible generic contract if confirmed;
+retain earlier67 compatibility only as justified by its real format/handler.
+Record any actual collision and proposed resolution for review. Do not allocate
+new command bytes, or assume that no collision in main rules out all branches.
+In-place decode requires retaining source ownership until successful completion.
+No firmware or application changes were made during this contract archaeology.
