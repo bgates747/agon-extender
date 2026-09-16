@@ -7,6 +7,11 @@ item is removed.
 
 ## Current Author-directed research
 
+- [ ] **RESEARCH-002 — Espressif P4 board network-video throughput claims**
+  - Status: Retrospective research complete; awaiting Author review. Link/encoder limits do not establish sustained frame-serving throughput.
+  - Details: [RESEARCH-002](docs/tasks/RESEARCH-002.md)
+  - Boundary: Documentation only; no new benchmark, firmware change or compression execution.
+
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
   - Status: C1–C5 source reviews complete; synthesis in RESEARCH-001/C5/README.md. Hardware voice receipt verified. Await Author review; RLE prerequisite satisfied, no implementation started.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
