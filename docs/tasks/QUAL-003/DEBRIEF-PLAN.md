@@ -119,7 +119,7 @@ existing fixtures. No Golem, MOS experiment or downstream execution.
 Author authorized bounded P01c/d implementation and execution;
 [execution contract](debrief/P01cd/README.md) owns this tranche. It precedes RLE.
 
-3. [ ] P01c: If pre-enqueue variation remains, define one bounded diagnostic
+3. [x] P01c (bounded selection; see result limitations): If pre-enqueue variation remains, define one bounded diagnostic
    build that measures the missing intervals: parser/owner runnable and blocked
    time, RX driver buffered work, software reply-gate duration, UART driver
    activity, foreground/native/input-lock acquisition, timer wake lateness. Include foreground admission, dynamic-payload/queue
@@ -136,7 +136,7 @@ Author authorized bounded P01c/d implementation and execution;
    and startup allocation order. These are hypotheses, not established causes.
    Select only probes needed for attribution; no per-allocation logging or heavy
    heap tracing without measuring its overhead against the same control.
-4. [ ] P01d: Validate the probe against the same unmodified reference condition;
+4. [x] P01d (overhead evaluated; attribution limited): Validate the probe against the same unmodified reference condition;
    a probe which makes the failure disappear gives only limited attribution.
    Save RAM records only after the terminal fence. No live SD, per-frame UART
    logs, open serial tool that resets the board, or browser polling during the
@@ -151,11 +151,18 @@ fix is identified. Estimated existing controls:3minutes observer each, about
 40seconds game work, plus setup/retrieval; diagnostic preparation has no tested
 duration yet. Do not turn estimates into resets.
 
-**P01a/b review checkpoint:** [matched-run results](debrief/P01/README.md).
+**Historical P01a/b review checkpoint (superseded by P01c/d below):** [matched-run results](debrief/P01/README.md).
 Two output-off controls remove the tail; both streamed controls worsen it.
 P01c/d remain unchecked and deferred: recommend existing P02a/b isolation before
 adding broad instrumentation. This is an evidence-driven sequencing proposal,
 not authorization to start P02. No immediate fix or parity pass is claimed.
+
+**P01c/d review checkpoint:** [six paired hardware controls](debrief/P01cd/README.md)
+complete. Streaming native waits/holds reach22–23ms; probe effects materially
+alter output timing. No exclusive CPU/runnable attribution or performance fix.
+Broad unmeasured items above remain possible follow-ups, not completed probes.
+The result proposes narrower owner/scheduler correlation before optimization.
+Original r43/startup restored; no experimental push. Await Author review.
 
 ### P02 — Separate output composition from network scheduling, if warranted
 

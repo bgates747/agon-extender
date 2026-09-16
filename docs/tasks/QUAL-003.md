@@ -1,15 +1,19 @@
 # QUAL-003 — Compare mainboard VDP and Extender EDP graphics
 
-## Executive summary — current review, 2026-09-15
+## Executive summary — current review, 2026-09-16
 
-The [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md) is ready for Author review,
-with [official-source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) and a
-[focused proposed sequence](QUAL-003/DEBRIEF-PLAN.md#proposed-investigation-sequence).
-Recorded P4 native execution scopes are faster than mainboard, but streamed
-Nurples completion spacing has not passed repeated parity. Current Rally
-hardware FPS is unmeasured. Hardware voice completed; bench returned to Legacy
-MOS. Experiments remain paused, proposed steps require review, and Golem testing
-is explicitly on hold until further notice. No experimental push.
+[Bounded P01c/d diagnostics](QUAL-003/debrief/P01cd/README.md) completed six
+matched workload controls. Streaming native lock waits/holds reached22–23ms;
+output-off stayed near historical mainboard pacing. Instrumentation materially
+perturbed output, so this is a lead for narrower owner/scheduler correlation,
+not a performance fix or attribution to one network task. See the executive
+tables and retained raw records. Original r43/startup restored and keyboard/SD
+verified; hardware attention cue follows report completion. No experimental push.
+
+The [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md),
+[official-source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) and
+[itemized plan](QUAL-003/DEBRIEF-PLAN.md) remain authoritative context. Current
+Rally hardware FPS is unmeasured in these controls; Golem remains on hold.
 
 ## Earlier execution amendments and scope records
 
