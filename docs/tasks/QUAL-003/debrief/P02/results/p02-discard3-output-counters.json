@@ -1,0 +1,160 @@
+{
+  "before": {
+    "schema": 1,
+    "clock_bits": 32,
+    "now_us": 493440502,
+    "totals_valid": true,
+    "lost_completions": 1,
+    "overlapping_calls": 0,
+    "busy_reads": 0,
+    "phases": [
+      {
+        "name": "snapshot",
+        "count": 5174,
+        "total_us": 50698704,
+        "units": 1045585920,
+        "max_us": 49508,
+        "last_us": 6575,
+        "last_at_us": 239192360,
+        "max_context": 33554816,
+        "active": {
+          "state": 0,
+          "generation": 5174,
+          "context": 33554816,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "socket_send",
+        "count": 5172,
+        "total_us": 90625419,
+        "units": 1045554816,
+        "max_us": 187667,
+        "last_us": 16230,
+        "last_at_us": 239174519,
+        "max_context": 2,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 2,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "credit_to_ready",
+        "count": 5171,
+        "total_us": 5420952,
+        "units": 5171,
+        "max_us": 30090,
+        "last_us": 588,
+        "last_at_us": 239173802,
+        "max_context": 0,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 0,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "ready_to_send",
+        "count": 5172,
+        "total_us": 670526,
+        "units": 5172,
+        "max_us": 517,
+        "last_us": 118,
+        "last_at_us": 239174400,
+        "max_context": 0,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 0,
+          "age_us": 0,
+          "consistent": true
+        }
+      }
+    ]
+  },
+  "after": {
+    "schema": 1,
+    "clock_bits": 32,
+    "now_us": 691058599,
+    "totals_valid": true,
+    "lost_completions": 1,
+    "overlapping_calls": 0,
+    "busy_reads": 0,
+    "phases": [
+      {
+        "name": "snapshot",
+        "count": 7571,
+        "total_us": 66091523,
+        "units": 1516855296,
+        "max_us": 49508,
+        "last_us": 7580,
+        "last_at_us": 556569624,
+        "max_context": 33554816,
+        "active": {
+          "state": 0,
+          "generation": 7571,
+          "context": 33554816,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "socket_send",
+        "count": 5172,
+        "total_us": 90625419,
+        "units": 1045554816,
+        "max_us": 187667,
+        "last_us": 16230,
+        "last_at_us": 239174519,
+        "max_context": 2,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 2,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "credit_to_ready",
+        "count": 5171,
+        "total_us": 5420952,
+        "units": 5171,
+        "max_us": 30090,
+        "last_us": 588,
+        "last_at_us": 239173802,
+        "max_context": 0,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 0,
+          "age_us": 0,
+          "consistent": true
+        }
+      },
+      {
+        "name": "ready_to_send",
+        "count": 5172,
+        "total_us": 670526,
+        "units": 5172,
+        "max_us": 517,
+        "last_us": 118,
+        "last_at_us": 239174400,
+        "max_context": 0,
+        "active": {
+          "state": 0,
+          "generation": 5172,
+          "context": 0,
+          "age_us": 0,
+          "consistent": true
+        }
+      }
+    ]
+  }
+}

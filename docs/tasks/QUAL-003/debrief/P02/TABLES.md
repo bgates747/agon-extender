@@ -7,6 +7,7 @@ Historical stock mainboard baseline:59.927 completions/s, mean16.687 ms, p9517.0
 | p02-discard6 | 52.551 | 19.029 | 45.509 | 54.228 | +166.71% | 44.339 |
 | p02-normal1 | 60.055 | 16.651 | 29.238 | 37.727 | +71.35% | 29.830 |
 | p02-prebuilt5 | 60.057 | 16.651 | 25.026 | 33.624 | +46.67% | 23.503 |
+| p02-prebuilt7 | 60.058 | 16.651 | 21.428 | 33.171 | +25.58% | 21.820 |
 | p02-discard3 | 60.053 | 16.652 | 17.318 | 21.335 | +1.49% | 17.429 |
 | p02-off2 | 60.053 | 16.652 | 17.049 | 21.072 | -0.08% | 17.326 |
 
@@ -19,5 +20,6 @@ Operation scopes below are per full512×384 frame, not per bitmap draw. Means ar
 | p02-prebuilt5 | 0 | — | 0.000 | 1133 | 17.342 | 28.357 | 222793120 |
 | p02-normal1 | 1093 | 13.623 | 27.360 | 1093 | 17.702 | 27.360 | 214927520 |
 | p02-discard6 | 2472 | 13.537 | 53.913 | 0 | — | 0.000 | 0 |
+| p02-prebuilt7 | 0 | — | 0.000 | 1166 | 17.082 | 29.184 | 229282240 |
 
 Prebuilt counters measure slot preparation/cache reuse, not native composition; full-size bytes are still sent. Raw per-phase counts, units, means and duration are retained in `results/*-output.json`. All accepted operation blocks report zero failures, invalid state and pending operations.

@@ -2,13 +2,38 @@
 
 ## Executive summary
 
-Author approved P02 after P01 reproduced an output-associated timing tail.
-Implement one default-off diagnostic candidate based on archived r43 and compare
-normal output, output off, full native composition with local discard, and
-prebuilt full-size frame transmission. No renderer algorithm, MOS, upstream
-reference, browser credit contract or mainboard firmware changes. Golem excluded.
-Stop at an actionable conclusion; notify by hardware voice, preserve original
-startup and restore the verified r43 baseline before human review.
+**The controls reveal two problems to investigate, not a clean network-only
+bottleneck.** Normal streaming reproduced the timing tail. Prebuilt full-size
+transmission retained a tail without native composition. However, composition-
+only changed from near-stock pacing to substantially worse pacing on repeat,
+with the same deterministic game states and no network sends. No firmware fix
+or core-affinity change is justified yet.
+
+| Condition | Refresh completions/s | Spacing p95 ms |
+|---|---:|---:|
+| Mainboard historical reference | 59.927 | 17.063 |
+| P4 normal web output | 60.055 | 29.238 |
+| P4 output disabled | 60.053 | 17.049 |
+| P4 composition only, two runs | 60.053 / 52.551 | 17.318 / 45.509 |
+| P4 prebuilt transmission, two runs | 60.057 / 60.058 | 25.026 / 21.428 |
+
+Normal composition averaged13.623ms per full frame; discard composition
+6.429/13.537ms. Full-frame sends averaged17.702ms normally and17.342/17.082ms
+with prebuilt content. These wall-time scopes include waiting/preemption,
+not isolated bitmap-plot execution. Game-window sends were27.360/s normally
+and28.357/29.184/s prebuilt; approximately60 refresh completions/s is not60
+browser frames/s. No matched mainboard snapshot/network operation exists here.
+
+[Comparative tables](TABLES.md) separate completion FPS, spacing milliseconds,
+per-frame operation costs and output rates. The historical mainboard p95 is
+17.063ms. These are software-sprite fixture results, not new Rally timings or
+hardware-sprite qualification. Golem remains excluded.
+
+**First avenue:** resolve discard-repeat variability using matched P4 boot/order
+and snapshot-pool placement/lock evidence, then bound HTTP/lwIP/Ethernet task
+interference. The priority5 HTTP task performs queued sends; pinning only the
+priority3 network worker or lwIP does not isolate the entire path. This is an
+agent recommendation for review, not a newly approved experiment.
 
 ## Frozen diagnostic choices
 
@@ -54,8 +79,8 @@ Author-specified product requirements.
 
 1. [x] I01: Implement and host-check default-off controls; freeze candidate source.
 2. [x] I02: Build/hash/preserve/deploy/verify candidate and fixture readiness.
-3. [ ] I03: Run and validate four controls, repeat informative contrast as needed.
-4. [ ] I04: Interpret per-operation/output and paced completion separately;
+3. [x] I03: Run and validate four controls, repeat informative contrast as needed.
+4. [x] I04: Interpret per-operation/output and paced completion separately;
    select at most one justified P02c change or stop with a proposed next step.
 5. [ ] I05: Restore baseline/startup, verify service/input, commit evidence,
    deliver hardware voice notification and pause.
@@ -169,3 +194,32 @@ bad, whereas enqueue-to-completion p954.123ms is comparatively small. These
 are separate distributions, not subtractable estimates of CPU cost. The game
 was already delayed before RefreshSprites admission. Mainboard resets do not
 establish a fresh P4 boot for each control; the raw logs preserve that distinction.
+
+## Evidence, duration and reproducibility
+
+Six accepted controls completed2400 identical game states and2400 explicit
+refreshes each, with at most1 pending refresh and successful terminal fence.
+One initial-query failure is retained separately. Run order: normal1, off2,
+discard3, failed prebuilt4; prebuilt5, discard6; prebuilt7. A new passive serial
+capture initializes the P4 between those three series; mainboard reset alone
+between controls does not reset the P4. This is a possible sequencing confounder,
+not a proven cause of discard variance.
+
+Raw NP04 state records, microsecond trace blocks, per-phase output blocks,
+allocation excerpts, observer summaries and SHA256 inventory are in `results/`.
+Private original serial logs and complete browser captures remain under ignored
+`agents/p02/`. Recompute with the existing `nurples-parity/analyze.py`,
+`analyze_refresh_trace.py`, and this directory's `analyze_output_isolation.py`,
+using each result's nonce. Do not run the successful-state analyzer on the
+count0/error15 failure and expect it to pass.
+
+Observer windows were180seconds; actual fixture windows were approximately40
+seconds, except slow discard6 at45.851seconds. Per-run reset-to-collection
+wall durations are in `*-duration.json`; they include observation/retrieval,
+not exact gameplay runtime. Allow additional staging and firmware restoration
+time when scheduling repetitions. A host cleanup initially reused an old SD
+session state; the service rejected it before mutation and cleanup was retried
+with fresh state. That bookkeeping issue did not change collected game traces.
+
+No affinity, priority, parser, renderer, MOS or mainboard VDP change was made
+between controls. The diagnostic image is not promoted; no experimental push.

@@ -8,11 +8,12 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-P00's focused timing audit and [P01a/b matched output controls](docs/tasks/QUAL-003/debrief/P01/README.md)
-are complete. Removing output removes the SW timing tail in both repeats;
-streamed repeats remain uneven. Hardware voice delivered; paused for review.
-Recommend existing P02 composition-versus-network isolation next, not yet
-approved. Conditional P01c/d instrumentation is deferred. Golem remains on hold.
+P00 and P01a/b are complete; [P02 SW isolation controls](docs/tasks/QUAL-003/debrief/P02/README.md)
+are collected for review. Prebuilt transmission retains a timing tail, but a
+contradictory composition-only repeat prevents network-only attribution.
+Recommend resolving boot/order/pool-placement and scheduling variance before
+an affinity change. No performance fix or parity pass claimed. Golem remains
+on hold; P02 hardware restoration/notification is the remaining closeout.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

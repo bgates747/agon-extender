@@ -37,7 +37,7 @@ single-operation cost from a mixed scene. Human acceptance remains separate.
 
 ## Proposed investigation sequence
 
-**P00 complete. P01a/b complete. P02 approved; P03–P06 remain proposals.**
+**P00 complete. P01a/b complete. P02 SW controls collected; review pending. P03–P06 remain proposals.**
 These steps refine the open N04ae-iii/N03–N05 work, not a second independent
 performance queue. Author clarification: **all Golem testing remains on hold
 until further notice**. Only the current eZ80-projection Rally is eligible below.
@@ -154,7 +154,7 @@ Author approved unattended P02 execution with hardware voice notification.
 measurement limits, rollback and review boundary before implementation.
 
 
-1. [ ] P02a: On one frozen diagnostic image, compare four explicitly labelled
+1. [x] P02a: On one frozen diagnostic image, compare four explicitly labelled
    controls: output off; complete snapshot composition with local discard;
    full-sized prebuilt-frame network streaming; normal composition+streaming.
    Hold seed, work, resolution and target request cadence fixed. Preserve full
@@ -178,6 +178,14 @@ measurement limits, rollback and review boundary before implementation.
 unchanged work. Return to the baseline after a failed control. Do not retry the
 already rejected same-core snapshot priority2/4 configurations without new
 contradictory evidence. No renderer redesign based solely on task priority lists.
+
+P02 result: six valid SW controls plus one retained pre-marker query failure.
+Normal streaming p9529.238ms; off17.049ms; prebuilt25.026/21.428ms;
+discard17.318/45.509ms. The contradictory discard repeat prevents network-only
+attribution. See `debrief/P02/README.md`. P02b HW extension and P02c scheduling
+change remain unexecuted; stop for review before adding instrumentation or
+changing affinity. Agent-recommended next boundary: matched boot/order and
+pool-placement/lock evidence, then measured networking task interference.
 
 ### P03 — Audit/fix the evidenced owner or scheduling path
 

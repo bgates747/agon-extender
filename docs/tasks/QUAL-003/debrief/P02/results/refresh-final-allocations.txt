@@ -1,0 +1,3 @@
+I (1754) np-fb-memory: width=640 height=480 bytes=153600 largest=335872 selected=psram-fallback
+I (66549) np-fb-memory: width=640 height=480 bytes=153600 largest=225280 selected=psram-fallback
+I (66616) np-fb-memory: width=512 height=384 bytes=196608 largest=225280 selected=internal
