@@ -8,6 +8,9 @@ confirmed by the Author. No audio or emulator notification. Mainboard hardware
 is the compatibility oracle; emulator references are supplementary. Existing
 39-case probe results are evidence of selected checks, not whole-image parity.
 Rendering timing is secondary; no streaming-performance optimisation or Golem.
+Author clarification: mark missing API functionality **not implemented**; do not
+implement it in this run. Defer implementation to a separately authorised second
+pass. Capture/test instrumentation is permitted and is not API implementation.
 
 ## Frozen execution contract
 
