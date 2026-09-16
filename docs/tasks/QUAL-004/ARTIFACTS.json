@@ -58,5 +58,10 @@
     "source_commit": "4fe366a2bd6fb85d93aae5e9e6ab8a65a3c9a99a",
     "scope": "Fenced scene player; no renderer changes"
   },
-  "interpretation": "Artifact identity, not an assertion that every built image was deployed or passed. See run and restoration records."
+  "interpretation": "Artifact identity, not an assertion that every built image was deployed or passed. See run and restoration records.",
+  "public_pixel_query_probe": {
+    "sha256": "2b024b99fbf88444250c799b22f8b75b13af23cc18d05d0ce224be8957d0c397",
+    "bytes": 1736,
+    "scope": "Ordinary pixel-query API only; ten independently checked RGB replies"
+  }
 }

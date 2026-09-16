@@ -1,0 +1,174 @@
+[
+  {
+    "route": "LEGACY",
+    "queries": [
+      {
+        "x": 80,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          170,
+          0,
+          0
+        ],
+        "expected": [
+          170,
+          0,
+          0
+        ],
+        "match": true
+      },
+      {
+        "x": 144,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          0,
+          170,
+          0
+        ],
+        "expected": [
+          0,
+          170,
+          0
+        ],
+        "match": true
+      },
+      {
+        "x": 208,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          0,
+          0,
+          170
+        ],
+        "expected": [
+          0,
+          0,
+          170
+        ],
+        "match": true
+      },
+      {
+        "x": 336,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          255,
+          255,
+          255
+        ],
+        "expected": [
+          255,
+          255,
+          255
+        ],
+        "match": true
+      },
+      {
+        "x": 16,
+        "y": 200,
+        "status": 0,
+        "rgb": [
+          0,
+          0,
+          0
+        ],
+        "expected": [
+          0,
+          0,
+          0
+        ],
+        "match": true
+      }
+    ],
+    "match": true
+  },
+  {
+    "route": "EXCOM",
+    "queries": [
+      {
+        "x": 80,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          170,
+          0,
+          0
+        ],
+        "expected": [
+          170,
+          0,
+          0
+        ],
+        "match": true
+      },
+      {
+        "x": 144,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          0,
+          170,
+          0
+        ],
+        "expected": [
+          0,
+          170,
+          0
+        ],
+        "match": true
+      },
+      {
+        "x": 208,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          0,
+          0,
+          170
+        ],
+        "expected": [
+          0,
+          0,
+          170
+        ],
+        "match": true
+      },
+      {
+        "x": 336,
+        "y": 40,
+        "status": 0,
+        "rgb": [
+          255,
+          255,
+          255
+        ],
+        "expected": [
+          255,
+          255,
+          255
+        ],
+        "match": true
+      },
+      {
+        "x": 16,
+        "y": 200,
+        "status": 0,
+        "rgb": [
+          0,
+          0,
+          0
+        ],
+        "expected": [
+          0,
+          0,
+          0
+        ],
+        "match": true
+      }
+    ],
+    "match": true
+  }
+]

@@ -22,7 +22,7 @@ pass. Capture/test instrumentation is permitted and is not API implementation.
    Record dimensions, colour interpretation, palette, display/drawing page,
    sprite composition and integrity checks. Reject incomplete or mixed frames.
    Prefer existing stock pixel semantics and capture paths over new rendering.
-3. [ ] Validate capture against simple known patterns and selected pixel queries;
+3. [x] Validate capture against simple known patterns and selected pixel queries;
    negative controls must detect changed pixels, missing rows and corrupt data.
    Freeze candidate inputs before evidence-producing builds/runs. Official
    upstream checkouts remain read-only. Diagnostic firmware changes stay here.
