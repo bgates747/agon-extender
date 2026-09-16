@@ -71,3 +71,14 @@ identical and all196608 pixels matched P4. This is evidence for static sprite
 composition under fresh setup, not clearance of the live-replay crash. The
 remaining55-scene cohort is proceeding with actual SD-startup readiness checked
 after each reset rather than a fixed boot-delay assumption.
+
+## Unexpected mode during acquisition
+
+The isolated cohort passed14 further scenes through BSP25_03. BSP25_04 then
+reported640×480 rather than the startup's expected512×384; its capture ended
+unsuccessfully without a row. The r01 tap covers64-colour scanout only, so this
+is invalid acquisition, not a valid pixel mismatch. The frozen input contains
+no top-level mode command. Startup bytes had been verified, but that does not
+prove the display reached its requested mode. Cause remains unresolved; one
+fresh-start retry of the case is permitted before proceeding with the remainder.
+No mode-selection command is added to the fixture and no renderer is repaired.
