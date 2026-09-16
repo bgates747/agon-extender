@@ -82,3 +82,11 @@ no top-level mode command. Startup bytes had been verified, but that does not
 prove the display reached its requested mode. Cause remains unresolved; one
 fresh-start retry of the case is permitted before proceeding with the remainder.
 No mode-selection command is added to the fixture and no renderer is repaired.
+
+Correction after examining serial bytes **before** Q4BEGIN4028: the VDP did not
+merely remain in the wrong startup mode. It crashed/rebooted during scene
+execution at the same stock sprite-scanout PC0x40083247/address0x1c, then consumed
+the trailing capture command in default640×480 mode. The dated run correction
+and full preceding crash text are retained. Restart isolation therefore reduces
+live-replay exposure but does not eliminate this failure. Its timing relationship
+to the diagnostic build remains unqualified; no renderer fix is attempted.

@@ -1,0 +1,23 @@
+Q4END 4027 1
+[   680][E][esp32-hal-misc.c:143] disableCore1WDT(): Failed to remove Core 1 IDLE task from WDT
+Guru Meditation Error: Core  1 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x40083247  PS      : 0x00060031  A0      : 0x800832a0  A1      : 0x3ffbf80c  
+A2      : 0x3ffd6b20  A3      : 0x00000000  A4      : 0x00000102  A5      : 0x00000200  
+A6      : 0x00000180  A7      : 0x00000d00  A8      : 0x80083247  A9      : 0x3ffbf7ec  
+A10     : 0x00000000  A11     : 0x00000000  A12     : 0x3ffb62a0  A13     : 0x80000000  
+A14     : 0x00000001  A15     : 0x00000001  SAR     : 0x00000000  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x0000001c  LBEG    : 0x4008c798  LEND    : 0x4008c7ae  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x40083244:0x3ffbf80c |<-CORRUPTED
+
+
+
+
+ELF file SHA256: 2457d9547e8cc55a
+
+Rebooting...
+[   679][E][esp32-hal-misc.c:143] disableCore1WDT(): Failed to remove Core 1 IDLE task from WDT
+

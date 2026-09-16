@@ -17,7 +17,13 @@
     }
   },
   "start": 1789567579.5476327,
-  "status": "invalid_mode_state",
+  "status": "invalid_mainboard_crash",
   "end": 1789567614.4726796,
-  "reason": "Capture reported640x480, expected512x384; no rows and terminal0. Input contains no mode-selection command. Cause unresolved."
+  "reason": "Stock sprite scanout crashed during scene before capture; samePC0x40083247/address0x1c. No valid paired image.",
+  "correction": {
+    "at": "2026-09-16T14:11:36.384953+00:00",
+    "previous_status": "invalid_mode_state",
+    "previous_reason": "Capture reported640x480, expected512x384; no rows and terminal0. Input contains no mode-selection command. Cause unresolved.",
+    "evidence": "Earlier serial bytes show matching stock scanout LoadProhibited/reboot before capture. Default640x480 was a consequence."
+  }
 }
