@@ -328,6 +328,22 @@ and disposition; initial scouting alone does not satisfy this dependency.
    Never obtain a rendering-parity pass by reducing game workload, resolution,
    sprite count or silently displaying stale frames. Golem remains excluded.
 
+**Author-requested fallback — explicit browser frame-rate targets:** if the
+current investigation and its resulting measurements fail to yield sufficient
+improvement, consider a selectable sustainable output cadence (for example
+30 Hz; no rate selected yet). P06e owns review before implementation. Pace
+snapshot creation/admission, not merely socket transmission after expensive
+composition has already occurred. Bound pending work and prefer the freshest
+available frame rather than accumulating latency. Keep game rendering cadence
+separate and unchanged; a lower browser target is not a rendering-parity pass
+or a replacement for the existing full-frame eight-bit60Hz goal.
+
+Choose any fallback target from repeatable worst-case/tail timings and visual
+frame pacing under representative heavy scenes, with explicit headroom. A cap
+cannot itself cure a long individual capture stall. Report render completions
+and browser presentation separately. This is a deferred contingency, not an
+authorized implementation or a change to C1–C5/RLE investigation sequencing.
+
 ## Debrief delivery
 
 D01–D05 complete. The report, official-source audit, reproducible tables and

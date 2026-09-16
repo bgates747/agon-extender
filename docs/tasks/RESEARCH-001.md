@@ -245,3 +245,11 @@ or benchmark performed; hardware closeout follows.
 C3 closed: findings04027da; source hashes verified. Fresh hardware audio receipt
 verified; startup unchanged, Legacy MOS and completion banner emitted. Hearing/
 visual readback pending. No builds/flashes/tests or push; paused for review.
+
+### Deferred output-cadence fallback
+
+Author requested recording selectable browser frame-rate targets if this
+investigation yields insufficient improvement. Canonical consideration lives
+under QUAL-003 DEBRIEF-PLAN P06e: pace capture before doing the work, retain game
+cadence, choose targets from measured tails and steady presentation. No
+implementation authorized and no change to the candidate/RLE sequence.
