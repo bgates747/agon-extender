@@ -1,0 +1,37 @@
+{
+  "build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "idf_version": "5.5.5",
+  "arduino_package_version": "3.3.11",
+  "retained_boot_chip_revision": "v1.3",
+  "retained_boot_flash": "QIO 80MHz",
+  "retained_boot_psram": "200MHz",
+  "config": {
+    "CACHE_L2_CACHE_SIZE": 131072,
+    "CACHE_L2_CACHE_LINE_SIZE": 64,
+    "ESP_DEFAULT_CPU_FREQ_MHZ": 360,
+    "ETH_IRAM_OPTIMIZATION": false,
+    "FREERTOS_HZ": 1000,
+    "LWIP_IRAM_OPTIMIZATION": false,
+    "LWIP_EXTRA_IRAM_OPTIMIZATION": false,
+    "LWIP_TCPIP_TASK_AFFINITY": 2147483647,
+    "LWIP_TCPIP_TASK_PRIO": 18,
+    "LWIP_TCP_SND_BUF_DEFAULT": 32768,
+    "LWIP_TCP_WND_DEFAULT": 5760,
+    "PM_ENABLE": false,
+    "SPIRAM_MALLOC_ALWAYSINTERNAL": 16384,
+    "SPIRAM_MALLOC_RESERVE_INTERNAL": 32768,
+    "SPIRAM_SPEED": 200,
+    "SPIRAM_XIP_FROM_PSRAM": false
+  },
+  "sha256": {
+    "sdkconfig": "ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5",
+    "compiled_config": "8b9d946b5ad0aebf8bf1fca7a44e3bd7998d0a67244861a0adea792351da73b5",
+    "snapshot_allocation": "1ba39b1ab989e06215d5c79a09b36e0ed1815b0cc58dd9d3e62ac6eb656820aa",
+    "snapshot_pool": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+    "network_sender": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca",
+    "riscv_port": "8ed5f02b14b6859b4c6f3c7121016715dd25b203a37b6e2af876525279c1685e",
+    "fpu_test": "6fd7fb0a30dd39527bb685b78ecf08a22531915c58f9c302039ae95395ed27ee"
+  },
+  "source_commit": "dd5d027",
+  "new_hardware_measurements": false
+}

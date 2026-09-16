@@ -26,13 +26,13 @@ No specific known upstream cause is assumed. P02 details remain authoritative.
 
 ## Itemized execution plan
 
-1. [ ] R01: Pin relevant local build facts and search vocabulary; freeze this
+1. [x] R01: Pin relevant local build facts and search vocabulary; freeze this
    contract and TODO entry before external research.
-2. [ ] R02: Search P4-specific official documentation, errata, issue trackers,
+2. [x] R02: Search P4-specific official documentation, errata, issue trackers,
    examples and maintainer discussions: Ethernet/WebSocket stalls, dual-core
    contention, cache/PSRAM/internal RAM, DMA/coherency, scheduling, heap/order,
    power/clock behavior and graphics under network load. Log queries and hits.
-3. [ ] R03: Where no exact P4 match appears, extend to ESP-IDF/lwIP/FreeRTOS and
+3. [x] R03: Where no exact P4 match appears, extend to ESP-IDF/lwIP/FreeRTOS and
    Arduino-ESP32 HTTP/WebSocket throughput and task-affinity mechanisms. Prefer
    primary evidence; label other-chip reports and unverified user claims.
 4. [ ] R04: Compare promising explanations against P02 and selected local code;
