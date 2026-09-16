@@ -1,0 +1,45 @@
+{
+  "build_id": "uart-excom-console-r48-b2026-09-16-05-48-20Z",
+  "status": "draft",
+  "parent_build_id": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "commit": "b918ae34a11321957781bc9bfaeaedce645fe38a",
+  "changed": {
+    "vdp/video/extender/diagnostics/row_priority.hpp": "c39ad0f878f718b2d07bf9f7cceba127d77bbd8ecffbb910f54d3c469131612f",
+    "vdp/video/extender/diagnostics/refresh_trace.hpp": "0211e42c7de491866b9b16c467fee0b2dbd5ed90ff44df4a6008394ba56bc418",
+    "vdp/video/extender/display/stock_p4_service.cpp": "174d6f9f02fbb2e43b86d5e85aa1a85dac1111e27c8037b8676e9fdd0d196f1f"
+  },
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "2f07558b34db19da9f5aa4647604d839d7f9dcdc1bbdecbfe6be2369a90f07d5",
+      "bytes": 1452080
+    },
+    "firmware.factory.bin": {
+      "sha256": "f7dc4f65dcb1fdfb57a7f5dd4b63534038c1f0e056a34e66778d2805acc0dee9",
+      "bytes": 1583152
+    },
+    "firmware.elf": {
+      "sha256": "0db30900d678d1b1c17a406460841958c87d79fd3d2cdffd202fa389f30d1f68",
+      "bytes": 28176004
+    },
+    "bootloader.bin": {
+      "sha256": "2ac5b8784e51b0638cfd7747c4afb9be458c4ed9f05e8985dcffc4a56df52b45",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "build_complete": true,
+  "host_test": "ceiling_test.cpp: disabled, nested, early-return and unwind restoration pass",
+  "sdk_tasks_sha256": "193c3d8379acc847097632da8e6d4dd2ee0bf8e069d78979d68dd26b653d48df",
+  "runner_sha256": {
+    "game.py": "a35f4c6e4c4de37ef190c02a73a87434b055793e7bee4c23c754f1079e2f9c89",
+    "run.py": "1926105522e1ea69fffe35fa3a4c682e0ca041e669d7d1d9d6cb1e65062bd1a2",
+    "build.py": "d660cc6d1d0c2a8d98933a0cc4bb5300ae888733dd31f378a244423d6e38ba7a",
+    "prepare.py": "16a085505efb68bcf20b55a6a1fb43fc11e45c334b547a42aa64ab8d892c47ab",
+    "preflight.py": "f688f19667fc98ff5a692281ca3c72ddb25f3ef8c5d7dea384d8811f138ffb69",
+    "restore.py": "bc972bd695aa91f02df1037920d0e8e92be217ac4bb11620fe7471059e5e3d50"
+  },
+  "control_same_image": true
+}

@@ -1,0 +1,53 @@
+--- r45/vdp/video/extender/display/stock_p4_service.cpp
++++ candidate/vdp/video/extender/display/stock_p4_service.cpp
+@@ -1,3 +1,4 @@
++#include "extender/diagnostics/row_priority.hpp"
+ #include "extender/display/stock_p4_service.hpp"
+ #include "extender/diagnostics/video_timing.hpp"
+ #include <cassert>
+@@ -230,11 +231,18 @@
+   for (std::size_t y = 0; y < view.height; y += rowsPerBatch) {
+     if (stopping_.load(std::memory_order_acquire)) { complete = false; break; }
+     const unsigned count = view.height-y < rowsPerBatch ? view.height-y : rowsPerBatch;
++    {
++#ifdef AGON_EXTENDER_ROW_PRIORITY
++    // P01f S: raise before acquisition; restore only after prepareRows releases
++    // native exclusion, before normalization. SDK inheritance stays intact.
++    agon_row_priority::Scope priority(agon_row_priority::enabled.load());
++#endif
+ #if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+     controller_->prepareRows(y, count, signal, kPresentationSnapshotMaximumWidth);
+ #else
+     controller_->prepareRow(y, signal);
+ #endif
++    }
+     // Normalization remains outside native exclusion, in exact row order.
+     for (unsigned i=0;i<count;++i)
+       StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
+--- r45/vdp/video/extender/diagnostics/refresh_trace.hpp
++++ candidate/vdp/video/extender/diagnostics/refresh_trace.hpp
+@@ -1,3 +1,4 @@
++#include "row_priority.hpp"
+ // QUAL-003/N04w diagnostic only; disabled in normal builds. Stock buffer WRITE
+ // to65535 still consumes/discards its bytes. Exact markers only arm observation.
+ // No per-frame UART, allocation, logging, scheduling or drawing changes.
+@@ -90,6 +91,9 @@
+ #endif
+ #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+   if(began)agon_output_isolation::begin(data+8);
++#ifdef AGON_EXTENDER_ROW_PRIORITY
++  if(began)agon_row_priority::begin(data+8);
++#endif
+ #endif
+   return;
+  }
+@@ -101,6 +105,9 @@
+ #endif
+ #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  agon_output_isolation::stop(data+8);
++#ifdef AGON_EXTENDER_ROW_PRIORITY
++ agon_row_priority::stop(data+8);
++#endif
+ #endif
+  // No further records admitted. Parser owns marker processing, so another
+  // start cannot overlap this dump. USB output is strictly after terminal fence.

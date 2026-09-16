@@ -14,7 +14,7 @@ priority experiment, not an approved production scheduling policy.
 
 1. [x] S01: Freeze source précis/intervention and clear hardware screen; review
    RAII early-return/nesting restoration and default-off build boundary.
-2. [ ] S02: Implement default-off scope in project adapter, host-check, commit;
+2. [x] S02: Implement default-off scope in project adapter, host-check, commit;
    archive r45 source and overlay only this change. Select experimental r48
    explicitly for this task, no production identity increment. Build once using
    pinned SDK/config and record hashes. No owner/lock-wake probe flags.
@@ -75,3 +75,15 @@ recursive inner native calls unwind before restoration. Host tests cover disable
 path, nested ceiling, early return and exception unwinding (firmware does not
 require exceptions). No per-row diagnostic counters/timestamps added. The
 post-window NPPRIO record verifies selector; it is not a measured CPU trace.
+
+Before-run control admission bound:58–62 completed refresh/s and streamed p95
+spacing at least20ms. This encompasses retained approximately60/s controls with
+22–29ms streaming tails; outside it is a changed baseline/review stop, not proof
+of a defect. This guard is agent-selected and frozen before any S bench run.
+
+S02 build succeeded using pinned tools and archived r45 plus only the three
+P01f S source changes. Parent delta retained in archived-parent.patch; new header
+is tracked in vdp/video/extender/diagnostics/row_priority.hpp. No owner/lock-wake
+flags or scheduler hooks in candidate. One image serves all four controls;
+manifest retains exact source, SDK tasks and runner hashes. No production build
+flags or SDK installation were modified.
