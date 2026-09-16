@@ -286,9 +286,13 @@ RLE investigation remains next for review, not automatically implemented.
     sparse redraw and task/memory configuration.
 29. [x] C5-02: Assess completion/drop counters and limits; compare with Extender,
     record disposition and consolidate the five candidates' useful contributions.
-30. [ ] C5-03: Verify documentation/provenance, commit and hardware voice with
+30. [x] C5-03: Verify documentation/provenance, commit and hardware voice with
     fresh receipt and visible completion cue; stop for Author review.
 
 C5 source findings and five-candidate synthesis: [review](RESEARCH-001/C5/README.md).
 All five avenues now have dispositions. No direct speedup established; RLE
 prerequisite satisfied, await review before further work.
+
+C5 closed: findingsd939aef, source hashes verified. Fresh hardware audio receipt
+verified; startup unchanged, Legacy MOS completion banner emitted. Human hearing/
+visual readback pending. No build/test/flash or push; paused for review.
