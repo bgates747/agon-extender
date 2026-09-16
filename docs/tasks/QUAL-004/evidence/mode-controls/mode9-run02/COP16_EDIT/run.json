@@ -1,0 +1,27 @@
+{
+  "case": {
+    "name": "COP16_EDIT",
+    "file": "COP16_EDIT.vdu",
+    "bytes": 630,
+    "mode": 9,
+    "sha256": "e3e98e7a5efc4c8b138445e1992079314cf0ca058a074ec938975ab811bcc41b",
+    "source": "PORT-008 copper-coverage",
+    "stage": "edit",
+    "scope": "Static row palettes and composed SW/HW sprites"
+  },
+  "start": 1789574575.973711,
+  "status": "pass",
+  "comparison": {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "dcd6352cde79e5095a61ebe7f82c62f6739c7b702d9b3ae6633ddc8009feda39",
+    "p4_sha256": "dcd6352cde79e5095a61ebe7f82c62f6739c7b702d9b3ae6633ddc8009feda39"
+  },
+  "end": 1789574665.2024562,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

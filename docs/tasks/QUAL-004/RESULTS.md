@@ -1,33 +1,49 @@
-# QUAL-004 graphics correctness results — in progress
+# QUAL-004 graphics correctness results — first pass
 
 ## Executive summary
 
-All63 distinct mode20 scenes now have valid mainboard/P4 comparisons,
-with zero differing pixels across each complete512×384 image. Three mainboard
-attempts have also crashed in stock sprite scanout, outside the capture command;
-they remain invalid attempts even where a fresh retry later passes. The original
-unfenced alpha replay was unstable; an explicitly fenced control matched.
+**66 distinct static scenes matched pixel for pixel on physical mainboard VDP
+and P4: 12,616,704 compared pixels, zero differences.** This establishes parity
+for the captured scenes, not every graphics API, mode, animation or transition.
+Mainboard repeat captures and two fresh P4 snapshots agreed for each valid pair.
+Six independent literal-oracle checks (three scenes on both devices) and ten
+ordinary MOS pixel-query replies also passed.
 
-The mode20 corpus is complete; lower-depth/page controls and independent public
-pixel queries are still pending. This is
-not yet a blanket API-parity conclusion. Missing functionality is recorded in
-[COVERAGE.md](COVERAGE.md) and will not be implemented in this pass. Exact
-artifact identities are in [ARTIFACTS.json](ARTIFACTS.json).
+| Scope | Mainboard | P4 | Complete-image differences |
+|---|---:|---:|---:|
+| Mode20, 512×384×64 |63 valid scenes|63 valid scenes|0 /12,386,304 pixels|
+| Mode9, 320×240×16 |3 valid scenes|3 valid scenes|0 /230,400 pixels|
+| Remaining prepared mode controls |Not qualified|Not qualified|8 scenes deferred|
 
-The table below is the early control history; the retained cohort tables contain
-subsequent full-image comparisons.
+**Reliability findings remain open:** three mainboard diagnostic-build attempts
+crashed in stock sprite scanout; two P4 restarts occurred during subsequent mode
+setup after Copper scenes. Fresh retries passed the affected mainboard static
+scenes. P4's second restart ended additional coverage as required by the contract.
+These failures are retained, not converted into passes by successful retries.
+The initial unfenced alpha scene also differed between mainboard repeats;
+explicit completion barriers before resource clears produced stable matching images.
+No renderer or missing API functionality was implemented or repaired.
 
-| Scene | Mainboard repeat | Mainboard versus P4 | Differing pixels |
-|---|---|---|---:|
-| BSP03_01, original unfenced | Failed stability | Not run |11600 between mainboard replays|
-| CAL | Exact | Exact |0|
-| EMPTY | Exact | Exact |0|
-| SHP20 | Exact | Exact |0|
-| SHP23 | Exact | Exact |0|
+The next investigation should capture the P4 restart cause during the Copper/mode
+transition, then reproduce the mainboard sprite failure without the capture tap.
+These are **second-pass candidates, not started or automatically approved**.
+Remaining low-depth/page controls and uncovered API families follow those checks.
 
-The calibration cohort took88.374 seconds including loading, two serial dumps,
-keyboard orchestration and P4 snapshots. This is procedure duration, not a GPU
-rendering time or frame rate. Native rendered-operation timing is not inferred.
+This pass measured acquisition procedure durations, **not isolated rendering
+milliseconds or realised FPS**. Resets, loading, serial extraction and host control
+are included; those durations cannot support a mainboard/P4 speed claim. The
+initial calibration procedure took88.374 seconds. Each cohort table retains
+individual procedure seconds for future acquisition estimates.
+
+Evidence tables: [first fenced cohort](evidence/fenced-first/TABLES.md),
+[isolated cohort](evidence/isolated-first/TABLES.md),
+[isolated retry](evidence/isolated-retry/TABLES.md),
+[remaining mode20 corpus](evidence/bounded-corpus/TABLES.md), and
+[mode9 controls](evidence/mode-controls/TABLES.md). Duplicate calibration/alpha
+controls are excluded from the66-scene count. Exact identities and prepared inputs
+are in [ARTIFACTS.json](ARTIFACTS.json) and [fixtures](fixtures/README.md).
+Known missing functionality and untested coverage are separated in
+[COVERAGE.md](COVERAGE.md).
 
 ## Unfenced alpha finding
 
@@ -111,3 +127,57 @@ No serial panic trace was acquired, and no P4 firmware change is made.
 Retain the failure as an unqualified mode-transition path. The next bounded
 static-scene control explicitly resets Copper and sprites after capture before
 re-selecting a mode. Such cleanup must not be described as fixing the P4 restart.
+
+## Second Copper transition failure and stop
+
+COP16_EDIT passed after the first recovery: both complete images matched, and
+both devices passed its independent literal oracle. The fixture then sent ordinary
+Copper reset and sprite cleanup before the next startup. During that startup,
+HTTP timed out again and P4's boot identity changed. No COP16_REPLACE image was
+acquired. Cleanup therefore did not establish reliable mode-transition behaviour.
+No panic trace was collected; the source of the restart remains unresolved.
+The remaining eight prepared mode controls were left unqualified, not failed pixel
+comparisons. See the retained second-restart observation and mode-control table.
+
+## What the images establish
+
+The temporary mainboard diagnostic samples composed scanout rows after palette
+expansion and sprite decoration; row transfer uses USB serial outside rendering.
+Canonical pixels are logical RGB222 colours, including hardware-sprite composition.
+Static rows are stitched across refreshes, so repeated identical captures are a
+required stability check. P4 images are lossless immutable web snapshots from the
+unchanged r43 firmware. Every pixel is compared; no cropping, resizing or tolerance.
+This is visible-image equality, not identity of internal framebuffer memory layout,
+electrical VGA timing, browser presentation cadence or tear-free animation.
+Capture instrumentation can change mainboard timing and memory layout; the crashes
+are not proven reproducible on uninstrumented stock firmware.
+
+## Independent controls and remaining boundaries
+
+The host decoder's nine negative-control tests reject malformed/corrupt captures
+and detect pixel differences. Ten public pixel-query replies validate colour
+interpretation on both devices. PAL16, COP16_SETUP and COP16_EDIT pass the retained
+literal pixel/halo oracle independently on each device (six checks). The other
+16 device-oracle checks have no image because eight scenes were deferred.
+No ideal-oracle mismatch was observed in those completed checks.
+
+Known absent mouse-cursor, audio and selected native-display backends remain
+untouched. Feature-gated tile/layer APIs, teletext, dynamic Copper, live sprite
+mutation, population stress and exhaustive mode/format combinations are not fully
+qualified. A prepared fixture is not evidence of a passing implementation.
+
+## Restoration and elapsed time
+
+The exact incoming mainboard app erase sectors were restored from the freshly
+verified full-flash backup and independently read back. The original89-byte
+`autoexec.txt` was restored and read back through SD service. P4 firmware r43 and
+MOS were not changed. Final normal mainboard reset completed; Extender keyboard
+was ready and neutral, SD service verification succeeded and exited to Legacy
+MOS. Serial capture closed. No notification was sent. The original startup loads
+Nurples without running it. Test-only files remain under `/test/qual004`; production
+applications were untouched. See [restoration receipt](evidence/restoration.json).
+
+Goal began12:11:20 UTC; hardware restoration verified16:09:31 UTC on2026-09-16
+(3h58m11s including preparation, testing and recovery). Reporting finished shortly
+afterward, comfortably before the eight-hour ceiling. This is elapsed project
+work, not graphics execution time.

@@ -1,0 +1,376 @@
+[
+  {
+    "case": "PAL4",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "PAL4",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "COP4_SETUP",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "COP4_SETUP",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "PAL2",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "PAL2",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "COP2_SETUP",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "COP2_SETUP",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "PAGE_FRONT",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "PAGE_FRONT",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "PAGE_SWAP",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "PAGE_SWAP",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "PAL16",
+    "device": "mainboard",
+    "cohort": "mode9-run01",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "paint-before-palette-change",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "rgba8888-alpha-and-palette",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "rgba2222-alpha-and-palette",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "mono-byte-row-and-creation-colour",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "solid-bitmap-and-alias",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "screen-capture-before-remap",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "xor-white-erases-selected-pixels",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "paint-after-palette-change",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "invalid-physical-colour-ignored",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "PAL16",
+    "device": "p4",
+    "cohort": "mode9-run01",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "paint-before-palette-change",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "rgba8888-alpha-and-palette",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "rgba2222-alpha-and-palette",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "mono-byte-row-and-creation-colour",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "solid-bitmap-and-alias",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "screen-capture-before-remap",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "xor-white-erases-selected-pixels",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "paint-after-palette-change",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "invalid-physical-colour-ignored",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "COP16_SETUP",
+    "device": "mainboard",
+    "cohort": "mode9-run01",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "primary-index-strip-crosses-every-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "bitmap-crosses-copy-palette-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "software-sprite-follows-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-sprite-ignores-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-over-software-at-row-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "draw-after-primary-mutation",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "COP16_SETUP",
+    "device": "p4",
+    "cohort": "mode9-run01",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "primary-index-strip-crosses-every-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "bitmap-crosses-copy-palette-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "software-sprite-follows-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-sprite-ignores-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-over-software-at-row-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "draw-after-primary-mutation",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "COP16_EDIT",
+    "device": "mainboard",
+    "cohort": "mode9-run02",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "primary-index-strip-crosses-every-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "bitmap-crosses-copy-palette-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "software-sprite-follows-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-sprite-ignores-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-over-software-at-row-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "draw-after-primary-mutation",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "COP16_EDIT",
+    "device": "p4",
+    "cohort": "mode9-run02",
+    "status": "pass",
+    "result": {
+      "scale": 1,
+      "ideal_pixels_match": true,
+      "tiles": [
+        {
+          "name": "primary-index-strip-crosses-every-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "bitmap-crosses-copy-palette-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "software-sprite-follows-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-sprite-ignores-copper",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "hardware-over-software-at-row-boundary",
+          "mismatches": 0,
+          "first": []
+        },
+        {
+          "name": "draw-after-primary-mutation",
+          "mismatches": 0,
+          "first": []
+        }
+      ],
+      "acceptance_basis": "independent ideal pixels",
+      "passed": true
+    }
+  },
+  {
+    "case": "COP16_REPLACE",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "COP16_REPLACE",
+    "device": "p4",
+    "status": "not captured"
+  },
+  {
+    "case": "COP16_RESET",
+    "device": "mainboard",
+    "status": "not captured"
+  },
+  {
+    "case": "COP16_RESET",
+    "device": "p4",
+    "status": "not captured"
+  }
+]

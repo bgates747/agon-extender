@@ -1,0 +1,8 @@
+{
+  "observation": "P4 keyboard boot identity changed after timeout during subsequent mode9 startup, despite post-capture Copper/sprite cleanup.",
+  "previous_boot": 3118892624,
+  "observed_boot": 233930163,
+  "cause": "unresolved",
+  "action": "Stop remaining coverage; restore original bench",
+  "renderer_changes": false
+}

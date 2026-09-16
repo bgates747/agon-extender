@@ -1,0 +1,152 @@
+[
+  {
+    "file": "mode9-run01/COP16_EDIT/run.json",
+    "bytes": 570,
+    "sha256": "c758ece09d9d6ef6fcacc67bf0a84725f8714587f6f6b86b99372c276abf5420"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/02.evf.gz",
+    "bytes": 433,
+    "sha256": "ec4e66e704fd8b3279c5b55ee7afe5df672d9992cdf2f0f95fdefbdccfd1c42e"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/03.evf.gz",
+    "bytes": 433,
+    "sha256": "d57236715b9bc19fd9750a903f3f7f740553104d6f0018a5a32bfcaf51ab597f"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/comparison.json",
+    "bytes": 282,
+    "sha256": "f643d03ecc8c818013d8d33b952f8914ed79779b9d08fdb93b690f3d71322c3d"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/difference.png",
+    "bytes": 302,
+    "sha256": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/mainboard-0.serial.gz",
+    "bytes": 1369,
+    "sha256": "abb731871ddab539b1b52328419399e96c9340e6ed49dd737f10971701340ed2"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/mainboard-1.serial.gz",
+    "bytes": 1369,
+    "sha256": "8cbda6cacdc6bceaff87eb7d6fa123a4d20107107372b464bf5a6e70028e56d7"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/mainboard.png",
+    "bytes": 891,
+    "sha256": "ef760844c1af3d449f53b50ee8034bb6383ea4f8a3c8e1f5a47286df14ea7143"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/p4.png",
+    "bytes": 891,
+    "sha256": "ef760844c1af3d449f53b50ee8034bb6383ea4f8a3c8e1f5a47286df14ea7143"
+  },
+  {
+    "file": "mode9-run01/COP16_SETUP/run.json",
+    "bytes": 775,
+    "sha256": "c6c82ac264cd9d7969904f72cbff2c9a2c320b6418a4243057d790348086bd50"
+  },
+  {
+    "file": "mode9-run01/PAL16/02.evf.gz",
+    "bytes": 204,
+    "sha256": "2ff3b1bc9422c90d60b2c9602524f10fff7c935bb6996820a0a529d34511b194"
+  },
+  {
+    "file": "mode9-run01/PAL16/03.evf.gz",
+    "bytes": 204,
+    "sha256": "37a6cb84d735b86df3c068a5db7940408b90a917942eff0292bb79cc8b1638b3"
+  },
+  {
+    "file": "mode9-run01/PAL16/comparison.json",
+    "bytes": 282,
+    "sha256": "0ec68ab0512cd2843d6cb95feed19ac4e9a8b7a9f29c7b1162904502e5bcd906"
+  },
+  {
+    "file": "mode9-run01/PAL16/difference.png",
+    "bytes": 302,
+    "sha256": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12"
+  },
+  {
+    "file": "mode9-run01/PAL16/mainboard-0.serial.gz",
+    "bytes": 1051,
+    "sha256": "d86db1f2bd8eb3bb53a351afb2d402cc93aefaa14e36ba208969c90934810ef9"
+  },
+  {
+    "file": "mode9-run01/PAL16/mainboard-1.serial.gz",
+    "bytes": 1051,
+    "sha256": "bfc5260b5fcf6be9ee0843f33119129809e9ab0cb9877d6d60e2b3d901d94e7f"
+  },
+  {
+    "file": "mode9-run01/PAL16/mainboard.png",
+    "bytes": 396,
+    "sha256": "e2b3973d449ab1954f81b2dcee6c5957e0019c1a2fd9bbc85ce609e74f44b692"
+  },
+  {
+    "file": "mode9-run01/PAL16/p4.png",
+    "bytes": 396,
+    "sha256": "e2b3973d449ab1954f81b2dcee6c5957e0019c1a2fd9bbc85ce609e74f44b692"
+  },
+  {
+    "file": "mode9-run01/PAL16/run.json",
+    "bytes": 716,
+    "sha256": "cb4953d1dfd7eb765b34778802a944007b0b200492d1324a129c48b5b0e4839e"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/02.evf.gz",
+    "bytes": 490,
+    "sha256": "9cfe4241394b68fbbe3cb069a9dd22c9837d47566abf13db65c9925e9584436c"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/03.evf.gz",
+    "bytes": 490,
+    "sha256": "31df46e6d347a7781cefdff5c31ecc30dacc7c8ef08138ac8d8f9276b287447b"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/comparison.json",
+    "bytes": 282,
+    "sha256": "7e30294a003a76f6a21f44b1fd215812bff47a1241ab49e4abe8d93a0aebcd99"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/difference.png",
+    "bytes": 302,
+    "sha256": "f8919e417f3af6aa277c1c6f802130118bd9ca3f43a3fbe95f0378872be6df12"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/mainboard-0.serial.gz",
+    "bytes": 1400,
+    "sha256": "7be959396026e5082a32c7b7414a876219640b833c12d3d9dda0d8cfbf7747aa"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/mainboard-1.serial.gz",
+    "bytes": 1400,
+    "sha256": "62560a659c5febe3af5800353e486f899e75fc79be273f72ef2c865e8bc680e0"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/mainboard.png",
+    "bytes": 972,
+    "sha256": "f89d380f0a213ecb02e68a8f7e45f3408d9b4266a8bf640aa77b5dbdf52a5d26"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/p4.png",
+    "bytes": 972,
+    "sha256": "f89d380f0a213ecb02e68a8f7e45f3408d9b4266a8bf640aa77b5dbdf52a5d26"
+  },
+  {
+    "file": "mode9-run02/COP16_EDIT/run.json",
+    "bytes": 772,
+    "sha256": "c2bd712f70beb44b082df53dd742e0f2165064f1e2e91460251806d7067cffdb"
+  },
+  {
+    "file": "mode9-run02/COP16_REPLACE/mainboard-0.serial.gz",
+    "bytes": 1340,
+    "sha256": "f4a403d65fcba4d825a28c1e7baa8832adb12f4602f18264652cfa4b727ed9ed"
+  },
+  {
+    "file": "mode9-run02/COP16_REPLACE/run.json",
+    "bytes": 673,
+    "sha256": "ea215f05a8b8de747b040ca6a2b522a572460d501003ca5eeaa1e87b19910139"
+  }
+]

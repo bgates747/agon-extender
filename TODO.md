@@ -317,5 +317,6 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
 ## Current correctness qualification
 
 - [ ] **QUAL-004 — Whole-image graphics correctness on physical VDP and P4**
-  - Author-authorized eight-hour unattended run; correctness primary, timings
-    secondary, no notification. Bench released. Contract: [QUAL-004](docs/tasks/QUAL-004.md).
+  - First pass complete; awaiting Author review.66 exact static scene pairs;
+    scanout/restart findings and eight deferred controls retained. Bench restored.
+    Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).

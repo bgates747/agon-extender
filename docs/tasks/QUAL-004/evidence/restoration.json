@@ -1,0 +1,15 @@
+{
+  "time": 1789574971.401028,
+  "startup_exact": true,
+  "mainboard_app_verified": true,
+  "p4_unchanged": true,
+  "mos_unchanged": true,
+  "keyboard_ready": true,
+  "no_notification": true,
+  "restored_app_region_sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e",
+  "original_full_flash_backup_sha256": "42f25ed32535180602e9c07479077279dc7dfa4943468c624aba24a88c1cf77c",
+  "startup_sha256": "38f0a73389c584b0884b5a718a20cb9c610bd4f249a3af447912c0415ec5678e",
+  "app_erase_span_bytes": 1081344,
+  "app_offset": "0x10000",
+  "serial_reader_closed": true
+}

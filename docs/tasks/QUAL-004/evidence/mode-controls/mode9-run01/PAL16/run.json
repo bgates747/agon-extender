@@ -1,0 +1,26 @@
+{
+  "case": {
+    "name": "PAL16",
+    "file": "PAL16.vdu",
+    "bytes": 631,
+    "mode": 9,
+    "sha256": "8b7c9c4c04780e67ce2f24f882c5c573504b4de12b54f8ed3d26925a268ca6e2",
+    "source": "PORT-008 palette-coverage",
+    "oracle": "oracle/oracle.json"
+  },
+  "start": 1789573997.3091254,
+  "status": "pass",
+  "comparison": {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "fcfa9ad31d3b5a5b00444d29450a0558ec03743fb3d78ebf55c0099bdb261c1f",
+    "p4_sha256": "fcfa9ad31d3b5a5b00444d29450a0558ec03743fb3d78ebf55c0099bdb261c1f"
+  },
+  "end": 1789574085.6290154,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

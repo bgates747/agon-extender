@@ -1,0 +1,27 @@
+{
+  "case": {
+    "name": "COP16_SETUP",
+    "file": "COP16_SETUP.vdu",
+    "bytes": 554,
+    "mode": 9,
+    "sha256": "0c03248e544211fbc61998eddcf2ea5e4e0482cb1daeb74864aacff49e336fa6",
+    "source": "PORT-008 copper-coverage",
+    "stage": "setup",
+    "scope": "Static row palettes and composed SW/HW sprites"
+  },
+  "start": 1789574086.7783508,
+  "status": "pass",
+  "comparison": {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "f372def9c5904676dcd370c62a40a70592acf6a80c2812532a1fd0f020222c31",
+    "p4_sha256": "f372def9c5904676dcd370c62a40a70592acf6a80c2812532a1fd0f020222c31"
+  },
+  "end": 1789574176.098057,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

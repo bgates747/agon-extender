@@ -26,18 +26,18 @@ pass. Capture/test instrumentation is permitted and is not API implementation.
    negative controls must detect changed pixels, missing rows and corrupt data.
    Freeze candidate inputs before evidence-producing builds/runs. Official
    upstream checkouts remain read-only. Diagnostic firmware changes stay here.
-4. [ ] Run bounded coverage of primitives, clipping/viewports/origins, scrolling,
+4. [x] Run bounded coverage of primitives, clipping/viewports/origins, scrolling,
    colours/palettes, bitmap formats/transforms, fonts/text, contexts, buffered
    execution, software/hardware sprites and supported double-buffered modes.
    Reuse existing corpus first. Publish a coverage matrix: tested, unsupported,
    deferred, failed. Do not replace missing coverage with a blanket pass.
-5. [ ] Compare canonical logical colours for every captured pixel on both physical
+5. [x] Compare canonical logical colours for every captured pixel on both physical
    devices. Retain actual images and difference images, mismatch counts/bounds,
    commands, seeds, identities and durations. Diagnose mismatches with focused
    repeats; distinguish stock-shared defects from port regressions. No broad
    product fixes in this qualification chunk. Emulator-only success cannot
    substitute for mainboard hardware evidence.
-6. [ ] Restore verified pre-run firmware/startup and usable Legacy CLI. Publish
+6. [x] Restore verified pre-run firmware/startup and usable Legacy CLI. Publish
    executive summary, case table, secondary timing scopes, unresolved issues and
    next actions. Commit owned discrete work; no experimental push or alerts.
 
@@ -94,3 +94,18 @@ For the remaining static Copper pairs, use ordinary Copper reset and sprite
 cleanup after the P4 capture, before the next startup/mode selection. This is
 fixture teardown only, not a firmware correction. Stop on another unexplained
 restart; restore the original bench rather than chase implementation changes.
+
+## First-pass closeout
+
+Bounded run complete, awaiting Author review.66 static scene pairs match all
+12,616,704 pixels. Reliability gate stopped eight prepared controls after the
+second P4 mode-setup restart. Three mainboard diagnostic-build scanout crashes
+and the unfenced alpha instability remain retained findings. No rendering fixes
+or missing API implementations. Exact original mainboard app/startup restored;
+P4/MOS unchanged, Legacy CLI usable, serial reader closed, no alerts.
+
+Results and second-pass candidates: [RESULTS.md](QUAL-004/RESULTS.md).
+Coverage and explicit **not implemented** entries: [COVERAGE.md](QUAL-004/COVERAGE.md).
+Checkboxes indicate completion of the bounded qualification procedure, not blanket
+API acceptance. Second-pass implementation and unresolved investigations are not
+started by closing this run.

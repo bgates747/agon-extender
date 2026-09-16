@@ -1,0 +1,16 @@
+{
+  "case": {
+    "name": "COP16_REPLACE",
+    "file": "COP16_REPLACE.vdu",
+    "bytes": 687,
+    "mode": 9,
+    "sha256": "2f6f3b931e30959a78b386875c17685f473a6f1404a405b6812147658d5d67a3",
+    "source": "PORT-008 copper-coverage",
+    "stage": "replace",
+    "scope": "Static row palettes and composed SW/HW sprites"
+  },
+  "start": 1789574672.5450375,
+  "status": "invalid_p4_restart_during_setup",
+  "end": 1789574956.3855932,
+  "finding": "HTTP timed out during next mainboard startup after COP16_EDIT paired capture and ordinary Copper/sprite teardown. Keyboard boot identity changed again; no panic trace. No COP16_REPLACE paired image. Further coverage stopped."
+}
