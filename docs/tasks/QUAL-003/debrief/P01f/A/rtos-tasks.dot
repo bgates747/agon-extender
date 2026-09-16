@@ -1,0 +1,27 @@
+digraph RTOS {
+ graph [rankdir=TB, bgcolor="#f6f8fc", pad="0.4", nodesep="0.4", ranksep="0.38", fontname="DejaVu Sans", fontsize=20, labelloc=t, label="P4 graphics and web output: task / ownership map\nNormal priorities; not a scheduler timeline"];
+ node [shape=box, style="rounded,filled", fillcolor=white, color="#516079", fontname="DejaVu Sans", fontsize=15, margin="0.18,0.12"];
+ edge [fontname="DejaVu Sans", fontsize=12, color="#52647b", arrowsize=0.75];
+ subgraph cluster_c0 { label="Pinned to core 0"; color="#83b6d5"; style=rounded; timer [label="Logical timer callback\nesp_timer task • priority 22"]; parser [label="UART command parser\nPriority 3"]; draw [label="Drawing worker\nPriority 5"]; }
+ subgraph cluster_c1 { label="Pinned to core 1"; color="#b098cf"; style=rounded; snap [label="Snapshot worker\nBase priority 2"]; }
+ subgraph cluster_net { label="Unpinned: eligible for either core"; color="#84b7a6"; style=rounded; dispatch [label="Network dispatcher\nPriority 3"]; http [label="HTTP / WebSocket sender\nPriority 5"]; tcp [label="lwIP TCP/IP task\nPriority 18"]; }
+ queue [shape=component, label="Primitive queue", fillcolor="#e8effa"];
+ lock [shape=hexagon, label="Shared native graphics lock N\nMutable framebuffer, sprites, palette", fillcolor="#ffe3c2", color="#d77b18", penwidth=2];
+ pool [shape=component,label="Immutable snapshot slots\nLease retained until send finishes",fillcolor="#e0f2e9"];
+ browser [label="Ethernet → browser",fillcolor="#e0f2e9"];
+ note [shape=note,label="Contention path\nNetwork task preempts snapshot lock owner.\nDrawing on the other core waits for that lock.\nNetwork sender itself does NOT hold lock N.",fillcolor="#fff0db",color="#d77b18"];
+ legend [shape=note,label="Higher number = higher priority.\nSolid arrows: data / queued work.\nDashed arrows: notifications / lock use.\nMinor tasks and other locks omitted.\nRejected priority-19 experiment not shown.",fillcolor="#edf0f5"];
+ parser -> queue; queue -> draw;
+ timer -> draw [style=dashed,label="drawing opportunities"];
+ timer -> snap [style=dashed,label="logical frame notification"];
+ parser -> lock [style=dashed,label="mutation / foreground work"];
+ draw -> lock [style=dashed,label="per graphics operation"];
+ snap -> lock [style=dashed,label="read two rows per acquisition"];
+ snap -> pool [label="normalize, then publish"];
+ pool -> dispatch [label="acquire frame lease"];
+ dispatch -> http [label="queue callback"];
+ http -> tcp [label="socket / mailbox"];
+ tcp -> browser [label="TCP over wired Ethernet"];
+ lock -> note [style=dotted,arrowhead=none,color="#d77b18"];
+ note -> legend [style=invis];
+}

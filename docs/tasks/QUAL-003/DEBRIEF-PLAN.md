@@ -480,3 +480,10 @@ control60.052/s,29.019ms. Remaining repeats not run. Once-per-snapshot priority
 remedy rejected; no further numeric priority experiments. [Report](debrief/P01f/W/TABLES.md)
 recommends reviewing pre-enqueue/parser ownership before a concrete handoff design.
 Exact r43/startup restored with input/SD health; no next implementation underway.
+
+## Authorized continuation — P01g then P01h
+
+Author now selects [payload ladder](debrief/P01g/README.md) for execution and
+[AGM/SRLE2](debrief/P01h/README.md) as the next experiment after review. This
+supersedes earlier load-ramp deferral. Freeze both; execute only G; restore and
+hardware-voice notify. No priority sweep or Golem.

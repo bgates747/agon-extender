@@ -2,16 +2,10 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
-[P01f W](QUAL-003/debrief/P01f/W/README.md) stopped at first snapshot-wide
-priority19 treatment failure: terminal pixel-query15, diagnostic36.671native
-refresh/s,58.299ms p95 versus passing control60.052/s,29.019ms. No remaining
-repeats or adoption. [Tables and limits](QUAL-003/debrief/P01f/W/TABLES.md).
-
-Removing per-row transitions did not cure the priority remedy. Native enqueue
-spacing also worsened; review parser/graphics ownership and pre-enqueue delay
-before a concrete handoff design. No next implementation started. Exact r43 and
-startup restored; keyboard/SD and offline terminal WebGL conversion verified.
-A's source audit remains valid; neither A nor W establishes the complete cause.
+[P01g](QUAL-003/debrief/P01g/README.md) is the Author-authorized fixed-rendering
+network payload ladder. Freeze contracts, execute G, restore and voice notify.
+[P01h](QUAL-003/debrief/P01h/README.md) owns subsequent AGM/SRLE2 review; no
+compression implementation now. Prior W failure remains preserved, not retried.
 
 ## Prior diagnostic finding
 
@@ -27,7 +21,7 @@ The [itemized plan](QUAL-003/DEBRIEF-PLAN.md),
 [overnight debrief](QUAL-003/OVERNIGHT-DEBRIEF.md) and
 [source research](QUAL-003/debrief/OFFICIAL-RESEARCH.md) preserve context.
 Review a representative lower-overhead control and bounded scheduling/exclusion
-experiment. Load ramp remains deferred, chunking fallback only; Golem excluded.
+experiment. Load ramp is now authorized in P01g, chunking fallback only; Golem excluded.
 
 ## Earlier execution amendments and scope records
 
