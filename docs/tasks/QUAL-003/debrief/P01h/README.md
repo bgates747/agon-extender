@@ -4,7 +4,7 @@
 
 Author requested this plan on2026-09-16 after QUAL-004's overwhelmingly successful
 static-image comparison. Reuse this existing compression task rather than create
-a competing queue. **Planning complete; implementation/deployment not started.**
+a competing queue. **Execution authorized; contract frozen before implementation.**
 Deploy the Author's RLE2 in both directions: P4 encodes optional negotiated
 web frames, and P4 decodes uploaded RLE2 assets into bitmap data. Preserve raw output and unchanged graphics semantics. Evaluate
 SRLE2 (RLE2 followed by szip) separately after measuring the simpler codec.
@@ -141,8 +141,8 @@ with H06/H07. No implementation is started by this planning amendment.
 ## Authority and status
 
 This revision refines the already frozen P01h compression experiment following
-explicit Author request for a deployment plan. It authorizes documentation and
-its hardware completion cue now, not automatic firmware implementation this turn.
+explicit Author request for a deployment plan. The Author now authorizes execution, including a clean-sheet P4 codec implementation
+and reversible qualification under the gates below.
 QUAL-004 remains open for exception review; its successful static pixels are
 reference evidence, not clearance of its unresolved transition failures.
 
@@ -183,3 +183,25 @@ Record any actual collision and proposed resolution for review. Do not allocate
 new command bytes, or assume that no collision in main rules out all branches.
 In-place decode requires retaining source ownership until successful completion.
 No firmware or application changes were made during this contract archaeology.
+
+## Clean-sheet implementation authorization — 2026-09-16
+
+Preserve earlier wire contracts where practical, subject to current upstream
+collisions. The old custom Xtensa codec is not an official VDP library and its
+internal API, layout, algorithms and historical bugs impose no compatibility
+requirement. Write the P4 encoder/decoder afresh for its RISC-V target. Historical
+code supplies format evidence and comparison vectors, not an implementation to
+port. Preserve actual official VDP semantics outside this extension.
+
+Start with bounded portable C/C++ and inspect compiler output and measured P4
+cost. Consider P4-specific instructions, alignment and memory placement only
+where supported by the actual target/toolchain and evidence. RISC-V alone does
+not imply a codec speedup; assembly and speculative cache/DMA changes are not
+prerequisites. Keep full-frame encode/decode allocations out of the hot loop.
+
+Execute in discrete evidence-producing chunks, committing completed checkboxes.
+First chunk: recover format/dispatch, implement the new bounded codec and host
+qualification; freeze asset/web integration contracts. Hardware voice notification
+at the chunk's review point. Subsequent integration retains H05–H08's hardware
+and default-promotion gates; no experimental push. Do not conflate passing host
+codec tests with deployed P4 or browser acceptance.
