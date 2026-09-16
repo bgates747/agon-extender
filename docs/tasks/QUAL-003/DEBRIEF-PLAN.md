@@ -116,6 +116,9 @@ existing fixtures. No Golem, MOS experiment or downstream execution.
    terminal pixels and service health. Reverse order for one repeat if the
    contrast is material or apparently passing. Earlier output-off data used
    different firmware/query timing; it cannot answer this current comparison.
+Author authorized bounded P01c/d implementation and execution;
+[execution contract](debrief/P01cd/README.md) owns this tranche. It precedes RLE.
+
 3. [ ] P01c: If pre-enqueue variation remains, define one bounded diagnostic
    build that measures the missing intervals: parser/owner runnable and blocked
    time, RX driver buffered work, software reply-gate duration, UART driver

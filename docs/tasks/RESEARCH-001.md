@@ -296,3 +296,6 @@ prerequisite satisfied, await review before further work.
 C5 closed: findingsd939aef, source hashes verified. Fresh hardware audio receipt
 verified; startup unchanged, Legacy MOS completion banner emitted. Human hearing/
 visual readback pending. No build/test/flash or push; paused for review.
+
+Author changed next-step sequence: execute QUAL-003 P01c/d diagnostic hooks and
+matched hardware controls before RLE. See its debrief/P01cd execution contract.
