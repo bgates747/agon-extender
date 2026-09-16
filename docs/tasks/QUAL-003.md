@@ -4,7 +4,10 @@
 
 Author authorized [P01f](QUAL-003/debrief/P01f/README.md): recover a lower-overhead
 baseline, one bounded scheduling intervention, then focused FabGL/port ownership
-audit. Run discrete chunks and notify on hardware; B is the current chunk.
+audit. B completed: all three unchanged-r45 controls passed, with near60.05/s
+refresh averages but streaming p95 24.990/29.291ms versus output-off 17.052ms.
+Representative baseline recovered, no fix yet. Original r43/startup restored;
+hardware voice/banner delivered. S/A remain unexecuted at this chunk review stop.
 
 ## Prior diagnostic finding
 

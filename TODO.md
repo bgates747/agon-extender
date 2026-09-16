@@ -17,8 +17,9 @@ item is removed.
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
 [P01f continuation](docs/tasks/QUAL-003/debrief/P01f/README.md) is authorized:
 recover a lower-overhead baseline, test one scheduling intervention, then audit
-FabGL/port ownership and handoffs. Current chunk B repeats archived r45 controls;
-stop with hardware voice at chunk completion. P01e's failed benchmark remains
+FabGL/port ownership and handoffs. Chunk B passed all three archived r45 controls: streaming p95 24.990/29.291ms
+versus output-off 17.052ms, averages near60.05/s. Original r43/startup restored;
+hardware voice/banner delivered. At discrete-work review stop before S. P01e's failed benchmark remains
 preserved. Golem excluded, chunking fallback only, no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks

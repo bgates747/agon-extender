@@ -451,4 +451,6 @@ both the event and failed qualification; no speculative scheduling change.
 Author authorized baseline recovery, a bounded scheduling experiment and focused
 FabGL/port ownership audit on 2026-09-16, with frozen contract and discrete
 hardware-notified chunks. [P01f](debrief/P01f/README.md) owns the substeps.
-Current chunk B reuses the archived r45 binary; S/A follow after review.
+Chunk B completed using archived r45: all three controls pass, streaming timing
+tail reproduced with repeat variability. r43/startup restored and voice/banner
+verified. S/A remain unexecuted at the discrete-work review stop. See P01f tables.

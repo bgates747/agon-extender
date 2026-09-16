@@ -21,8 +21,8 @@ Mean snapshot wall time changed from 6.596 to 13.424ms across the two streaming
 runs while sending stayed 17.753/17.760ms. Baseline is representative, not
 variance-free. Next S should use repeated matched controls to test one priority
 intervention; no conclusion from one favorable average. P01e's slow diagnostic
-candidate is not the performance baseline. Restoration/notification recorded
-below when verified. [Detailed tables and limits](TABLES.md).
+candidate is not the performance baseline. Original r43/startup restored and verified; hardware voice receipt and
+completion banner delivered. Chunk B is complete; S/A remain unexecuted. [Detailed tables and limits](TABLES.md).
 
 ## Evidence and source précis
 
@@ -83,7 +83,7 @@ locks/tasks and identify the original timing/ownership guarantee for each.
    honestly. Mainboard is not rerun; browser throughput is not render FPS.
    Treat normal near-60 average with wider spacing than output-off as recurrence,
    not parity. Report repeat variability rather than pick the favorable run.
-5. [ ] B05: Restore/readback original autoexec and r43; verify keyboard/SD,
+5. [x] B05: Restore/readback original autoexec and r43; verify keyboard/SD,
    exit to Legacy MOS, record results and commits, hardware voice plus visible
    completion banner. Stop for review before S.
 
@@ -109,3 +109,19 @@ locks/tasks and identify the original timing/ownership guarantee for each.
 3. [ ] A03: Recommend the smallest evidence-supported remedy; report prerequisites
    for any structural change. Link the already required exhaustive FabGL audit
    rather than duplicating it. Commit, notify and stop; no redesign by implication.
+
+## B closeout
+
+Baseline image r43 was independently flash-readback verified and its boot/native
+USB identity observed. Original autoexec was restored/read back, SD and neutral
+keyboard checked, and SD exited to Legacy MOS. Standard British voice produced
+a fresh stage6/audio-pass receipt; completion banner issued without clearing it.
+No capture, browser observer or controller remains active. Human hearing not
+assumed. No experimental push; granular local commits retain contract and evidence.
+
+Sanitized native traces were independently re-parsed and match all three retained
+summary results; framebuffer allocation excerpts and SHA256 manifest are retained.
+Next chunk S is the authorized bounded priority causality experiment, with its
+precise intervention/control frozen before any build. Warm-run variability means
+it needs repeated controls. This notification is the discrete-work review stop
+requested by the Author; no priority/affinity change has yet occurred.
