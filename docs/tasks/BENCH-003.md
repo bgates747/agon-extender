@@ -44,3 +44,12 @@ submission/pacing evidence, not per-primitive graphics timing.
 The accepted30Hz web ceiling applies to output requests and resulting snapshot
 admission. This diagnostic may enforce it in its host client without claiming the
 ordinary firmware/browser's production limiter is implemented.
+
+## Agent-assigned preparation adjustment
+
+The per-entry remote directory API re-enumerates from zero and incurs a network
+round trip per entry. Replace the slow host walk with a tiny task-owned read-only
+MOS3 directory walker, writing a new `/test/nscan.tsv` report. It traverses the
+card and emits Nurples/Rally paths plus root entries, an entry count and terminal
+status. No delete capability, firmware changes, or SD transport redesign. This
+support step is self-assigned under the Author's execution authorization.
