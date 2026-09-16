@@ -1,0 +1,3 @@
+#include "rle2.hpp"
+extern "C" int encode(const unsigned char*s,size_t n,unsigned char*d,size_t cap,size_t*out,int opaque){auto r=rle2::encode(s,n,d,cap,opaque);*out=r.bytes;return int(r.status);}
+extern "C" int decode(const unsigned char*s,size_t n,unsigned char*d,size_t cap,size_t*out){auto r=rle2::decode(s,n,d,cap);*out=r.bytes;return int(r.status);}
