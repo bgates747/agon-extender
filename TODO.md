@@ -15,11 +15,12 @@ item is removed.
 ## Current Author-directed review — Overnight debrief
 
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-[P01g payload ladder](docs/tasks/QUAL-003/debrief/P01g/README.md) is now authorized:
-fixed rendering/full composition, increasing network bytes, then restore/notify.
-[P01h AGM/SRLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) follows its review;
-contract only now. P01f W rejected priority boosting; no further priority sweep.
-Golem excluded; no experimental push.
+[P01g payload ladder](docs/tasks/QUAL-003/debrief/P01g/README.md) is at its review
+stop:48KiB passes;96KiB fails terminal query15 with35.981native completions/s,
+55.710ms p95 and23.817Mbit/s delivered payload. [Results](docs/tasks/QUAL-003/debrief/P01g/RESULTS.md).
+Larger/repeated/browser rungs stopped. Exact r43/startup restored.
+[P01h AGM/SRLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) is frozen and queued
+for review; no compression work started. Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

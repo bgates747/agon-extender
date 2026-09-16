@@ -1,0 +1,746 @@
+[
+  {
+    "case": "p01g2-mainboard",
+    "nonce": "50303201000057b5",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 0,
+    "application": {
+      "file": "PG1.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "50303201000057b5",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4560,
+      "mean_frame_ms": 16.673979815708645,
+      "completed_fps": 59.973684210526315,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 33.333333333333336,
+      "tick_histogram": {
+        "2": 2278,
+        "4": 1
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": null,
+    "output": null,
+    "receiver": null
+  },
+  {
+    "case": "p01g2r-off",
+    "nonce": "503032010000e919",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 0,
+    "application": {
+      "file": "P2G2.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "503032010000e919",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "503032010000e919",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.0528227685732,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65200658183414,
+        "p95_ms": 17.116,
+        "max_ms": 20.944,
+        "p50_ms": 16.668,
+        "p99_ms": 20.789,
+        "over_16_67_ms": 925,
+        "over_33_34_ms": 0
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.652622641509435,
+        "p95_ms": 17.353,
+        "max_ms": 18.844
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.3380859649122807,
+        "p95_ms": 3.918,
+        "max_ms": 4.396
+      },
+      "elapsed_first_to_last_ms": 39908.374
+    },
+    "output": {
+      "nonce": "503032010000e919",
+      "mode": "off",
+      "window_seconds": 39.917947,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": null,
+    "approx_nominal_opportunities": 2395.0289194216116,
+    "composition_rate": 0.0,
+    "send_rate": 0.0,
+    "payload_mbit_s": 0.0,
+    "protocol_mbit_s": 0.0
+  },
+  {
+    "case": "p01g2s-compose",
+    "nonce": "5030320201004cae",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 0,
+    "application": {
+      "file": "P2G3.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "5030320201004cae",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "5030320201004cae",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.054158363105465,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.651636243966653,
+        "p95_ms": 17.308,
+        "max_ms": 21.273,
+        "p50_ms": 16.667,
+        "p99_ms": 20.818,
+        "over_16_67_ms": 1012,
+        "over_33_34_ms": 0
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.65159017112769,
+        "p95_ms": 17.434,
+        "max_ms": 19.667
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.267195175438596,
+        "p95_ms": 3.927,
+        "max_ms": 4.247
+      },
+      "elapsed_first_to_last_ms": 39895.107
+    },
+    "output": {
+      "nonce": "5030320201004cae",
+      "mode": "discard",
+      "window_seconds": 39.904543,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 2394,
+          "units": 470679552,
+          "wall_ms_sum": 15206.035,
+          "mean_operation_ms": 6.35172723475355,
+          "operations_per_window_second": 59.99316919880526,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": null,
+    "approx_nominal_opportunities": 2394.22469550609,
+    "composition_rate": 59.99316919880526,
+    "send_rate": 0.0,
+    "payload_mbit_s": 0.0,
+    "protocol_mbit_s": 0.0
+  },
+  {
+    "case": "p01g2s-compose-repeat",
+    "nonce": "5030320201007757",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 0,
+    "application": {
+      "file": "P2G6.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "5030320201007757",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "5030320201007757",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.05304272614569,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.651945590171128,
+        "p95_ms": 17.053,
+        "max_ms": 21.129,
+        "p50_ms": 16.667,
+        "p99_ms": 20.804,
+        "over_16_67_ms": 994,
+        "over_33_34_ms": 0
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.651960947784115,
+        "p95_ms": 17.391,
+        "max_ms": 19.529
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.3213754385964913,
+        "p95_ms": 3.929,
+        "max_ms": 4.223
+      },
+      "elapsed_first_to_last_ms": 39953.386
+    },
+    "output": {
+      "nonce": "5030320201007757",
+      "mode": "discard",
+      "window_seconds": 39.961522,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 2398,
+          "units": 471465984,
+          "wall_ms_sum": 14955.016,
+          "mean_operation_ms": 6.236453711426188,
+          "operations_per_window_second": 60.007724430515935,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": null,
+    "approx_nominal_opportunities": 2397.643367132657,
+    "composition_rate": 60.00772443051593,
+    "send_rate": 0.0,
+    "payload_mbit_s": 0.0,
+    "protocol_mbit_s": 0.0
+  },
+  {
+    "case": "p01g2s-eighth",
+    "nonce": "50303200010256bb",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 24576,
+    "application": {
+      "file": "P2G4.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "50303200010256bb",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "50303200010256bb",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.04805530723631,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.653328652917946,
+        "p95_ms": 20.9,
+        "max_ms": 25.099,
+        "p50_ms": 16.664,
+        "p99_ms": 21.581,
+        "over_16_67_ms": 1101,
+        "over_33_34_ms": 0
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.653421237384816,
+        "p95_ms": 19.587,
+        "max_ms": 25.581
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.533897368421053,
+        "p95_ms": 4.301,
+        "max_ms": 6.529
+      },
+      "elapsed_first_to_last_ms": 39948.774
+    },
+    "output": {
+      "nonce": "50303200010256bb",
+      "mode": "normal",
+      "window_seconds": 39.961673,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 2399,
+          "units": 471662592,
+          "wall_ms_sum": 19520.702,
+          "mean_operation_ms": 8.137016256773656,
+          "operations_per_window_second": 60.032521661442956,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 2166,
+          "units": 53300928,
+          "wall_ms_sum": 3368.931,
+          "mean_operation_ms": 1.5553698060941827,
+          "operations_per_window_second": 54.20193493901019,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": {
+      "error": null,
+      "ignored_normal_frames": 3112,
+      "duration_s": 123.06023542408366,
+      "receiver": "wired Python; no presentation",
+      "validation": "all payload bytes, CRC32, nonce, consecutive send IDs",
+      "validated_messages": 2166,
+      "validated_bytes": 53231616
+    },
+    "approx_nominal_opportunities": 2397.652426951461,
+    "composition_rate": 60.032521661442956,
+    "send_rate": 54.20193493901019,
+    "payload_mbit_s": 10.656534024488915,
+    "protocol_mbit_s": 10.670409719833302
+  },
+  {
+    "case": "p01g2s-half",
+    "nonce": "5030320001086eaf",
+    "fixture_error": 15,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 98304,
+    "application": null,
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "5030320001086eaf",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 35.98088210534798,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 27.792537077665642,
+        "p95_ms": 55.71,
+        "max_ms": 78.772,
+        "p50_ms": 21.67,
+        "p99_ms": 66.681,
+        "over_16_67_ms": 2000,
+        "over_33_34_ms": 529
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 27.793153576129882,
+        "p95_ms": 56.177,
+        "max_ms": 79.685
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 3.2937350877192983,
+        "p95_ms": 8.675,
+        "max_ms": 17.081
+      },
+      "elapsed_first_to_last_ms": 66755.401
+    },
+    "output": {
+      "nonce": "5030320001086eaf",
+      "mode": "normal",
+      "window_seconds": 66.79848,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 3050,
+          "units": 599654400,
+          "wall_ms_sum": 65052.952,
+          "mean_operation_ms": 21.328836721311475,
+          "operations_per_window_second": 45.65972159845553,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 2023,
+          "units": 198933728,
+          "wall_ms_sum": 17080.065,
+          "mean_operation_ms": 8.442938704893722,
+          "operations_per_window_second": 30.28512026022149,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": {
+      "error": null,
+      "ignored_normal_frames": 1853,
+      "duration_s": 121.8202775400132,
+      "receiver": "wired Python; no presentation",
+      "validation": "all payload bytes, CRC32, nonce, consecutive send IDs",
+      "validated_messages": 2023,
+      "validated_bytes": 198868992
+    },
+    "approx_nominal_opportunities": 4007.8286434271313,
+    "composition_rate": 45.65972159845553,
+    "send_rate": 30.28512026022149,
+    "payload_mbit_s": 23.817187696486506,
+    "protocol_mbit_s": 23.824940687273127
+  },
+  {
+    "case": "p01g2s-quarter",
+    "nonce": "50303200010454e9",
+    "fixture_error": 0,
+    "fixture_count": 2400,
+    "requested_payload_bytes": 49152,
+    "application": {
+      "file": "P2G5.BIN",
+      "provenance": "nonce_verified",
+      "nonce": "50303200010454e9",
+      "count": 2400,
+      "failed": 0,
+      "warmup_boundaries": 120,
+      "intervals": 2279,
+      "elapsed_ticks": 4558,
+      "mean_frame_ms": 16.666666666666668,
+      "completed_fps": 60.0,
+      "p95_frame_ms": 16.666666666666668,
+      "maximum_frame_ms": 16.666666666666668,
+      "tick_histogram": {
+        "2": 2279
+      },
+      "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+      "variant": "unfenced-sw",
+      "completion_scope": "submission/vblank boundary; terminal fence only",
+      "end_reason": "boundary_limit",
+      "live_sprites_max": 13,
+      "live_sprites_mean": 8.29875,
+      "live_sprites_histogram": {
+        "1": 1,
+        "2": 7,
+        "3": 7,
+        "4": 95,
+        "5": 284,
+        "6": 190,
+        "7": 219,
+        "8": 293,
+        "9": 475,
+        "10": 439,
+        "11": 293,
+        "12": 85,
+        "13": 12
+      }
+    },
+    "native": {
+      "scope": "p4 completed explicit RefreshSprites boundaries; not physical scanout or web delivery",
+      "nonce": "50303200010454e9",
+      "submitted": 2400,
+      "completed": 2400,
+      "maximum_pending_refreshes": 1,
+      "warmup": 120,
+      "completed_fps": 60.045191713310366,
+      "completion_intervals": {
+        "count": 2279,
+        "mean_ms": 16.654122860903907,
+        "p95_ms": 21.004,
+        "max_ms": 29.052,
+        "p50_ms": 16.662,
+        "p99_ms": 24.805,
+        "over_16_67_ms": 1090,
+        "over_33_34_ms": 0
+      },
+      "enqueue_intervals": {
+        "count": 2279,
+        "mean_ms": 16.654518209741116,
+        "p95_ms": 20.55,
+        "max_ms": 28.647
+      },
+      "enqueue_to_completion": {
+        "count": 2280,
+        "mean_ms": 2.483169736842105,
+        "p95_ms": 4.077,
+        "max_ms": 7.819
+      },
+      "elapsed_first_to_last_ms": 39955.506
+    },
+    "output": {
+      "nonce": "50303200010454e9",
+      "mode": "normal",
+      "window_seconds": 39.966235,
+      "pending": 0,
+      "invalid": 0,
+      "phases": {
+        "compose": {
+          "calls": 2398,
+          "units": 471465984,
+          "wall_ms_sum": 23380.825,
+          "mean_operation_ms": 9.750135529608007,
+          "operations_per_window_second": 60.000648047032705,
+          "unit_kind": "RGB222_pixels"
+        },
+        "prebuilt": {
+          "calls": 0,
+          "units": 0,
+          "wall_ms_sum": 0.0,
+          "mean_operation_ms": null,
+          "operations_per_window_second": 0.0,
+          "unit_kind": "RGB222_pixels"
+        },
+        "send": {
+          "calls": 2199,
+          "units": 108155616,
+          "wall_ms_sum": 9675.854,
+          "mean_operation_ms": 4.400115507048659,
+          "operations_per_window_second": 55.021444977241416,
+          "unit_kind": "diagnostic_header_plus_payload_bytes"
+        }
+      },
+      "boundary_composition_carryover": 0,
+      "scope": "operations admitted in marker window; final in-flight completion joined; wall times include preemption; no physical presentation claim"
+    },
+    "receiver": {
+      "error": null,
+      "ignored_normal_frames": 3127,
+      "duration_s": 123.46959552203771,
+      "receiver": "wired Python; no presentation",
+      "validation": "all payload bytes, CRC32, nonce, consecutive send IDs",
+      "validated_messages": 2199,
+      "validated_bytes": 108085248
+    },
+    "approx_nominal_opportunities": 2397.9261414771704,
+    "composition_rate": 60.000648047032705,
+    "send_rate": 55.021444977241416,
+    "payload_mbit_s": 21.635312508170962,
+    "protocol_mbit_s": 21.649397998085135
+  }
+]

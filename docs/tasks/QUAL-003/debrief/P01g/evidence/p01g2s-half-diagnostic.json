@@ -1,0 +1,6 @@
+{
+  "fixture_error": 15,
+  "fixture_count": 2400,
+  "state_sha256": "f43eaa27074aaf6916eded49e5f97bb7eb64a79fd0ccc060f1923a9eb3ea3948",
+  "status": "FAILED terminal pixel query; timing diagnostic only"
+}

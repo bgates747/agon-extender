@@ -2,10 +2,13 @@
 
 ## Executive summary — current continuation, 2026-09-16
 
-[P01g](QUAL-003/debrief/P01g/README.md) is the Author-authorized fixed-rendering
-network payload ladder. Freeze contracts, execute G, restore and voice notify.
-[P01h](QUAL-003/debrief/P01h/README.md) owns subsequent AGM/SRLE2 review; no
-compression implementation now. Prior W failure remains preserved, not retried.
+[P01g results](QUAL-003/debrief/P01g/RESULTS.md): fixed-rendering payload ladder
+passed48KiB then failed96KiB terminal query15. Diagnostic35.981refresh/s,
+55.710ms p95,23.817Mbit/s payload; all2023received payloads validate. No repeatable
+threshold/root cause claimed. Stop gate prevented larger rungs/repeats/browser
+comparison. Exact r43/startup restored with keyboard/SD verified.
+[P01h](QUAL-003/debrief/P01h/README.md) AGM/SRLE2 contract is frozen, queued after
+review; no compression or further priority intervention started.
 
 ## Prior diagnostic finding
 

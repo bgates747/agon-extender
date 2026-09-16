@@ -2,10 +2,12 @@
 
 ## Executive summary
 
-Author-authorized on 2026-09-16: freeze and execute this experiment, then restore
-and hardware-voice notify. No compression or scheduling remedy is implemented.
-Measure where increased network bytes disturb otherwise identical rendering.
-P01f W rejected priority boosting; this experiment changes load, not priorities.
+**Review stop: half-frame rung failed terminal query15.** Passing48KiB payloads
+retained60.045 native completions/s; failed96KiB produced35.981/s and55.710ms p95
+while delivering23.817Mbit/s. Byte validation passed. [Results](RESULTS.md) and
+[graph](ladder.svg) distinguish diagnostics from passing benchmarks. Larger
+rungs/repeats/browser tests were not run. Exact r43/startup restored; no push.
+P01h remains queued after review; no compression implementation has started.
 
 ## Frozen contract
 
@@ -19,12 +21,12 @@ P01f W rejected priority boosting; this experiment changes load, not priorities.
    and full-compose/no-send controls, plus the same fixture on installed stock
    mainboard VDP. Mainboard NP04 application timing is not native P4 completion
    timing; preserve historical instrumented mainboard evidence separately.
-4. [ ] G04: Run payload sizes 24576,49152,98304,147456,196608 bytes at 60 nominal
+4. [ ] G04 (stopped at first correctness failure, 96KiB): Run payload sizes 24576,49152,98304,147456,196608 bytes at 60 nominal
    opportunities/s. Keep full snapshot composition enabled and independently
    demanded at all network rungs. Count coalesced/missed opportunities; never
    describe intended 60 Hz work as realized work. Fixed native drawing and
    snapshot algorithm, priorities, affinity, queue limits and receiver host.
-5. [ ] G05: Repeat compose/no-send control between groups and descend through
+5. [ ] G05 (not run after stop gate): Repeat compose/no-send control between groups and descend through
    the first degrading interval. If integrity passes, refine once at midpoint.
    Repeat informative endpoints through browser receive-only transport; ordinary
    full-frame browser rendering is a separate scope, not a partial-frame viewer.

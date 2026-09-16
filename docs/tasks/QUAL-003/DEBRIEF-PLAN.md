@@ -487,3 +487,8 @@ Author now selects [payload ladder](debrief/P01g/README.md) for execution and
 [AGM/SRLE2](debrief/P01h/README.md) as the next experiment after review. This
 supersedes earlier load-ramp deferral. Freeze both; execute only G; restore and
 hardware-voice notify. No priority sweep or Golem.
+
+P01g review stop:48KiB passed;96KiB failed terminal query15. Native diagnostic
+35.981/s,55.710ms p95 at23.817Mbit/s payload. Larger/rerepeated/browser cases
+stopped; [report](debrief/P01g/RESULTS.md), trace/receiver integrity and graph
+retained. Exact r43/startup restored. P01h remains queued, not executed.
