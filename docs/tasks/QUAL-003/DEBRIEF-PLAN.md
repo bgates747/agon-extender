@@ -259,6 +259,16 @@ P02 owns the four composition/network isolation controls. Reuse those results
 here rather than repeat them. P00 owns FabGL timing; AUDIT-007 owns exhaustive
 port coverage. This section owns network API/protocol and client delivery.
 
+**Author clarification — packing and the hard output goal:** performant full-frame
+512×384 output at 60 Hz with **one byte per pixel (8 bits/pixel)** remains the
+hard target, including eventual 256-colour palettes. The Author's conversational
+"1bpp" here means one **byte**, not one bit. Six-bit packing for current 64-colour
+modes is only an optional experiment; it cannot satisfy or replace the eight-bit
+target. Sparse redraw is not an assumed prerequisite or an accepted substitute.
+The target remains unproven: 94.37 Mbit/s pixel payload leaves very little margin
+on a 100 Mbit/s link once framing is included. Report any measured physical or
+protocol limit explicitly rather than silently reducing the acceptance target.
+
 1. [ ] P06a: Record each receiving host and wired/wireless path, negotiated link
    rate, payload/header bytes and credit policy. The Author reports this
    workstation has used Wi-Fi for several days after earlier wired operation:
@@ -273,6 +283,14 @@ port coverage. This section owns network API/protocol and client delivery.
    worker scheduling and client handling. Distinguish supported transport APIs
    from custom video payload conventions; do not assume one officially approved
    video protocol exists. Document adaptations and discrepancies before fixes.
+   As preparation for any separately reviewed packing experiment, inventory
+   supported mode widths and colour depths against whole-byte packing groups.
+   Six-bit pixels pack four-to-three bytes: independently packed rows have
+   `ceil(width * 6 / 8)` bytes, with no padding when width is divisible by four.
+   At512 pixels this is384 bytes/row. Define row stride, bit order and final-byte
+   padding explicitly; height imposes no extra alignment constraint for that
+   row-based format. Account for P4 packing and browser unpacking costs, and
+   retain the independent eight-bit full-frame baseline and acceptance goal.
 3. [ ] P06c: Extend P02's prebuilt-frame control with a deterministic animated
    pattern generated locally by the P4, visually distinct from the browser-local
    pattern. Bypass Agon submission and VDP drawing, retain the tested resolution,

@@ -33,6 +33,14 @@ P4-local producer/output control as the independent network-capacity experiment.
 Do not add five parallel implementation tasks or replace FabGL with LVGL.
 All experiments below are proposals awaiting review.
 
+Subsequent Author clarification: six-bit transport packing is worth considering,
+subject to auditing mode widths/colour depths and byte alignment. Full-frame
+one-byte-per-pixel performance remains a hard goal for eventual 256-colour
+palettes; sparse redraw or six-bit-only results cannot replace it. The
+[P06 work contract](../QUAL-003/DEBRIEF-PLAN.md#p06--browser-delivery-audit-and-isolated-pattern-benchmark)
+owns this requirement and the optional packing audit. No encoding change or
+experiment has started.
+
 ## 1. Why these sources, and answers to the discussion
 
 1. **Beyond HTTP:** discovery covered P4 emulators, audio, graphics adapters,
