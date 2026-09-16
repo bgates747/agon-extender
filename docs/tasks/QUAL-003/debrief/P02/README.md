@@ -200,8 +200,8 @@ establish a fresh P4 boot for each control; the raw logs preserve that distincti
 Six accepted controls completed2400 identical game states and2400 explicit
 refreshes each, with at most1 pending refresh and successful terminal fence.
 One initial-query failure is retained separately. Run order: normal1, off2,
-discard3, failed prebuilt4; prebuilt5, discard6; prebuilt7. A new passive serial
-capture initializes the P4 between those three series; mainboard reset alone
+discard3, failed prebuilt4; prebuilt5, discard6; prebuilt7. Each of the three passive serial
+capture logs contains a fresh P4 boot before its series; mainboard reset alone
 between controls does not reset the P4. This is a possible sequencing confounder,
 not a proven cause of discard variance.
 
@@ -223,3 +223,12 @@ with fresh state. That bookkeeping issue did not change collected game traces.
 
 No affinity, priority, parser, renderer, MOS or mainboard VDP change was made
 between controls. The diagnostic image is not promoted; no experimental push.
+
+## Bench closeout
+
+Archived r43 is restored with flash verification and observed boot identity.
+Original startup was read back unchanged, SD service exited to Legacy MOS and
+native keyboard admission is ready/neutral. Mainboard VDP/MOS are unchanged.
+See `restoration.json`; diagnostic r45 and before-flash evidence are preserved
+privately. Hardware voice receipt will be added on delivery. Human hearing and
+review remain separate from successful audio-command acknowledgement.

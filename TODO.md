@@ -84,7 +84,7 @@ deterministic Nurples and separate typing measurements are deferred.
 
 - [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
   - Started: 2026-09-09
-  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. Proposed P01–P06 sequence is review-only; experiments paused, Golem on hold. Hardware voice completed, Legacy CLI restored; no experimental push.
+  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. P00/P01 complete; approved P02 SW controls reveal transmission-associated tails and contradictory discard-repeat variance. Review P02 before further experiments; Golem on hold, no experimental push.
   - Details: [QUAL-003](docs/tasks/QUAL-003.md)
   - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: RX06 repair eliminates all 14 road-section differences; 80/80 samples now match stock. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). RX07 enumeration complete: [inventory](docs/tasks/QUAL-003/rally-excom/rx07/README.md). RX08 approved N02–N06; [RX09/RX10 guards and stock comparisons](docs/tasks/QUAL-003/rally-excom/rx09/PLAN.md) pass machine checks; human review pending. RX11 reusable import protection complete; [results](docs/tasks/QUAL-003/rally-excom/rx11/README.md). Golem excluded.
 
