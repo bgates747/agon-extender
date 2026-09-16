@@ -14,7 +14,7 @@ voice-notify at the discrete review stop, whether success or informative failure
 
 1. [x] W01: Freeze contract and clear mainboard through fresh admitted CLI;
    establish unchanged startup, fixture, candidate parent and rollback identity.
-2. [ ] W02: Add default-off snapshot scope with mutual exclusion against the old
+2. [x] W02: Add default-off snapshot scope with mutual exclusion against the old
    row-priority flag. Host-check lifetime restoration; inspect actual source and
    linked placement. Archive exact parent plus bounded delta, build/hash isolated
    experimental r49. Existing priority guard/nonce/accounting reused; no heavy
@@ -77,3 +77,9 @@ W01 complete: fresh native clear; original startup and r05 fixture read back;
 r48 parent and r43 rollback archive output hashes verified. Host ceiling checks
 cover disabled/nested/early-exit/unwinding; source placement restores before
 publication. No new hardware measurement yet.
+
+W02 complete: isolated r49 built with pinned SDK; default-off scope mutually
+exclusive with per-row mode. Host lifetime tests passed. Linked publish has two
+priority-set and four priority-query call sites; selected source brackets the
+whole row/normalization loop and restores before finish. Candidate manifest and
+archived-parent.patch retain exact bounded delta. No heavy owner/lock-wake flags.

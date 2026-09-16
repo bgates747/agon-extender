@@ -1,0 +1,47 @@
+{
+  "build_id": "uart-excom-console-r49-b2026-09-16-06-33-21Z",
+  "status": "draft",
+  "parent_build_id": "uart-excom-console-r48-b2026-09-16-05-48-20Z",
+  "commit": "eda4a892a3f7e24d36d20d0c9c85c2217d547e1f",
+  "changed": {
+    "vdp/video/extender/diagnostics/row_priority.hpp": "c1032d45e9ece3d74ad3b42921ac488826bad476025c2eca6188467eb84bd891",
+    "vdp/video/extender/diagnostics/refresh_trace.hpp": "cdc2b9649000fab90fca643b9aa63a939bdc7bd42dda48702a4c5e0ccb09c857",
+    "vdp/video/extender/display/stock_p4_service.cpp": "b6bddce57e598578896c898a1b5ab51d250d32c8436ee01ebcd2c32b707e28c8"
+  },
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "3c9d7533c59725ebc0139c4889a7dd736f6053f7009ee59d2afab09f408d6f21",
+      "bytes": 1451984
+    },
+    "firmware.factory.bin": {
+      "sha256": "bfa5083bfc19d681070484b58ca2ec55a0ffb39993003197971b284c7f280cfa",
+      "bytes": 1583056
+    },
+    "firmware.elf": {
+      "sha256": "371c27901e6fe97847f9128b568a0ad1fc9f605c59f6c50e9f12a59c4e2896d4",
+      "bytes": 28175204
+    },
+    "bootloader.bin": {
+      "sha256": "b87251263d2a1a8812103d5a750fc53acac9e88a9e73b07c3b906a857743aa9f",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "build_complete": true,
+  "scope": "snapshot once; restores before publication; normalization elevated",
+  "rows_per_lock": 2,
+  "output_core": 1,
+  "base_priority": 2,
+  "ceiling_priority": 19,
+  "host_ceiling_checks": "passed",
+  "sdk_tasks_sha256": "193c3d8379acc847097632da8e6d4dd2ee0bf8e069d78979d68dd26b653d48df",
+  "disassembly_sha256": "b2f0a16a50c95e8a41e82ff1c41e499cbf2bc0a4ee5d189207c4440e4e09e322",
+  "runner_sha256": {
+    "game.py": "c267e8d01342f0424907f026e7027c611af26f7e289e6ffe740857d1229804ae",
+    "run.py": "f21e6bdc86e8a3e2a319a9c5131eacdac9b6e0f4fb1141ed44ef4c02ff747c51",
+    "restore.py": "24b7bb9e4c46b9bc3dcf9d0d23190f2e78aebff8fb65db34bc09144a6daf1194"
+  }
+}
