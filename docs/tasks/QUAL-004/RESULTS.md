@@ -2,12 +2,19 @@
 
 ## Executive summary
 
-The first four scenes (calibration, empty/reset, viewport/clear, and bitmap/graphics
-text) match across all196608 pixels per scene on physical mainboard and P4.
-The alpha/cutout scene is **not yet a valid parity comparison**: two mainboard
-replays differed at11600 pixels in one reused checkerboard bitmap. Both captures
-passed their row-integrity checks. A test-only resource-barrier variant is being
-prepared; no VDP rendering implementation is changed.
+Twenty-four distinct mode20 scenes now have valid mainboard/P4 comparisons,
+with zero differing pixels across each complete512×384 image. Three mainboard
+attempts have also crashed in stock sprite scanout, outside the capture command;
+they remain invalid attempts even where a fresh retry later passes. The original
+unfenced alpha replay was unstable; an explicitly fenced control matched.
+
+The remaining cases and lower-depth/page controls are still running. This is
+not yet a blanket API-parity conclusion. Missing functionality is recorded in
+[COVERAGE.md](COVERAGE.md) and will not be implemented in this pass. Exact
+artifact identities are in [ARTIFACTS.json](ARTIFACTS.json).
+
+The table below is the early control history; the retained cohort tables contain
+subsequent full-image comparisons.
 
 | Scene | Mainboard repeat | Mainboard versus P4 | Differing pixels |
 |---|---|---|---:|

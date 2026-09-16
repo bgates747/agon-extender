@@ -2,7 +2,8 @@
 
 ## Executive summary
 
-Acquisition and deployment are in progress. No whole-image pass is claimed yet.
+Acquisition is in progress. Twenty-four distinct mode20 scenes have exact paired
+images; the family ledger will be reconciled with terminal run records at closeout.
 The first tranche is63 static scenes at512×384×64 colours: calibration,39 retained
 finite cases, 22 additional existing shape pages, and the retained custom-font case. Each needs paired physical
 captures; preparing a command file does not constitute testing it.
