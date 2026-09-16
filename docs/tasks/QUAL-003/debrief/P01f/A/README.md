@@ -12,7 +12,7 @@ No firmware edits/build/flash, performance tests or broad redesign in this chunk
 
 ## Frozen contract
 
-1. [ ] A01: Freeze this scope, identify exact source snapshots/SDK and official
+1. [x] A01: Freeze this scope, identify exact source snapshots/SDK and official
    references; clear mainboard through admitted CLI without reset.
 2. [ ] A02: Trace real lock order and ownership across parser, foreground flush,
    drawing, row composition, snapshot leases, network worker, HTTP sender and
@@ -45,3 +45,11 @@ masking, chunk pacing, RLE and exhaustive FabGL coverage remain outside this chu
 Host-side source inspection/calculation is allowed. Any model must be labelled
 as a model, not proof of the bench schedule. New performance or firmware work
 requires a frozen subsequent implementation/test contract after this review.
+
+## A01 source admission
+
+Scope frozen in commit `8d92f12`. Mainboard was cleared through freshly admitted
+CLI without reset. Exact archived r45/r48/current source comparisons, retained
+mainboard identities and pinned SDK hashes are in [SOURCES.json](SOURCES.json).
+Official VDP checkout remains clean at v2.16.0. Online v5.5 ESP-IDF documentation
+provides context; locally pinned 5.5.5 source controls precise behavior.

@@ -1,0 +1,91 @@
+{
+  "kind": "source-only audit; no new hardware measurement",
+  "audit_start_commit": "8d92f12bc18de502a29ad194a523557037a8a456",
+  "official_vdp": {
+    "tag": "v2.16.0",
+    "commit": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+    "worktree_clean": true
+  },
+  "r45_build": "uart-excom-console-r45-b2026-09-15-23-26-55Z",
+  "r48_build": "uart-excom-console-r48-b2026-09-16-05-48-20Z",
+  "files": {
+    "vdp/video/extender/display/stock_native_access.cpp": {
+      "checked_in": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238",
+      "r45": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238",
+      "r48": "61bb35d0d8b320726606a4ed390825bdfa58a3a02d744b609a0e3336dc884238"
+    },
+    "vdp/video/extender/display/stock_runtime_controller.hpp": {
+      "checked_in": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+      "r45": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+      "r48": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e"
+    },
+    "vdp/video/extender/display/stock_p4_service.cpp": {
+      "checked_in": "1c4f37f875165c74b2f88b3bedcbf648d196d3636bc38b0925174ba58697e40f",
+      "r45": "e5165e5de390ce0d692f12f09053bc3712afe07f01176ed7a62a16a2740b945e",
+      "r48": "174d6f9f02fbb2e43b86d5e85aa1a85dac1111e27c8037b8676e9fdd0d196f1f"
+    },
+    "vdp/video/extender/display/stock_scanline.cpp": {
+      "checked_in": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+      "r45": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+      "r48": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e"
+    },
+    "vdp/vendor/vdp-gl/src/displaycontroller.cpp": {
+      "checked_in": "07f6354bf63c8f497c698beabd4eadc702516b420bc3bf6b49da55aea1dfa3d2",
+      "r45": "07f6354bf63c8f497c698beabd4eadc702516b420bc3bf6b49da55aea1dfa3d2",
+      "r48": "07f6354bf63c8f497c698beabd4eadc702516b420bc3bf6b49da55aea1dfa3d2"
+    },
+    "vdp/video/extender/display/presentation_snapshot_pool.cpp": {
+      "checked_in": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+      "r45": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e",
+      "r48": "b578b4772a7fd673dcbed0b8d2d2ea401e0f7a1cbc19180e54e957b5698c496e"
+    },
+    "vdp/video/extender/web/browser_video_provider.cpp": {
+      "checked_in": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+      "r45": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa",
+      "r48": "66c5d7396cc99cf3a494573b76e1112c6994434b2e153c684ac5facb9b9dc4fa"
+    },
+    "vdp/video/extender/network/browser_video_service_core.cpp": {
+      "checked_in": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08",
+      "r45": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08",
+      "r48": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08"
+    },
+    "vdp/video/extender/network/wired_network_service.cpp": {
+      "checked_in": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca",
+      "r45": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca",
+      "r48": "ed4eb8334988498d72dcb8b71825b9a35cfadf9efd6e32dcc6a7c046a221deca"
+    },
+    "vdp/video/extender/diagnostics/row_priority.hpp": {
+      "checked_in": "c39ad0f878f718b2d07bf9f7cceba127d77bbd8ecffbb910f54d3c469131612f",
+      "r45": null,
+      "r48": "c39ad0f878f718b2d07bf9f7cceba127d77bbd8ecffbb910f54d3c469131612f"
+    }
+  },
+  "sdk": {
+    "version": "ESP-IDF 5.5.5",
+    "files": {
+      "components/freertos/FreeRTOS-Kernel/tasks.c": "193c3d8379acc847097632da8e6d4dd2ee0bf8e069d78979d68dd26b653d48df",
+      "components/freertos/FreeRTOS-Kernel/queue.c": "6794db86ab086372ea2789d043d83e0b1efd0534a0c0deb5d28cffb342feaa0e",
+      "components/freertos/FreeRTOS-Kernel/portable/riscv/include/freertos/portmacro.h": "8d66891a8ef5555b9c542cb8b9b63d3c7f06b1a19aae67336e0ef5058f361134",
+      "components/pthread/pthread.c": "3423df09f2a291e76abf2cb34a26b5fde21a22bd514563f1526d44cdafa8da15",
+      "components/pthread/pthread_cond_var.c": "698dd4e356441a67d779d7b9e3fc6634c7cdbb1cf4b50276e7aa95b9e6414165",
+      "components/esp_http_server/src/httpd_ws.c": "154140abc17f7699d43d9c0bb83e5bb8aec7ed7f0e00dc71568318c03d345585",
+      "components/esp_http_server/src/httpd_txrx.c": "438b9e1d357e8ab3b2e353bacea2d84352a65dd45633070aadfde5d2bd9a074c",
+      "components/lwip/lwip/src/api/api_lib.c": "526d1e90e2becbdeab970dd712665a7dd2285b12bdd9089f17ed4330e77c477e",
+      "components/lwip/lwip/src/api/api_msg.c": "a793b371032ba38ca5e23fd7fede4c910aea0079ffe612d781109f203eab92a0",
+      "components/lwip/lwip/src/api/tcpip.c": "486a8ad6d219bd9c3ed5e030715d457589537678a059b74e4debe687657e03e9"
+    }
+  },
+  "retained_mainboard": {
+    "build_id": "mainboard-refresh-trace-r01-b2026-09-15-15-10-44Z",
+    "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+    "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+    "files": {
+      "displaycontroller.cpp": "6aa61db30c938f3aee9ee984706507d2871cda49b26b061b153d8d4d921575d0",
+      "dispdrivers/vgabasecontroller.cpp": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+      "dispdrivers/vga64controller.cpp": "8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b",
+      "dispdrivers/vgapalettedcontroller.cpp": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49"
+    }
+  },
+  "selected_sdkconfig_sha256": "ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5",
+  "selected_platformio_sha256": "383464e57209501fc5b55032ca485bb8f2a91576b9552805ad6d653251a9439f"
+}
