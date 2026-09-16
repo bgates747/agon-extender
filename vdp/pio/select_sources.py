@@ -208,6 +208,14 @@ if os.environ.get("AGON_EXTENDER_DSP_LIFETIME_FIX") == "1":
     with root_path.open("a") as root_file:
         root_file.write('include("${CMAKE_CURRENT_LIST_DIR}/pio/dsp_matrix_lifetime.cmake")\n')
 
+# P01e diagnostic: inject only the official task-switch hook macros into the
+# isolated SDK target. Never rewrite installed SDK source or ordinary builds.
+if os.environ.get("AGON_EXTENDER_OWNER_TRACE") == "1":
+    if environment != "p4-console":
+        raise RuntimeError("Owner trace is scoped to p4-console")
+    with root_path.open("a") as root_file:
+        root_file.write('target_compile_options(__idf_freertos PRIVATE "$<$<COMPILE_LANGUAGE:C>:-include${CMAKE_CURRENT_LIST_DIR}/video/extender/diagnostics/owner_trace_hooks.h>")\n')
+
 # Original depth controllers live in dispdrivers/. Keep exact file allowlisting;
 # never discover or enable the rest of the classic-ESP32 driver family.
 vendored_root = project_dir / "vendor/vdp-gl/src"
