@@ -14,10 +14,10 @@ pass. Capture/test instrumentation is permitted and is not API implementation.
 
 ## Frozen execution contract
 
-1. [ ] Inventory reusable corpus, capture hooks, firmware identities and recovery.
+1. [x] Inventory reusable corpus, capture hooks, firmware identities and recovery.
    Pin official VDP v2.16.0 and applicable source/docs. Preserve current installed
    firmware/startup before changes; do not assume the Mac agent left old state.
-2. [ ] Implement task-local full-image acquisition and comparison. Capture after
+2. [x] Implement task-local full-image acquisition and comparison. Capture after
    queue completion at a stable checkpoint; serial transfer is outside timing.
    Record dimensions, colour interpretation, palette, display/drawing page,
    sprite composition and integrity checks. Reject incomplete or mixed frames.

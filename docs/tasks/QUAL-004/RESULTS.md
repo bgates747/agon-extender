@@ -32,3 +32,14 @@ lifetime/ordering issue is a hypothesis; the initial observation does not prove
 a P4 defect, a shared defect, or a capture-method defect. Raw serial evidence is
 retained beside the images. The test-only next variant places stock completion
 commands before top-level buffer clears, with opaque pixel payloads untouched.
+
+## Resource-barrier control
+
+BSP03_01 with stock completion commands before buffer clears now has identical
+mainboard repeats and zero differing P4 pixels. Its image hash is
+`d632b08298934359a5dd793d1e8ce1e73b25921b7f5ad4c43b0582b00f60665e`, matching
+the complete checkerboard from the original second replay. This supports a
+mutable-resource ordering explanation; it does not establish which upstream
+contract, if any, the unfenced case violates. No renderer code was repaired.
+Proceed with the explicitly serialised63-scene correctness cohort; preserve the
+unfenced result rather than silently relabelling it a pass.
