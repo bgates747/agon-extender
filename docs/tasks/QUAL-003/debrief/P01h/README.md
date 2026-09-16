@@ -222,3 +222,16 @@ agon-utils is Unlicense; historical personal VDP is MIT. Clean-sheet codec uses
 format evidence, not copied legacy implementation. Evidence is under `evidence/`.
 Seven routed asset image cases and raw/compressed web static controls pass on
 candidate r03; these do not yet complete all A04/A05 or recovery/performance gates.
+
+## One-hour execution review — 2026-09-16
+
+The bounded execution produced iteratively benchmarked clean-sheet codec and
+asset/web candidates. See [RESULTS.md](RESULTS.md) and [TABLES.md](TABLES.md).
+H06 is partial: a matched 1800-cycle Nurples trial per condition passed, plus
+static/incompressible controls; repeated wired trials, Rally and detailed phase
+accounting remain open. H07 is partial: malformed assets, raw compatibility,
+reconnects and incompressible fallback passed; overload/failure injection and
+broad mode/palette coverage remain open. A04 has exact bitmap-transform and
+software/hardware-sprite pairs; A05 has codec timings, not full path accounting.
+H08 awaits the remaining qualification and Author production-promotion decision.
+Unchecked gates are intentionally not represented as complete by this timed run.

@@ -1,0 +1,22 @@
+[
+  {
+    "case": "bitmap_raw",
+    "exact": true,
+    "sha256": "595ceef67df35dae3366c6bb93b6015c76c90d09e6b8a112c3a0764897c3da5d"
+  },
+  {
+    "case": "bitmap_rle",
+    "exact": true,
+    "sha256": "595ceef67df35dae3366c6bb93b6015c76c90d09e6b8a112c3a0764897c3da5d"
+  },
+  {
+    "case": "raw_sprites",
+    "exact": true,
+    "sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36"
+  },
+  {
+    "case": "rle_sprites",
+    "exact": true,
+    "sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36"
+  }
+]

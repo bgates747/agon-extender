@@ -44,8 +44,11 @@ QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/
 stop:48KiB passes;96KiB fails terminal query15 with35.981native completions/s,
 55.710ms p95 and23.817Mbit/s delivered payload. [Results](docs/tasks/QUAL-003/debrief/P01g/RESULTS.md).
 Larger/repeated/browser rungs stopped. Exact r43/startup restored.
-[P01h AGM/SRLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) now contains the RLE2-first deployment plan, ready for review;
-no compression implementation started. Golem excluded; no experimental push.
+[P01h RLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) has a tested clean-sheet
+asset decoder and negotiated web encoder candidate, ready for bounded-results review.
+One matched Nurples trial recovered 30 application fps versus 12.8 with raw output.
+Remaining qualification gates and default promotion stay open; see its results.
+Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
 

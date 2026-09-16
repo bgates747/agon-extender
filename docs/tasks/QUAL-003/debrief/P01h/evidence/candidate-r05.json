@@ -1,0 +1,49 @@
+{
+  "build_id": "rle2-p4-r05-b2026-09-16-22-43-43Z",
+  "parent_build_id": "rle2-p4-r02-b2026-09-16-22-30-18Z",
+  "contract_commit": "561d1594c0dee31314d4d014946d37bfaa922cd3",
+  "inputs": {
+    "test_web.mjs": "10193d87f6e50925500a47a8986e1ac673bf9aa1d1e591fcab42be865b72d743",
+    "web_decode.js": "ec13b10b8b63997b43439836aade8ac878ff9d9d2eb072181c9e99a57c7bd268",
+    "bench.hpp": "d624ca9c52dd88d99f592d5e67879fd935e1455e049bb91a40eeb70695c64857",
+    "fuzz.cpp": "9b75ee594b6b83d67011a08959a24480e45bcf58488fb322b597afec60733bf3",
+    "rle2.hpp": "98140426fd2bdcbdccf62b4e4abb826a54eb7ca3558e0a4ce87ffd5701c117bc",
+    "test_codec.py": "14dfde8f1c56a5d7b84d39ac384788dfad40955d1421272b3d784e46480ab3f1",
+    "asset.inc": "a279bef572143dd45eacab944432f089c82f71042722aa850942a90e881c2f6c",
+    "web_send.inc": "febca6af67d3f41fc2140eae83a0b5eb65a7e500869744678b795856db16b633",
+    "add_web.py": "e8082c4c3f2b1216ce94e9dab07de39d630ab39a36d2cb8872e54658778a4608",
+    "prepare.py": "355a913faf80d7745b67ef7c3b845c67b165b8040f5bf16b53698ea6108cb606",
+    "host_bridge.cpp": "0d3e5a127de905dc6f79a31bacdfeaaa715da15455c5daae3e39907f669b569e"
+  },
+  "web_contract": "EVR1-v1-task-candidate",
+  "web_inputs": {
+    "add_web.py": "e8082c4c3f2b1216ce94e9dab07de39d630ab39a36d2cb8872e54658778a4608",
+    "web_send.inc": "febca6af67d3f41fc2140eae83a0b5eb65a7e500869744678b795856db16b633",
+    "web_decode.js": "ec13b10b8b63997b43439836aade8ac878ff9d9d2eb072181c9e99a57c7bd268"
+  },
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "dbd2304bc7aa78906379a49742fcc190ba9f9fc5c2929da37487ed2e3ea112a4",
+      "bytes": 1458208
+    },
+    "firmware.factory.bin": {
+      "sha256": "3f7767c9c89b443ad883839e39280492ca0e5358e5cc4c98f2c865a5dcebd064",
+      "bytes": 1589280
+    },
+    "firmware.elf": {
+      "sha256": "bea219b9afa359e2d9ccc5702fd0469e33279b73e9f09448364a4da63315fee1",
+      "bytes": 28202092
+    },
+    "bootloader.bin": {
+      "sha256": "515a11171ede09872b5bf30e48ad643b9fb2ef9012fb9eb722518c0ebdf9a8ac",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "build_complete": true,
+  "bench_sha256": "7fb6f9247d9cf86e09b4681eb64b2737f30a6931b443f70e4f29deebf25eb30a",
+  "codec_sha256": "f579f5facc061987f3d7ddb8f2029da6dbdec86c2154898b4c848bab30da67fd"
+}
