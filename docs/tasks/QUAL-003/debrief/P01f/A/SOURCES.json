@@ -72,7 +72,8 @@
       "components/esp_http_server/src/httpd_txrx.c": "438b9e1d357e8ab3b2e353bacea2d84352a65dd45633070aadfde5d2bd9a074c",
       "components/lwip/lwip/src/api/api_lib.c": "526d1e90e2becbdeab970dd712665a7dd2285b12bdd9089f17ed4330e77c477e",
       "components/lwip/lwip/src/api/api_msg.c": "a793b371032ba38ca5e23fd7fede4c910aea0079ffe612d781109f203eab92a0",
-      "components/lwip/lwip/src/api/tcpip.c": "486a8ad6d219bd9c3ed5e030715d457589537678a059b74e4debe687657e03e9"
+      "components/lwip/lwip/src/api/tcpip.c": "486a8ad6d219bd9c3ed5e030715d457589537678a059b74e4debe687657e03e9",
+      "components/freertos/FreeRTOS-Kernel/portable/riscv/port.c": "8ed5f02b14b6859b4c6f3c7121016715dd25b203a37b6e2af876525279c1685e"
     }
   },
   "retained_mainboard": {

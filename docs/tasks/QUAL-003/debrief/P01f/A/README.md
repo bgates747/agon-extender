@@ -14,11 +14,11 @@ No firmware edits/build/flash, performance tests or broad redesign in this chunk
 
 1. [x] A01: Freeze this scope, identify exact source snapshots/SDK and official
    references; clear mainboard through admitted CLI without reset.
-2. [ ] A02: Trace real lock order and ownership across parser, foreground flush,
+2. [x] A02: Trace real lock order and ownership across parser, foreground flush,
    drawing, row composition, snapshot leases, network worker, HTTP sender and
    SDK networking tasks. Identify waits/yields and allocation inside exclusion.
    Follow virtual overrides and build flags, not comments alone.
-3. [ ] A03: Compare upstream VGA ISR/primitive execution constraints with P4
+3. [x] A03: Compare upstream VGA ISR/primitive execution constraints with P4
    replacements. Explain which locks are inherited or port-added and which
    original timing/exclusion guarantees survive. Reuse P00; only add findings
    that resolve a gap or re-check an assumption. AUDIT-007 remains separate.
@@ -53,3 +53,10 @@ CLI without reset. Exact archived r45/r48/current source comparisons, retained
 mainboard identities and pinned SDK hashes are in [SOURCES.json](SOURCES.json).
 Official VDP checkout remains clean at v2.16.0. Online v5.5 ESP-IDF documentation
 provides context; locally pinned 5.5.5 source controls precise behavior.
+
+## Ownership and upstream comparison
+
+A02/A03 completed in [OWNERSHIP.md](OWNERSHIP.md): actor/lock map, virtual
+gate dispatch, original ISR versus scheduled task differences, immutable network
+lease boundary, selected SDK send path, inherited allocation waits and scope
+limits. No closed cycle established in the inspected steady-state path.
