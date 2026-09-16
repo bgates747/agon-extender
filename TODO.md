@@ -17,8 +17,8 @@ item is removed.
 QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
 P00, P01a/b, P02 controls and bounded [P01c/d diagnostics](docs/tasks/QUAL-003/debrief/P01cd/README.md)
 are complete. Streaming probes expose22–23ms native lock stalls and long output
-notification age, but materially perturb output performance. Review narrower
-owner/scheduler correlation before optimization. No fix or parity pass claimed;
+notification age, but materially perturb output performance. Author authorized narrower
+[P01e owner/scheduler correlation](docs/tasks/QUAL-003/debrief/P01e/README.md) before optimization. No fix or parity pass claimed;
 Golem remains on hold. Verified r43/startup restored; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks

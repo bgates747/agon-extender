@@ -338,6 +338,53 @@ and disposition; initial scouting alone does not satisfy this dependency.
    Never obtain a rendering-parity pass by reducing game workload, resolution,
    sprite count or silently displaying stale frames. Golem remains excluded.
 
+### Additional experiment candidates — recorded 2026-09-16
+
+Author requested recording the following ideas; execution is not yet authorized.
+These belong to QUAL-003, not a separate queue. Author clarified: continue narrower P01 owner/scheduler tracing first.
+P06f remains a later diagnostic candidate; P06g/P06h are fallback ideas if
+more direct remedies fail. These items do not authorize a new bench run.
+
+6. [ ] P06f — Controlled output-demand ramp. Keep the deterministic Nurples
+   workload, seed, game rendering target, resolution, pixel format and wired
+   observer fixed. P4 snapshot admission targets: output-off, then5,10,15,20,25,
+   30,40,50,60 frames/s. Use separate matched runs rather than changing rates
+   across different portions of a game. Gate snapshot creation, not merely
+   transmission after composition. Retain existing frame ownership and credit
+   semantics; measure requested versus achieved composition, sends and unique
+   client frames. Start with existing low-overhead completion/output accounting,
+   not the intrusive P01c/d acquisition probes. Record game spacing p95/p99/max,
+   output cost, bytes, backlog/age and validity. Investigate lock stalls with
+   separately qualified probes if the ramp identifies a useful boundary.
+   Repeat/reverse order near deterioration to distinguish load from boot/order
+   variability. If delivery saturates below the requested rate, report that
+   plateau rather than treating the target as achieved load. A reduced-output
+   diagnostic is not acceptance of a lower production target.
+7. [ ] P06g — Paced snapshot batches. Inspired by the Author's Jukebox routine:
+   buffer1second of audio, stream one-sixtieth per vblank, then idle until the
+   next interrupt. Compare continuous snapshot composition against bounded row
+   groups with explicit scheduling opportunities between groups, at matched
+   achieved output rates selected from P06f. Existing two-row native lock release
+   is not itself deliberate pacing. Preserve stock rendering; define how partial
+   snapshot ownership survives pauses and measure temporal consistency, frame
+   age, game pacing and capture latency. Never retain the native graphics lock
+   while deliberately waiting; check that the actual scheduling mechanism gives
+   contending tasks an opportunity. Game pixels are live, unlike prebuffered
+   audio, so spreading capture can increase within-frame temporal skew.
+8. [ ] P06h — Paced transmission batches. Independently compare burst sends with
+   bounded portions of an already completed immutable full frame, at matched
+   achieved rates/payloads. Trace the actual HTTP/socket executor; smaller caller
+   writes alone do not prove smaller wire bursts or fairer scheduling. Preserve
+   frame lease lifetime, ordering, complete-frame presentation and credit rules;
+   account for partial writes, disconnects, send completion and bounded backlog.
+   Review required WebSocket/API handling before implementation. Measure both
+   throughput and end-to-end frame age. Test capture and transmission pacing
+   separately before any combined condition, so their effects remain attributable.
+
+The512×384×64-colour60Hz target and longer-term eight-bit pixel goal remain.
+Golem stays excluded. The ramp is a diagnostic available before giving up that
+target; the following selectable-rate product fallback remains conditional.
+
 **Author-requested fallback — explicit browser frame-rate targets:** if the
 current investigation and its resulting measurements fail to yield sufficient
 improvement, consider a selectable sustainable output cadence (for example
@@ -388,3 +435,8 @@ keyboard readiness verified, SD service exited to Legacy MOS. See
 `debrief/notification.json`. Human hearing/review is pending. No performance
 experiment, firmware flash/reset, Golem test, emulator change or push occurred.
 Only the documentation/research goal is complete; parity remains unproved.
+
+## Authorized continuation — P01e
+
+Author approved narrower ownership/scheduler tracing on2026-09-16, retaining
+chunking as a fallback. [P01e contract](debrief/P01e/README.md) owns execution.

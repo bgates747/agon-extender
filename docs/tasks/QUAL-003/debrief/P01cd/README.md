@@ -183,6 +183,13 @@ execution. Firmware installation preserves rollback and startup before writing.
 
 ## Next proposed experiment — not executed
 
+Sequencing update,2026-09-16: the Author requested recording output-load ramp
+and paced-chunk experiments. [P06f–P06h](../../DEBRIEF-PLAN.md#additional-experiment-candidates--recorded-2026-09-16)
+own their details. Author clarified that the narrower attribution design below proceeds first;
+load ramp remains a later candidate, and chunking a fallback.
+[P01e](../P01e/README.md) owns the authorized continuation.
+
+
 1. Reuse the same full-size streaming/reference fixture and rollback. Select a
    low-overhead bounded event design that preserves task ownership and timestamps
    around outlier intervals; count overwritten/missing events and reject overflow.
