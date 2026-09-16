@@ -1,0 +1,15 @@
+{
+  "review_utc": "2026-09-16T03:02:09.363455+00:00",
+  "contract": "60cb017",
+  "upstream_commit": "caf2d9b77e1c9eaa5b7f8805fc0172650dbea051",
+  "source_hashes": {
+    "README.md": "376c585aec45ddd5ca94b7705635331e9e9203bd0c600c0b4e3df7344cc1ecb7",
+    "sdkconfig.defaults": "4e125ce9787193d68c95efb49552b54922f67b8d4e9e34f5534cb92a3c86f62d",
+    "main/hdmi.c": "5b1980afa515aa0e80b208ebc360c8f5c682edc5b21461fc0b01dfde5fd231a2",
+    "main/main.c": "3bf379077c8c183f480827cced0b5c31a182a1210f146e1663e0c8cf5e4d0743",
+    "main/idf_component.yml": "7815890558ac12e5fd08781835385703f71ff7d89d54d550e902efa2fdbabe9b",
+    "main/audio.i": "e38ee5456ab4bc172e29312cc157dbdfd9e76ad9568e83c292e67219246eb0ba",
+    "main/defines.h": "efc661693cc2a989bd7fbf580f663214d4d13b4b64db15e16a9af95071d497e9"
+  },
+  "scope": "source-only; no build/test/ROM download"
+}

@@ -192,6 +192,10 @@ completion. Owner: P02/P06; no wholesale GMF adoption.
 
 ### C5 — Vectrex: useful sparse-work idea, weak handoff assurance
 
+Completed [focused review and five-candidate synthesis](C5/README.md):
+check/claim races and loop-based FPS counter prevent treating this as parity
+evidence. Source-only candidate prerequisite is now satisfied.
+
 [Source][vectrex-code] places three descriptor slots in DRAM, uses VSYNC semaphore
 wakeups, runs renderer on core0 and application/audio on core1. It compares old
 and new vector lines instead of clearing whole framebuffers. These are useful
