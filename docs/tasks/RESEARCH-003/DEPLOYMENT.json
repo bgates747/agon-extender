@@ -1,0 +1,10 @@
+{
+  "app_verified": true,
+  "boot_partition_nvs_written": false,
+  "build_id": "research003-reference-r01-b2026-09-16-08-42-06Z",
+  "hashes": {
+    "candidate.bin": "e71fc56a7211e9f9889175b8c96954bcfc66d5501da827014ebf713a63cd75f4",
+    "baseline.bin": "25d635a22c21429c66d1f4f6463d30b1f30934c386761f95260a7dbf15db89c7",
+    "partitions.bin": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+  }
+}

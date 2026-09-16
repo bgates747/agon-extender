@@ -1,0 +1,9 @@
+{
+  "identity_observed": true,
+  "cpu_mhz": 360,
+  "psram_mhz": 200,
+  "psram_bytes": 33554432,
+  "chip_revision": "v1.3",
+  "sdk": "5.5.5",
+  "note": "One USB boot capture taken before timed runs; no serial monitor during measurements."
+}

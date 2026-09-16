@@ -1,0 +1,38 @@
+{
+  "invalid_parameters": [
+    {
+      "query": "mode=bad&fps=60&frames=600",
+      "status": 400
+    },
+    {
+      "query": "mode=render&fps=61&frames=600",
+      "status": 400
+    },
+    {
+      "query": "mode=render&fps=60&frames=999999",
+      "status": 400
+    }
+  ],
+  "post_suite_state": {
+    "state": "done",
+    "identity": "research003-reference-r01-b2026-09-16-08-42-06Z",
+    "mode": 2,
+    "fps_target": 60,
+    "requested": 600,
+    "produced": 472,
+    "dropped": 128,
+    "sent": 472,
+    "send_error": 0,
+    "elapsed_us": 10038407,
+    "render_mean_us": 6213.689,
+    "render_p95_us": 7445,
+    "render_max_us": 19103,
+    "interval_p50_us": 17025,
+    "interval_p95_us": 34036,
+    "interval_max_us": 36110,
+    "send_mean_us": 21215.585,
+    "send_p95_us": 23086,
+    "cpu_mhz": 360,
+    "psram_bytes": 33554432
+  }
+}

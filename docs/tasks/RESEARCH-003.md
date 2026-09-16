@@ -38,15 +38,15 @@ performance. Avoid external camera/LCD requirements absent on this bench.
    Use no VDP/FabGL/parser, no Agon control requirement. HTTP starts bounded
    tests and returns status/results; network receiver validates sequence and
    pixels. Separate deterministic rendering from immutable output ownership.
-3. [ ] R03 — Build and host-validate protocol, pixel reference and error paths.
+3. [x] R03 — Build and host-validate protocol, pixel reference and error paths.
    Preallocate buffers, bound waits, record memory/clocks/task placement and
    output fidelity. Inspect pin assignments and preserve rollback artifacts.
-4. [ ] R04 — Deploy with stable USB identity/readback verification. Run
+4. [x] R04 — Deploy with stable USB identity/readback verification. Run
    render-only, send-only and combined controls using the same deterministic
    animation. Test 30 and 60 fps targets, with full-frame output as primary;
    any smaller/compressed variants explicitly separate. At least two repeats
    of decisive cases; stop escalating on corruption/reset and retain evidence.
-5. [ ] R05 — Report rendering ms, completed/received unique fps, payload Mbit/s,
+5. [x] R05 — Report rendering ms, completed/received unique fps, payload Mbit/s,
    p50/p95/max intervals, drops, correctness and elapsed durations. Do not claim
    browser presentation from a socket receiver or VDP parity from a new workload.
 6. [ ] R06 — Record results, limits and installed firmware identity; notify
@@ -78,3 +78,10 @@ discovered changes to the plan must be marked agent-assigned with rationale;
 they cannot silently enlarge hardware or production scope. P01h remains
 separately queued. Existing research: RESEARCH-001/C1–C5, RESEARCH-002 and
 QUAL-003/P01g. Hardware details stay in ignored local records.
+
+## Execution checkpoint
+
+Twelve runs complete; [results](RESEARCH-003/RESULTS.md) show47.02–47.29fps
+combined exact raw output,49.59–49.60send-only,60render-only. All30fps cases
+pass without drops.60fps delivery target unmet. Healthy standalone image remains
+installed; emulator voice closeout pending. No production edits or push.
