@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: Authorized; P4-first search, widening to ESP-IDF/Arduino as needed.
+  - Status: Research complete; no confirmed matching upstream defect. P4-specific reports and general IDF mechanisms ranked for review; hardware voice closeout pending.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 

@@ -6,7 +6,7 @@ Author requested a broad internet investigation of P02's variable composition
 and web-streaming latency, starting with ESP32-P4 and widening to ESP-IDF and
 Arduino-ESP32 where no specific match is found. This task researches causes;
 it does not authorize firmware changes or new performance experiments.
-Results will rank documented matches, plausible mechanisms and non-matches,
+Results rank documented matches, plausible mechanisms and non-matches,
 with primary-source links, version applicability and next discriminating checks.
 Hardware voice notification closes the task for review. Golem is excluded.
 
@@ -35,7 +35,7 @@ No specific known upstream cause is assumed. P02 details remain authoritative.
 3. [x] R03: Where no exact P4 match appears, extend to ESP-IDF/lwIP/FreeRTOS and
    Arduino-ESP32 HTTP/WebSocket throughput and task-affinity mechanisms. Prefer
    primary evidence; label other-chip reports and unverified user claims.
-4. [ ] R04: Compare promising explanations against P02 and selected local code;
+4. [x] R04: Compare promising explanations against P02 and selected local code;
    record supporting/contradictory facts, affected/fixed versions where known,
    and a falsifiable next check. Do not upgrade dependencies or implement fixes.
 5. [ ] R05: Write executive findings, source ledger and ranked investigation
@@ -51,3 +51,13 @@ SDK versions. General API guidance is not proof of the observed mechanism.
 No hardware testing, reset or flash; use the established voice path only at
 completion. No emulator changes, source edits, experimental push or Golem.
 Further experiments are recommendations for review, not silently self-authorized.
+
+## Research result
+
+See [findings and ranked next checks](RESEARCH-001/FINDINGS.md),
+[query ledger](RESEARCH-001/QUERIES.md) and
+[exact local build facts](RESEARCH-001/LOCAL-FACTS.json). No confirmed upstream
+root cause or drop-in fix found. Clarified that snapshot slots are explicitly
+PSRAM; the framebuffer is internal. Investigate real affinity/priority/locks,
+PSRAM/cache interactions, and HTTP/socket/credit pacing under the existing
+QUAL-003 ownership. No new performance measurements or firmware changes.

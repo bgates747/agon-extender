@@ -187,6 +187,12 @@ change remain unexecuted; stop for review before adding instrumentation or
 changing affinity. Agent-recommended next boundary: matched boot/order and
 pool-placement/lock evidence, then measured networking task interference.
 
+Author-requested [RESEARCH-001](../RESEARCH-001.md) now supplies a P4-first
+internet review and ranked follow-up checks. It clarifies that the selected
+snapshot allocator explicitly uses PSRAM; only addresses/alignment/runtime
+interactions remain unmeasured. No matching upstream fix or new experiment
+is established. Reuse its findings in P02c/P01c/P06 instead of duplicating work.
+
 ### P03 — Audit/fix the evidenced owner or scheduling path
 
 1. [ ] P03a: If owner/RX/reply time dominates, compare the exact current parser,
