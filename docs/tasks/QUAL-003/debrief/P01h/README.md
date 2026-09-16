@@ -5,8 +5,8 @@
 Author requested this plan on2026-09-16 after QUAL-004's overwhelmingly successful
 static-image comparison. Reuse this existing compression task rather than create
 a competing queue. **Planning complete; implementation/deployment not started.**
-Deploy the Author's RLE2 first as an optional, negotiated, lossless full-frame P4
-web transport. Preserve raw output and unchanged graphics semantics. Evaluate
+Deploy the Author's RLE2 in both directions: P4 encodes optional negotiated
+web frames, and P4 decodes uploaded RLE2 assets into bitmap data. Preserve raw output and unchanged graphics semantics. Evaluate
 SRLE2 (RLE2 followed by szip) separately after measuring the simpler codec.
 The accepted target remains512×384 at30fps; no new60fps promise.
 
@@ -84,6 +84,46 @@ The accepted target remains512×384 at30fps; no new60fps promise.
    on every network. Restore baseline if candidate is not ready. Author visual
    review precedes default enablement/promotion; no experimental remote push.
    Commit discrete owned changes and hardware voice-notify for review.
+
+## Required asset-decompression work — Author amendment
+
+The P4 driver must support **RLE2 decoding as well as encoding**. Asset upload
+is a required deliverable, not a deferred optimisation. Keep its tests separate
+from web output so gains and failures are attributable.
+
+1. [ ] A01 — Alongside H01/H03, inspect stock buffered decompression commands and
+   compression-format dispatch before defining any extension. Identify whether
+   stock already accepts this exact RLE2 format. Reuse stock contracts where
+   available; otherwise explicitly document a capability-gated EDP extension,
+   never silently reinterpret an existing VDP command. EMOS owns routing from
+   the eZ80 to EDP through the established transport; no direct bypass.
+2. [ ] A02 — Freeze upload/decode/bitmap lifecycle: eZ80 supplies encoded buffer,
+   P4 validates format/version and declared output length, decodes into bounded
+   owned storage, and exposes decoded data through the applicable bitmap-create
+   command. Specify source/destination buffer IDs, dimensions, pixel format,
+   completion ordering, errors, allocation limits and buffer deletion/reuse.
+   Do not make clients consume partially decoded data. Allocation for asset
+   creation is permitted when checked and bounded; the prohibition on hot-path
+   per-frame allocation does not ban asset storage allocation.
+3. [ ] A03 — Implement P4 decoding using shared pinned RLE2 semantics and golden
+   vectors. Test opaque colours and exactly supported transparency separately;
+   resolve the singleton/run alpha limitation before claiming RGBA2222 fidelity.
+   Reject truncated headers/tokens, run overflow, invalid sizes and unsupported
+   versions before out-of-bounds reads/writes. Define behaviour on allocation
+   failure without damaging an existing usable bitmap.
+4. [ ] A04 — Upload raw and RLE2 forms of identical assets through normal EMOS
+   routing. On physical P4, compare decoded bytes and full rendered images after
+   bitmap creation, plotting, clipping, scaling and supported sprite use. Compare
+   resulting images with stock mainboard receiving equivalent raw assets; do not
+   require stock to understand an EDP-only codec extension. Include repeated
+   upload/replacement/deletion, transparent cutouts and malformed inputs.
+5. [ ] A05 — Report transfer bytes/time, P4 decode milliseconds, peak memory and
+   bitmap creation time separately. Preserve protocol synchronization after
+   rejected inputs. Include this asset path in H07 recovery and H08 review before
+   declaring bidirectional RLE2 deployment complete.
+
+Sequence: freeze A01/A02 with H01/H03; implement A03 alongside H04; qualify A04/A05
+with H06/H07. No implementation is started by this planning amendment.
 
 ## Deferred follow-on experiments — not part of initial deployment
 
