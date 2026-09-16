@@ -116,3 +116,9 @@ and reporting; development stopped early enough to leave recovery margin.
 Standard British hardware voice cue completed; fresh service receipt confirmed
 audio commands and unchanged startup. Human hearing/visual acceptance remains
 pending. Run completed in approximately 45 minutes, within the one-hour limit.
+
+## Single-vblank follow-up
+
+The [60fps-paced Nurples run](60fps/RESULTS.md) maintained60 application fps
+with and without streaming. Browser receipts averaged24.55fps with its unchanged
+30Hz cap. See that report for final-candidate identity and comparison limits.

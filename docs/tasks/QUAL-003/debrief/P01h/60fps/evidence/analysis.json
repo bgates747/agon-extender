@@ -1,0 +1,57 @@
+{
+  "off60": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "vdu_faults": 0
+  },
+  "rle60": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "vdu_faults": 0,
+    "browser": {
+      "frames": 716,
+      "intervals": {
+        "n": 715,
+        "mean_ms": 40.734685314681144,
+        "median_ms": 40.599999994039536,
+        "p95_ms": 51.599999994039536,
+        "max_ms": 68.5,
+        "effective_fps": 24.549103356877808
+      },
+      "mean_message_bytes": 37647.305865921786,
+      "magic": [
+        "EVR1"
+      ]
+    }
+  }
+}
