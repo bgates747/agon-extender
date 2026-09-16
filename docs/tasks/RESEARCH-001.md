@@ -200,3 +200,18 @@ and packet allocation confirmed as source behavior, cost unmeasured.
 C1-M03 complete: findings committed at749db00; source hashes verified. Fresh
 hardware voice/service receipt verified; startup unchanged, returned to Legacy
 MOS. See C1/memory-notification.json. No build/test/flash or push; paused for review.
+
+### C2 — authorized source-only concurrency benchmark review
+
+Author accepted C2 on medium effort. Start by clearing the mainboard screen;
+finish with accepted hardware voice and stop for review. No build, firmware
+execution, flash, reset or benchmark. C3–C5 and RLE remain deferred.
+
+19. [ ] C2-01: Pin retained micro-mp3 sources; trace task startup, affinity,
+    timing boundaries, allocation, completion and correctness controls.
+20. [ ] C2-02: Assess published measurements and confounders; compare with our
+    P02 evidence and propose the smallest discriminating diagnostic under
+    existing P01/P02 ownership. Do not equate MP3 throughput with graphics FPS.
+21. [ ] C2-03: Record findings/provenance and verify documentation; commit,
+    issue hardware voice with fresh receipt, preserve visible completion cue,
+    then stop for review.

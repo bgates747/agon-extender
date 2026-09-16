@@ -8,7 +8,7 @@ item is removed.
 ## Current Author-directed research
 
 - [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: C1 ownership and allocation/cache source investigations complete; reports in RESEARCH-001/C1/README.md and MEMORY.md. No drop-in fix or new benchmark. Await Author review before C2; RLE deferred until C1–C5 dispositions.
+  - Status: C2 source-only review authorized and active; C1 reports retained. No firmware experiment; C3–C5 and RLE deferred.
   - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
   - Boundary: Research only; hardware voice at review, no firmware changes.
 
