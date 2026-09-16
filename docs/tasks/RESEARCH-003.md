@@ -20,7 +20,7 @@ The Author requested a new task, freeze and execution, with Espressif-first
 research and freedom to use HTTP control without Agon integration. This
 authorizes task-scoped builds, temporary P4 deployment and measurement with
 the existing wiring. Preserve and verify the installed baseline before any
-write; restore it and input/service readiness afterward. Do not assign any
+write; retain it for verified rollback. Do not assign any
 GPIO from an external board example without checking the local harness.
 
 No requirement to manufacture a successful candidate: if none advertises a
@@ -49,8 +49,16 @@ performance. Avoid external camera/LCD requirements absent on this bench.
 5. [ ] R05 — Report rendering ms, completed/received unique fps, payload Mbit/s,
    p50/p95/max intervals, drops, correctness and elapsed durations. Do not claim
    browser presentation from a socket receiver or VDP parity from a new workload.
-6. [ ] R06 — Restore exact baseline, verify ordinary bench readiness, record
-   results and remaining limits, hardware voice notify and stop for review.
+6. [ ] R06 — Record results, limits and installed firmware identity; notify
+   through an emulator with the accepted spoken cue and stop for review.
+   Preserve a healthy test image for review rather than restoring Extender
+   solely to obtain Agon control for notification. Keep verified rollback ready;
+   restore the baseline if required for recovery and record that distinction.
+
+Author amendment after contract freeze: use an **emulator** notification at the
+conclusion so the installed test firmware need not be disrupted to control the
+Agon. This supersedes the original hardware-voice/restoration closeout, without
+relaxing image preservation, deployment verification or recovery requirements.
 
 ## Measurement contract
 
