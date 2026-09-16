@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP21_01",
+    "file": "BSP21_01.vdu",
+    "group": 121,
+    "bytes": 43514,
+    "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed",
+    "source": {
+      "name": "BSP21_01",
+      "group": 121,
+      "bytes": 43203,
+      "setup_bytes": 311,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 42644,
+      "sha256": "ba728e47f6d5fc07e27f758739cd7ad377326ffcc574601d99e8daf28c5ff8ed"
+    }
+  },
+  "start": 1789565989.9327612,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "7400039477093bdfd67559f0e06d3e6e20afbfdb115b85e630415470db6bcb40",
+    "p4_sha256": "7400039477093bdfd67559f0e06d3e6e20afbfdb115b85e630415470db6bcb40"
+  },
+  "end": 1789566102.4703543,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

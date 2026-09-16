@@ -1,0 +1,34 @@
+{
+  "case": {
+    "name": "BSP22_02",
+    "file": "BSP22_02.vdu",
+    "group": 122,
+    "bytes": 26517,
+    "sha256": "3a91ee88e3c8d07ca79cb405f7b05b52ac62e2ae917ec93d53ec1d6f50439861",
+    "source": {
+      "name": "BSP22_02",
+      "group": 122,
+      "bytes": 11,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": true,
+      "upload_bytes": 0,
+      "sha256": "011b46ce235474034f9a73eba5be5fe18260be7b456eccc04620d31ee169e29c"
+    }
+  },
+  "start": 1789566785.6919765,
+  "status": "pass",
+  "comparison": {
+    "width": 512,
+    "height": 384,
+    "pixels": 196608,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "80ba779795e89576978ea13f805883c6694e6613d769bb26b496303c8e180ff1",
+    "p4_sha256": "80ba779795e89576978ea13f805883c6694e6613d769bb26b496303c8e180ff1"
+  },
+  "end": 1789566897.4392803,
+  "mainboard_repeat_equal": true,
+  "p4_repeat_equal": true
+}

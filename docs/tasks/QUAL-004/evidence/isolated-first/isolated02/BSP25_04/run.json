@@ -1,0 +1,29 @@
+{
+  "case": {
+    "name": "BSP25_04",
+    "file": "BSP25_04.vdu",
+    "group": 125,
+    "bytes": 31206,
+    "sha256": "69c612baebaa1702a6a47b3c51a2744e61e5fa60f08affeaa447ea429e197df9",
+    "source": {
+      "name": "BSP25_04",
+      "group": 125,
+      "bytes": 315,
+      "setup_bytes": 0,
+      "probes": 0,
+      "quiet": false,
+      "upload_bytes": 0,
+      "sha256": "55fc06047250124c5ee4ed1ea84f7df158517d6181009b6bb7390668a2d686b0"
+    }
+  },
+  "start": 1789567579.5476327,
+  "status": "invalid_mainboard_crash",
+  "end": 1789567614.4726796,
+  "reason": "Stock sprite scanout crashed during scene before capture; samePC0x40083247/address0x1c. No valid paired image.",
+  "correction": {
+    "at": "2026-09-16T14:11:36.384953+00:00",
+    "previous_status": "invalid_mode_state",
+    "previous_reason": "Capture reported640x480, expected512x384; no rows and terminal0. Input contains no mode-selection command. Cause unresolved.",
+    "evidence": "Earlier serial bytes show matching stock scanout LoadProhibited/reboot before capture. Default640x480 was a consequence."
+  }
+}
