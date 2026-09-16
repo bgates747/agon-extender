@@ -39,3 +39,12 @@ separate work under QUAL-003 P06e-30; no production web firmware change is claim
 No Golem work, performance instrumentation or physics compensation added.
 Hardware command acknowledgements are not proof of human visual acceptance.
 Deployment/notification receipts are appended after completion.
+
+## Deployment and notification complete
+
+[Deployment receipt](DEPLOYMENT.json): only Nurples executable changed; Rally
+matched byte-for-byte. Required assets retained, autoexec unchanged.
+[Hardware notification](NOTIFICATION.JSON): fresh stage6/audio_commands=pass
+receipt. [Launch record](LAUNCH.JSON): EMOS EXCOM, current Nurples path, LOAD/RUN
+commands acknowledged. Human visual acceptance is pending; no ongoing driver
+or SD service. Changes committed locally, unrelated dirty artwork preserved.

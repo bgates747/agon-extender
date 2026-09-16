@@ -10,6 +10,8 @@ item is removed.
 - [ ] **BENCH-002 — 30 fps Nurples/Rally human review**
   - Details: [contract](docs/tasks/BENCH-002.md). Two vblanks per Nurples frame;
     verify Rally30Hz, restore normal P4, narrow deployment, hardware voice.
+  - Status: Deployed and hardware voice verified; Nurples ExCom launch commands
+    acknowledged. Await human smoothness review; Rally already30Hz and unchanged.
 
 ## Accepted web-output contract
 

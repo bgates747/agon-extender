@@ -22,7 +22,7 @@ with the standard hardware spoken cue. Human smoothness assessment remains open.
 4. [x] B04: Deploy the narrow Nurples executable plus verify required runtime
    data; preserve/read back any replaced files. Compare deployed current Rally
    with maintained binary/build before declaring its cadence. Preserve autoexec.
-5. [ ] B05: Record build/deployment evidence and scope limits, send hardware
+5. [x] B05: Record build/deployment evidence and scope limits, send hardware
    voice and visible review banner, leave safe CLI readiness and stop for review.
 
 ## Scope and acceptance
@@ -46,3 +46,10 @@ claim full asset hash equality with the dirty tree.
 Rally already uses next=now+4 on the MOS clock, which advances2 per vblank;
 no Rally source change. Nurples dev commit2f0f095 adds the second existing
 vdu_vblank call; real-time timestamp timers deliberately unchanged.
+
+## Review stop
+
+Hardware voice stage6/audio_commands=pass verified with fresh service receipt;
+autoexec unchanged. Nurples ExCom launch commands acknowledged. Human hearing,
+visual smoothness and realized frame rate remain unconfirmed. Rally binary
+already matched the rebuilt maintained release and was not replaced.
