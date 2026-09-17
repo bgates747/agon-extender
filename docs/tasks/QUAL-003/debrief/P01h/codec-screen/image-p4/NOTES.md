@@ -30,3 +30,9 @@ JPEG remains lossy. Streaming qualification follows before any verdict.
    rejected connection before any upload/test invocation; no old fixture was
    deployed. Preload standard queue/concurrent.futures.thread before helper
    path insertion. Discard this trial from measurements; preserve host traceback.
+
+6. Replay SAVE names must be unique: official MOS mos_SAVE uses FA_CREATE_NEW.
+   Reusing first-attempt trace names aborted the second batch before SD return.
+   Corrected controller gives phase/attempt-specific batch, EXEC, trace and
+   telemetry paths, all inspected together. No firmware correction for this
+   setup error. Only the final complete uniquely named series counts.
