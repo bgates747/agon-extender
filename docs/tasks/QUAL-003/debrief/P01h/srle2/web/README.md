@@ -22,20 +22,20 @@ The emulator is an attention cue only, not the codec under test. No Golem.
 
 ## Itemized work plan
 
-1. [ ] W01 — Pin fixtures and decoder boundary. Reuse SOURCE.json's original szip
+1. [x] W01 — Pin fixtures and decoder boundary. Reuse SOURCE.json's original szip
    source and the historical CmpS + SZ1.12 wrapper, order3/recordsize1 subset.
    Gather existing generated/owned bitmap fixtures plus deterministic synthetic
    all-colour, solid, stripes, scrolling, sprite-heavy and incompressible scenes.
    Record width, height, stride, format, exact raw bytes, SHA256, seed and source.
    Keep third-party reference footage out of tracked fixtures.
-2. [ ] W02 — Freeze browser negotiation and frame envelope before implementation.
+2. [x] W02 — Freeze browser negotiation and frame envelope before implementation.
    Existing EVF1 raw and EVR1 RLE2 retain their exact meaning. Specify a distinct
    negotiated SRLE2 envelope with encoded and decoded sizes, dimensions, sequence,
    version and maximum lengths. Payload is a complete CmpS-wrapped RLE2 file.
    Define rejection, raw fallback and reconnect behaviour. Initially independent
    full frames, no deltas or inferred transparency. Reuse existing 30Hz credit
    pacing, with deterministic single-frame stepping as a separate harness option.
-3. [ ] W03 — Implement a reusable browser decoder module, independent of the
+3. [x] W03 — Implement a reusable browser decoder module, independent of the
    replay server. Preferred starting point: compile the pinned original C decoder
    to WebAssembly with bounded memory I/O, adapting the P4 allocation shim rather
    than translating the entropy algorithm by hand. Inspect available tooling first;
@@ -44,13 +44,13 @@ The emulator is an attention cue only, not the codec under test. No Golem.
    enforceable deadline; reject malformed streams without freezing the webpage.
    Decode szip to the complete RLE2 file, then use the retained RLE2 decoder and
    existing pixel/palette presenter. Retain original license notices and source.
-4. [ ] W04 — Build a loopback-only Linux HTTP/WebSocket replay server. Serve the
+4. [x] W04 — Build a loopback-only Linux HTTP/WebSocket replay server. Serve the
    actual candidate web client/modules, answer its negotiation/credit protocol,
    and transmit prerecorded raw/RLE2/SRLE2 messages. Do not implement a separate
    demonstration viewer that later has to be replaced. No board addresses in
    defaults; fail closed on accidental bench endpoints. Provide one documented
    CLI for named corpus, output directory, pace, count and optional browser path.
-5. [ ] W05 — Independent correctness controls. Compare browser-decoded bytes to
+5. [x] W05 — Independent correctness controls. Compare browser-decoded bytes to
    the retained uncompressed originals, not merely a same-code round trip. Generate
    golden encoded files with the pinned original Linux szip CLI (-b41o3), checking
    its locally modified decoder's known output-path issue before relying on it.
@@ -118,3 +118,7 @@ path correction. Awaiting Author direction; no hardware access or silent fix.
 Author reset the one-hour goal and authorized a few repair/test iterations for
 unexpected failures before stopping. Fix the identified output-path defect and
 continue W01–W08; bench remains unavailable. Supersedes the immediate-stop rule.
+
+Restart progress: native original/adapted encode and decode match all pinned
+corpus files. Real browser replay passes raw/RLE2/SRLE2 pixels. Negative cases and
+repeated timing controls are underway; W06–W08 remain incomplete.

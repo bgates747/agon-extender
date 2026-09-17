@@ -21,5 +21,11 @@ for p in out.glob('*.c'):
   s=s.replace('initmodel(&m, -1, &recordsize);','initmodel(&m, -1, &recordsize);\n    if(recordsize!=1)sz_fail(1);')
   s=s.replace('if (runlength>bytesleft)','if (!runlength || ch>255 || runlength>bytesleft)')
   s+='\n'+(root/'entry.inc').read_text()
- if p.name=='sz_srt.c':s+='\nvoid p4_szip_reset_sort(void){globalinit=0;memset(&globalptr,0,sizeof globalptr);}\n'
+ if p.name=='sz_srt.c':
+  # Legacy function-local caches cannot survive invocation-owned cleanup.
+  s=s.replace('static uint4 *table;','uint4 *table=NULL;')
+  for decl in ['uint4 *counters=NULL','uint2 *context=NULL','unsigned char *symbols=NULL','unsigned char *flags1=NULL','unsigned char *flags2=NULL']:
+   s=s.replace('static '+decl,decl)
+  s+='\nvoid p4_szip_reset_sort(void){globalinit=0;memset(&globalptr,0,sizeof globalptr); }\n'
+
  p.write_text(s)

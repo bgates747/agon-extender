@@ -1,0 +1,266 @@
+[
+  {
+    "name": "colours",
+    "width": 64,
+    "height": 1,
+    "stride": 64,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 64,
+        "sha256": "fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108"
+      },
+      "rle2": {
+        "bytes": 78,
+        "sha256": "48023b4fd9fda7d29033d9dfebc45b2446a9ceab882fdc1aaeb54f5ec41f974d"
+      },
+      "srle2": {
+        "bytes": 111,
+        "sha256": "582d592ef974d82991456482ae171fb7214e0a4d05764055e55bd9bd29da90ce"
+      }
+    }
+  },
+  {
+    "name": "tiny",
+    "width": 1,
+    "height": 1,
+    "stride": 1,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 1,
+        "sha256": "2f0fd1e89b8de1d57292742ec380ea47066e307ad645f5bc3adad8a06ff58608"
+      },
+      "rle2": {
+        "bytes": 15,
+        "sha256": "6158f1ca8810876af25e261a5146b67e4c38086c3285f943bef1413dec0fcff8"
+      },
+      "srle2": {
+        "bytes": 46,
+        "sha256": "edd3b65fdbc91f5f827a263508b2db28fbc9510b76d75f73428ee25009e43ae8"
+      }
+    }
+  },
+  {
+    "name": "solid",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "4bd4c4b675183fb84ef2d62b81fe4d4c5c31dc3ce73cac94c24fbb2330547018"
+      },
+      "rle2": {
+        "bytes": 3040,
+        "sha256": "580b9c347612a12f719964f0450170faa71fa02e59d40e3f10963e783d4688a6"
+      },
+      "srle2": {
+        "bytes": 55,
+        "sha256": "b79f0f4ee73e4a2c913475f0cd8302d0a502ee16760a90842e5580c6d5cb1abb"
+      }
+    }
+  },
+  {
+    "name": "stripes",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "db9e4564d99126ada90d4997181e0e41bcad46a4136a02fa55a02bb9b76f9860"
+      },
+      "rle2": {
+        "bytes": 24590,
+        "sha256": "117cf92f99a861a5749d5eed38be1e02e2a91128fb679ac5ed1a570c51f88ce7"
+      },
+      "srle2": {
+        "bytes": 145,
+        "sha256": "ac219e31ff0924ff9bfbc7af6a003eb703ee6d4e6f56c2482de7855be26748da"
+      }
+    }
+  },
+  {
+    "name": "noise",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "40a5ca4d526bd6f63c2abe4cf1b10bf685e0e7e53c74b4a1484c110b19557126"
+      },
+      "rle2": {
+        "bytes": 196579,
+        "sha256": "6a96f5092b6bc4b17c4d0b8bdd06f0534063807b17348ec69d6e8dc7568242ce"
+      },
+      "srle2": {
+        "bytes": 151696,
+        "sha256": "470f69f5b897511e61b38cd5f8c3b817be07c013f83ef519b0b241578618e1ec"
+      }
+    }
+  },
+  {
+    "name": "scroll0",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "ac951b654e2c385719e6da3a2c6d63425f0118df46c9f3023db9a74e7cc9a38d"
+      },
+      "rle2": {
+        "bytes": 49166,
+        "sha256": "7af1b1079576f390dc51af0a1b5c78dd4c68be89ef38207522f9a927162958c4"
+      },
+      "srle2": {
+        "bytes": 369,
+        "sha256": "1cd16e19c33277e78201389dadd8f96424f549bd32121755a0199e377f9c001f"
+      }
+    }
+  },
+  {
+    "name": "sprites0",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "357b2da407ed849d424ebe8e4179a23fc83950eea3b321b2370ec14e9463dc44"
+      },
+      "rle2": {
+        "bytes": 15031,
+        "sha256": "180ba0b21dffaf7b9b0e4fd3e2c71873f3ee301c1c703ff70d36cee166d59228"
+      },
+      "srle2": {
+        "bytes": 654,
+        "sha256": "3ead59b8211e84e879137ca5fa960f3d776cc2ba6d3f4f64b3c03e7d876fb6ce"
+      }
+    }
+  },
+  {
+    "name": "scroll1",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "3ffc4883ef8158bb4c9e48f3364ddbd5d0894bbb5fa6f9ac5ce63b947971e7b2"
+      },
+      "rle2": {
+        "bytes": 49214,
+        "sha256": "62546319a3c7da34308aa2bc1bd733d46a47542c29d6432558b3c9daa19974c9"
+      },
+      "srle2": {
+        "bytes": 491,
+        "sha256": "7b57aeb30dfd9599f71e3fc01140776777af5fedcbf5a2b8b60a1d1296e2d430"
+      }
+    }
+  },
+  {
+    "name": "sprites1",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "4969b572ee89ff4f09ed1825f7b9404fa460ee5502e62caca82123ade52a25df"
+      },
+      "rle2": {
+        "bytes": 15022,
+        "sha256": "6ca21e93cb573d06edca05fe2b37e46218f2ec67167a9175fe2c7064cae57a37"
+      },
+      "srle2": {
+        "bytes": 613,
+        "sha256": "aeff4390a5ee4bab1993fc9d5a5dcba2b70f841fafffdf7ec1cb34d3c7d0a2ab"
+      }
+    }
+  },
+  {
+    "name": "scroll2",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "731f632a92404f53577a3a8952d9e8d38d6e90b26f9307f3388db93ae9d8f101"
+      },
+      "rle2": {
+        "bytes": 49262,
+        "sha256": "8360745d239bb7568601ef6aaccd3fafdf638b6335fd15cca6738d8c06ccb321"
+      },
+      "srle2": {
+        "bytes": 530,
+        "sha256": "50c6576a0add327adb823ae625c3c6768e4aabfd3a50bbca24de7c4b5b842087"
+      }
+    }
+  },
+  {
+    "name": "sprites2",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "4b603ee15fc727e927585a80a6f7a70bd1ee887d456e67b899ac53fae34e8a20"
+      },
+      "rle2": {
+        "bytes": 15022,
+        "sha256": "121213370504d21c460c53fd73c42641c8a5dcaacdc4d4f7f3b24a9dfa5c5421"
+      },
+      "srle2": {
+        "bytes": 611,
+        "sha256": "c0741106e683635f7c24198c791b61ae085427292ca47eb3d56e1ac5e7b27ca8"
+      }
+    }
+  },
+  {
+    "name": "retained-sprites",
+    "width": 512,
+    "height": 384,
+    "stride": 512,
+    "format": 2,
+    "seed": "0x53524c32",
+    "files": {
+      "raw": {
+        "bytes": 196608,
+        "sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36"
+      },
+      "rle2": {
+        "bytes": 7038,
+        "sha256": "3aaa4381fa330b8b5b5caca4d7f47fcf6cba9ec4b5b6e9189d1be8f2aa738e9e"
+      },
+      "srle2": {
+        "bytes": 919,
+        "sha256": "d6cc033cf088164d0be0ab2d80a3af905fc909278619843daf0835a228cead7f"
+      }
+    }
+  }
+]
