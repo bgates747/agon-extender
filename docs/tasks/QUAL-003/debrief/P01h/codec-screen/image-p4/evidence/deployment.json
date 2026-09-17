@@ -1,0 +1,8 @@
+{
+  "run_id": "QUAL-003-2026-09-17-06-40-43Z",
+  "build_id": "image-p4-r02-b2026-09-17-06-40-16Z",
+  "factory_sha256": "8df1acb8d1e4314a686d27e550917bdbf8284cb43f5c84dd1179903b0e3db66b",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "mainboard_sd_commissioning": "pending"
+}

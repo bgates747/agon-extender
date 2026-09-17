@@ -20,7 +20,7 @@ voice notification. No mainboard firmware changes, Golem or production promotion
    on retained corpus. Decode in browser, measure visual error and conversion,
    encoding, bytes and delivery separately. Compare selected settings with RLE2
    on matched deterministic Nurples and static scenes, three interleaved trials.
-4. [ ] I04 — Add indexed PNG using reviewed existing encoder, levels1/3 where
+4. [x] I04 — Add indexed PNG using reviewed existing encoder, levels1/3 where
    available, exact64-colour palette. Prove decoded pixels exact, reject bad input,
    measure the same scopes and repeat matched selected-setting comparisons.
 5. [ ] I05 — Assess evidence, preserve anomalous runs, state practical verdict and
@@ -80,3 +80,7 @@ before network access timed out. Subsequent serial opening observed boot but
 can itself reset P4, so it does not establish the cause of the earlier timeout.
 One bounded clean-start resume of remaining cases is agent-assigned; if the
 problem repeats, stop rather than expand into scheduler diagnosis.
+
+I04 complete: all26 PNG corpus cases/settings decoded exactly, nine fresh-start
+PNG/RLE2 game trials completed, and12 combined static controls passed. PNG loses
+on this game but beats RLE2/raw on the periodic pattern. No global promotion.

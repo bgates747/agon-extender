@@ -1,0 +1,2126 @@
+[
+  {
+    "scene": "bitmap_raw",
+    "codec": "rle2",
+    "frames": [
+      {
+        "ms": 2725.5999999940395,
+        "bytes": 8393,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2770.7999999970198,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2807.5,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2840.3999999910593,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2874.7000000029802,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2909.8999999910593,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2940.7999999970198,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2974.8999999910593,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3010.5,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3044.0999999940395,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3077.7000000029802,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3112.5999999940395,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3146.8999999910593,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3179.7000000029802,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3215,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3250.0999999940395,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3283.7999999970198,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3319.8999999910593,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3393.5999999940395,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3464.5,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15495408,
+      "rle2_attempts": 2463,
+      "rle2_frames": 2463,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 11880805,
+      "encode_us": 171804998,
+      "attempts": 2190,
+      "failures": 1,
+      "frames": 2136
+    },
+    "after": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 11880805,
+      "encode_us": 171804998,
+      "attempts": 2190,
+      "failures": 1,
+      "frames": 2136
+    }
+  },
+  {
+    "scene": "bitmap_raw",
+    "codec": "jpeg",
+    "frames": [
+      {
+        "ms": 176.8999999910593,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 282.09999999403954,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 367,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 445,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 531.7999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 612,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 695.5,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 781.1999999880791,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 863,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 905.2999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 955.8999999910593,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1007.5,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1055.3999999910593,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1105.7999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1155.2999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1203.699999988079,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1254.7999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1305.199999988079,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1354.7999999970198,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1404,
+        "bytes": 7479,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 11880805,
+      "encode_us": 171804998,
+      "attempts": 2190,
+      "failures": 1,
+      "frames": 2136
+    },
+    "after": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12156256,
+      "encode_us": 171900335,
+      "attempts": 2210,
+      "failures": 1,
+      "frames": 2156
+    }
+  },
+  {
+    "scene": "bitmap_raw",
+    "codec": "png1",
+    "frames": [
+      {
+        "ms": 198.69999998807907,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 299.8999999910593,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 388.5,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 467.19999998807907,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 551.3999999910593,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 637.2999999970198,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 717.8999999910593,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 802,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 885,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 969.8999999910593,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1052.199999988079,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1136,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1216.699999988079,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1300.5,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1383.3999999910593,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1468.2999999970198,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1551.7999999970198,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1634.2999999970198,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1720.5,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1801.5,
+        "bytes": 2017,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12156256,
+      "encode_us": 171900335,
+      "attempts": 2210,
+      "failures": 1,
+      "frames": 2156
+    },
+    "after": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12269159,
+      "encode_us": 173111091,
+      "attempts": 2231,
+      "failures": 1,
+      "frames": 2177
+    }
+  },
+  {
+    "scene": "bitmap_raw",
+    "codec": "png3",
+    "frames": [
+      {
+        "ms": 193,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 293.29999999701977,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 380.6000000089407,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 460.5,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 546,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 627.9000000059605,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 713.4000000059605,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 793.2999999970198,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 876.5,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 961.2999999970198,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1044,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1127.7999999970198,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1211.4000000059605,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1292.9000000059605,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1376.5,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1460.2999999970198,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1545.4000000059605,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1627.2999999970198,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1713,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1794.2000000029802,
+        "bytes": 2011,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12269159,
+      "encode_us": 173111091,
+      "attempts": 2231,
+      "failures": 1,
+      "frames": 2177
+    },
+    "after": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12382896,
+      "encode_us": 174322124,
+      "attempts": 2252,
+      "failures": 1,
+      "frames": 2198
+    }
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "rle2",
+    "frames": [
+      {
+        "ms": 2716.300000011921,
+        "bytes": 3301,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2772.300000011921,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2805.4000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2840.9000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2871.9000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2907.5,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2941.4000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2977.7000000029802,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3011.6000000089407,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3045.2000000029802,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3079.6000000089407,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3113.2000000029802,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3148.5,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3182,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3216.4000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3252.2000000029802,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3286.4000000059605,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3321.1000000089407,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3354.800000011921,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3386.5,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15599084,
+      "rle2_attempts": 2484,
+      "rle2_frames": 2484,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12382896,
+      "encode_us": 174322124,
+      "attempts": 2252,
+      "failures": 1,
+      "frames": 2198
+    },
+    "after": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12382896,
+      "encode_us": 174322124,
+      "attempts": 2252,
+      "failures": 1,
+      "frames": 2198
+    }
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "jpeg",
+    "frames": [
+      {
+        "ms": 164.30000001192093,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 235.6000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 286.1000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 336.20000000298023,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 383.30000001192093,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 435.5,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 485.80000001192093,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 576.5,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 659.7000000029802,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 742.7000000029802,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 826.8000000119209,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 910.5,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 991.4000000059605,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1073.6000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1158.6000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1243.5,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1326.800000011921,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1408.1000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1493.1000000089407,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1578.800000011921,
+        "bytes": 9945,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12382896,
+      "encode_us": 174322124,
+      "attempts": 2252,
+      "failures": 1,
+      "frames": 2198
+    },
+    "after": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12656254,
+      "encode_us": 174416447,
+      "attempts": 2272,
+      "failures": 1,
+      "frames": 2218
+    }
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "png1",
+    "frames": [
+      {
+        "ms": 194.8999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 297.8999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 383.3999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 465.70000000298023,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 546.7000000029802,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 630.7999999970198,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 714.3999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 798,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 881.7000000029802,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 966.5,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1049.7999999970198,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1133.5,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1215.8999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1300.7999999970198,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1383.0999999940395,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1465.7999999970198,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1550.5,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1631.8999999910593,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1717,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1799.2000000029802,
+        "bytes": 2945,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12656254,
+      "encode_us": 174416447,
+      "attempts": 2272,
+      "failures": 1,
+      "frames": 2218
+    },
+    "after": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12768040,
+      "encode_us": 175655030,
+      "attempts": 2293,
+      "failures": 1,
+      "frames": 2239
+    }
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "png3",
+    "frames": [
+      {
+        "ms": 215.70000000298023,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 326,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 414.6000000089407,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 495.1000000089407,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 578.4000000059605,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 661.2000000029802,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 745.5,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 829.4000000059605,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 910.2000000029802,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 993.9000000059605,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1076.6000000089407,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1160.300000011921,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1245.6000000089407,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1327,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1413.300000011921,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1494,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1578.7000000029802,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1661.7000000029802,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1744.5,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1830.5,
+        "bytes": 2594,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12768040,
+      "encode_us": 175655030,
+      "attempts": 2293,
+      "failures": 1,
+      "frames": 2239
+    },
+    "after": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12880870,
+      "encode_us": 176891866,
+      "attempts": 2314,
+      "failures": 1,
+      "frames": 2260
+    }
+  },
+  {
+    "scene": "incompressible",
+    "codec": "rle2",
+    "frames": [
+      {
+        "ms": 2763.6000000089407,
+        "bytes": 7070,
+        "magic": "EVR1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2911.1000000089407,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3038.2000000029802,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3223.300000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3357.7000000029802,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3492.2000000029802,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3625.6000000089407,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3757.800000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3936.300000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4104.600000008941,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4246.20000000298,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4376.9000000059605,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4557.5,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4697.600000008941,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4827.800000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 5015.20000000298,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 5147.5,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 5324.800000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 5456.300000011921,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 5589.70000000298,
+        "bytes": 196640,
+        "magic": "EVF1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15701270,
+      "rle2_attempts": 2504,
+      "rle2_frames": 2504,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12880870,
+      "encode_us": 176891866,
+      "attempts": 2314,
+      "failures": 1,
+      "frames": 2260
+    },
+    "after": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12880870,
+      "encode_us": 176891866,
+      "attempts": 2314,
+      "failures": 1,
+      "frames": 2260
+    }
+  },
+  {
+    "scene": "incompressible",
+    "codec": "jpeg",
+    "frames": [
+      {
+        "ms": 309.79999999701977,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 520.7999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 746,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 941.4000000059605,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1148.7999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1332.9000000059605,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1519,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1738.7000000029802,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1953.2000000029802,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2162.7000000029802,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2355.7999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2612.2000000029802,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2807.7999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3005.5999999940395,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3220.9000000059605,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3427.7999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3618.5,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 3830.2999999970198,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4038.0999999940395,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 4243.79999999702,
+        "bytes": 293636,
+        "magic": "EVJ1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 12880870,
+      "encode_us": 176891866,
+      "attempts": 2314,
+      "failures": 1,
+      "frames": 2260
+    },
+    "after": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 13167658,
+      "encode_us": 177002496,
+      "attempts": 2335,
+      "failures": 1,
+      "frames": 2281
+    }
+  },
+  {
+    "scene": "incompressible",
+    "codec": "png1",
+    "frames": [
+      {
+        "ms": 196.79999999701977,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 299.09999999403954,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 385.79999999701977,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 483.3999999910593,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 585,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 684.5999999940395,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 784.3999999910593,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 882.5,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 982,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1065.5999999940395,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1149.5999999940395,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1250.199999988079,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1351.199999988079,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1448.199999988079,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1534.0999999940395,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1634.199999988079,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1775.5,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1904.8999999910593,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2039.5,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2174.2999999970198,
+        "bytes": 4043,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 13167658,
+      "encode_us": 177002496,
+      "attempts": 2335,
+      "failures": 1,
+      "frames": 2281
+    },
+    "after": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 13278655,
+      "encode_us": 178322558,
+      "attempts": 2356,
+      "failures": 1,
+      "frames": 2302
+    }
+  },
+  {
+    "scene": "incompressible",
+    "codec": "png3",
+    "frames": [
+      {
+        "ms": 210.5,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 323.5,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 415.1000000089407,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 510.70000000298023,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 612.7999999970198,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 713.2999999970198,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 813,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 913,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1014.7000000029802,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1112.7000000029802,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1213,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1312.2999999970198,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1412.1000000089407,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1512,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1612.6000000089407,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1712.6000000089407,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1811.9000000059605,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 1911.7000000029802,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2014,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      },
+      {
+        "ms": 2113.2999999970198,
+        "bytes": 3157,
+        "magic": "EVP1",
+        "w": 512,
+        "h": 384
+      }
+    ],
+    "errors": [],
+    "before": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 13278655,
+      "encode_us": 178322558,
+      "attempts": 2356,
+      "failures": 1,
+      "frames": 2302
+    },
+    "after": {
+      "rle2_us": 15906938,
+      "rle2_attempts": 2525,
+      "rle2_frames": 2505,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "stack_min_bytes": 13484,
+      "convert_us": 13384447,
+      "encode_us": 179570917,
+      "attempts": 2376,
+      "failures": 1,
+      "frames": 2322
+    }
+  }
+]

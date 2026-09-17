@@ -1,0 +1,524 @@
+{
+  "p11": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1873523,
+      "encode_us": 26897311,
+      "attempts": 340,
+      "failures": 0,
+      "frames": 340
+    },
+    "browser": {
+      "intervals": {
+        "n": 101,
+        "mean_ms": 147.6019801979903,
+        "median_ms": 137.3999999910593,
+        "p95_ms": 176.0,
+        "max_ms": 183.1000000089407,
+        "effective_fps": 6.774976857753672
+      },
+      "submitted": {
+        "n": 101,
+        "mean_ms": 147.6792079208806,
+        "median_ms": 133.79999999701977,
+        "p95_ms": 183.40000000596046,
+        "max_ms": 184.20000000298023,
+        "effective_fps": 6.77143393493654
+      },
+      "decode_parse_ms": 2.892897727433592,
+      "mean_bytes": 23333.235294117647,
+      "magic": {
+        "EVP1": 102
+      }
+    },
+    "seconds": 45.49372434616089
+  },
+  "p12": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1878705,
+      "encode_us": 26788581,
+      "attempts": 339,
+      "failures": 0,
+      "frames": 339
+    },
+    "browser": {
+      "intervals": {
+        "n": 99,
+        "mean_ms": 150.265656565777,
+        "median_ms": 138.19999998807907,
+        "p95_ms": 182.3999999910593,
+        "max_ms": 184.20000000298023,
+        "effective_fps": 6.654880581859781
+      },
+      "submitted": {
+        "n": 99,
+        "mean_ms": 150.15959595956585,
+        "median_ms": 133.70000000298023,
+        "p95_ms": 183.6000000089407,
+        "max_ms": 183.70000000298023,
+        "effective_fps": 6.65958105181153
+      },
+      "decode_parse_ms": 2.9025641023008912,
+      "mean_bytes": 23379.1,
+      "magic": {
+        "EVP1": 100
+      }
+    },
+    "seconds": 45.477614402770996
+  },
+  "p13": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1855337,
+      "encode_us": 27031032,
+      "attempts": 343,
+      "failures": 0,
+      "frames": 343
+    },
+    "browser": {
+      "intervals": {
+        "n": 99,
+        "mean_ms": 149.0242424241521,
+        "median_ms": 139.5,
+        "p95_ms": 180.79999999701977,
+        "max_ms": 184.29999999701977,
+        "effective_fps": 6.710317621704827
+      },
+      "submitted": {
+        "n": 99,
+        "mean_ms": 148.96868686874708,
+        "median_ms": 133.79999999701977,
+        "p95_ms": 183.29999999701977,
+        "max_ms": 183.79999999701977,
+        "effective_fps": 6.712820130320926
+      },
+      "decode_parse_ms": 2.8876056341638026,
+      "mean_bytes": 23318.62,
+      "magic": {
+        "EVP1": 100
+      }
+    },
+    "seconds": 46.07645130157471
+  },
+  "p31": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1804101,
+      "encode_us": 27169523,
+      "attempts": 335,
+      "failures": 0,
+      "frames": 335
+    },
+    "browser": {
+      "intervals": {
+        "n": 94,
+        "mean_ms": 157.28829787243555,
+        "median_ms": 143.0,
+        "p95_ms": 186.6000000089407,
+        "max_ms": 248.6000000089407,
+        "effective_fps": 6.3577520611929
+      },
+      "submitted": {
+        "n": 94,
+        "mean_ms": 157.44255319158447,
+        "median_ms": 134.34999999403954,
+        "p95_ms": 183.70000000298023,
+        "max_ms": 249.90000000596046,
+        "effective_fps": 6.35152301413168
+      },
+      "decode_parse_ms": 2.662247838908726,
+      "mean_bytes": 21768.6,
+      "magic": {
+        "EVP1": 95
+      }
+    },
+    "seconds": 45.533554553985596
+  },
+  "p32": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1930802,
+      "encode_us": 28415305,
+      "attempts": 352,
+      "failures": 0,
+      "frames": 352
+    },
+    "browser": {
+      "intervals": {
+        "n": 94,
+        "mean_ms": 156.24787234039383,
+        "median_ms": 144.5,
+        "p95_ms": 186.79999999701977,
+        "max_ms": 251.0,
+        "effective_fps": 6.400087150124194
+      },
+      "submitted": {
+        "n": 95,
+        "mean_ms": 156.47894736842105,
+        "median_ms": 134.40000000596046,
+        "p95_ms": 183.90000000596046,
+        "max_ms": 266.59999999403954,
+        "effective_fps": 6.39063603646026
+      },
+      "decode_parse_ms": 2.741208790791231,
+      "mean_bytes": 21670.052631578947,
+      "magic": {
+        "EVP1": 95
+      }
+    },
+    "seconds": 46.29957985877991
+  },
+  "p33": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 0,
+      "rle2_attempts": 0,
+      "rle2_frames": 0,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 1887140,
+      "encode_us": 28144941,
+      "attempts": 349,
+      "failures": 0,
+      "frames": 349
+    },
+    "browser": {
+      "intervals": {
+        "n": 94,
+        "mean_ms": 157.79574468081935,
+        "median_ms": 150.5,
+        "p95_ms": 185.6000000089407,
+        "max_ms": 190.59999999403954,
+        "effective_fps": 6.337306509898259
+      },
+      "submitted": {
+        "n": 94,
+        "mean_ms": 157.7968085107017,
+        "median_ms": 149.94999999552965,
+        "p95_ms": 183.80000001192093,
+        "max_ms": 184.0,
+        "effective_fps": 6.337263785231629
+      },
+      "decode_parse_ms": 2.9055401662214972,
+      "mean_bytes": 21736.8,
+      "magic": {
+        "EVP1": 95
+      }
+    },
+    "seconds": 46.48164391517639
+  },
+  "rle1": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 5069640,
+      "rle2_attempts": 799,
+      "rle2_frames": 799,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 0,
+      "encode_us": 0,
+      "attempts": 0,
+      "failures": 0,
+      "frames": 0
+    },
+    "browser": {
+      "intervals": {
+        "n": 206,
+        "mean_ms": 72.34563106797563,
+        "median_ms": 63.24999999254942,
+        "p95_ms": 101.1000000089407,
+        "max_ms": 107.70000000298023,
+        "effective_fps": 13.82253475763318
+      },
+      "submitted": {
+        "n": 207,
+        "mean_ms": 72.30096618356048,
+        "median_ms": 66.29999999701977,
+        "p95_ms": 100.70000000298023,
+        "max_ms": 101.19999998807907,
+        "effective_fps": 13.831073812501502
+      },
+      "decode_parse_ms": 0.5120291616835542,
+      "mean_bytes": 37737.14975845411,
+      "magic": {
+        "EVR1": 207
+      }
+    },
+    "seconds": 45.83302021026611
+  },
+  "rle2": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 4965869,
+      "rle2_attempts": 785,
+      "rle2_frames": 785,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 0,
+      "encode_us": 0,
+      "attempts": 0,
+      "failures": 0,
+      "frames": 0
+    },
+    "browser": {
+      "intervals": {
+        "n": 197,
+        "mean_ms": 75.80913705586782,
+        "median_ms": 66.59999999403954,
+        "p95_ms": 107.09999999403954,
+        "max_ms": 111.79999999701977,
+        "effective_fps": 13.191022069846888
+      },
+      "submitted": {
+        "n": 197,
+        "mean_ms": 75.79796954316234,
+        "median_ms": 67.20000000298023,
+        "p95_ms": 100.3999999910593,
+        "max_ms": 100.90000000596046,
+        "effective_fps": 13.192965537560486
+      },
+      "decode_parse_ms": 0.4799752780990341,
+      "mean_bytes": 37638.83838383838,
+      "magic": {
+        "EVR1": 198
+      }
+    },
+    "seconds": 45.75782823562622
+  },
+  "rle3": {
+    "application": {
+      "frames_recorded": 1800,
+      "intervals": {
+        "n": 1799,
+        "mean_ms": 16.666666666666668,
+        "median_ms": 16.666666666666668,
+        "p95_ms": 16.666666666666668,
+        "max_ms": 16.666666666666668,
+        "effective_fps": 59.99999999999999
+      },
+      "histogram_ms": {
+        "16.667": 1799
+      },
+      "states": {
+        "0x47026": 1800
+      }
+    },
+    "errors": [],
+    "codec_counters": {
+      "rle2_us": 5073516,
+      "rle2_attempts": 800,
+      "rle2_frames": 800,
+      "srle2_us": 0,
+      "srle2_attempts": 0,
+      "srle2_frames": 0,
+      "srle2_failures": 0,
+      "convert_us": 0,
+      "encode_us": 0,
+      "attempts": 0,
+      "failures": 0,
+      "frames": 0
+    },
+    "browser": {
+      "intervals": {
+        "n": 208,
+        "mean_ms": 71.76442307692308,
+        "median_ms": 60.599999994039536,
+        "p95_ms": 103.09999999403954,
+        "max_ms": 109.20000000298023,
+        "effective_fps": 13.934481141555569
+      },
+      "submitted": {
+        "n": 209,
+        "mean_ms": 71.688038277569,
+        "median_ms": 50.79999999701977,
+        "p95_ms": 100.5,
+        "max_ms": 101.29999999701977,
+        "effective_fps": 13.949328563408288
+      },
+      "decode_parse_ms": 0.4839805823217318,
+      "mean_bytes": 37730.34928229665,
+      "magic": {
+        "EVR1": 209
+      }
+    },
+    "seconds": 45.75151252746582
+  }
+}
