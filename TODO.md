@@ -53,7 +53,7 @@ Its SRLE2 follow-up has completed the scoped [native/browser replay tasklet](doc
 codec controls pass. Original-source output/lifetime corrections are in source;
 the earlier compiled P4 image is obsolete. Browser candidate review and corrected
 P4 SRLE2 hardware results are ready in the [assessment](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md): retain asset decoding; live SRLE2 is slower than matched RLE2. QUAL-003-I006 records the separate, unscheduled streaming/mode-transition issue. Final restoration and review closeout belong to the hardware contract.
-Current codec follow-up: [settings/PNG staged contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/README.md). Linux/browser phase authorized; P4 phase waits for shortlist review and bench release.
+Current codec follow-up: [settings/PNG staged contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/README.md). Linux/browser phase complete; results and shortlist await review. P4 phase waits for shortlist approval and bench release.
 
 Golem excluded; no experimental push.
 

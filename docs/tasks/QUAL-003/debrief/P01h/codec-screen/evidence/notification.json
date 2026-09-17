@@ -1,0 +1,7 @@
+{
+  "purpose": "Notification only - no screenshot needed",
+  "emulator_launched": true,
+  "spoken_cue": "accepted attention.bin/attention.wav",
+  "author_heard": "not confirmed",
+  "hardware_access": false
+}

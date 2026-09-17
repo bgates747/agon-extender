@@ -33,7 +33,7 @@ Stop for Author review before C06; emulator spoken notification only.
    Warm up and repeat; report encode, bytes, browser decode, presentation and
    paced delivery separately. Test malformed input/recovery and mixed frames.
    Keep any failures and the exact tested shortlist. No host-to-P4 extrapolation.
-5. [ ] C05 — Evaluate and record a proposed hardware shortlist with tabular results,
+5. [x] C05 — Evaluate and record a proposed hardware shortlist with tabular results,
    percentage differences against RLE2 and explicit limitations. Commit discrete
    work/evidence, document reproduction, then emulator voice alert and STOP for
    Author review. No experimental push or production promotion.
@@ -137,3 +137,8 @@ browser run took71.7 seconds. The subsequent paired host confirmation covered
 42 case/settings groups with20 measured pairs each; identical encoded payloads
 were verified each time. Paired medians supersede the noisy initial three-sample
 relative encode rankings; the original sweep remains in native.csv.
+
+C05 complete: assessment and evidence committed; accepted spoken emulator
+attention profile launched with the review banner. This is a notification, not
+physical test evidence or confirmation that the Author heard it. C06 remains
+unstarted pending review and explicit bench release.
