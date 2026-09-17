@@ -59,3 +59,13 @@ Setup correction: initial build exhausted HTTP URI slots after adding two
 diagnostic endpoints. Server stopped before codec calls. Increase capacity by
 two; no graphics/scheduling change. Rebuild and independently verify before
 continuing. Initial boot/firmware evidence retained privately, not timing data.
+
+## Agent-assigned control correction — fresh startup per game trial
+
+Visual inspection of the first JPEG game capture found prior completion text
+and missing bezel pixels, unlike the initial RLE2 scene. Comparing different
+source images confounds bytes and delivery. Exclude the partial game04 series
+from the principal comparison. Reapply the same startup/mode20 via normal
+mainboard reset before every trial; keep P4 firmware and all codecs unchanged.
+Use new phase/attempt SAVE names. This follows the frozen contract's matched
+workload requirement; it is not a codec optimisation or scheduler change.
