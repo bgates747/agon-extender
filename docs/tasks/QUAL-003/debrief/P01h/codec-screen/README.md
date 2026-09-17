@@ -20,7 +20,7 @@ Use the accepted spoken emulator notification when the report is ready.
    frames. Record exact output, host encode time and size. Extend only task-owned
    codec adapters; keep original sorting/model source and licenses intact.
    Verify against original CLI where supported; explicitly document exclusions.
-3. [ ] C03 — Reuse the browser Worker/decoder and existing presenter boundaries.
+3. [x] C03 — Reuse the browser Worker/decoder and existing presenter boundaries.
    Add direct szip/settings support and browser-native indexed PNG decoding in
    this silo. Freeze a test-only transport envelope; do not repurpose production
    EVF1/EVR1/EVS1 meanings. Fail closed on invalid lengths/settings, bound memory,
@@ -103,8 +103,7 @@ one input stream.
 ## Agent-assigned amendment A01 — pathological native runtime
 
 Native order0 on the solid case measured7–9 seconds per encode for some
-structural settings; stripes with128KiB blocks measured17.03ms ×1000 (17.03
-seconds). Continuing the full matrix without a bound would waste the screening
+structural settings; stripes with128KiB blocks measured17.03 seconds. Continuing the full matrix without a bound would waste the screening
 budget. Each remaining variant now runs in a disposable native process with
 a5-second wall limit for its four encodes and verification combined. A timeout
 is an unqualified/performance-screen exclusion, not evidence of wrong pixels.
@@ -112,3 +111,11 @@ Previously completed timings and correctness remain retained. Only variants
 passing every corpus case enter the browser shortlist; excluded order0 evidence
 remains in the full native results. This amendment is agent-assigned, not a
 separately Author-approved change. The codec source/algorithm remains unchanged.
+
+C03 preflight passed on colours, tiny and solid images across10 selected
+variants, followed by paced replays. Invalid envelopes, unknown codec, corrupt
+CmpS/PNG headers and an intentionally nonresponsive Worker were rejected;
+valid raw frames decoded after each rejection. This is preflight evidence;
+C04 owns the complete corpus and final measured shortlist. Python3.14 changed
+the multiprocessing default; the host-only timeout harness explicitly selects
+Linux fork so inherited ctypes state remains local to each disposable child.

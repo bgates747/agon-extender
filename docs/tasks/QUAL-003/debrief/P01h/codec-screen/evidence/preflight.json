@@ -1,0 +1,17 @@
+{
+  "seconds": 38.22091197967529,
+  "browser": "151.0.7922.34",
+  "platform": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "transport": "loopback",
+  "presentation": "headless Chromium WebGL2 SwiftShader; submission not physical display",
+  "selected": 10,
+  "edges": [
+    "Invalid EVC1 frame",
+    "Invalid EVC1 frame",
+    "Invalid EVC1 frame",
+    "Invalid CmpS",
+    "Invalid PNG header",
+    "Decoder timeout"
+  ],
+  "run": "QUAL-003-codec-screen-preflight-2026-09-17"
+}

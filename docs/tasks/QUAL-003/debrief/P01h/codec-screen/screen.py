@@ -20,7 +20,7 @@ for case in manifest:
  dest=a.out/name;dest.mkdir(exist_ok=True);(dest/'raw.bin').write_bytes(raw);source=C.create_string_buffer(raw);tmp=C.create_string_buffer(cap);out=C.create_string_buffer(cap);decoded=C.create_string_buffer(cap)
  for v in variants:
   if any(r['case']==name and r['variant']==v['id'] for r in rows):continue
-  queue=multiprocessing.Queue()
+  ctx=multiprocessing.get_context('fork');queue=ctx.Queue()
   def evaluate():
    samples=[];failure=None;result=b'';cli_checked=False
    for trial in range(4):
@@ -60,7 +60,7 @@ for case in manifest:
      nn=pl.screen_unrle(result,len(result),decoded,cap);assert bytes(x&63 for x in decoded.raw[:nn])==raw
     if not failure:(dest/(v['id']+'.bin')).write_bytes(result)
    queue.put(dict(case=name,variant=v['id'],kind=v['kind'],exact=not failure,failure=failure,bytes=len(result),encode_ms=statistics.mean(samples[1:]) if len(samples)>1 else None,samples_ms=samples,original_cli_exact=cli_checked,sha256=hashlib.sha256(result).hexdigest()))
-  job=multiprocessing.Process(target=evaluate);job.start();job.join(5)
+  job=ctx.Process(target=evaluate);job.start();job.join(5)
   if job.is_alive():
    job.terminate();job.join();result=dict(case=name,variant=v['id'],kind=v['kind'],exact=False,failure='screening timeout: four encodes plus verification exceeded 5 seconds',bytes=0,encode_ms=None,samples_ms=[],original_cli_exact=False,sha256=None)
   elif job.exitcode or queue.empty():result=dict(case=name,variant=v['id'],kind=v['kind'],exact=False,failure=f'worker exit {job.exitcode}',bytes=0,encode_ms=None,samples_ms=[],original_cli_exact=False,sha256=None)
