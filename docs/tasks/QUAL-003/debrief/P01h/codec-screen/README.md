@@ -99,3 +99,16 @@ Zlib manual `deflateInit2` defines selected strategies: default0, Huffman-only2,
 RLE3. These are compression tradeoffs, not image-quality settings. No interframe
 deltas are used in this screen; szip incremental mode differences bytes within
 one input stream.
+
+## Agent-assigned amendment A01 — pathological native runtime
+
+Native order0 on the solid case measured7–9 seconds per encode for some
+structural settings; stripes with128KiB blocks measured17.03ms ×1000 (17.03
+seconds). Continuing the full matrix without a bound would waste the screening
+budget. Each remaining variant now runs in a disposable native process with
+a5-second wall limit for its four encodes and verification combined. A timeout
+is an unqualified/performance-screen exclusion, not evidence of wrong pixels.
+Previously completed timings and correctness remain retained. Only variants
+passing every corpus case enter the browser shortlist; excluded order0 evidence
+remains in the full native results. This amendment is agent-assigned, not a
+separately Author-approved change. The codec source/algorithm remains unchanged.
