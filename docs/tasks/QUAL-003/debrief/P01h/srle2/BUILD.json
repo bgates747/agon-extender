@@ -1,0 +1,55 @@
+{
+  "build_id": "srle2-p4-r01-b2026-09-17-00-41-21Z",
+  "compile_only": true,
+  "tests_run": false,
+  "flashed": false,
+  "returncode": 0,
+  "source_commit": "3ec3c902561bc8dde8a3dd0c012361fdfcc7f16a",
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1474304,
+      "sha256": "4e7b3f7cd96568374464b108100f2dba381a81b5763b2928c593b5d1929bafcc"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1605376,
+      "sha256": "ac62aa5c44ad0075593ac2f6061be9e1d623621ddab7c1ca5867c252c5bc4ef4"
+    },
+    "firmware.elf": {
+      "bytes": 28357008,
+      "sha256": "d4582f98171d774a9961933a90990e7af833498dc20db2c328b595a15c4d526d"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    }
+  },
+  "implementation_commit": "a13fb475fc40917115ca1ec04fbe2ed2c0387b47",
+  "source_commit_note": "source_commit records contract HEAD during compilation; implementation committed afterward without codec changes.",
+  "inputs": {
+    "port.py": "aa360137153df92aad13aee17abd6a49ede3624c1e3cdab3a1f2fd52d63ac926",
+    "io.h": "be9f050a576e048908c77076e31d8359a770ef0418c4233e4d2a1d99170c080d",
+    "asset.inc": "bbbbecc017a491d73c6012555a8a8c9e4d961bf1f3c97063205c462a8f8fe771",
+    "srle2.hpp": "ebe6e76618743b19586db418afea785bcf5e9d93727d5062e4b1b8e7263e2ea2",
+    "prepare.py": "1aa287c1e5f71b0c1c2a0c1129c7886a58ed5c0d9bf887e19d8e86c7f1a2cc56",
+    "entry.inc": "9f75d16e100e43d245e2fdb439602127c475600bb7d067046cc7958cff0f830b",
+    "build.py": "93474ebc7701b8305255627f6100facd50aa3e8f4827a72d9a9529257c99fac1",
+    "szip_p4.h": "bb10b3bd5bc5cc4f64504ad3236f2980357612d6f9192315e10d046a56c68dbb",
+    "vendor/sz_srt.h": "9567a8b6f97b10ac3ecd0e5a93fe80a515b9abdb8743d7bc511a9121530fd94c",
+    "vendor/sz_mod4.h": "1172ee8560dd236e601ea6af7235d44749163384d13c0de43317dbcfd3e9dce8",
+    "vendor/bitmodel.c": "b5f0c82d9e488becc72c344c26995eb00af1aec4a296322e63cc19c38fe98867",
+    "vendor/qsort_u4.c": "43541d4f48b95f27f976219cd9b9939b681863338b1e84ed360611c416fdd8c4",
+    "vendor/szip.c": "6a9c9c33d529b2ae2f5e4b6fbb69d89d2e58705b6b5b92abf5260c2f8b18612b",
+    "vendor/szip.h": "c467eb0bad60e79bb833fdd43f48cf0defd99bbed505442f7cc44381d1ff4710",
+    "vendor/reorder.h": "c1bef426ea58604f435eb1627d993f6e12ce4d7ecf995cb5845789b3dc6aded4",
+    "vendor/qsmodel.h": "ed1d3b6d957a02c4f219252d96770701018b921f2efed59ecf238deff054f702",
+    "vendor/reorder.c": "90d4a616901b6b76d7561478318ee97a30db54c33db8415302d5887aae3ef1c6",
+    "vendor/rangecod.c": "8e2006697d42f297401378fd68e3fcc8a9e3cb097c5b4049df443ee5f755db3d",
+    "vendor/rangecod.h": "eb3d86480ebf44a1ba521aa5967d09d6e0edc3a25a30ec8cdaef6117ac23e10c",
+    "vendor/sz_srt.c": "d70f5bd367b80208a9724f39fa104857d7471e53f3eb89416e1cee62fcb64f3b",
+    "vendor/qsmodel.c": "e28947b267bd90951f173956e17b68a45e8a66732d216761f087b7029553e1fd",
+    "vendor/sz_err.h": "beae5b4791f99233ec11bd553e60f1a4e081d28d7e8faf51f5a5393e9eb56d75",
+    "vendor/port.h": "db78d05d229bee425c585c9632fa5082ff0eb63586e603061e0ca34bab0083d1",
+    "vendor/bitmodel.h": "ad31e9ca5468e9bab57406ca1f7411ce2c103a74bfd6aae2be64295246c30b3b",
+    "vendor/sz_mod4.c": "5e47c4350cc869e514aea8ae5b61be0aabf35847808be79e21c5bed36deab5fe"
+  }
+}

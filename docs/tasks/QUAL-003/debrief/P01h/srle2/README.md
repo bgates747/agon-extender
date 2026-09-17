@@ -11,7 +11,7 @@ emulators, codec execution or runtime tests until explicit release. Compile only
    errors and serialized access; preserve order3, recordsize1 entropy format.
 3. [x] Add SRLE2 encode/decode APIs and command65 single-layer CmpS decoding.
    Keep TVC and RLE2 paths. Two command65 calls decode SRLE2 then create bitmap.
-4. [ ] Compile an isolated P4 candidate; record hashes, compiler diagnostics,
+4. [x] Compile an isolated P4 candidate; record hashes, compiler diagnostics,
    limitations and pending tests. No runtime or hardware validation claim.
 
 Historical decoder/caller: personal agon-vdp c33b3c23397670e85c38c84941d592a3bbca801e,
@@ -48,3 +48,6 @@ this directory; run from repository root). Parent must be the retained r06 sourc
 closure/configuration; source identity and private location are in build evidence.
 The generated source-selection manifest explicitly includes original C modules;
 qsort_u4.c is included by sz_srt.c, not compiled a second time. No upload target.
+
+Compile-only phase complete; see [RESULTS.md](RESULTS.md). Runtime gates remain
+closed pending Author release.
