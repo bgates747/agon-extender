@@ -10,7 +10,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
 
 ## Frozen execution contract
 
-1. [ ] H01 — Re-establish the bench baseline. Preserve current SD startup and actual
+1. [x] H01 — Re-establish the bench baseline. Preserve current SD startup and actual
    P4 state; restore the exact pre-stock-test EMOS ROM through the maintained ZDI
    programmer and independently verify it. No EMOS source edits. Leave mainboard
    VDP release2.16.0 untouched. Restore the known P4 product baseline, enable its
@@ -78,3 +78,7 @@ from free-memory differences, which can include other tasks.
 ## Current checkpoint
 
 H02 completed: isolated candidate compiled, flashed and independently verified. Initial H03 codec RPC controls passed; asset-command and game tests remain pending. See [RESULTS.md](RESULTS.md). H01 remains incomplete pending SD-card clarification and EMOS boot/readiness.
+
+## Bench resumed
+
+Author restored the Extender keyboard directive on the card physically in the Agon. Keyboard admission and SD service are verified; startup was preserved and the mainboard screen cleared. The host-mounted MOS-suite card remains untouched. Asset fixtures are staged with independent readback. Mode selection is in temporary startup; original startup will be restored at closeout.
