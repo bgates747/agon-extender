@@ -9,7 +9,10 @@ Original vendor files remain byte-for-byte intact; port.py generates modificatio
 1. Historical Agon sources prepend uppercase CmpS/LE32 length to SZ 0A 04 01 0C.
    The mainboard decoder requires exactly1.12. Command65 decodes a single layer;
    use two calls for SRLE2. No command67 alias or new opcode is introduced.
-2. Agon utility sources already contain local changes, including cached sort
+2. **Correction from host testing:** the reinstated fwrite is erroneous: sz_unsrt
+   already writes through putc for NULL output, and putc is missing from io.h
+   redirects. See web/RESULTS.md; the following original rationale is superseded.
+   Agon utility sources already contain local changes, including cached sort
    allocations and a commented-out output write in the recordsize1 decoder.
    The generated adapter reinstates that write and owns cleanup of every tracked
    allocation at invocation end. Original notices remain with source; GPL notices

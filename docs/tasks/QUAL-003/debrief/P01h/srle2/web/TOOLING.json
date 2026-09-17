@@ -1,0 +1,9 @@
+{
+  "emscripten_version": "4.0.23",
+  "emsdk_commit": "c59d6e841da55c2c21af32004c4c173cbd1c0f10",
+  "installed": true,
+  "activated": false,
+  "tests_run": [
+    "Linux first golden reference roundtrip (failed)"
+  ]
+}

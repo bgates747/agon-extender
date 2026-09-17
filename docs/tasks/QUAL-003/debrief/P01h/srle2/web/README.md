@@ -106,3 +106,9 @@ Author approved W01–W08 with a one-hour wall limit on2026-09-17 UTC. Linux/bro
 tests are now authorized; bench remains unavailable. Missing WebAssembly tooling
 is an anticipated W03 setup item: install an isolated pinned official SDK locally.
 Notify with emulator spoken cue on success or unexpected stop. No hardware actions.
+
+## Unexpected stop
+
+Execution paused at the first W01 golden mismatch; see [RESULTS.md](RESULTS.md).
+Compiled P4 candidate is unsuitable for deployment pending the identified output
+path correction. Awaiting Author direction; no hardware access or silent fix.

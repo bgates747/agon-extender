@@ -1,0 +1,12 @@
+{
+  "case": "colours",
+  "expected_bytes": 78,
+  "actual_bytes": 156,
+  "expected_prefix_matches": true,
+  "expected_sha256": "48023b4fd9fda7d29033d9dfebc45b2446a9ceab882fdc1aaeb54f5ec41f974d",
+  "actual_sha256": "36325f8e8553d51b97bb165d46bbc194609cb5052625190788780f12697a2d95",
+  "reference_exit_success": true,
+  "roundtrip_pass": false,
+  "bench_access": false,
+  "time": 1789607656.770864
+}

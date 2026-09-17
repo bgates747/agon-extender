@@ -2,6 +2,10 @@
 
 ## Executive summary
 
+**Subsequent host testing found an output-path defect in this candidate. Do not
+deploy it.** See [browser tasklet stop findings](web/RESULTS.md). The compilation
+result below remains valid but establishes no decoding correctness.
+
 **Original-source szip and SRLE2 wrappers compile and link for ESP32-P4.**
 No codec tests, firmware execution, flash, hardware access or performance runs
 were performed. Candidate remains unqualified and uninstalled pending Author

@@ -50,7 +50,8 @@ One matched Nurples trial recovered 30 application fps versus 12.8 with raw outp
 Remaining qualification gates and default promotion stay open; see its results.
 Its SRLE2 follow-up now compiles original szip for P4; runtime validation is
 paused because another agent owns the bench. A Linux-to-browser SRLE2 replay
-tasklet under the same task is prepared for review.
+tasklet under the same task stopped on its first golden mismatch: original
+output-path adaptation is incorrect. Do not deploy SRLE2 candidate before correction.
 Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
