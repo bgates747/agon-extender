@@ -23,3 +23,8 @@ size_t sz_write(const void *,size_t,size_t,FILE *);
 #define fread sz_read
 #define fwrite sz_write
 #define fprintf(...) ((void)0)
+
+#undef putc
+#define putc(c,f) sz_put(c)
+#undef getc
+#define getc(f) sz_get()

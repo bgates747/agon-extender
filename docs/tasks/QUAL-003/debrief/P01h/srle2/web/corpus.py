@@ -3,8 +3,7 @@ from pathlib import Path
 import argparse,hashlib,json,random,shutil,struct,subprocess
 p=argparse.ArgumentParser();p.add_argument('output',type=Path);a=p.parse_args();root=Path(__file__).resolve().parents[1];out=a.output;out.mkdir(exist_ok=False);src=out/'reference';shutil.copytree(root/'vendor',src)
 files=['szip.c','rangecod.c','qsmodel.c','bitmodel.c','sz_mod4.c','sz_srt.c','reorder.c']
-# Known local Agon omission documented in PORT-NOTES; original golden encoder unchanged.
-f=src/'szip.c';f.write_text(f.read_text().replace('//fwrite(buffer,1,buflen,stdout);','fwrite(buffer,1,buflen,stdout);'))
+# Original CLI remains unmodified; sz_unsrt(NULL) writes decoded output itself.
 subprocess.run(['cc','-O2','-DGCC',*files,'-o','szip'],cwd=src,check=True)
 def rle(data):
  b=bytearray(b'Cmpr'+struct.pack('<I',len(data))+b'RLE2\1\0');i=0

@@ -112,3 +112,9 @@ Notify with emulator spoken cue on success or unexpected stop. No hardware actio
 Execution paused at the first W01 golden mismatch; see [RESULTS.md](RESULTS.md).
 Compiled P4 candidate is unsuitable for deployment pending the identified output
 path correction. Awaiting Author direction; no hardware access or silent fix.
+
+## Restart authorization
+
+Author reset the one-hour goal and authorized a few repair/test iterations for
+unexpected failures before stopping. Fix the identified output-path defect and
+continue W01–W08; bench remains unavailable. Supersedes the immediate-stop rule.

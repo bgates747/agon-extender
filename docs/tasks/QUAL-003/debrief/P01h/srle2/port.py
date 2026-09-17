@@ -16,7 +16,7 @@ for p in out.glob('*.c'):
   # Original local codec kept the model on stack and omitted output for r1.
   s=s.replace('sz_model m;','sz_model *model = (sz_model*) sz_alloc(sizeof(sz_model));\n#define m (*model)')
   s=s.replace('deletemodel(&m);','deletemodel(&m);\n    sz_free(model);\n#undef m')
-  s=s.replace('//fwrite(buffer,1,buflen,stdout);','fwrite(buffer,1,buflen,stdout);')
+  # sz_unsrt(NULL) already emits via putc; do not append its work buffer.
   s=s.replace('order = getchar();','order = getchar();\n    if(order!=3 || indexlast>=buflen)sz_fail(1);')
   s=s.replace('initmodel(&m, -1, &recordsize);','initmodel(&m, -1, &recordsize);\n    if(recordsize!=1)sz_fail(1);')
   s=s.replace('if (runlength>bytesleft)','if (!runlength || ch>255 || runlength>bytesleft)')
