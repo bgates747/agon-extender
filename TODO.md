@@ -55,6 +55,7 @@ the earlier compiled P4 image is obsolete. Browser candidate review and correcte
 P4 SRLE2 hardware results are ready in the [assessment](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md): retain asset decoding; live SRLE2 is slower than matched RLE2. QUAL-003-I006 records the separate, unscheduled streaming/mode-transition issue. Final restoration and review closeout belong to the hardware contract.
 Current codec follow-up: [settings/PNG staged contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/README.md). Linux/browser phase complete; results and shortlist await review. P4 phase waits for shortlist approval and bench release.
 Order4 block-size follow-up: [screen and findings](docs/tasks/QUAL-003/debrief/P01h/codec-screen/blocks/README.md), bench-free under QUAL-003; no P4 deployment authorized by this host run.
+Order4 silicon follow-up: [assessment](docs/tasks/QUAL-003/debrief/P01h/codec-screen/order4-p4/RESULTS.md). Matched tests completed with qualification limits: order4 improves on order3 and sometimes beats RLE2, but delivery varies and the reset-control extension rebooted under RLE2. Retain baseline; further diagnosis requires a separate work item.
 
 Golem excluded; no experimental push.
 

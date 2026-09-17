@@ -6,7 +6,7 @@
 actually beat RLE2 delivery. It is promising, but not a reliable replacement yet.**
 The first order4 trial was much slower, and a reset-before-run extension later
 encountered an unplanned P4 reboot while testing RLE2. Do not promote this
-candidate or hide the variation in its average. Restore the known-good baseline.
+candidate or hide the variation in its average. The known-good baseline has been restored and verified.
 
 All three codecs ran in one firmware with unchanged graphics/scheduler settings,
 on the same fixed-mode512×384 cadence60 Nurples fixture. Three interleaved trials:
@@ -108,3 +108,18 @@ EMOS change, mainboard VDP flash or production promotion is included.
 See [REPRODUCE.md](REPRODUCE.md). Raw machine-local evidence is retained under
 `agents/order4-p4`; compact measurements and identities are committed here.
 Restoration and hardware notification receipts are recorded at closeout.
+
+## Closeout
+
+Original P4 factory prefix SHA256
+`22d22c530d643ac2896aa624eba802eb8b3c0ad695f2f6425036d3f130f50604`
+was independently verified after flashing. The original 48-byte startup was
+restored and read back exactly. EMOS and stock mainboard VDP were unchanged;
+the host-mounted MOS-suite card was untouched. The experimental before-prefix
+is preserved privately, including its diagnostic partition.
+
+Hardware British female voice notification returned a fresh service receipt
+(`stage=6`, `audio_commands=pass`); human hearing is not assumed. Final state:
+Legacy MOS prompt, keyboard ready and neutral, SD service exited. See
+[evidence/restored-final.json](evidence/restored-final.json) and
+[evidence/notification-final.json](evidence/notification-final.json).

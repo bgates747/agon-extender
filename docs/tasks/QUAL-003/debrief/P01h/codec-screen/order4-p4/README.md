@@ -21,7 +21,7 @@ VDP or change EMOS. The host-mounted MOS-suite card is out of scope.
    runs, three trials per RLE2/order3/order4, plus informative static scenes.
    Record encoding time, bytes, delivered/submitted cadence and fixture timing.
    Stop and diagnose boundedly on corruption, reset or unresolved test failures.
-4. [ ] S04 — Verdict and tables, restore verified original P4/startup, neutral keys
+4. [x] S04 — Verdict and tables, restore verified original P4/startup, neutral keys
    and Legacy prompt; accepted hardware voice receipt, emulator voice fallback
    only if hardware cannot notify. Commit discrete work; no push/promotion.
 
@@ -57,3 +57,8 @@ S03 concluded with qualified limits:78 exact codec checks, nine complete game
 trials and nine correctly sized static controls passed. Reset extension failed
 with an unplanned P4 reboot under RLE2 and is retained as unresolved, not passed.
 See RESULTS.md; no further diagnostic expansion in this task.
+
+S04 complete: original P4 prefix independently verified after restoration; exact
+original startup read back. Stock mainboard VDP and EMOS unchanged. Hardware
+British voice returned a fresh successful receipt; keyboard ready/neutral, SD
+service exited, Legacy MOS prompt. Tests concluded with the S03 limits above.
