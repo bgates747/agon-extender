@@ -16,7 +16,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
    VDP release2.16.0 untouched. Restore the known P4 product baseline, enable its
    admitted keyboard/SD path through startup, verify readiness and clear the
    mainboard screen. Physical card movement is a human assistance gate when needed.
-2. [ ] H02 — Build a corrected isolated SRLE2 candidate from retained RLE2 r06.
+2. [x] H02 — Build a corrected isolated SRLE2 candidate from retained RLE2 r06.
    Integrate the tested EVS1 browser decoder and explicit raw/RLE2/SRLE2 negotiation.
    Reuse one-frame credits/30Hz output ceiling. Keep immutable compressed snapshot
    ownership separate from graphics locks; do not change scheduling or rendering
@@ -55,7 +55,7 @@ No experimental push. Commit discrete changes/evidence; source stays within P01h
 until acceptance. Preserve original szip source and historical command65 CmpS wire
 contract. Mainboard VDP flashing, new EMOS hacks, Golem and production application
 replacement are excluded. See ../web/RESULTS.md, ../PORT-NOTES.md and the enduring
-../../../../../../mos-recovery.md procedure. Host and P4 allocation limits are
+../../../../../../../mos-recovery.md procedure. Host and P4 allocation limits are
 not interchangeable, and host timing is not P4 timing.
 
 The SD card is presently mounted on the Linux host with the Author's MOS-suite
@@ -74,3 +74,7 @@ preallocated RLE2/SRLE2 output scratch and keeps the immutable snapshot lease un
 send completion. The entropy library's invocation allocations remain measured
 separately through bounded RPC controls; no live-heap high-water claim is inferred
 from free-memory differences, which can include other tasks.
+
+## Current checkpoint
+
+H02 completed: isolated candidate compiled, flashed and independently verified. Initial H03 codec RPC controls passed; asset-command and game tests remain pending. See [RESULTS.md](RESULTS.md). H01 remains incomplete pending SD-card clarification and EMOS boot/readiness.
