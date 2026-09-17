@@ -8,7 +8,7 @@ producer, while the real browser decoder and presenter remain the code under
 test. This provides reusable correctness and browser-cost testing without bench
 access; it cannot establish P4 encoding cost or embedded networking performance.
 
-Status: plan ready for Author review; implementation and execution not started.
+Status: Author approved execution as a one-hour goal; stop on unexpected conditions or questions.
 Parent task: P01h, SRLE2 iteration. No new top-level task namespace.
 
 ## Authorization and boundaries
@@ -99,3 +99,10 @@ browser implementation exercised through the same envelope as future P4 output.
 Performance is measured, not prescribed by desktop results. Once bench is released,
 reuse the corpus/client against the P4, verify its encoded output and compare
 actual P4 codec/network timings. No desktop pass substitutes for that bridge.
+
+## Execution authorization
+
+Author approved W01–W08 with a one-hour wall limit on2026-09-17 UTC. Linux/browser
+tests are now authorized; bench remains unavailable. Missing WebAssembly tooling
+is an anticipated W03 setup item: install an isolated pinned official SDK locally.
+Notify with emulator spoken cue on success or unexpected stop. No hardware actions.
