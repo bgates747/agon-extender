@@ -2,7 +2,7 @@
 import argparse,ctypes as C,json,time,statistics,subprocess,hashlib,platform,io,itertools,multiprocessing,os,signal
 from pathlib import Path
 from PIL import Image
-p=argparse.ArgumentParser();p.add_argument('--build',type=Path,required=True);p.add_argument('--corpus',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();a.out.mkdir(exist_ok=True);start=time.time();root=Path(__file__).resolve().parent
+p=argparse.ArgumentParser();p.add_argument('--build',type=Path,required=True);p.add_argument('--corpus',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();a.out.mkdir(exist_ok=True);start=time.time();source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip();source_hash=hashlib.sha256(Path(__file__).read_bytes()).hexdigest();root=Path(__file__).resolve().parent
 subprocess.run(['c++','-std=c++17','-O2','-shared','-fPIC',str(root/'png.cpp'),'-lz','-o',str(a.out/'png.so')],check=True)
 lib=C.CDLL(str(a.build/'codec.so'));fn=lib.bench_szip;fn.argtypes=[C.c_int,C.c_void_p,C.c_size_t,C.c_void_p,C.c_size_t,C.POINTER(C.c_size_t),C.c_uint,C.c_uint,C.c_uint];fn.restype=C.c_int
 pl=C.CDLL(str(a.out/'png.so'));pl.screen_rle.argtypes=[C.c_void_p,C.c_size_t,C.c_void_p,C.c_size_t];pl.screen_rle.restype=C.c_size_t;pl.screen_unrle.argtypes=pl.screen_rle.argtypes;pl.screen_unrle.restype=C.c_size_t;pl.screen_png.argtypes=[C.c_void_p,C.c_uint,C.c_uint,C.c_int,C.c_int,C.c_int,C.c_void_p,C.c_size_t];pl.screen_png.restype=C.c_size_t
@@ -69,4 +69,4 @@ for case in manifest:
   queue.close();rows.append(result)
   (a.out/'results.json').write_text(json.dumps(rows,indent=2))
  print(name,len(variants),'variants',sum(x['failure'] is not None for x in rows if x['case']==name),'failures',flush=True)
-(a.out/'manifest.json').write_text(json.dumps(manifest,indent=2));(a.out/'complete.json').write_text(json.dumps(dict(seconds=time.time()-start,host=platform.platform(),python=platform.python_version(),variants=len(variants),cases=len(manifest),source_commit=subprocess.check_output(['git','rev-parse','HEAD'],text=True).strip()),indent=2))
+(a.out/'manifest.json').write_text(json.dumps(manifest,indent=2));(a.out/'complete.json').write_text(json.dumps(dict(seconds=time.time()-start,host=platform.platform(),python=platform.python_version(),variants=len(variants),cases=len(manifest),source_commit=source_commit,source_sha256=source_hash),indent=2))

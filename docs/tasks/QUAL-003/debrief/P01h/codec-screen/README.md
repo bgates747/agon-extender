@@ -13,7 +13,7 @@ Use the accepted spoken emulator notification when the report is ready.
 1. [x] C01 — Pin existing task-owned captured framebuffer and synthetic corpus,
    original szip lineage and present RLE2 baseline. Record exact bytes, geometry,
    source hashes, tool versions and host conditions. No third-party artwork.
-2. [ ] C02 — Implement a bounded Linux screening matrix: direct szip and SRLE2,
+2. [x] C02 — Implement a bounded Linux screening matrix: direct szip and SRLE2,
    orders0/3/4/6, small/medium/full-frame blocks; selected record sizes and optional
    incremental differencing. Test fast indexed PNG (levels1/3, selected filters,
    default/RLE/Huffman strategies), plus raw and RLE2 controls. Use identical raw
@@ -119,3 +119,11 @@ valid raw frames decoded after each rejection. This is preflight evidence;
 C04 owns the complete corpus and final measured shortlist. Python3.14 changed
 the multiprocessing default; the host-only timeout harness explicitly selects
 Linux fork so inherited ctypes state remains local to each disposable child.
+
+C02 complete:960 combinations,924 exact passes,36 screening timeouts.
+All completed captured-scene szip encodings matched the original CLI. No pixel
+mismatch was observed. The resumed sweep took302.6 seconds, excluding its
+earlier unbounded segment. Initial samples used screen.py at68f739e; resumed
+samples used its explicit-fork revision atb70bb6c. The run manifest recorded
+HEAD at completion, not execution start; those source revisions are the precise
+identities. Future runs now capture source commit/hash at invocation.
