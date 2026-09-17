@@ -15,6 +15,7 @@ def select(rows,variants,cases):
  # then aggregate full-sized corpus. Both criteria are Linux screening only.
  for kind in ('szip','srle2','png'):
   for subset in ([r for r in rows if r['case']=='retained-sprites'],[r for r in rows if next(c for c in cases if c['name']==r['case'])['width']==512]):
+   if not subset:continue
    for metric in ('bytes','encode_ms'):
     candidates=[v for v in good.values() if v['kind']==kind]
     winner=min(candidates,key=lambda v:statistics.mean(r[metric] for r in subset if r['variant']==v['id']))

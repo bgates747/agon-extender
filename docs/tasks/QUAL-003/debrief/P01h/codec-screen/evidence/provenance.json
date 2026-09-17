@@ -1,0 +1,39 @@
+{
+  "artifact": "codec-screen-r01",
+  "status": "experimental",
+  "host": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "python": "3.14.6",
+  "compiler": "cc (Ubuntu 13.3.0-6ubuntu2~24.04.1) 13.3.0",
+  "zlib": "1.3",
+  "build": {
+    "source_commit": "57325044404b118f9b5f44c9702bdeb9f8521ae9",
+    "outputs": {
+      "codec.so": "6eaacca949137263c2c14c49b6aa0413d911206d188718d0fe79f4b2750523d5",
+      "szip.js": "7ad47210e905ef3ddda2dbe2392475de3186e6308fd97f1e2a408d71a9887881",
+      "szip.wasm": "f0e0e66782645a5c6bac91e5e1dd555940b6b9b74eb7554938b212e2cb42e81e"
+    }
+  },
+  "source_hashes": {
+    "srle2/vendor/sz_srt.h": "9567a8b6f97b10ac3ecd0e5a93fe80a515b9abdb8743d7bc511a9121530fd94c",
+    "srle2/vendor/sz_mod4.h": "1172ee8560dd236e601ea6af7235d44749163384d13c0de43317dbcfd3e9dce8",
+    "srle2/vendor/bitmodel.c": "b5f0c82d9e488becc72c344c26995eb00af1aec4a296322e63cc19c38fe98867",
+    "srle2/vendor/qsort_u4.c": "43541d4f48b95f27f976219cd9b9939b681863338b1e84ed360611c416fdd8c4",
+    "srle2/vendor/szip.c": "6a9c9c33d529b2ae2f5e4b6fbb69d89d2e58705b6b5b92abf5260c2f8b18612b",
+    "srle2/vendor/szip.h": "c467eb0bad60e79bb833fdd43f48cf0defd99bbed505442f7cc44381d1ff4710",
+    "srle2/vendor/COPYING.GPL-2": "8177f97513213526df2cf6184d8ff986c675afb514d4e68a404010521b880643",
+    "srle2/vendor/reorder.h": "c1bef426ea58604f435eb1627d993f6e12ce4d7ecf995cb5845789b3dc6aded4",
+    "srle2/vendor/qsmodel.h": "ed1d3b6d957a02c4f219252d96770701018b921f2efed59ecf238deff054f702",
+    "srle2/vendor/reorder.c": "90d4a616901b6b76d7561478318ee97a30db54c33db8415302d5887aae3ef1c6",
+    "srle2/vendor/techinfo.txt": "2ee0e622ad4d85c2bbdbb12c65392ef1160d44c3af7860aa2897ab56aaf7637a",
+    "srle2/vendor/rangecod.c": "8e2006697d42f297401378fd68e3fcc8a9e3cb097c5b4049df443ee5f755db3d",
+    "srle2/vendor/rangecod.h": "eb3d86480ebf44a1ba521aa5967d09d6e0edc3a25a30ec8cdaef6117ac23e10c",
+    "srle2/vendor/sz_srt.c": "d70f5bd367b80208a9724f39fa104857d7471e53f3eb89416e1cee62fcb64f3b",
+    "srle2/vendor/qsmodel.c": "e28947b267bd90951f173956e17b68a45e8a66732d216761f087b7029553e1fd",
+    "srle2/vendor/sz_err.h": "beae5b4791f99233ec11bd553e60f1a4e081d28d7e8faf51f5a5393e9eb56d75",
+    "srle2/vendor/port.h": "db78d05d229bee425c585c9632fa5082ff0eb63586e603061e0ca34bab0083d1",
+    "srle2/vendor/bitmodel.h": "ad31e9ca5468e9bab57406ca1f7411ce2c103a74bfd6aae2be64295246c30b3b",
+    "srle2/vendor/sz_mod4.c": "5e47c4350cc869e514aea8ae5b61be0aabf35847808be79e21c5bed36deab5fe",
+    "srle2/vendor/readme.txt": "1020e2212bbb75f0a13e079cef78599e154d3026ce28e5e6cb18caf7f941887b"
+  },
+  "conditions": "Ordinary Linux desktop; no CPU isolation or frequency lock. Browser preflight overlapped part of native sweep. Final browser measurements run after native sweep; host times are screening evidence, not embedded predictions."
+}

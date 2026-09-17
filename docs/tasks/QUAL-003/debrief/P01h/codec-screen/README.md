@@ -10,7 +10,7 @@ Use the accepted spoken emulator notification when the report is ready.
 
 ## Frozen contract
 
-1. [ ] C01 — Pin existing task-owned captured framebuffer and synthetic corpus,
+1. [x] C01 — Pin existing task-owned captured framebuffer and synthetic corpus,
    original szip lineage and present RLE2 baseline. Record exact bytes, geometry,
    source hashes, tool versions and host conditions. No third-party artwork.
 2. [ ] C02 — Implement a bounded Linux screening matrix: direct szip and SRLE2,
@@ -80,3 +80,22 @@ D01 — Author approved staged Linux/browser work with a review gate before P4.
 D02 — Bench remains untouched; emulator spoken cue only.
 D03 — Production codec negotiation remains unchanged. This is an experimental
 comparison protocol and proposed shortlist, not an accepted product choice.
+
+## Execution notes
+
+C01 corpus integrity and build/source identities are in `evidence/`. Generated
+code, Wasm, corpus payloads and verbose samples remain in ignored `agents/`;
+tracked results retain hashes and compact tables. Native order0 encoding of a
+solid full-size frame is unexpectedly expensive (seconds); retain the result
+rather than excluding it as an outlier. This screen does not change that algorithm.
+
+The browser checks palette indices exactly. PNG checks native decoded RGB against
+the exact64-colour palette, with readback cost separated from decode and absent
+from the paced replay. The PNG renderer uploads ImageBitmap to the retained
+WebGL2 shader path. Its submission time is not completed GPU/monitor display time.
+
+PNG implementation follows W3C PNG third edition IHDR/PLTE/IDAT/filter definitions.
+Zlib manual `deflateInit2` defines selected strategies: default0, Huffman-only2,
+RLE3. These are compression tradeoffs, not image-quality settings. No interframe
+deltas are used in this screen; szip incremental mode differences bytes within
+one input stream.

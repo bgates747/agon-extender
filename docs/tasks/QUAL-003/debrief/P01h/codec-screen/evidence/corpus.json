@@ -1,0 +1,98 @@
+[
+  {
+    "name": "colours",
+    "width": 64,
+    "height": 1,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 64,
+    "sha256": "fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108"
+  },
+  {
+    "name": "tiny",
+    "width": 1,
+    "height": 1,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 1,
+    "sha256": "2f0fd1e89b8de1d57292742ec380ea47066e307ad645f5bc3adad8a06ff58608"
+  },
+  {
+    "name": "solid",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "4bd4c4b675183fb84ef2d62b81fe4d4c5c31dc3ce73cac94c24fbb2330547018"
+  },
+  {
+    "name": "stripes",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "db9e4564d99126ada90d4997181e0e41bcad46a4136a02fa55a02bb9b76f9860"
+  },
+  {
+    "name": "noise",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "40a5ca4d526bd6f63c2abe4cf1b10bf685e0e7e53c74b4a1484c110b19557126"
+  },
+  {
+    "name": "scroll0",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "ac951b654e2c385719e6da3a2c6d63425f0118df46c9f3023db9a74e7cc9a38d"
+  },
+  {
+    "name": "sprites0",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "357b2da407ed849d424ebe8e4179a23fc83950eea3b321b2370ec14e9463dc44"
+  },
+  {
+    "name": "scroll1",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "3ffc4883ef8158bb4c9e48f3364ddbd5d0894bbb5fa6f9ac5ce63b947971e7b2"
+  },
+  {
+    "name": "sprites1",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "4969b572ee89ff4f09ed1825f7b9404fa460ee5502e62caca82123ade52a25df"
+  },
+  {
+    "name": "scroll2",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "731f632a92404f53577a3a8952d9e8d38d6e90b26f9307f3388db93ae9d8f101"
+  },
+  {
+    "name": "sprites2",
+    "width": 512,
+    "height": 384,
+    "source": "corpus.py deterministic synthetic generator",
+    "bytes": 196608,
+    "sha256": "4b603ee15fc727e927585a80a6f7a70bd1ee887d456e67b899ac53fae34e8a20"
+  },
+  {
+    "name": "retained-sprites",
+    "width": 512,
+    "height": 384,
+    "source": "retained P01h task-owned raw_sprites-r06.evf.gz",
+    "bytes": 196608,
+    "sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36"
+  }
+]
