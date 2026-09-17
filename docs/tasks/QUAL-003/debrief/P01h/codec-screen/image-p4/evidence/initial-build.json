@@ -1,35 +1,33 @@
 {
-  "build_id": "image-p4-r02-b2026-09-17-06-40-16Z",
+  "build_id": "image-p4-r01-b2026-09-17-06-35-57Z",
   "compile_only": true,
   "tests_run": false,
   "flashed": false,
   "returncode": 0,
-  "source_commit": "17ff471ed5a138912db62498af9239d413a7e7f8",
+  "source_commit": "e1f32ffa893a9fb06e7cb779722daaf698970ab6",
   "inputs": {
     "image_codec.hpp": "58567da24db22966ab4541b1d9c7f8acacabf9d9bb3facabad4ac88b6ea0ce8b",
-    "prepare.py": "199e31d90a172279f091b58386705fbc77450789ced8ff4ca85697ee9801030f",
-    "build.py": "9fea835fd7038c8a90a55643993f26a97e6ccc2f0bd60b5af8e1cf79316168bd",
-    "check_images.py": "eeb69210357ef94fb5168d67fb478e7f9c5bd90aeec6ebf66bc79b7873a420eb"
+    "prepare.py": "cfd2d53e52a9a28190a1029dccdc2af9bedcc7d956b46f1c0441f2bd8c661765",
+    "build.py": "9fea835fd7038c8a90a55643993f26a97e6ccc2f0bd60b5af8e1cf79316168bd"
   },
   "outputs": {
     "firmware.bin": {
       "bytes": 1618304,
-      "sha256": "48989a8ae73572c843f5e7769895df3a72647ff856cd2511caa5fa5818a7ea0d"
+      "sha256": "363db21df839ba41c4f7198352c1c30e5cc2a36c401f95d2dc15d8f2167db857"
     },
     "firmware.factory.bin": {
       "bytes": 1749376,
-      "sha256": "8df1acb8d1e4314a686d27e550917bdbf8284cb43f5c84dd1179903b0e3db66b"
+      "sha256": "3e701e5cc4106b648e616afd39619300629041fd76d00dcc36064c96c3e3b78e"
     },
     "firmware.elf": {
       "bytes": 29049052,
-      "sha256": "6cfdf95d2b6945690c9888869b726accec83e478f221106da388620cacb8fbd9"
+      "sha256": "296d9c45024893212cff38a8e523ceb28aaf6aa96e5b053f0e75583739863bea"
     },
     "partitions.bin": {
       "bytes": 3072,
       "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
     }
   },
-  "initial_setup_correction": "two additional HTTP handlers; initial build not performance-tested",
   "prepared_source_hashes": {
     "vdp/video/extender/version.h": "75de3af6e2ab3f3f8fd1b7b9647a7feb50c4f09ebeae7bba6959f420304fcbc4",
     "vdp/video/extender/storage/sd_service.hpp": "af2b8b4036d8ee2149c43246b3fb1617ff25ca0bc82b6ab2dcb31aceb1d7eac9",
@@ -155,7 +153,7 @@
     "vdp/video/extender/network/wired_network_service.cpp.orig": "ebbbf4a6df53df33bef49e1398258e97b987e1af39722259310f164122868e5c",
     "vdp/video/extender/network/browser_video_service_core.cpp": "e9a9479e196ce8b344c91143ae9fc68b847f5774b3923dfd075d224a8df40b08",
     "vdp/video/extender/network/browser_video_service_core.hpp": "d7a74d1b4d0b401122edc52f3f0444bee57e9cd0af0a628073b5fb3d098a576e",
-    "vdp/video/extender/network/wired_network_service.cpp": "16ff55ff772432094fcd15b191b444e624d1ae49b37b7bd8d4e615ff7f39eac3",
+    "vdp/video/extender/network/wired_network_service.cpp": "38f6edffbb14bc67804cdc02ff048d586d140ac0fd8def60ce1f5065574e7934",
     "vdp/video/extender/compat/p4_vdp_gl.hpp": "9832c9d0c48572a352a979723f2d650604965a0bc51107f2cb7dd35dcda78a30",
     "vdp/video/extender/compat/p4_vdp_gl_architecture.hpp": "c650256234a5c95fae97463b096c6e2e81591e7f3845c9f46ace6c1d4f4d18df",
     "vdp/video/extender/boot/p4_general_poll_vdp.cpp": "3cfe8c0104c78cc1e980aec0dae5ed3ce1dcd32ef154168c314ebf0bedc7f806",

@@ -1,0 +1,23 @@
+{
+  "seconds": 16.678465604782104,
+  "checks": [
+    {
+      "query": "mode=90&w=513&h=8",
+      "status": 400
+    },
+    {
+      "query": "mode=90&w=8&h=8",
+      "status": 400
+    },
+    {
+      "query": "mode=2&w=8&h=8",
+      "status": 400
+    },
+    {
+      "query": "mode=90&w=8&h=8",
+      "status": 400
+    }
+  ],
+  "healthy_after": true,
+  "cases": 39
+}
