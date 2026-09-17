@@ -1,8 +1,10 @@
 """Compile a prepared P4 candidate. Does not flash, connect to bench or run tests."""
 from pathlib import Path
 import argparse,os,subprocess,json,datetime,hashlib
-p=argparse.ArgumentParser();p.add_argument('candidate',type=Path);a=p.parse_args();out=a.candidate.resolve()
-identity='srle2-p4-r01-b'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
+p=argparse.ArgumentParser();p.add_argument('candidate',type=Path);p.add_argument('--revision',default='r01');a=p.parse_args();
+assert __import__('re').fullmatch(r'r[0-9]{2,}',a.revision)
+out=a.candidate.resolve()
+identity='srle2-p4-'+a.revision+'-b'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y-%m-%d-%H-%M-%SZ')
 with (out/'build.log').open('w') as f:
  status=subprocess.run([str(Path('.venv/bin/pio').resolve()),'run','-d',str(out/'source/vdp'),'-c',str(out/'platformio.ini'),'-e','p4-console'],env=dict(os.environ,AGON_EXTENDER_BUILD_ID=identity,AGON_EXTENDER_DSP_LIFETIME_FIX='1'),stdout=f,stderr=subprocess.STDOUT).returncode
 root=Path(__file__).resolve().parent

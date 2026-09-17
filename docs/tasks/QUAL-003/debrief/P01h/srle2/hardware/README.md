@@ -63,3 +63,14 @@ startup. Preserve it before staging; do not mistake a missing card for MOS failu
 Inspect actual P4 state because the intervening MOS test may have used a programmer
 image. Machine identities, fresh receipts and controller ownership live in the
 ignored hardware record and agents/srle2-hardware.
+
+### H02 implementation refinement (agent-selected)
+
+The original entropy routines contain nested 1–2 KiB local arrays, in addition to
+HTTP stack use. The candidate explicitly allocates a 16 KiB HTTP task stack and
+reports its measured low-water mark. Raw/RLE2/SRLE2 controls share that same stack;
+priority, affinity and renderer scheduling remain unchanged. Web encoding uses
+preallocated RLE2/SRLE2 output scratch and keeps the immutable snapshot lease until
+send completion. The entropy library's invocation allocations remain measured
+separately through bounded RPC controls; no live-heap high-water claim is inferred
+from free-memory differences, which can include other tasks.
