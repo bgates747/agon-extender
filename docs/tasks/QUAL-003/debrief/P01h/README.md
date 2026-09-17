@@ -235,3 +235,9 @@ broad mode/palette coverage remain open. A04 has exact bitmap-transform and
 software/hardware-sprite pairs; A05 has codec timings, not full path accounting.
 H08 awaits the remaining qualification and Author production-promotion decision.
 Unchecked gates are intentionally not represented as complete by this timed run.
+
+## SRLE2 iteration — compile-only authorization
+
+Continue this same task in [srle2/README.md](srle2/README.md): original szip source,
+P4 target, historical command65 wrappers. Bench is owned by another agent.
+No flash or runtime tests until Author release; RLE2 web wire format unchanged.
