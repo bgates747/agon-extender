@@ -4,5 +4,7 @@
   "python": "3.14.6",
   "variants": 80,
   "cases": 12,
-  "source_commit": "cb1653f70a235a555c1da1a65af8eeced053518f"
+  "source_commit": "cb1653f70a235a555c1da1a65af8eeced053518f",
+  "run": "QUAL-003-2026-09-17-05-04-12Z",
+  "run_time_basis": "Start derived from recorded duration and completion-file timestamp; native is resumed segment only"
 }

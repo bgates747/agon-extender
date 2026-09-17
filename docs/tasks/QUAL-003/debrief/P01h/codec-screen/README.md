@@ -2,11 +2,13 @@
 
 ## Executive summary
 
-Author authorizes the Linux-to-browser comparison now, followed by a review stop.
-Determine which lossless codecs/settings merit later P4 measurement; do not infer
-P4 speed from host timings. The physical bench is unavailable to this task.
-No physical network, serial, SD, firmware or reset operations, including alerts.
-Use the accepted spoken emulator notification when the report is ready.
+Linux/browser screening is complete. Existing SRLE2 remains a strong choice;
+SRLE2 order4 and fast indexed PNG merit later P4 comparison, not promotion now.
+924 native combinations passed;36 exceeded the screening time guard. All1,344
+shortlisted browser frame checks and the mixed fallback checks passed. See
+[RESULTS.md](RESULTS.md) for the verdict, shortlist and limits, and
+[TABLES.md](TABLES.md) for measured comparisons. Physical bench untouched.
+Stop for Author review before C06; emulator spoken notification only.
 
 ## Frozen contract
 

@@ -13,5 +13,6 @@
     "Invalid PNG header",
     "Decoder timeout"
   ],
-  "run": "QUAL-003-codec-screen-preflight-2026-09-17"
+  "run": "QUAL-003-2026-09-17-05-02-06Z",
+  "run_time_basis": "Start derived from recorded duration and completion-file timestamp"
 }

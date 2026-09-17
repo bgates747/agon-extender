@@ -24,6 +24,14 @@ when distributing it. It is not a production firmware or negotiated web format.
   --native agents/my-codec-native --build agents/my-codec-build --out agents/my-codec-browser
 ```
 
+After the browser run, repeat paired native timing without browser load:
+
+```sh
+.venv/bin/python docs/tasks/QUAL-003/debrief/P01h/codec-screen/repeat.py \
+  --native agents/my-codec-native --build agents/my-codec-build \
+  --selected agents/my-codec-browser/selected.json --out agents/my-codec-browser/paired.json
+```
+
 Wait for native `complete.json` before launching the measured browser run. The
 native harness checkpoints every result and can resume its same output directory;
 do not reuse that directory after changing inputs, codec binaries or the matrix.
