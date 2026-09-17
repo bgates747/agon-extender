@@ -42,7 +42,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
    repeat affected controls, keeping failed evidence and rollback points. Do not
    chase parity indefinitely or broaden into scheduler/transport rewrites. Label
    any self-assigned additions prominently and record their justification.
-6. [ ] H06 — Write the assessment with tables and a keep/reject/conditional verdict
+6. [x] H06 — Write the assessment with tables and a keep/reject/conditional verdict
    in its first sentences. Restore the known-good product P4 image/startup unless
    a fully tested candidate is deliberately retained for Author review, with that
    state explicit. Leave restored EMOS and stock mainboard VDP in place. Return
@@ -108,3 +108,7 @@ the fixture cannot change it. Keep game logic, assets, pacing, telemetry and
 addresses identical. Run all controls on this same derivative. No production
 application replacement. This implements existing bench mode-ownership rules and
 requires a fresh comparison series; historical timing is context only.
+
+## Closeout
+
+H01–H06 complete. See RESULTS.md for the asset-keep/live-streaming-reject recommendation. Original P4 prefix and original Agon startup were independently verified after restoration. Restored unchanged EMOS and stock mainboard VDP remain installed. Hardware British voice receipt verified; keyboard neutral, SD service exited, ordinary Legacy EMOS foreground. No experimental push. Author review remains the product acceptance gate.
