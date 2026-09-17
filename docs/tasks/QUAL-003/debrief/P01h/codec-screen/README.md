@@ -25,7 +25,7 @@ Use the accepted spoken emulator notification when the report is ready.
    this silo. Freeze a test-only transport envelope; do not repurpose production
    EVF1/EVR1/EVS1 meanings. Fail closed on invalid lengths/settings, bound memory,
    preserve raw fallback and isolate decode timeouts in a Worker.
-4. [ ] C04 — Linux-to-browser exact-pixel and measured runs. Screen all settings
+4. [x] C04 — Linux-to-browser exact-pixel and measured runs. Screen all settings
    natively, then test a representative bounded shortlist in real Chromium over
    loopback, including every codec family and host speed/size Pareto candidates.
    Warm up and repeat; report encode, bytes, browser decode, presentation and
@@ -127,3 +127,11 @@ earlier unbounded segment. Initial samples used screen.py at68f739e; resumed
 samples used its explicit-fork revision atb70bb6c. The run manifest recorded
 HEAD at completion, not execution start; those source revisions are the precise
 identities. Future runs now capture source commit/hash at invocation.
+
+C04 complete:14 variants ×12 cases ×8 exact frames =1,344 frame checks,
+plus1,260 paced frames and24 mixed codec/raw-fallback exact frames. All passed.
+Malformed-input recovery and intentional Worker timeout also passed. The complete
+browser run took71.7 seconds. The subsequent paired host confirmation covered
+42 case/settings groups with20 measured pairs each; identical encoded payloads
+were verified each time. Paired medians supersede the noisy initial three-sample
+relative encode rankings; the original sweep remains in native.csv.
