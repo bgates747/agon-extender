@@ -1,0 +1,2162 @@
+[
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.11666666964689891,
+    "decode_ms": 0.04999999701976776,
+    "submit_ms": 0.06666666517655055,
+    "fps": 60.38647343212519
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.01666666567325592,
+    "decode_ms": 0,
+    "submit_ms": 0.050000001986821495,
+    "fps": 59.31198102226291
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.1666666666666667,
+    "decode_ms": 1.133333332836628,
+    "submit_ms": 0.1666666641831398,
+    "fps": 60.45949213808727
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.6166666597127914,
+    "decode_ms": 1.5666666626930237,
+    "submit_ms": 0.11666666219631831,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.1666666641831398,
+    "decode_ms": 1.133333330353101,
+    "submit_ms": 0,
+    "fps": 60.31363088708379
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.2000000004967053,
+    "decode_ms": 1.2000000004967053,
+    "submit_ms": 0.03333333134651184,
+    "fps": 60.02400959525159
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.633333335320155,
+    "decode_ms": 1.5833333358168602,
+    "submit_ms": 0.0833333358168602,
+    "fps": 60.02400959525159
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7000000004967053,
+    "decode_ms": 1.6500000034769375,
+    "submit_ms": 0.10000000149011612,
+    "fps": 60.09615385476445
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.6833333323399227,
+    "decode_ms": 1.616666669646899,
+    "submit_ms": 0.11666666716337204,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.5666666651765506,
+    "decode_ms": 1.516666665673256,
+    "submit_ms": 0.06666666517655055,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.0333333313465118,
+    "decode_ms": 0.9833333343267441,
+    "submit_ms": 0.06666666766007741,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "raw",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.2833333363135655,
+    "decode_ms": 1.2666666681567829,
+    "submit_ms": 0.06666666766007741,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.11666666716337204,
+    "decode_ms": 0.10000000149011612,
+    "submit_ms": 0.08333333333333333,
+    "fps": 59.453032098316875
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.11666666964689891,
+    "decode_ms": 0.04999999701976776,
+    "submit_ms": 0.09999999900658925,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.500000002483527,
+    "decode_ms": 1.4333333348234494,
+    "submit_ms": 0.11666666964689891,
+    "fps": 60.679611646096134
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.733333334326744,
+    "decode_ms": 1.6666666666666667,
+    "submit_ms": 0.08333333333333333,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.616666664679845,
+    "decode_ms": 1.5666666651765506,
+    "submit_ms": 0.11666666716337204,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.2666666681567826,
+    "decode_ms": 2.216666668653488,
+    "submit_ms": 0.10000000397364299,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.766666665673256,
+    "decode_ms": 1.7333333293596904,
+    "submit_ms": 0.10000000645716985,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.3499999990065894,
+    "decode_ms": 2.2999999995032945,
+    "submit_ms": 0.13333333283662796,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.016666665673256,
+    "decode_ms": 1.983333334326744,
+    "submit_ms": 0.14999999850988388,
+    "fps": 59.73715650922305
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7833333313465118,
+    "decode_ms": 1.766666665673256,
+    "submit_ms": 0,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.75,
+    "decode_ms": 1.7000000004967053,
+    "submit_ms": 0.13333333532015482,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "rle2",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.616666667163372,
+    "decode_ms": 1.5666666651765506,
+    "submit_ms": 0.11666666467984517,
+    "fps": 59.45303210885098
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.7166666661699613,
+    "decode_ms": 0.3833333303531011,
+    "submit_ms": 0.08333333333333333,
+    "fps": 59.453032098316875
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5833333333333334,
+    "decode_ms": 0.28333332886298496,
+    "submit_ms": 0.09999999900658925,
+    "fps": 60.45949213808727
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.9500000004967055,
+    "decode_ms": 2.6666666666666665,
+    "submit_ms": 0.0833333358168602,
+    "fps": 59.73715650922305
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 10.366666669646898,
+    "decode_ms": 9.84999999900659,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 53.21666666865349,
+    "decode_ms": 52.71666666865349,
+    "submit_ms": 0.08333333084980647,
+    "fps": 16.835016835016834
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 10.566666662693024,
+    "decode_ms": 10.466666663686434,
+    "submit_ms": 0.06666666766007741,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.033333331346512,
+    "decode_ms": 3.9000000034769378,
+    "submit_ms": 0.08333333084980647,
+    "fps": 59.59475565726803
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 11.266666665673256,
+    "decode_ms": 10.450000000496706,
+    "submit_ms": 0.13333332786957422,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.316666667660077,
+    "decode_ms": 3.9000000009934106,
+    "submit_ms": 0.049999999503294625,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 10.466666668653488,
+    "decode_ms": 10.383333332836628,
+    "submit_ms": 0.0833333358168602,
+    "fps": 59.73715650922305
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.216666666169961,
+    "decode_ms": 3.91666666418314,
+    "submit_ms": 0.09999999652306239,
+    "fps": 59.382422800748536
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.966666668653488,
+    "decode_ms": 2.3499999990065894,
+    "submit_ms": 0.11666666964689891,
+    "fps": 59.453032098316875
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.6000000014901161,
+    "decode_ms": 0.29999999950329465,
+    "submit_ms": 0.18333333233992258,
+    "fps": 59.59475566785243
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.7166666686534882,
+    "decode_ms": 0.29999999950329465,
+    "submit_ms": 0.06666666517655055,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.7666666681567826,
+    "decode_ms": 2.4333333298563957,
+    "submit_ms": 0.38333333283662796,
+    "fps": 60.901339822844086
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.616666664679845,
+    "decode_ms": 4.416666666666667,
+    "submit_ms": 0.08333333333333333,
+    "fps": 60.679611646096134
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 36.716666666169964,
+    "decode_ms": 36.083333333333336,
+    "submit_ms": 0.09999999900658925,
+    "fps": 20.048115476666013
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 6.466666666169961,
+    "decode_ms": 6.133333332836628,
+    "submit_ms": 0.06666666766007741,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.616666667163372,
+    "decode_ms": 2.7999999970197678,
+    "submit_ms": 0.15000000596046448,
+    "fps": 60.31363087624249
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 6.716666666169961,
+    "decode_ms": 6.166666669150193,
+    "submit_ms": 0.10000000149011612,
+    "fps": 59.31198102226291
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.383333332836628,
+    "decode_ms": 2.8499999990065894,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 6.850000001490116,
+    "decode_ms": 6.066666665176551,
+    "submit_ms": 0.13333334028720856,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.0666666676600776,
+    "decode_ms": 2.5,
+    "submit_ms": 0.11666666467984517,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.233333334326744,
+    "decode_ms": 1.6000000014901161,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.02400959525159
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.38333333283662796,
+    "decode_ms": 0.16666666666666666,
+    "submit_ms": 0.08333333333333333,
+    "fps": 60.75334143597884
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.350000003973643,
+    "decode_ms": 0.16666666915019354,
+    "submit_ms": 0.0833333358168602,
+    "fps": 59.31198101177872
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8499999990065892,
+    "decode_ms": 1.633333330353101,
+    "submit_ms": 0.14999999850988388,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.9666666661699614,
+    "decode_ms": 3.2500000074505806,
+    "submit_ms": 0.11666666716337204,
+    "fps": 59.95203837573157
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 27.250000002483528,
+    "decode_ms": 27.049999997019768,
+    "submit_ms": 0.06666666517655055,
+    "fps": 29.940119760479043
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.233333334326744,
+    "decode_ms": 3.9333333348234496,
+    "submit_ms": 0.09999999900658925,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.383333332836628,
+    "decode_ms": 2.0499999995032945,
+    "submit_ms": 0.15000000099341074,
+    "fps": 60.753341424978906
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 5.650000000993411,
+    "decode_ms": 5.133333332836628,
+    "submit_ms": 0.11666666716337204,
+    "fps": 59.95203837573157
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.5000000024835267,
+    "decode_ms": 2.283333331346512,
+    "submit_ms": 0.05000000447034836,
+    "fps": 59.59475565726803
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 4.266666663189729,
+    "decode_ms": 3.9333333298563957,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.09615385476445
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.75,
+    "decode_ms": 2.3000000019868216,
+    "submit_ms": 0.08333333084980647,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.616666664679845,
+    "decode_ms": 1.3166666676600773,
+    "submit_ms": 0.15000000099341074,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5833333333333334,
+    "decode_ms": 0.29999999950329465,
+    "submit_ms": 0.10000000149011612,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.666666661699613,
+    "decode_ms": 0.350000003973643,
+    "submit_ms": 0.09999999652306239,
+    "fps": 60.38647343212519
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.633333330353101,
+    "decode_ms": 1.3166666651765506,
+    "submit_ms": 0.15000000347693762,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.4666666661699614,
+    "decode_ms": 1.9333333298563957,
+    "submit_ms": 0.09999999652306239,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 22.866666664679844,
+    "decode_ms": 22.333333330849808,
+    "submit_ms": 0.0833333358168602,
+    "fps": 30.45066991418544
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.9666666661699614,
+    "decode_ms": 2.7999999995032945,
+    "submit_ms": 0.10000000397364299,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.6500000034769375,
+    "decode_ms": 1.4500000004967053,
+    "submit_ms": 0.10000000149011612,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.9166666691501937,
+    "decode_ms": 2.7833333338300386,
+    "submit_ms": 0.050000001986821495,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.1833333298563957,
+    "decode_ms": 1.733333336810271,
+    "submit_ms": 0.04999999701976776,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.8666666696468988,
+    "decode_ms": 2.716666671137015,
+    "submit_ms": 0.049999999503294625,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8333333308498065,
+    "decode_ms": 1.5166666681567829,
+    "submit_ms": 0.06666666766007741,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.9666666661699612,
+    "decode_ms": 1.7666666706403096,
+    "submit_ms": 0.08333333084980647,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.4833333343267441,
+    "decode_ms": 0.28333333134651184,
+    "submit_ms": 0.06666666517655055,
+    "fps": 59.382422800748536
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5666666701436043,
+    "decode_ms": 0.29999999950329465,
+    "submit_ms": 0.06666666766007741,
+    "fps": 60.09615385476445
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8666666721304257,
+    "decode_ms": 1.6833333373069763,
+    "submit_ms": 0.1333333303531011,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8166666602094967,
+    "decode_ms": 1.5833333333333333,
+    "submit_ms": 0.05000000447034836,
+    "fps": 59.1715976331361
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 20.53333333383004,
+    "decode_ms": 20.299999999503296,
+    "submit_ms": 0.11666666467984517,
+    "fps": 35.038542395904535
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.4500000029802322,
+    "decode_ms": 2.350000003973643,
+    "submit_ms": 0.04999999701976776,
+    "fps": 59.95203837573157
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.5499999945362408,
+    "decode_ms": 1.4333333348234494,
+    "submit_ms": 0.049999999503294625,
+    "fps": 60.09615385476445
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.7499999975164733,
+    "decode_ms": 3.4499999980131784,
+    "submit_ms": 0.049999999503294625,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7333333293596904,
+    "decode_ms": 1.4333333323399227,
+    "submit_ms": 0.06666667014360428,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.5,
+    "decode_ms": 2.3166666651765504,
+    "submit_ms": 0.016666668156782787,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7833333313465118,
+    "decode_ms": 1.3333333333333333,
+    "submit_ms": 0.09999999900658925,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.100000001490116,
+    "decode_ms": 1.7000000004967053,
+    "submit_ms": 0.08333333333333333,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5666666651765505,
+    "decode_ms": 0.2666666656732559,
+    "submit_ms": 0.11666666716337204,
+    "fps": 60.02400959525159
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.6333333278695742,
+    "decode_ms": 0.3333333283662796,
+    "submit_ms": 0,
+    "fps": 59.382422800748536
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.350000003973643,
+    "decode_ms": 2.0333333338300386,
+    "submit_ms": 0.0833333283662796,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.4166666716337204,
+    "decode_ms": 2.0666666676600776,
+    "submit_ms": 0.11666666716337204,
+    "fps": 60.45949214898105
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 20.166666666666668,
+    "decode_ms": 19.666666666666668,
+    "submit_ms": 0.049999999503294625,
+    "fps": 31.1138767884709
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.683333339790503,
+    "decode_ms": 1.9833333318432171,
+    "submit_ms": 0.09999999652306239,
+    "fps": 59.382422800748536
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.9833333318432171,
+    "decode_ms": 1.383333335320155,
+    "submit_ms": 0.15000000099341074,
+    "fps": 59.66587112384032
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.7000000029802322,
+    "decode_ms": 2.3333333308498063,
+    "submit_ms": 0.11666666716337204,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.3166666676600773,
+    "decode_ms": 1.1666666691501935,
+    "submit_ms": 0.06666666269302368,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.1666666691501937,
+    "decode_ms": 2.883333337803682,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.6796116570694
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.3999999985098839,
+    "decode_ms": 1.116666667163372,
+    "submit_ms": 0.14999999602635702,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.2333333318432171,
+    "decode_ms": 1.1333333278695743,
+    "submit_ms": 0.10000000149011612,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5499999995032946,
+    "decode_ms": 0.2500000024835269,
+    "submit_ms": 0.09999999652306239,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.3333333407839139,
+    "decode_ms": 0.1333333378036817,
+    "submit_ms": 0.03333333134651184,
+    "fps": 59.59475566785243
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7000000004967053,
+    "decode_ms": 1.4166666616996129,
+    "submit_ms": 0.09999999900658925,
+    "fps": 59.73715650922305
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.233333334326744,
+    "decode_ms": 1.983333334326744,
+    "submit_ms": 0.09999999900658925,
+    "fps": 59.73715651985809
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 19.633333335320156,
+    "decode_ms": 19.06666666517655,
+    "submit_ms": 0.09999999900658925,
+    "fps": 32.03074952076181
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.9500000004967053,
+    "decode_ms": 1.8333333333333333,
+    "submit_ms": 0.06666666517655055,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.766666665673256,
+    "decode_ms": 1.5833333358168602,
+    "submit_ms": 0.033333333830038704,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.0999999990065894,
+    "decode_ms": 1.766666665673256,
+    "submit_ms": 0.09999999900658925,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.5000000049670537,
+    "decode_ms": 1.133333330353101,
+    "submit_ms": 0.15000000099341074,
+    "fps": 60.09615385476445
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.1500000009934106,
+    "decode_ms": 2.966666671137015,
+    "submit_ms": 0.06666666517655055,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.4166666666666667,
+    "decode_ms": 1.3166666651765506,
+    "submit_ms": 0.11666666219631831,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.5833333333333333,
+    "decode_ms": 1.1499999985098839,
+    "submit_ms": 0.13333333283662796,
+    "fps": 59.24170616741306
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.5000000049670538,
+    "decode_ms": 0.21666666368643442,
+    "submit_ms": 0.10000000149011612,
+    "fps": 59.38242281125765
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.4833333318432172,
+    "decode_ms": 0.23333333184321722,
+    "submit_ms": 0.14999999602635702,
+    "fps": 60.38647343212519
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.466666671137015,
+    "decode_ms": 1.3166666676600773,
+    "submit_ms": 0.08333333084980647,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7666666681567829,
+    "decode_ms": 1.2166666661699612,
+    "submit_ms": 0.18333332985639572,
+    "fps": 60.09615384400119
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 19.44999999801318,
+    "decode_ms": 18.900000005960464,
+    "submit_ms": 0.049999999503294625,
+    "fps": 36.57644476877098
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.2833333338300386,
+    "decode_ms": 2.1666666666666665,
+    "submit_ms": 0.049999999503294625,
+    "fps": 60.31363087624249
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.866666664679845,
+    "decode_ms": 1.116666667163372,
+    "submit_ms": 0.0833333358168602,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.2833333338300386,
+    "decode_ms": 1.883333332836628,
+    "submit_ms": 0.11666667213042577,
+    "fps": 60.5326876447796
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.3000000019868216,
+    "decode_ms": 1.733333336810271,
+    "submit_ms": 0.10000000149011612,
+    "fps": 59.95203837573157
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.4000000034769378,
+    "decode_ms": 2.983333334326744,
+    "submit_ms": 0.09999999652306239,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.516666665673256,
+    "decode_ms": 1.149999996026357,
+    "submit_ms": 0.1333333303531011,
+    "fps": 59.80861244445559
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.2000000004967053,
+    "decode_ms": 1.133333335320155,
+    "submit_ms": 0.06666666766007741,
+    "fps": 60.82725060606716
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.34999999900658924,
+    "decode_ms": 0.18333333233992258,
+    "submit_ms": 0.08333333333333333,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.4166666641831398,
+    "decode_ms": 0.1666666641831398,
+    "submit_ms": 0.06666667014360428,
+    "fps": 59.73715650922305
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.0999999990065892,
+    "decode_ms": 0.966666671137015,
+    "submit_ms": 0.06666666269302368,
+    "fps": 59.45303210885098
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.75,
+    "decode_ms": 1.500000002483527,
+    "submit_ms": 0.0833333358168602,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 19.200000000496704,
+    "decode_ms": 19.049999992052715,
+    "submit_ms": 0.08333333333333333,
+    "fps": 33.09066843280765
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.133333332836628,
+    "decode_ms": 1.7833333338300388,
+    "submit_ms": 0.18333333482344946,
+    "fps": 60.45949213808727
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.233333334326744,
+    "decode_ms": 1.1500000009934108,
+    "submit_ms": 0.09999999900658925,
+    "fps": 60.31363088708379
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.216666668653488,
+    "decode_ms": 1.9500000029802322,
+    "submit_ms": 0.06666667014360428,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.7666666706403096,
+    "decode_ms": 1.2166666661699612,
+    "submit_ms": 0.11666666467984517,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 3.0333333338300386,
+    "decode_ms": 2.75,
+    "submit_ms": 0.08333333830038707,
+    "fps": 60.24096385542168
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.3000000019868216,
+    "decode_ms": 1.9666666661699612,
+    "submit_ms": 0.050000001986821495,
+    "fps": 59.95203836501989
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8500000014901161,
+    "decode_ms": 1.5500000019868214,
+    "submit_ms": 0.09999999403953552,
+    "fps": 59.52380952380952
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "colours"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.4833333318432172,
+    "decode_ms": 0.28333333134651184,
+    "submit_ms": 0.016666668156782787,
+    "fps": 59.59475565726803
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "tiny"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 0.3333333283662796,
+    "decode_ms": 0.09999999900658925,
+    "submit_ms": 0.0833333358168602,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "solid"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.1666666666666667,
+    "decode_ms": 1.016666665673256,
+    "submit_ms": 0.08333333084980647,
+    "fps": 60.679611646096134
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "stripes"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.4499999980131786,
+    "decode_ms": 1.3333333358168602,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.16847171434479
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "noise"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 19.566666670143604,
+    "decode_ms": 19.133333332836628,
+    "submit_ms": 0.033333333830038704,
+    "fps": 35.18648838993475
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "scroll0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 2.2999999995032945,
+    "decode_ms": 1.9833333318432171,
+    "submit_ms": 0.13333333283662796,
+    "fps": 60.16847172513396
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "sprites0"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.499999997516473,
+    "decode_ms": 1.116666664679845,
+    "submit_ms": 0.11666665971279144,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "scroll1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.9166666691501935,
+    "decode_ms": 1.616666664679845,
+    "submit_ms": 0.049999999503294625,
+    "fps": 60.31363087624249
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "sprites1"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.4166666666666667,
+    "decode_ms": 1.1833333348234494,
+    "submit_ms": 0.06666666766007741,
+    "fps": 60.02400960598902
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "scroll2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.8333333358168602,
+    "decode_ms": 1.5499999995032947,
+    "submit_ms": 0.06666666517655055,
+    "fps": 59.382422800748536
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "sprites2"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.2833333338300388,
+    "decode_ms": 1.2000000004967053,
+    "submit_ms": 0.033333333830038704,
+    "fps": 60.679611646096134
+  },
+  {
+    "phase": "exact",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "retained-sprites"
+    ],
+    "frames": 8,
+    "exact": true,
+    "decode_wall_ms": 1.233333334326744,
+    "decode_ms": 1.1666666691501935,
+    "submit_ms": 0.033333333830038704,
+    "fps": 59.880239520958085
+  },
+  {
+    "phase": "paced",
+    "variant": "raw",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 1.2443181818181819,
+    "decode_ms": 1.2022727274081924,
+    "submit_ms": 0.08863636343316598,
+    "fps": 27.46558908958319
+  },
+  {
+    "phase": "paced",
+    "variant": "rle2",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 1.9352272735400633,
+    "decode_ms": 1.895454545759342,
+    "submit_ms": 0.09431818313896656,
+    "fps": 28.057275541822634
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 11.848863635720177,
+    "decode_ms": 11.274999999864535,
+    "submit_ms": 0.10227272727272728,
+    "fps": 26.638905049217115
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 8.194318181919781,
+    "decode_ms": 7.57159090871838,
+    "submit_ms": 0.09999999979680235,
+    "fps": 27.913244353209443
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 7.95909090898931,
+    "decode_ms": 7.28750000081279,
+    "submit_ms": 0.10795454409989444,
+    "fps": 27.81774580335731
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 6.665909091180021,
+    "decode_ms": 5.948863635855642,
+    "submit_ms": 0.12954545478251847,
+    "fps": 28.38313976246751
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 5.822727273641662,
+    "decode_ms": 5.267045454206792,
+    "submit_ms": 0.09090909057042816,
+    "fps": 28.603366649047956
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 5.568181818520481,
+    "decode_ms": 4.917045455595309,
+    "submit_ms": 0.11818181757222522,
+    "fps": 28.397036263452204
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 5.3886363633315675,
+    "decode_ms": 4.755681817843155,
+    "submit_ms": 0.10568181848661466,
+    "fps": 28.469517981553814
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 5.41249999945814,
+    "decode_ms": 4.854545454071327,
+    "submit_ms": 0.10454545474865219,
+    "fps": 28.676906849383
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 5.455681817775423,
+    "decode_ms": 4.884090909734368,
+    "submit_ms": 0.12386363795535131,
+    "fps": 28.604307085319743
+  },
+  {
+    "phase": "paced",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "cases": [
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 90,
+    "exact": false,
+    "decode_wall_ms": 4.788636363365433,
+    "decode_ms": 4.371590907770124,
+    "submit_ms": 0.06477272713726218,
+    "fps": 28.796504700090754
+  },
+  {
+    "phase": "fallback",
+    "variant": "srle2-o4-b512-r1-i0",
+    "cases": [
+      "colours",
+      "tiny",
+      "solid",
+      "stripes",
+      "noise",
+      "scroll0",
+      "sprites0",
+      "scroll1",
+      "sprites1",
+      "scroll2",
+      "sprites2",
+      "retained-sprites"
+    ],
+    "frames": 24,
+    "exact": true,
+    "decode_wall_ms": 10.554545452648943,
+    "decode_ms": 10.340909088199789,
+    "submit_ms": 0.18636363677003168,
+    "fps": 48.52125693194225
+  }
+]

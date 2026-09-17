@@ -14,7 +14,7 @@ establish P4 cache behavior or a shipping choice.
    span sub-kilobyte overhead through cache-sized working sets to existing limits.
    Use all12 previous cases. Native exact decode plus original CLI decode checks;
    original CLI cannot request these small blocks, but its decoder must accept them.
-2. [ ] B02 — Measure20 paired encodes against full-block order4 on captured scene,
+2. [x] B02 — Measure20 paired encodes against full-block order4 on captured scene,
    synthetic sprites and noise; alternate order and discard warmups. Browser-test
    every block size:8 exact frames/case,90 mixed frames at30Hz ceiling, malformed
    input/recovery and raw fallback. Reuse existing isolated EVC1/Worker/presenter.
@@ -48,3 +48,8 @@ CLI decoding and browser checks before timings are interpreted.
 B01 complete:144/144 native combinations passed, including original CLI decode
 of all120 SRLE2 streams. The r03 build retains the same codec algorithms while
 reclaiming block-local scratch. All full-block comparisons below use r03 as well.
+
+B02 complete:1,152 browser exact frames,1,080 paced frames and24 mixed
+codec/raw exact fallback frames passed, as did invalid-input/timeout recovery.
+Paired timing confirmed36 case/settings groups with20 measured pairs each.
+No physical bench access occurred. See TABLES.md and evidence/.

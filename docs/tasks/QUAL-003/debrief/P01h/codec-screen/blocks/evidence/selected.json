@@ -1,0 +1,90 @@
+[
+  {
+    "id": "raw",
+    "kind": "raw"
+  },
+  {
+    "id": "rle2",
+    "kind": "rle2"
+  },
+  {
+    "id": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 512,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 1024,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 2048,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 4096,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 8192,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 16384,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 32768,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 65536,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 131072,
+    "record": 1,
+    "incremental": false
+  },
+  {
+    "id": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "order": 4,
+    "block": 4259840,
+    "record": 1,
+    "incremental": false
+  }
+]
