@@ -1,0 +1,1421 @@
+[
+  {
+    "case": "colours",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 78,
+    "output_bytes": 111,
+    "output_sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9",
+    "samples": [
+      {
+        "codec_us": 5922,
+        "http_ms": 17.068117987946607,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330080,
+        "psram_after": 28330080
+      },
+      {
+        "codec_us": 5719,
+        "http_ms": 17.594285003724508,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330080,
+        "psram_after": 28330080
+      },
+      {
+        "codec_us": 5652,
+        "http_ms": 16.869048995431513,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330080,
+        "psram_after": 28330080
+      },
+      {
+        "codec_us": 5646,
+        "http_ms": 17.29465699463617,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330080,
+        "psram_after": 28330080
+      }
+    ],
+    "steady_codec_us": 5672.333333333333
+  },
+  {
+    "case": "colours",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 111,
+    "output_bytes": 78,
+    "output_sha256": "48023b4fd9fda7d29033d9dfebc45b2446a9ceab882fdc1aaeb54f5ec41f974d",
+    "samples": [
+      {
+        "codec_us": 2755,
+        "http_ms": 14.313772990135476,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2579,
+        "http_ms": 12.424403001205064,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2578,
+        "http_ms": 13.226189010310918,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2572,
+        "http_ms": 12.755340998410247,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      }
+    ],
+    "steady_codec_us": 2576.3333333333335
+  },
+  {
+    "case": "colours",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 111,
+    "output_bytes": 64,
+    "output_sha256": "47f7e1441be49b5e4701d19e2af2c31a5ee056914c03bd8d6249bdb085bb374d",
+    "samples": [
+      {
+        "codec_us": 2585,
+        "http_ms": 10.60917200811673,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2580,
+        "http_ms": 10.66726200224366,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2582,
+        "http_ms": 13.206119008827955,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      },
+      {
+        "codec_us": 2580,
+        "http_ms": 14.690551004605368,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330048,
+        "psram_after": 28330048
+      }
+    ],
+    "steady_codec_us": 2580.6666666666665
+  },
+  {
+    "case": "tiny",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 15,
+    "output_bytes": 46,
+    "output_sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245",
+    "samples": [
+      {
+        "codec_us": 5473,
+        "http_ms": 13.832006006850861,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330144,
+        "psram_after": 28330144
+      },
+      {
+        "codec_us": 5495,
+        "http_ms": 16.670159995555878,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330144,
+        "psram_after": 28330144
+      },
+      {
+        "codec_us": 5517,
+        "http_ms": 15.107689003343694,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330144,
+        "psram_after": 28330144
+      },
+      {
+        "codec_us": 5428,
+        "http_ms": 15.140828996663913,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330144,
+        "psram_after": 28330144
+      }
+    ],
+    "steady_codec_us": 5480
+  },
+  {
+    "case": "tiny",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 46,
+    "output_bytes": 15,
+    "output_sha256": "6158f1ca8810876af25e261a5146b67e4c38086c3285f943bef1413dec0fcff8",
+    "samples": [
+      {
+        "codec_us": 2575,
+        "http_ms": 13.405827005044557,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2391,
+        "http_ms": 11.884004998137243,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2398,
+        "http_ms": 14.814699999988079,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2388,
+        "http_ms": 11.695506997057237,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      }
+    ],
+    "steady_codec_us": 2392.3333333333335
+  },
+  {
+    "case": "tiny",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 46,
+    "output_bytes": 1,
+    "output_sha256": "cdce9374e0fecee1655cbc7207b0ed392201941f084c4b5672e917a99c7b2b26",
+    "samples": [
+      {
+        "codec_us": 2429,
+        "http_ms": 12.479813012760133,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2400,
+        "http_ms": 10.650112002622336,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2395,
+        "http_ms": 10.547552999923937,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      },
+      {
+        "codec_us": 2396,
+        "http_ms": 12.565102006192319,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330112,
+        "psram_after": 28330112
+      }
+    ],
+    "steady_codec_us": 2397
+  },
+  {
+    "case": "solid",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 3040,
+    "output_bytes": 55,
+    "output_sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b",
+    "samples": [
+      {
+        "codec_us": 6141,
+        "http_ms": 16.91233900783118,
+        "stack_min_bytes": 11996,
+        "psram_before": 28327088,
+        "psram_after": 28327088
+      },
+      {
+        "codec_us": 6225,
+        "http_ms": 16.312421998009086,
+        "stack_min_bytes": 11996,
+        "psram_before": 28327088,
+        "psram_after": 28327088
+      },
+      {
+        "codec_us": 6182,
+        "http_ms": 16.969489006442018,
+        "stack_min_bytes": 11996,
+        "psram_before": 28327088,
+        "psram_after": 28327088
+      },
+      {
+        "codec_us": 6091,
+        "http_ms": 17.989814004977234,
+        "stack_min_bytes": 11996,
+        "psram_before": 28327088,
+        "psram_after": 28327088
+      }
+    ],
+    "steady_codec_us": 6166
+  },
+  {
+    "case": "solid",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 55,
+    "output_bytes": 3040,
+    "output_sha256": "580b9c347612a12f719964f0450170faa71fa02e59d40e3f10963e783d4688a6",
+    "samples": [
+      {
+        "codec_us": 3334,
+        "http_ms": 17.160956995212473,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 3142,
+        "http_ms": 13.354267997783609,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 3129,
+        "http_ms": 14.412201999220997,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 3129,
+        "http_ms": 16.875899003935046,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      }
+    ],
+    "steady_codec_us": 3133.3333333333335
+  },
+  {
+    "case": "solid",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 55,
+    "output_bytes": 196608,
+    "output_sha256": "0162e35e06de2d4ab2e42c1de9cbc737ebf703dd932389667ae18f207e3b678a",
+    "samples": [
+      {
+        "codec_us": 5473,
+        "http_ms": 105.75635000714101,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 5819,
+        "http_ms": 107.9960380011471,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 5796,
+        "http_ms": 106.65473600965925,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      },
+      {
+        "codec_us": 5749,
+        "http_ms": 108.47564499999862,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330104,
+        "psram_after": 28330104
+      }
+    ],
+    "steady_codec_us": 5788
+  },
+  {
+    "case": "stripes",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 24590,
+    "output_bytes": 145,
+    "output_sha256": "e6303608e58dd73df3fc31cdad64df3897a9a777d6f0d43d22c79cbf6ad0e05b",
+    "samples": [
+      {
+        "codec_us": 11049,
+        "http_ms": 36.87935200287029,
+        "stack_min_bytes": 11996,
+        "psram_before": 28305072,
+        "psram_after": 28305072
+      },
+      {
+        "codec_us": 10947,
+        "http_ms": 32.36135499901138,
+        "stack_min_bytes": 11996,
+        "psram_before": 28305072,
+        "psram_after": 28305072
+      },
+      {
+        "codec_us": 11177,
+        "http_ms": 35.82633699988946,
+        "stack_min_bytes": 11996,
+        "psram_before": 28305072,
+        "psram_after": 28305072
+      },
+      {
+        "codec_us": 11009,
+        "http_ms": 31.738958990899846,
+        "stack_min_bytes": 11996,
+        "psram_before": 28305072,
+        "psram_after": 28305072
+      }
+    ],
+    "steady_codec_us": 11044.333333333334
+  },
+  {
+    "case": "stripes",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 145,
+    "output_bytes": 24590,
+    "output_sha256": "117cf92f99a861a5749d5eed38be1e02e2a91128fb679ac5ed1a570c51f88ce7",
+    "samples": [
+      {
+        "codec_us": 9703,
+        "http_ms": 31.820807998883538,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 10192,
+        "http_ms": 31.18650199030526,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 9795,
+        "http_ms": 33.59038900816813,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 9807,
+        "http_ms": 31.809998996322975,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      }
+    ],
+    "steady_codec_us": 9931.333333333334
+  },
+  {
+    "case": "stripes",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 145,
+    "output_bytes": 196608,
+    "output_sha256": "2c45ee020741fcfb36a8cd891ef23c9a237254d8eb5ce6d85ac528527f6b589e",
+    "samples": [
+      {
+        "codec_us": 14658,
+        "http_ms": 114.08332599967252,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 14786,
+        "http_ms": 113.90589599614032,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 14703,
+        "http_ms": 126.06192099337932,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      },
+      {
+        "codec_us": 14711,
+        "http_ms": 130.11366900173016,
+        "stack_min_bytes": 11996,
+        "psram_before": 28330012,
+        "psram_after": 28330012
+      }
+    ],
+    "steady_codec_us": 14733.333333333334
+  },
+  {
+    "case": "noise",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 196579,
+    "output_bytes": 151715,
+    "output_sha256": "3fbdc2bab8e1eb482a596d9045330fc4c974ba5cb49389d475fe72c18ba6720e",
+    "samples": [
+      {
+        "codec_us": 678583,
+        "http_ms": 924.9182269995799,
+        "stack_min_bytes": 11996,
+        "psram_before": 28133552,
+        "psram_after": 28133552
+      },
+      {
+        "codec_us": 678017,
+        "http_ms": 926.8338959955145,
+        "stack_min_bytes": 11996,
+        "psram_before": 28133552,
+        "psram_after": 28133552
+      },
+      {
+        "codec_us": 678663,
+        "http_ms": 862.6316010049777,
+        "stack_min_bytes": 11996,
+        "psram_before": 28133552,
+        "psram_after": 28133552
+      },
+      {
+        "codec_us": 678449,
+        "http_ms": 874.5676679973258,
+        "stack_min_bytes": 11996,
+        "psram_before": 28133552,
+        "psram_after": 28133552
+      }
+    ],
+    "steady_codec_us": 678376.3333333334
+  },
+  {
+    "case": "noise",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 151715,
+    "output_bytes": 196579,
+    "output_sha256": "6a96f5092b6bc4b17c4d0b8bdd06f0534063807b17348ec69d6e8dc7568242ce",
+    "samples": [
+      {
+        "codec_us": 609999,
+        "http_ms": 808.835091011133,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 609916,
+        "http_ms": 784.4133140024496,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 610670,
+        "http_ms": 900.9522849955829,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 609547,
+        "http_ms": 815.6986850081012,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      }
+    ],
+    "steady_codec_us": 610044.3333333334
+  },
+  {
+    "case": "noise",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 151715,
+    "output_bytes": 196608,
+    "output_sha256": "e77ca639e8fd2ff9d6a2dfa8d4d43a924ea2647cbfb5f98a0a43c9acd8cbfbe5",
+    "samples": [
+      {
+        "codec_us": 617986,
+        "http_ms": 802.13703699701,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 618730,
+        "http_ms": 813.8482440117514,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 618341,
+        "http_ms": 790.0737129966728,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      },
+      {
+        "codec_us": 618762,
+        "http_ms": 791.128946992103,
+        "stack_min_bytes": 11996,
+        "psram_before": 28174512,
+        "psram_after": 28174512
+      }
+    ],
+    "steady_codec_us": 618611
+  },
+  {
+    "case": "scroll0",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 49166,
+    "output_bytes": 369,
+    "output_sha256": "93b02cfddcb6aea5bc1a0ee5e8596e803ddf00afc742c05f7730f01eb25c3aca",
+    "samples": [
+      {
+        "codec_us": 18141,
+        "http_ms": 56.783613996231,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18027,
+        "http_ms": 53.33056299423333,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18139,
+        "http_ms": 51.21506399882492,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18037,
+        "http_ms": 50.39739899802953,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      }
+    ],
+    "steady_codec_us": 18067.666666666668
+  },
+  {
+    "case": "scroll0",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 369,
+    "output_bytes": 49166,
+    "output_sha256": "7af1b1079576f390dc51af0a1b5c78dd4c68be89ef38207522f9a927162958c4",
+    "samples": [
+      {
+        "codec_us": 19441,
+        "http_ms": 56.165867994423024,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 19428,
+        "http_ms": 55.76659899088554,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 19437,
+        "http_ms": 56.39398600033019,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 19366,
+        "http_ms": 53.136233997065574,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      }
+    ],
+    "steady_codec_us": 19410.333333333332
+  },
+  {
+    "case": "scroll0",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 369,
+    "output_bytes": 196608,
+    "output_sha256": "99e560927f3a38b37873ad51ea7c5f4f4e1be35f30d750d43a39453d3cef88c8",
+    "samples": [
+      {
+        "codec_us": 26208,
+        "http_ms": 129.04310500016436,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 26198,
+        "http_ms": 128.21001900010742,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 26263,
+        "http_ms": 142.00912399974186,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      },
+      {
+        "codec_us": 26147,
+        "http_ms": 144.687841006089,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329784,
+        "psram_after": 28329784
+      }
+    ],
+    "steady_codec_us": 26202.666666666668
+  },
+  {
+    "case": "sprites0",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 15031,
+    "output_bytes": 532,
+    "output_sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58",
+    "samples": [
+      {
+        "codec_us": 9322,
+        "http_ms": 25.76447100727819,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9218,
+        "http_ms": 24.874165988876484,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9202,
+        "http_ms": 26.233747994410805,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9223,
+        "http_ms": 26.352177999797277,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      }
+    ],
+    "steady_codec_us": 9214.333333333334
+  },
+  {
+    "case": "sprites0",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 532,
+    "output_bytes": 15031,
+    "output_sha256": "180ba0b21dffaf7b9b0e4fd3e2c71873f3ee301c1c703ff70d36cee166d59228",
+    "samples": [
+      {
+        "codec_us": 7308,
+        "http_ms": 26.499166997382417,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 7225,
+        "http_ms": 24.064771001576446,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 7204,
+        "http_ms": 27.39357300742995,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 7171,
+        "http_ms": 25.075045006815344,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      }
+    ],
+    "steady_codec_us": 7200
+  },
+  {
+    "case": "sprites0",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 532,
+    "output_bytes": 196608,
+    "output_sha256": "be34e957366380cb31bc9af1b5410348d29bf049bec17bbfe20238bcbd7c4a7b",
+    "samples": [
+      {
+        "codec_us": 10604,
+        "http_ms": 118.83372899319511,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 10855,
+        "http_ms": 109.5800600014627,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 10858,
+        "http_ms": 129.76429099217057,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 10768,
+        "http_ms": 113.03719099669252,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      }
+    ],
+    "steady_codec_us": 10827
+  },
+  {
+    "case": "scroll1",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 49214,
+    "output_bytes": 491,
+    "output_sha256": "eed00e1b18d714d738a277be2d8f81f38dd3d31655479c14e2747986dea677ce",
+    "samples": [
+      {
+        "codec_us": 18074,
+        "http_ms": 51.92238099698443,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18022,
+        "http_ms": 55.00439400202595,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 17966,
+        "http_ms": 55.5951699934667,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18051,
+        "http_ms": 55.23273198923562,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      }
+    ],
+    "steady_codec_us": 18013
+  },
+  {
+    "case": "scroll1",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 491,
+    "output_bytes": 49214,
+    "output_sha256": "62546319a3c7da34308aa2bc1bd733d46a47542c29d6432558b3c9daa19974c9",
+    "samples": [
+      {
+        "codec_us": 19445,
+        "http_ms": 52.60042600275483,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 19555,
+        "http_ms": 56.648003999725915,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 19576,
+        "http_ms": 56.68226499983575,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 19513,
+        "http_ms": 53.47286099276971,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      }
+    ],
+    "steady_codec_us": 19548
+  },
+  {
+    "case": "scroll1",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 491,
+    "output_bytes": 196608,
+    "output_sha256": "bad29cb296fefc3ab734e79960f423eb2a1596ff15b9af93db9086e6462e795e",
+    "samples": [
+      {
+        "codec_us": 26412,
+        "http_ms": 143.00198000273667,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 26378,
+        "http_ms": 142.36838299257215,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 26347,
+        "http_ms": 142.7461109997239,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      },
+      {
+        "codec_us": 26368,
+        "http_ms": 126.07706000562757,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329664,
+        "psram_after": 28329664
+      }
+    ],
+    "steady_codec_us": 26364.333333333332
+  },
+  {
+    "case": "sprites1",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 15022,
+    "output_bytes": 510,
+    "output_sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9",
+    "samples": [
+      {
+        "codec_us": 9266,
+        "http_ms": 29.032744001597166,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9157,
+        "http_ms": 27.949779003392905,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9146,
+        "http_ms": 26.487576993531547,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9124,
+        "http_ms": 24.852625996572897,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      }
+    ],
+    "steady_codec_us": 9142.333333333334
+  },
+  {
+    "case": "sprites1",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 510,
+    "output_bytes": 15022,
+    "output_sha256": "6ca21e93cb573d06edca05fe2b37e46218f2ec67167a9175fe2c7064cae57a37",
+    "samples": [
+      {
+        "codec_us": 7277,
+        "http_ms": 25.901860994054005,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7173,
+        "http_ms": 24.05873998941388,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7131,
+        "http_ms": 24.10992000659462,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7134,
+        "http_ms": 24.957264991826378,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      }
+    ],
+    "steady_codec_us": 7146
+  },
+  {
+    "case": "sprites1",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 510,
+    "output_bytes": 196608,
+    "output_sha256": "a1f6d14ed54f2810935198d47493b6dd1464043562d6b5f5260112947a2e43aa",
+    "samples": [
+      {
+        "codec_us": 10531,
+        "http_ms": 125.5746039969381,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10833,
+        "http_ms": 127.18972499715164,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10780,
+        "http_ms": 111.19070099084638,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10792,
+        "http_ms": 109.55373001343105,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      }
+    ],
+    "steady_codec_us": 10801.666666666666
+  },
+  {
+    "case": "scroll2",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 49262,
+    "output_bytes": 530,
+    "output_sha256": "b84e17ab2ee60906391cae2d216ae2ebaf294ef60364e89d7d776f85e1a4a412",
+    "samples": [
+      {
+        "codec_us": 18229,
+        "http_ms": 51.733640997554176,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18114,
+        "http_ms": 56.16058700252324,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18097,
+        "http_ms": 50.401027998304926,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      },
+      {
+        "codec_us": 18180,
+        "http_ms": 54.3102569936309,
+        "stack_min_bytes": 11996,
+        "psram_before": 28279984,
+        "psram_after": 28279984
+      }
+    ],
+    "steady_codec_us": 18130.333333333332
+  },
+  {
+    "case": "scroll2",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 530,
+    "output_bytes": 49262,
+    "output_sha256": "8360745d239bb7568601ef6aaccd3fafdf638b6335fd15cca6738d8c06ccb321",
+    "samples": [
+      {
+        "codec_us": 19465,
+        "http_ms": 53.245403003529646,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 19552,
+        "http_ms": 55.900908992043696,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 19609,
+        "http_ms": 56.419736007228494,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 19568,
+        "http_ms": 51.56850200728513,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      }
+    ],
+    "steady_codec_us": 19576.333333333332
+  },
+  {
+    "case": "scroll2",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 530,
+    "output_bytes": 196608,
+    "output_sha256": "05a431f94345f76a02f1b67658a69fcc3a4c543f5cb095719b0187fc86a75b90",
+    "samples": [
+      {
+        "codec_us": 26593,
+        "http_ms": 130.7987449981738,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 26558,
+        "http_ms": 126.22580000606831,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 26342,
+        "http_ms": 139.24606000364292,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      },
+      {
+        "codec_us": 26464,
+        "http_ms": 141.39360799163114,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329616,
+        "psram_after": 28329616
+      }
+    ],
+    "steady_codec_us": 26454.666666666668
+  },
+  {
+    "case": "sprites2",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 15022,
+    "output_bytes": 511,
+    "output_sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50",
+    "samples": [
+      {
+        "codec_us": 9273,
+        "http_ms": 28.115007997257635,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9157,
+        "http_ms": 30.264977001934312,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9162,
+        "http_ms": 26.922805001959205,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      },
+      {
+        "codec_us": 9189,
+        "http_ms": 25.790001003770158,
+        "stack_min_bytes": 11996,
+        "psram_before": 28315056,
+        "psram_after": 28315056
+      }
+    ],
+    "steady_codec_us": 9169.333333333334
+  },
+  {
+    "case": "sprites2",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 511,
+    "output_bytes": 15022,
+    "output_sha256": "121213370504d21c460c53fd73c42641c8a5dcaacdc4d4f7f3b24a9dfa5c5421",
+    "samples": [
+      {
+        "codec_us": 7288,
+        "http_ms": 28.35925699037034,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7170,
+        "http_ms": 24.40214899252169,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7126,
+        "http_ms": 27.34327300277073,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 7137,
+        "http_ms": 26.212728989776224,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      }
+    ],
+    "steady_codec_us": 7144.333333333333
+  },
+  {
+    "case": "sprites2",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 511,
+    "output_bytes": 196608,
+    "output_sha256": "7ce4e62f962328229a8a2832dca5f458fc96cab0342f7f1bdf3c6c6d5771bc39",
+    "samples": [
+      {
+        "codec_us": 10569,
+        "http_ms": 129.50562199694104,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10860,
+        "http_ms": 124.69652800064068,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10867,
+        "http_ms": 110.1799559983192,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      },
+      {
+        "codec_us": 10834,
+        "http_ms": 130.3689369960921,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329648,
+        "psram_after": 28329648
+      }
+    ],
+    "steady_codec_us": 10853.666666666666
+  },
+  {
+    "case": "retained-sprites",
+    "operation": "encode4",
+    "exact": true,
+    "input_bytes": 7038,
+    "output_bytes": 937,
+    "output_sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9",
+    "samples": [
+      {
+        "codec_us": 8431,
+        "http_ms": 24.313018991961144,
+        "stack_min_bytes": 11996,
+        "psram_before": 28323120,
+        "psram_after": 28323120
+      },
+      {
+        "codec_us": 8313,
+        "http_ms": 23.044005007250234,
+        "stack_min_bytes": 11996,
+        "psram_before": 28323120,
+        "psram_after": 28323120
+      },
+      {
+        "codec_us": 8302,
+        "http_ms": 23.202084994409233,
+        "stack_min_bytes": 11996,
+        "psram_before": 28323120,
+        "psram_after": 28323120
+      },
+      {
+        "codec_us": 8238,
+        "http_ms": 23.590572993271053,
+        "stack_min_bytes": 11996,
+        "psram_before": 28323120,
+        "psram_after": 28323120
+      }
+    ],
+    "steady_codec_us": 8284.333333333334
+  },
+  {
+    "case": "retained-sprites",
+    "operation": "decode",
+    "exact": true,
+    "input_bytes": 937,
+    "output_bytes": 7038,
+    "output_sha256": "3aaa4381fa330b8b5b5caca4d7f47fcf6cba9ec4b5b6e9189d1be8f2aa738e9e",
+    "samples": [
+      {
+        "codec_us": 5789,
+        "http_ms": 21.82123198872432,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 5607,
+        "http_ms": 17.96967300469987,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 5571,
+        "http_ms": 17.99456299340818,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 5573,
+        "http_ms": 18.521480000345036,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      }
+    ],
+    "steady_codec_us": 5583.666666666667
+  },
+  {
+    "case": "retained-sprites",
+    "operation": "unpack",
+    "exact": true,
+    "input_bytes": 937,
+    "output_bytes": 196608,
+    "output_sha256": "4f79217d3fe681940501600f403bad44cbb3c4a5a30150479a9e30228797ae14",
+    "samples": [
+      {
+        "codec_us": 8339,
+        "http_ms": 108.81357399921399,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 8678,
+        "http_ms": 107.47915999672841,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 8646,
+        "http_ms": 131.0700540052494,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      },
+      {
+        "codec_us": 8658,
+        "http_ms": 125.47281400475185,
+        "stack_min_bytes": 11996,
+        "psram_before": 28329216,
+        "psram_after": 28329216
+      }
+    ],
+    "steady_codec_us": 8660.666666666666
+  },
+  {
+    "case": "truncated",
+    "operation": "reject-and-recover",
+    "exact": true
+  },
+  {
+    "case": "short",
+    "operation": "reject-and-recover",
+    "exact": true
+  },
+  {
+    "case": "wrong-version",
+    "operation": "reject-and-recover",
+    "exact": true
+  }
+]

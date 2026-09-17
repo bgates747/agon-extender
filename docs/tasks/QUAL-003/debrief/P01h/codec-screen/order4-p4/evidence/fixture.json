@@ -1,0 +1,17 @@
+{
+  "source": "Retained deterministic BENCH-003 cadence60 fixture with mode-setting entry replaced by RET, as qualified in prior SRLE2 hardware run",
+  "bytes": 36527,
+  "sha256": "68fb3d4ce4b33d7ff325781f9a76e74a87500894acb119180f2bd8e51c31b03e",
+  "mode": "Startup selects20 on both devices; fixture never changes mode",
+  "trials": [
+    "rle1",
+    "srle1",
+    "o4a",
+    "rle2",
+    "srle2",
+    "o4b",
+    "rle3",
+    "srle3",
+    "o4c"
+  ]
+}

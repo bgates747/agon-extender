@@ -35,3 +35,9 @@ verified after flash. One image owns RLE2, srle2=1/order3 and srle2=4/order4.
 The existing command and HTTP stack sizes remain16KiB; no small-block cleanup
 change is needed in this single-block encoder. Decoder Wasm is the qualified
 order4-capable host build. No mainboard VDP or EMOS changes.
+
+S03 setup correction: the first static-scene run inherited restored mode3
+(640×480), outside the compressed512×384 path. Its frame metadata exposed this,
+so those timing rows are excluded. Run valid fixed-mode game startup first, then
+repeat static scenes in the resulting512×384 mode with a hard geometry assertion.
+This is a fixture-ordering correction, not a renderer or codec fix.
