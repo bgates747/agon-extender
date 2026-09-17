@@ -142,3 +142,9 @@ C05 complete: assessment and evidence committed; accepted spoken emulator
 attention profile launched with the review banner. This is a notification, not
 physical test evidence or confirmation that the Author heard it. C06 remains
 unstarted pending review and explicit bench release.
+
+## Author-supplied discussion
+
+The [2026-09-17 Gemini architecture material](discussion/README.md) is preserved
+verbatim beside this investigation for later consideration. It does not change
+the frozen contracts or establish measured performance.
