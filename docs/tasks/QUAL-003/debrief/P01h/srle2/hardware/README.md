@@ -90,3 +90,21 @@ Repeated asset decoding on r02 produced a captured Stack protection fault in pro
 ## r03 correctness checkpoint
 
 Build srle2-p4-r03-b2026-09-17-04-05-02Z passed all 39 original-golden codec controls and all six routed asset cases (raw, SRLE2, fragmented, in-place, wrong version, truncated), each compared across the entire 512×384 framebuffer to the literal alpha checker oracle. This resolves the reproducible r02 processLoop stack failure for the tested cases. Evidence is under evidence/; asset controls used normal EMOS-routed VDU commands. Performance controls are next.
+
+### H04 fixture correction — mode ownership (agent-assigned within scope)
+
+The retained cadence60 executable still invokes video mode changes (title mode8,
+gameplay mode20, exit original mode), contrary to current bench constraints.
+Continuous output runs stayed at320×240; a sparse capture20seconds into the same
+fixture observed512×384. Repeating original mode3 startup did not resolve this.
+These observations expose an output-dependent mode-transition problem, not a
+valid codec throughput comparison. Preserve those runs as invalid for512×384.
+Do not implement a general mode-transition fix in this codec task.
+
+For current comparisons, create a distinct test-only binary by replacing the
+first instruction of vdu_set_screen_mode with RET (one byte, verified against
+retained symbols/source). Startup selects mode20 before output or fixture launch;
+the fixture cannot change it. Keep game logic, assets, pacing, telemetry and
+addresses identical. Run all controls on this same derivative. No production
+application replacement. This implements existing bench mode-ownership rules and
+requires a fresh comparison series; historical timing is context only.
