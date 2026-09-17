@@ -25,3 +25,14 @@ establish P4 cache behavior or a shipping choice.
 A tiny-block tail may use the original stored-block representation; preserve it.
 Retain failures rather than silently excluding sizes. Five-second native worker
 screening guard remains; classify timeouts separately from incorrect pixels.
+
+## Agent-assigned adaptation A01
+
+Initial small-block tests hit adapter allocation status3: the12MiB guard counted
+lifetime allocation traffic, although each block's model had already been freed.
+The isolated r02 build tracks each slot's size and subtracts it on free, keeping
+the12MiB live-allocation ceiling,4096 live-slot ceiling and existing decode
+timeouts. Original sorting/model algorithms remain unchanged. This is test-only;
+production port still needs review before adopting multi-block settings. Retain
+the initial status3 evidence. A fixture mistake also tried feeding raw/RLE2
+controls to the szip CLI; corrected to check only SRLE2 streams.
