@@ -670,3 +670,7 @@ The codec task uses a startup-owned-mode derivative and does not fix the port.
 See [physical assessment](QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md).
 
 - [ ] Isolate command-mode handling versus snapshot metadata under continuous output, then compare against the retained product baseline before proposing a port change. Preserve original mode semantics; do not infer a mainboard defect.
+
+## Author-directed Gemini cross-reference audit — 2026-09-17
+
+Active documentation-only goal: [contract and findings](QUAL-003/debrief/P01h/codec-screen/discussion/AUDIT.md). Compare supplied claims to existing evidence and official sources; hardware voice at completion. No firmware changes or new benchmarks.
