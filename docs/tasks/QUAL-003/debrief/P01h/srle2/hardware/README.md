@@ -22,7 +22,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
    ownership separate from graphics locks; do not change scheduling or rendering
    to manufacture a codec improvement. Bound allocations, concurrent admission,
    failures and raw fallback. Record build and rollback manifests before flashing.
-3. [ ] H03 — Qualify device codec and asset paths first. Original CLI golden corpus
+3. [x] H03 — Qualify device codec and asset paths first. Original CLI golden corpus
    → P4 decode and P4 encode → independent host decode, exact bytes. Cover tiny/
    stored data, alpha assets, command65 two-layer unpack, fragmented buffers,
    in-place destination, retained destination after bounded invalid input, and
@@ -86,3 +86,7 @@ Author restored the Extender keyboard directive on the card physically in the Ag
 ### H05 corrective iteration — processLoop stack (agent-assigned within scope)
 
 Repeated asset decoding on r02 produced a captured Stack protection fault in processLoop. ELF resolves PC 0x40051f4e to original szip maketable (sz_srt.c:329), called by sz_unsrt. Inherited command-task stack is 4096 bytes; HTTP-only tests used 16384 bytes and did not cover this caller. Set processLoop stack to 16384 bytes in isolated r03, retaining priority and affinity. Rebuild, rerun codec and complete asset controls before game testing. No EMOS/mainboard VDP changes. Preserve serial evidence; absence of a stored coredump was not absence of a crash.
+
+## r03 correctness checkpoint
+
+Build srle2-p4-r03-b2026-09-17-04-05-02Z passed all 39 original-golden codec controls and all six routed asset cases (raw, SRLE2, fragmented, in-place, wrong version, truncated), each compared across the entire 512×384 framebuffer to the literal alpha checker oracle. This resolves the reproducible r02 processLoop stack failure for the tested cases. Evidence is under evidence/; asset controls used normal EMOS-routed VDU commands. Performance controls are next.
