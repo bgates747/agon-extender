@@ -333,3 +333,5 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
     66 exact static scene pairs;
     scanout/restart findings and eight deferred controls retained. Bench restored.
     Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).
+
+Current QUAL-003 image-codec experiment: [RGB888 JPEG then indexed PNG contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/README.md). Physical bench authorized; preserve baseline and hardware-notify at closeout.
