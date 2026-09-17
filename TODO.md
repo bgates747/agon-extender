@@ -332,4 +332,3 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
     66 exact static scene pairs;
     scanout/restart findings and eight deferred controls retained. Bench restored.
     Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).
-

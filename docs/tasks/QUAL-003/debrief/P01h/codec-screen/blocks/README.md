@@ -18,7 +18,7 @@ and [TABLES.md](TABLES.md). Bench untouched; no production changes.
    synthetic sprites and noise; alternate order and discard warmups. Browser-test
    every block size:8 exact frames/case,90 mixed frames at30Hz ceiling, malformed
    input/recovery and raw fallback. Reuse existing isolated EVC1/Worker/presenter.
-3. [ ] B03 — Report bytes and ms, percentage differences to full-block order4,
+3. [x] B03 — Report bytes and ms, percentage differences to full-block order4,
    exceptions and practical shortlist. Freeze results in commits, emulator voice
    notify, stop. No bench/firmware/production changes or push.
 
@@ -53,3 +53,7 @@ B02 complete:1,152 browser exact frames,1,080 paced frames and24 mixed
 codec/raw exact fallback frames passed, as did invalid-input/timeout recovery.
 Paired timing confirmed36 case/settings groups with20 measured pairs each.
 No physical bench access occurred. See TABLES.md and evidence/.
+
+B03 complete: results committed, spoken emulator notification launched with
+review banner. The Author hearing it is not independently confirmed. Stop for
+review; no hardware or downstream work started.
