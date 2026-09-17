@@ -13,3 +13,6 @@ Only the supplied text is available; no missing conversational context is inferr
 
 Source attachment: `pasted-text.txt` (9,992 bytes).
 Original attachment SHA-256: `853a3df2ff7b5fd75ced9c284de14c91e082a797f0121d1337c43255cc084761`.
+
+[Cross-reference audit](AUDIT.md) compares these claims with our implementation,
+retained tests, and official sources; it separates recommendations from evidence.
