@@ -1,0 +1,2450 @@
+[
+  {
+    "case": "colours",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 64,
+    "encode_ms": 0.007506666666666667,
+    "samples_ms": [
+      0.068639,
+      0.01331,
+      0.00541,
+      0.0038
+    ],
+    "original_cli_exact": false,
+    "sha256": "fdeab9acf3710362bd2658cdc9a29e8f9c757fcf9811603a8c447cd1d9151108"
+  },
+  {
+    "case": "colours",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 78,
+    "encode_ms": 0.00679,
+    "samples_ms": [
+      0.0672,
+      0.01195,
+      0.00477,
+      0.00365
+    ],
+    "original_cli_exact": false,
+    "sha256": "48023b4fd9fda7d29033d9dfebc45b2446a9ceab882fdc1aaeb54f5ec41f974d"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.09949266666666667,
+    "samples_ms": [
+      0.314458,
+      0.174109,
+      0.063409,
+      0.06096
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.05667966666666666,
+    "samples_ms": [
+      0.308209,
+      0.113129,
+      0.03007,
+      0.02684
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.10417633333333333,
+    "samples_ms": [
+      0.400798,
+      0.188299,
+      0.06454,
+      0.05969
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.098213,
+    "samples_ms": [
+      0.334248,
+      0.174679,
+      0.06263,
+      0.05733
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.102323,
+    "samples_ms": [
+      0.317369,
+      0.192219,
+      0.05871,
+      0.05604
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.09352633333333334,
+    "samples_ms": [
+      0.319868,
+      0.16848,
+      0.05603,
+      0.056069
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.09881266666666666,
+    "samples_ms": [
+      0.303938,
+      0.171619,
+      0.063999,
+      0.06082
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.09870633333333334,
+    "samples_ms": [
+      0.318638,
+      0.174149,
+      0.06267,
+      0.0593
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.096916,
+    "samples_ms": [
+      0.348659,
+      0.174829,
+      0.05835,
+      0.057569
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "colours",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 111,
+    "encode_ms": 0.09484266666666666,
+    "samples_ms": [
+      0.322158,
+      0.174059,
+      0.05523,
+      0.055239
+    ],
+    "original_cli_exact": true,
+    "sha256": "140acdff48c305d9a30d0f97fda785ad0b5cb5312fa5dc46a7912e718521eba9"
+  },
+  {
+    "case": "tiny",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 1,
+    "encode_ms": 0.00468,
+    "samples_ms": [
+      0.05466,
+      0.009,
+      0.00298,
+      0.00206
+    ],
+    "original_cli_exact": false,
+    "sha256": "2f0fd1e89b8de1d57292742ec380ea47066e307ad645f5bc3adad8a06ff58608"
+  },
+  {
+    "case": "tiny",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 15,
+    "encode_ms": 0.005436666666666666,
+    "samples_ms": [
+      0.063719,
+      0.01104,
+      0.00291,
+      0.00236
+    ],
+    "original_cli_exact": false,
+    "sha256": "6158f1ca8810876af25e261a5146b67e4c38086c3285f943bef1413dec0fcff8"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.054226333333333335,
+    "samples_ms": [
+      0.288539,
+      0.06739,
+      0.04885,
+      0.046439
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.057563,
+    "samples_ms": [
+      0.294708,
+      0.07094,
+      0.05345,
+      0.048299
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.05967966666666667,
+    "samples_ms": [
+      0.291519,
+      0.07326,
+      0.054169,
+      0.05161
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.05843966666666667,
+    "samples_ms": [
+      0.301019,
+      0.071949,
+      0.05468,
+      0.04869
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.06240966666666666,
+    "samples_ms": [
+      0.314908,
+      0.07794,
+      0.05798,
+      0.051309
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.057639333333333334,
+    "samples_ms": [
+      0.295568,
+      0.069699,
+      0.054039,
+      0.04918
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.055993,
+    "samples_ms": [
+      0.325068,
+      0.073579,
+      0.04869,
+      0.04571
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.05429633333333333,
+    "samples_ms": [
+      0.297969,
+      0.069989,
+      0.04729,
+      0.04561
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.05686,
+    "samples_ms": [
+      0.295248,
+      0.07552,
+      0.04865,
+      0.04641
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "tiny",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 46,
+    "encode_ms": 0.036223,
+    "samples_ms": [
+      0.294648,
+      0.062819,
+      0.0244,
+      0.02145
+    ],
+    "original_cli_exact": true,
+    "sha256": "d4144a77c599a62a93afb1c78d5cc0e6d33e71fe4467751d1eac1e811e046245"
+  },
+  {
+    "case": "solid",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011826666666666666,
+    "samples_ms": [
+      0.162139,
+      0.01764,
+      0.00953,
+      0.00831
+    ],
+    "original_cli_exact": false,
+    "sha256": "4bd4c4b675183fb84ef2d62b81fe4d4c5c31dc3ce73cac94c24fbb2330547018"
+  },
+  {
+    "case": "solid",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 3040,
+    "encode_ms": 0.05034266666666667,
+    "samples_ms": [
+      0.15784,
+      0.046629,
+      0.04533,
+      0.059069
+    ],
+    "original_cli_exact": false,
+    "sha256": "580b9c347612a12f719964f0450170faa71fa02e59d40e3f10963e783d4688a6"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 164,
+    "encode_ms": 0.328048,
+    "samples_ms": [
+      0.657847,
+      0.342798,
+      0.320468,
+      0.320878
+    ],
+    "original_cli_exact": true,
+    "sha256": "5f9718d36b37575875fc774c179dbd0afaa2adb74c1f235a02d56544c796c38d"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 99,
+    "encode_ms": 0.22841866666666666,
+    "samples_ms": [
+      0.567217,
+      0.244288,
+      0.216399,
+      0.224569
+    ],
+    "original_cli_exact": true,
+    "sha256": "ca73eac414c80815bead566924ae9fd842e3bbf49b60301d6cc6395256e12eb3"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 77,
+    "encode_ms": 0.19456566666666666,
+    "samples_ms": [
+      0.529908,
+      0.212549,
+      0.186569,
+      0.184579
+    ],
+    "original_cli_exact": true,
+    "sha256": "9686a3b50095c111abd8b61f17484fd9728e0101435306e7da561dcf30fbc7f2"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.32368166666666665,
+    "samples_ms": [
+      0.696466,
+      0.287949,
+      0.339088,
+      0.344008
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.158989,
+    "samples_ms": [
+      0.499487,
+      0.175569,
+      0.148489,
+      0.152909
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.16163233333333332,
+    "samples_ms": [
+      0.513777,
+      0.182769,
+      0.150119,
+      0.152009
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.161099,
+    "samples_ms": [
+      0.533357,
+      0.183159,
+      0.148809,
+      0.151329
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.240342,
+    "samples_ms": [
+      0.501578,
+      0.256688,
+      0.232669,
+      0.231669
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.18510566666666667,
+    "samples_ms": [
+      0.467337,
+      0.175299,
+      0.189129,
+      0.190889
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "solid",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 55,
+    "encode_ms": 0.15729233333333334,
+    "samples_ms": [
+      0.485837,
+      0.173309,
+      0.148499,
+      0.150069
+    ],
+    "original_cli_exact": true,
+    "sha256": "f544fd82ced23b4266411369a08e724b289554fbc6b98cc3d57bccf29edb5d6b"
+  },
+  {
+    "case": "stripes",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.012259666666666667,
+    "samples_ms": [
+      0.16337,
+      0.01788,
+      0.00945,
+      0.009449
+    ],
+    "original_cli_exact": false,
+    "sha256": "db9e4564d99126ada90d4997181e0e41bcad46a4136a02fa55a02bb9b76f9860"
+  },
+  {
+    "case": "stripes",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 24590,
+    "encode_ms": 0.049676,
+    "samples_ms": [
+      0.199339,
+      0.058459,
+      0.04546,
+      0.045109
+    ],
+    "original_cli_exact": false,
+    "sha256": "117cf92f99a861a5749d5eed38be1e02e2a91128fb679ac5ed1a570c51f88ce7"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 3135,
+    "encode_ms": 1.3230326666666667,
+    "samples_ms": [
+      2.337297,
+      2.016779,
+      1.000164,
+      0.952155
+    ],
+    "original_cli_exact": true,
+    "sha256": "f0e03ce8092f7d0cebf6384eb4526e8f0541a084ad5fbcaabb555b3fc1030829"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1695,
+    "encode_ms": 0.6001066666666667,
+    "samples_ms": [
+      1.570901,
+      0.677936,
+      0.580917,
+      0.541467
+    ],
+    "original_cli_exact": true,
+    "sha256": "427277aed86f36a71546cbd771e734eba3ad57eef18c48dfe2377381f5a711b7"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1199,
+    "encode_ms": 0.4699443333333333,
+    "samples_ms": [
+      1.065184,
+      0.723196,
+      0.359298,
+      0.327339
+    ],
+    "original_cli_exact": true,
+    "sha256": "2ef42d9c36b4f842334c5b4c4994024d0f6c8066b37016b27385fe419b9783fc"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 657,
+    "encode_ms": 0.47780433333333333,
+    "samples_ms": [
+      0.822896,
+      0.495017,
+      0.457438,
+      0.480958
+    ],
+    "original_cli_exact": true,
+    "sha256": "65bc0b0e42806247e58c925dd17cc364b0c5e405b5488b668b4041bba9b26f26"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 372,
+    "encode_ms": 0.35825466666666667,
+    "samples_ms": [
+      0.749536,
+      0.364248,
+      0.352668,
+      0.357848
+    ],
+    "original_cli_exact": true,
+    "sha256": "10dc6269f09130ff35b52758d8aaacb8391172b22586cb0965b0796fec62a012"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 249,
+    "encode_ms": 0.29147833333333334,
+    "samples_ms": [
+      0.678236,
+      0.318748,
+      0.273868,
+      0.281819
+    ],
+    "original_cli_exact": true,
+    "sha256": "c93fe435aa70db08ef89b430eb3f9898a9ecf998871c054c1704684664bc262a"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 145,
+    "encode_ms": 0.25105833333333333,
+    "samples_ms": [
+      0.837896,
+      0.279438,
+      0.238718,
+      0.235019
+    ],
+    "original_cli_exact": true,
+    "sha256": "e6303608e58dd73df3fc31cdad64df3897a9a777d6f0d43d22c79cbf6ad0e05b"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 145,
+    "encode_ms": 0.26758866666666664,
+    "samples_ms": [
+      0.626326,
+      0.292449,
+      0.235139,
+      0.275178
+    ],
+    "original_cli_exact": true,
+    "sha256": "e6303608e58dd73df3fc31cdad64df3897a9a777d6f0d43d22c79cbf6ad0e05b"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 145,
+    "encode_ms": 0.24799866666666667,
+    "samples_ms": [
+      0.594117,
+      0.275239,
+      0.235988,
+      0.232769
+    ],
+    "original_cli_exact": true,
+    "sha256": "e6303608e58dd73df3fc31cdad64df3897a9a777d6f0d43d22c79cbf6ad0e05b"
+  },
+  {
+    "case": "stripes",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 145,
+    "encode_ms": 0.254552,
+    "samples_ms": [
+      0.655957,
+      0.274459,
+      0.252249,
+      0.236948
+    ],
+    "original_cli_exact": true,
+    "sha256": "e6303608e58dd73df3fc31cdad64df3897a9a777d6f0d43d22c79cbf6ad0e05b"
+  },
+  {
+    "case": "noise",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.00856,
+    "samples_ms": [
+      0.125849,
+      0.01155,
+      0.00785,
+      0.00628
+    ],
+    "original_cli_exact": false,
+    "sha256": "40a5ca4d526bd6f63c2abe4cf1b10bf685e0e7e53c74b4a1484c110b19557126"
+  },
+  {
+    "case": "noise",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 196579,
+    "encode_ms": 0.07378266666666666,
+    "samples_ms": [
+      0.329178,
+      0.100389,
+      0.06324,
+      0.057719
+    ],
+    "original_cli_exact": false,
+    "sha256": "6a96f5092b6bc4b17c4d0b8bdd06f0534063807b17348ec69d6e8dc7568242ce"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 181649,
+    "encode_ms": 16.995103666666665,
+    "samples_ms": [
+      19.943601,
+      16.991157,
+      17.035147,
+      16.959007
+    ],
+    "original_cli_exact": true,
+    "sha256": "86a9f13649a7c3fdcebb9bc3f86096cad355fc11d09c16d2a118bb36cd462ad3"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 171399,
+    "encode_ms": 13.735575333333333,
+    "samples_ms": [
+      24.282707,
+      13.627336,
+      13.817975,
+      13.761415
+    ],
+    "original_cli_exact": true,
+    "sha256": "48520e5c62fd8343011ece47aa1b32e5750c40650efc8933ec9a020cdb27b40d"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 164260,
+    "encode_ms": 13.702118,
+    "samples_ms": [
+      26.347106,
+      16.178901,
+      12.70928,
+      12.218173
+    ],
+    "original_cli_exact": true,
+    "sha256": "7e7d2cc3460a353fe0b3f42ab9b042549825f2cff1f1d2a8e1e0d17ecb0f8427"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 159352,
+    "encode_ms": 11.349181666666667,
+    "samples_ms": [
+      12.336092,
+      11.255009,
+      11.460798,
+      11.331738
+    ],
+    "original_cli_exact": true,
+    "sha256": "a22f5a8f6a440efcffcc2094ad7658d725b6f859b513ce0c004a78b9c5f26838"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 156147,
+    "encode_ms": 11.095169,
+    "samples_ms": [
+      15.964452,
+      11.041709,
+      11.138329,
+      11.105469
+    ],
+    "original_cli_exact": true,
+    "sha256": "61a6dcf4ca83b9e9b25964e6d60d6aaee30e81981259f9446af4e6fa62d7be64"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 154069,
+    "encode_ms": 10.836971,
+    "samples_ms": [
+      19.606693,
+      10.762581,
+      10.918071,
+      10.830261
+    ],
+    "original_cli_exact": true,
+    "sha256": "90c7d1370010c65b4706a4312bed93aefbf74253940e11f106103414204f0151"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 152788,
+    "encode_ms": 10.691658333333333,
+    "samples_ms": [
+      16.736429,
+      10.623032,
+      10.740251,
+      10.711692
+    ],
+    "original_cli_exact": true,
+    "sha256": "18affc9496833adf85466b7e4d7611ad5d3f3a1b4de5ff2d1f54c16adbedaaa4"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 152174,
+    "encode_ms": 10.688638,
+    "samples_ms": [
+      16.5081,
+      10.637451,
+      10.726201,
+      10.702262
+    ],
+    "original_cli_exact": true,
+    "sha256": "646b308e2ce4a94a99b60f211595ec0a9dd1b289d94ef3ec2cee7e1ebf54d730"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 151937,
+    "encode_ms": 10.681651333333333,
+    "samples_ms": [
+      12.155364,
+      10.638422,
+      10.714421,
+      10.692111
+    ],
+    "original_cli_exact": true,
+    "sha256": "f5ee693d5a1a6e729c49414eeaad6f4d619df60dd14f995170a3a5702c00ea6e"
+  },
+  {
+    "case": "noise",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 151715,
+    "encode_ms": 10.713981333333333,
+    "samples_ms": [
+      19.909141,
+      10.666622,
+      10.772981,
+      10.702341
+    ],
+    "original_cli_exact": true,
+    "sha256": "3fbdc2bab8e1eb482a596d9045330fc4c974ba5cb49389d475fe72c18ba6720e"
+  },
+  {
+    "case": "scroll0",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011546666666666667,
+    "samples_ms": [
+      0.197809,
+      0.01664,
+      0.00967,
+      0.00833
+    ],
+    "original_cli_exact": false,
+    "sha256": "ac951b654e2c385719e6da3a2c6d63425f0118df46c9f3023db9a74e7cc9a38d"
+  },
+  {
+    "case": "scroll0",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 49166,
+    "encode_ms": 0.049576666666666665,
+    "samples_ms": [
+      0.123359,
+      0.05423,
+      0.04744,
+      0.04706
+    ],
+    "original_cli_exact": false,
+    "sha256": "7af1b1079576f390dc51af0a1b5c78dd4c68be89ef38207522f9a927162958c4"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 8612,
+    "encode_ms": 1.9892823333333334,
+    "samples_ms": [
+      2.373837,
+      2.021649,
+      1.977849,
+      1.968349
+    ],
+    "original_cli_exact": true,
+    "sha256": "2bde11c30d2498eeca46c0ef9c788994df20fd3f1a6e4ca083fd774a4e5bde72"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 5176,
+    "encode_ms": 2.3078073333333333,
+    "samples_ms": [
+      2.880284,
+      2.348827,
+      2.302158,
+      2.272437
+    ],
+    "original_cli_exact": true,
+    "sha256": "7751fe5ce73b1a89cdba05a87d369f2586b94cac5df82ae9630c265dc9b2c4c2"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2927,
+    "encode_ms": 1.117264,
+    "samples_ms": [
+      1.81829,
+      1.434312,
+      1.246264,
+      0.671216
+    ],
+    "original_cli_exact": true,
+    "sha256": "38c3bc27b2b0a22a58b46a49fee183e7569dfb0f4fd54927102fd58e3bbd21e0"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2189,
+    "encode_ms": 0.8845316666666667,
+    "samples_ms": [
+      1.268753,
+      0.930085,
+      0.862725,
+      0.860785
+    ],
+    "original_cli_exact": true,
+    "sha256": "be025901a15206bf78355fc298025b57534ef631c38aeb2c6a5a5e2258e0056d"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1267,
+    "encode_ms": 0.648863,
+    "samples_ms": [
+      1.158784,
+      0.684836,
+      0.655127,
+      0.606626
+    ],
+    "original_cli_exact": true,
+    "sha256": "182c8d85efae030265b7c31974f8f4f06cf4ad9101cf71d90fa21a8fbdf8010c"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 775,
+    "encode_ms": 0.491747,
+    "samples_ms": [
+      0.867735,
+      0.529307,
+      0.476267,
+      0.469667
+    ],
+    "original_cli_exact": true,
+    "sha256": "e2f58b024f49751299808c776917894985c94cdc14fb7b2bbd59837f9465eeec"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 571,
+    "encode_ms": 0.35376466666666667,
+    "samples_ms": [
+      0.856835,
+      0.479848,
+      0.320248,
+      0.261198
+    ],
+    "original_cli_exact": true,
+    "sha256": "5c6fee5634028f24ac5b930cf1b8f8de52658b16e5f83347c5f46407e6afbfa9"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 369,
+    "encode_ms": 0.3794713333333333,
+    "samples_ms": [
+      0.780965,
+      0.416108,
+      0.358138,
+      0.364168
+    ],
+    "original_cli_exact": true,
+    "sha256": "93b02cfddcb6aea5bc1a0ee5e8596e803ddf00afc742c05f7730f01eb25c3aca"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 369,
+    "encode_ms": 0.3637343333333333,
+    "samples_ms": [
+      0.813875,
+      0.386807,
+      0.350828,
+      0.353568
+    ],
+    "original_cli_exact": true,
+    "sha256": "93b02cfddcb6aea5bc1a0ee5e8596e803ddf00afc742c05f7730f01eb25c3aca"
+  },
+  {
+    "case": "scroll0",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 369,
+    "encode_ms": 0.371801,
+    "samples_ms": [
+      0.801605,
+      0.396187,
+      0.357378,
+      0.361838
+    ],
+    "original_cli_exact": true,
+    "sha256": "93b02cfddcb6aea5bc1a0ee5e8596e803ddf00afc742c05f7730f01eb25c3aca"
+  },
+  {
+    "case": "sprites0",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011093333333333334,
+    "samples_ms": [
+      0.187899,
+      0.01534,
+      0.00913,
+      0.00881
+    ],
+    "original_cli_exact": false,
+    "sha256": "357b2da407ed849d424ebe8e4179a23fc83950eea3b321b2370ec14e9463dc44"
+  },
+  {
+    "case": "sprites0",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 15031,
+    "encode_ms": 0.05641966666666667,
+    "samples_ms": [
+      0.12634,
+      0.05286,
+      0.056119,
+      0.06028
+    ],
+    "original_cli_exact": false,
+    "sha256": "180ba0b21dffaf7b9b0e4fd3e2c71873f3ee301c1c703ff70d36cee166d59228"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2272,
+    "encode_ms": 0.937048,
+    "samples_ms": [
+      1.687951,
+      1.335333,
+      0.834315,
+      0.641496
+    ],
+    "original_cli_exact": true,
+    "sha256": "582648e47644ddb08861e90a425b628e2b3d46db46695b411e3d2d819f5bacd4"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1594,
+    "encode_ms": 0.4881506666666667,
+    "samples_ms": [
+      1.152224,
+      0.713376,
+      0.384958,
+      0.366118
+    ],
+    "original_cli_exact": true,
+    "sha256": "91cb70f5b892acfb9e0eb885079e67d5532af93a31fa3e803f095add18ef161d"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1159,
+    "encode_ms": 0.5031836666666667,
+    "samples_ms": [
+      0.929335,
+      0.525417,
+      0.483207,
+      0.500927
+    ],
+    "original_cli_exact": true,
+    "sha256": "f3b0163e74a60121763efb773ec528db38fb2f007e6ce9155e184baf716dc463"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 887,
+    "encode_ms": 0.350808,
+    "samples_ms": [
+      0.718686,
+      0.375488,
+      0.335748,
+      0.341188
+    ],
+    "original_cli_exact": true,
+    "sha256": "2ed4eeeea0294ca5a6a89d912ba4c8d4808d749602335ef52981799544cf789b"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 709,
+    "encode_ms": 0.278678,
+    "samples_ms": [
+      0.626757,
+      0.305288,
+      0.267088,
+      0.263658
+    ],
+    "original_cli_exact": true,
+    "sha256": "d98b9008f101f1d08259b61b26010f14286c429c63f67429ad4ebcebf9c03f2a"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 532,
+    "encode_ms": 0.16150566666666666,
+    "samples_ms": [
+      0.785825,
+      0.208199,
+      0.146969,
+      0.129349
+    ],
+    "original_cli_exact": true,
+    "sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 532,
+    "encode_ms": 0.23701533333333333,
+    "samples_ms": [
+      0.661586,
+      0.263799,
+      0.224489,
+      0.222758
+    ],
+    "original_cli_exact": true,
+    "sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 532,
+    "encode_ms": 0.23749533333333334,
+    "samples_ms": [
+      0.585956,
+      0.264778,
+      0.224559,
+      0.223149
+    ],
+    "original_cli_exact": true,
+    "sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 532,
+    "encode_ms": 0.24360199999999999,
+    "samples_ms": [
+      0.640036,
+      0.273149,
+      0.234339,
+      0.223318
+    ],
+    "original_cli_exact": true,
+    "sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58"
+  },
+  {
+    "case": "sprites0",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 532,
+    "encode_ms": 0.14381233333333335,
+    "samples_ms": [
+      0.776826,
+      0.181289,
+      0.136469,
+      0.113679
+    ],
+    "original_cli_exact": true,
+    "sha256": "27c96ffc3b6b276d3bb841edfe02b0b74cd80a3fab168030a0ea999984a40e58"
+  },
+  {
+    "case": "scroll1",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011626666666666667,
+    "samples_ms": [
+      0.157629,
+      0.01682,
+      0.00967,
+      0.00839
+    ],
+    "original_cli_exact": false,
+    "sha256": "3ffc4883ef8158bb4c9e48f3364ddbd5d0894bbb5fa6f9ac5ce63b947971e7b2"
+  },
+  {
+    "case": "scroll1",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 49214,
+    "encode_ms": 0.054886333333333336,
+    "samples_ms": [
+      0.219289,
+      0.06443,
+      0.05119,
+      0.049039
+    ],
+    "original_cli_exact": false,
+    "sha256": "62546319a3c7da34308aa2bc1bd733d46a47542c29d6432558b3c9daa19974c9"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 9092,
+    "encode_ms": 3.298388666666667,
+    "samples_ms": [
+      4.531875,
+      4.197967,
+      3.62516,
+      2.072039
+    ],
+    "original_cli_exact": true,
+    "sha256": "44ae4990bee7a3e5c1b08320e44b10c637187c1e750ccd433ce818ebb07ddcc2"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 5649,
+    "encode_ms": 2.1866646666666667,
+    "samples_ms": [
+      2.768735,
+      2.366627,
+      2.314137,
+      1.87923
+    ],
+    "original_cli_exact": true,
+    "sha256": "882b41f2a067b362b5746e422cfd461f974c58179cfeb61f5c4bf2f90df65ac4"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 3186,
+    "encode_ms": 0.7638896666666667,
+    "samples_ms": [
+      1.77235,
+      0.921625,
+      0.699447,
+      0.670597
+    ],
+    "original_cli_exact": true,
+    "sha256": "3d3352611eda9bbbdb3c3ed941eb4cc352fe081decbad18376862a9cc4493f6d"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2441,
+    "encode_ms": 0.7909123333333333,
+    "samples_ms": [
+      1.332223,
+      0.917965,
+      0.878905,
+      0.575867
+    ],
+    "original_cli_exact": true,
+    "sha256": "e335009cee945f63d2281275b9da40c3963c39e7cbe81b652acd0233719ed3b3"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1475,
+    "encode_ms": 0.6385426666666667,
+    "samples_ms": [
+      0.997984,
+      0.660726,
+      0.624896,
+      0.630006
+    ],
+    "original_cli_exact": true,
+    "sha256": "05ab78cae9d2a13cff820d992a5d0f7417397ead00e7ee0460dfb26edcdb5aa1"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 944,
+    "encode_ms": 0.27307533333333334,
+    "samples_ms": [
+      0.892575,
+      0.304959,
+      0.280578,
+      0.233689
+    ],
+    "original_cli_exact": true,
+    "sha256": "048861b62668bcce18dde65f72dba6e96f49adbd010fbd140bf4110bcd633039"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 702,
+    "encode_ms": 0.43637766666666666,
+    "samples_ms": [
+      0.907775,
+      0.459097,
+      0.425858,
+      0.424178
+    ],
+    "original_cli_exact": true,
+    "sha256": "944caf658535d1d286488a0463e0be1723c0978382ad610dc92d04b76381ef36"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 491,
+    "encode_ms": 0.391278,
+    "samples_ms": [
+      0.837386,
+      0.431448,
+      0.370628,
+      0.371758
+    ],
+    "original_cli_exact": true,
+    "sha256": "eed00e1b18d714d738a277be2d8f81f38dd3d31655479c14e2747986dea677ce"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 491,
+    "encode_ms": 0.41131466666666666,
+    "samples_ms": [
+      0.828465,
+      0.467198,
+      0.391158,
+      0.375588
+    ],
+    "original_cli_exact": true,
+    "sha256": "eed00e1b18d714d738a277be2d8f81f38dd3d31655479c14e2747986dea677ce"
+  },
+  {
+    "case": "scroll1",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 491,
+    "encode_ms": 0.399138,
+    "samples_ms": [
+      0.838155,
+      0.443098,
+      0.377908,
+      0.376408
+    ],
+    "original_cli_exact": true,
+    "sha256": "eed00e1b18d714d738a277be2d8f81f38dd3d31655479c14e2747986dea677ce"
+  },
+  {
+    "case": "sprites1",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.009506666666666667,
+    "samples_ms": [
+      0.113319,
+      0.01526,
+      0.00745,
+      0.00581
+    ],
+    "original_cli_exact": false,
+    "sha256": "4969b572ee89ff4f09ed1825f7b9404fa460ee5502e62caca82123ade52a25df"
+  },
+  {
+    "case": "sprites1",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 15022,
+    "encode_ms": 0.04525333333333333,
+    "samples_ms": [
+      0.245739,
+      0.05029,
+      0.04296,
+      0.04251
+    ],
+    "original_cli_exact": false,
+    "sha256": "6ca21e93cb573d06edca05fe2b37e46218f2ec67167a9175fe2c7064cae57a37"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2177,
+    "encode_ms": 1.2866496666666667,
+    "samples_ms": [
+      1.673951,
+      1.329652,
+      1.272073,
+      1.258224
+    ],
+    "original_cli_exact": true,
+    "sha256": "fe80a9f15fa4579afa49bb0e19a87a13deda532a73fd51a14dc76a4ecaf5bb12"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1503,
+    "encode_ms": 0.7512426666666667,
+    "samples_ms": [
+      1.173173,
+      0.791286,
+      0.733776,
+      0.728666
+    ],
+    "original_cli_exact": true,
+    "sha256": "e3cc1cb0784101472849d34667d9f536c3321398a27137ea0ad56b96ff6869bd"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1098,
+    "encode_ms": 0.4981603333333333,
+    "samples_ms": [
+      0.890045,
+      0.527397,
+      0.483497,
+      0.483587
+    ],
+    "original_cli_exact": true,
+    "sha256": "ae75a98c60ec5523e14b70655a162b4c6e751df60f07fc4c124ae00a8e49865f"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 835,
+    "encode_ms": 0.37261466666666665,
+    "samples_ms": [
+      0.757596,
+      0.410268,
+      0.347738,
+      0.359838
+    ],
+    "original_cli_exact": true,
+    "sha256": "b8ddc2d1d00e4fddb063eb334258b04096c8280dbee7723f8c14c03e0d1cc103"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 673,
+    "encode_ms": 0.284499,
+    "samples_ms": [
+      0.671986,
+      0.315909,
+      0.267809,
+      0.269779
+    ],
+    "original_cli_exact": true,
+    "sha256": "44486183e2eadcfe19f663425d7238e16da3df41a9236ec852b8041b9126cedc"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 510,
+    "encode_ms": 0.239302,
+    "samples_ms": [
+      0.657806,
+      0.268318,
+      0.225099,
+      0.224489
+    ],
+    "original_cli_exact": true,
+    "sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 510,
+    "encode_ms": 0.11757266666666667,
+    "samples_ms": [
+      0.879635,
+      0.144209,
+      0.104029,
+      0.10448
+    ],
+    "original_cli_exact": true,
+    "sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 510,
+    "encode_ms": 0.23792866666666665,
+    "samples_ms": [
+      0.632797,
+      0.267049,
+      0.223019,
+      0.223718
+    ],
+    "original_cli_exact": true,
+    "sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 510,
+    "encode_ms": 0.2370786666666667,
+    "samples_ms": [
+      0.608776,
+      0.265969,
+      0.222508,
+      0.222759
+    ],
+    "original_cli_exact": true,
+    "sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9"
+  },
+  {
+    "case": "sprites1",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 510,
+    "encode_ms": 0.24019566666666667,
+    "samples_ms": [
+      0.637566,
+      0.263599,
+      0.233109,
+      0.223879
+    ],
+    "original_cli_exact": true,
+    "sha256": "a0b9ec3df908cd1762a21c92883c66c41f4fb36bd449d23682fa6f3425e7aca9"
+  },
+  {
+    "case": "scroll2",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011466666666666667,
+    "samples_ms": [
+      0.172229,
+      0.01625,
+      0.00905,
+      0.0091
+    ],
+    "original_cli_exact": false,
+    "sha256": "731f632a92404f53577a3a8952d9e8d38d6e90b26f9307f3388db93ae9d8f101"
+  },
+  {
+    "case": "scroll2",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 49262,
+    "encode_ms": 0.06310633333333333,
+    "samples_ms": [
+      0.143849,
+      0.06351,
+      0.06461,
+      0.061199
+    ],
+    "original_cli_exact": false,
+    "sha256": "8360745d239bb7568601ef6aaccd3fafdf638b6335fd15cca6738d8c06ccb321"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 9019,
+    "encode_ms": 2.0162656666666665,
+    "samples_ms": [
+      2.281108,
+      2.070259,
+      2.002819,
+      1.975719
+    ],
+    "original_cli_exact": true,
+    "sha256": "ba5fa263a6ff53ce8195d893eaca77764d979f0d87ce98441fc0df0d4b38bbe2"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 5586,
+    "encode_ms": 2.3127839999999997,
+    "samples_ms": [
+      2.733365,
+      2.345287,
+      2.290047,
+      2.303018
+    ],
+    "original_cli_exact": true,
+    "sha256": "d96f055c6e8e6cdbc83353391d87e25c767ae0c85b9786517687609ea87fd8b4"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 3243,
+    "encode_ms": 1.430339,
+    "samples_ms": [
+      1.8356,
+      1.487592,
+      1.400003,
+      1.403422
+    ],
+    "original_cli_exact": true,
+    "sha256": "f11abd1312f7975c0f56edcbb5a10b43c3bff6cf02e5d2bdf474859ec6020c28"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2514,
+    "encode_ms": 0.9109216666666666,
+    "samples_ms": [
+      1.334833,
+      0.967155,
+      0.882935,
+      0.882675
+    ],
+    "original_cli_exact": true,
+    "sha256": "3175f3cdd58b8d16515d1ff655aed9593625d95df96fd3d905641f644e7efcc4"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1541,
+    "encode_ms": 0.655566,
+    "samples_ms": [
+      1.057434,
+      0.669576,
+      0.654066,
+      0.643056
+    ],
+    "original_cli_exact": true,
+    "sha256": "2c99c9ca79e24250767684320a39d6744dab31421774f607d73666af843ddc7a"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1021,
+    "encode_ms": 0.345495,
+    "samples_ms": [
+      0.952524,
+      0.446417,
+      0.306349,
+      0.283719
+    ],
+    "original_cli_exact": true,
+    "sha256": "b7aad2fc396058125b3d5518e8e4a843dd26a2dc28218a338f23798d7cb3b5d3"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 766,
+    "encode_ms": 0.45306066666666667,
+    "samples_ms": [
+      0.878195,
+      0.507497,
+      0.428068,
+      0.423617
+    ],
+    "original_cli_exact": true,
+    "sha256": "285c74cfb0e0bee3018299dc30cd90eaa5e95576007601565235c8e69f10c717"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 530,
+    "encode_ms": 0.40459433333333333,
+    "samples_ms": [
+      0.844435,
+      0.460897,
+      0.374688,
+      0.378198
+    ],
+    "original_cli_exact": true,
+    "sha256": "b84e17ab2ee60906391cae2d216ae2ebaf294ef60364e89d7d776f85e1a4a412"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 530,
+    "encode_ms": 0.4030646666666667,
+    "samples_ms": [
+      0.822726,
+      0.431178,
+      0.402048,
+      0.375968
+    ],
+    "original_cli_exact": true,
+    "sha256": "b84e17ab2ee60906391cae2d216ae2ebaf294ef60364e89d7d776f85e1a4a412"
+  },
+  {
+    "case": "scroll2",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 530,
+    "encode_ms": 0.4561443333333333,
+    "samples_ms": [
+      0.845375,
+      0.478798,
+      0.486067,
+      0.403568
+    ],
+    "original_cli_exact": true,
+    "sha256": "b84e17ab2ee60906391cae2d216ae2ebaf294ef60364e89d7d776f85e1a4a412"
+  },
+  {
+    "case": "sprites2",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.011536666666666667,
+    "samples_ms": [
+      0.163049,
+      0.01623,
+      0.00977,
+      0.00861
+    ],
+    "original_cli_exact": false,
+    "sha256": "4b603ee15fc727e927585a80a6f7a70bd1ee887d456e67b899ac53fae34e8a20"
+  },
+  {
+    "case": "sprites2",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 15022,
+    "encode_ms": 0.09862666666666667,
+    "samples_ms": [
+      0.201679,
+      0.11218,
+      0.09226,
+      0.09144
+    ],
+    "original_cli_exact": false,
+    "sha256": "121213370504d21c460c53fd73c42641c8a5dcaacdc4d4f7f3b24a9dfa5c5421"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 2174,
+    "encode_ms": 1.2745296666666668,
+    "samples_ms": [
+      1.673441,
+      1.322313,
+      1.270743,
+      1.230533
+    ],
+    "original_cli_exact": true,
+    "sha256": "75d14ec708c07c250c4ac0a6e77844789dc15aff2a910f78420f9010f14780bb"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1514,
+    "encode_ms": 0.6863733333333333,
+    "samples_ms": [
+      1.064784,
+      0.740936,
+      0.661237,
+      0.656947
+    ],
+    "original_cli_exact": true,
+    "sha256": "689711584869a2edd2d65d3ce72704ff9e00bcc588454b04865e57bda121c54e"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1104,
+    "encode_ms": 0.41169433333333333,
+    "samples_ms": [
+      0.763616,
+      0.437867,
+      0.398478,
+      0.398738
+    ],
+    "original_cli_exact": true,
+    "sha256": "ededa7b9a6f616941ee1f950f708bce251ad936686508fe8df9db90f0ba8f653"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 835,
+    "encode_ms": 0.28229133333333334,
+    "samples_ms": [
+      0.602947,
+      0.322048,
+      0.269738,
+      0.255088
+    ],
+    "original_cli_exact": true,
+    "sha256": "503b7e2d923d4500b8ddc8f424da39608fa17951ab61a9906ce89b0e3b410c85"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 674,
+    "encode_ms": 0.206852,
+    "samples_ms": [
+      0.499438,
+      0.238078,
+      0.192959,
+      0.189519
+    ],
+    "original_cli_exact": true,
+    "sha256": "f45390260859f7defc574909a9b6d26d3784cff73e62ed77548432b5cf252986"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 511,
+    "encode_ms": 0.17535566666666666,
+    "samples_ms": [
+      0.476078,
+      0.203239,
+      0.164029,
+      0.158799
+    ],
+    "original_cli_exact": true,
+    "sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 511,
+    "encode_ms": 0.18115900000000001,
+    "samples_ms": [
+      0.495648,
+      0.211319,
+      0.169489,
+      0.162669
+    ],
+    "original_cli_exact": true,
+    "sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 511,
+    "encode_ms": 0.180249,
+    "samples_ms": [
+      0.491527,
+      0.216659,
+      0.163039,
+      0.161049
+    ],
+    "original_cli_exact": true,
+    "sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 511,
+    "encode_ms": 0.179526,
+    "samples_ms": [
+      0.480187,
+      0.213509,
+      0.164429,
+      0.16064
+    ],
+    "original_cli_exact": true,
+    "sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50"
+  },
+  {
+    "case": "sprites2",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 511,
+    "encode_ms": 0.18028233333333332,
+    "samples_ms": [
+      0.464117,
+      0.214079,
+      0.158959,
+      0.167809
+    ],
+    "original_cli_exact": true,
+    "sha256": "d07bfb69d27e335128034b349f38578f269119078912f6ad0964b0be3b345a50"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "raw",
+    "kind": "raw",
+    "exact": true,
+    "failure": null,
+    "bytes": 196608,
+    "encode_ms": 0.010496666666666666,
+    "samples_ms": [
+      0.134919,
+      0.01599,
+      0.0081,
+      0.0074
+    ],
+    "original_cli_exact": false,
+    "sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "rle2",
+    "kind": "rle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 7038,
+    "encode_ms": 0.10109233333333333,
+    "samples_ms": [
+      0.158089,
+      0.106109,
+      0.100579,
+      0.096589
+    ],
+    "original_cli_exact": false,
+    "sha256": "3aaa4381fa330b8b5b5caca4d7f47fcf6cba9ec4b5b6e9189d1be8f2aa738e9e"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b512-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1444,
+    "encode_ms": 0.525167,
+    "samples_ms": [
+      0.789906,
+      0.556277,
+      0.514147,
+      0.505077
+    ],
+    "original_cli_exact": true,
+    "sha256": "85f2087f868e3538166f2c7a2f77c6462f29734443bb8b446a7fb005b058d325"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b1024-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1207,
+    "encode_ms": 0.3514213333333333,
+    "samples_ms": [
+      0.614587,
+      0.382208,
+      0.337928,
+      0.334128
+    ],
+    "original_cli_exact": true,
+    "sha256": "acefdae0695a08fe28e0ff0b7cb96a1f0cfaf7c9253fc03ff03fb965f5bb68a9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b2048-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 1124,
+    "encode_ms": 0.272422,
+    "samples_ms": [
+      0.561247,
+      0.297608,
+      0.267539,
+      0.252119
+    ],
+    "original_cli_exact": true,
+    "sha256": "b75935f18c6c79ab1b6b61bddb51775b1e982f546bb6f18a25dce6867e6f1e4a"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b4096-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 996,
+    "encode_ms": 0.21549866666666667,
+    "samples_ms": [
+      0.480108,
+      0.227419,
+      0.212628,
+      0.206449
+    ],
+    "original_cli_exact": true,
+    "sha256": "2df66e5517b3abf53dcddde97190973d455d770d798eb5186c807991e25e26a0"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b8192-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.18960233333333334,
+    "samples_ms": [
+      0.495237,
+      0.199389,
+      0.187839,
+      0.181579
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b16384-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.19728233333333334,
+    "samples_ms": [
+      0.496797,
+      0.220049,
+      0.191679,
+      0.180119
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b32768-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.207092,
+    "samples_ms": [
+      0.479368,
+      0.247688,
+      0.189529,
+      0.184059
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b65536-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.19678566666666666,
+    "samples_ms": [
+      0.465857,
+      0.219209,
+      0.187339,
+      0.183809
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b131072-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.19160566666666667,
+    "samples_ms": [
+      0.501097,
+      0.200859,
+      0.190699,
+      0.183259
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  },
+  {
+    "case": "retained-sprites",
+    "variant": "srle2-o4-b4259840-r1-i0",
+    "kind": "srle2",
+    "exact": true,
+    "failure": null,
+    "bytes": 937,
+    "encode_ms": 0.17189566666666667,
+    "samples_ms": [
+      0.473318,
+      0.197339,
+      0.163359,
+      0.154989
+    ],
+    "original_cli_exact": true,
+    "sha256": "8d7435d9935ac94daff8f05b17aa0716842585ff058d57b4e7220588003036e9"
+  }
+]

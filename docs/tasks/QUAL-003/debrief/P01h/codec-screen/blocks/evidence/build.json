@@ -1,0 +1,8 @@
+{
+  "source_commit": "f2fa1c9934f1ad2dba72b8db9358214e72745ab1",
+  "outputs": {
+    "codec.so": "e2c9290c6322af99e0d0ad0580ec2e7dee36d62edeb9ee6353e8f6c9511092ec",
+    "szip.js": "7ad47210e905ef3ddda2dbe2392475de3186e6308fd97f1e2a408d71a9887881",
+    "szip.wasm": "ea97f5c30472f923d9f727fb02ebd1cf5c64defd74e44715e45bfc1bf5eecde5"
+  }
+}

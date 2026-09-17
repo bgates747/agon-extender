@@ -1,0 +1,9 @@
+{
+  "seconds": 3.7734296321868896,
+  "host": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "python": "3.14.6",
+  "variants": 12,
+  "cases": 12,
+  "source_commit": "f2fa1c9934f1ad2dba72b8db9358214e72745ab1",
+  "source_sha256": "2c05228ad7759f7584e599602edc536d370b565da1a81e5f004807ab7fbd39b1"
+}

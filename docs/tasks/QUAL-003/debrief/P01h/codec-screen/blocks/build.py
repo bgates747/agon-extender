@@ -20,6 +20,7 @@ int bench_szip(int decode,const uint8_t*src,size_t n,uint8_t*dst,size_t cap,size
 }
 '''
 s=s.replace('static void *allocations[4096];','static void *allocations[4096];static size_t allocation_sizes[4096];').replace('allocations[i]=p;allocated+=n;','allocations[i]=p;allocation_sizes[i]=n;allocated+=n;').replace('heap_caps_free(p);allocations[i]=NULL;return;','allocated-=allocation_sizes[i];allocation_sizes[i]=0;heap_caps_free(p);allocations[i]=NULL;return;')
+s=s.replace('int sz_get(void)', 'static void sz_release_block(void){for(unsigned i=0;i<4096;i++)if(allocations[i]){heap_caps_free(allocations[i]);allocations[i]=NULL;allocation_sizes[i]=0;}allocated=0;p4_szip_reset_sort();}\nint sz_get(void)').replace('sz_free(buf);pos+=n;', 'sz_free(buf);sz_release_block();pos+=n;').replace('    sz_free(buf);\n   }', '    sz_free(buf);sz_release_block();\n   }')
 f.write_text(s)
 (src/'esp_heap_caps.h').write_text('#pragma once\n#undef malloc\n#undef free\n#include <stdlib.h>\n#define MALLOC_CAP_SPIRAM 0\n#define MALLOC_CAP_8BIT 0\nstatic inline void*heap_caps_malloc(size_t n,int caps){(void)caps;return malloc(n);}\nstatic inline void heap_caps_free(void*p){free(p);}\n')
 files=[str(x) for x in src.glob('*.c') if x.name!='qsort_u4.c']

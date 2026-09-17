@@ -9,7 +9,7 @@ establish P4 cache behavior or a shipping choice.
 
 ## Frozen contract
 
-1. [ ] B01 — Reuse pinned codec/corpus. Test512,1024,2048,4096,8192,16384,
+1. [x] B01 — Reuse pinned codec/corpus. Test512,1024,2048,4096,8192,16384,
    32768,65536,131072 bytes and full input, with raw/RLE2 controls. Powers of two
    span sub-kilobyte overhead through cache-sized working sets to existing limits.
    Use all12 previous cases. Native exact decode plus original CLI decode checks;
@@ -36,3 +36,15 @@ timeouts. Original sorting/model algorithms remain unchanged. This is test-only;
 production port still needs review before adopting multi-block settings. Retain
 the initial status3 evidence. A fixture mistake also tried feeding raw/RLE2
 controls to the szip CLI; corrected to check only SRLE2 streams.
+
+A01 refinement: live accounting alone did not resolve status3. The inherited
+order4 sorter has commented-out frees; its task port intentionally sweeps those
+allocations at end-of-call. Multiple small blocks retain one scratch set per
+block until then. Isolated r03 now sweeps tracked scratch and resets sort-cache
+pointers at each complete block, for encode and decode. No algorithm or wire
+format changes. Both r01/r02 failures remain evidence; r03 must pass original
+CLI decoding and browser checks before timings are interpreted.
+
+B01 complete:144/144 native combinations passed, including original CLI decode
+of all120 SRLE2 streams. The r03 build retains the same codec algorithms while
+reclaiming block-local scratch. All full-block comparisons below use r03 as well.
