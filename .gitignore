@@ -144,3 +144,6 @@ Desktop.ini
 
 # Machine-local cross-agent setup handoff
 /agentcoms.md
+
+# Local cross-agent consultation mailbox
+/zork.md
