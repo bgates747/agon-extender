@@ -9,10 +9,10 @@ voice notification. No mainboard firmware changes, Golem or production promotion
 
 ## Frozen execution contract
 
-1. [ ] I01 — Preserve incoming bench state and clear old mainboard cue. Inspect
+1. [x] I01 — Preserve incoming bench state and clear old mainboard cue. Inspect
    official P4 JPEG API and official PNG implementation, identify exact source
    dependencies and reusable indexed-PNG candidates. Record bounded research.
-2. [ ] I02 — Prepare isolated candidate and reproducible changes inside this
+2. [x] I02 — Prepare isolated candidate and reproducible changes inside this
    task. JPEG accepts expanded RGB888 (driver byte order verified), reusable for
    future RGB888 sources. Benchmark quality 80/90/95 and 4:4:4 without colour
    subsampling first. Reject malformed dimensions and avoid per-frame allocation.
@@ -48,3 +48,9 @@ Author's latest colour decision: RGB222 expands exactly to RGB888 levels
 0,85,170,255. RGB565 introduces unequal channel rounding and is out of scope.
 Official PNG API presence does not establish indexed encoding or performance;
 inspect source before selecting. Existing PNG Linux/browser work is reused.
+
+I01/I02: mainboard cue cleared through admitted CLI; actual startup preserved.
+Official JPEG and PNG source review is in RESEARCH.md. Candidate compiles with
+IDF5.5.5 and preallocated image scratch; both codecs are compiled into the same
+image, but JPEG testing precedes PNG. PNGenc retains its embedded memory
+configuration. Source preparation and browser ImageBitmap path are task-owned.
