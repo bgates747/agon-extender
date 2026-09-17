@@ -52,7 +52,7 @@ Its SRLE2 follow-up has completed the scoped [native/browser replay tasklet](doc
 1,440 exact paced frames, 22 browser edge/lifecycle checks and independent native
 codec controls pass. Original-source output/lifetime corrections are in source;
 the earlier compiled P4 image is obsolete. Browser candidate review and corrected
-P4 rebuild/runtime qualification are now authorized in the [hardware contract](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/README.md); restore saved EMOS, leave mainboard VDP stock, and change P4 firmware only thereafter.
+P4 SRLE2 hardware results are ready in the [assessment](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md): retain asset decoding; live SRLE2 is slower than matched RLE2. QUAL-003-I006 records the separate, unscheduled streaming/mode-transition issue. Final restoration and review closeout belong to the hardware contract.
 Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks

@@ -1,34 +1,55 @@
-# Initial physical codec results
+# SRLE2 physical P4 assessment
 
 ## Executive summary
 
-SRLE2 passes the initial exact-byte P4 codec controls, but is not yet qualified for live streaming. Encoding takes about 9–11 ms for sprite examples, 24–25 ms for scrolling patterns and 676 ms for noise. Unconditional live entropy encoding would therefore be unsuitable; game comparisons and asset-command qualification remain pending.
+**Keep the tested SRLE2 asset decoder; do not replace RLE2 live streaming with this SRLE2 encoder.** On matched512×384 Nurples trials, SRLE2 delivered 12.66 browser fps versus RLE2's 17.20: **-26.4% lower**, despite 75.0% smaller messages. Both maintained60 application cycles/s. The extra entropy pass costs about21ms per attempted frame in these runs. Smaller packets did not compensate for that cost.
 
-The exact saved EMOS ROM was restored and independently read back. Mainboard VDP remains stock 2.16.0, untouched. Candidate `srle2-p4-r02-b2026-09-17-02-24-44Z` was flashed and independently verified on P4. Mainboard has not been reset into EMOS yet: the mounted MOS-test card lacks the usual Extender service files, and the Author has been asked whether to prepare that card or use the usual card already in the Agon. No changes were made to the mounted card.
+The corrected P4 candidate passed39 original-golden codec controls and six routed full-frame asset checks. Hardware exposed and this task fixed an undersized command-task stack. An output-dependent mode-transition issue remains recorded separately; it invalidated the first game series. Final comparisons use one common test-only fixture with startup-owned mode20, avoiding mode changes during streaming. No EMOS source or mainboard VDP changes were required.
 
-## Codec controls
+| Output | Trials | Application mean ms / fps | Browser receipt fps | Mean message bytes |
+|---|---:|---:|---:|---:|
+| Disabled | 1 | 16.667 / 60.00 | — | — |
+| Raw | 1 | 16.667 / 60.00 | 7.39 | 196,640 |
+| RLE2 | 3 | 16.667 / 60.00 | 17.20 | 23,501 |
+| SRLE2 | 3 | 16.667 / 60.00 | 12.66 | 5,879 |
 
-Twelve original-CLI golden cases each passed P4 encode, decode and two-layer unpack: 36 controls, each with one warmup and three measured repetitions. Three bounded malformed streams were rejected, each followed by successful valid decoding. Collection took 17.53 seconds. Minimum reported HTTP-task stack reserve was 11,996 bytes. These are codec-only RPC tests, not rendering, asset command-stream or browser-output measurements.
+These are P4 variants, not a fresh mainboard comparison. No physical scanout or unique rendered-frame rate is inferred from application ticks or browser submissions.
 
-Mean of three post-warmup device timings; original golden bytes are the correctness oracle. No mainboard timing baseline is claimed.
+## Matched game trials
 
-| Case | Encode ms | Decode ms | Unpack ms | RLE2 bytes | SRLE2 bytes |
+| Pair | RLE2 receipt fps | SRLE2 receipt fps | SRLE2 change vs RLE2 | RLE2 p95 interval ms | SRLE2 p95 interval ms |
 |---|---:|---:|---:|---:|---:|
-| noise | 675.948 | 613.966 | 621.911 | 196579 | 151696 |
-| scroll2 | 25.148 | 16.908 | 23.792 | 49262 | 530 |
-| scroll1 | 24.795 | 16.889 | 23.806 | 49214 | 491 |
-| scroll0 | 23.793 | 16.881 | 23.690 | 49166 | 369 |
-| stripes | 13.438 | 8.493 | 13.622 | 24590 | 145 |
-| sprites1 | 10.813 | 6.493 | 10.121 | 15022 | 613 |
-| sprites0 | 10.811 | 6.557 | 10.212 | 15031 | 654 |
-| sprites2 | 10.809 | 6.508 | 10.167 | 15022 | 611 |
-| retained-sprites | 8.974 | 5.193 | 8.232 | 7038 | 919 |
-| solid | 6.492 | 2.975 | 5.531 | 3040 | 55 |
-| colours | 5.745 | 2.557 | 2.575 | 78 | 111 |
-| tiny | 5.474 | 2.381 | 2.390 | 15 | 46 |
+| 1 | 17.60 | 12.95 | -26.5% | 91.6 | 101.7 |
+| 2 | 16.48 | 12.67 | -23.1% | 92.1 | 101.7 |
+| 3 | 17.53 | 12.36 | -29.5% | 91.4 | 103.7 |
 
-## Next action and limits
+Each run recorded1800 cycles and1799 intervals, all two MOS120Hz ticks (16.667ms), with no VDU fault flags or browser page errors. Output cap remained30Hz. Browser statistics use a central15-second window ending5seconds before final receipt, excluding loading/completion edges. WebGL submission cadence closely followed receipt cadence; it is not monitor scanout. Raw/RLE2/SRLE2 message types were EVF1/EVR1/EVS1 respectively. Three codec trials alternated; disabled/raw each ran once. Host used its current Wi-Fi connection and headless Chromium. Historical24.55fps RLE2 is not substituted for this same-candidate control.
 
-Resolve card location/preparation, boot restored EMOS and verify keyboard/SD service, then finish H03 asset command controls before matched H04 game runs. Size-based fallback alone does not avoid the time already spent compressing a frame. Keep that distinction explicit when assessing any live-output policy. No scheduler, EMOS or mainboard VDP changes are justified by these measurements.
+Whole-observation device counters averaged roughly5.86–6.05ms per RLE2 pass and20.88–21.00ms per additional SRLE2 pass. Counter windows include startup/completion frames, unlike the central browser window. They quantify codec cost, not total rendering time, exclusive CPU time or a complete scheduling attribution. No SRLE2 failures were reported by those counters.
 
-Private deployment receipts and per-repetition timing/header evidence are retained under `agents/srle2-hardware/`; source and procedures are in this task silo. Current P4 is the diagnostic candidate, not the production baseline. No product acceptance or hardware gameplay readiness is claimed.
+## Synthetic controls
+
+| Static scene | RLE2 fps | SRLE2 fps | RLE2 message bytes | SRLE2 message bytes |
+|---|---:|---:|---:|---:|
+| incompressible | 8.56 | 3.64 | 196,640 | 1,152 |
+| raw_sprites | 29.26 | 12.02 | 7,070 | 959 |
+| bitmap_raw | 29.22 | 14.01 | 3,301 | 232 |
+
+Twenty receipts per scene/codec, first two excluded. The fixture named `incompressible` is difficult for RLE2 but highly compressible by szip; it is not random entropy noise. Independent seeded-noise RPC controls took about676ms to encode, reinforcing that this encoder cannot be run unconditionally at30Hz. Static tests use real retained browser decoding and normal EMOS-routed drawing, not HTTP-injected pixels.
+
+## Correctness, failure and correction
+
+1. Twelve golden cases × encode/decode/unpack passed exact comparison against the original szip CLI; each ran one warmup and three measured repetitions. Three bounded corruptions were rejected and each was followed by valid recovery. HTTP task minimum reported stack reserve was11,996bytes. Free-heap differences are not peak allocation measurements.
+2. Command65 two-layer CmpS→Cmpr→RGBA2222 passed full512×384 comparison for the raw reference, ordinary SRLE2, fragmented source, in-place replacement, wrong version and truncation. Invalid input preserved the existing destination. The checker includes transparent/opaque pixels; this is not exhaustive coverage of arbitrary alpha values or malicious entropy streams.
+3. r02 crashed in `processLoop`: original szip `maketable` exceeded its4096-byte stack. Captured serial panic and ELF addresses established the cause; flash coredump storage had failed. r03 increases this task to16384bytes, retaining priority/affinity. HTTP already had16384bytes. All relevant controls passed on r03. No changes to EMOS or stock mainboard VDP.
+4. The retained Nurples fixture changes title/game/exit modes. Continuous-output runs stayed at320×240; a sparse capture reached512×384. Original-startup retry reproduced the mismatch. Those timings are excluded. A one-byte test-only RET at the mode setter makes startup the sole mode owner. All final variants use that same derivative; production Nurples is unchanged. This avoids the transition issue and does not claim to fix it.
+
+## Provenance and reproduction
+
+Candidate: `srle2-p4-r03-b2026-09-17-04-05-02Z`, frozen correction commit `f17e943`. Original C codec source and licenses remain retained; wrappers/decoder live in the SRLE2 task silo. `fixed_fixture.py` verifies parent and derivative hashes. Mode20 is selected before fixture/browser startup. The parent is the retained single-vblank repair-based cadence fixture; game logic, addresses, resources and telemetry are unchanged.
+
+`evidence/codec-r03.json`, `assets-r03.json`, `synthetic-r03.json` and compressed `game-r03/` contain the scoped results. Unpack game evidence to a fresh directory and run project-local Python on `hardware/analyze.py DIRECTORY` from repository root. The parser validates1800 cycles, telemetry and512×384 central-window samples. Private controller journals, images, flash receipts and informative failed runs remain under `agents/srle2-hardware/`. Build/run identities and fixture hashes distinguish this from historical tests. This is task-scoped experimental qualification, not a released product or exhaustive decoder-security qualification.
+
+## Disposition
+
+Retain command65 asset support and reusable decoder/tests for review. Do not enable SRLE2 live output by default or spend further time tuning it in this bounded run. RLE2 remains the comparison choice. Original P4 image and original Agon startup are being restored; final restoration/voice receipt will be recorded below. The mounted MOS-test card was never modified. Restored EMOS is unchanged; mainboard VDP remains stock2.16.0. General mode-transition investigation is a separately recorded, unscheduled follow-up.

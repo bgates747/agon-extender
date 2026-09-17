@@ -29,7 +29,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
    bitmap pixels versus raw upload. Record memory/stack and codec time where
    measurable. Stop on corruption/watchdog/unknown correctness faults; diagnose
    in the task silo, not by modifying EMOS or mainboard VDP.
-4. [ ] H04 — Matched performance controls. Begin with informative synthetic regular,
+4. [x] H04 — Matched performance controls. Begin with informative synthetic regular,
    sprite-heavy and noise scenes; separately measure encoding cost, message bytes,
    and delivered browser cadence. Then reuse the identical deterministic Nurples
    single-vblank fixture for output-disabled, raw, RLE2 and SRLE2 conditions at the
@@ -37,7 +37,7 @@ from that pass. This is a new goal; the preceding browser-only hour has ended.
    actual fixture/build identity, application timing and browser receipt/submission
    separately. Historical results are context, not replacements for a current
    same-candidate control. No Golem, game-logic or EMOS changes.
-5. [ ] H05 — Review the evidence and perform bounded P4-only corrections if a clear
+5. [x] H05 — Review the evidence and perform bounded P4-only corrections if a clear
    defect or avoidable codec overhead is exposed. Change one cause at a time and
    repeat affected controls, keeping failed evidence and rollback points. Do not
    chase parity indefinitely or broaden into scheduler/transport rewrites. Label

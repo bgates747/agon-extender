@@ -1,0 +1,8 @@
+{
+  "parent_sha256": "8bd48c691b3f48289554762d99be12f75e66b7ef8ea454c4a62fe71f69559379",
+  "sha256": "68fb3d4ce4b33d7ff325781f9a76e74a87500894acb119180f2bd8e51c31b03e",
+  "offset": 5376,
+  "before": 50,
+  "after": 201,
+  "reason": "startup owns mode20; disable retained mode setter in test fixture only"
+}

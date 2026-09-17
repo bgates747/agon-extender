@@ -660,3 +660,13 @@ scanout failure and intends to provide it. The [video findings](QUAL-003/timing/
 now record the received clip; it complements the preserved callback timeout and the report of
 stage16 scanout errors. Receipt of the video does not block the independently
 scoped 39-case baseline run with the full population-stress page excluded.
+
+## QUAL-003-I006 — Mode transitions during output — recorded 2026-09-17
+
+Status: open, unscheduled, agent-identified during the authorized SRLE2 experiment.
+Retained Nurples changes modes8→20. Continuous browser output remained320×240;
+sparse capture reached512×384. Original-startup retry reproduced the mismatch.
+The codec task uses a startup-owned-mode derivative and does not fix the port.
+See [physical assessment](QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md).
+
+- [ ] Isolate command-mode handling versus snapshot metadata under continuous output, then compare against the retained product baseline before proposing a port change. Preserve original mode semantics; do not infer a mainboard defect.
