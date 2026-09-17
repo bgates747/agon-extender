@@ -1,0 +1,13 @@
+"""Prepare matched order3/order4 experiment; no bench operations."""
+from pathlib import Path
+import argparse,shutil,json,hashlib
+p=argparse.ArgumentParser();p.add_argument('base',type=Path);p.add_argument('out',type=Path);p.add_argument('--wasm',type=Path,required=True);a=p.parse_args();a.out.mkdir(exist_ok=False)
+shutil.copytree(a.base/'source',a.out/'source',symlinks=True,ignore=shutil.ignore_patterns('.git','.pio','__pycache__'))
+v=a.out/'source/vdp';(v/'.pio').mkdir();(v/'.pio/packages').symlink_to((a.base/'source/vdp/.pio/packages').resolve(),target_is_directory=True)
+s=(a.base/'platformio.ini').read_text().replace(str(a.base.resolve()),str(a.out.resolve()));(a.out/'platformio.ini').write_text(s)
+c=v/'video/extender/diagnostics/srle2';f=c/'szip.c';s=f.read_text().replace('if(order!=3 || indexlast>=buflen)','if((order!=3 && order!=4) || indexlast>=buflen)').replace('int p4_szip(int decode,','int p4_szip_order(unsigned selected_order,int decode,').replace(' *written=0;if(__sync_lock_test_and_set', ' if(selected_order!=3&&selected_order!=4)return 1;\n *written=0;if(__sync_lock_test_and_set').replace('order=3;recordsize=1;','order=selected_order;recordsize=1;');s+='\nint p4_szip(int decode,const uint8_t*src,size_t n,uint8_t*dst,size_t cap,size_t*written){return p4_szip_order(3,decode,src,n,dst,cap,written);}\n';f.write_text(s)
+f=c/'szip_p4.h';s=f.read_text().replace('int p4_szip(int decode,','int p4_szip_order(unsigned selected_order,int decode,const uint8_t*source,size_t length,uint8_t*output,size_t capacity,size_t*written);\nint p4_szip(int decode,');f.write_text(s)
+f=c/'codec_probe.hpp';s=f.read_text().replace('const bool enc=std::strcmp(query,"op=encode")==0;','const bool enc4=std::strcmp(query,"op=encode4")==0;\n  const bool enc=enc4||std::strcmp(query,"op=encode")==0;').replace(':p4_szip(dec?1:0,',':p4_szip_order(enc4?4:3,dec?1:0,');f.write_text(s)
+f=v/'video/extender/network/wired_network_service.cpp';s=f.read_text().replace('srle2_requested=false;','srle2_requested=false,srle2_order4=false;').replace('srle2_requested=std::strcmp(query,"srle2=1")==0;','srle2_order4=std::strcmp(query,"srle2=4")==0;\n  srle2_requested=srle2_order4||std::strcmp(query,"srle2=1")==0;').replace('p4_szip(0,rle2_scratch,','p4_szip_order(srle2_order4?4:3,0,rle2_scratch,');f.write_text(s)
+for name in ('szip.js','szip.wasm'):shutil.copy2(a.wasm/name,v/'video/extender/web'/name)
+(a.out/'preparation.json').write_text(json.dumps(dict(base_manifest_sha256=hashlib.sha256((a.base/'manifest.json').read_bytes()).hexdigest(),changes='Per-call selected order, explicit query, decoder accepts order4. Single full block. No scheduler/render changes.'),indent=2))
