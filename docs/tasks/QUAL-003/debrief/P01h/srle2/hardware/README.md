@@ -82,3 +82,7 @@ H02 completed: isolated candidate compiled, flashed and independently verified. 
 ## Bench resumed
 
 Author restored the Extender keyboard directive on the card physically in the Agon. Keyboard admission and SD service are verified; startup was preserved and the mainboard screen cleared. The host-mounted MOS-suite card remains untouched. Asset fixtures are staged with independent readback. Mode selection is in temporary startup; original startup will be restored at closeout.
+
+### H05 corrective iteration — processLoop stack (agent-assigned within scope)
+
+Repeated asset decoding on r02 produced a captured Stack protection fault in processLoop. ELF resolves PC 0x40051f4e to original szip maketable (sz_srt.c:329), called by sz_unsrt. Inherited command-task stack is 4096 bytes; HTTP-only tests used 16384 bytes and did not cover this caller. Set processLoop stack to 16384 bytes in isolated r03, retaining priority and affinity. Rebuild, rerun codec and complete asset controls before game testing. No EMOS/mainboard VDP changes. Preserve serial evidence; absence of a stored coredump was not absence of a crash.

@@ -4,6 +4,14 @@ import argparse,json,shutil,subprocess,sys
 p=argparse.ArgumentParser();p.add_argument('candidate',type=Path);p.add_argument('--decoder',type=Path,required=True);a=p.parse_args()
 root=Path(__file__).resolve().parent;v=a.candidate/'source/vdp';web=v/'video/extender/web';codec=v/'video/extender/diagnostics/srle2'
 shutil.copy2(root/'codec_probe.hpp',codec/'codec_probe.hpp')
+# Command65 calls original szip synchronously on processLoop, not HTTP.
+# The r02 hardware fault proved its inherited 4 KiB stack is insufficient.
+f=v/'video/video.ino';s=f.read_text()
+needle='"processLoop",\n\t\t4096,'
+assert s.count(needle)==1
+s=s.replace(needle,'"processLoop",\n\t\t16384,')
+f.write_text(s)
+
 staged=a.candidate/'web-staged'
 subprocess.run([sys.executable,str(root.parent/'web/prepare_client.py'),str(web),str(a.decoder),str(staged)],check=True)
 for f in staged.iterdir():
