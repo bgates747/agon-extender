@@ -8,7 +8,7 @@ f=v/'pio/p4-console-source-selection.json';m=json.loads(f.read_text());m['projec
 s=s.replace('-D AGON_EXTENDER_CANARY=1','-D AGON_EXTENDER_CANARY=1\n\t-I video/extender/diagnostics/image/PNGenc')
 (out/'platformio.ini').write_text(s)
 c=v/'video/extender/diagnostics/image';c.mkdir();shutil.copytree(png/'src',c/'PNGenc');shutil.copy2(png/'LICENSE',c/'PNGenc/LICENSE');shutil.copy2(root/'image_codec.hpp',c/'image_codec.hpp')
-f=v/'video/extender/network/wired_network_service.cpp';s=f.read_text();s='#include "extender/diagnostics/image/image_codec.hpp"\n'+s
+f=v/'video/extender/network/wired_network_service.cpp';s=f.read_text();s=s.replace('config.max_uri_handlers = 16','config.max_uri_handlers = 18');s='#include "extender/diagnostics/image/image_codec.hpp"\n'+s
 s=s.replace('  if(!rle2_scratch)', '  imagecodec::init();\n  if(!rle2_scratch)',1)
 s=s.replace('  httpd_uri_t srle{};', '  httpd_uri_t img{};img.uri="/diagnostics/image";img.method=HTTP_POST;img.handler=&imagecodec::handler;httpd_register_uri_handler(server,&img);\n  httpd_uri_t srle{};')
 # Match existing server member used by other handlers.

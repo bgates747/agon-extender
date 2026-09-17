@@ -54,3 +54,8 @@ Official JPEG and PNG source review is in RESEARCH.md. Candidate compiles with
 IDF5.5.5 and preallocated image scratch; both codecs are compiled into the same
 image, but JPEG testing precedes PNG. PNGenc retains its embedded memory
 configuration. Source preparation and browser ImageBitmap path are task-owned.
+
+Setup correction: initial build exhausted HTTP URI slots after adding two
+diagnostic endpoints. Server stopped before codec calls. Increase capacity by
+two; no graphics/scheduling change. Rebuild and independently verify before
+continuing. Initial boot/firmware evidence retained privately, not timing data.
