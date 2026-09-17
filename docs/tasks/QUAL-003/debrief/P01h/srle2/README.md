@@ -58,3 +58,9 @@ Author authorized and completed the [Linux replay/browser tasklet](web/README.md
 Its reusable decoder and replay suite passed native/browser qualification and are
 ready for review; see [results](web/RESULTS.md). It did not access the occupied bench. Its scoped host execution supersedes the blanket host-test
 restriction above when that tasklet proceeds; hardware remains reserved.
+
+## Hardware release supersedes earlier bench restriction
+
+Author released the bench and authorized the [physical qualification goal](hardware/README.md).
+Restore saved EMOS unchanged; keep mainboard VDP stock. The hardware contract owns
+current execution and review gates. Earlier compile-only limits are historical.
