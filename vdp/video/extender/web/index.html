@@ -13,12 +13,13 @@
       <p>EDP browser video</p>
     </header>
 
-    <section class="screen-shell">
+    <section class="screen-shell" id="video-panel">
       <canvas id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
     </section>
 
     <section class="controls">
       <button id="connect" type="button">Connect</button>
+      <button id="fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen (Esc to exit)">Fullscreen</button>
       <button id="demo" type="button">Local test pattern</button>
       <span id="state">disconnected</span>
     </section>

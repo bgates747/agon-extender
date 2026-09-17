@@ -97,3 +97,17 @@ dd { margin: 0; font-variant-numeric: tabular-nums; }
 @media (max-width: 650px) {
   .stats { grid-template-columns: 1fr 1fr; }
 }
+
+/* Fullscreen changes presentation only; preserve the 4:3 viewport and pixels. */
+.screen-shell:fullscreen {
+  width: 100vw;
+  height: 100vh;
+  margin: 0;
+  min-height: 0;
+  border: 0;
+  background: #000;
+}
+.screen-shell:fullscreen canvas {
+  width: min(100vw, calc(100vh * 4 / 3));
+  height: auto;
+}

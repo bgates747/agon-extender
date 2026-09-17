@@ -202,3 +202,22 @@ connectButton.addEventListener("click", connect);
 demoButton.addEventListener("click", startDemo);
 
 if (new URLSearchParams(location.search).has("demo")) startDemo();
+
+
+const videoPanel = document.querySelector("#video-panel");
+const fullscreenButton = document.querySelector("#fullscreen");
+fullscreenButton.disabled = !document.fullscreenEnabled;
+fullscreenButton.addEventListener("click", async () => {
+  try {
+    if (document.fullscreenElement === videoPanel) await document.exitFullscreen();
+    else await videoPanel.requestFullscreen();
+    fullscreenButton.blur();
+  } catch (error) {
+    setState(`Fullscreen unavailable: ${error.message}`);
+  }
+});
+document.addEventListener("fullscreenchange", () => {
+  const active = document.fullscreenElement === videoPanel;
+  fullscreenButton.textContent = active ? "Exit fullscreen" : "Fullscreen";
+  fullscreenButton.setAttribute("aria-label", active ? "Exit fullscreen" : "Enter fullscreen");
+});
