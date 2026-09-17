@@ -1,0 +1,74 @@
+[
+  {
+    "scene": "bitmap_raw",
+    "codec": "rle2",
+    "fps": 29.22971114197769,
+    "bytes": 3301,
+    "entropy_ms": 0.0,
+    "errors": []
+  },
+  {
+    "scene": "bitmap_raw",
+    "codec": "srle2",
+    "fps": 12.131592093082249,
+    "bytes": 232,
+    "entropy_ms": 8.788809523809523,
+    "errors": []
+  },
+  {
+    "scene": "bitmap_raw",
+    "codec": "order4",
+    "fps": 12.293896442028231,
+    "bytes": 232,
+    "entropy_ms": 8.17647619047619,
+    "errors": []
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "rle2",
+    "fps": 28.229823978604895,
+    "bytes": 7070,
+    "entropy_ms": 0.0,
+    "errors": []
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "srle2",
+    "fps": 11.997177134791814,
+    "bytes": 959,
+    "entropy_ms": 10.958761904761905,
+    "errors": []
+  },
+  {
+    "scene": "raw_sprites",
+    "codec": "order4",
+    "fps": 11.997177134791814,
+    "bytes": 977,
+    "entropy_ms": 9.84457142857143,
+    "errors": []
+  },
+  {
+    "scene": "incompressible",
+    "codec": "rle2",
+    "fps": 7.924299631764143,
+    "bytes": 196640,
+    "entropy_ms": 0.0,
+    "errors": []
+  },
+  {
+    "scene": "incompressible",
+    "codec": "srle2",
+    "fps": 4.001883239171375,
+    "bytes": 1152,
+    "entropy_ms": 174.93942857142858,
+    "errors": []
+  },
+  {
+    "scene": "incompressible",
+    "codec": "order4",
+    "fps": 5.0583194477550215,
+    "bytes": 1153,
+    "entropy_ms": 98.30671428571429,
+    "errors": []
+  }
+]

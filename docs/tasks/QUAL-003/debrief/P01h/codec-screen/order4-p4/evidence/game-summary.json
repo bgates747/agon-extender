@@ -1,0 +1,134 @@
+[
+  {
+    "codec": "RLE2",
+    "mean": {
+      "application_hz": 59.99999999999999,
+      "browser_fps": 17.25529413318595,
+      "submitted_fps": 17.28296808989363,
+      "bytes": 28458.55084243242,
+      "rle_ms": 6.194178907447223,
+      "entropy_ms": 0.0,
+      "failures": 0
+    },
+    "trials": [
+      {
+        "name": "rle1",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 16.43099981967284,
+        "submitted_fps": 16.461956083535966,
+        "bytes": 38868.1983805668,
+        "rle_ms": 6.449626733921816,
+        "entropy_ms": 0.0,
+        "failures": 0
+      },
+      {
+        "name": "rle2",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 17.717101348508944,
+        "submitted_fps": 17.766038039441,
+        "bytes": 23144.552631578947,
+        "rle_ms": 6.039972651605232,
+        "entropy_ms": 0.0,
+        "failures": 0
+      },
+      {
+        "name": "rle3",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 17.617781231376064,
+        "submitted_fps": 17.62091014670392,
+        "bytes": 23362.901515151516,
+        "rle_ms": 6.092937336814622,
+        "entropy_ms": 0.0,
+        "failures": 0
+      }
+    ]
+  },
+  {
+    "codec": "SRLE2 order3",
+    "mean": {
+      "application_hz": 59.99999999999999,
+      "browser_fps": 12.395818482218859,
+      "submitted_fps": 12.403389784373115,
+      "bytes": 5857.361497326203,
+      "rle_ms": 5.951746118928084,
+      "entropy_ms": 20.903566962005037,
+      "failures": 0
+    },
+    "trials": [
+      {
+        "name": "srle1",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 12.504453871348604,
+        "submitted_fps": 12.523607334684185,
+        "bytes": 5845.68449197861,
+        "rle_ms": 5.902439416058394,
+        "entropy_ms": 21.06168613138686,
+        "failures": 0
+      },
+      {
+        "name": "srle2",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 12.334919890058321,
+        "submitted_fps": 12.336491206890313,
+        "bytes": 5831.118918918919,
+        "rle_ms": 6.010735080058224,
+        "entropy_ms": 20.824082969432315,
+        "failures": 0
+      },
+      {
+        "name": "srle3",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 12.348081685249653,
+        "submitted_fps": 12.350070811544846,
+        "bytes": 5895.281081081081,
+        "rle_ms": 5.942063860667634,
+        "entropy_ms": 20.824931785195936,
+        "failures": 0
+      }
+    ]
+  },
+  {
+    "codec": "SRLE2 order4",
+    "mean": {
+      "application_hz": 59.99999999999999,
+      "browser_fps": 16.827633182861224,
+      "submitted_fps": 16.840183892810124,
+      "bytes": 5594.7713103979295,
+      "rle_ms": 6.023599544495407,
+      "entropy_ms": 18.52478638080076,
+      "failures": 0
+    },
+    "trials": [
+      {
+        "name": "o4a",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 12.452549759984661,
+        "submitted_fps": 12.483221476510067,
+        "bytes": 5700.754010695187,
+        "rle_ms": 5.987168302945301,
+        "entropy_ms": 18.503718092566622,
+        "failures": 0
+      },
+      {
+        "name": "o4b",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 18.89223415690736,
+        "submitted_fps": 18.905999637962665,
+        "bytes": 5527.232394366197,
+        "rle_ms": 6.126654524089306,
+        "entropy_ms": 18.53743713278496,
+        "failures": 0
+      },
+      {
+        "name": "o4c",
+        "application_hz": 59.99999999999999,
+        "browser_fps": 19.138115631691647,
+        "submitted_fps": 19.13133056395764,
+        "bytes": 5556.327526132404,
+        "rle_ms": 5.956975806451613,
+        "entropy_ms": 18.53320391705069,
+        "failures": 0
+      }
+    ]
+  }
+]

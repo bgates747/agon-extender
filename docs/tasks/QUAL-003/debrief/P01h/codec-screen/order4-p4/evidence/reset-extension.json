@@ -1,0 +1,12 @@
+{
+  "status": "failed-unplanned-P4-reboot",
+  "codec": "RLE2",
+  "completed_trials": 0,
+  "reset_saved_pc": [
+    "0x4ff0e8be xQueueGenericSend",
+    "0x4ff08a7e esp_cpu_wait_for_intr"
+  ],
+  "root_cause": "unresolved",
+  "recovery": "normal mainboard reset restored SD/keyboard; corrected static trials subsequently passed",
+  "console_sha256": "1197250a4a4195c669aa1284ea954afe9d23bc7ac094706e7934c5dcb155a57b"
+}

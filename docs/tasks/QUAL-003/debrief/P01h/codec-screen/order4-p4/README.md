@@ -16,7 +16,7 @@ VDP or change EMOS. The host-mounted MOS-suite card is out of scope.
    order3/RLE2 controls; use full-input blocks and record1/no differencing.
    Retain stack sizes, priorities, codec ownership and rendering. Build and verify
    exact before/after firmware hashes when deploying. No small-block experiments.
-3. [ ] S03 — Exact original-derived golden inputs and outputs for both orders on
+3. [x] S03 — Exact original-derived golden inputs and outputs for both orders on
    P4, including browser decode. Then matched deterministic fixed-mode Nurples
    runs, three trials per RLE2/order3/order4, plus informative static scenes.
    Record encoding time, bytes, delivered/submitted cadence and fixture timing.
@@ -52,3 +52,8 @@ mode20 startup reapplied by normal mainboard reset before each trial. This tests
 prior application/display state as a variable; it does not reset P4 or change
 firmware/scheduling. Keep both series separate. Then stop after static checks,
 restoration and report; no unbounded scheduling investigation is authorized.
+
+S03 concluded with qualified limits:78 exact codec checks, nine complete game
+trials and nine correctly sized static controls passed. Reset extension failed
+with an unplanned P4 reboot under RLE2 and is retained as unresolved, not passed.
+See RESULTS.md; no further diagnostic expansion in this task.
