@@ -1,0 +1,11 @@
+{
+  "recorded_utc": "2026-09-17T01:46:57.040441+00:00",
+  "purpose": "Final mixed-size Worker reuse and busy-admission supplement; no decoder/client changes",
+  "source_sha256": "c2214c11edb199fcaf26ae1081e6425110333aa0558d0785febe141138517f0e",
+  "complete": {
+    "complete": true,
+    "cases": 22,
+    "sends": 13,
+    "seconds": 14.857179164886475
+  }
+}

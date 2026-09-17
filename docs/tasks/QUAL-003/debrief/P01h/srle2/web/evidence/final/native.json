@@ -1,0 +1,62 @@
+[
+  {
+    "case": "colours",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "tiny",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "solid",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "stripes",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "noise",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "scroll0",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "sprites0",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "scroll1",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "sprites1",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "scroll2",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "sprites2",
+    "decode_exact": true,
+    "encode_exact": true
+  },
+  {
+    "case": "retained-sprites",
+    "decode_exact": true,
+    "encode_exact": true
+  }
+]

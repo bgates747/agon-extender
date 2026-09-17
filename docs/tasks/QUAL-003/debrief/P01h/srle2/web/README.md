@@ -8,7 +8,8 @@ producer, while the real browser decoder and presenter remain the code under
 test. This provides reusable correctness and browser-cost testing without bench
 access; it cannot establish P4 encoding cost or embedded networking performance.
 
-Status: Restarted one-hour goal; attempt a few repair/test iterations before stopping on an unresolved condition. Bench unavailable.
+Status: W01–W08 complete within the restarted one-hour goal. Native/browser scope
+passed; product promotion and P4 qualification await review/bench release.
 Parent task: P01h, SRLE2 iteration. No new top-level task namespace.
 
 ## Authorization and boundaries
@@ -65,13 +66,13 @@ The emulator is an attention cue only, not the codec under test. No Golem.
    timeout. WebSocket messages may span transport fragments; the browser API emits
    complete messages, so do not incorrectly treat TCP fragments as independent
    frames. Preserve last valid frame and recover deliberately after rejection.
-7. [ ] W07 — Measure separately: encoded bytes, worker decode ms, RLE2 expansion
+7. [x] W07 — Measure separately: encoded bytes, worker decode ms, RLE2 expansion
    ms, palette conversion/presenter submission ms, receipt cadence and allocation
    high-water where measurable. Warm up and repeat; record browser/build/machine,
    loopback versus network and sample count. Never call loopback throughput a P4
    Ethernet result, nor WebGL submission a physical-monitor refresh measurement.
    Keep raw/RLE2/SRLE2 inputs identical and use tabular comparisons.
-8. [ ] W08 — Package reusable protocol, fixtures, runner and results with one-command
+8. [x] W08 — Package reusable protocol, fixtures, runner and results with one-command
    reproduction; retain the same decoder for eventual firmware-hosted web use.
    Start in this task silo, then promote accepted infrastructure to a role-named
    location under the project documentation/testing structure. Add links, not a
@@ -119,11 +120,14 @@ Author reset the one-hour goal and authorized a few repair/test iterations for
 unexpected failures before stopping. Fix the identified output-path defect and
 continue W01–W08; bench remains unavailable. Supersedes the immediate-stop rule.
 
-Restart progress: native original/adapted encode and decode match all pinned
-corpus files. Real browser replay passes raw/RLE2/SRLE2 pixels. Negative cases and
-repeated timing controls are underway; W06–W08 remain incomplete.
+Restart completed: native original/adapted encode and decode match all pinned
+corpus files. The final packaged run passed 1,440 exact browser frame comparisons;
+22 browser edge/lifecycle controls and native stored/alpha/truncation checks pass.
+W07 tables and W08 one-command reproduction are complete. The retained implementation
+stays in this task silo until acceptance; production promotion is the later review
+gate in W08, not an unperformed authorized deployment.
 
-W06 passed20 browser negative/lifecycle cases,5 stored-block controls, asset-alpha
-preservation and45 native truncation controls. The actual client had an inherited
-browser-invalid WebSocket close1002; the staged client now uses4002. Standard
-reference and rationale are in PROTOCOL.md. Mainspace/installed firmware is unchanged.
+See [results](RESULTS.md), [tables](evidence/final/TABLES.md) and
+[one-command reproduction](REPRODUCE.md). Current source corrects the inherited
+browser-invalid close code and original-code I/O/allocation-lifetime defects.
+The earlier compiled P4 image remains obsolete; no hardware actions occurred.

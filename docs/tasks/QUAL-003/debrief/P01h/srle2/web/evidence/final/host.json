@@ -1,0 +1,7 @@
+{
+  "cpu": "AMD Ryzen AI 9 HX 370 w/ Radeon 890M",
+  "logical_cpus": 24,
+  "platform": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "renderer": "Headless Chromium with --enable-unsafe-swiftshader",
+  "bench_access": false
+}

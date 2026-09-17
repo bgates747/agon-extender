@@ -54,7 +54,7 @@ closed pending Author release.
 
 ## Bench-independent browser follow-up
 
-Author requested the [Linux replay/browser tasklet](web/README.md), now ready for
-review. It develops a reusable web decoder and replay protocol without accessing
-the occupied bench. Its scoped host execution supersedes the blanket host-test
+Author authorized and completed the [Linux replay/browser tasklet](web/README.md).
+Its reusable decoder and replay suite passed native/browser qualification and are
+ready for review; see [results](web/RESULTS.md). It did not access the occupied bench. Its scoped host execution supersedes the blanket host-test
 restriction above when that tasklet proceeds; hardware remains reserved.

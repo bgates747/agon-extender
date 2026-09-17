@@ -48,10 +48,11 @@ Larger/repeated/browser rungs stopped. Exact r43/startup restored.
 asset decoder and negotiated web encoder candidate, ready for bounded-results review.
 One matched Nurples trial recovered 30 application fps versus 12.8 with raw output.
 Remaining qualification gates and default promotion stay open; see its results.
-Its SRLE2 follow-up now compiles original szip for P4; runtime validation is
-paused because another agent owns the bench. A Linux-to-browser SRLE2 replay
-tasklet under the same task stopped on its first golden mismatch: original
-output-path adaptation is incorrect. Do not deploy SRLE2 candidate before correction.
+Its SRLE2 follow-up has completed the scoped [native/browser replay tasklet](docs/tasks/QUAL-003/debrief/P01h/srle2/web/RESULTS.md):
+1,440 exact paced frames, 22 browser edge/lifecycle checks and independent native
+codec controls pass. Original-source output/lifetime corrections are in source;
+the earlier compiled P4 image is obsolete. Browser candidate review and corrected
+P4 rebuild/runtime qualification remain pending; the bench is still reserved.
 Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks

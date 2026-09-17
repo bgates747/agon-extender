@@ -1,0 +1,160 @@
+{
+  "run": "QUAL-003-2026-09-17-01-41-50Z",
+  "started_utc": "2026-09-17T01:41:50.961428+00:00",
+  "complete": true,
+  "steps": [
+    {
+      "name": "corpus",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/corpus.py",
+        "<repo>/agents/srle2-web/qualification02/corpus"
+      ],
+      "passed": true,
+      "seconds": 0.9153180122375488
+    },
+    {
+      "name": "build",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/build_decoder.py",
+        "<repo>/agents/srle2-web/qualification02/decoder",
+        "--emcc",
+        "<repo>/agents/srle2-web/emsdk/upstream/emscripten/emcc"
+      ],
+      "passed": true,
+      "seconds": 1.616375207901001
+    },
+    {
+      "name": "client",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/prepare_client.py",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/client-source",
+        "<repo>/agents/srle2-web/qualification02/decoder",
+        "<repo>/agents/srle2-web/qualification02/client"
+      ],
+      "passed": true,
+      "seconds": 0.06434226036071777
+    },
+    {
+      "name": "native",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/native_check.py",
+        "<repo>/agents/srle2-web/qualification02/decoder/codec.so",
+        "<repo>/agents/srle2-web/qualification02/corpus",
+        "<repo>/agents/srle2-web/qualification02/native.json"
+      ],
+      "passed": true,
+      "seconds": 0.1142430305480957
+    },
+    {
+      "name": "native-edges",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/native_edges.py",
+        "<repo>/agents/srle2-web/qualification02/decoder/codec.so",
+        "<repo>/agents/srle2-web/qualification02/corpus/reference/szip",
+        "<repo>/agents/srle2-web/qualification02/native-edges"
+      ],
+      "passed": true,
+      "seconds": 0.06431436538696289
+    },
+    {
+      "name": "edges",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/edges.py",
+        "--corpus",
+        "<repo>/agents/srle2-web/qualification02/corpus",
+        "--client",
+        "<repo>/agents/srle2-web/qualification02/client",
+        "--native-edges",
+        "<repo>/agents/srle2-web/qualification02/native-edges",
+        "--output",
+        "<repo>/agents/srle2-web/qualification02/edges"
+      ],
+      "passed": true,
+      "seconds": 2.5678646564483643
+    },
+    {
+      "name": "replay1",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/replay.py",
+        "--corpus",
+        "<repo>/agents/srle2-web/qualification02/corpus",
+        "--client",
+        "<repo>/agents/srle2-web/qualification02/client",
+        "--output",
+        "<repo>/agents/srle2-web/qualification02/replay1",
+        "--count",
+        "20"
+      ],
+      "passed": true,
+      "seconds": 53.628891468048096
+    },
+    {
+      "name": "replay2",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/replay.py",
+        "--corpus",
+        "<repo>/agents/srle2-web/qualification02/corpus",
+        "--client",
+        "<repo>/agents/srle2-web/qualification02/client",
+        "--output",
+        "<repo>/agents/srle2-web/qualification02/replay2",
+        "--count",
+        "20"
+      ],
+      "passed": true,
+      "seconds": 55.43103504180908
+    },
+    {
+      "name": "report",
+      "command": [
+        "<repo>/.venv/bin/python",
+        "<repo>/docs/tasks/QUAL-003/debrief/P01h/srle2/web/report.py",
+        "<repo>/agents/srle2-web/qualification02"
+      ],
+      "passed": true,
+      "seconds": 0.06607532501220703
+    }
+  ],
+  "source_commit": "5c7a96ca1f1063642808bf92c74a5930aa9d4d84",
+  "task_sources": {
+    "port.py": "cd705ea6d86ef6820c1bd7c97dc6a2a7e9210442ceba995f63b20a07c7588580",
+    "io.h": "ff797c735ab1b3d725142f86ccea0c8f97ddcd08b6398ebbbd15221753aad0fa",
+    "asset.inc": "bbbbecc017a491d73c6012555a8a8c9e4d961bf1f3c97063205c462a8f8fe771",
+    "prepare.py": "1aa287c1e5f71b0c1c2a0c1129c7886a58ed5c0d9bf887e19d8e86c7f1a2cc56",
+    "entry.inc": "9f75d16e100e43d245e2fdb439602127c475600bb7d067046cc7958cff0f830b",
+    "build.py": "93474ebc7701b8305255627f6100facd50aa3e8f4827a72d9a9529257c99fac1",
+    "szip_p4.h": "bb10b3bd5bc5cc4f64504ad3236f2980357612d6f9192315e10d046a56c68dbb",
+    "vendor/sz_srt.h": "9567a8b6f97b10ac3ecd0e5a93fe80a515b9abdb8743d7bc511a9121530fd94c",
+    "vendor/sz_mod4.h": "1172ee8560dd236e601ea6af7235d44749163384d13c0de43317dbcfd3e9dce8",
+    "vendor/szip.h": "c467eb0bad60e79bb833fdd43f48cf0defd99bbed505442f7cc44381d1ff4710",
+    "vendor/reorder.h": "c1bef426ea58604f435eb1627d993f6e12ce4d7ecf995cb5845789b3dc6aded4",
+    "vendor/qsmodel.h": "ed1d3b6d957a02c4f219252d96770701018b921f2efed59ecf238deff054f702",
+    "vendor/rangecod.h": "eb3d86480ebf44a1ba521aa5967d09d6e0edc3a25a30ec8cdaef6117ac23e10c",
+    "vendor/sz_err.h": "beae5b4791f99233ec11bd553e60f1a4e081d28d7e8faf51f5a5393e9eb56d75",
+    "vendor/port.h": "db78d05d229bee425c585c9632fa5082ff0eb63586e603061e0ca34bab0083d1",
+    "vendor/bitmodel.h": "ad31e9ca5468e9bab57406ca1f7411ce2c103a74bfd6aae2be64295246c30b3b",
+    "web/native_edges.py": "00376c38fa2c92661d34b308fa20949860991560201ce3d3b1ff12043b12a1b5",
+    "web/edges.py": "e9798203bfb908712d63f56c9af504120129f74dae3c3cc159b6e1e527cff1ff",
+    "web/prepare_client.py": "50fb38e2d244d368ba13793591ff52319240ba544559352d17bd66835ded0b06",
+    "web/report.py": "eb721c91c490f5277250fd985a5f6630287857a6788e48b4de5b2cf131c1300c",
+    "web/build_decoder.py": "5675ad562f9c3ac488f6ad60b86ce0d6ae0795a280bdb9f816c07a88e217d1dc",
+    "web/native_check.py": "a908e726f0e34b90fb00fa313de7dcd51b6b9007c653ae3fea499c63c0153a59",
+    "web/decoder-worker.js": "28c831feaa437a0e29015386e3f5292c4104402c6e10073e93fd33230afdaa33",
+    "web/run_all.py": "e64dbbed088cc3a1b5d9dd0d1ae140abbb79fab59b97a218c141845415cd17a7",
+    "web/replay.py": "27becfec37d84430e92c3e178a8a546e654ffc46cbdffee2b066be03ea662c76",
+    "web/corpus.py": "1fd3b0646e7bba33eed35e5f88d4a56a1e5b1c83a30d9c518795952dd2e42afa",
+    "web/decoder.js": "f905c764ddf4fcce6812b6a80593f1804efa74fa811d33a95e1f7899f136a6ac",
+    "web/client-source/webgl2_presenter.js": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2",
+    "web/client-source/app.js": "8af962d7a51a967122dd4cf4a71534a83cbb487f38ed5ccdf7fcbcc1ac4863e5",
+    "web/client-source/frame_protocol.js": "72bca3b814bbf0b2d4dbc0dc0016e13d813e43a42a45c89617531e2937d8762c"
+  },
+  "seconds": 114.4762659072876
+}

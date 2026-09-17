@@ -1,0 +1,128 @@
+[
+  {
+    "case": "short",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "truncated",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "asset-alpha-not-composed-frame",
+    "passed": true,
+    "error": "Invalid EVR1/RLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "zero-width",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "bad-version",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "bad-szip-version",
+    "passed": true,
+    "error": "Szip decode failed (1)",
+    "bytes": 96
+  },
+  {
+    "case": "bad-order",
+    "passed": true,
+    "error": "Szip decode failed (1)",
+    "bytes": 96
+  },
+  {
+    "case": "bad-index",
+    "passed": true,
+    "error": "Szip decode failed (1)",
+    "bytes": 96
+  },
+  {
+    "case": "bad-mid",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "reserved",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "bad-encoded-size",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "oversized-width",
+    "passed": true,
+    "error": "Invalid EVS1/SRLE2 frame",
+    "bytes": 96
+  },
+  {
+    "case": "bad-record-size",
+    "passed": true,
+    "error": "Szip decode failed (1)",
+    "bytes": 96
+  },
+  {
+    "case": "worker-timeout-page-responsive",
+    "passed": true,
+    "error": "Decoder timeout",
+    "ticks": 17
+  },
+  {
+    "case": "mixed-fixture-worker-reuse",
+    "passed": true,
+    "frames": 24
+  },
+  {
+    "case": "single-inflight-admission",
+    "passed": true
+  },
+  {
+    "case": "client-fragment",
+    "passed": true,
+    "frames": 3
+  },
+  {
+    "case": "client-slow",
+    "passed": true,
+    "frames": 3
+  },
+  {
+    "case": "client-bad-after-valid",
+    "passed": true,
+    "frames": 1
+  },
+  {
+    "case": "client-valid",
+    "passed": true,
+    "frames": 3
+  },
+  {
+    "case": "slow-consumer-credit",
+    "passed": true,
+    "before": 0,
+    "after": 1,
+    "held": 1
+  },
+  {
+    "case": "takeover-and-raw-fallback",
+    "passed": true,
+    "magic": "EVF1",
+    "close": 1000
+  }
+]

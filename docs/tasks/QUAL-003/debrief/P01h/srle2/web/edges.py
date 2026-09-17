@@ -48,6 +48,13 @@ async def run(a):
      got=await page.evaluate('''async ({data,valid})=>{const {FrameDecoder}=await import('./decoder.js');const d=new FrameDecoder();let error='';try{await d.decode(new Uint8Array(data).buffer);}catch(e){error=e.message;}if(!error)throw Error('bad frame accepted');const good=await d.decode(new Uint8Array(valid).buffer);d.reset();return {error,bytes:good.buffer.byteLength};}''',dict(data=list(data),valid=list(valid)))
      assert got['bytes']==len(raw);record(name,**got)
     timeout=await page.evaluate('''async()=>{const {FrameDecoder}=await import('./decoder.js');let ticks=0;const timer=setInterval(()=>ticks++,5);const d=new FrameDecoder({timeoutMs:80,workerURL:new URL('/hung.js',location.href)});let error='';try{await d.decode(new TextEncoder().encode('EVS1').buffer);}catch(e){error=e.message;}clearInterval(timer);d.reset();return {error,ticks};}''');assert timeout['error']=='Decoder timeout' and timeout['ticks']>1;record('worker-timeout-page-responsive',**timeout)
+    # A single Worker must survive changing sizes and sort histories, not only identical frames.
+    await page.evaluate("async()=>{const {FrameDecoder}=await import('./decoder.js');window.mixedDecoder=new FrameDecoder();}")
+    for mixed in manifest+list(reversed(manifest)):
+     b=packet(mixed,a.corpus,'srle2',0);expected=(a.corpus/mixed['name']/'raw.bin').read_bytes()
+     exact=await page.evaluate('''async({data,expected})=>{const {parseFrame}=await import('./frame_protocol.js');const d=await window.mixedDecoder.decode(new Uint8Array(data).buffer);const p=parseFrame(d.buffer).pixels;return p.length===expected.length&&p.every((v,i)=>v===expected[i]);}''',dict(data=list(b),expected=list(expected)));assert exact,mixed['name']
+    await page.evaluate('window.mixedDecoder.reset()');record('mixed-fixture-worker-reuse',frames=2*len(manifest))
+    busy=await page.evaluate('''async(data)=>{const {FrameDecoder}=await import('./decoder.js');const d=new FrameDecoder();const a=d.decode(new Uint8Array(data).buffer);let error='';try{await d.decode(new Uint8Array(data).buffer);}catch(e){error=e.message;}await a;d.reset();return error;}''',list(valid));assert busy=='Decoder busy';record('single-inflight-admission')
     # Actual retained page: fragmented transport, slow source, protocol rejection and reconnect.
     for selected in ('fragment','slow','bad-after-valid','valid'):
      mode=selected;await page.goto(url);await page.evaluate("window.seen=[];window.addEventListener('agon-frame-decoded',e=>window.seen.push(Array.from(e.detail.pixels)));")

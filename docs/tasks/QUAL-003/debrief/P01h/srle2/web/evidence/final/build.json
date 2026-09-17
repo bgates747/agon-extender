@@ -1,0 +1,30 @@
+{
+  "args": [
+    "<repo>/agents/srle2-web/emsdk/upstream/emscripten/emcc",
+    "-O2",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/bitmodel.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/szip.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/reorder.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/rangecod.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/sz_srt.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/qsmodel.c",
+    "<repo>/agents/srle2-web/qualification02/decoder/c/sz_mod4.c",
+    "-I<repo>/agents/srle2-web/qualification02/decoder/c",
+    "-sMODULARIZE=1",
+    "-sEXPORT_ES6=1",
+    "-sENVIRONMENT=worker",
+    "-sEXPORT_NAME=createSzip",
+    "-sINITIAL_MEMORY=67108864",
+    "-sSTACK_SIZE=2097152",
+    "-sALLOW_MEMORY_GROWTH=0",
+    "-sEXPORTED_FUNCTIONS=[\"_p4_szip\",\"_malloc\",\"_free\"]",
+    "-sEXPORTED_RUNTIME_METHODS=[\"HEAPU8\",\"HEAPU32\"]",
+    "-o",
+    "<repo>/agents/srle2-web/qualification02/decoder/szip.js"
+  ],
+  "outputs": {
+    "codec.so": "3fa0aa38a763157fee303cdb8fd7afdd197110585fb8f428ef83e8570bb53a38",
+    "szip.js": "9129ae682b4677281fddd3d4d73a4555e1b048a752ebdd54b00f055fe7db2aca",
+    "szip.wasm": "f984aae9dba4b0d734edd628aaefe957cdd9e2005a118742a6c0a6f23366aa44"
+  }
+}

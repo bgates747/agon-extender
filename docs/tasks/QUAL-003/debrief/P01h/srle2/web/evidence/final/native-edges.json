@@ -1,0 +1,31 @@
+[
+  {
+    "case": "stored-1",
+    "passed": true
+  },
+  {
+    "case": "stored-2",
+    "passed": true
+  },
+  {
+    "case": "stored-3",
+    "passed": true
+  },
+  {
+    "case": "stored-4",
+    "passed": true
+  },
+  {
+    "case": "stored-5",
+    "passed": true
+  },
+  {
+    "case": "asset-alpha-preserved-outer-layer",
+    "passed": true
+  },
+  {
+    "case": "all-truncations",
+    "count": 45,
+    "passed": true
+  }
+]

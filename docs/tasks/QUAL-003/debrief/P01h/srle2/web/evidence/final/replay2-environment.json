@@ -1,0 +1,11 @@
+{
+  "browser": "151.0.7922.34",
+  "platform": "Linux-7.1.5-76070105-generic-x86_64-with-glibc2.39",
+  "transport": "loopback",
+  "forced_codec": true,
+  "palette_conversion": "GPU shader; inseparable from presentation submission",
+  "pace": 30,
+  "count": 20,
+  "seconds": 55.1672797203064,
+  "errors": []
+}

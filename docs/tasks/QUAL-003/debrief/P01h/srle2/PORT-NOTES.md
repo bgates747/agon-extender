@@ -2,21 +2,22 @@
 
 ## Executive summary
 
-This is an untested P4 C port of the pinned szip1.12 code, not a clean-sheet entropy
-codec. Firmware compilation is the only validation authorized for this iteration.
-Original vendor files remain byte-for-byte intact; port.py generates modifications.
+This is a P4 C port of pinned szip1.12, with subsequent exact native/browser
+validation of its generated codec. P4 runtime remains untested and the earlier
+compiled image is obsolete. See [browser results](web/RESULTS.md). Original vendor
+files remain byte-for-byte intact; port.py generates modifications.
 
 1. Historical Agon sources prepend uppercase CmpS/LE32 length to SZ 0A 04 01 0C.
    The mainboard decoder requires exactly1.12. Command65 decodes a single layer;
    use two calls for SRLE2. No command67 alias or new opcode is introduced.
-2. **Correction from host testing:** the reinstated fwrite is erroneous: sz_unsrt
-   already writes through putc for NULL output, and putc is missing from io.h
-   redirects. See web/RESULTS.md; the following original rationale is superseded.
-   Agon utility sources already contain local changes, including cached sort
-   allocations and a commented-out output write in the recordsize1 decoder.
-   The generated adapter reinstates that write and owns cleanup of every tracked
-   allocation at invocation end. Original notices remain with source; GPL notices
-   in range/model modules are not replaced by the project's general license.
+2. Host testing corrected the output path: sz_unsrt(NULL) already emits through
+   putc, so the caller must not append its work buffer. io.h redirects putc/getc
+   as well as getchar/putchar/fread/fwrite/ungetc into bounded memory. fprintf
+   diagnostics are suppressed; exit/abort return through the C error boundary.
+   Invocation cleanup also requires removing retained function-local static sort
+   pointers; they are now local, and the remaining global sort cache is reset.
+   Native golden encode/decode and repeated browser fixtures pass. Original GPL
+   notices remain with the pinned range/model modules and staged web assets.
 3. Original model/sort/range arithmetic stays in C compiled for RISC-V. Fixed
    uint16_t/uint32_t replace host-specific u_int types. CMake applies C++17 only
    to C++ translation units. No Xtensa assembly or speculative P4 SIMD used.
