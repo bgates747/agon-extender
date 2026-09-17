@@ -51,3 +51,10 @@ qsort_u4.c is included by sz_srt.c, not compiled a second time. No upload target
 
 Compile-only phase complete; see [RESULTS.md](RESULTS.md). Runtime gates remain
 closed pending Author release.
+
+## Bench-independent browser follow-up
+
+Author requested the [Linux replay/browser tasklet](web/README.md), now ready for
+review. It develops a reusable web decoder and replay protocol without accessing
+the occupied bench. Its scoped host execution supersedes the blanket host-test
+restriction above when that tasklet proceeds; hardware remains reserved.

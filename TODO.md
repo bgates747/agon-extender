@@ -49,7 +49,8 @@ asset decoder and negotiated web encoder candidate, ready for bounded-results re
 One matched Nurples trial recovered 30 application fps versus 12.8 with raw output.
 Remaining qualification gates and default promotion stay open; see its results.
 Its SRLE2 follow-up now compiles original szip for P4; runtime validation is
-paused because another agent owns the bench.
+paused because another agent owns the bench. A Linux-to-browser SRLE2 replay
+tasklet under the same task is prepared for review.
 Golem excluded; no experimental push.
 
 ## Current Author-directed sequence — Audits before game benchmarks
