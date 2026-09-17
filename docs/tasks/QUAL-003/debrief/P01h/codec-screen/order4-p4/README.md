@@ -9,9 +9,9 @@ VDP or change EMOS. The host-mounted MOS-suite card is out of scope.
 
 ## Frozen contract
 
-1. [ ] S01 — Verify current stable P4 identity, baseline/startup and controller
+1. [x] S01 — Verify current stable P4 identity, baseline/startup and controller
    readiness; preserve rollback; clear mainboard screen through admitted CLI.
-2. [ ] S02 — Clone retained qualified SRLE2 r03 into this task's private candidate.
+2. [x] S02 — Clone retained qualified SRLE2 r03 into this task's private candidate.
    Add explicit order4 encode entry and query selection alongside unchanged
    order3/RLE2 controls; use full-input blocks and record1/no differencing.
    Retain stack sizes, priorities, codec ownership and rendering. Build and verify
@@ -28,3 +28,10 @@ VDP or change EMOS. The host-mounted MOS-suite card is out of scope.
 Original reference tests: ../../srle2/hardware/README.md. Current local bench
 state and identities: HARDWARE.local.md. All operations use the card in the Agon.
 No Golem, EMOS, mainboard VDP, production games or graphics scheduling changes.
+
+S01/S02 complete: actual startup preserved and screen cleared. Stable USB identity
+verified; before-image matched restored product baseline, candidate independently
+verified after flash. One image owns RLE2, srle2=1/order3 and srle2=4/order4.
+The existing command and HTTP stack sizes remain16KiB; no small-block cleanup
+change is needed in this single-block encoder. Decoder Wasm is the qualified
+order4-capable host build. No mainboard VDP or EMOS changes.
