@@ -141,3 +141,6 @@ Desktop.ini
 !/vdp/vendor/**
 
 /tests/fixtures/visible-text/obj/
+
+# Machine-local cross-agent setup handoff
+/agentcoms.md
