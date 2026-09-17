@@ -41,3 +41,14 @@ S03 setup correction: the first static-scene run inherited restored mode3
 so those timing rows are excluded. Run valid fixed-mode game startup first, then
 repeat static scenes in the resulting512×384 mode with a hard geometry assertion.
 This is a fixture-ordering correction, not a renderer or codec fix.
+
+## Agent-assigned S03 extension — reset-before-run controls
+
+The three order4 game trials yielded12.45,18.89,19.14 received fps, with no
+codec failures and60 application cycles/s. RLE2 yielded16.43–17.72 and order3
+12.33–12.50. Do not hide this bimodality in an average or claim a stable win.
+Add one RLE2, one order3 and two order4 trials with the same existing temporary
+mode20 startup reapplied by normal mainboard reset before each trial. This tests
+prior application/display state as a variable; it does not reset P4 or change
+firmware/scheduling. Keep both series separate. Then stop after static checks,
+restoration and report; no unbounded scheduling investigation is authorized.
