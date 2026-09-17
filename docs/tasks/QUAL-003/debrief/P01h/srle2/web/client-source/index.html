@@ -1,0 +1,45 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Agon Extender Video</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+<body>
+  <main>
+    <header>
+      <h1>Agon Extender</h1>
+      <p>EDP browser video</p>
+    </header>
+
+    <section class="screen-shell">
+      <canvas id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
+    </section>
+
+    <section class="controls">
+      <button id="connect" type="button">Connect</button>
+      <button id="demo" type="button">Local test pattern</button>
+      <span id="state">disconnected</span>
+    </section>
+
+    <dl class="stats">
+      <div><dt>Sequence</dt><dd id="sequence">—</dd></div>
+      <div><dt>Surface</dt><dd id="surface">—</dd></div>
+      <div><dt>Stride</dt><dd id="stride">—</dd></div>
+      <div><dt>Period</dt><dd id="period">—</dd></div>
+      <div><dt>Received</dt><dd id="received">0</dd></div>
+      <div><dt>Presented</dt><dd id="presented">0</dd></div>
+      <div><dt>Presented fps</dt><dd id="fps">—</dd></div>
+      <div><dt>Sequence gaps</dt><dd id="gaps">0</dd></div>
+    </dl>
+
+    <p class="note">
+      EDP/P4 composes the final image. This browser presents pixels;
+      it does not reproduce VDP palette, Copper, sprite, or cursor behavior.
+    </p>
+  </main>
+
+  <script type="module" src="./app.js"></script>
+</body>
+</html>

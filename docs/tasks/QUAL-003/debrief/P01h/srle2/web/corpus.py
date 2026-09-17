@@ -32,5 +32,5 @@ for name,w,h,raw in cases:
  subprocess.run([str((src/'szip').resolve()),'-b41o3',str((d/'rle2.bin').resolve()),str((d/'srle2.bin').resolve())],check=True,timeout=20,stdout=subprocess.DEVNULL,stderr=(d/'encoder.log').open('w'))
  subprocess.run([str((src/'szip').resolve()),'-d',str((d/'srle2.bin').resolve()),str((d/'decoded-rle2.bin').resolve())],check=True,timeout=20,stdout=subprocess.DEVNULL,stderr=(d/'decoder.log').open('w'))
  assert (d/'decoded-rle2.bin').read_bytes()==(d/'rle2.bin').read_bytes(),name
- manifest.append(dict(name=name,width=w,height=h,stride=w,format=2,seed='0x53524c32',files={n:dict(bytes=(d/(n+'.bin')).stat().st_size,sha256=hashlib.sha256((d/(n+'.bin')).read_bytes()).hexdigest()) for n in ('raw','rle2','srle2')}))
+ manifest.append(dict(name=name,width=w,height=h,stride=w,format=2,source=('retained P01h task-owned raw_sprites-r06.evf.gz' if name=='retained-sprites' else 'corpus.py deterministic synthetic generator'),seed='0x53524c32',files={n:dict(bytes=(d/(n+'.bin')).stat().st_size,sha256=hashlib.sha256((d/(n+'.bin')).read_bytes()).hexdigest()) for n in ('raw','rle2','srle2')}))
  (out/'manifest.json').write_text(json.dumps(manifest,indent=2)+'\n');print(name,'golden PASS',flush=True)

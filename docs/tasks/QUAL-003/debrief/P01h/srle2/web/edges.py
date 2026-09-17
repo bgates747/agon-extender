@@ -9,7 +9,7 @@ def fragment(data,opcode,fin):
  n=len(data);h=bytes([(128 if fin else 0)|opcode]);return h+(bytes([n]) if n<126 else b'\x7e'+struct.pack('>H',n) if n<65536 else b'\x7f'+struct.pack('>Q',n))+data
 
 async def run(a):
- a.output.mkdir(exist_ok=False);manifest=json.loads((a.corpus/'manifest.json').read_text());case=manifest[0];valid=packet(case,a.corpus,'srle2',0);raw=packet(case,a.corpus,'raw',0);active=None;mode='valid';sends=0;result=[]
+ a.output.mkdir(exist_ok=False);manifest=json.loads((a.corpus/'manifest.json').read_text());case=manifest[0];valid=packet(case,a.corpus,'srle2',0);raw=packet(case,a.corpus,'raw',0);active=None;mode='valid';sends=0;result=[];started=time.time()
  async def socket(req):
   nonlocal active,sends
   ws=web.WebSocketResponse();await ws.prepare(req)
@@ -37,9 +37,12 @@ async def run(a):
   async with async_playwright() as pw:
    browser=await pw.chromium.launch(headless=True,args=['--enable-unsafe-swiftshader'])
    try:
-    page=await browser.new_page();await page.goto(url)
+    page=await browser.new_page()
+    await page.add_init_script("window.wss=[];const N=WebSocket;window.WebSocket=class extends N{constructor(...a){super(...a);window.wss.push(this);}};")
+    await page.goto(url)
     mutations={'short':b'EVS1','truncated':valid[:-1]}
-    for name,offset,values in [('zero-width',12,b'\0\0'),('bad-version',4,b'\2'),('bad-szip-version',53,b'\x7f'),('bad-order',64,b'\xff'),('bad-index',61,b'\xff\xff\xff'),('bad-mid',36,b'\xff\xff\xff\x7f'),('reserved',28,b'\1'),('bad-encoded-size',32,b'\0\0\0\0')]:
+    alpha=(a.native_edges/'alpha.srle2').read_bytes();b=bytearray(valid[:40]);struct.pack_into('<HHII',b,12,3,1,3,3);struct.pack_into('<II',b,32,len(alpha),16);mutations['asset-alpha-not-composed-frame']=bytes(b)+alpha
+    for name,offset,values in [('zero-width',12,b'\0\0'),('bad-version',4,b'\2'),('bad-szip-version',53,b'\x7f'),('bad-order',64,b'\xff'),('bad-index',61,b'\xff\xff\xff'),('bad-mid',36,b'\xff\xff\xff\x7f'),('reserved',28,b'\1'),('bad-encoded-size',32,b'\0\0\0\0'),('oversized-width',12,b'\x01\x02'),('bad-record-size',65,b'\x02')]:
      b=bytearray(valid);b[offset:offset+len(values)]=values;mutations[name]=bytes(b)
     for name,data in mutations.items():
      got=await page.evaluate('''async ({data,valid})=>{const {FrameDecoder}=await import('./decoder.js');const d=new FrameDecoder();let error='';try{await d.decode(new Uint8Array(data).buffer);}catch(e){error=e.message;}if(!error)throw Error('bad frame accepted');const good=await d.decode(new Uint8Array(valid).buffer);d.reset();return {error,bytes:good.buffer.byteLength};}''',dict(data=list(data),valid=list(valid)))
@@ -52,19 +55,26 @@ async def run(a):
      expected=1 if selected=='bad-after-valid' else 3
      await page.wait_for_function('(n)=>window.seen.length>=n',arg=expected,timeout=15000)
      if selected=='bad-after-valid':
-      await page.wait_for_function("document.querySelector('#state').textContent==='disconnected'",timeout=5000)
+      try:await page.wait_for_function("document.querySelector('#state').textContent==='disconnected'",timeout=10000)
+      except Exception:
+       (a.output/'unexpected-state.json').write_text(json.dumps(await page.evaluate("({state:document.querySelector('#state').textContent,seen:window.seen.length,sockets:window.wss.map(x=>x.readyState)})")));await page.screenshot(path=str(a.output/'unexpected.png'));raise
       count=await page.evaluate('window.seen.length');assert count==1
+      assert await page.evaluate('window.wss[0].readyState')==3
+      await page.screenshot(path=str(a.output/'last-valid-frame-retained.png'))
      pixels=await page.evaluate('window.seen');assert all(bytes(x)==(a.corpus/case['name']/'raw.bin').read_bytes() for x in pixels)
      record('client-'+selected,frames=len(pixels))
+    # Withhold credit: producer must not send unsolicited frames or queue growth.
+    mode='valid'
+    slow=await page.evaluate('''async()=>{const s=new WebSocket(location.origin.replace('http','ws')+'/video');s.binaryType='arraybuffer';let n=0;s.onmessage=()=>n++;await new Promise(r=>s.onopen=r);await new Promise(r=>setTimeout(r,100));const before=n;s.send('frame');await new Promise(r=>setTimeout(r,200));const after=n;await new Promise(r=>setTimeout(r,200));const held=n;s.close();return {before,after,held};}''');assert slow==dict(before=0,after=1,held=1);record('slow-consumer-credit',**slow)
     # Non-negotiating clients receive raw; second connection displaces first.
     mode='valid'
     lifecycle=await page.evaluate('''async()=>{const url=location.origin.replace('http','ws')+'/video';const a=new WebSocket(url);a.binaryType='arraybuffer';await new Promise(r=>a.onopen=r);const closed=new Promise(r=>a.onclose=e=>r(e.code));const b=new WebSocket(url);b.binaryType='arraybuffer';await new Promise(r=>b.onopen=r);const next=new Promise(r=>b.onmessage=e=>r(String.fromCharCode(...new Uint8Array(e.data,0,4))));b.send('frame');const magic=await next;const close=await closed;b.close();return {magic,close};}''');assert lifecycle==dict(magic='EVF1',close=1000);record('takeover-and-raw-fallback',**lifecycle)
-    (a.output/'complete.json').write_text(json.dumps(dict(complete=True,cases=len(result),sends=sends))+'\n')
+    (a.output/'complete.json').write_text(json.dumps(dict(complete=True,cases=len(result),sends=sends,seconds=time.time()-started))+'\n')
    finally:await browser.close()
  finally:
   if active is not None:await active.close()
   await runner.cleanup()
 if __name__=='__main__':
- p=argparse.ArgumentParser();p.add_argument('--corpus',type=Path,required=True);p.add_argument('--client',type=Path,required=True);p.add_argument('--output',type=Path,required=True);a=p.parse_args()
+ p=argparse.ArgumentParser();p.add_argument('--corpus',type=Path,required=True);p.add_argument('--client',type=Path,required=True);p.add_argument('--output',type=Path,required=True);p.add_argument('--native-edges',type=Path,required=True);a=p.parse_args()
  try:asyncio.run(asyncio.wait_for(run(a),180))
  except Exception as e:a.output.mkdir(exist_ok=True);(a.output/'failure.json').write_text(json.dumps(dict(error=str(e),type=type(e).__name__))+'\n');raise

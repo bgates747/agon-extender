@@ -1,4 +1,4 @@
-"""Generate P4 C sources from pinned vendor bytes; compilation only, no execution."""
+"""Generate P4 C sources from pinned vendor bytes; shared by firmware and isolated host tests."""
 from pathlib import Path
 import shutil,sys
 root=Path(__file__).resolve().parent;out=Path(sys.argv[1]);out.mkdir(parents=True,exist_ok=True)
@@ -13,7 +13,7 @@ for p in out.glob('*.c'):
  s='#include <stdio.h>\n#include <stdlib.h>\n#include <string.h>\n#include <ctype.h>\n#include <sys/stat.h>\n#include "io.h"\n'+s
  if p.name=='szip.c':
   s=s[:s.index('static void compressit()')]
-  # Original local codec kept the model on stack and omitted output for r1.
+  # Move the original local model off the embedded task stack.
   s=s.replace('sz_model m;','sz_model *model = (sz_model*) sz_alloc(sizeof(sz_model));\n#define m (*model)')
   s=s.replace('deletemodel(&m);','deletemodel(&m);\n    sz_free(model);\n#undef m')
   # sz_unsrt(NULL) already emits via putc; do not append its work buffer.

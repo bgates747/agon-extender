@@ -2,8 +2,11 @@
   "emscripten_version": "4.0.23",
   "emsdk_commit": "c59d6e841da55c2c21af32004c4c173cbd1c0f10",
   "installed": true,
-  "activated": false,
+  "activated": true,
   "tests_run": [
-    "Linux first golden reference roundtrip (failed)"
+    "Original Linux CLI golden corpus (12 pass)",
+    "Adapted native encode/decode (12 exact pass)",
+    "Browser raw/RLE2/SRLE2 pixel comparisons",
+    "Malformed/lifecycle/resource tests"
   ]
 }

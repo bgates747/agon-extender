@@ -8,7 +8,7 @@ producer, while the real browser decoder and presenter remain the code under
 test. This provides reusable correctness and browser-cost testing without bench
 access; it cannot establish P4 encoding cost or embedded networking performance.
 
-Status: Author approved execution as a one-hour goal; stop on unexpected conditions or questions.
+Status: Restarted one-hour goal; attempt a few repair/test iterations before stopping on an unresolved condition. Bench unavailable.
 Parent task: P01h, SRLE2 iteration. No new top-level task namespace.
 
 ## Authorization and boundaries
@@ -59,7 +59,7 @@ The emulator is an attention cue only, not the codec under test. No Golem.
    alpha rules for assets versus opaque composed frames, raw fallback, consecutive
    frames, reconnect and client takeover. Capture exact mismatch coordinates and
    byte hashes; screenshots supplement, never replace, byte comparisons.
-6. [ ] W06 — Negative cases and resource limits. Exercise truncation, corrupt
+6. [x] W06 — Negative cases and resource limits. Exercise truncation, corrupt
    headers/version/length, invalid sort index/order/record size, oversized output,
    partial messages at the correct transport layer, slow consumers and decode
    timeout. WebSocket messages may span transport fragments; the browser API emits
@@ -107,11 +107,11 @@ tests are now authorized; bench remains unavailable. Missing WebAssembly tooling
 is an anticipated W03 setup item: install an isolated pinned official SDK locally.
 Notify with emulator spoken cue on success or unexpected stop. No hardware actions.
 
-## Unexpected stop
+## Historical first stop (superseded by restart)
 
 Execution paused at the first W01 golden mismatch; see [RESULTS.md](RESULTS.md).
 Compiled P4 candidate is unsuitable for deployment pending the identified output
-path correction. Awaiting Author direction; no hardware access or silent fix.
+path correction. Author subsequently authorized correction and continuation below. No hardware access.
 
 ## Restart authorization
 
@@ -122,3 +122,8 @@ continue W01–W08; bench remains unavailable. Supersedes the immediate-stop rul
 Restart progress: native original/adapted encode and decode match all pinned
 corpus files. Real browser replay passes raw/RLE2/SRLE2 pixels. Negative cases and
 repeated timing controls are underway; W06–W08 remain incomplete.
+
+W06 passed20 browser negative/lifecycle cases,5 stored-block controls, asset-alpha
+preservation and45 native truncation controls. The actual client had an inherited
+browser-invalid WebSocket close1002; the staged client now uses4002. Standard
+reference and rationale are in PROTOCOL.md. Mainspace/installed firmware is unchanged.

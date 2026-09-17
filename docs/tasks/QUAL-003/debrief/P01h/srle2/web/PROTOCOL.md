@@ -26,3 +26,7 @@ A server may select raw when compression does not reduce the complete message.
 A diagnostic corpus can force a codec for comparison, identified in run metadata;
 that is not production selection policy. Replay completion is recorded by the
 harness; no new in-band text message is added to the production frame protocol.
+
+Browser protocol rejection uses private close code4002. The inherited client
+used1002, which browser WebSocket.close() rejects with InvalidAccessError;
+server-originated1002 remains valid. See [WebSockets standard](https://websockets.spec.whatwg.org/#dom-websocket-close).
