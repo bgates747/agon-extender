@@ -1,0 +1,886 @@
+[
+  {
+    "case": "colours",
+    "mode": 1,
+    "width": 64,
+    "height": 8,
+    "input_sha256": "fd41b95794f9b05011674b3d6695badb55bf414d38bfb45939acb5d34b825843",
+    "bytes": 862,
+    "sha256": "ee03f0b5a03acb1a02b3a1a4be748f1a16cd7d4f987d961687771ee3e94ab209",
+    "convert_ms": 0.014,
+    "encode_ms": 0.4816666666666667,
+    "samples": [
+      {
+        "convert_us": 17,
+        "encode_us": 1252
+      },
+      {
+        "convert_us": 15,
+        "encode_us": 503
+      },
+      {
+        "convert_us": 13,
+        "encode_us": 481
+      },
+      {
+        "convert_us": 14,
+        "encode_us": 461
+      }
+    ],
+    "browser_decode_ms": 1.2999999970197678,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "colours",
+    "mode": 3,
+    "width": 64,
+    "height": 8,
+    "input_sha256": "fd41b95794f9b05011674b3d6695badb55bf414d38bfb45939acb5d34b825843",
+    "bytes": 862,
+    "sha256": "95952db473b5f429d4492576b2f65aaf0a5d7d7138393e2e3754412e20840221",
+    "convert_ms": 0.012333333333333333,
+    "encode_ms": 0.458,
+    "samples": [
+      {
+        "convert_us": 13,
+        "encode_us": 478
+      },
+      {
+        "convert_us": 11,
+        "encode_us": 459
+      },
+      {
+        "convert_us": 13,
+        "encode_us": 455
+      },
+      {
+        "convert_us": 13,
+        "encode_us": 460
+      }
+    ],
+    "browser_decode_ms": 0.800000011920929,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "tiny",
+    "mode": 1,
+    "width": 8,
+    "height": 8,
+    "input_sha256": "061e0434dca7e63d2ad660480c9205f0f127e41ed54036938dbc7dbf49576392",
+    "bytes": 856,
+    "sha256": "a0d37b46a5b69cdcafa5da2ed7c35a996ca306cdcde7bcbfdc3c545fc27f9740",
+    "convert_ms": 0.0026666666666666666,
+    "encode_ms": 0.32666666666666666,
+    "samples": [
+      {
+        "convert_us": 2,
+        "encode_us": 339
+      },
+      {
+        "convert_us": 4,
+        "encode_us": 321
+      },
+      {
+        "convert_us": 2,
+        "encode_us": 328
+      },
+      {
+        "convert_us": 2,
+        "encode_us": 331
+      }
+    ],
+    "browser_decode_ms": 0.5,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "tiny",
+    "mode": 3,
+    "width": 8,
+    "height": 8,
+    "input_sha256": "061e0434dca7e63d2ad660480c9205f0f127e41ed54036938dbc7dbf49576392",
+    "bytes": 856,
+    "sha256": "9a129f62da7bebb7e374868742a95801ab3cdcda882ce5984308d3b9461f7f5b",
+    "convert_ms": 0.0033333333333333335,
+    "encode_ms": 0.335,
+    "samples": [
+      {
+        "convert_us": 2,
+        "encode_us": 339
+      },
+      {
+        "convert_us": 4,
+        "encode_us": 335
+      },
+      {
+        "convert_us": 4,
+        "encode_us": 346
+      },
+      {
+        "convert_us": 2,
+        "encode_us": 324
+      }
+    ],
+    "browser_decode_ms": 0.5,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "solid",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4bd4c4b675183fb84ef2d62b81fe4d4c5c31dc3ce73cac94c24fbb2330547018",
+    "bytes": 2191,
+    "sha256": "974147afdc818de124d1eac850b71f1a5b5140dd0738f9339b77d92df3ba5853",
+    "convert_ms": 5.263666666666667,
+    "encode_ms": 61.757666666666665,
+    "samples": [
+      {
+        "convert_us": 5244,
+        "encode_us": 61675
+      },
+      {
+        "convert_us": 5273,
+        "encode_us": 61679
+      },
+      {
+        "convert_us": 5282,
+        "encode_us": 61708
+      },
+      {
+        "convert_us": 5236,
+        "encode_us": 61886
+      }
+    ],
+    "browser_decode_ms": 5.800000011920929,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "solid",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4bd4c4b675183fb84ef2d62b81fe4d4c5c31dc3ce73cac94c24fbb2330547018",
+    "bytes": 2191,
+    "sha256": "da9f632e70386e7ae3ab8e9b81b56461f7c808a0bf0eb96e80a44a2b995f9b2e",
+    "convert_ms": 5.274666666666667,
+    "encode_ms": 61.75533333333333,
+    "samples": [
+      {
+        "convert_us": 5258,
+        "encode_us": 61824
+      },
+      {
+        "convert_us": 5290,
+        "encode_us": 61667
+      },
+      {
+        "convert_us": 5281,
+        "encode_us": 61848
+      },
+      {
+        "convert_us": 5253,
+        "encode_us": 61751
+      }
+    ],
+    "browser_decode_ms": 1.7000000029802322,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "stripes",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "db9e4564d99126ada90d4997181e0e41bcad46a4136a02fa55a02bb9b76f9860",
+    "bytes": 2720,
+    "sha256": "274146254af7dc1a528a4fb04795c8a982bfbfd9fc8157fae8ac06d2cea3c019",
+    "convert_ms": 5.207333333333333,
+    "encode_ms": 62.339333333333336,
+    "samples": [
+      {
+        "convert_us": 5282,
+        "encode_us": 62504
+      },
+      {
+        "convert_us": 5185,
+        "encode_us": 62354
+      },
+      {
+        "convert_us": 5229,
+        "encode_us": 62298
+      },
+      {
+        "convert_us": 5208,
+        "encode_us": 62366
+      }
+    ],
+    "browser_decode_ms": 1.4000000059604645,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "stripes",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "db9e4564d99126ada90d4997181e0e41bcad46a4136a02fa55a02bb9b76f9860",
+    "bytes": 2200,
+    "sha256": "4dd0c15bd53194be68afa8f47cc07c0c91f964a3e67ce7b8f4693c6a8003d742",
+    "convert_ms": 5.182,
+    "encode_ms": 62.083,
+    "samples": [
+      {
+        "convert_us": 5249,
+        "encode_us": 62418
+      },
+      {
+        "convert_us": 5181,
+        "encode_us": 62043
+      },
+      {
+        "convert_us": 5196,
+        "encode_us": 62062
+      },
+      {
+        "convert_us": 5169,
+        "encode_us": 62144
+      }
+    ],
+    "browser_decode_ms": 1.7000000029802322,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "noise",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "40a5ca4d526bd6f63c2abe4cf1b10bf685e0e7e53c74b4a1484c110b19557126",
+    "bytes": 166301,
+    "sha256": "b291109e7418f3bfa02a61f016540d0732f7fd51bd3ed7a0dc55a0f463531c65",
+    "convert_ms": 5.251333333333333,
+    "encode_ms": 178.91166666666666,
+    "samples": [
+      {
+        "convert_us": 5293,
+        "encode_us": 178902
+      },
+      {
+        "convert_us": 5196,
+        "encode_us": 178859
+      },
+      {
+        "convert_us": 5284,
+        "encode_us": 178962
+      },
+      {
+        "convert_us": 5274,
+        "encode_us": 178914
+      }
+    ],
+    "browser_decode_ms": 3.2999999970197678,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "noise",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "40a5ca4d526bd6f63c2abe4cf1b10bf685e0e7e53c74b4a1484c110b19557126",
+    "bytes": 166302,
+    "sha256": "d78db8efe88362a83dacf13de383c3a5ce30a6f39dc7621ddac2c6a1808e2d34",
+    "convert_ms": 5.235,
+    "encode_ms": 178.92666666666665,
+    "samples": [
+      {
+        "convert_us": 5291,
+        "encode_us": 178834
+      },
+      {
+        "convert_us": 5253,
+        "encode_us": 178977
+      },
+      {
+        "convert_us": 5224,
+        "encode_us": 178857
+      },
+      {
+        "convert_us": 5228,
+        "encode_us": 178946
+      }
+    ],
+    "browser_decode_ms": 3,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll0",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "ac951b654e2c385719e6da3a2c6d63425f0118df46c9f3023db9a74e7cc9a38d",
+    "bytes": 3189,
+    "sha256": "6b5c61ec3b10b24f1f361de696be0c13647318143d8724e2960f55317e69aca6",
+    "convert_ms": 5.244333333333333,
+    "encode_ms": 64.50133333333333,
+    "samples": [
+      {
+        "convert_us": 5187,
+        "encode_us": 64373
+      },
+      {
+        "convert_us": 5215,
+        "encode_us": 64430
+      },
+      {
+        "convert_us": 5273,
+        "encode_us": 64426
+      },
+      {
+        "convert_us": 5245,
+        "encode_us": 64648
+      }
+    ],
+    "browser_decode_ms": 1.699999988079071,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll0",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "ac951b654e2c385719e6da3a2c6d63425f0118df46c9f3023db9a74e7cc9a38d",
+    "bytes": 2723,
+    "sha256": "b6ccdb317fba6c96c8b3af65f8e90e3b9985cde302d20b7b8b2c4c6a29f2fc44",
+    "convert_ms": 5.263,
+    "encode_ms": 64.51533333333333,
+    "samples": [
+      {
+        "convert_us": 5254,
+        "encode_us": 64271
+      },
+      {
+        "convert_us": 5274,
+        "encode_us": 64508
+      },
+      {
+        "convert_us": 5290,
+        "encode_us": 64434
+      },
+      {
+        "convert_us": 5225,
+        "encode_us": 64604
+      }
+    ],
+    "browser_decode_ms": 1.5999999940395355,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites0",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "357b2da407ed849d424ebe8e4179a23fc83950eea3b321b2370ec14e9463dc44",
+    "bytes": 3770,
+    "sha256": "e243b541a7df62c0ba492ecd5e7d4c456c14ef74ea69e9460ff9a5459e2124e0",
+    "convert_ms": 5.198,
+    "encode_ms": 63.324,
+    "samples": [
+      {
+        "convert_us": 5249,
+        "encode_us": 63250
+      },
+      {
+        "convert_us": 5196,
+        "encode_us": 63390
+      },
+      {
+        "convert_us": 5224,
+        "encode_us": 63336
+      },
+      {
+        "convert_us": 5174,
+        "encode_us": 63246
+      }
+    ],
+    "browser_decode_ms": 1.9000000059604645,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites0",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "357b2da407ed849d424ebe8e4179a23fc83950eea3b321b2370ec14e9463dc44",
+    "bytes": 3531,
+    "sha256": "b91cff7c3ae0a4f8115203f7f04a786c1edf9335d9c52d3c0c78a5daf1a128dc",
+    "convert_ms": 5.267666666666667,
+    "encode_ms": 63.495,
+    "samples": [
+      {
+        "convert_us": 5222,
+        "encode_us": 63647
+      },
+      {
+        "convert_us": 5294,
+        "encode_us": 63432
+      },
+      {
+        "convert_us": 5254,
+        "encode_us": 63525
+      },
+      {
+        "convert_us": 5255,
+        "encode_us": 63528
+      }
+    ],
+    "browser_decode_ms": 2.1000000089406967,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll1",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "3ffc4883ef8158bb4c9e48f3364ddbd5d0894bbb5fa6f9ac5ce63b947971e7b2",
+    "bytes": 3324,
+    "sha256": "9a524d0e5ddfe9c5717f1231529827881dbe8fbd84832e88e30f621ce7e9f24b",
+    "convert_ms": 5.258333333333333,
+    "encode_ms": 64.77466666666666,
+    "samples": [
+      {
+        "convert_us": 5251,
+        "encode_us": 64748
+      },
+      {
+        "convert_us": 5255,
+        "encode_us": 64859
+      },
+      {
+        "convert_us": 5276,
+        "encode_us": 64733
+      },
+      {
+        "convert_us": 5244,
+        "encode_us": 64732
+      }
+    ],
+    "browser_decode_ms": 1.6000000089406967,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll1",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "3ffc4883ef8158bb4c9e48f3364ddbd5d0894bbb5fa6f9ac5ce63b947971e7b2",
+    "bytes": 2858,
+    "sha256": "1b58daa807fe8a3d9f75d831314b732377df88a679c29540c20b16ab0a841a6b",
+    "convert_ms": 5.237333333333333,
+    "encode_ms": 64.53733333333334,
+    "samples": [
+      {
+        "convert_us": 5179,
+        "encode_us": 64316
+      },
+      {
+        "convert_us": 5212,
+        "encode_us": 64495
+      },
+      {
+        "convert_us": 5244,
+        "encode_us": 64498
+      },
+      {
+        "convert_us": 5256,
+        "encode_us": 64619
+      }
+    ],
+    "browser_decode_ms": 1.8999999910593033,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites1",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4969b572ee89ff4f09ed1825f7b9404fa460ee5502e62caca82123ade52a25df",
+    "bytes": 3758,
+    "sha256": "26b9a895cd5c75e5901ef97e7c753c52b768a1b909ff1ee7ee410fccc6f29cd5",
+    "convert_ms": 5.293333333333333,
+    "encode_ms": 63.586666666666666,
+    "samples": [
+      {
+        "convert_us": 5174,
+        "encode_us": 63260
+      },
+      {
+        "convert_us": 5244,
+        "encode_us": 63513
+      },
+      {
+        "convert_us": 5244,
+        "encode_us": 63751
+      },
+      {
+        "convert_us": 5392,
+        "encode_us": 63496
+      }
+    ],
+    "browser_decode_ms": 1.5,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites1",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4969b572ee89ff4f09ed1825f7b9404fa460ee5502e62caca82123ade52a25df",
+    "bytes": 3552,
+    "sha256": "8323202687b3e8a5d203dedbee24f71e87e2b9c54484d271e8282937a7aa8aee",
+    "convert_ms": 5.228,
+    "encode_ms": 63.416333333333334,
+    "samples": [
+      {
+        "convert_us": 5191,
+        "encode_us": 63330
+      },
+      {
+        "convert_us": 5197,
+        "encode_us": 63540
+      },
+      {
+        "convert_us": 5207,
+        "encode_us": 63372
+      },
+      {
+        "convert_us": 5280,
+        "encode_us": 63337
+      }
+    ],
+    "browser_decode_ms": 1.7000000029802322,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll2",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "731f632a92404f53577a3a8952d9e8d38d6e90b26f9307f3388db93ae9d8f101",
+    "bytes": 3296,
+    "sha256": "ffe48d37a8760c093e00726cd7fc3b2c0f020dfeed69b9278f580afc7452f887",
+    "convert_ms": 5.208666666666667,
+    "encode_ms": 64.88966666666667,
+    "samples": [
+      {
+        "convert_us": 5243,
+        "encode_us": 65058
+      },
+      {
+        "convert_us": 5184,
+        "encode_us": 65035
+      },
+      {
+        "convert_us": 5220,
+        "encode_us": 64800
+      },
+      {
+        "convert_us": 5222,
+        "encode_us": 64834
+      }
+    ],
+    "browser_decode_ms": 2,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "scroll2",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "731f632a92404f53577a3a8952d9e8d38d6e90b26f9307f3388db93ae9d8f101",
+    "bytes": 2703,
+    "sha256": "1bd20fd57c71a561e8526f66f7a07f3a282624af2c91d57527d2d38857fadcb6",
+    "convert_ms": 5.214,
+    "encode_ms": 64.506,
+    "samples": [
+      {
+        "convert_us": 5242,
+        "encode_us": 64497
+      },
+      {
+        "convert_us": 5263,
+        "encode_us": 64503
+      },
+      {
+        "convert_us": 5174,
+        "encode_us": 64487
+      },
+      {
+        "convert_us": 5205,
+        "encode_us": 64528
+      }
+    ],
+    "browser_decode_ms": 1.7000000029802322,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites2",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4b603ee15fc727e927585a80a6f7a70bd1ee887d456e67b899ac53fae34e8a20",
+    "bytes": 3701,
+    "sha256": "479a722a80e172e153ec4d4badaa020b2615a821af32cd914f1d39d04dc4d8f5",
+    "convert_ms": 5.248333333333333,
+    "encode_ms": 63.297666666666665,
+    "samples": [
+      {
+        "convert_us": 5255,
+        "encode_us": 63362
+      },
+      {
+        "convert_us": 5242,
+        "encode_us": 63319
+      },
+      {
+        "convert_us": 5266,
+        "encode_us": 63240
+      },
+      {
+        "convert_us": 5237,
+        "encode_us": 63334
+      }
+    ],
+    "browser_decode_ms": 2,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "sprites2",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "4b603ee15fc727e927585a80a6f7a70bd1ee887d456e67b899ac53fae34e8a20",
+    "bytes": 3596,
+    "sha256": "fbe452a5c925682a85121e0b6b08160b5fc6baa85979df96ce2ad241aec27d76",
+    "convert_ms": 5.231333333333333,
+    "encode_ms": 63.644666666666666,
+    "samples": [
+      {
+        "convert_us": 5279,
+        "encode_us": 63511
+      },
+      {
+        "convert_us": 5236,
+        "encode_us": 63569
+      },
+      {
+        "convert_us": 5206,
+        "encode_us": 63628
+      },
+      {
+        "convert_us": 5252,
+        "encode_us": 63737
+      }
+    ],
+    "browser_decode_ms": 2.0999999940395355,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "retained-sprites",
+    "mode": 1,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36",
+    "bytes": 2913,
+    "sha256": "089cd5579d0d74291a902085e666b06dc2df559ba5173eb3cb6b6f0b2da48d27",
+    "convert_ms": 5.205333333333333,
+    "encode_ms": 59.077,
+    "samples": [
+      {
+        "convert_us": 5241,
+        "encode_us": 59018
+      },
+      {
+        "convert_us": 5199,
+        "encode_us": 59028
+      },
+      {
+        "convert_us": 5214,
+        "encode_us": 59199
+      },
+      {
+        "convert_us": 5203,
+        "encode_us": 59004
+      }
+    ],
+    "browser_decode_ms": 2,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "retained-sprites",
+    "mode": 3,
+    "width": 512,
+    "height": 384,
+    "input_sha256": "d091d5f4f7981c5c1dbe4ed668e59fffe8bb72ee1060bc8fccb2856702ca7d36",
+    "bytes": 2562,
+    "sha256": "4f24a72a5c1a20c2b4c132ac4017a0570c34e049d2ca6a36abc94cc02bf94645",
+    "convert_ms": 5.243333333333333,
+    "encode_ms": 58.90266666666666,
+    "samples": [
+      {
+        "convert_us": 5250,
+        "encode_us": 58853
+      },
+      {
+        "convert_us": 5241,
+        "encode_us": 58990
+      },
+      {
+        "convert_us": 5272,
+        "encode_us": 58813
+      },
+      {
+        "convert_us": 5217,
+        "encode_us": 58905
+      }
+    ],
+    "browser_decode_ms": 1.2999999970197678,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "primary-patches",
+    "mode": 1,
+    "width": 64,
+    "height": 64,
+    "input_sha256": "6e7e0d9f9d5792857389de55d8ce4f71ff9ff00131552a20712d3e8523102883",
+    "bytes": 937,
+    "sha256": "496e92b1c598629a58296a24e6f1929228e79879097e5c04bceb68e206e277ab",
+    "convert_ms": 0.08533333333333333,
+    "encode_ms": 1.695,
+    "samples": [
+      {
+        "convert_us": 87,
+        "encode_us": 1985
+      },
+      {
+        "convert_us": 83,
+        "encode_us": 1704
+      },
+      {
+        "convert_us": 83,
+        "encode_us": 1664
+      },
+      {
+        "convert_us": 90,
+        "encode_us": 1717
+      }
+    ],
+    "browser_decode_ms": 0.9000000059604645,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  },
+  {
+    "case": "primary-patches",
+    "mode": 3,
+    "width": 64,
+    "height": 64,
+    "input_sha256": "6e7e0d9f9d5792857389de55d8ce4f71ff9ff00131552a20712d3e8523102883",
+    "bytes": 937,
+    "sha256": "d6af4ca40b5efe28f3993d08b9085a6883b2ec46b32d0f0c4fa5673046294aa5",
+    "convert_ms": 0.08266666666666667,
+    "encode_ms": 1.683,
+    "samples": [
+      {
+        "convert_us": 85,
+        "encode_us": 1692
+      },
+      {
+        "convert_us": 83,
+        "encode_us": 1685
+      },
+      {
+        "convert_us": 83,
+        "encode_us": 1693
+      },
+      {
+        "convert_us": 82,
+        "encode_us": 1671
+      }
+    ],
+    "browser_decode_ms": 0.9000000059604645,
+    "mae": 0,
+    "max_error": 0,
+    "psnr_db": null,
+    "exact": true
+  }
+]

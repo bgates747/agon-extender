@@ -36,3 +36,12 @@ JPEG remains lossy. Streaming qualification follows before any verdict.
    Corrected controller gives phase/attempt-specific batch, EXEC, trace and
    telemetry paths, all inspected together. No firmware correction for this
    setup error. Only the final complete uniquely named series counts.
+
+7. Bounded PNG resume completed all26 exact cases/settings. Earlier network
+   interruption remains unresolved; observing reboot after opening USB serial
+   cannot determine whether the initial failure was a reset. No firmware fix
+   is claimed. Game comparisons use fresh startup and are a separate series.
+8. PNGenc workspace is in PSRAM in this first implementation. Its embedded
+   MEM_SHRINK3 window/pool differs from desktop zlib; absolute encoding cost
+   must not be generalized to every PNG implementation or memory placement.
+   Internal-SRAM workspace is an untested follow-up, not an established fix.
