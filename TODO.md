@@ -23,8 +23,8 @@ qualification; higher-rate stress work needs explicit authorization. See
 
 ## Current Author-directed research
 
-- [ ] **RESEARCH-004 — P4 HDMI hardware purchasing and compatibility**
-  - Details: [contract](docs/tasks/RESEARCH-004.md). Single-board GPIO/Ethernet/HDMI first; US-available compatible adapter fallback. Research active, hardware voice at completion.
+- [x] **RESEARCH-004 — P4 HDMI hardware purchasing and compatibility**
+  - Details: [contract](docs/tasks/RESEARCH-004.md). Single-board GPIO/Ethernet/HDMI first; US-available compatible adapter fallback. Research complete; no exact drop-in match. US-stocked adapter requires an interposer; hardware voice receipt verified. Results: [assessment](docs/tasks/RESEARCH-004/RESULTS.md).
 
 - [ ] **RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment**
   - Status: Twelve standalone runs complete:47.02–47.29fps exact full-frame output while rendering;60fps delivery unmet. Candidate left installed for review with rollback retained; emulator spoken cue verified; awaiting Author review.

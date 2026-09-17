@@ -14,7 +14,7 @@ EUR5000 direct-order minimum. Research only, no orders or hardware changes.
    HDMI output from HDMI capture and generic DSI connectors.
 3. [x] H03: Check adapter pinout, electrical/driver compatibility, US stock and
    separately overseas sellers serving US buyers. Do not equate listing with stock.
-4. [ ] H04: Record shortlist, disqualifiers, purchase links, uncertainties and
+4. [x] H04: Record shortlist, disqualifiers, purchase links, uncertainties and
    recommended path; hardware voice notify when ready.
 
 No firmware builds/flashes, purchases, or messages to vendors. Retain official
@@ -24,3 +24,7 @@ source links and retrieval date; no assumed shipping or unverified compatibility
 
 [Assessment and purchasing shortlist](RESEARCH-004/RESULTS.md). No confirmed
 unchanged solution; US-stocked M5Stack adapter is an interposer candidate.
+
+Hardware spoken notification completed; fresh stage-6 audio-command receipt
+verified. Left Legacy MOS prompt, installed firmware and startup unchanged.
+Research complete; adapter engineering/purchasing is not performed or scheduled.

@@ -1,0 +1,8 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "state": "Legacy MOS prompt; fullscreen r02 firmware retained",
+  "startup_unchanged": true,
+  "human_hearing": "not assumed",
+  "time": 1789634416.7700784
+}
