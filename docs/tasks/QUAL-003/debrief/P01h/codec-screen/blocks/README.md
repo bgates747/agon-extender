@@ -2,10 +2,10 @@
 
 ## Executive summary
 
-Author authorizes a bench-free block-size comparison and emulator spoken notice.
-Keep order4, recordsize1, differencing off; vary only szip block size. No P4 access.
-Sizes apply to the RLE2 stream, not raw framebuffer rows. Host results cannot
-establish P4 cache behavior or a shipping choice.
+Complete: keep full-input blocks. Smaller blocks generally made encoding slower
+and output larger. All native/browser exact checks passed after isolating
+multi-block scratch reclamation in the test adapter. See [RESULTS.md](RESULTS.md)
+and [TABLES.md](TABLES.md). Bench untouched; no production changes.
 
 ## Frozen contract
 

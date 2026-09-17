@@ -54,6 +54,7 @@ codec controls pass. Original-source output/lifetime corrections are in source;
 the earlier compiled P4 image is obsolete. Browser candidate review and corrected
 P4 SRLE2 hardware results are ready in the [assessment](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md): retain asset decoding; live SRLE2 is slower than matched RLE2. QUAL-003-I006 records the separate, unscheduled streaming/mode-transition issue. Final restoration and review closeout belong to the hardware contract.
 Current codec follow-up: [settings/PNG staged contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/README.md). Linux/browser phase complete; results and shortlist await review. P4 phase waits for shortlist approval and bench release.
+Order4 block-size follow-up: [screen and findings](docs/tasks/QUAL-003/debrief/P01h/codec-screen/blocks/README.md), bench-free under QUAL-003; no P4 deployment authorized by this host run.
 
 Golem excluded; no experimental push.
 
@@ -332,4 +333,3 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
     scanout/restart findings and eight deferred controls retained. Bench restored.
     Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).
 
-Order4 block-size follow-up: [screen and findings](docs/tasks/QUAL-003/debrief/P01h/codec-screen/blocks/README.md), bench-free under QUAL-003; no P4 deployment authorized by this host run.
