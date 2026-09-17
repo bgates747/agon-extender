@@ -156,3 +156,48 @@ Original PDFs and extraction/crop aids are in ignored `agents/hdmi-search/`:
 are the durable references. The schematic EXT header was visually inspected,
 not inferred solely from product advertising. Stock readings describe seller
 pages on the retrieval date, not a completed checkout.
+
+## 2026-09-17 addendum — Pico and PiCowbell inventory correction
+
+The Author supplied the exact parts after initially recalling a Pico 2:
+
+| Status | Part | Meaning |
+| --- | --- | --- |
+| Reported on hand | [Raspberry Pi SC0915](https://www.digikey.com/en/products/detail/raspberry-pi/SC0915/13624793) | Original Pico, RP2040; no HSTX peripheral |
+| Reported on hand | [Adafruit 6363](https://www.adafruit.com/product/6363) | PiCowbell HSTX DVI Output, mini-HDMI connector, GPIO12–19 |
+| Recommended order | [Raspberry Pi SC1632](https://www.digikey.com/en/products/detail/raspberry-pi/SC1632/26241102), DigiKey **2648-SC1632-ND** | Pico 2 with presoldered headers, RP2350; correct HSTX-capable board |
+| Unsoldered alternative | [Raspberry Pi SC1631](https://www.digikey.com/en/products/detail/raspberry-pi/SC1631/24627142), DigiKey **2648-SC1631CT-ND** | Pico 2 without headers; useful if choosing a custom stacking arrangement |
+
+The [Adafruit assembly guide](https://learn.adafruit.com/adafruit-picowbell-hstx-dvi-output/pico)
+covers socket/stacking options. Check the Cowbell's existing assembly before
+ordering headers: the presoldered Pico still requires mating female sockets on
+the Cowbell. Also check for a mini-HDMI-to-HDMI cable and a Micro-USB data cable.
+No wireless model is needed. Price and stock should be checked at checkout.
+
+Correction to the conversation: the Pico and Cowbell are not a supported HSTX
+pair when the Pico is SC0915. They physically share the form factor, but RP2040
+cannot run the RP2350 HSTX output path. This is not proof that all video use is
+impossible: [PicoDVI](https://github.com/Wren6991/PicoDVI) generates DVI using
+RP2040 PIO/DMA and software encoding, with overclocking. Compatibility with this
+specific Cowbell pinout has **not** been qualified. Do not turn that possibility
+into a purchasing or performance guarantee.
+
+The potential new video architecture is P4 rendering, then a separately designed
+P4-to-Pico transport, then Pico 2 framebuffer storage and HSTX scanout through the
+Cowbell. The Cowbell is not a MIPI receiver or a standalone conversion processor.
+At 512x384 and one byte per pixel, one framebuffer is 192 KiB, two are 384 KiB,
+and 60 complete updates per second require 11.79648 MB/s payload before overhead.
+The RP2040 has 264 KiB SRAM, versus the RP2350's 520 KiB; video working buffers
+and code/data also need space. These arithmetic budgets are not measured
+throughput or proof of a supported display timing. P4-to-Pico transfer, palette
+handling, scanout and concurrent operation remain unimplemented and untested.
+See [RP2040 specifications](https://www.raspberrypi.com/products/rp2040/) and
+[Pico 2 specifications](https://www.raspberrypi.com/products/raspberry-pi-pico-2/).
+
+The Author favours retaining the original RP2040 for **bench automation**.
+Potential uses discussed: USB-controlled bus capture/timing, repeatable parallel
+or handshake stimulus, reset/recovery control, and controlled fault injection.
+These are proposals, not installed capabilities; signal voltage, pin allocation,
+capture capacity and integration with existing recovery tools require a separate
+work contract. No current bench wiring or firmware was changed for this addendum.
+No Pico/Cowbell experiment has been started or authorized by this shopping note.
