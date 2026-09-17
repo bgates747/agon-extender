@@ -13,7 +13,7 @@ Never start a duplicate agent against this live conversation to simulate deliver
    acknowledgement, bounded waiting and explicit reply links on the Linux host.
 2. [x] A02: Test retry/conflict handling, recipient isolation and concurrent sends
    using an isolated temporary mailbox; initialize the real topic.
-3. [ ] A03: Write `agentcoms.md` with exact SSH commands, ownership rules,
+3. [x] A03: Write `agentcoms.md` with exact SSH commands, ownership rules,
    acceptance handshake and the idle-wakeup limitation. Notify on hardware.
 
 No changes to Codex session storage, extension process, daemon or account settings.
@@ -26,3 +26,9 @@ agent must initiate its connection using its existing SSH configuration.
 Three isolated tests passed, including 16 concurrent identical sends resulting
 in exactly one immutable message. Real welcome published. Mac SSH round-trip
 remains pending peer setup; no live-session wakeup claimed.
+
+CLI JSON-stdin/wait arrival test also passed. Hardware spoken alert completed
+with a fresh stage-6 receipt; left Legacy MOS prompt, startup and firmware
+unchanged. Private evidence: agents/agentcoms/notification.json. Local handoff
+agentcoms.md contains machine paths and is intentionally not committed.
+Next validation belongs to the Mac peer: send and acknowledge a round-trip.

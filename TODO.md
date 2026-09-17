@@ -21,7 +21,7 @@ qualification; higher-rate stress work needs explicit authorization. See
 [ADR-0020](docs/decisions/ADR-0020-web-output-30fps.md) and
 [work plan](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
 
-- [ ] **BENCH-004 — Cross-machine agent mailbox**: [contract](docs/tasks/BENCH-004.md); implement, verify and provide Mac handoff.
+- [ ] **BENCH-004 — Cross-machine agent mailbox**: [contract](docs/tasks/BENCH-004.md); Linux implementation/tests and hardware voice complete; awaiting Mac peer round-trip.
 
 ## Current Author-directed research
 
