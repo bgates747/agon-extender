@@ -1,5 +1,5 @@
 """Generate identical-frame codec matrix and original-CLI/native correctness evidence."""
-import argparse,ctypes as C,json,time,statistics,subprocess,hashlib,platform,io,itertools,multiprocessing
+import argparse,ctypes as C,json,time,statistics,subprocess,hashlib,platform,io,itertools,multiprocessing,os,signal
 from pathlib import Path
 from PIL import Image
 p=argparse.ArgumentParser();p.add_argument('--build',type=Path,required=True);p.add_argument('--corpus',type=Path,required=True);p.add_argument('--out',type=Path,required=True);a=p.parse_args();a.out.mkdir(exist_ok=True);start=time.time();root=Path(__file__).resolve().parent
@@ -22,6 +22,7 @@ for case in manifest:
   if any(r['case']==name and r['variant']==v['id'] for r in rows):continue
   ctx=multiprocessing.get_context('fork');queue=ctx.Queue()
   def evaluate():
+   os.setsid()
    samples=[];failure=None;result=b'';cli_checked=False
    for trial in range(4):
     t=time.perf_counter_ns();kind=v['kind']
@@ -62,7 +63,7 @@ for case in manifest:
    queue.put(dict(case=name,variant=v['id'],kind=v['kind'],exact=not failure,failure=failure,bytes=len(result),encode_ms=statistics.mean(samples[1:]) if len(samples)>1 else None,samples_ms=samples,original_cli_exact=cli_checked,sha256=hashlib.sha256(result).hexdigest()))
   job=ctx.Process(target=evaluate);job.start();job.join(5)
   if job.is_alive():
-   job.terminate();job.join();result=dict(case=name,variant=v['id'],kind=v['kind'],exact=False,failure='screening timeout: four encodes plus verification exceeded 5 seconds',bytes=0,encode_ms=None,samples_ms=[],original_cli_exact=False,sha256=None)
+   os.killpg(job.pid,signal.SIGTERM);job.join();result=dict(case=name,variant=v['id'],kind=v['kind'],exact=False,failure='screening timeout: four encodes plus verification exceeded 5 seconds',bytes=0,encode_ms=None,samples_ms=[],original_cli_exact=False,sha256=None)
   elif job.exitcode or queue.empty():result=dict(case=name,variant=v['id'],kind=v['kind'],exact=False,failure=f'worker exit {job.exitcode}',bytes=0,encode_ms=None,samples_ms=[],original_cli_exact=False,sha256=None)
   else:result=queue.get()
   queue.close();rows.append(result)
