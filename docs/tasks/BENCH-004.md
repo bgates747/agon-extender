@@ -9,9 +9,9 @@ Never start a duplicate agent against this live conversation to simulate deliver
 
 ## Authorized scope and frozen contract
 
-1. [ ] A01: Implement immutable messages, idempotent sends, recipient-scoped
+1. [x] A01: Implement immutable messages, idempotent sends, recipient-scoped
    acknowledgement, bounded waiting and explicit reply links on the Linux host.
-2. [ ] A02: Test retry/conflict handling, recipient isolation and concurrent sends
+2. [x] A02: Test retry/conflict handling, recipient isolation and concurrent sends
    using an isolated temporary mailbox; initialize the real topic.
 3. [ ] A03: Write `agentcoms.md` with exact SSH commands, ownership rules,
    acceptance handshake and the idle-wakeup limitation. Notify on hardware.
@@ -20,3 +20,9 @@ No changes to Codex session storage, extension process, daemon or account settin
 No listener exposed, automatic model invocations, firmware flash or reset.
 Messages request work; they do not expand the Author's authorization. The Mac
 agent must initiate its connection using its existing SSH configuration.
+
+## Verification
+
+Three isolated tests passed, including 16 concurrent identical sends resulting
+in exactly one immutable message. Real welcome published. Mac SSH round-trip
+remains pending peer setup; no live-session wakeup claimed.
