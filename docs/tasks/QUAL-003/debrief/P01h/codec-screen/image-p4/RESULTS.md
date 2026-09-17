@@ -117,3 +117,17 @@ Browser screenshots are CSS-scaled and taken at different gameplay instants:
 [PNG1](images/nurples-png1.png). For identical-source fidelity inspection:
 [reference](images/sprite-reference.png), [JPEG90](images/sprite-jpeg90.png),
 [exact PNG3](images/sprite-png3.png). Human visual acceptance remains separate.
+
+## Restoration and attention receipt
+
+Exact original r43 P4 prefix was independently verified after restoration:
+SHA256 `22d22c530d643ac2896aa624eba802eb8b3c0ad695f2f6425036d3f130f50604`.
+Original48-byte startup restored/read back, SHA256
+`c4407c0c0e7c7a14dc330c3ddb9ce3f6ef509f03e08ff896a71719ea5ed9549f`.
+EMOS and stock mainboard VDP unchanged; host MOS-suite card untouched.
+Experimental before-prefix retained, including diagnostic partition.
+
+British female hardware voice returned a fresh stage6/audio_commands=pass
+receipt. Human hearing is not assumed. Final state: Legacy MOS prompt, keyboard
+ready/neutral, SD service exited. See evidence/restored-final.json and
+notification-final.json. Bench released for Author review; no promotion or push.

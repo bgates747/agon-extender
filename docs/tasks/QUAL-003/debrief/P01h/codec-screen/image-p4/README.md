@@ -23,7 +23,7 @@ voice notification. No mainboard firmware changes, Golem or production promotion
 4. [x] I04 — Add indexed PNG using reviewed existing encoder, levels1/3 where
    available, exact64-colour palette. Prove decoded pixels exact, reject bad input,
    measure the same scopes and repeat matched selected-setting comparisons.
-5. [ ] I05 — Assess evidence, preserve anomalous runs, state practical verdict and
+5. [x] I05 — Assess evidence, preserve anomalous runs, state practical verdict and
    limits in executive summary and tables. Restore original P4/startup, leave
    keyboard neutral at Legacy prompt, send hardware British voice and verify
    fresh receipt. Commit discrete work, no push or promotion.
@@ -84,3 +84,8 @@ problem repeats, stop rather than expand into scheduler diagnosis.
 I04 complete: all26 PNG corpus cases/settings decoded exactly, nine fresh-start
 PNG/RLE2 game trials completed, and12 combined static controls passed. PNG loses
 on this game but beats RLE2/raw on the periodic pattern. No global promotion.
+
+I05 complete: results/tables/images committed; exact original P4 prefix and
+startup restored/read back. Mainboard VDP and EMOS unchanged. Fresh accepted
+hardware British voice receipt verified; keyboard ready/neutral, SD service
+exited, Legacy MOS prompt. Candidate retained privately, no push/promotion.
