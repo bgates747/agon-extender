@@ -16,7 +16,7 @@ voice notification. No mainboard firmware changes, Golem or production promotion
    task. JPEG accepts expanded RGB888 (driver byte order verified), reusable for
    future RGB888 sources. Benchmark quality 80/90/95 and 4:4:4 without colour
    subsampling first. Reject malformed dimensions and avoid per-frame allocation.
-3. [ ] I03 — Compile, independently verify deployment and exercise hardware JPEG
+3. [x] I03 — Compile, independently verify deployment and exercise hardware JPEG
    on retained corpus. Decode in browser, measure visual error and conversion,
    encoding, bytes and delivery separately. Compare selected settings with RLE2
    on matched deterministic Nurples and static scenes, three interleaved trials.
@@ -69,3 +69,14 @@ from the principal comparison. Reapply the same startup/mode20 via normal
 mainboard reset before every trial; keep P4 firmware and all codecs unchanged.
 Use new phase/attempt SAVE names. This follows the frozen contract's matched
 workload requirement; it is not a codec optimisation or scheduler change.
+
+I03 complete:39 JPEG corpus/quality checks and six fresh-start paired game
+trials passed. JPEG90 received5.94–6.66fps versus RLE2 12.77–13.80fps; all
+application traces completed1800 cycles without VDU fault. Static combined
+controls remain in I04. No JPEG performance win claimed.
+
+PNG interruption: thirteen corpus/settings rows passed exact browser pixels
+before network access timed out. Subsequent serial opening observed boot but
+can itself reset P4, so it does not establish the cause of the earlier timeout.
+One bounded clean-start resume of remaining cases is agent-assigned; if the
+problem repeats, stop rather than expand into scheduler diagnosis.
