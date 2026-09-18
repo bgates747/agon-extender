@@ -2,12 +2,15 @@
 
 ## Executive summary
 
-Assess whether Agon can sustain SD-card reads into SRAM followed by eight-bit
-parallel delivery to EDP for 44,100 Hz, 16-bit stereo PCM, with network audio
-output on the current bench. Mainboard VDP retains video in a proposed modified
-Legacy configuration. The first work is feasibility, not implementation. The
-Author reports existing parallel code and an already wired bench; neither is
-assumed integrated or qualified. Hardware voice notification is requested at the stopping point.
+**AF01 complete: worth pursuing, but measured SD rates plus historical parallel
+performance do not yet meet uncompressed 44.1 kHz/16-bit stereo.** Current SD
+reads reached 189–199 KiB/s; the target is 172.27 KiB/s before transmission.
+The next step is a sustained integrated parallel benchmark, then combined
+read/send measurement—not a claim that stereo playback works.
+
+See the [results and evidence](AUDIO-001/RESULTS.md). Six storage profiles passed
+their bounded checks. No firmware flashed; startup preserved. AF02–AF05 remain
+pending. Hardware voice notification closes this feasibility run.
 
 ## Scope and authority
 
@@ -26,7 +29,7 @@ bypass EMOS. Preserve ordinary Legacy behavior and working recovery paths.
 
 ## Itemized work plan
 
-1. [ ] AF01 — Feasibility study. Inspect Jukebox/AGM code and prior measurements;
+1. [x] AF01 — Feasibility study. Inspect Jukebox/AGM code and prior measurements;
    inventory existing forward-parallel code in Extender, EMOS and legacy work.
    Pin revisions and distinguish implemented, compiled, tested and abandoned
    paths. Reconcile the current local wiring record with older HW-001 holds;
@@ -88,10 +91,15 @@ identities in ignored local records. The authoritative project queue is TODO.md.
 
 ## AF01 execution sequence
 
-1. [ ] F01 — Inspect source/revisions and retained SD/parallel evidence; identify
+1. [x] F01 — Inspect source/revisions and retained SD/parallel evidence; identify
    present routing and memory constraints.
-2. [ ] F02 — Run a bounded current SD benchmark if a safe reusable fixture is
+2. [x] F02 — Run a bounded current SD benchmark if a safe reusable fixture is
    available. Do not build the complete audio integration to answer feasibility.
-3. [ ] F03 — Calculate serial-stage budgets and document architectural gaps,
+3. [x] F03 — Calculate serial-stage budgets and document architectural gaps,
    evidence limits, and a recommended next experiment.
-4. [ ] F04 — Restore any changed state, verify access, and hardware voice notify.
+4. [x] F04 — Restore any changed state, verify access, and hardware voice notify.
+
+AF01 stopped after approximately 15 minutes, within the one-hour limit. Hardware
+voice execution receipt verified; startup unchanged, service exited to MOS.
+See [notification receipt](AUDIO-001/notification.json). No end-to-end stereo test
+or firmware flash performed. AF02 awaits its integration contract.

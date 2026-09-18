@@ -1,0 +1,6 @@
+{
+  "sha256": "1591fde3c4b751f0f67a3423d09c5675d089baf82cde3f86c9fa20944cf2c301",
+  "bytes": 8665,
+  "target": "/test/audio001/sdbench.bin",
+  "startup_changed": false
+}

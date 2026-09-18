@@ -25,6 +25,8 @@ qualification; higher-rate stress work needs explicit authorization. See
 
 ## Current Author-directed research
 
+- [ ] **AUDIO-001 — SD-to-parallel stereo streaming feasibility**: [plan](docs/tasks/AUDIO-001.md). First assess Agon SD/SRAM/send throughput and EMOS-owned split routing; mainboard video, Extender audio via network. AF01 complete: current SD 189–199 KiB/s; sequential read/send budget below stereo target using historical parallel rate. [Results](docs/tasks/AUDIO-001/RESULTS.md); AF02 integrated parallel benchmark is next.
+
 - [x] **RESEARCH-004 — P4 HDMI hardware purchasing and compatibility**
   - Details: [contract](docs/tasks/RESEARCH-004.md). Single-board GPIO/Ethernet/HDMI first; US-available compatible adapter fallback. Research complete; no exact drop-in match. US-stocked adapter requires an interposer; hardware voice receipt verified. Results: [assessment](docs/tasks/RESEARCH-004/RESULTS.md).
 
