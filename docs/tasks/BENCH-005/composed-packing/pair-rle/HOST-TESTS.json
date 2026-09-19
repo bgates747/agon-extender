@@ -1,0 +1,455 @@
+{
+  "roundtrips": [
+    {
+      "w": 1,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 1,
+      "encoded": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 1,
+      "encoded": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "pattern": "random",
+      "raw": 1,
+      "encoded": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 1,
+      "encoded": 1
+    },
+    {
+      "w": 3,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 3,
+      "encoded": 3
+    },
+    {
+      "w": 3,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 3,
+      "encoded": 3
+    },
+    {
+      "w": 3,
+      "h": 1,
+      "pattern": "random",
+      "raw": 3,
+      "encoded": 3
+    },
+    {
+      "w": 3,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 3,
+      "encoded": 3
+    },
+    {
+      "w": 17,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 17,
+      "encoded": 3
+    },
+    {
+      "w": 17,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 17,
+      "encoded": 3
+    },
+    {
+      "w": 17,
+      "h": 1,
+      "pattern": "random",
+      "raw": 17,
+      "encoded": 17
+    },
+    {
+      "w": 17,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 17,
+      "encoded": 17
+    },
+    {
+      "w": 18,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 18,
+      "encoded": 2
+    },
+    {
+      "w": 18,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 18,
+      "encoded": 2
+    },
+    {
+      "w": 18,
+      "h": 1,
+      "pattern": "random",
+      "raw": 18,
+      "encoded": 18
+    },
+    {
+      "w": 18,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 18,
+      "encoded": 18
+    },
+    {
+      "w": 19,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 19,
+      "encoded": 3
+    },
+    {
+      "w": 19,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 19,
+      "encoded": 3
+    },
+    {
+      "w": 19,
+      "h": 1,
+      "pattern": "random",
+      "raw": 19,
+      "encoded": 19
+    },
+    {
+      "w": 19,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 19,
+      "encoded": 19
+    },
+    {
+      "w": 20,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 20,
+      "encoded": 2
+    },
+    {
+      "w": 20,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 20,
+      "encoded": 2
+    },
+    {
+      "w": 20,
+      "h": 1,
+      "pattern": "random",
+      "raw": 20,
+      "encoded": 20
+    },
+    {
+      "w": 20,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 20,
+      "encoded": 20
+    },
+    {
+      "w": 31,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 31,
+      "encoded": 3
+    },
+    {
+      "w": 31,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 31,
+      "encoded": 3
+    },
+    {
+      "w": 31,
+      "h": 1,
+      "pattern": "random",
+      "raw": 31,
+      "encoded": 31
+    },
+    {
+      "w": 31,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 31,
+      "encoded": 31
+    },
+    {
+      "w": 32,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 32,
+      "encoded": 2
+    },
+    {
+      "w": 32,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 32,
+      "encoded": 2
+    },
+    {
+      "w": 32,
+      "h": 1,
+      "pattern": "random",
+      "raw": 32,
+      "encoded": 32
+    },
+    {
+      "w": 32,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 32,
+      "encoded": 32
+    },
+    {
+      "w": 33,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 33,
+      "encoded": 3
+    },
+    {
+      "w": 33,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 33,
+      "encoded": 3
+    },
+    {
+      "w": 33,
+      "h": 1,
+      "pattern": "random",
+      "raw": 33,
+      "encoded": 33
+    },
+    {
+      "w": 33,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 33,
+      "encoded": 33
+    },
+    {
+      "w": 34,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 34,
+      "encoded": 4
+    },
+    {
+      "w": 34,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 34,
+      "encoded": 4
+    },
+    {
+      "w": 34,
+      "h": 1,
+      "pattern": "random",
+      "raw": 34,
+      "encoded": 34
+    },
+    {
+      "w": 34,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 34,
+      "encoded": 34
+    },
+    {
+      "w": 65,
+      "h": 1,
+      "pattern": "flat",
+      "raw": 65,
+      "encoded": 5
+    },
+    {
+      "w": 65,
+      "h": 1,
+      "pattern": "pairs",
+      "raw": 65,
+      "encoded": 5
+    },
+    {
+      "w": 65,
+      "h": 1,
+      "pattern": "random",
+      "raw": 65,
+      "encoded": 65
+    },
+    {
+      "w": 65,
+      "h": 1,
+      "pattern": "odd_runs",
+      "raw": 65,
+      "encoded": 65
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "pattern": "flat",
+      "raw": 64000,
+      "encoded": 4000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "pattern": "pairs",
+      "raw": 64000,
+      "encoded": 4000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "pattern": "random",
+      "raw": 64000,
+      "encoded": 63974
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "pattern": "odd_runs",
+      "raw": 64000,
+      "encoded": 64000
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "pattern": "flat",
+      "raw": 76800,
+      "encoded": 4800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "pattern": "pairs",
+      "raw": 76800,
+      "encoded": 4800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "pattern": "random",
+      "raw": 76800,
+      "encoded": 76788
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "pattern": "odd_runs",
+      "raw": 76800,
+      "encoded": 76800
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "pattern": "flat",
+      "raw": 196608,
+      "encoded": 12288
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "pattern": "pairs",
+      "raw": 196608,
+      "encoded": 12288
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "pattern": "random",
+      "raw": 196608,
+      "encoded": 196572
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "pattern": "odd_runs",
+      "raw": 196608,
+      "encoded": 196608
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "pattern": "flat",
+      "raw": 307200,
+      "encoded": 19200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "pattern": "pairs",
+      "raw": 307200,
+      "encoded": 19200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "pattern": "random",
+      "raw": 307200,
+      "encoded": 307150
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "pattern": "odd_runs",
+      "raw": 307200,
+      "encoded": 307200
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "pattern": "flat",
+      "raw": 786432,
+      "encoded": 49152
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "pattern": "pairs",
+      "raw": 786432,
+      "encoded": 49152
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "pattern": "random",
+      "raw": 786432,
+      "encoded": 786246
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "pattern": "odd_runs",
+      "raw": 786432,
+      "encoded": 786432
+    }
+  ],
+  "malformed_rejected": 8,
+  "nonexpansion": true,
+  "worst_case_exact": true
+}
