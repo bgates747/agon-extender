@@ -117,3 +117,16 @@ Dense mode2 now passes the far-corner black/white check after clearing its buffe
 and flushing creation, with candidate02 installed. Preserve this corrected
 control; it supersedes the missing-tile attempts. The final sweep uses200ms taps,
 explicit buffer replacement, palette setup, far-corner checks and moving markers.
+
+Observed timing follow-up, not assigned implementation: some small RLE2 payloads
+settle near15fps despite mean P4 snapshot+socket phases below11ms; larger images
+sometimes reach30fps. The socket phase measures API send time, not TCP delivery.
+Record browser/request/network waits separately before attributing these plateaus
+to rendering. TCP packet/ACK behaviour is a hypothesis only, not a diagnosed cause.
+No networking/scheduler redesign is authorized by this packing experiment.
+
+Corrected sweep02 completed modes0–11 (34 workload groups). Preparing mode12
+encountered one keyboard HTTP timeout after route switching, before its startup
+was uploaded or measured. Keyboard status subsequently returned ready/neutral.
+A bounded ordinary reset restores known startup before continuing unchanged
+firmware/fixture as sweep03 from mode12; completed measurements are preserved.

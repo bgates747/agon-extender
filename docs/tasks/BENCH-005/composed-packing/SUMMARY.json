@@ -1,0 +1,2989 @@
+{
+  "rows": [
+    {
+      "mode": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 13,
+          "fps": 6.315457081127008,
+          "mean_bytes": 307232,
+          "decode_ms": 0.04615385715778057,
+          "interval_p95_ms": 168.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.412166666666666,
+            "socket_send": 126.94220833333333,
+            "credit_to_ready": 0.49345833333333333,
+            "ready_to_send": 0.10095833333333333
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 60,
+          "fps": 29.996441099663045,
+          "mean_bytes": 5294,
+          "decode_ms": 0.27704918189126937,
+          "interval_p95_ms": 34.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.221925925925925,
+            "socket_send": 8.51943119266055,
+            "credit_to_ready": 0.6869724770642202,
+            "ready_to_send": 0.14395412844036698
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 18,
+          "fps": 8.721079361768858,
+          "mean_bytes": 153642,
+          "decode_ms": 1.0111111170715756,
+          "interval_p95_ms": 132.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.969272727272728,
+            "socket_send": 81.38845454545455,
+            "credit_to_ready": 0.5134545454545455,
+            "ready_to_send": 0.12227272727272727
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 61,
+          "fps": 30.015007503751875,
+          "mean_bytes": 5294,
+          "decode_ms": 0.32333333094914757,
+          "interval_p95_ms": 34.09999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.054345454545455,
+            "socket_send": 8.523563636363637,
+            "credit_to_ready": 0.6241545454545454,
+            "ready_to_send": 0.1398909090909091
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 13,
+          "fps": 6.486837126414756,
+          "mean_bytes": 307232,
+          "decode_ms": 0.03076923810518705,
+          "interval_p95_ms": 166.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.8294,
+            "socket_send": 120.46755999999999,
+            "credit_to_ready": 0.49560000000000004,
+            "ready_to_send": 0.12068000000000001
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 11,
+          "fps": 5.357908272507708,
+          "mean_bytes": 304835,
+          "decode_ms": 1.0090909112583508,
+          "interval_p95_ms": 200.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.884,
+            "socket_send": 155.42804999999998,
+            "credit_to_ready": 0.49735,
+            "ready_to_send": 0.1123
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 18,
+          "fps": 8.787346221603567,
+          "mean_bytes": 153652,
+          "decode_ms": 1.1777777804268732,
+          "interval_p95_ms": 117.89999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.9159375,
+            "socket_send": 81.72390909090909,
+            "credit_to_ready": 0.5101515151515151,
+            "ready_to_send": 0.11857575757575758
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 15,
+          "fps": 7.5095209997910635,
+          "mean_bytes": 153652,
+          "decode_ms": 1.2400000015894572,
+          "interval_p95_ms": 133.89999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 14.203071428571429,
+            "socket_send": 101.01232142857144,
+            "credit_to_ready": 0.49364285714285716,
+            "ready_to_send": 0.10364285714285713
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 16
+    },
+    {
+      "mode": {
+        "mode": 0,
+        "width": 640,
+        "height": 480,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 11,
+          "fps": 5.360205831835443,
+          "mean_bytes": 307232,
+          "decode_ms": 0.027272728356448086,
+          "interval_p95_ms": 198,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 20.536809523809524,
+            "socket_send": 146.3327619047619,
+            "credit_to_ready": 0.8751428571428571,
+            "ready_to_send": 0.11085714285714286
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 60,
+          "fps": 29.987293519695044,
+          "mean_bytes": 7821.833333333333,
+          "decode_ms": 0.35833334028720853,
+          "interval_p95_ms": 34.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 16.007587155963304,
+            "socket_send": 9.272045454545454,
+            "credit_to_ready": 0.9099363636363635,
+            "ready_to_send": 0.1282727272727273
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 17,
+          "fps": 8.342892898060562,
+          "mean_bytes": 153650.6875,
+          "decode_ms": 1.1062500067055225,
+          "interval_p95_ms": 133.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 20.33859375,
+            "socket_send": 86.18021875,
+            "credit_to_ready": 0.87296875,
+            "ready_to_send": 0.1386875
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 60,
+          "fps": 29.988817729345833,
+          "mean_bytes": 7821.333333333333,
+          "decode_ms": 0.33666666646798454,
+          "interval_p95_ms": 34.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 15.900514018691588,
+            "socket_send": 9.476185185185184,
+            "credit_to_ready": 0.9601111111111111,
+            "ready_to_send": 0.1489814814814815
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 1,
+        "width": 640,
+        "height": 480,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 11,
+          "fps": 5.555246930652493,
+          "mean_bytes": 307232,
+          "decode_ms": 0.054545462131500244,
+          "interval_p95_ms": 183.5999999642372,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.678772727272728,
+            "socket_send": 143.61685714285713,
+            "credit_to_ready": 1.1181904761904762,
+            "ready_to_send": 0.10966666666666668
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 60,
+          "fps": 29.988817729345833,
+          "mean_bytes": 5294,
+          "decode_ms": 0.32833333909511564,
+          "interval_p95_ms": 34.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 8.91643119266055,
+            "socket_send": 8.702174311926605,
+            "credit_to_ready": 0.6786513761467889,
+            "ready_to_send": 0.13575229357798166
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 17,
+          "fps": 8.414409676571129,
+          "mean_bytes": 153642,
+          "decode_ms": 1.1705882268793442,
+          "interval_p95_ms": 133.9000000357628,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 14.4458125,
+            "socket_send": 83.86821875,
+            "credit_to_ready": 0.57175,
+            "ready_to_send": 0.13
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 61,
+          "fps": 30.240411270138342,
+          "mean_bytes": 5294,
+          "decode_ms": 0.29166666865348817,
+          "interval_p95_ms": 33.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 9.310663636363637,
+            "socket_send": 8.721567567567568,
+            "credit_to_ready": 0.727009009009009,
+            "ready_to_send": 0.13657657657657657
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 1,
+        "width": 640,
+        "height": 480,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 13,
+          "fps": 6.372470925722425,
+          "mean_bytes": 307232,
+          "decode_ms": 0.04615384798783522,
+          "interval_p95_ms": 166.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 11.820708333333334,
+            "socket_send": 120.62896,
+            "credit_to_ready": 0.52496,
+            "ready_to_send": 0.1164
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 11,
+          "fps": 5.357047195620003,
+          "mean_bytes": 287805,
+          "decode_ms": 1.1909090876579285,
+          "interval_p95_ms": 200.0,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 11.40625,
+            "socket_send": 155.235,
+            "credit_to_ready": 0.48555000000000004,
+            "ready_to_send": 0.11065000000000001
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 17,
+          "fps": 8.641641911963273,
+          "mean_bytes": 153641,
+          "decode_ms": 1.2999999978963066,
+          "interval_p95_ms": 118.29999995231628,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 12.496709677419354,
+            "socket_send": 85.09546875,
+            "credit_to_ready": 0.518,
+            "ready_to_send": 0.11265625
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 15,
+          "fps": 7.369972625723461,
+          "mean_bytes": 153641,
+          "decode_ms": 1.0133333285649617,
+          "interval_p95_ms": 149.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 11.975535714285714,
+            "socket_send": 100.20821428571429,
+            "credit_to_ready": 0.4925357142857143,
+            "ready_to_send": 0.10739285714285714
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 5
+    },
+    {
+      "mode": {
+        "mode": 1,
+        "width": 640,
+        "height": 480,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 11,
+          "fps": 5.511160099200882,
+          "mean_bytes": 307232,
+          "decode_ms": 0.045454545454545456,
+          "interval_p95_ms": 183.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 16.575,
+            "socket_send": 144.74757142857143,
+            "credit_to_ready": 0.7168095238095239,
+            "ready_to_send": 0.11876190476190476
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 60,
+          "fps": 29.99339128630212,
+          "mean_bytes": 7816.065573770492,
+          "decode_ms": 0.3229508175224554,
+          "interval_p95_ms": 34.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.401121495327104,
+            "socket_send": 9.128240740740742,
+            "credit_to_ready": 0.8765185185185185,
+            "ready_to_send": 0.12669444444444444
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 16,
+          "fps": 8.037293039652889,
+          "mean_bytes": 153641,
+          "decode_ms": 1.2875000014901161,
+          "interval_p95_ms": 132.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 17.4508,
+            "socket_send": 91.11506666666666,
+            "credit_to_ready": 0.7677,
+            "ready_to_send": 0.10096666666666666
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 60,
+          "fps": 30.011699476430916,
+          "mean_bytes": 7816.3,
+          "decode_ms": 0.2733333309491475,
+          "interval_p95_ms": 34.0,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.130700934579439,
+            "socket_send": 9.14088785046729,
+            "credit_to_ready": 0.8255233644859813,
+            "ready_to_send": 0.1253644859813084
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 10,
+        "width": 320,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 41,
+          "fps": 20.168406191579475,
+          "mean_bytes": 76832,
+          "decode_ms": 0.024390246809982672,
+          "interval_p95_ms": 50.700000047683716,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.134439393939394,
+            "socket_send": 19.19306060606061,
+            "credit_to_ready": 0.6341818181818182,
+            "ready_to_send": 0.10381818181818181
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 120,
+          "fps": 59.98890961370929,
+          "mean_bytes": 1890,
+          "decode_ms": 0.14416666825612387,
+          "interval_p95_ms": 17.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.467914893617021,
+            "socket_send": 2.0629470899470896,
+            "credit_to_ready": 0.6240370370370371,
+            "ready_to_send": 0.1253862433862434
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 29.987293519695044,
+          "mean_bytes": 38442,
+          "decode_ms": 0.39666666785875954,
+          "interval_p95_ms": 34.0,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.3771157894736845,
+            "socket_send": 11.238189473684212,
+            "credit_to_ready": 0.5109368421052631,
+            "ready_to_send": 0.11106315789473685
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 120,
+          "fps": 59.991933856911515,
+          "mean_bytes": 1890,
+          "decode_ms": 0.15416666169961293,
+          "interval_p95_ms": 17.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.458718918918919,
+            "socket_send": 2.072745945945946,
+            "credit_to_ready": 0.6260324324324325,
+            "ready_to_send": 0.12150810810810811
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 10,
+        "width": 320,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 41,
+          "fps": 20.17145738779627,
+          "mean_bytes": 76832,
+          "decode_ms": 0.04500000029802322,
+          "interval_p95_ms": 50.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.1396875,
+            "socket_send": 19.881828125,
+            "credit_to_ready": 0.488734375,
+            "ready_to_send": 0.123640625
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 40,
+          "fps": 19.66221325938997,
+          "mean_bytes": 71925,
+          "decode_ms": 0.46666666636100185,
+          "interval_p95_ms": 51.5,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.395285714285714,
+            "socket_send": 24.299174603174603,
+            "credit_to_ready": 0.5197301587301587,
+            "ready_to_send": 0.11595238095238095
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 59,
+          "fps": 29.72529725315414,
+          "mean_bytes": 38441,
+          "decode_ms": 0.47166666289170583,
+          "interval_p95_ms": 34.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.3775520833333337,
+            "socket_send": 11.025864583333334,
+            "credit_to_ready": 0.5284895833333334,
+            "ready_to_send": 0.12158333333333333
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 51,
+          "fps": 25.221953187599876,
+          "mean_bytes": 38441,
+          "decode_ms": 0.3470588197895125,
+          "interval_p95_ms": 50.700000047683716,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.4660375,
+            "socket_send": 16.677675,
+            "credit_to_ready": 0.5057375000000001,
+            "ready_to_send": 0.114825
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 5
+    },
+    {
+      "mode": {
+        "mode": 10,
+        "width": 320,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 20.0,
+          "mean_bytes": 76832,
+          "decode_ms": 0.04750000089406967,
+          "interval_p95_ms": 50.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.103861538461539,
+            "socket_send": 20.131060606060608,
+            "credit_to_ready": 0.6306060606060606,
+            "ready_to_send": 0.10787878787878788
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 15.004139073217846,
+          "mean_bytes": 3922.6,
+          "decode_ms": 0.1900000015894572,
+          "interval_p95_ms": 67.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.32055737704918,
+            "socket_send": 2.681655737704918,
+            "credit_to_ready": 0.679655737704918,
+            "ready_to_send": 0.109
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 59,
+          "fps": 29.491025576016455,
+          "mean_bytes": 38441,
+          "decode_ms": 0.49152542574931,
+          "interval_p95_ms": 34.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.132489583333333,
+            "socket_send": 11.05390625,
+            "credit_to_ready": 0.7174270833333334,
+            "ready_to_send": 0.12738541666666667
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.99638018400105,
+          "mean_bytes": 3910.6666666666665,
+          "decode_ms": 0.17333333293596903,
+          "interval_p95_ms": 67.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.539133333333333,
+            "socket_send": 2.6663666666666668,
+            "credit_to_ready": 0.7902166666666667,
+            "ready_to_send": 0.1245
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 11,
+        "width": 320,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 41,
+          "fps": 20.345879959308242,
+          "mean_bytes": 76832,
+          "decode_ms": 0.02195122183823004,
+          "interval_p95_ms": 50.59999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.7781194029850744,
+            "socket_send": 19.56213432835821,
+            "credit_to_ready": 0.517955223880597,
+            "ready_to_send": 0.11277611940298507
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 119,
+          "fps": 59.45183393757118,
+          "mean_bytes": 1890,
+          "decode_ms": 0.16333332806825637,
+          "interval_p95_ms": 17.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.298460732984293,
+            "socket_send": 1.9874712041884817,
+            "credit_to_ready": 0.6258167539267017,
+            "ready_to_send": 0.13687958115183246
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 29.99949153331444,
+          "mean_bytes": 38442,
+          "decode_ms": 0.35833332935969037,
+          "interval_p95_ms": 33.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.7917894736842106,
+            "socket_send": 10.952852631578947,
+            "credit_to_ready": 0.5908842105263158,
+            "ready_to_send": 0.12232631578947369
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 120,
+          "fps": 60.00100841994894,
+          "mean_bytes": 1890,
+          "decode_ms": 0.1198347117290024,
+          "interval_p95_ms": 17.599999964237213,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.361505376344086,
+            "socket_send": 1.9931069518716578,
+            "credit_to_ready": 0.6848609625668449,
+            "ready_to_send": 0.13963636363636361
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 11,
+        "width": 320,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 20.00102569386987,
+          "mean_bytes": 76832,
+          "decode_ms": 0.04999999850988388,
+          "interval_p95_ms": 50.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.838469696969697,
+            "socket_send": 19.284545454545455,
+            "credit_to_ready": 0.49774242424242426,
+            "ready_to_send": 0.11
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 41,
+          "fps": 20.336570237675968,
+          "mean_bytes": 61021,
+          "decode_ms": 0.5243902409948954,
+          "interval_p95_ms": 50.59999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.721030769230769,
+            "socket_send": 18.632727272727273,
+            "credit_to_ready": 0.49342424242424243,
+            "ready_to_send": 0.11445454545454545
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 62,
+          "fps": 31.000660669066306,
+          "mean_bytes": 19239,
+          "decode_ms": 0.3709677419354839,
+          "interval_p95_ms": 34.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.422561904761905,
+            "socket_send": 5.5755566037735855,
+            "credit_to_ready": 0.8097358490566038,
+            "ready_to_send": 0.11617924528301887
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 60,
+          "fps": 29.991866612625827,
+          "mean_bytes": 19239,
+          "decode_ms": 0.36500000456968945,
+          "interval_p95_ms": 34.0,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.753042105263158,
+            "socket_send": 10.465031578947368,
+            "credit_to_ready": 0.5648210526315789,
+            "ready_to_send": 0.12206315789473685
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 3
+    },
+    {
+      "mode": {
+        "mode": 11,
+        "width": 320,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 39,
+          "fps": 19.479188025306435,
+          "mean_bytes": 76832,
+          "decode_ms": 0.038461538461538464,
+          "interval_p95_ms": 66.5,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.830523076923076,
+            "socket_send": 19.593523076923077,
+            "credit_to_ready": 0.7200923076923077,
+            "ready_to_send": 0.12184615384615384
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 31,
+          "fps": 15.003750937734434,
+          "mean_bytes": 3865,
+          "decode_ms": 0.17999998728434244,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.8844333333333334,
+            "socket_send": 2.5494666666666665,
+            "credit_to_ready": 1.54345,
+            "ready_to_send": 0.12875
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 63,
+          "fps": 31.30996868927736,
+          "mean_bytes": 19239,
+          "decode_ms": 0.47580645161290325,
+          "interval_p95_ms": 33.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.885646464646465,
+            "socket_send": 6.040575757575758,
+            "credit_to_ready": 0.7561616161616161,
+            "ready_to_send": 0.11096969696969697
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 15.007244877022252,
+          "mean_bytes": 3862,
+          "decode_ms": 0.2166666845480601,
+          "interval_p95_ms": 66.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.9988852459016395,
+            "socket_send": 2.550688524590164,
+            "credit_to_ready": 0.969672131147541,
+            "ready_to_send": 0.12321311475409835
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 2,
+        "width": 640,
+        "height": 480,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 11,
+          "fps": 5.405989836878462,
+          "mean_bytes": 307232,
+          "decode_ms": 0.07272727922959761,
+          "interval_p95_ms": 185.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.461380952380953,
+            "socket_send": 144.81990476190475,
+            "credit_to_ready": 0.525952380952381,
+            "ready_to_send": 0.11861904761904762
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 60,
+          "fps": 29.99339128630212,
+          "mean_bytes": 5294,
+          "decode_ms": 0.2649999976158142,
+          "interval_p95_ms": 34.0,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 8.073935185185185,
+            "socket_send": 8.485861111111111,
+            "credit_to_ready": 0.6750370370370371,
+            "ready_to_send": 0.1373611111111111
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 18,
+          "fps": 8.801449650530676,
+          "mean_bytes": 153642,
+          "decode_ms": 1.3277777764532301,
+          "interval_p95_ms": 117.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.547,
+            "socket_send": 82.02254545454545,
+            "credit_to_ready": 0.5312121212121212,
+            "ready_to_send": 0.09966666666666667
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 60,
+          "fps": 30.00101698326285,
+          "mean_bytes": 5294,
+          "decode_ms": 0.3166666656732559,
+          "interval_p95_ms": 34.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 8.034697247706422,
+            "socket_send": 8.497770642201834,
+            "credit_to_ready": 0.6532752293577981,
+            "ready_to_send": 0.1429724770642202
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 2,
+        "width": 640,
+        "height": 480,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 11,
+          "fps": 5.549697541373843,
+          "mean_bytes": 307232,
+          "decode_ms": 0.03636363419619473,
+          "interval_p95_ms": 183.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.275714285714287,
+            "socket_send": 143.59985714285713,
+            "credit_to_ready": 0.5,
+            "ready_to_send": 0.1162857142857143
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 14,
+          "fps": 6.722167640394848,
+          "mean_bytes": 244381,
+          "decode_ms": 1.242857141154153,
+          "interval_p95_ms": 166.70000004768372,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.539879999999998,
+            "socket_send": 117.33936,
+            "credit_to_ready": 0.50792,
+            "ready_to_send": 0.11204
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 29,
+          "fps": 14.731414742029575,
+          "mean_bytes": 76839,
+          "decode_ms": 1.1586206966433032,
+          "interval_p95_ms": 68.5,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.994576923076924,
+            "socket_send": 40.961773584905664,
+            "credit_to_ready": 0.5025283018867924,
+            "ready_to_send": 0.11950943396226416
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 24,
+          "fps": 11.89429590946982,
+          "mean_bytes": 76839,
+          "decode_ms": 1.1458333333333333,
+          "interval_p95_ms": 83.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 11.125767441860466,
+            "socket_send": 59.03183720930233,
+            "credit_to_ready": 0.5211162790697674,
+            "ready_to_send": 0.11865116279069766
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 3
+    },
+    {
+      "mode": {
+        "mode": 2,
+        "width": 640,
+        "height": 480,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 13,
+          "fps": 6.429145459416019,
+          "mean_bytes": 307232,
+          "decode_ms": 0.05384615292915931,
+          "interval_p95_ms": 166.5999999642372,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 15.788625,
+            "socket_send": 127.63854166666667,
+            "credit_to_ready": 0.5945,
+            "ready_to_send": 0.12570833333333334
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 61,
+          "fps": 29.995500674720006,
+          "mean_bytes": 7784.233333333334,
+          "decode_ms": 0.33999999761581423,
+          "interval_p95_ms": 34.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 11.937527777777778,
+            "socket_send": 9.170018518518518,
+            "credit_to_ready": 0.8486296296296296,
+            "ready_to_send": 0.1175
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 30,
+          "fps": 14.74626258544054,
+          "mean_bytes": 76839,
+          "decode_ms": 1.2499999980131784,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 15.332592592592594,
+            "socket_send": 42.08189090909091,
+            "credit_to_ready": 0.6084909090909091,
+            "ready_to_send": 0.12165454545454546
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 60,
+          "fps": 29.996441100572053,
+          "mean_bytes": 7787.6,
+          "decode_ms": 0.3816666682561239,
+          "interval_p95_ms": 34.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 12.108841121495328,
+            "socket_send": 9.13561111111111,
+            "credit_to_ready": 0.7955462962962963,
+            "ready_to_send": 0.14558333333333334
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 3,
+        "width": 640,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 24,
+          "fps": 12.105900310694578,
+          "mean_bytes": 153632,
+          "decode_ms": 0.045833341777324677,
+          "interval_p95_ms": 83.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.3088999999999995,
+            "socket_send": 56.37675,
+            "credit_to_ready": 0.5173,
+            "ready_to_send": 0.104825
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 84,
+          "fps": 41.86844229267465,
+          "mean_bytes": 4792,
+          "decode_ms": 0.24337349455040622,
+          "interval_p95_ms": 33.89999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.866695945945946,
+            "socket_send": 4.723791946308725,
+            "credit_to_ready": 1.017208053691275,
+            "ready_to_send": 0.1332214765100671
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 24,
+          "fps": 11.79547669125659,
+          "mean_bytes": 153632,
+          "decode_ms": 0.030434782090394394,
+          "interval_p95_ms": 83.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.286897435897435,
+            "socket_send": 55.269225,
+            "credit_to_ready": 0.5422250000000001,
+            "ready_to_send": 0.120875
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 73,
+          "fps": 36.628173168974634,
+          "mean_bytes": 4792,
+          "decode_ms": 0.21756756386241397,
+          "interval_p95_ms": 33.89999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.784540983606558,
+            "socket_send": 4.721227642276423,
+            "credit_to_ready": 1.1721463414634148,
+            "ready_to_send": 0.12584552845528454
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 64
+    },
+    {
+      "mode": {
+        "mode": 3,
+        "width": 640,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 21,
+          "fps": 10.907504363214487,
+          "mean_bytes": 153632,
+          "decode_ms": 0.03181818127632141,
+          "interval_p95_ms": 100.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.030078947368421,
+            "socket_send": 60.35268421052631,
+            "credit_to_ready": 0.5300263157894737,
+            "ready_to_send": 0.10307894736842106
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 22,
+          "fps": 10.588947156174985,
+          "mean_bytes": 153632,
+          "decode_ms": 0.05000000650232488,
+          "interval_p95_ms": 116.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.525027777777777,
+            "socket_send": 66.8698611111111,
+            "credit_to_ready": 0.5518611111111111,
+            "ready_to_send": 0.10913888888888888
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 23,
+          "fps": 11.287260787237013,
+          "mean_bytes": 153632,
+          "decode_ms": 0.04347825827805892,
+          "interval_p95_ms": 100.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.291789473684211,
+            "socket_send": 57.42671052631579,
+            "credit_to_ready": 0.5061842105263158,
+            "ready_to_send": 0.10823684210526316
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 19,
+          "fps": 9.467206648023533,
+          "mean_bytes": 153632,
+          "decode_ms": 0.05263158522154156,
+          "interval_p95_ms": 117.09999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.419735294117647,
+            "socket_send": 72.58226470588235,
+            "credit_to_ready": 0.5283823529411764,
+            "ready_to_send": 0.10955882352941176
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 64
+    },
+    {
+      "mode": {
+        "mode": 3,
+        "width": 640,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 20,
+          "fps": 10.175664096037545,
+          "mean_bytes": 153632,
+          "decode_ms": 0.04500000774860382,
+          "interval_p95_ms": 100.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 10.082882352941176,
+            "socket_send": 65.3792,
+            "credit_to_ready": 0.9730571428571428,
+            "ready_to_send": 0.09945714285714286
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 15.004139072755141,
+          "mean_bytes": 3886,
+          "decode_ms": 0.24666666587193806,
+          "interval_p95_ms": 67.29999995231628,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.076790322580645,
+            "socket_send": 5.021919354838709,
+            "credit_to_ready": 1.0492903225806451,
+            "ready_to_send": 0.14669354838709678
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 31,
+          "fps": 15.515101365615878,
+          "mean_bytes": 76850.35483870968,
+          "decode_ms": 0.6967742039311317,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 9.35548076923077,
+            "socket_send": 32.95845283018868,
+            "credit_to_ready": 0.9205849056603773,
+            "ready_to_send": 0.12924528301886792
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.99870700801655,
+          "mean_bytes": 3886,
+          "decode_ms": 0.23333333532015482,
+          "interval_p95_ms": 67.20000004768372,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.058220338983051,
+            "socket_send": 4.9828983050847455,
+            "credit_to_ready": 0.9457966101694915,
+            "ready_to_send": 0.13498305084745763
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 4,
+        "width": 640,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 21,
+          "fps": 10.616838305485421,
+          "mean_bytes": 153632,
+          "decode_ms": 0.028571435383387973,
+          "interval_p95_ms": 100.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.466594594594595,
+            "socket_send": 61.55516216216216,
+            "credit_to_ready": 0.5347837837837838,
+            "ready_to_send": 0.10983783783783783
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 14.99870700801655,
+          "mean_bytes": 2930,
+          "decode_ms": 0.20666666626930236,
+          "interval_p95_ms": 67.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.578515151515152,
+            "socket_send": 4.601590909090909,
+            "credit_to_ready": 1.2722272727272728,
+            "ready_to_send": 0.1565
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 32,
+          "fps": 16.175319593008087,
+          "mean_bytes": 76842,
+          "decode_ms": 0.6718750018626451,
+          "interval_p95_ms": 67.09999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.7464259259259265,
+            "socket_send": 31.902074074074072,
+            "credit_to_ready": 0.5228518518518519,
+            "ready_to_send": 0.11470370370370371
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 15.008021528655535,
+          "mean_bytes": 2930,
+          "decode_ms": 0.2666666607062022,
+          "interval_p95_ms": 67.59999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.731776119402985,
+            "socket_send": 4.591970149253732,
+            "credit_to_ready": 0.6205223880597015,
+            "ready_to_send": 0.13483582089552237
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 4,
+        "width": 640,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 22,
+          "fps": 10.866190624230883,
+          "mean_bytes": 153632,
+          "decode_ms": 0.022727275436574764,
+          "interval_p95_ms": 100.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.442833333333333,
+            "socket_send": 61.84186111111111,
+            "credit_to_ready": 0.5548055555555556,
+            "ready_to_send": 0.11813888888888889
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 19,
+          "fps": 9.479172152417716,
+          "mean_bytes": 152435,
+          "decode_ms": 0.6263157882188496,
+          "interval_p95_ms": 117.09999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.49046875,
+            "socket_send": 74.9520625,
+            "credit_to_ready": 0.518375,
+            "ready_to_send": 0.1161875
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 31,
+          "fps": 15.253978746215408,
+          "mean_bytes": 76852,
+          "decode_ms": 0.6866666694482167,
+          "interval_p95_ms": 67.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.003230769230769,
+            "socket_send": 33.5509423076923,
+            "credit_to_ready": 0.5074038461538461,
+            "ready_to_send": 0.11857692307692308
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 15.003362822424046,
+          "mean_bytes": 76852,
+          "decode_ms": 0.7433333277702332,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 9.75596,
+            "socket_send": 40.26,
+            "credit_to_ready": 0.5929411764705883,
+            "ready_to_send": 0.12618000000000001
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 16
+    },
+    {
+      "mode": {
+        "mode": 4,
+        "width": 640,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 21,
+          "fps": 10.530195335057375,
+          "mean_bytes": 153632,
+          "decode_ms": 0.061904756795792354,
+          "interval_p95_ms": 100.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 9.529305555555554,
+            "socket_send": 65.19030555555555,
+            "credit_to_ready": 0.7444166666666666,
+            "ready_to_send": 0.11327777777777777
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 15.001034554199682,
+          "mean_bytes": 3981.266666666667,
+          "decode_ms": 0.24999999403953552,
+          "interval_p95_ms": 67.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.782725806451612,
+            "socket_send": 4.946919354838709,
+            "credit_to_ready": 0.8668225806451614,
+            "ready_to_send": 0.12193548387096774
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 30,
+          "fps": 15.260748302803808,
+          "mean_bytes": 76850.45161290323,
+          "decode_ms": 0.6709677461654909,
+          "interval_p95_ms": 67.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 9.25456862745098,
+            "socket_send": 34.25634615384616,
+            "credit_to_ready": 0.6683653846153846,
+            "ready_to_send": 0.09728846153846153
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 15.004915403414328,
+          "mean_bytes": 3981.6666666666665,
+          "decode_ms": 0.2200000007947286,
+          "interval_p95_ms": 67.29999995231628,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.173573770491803,
+            "socket_send": 4.957262295081967,
+            "credit_to_ready": 0.7457213114754099,
+            "ready_to_send": 0.10704918032786885
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 5,
+        "width": 640,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 24,
+          "fps": 12.327151891871074,
+          "mean_bytes": 153632,
+          "decode_ms": 0.037499996523062386,
+          "interval_p95_ms": 83.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.670880952380952,
+            "socket_send": 52.61473170731707,
+            "credit_to_ready": 0.7292439024390244,
+            "ready_to_send": 0.11373170731707317
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 15.001810563158827,
+          "mean_bytes": 2930,
+          "decode_ms": 0.27333333492279055,
+          "interval_p95_ms": 67.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.630676923076924,
+            "socket_send": 4.558584615384615,
+            "credit_to_ready": 0.6300615384615385,
+            "ready_to_send": 0.1332923076923077
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 32,
+          "fps": 15.894175553926859,
+          "mean_bytes": 76842,
+          "decode_ms": 0.7677419339456866,
+          "interval_p95_ms": 67.39999997615814,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.944037735849057,
+            "socket_send": 32.33245283018868,
+            "credit_to_ready": 0.4961698113207547,
+            "ready_to_send": 0.10860377358490567
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.99250374803354,
+          "mean_bytes": 2930,
+          "decode_ms": 0.22333334088325502,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.473477611940298,
+            "socket_send": 4.488895522388059,
+            "credit_to_ready": 0.6339701492537314,
+            "ready_to_send": 0.12382089552238805
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 5,
+        "width": 640,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 24,
+          "fps": 12.00041740567353,
+          "mean_bytes": 153632,
+          "decode_ms": 0.045833331843217216,
+          "interval_p95_ms": 83.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.799317073170731,
+            "socket_send": 53.59634146341463,
+            "credit_to_ready": 0.5373170731707317,
+            "ready_to_send": 0.12419512195121951
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 21,
+          "fps": 10.083186286866649,
+          "mean_bytes": 143925,
+          "decode_ms": 0.7400000035762787,
+          "interval_p95_ms": 100.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.535361111111111,
+            "socket_send": 67.02527777777779,
+            "credit_to_ready": 0.5049444444444444,
+            "ready_to_send": 0.1155
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 31,
+          "fps": 15.520720161128324,
+          "mean_bytes": 76841,
+          "decode_ms": 0.6612903264261061,
+          "interval_p95_ms": 67.0,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.575365384615385,
+            "socket_send": 33.32425,
+            "credit_to_ready": 0.5255961538461538,
+            "ready_to_send": 0.10448076923076922
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.877135381840995,
+          "mean_bytes": 76841,
+          "decode_ms": 0.7033333361148835,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.90032,
+            "socket_send": 40.22774,
+            "credit_to_ready": 0.5152,
+            "ready_to_send": 0.10968000000000001
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 5
+    },
+    {
+      "mode": {
+        "mode": 5,
+        "width": 640,
+        "height": 240,
+        "colours": 4,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 23,
+          "fps": 11.786135218964425,
+          "mean_bytes": 153632,
+          "decode_ms": 0.0304347794988881,
+          "interval_p95_ms": 83.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 8.744674999999999,
+            "socket_send": 55.494550000000004,
+            "credit_to_ready": 0.5969500000000001,
+            "ready_to_send": 0.1189
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 31,
+          "fps": 14.99925003731933,
+          "mean_bytes": 3977,
+          "decode_ms": 0.24333332578341166,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.175580645161291,
+            "socket_send": 4.966031746031747,
+            "credit_to_ready": 0.7412380952380951,
+            "ready_to_send": 0.13584126984126985
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 33,
+          "fps": 16.131471492277456,
+          "mean_bytes": 76841,
+          "decode_ms": 0.8575757543245951,
+          "interval_p95_ms": 67.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 8.353814814814816,
+            "socket_send": 33.01598181818182,
+            "credit_to_ready": 0.6778545454545455,
+            "ready_to_send": 0.10743636363636364
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 31,
+          "fps": 15.0142635501937,
+          "mean_bytes": 3974.866666666667,
+          "decode_ms": 0.2566666622956594,
+          "interval_p95_ms": 67.20000004768372,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.173583333333333,
+            "socket_send": 5.048466666666666,
+            "credit_to_ready": 0.70155,
+            "ready_to_send": 0.13821666666666668
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 6,
+        "width": 640,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 21,
+          "fps": 10.34393586759762,
+          "mean_bytes": 153632,
+          "decode_ms": 0.03333332708903721,
+          "interval_p95_ms": 100.5,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.19572972972973,
+            "socket_send": 62.58402702702703,
+            "credit_to_ready": 0.4952432432432432,
+            "ready_to_send": 0.1105945945945946
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 14.994054081817131,
+          "mean_bytes": 2930,
+          "decode_ms": 0.21000000437100727,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.943492537313433,
+            "socket_send": 4.455179104477612,
+            "credit_to_ready": 0.6264029850746268,
+            "ready_to_send": 0.1333134328358209
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 31,
+          "fps": 15.512694555235457,
+          "mean_bytes": 76842,
+          "decode_ms": 0.6451612941680416,
+          "interval_p95_ms": 67.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.217057692307693,
+            "socket_send": 33.05528846153846,
+            "credit_to_ready": 0.5111730769230769,
+            "ready_to_send": 0.11286538461538462
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.739517153748412,
+          "mean_bytes": 2930,
+          "decode_ms": 0.23448275081042586,
+          "interval_p95_ms": 67.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.8245671641791046,
+            "socket_send": 4.455671641791045,
+            "credit_to_ready": 0.6278955223880597,
+            "ready_to_send": 0.1411044776119403
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 6,
+        "width": 640,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 24,
+          "fps": 11.896756840561826,
+          "mean_bytes": 153632,
+          "decode_ms": 0.045833329359690346,
+          "interval_p95_ms": 83.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.977536585365854,
+            "socket_send": 54.04314634146341,
+            "credit_to_ready": 0.4686341463414634,
+            "ready_to_send": 0.1187560975609756
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 24,
+          "fps": 11.699476067083237,
+          "mean_bytes": 122221,
+          "decode_ms": 0.8833333303531011,
+          "interval_p95_ms": 99.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.106025,
+            "socket_send": 56.328325,
+            "credit_to_ready": 0.5214500000000001,
+            "ready_to_send": 0.103725
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 58,
+          "fps": 28.75012609756289,
+          "mean_bytes": 38439,
+          "decode_ms": 0.7431034476592623,
+          "interval_p95_ms": 50.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.381296703296703,
+            "socket_send": 16.26941304347826,
+            "credit_to_ready": 0.5421739130434783,
+            "ready_to_send": 0.11832608695652173
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 40,
+          "fps": 20.002051492338474,
+          "mean_bytes": 38439,
+          "decode_ms": 0.7650000020861626,
+          "interval_p95_ms": 50.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.313537313432835,
+            "socket_send": 26.399432835820896,
+            "credit_to_ready": 0.5220294117647059,
+            "ready_to_send": 0.11661764705882353
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 3
+    },
+    {
+      "mode": {
+        "mode": 6,
+        "width": 640,
+        "height": 240,
+        "colours": 2,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 24,
+          "fps": 11.999791308051885,
+          "mean_bytes": 153632,
+          "decode_ms": 0.045833329359690346,
+          "interval_p95_ms": 83.5,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.350024390243902,
+            "socket_send": 55.07148780487805,
+            "credit_to_ready": 0.701219512195122,
+            "ready_to_send": 0.1181219512195122
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 14.995604736265431,
+          "mean_bytes": 3956.5333333333333,
+          "decode_ms": 0.21666667064030964,
+          "interval_p95_ms": 67.10000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.377285714285715,
+            "socket_send": 4.866730158730159,
+            "credit_to_ready": 1.1222063492063492,
+            "ready_to_send": 0.12039682539682539
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 48,
+          "fps": 23.706244325347928,
+          "mean_bytes": 38439,
+          "decode_ms": 0.7645833343267441,
+          "interval_p95_ms": 50.5,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 7.144776315789473,
+            "socket_send": 16.632552631578946,
+            "credit_to_ready": 0.7096447368421053,
+            "ready_to_send": 0.12755263157894736
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.875609130546295,
+          "mean_bytes": 3956.6666666666665,
+          "decode_ms": 0.22333333293596905,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.153032258064516,
+            "socket_send": 4.8697580645161285,
+            "credit_to_ready": 0.8270806451612903,
+            "ready_to_send": 0.10498387096774194
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 7,
+        "width": 640,
+        "height": 480,
+        "colours": 16,
+        "hz": 60,
+        "double": false,
+        "special": "teletext; separately qualify, not ordinary raster fixture"
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 13,
+          "fps": 6.437768240343348,
+          "mean_bytes": 307232,
+          "decode_ms": 0.05384616209910466,
+          "interval_p95_ms": 167.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.258375,
+            "socket_send": 124.40204166666668,
+            "credit_to_ready": 0.498875,
+            "ready_to_send": 0.12279166666666667
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 40,
+          "fps": 19.993848046510465,
+          "mean_bytes": 48354,
+          "decode_ms": 0.8400000020861625,
+          "interval_p95_ms": 50.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.682986301369864,
+            "socket_send": 19.45404109589041,
+            "credit_to_ready": 0.585013698630137,
+            "ready_to_send": 0.1357123287671233
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 40,
+          "fps": 20.0,
+          "mean_bytes": 38438,
+          "decode_ms": 1.3150000005960465,
+          "interval_p95_ms": 50.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.630458333333333,
+            "socket_send": 26.646493150684933,
+            "credit_to_ready": 0.6081643835616438,
+            "ready_to_send": 0.1292054794520548
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.997155711940207,
+          "mean_bytes": 38438,
+          "decode_ms": 1.276666663090388,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 13.292245283018868,
+            "socket_send": 36.52325925925926,
+            "credit_to_ready": 0.5993888888888889,
+            "ready_to_send": 0.12940740740740742
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 2
+    },
+    {
+      "mode": {
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 19.663204598401133,
+          "mean_bytes": 76832,
+          "decode_ms": 0.04249999821186066,
+          "interval_p95_ms": 50.90000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.2653225806451616,
+            "socket_send": 23.225241935483872,
+            "credit_to_ready": 0.5425967741935485,
+            "ready_to_send": 0.10693548387096774
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 31,
+          "fps": 14.995501349416415,
+          "mean_bytes": 3444,
+          "decode_ms": 0.20333333412806193,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.78008064516129,
+            "socket_send": 2.2952380952380955,
+            "credit_to_ready": 1.2646031746031747,
+            "ready_to_send": 0.1355714285714286
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 39,
+          "fps": 19.65957887076254,
+          "mean_bytes": 76832,
+          "decode_ms": 0.05384614987251086,
+          "interval_p95_ms": 53.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.391890625,
+            "socket_send": 23.289153846153848,
+            "credit_to_ready": 0.5099230769230769,
+            "ready_to_send": 0.11384615384615383
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.875609130546295,
+          "mean_bytes": 3444,
+          "decode_ms": 0.23000000516573588,
+          "interval_p95_ms": 67.59999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 2.7422622950819675,
+            "socket_send": 2.3442741935483875,
+            "credit_to_ready": 1.467274193548387,
+            "ready_to_send": 0.1427258064516129
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 64
+    },
+    {
+      "mode": {
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 19.66221325938997,
+          "mean_bytes": 76832,
+          "decode_ms": 0.05384614987251086,
+          "interval_p95_ms": 51.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.24059375,
+            "socket_send": 21.9950625,
+            "credit_to_ready": 0.553859375,
+            "ready_to_send": 0.132265625
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 34,
+          "fps": 17.362024516847537,
+          "mean_bytes": 76832,
+          "decode_ms": 0.03999999761581421,
+          "interval_p95_ms": 67.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.3032456140350877,
+            "socket_send": 27.440684210526317,
+            "credit_to_ready": 0.5316140350877193,
+            "ready_to_send": 0.13182456140350876
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 41,
+          "fps": 19.999000050355093,
+          "mean_bytes": 76832,
+          "decode_ms": 0.02499999850988388,
+          "interval_p95_ms": 51.0,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.4812153846153846,
+            "socket_send": 19.865215384615386,
+            "credit_to_ready": 0.5264,
+            "ready_to_send": 0.10803076923076924
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 34,
+          "fps": 16.643970343571095,
+          "mean_bytes": 76832,
+          "decode_ms": 0.047058820724487305,
+          "interval_p95_ms": 67.40000003576279,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.594592592592593,
+            "socket_send": 27.054254545454548,
+            "credit_to_ready": 0.5098363636363636,
+            "ready_to_send": 0.12887272727272728
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 64
+    },
+    {
+      "mode": {
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colours": 64,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 39,
+          "fps": 19.65347814843548,
+          "mean_bytes": 76832,
+          "decode_ms": 0.04358974175575452,
+          "interval_p95_ms": 51.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.512587301587301,
+            "socket_send": 22.9195,
+            "credit_to_ready": 0.6425,
+            "ready_to_send": 0.11590625
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 15.001034554199682,
+          "mean_bytes": 3828.9333333333334,
+          "decode_ms": 0.18666667143503826,
+          "interval_p95_ms": 67.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.343426229508197,
+            "socket_send": 2.9343934426229508,
+            "credit_to_ready": 0.7175245901639344,
+            "ready_to_send": 0.12324590163934426
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 29.737903225806452,
+          "mean_bytes": 38450.26666666667,
+          "decode_ms": 0.38333333333333336,
+          "interval_p95_ms": 34.0,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.325659793814433,
+            "socket_send": 11.257427083333335,
+            "credit_to_ready": 0.756,
+            "ready_to_send": 0.1251958762886598
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 14.991728701590898,
+          "mean_bytes": 3834.9333333333334,
+          "decode_ms": 0.21999999284744262,
+          "interval_p95_ms": 67.5,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.089606557377049,
+            "socket_send": 2.9392131147540987,
+            "credit_to_ready": 0.7850983606557377,
+            "ready_to_send": 0.12255737704918034
+          }
+        }
+      ]
+    },
+    {
+      "mode": {
+        "mode": 9,
+        "width": 320,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "static",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 20.172761599835468,
+          "mean_bytes": 76832,
+          "decode_ms": 0.03500000089406967,
+          "interval_p95_ms": 50.69999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.8541692307692306,
+            "socket_send": 20.255184615384618,
+            "credit_to_ready": 0.5257384615384616,
+            "ready_to_send": 0.10976923076923077
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 120,
+          "fps": 60.00705965335551,
+          "mean_bytes": 1890,
+          "decode_ms": 0.14500000029802323,
+          "interval_p95_ms": 17.899999976158142,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.3416560846560848,
+            "socket_send": 2.0566349206349206,
+            "credit_to_ready": 0.6228624338624338,
+            "ready_to_send": 0.1276243386243386
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 30.010172939979654,
+          "mean_bytes": 38442,
+          "decode_ms": 0.38833333055178326,
+          "interval_p95_ms": 34,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.9079479166666666,
+            "socket_send": 11.532666666666666,
+            "credit_to_ready": 0.5253229166666666,
+            "ready_to_send": 0.11826041666666667
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 120,
+          "fps": 59.97379296477923,
+          "mean_bytes": 1890,
+          "decode_ms": 0.16166666249434153,
+          "interval_p95_ms": 17.80000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.210878306878307,
+            "socket_send": 2.0618000000000003,
+            "credit_to_ready": 0.6639736842105264,
+            "ready_to_send": 0.12687894736842106
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 6
+    },
+    {
+      "mode": {
+        "mode": 9,
+        "width": 320,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "dense",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 40,
+          "fps": 19.997948928437285,
+          "mean_bytes": 76832,
+          "decode_ms": 0.027500002086162566,
+          "interval_p95_ms": 50.60000002384186,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.789,
+            "socket_send": 20.646723076923077,
+            "credit_to_ready": 0.5120769230769231,
+            "ready_to_send": 0.11396923076923077
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 37,
+          "fps": 18.300122000924233,
+          "mean_bytes": 76235,
+          "decode_ms": 0.4108108137104962,
+          "interval_p95_ms": 67.0,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.847406779661017,
+            "socket_send": 26.28081355932203,
+            "credit_to_ready": 0.5059661016949153,
+            "ready_to_send": 0.11722033898305086
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 29.784441414980478,
+          "mean_bytes": 38452,
+          "decode_ms": 0.3559322044000787,
+          "interval_p95_ms": 34.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.988526315789474,
+            "socket_send": 11.406452631578947,
+            "credit_to_ready": 0.5292736842105263,
+            "ready_to_send": 0.10789473684210527
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 47,
+          "fps": 23.396571893312743,
+          "mean_bytes": 38452,
+          "decode_ms": 0.39361702508114754,
+          "interval_p95_ms": 50.19999998807907,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 3.919148648648649,
+            "socket_send": 16.51562162162162,
+            "credit_to_ready": 0.5195,
+            "ready_to_send": 0.11027027027027027
+          }
+        }
+      ],
+      "identical_pixels": true,
+      "distinct_colours": 16
+    },
+    {
+      "mode": {
+        "mode": 9,
+        "width": 320,
+        "height": 240,
+        "colours": 16,
+        "hz": 60,
+        "double": false
+      },
+      "activity": "moving",
+      "status": "pass",
+      "trials": [
+        {
+          "label": "raw",
+          "frames": 39,
+          "fps": 19.481185276087118,
+          "mean_bytes": 76832,
+          "decode_ms": 0.03589743528610621,
+          "interval_p95_ms": 66.29999995231628,
+          "errors": [],
+          "wire_formats": [
+            "EVF1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 6.181578125,
+            "socket_send": 21.16053125,
+            "credit_to_ready": 0.691296875,
+            "ready_to_send": 0.11396875
+          }
+        },
+        {
+          "label": "rle2",
+          "frames": 30,
+          "fps": 14.997155711940207,
+          "mean_bytes": 3913.4,
+          "decode_ms": 0.20999999443689982,
+          "interval_p95_ms": 67.30000001192093,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.7779836065573775,
+            "socket_send": 2.871229508196721,
+            "credit_to_ready": 0.7514098360655738,
+            "ready_to_send": 0.1292622950819672
+          }
+        },
+        {
+          "label": "packed",
+          "frames": 60,
+          "fps": 29.99339128630212,
+          "mean_bytes": 38450.53333333333,
+          "decode_ms": 0.3549999992052714,
+          "interval_p95_ms": 34,
+          "errors": [],
+          "wire_formats": [
+            "EVP1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 5.843947916666667,
+            "socket_send": 11.095876288659793,
+            "credit_to_ready": 0.7838865979381443,
+            "ready_to_send": 0.11304123711340207
+          }
+        },
+        {
+          "label": "auto",
+          "frames": 30,
+          "fps": 15.010351966873706,
+          "mean_bytes": 3921.6,
+          "decode_ms": 0.173333340883255,
+          "interval_p95_ms": 67.59999996423721,
+          "errors": [],
+          "wire_formats": [
+            "EVR1"
+          ],
+          "phase_mean_ms": {
+            "snapshot": 4.912311475409836,
+            "socket_send": 2.8218688524590165,
+            "credit_to_ready": 0.8185901639344262,
+            "ready_to_send": 0.12834426229508197
+          }
+        }
+      ]
+    }
+  ],
+  "exceptions": [
+    {
+      "mode": 1,
+      "kind": "P4 restart on transition; one reset retry"
+    },
+    {
+      "mode": 10,
+      "kind": "P4 restart on transition; one reset retry"
+    },
+    {
+      "mode": 5,
+      "kind": "P4 restart on transition; one reset retry"
+    }
+  ]
+}
