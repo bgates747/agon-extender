@@ -44,3 +44,26 @@ observability is a result to report, not permission to mislabel measurements.
 Official local Agon docs MOS API and VDP commands; agondev input wrappers and MOS
 interrupt implementation; existing BENCH-001 telemetry contract; installed web
 client decoder and scripts/keyboard.py. Record concrete APIs in results/source.
+
+## K01 findings / instrumentation refinement
+
+Installed web client explicitly limits frame credits to 30/s at all resolutions.
+Preserve this setting for the comparison. Browser-origin keyboard requests are
+intentionally rejected; use the authorized host injection helper and bracket a
+host/browser monotonic-clock alignment, retaining its uncertainty. This avoids
+weakening the input boundary. First rejected request supplied no accepted sample.
+
+Application character-state polling is not MOS getkey; test actual blocking
+`getch()` separately (idle only). Its blocked call needs host Escape for exit;
+the raw-tick safety cap only applies while the foreground loop runs. Host trial
+and injection-session deadlines bound this test. Legacy telemetry payloads must
+satisfy the existing v2 envelope constants even though the contents are synthetic.
+
+## Self-assigned diagnostic control (within latency scope)
+
+After the installed 30 fps client trials, temporarily remove only the client-side
+credit delay in a headless observer for one matched idle-character group. This is
+host-only instrumentation, not a deployed UI or firmware change. It tests whether
+the identified output cap materially contributes to visible delay; retain the
+30 fps baseline as the user's actual experience. No 60 fps performance claim
+without measured delivery. Restore by closing the observer.
