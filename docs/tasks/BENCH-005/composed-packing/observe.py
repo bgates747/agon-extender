@@ -8,7 +8,7 @@ p=argparse.ArgumentParser();p.add_argument('--url',required=True);p.add_argument
 a.output.mkdir(parents=True,exist_ok=True)
 source=urllib.request.urlopen(a.url+'/app.js',timeout=10).read().decode()
 source=source.replace('acceptFrame(parseFrame(event.data), true);','''const before=performance.now();const f=parseFrame(event.data);const after=performance.now();
-window.samples.push({t:after,decode_ms:after-before,bytes:event.data.byteLength,magic:String.fromCharCode(...new Uint8Array(event.data,0,4)),seq:f.sequence,w:f.width,h:f.height});
+window.samples.push({t:after,decode_ms:after-before,bytes:event.data.byteLength,magic:String.fromCharCode(...new Uint8Array(event.data,0,4)),seq:f.sequence,w:f.width,h:f.height,signature:[0,1,2,3,4,5,6,7].map(i=>f.pixels[Math.floor(f.height/2)*f.strideBytes+Math.floor((i+.5)*f.width/8)]).join(",")});
 window.lastPixels=Array.from(f.pixels);acceptFrame(f,true);''')
 # Array.from is only for correctness frame retrieval, omit from timed stream.
 source=source.replace('window.lastPixels=Array.from(f.pixels);','window.lastFrame=f;')
