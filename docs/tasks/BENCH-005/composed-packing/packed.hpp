@@ -10,6 +10,8 @@ constexpr size_t max_pixels=1024u*768u;
 // then MSB-first indices across the raster. Final low padding bits are zero.
 inline size_t encode(const uint8_t*src,size_t n,uint8_t*dst,size_t cap,size_t smaller_than) {
  if(!n || n>max_pixels)return 0;
+ // Even a single-colour 1-bit image cannot beat this bound.
+ if(5+(n+7)/8>=smaller_than)return 0;
  uint8_t map[64],palette[16];std::memset(map,255,sizeof(map));unsigned colours=0;
  for(size_t i=0;i<n;++i){unsigned p=src[i];if(p>63)return 0;
   if(map[p]==255){if(colours==16)return 0;map[p]=colours;palette[colours++]=p;}}
