@@ -102,3 +102,10 @@ Escalating push/worker options are planned but not authorized for implementation
 W07a [packed-output audit](BENCH-005/packed-output/RESULTS.md) identifies the
 installed 512×384 RLE2 size ceiling; mode0 falls back to raw. Native packing
 proposal remains unimplemented pending Author review.
+
+## Author-authorized composed packing continuation
+
+[W08 contract](BENCH-005/composed-packing/PLAN.md) supersedes the unimplemented
+native-plane proposal: compose everything first, losslessly pack final colours,
+and benchmark all supported non-50-Hz modes. Goal execution authorized, hardware
+notification at review readiness.
