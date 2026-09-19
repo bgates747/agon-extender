@@ -13,7 +13,7 @@ No mainboard firmware, production game, scheduler or pacing changes.
 2. [x] Build/deploy the P4 candidate with rollback intact. Run matched Nurples
    output trials, recording actual wire formats, bytes, fps and decoding costs.
    Host codec tests may cover every geometry; no new all-mode hardware sweep.
-3. [ ] Record results and limits, restore startup, hardware voice notify and
+3. [x] Record results and limits, restore startup, hardware voice notify and
    leave the existing test Nurples ready for subjective review. Commit only
    this task's work; no push or unrelated changes.
 
@@ -22,3 +22,8 @@ reinterpretation. Official Screen-Modes.md reviewed; no VDU contract changes.
 The experimental extension requires packed=2 so older packed=1 clients cannot
 receive an unsupported six-bit packet. Automatic selection retains RLE2 where
 smaller; packed-only is a diagnostic control, not a promised universal speedup.
+
+Closeout: original startup restored/read back; hardware voice fresh receipt
+verified. New P4 candidate retained for interactive review, old W08 rollback
+untouched. Browser observers closed, production games/mainboard firmware
+unchanged. Nurples review launch uses existing two-vblank test build.
