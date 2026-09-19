@@ -109,3 +109,9 @@ proposal remains unimplemented pending Author review.
 native-plane proposal: compose everything first, losslessly pack final colours,
 and benchmark all supported non-50-Hz modes. Goal execution authorized, hardware
 notification at review readiness.
+
+W08 implementation and the 54-mode hardware screen are complete; bounded longer
+confirmation and closeout are recorded in the linked contract. See
+[packing results](BENCH-005/composed-packing/RESULTS.md) and
+[findings](BENCH-005/composed-packing/FINDINGS.md). Human review remains pending;
+this does not close BENCH-005's unrelated latency or pacing questions.

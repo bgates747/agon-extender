@@ -28,14 +28,21 @@ for run in a.runs:
     files=[(modepath/activity/(name+'.rgb222')).read_bytes() for name in ['raw','rle2','packed','auto']];row['identical_pixels']=all(x==files[0] for x in files);row['distinct_colours']=len(set(files[0]))
    rows.append(row)
 (T/'SUMMARY.json').write_text(json.dumps(dict(rows=rows,exceptions=exceptions,durations=durations),indent=2)+'\n')
-lines=['# Composed packing — hardware results','','## Executive summary','','Results are provisional until all requested modes and exceptions are reviewed. Final-colour packing preserves composition; measured performance depends on image entropy. RLE2 is the baseline below, with its size limit corrected for all supported resolutions.','','## Matched browser presentation submissions','','Each trial uses the same candidate, compositor, host and60Hz request cap. These are headless Chromium presentation submissions, not physical display refresh or game simulation fps. Static and dense cases compare decoded images exactly against the same P4 compositor without compression. This qualifies wire preservation, not new stock-mainboard pixel parity. Moving cases measure output during deterministic drawing; images differ in time and are not compared bytewise.','','| Mode | Scene | Raw fps | RLE2 fps | Packed fps | Auto fps | Auto vs RLE2 | RLE2 bytes | Packed bytes | Auto bytes |','|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|']
+lines=['# Composed packing — hardware results','','## Executive summary','','Keep composed-frame packing as an additional lossless output option: it improves dense low-colour scenes while preserving the completed image. It does not make every scene faster or establish universal 60 fps output. The automatic selector still pays for trying both encoders on some frames. See [findings and recommended next steps](FINDINGS.md) and [longer confirmation runs](CONFIRMATION.md). RLE2 below is the matched baseline with its size limit raised to cover every supported resolution; comparison with the older deployed firmware is a separate question.','','## Matched browser presentation submissions','','Each trial uses the same candidate, compositor, host and60Hz request cap. These are headless Chromium presentation submissions, not physical display refresh or game simulation fps. Static and dense cases compare decoded images exactly against the same P4 compositor without compression. This qualifies wire preservation, not new stock-mainboard pixel parity. Moving cases measure output during deterministic drawing; images differ in time and are not compared bytewise.','','| Mode | Scene | Raw fps | RLE2 fps | Packed fps | Auto fps | Auto vs RLE2 | RLE2 bytes | Packed bytes | Auto bytes |','|---:|---|---:|---:|---:|---:|---:|---:|---:|---:|']
 for row in sorted(rows,key=lambda r:next(x['fps'] for x in r['trials'] if x['label']=='auto')):
  d={t['label']:t for t in row['trials']};base=d['rle2'];auto=d['auto'];pack=d['packed'];pct=(auto['fps']/base['fps']-1)*100 if base['fps'] else 0
  lines.append(f"| {row['mode']['mode']} | {row['activity']} | {d['raw']['fps']:.2f} | {base['fps']:.2f} | {pack['fps']:.2f} | {auto['fps']:.2f} | {pct:+.1f}% | {base['mean_bytes']:.0f} | {pack['mean_bytes']:.0f} | {auto['mean_bytes']:.0f} |")
 lines+=['','Ranked slowest automatic output first. Percentage is throughput change relative to RLE2-only; positive is faster. Payload bytes include transport frame headers, not TCP/Ethernet overhead. See SUMMARY.json for sample counts, p95 intervals, decoder milliseconds, and snapshot/socket phase milliseconds. Socket phase includes encoding: it is not pure wire time. The timing counter windows include warmup, whereas fps excludes it.','', '## Exceptions', '']
 lines += [f"1. Mode {e['mode']}: {e['kind']}." for e in exceptions] or ['None recorded in these run directories.']
-(T/'RESULTS.md').write_text('\n'.join(lines)+'\n')
 print(len(rows),'mode/scene comparisons,',len(exceptions),'recorded exceptions')
+
+mode_count=len({r['mode']['mode'] for r in rows})
+pixel_count=sum('identical_pixels' in r for r in rows)
+ratios=[]
+for row in rows:
+ if row['activity']=='dense':
+  d={t['label']:t for t in row['trials']};ratios.append(d['auto']['fps']/d['rle2']['fps'])
+lines.insert(5,f'{mode_count} explicit modes completed; {pixel_count} static/dense scenes reconstructed identically across four encoding paths. Median dense-scene automatic throughput change: {(statistics.median(ratios)-1)*100:+.1f}%. Short two-second screening windows are not confidence intervals; see longer confirmations and exceptions below.')
 
 # Keep detailed timing separate from throughput: these counters are overlapping
 # pipeline phases, not additive pieces of the browser frame interval.

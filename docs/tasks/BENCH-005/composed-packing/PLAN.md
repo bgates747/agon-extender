@@ -47,7 +47,7 @@ explicitly negotiated and includes its palette in each complete frame.
    presentation timings wherever instrumentation permits; report unavailable
    metrics honestly. 60 Hz request ceiling is not a claim of 60 delivered fps.
    Include 70 Hz modes and document legacy-numbering aliases separately.
-5. [ ] P05 — Review results; make bounded corrections if evidence warrants them,
+5. [x] P05 — Review results; make bounded corrections if evidence warrants them,
    rerun affected cases. Tables give bytes, milliseconds, fps, baseline-relative
    differences and sample counts. Record elapsed execution for future estimates.
 6. [ ] P06 — Restore startup, close observers, release keys, preserve a working

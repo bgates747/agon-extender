@@ -2,7 +2,8 @@
 
 ## Executive summary
 
-Results are provisional until all requested modes and exceptions are reviewed. Final-colour packing preserves composition; measured performance depends on image entropy. RLE2 is the baseline below, with its size limit corrected for all supported resolutions.
+Keep composed-frame packing as an additional lossless output option: it improves dense low-colour scenes while preserving the completed image. It does not make every scene faster or establish universal 60 fps output. The automatic selector still pays for trying both encoders on some frames. See [findings and recommended next steps](FINDINGS.md) and [longer confirmation runs](CONFIRMATION.md). RLE2 below is the matched baseline with its size limit raised to cover every supported resolution; comparison with the older deployed firmware is a separate question.
+54 explicit modes completed; 107 static/dense scenes reconstructed identically across four encoding paths. Median dense-scene automatic throughput change: +42.7%. Short two-second screening windows are not confidence intervals; see longer confirmations and exceptions below.
 
 ## Matched browser presentation submissions
 
