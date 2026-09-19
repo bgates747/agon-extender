@@ -92,3 +92,9 @@ stock edge exclusion and cached cursor documented. See [results](BENCH-005/RESUL
 Hardware voice fresh execution receipt verified; startup restored byte-for-byte,
 observer closed, Legacy MOS prompt. First bounded investigation is complete, with
 paired app-receipt timing explicitly unavailable and retained as follow-up.
+
+## Browser pacing continuation
+
+Author authorized [W01–W02](BENCH-005/web-pacing/PLAN.md): deploy a 60 fps request
+ceiling with existing RLE2 and credit flow, then hardware notify for review.
+Escalating push/worker options are planned but not authorized for implementation.
