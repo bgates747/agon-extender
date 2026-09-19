@@ -36,4 +36,9 @@ Current EVQ1 uses count-minus-one; zero therefore means one literal pair.
 Final clarification was explicit: "do your way"; proceed with the four-bit count.
 64 host round trips and8 malformed cases passed, including maximum runs, odd
 tails and exact worst-case size. First Escape did not reach MOS; a normal reset
-restored the unchanged startup, then screen clear and SD readback passed.
+returned keyboard readiness, but the following SD admission still failed.
+The requested screen clear was emitted, not independently confirmed. No SD
+mutation occurred. Recheck admission after the P4 deployment before trials.
+
+After verified P4 deployment, SD admission succeeded and the unchanged Nurples
+fixture transfer began. The earlier admission failure did not recur at this gate.
