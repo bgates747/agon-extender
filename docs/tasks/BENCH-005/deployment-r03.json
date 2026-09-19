@@ -1,0 +1,6 @@
+{
+  "build": "bench005-keylat-r03-b2026-09-19-00-03-06Z",
+  "sha256": "2f84ff000bf8f19359c2cee4e70eda116d40f36d4f1abe530bd5faae0b6c2846",
+  "bytes": 10030,
+  "change": "Record telemetry-open status before testing"
+}

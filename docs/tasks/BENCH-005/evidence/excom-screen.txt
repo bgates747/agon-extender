@@ -1,0 +1,31 @@
+cols=40 rows=30 cursor=0,6 unknown=69 timeouts=0 captured=1200
+BENCH-005 char idle                    ?
+A: marker  ESC: exit                   ?
+                                       ?
+20                                     ?
+BENCH-005 ended: 20 events             ?
+/ *EMOS LEGACY --keep-display          ?
+/ *ECHO BENCH005 EXCOM READBACK 67890  ?
+BENCH005 EXCOM READBACK 67890          ?
+/ *LOAD /test/bench005/textread.bin    ?
+/ *RUN . /test/bench005/excom.txt      ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+                                       ?
+????????????????????????????????????????

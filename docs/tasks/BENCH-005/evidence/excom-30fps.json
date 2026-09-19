@@ -1,0 +1,1932 @@
+[
+  {
+    "kind": "char",
+    "activity": "idle",
+    "trials": [
+      {
+        "start": 18868.899213969707,
+        "httpEnd": 18894.367488980293,
+        "clock_alignment_bound_ms": 1.1903840005397797,
+        "decoded": {
+          "t": 18923.30000001192,
+          "pixel": 63,
+          "seq": 6437,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 18926,
+          "pixel": 63,
+          "seq": 6437
+        },
+        "trial": 1,
+        "expected": 63
+      },
+      {
+        "start": 19174.617689967155,
+        "httpEnd": 19200.1285648942,
+        "clock_alignment_bound_ms": 1.015749990940094,
+        "decoded": {
+          "t": 19258.5,
+          "pixel": 0,
+          "seq": 6447,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 19259.399999976158,
+          "pixel": 0,
+          "seq": 6447
+        },
+        "trial": 2,
+        "expected": 0
+      },
+      {
+        "start": 19542.556814968586,
+        "httpEnd": 19566.828965961933,
+        "clock_alignment_bound_ms": 0.9548450112342834,
+        "decoded": {
+          "t": 19622.30000001192,
+          "pixel": 63,
+          "seq": 6458,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 19626.69999998808,
+          "pixel": 63,
+          "seq": 6458
+        },
+        "trial": 3,
+        "expected": 63
+      },
+      {
+        "start": 19945.735226035118,
+        "httpEnd": 19971.8698579669,
+        "clock_alignment_bound_ms": 0.7322360277175903,
+        "decoded": {
+          "t": 20017.30000001192,
+          "pixel": 0,
+          "seq": 6470,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 20025.899999976158,
+          "pixel": 0,
+          "seq": 6470
+        },
+        "trial": 4,
+        "expected": 0
+      },
+      {
+        "start": 20378.983700990677,
+        "httpEnd": 20404.29325801134,
+        "clock_alignment_bound_ms": 0.6814510226249695,
+        "decoded": {
+          "t": 20452.5,
+          "pixel": 63,
+          "seq": 6483,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 20460.099999964237,
+          "pixel": 63,
+          "seq": 6483
+        },
+        "trial": 5,
+        "expected": 63
+      },
+      {
+        "start": 20687.17717796564,
+        "httpEnd": 20712.709992945194,
+        "clock_alignment_bound_ms": 1.2745680212974548,
+        "decoded": {
+          "t": 20747.69999998808,
+          "pixel": 0,
+          "seq": 6492,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 20759.19999998808,
+          "pixel": 0,
+          "seq": 6492
+        },
+        "trial": 6,
+        "expected": 0
+      },
+      {
+        "start": 21020.36068046093,
+        "httpEnd": 21046.38099348545,
+        "clock_alignment_bound_ms": 1.7571204900741577,
+        "decoded": {
+          "t": 21079.599999964237,
+          "pixel": 63,
+          "seq": 6502,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 21092.5,
+          "pixel": 63,
+          "seq": 6502
+        },
+        "trial": 7,
+        "expected": 63
+      },
+      {
+        "start": 21389.060644447803,
+        "httpEnd": 21413.070587456226,
+        "clock_alignment_bound_ms": 1.0575045049190521,
+        "decoded": {
+          "t": 21443.399999976158,
+          "pixel": 0,
+          "seq": 6513,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 21459.399999976158,
+          "pixel": 0,
+          "seq": 6513
+        },
+        "trial": 8,
+        "expected": 0
+      },
+      {
+        "start": 21792.90174895525,
+        "httpEnd": 21819.672757983208,
+        "clock_alignment_bound_ms": 1.0997790098190308,
+        "decoded": {
+          "t": 21874,
+          "pixel": 63,
+          "seq": 6526,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 21875.69999998808,
+          "pixel": 63,
+          "seq": 6526
+        },
+        "trial": 9,
+        "expected": 63
+      },
+      {
+        "start": 22247.717445015907,
+        "httpEnd": 22274.010926008224,
+        "clock_alignment_bound_ms": 1.9138650000095367,
+        "decoded": {
+          "t": 22308.80000001192,
+          "pixel": 0,
+          "seq": 6539,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 22309.19999998808,
+          "pixel": 0,
+          "seq": 6539
+        },
+        "trial": 10,
+        "expected": 0
+      },
+      {
+        "start": 22550.048684954643,
+        "httpEnd": 22578.04068696499,
+        "clock_alignment_bound_ms": 0.9473249912261963,
+        "decoded": {
+          "t": 22610.19999998808,
+          "pixel": 63,
+          "seq": 6548,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 22626.5,
+          "pixel": 63,
+          "seq": 6548
+        },
+        "trial": 11,
+        "expected": 63
+      },
+      {
+        "start": 22912.452358424664,
+        "httpEnd": 22941.2011064291,
+        "clock_alignment_bound_ms": 1.2501084804534912,
+        "decoded": {
+          "t": 22973.599999964237,
+          "pixel": 0,
+          "seq": 6559,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 22975.80000001192,
+          "pixel": 0,
+          "seq": 6559
+        },
+        "trial": 12,
+        "expected": 0
+      },
+      {
+        "start": 23296.001052975655,
+        "httpEnd": 23324.096754968166,
+        "clock_alignment_bound_ms": 1.2977629899978638,
+        "decoded": {
+          "t": 23370.5,
+          "pixel": 63,
+          "seq": 6571,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 23376.19999998808,
+          "pixel": 63,
+          "seq": 6571
+        },
+        "trial": 13,
+        "expected": 63
+      },
+      {
+        "start": 23730.791855454445,
+        "httpEnd": 23753.738064408302,
+        "clock_alignment_bound_ms": 0.8896654844284058,
+        "decoded": {
+          "t": 23801.899999976158,
+          "pixel": 0,
+          "seq": 6584,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 23809.599999964237,
+          "pixel": 0,
+          "seq": 6584
+        },
+        "trial": 14,
+        "expected": 0
+      },
+      {
+        "start": 24033.712007939816,
+        "httpEnd": 24062.638035953045,
+        "clock_alignment_bound_ms": 1.3079580068588257,
+        "decoded": {
+          "t": 24099.599999964237,
+          "pixel": 63,
+          "seq": 6593,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 24109.5,
+          "pixel": 63,
+          "seq": 6593
+        },
+        "trial": 15,
+        "expected": 63
+      },
+      {
+        "start": 24373.497364997864,
+        "httpEnd": 24402.820900022984,
+        "clock_alignment_bound_ms": 0.9957349896430969,
+        "decoded": {
+          "t": 24431.899999976158,
+          "pixel": 0,
+          "seq": 6603,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 24443.399999976158,
+          "pixel": 0,
+          "seq": 6603
+        },
+        "trial": 16,
+        "expected": 0
+      },
+      {
+        "start": 24747.1639534235,
+        "httpEnd": 24776.743487477303,
+        "clock_alignment_bound_ms": 2.1586534678936005,
+        "decoded": {
+          "t": 24827.099999964237,
+          "pixel": 63,
+          "seq": 6615,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 24843.099999964237,
+          "pixel": 63,
+          "seq": 6615
+        },
+        "trial": 17,
+        "expected": 63
+      },
+      {
+        "start": 25177.699420571327,
+        "httpEnd": 25205.85054153204,
+        "clock_alignment_bound_ms": 0.897580474615097,
+        "decoded": {
+          "t": 25257.099999964237,
+          "pixel": 0,
+          "seq": 6628,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 25259,
+          "pixel": 0,
+          "seq": 6628
+        },
+        "trial": 18,
+        "expected": 0
+      },
+      {
+        "start": 25625.55859053135,
+        "httpEnd": 25655.159444510937,
+        "clock_alignment_bound_ms": 0.8577204942703247,
+        "decoded": {
+          "t": 25688.19999998808,
+          "pixel": 63,
+          "seq": 6641,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 25692.30000001192,
+          "pixel": 63,
+          "seq": 6641
+        },
+        "trial": 19,
+        "expected": 63
+      },
+      {
+        "start": 25931.96684294939,
+        "httpEnd": 25961.230628967285,
+        "clock_alignment_bound_ms": 2.265163004398346,
+        "decoded": {
+          "t": 25988.30000001192,
+          "pixel": 0,
+          "seq": 6650,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 25993.30000001192,
+          "pixel": 0,
+          "seq": 6650
+        },
+        "trial": 20,
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "kind": "map",
+    "activity": "idle",
+    "trials": [
+      {
+        "start": 43824.548630476,
+        "httpEnd": 43850.412363409996,
+        "clock_alignment_bound_ms": 0.8468505144119263,
+        "decoded": {
+          "t": 43898.69999998808,
+          "pixel": 63,
+          "seq": 7187,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 43909.09999996424,
+          "pixel": 63,
+          "seq": 7187
+        },
+        "trial": 1,
+        "expected": 63
+      },
+      {
+        "start": 44156.740495979786,
+        "httpEnd": 44182.325700998306,
+        "clock_alignment_bound_ms": 0.7372259795665741,
+        "decoded": {
+          "t": 44228.59999996424,
+          "pixel": 0,
+          "seq": 7197,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 44242.09999996424,
+          "pixel": 0,
+          "seq": 7197
+        },
+        "trial": 2,
+        "expected": 0
+      },
+      {
+        "start": 44527.039282381535,
+        "httpEnd": 44552.51206845045,
+        "clock_alignment_bound_ms": 1.4356025159358978,
+        "decoded": {
+          "t": 44592.19999998808,
+          "pixel": 63,
+          "seq": 7208,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 44592.59999996424,
+          "pixel": 63,
+          "seq": 7208
+        },
+        "trial": 3,
+        "expected": 63
+      },
+      {
+        "start": 44915.34165352583,
+        "httpEnd": 44941.56408548355,
+        "clock_alignment_bound_ms": 1.2399934828281403,
+        "decoded": {
+          "t": 44990.5,
+          "pixel": 0,
+          "seq": 7220,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 44991.69999998808,
+          "pixel": 0,
+          "seq": 7220
+        },
+        "trial": 4,
+        "expected": 0
+      },
+      {
+        "start": 45354.210959494114,
+        "httpEnd": 45378.340052485466,
+        "clock_alignment_bound_ms": 1.0035194754600525,
+        "decoded": {
+          "t": 45423.80000001192,
+          "pixel": 63,
+          "seq": 7233,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 45424.89999997616,
+          "pixel": 63,
+          "seq": 7233
+        },
+        "trial": 5,
+        "expected": 63
+      },
+      {
+        "start": 45651.110813975334,
+        "httpEnd": 45675.504694998264,
+        "clock_alignment_bound_ms": 1.1077839732170105,
+        "decoded": {
+          "t": 45722.5,
+          "pixel": 0,
+          "seq": 7242,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 45725.30000001192,
+          "pixel": 0,
+          "seq": 7242
+        },
+        "trial": 6,
+        "expected": 0
+      },
+      {
+        "start": 45985.607001423836,
+        "httpEnd": 46011.15498650074,
+        "clock_alignment_bound_ms": 0.6050814986228943,
+        "decoded": {
+          "t": 46051.5,
+          "pixel": 63,
+          "seq": 7252,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 46058.09999996424,
+          "pixel": 63,
+          "seq": 7252
+        },
+        "trial": 7,
+        "expected": 63
+      },
+      {
+        "start": 46363.26133900881,
+        "httpEnd": 46391.98624801636,
+        "clock_alignment_bound_ms": 1.0591389834880829,
+        "decoded": {
+          "t": 46418.59999996424,
+          "pixel": 0,
+          "seq": 7263,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 46424.80000001192,
+          "pixel": 0,
+          "seq": 7263
+        },
+        "trial": 8,
+        "expected": 0
+      },
+      {
+        "start": 46762.978729486465,
+        "httpEnd": 46786.469305455685,
+        "clock_alignment_bound_ms": 1.9730895161628723,
+        "decoded": {
+          "t": 46816.89999997616,
+          "pixel": 63,
+          "seq": 7275,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 46825.5,
+          "pixel": 63,
+          "seq": 7275
+        },
+        "trial": 9,
+        "expected": 63
+      },
+      {
+        "start": 47197.001359939575,
+        "httpEnd": 47223.4064309001,
+        "clock_alignment_bound_ms": 0.8989999890327454,
+        "decoded": {
+          "t": 47248.89999997616,
+          "pixel": 0,
+          "seq": 7288,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 47258.09999996424,
+          "pixel": 0,
+          "seq": 7288
+        },
+        "trial": 10,
+        "expected": 0
+      },
+      {
+        "start": 47500.19989800453,
+        "httpEnd": 47524.85665798187,
+        "clock_alignment_bound_ms": 1.2967779636383057,
+        "decoded": {
+          "t": 47547.39999997616,
+          "pixel": 63,
+          "seq": 7297,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 47558.5,
+          "pixel": 63,
+          "seq": 7297
+        },
+        "trial": 11,
+        "expected": 63
+      },
+      {
+        "start": 47840.83904147148,
+        "httpEnd": 47864.44590640068,
+        "clock_alignment_bound_ms": 0.7373915016651154,
+        "decoded": {
+          "t": 47913.89999997616,
+          "pixel": 0,
+          "seq": 7308,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 47925.69999998808,
+          "pixel": 0,
+          "seq": 7308
+        },
+        "trial": 12,
+        "expected": 0
+      },
+      {
+        "start": 48242.415274977684,
+        "httpEnd": 48267.5553919673,
+        "clock_alignment_bound_ms": 0.9137749969959259,
+        "decoded": {
+          "t": 48309.30000001192,
+          "pixel": 63,
+          "seq": 7320,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 48325.39999997616,
+          "pixel": 63,
+          "seq": 7320
+        },
+        "trial": 13,
+        "expected": 63
+      },
+      {
+        "start": 48680.79976552725,
+        "httpEnd": 48709.06441646814,
+        "clock_alignment_bound_ms": 0.8972655236721039,
+        "decoded": {
+          "t": 48738.80000001192,
+          "pixel": 0,
+          "seq": 7333,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 48741.59999996424,
+          "pixel": 0,
+          "seq": 7333
+        },
+        "trial": 14,
+        "expected": 0
+      },
+      {
+        "start": 48961.915075957775,
+        "httpEnd": 48988.471705019474,
+        "clock_alignment_bound_ms": 0.8131459951400757,
+        "decoded": {
+          "t": 49035.19999998808,
+          "pixel": 63,
+          "seq": 7342,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 49042.30000001192,
+          "pixel": 63,
+          "seq": 7342
+        },
+        "trial": 15,
+        "expected": 63
+      },
+      {
+        "start": 49297.18425351381,
+        "httpEnd": 49325.258365511894,
+        "clock_alignment_bound_ms": 1.1813935041427612,
+        "decoded": {
+          "t": 49366.30000001192,
+          "pixel": 0,
+          "seq": 7352,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 49375.30000001192,
+          "pixel": 0,
+          "seq": 7352
+        },
+        "trial": 16,
+        "expected": 0
+      },
+      {
+        "start": 49671.0335611105,
+        "httpEnd": 49696.16506803036,
+        "clock_alignment_bound_ms": 0.7322210073471069,
+        "decoded": {
+          "t": 49733.5,
+          "pixel": 63,
+          "seq": 7363,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 49742.39999997616,
+          "pixel": 63,
+          "seq": 7363
+        },
+        "trial": 17,
+        "expected": 63
+      },
+      {
+        "start": 50079.48558497429,
+        "httpEnd": 50107.244129002094,
+        "clock_alignment_bound_ms": 0.9834350347518921,
+        "decoded": {
+          "t": 50131,
+          "pixel": 0,
+          "seq": 7375,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 50141.30000001192,
+          "pixel": 0,
+          "seq": 7375
+        },
+        "trial": 18,
+        "expected": 0
+      },
+      {
+        "start": 50511.765377521515,
+        "httpEnd": 50545.38106948137,
+        "clock_alignment_bound_ms": 1.4625875055789948,
+        "decoded": {
+          "t": 50563.19999998808,
+          "pixel": 63,
+          "seq": 7388,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 50574.59999996424,
+          "pixel": 63,
+          "seq": 7388
+        },
+        "trial": 19,
+        "expected": 63
+      },
+      {
+        "start": 50809.182948470116,
+        "httpEnd": 50839.37588840723,
+        "clock_alignment_bound_ms": 1.2788785099983215,
+        "decoded": {
+          "t": 50863.80000001192,
+          "pixel": 0,
+          "seq": 7397,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 50874.69999998808,
+          "pixel": 0,
+          "seq": 7397
+        },
+        "trial": 20,
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "kind": "char",
+    "activity": "busy",
+    "trials": [
+      {
+        "start": 68710.9678170085,
+        "httpEnd": 68740.31755203009,
+        "clock_alignment_bound_ms": 1.4656570255756378,
+        "decoded": {
+          "t": 68774.30000001192,
+          "pixel": 63,
+          "seq": 7936,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 68790.59999996424,
+          "pixel": 63,
+          "seq": 7936
+        },
+        "trial": 1,
+        "expected": 63
+      },
+      {
+        "start": 69047.80665004253,
+        "httpEnd": 69083.4295720458,
+        "clock_alignment_bound_ms": 2.801659971475601,
+        "decoded": {
+          "t": 69103.59999996424,
+          "pixel": 0,
+          "seq": 7946,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 69108.39999997616,
+          "pixel": 0,
+          "seq": 7946
+        },
+        "trial": 2,
+        "expected": 0
+      },
+      {
+        "start": 69398.6504650116,
+        "httpEnd": 69430.33365797997,
+        "clock_alignment_bound_ms": 0.9481850266456604,
+        "decoded": {
+          "t": 69471,
+          "pixel": 63,
+          "seq": 7957,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 69474.69999998808,
+          "pixel": 63,
+          "seq": 7957
+        },
+        "trial": 3,
+        "expected": 63
+      },
+      {
+        "start": 69795.31003004313,
+        "httpEnd": 69822.11451900005,
+        "clock_alignment_bound_ms": 0.9079900085926056,
+        "decoded": {
+          "t": 69867.80000001192,
+          "pixel": 0,
+          "seq": 7969,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 69873.89999997616,
+          "pixel": 0,
+          "seq": 7969
+        },
+        "trial": 4,
+        "expected": 0
+      },
+      {
+        "start": 70231.80891650915,
+        "httpEnd": 70260.3905954957,
+        "clock_alignment_bound_ms": 0.7078464925289154,
+        "decoded": {
+          "t": 70302.30000001192,
+          "pixel": 63,
+          "seq": 7982,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 70308,
+          "pixel": 63,
+          "seq": 7982
+        },
+        "trial": 5,
+        "expected": 63
+      },
+      {
+        "start": 70536.87633550167,
+        "httpEnd": 70565.30309551954,
+        "clock_alignment_bound_ms": 0.8735055327415466,
+        "decoded": {
+          "t": 70600.89999997616,
+          "pixel": 0,
+          "seq": 7991,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 70608.09999996424,
+          "pixel": 0,
+          "seq": 7991
+        },
+        "trial": 6,
+        "expected": 0
+      },
+      {
+        "start": 70878.65214443207,
+        "httpEnd": 70908.25849843025,
+        "clock_alignment_bound_ms": 1.0500145256519318,
+        "decoded": {
+          "t": 70931.5,
+          "pixel": 63,
+          "seq": 8001,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 70940.59999996424,
+          "pixel": 63,
+          "seq": 8001
+        },
+        "trial": 7,
+        "expected": 63
+      },
+      {
+        "start": 71243.94375401735,
+        "httpEnd": 71275.53252696991,
+        "clock_alignment_bound_ms": 1.1420339941978455,
+        "decoded": {
+          "t": 71299.59999996424,
+          "pixel": 0,
+          "seq": 8012,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 71308,
+          "pixel": 0,
+          "seq": 8012
+        },
+        "trial": 8,
+        "expected": 0
+      },
+      {
+        "start": 71653.94987648726,
+        "httpEnd": 71679.72402048111,
+        "clock_alignment_bound_ms": 0.6487664878368378,
+        "decoded": {
+          "t": 71730.59999996424,
+          "pixel": 63,
+          "seq": 8025,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 71740.80000001192,
+          "pixel": 63,
+          "seq": 8025
+        },
+        "trial": 9,
+        "expected": 63
+      },
+      {
+        "start": 72117.58666998148,
+        "httpEnd": 72149.70151996613,
+        "clock_alignment_bound_ms": 0.9835299849510193,
+        "decoded": {
+          "t": 72192.39999997616,
+          "pixel": 0,
+          "seq": 8039,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 72207.39999997616,
+          "pixel": 0,
+          "seq": 8039
+        },
+        "trial": 10,
+        "expected": 0
+      },
+      {
+        "start": 72452.21320545673,
+        "httpEnd": 72480.22056746483,
+        "clock_alignment_bound_ms": 0.911455512046814,
+        "decoded": {
+          "t": 72523,
+          "pixel": 63,
+          "seq": 8049,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 72524,
+          "pixel": 63,
+          "seq": 8049
+        },
+        "trial": 11,
+        "expected": 63
+      },
+      {
+        "start": 72808.28975456953,
+        "httpEnd": 72837.90928852558,
+        "clock_alignment_bound_ms": 0.9882545173168182,
+        "decoded": {
+          "t": 72889,
+          "pixel": 0,
+          "seq": 8060,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 72890.5,
+          "pixel": 0,
+          "seq": 8060
+        },
+        "trial": 12,
+        "expected": 0
+      },
+      {
+        "start": 73207.10931497812,
+        "httpEnd": 73236.66907894611,
+        "clock_alignment_bound_ms": 1.0075649917125702,
+        "decoded": {
+          "t": 73289.89999997616,
+          "pixel": 63,
+          "seq": 8072,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 73291,
+          "pixel": 63,
+          "seq": 8072
+        },
+        "trial": 13,
+        "expected": 63
+      },
+      {
+        "start": 73644.13403350115,
+        "httpEnd": 73668.12006652355,
+        "clock_alignment_bound_ms": 1.2303434908390045,
+        "decoded": {
+          "t": 73721.59999996424,
+          "pixel": 0,
+          "seq": 8085,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 73723.69999998808,
+          "pixel": 0,
+          "seq": 8085
+        },
+        "trial": 14,
+        "expected": 0
+      },
+      {
+        "start": 73942.36154001951,
+        "httpEnd": 73968.20074301958,
+        "clock_alignment_bound_ms": 0.959850013256073,
+        "decoded": {
+          "t": 74019,
+          "pixel": 63,
+          "seq": 8094,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 74024.09999996424,
+          "pixel": 63,
+          "seq": 8094
+        },
+        "trial": 15,
+        "expected": 63
+      },
+      {
+        "start": 74278.37846893072,
+        "httpEnd": 74309.10551595688,
+        "clock_alignment_bound_ms": 1.1763690114021301,
+        "decoded": {
+          "t": 74353,
+          "pixel": 0,
+          "seq": 8104,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 74358,
+          "pixel": 0,
+          "seq": 8104
+        },
+        "trial": 16,
+        "expected": 0
+      },
+      {
+        "start": 74665.61920052767,
+        "httpEnd": 74694.3851595521,
+        "clock_alignment_bound_ms": 0.8179705142974854,
+        "decoded": {
+          "t": 74715.5,
+          "pixel": 63,
+          "seq": 8115,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 74723.69999998808,
+          "pixel": 63,
+          "seq": 8115
+        },
+        "trial": 17,
+        "expected": 63
+      },
+      {
+        "start": 75063.55425995588,
+        "httpEnd": 75092.43547695875,
+        "clock_alignment_bound_ms": 0.9526700079441071,
+        "decoded": {
+          "t": 75146.69999998808,
+          "pixel": 0,
+          "seq": 8128,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 75157.80000001192,
+          "pixel": 0,
+          "seq": 8128
+        },
+        "trial": 18,
+        "expected": 0
+      },
+      {
+        "start": 75537.62459492683,
+        "httpEnd": 75566.76638096571,
+        "clock_alignment_bound_ms": 0.9228949844837189,
+        "decoded": {
+          "t": 75580.5,
+          "pixel": 63,
+          "seq": 8141,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 75591.5,
+          "pixel": 63,
+          "seq": 8141
+        },
+        "trial": 19,
+        "expected": 63
+      },
+      {
+        "start": 75828.48549109697,
+        "httpEnd": 75859.09763908386,
+        "clock_alignment_bound_ms": 1.6820209920406342,
+        "decoded": {
+          "t": 75912.59999996424,
+          "pixel": 0,
+          "seq": 8151,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 75923.80000001192,
+          "pixel": 0,
+          "seq": 8151
+        },
+        "trial": 20,
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "kind": "map",
+    "activity": "busy",
+    "trials": [
+      {
+        "start": 93773.68586045504,
+        "httpEnd": 93797.48309451342,
+        "clock_alignment_bound_ms": 0.8844804763793945,
+        "decoded": {
+          "t": 93844.89999997616,
+          "pixel": 63,
+          "seq": 8687,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 93856.30000001192,
+          "pixel": 63,
+          "seq": 8687
+        },
+        "trial": 1,
+        "expected": 63
+      },
+      {
+        "start": 94096.92191648483,
+        "httpEnd": 94121.26885849237,
+        "clock_alignment_bound_ms": 0.6204365193843842,
+        "decoded": {
+          "t": 94177.69999998808,
+          "pixel": 0,
+          "seq": 8697,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 94189.59999996424,
+          "pixel": 0,
+          "seq": 8697
+        },
+        "trial": 2,
+        "expected": 0
+      },
+      {
+        "start": 94470.31047552824,
+        "httpEnd": 94494.22972947359,
+        "clock_alignment_bound_ms": 0.8082855045795441,
+        "decoded": {
+          "t": 94543.5,
+          "pixel": 63,
+          "seq": 8708,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 94556.30000001192,
+          "pixel": 63,
+          "seq": 8708
+        },
+        "trial": 3,
+        "expected": 63
+      },
+      {
+        "start": 94874.68121647835,
+        "httpEnd": 94899.37859642506,
+        "clock_alignment_bound_ms": 0.5799365043640137,
+        "decoded": {
+          "t": 94944.39999997616,
+          "pixel": 0,
+          "seq": 8720,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 94956.69999998808,
+          "pixel": 0,
+          "seq": 8720
+        },
+        "trial": 4,
+        "expected": 0
+      },
+      {
+        "start": 95313.57216203213,
+        "httpEnd": 95336.99432808161,
+        "clock_alignment_bound_ms": 0.5699019730091095,
+        "decoded": {
+          "t": 95375.30000001192,
+          "pixel": 63,
+          "seq": 8733,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 95389.59999996424,
+          "pixel": 63,
+          "seq": 8733
+        },
+        "trial": 5,
+        "expected": 63
+      },
+      {
+        "start": 95610.89948654175,
+        "httpEnd": 95635.2001785636,
+        "clock_alignment_bound_ms": 0.5978865027427673,
+        "decoded": {
+          "t": 95673.30000001192,
+          "pixel": 0,
+          "seq": 8742,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 95689.80000001192,
+          "pixel": 0,
+          "seq": 8742
+        },
+        "trial": 6,
+        "expected": 0
+      },
+      {
+        "start": 95946.09877800941,
+        "httpEnd": 95970.04944199324,
+        "clock_alignment_bound_ms": 0.3977779746055603,
+        "decoded": {
+          "t": 96004.59999996424,
+          "pixel": 63,
+          "seq": 8752,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 96006.19999998808,
+          "pixel": 63,
+          "seq": 8752
+        },
+        "trial": 7,
+        "expected": 63
+      },
+      {
+        "start": 96301.73213255405,
+        "httpEnd": 96324.62529152632,
+        "clock_alignment_bound_ms": 0.431222528219223,
+        "decoded": {
+          "t": 96369.5,
+          "pixel": 0,
+          "seq": 8763,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 96372.80000001192,
+          "pixel": 0,
+          "seq": 8763
+        },
+        "trial": 8,
+        "expected": 0
+      },
+      {
+        "start": 96705.86783248186,
+        "httpEnd": 96730.15192449093,
+        "clock_alignment_bound_ms": 0.466682493686676,
+        "decoded": {
+          "t": 96769.09999996424,
+          "pixel": 63,
+          "seq": 8775,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 96772.89999997616,
+          "pixel": 63,
+          "seq": 8775
+        },
+        "trial": 9,
+        "expected": 63
+      },
+      {
+        "start": 97144.5277364254,
+        "httpEnd": 97168.08211243153,
+        "clock_alignment_bound_ms": 0.6260164976119995,
+        "decoded": {
+          "t": 97200,
+          "pixel": 0,
+          "seq": 8788,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 97206.19999998808,
+          "pixel": 0,
+          "seq": 8788
+        },
+        "trial": 10,
+        "expected": 0
+      },
+      {
+        "start": 97443.7056569457,
+        "httpEnd": 97465.6393609643,
+        "clock_alignment_bound_ms": 0.6042270064353943,
+        "decoded": {
+          "t": 97532.80000001192,
+          "pixel": 63,
+          "seq": 8798,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 97539.5,
+          "pixel": 63,
+          "seq": 8798
+        },
+        "trial": 11,
+        "expected": 63
+      },
+      {
+        "start": 97810.43852096796,
+        "httpEnd": 97833.0996119976,
+        "clock_alignment_bound_ms": 0.7365609705448151,
+        "decoded": {
+          "t": 97866.5,
+          "pixel": 0,
+          "seq": 8808,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 97873,
+          "pixel": 0,
+          "seq": 8808
+        },
+        "trial": 12,
+        "expected": 0
+      },
+      {
+        "start": 98184.07025146484,
+        "httpEnd": 98209.11942946911,
+        "clock_alignment_bound_ms": 0.6684615015983582,
+        "decoded": {
+          "t": 98266,
+          "pixel": 63,
+          "seq": 8820,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 98272.89999997616,
+          "pixel": 63,
+          "seq": 8820
+        },
+        "trial": 13,
+        "expected": 63
+      },
+      {
+        "start": 98618.86269044876,
+        "httpEnd": 98644.68636447191,
+        "clock_alignment_bound_ms": 0.7601705193519592,
+        "decoded": {
+          "t": 98696.80000001192,
+          "pixel": 0,
+          "seq": 8833,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 98706.09999996424,
+          "pixel": 0,
+          "seq": 8833
+        },
+        "trial": 14,
+        "expected": 0
+      },
+      {
+        "start": 98918.87663596869,
+        "httpEnd": 98943.18976694345,
+        "clock_alignment_bound_ms": 0.7744459807872772,
+        "decoded": {
+          "t": 98996.19999998808,
+          "pixel": 63,
+          "seq": 8842,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 99006.19999998808,
+          "pixel": 63,
+          "seq": 8842
+        },
+        "trial": 15,
+        "expected": 63
+      },
+      {
+        "start": 99257.69144695997,
+        "httpEnd": 99282.41656696796,
+        "clock_alignment_bound_ms": 0.5900270044803619,
+        "decoded": {
+          "t": 99331.89999997616,
+          "pixel": 0,
+          "seq": 8852,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 99339.5,
+          "pixel": 0,
+          "seq": 8852
+        },
+        "trial": 16,
+        "expected": 0
+      },
+      {
+        "start": 99629.03529655933,
+        "httpEnd": 99653.8089055419,
+        "clock_alignment_bound_ms": 0.63321653008461,
+        "decoded": {
+          "t": 99694,
+          "pixel": 63,
+          "seq": 8863,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 99706.09999996424,
+          "pixel": 63,
+          "seq": 8863
+        },
+        "trial": 17,
+        "expected": 63
+      },
+      {
+        "start": 100030.91480255127,
+        "httpEnd": 100055.2410735488,
+        "clock_alignment_bound_ms": 0.5137124955654144,
+        "decoded": {
+          "t": 100093.30000001192,
+          "pixel": 0,
+          "seq": 8875,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 100106.09999996424,
+          "pixel": 0,
+          "seq": 8875
+        },
+        "trial": 18,
+        "expected": 0
+      },
+      {
+        "start": 100473.25225144625,
+        "httpEnd": 100498.51437842846,
+        "clock_alignment_bound_ms": 0.6507914960384369,
+        "decoded": {
+          "t": 100557.69999998808,
+          "pixel": 63,
+          "seq": 8889,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 100572.80000001192,
+          "pixel": 63,
+          "seq": 8889
+        },
+        "trial": 19,
+        "expected": 63
+      },
+      {
+        "start": 100804.12846201658,
+        "httpEnd": 100830.6990519762,
+        "clock_alignment_bound_ms": 0.6270020008087158,
+        "decoded": {
+          "t": 100854.30000001192,
+          "pixel": 0,
+          "seq": 8898,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 100855.89999997616,
+          "pixel": 0,
+          "seq": 8898
+        },
+        "trial": 20,
+        "expected": 0
+      }
+    ]
+  },
+  {
+    "kind": "block",
+    "activity": "idle",
+    "trials": [
+      {
+        "start": 118748.49397701025,
+        "httpEnd": 118774.97440695763,
+        "clock_alignment_bound_ms": 0.5927069783210754,
+        "decoded": {
+          "t": 118816,
+          "pixel": 63,
+          "seq": 9436,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 118822.39999997616,
+          "pixel": 63,
+          "seq": 9436
+        },
+        "trial": 1,
+        "expected": 63
+      },
+      {
+        "start": 119067.12635058165,
+        "httpEnd": 119088.40862858295,
+        "clock_alignment_bound_ms": 0.8245404958724976,
+        "decoded": {
+          "t": 119113.39999997616,
+          "pixel": 0,
+          "seq": 9445,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 119122,
+          "pixel": 0,
+          "seq": 9445
+        },
+        "trial": 2,
+        "expected": 0
+      },
+      {
+        "start": 119402.84692049026,
+        "httpEnd": 119423.365511477,
+        "clock_alignment_bound_ms": 0.8435704708099365,
+        "decoded": {
+          "t": 119445.5,
+          "pixel": 63,
+          "seq": 9455,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 119455.19999998808,
+          "pixel": 63,
+          "seq": 9455
+        },
+        "trial": 3,
+        "expected": 63
+      },
+      {
+        "start": 119771.91825205088,
+        "httpEnd": 119795.48230701685,
+        "clock_alignment_bound_ms": 0.6166119873523712,
+        "decoded": {
+          "t": 119844.59999996424,
+          "pixel": 0,
+          "seq": 9467,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 119855.09999996424,
+          "pixel": 0,
+          "seq": 9467
+        },
+        "trial": 4,
+        "expected": 0
+      },
+      {
+        "start": 120208.32409101725,
+        "httpEnd": 120232.33515399694,
+        "clock_alignment_bound_ms": 0.7226209938526154,
+        "decoded": {
+          "t": 120278.19999998808,
+          "pixel": 63,
+          "seq": 9480,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 120289.09999996424,
+          "pixel": 63,
+          "seq": 9480
+        },
+        "trial": 5,
+        "expected": 63
+      },
+      {
+        "start": 120513.67260694504,
+        "httpEnd": 120539.26096189022,
+        "clock_alignment_bound_ms": 0.5714069902896881,
+        "decoded": {
+          "t": 120574.30000001192,
+          "pixel": 0,
+          "seq": 9489,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 120588.59999996424,
+          "pixel": 0,
+          "seq": 9489
+        },
+        "trial": 6,
+        "expected": 0
+      },
+      {
+        "start": 120847.63093549013,
+        "httpEnd": 120873.15866053104,
+        "clock_alignment_bound_ms": 0.8296555280685425,
+        "decoded": {
+          "t": 120907,
+          "pixel": 63,
+          "seq": 9499,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 120922.19999998808,
+          "pixel": 63,
+          "seq": 9499
+        },
+        "trial": 7,
+        "expected": 63
+      },
+      {
+        "start": 121218.03938645124,
+        "httpEnd": 121243.0821044445,
+        "clock_alignment_bound_ms": 0.7381165027618408,
+        "decoded": {
+          "t": 121270.39999997616,
+          "pixel": 0,
+          "seq": 9510,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 121272.30000001192,
+          "pixel": 0,
+          "seq": 9510
+        },
+        "trial": 8,
+        "expected": 0
+      },
+      {
+        "start": 121605.07822048664,
+        "httpEnd": 121628.46313750744,
+        "clock_alignment_bound_ms": 0.7768805027008057,
+        "decoded": {
+          "t": 121666.89999997616,
+          "pixel": 63,
+          "seq": 9522,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 121671.69999998808,
+          "pixel": 63,
+          "seq": 9522
+        },
+        "trial": 9,
+        "expected": 63
+      },
+      {
+        "start": 122041.6705314517,
+        "httpEnd": 122065.03542846441,
+        "clock_alignment_bound_ms": 0.6664814949035645,
+        "decoded": {
+          "t": 122096,
+          "pixel": 0,
+          "seq": 9535,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 122105.30000001192,
+          "pixel": 0,
+          "seq": 9535
+        },
+        "trial": 10,
+        "expected": 0
+      },
+      {
+        "start": 122342.56275600195,
+        "httpEnd": 122366.91419696808,
+        "clock_alignment_bound_ms": 1.7609359920024872,
+        "decoded": {
+          "t": 122426.39999997616,
+          "pixel": 63,
+          "seq": 9545,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 122438.89999997616,
+          "pixel": 63,
+          "seq": 9545
+        },
+        "trial": 11,
+        "expected": 63
+      },
+      {
+        "start": 122717.8336699605,
+        "httpEnd": 122741.14822691679,
+        "clock_alignment_bound_ms": 0.9321199953556061,
+        "decoded": {
+          "t": 122792.39999997616,
+          "pixel": 0,
+          "seq": 9556,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 122805,
+          "pixel": 0,
+          "seq": 9556
+        },
+        "trial": 12,
+        "expected": 0
+      },
+      {
+        "start": 123113.57714694738,
+        "httpEnd": 123139.91510796547,
+        "clock_alignment_bound_ms": 0.5749569833278656,
+        "decoded": {
+          "t": 123188,
+          "pixel": 63,
+          "seq": 9568,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 123189.09999996424,
+          "pixel": 63,
+          "seq": 9568
+        },
+        "trial": 13,
+        "expected": 63
+      },
+      {
+        "start": 123537.050791502,
+        "httpEnd": 123561.4897224307,
+        "clock_alignment_bound_ms": 0.6494314968585968,
+        "decoded": {
+          "t": 123584.89999997616,
+          "pixel": 0,
+          "seq": 9580,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 123588.30000001192,
+          "pixel": 0,
+          "seq": 9580
+        },
+        "trial": 14,
+        "expected": 0
+      },
+      {
+        "start": 123803.4993494749,
+        "httpEnd": 123827.3034734726,
+        "clock_alignment_bound_ms": 1.0920895040035248,
+        "decoded": {
+          "t": 123852.19999998808,
+          "pixel": 63,
+          "seq": 9588,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 123855.09999996424,
+          "pixel": 63,
+          "seq": 9588
+        },
+        "trial": 15,
+        "expected": 63
+      },
+      {
+        "start": 124106.41475147009,
+        "httpEnd": 124129.91887748241,
+        "clock_alignment_bound_ms": 0.6130715012550354,
+        "decoded": {
+          "t": 124151,
+          "pixel": 0,
+          "seq": 9597,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 124155.09999996424,
+          "pixel": 0,
+          "seq": 9597
+        },
+        "trial": 16,
+        "expected": 0
+      },
+      {
+        "start": 124451.06552255154,
+        "httpEnd": 124476.29590857029,
+        "clock_alignment_bound_ms": 0.5634124875068665,
+        "decoded": {
+          "t": 124516.80000001192,
+          "pixel": 63,
+          "seq": 9608,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 124521.69999998808,
+          "pixel": 63,
+          "seq": 9608
+        },
+        "trial": 17,
+        "expected": 63
+      },
+      {
+        "start": 124847.09325700998,
+        "httpEnd": 124870.6416220069,
+        "clock_alignment_bound_ms": 0.5919470191001892,
+        "decoded": {
+          "t": 124914.89999997616,
+          "pixel": 0,
+          "seq": 9620,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 124921.69999998808,
+          "pixel": 0,
+          "seq": 9620
+        },
+        "trial": 18,
+        "expected": 0
+      },
+      {
+        "start": 125282.57220196724,
+        "httpEnd": 125305.92436796427,
+        "clock_alignment_bound_ms": 0.5698519647121429,
+        "decoded": {
+          "t": 125348.39999997616,
+          "pixel": 63,
+          "seq": 9633,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 125355.09999996424,
+          "pixel": 63,
+          "seq": 9633
+        },
+        "trial": 19,
+        "expected": 63
+      },
+      {
+        "start": 125581.35988199711,
+        "httpEnd": 125605.33501499891,
+        "clock_alignment_bound_ms": 0.5585719645023346,
+        "decoded": {
+          "t": 125644.30000001192,
+          "pixel": 0,
+          "seq": 9642,
+          "w": 320,
+          "h": 240
+        },
+        "presented": {
+          "t": 125655.19999998808,
+          "pixel": 0,
+          "seq": 9642
+        },
+        "trial": 20,
+        "expected": 0
+      }
+    ]
+  }
+]

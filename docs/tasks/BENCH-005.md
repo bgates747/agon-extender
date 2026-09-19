@@ -10,25 +10,25 @@ can support before attributing delay to input, graphics or networking.
 
 ## Frozen execution contract
 
-1. [ ] K01 — Inspect input, acknowledgement and capture paths. Freeze this contract
+1. [x] K01 — Inspect input, acknowledgement and capture paths. Freeze this contract
    before implementation; retain identities and host-monotonic timing definitions.
-2. [ ] K02 — Build a bounded app with character and keymap variants, idle and
+2. [x] K02 — Build a bounded app with character and keymap variants, idle and
    continuously updating screen variants, a sequence-coded visible response,
    explicit exit and timeout. Keep firmware and production games unchanged where
    possible. App never changes mode; select mode 8 in temporary autoexec setup.
-3. [ ] K03 — Measure repeated injected taps under matching conditions. Distinguish
+3. [x] K03 — Measure repeated injected taps under matching conditions. Distinguish
    HTTP admission, event drain, actual application receipt and captured/displayed
    image. Existing resident telemetry is Legacy-only: do not call its availability
    a paired ExCom acknowledgement. Use it for a bounded Legacy control if viable;
    otherwise explicitly mark that measurement unavailable. No fake app receipt
    inferred from the keyboard queue. ExCom visible-response tests are primary.
-4. [ ] K04 — Compare idle/busy and character/keymap distributions (ms, sample count,
+4. [x] K04 — Compare idle/busy and character/keymap distributions (ms, sample count,
    median, p95, worst), plus console control where practical. Preserve raw samples,
    errors and diagnostic limits. Browser capture/presentation is not physical
    monitor latency; software injection bypasses USB keyboard polling. Polling and
    observation overhead must be stated. Do not use CLOCKS_PER_SEC=100 to convert
    MOS time; host monotonic clock is the latency authority.
-5. [ ] K05 — Restore startup, release injected keys and web observer, return Legacy
+5. [x] K05 — Restore startup, release injected keys and web observer, return Legacy
    prompt, document actionable findings and send hardware voice notification.
 
 ## Boundaries
@@ -70,9 +70,25 @@ without measured delivery. Restore by closing the observer.
 
 ## Author extension — text readback
 
-6. [ ] K06 — Provide and validate a read-only MOS-screen capture utility on Legacy
+6. [x] K06 — Provide and validate a read-only MOS-screen capture utility on Legacy
    and ExCom using stock VDU 23,0,&83 queries. Save text on the Agon's SD for host
    retrieval. Preserve display contents during capture, include cursor/dimensions,
    mark unknown glyphs/timeouts. This is font/pixel recognition, not an authoritative
    character-cell backing store; no claim of graphics or changed-font coverage.
    Loading the helper itself leaves CLI text on screen; retain this limitation.
+
+Legacy telemetry admission returned 27 (provider not found in the inspected EMOS
+status enumeration); this installed configuration does not supply the requested
+service. Fixture r02 returned 2, producing the Author-observed "Internal error".
+R03 records admission status to SD before returning. Do not infer SD failure or
+latency from this rejected control. Paired app-ack timing needs an instrumentation
+follow-up; this bounded run records it as unavailable rather than flashing a new
+EMOS purely to force a result.
+
+K03 completed its explicitly permitted unavailable-control branch: Legacy telemetry
+provider absent, no paired receipt claim. K06 passed interior text on both routes;
+stock edge exclusion and cached cursor documented. See [results](BENCH-005/RESULTS.md).
+
+Hardware voice fresh execution receipt verified; startup restored byte-for-byte,
+observer closed, Legacy MOS prompt. First bounded investigation is complete, with
+paired app-receipt timing explicitly unavailable and retained as follow-up.

@@ -1,0 +1,6 @@
+{
+  "build": "bench005-keylat-r02-b2026-09-19-00-01-30Z",
+  "sha256": "6258a6d999fc0939a849b2ba0c116e244c12a579b080b724eb2dd45ee08e0564",
+  "bytes": 9132,
+  "change": "Populate required Legacy telemetry envelope constants; same input/render loop"
+}

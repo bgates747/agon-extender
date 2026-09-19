@@ -1,0 +1,31 @@
+cols=40 rows=30 cursor=0,29 unknown=69 timeouts=0 captured=1200
+/ *LOAD /extender/sdserve.bin          ?
+/ *RUN . /                             ?
+sdserve-v0.1.0-b2026-09-13-01-07-48Z (c?
+ndidate), root /                       ?
+Escape returns to MOS.                 ?
+SD service stopped.                    ?
+/ *LOAD /test/bench005/keylat.bin      ?
+/ *RUN . char idle tele                ?
+                                       ?
+Internal error                         ?
+/ *                                    ?
+Escape                                 ?
+/ *LOAD /extender/sdserve.bin          ?
+/ *RUN . /                             ?
+sdserve-v0.1.0-b2026-09-13-01-07-48Z (c?
+ndidate), root /                       ?
+Escape returns to MOS.                 ?
+SD service stopped.                    ?
+/ *EMOS EXCOM --keep-display           ?
+/ *LOAD /extender/sdserve.bin          ?
+/ *RUN . /                             ?
+sdserve-v0.1.0-b2026-09-13-01-07-48Z (c?
+ndidate), root /                       ?
+Escape returns to MOS.                 ?
+SD service stopped.                    ?
+/ *ECHO BENCH005 LEGACY READBACK 12345 ?
+BENCH005 LEGACY READBACK 12345         ?
+/ *LOAD /test/bench005/textread.bin    ?
+/ *RUN . /test/bench005/legacy.txt     ?
+????????????????????????????????????????

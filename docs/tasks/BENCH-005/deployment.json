@@ -1,0 +1,8 @@
+{
+  "build": "bench005-keylat-r01-b2026-09-18-23-57-32Z",
+  "sha256": "a465559d9482202a5009f8df5256ec211f8b15e676487f22e0cafbcd515b5f57",
+  "bytes": 9114,
+  "target": "/test/bench005/keylat.bin",
+  "mode": 8,
+  "firmware_changed": false
+}

@@ -342,3 +342,5 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
     Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).
 
 Current QUAL-003 image-codec experiment: [RGB888 JPEG then indexed PNG contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/README.md). Completed; [results](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/RESULTS.md) await review. RLE2 wins live Nurples; PNG wins periodic static control only. Baseline restored; hardware voice verified.
+
+- [ ] **BENCH-005 — Keyboard/visible response latency**: [contract](docs/tasks/BENCH-005.md). First measurement pass complete: [results](docs/tasks/BENCH-005/RESULTS.md). Client cap adds visible latency; Legacy app-ack provider absent. Follow-up receipt instrumentation/console timing pending.

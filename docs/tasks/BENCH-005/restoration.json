@@ -1,0 +1,7 @@
+{
+  "startup_restored_and_read_back": true,
+  "firmware_changed": false,
+  "route": "Legacy",
+  "observer_closed": true,
+  "test_files_retained": "/test/bench005"
+}
