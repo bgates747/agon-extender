@@ -18,8 +18,10 @@ static void dense(unsigned w,unsigned h,unsigned colours,unsigned dbl){
  if(colours==4){palette[1]=3;palette[2]=12;palette[3]=63;}
  if(colours!=64)for(unsigned i=0;i<colours;i++){unsigned c=palette[i];uint8_t set[]={19,i,255,(c&3)*85,((c>>2)&3)*85,((c>>4)&3)*85};mos_puts((char*)set,sizeof(set),0);}
  for(unsigned i=0;i<1024;i++){seed=(seed*109+89)&65535;unsigned c=(seed>>6)%colours;pixels[i]=192|(colours==64?c:palette[c]);}
+ const uint8_t clear[]={23,0,160,32,203,2};mos_puts((char*)clear,sizeof(clear),0);
  const uint8_t prefix[]={23,0,160,32,203,0,0,4};mos_puts((char*)prefix,sizeof(prefix),0);mos_puts((char*)pixels,sizeof(pixels),0);
  const uint8_t bitmap[]={23,27,32,32,203,23,27,33,32,0,32,0,1};mos_puts((char*)bitmap,sizeof(bitmap),0);
+ const uint8_t flush[]={23,0,202};mos_puts((char*)flush,sizeof(flush),0);
  for(unsigned y=0;y<h;y+=32)for(unsigned x=0;x<w;x+=32){uint8_t plot[]={25,237,x,x>>8,y,y>>8};mos_puts((char*)plot,sizeof(plot),0);}
  const char sync[]={23,0,195};if(dbl)mos_puts(sync,3,0);
 }
