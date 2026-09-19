@@ -224,7 +224,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08
   - Finished: --
-  - Status: Plan reopened 2026-09-19: explicit capture/release toggle over the working processed-key route. B01–B07 planned; implementation not started.
+  - Status: B01 review and B02/B03 behaviour contract frozen 2026-09-19. Includes separate keyboard WebSocket, ownership priority, P4 repeat, locales/locks/keypad and fullscreen controls. B04 implementation has not started.
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Qualification infrastructure

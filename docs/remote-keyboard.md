@@ -134,3 +134,75 @@ Accepted browser capture behaviour is recorded in
 [ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md). Implementation is planned
 under REMOTE-001; the existing host-only HTTP contract remains unchanged until
 that work is implemented and qualified.
+
+The browser adapter will use a separate keyboard WebSocket, independent of
+video connection and Legacy/ExCom display routing. When EMOS admits Extender
+input, the operator can continue typing in Legacy and issue `emos excom` at
+the MOS prompt. Legacy mainboard output is not mirrored into the browser.
+Video-only loss does not release capture; input loss, focus loss and explicit
+release do. This is the accepted design, not currently deployed browser support.
+
+Physical USB keypress takes priority over browser capture: P4 discards pending
+browser events and releases browser-held keys before delivering the physical
+press. Browser control requires explicit recapture afterward.
+
+Explicit browser Capture overrides host-agent keyboard automation, cancelling
+queued agent events and releasing its held keys before browser input is admitted.
+Agent keyboard acquisition receives busy while browser capture is active. After
+release, the agent must acquire a fresh session; cancelled input is not replayed.
+This planned keyboard arbitration does not revoke video or screen-text access.
+
+Among browser sessions, latest explicit Capture wins. P4 discards the displaced
+browser's pending input and releases its held keys before admitting the new owner.
+Stale events are rejected; page opening/reconnection alone never takes ownership.
+Physical USB precedence and EMOS admission still apply.
+
+`EMOS KEYINPUT extender` is the common selector for physical USB, browser and
+host-agent keyboard input through P4. P4 arbitrates the providers; EMOS receives
+the same keyboard packet format without provider identity. Capturing the browser
+does not require switching EMOS to the historical `browser` selector.
+
+P4 generates browser held-key repeat using the Agon's configured delay/rate and
+the existing USB repeat policy. The browser sends press/release transitions,
+suppressing browser-generated automatic repeats. Revocation stops repeat and
+releases browser-held keys. Host automation retains its existing no-repeat policy.
+
+Human browser transitions bypass the host-agent policy's fixed 20 ms event
+spacing. P4 still observes console ownership, ordering, bounded queues and UART
+flow control. Agent pacing is unchanged; repeat delay/rate governs repeats only.
+
+Browser events report physical key positions. P4 translates them using the
+Agon's `SET KEYBOARD` locale, initially the existing UK/US mappings, just as for
+USB input. The browser host's interpreted character does not override that locale.
+
+Caps Lock is provider-specific: browser Capture uses the host's reported state
+when available and refreshes it from browser events. On physical USB takeover,
+P4 uses the USB provider's own Caps state and keeps its indicator synchronized.
+Browser support is cross-platform. Unknown browser state must not be presented
+as known off. Current USB acquisition has no LED writes; the planned adapter
+work includes that synchronization requirement, not a claim it already works.
+
+When Caps state is unavailable at Capture, show unknown until the first reliable
+keyboard event supplies it, then synchronize before translating/delivering that
+key. Do not interpret missing or unsupported state reporting as known off.
+
+Captured Tab and Escape go to Agon, with browser default actions suppressed
+where the page receives cancellable events. They do not intentionally release
+capture. The Release button or actual focus/session loss releases input. Events
+reserved by the browser/OS and not delivered to the page require documented
+platform limits; fullscreen behaviour must be qualified rather than assumed.
+
+Fullscreen keeps Release keyboard and Exit fullscreen accessible in a normally
+hidden bottom-edge mouse-reveal strip, outside the Agon image but inside the
+fullscreen container. Controls beside the video are the fallback. Do not use a
+top-edge strip that competes with browser fullscreen notices. Mouse reveal alone
+does not release capture.
+
+Num Lock and Scroll Lock follow the active provider's state like Caps Lock,
+including physical USB indicator synchronization. Numeric-keypad behaviour follows
+Num Lock. This expands the current limited mapping; missing browser lock-state
+reporting must not silently be interpreted as off.
+
+For lock states the browser cannot reliably report, the control strip offers
+explicitly labelled manual settings. A manually selected state is not presented
+as a host-observed value. This fallback keeps those browsers usable.

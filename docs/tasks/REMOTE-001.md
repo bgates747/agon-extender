@@ -2,7 +2,7 @@
 
 ## Current plan — browser capture over the working Extender input path
 
-**Planning reopened, 2026-09-19. Implementation has not started.** Add an explicit
+**Behaviour contract frozen by Author, 2026-09-19. Implementation has not started.** Add an explicit
 Capture keyboard / Release keyboard toggle to the existing video page, backed by
 the working processed-key input route used by Extender USB and host injection.
 Retain installed video codecs, fullscreen controls and direct screen-text access.
@@ -19,19 +19,30 @@ The historical implementation below is evidence, not the new build baseline.
 4. Returning focus or reconnecting leaves input released; capture must be explicit.
 5. Place controls outside the video image. Screen-text HTTP reads remain independent
    of both video viewing and keyboard ownership.
+6. Use a separate browser-to-P4 keyboard WebSocket. Capture requires input
+   admission, not an active video connection. Input connection loss releases
+   browser-held keys; video-only connection loss does not itself revoke capture.
+7. With Extender input admitted by EMOS, browser keys work in both Legacy and
+   ExCom. Legacy output remains on mainboard VDP; the browser retains P4's image
+   rather than mirroring mainboard output. The operator can type `emos excom`
+   at the MOS prompt to restore P4 output without visiting the bench.
 
 ### Itemized work
 
-- [ ] B01 — Inspect retained browser implementation/tests at 1ce96dc and current
+- [x] B01 — Inspect retained browser implementation/tests at 1ce96dc and current
   remote-keyboard/USB path. Map reusable key conversion and cleanup logic; preserve
   rollback. Do not reinstate the retired networking implementation wholesale.
-- [ ] B02 — Specify browser transport and ownership alongside host injection and
+  Completed 2026-09-19: [source review and checks](REMOTE-001/B01-review.md).
+- [x] B02 — Specify browser transport and ownership alongside host injection and
   physical USB. Resolve competing captures, physical takeover and source-specific
   releases. Current host endpoint rejects browser Origin: define a deliberate
   browser-facing admission contract instead of merely removing that check.
-- [ ] B03 — Specify key mapping, modifiers, locale, held keys, repeat ownership,
+  Behaviour settled in B02-D01–D06; B04 must define and test the browser-specific
+  handshake/wire admission without weakening the host-only endpoint.
+- [x] B03 — Specify key mapping, modifiers, locale, held keys, repeat ownership,
   browser-reserved shortcuts and fullscreen interaction. Document unsupported keys
   visibly. Reuse existing stock-compatible UART encoding and EMOS admission.
+  Behaviour settled in B03-D01–D09. Browser/platform qualification remains B05/B06.
 - [ ] B04 — Implement toggle/UI and P4 adapter with bounded queues, orderly key-up
   cleanup, stale-session rejection and correct wrap-safe lease timing. Keep the
   video service independent of input session expiry and failed input requests.
@@ -46,12 +57,111 @@ The historical implementation below is evidence, not the new build baseline.
   final bench state. Leave ExCom for remote review. Retain failed evidence and
   rollback; publication follows the Author's review.
 
-### Decisions still to settle during preparation
+### Decision register — accepted behaviour
 
-Transport choice (existing video socket versus a separate input endpoint), exact
-ownership interaction with host automation, repeat policy and reserved-key mapping
-remain open under B02/B03. The toggle behaviour above is accepted. Writing this
-plan does not authorize executing B01–B07 in this turn.
+The Author settled the behaviour through one-at-a-time questions. Implementation
+remains unstarted. This register owns the accepted decisions; historical policies
+below do not override it. No behavioural question remains open in this register.
+
+| Decision | State | Contract or question |
+|---|---|---|
+| B02-D01 — Transport | Accepted 2026-09-19 | Separate keyboard WebSocket; preserve video protocol and host-only RPC contract. Separate connections still share P4 resources, so this is not a latency guarantee. |
+| B02-D02 — Display independence | Accepted 2026-09-19 | Browser input remains usable in Legacy and ExCom when EMOS admits Extender input; video connection is not a capture prerequisite. |
+| B02-D03 — Physical USB takeover | Accepted 2026-09-19 | Physical USB keypress takes precedence: P4 discards queued browser input and releases browser-held keys before emitting the physical press; browser requires explicit recapture. |
+| B02-D04 — Browser versus host automation | Accepted 2026-09-19 | Explicit browser Capture overrides host-agent input. P4 cancels pending agent events and releases agent-held keys before admitting browser input. Agent keyboard acquisition receives busy while browser capture is active; release permits a fresh agent session, not automatic replay. Physical USB precedence remains unchanged. |
+| B02-D05 — Competing browsers | Accepted 2026-09-19 | Latest explicit browser Capture wins, subject to physical USB precedence and input admission. P4 revokes the previous browser, discards its queued input and releases its held keys before admitting the new owner. Stale events cannot regain ownership. |
+| B02-D06 — EMOS source naming | Accepted 2026-09-19 | `EMOS KEYINPUT extender` admits the common P4 source for USB, browser and agent input. P4 owns provider arbitration; all use the same stock-compatible keyboard packet format without a provider identifier. Browser capture does not issue or require `EMOS KEYINPUT browser`. |
+| B03-D01 — Repeat ownership | Accepted 2026-09-19 | P4 generates browser held-key repeats using the Agon's configured delay/rate, following the existing USB repeat policy. Browser sends press/release transitions and suppresses its automatic repeated key-downs. |
+| B03-D03 — Interactive pacing | Accepted 2026-09-19 | Human keypresses are not subject to agent automation's fixed 20 ms spacing. P4 delivers browser transitions promptly through the existing owner path, retaining UART flow control, ordering and bounded queues. Agent automation pacing is unchanged; held-key repeat follows configured delay/rate. |
+| B03-D02 — Locale | Accepted 2026-09-19 | Browser reports physical key positions; P4 translates using the Agon's selected `SET KEYBOARD` locale, consistent with USB. Initially support the existing UK/US mappings; do not silently substitute the Mac's character interpretation. |
+| B03-D04 — Caps Lock ownership | Accepted 2026-09-19 | Follow the active input provider, not a global P4 override. Browser Capture supplies the browser host's Caps Lock state when available; subsequent browser key events keep it current. Physical USB takeover restores that provider's own state. Browser support is cross-platform, not Mac-only; indicated and effective state must agree. |
+| B03-D05 — Captured application keys | Accepted 2026-09-19 | Tab and Escape are essential Agon application keys. While captured, forward their events and suppress browser default actions where the browser delivers cancellable events. Neither key intentionally releases capture. Explicit Release and actual focus/session loss retain their agreed behaviour. Browser/OS-reserved events that never reach the page cannot be promised; qualify fullscreen Escape behaviour and document limits. |
+| B03-D06 — Caps state absent at Capture | Accepted 2026-09-19 | Show Caps Lock as unknown until the first reliable keyboard event supplies it; synchronize before translating/delivering that key. Never silently treat unsupported reporting as known off. |
+| B03-D07 — Other locks and keypad | Accepted 2026-09-19 | Num Lock and Scroll Lock follow the active provider's state like Caps Lock; numeric-keypad behaviour follows Num Lock. Extend current limited mapping and USB indicator synchronization accordingly. Unknown reporting must not silently mean off. |
+| B03-D08 — Unavailable lock reporting | Accepted 2026-09-19 | Offer explicitly labelled manual lock-state settings in the control strip when a browser cannot reliably report a lock state. Do not reject the browser solely for that limitation or present a manual value as host-observed state. |
+| B03-D09 — Fullscreen control access | Accepted 2026-09-19 | Mouse movement to the bottom edge reveals a normally hidden strip containing Release keyboard and Exit fullscreen, inside the fullscreen container and outside the Agon image. Do not use the top edge, avoiding browser fullscreen notices. Controls beside the video are the accepted fallback. Preserve Tab/Escape as application keys where supported. |
+
+Fullscreen review: current `web/app.js` requests fullscreen on `#video-panel`,
+which contains only the canvas; controls are siblings in `index.html` and so
+are excluded from element fullscreen. A control strip must be inside the chosen
+fullscreen element, outside the rendered image. Merely reusing the existing
+button will not fix access. Browser-window fullscreen is a separate host mode;
+`document.exitFullscreen()` controls page-requested element fullscreen only.
+Keyboard Lock can help deliver reserved keys but support/secure-context
+requirements vary; `preventDefault()` alone is not a universal guarantee that
+Escape stays in fullscreen. Qualify supported modes and keep explicit mouse
+access to release/exit. References:
+[Keyboard Lock](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard/lock),
+[Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
+The bottom-reveal/side-fallback design is frozen; implementation has not started.
+Keyboard Lock/platform limits remain a
+qualification requirement, not a promise that all browsers expose Escape.
+
+Caps feasibility: W3C UI Events defines `getModifierState("CapsLock")` on
+keyboard and mouse events; it is event-associated state, not an unrestricted
+global keyboard query. Capture can sample its trusted activation event where
+supported, then refresh from trusted keyboard events. Actual reporting differs
+across browser/host combinations and must be tested; a returned false alone
+cannot distinguish unsupported reporting from a known off state.
+[UI Events](https://www.w3.org/TR/uievents/),
+[MDN modifier-state support](https://developer.mozilla.org/en-US/docs/Web/API/KeyboardEvent/getModifierState).
+
+Physical USB detail: the current `usb_boot_keyboard.hpp` tracks its own Caps
+state but implements no LED writes. USB boot input reports do not supply an
+independent lock-state bit; the USB host maintains state and sends LED output
+reports. Meeting B03-D04's indicator requirement therefore includes implementing
+and qualifying physical LED synchronization, while keeping its state separate
+from browser state. Do not claim the current keyboard already satisfies it.
+See [USB HID 1.11, Appendix B](https://www.usb.org/sites/default/files/hid1_11.pdf).
+Include opposite-state browser/USB handover, browser-to-browser handover,
+Caps changes during capture, capture by mouse/keyboard, and USB reconnect in
+B05/B06. This scopes future work; no keyboard or firmware was changed.
+
+B02-D03 preserves the current physical/host takeover model. Its
+prerequisite is source-specific cleanup before the physical event reaches the
+shared processed-key queue; the tradeoff is that a bench keypress interrupts
+remote control. B02-D04/D05 preserve that ownership rule. ADR-0022 is complete
+for this behaviour scope; implementation and qualification remain outstanding.
+
+### Implementation and acceptance boundaries
+
+1. Preserve installed candidate provenance and rollback before producing a new
+   build. Retain codecs, fullscreen display and screen-text access; do not restore
+   the historical network service. No EMOS wire/receiver change is indicated.
+2. P4 must bind each browser admission to a fresh session/generation and reject
+   stale events. Define bounded message/queue sizes and lease timing before
+   implementation; retain signed modular timer comparisons. Capture acknowledgement
+   means input admission, not eZ80 execution. Network handlers never write UART.
+3. Qualify priority transitions with held modifiers and queued input: USB over
+   browser over agent, latest browser capture, no stale replay, clean release,
+   reconnect and layout/admission loss. Agent pacing and journals must retain
+   their existing guarantees.
+4. Qualify browser input with no video connection, in Legacy, and after typing
+   `emos excom` at a verified MOS prompt. Separately test live video load and
+   screen-text reads without revoking browser control.
+5. Qualify repeat, UK/US letters/editing/F keys, Tab/Escape, keypad and lock-state
+   handover. Extend physical USB state/LED handling; test manual versus reported
+   browser lock state and unknown initial state. Keep unavailable reporting
+   distinguishable from off; do not silently translate a lock-sensitive key
+   using a guessed state.
+6. Test fullscreen bottom reveal and side fallback, release/exit accessibility,
+   focus cleanup, and browser-reserved key limits. Record the actual browsers,
+   operating systems and secure-context requirements tested. Do not claim broad
+   cross-platform acceptance from a single browser or mocked DOM test.
+7. Record product/host/emulator checks before staging hardware under the existing
+   bench instructions. Contract agreement alone does not start implementation,
+   authorize a flash or establish qualification. The Author froze the contract;
+   execution authorization remains separate.
+
+### Review progress — 2026-09-19
+
+Author subsequently authorized B01 review. It is complete; implementation and
+bench work have not started. Current processed-key mapping/serialization and
+EMOS reception are reusable. Retired BrowserKeyboard still reproduces its
+false-expiry defect; current host ownership fixes the arithmetic but retains
+automation-only pacing/no-repeat policy. Preserve installed codec/source overlay
+and rollback. Subsequent Author answers settled B02/B03 in the register above
+and were promoted into ADR-0022; its scope is now complete, not implemented.
 
 ## Historical state and evidence (superseded priority)
 
