@@ -67,3 +67,12 @@ host-only instrumentation, not a deployed UI or firmware change. It tests whethe
 the identified output cap materially contributes to visible delay; retain the
 30 fps baseline as the user's actual experience. No 60 fps performance claim
 without measured delivery. Restore by closing the observer.
+
+## Author extension — text readback
+
+6. [ ] K06 — Provide and validate a read-only MOS-screen capture utility on Legacy
+   and ExCom using stock VDU 23,0,&83 queries. Save text on the Agon's SD for host
+   retrieval. Preserve display contents during capture, include cursor/dimensions,
+   mark unknown glyphs/timeouts. This is font/pixel recognition, not an authoritative
+   character-cell backing store; no claim of graphics or changed-font coverage.
+   Loading the helper itself leaves CLI text on screen; retain this limitation.
