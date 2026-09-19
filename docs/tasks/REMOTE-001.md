@@ -1,6 +1,60 @@
 # REMOTE-001 — Develop browser keyboard and remote EMOS control
 
-## State
+## Current plan — browser capture over the working Extender input path
+
+**Planning reopened, 2026-09-19. Implementation has not started.** Add an explicit
+Capture keyboard / Release keyboard toggle to the existing video page, backed by
+the working processed-key input route used by Extender USB and host injection.
+Retain installed video codecs, fullscreen controls and direct screen-text access.
+The historical implementation below is evidence, not the new build baseline.
+
+### Accepted behaviour
+
+1. Start released. Clicking Capture keyboard explicitly requests ownership; show
+   captured only after P4 admission succeeds. Display a clear active indicator.
+2. While captured, send key-down/key-up events through P4's existing processed-key
+   serializer to EMOS. Capture does not switch Legacy/ExCom or change VDU routing.
+3. Release button, focus loss, hidden page or disconnect releases all browser-held
+   keys. P4 handles expiry/disconnect even when the browser cannot send cleanup.
+4. Returning focus or reconnecting leaves input released; capture must be explicit.
+5. Place controls outside the video image. Screen-text HTTP reads remain independent
+   of both video viewing and keyboard ownership.
+
+### Itemized work
+
+- [ ] B01 — Inspect retained browser implementation/tests at 1ce96dc and current
+  remote-keyboard/USB path. Map reusable key conversion and cleanup logic; preserve
+  rollback. Do not reinstate the retired networking implementation wholesale.
+- [ ] B02 — Specify browser transport and ownership alongside host injection and
+  physical USB. Resolve competing captures, physical takeover and source-specific
+  releases. Current host endpoint rejects browser Origin: define a deliberate
+  browser-facing admission contract instead of merely removing that check.
+- [ ] B03 — Specify key mapping, modifiers, locale, held keys, repeat ownership,
+  browser-reserved shortcuts and fullscreen interaction. Document unsupported keys
+  visibly. Reuse existing stock-compatible UART encoding and EMOS admission.
+- [ ] B04 — Implement toggle/UI and P4 adapter with bounded queues, orderly key-up
+  cleanup, stale-session rejection and correct wrap-safe lease timing. Keep the
+  video service independent of input session expiry and failed input requests.
+- [ ] B05 — Test mapping and state transitions: down/up, modifiers, held movement,
+  release while held, blur, hidden tab, disconnected network, page reload, takeover,
+  physical input and host-agent input. Reproduce the historical stale-time defect
+  as a regression test. Confirm screen readback leaves browser control intact.
+- [ ] B06 — Build and stage on the existing bench; verify firmware and web assets.
+  Check CLI typing/editing and game held-key input, with video active. Measure input
+  delivery separately from visible response; compare against the current baseline.
+- [ ] B07 — Human browser acceptance, then document the selected interface and
+  final bench state. Leave ExCom for remote review. Retain failed evidence and
+  rollback; publication follows the Author's review.
+
+### Decisions still to settle during preparation
+
+Transport choice (existing video socket versus a separate input endpoint), exact
+ownership interaction with host automation, repeat policy and reserved-key mapping
+remain open under B02/B03. The toggle behaviour above is accepted. Writing this
+plan does not authorize executing B01–B07 in this turn.
+
+## Historical state and evidence (superseded priority)
+
 
 - Status: Browser-input implementation deprecated by Author, 2026-09-09;
   future input work remains deferred in favor of selectable mainboard/Extender

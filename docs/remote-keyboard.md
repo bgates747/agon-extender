@@ -127,3 +127,10 @@ not a general completion acknowledgement for arbitrary commands. Keep dependent
 commands inside the verified finite batch; establish prompt readiness separately
 before typing its EXEC command. The optional text readback diagnostic is in
 `examples/keyboard-screen`; it observes rendered characters, not MOS memory.
+
+## Planned browser adapter
+
+Accepted browser capture behaviour is recorded in
+[ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md). Implementation is planned
+under REMOTE-001; the existing host-only HTTP contract remains unchanged until
+that work is implemented and qualified.

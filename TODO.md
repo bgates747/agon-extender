@@ -219,12 +219,12 @@ deterministic Nurples and separate typing measurements are deferred.
   - Status: Further keyboard refinements, including the proposed Caps Lock LED increment, deferred by Author on 2026-09-09. Preserve working USB input; repair only keyboard regressions that block the ExCom increment.
   - Details: [PORT-005](docs/tasks/PORT-005.md)
 
-## Deferred browser input
+## Browser input
 
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08
   - Finished: --
-  - Status: Deferred by Author, 2026-09-09; retain implementation, measurements and unresolved defects. Resume only on explicit reprioritization.
+  - Status: Plan reopened 2026-09-19: explicit capture/release toggle over the working processed-key route. B01–B07 planned; implementation not started.
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Qualification infrastructure
