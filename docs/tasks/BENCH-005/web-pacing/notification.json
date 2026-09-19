@@ -1,0 +1,9 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "startup_unchanged": true,
+  "firmware_flashed": false,
+  "state": "MOS prompt; SD service exited",
+  "human_hearing": "not assumed",
+  "time": 1789777886.5477054
+}

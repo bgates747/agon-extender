@@ -1,0 +1,27 @@
+{
+  "build_id": "browser-credit60-r01-b2026-09-19-00-28-47Z",
+  "parent_build_id": "rle2-fullscreen-r02-b2026-09-17-08-02-06Z",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "3a42b393deacb04c343aa5693e7f36cdf814248f1e68361e62252426488abef1",
+      "bytes": 1459440
+    },
+    "firmware.factory.bin": {
+      "sha256": "98dcb87f99ef8f4f6787d98ebad0f2844be38889d651f257e1515f3974c6a2ed",
+      "bytes": 1590512
+    },
+    "firmware.elf": {
+      "sha256": "8e34d35072c953e99122941856679ebccbf52180d2fbbb88febeec6fde5ff5a0",
+      "bytes": 28202092
+    },
+    "bootloader.bin": {
+      "sha256": "515a11171ede09872b5bf30e48ad643b9fb2ef9012fb9eb722518c0ebdf9a8ac",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "change": "Installed fullscreen r02 web assets, only credit cap 30 to 60"
+}

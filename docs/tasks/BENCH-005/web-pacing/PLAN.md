@@ -8,10 +8,10 @@ and verify it, then hardware voice notify for human testing. No push/worker
 redesign now. This is an experimental override of ADR-0020, not a new sustained
 512×384 throughput guarantee.
 
-1. [ ] W01 — Preserve current fullscreen r02 baseline and freeze this contract.
+1. [x] W01 — Preserve current fullscreen r02 baseline and freeze this contract.
    Build a candidate from that preserved implementation with only 1000/30 changed
    to 1000/60 in browser credit pacing (plus build identity). RLE2 stays default.
-2. [ ] W02 — Flash P4 only, independently verify, check served web assets and
+2. [x] W02 — Flash P4 only, independently verify, check served web assets and
    keyboard admission; preserve startup and mainboard firmware. Leave a usable
    ExCom console for human typing at modes 20 and 0. Voice notify on hardware.
 3. [ ] W03 — Author review: typing, cursor movement, scrolling, both resolutions,
@@ -27,3 +27,6 @@ redesign now. This is an experimental override of ADR-0020, not a new sustained
 
 Stop at W02 for this authorization. Preserve rollback artifacts, keep experiment
 in this task silo, and do not deploy later stages merely because they are listed.
+
+Candidate deployed and served assets verified. Hardware voice receipt passed;
+ExCom console set to mode 20. Refresh browser before review. W03 remains pending.
