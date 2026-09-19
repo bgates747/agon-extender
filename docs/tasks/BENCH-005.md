@@ -119,3 +119,7 @@ this does not close BENCH-005's unrelated latency or pacing questions.
 W09 [six-bit continuation](BENCH-005/composed-packing/sixbit/PLAN.md) is authorized:
 preserve W08, pack full 64-colour composed output, benchmark Nurples only and
 hardware notify for interactive review.
+
+W10 [pair-RLE experiment](BENCH-005/composed-packing/pair-rle/PLAN.md) is authorized
+as a goal: lossless pair runs, Nurples comparison, preserved rollback and hardware
+review notification.
