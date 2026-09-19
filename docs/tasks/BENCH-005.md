@@ -123,3 +123,10 @@ hardware notify for interactive review.
 W10 [pair-RLE experiment](BENCH-005/composed-packing/pair-rle/PLAN.md) is authorized
 as a goal: lossless pair runs, Nurples comparison, preserved rollback and hardware
 review notification.
+
+## Browser output discussion record
+
+[Output ideas and dispositions](BENCH-005/OUTPUT-IDEAS.md) records the Author's
+post-W10 discussion: rejected Nurples pair-RLE default, untested temporal
+compression, mirrored scrolling with patches, separate sprite/background planes,
+and browser rendering. Documentation only; no new execution authorization.
