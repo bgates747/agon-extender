@@ -4,6 +4,14 @@ This document describes the current accepted architecture. Open questions and
 implementation work belong in `TODO.md` and the corresponding tracked files
 under `docs/tasks/` rather than here.
 
+## Browser-video default encoding
+
+RLE2 is the accepted default for browser video output. It compresses complete
+supported frames; raw compatibility and explicit test overrides remain available.
+See [ADR-0021](decisions/ADR-0021-rle2-browser-default.md) and the
+[browser-video contract](protocols/browser-video.md). Encoding choice does not
+change the separately accepted output pacing policy.
+
 ## Web-output cadence
 
 The accepted512×384 web-output contract is30 complete frames/s. Normal test

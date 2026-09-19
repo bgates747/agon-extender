@@ -6,6 +6,15 @@ RGB222 increment supersedes that phase's RGB888-only wire restriction and
 200 ms first-bench snapshot interval. Historical qualification records remain
 evidence for their recorded builds.
 
+## Default encoding — accepted 2026-09-19
+
+Browser video output defaults to **RLE2 compression**, requesting `?rle2=1` in
+clients using the current negotiation interface. This is full-frame compression,
+not frame differencing. Retain raw compatibility/fallback and explicit test codec
+overrides. This decision does not change pacing or expand supported formats.
+Client replacements and firmware deployments must preserve and verify this default.
+Authority: [ADR-0021](../decisions/ADR-0021-rle2-browser-default.md).
+
 ## Accepted web-output ceiling — 2026-09-16
 
 At512×384, the supported web-output target is **30 complete frames per second**.

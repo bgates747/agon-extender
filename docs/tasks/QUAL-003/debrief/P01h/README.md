@@ -241,3 +241,11 @@ Unchecked gates are intentionally not represented as complete by this timed run.
 Continue this same task in [srle2/README.md](srle2/README.md): original szip source,
 P4 target, historical command65 wrappers. Bench is owned by another agent.
 No flash or runtime tests until Author release; RLE2 web wire format unchanged.
+
+## Author decision — 2026-09-19
+
+RLE2 is now the accepted default for browser video output, frozen in
+[ADR-0021](../../../../../decisions/ADR-0021-rle2-browser-default.md) and the canonical
+browser-video contract. This resolves default-selection approval only; remaining
+qualification/promotion gates above are not silently marked complete. Future
+client/deployment checks must verify RLE2 remains the default negotiation.
