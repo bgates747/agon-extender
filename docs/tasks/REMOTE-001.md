@@ -68,10 +68,19 @@ Physical USB takeover is explicitly untested; Author will test it later. Overall
 acceptance remains partial: focus decoration clips edge text, fullscreen no longer
 enlarges the image correctly, and surrounding controls/diagnostics are distracting.
 
+### UI follow-up — frozen, awaiting implementation instruction
+
+- [ ] C01 — Correct browser presentation under the [frozen UI cleanup contract](REMOTE-001/C01-ui-cleanup.md).
+
+| Decision | State | Scope |
+|---|---|---|
+| C01-D01 — Presentation cleanup | Accepted 2026-09-19 | No inset focus border; enlarge fullscreen image with aspect preserved; one clear video surface; Capture replaces the URL slot; connection status below Connect; resolution and presented fps beside branding; remove ordinary debug clutter. |
+| C01-D02 — Manual lock controls | Accepted 2026-09-19 | Remove manual lock selectors and software overrides entirely, including secondary menus. Host-reported state remains authoritative; preserve working keyboard Caps Lock and distinguish unknown from off through concise input status. Supersedes B03-D08. |
+
 ### Decision register — accepted behaviour
 
 The Author settled the behaviour through one-at-a-time questions. B04 is deployed with partial human acceptance. This register owns the accepted decisions; historical policies
-below do not override it. No behavioural question remains open in this register.
+below do not override it. The decisions below remain accepted except B03-D08, superseded by accepted C01-D02. No UI contract decision remains open.
 
 | Decision | State | Contract or question |
 |---|---|---|
@@ -88,7 +97,7 @@ below do not override it. No behavioural question remains open in this register.
 | B03-D05 — Captured application keys | Accepted 2026-09-19 | Tab and Escape are essential Agon application keys. While captured, forward their events and suppress browser default actions where the browser delivers cancellable events. Neither key intentionally releases capture. Explicit Release and actual focus/session loss retain their agreed behaviour. Browser/OS-reserved events that never reach the page cannot be promised; qualify fullscreen Escape behaviour and document limits. |
 | B03-D06 — Caps state absent at Capture | Accepted 2026-09-19 | Show Caps Lock as unknown until the first reliable keyboard event supplies it; synchronize before translating/delivering that key. Never silently treat unsupported reporting as known off. |
 | B03-D07 — Other locks and keypad | Accepted 2026-09-19 | Num Lock and Scroll Lock follow the active provider's state like Caps Lock; numeric-keypad behaviour follows Num Lock. Extend current limited mapping and USB indicator synchronization accordingly. Unknown reporting must not silently mean off. |
-| B03-D08 — Unavailable lock reporting | Accepted 2026-09-19 | Offer explicitly labelled manual lock-state settings in the control strip when a browser cannot reliably report a lock state. Do not reject the browser solely for that limitation or present a manual value as host-observed state. |
+| B03-D08 — Unavailable lock reporting | Superseded by C01-D02 | Original manual fallback was withdrawn by Author on 2026-09-19 to reduce clutter and avoid software/keyboard state divergence. |
 | B03-D09 — Fullscreen control access | Accepted 2026-09-19 | Mouse movement to the bottom edge reveals a normally hidden strip containing Release keyboard and Exit fullscreen, inside the fullscreen container and outside the Agon image. Do not use the top edge, avoiding browser fullscreen notices. Controls beside the video are the accepted fallback. Preserve Tab/Escape as application keys where supported. |
 
 Fullscreen review: current `web/app.js` requests fullscreen on `#video-panel`,
@@ -150,8 +159,8 @@ for this behaviour scope; implementation and qualification remain outstanding.
    `emos excom` at a verified MOS prompt. Separately test live video load and
    screen-text reads without revoking browser control.
 5. Qualify repeat, UK/US letters/editing/F keys, Tab/Escape, keypad and lock-state
-   handover. Extend physical USB state/LED handling; test manual versus reported
-   browser lock state and unknown initial state. Keep unavailable reporting
+   handover. Extend physical USB state/LED handling; test host-reported
+   browser lock state and unknown initial state without manual overrides. Keep unavailable reporting
    distinguishable from off; do not silently translate a lock-sensitive key
    using a guessed state.
 6. Test fullscreen bottom reveal and side fallback, release/exit accessibility,

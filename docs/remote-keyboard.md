@@ -203,8 +203,20 @@ including physical USB indicator synchronization. Numeric-keypad behaviour follo
 Num Lock. This expands the current limited mapping; missing browser lock-state
 reporting must not silently be interpreted as off.
 
-For lock states the browser cannot reliably report, the control strip offers
-explicitly labelled manual settings. A manually selected state is not presented
-as a host-observed value. This fallback keeps those browsers usable.
+The browser offers no manual lock-state controls or software overrides, including
+in secondary menus. Use host-reported state; retain unknown state when reporting
+is unavailable. Explain blocked lock-sensitive input through concise status text,
+without guessing off or adding replacement widgets. Preserve the working keyboard
+Caps Lock toggle and independent physical USB lock state.
 
 Implementation details and local validation boundaries: [browser adapter](tasks/REMOTE-001/B04-implementation.md).
+
+### Ordinary browser presentation
+
+Capture state is indicated outside the video pixels, with no inset focus border.
+The page presents one clear video surface; fullscreen enlarges it to fit available
+space without cropping or changing its intended aspect. Capture/Release occupies
+the former connection-URL slot, with connection status directly below Connect.
+Resolution and presented fps appear next to the branding above the image. The
+ordinary page omits the expanded debug block; diagnostic data remains available
+to tooling. These accepted UI corrections do not change keyboard ownership.

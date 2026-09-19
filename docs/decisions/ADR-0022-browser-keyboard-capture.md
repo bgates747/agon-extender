@@ -85,10 +85,12 @@ basis as Caps Lock. Numeric-keypad behaviour follows Num Lock. P4 maintains the
 physical USB provider's lock states and corresponding indicators separately from
 browser providers. Unknown browser lock state must not be silently treated as off.
 
-Where the browser cannot reliably report a lock state, the control strip offers
-an explicitly labelled manual setting. This keeps input usable without claiming
-that the chosen state was observed on the host keyboard. Manual state and
-host-reported state remain visibly distinct.
+The browser provides no manual lock-state controls or software overrides, including
+in secondary menus. Host-reported state remains authoritative. If reporting is
+unavailable, unknown remains distinct from off; a concise input-status message
+explains when a lock-sensitive key cannot safely be translated. This supersedes
+the earlier manual fallback to reduce clutter and avoid keyboard/software state
+divergence.
 
 While capture is active, Tab and Escape are Agon application keys. The browser
 forwards them and prevents their normal browser actions wherever it receives
@@ -106,3 +108,11 @@ capture; explicit release or actual focus/session loss retains its normal effect
 
 This records accepted behaviour, not completed implementation. The earlier browser
 candidate remains historical evidence; the working Extender route is the new basis.
+
+The ordinary browser UI presents one unobscured video surface. Capture indication
+belongs outside the video pixels. Fullscreen enlarges the image to the available
+viewport while preserving aspect and accessible bottom controls. Capture occupies
+the former connection-URL position; connection status sits under Connect. Resolution
+and presented fps sit beside the branding; expanded debug statistics are excluded
+from the ordinary page. These presentation corrections preserve input and codec
+contracts.
