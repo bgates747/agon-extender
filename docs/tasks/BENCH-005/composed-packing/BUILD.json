@@ -1,0 +1,31 @@
+{
+  "build_id": "composed-packing-r01-b2026-09-19-01-40-53Z",
+  "parent_build_id": "browser-credit60-r01-b2026-09-19-00-28-47Z",
+  "status": "experimental",
+  "commit": "146c5c8a6e37ef79ca1f3eaee25ae8d1ab9e4254",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "a90cfdc44ea9831ebc2cc33bda52efd4881990acb8dcae47447c071cf12533f3",
+      "bytes": 1461536
+    },
+    "firmware.factory.bin": {
+      "sha256": "d6fbd002d8c892f7dc53898bc10417e6085e41eb6d072ce2d52c58075ac77f9e",
+      "bytes": 1592608
+    },
+    "firmware.elf": {
+      "sha256": "535cdb9ff782ee82e282fb70178aee7bd8c61c0a658666700c083606c09f87a8",
+      "bytes": 28211248
+    },
+    "bootloader.bin": {
+      "sha256": "90e3c4d54d49610b2cd108c2643725a95e1e757f54e812b21f9ca850f2310cdd",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "fixture_sha256": "9fe9643a16cf25bf6935a636e72cc86b065e3840d8664551f7ed3046f2b036ca",
+  "source_overlay_commit": "146c5c8a",
+  "known_dirty_unrelated_work_preserved": true
+}

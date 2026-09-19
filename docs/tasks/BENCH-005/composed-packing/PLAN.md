@@ -36,7 +36,7 @@ explicitly negotiated and includes its palette in each complete frame.
    decoding; retain RLE2/raw controls and choose the smaller eligible payload.
    Test exact round trips, palette overflow, malformed lengths/indices, all mode
    dimensions, and frames containing colours beyond the nominal mode depth.
-3. [ ] P03 — Build and deploy P4 candidate with verified identity and assets.
+3. [x] P03 — Build and deploy P4 candidate with verified identity and assets.
    Reuse deterministic graphics fixtures, adapting geometry/depth and swaps as
    necessary; modes selected in temporary autoexec only. Record exceptions for
    unsupported modes/features rather than silently substitute.
