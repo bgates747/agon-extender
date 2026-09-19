@@ -50,7 +50,7 @@ explicitly negotiated and includes its palette in each complete frame.
 5. [x] P05 — Review results; make bounded corrections if evidence warrants them,
    rerun affected cases. Tables give bytes, milliseconds, fps, baseline-relative
    differences and sample counts. Record elapsed execution for future estimates.
-6. [ ] P06 — Restore startup, close observers, release keys, preserve a working
+6. [x] P06 — Restore startup, close observers, release keys, preserve a working
    candidate or restore rollback on failure; record bench state and limitations,
    commit discrete work, and notify on hardware for Author review.
 
@@ -153,3 +153,9 @@ Mode142 sweep05 static/dense passed, but moving page load timed out. One direct
 unchanged moving-observer retry passed all four variants, geometry, no page
 errors and changing content signatures. Marked142 passed with a retained retry
 exception; its elapsed duration includes that pause. Sweep06 continues143 onward.
+
+Closeout: original48-byte startup restored and read back exactly; tested P4
+candidate02 retained, mainboard firmware unchanged. All observers closed, keys
+neutral, SD service exited, Legacy MOS prompt. Fresh hardware voice stage6
+receipt verified; human hearing/acceptance is not assumed. notification.json
+records execution. Remaining BENCH-005 questions remain open for review.
