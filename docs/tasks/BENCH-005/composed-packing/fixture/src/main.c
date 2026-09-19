@@ -13,7 +13,10 @@ static FIL file;
 static void dense(unsigned w,unsigned h,unsigned colours,unsigned dbl){
  putch(20);if(colours!=64){const char reset[]={23,0,196,4};mos_puts(reset,4,0);}
  uint8_t pixels[1024];unsigned seed=817;
- const uint8_t palette[16]={0,2,8,10,32,34,40,42,21,3,12,15,48,51,60,63};
+ uint8_t palette[16]={0,2,8,10,32,34,40,42,21,3,12,15,48,51,60,63};
+ if(colours==2)palette[1]=63;
+ if(colours==4){palette[1]=3;palette[2]=12;palette[3]=63;}
+ if(colours!=64)for(unsigned i=0;i<colours;i++){unsigned c=palette[i];uint8_t set[]={19,i,255,(c&3)*85,((c>>2)&3)*85,((c>>4)&3)*85};mos_puts((char*)set,sizeof(set),0);}
  for(unsigned i=0;i<1024;i++){seed=(seed*109+89)&65535;unsigned c=(seed>>6)%colours;pixels[i]=192|(colours==64?c:palette[c]);}
  const uint8_t prefix[]={23,0,160,32,203,0,0,4};mos_puts((char*)prefix,sizeof(prefix),0);mos_puts((char*)pixels,sizeof(pixels),0);
  const uint8_t bitmap[]={23,27,32,32,203,23,27,33,32,0,32,0,1};mos_puts((char*)bitmap,sizeof(bitmap),0);
