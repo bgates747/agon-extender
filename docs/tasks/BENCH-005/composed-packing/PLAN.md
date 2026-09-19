@@ -99,3 +99,10 @@ lower-bound check (one palette entry plus ceil(pixels/8) plus header) can skip t
 scan without changing transmitted bytes. Preserve the initial candidate/results;
 implement and compare selected sparse/dense cases after the baseline sweep, not
 mid-run. No change to rendering or locking is needed.
+
+Initial sweep screening exposed a fixture-control flaw: immediate down/up pairs
+can be missed by foreground keycount polling. The first sweep is provisional;
+its mode3 dense image remained unchanged. Hold injected keys200ms, verify dense
+far-corner pixels and moving content markers, and restart the sweep with this
+stronger acceptance gate. Do not publish those earlier missing-workload samples
+as dense/animated performance. This corrects the test, not P4 rendering.

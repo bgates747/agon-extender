@@ -12,7 +12,7 @@ def command(name,*args):cli('pack-'+a.label+'-'+name,*args)
 def key(name,code):
  k=KB(URL,out/(name+'-key.json'))
  try:
-  st=k.status();k.open(st);k.send([(code,1),(code,0)]);Path('agents/video-throughput/cli-latest.json').write_text(json.dumps(k.cancel()))
+  st=k.status();k.open(st);k.send([(code,1)]);time.sleep(.2);k.send([(code,0)]);Path('agents/video-throughput/cli-latest.json').write_text(json.dumps(k.cancel()))
  finally:k.lock.close()
 def sd(name):return SD(URL,out/(name+'-sd.json'))
 for m in modes:
@@ -43,6 +43,11 @@ for m in modes:
   if activity in ('static','dense'):
    pixels=[(dest/activity/(name+'.rgb222')).read_bytes() for name in ['raw','rle2','packed','auto']]
    assert all(p==pixels[0] for p in pixels),'Static encoding pixel mismatch'
+   if activity=='dense':
+    assert pixels[0]!=(dest/'static/raw.rgb222').read_bytes(),'Dense workload did not change pixels'
+    w=m['width'];h=m['height'];patch=b''.join(pixels[0][y*w+w-32:y*w+w] for y in range(h-32,h));assert len(set(patch))>=2,'Dense tile absent from far corner'
+  if activity=='moving':
+   assert all(len(set(s['signature'] for s in t['samples']))>1 for t in samples),'Moving workload did not change sampled pixels'
  key(label+'-exit',41);time.sleep(1)
  (dest/'progress.json').write_text(json.dumps({'mode':m,'state':'pass','start':start,'end':time.time()}))
  print('MODE',mode,'PASS',round(time.time()-start,1),'seconds',flush=True)
