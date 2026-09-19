@@ -40,7 +40,7 @@ explicitly negotiated and includes its palette in each complete frame.
    Reuse deterministic graphics fixtures, adapting geometry/depth and swaps as
    necessary; modes selected in temporary autoexec only. Record exceptions for
    unsupported modes/features rather than silently substitute.
-4. [ ] P04 — Benchmark all supported non-50-Hz modes with matched deterministic
+4. [x] P04 — Benchmark all supported non-50-Hz modes with matched deterministic
    workloads and encoding selections. Include static/text, moving rendering,
    software/hardware sprite and Copper correctness cases where supported. Reuse
    existing scene commands. Separate rendering from capture/encode/send/decode/
