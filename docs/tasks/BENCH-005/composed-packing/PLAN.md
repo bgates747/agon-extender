@@ -29,10 +29,10 @@ explicitly negotiated and includes its palette in each complete frame.
 
 ## Ordered work
 
-1. [ ] P01 — Freeze this contract; capture source/firmware identities, inventory
+1. [x] P01 — Freeze this contract; capture source/firmware identities, inventory
    every explicit non-50-Hz mode and buffering variant; clear previous bench cue
    at a verified prompt, save startup and preserve rollback artifacts.
-2. [ ] P02 — Implement bounded lossless final-frame palette packing and browser
+2. [x] P02 — Implement bounded lossless final-frame palette packing and browser
    decoding; retain RLE2/raw controls and choose the smaller eligible payload.
    Test exact round trips, palette overflow, malformed lengths/indices, all mode
    dimensions, and frames containing colours beyond the nominal mode depth.

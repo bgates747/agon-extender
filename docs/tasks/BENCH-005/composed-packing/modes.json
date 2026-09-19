@@ -1,0 +1,435 @@
+[
+  {
+    "mode": 0,
+    "width": 640,
+    "height": 480,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 1,
+    "width": 640,
+    "height": 480,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 2,
+    "width": 640,
+    "height": 480,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 3,
+    "width": 640,
+    "height": 240,
+    "colours": 64,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 4,
+    "width": 640,
+    "height": 240,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 5,
+    "width": 640,
+    "height": 240,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 6,
+    "width": 640,
+    "height": 240,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 7,
+    "width": 640,
+    "height": 480,
+    "colours": 16,
+    "hz": 60,
+    "double": false,
+    "special": "teletext; separately qualify, not ordinary raster fixture"
+  },
+  {
+    "mode": 8,
+    "width": 320,
+    "height": 240,
+    "colours": 64,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 9,
+    "width": 320,
+    "height": 240,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 10,
+    "width": 320,
+    "height": 240,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 11,
+    "width": 320,
+    "height": 240,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 12,
+    "width": 320,
+    "height": 200,
+    "colours": 64,
+    "hz": 70,
+    "double": false
+  },
+  {
+    "mode": 13,
+    "width": 320,
+    "height": 200,
+    "colours": 16,
+    "hz": 70,
+    "double": false
+  },
+  {
+    "mode": 14,
+    "width": 320,
+    "height": 200,
+    "colours": 4,
+    "hz": 70,
+    "double": false
+  },
+  {
+    "mode": 15,
+    "width": 320,
+    "height": 200,
+    "colours": 2,
+    "hz": 70,
+    "double": false
+  },
+  {
+    "mode": 16,
+    "width": 800,
+    "height": 600,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 17,
+    "width": 800,
+    "height": 600,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 18,
+    "width": 1024,
+    "height": 768,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 19,
+    "width": 1024,
+    "height": 768,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 20,
+    "width": 512,
+    "height": 384,
+    "colours": 64,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 21,
+    "width": 512,
+    "height": 384,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 22,
+    "width": 512,
+    "height": 384,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 23,
+    "width": 512,
+    "height": 384,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 24,
+    "width": 640,
+    "height": 512,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 25,
+    "width": 640,
+    "height": 512,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 26,
+    "width": 640,
+    "height": 512,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 27,
+    "width": 640,
+    "height": 256,
+    "colours": 64,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 28,
+    "width": 640,
+    "height": 256,
+    "colours": 16,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 29,
+    "width": 640,
+    "height": 256,
+    "colours": 4,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 30,
+    "width": 640,
+    "height": 256,
+    "colours": 2,
+    "hz": 60,
+    "double": false
+  },
+  {
+    "mode": 129,
+    "width": 640,
+    "height": 480,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 130,
+    "width": 640,
+    "height": 480,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 132,
+    "width": 640,
+    "height": 240,
+    "colours": 16,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 133,
+    "width": 640,
+    "height": 240,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 134,
+    "width": 640,
+    "height": 240,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 136,
+    "width": 320,
+    "height": 240,
+    "colours": 64,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 137,
+    "width": 320,
+    "height": 240,
+    "colours": 16,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 138,
+    "width": 320,
+    "height": 240,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 139,
+    "width": 320,
+    "height": 240,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 140,
+    "width": 320,
+    "height": 200,
+    "colours": 64,
+    "hz": 70,
+    "double": true
+  },
+  {
+    "mode": 141,
+    "width": 320,
+    "height": 200,
+    "colours": 16,
+    "hz": 70,
+    "double": true
+  },
+  {
+    "mode": 142,
+    "width": 320,
+    "height": 200,
+    "colours": 4,
+    "hz": 70,
+    "double": true
+  },
+  {
+    "mode": 143,
+    "width": 320,
+    "height": 200,
+    "colours": 2,
+    "hz": 70,
+    "double": true
+  },
+  {
+    "mode": 145,
+    "width": 800,
+    "height": 600,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 146,
+    "width": 1024,
+    "height": 768,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 149,
+    "width": 512,
+    "height": 384,
+    "colours": 16,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 150,
+    "width": 512,
+    "height": 384,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 151,
+    "width": 512,
+    "height": 384,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 153,
+    "width": 640,
+    "height": 512,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 154,
+    "width": 640,
+    "height": 512,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 156,
+    "width": 640,
+    "height": 256,
+    "colours": 16,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 157,
+    "width": 640,
+    "height": 256,
+    "colours": 4,
+    "hz": 60,
+    "double": true
+  },
+  {
+    "mode": 158,
+    "width": 640,
+    "height": 256,
+    "colours": 2,
+    "hz": 60,
+    "double": true
+  }
+]
