@@ -115,3 +115,7 @@ confirmation and closeout are recorded in the linked contract. See
 [packing results](BENCH-005/composed-packing/RESULTS.md) and
 [findings](BENCH-005/composed-packing/FINDINGS.md). Human review remains pending;
 this does not close BENCH-005's unrelated latency or pacing questions.
+
+W09 [six-bit continuation](BENCH-005/composed-packing/sixbit/PLAN.md) is authorized:
+preserve W08, pack full 64-colour composed output, benchmark Nurples only and
+hardware notify for interactive review.
