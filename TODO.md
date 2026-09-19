@@ -221,10 +221,12 @@ deterministic Nurples and separate typing measurements are deferred.
 
 ## Browser input
 
+- [ ] **REMOTE-003 — Browser-requested mainboard reset through P4**: [feasibility study](docs/tasks/REMOTE-003.md). Deferred by Author; study includes dedicated GPIO versus 74-series control expansion. Physical reset button for now; no implementation or wiring authorized.
+
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08
   - Finished: --
-  - Status: B01 review and B02/B03 behaviour contract frozen 2026-09-19. Includes separate keyboard WebSocket, ownership priority, P4 repeat, locales/locks/keypad and fullscreen controls. B04 deployed; Author reports no perceptible latency and working Caps Lock. C01 UI cleanup contract frozen, implementation not started; manual lock controls explicitly removed from the contract. Physical USB takeover remains untested.
+  - Status: B01 review and B02/B03 behaviour contract frozen 2026-09-19. Includes separate keyboard WebSocket, ownership priority, P4 repeat, locales/locks/keypad and fullscreen controls. B04 deployed; Author reports no perceptible latency and working Caps Lock. C01 UI cleanup implemented locally with passing Chromium input/layout checks; manual lock controls removed. P4 deployed; fullscreen-entry capture fix passes local regression; native Escape exit accepted for now. Hardware validation of the focus fix remains pending. Additional Connect-state and mode/header metadata requests recorded in C01; no coding authorized yet. Physical USB takeover remains untested.
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Qualification infrastructure

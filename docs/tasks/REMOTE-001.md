@@ -68,9 +68,9 @@ Physical USB takeover is explicitly untested; Author will test it later. Overall
 acceptance remains partial: focus decoration clips edge text, fullscreen no longer
 enlarges the image correctly, and surrounding controls/diagnostics are distracting.
 
-### UI follow-up — frozen, awaiting implementation instruction
+### UI follow-up — implemented locally, review pending
 
-- [ ] C01 — Correct browser presentation under the [frozen UI cleanup contract](REMOTE-001/C01-ui-cleanup.md).
+- [ ] C01 — Local UI implementation and Chromium checks complete under the [UI cleanup contract](REMOTE-001/C01-ui-cleanup.md); P4 deployed and CLI smoke passed; fullscreen capture/escape failures diagnosed, awaiting remaining Author feedback.
 
 | Decision | State | Scope |
 |---|---|---|
@@ -707,3 +707,20 @@ implemented; direct USB acquisition must use its own device lifetime rather
 than inherit the defective browser lease. After USB CLI and gameplay passed,
 the Author deferred browser input as an immediate goal. Resume only on explicit
 Author reprioritization; completion of PORT-015 is not an automatic trigger.
+
+### Current review hold — fullscreen diagnosis
+
+Author reported capture loss when entering fullscreen and Escape leaving fullscreen
+while captured. [C01-F01–F03 diagnosis](REMOTE-001/C01-ui-cleanup.md#fullscreen-feedback-diagnosis--2026-09-19)
+records the reproduced explicit-blur/session-close path, native Escape limitation
+and gaps in the original tests. The Author subsequently authorized the fullscreen-entry repair and accepted native
+Escape exit for now. The explicit canvas focus transfer and capture-first entry/exit
+regression pass locally. P4 deployment and human validation of this fix remain pending.
+
+
+### Additional UI requests — documentation only
+
+The C01 pending list now includes a green connected-state Connect button and a
+header showing mode number, resolution, colors, nominal Hz and buffering mode,
+followed by the existing Presented fps. Author explicitly requested no coding
+yet; metadata availability must be checked before implementation.
