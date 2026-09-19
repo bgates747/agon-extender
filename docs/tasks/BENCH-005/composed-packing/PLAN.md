@@ -142,3 +142,14 @@ modes2 and9 with eight measured seconds per path/workload, using the same
 firmware and fixture. These cover a larger two-colour raster and the common
 320×240 sixteen-colour raster; retain short screening results separately.
 Do not infer game simulation rates from either deterministic fixture.
+
+Sweep04 completed27–141. The first mode142 observer stopped on a ten-second
+HTTP diagnostic-counter request timeout, before that path's timed measurement;
+no decoder error was reported. Keyboard remained ready/neutral and SD offline.
+Sweep05 retries142 and continues the remaining modes using unchanged artifacts.
+No extra reset was needed outside the normal per-mode startup procedure.
+
+Mode142 sweep05 static/dense passed, but moving page load timed out. One direct
+unchanged moving-observer retry passed all four variants, geometry, no page
+errors and changing content signatures. Marked142 passed with a retained retry
+exception; its elapsed duration includes that pause. Sweep06 continues143 onward.
