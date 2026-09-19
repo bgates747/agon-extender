@@ -25,7 +25,8 @@
       "bytes": 3072
     }
   },
-  "fixture_sha256": "9fe9643a16cf25bf6935a636e72cc86b065e3840d8664551f7ed3046f2b036ca",
+  "fixture_sha256": "5641da5c38af7a704a0e1626913a0941c6f1bf41d77aabf867063adae4ef6f5f",
   "source_overlay_commit": "146c5c8a",
-  "known_dirty_unrelated_work_preserved": true
+  "known_dirty_unrelated_work_preserved": true,
+  "fixture_source_commit": "ce159bae"
 }

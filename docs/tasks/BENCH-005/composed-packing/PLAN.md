@@ -90,3 +90,12 @@ the now-clean P4 state restored mode9 and exact pixels. Self-assigned isolation:
 record this exception, permit one bounded startup retry only when admission is
 false, then stop if still unavailable. Such a retry is not a pass for transitions.
 Do not count boot-screen samples. Fixture geometry is checked for every path.
+
+## Self-assigned bounded optimisation to evaluate after the first sweep
+
+Automatic selection currently scans the entire frame for palette eligibility even
+when RLE2 is already smaller than the theoretical minimum packed image. A safe
+lower-bound check (one palette entry plus ceil(pixels/8) plus header) can skip that
+scan without changing transmitted bytes. Preserve the initial candidate/results;
+implement and compare selected sparse/dense cases after the baseline sweep, not
+mid-run. No change to rendering or locking is needed.
