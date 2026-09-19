@@ -106,3 +106,9 @@ its mode3 dense image remained unchanged. Hold injected keys200ms, verify dense
 far-corner pixels and moving content markers, and restart the sweep with this
 stronger acceptance gate. Do not publish those earlier missing-workload samples
 as dense/animated performance. This corrects the test, not P4 rendering.
+
+Sequencing amendment (self-assigned): because the initial all-mode sweep must be
+restarted for reliable workload control anyway, apply the already-described
+minimum-size short circuit before the replacement sweep. Preserve candidate01
+and its valid preliminary controls. Repeat host tests and selected silicon
+controls, then use one immutable candidate02 for the full replacement sweep.
