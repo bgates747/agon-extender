@@ -77,3 +77,9 @@ The preserved source-tree overlay is experimental (not a clean-tree release).
 SD uploads explicitly preserve startup then clean its known previous-transfer
 backup before replacing it. Initial staging API/state mistakes were corrected
 before executing a scene; they are not graphics failures.
+
+The first silicon smoke (mode9) reconstructed all four paths identically. Sparse
+Copper scene strongly favours RLE2, so a self-assigned dense deterministic bitmap
+tile stage was added before animated tiles. It resets the row palette list to
+exercise nominal palette packing, while the preceding static stage retains Copper.
+This makes the workload comparison cover both long runs and short-run imagery.

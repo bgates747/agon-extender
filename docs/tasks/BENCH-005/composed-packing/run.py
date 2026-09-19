@@ -28,12 +28,13 @@ for m in modes:
   c.connect();(dest/'prior-autoexec.txt').write_bytes(c.download('/autoexec.txt'));c.rpc(10,b'\3'+path_payload('/autoexec.txt'));c.upload('/autoexec.txt',startup,True);assert c.download('/autoexec.txt')==startup;c.rpc(11)
  finally:c.lock.close()
  subprocess.run(['/home/smith/Desktop/reset-agon.sh'],check=True,stdout=subprocess.DEVNULL);time.sleep(12)
- for activity in ['static','moving'] if mode!=7 else ['static']:
+ for activity in ['static','dense','moving'] if mode!=7 else ['static']:
+  if activity=='dense':key(label+'-dense',7);time.sleep(2)
   if activity=='moving':key(label+'-animate',4);time.sleep(1)
   subprocess.run([sys.executable,str(T/'observe.py'),'--url',URL,'--output',str(dest/activity),'--seconds',str(a.seconds)],check=True)
   samples=json.loads((dest/activity/'samples.json').read_text())
   assert all(s['samples'][-1]['w']==m['width'] and s['samples'][-1]['h']==m['height'] for s in samples),'Mode geometry mismatch'
-  if activity=='static':
+  if activity in ('static','dense'):
    pixels=[(dest/activity/(name+'.rgb222')).read_bytes() for name in ['raw','rle2','packed','auto']]
    assert all(p==pixels[0] for p in pixels),'Static encoding pixel mismatch'
  key(label+'-exit',41);time.sleep(1)
