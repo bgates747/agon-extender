@@ -1,0 +1,657 @@
+{
+  "roundtrips": [
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 1,
+      "h": 1,
+      "colours": 1,
+      "bytes": 6,
+      "pixels": 1
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 1,
+      "bytes": 7,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 2,
+      "bytes": 8,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 3,
+      "bytes": 11,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 4,
+      "bytes": 12,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 5,
+      "bytes": 17,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 9,
+      "bytes": 21,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 10,
+      "bytes": 22,
+      "pixels": 15
+    },
+    {
+      "w": 3,
+      "h": 5,
+      "colours": 15,
+      "bytes": 27,
+      "pixels": 15
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 1,
+      "bytes": 8005,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 2,
+      "bytes": 8006,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 3,
+      "bytes": 16007,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 4,
+      "bytes": 16008,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 5,
+      "bytes": 32009,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 16,
+      "bytes": 32020,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 17,
+      "bytes": 48004,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 200,
+      "colours": 64,
+      "bytes": 48004,
+      "pixels": 64000
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 1,
+      "bytes": 9605,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 2,
+      "bytes": 9606,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 3,
+      "bytes": 19207,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 4,
+      "bytes": 19208,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 5,
+      "bytes": 38409,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 16,
+      "bytes": 38420,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 17,
+      "bytes": 57604,
+      "pixels": 76800
+    },
+    {
+      "w": 320,
+      "h": 240,
+      "colours": 64,
+      "bytes": 57604,
+      "pixels": 76800
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 1,
+      "bytes": 19205,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 2,
+      "bytes": 19206,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 3,
+      "bytes": 38407,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 4,
+      "bytes": 38408,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 5,
+      "bytes": 76809,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 16,
+      "bytes": 76820,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 17,
+      "bytes": 115204,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 240,
+      "colours": 64,
+      "bytes": 115204,
+      "pixels": 153600
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 1,
+      "bytes": 20485,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 2,
+      "bytes": 20486,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 3,
+      "bytes": 40967,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 4,
+      "bytes": 40968,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 5,
+      "bytes": 81929,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 16,
+      "bytes": 81940,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 17,
+      "bytes": 122884,
+      "pixels": 163840
+    },
+    {
+      "w": 640,
+      "h": 256,
+      "colours": 64,
+      "bytes": 122884,
+      "pixels": 163840
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 1,
+      "bytes": 24581,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 2,
+      "bytes": 24582,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 3,
+      "bytes": 49159,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 4,
+      "bytes": 49160,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 5,
+      "bytes": 98313,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 16,
+      "bytes": 98324,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 17,
+      "bytes": 147460,
+      "pixels": 196608
+    },
+    {
+      "w": 512,
+      "h": 384,
+      "colours": 64,
+      "bytes": 147460,
+      "pixels": 196608
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 1,
+      "bytes": 38405,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 2,
+      "bytes": 38406,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 3,
+      "bytes": 76807,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 4,
+      "bytes": 76808,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 5,
+      "bytes": 153609,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 16,
+      "bytes": 153620,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 17,
+      "bytes": 230404,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 480,
+      "colours": 64,
+      "bytes": 230404,
+      "pixels": 307200
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 1,
+      "bytes": 40965,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 2,
+      "bytes": 40966,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 3,
+      "bytes": 81927,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 4,
+      "bytes": 81928,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 5,
+      "bytes": 163849,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 16,
+      "bytes": 163860,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 17,
+      "bytes": 245764,
+      "pixels": 327680
+    },
+    {
+      "w": 640,
+      "h": 512,
+      "colours": 64,
+      "bytes": 245764,
+      "pixels": 327680
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 1,
+      "bytes": 60005,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 2,
+      "bytes": 60006,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 3,
+      "bytes": 120007,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 4,
+      "bytes": 120008,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 5,
+      "bytes": 240009,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 16,
+      "bytes": 240020,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 17,
+      "bytes": 360004,
+      "pixels": 480000
+    },
+    {
+      "w": 800,
+      "h": 600,
+      "colours": 64,
+      "bytes": 360004,
+      "pixels": 480000
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 1,
+      "bytes": 98309,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 2,
+      "bytes": 98310,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 3,
+      "bytes": 196615,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 4,
+      "bytes": 196616,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 5,
+      "bytes": 393225,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 16,
+      "bytes": 393236,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 17,
+      "bytes": 589828,
+      "pixels": 786432
+    },
+    {
+      "w": 1024,
+      "h": 768,
+      "colours": 64,
+      "bytes": 589828,
+      "pixels": 786432
+    },
+    {
+      "w": 17,
+      "h": 1,
+      "colours": 17,
+      "bytes": 17,
+      "pixels": 17
+    },
+    {
+      "w": 18,
+      "h": 1,
+      "colours": 18,
+      "bytes": 18,
+      "pixels": 18
+    },
+    {
+      "w": 19,
+      "h": 1,
+      "colours": 19,
+      "bytes": 19,
+      "pixels": 19
+    },
+    {
+      "w": 20,
+      "h": 1,
+      "colours": 20,
+      "bytes": 19,
+      "pixels": 20
+    },
+    {
+      "w": 21,
+      "h": 1,
+      "colours": 21,
+      "bytes": 20,
+      "pixels": 21
+    }
+  ],
+  "malformed_rejected": 27,
+  "sixbit": true
+}
