@@ -19,3 +19,12 @@ The codec works, but **do not enable it by default for Nurples**. Pair-RLE produ
 5. A pair may span rows. Pair alignment and maximum32-pixel repeated spans limit compression of long same-colour regions compared with RLE2. Alternating AB patterns can favour this codec, but Nurples as tested does not. No claim is made for other games.
 6. Original firmware artifacts, source overlays and evidence remain intact. The experimental default-pair image is preserved separately from the final default-restored build. Mainboard firmware and production games are unchanged.
 7. The final interactive review uses existing /test/nurples/nurples.bin (two-vblank pacing), unchanged. Pair-only remains available through explicit pair=1 protocol negotiation; ordinary browser startup retains rle2=1&packed=2. Refresh the web client after flashing.
+
+## Final installed-image check
+
+The default-restored build served exact expected assets and completed a fresh
+Nurples run:1,279 observed EVR1 frames, no browser errors, no vblank timeout.
+The first smoke reached MOS but its SAVE command refused to overwrite the
+previous trace; rerun with unique output filenames passed. A stale host SD
+session was rejected before execution and replaced with a fresh session. These
+were fixture bookkeeping errors, not codec failures. SMOKE.json records success.
