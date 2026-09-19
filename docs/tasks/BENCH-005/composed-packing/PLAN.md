@@ -136,3 +136,9 @@ keyboard-status timeout; subsequent status was ready/neutral with an expired
 injection lease and SD offline. No mode27 measurements existed. An ordinary
 mainboard reset restored known startup; unchanged sweep04 resumes from27. These
 control-plane interruptions remain separate from rendering/pixel acceptance.
+
+P05 confirmation selection (self-assigned within the bounded review): repeat
+modes2 and9 with eight measured seconds per path/workload, using the same
+firmware and fixture. These cover a larger two-colour raster and the common
+320×240 sixteen-colour raster; retain short screening results separately.
+Do not infer game simulation rates from either deterministic fixture.
