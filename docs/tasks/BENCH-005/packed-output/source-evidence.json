@@ -1,0 +1,216 @@
+[
+  {
+    "path": "video/extender/display/stock_p4_service.cpp",
+    "sha256": "24b6324e0e274e599c05ba4f0d172fdffa0c3ce85dc398770153ebd316d63808",
+    "selected_lines": [
+      {
+        "line": 211,
+        "text": "    controller_->prepareRows(y, count, signal, kPresentationSnapshotMaximumWidth);"
+      },
+      {
+        "line": 217,
+        "text": "      StockScanlineController<fabgl::VGA2Controller>::normalizeRow("
+      }
+    ]
+  },
+  {
+    "path": "video/extender/display/stock_scanline.cpp",
+    "sha256": "c2660e1b73f3437c84a8be22e8f8e7de79268d0ca478083b023a60c3b983d28e",
+    "selected_lines": [
+      {
+        "line": 41,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 44,
+        "text": "      auto const packedPaletteIndexOctet_to_signals = (uint64_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 65,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      },
+      {
+        "line": 76,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 79,
+        "text": "      auto const packedPaletteIndexQuad_to_signals = (uint32_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 105,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      },
+      {
+        "line": 116,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 119,
+        "text": "      auto const packedPaletteIndexPair_to_signals = (uint16_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 156,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      },
+      {
+        "line": 167,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 170,
+        "text": "      auto const packedPaletteIndexPair_to_signals = (uint16_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 209,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      },
+      {
+        "line": 219,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 224,
+        "text": "      ctrl->decorateScanLinePixels(dest, scanLine);"
+      }
+    ]
+  },
+  {
+    "path": "video/extender/display/stock_scanline.hpp",
+    "sha256": "d8dc6e90613bd72c76d3144e546b49b013edd97eae4824150f3a05e833e6084c",
+    "selected_lines": [
+      {
+        "line": 51,
+        "text": "  static void normalizeRow(std::uint8_t const *signalRow,"
+      }
+    ]
+  },
+  {
+    "path": "video/extender/display/stock_runtime_controller.hpp",
+    "sha256": "6da68fa014decca35048bff7ee1f560c3f36162e7ba333a2284cf8d29045648e",
+    "selected_lines": [
+      {
+        "line": 23,
+        "text": "  virtual void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) {"
+      },
+      {
+        "line": 100,
+        "text": "  void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) override {"
+      }
+    ]
+  },
+  {
+    "path": "video/extender/network/wired_network_service.cpp",
+    "sha256": "c54c5b5447ea734d61d1f693c58e65f8d5f467f2358cdd45c730178a33737258",
+    "selected_lines": [
+      {
+        "line": 409,
+        "text": "  if(!rle2_scratch)rle2_scratch=(uint8_t*)heap_caps_malloc(196622,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);"
+      },
+      {
+        "line": 715,
+        "text": "    if(std::memcmp(h,\"EVF1\",4)==0 && h[6]==2 && n<=196608 && n==width*height && rle2::get32(h+16)==width && rle2::get32(h+20)==n){"
+      },
+      {
+        "line": 716,
+        "text": "      auto begin=esp_timer_get_time();auto encoded=rle2::encode_auto(segments[1].data,n,rle2_scratch,196622,true);"
+      }
+    ]
+  },
+  {
+    "path": "vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+    "sha256": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+    "selected_lines": [
+      {
+        "line": 75,
+        "text": "  row[brow] = (x & 1) ? ((row[brow] & 0xf0) | value) : ((row[brow] & 0x0f) | (value << 4));"
+      },
+      {
+        "line": 80,
+        "text": "  return ((x & 1) ? (row[brow] & 0x0f) : ((row[brow] & 0xf0) >> 4));"
+      },
+      {
+        "line": 88,
+        "text": "  row[brow] = (x & 1) ? ((row[brow] & 0xf0) | value) : ((row[brow] & 0x0f) | (value << 4));"
+      },
+      {
+        "line": 94,
+        "text": "  row[brow] |= (x & 1) ? value : (value << 4);"
+      },
+      {
+        "line": 100,
+        "text": "  row[brow] &= (x & 1) ? (value | 0xF0) : ((value << 4) | 0x0F);"
+      },
+      {
+        "line": 106,
+        "text": "  row[brow] ^= (x & 1) ? value : (value << 4);"
+      },
+      {
+        "line": 785,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 788,
+        "text": "      auto const packedPaletteIndexPair_to_signals = (uint16_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 827,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      }
+    ]
+  },
+  {
+    "path": "vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+    "sha256": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+    "selected_lines": [
+      {
+        "line": 74,
+        "text": "  row[brow] ^= (-value ^ row[brow]) & (0x80 >> (x & 7));"
+      },
+      {
+        "line": 79,
+        "text": "  return (row[brow] & (0x80 >> (x & 7))) != 0;"
+      },
+      {
+        "line": 87,
+        "text": "  row[brow] ^= (-value ^ row[brow]) & (0x80 >> (x & 7));"
+      },
+      {
+        "line": 761,
+        "text": "      auto src  = (uint8_t const *) s_viewPortVisible[scanLine];"
+      },
+      {
+        "line": 764,
+        "text": "      auto const packedPaletteIndexOctet_to_signals = (uint64_t *) ctrl->getSignalsForScanline(scanLine);"
+      },
+      {
+        "line": 785,
+        "text": "      ctrl->decorateScanLinePixels(decpix, scanLine);"
+      }
+    ]
+  },
+  {
+    "path": "vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+    "sha256": "d4a52c125c0c10b82f55a3ab153d03895ee94845c115916dbbf9c86338b594cc",
+    "selected_lines": [
+      {
+        "line": 458,
+        "text": "void * IRAM_ATTR VGAPalettedController::getSignalsForScanline(int scanLine) {"
+      },
+      {
+        "line": 478,
+        "text": "void IRAM_ATTR VGAPalettedController::decorateScanLinePixels(uint8_t * pixels, uint16_t scanRow) {"
+      }
+    ]
+  },
+  {
+    "path": "live /frame_protocol.js",
+    "sha256": "72bca3b814bbf0b2d4dbc0dc0016e13d813e43a42a45c89617531e2937d8762c",
+    "selected_lines": [
+      {
+        "line": 9,
+        "text": " if(!w||!h||n>196608||n!==w*h||v.getUint32(16,true)!==w)fail();"
+      }
+    ]
+  }
+]

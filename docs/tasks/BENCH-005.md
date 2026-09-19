@@ -98,3 +98,7 @@ paired app-receipt timing explicitly unavailable and retained as follow-up.
 Author authorized [W01–W02](BENCH-005/web-pacing/PLAN.md): deploy a 60 fps request
 ceiling with existing RLE2 and credit flow, then hardware notify for review.
 Escalating push/worker options are planned but not authorized for implementation.
+
+W07a [packed-output audit](BENCH-005/packed-output/RESULTS.md) identifies the
+installed 512×384 RLE2 size ceiling; mode0 falls back to raw. Native packing
+proposal remains unimplemented pending Author review.
