@@ -10,7 +10,7 @@ firmware, compositor, scheduler or sprite changes.
 1. [x] Freeze wire layout, preserve rollback, implement bounded C++ encoder and
    browser decoder. Test exact round trips, run boundaries, odd tails, invalid
    tokens and worst-case size. Existing formats remain negotiated independently.
-2. [ ] Build/deploy experimental P4 firmware and run matched deterministic
+2. [x] Build/deploy experimental P4 firmware and run matched deterministic
    Nurples trials: prior selection, pair-only and automatic selection. Record
    wire sizes/formats, application cycles and browser submissions separately.
 3. [ ] Evaluate whether the new path merits default selection; retain useful
@@ -42,3 +42,9 @@ mutation occurred. Recheck admission after the P4 deployment before trials.
 
 After verified P4 deployment, SD admission succeeded and the unchanged Nurples
 fixture transfer began. The earlier admission failure did not recur at this gate.
+
+Measured decision: pair-only packets averaged52KB vs39KB RLE2; automatic
+selected RLE2 throughout the measured Nurples window. Retain pair=1 support
+but restore the prior browser default without pair selection. Preserve the
+experimental image and results, rebuild only this default change, verify served
+assets and run a short Nurples default-client smoke before review.

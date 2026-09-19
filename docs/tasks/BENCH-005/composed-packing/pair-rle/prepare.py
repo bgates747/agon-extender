@@ -25,6 +25,6 @@ shutil.copy2(T/'pair.hpp',net.parent/'pair_rle.hpp');shutil.copy2(P/'packed.hpp'
 (R/'web').mkdir(exist_ok=True)
 for n in ['app.js','index.html','style.css','frame_protocol.js']:
  s=(Path('agents/sixbit/web')/n).read_text()
- if n=='app.js':s=s.replace('?rle2=1&packed=2','?rle2=1&packed=2&pair=1')
+ # Retain prior default: the Nurples experiment did not justify an extra encoder pass.
  if n=='frame_protocol.js':s=(T/'decoder.js').read_text()+'\n'+s.replace('buffer=unpackRLE2Frame(unpackPackedFrame(buffer));','buffer=unpackRLE2Frame(unpackPackedFrame(unpackPairFrame(buffer)));')
  (web/n).write_text(s);(R/'web'/n).write_text(s)
