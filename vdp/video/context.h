@@ -225,6 +225,11 @@ class Context {
 		uint16_t scanHToMatch(int16_t x, int16_t y, RGB888 colour, int8_t direction);
 
 	public:
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+        // BENCH-006: VDU-owner-only metadata for HTTP text capture.
+        const fabgl::FontInfo * screenTextFont() { return getFont(); }
+#endif
+
 
 		// Constructor
 		Context() {

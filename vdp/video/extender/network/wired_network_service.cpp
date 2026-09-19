@@ -1,3 +1,4 @@
+#include "screen_text.hpp"
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
 #include "extender/diagnostics/output_isolation.hpp"
 #endif
@@ -404,7 +405,7 @@ bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 6;
+  config.max_uri_handlers = 7;
 #if defined(AGON_EXTENDER_TELEMETRY)
   ++config.max_uri_handlers;
 #endif
@@ -433,6 +434,10 @@ bool WiredNetworkService::startHttp() noexcept {
     return false;
   }
   server_.store(server, std::memory_order_release);
+  httpd_uri_t screen{};
+  screen.uri="/screen/text";screen.method=HTTP_GET;screen.handler=&screen_text::handle;
+  if(httpd_register_uri_handler(server,&screen)!=ESP_OK){httpd_stop(server);server_.store(nullptr);return false;}
+
 
   for (auto const &asset : web::embeddedBrowserAssets()) {
     httpd_uri_t uri{};

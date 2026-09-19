@@ -1,0 +1,41 @@
+{
+  "build_id": "screen-text-r01-b2026-09-19-09-47-04Z",
+  "parent_build_id": "composed-packing-pair-rle-r01-b2026-09-19-04-14-46Z",
+  "status": "experimental",
+  "commit": "663eb5360e17f9780cbad7531b2753664c46704d",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "a149005cad93b9f8a95b40716d298a07b841f3fd995e44afe042d7939e7b2162",
+      "bytes": 1465616
+    },
+    "firmware.factory.bin": {
+      "sha256": "0686e3a1036a3a72a5a80e02b837e620f64c54404eaae9f95f41953605f9660d",
+      "bytes": 1596688
+    },
+    "firmware.elf": {
+      "sha256": "225a00442926d84f05547bf5344bd65b3d349e4c6bc512ade72993e4883ae818",
+      "bytes": 28235288
+    },
+    "bootloader.bin": {
+      "sha256": "5c3bcff6978bbc9e01392148d6def30efd7913c54b88a50173b2832f008104f4",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  },
+  "source_overlay": {
+    "video.ino": "28d94663070c34837a1c6df6411f428bea5be0a74eb63c0728b07bf49f0fa0c8",
+    "context.h": "ce86c560d0c0a025756bafd37d6cb61c24b794de4363eb138eefb72790f269ef",
+    "extender/network/wired_network_service.cpp": "3cf90aa4d188a27bb1670ec5dfc3d3bfb930aa82a0557aa1dda16ab7d5531092",
+    "extender/network/screen_text.hpp": "4d0a72757d09250ae0d5ea6d18e472b2dabb2bfb1a192a28307420e266a0766a",
+    "extender/transport/console_hardware.inc": "013dffc35a85976b4837996cd88d46ee07a0909559cfb4b07f936eac2e4ca03e"
+  },
+  "web_unchanged": {
+    "app.js": "30e477557fc11fd241ff6f2aeb4dfcfb80b778eb1a6d1eb6df2def049a693f15",
+    "frame_protocol.js": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217",
+    "index.html": "473ae45b67f3cb854f62069610d07cc31c7e8bb6ee78fca3ee209ccc05755fa2",
+    "style.css": "e77c145272f3fe719a4fc716313b6037237fd2c6161839b0017521ae93b5f84f"
+  }
+}

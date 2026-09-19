@@ -1,3 +1,4 @@
+#include "extender/network/screen_text.hpp"
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
 #endif
@@ -250,6 +251,7 @@ void runConsole(VDUStreamProcessor *processor) {
       parse.units(s.diagnostic_rx_bytes - rx_before);
 #endif
     }
+    agon::extender::screen_text::poll(processor->getContext().get(), canvasW, canvasH);
     keyboard.tick(now,emit);
 #if defined(AGON_EXTENDER_SD_SERVICE)
     // Service records wait behind complete keyboard/reply packets. Only this
