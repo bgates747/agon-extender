@@ -7,7 +7,7 @@ repeat count in each 16-bit word. Preserve previous candidates and compare only
 Nurples on hardware, then send a hardware voice notification. No game, mainboard
 firmware, compositor, scheduler or sprite changes.
 
-1. [ ] Freeze wire layout, preserve rollback, implement bounded C++ encoder and
+1. [x] Freeze wire layout, preserve rollback, implement bounded C++ encoder and
    browser decoder. Test exact round trips, run boundaries, odd tails, invalid
    tokens and worst-case size. Existing formats remain negotiated independently.
 2. [ ] Build/deploy experimental P4 firmware and run matched deterministic
@@ -32,3 +32,8 @@ No earlier pair-RLE firmware has been built or flashed.
 Author subsequently accepted returning to the original four-bit count ("as you
 were"). The literal-flag variation was host-tested only, never built/flashed.
 Current EVQ1 uses count-minus-one; zero therefore means one literal pair.
+
+Final clarification was explicit: "do your way"; proceed with the four-bit count.
+64 host round trips and8 malformed cases passed, including maximum runs, odd
+tails and exact worst-case size. First Escape did not reach MOS; a normal reset
+restored the unchanged startup, then screen clear and SD readback passed.
