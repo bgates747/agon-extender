@@ -21,6 +21,7 @@ for m in modes:
  try:
   if c.status()['online']:c.connect();c.rpc(11)
  finally:c.lock.close()
+ key(label+'-ensure-exit',41);time.sleep(.3)
  command(label+'-service','EMOS LEGACY','LOAD /extender/sdserve.bin','RUN . /')
  startup=f"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nEMOS EXCOM\r\nVDU 22 {mode}\r\nLOAD /test/packing/packtest.bin\r\nRUN . /test/packing/c{7 if mode==7 else m['colours']}.vdu {m['width']} {m['height']} {m['colours']} {int(m['double'])}\r\n".encode()
  c=sd(label+'-startup')
@@ -28,6 +29,11 @@ for m in modes:
   c.connect();(dest/'prior-autoexec.txt').write_bytes(c.download('/autoexec.txt'));c.rpc(10,b'\3'+path_payload('/autoexec.txt'));c.upload('/autoexec.txt',startup,True);assert c.download('/autoexec.txt')==startup;c.rpc(11)
  finally:c.lock.close()
  subprocess.run(['/home/smith/Desktop/reset-agon.sh'],check=True,stdout=subprocess.DEVNULL);time.sleep(12)
+ readiness=json.loads(urllib.request.urlopen(URL+'/keyboard/status',timeout=5).read())
+ if not readiness['ready']:
+  (dest/'restart-exception.json').write_text(json.dumps(readiness))
+  subprocess.run(['/home/smith/Desktop/reset-agon.sh'],check=True,stdout=subprocess.DEVNULL);time.sleep(12)
+  readiness=json.loads(urllib.request.urlopen(URL+'/keyboard/status',timeout=5).read());assert readiness['ready'],'No keyboard admission after bounded startup retry'
  for activity in ['static','dense','moving'] if mode!=7 else ['static']:
   if activity=='dense':key(label+'-dense',7);time.sleep(2)
   if activity=='moving':key(label+'-animate',4);time.sleep(1)

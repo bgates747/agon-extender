@@ -83,3 +83,10 @@ Copper scene strongly favours RLE2, so a self-assigned dense deterministic bitma
 tile stage was added before animated tiles. It resets the row palette list to
 exercise nominal palette packing, while the preceding static stage retains Copper.
 This makes the workload comparison cover both long runs and short-run imagery.
+
+A second startup after live Copper/sprites reproduced the known P4 reset: boot
+banner at640×480, keyboard admission false. One subsequent mainboard reset from
+the now-clean P4 state restored mode9 and exact pixels. Self-assigned isolation:
+record this exception, permit one bounded startup retry only when admission is
+false, then stop if still unavailable. Such a retry is not a pass for transitions.
+Do not count boot-screen samples. Fixture geometry is checked for every path.
