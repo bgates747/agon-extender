@@ -62,3 +62,18 @@ QUAL-004 Copper transition failures remain exceptions; do not hide or relabel th
 Use test-only files under /test. Preserve unrelated repository dirt. Missing
 observability or allocation/mode failures are reported, not inferred successes.
 Self-assigned changes to this plan must be explicitly labelled and justified.
+
+## Execution notes / self-assigned fixture adaptation
+
+Official references inspected: VDP v2.16.0, MOS v3.0.2, agon-docs
+f9806bd3cbff6ed5d1c08bef1d51fed11764b86b. All are read-only.
+The deterministic fixture reuses QUAL-004 Copper setup (including software and
+hardware sprites), plus BENCH-005's animated rectangle approach scaled to each
+surface. This avoids assuming game binaries support arbitrary mode geometries.
+Raw/RLE2/packed/automatic selection share the exact installed compositor and
+request cap. Host codec tests cover extra colours and fallback. Browser timings
+are headless Chromium presentation submissions, not physical display refresh.
+The preserved source-tree overlay is experimental (not a clean-tree release).
+SD uploads explicitly preserve startup then clean its known previous-transfer
+backup before replacing it. Initial staging API/state mistakes were corrected
+before executing a scene; they are not graphics failures.

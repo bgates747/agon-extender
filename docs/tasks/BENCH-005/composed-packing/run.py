@@ -3,7 +3,7 @@ Modes selected in temporary startup only. Durable per-mode progress; fail stops.
 """
 from pathlib import Path
 import queue,concurrent.futures.thread,sys,json,time,subprocess,argparse,urllib.request
-sys.path.insert(0,'agents/qual004');from common import cli,SD,URL,KB
+sys.path.insert(0,'agents/qual004');from common import cli,SD,URL,KB,path_payload
 T=Path('docs/tasks/BENCH-005/composed-packing');R=Path('agents/composed-packing')
 p=argparse.ArgumentParser();p.add_argument('--modes',default='');p.add_argument('--label',required=True);p.add_argument('--seconds',type=float,default=4);a=p.parse_args();out=R/a.label;out.mkdir(exist_ok=False)
 modes=json.loads((T/'modes.json').read_text())
@@ -17,10 +17,15 @@ def key(name,code):
 def sd(name):return SD(URL,out/(name+'-sd.json'))
 for m in modes:
  mode=m['mode'];label=str(mode);dest=out/label;dest.mkdir();start=time.time();(dest/'progress.json').write_text(json.dumps({'mode':m,'state':'preparing','start':start}))
+ c=sd(label+'-ensure-prompt')
+ try:
+  if c.status()['online']:c.connect();c.rpc(11)
+ finally:c.lock.close()
  command(label+'-service','EMOS LEGACY','LOAD /extender/sdserve.bin','RUN . /')
  startup=f"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nEMOS EXCOM\r\nVDU 22 {mode}\r\nLOAD /test/packing/packtest.bin\r\nRUN . /test/packing/c{7 if mode==7 else m['colours']}.vdu {m['width']} {m['height']} {m['colours']} {int(m['double'])}\r\n".encode()
  c=sd(label+'-startup')
- try:c.connect();c.upload('/autoexec.txt',startup,True);assert c.download('/autoexec.txt')==startup;c.rpc(11)
+ try:
+  c.connect();(dest/'prior-autoexec.txt').write_bytes(c.download('/autoexec.txt'));c.rpc(10,b'\3'+path_payload('/autoexec.txt'));c.upload('/autoexec.txt',startup,True);assert c.download('/autoexec.txt')==startup;c.rpc(11)
  finally:c.lock.close()
  subprocess.run(['/home/smith/Desktop/reset-agon.sh'],check=True,stdout=subprocess.DEVNULL);time.sleep(12)
  for activity in ['static','moving'] if mode!=7 else ['static']:
