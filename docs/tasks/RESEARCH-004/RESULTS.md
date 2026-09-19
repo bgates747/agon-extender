@@ -2,6 +2,17 @@
 
 ## Executive summary
 
+**September 18 purchase update:** Author has backordered P4-PC from Mouser US.
+Board integration, accessories and breadboard-harness planning now belong to
+[P4PC-001](../P4PC-001.md). Earlier same-GPIO rejection below is historical;
+standalone usefulness and total assembled cost now justify evaluating remapping.
+
+**Current purchasing criterion (Author clarification, September 18): a complete
+assembled drop-in adapter, or the closest practical equivalent. Chip-only
+listings are excluded. Custom-interposer candidates below are historical research
+options, not qualified near-drop-in recommendations. An assembled reproduction
+of the exact Olimex board remains within scope.**
+
 **No confirmed product meets all requirements unchanged.** A genuine single-board
 P4/Ethernet/HDMI solution exists: **Olimex ESP32-P4-PC**. However, its exposed GPIOs
 and peripheral assignments differ from our DevKit, so it is not a replacement for
@@ -201,3 +212,88 @@ These are proposals, not installed capabilities; signal voltage, pin allocation,
 capture capacity and integration with existing recovery tools require a separate
 work contract. No current bench wiring or firmware was changed for this addendum.
 No Pico/Cowbell experiment has been started or authorized by this shopping note.
+
+## 2026-09-18 — Broader adapter search
+
+The wider search adds **Toradex Verdin DSI-to-HDMI** and **Ezurio DB_DSIHD**
+to the purchasing leads, but still establishes no new plug-compatible US-stocked
+adapter. Toradex has the strongest new direct distributor evidence: Mouser lists
+15 at $33.86. Its control interface and connector require adaptation. No orders,
+firmware changes or bench operations were performed.
+
+### Likely article and its limitations
+
+The [CNX Software Olimex adapter article](https://www.cnx-software.com/2025/12/04/olimex-lt8912b-based-mipi-hdmi-adapter-board-adds-hdmi-output-to-the-esp32-p4-devkit-board/)
+links to ESP-HDMI-Bridge. It also contains an explicit correction to its original
+cross-board compatibility claims. Treat its board list as discovery leads, not
+schematic qualification. This may be the Author's article; identity is unconfirmed.
+The [earlier bridge article](https://www.cnx-software.com/2025/04/20/esp-hdmi-bridge-esp32-p4-hdmi-streaming-adapter-usb-ethernet-wifi-microsd-card/)
+said the bridge was unavailable at publication and linked reproducible design
+files. That historical statement does not establish current availability.
+
+### Newly screened purchasing leads
+
+| Candidate | Purchasing evidence retrieved September 18 | Compatibility assessment |
+| --- | --- | --- |
+| [Toradex Verdin DSI to HDMI, Mouser 145-0157](https://www.mouser.com/en/ProductDetail/Toradex/Verdin-DSI-to-HDMI-Adapter?qs=2FehpBK1j95WFkdv5AfHGg%3D%3D) | US storefront lists 15, $33.86 each; checkout not verified | LT8912B; custom interposer and control-voltage qualification required, not a ribbon replacement |
+| [Ezurio DB_DSIHD](https://www.ezurio.com/system-on-module/accessories/db-dsihd) | Manufacturer distributor feed lists DigiKey 25 and Mouser 2; direct price not established | Manufacturer targets Nitrogen8M/i.MX8M; no verified Olimex pinout or P4 driver qualification |
+| ESP-HDMI-Bridge | Open design/software lead; no confirmed stocked US retail source found | Relevant P4 reference implementation, not yet a purchasing solution |
+
+The [Toradex manufacturer datasheet](https://docs.toradex.com/109491-toradex-dsi-to-hdmi-adapter.pdf)
+documents a 60-contact DSI adapter connector and 1.8 V I2C/reset/power-enable
+control signals. The LT8912B chip in common with Olimex does not make the board
+plug-compatible. Confirm the exact sold board revision against its matching
+schematic before designing an interposer; this is a screening observation, not
+an approved wiring table.
+
+Ezurio's [manufacturer demonstration](https://www.ezurio.com/documentation/mipi-dsi-to-hdmi-for-i-mx8-boards-with-db-8mm-dsihd)
+confirms DSI input to HDMI output, rather than capture in the reverse direction.
+Its [DigiKey US listing](https://www.digikey.com/en/products/detail/ezurio/DB-DSIHD/19242856)
+exists. Manufacturer inventory feeds may lag seller stock. This board currently
+has less established integration detail than the M5Stack or Toradex candidates.
+
+Searches included review-site cross-links, LT8912B bridge boards, Raspberry Pi
+DSI adapters, industrial SoM accessories, and exact Olimex part/distributor
+queries. No additional verified US-stocked exact Olimex adapter emerged.
+M5Stack remains the inexpensive interposer candidate from the first pass;
+Toradex is a new documented alternative, not a demonstrated improvement over it.
+The Olimex open hardware files also permit investigating PCB assembly, but no
+fabrication quote or parts-availability assessment was obtained.
+
+## 2026-09-18 — Contract-manufacturer repeat-build search
+
+**No public evidence found that PCBWay, JLCPCB, Seeed Fusion or AISLER has
+previously assembled the exact Olimex MIPI-HDMI board.** This is a limited public
+catalogue/index search, not access to private order histories or proof that no
+such run exists. No vendor was contacted and no files were submitted for quotation.
+
+1. [PCBWay Shared Projects](https://www.pcbway.com/project/) is readable through
+   the web tool. Searches for Olimex MIPI-HDMI, LT8912/LT8912B and DSI-to-HDMI
+   found no exact matching shared project. A direct LT8912B tag-filter request
+   failed, so internal catalogue coverage is incomplete. Its
+   [sharing guide](https://www.pcbway.com/blog/help_center/Shared_Projects_PCBWay_Community_PCBWay_Website_Exploration_05_17c562d8.html)
+   allows projects to be created independently or shared from orders. Therefore
+   catalogue presence alone would not establish a prior assembly run.
+2. [OSHWLab ESP-HDMI-Bridge](https://oshwlab.com/hawaii0707/esp-hdmi-bridge)
+   is a real related shared design, attributed to the Espressif OSHWHub project.
+   It is not the Olimex board and its Completed label is not factory assembly
+   evidence. Connector compatibility and manufacturing history remain unverified.
+3. The chip-only LT8912B catalogue entry was removed from purchasing leads at
+   the Author's request. Individual components do not meet the requirement for
+   a complete assembled adapter.
+4. JLCPCB's [SMT reorder procedure](https://jlcpcb.com/help/article/smt-reorder-process-overview)
+   explicitly supports reuse of stored stencils/fixtures when the original order
+   included storage. That substantiates the Author's tooling-reuse idea, but
+   does not establish permission or availability to reuse another customer's
+   tooling and production data.
+5. Domain-restricted Seeed and AISLER searches found no exact prior-run evidence.
+   Unrelated CSI camera, reverse-direction HDMI-to-MIPI and RGB-to-HDMI projects
+   were excluded.
+
+Next useful inquiry, if the Author elects to contact vendors: identify the exact
+Olimex revision and repository, ask whether a previous assembled run exists,
+whether its stencil/panel/CPL/BOM/inspection setup can be reused for a new customer,
+and request itemized quotations for 2, 5 and 10 fully assembled units delivered
+to the USA. Separate setup/tooling, parts, PCB/assembly, functional testing and
+shipping. A prior PCB fabrication order does not establish assembly or HDMI
+functional validation. No inquiry has been sent.

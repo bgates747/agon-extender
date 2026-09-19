@@ -28,3 +28,11 @@ unchanged solution; US-stocked M5Stack adapter is an interposer candidate.
 Hardware spoken notification completed; fresh stage-6 audio-command receipt
 verified. Left Legacy MOS prompt, installed firmware and startup unchanged.
 Research complete; adapter engineering/purchasing is not performed or scheduled.
+
+September 18 follow-up: broadened review-site and industrial-adapter search;
+Toradex and Ezurio added to RESULTS.md with availability and compatibility limits.
+No hardware work or purchases performed.
+
+Author clarification: prioritize complete assembled drop-in or near-drop-in
+adapters. Exclude chip-only sourcing leads; retain custom-interposer research
+as unqualified historical alternatives, not purchasing recommendations.
