@@ -14,6 +14,13 @@ with tempfile.TemporaryDirectory() as temp:
 int main() {
  using agon::extender::input::mapUsbCliKey;
  assert(mapUsbCliKey(32,2,0).virtual_key==VK_POUND);
+ assert(mapUsbCliKey(71,0,1).virtual_key==VK_SCROLLLOCK);
+ assert(mapUsbCliKey(83,0,1).virtual_key==VK_NUMLOCK);
+ assert(mapUsbCliKey(84,0,1).virtual_key==VK_KP_DIVIDE);
+ assert(mapUsbCliKey(88,0,1).virtual_key==VK_KP_ENTER);
+ assert(mapUsbCliKey(89,32,1).virtual_key==VK_KP_1);
+ assert(mapUsbCliKey(89,34,1).virtual_key==VK_KP_END);
+ assert(mapUsbCliKey(99,0,1).virtual_key==VK_KP_DELETE);
  assert(mapUsbCliKey(58,0,1).virtual_key==VK_F1);
  assert(mapUsbCliKey(69,0,1).virtual_key==VK_F12);
  const int expected[]={VK_INSERT,VK_HOME,VK_PAGEUP,VK_DELETE,VK_END,VK_PAGEDOWN,VK_RIGHT,VK_LEFT,VK_DOWN,VK_UP};

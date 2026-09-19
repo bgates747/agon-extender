@@ -5,10 +5,8 @@
 #if defined(AGON_EXTENDER_TELEMETRY)
 #include "../telemetry/target.hpp"
 #endif
-// Video, SD RPC and explicit host keyboard requests; browser input stays retired.
-// Keep F003 complete writes and F012 failed-stop containment; no browser input
-// lease or browser-keyboard callback belongs here. Optional timing endpoints
-// are read-only diagnostics; they do not reinstate browser input.
+// Video and input use independent sessions. Retain complete video writes and
+// failed-stop containment; browser input is arbitrated by the console owner.
 #include "extender/network/wired_network_service.hpp"
 #include "extender/diagnostics/frame_timing.hpp"
 #include "extender/diagnostics/video_timing.hpp"
@@ -26,6 +24,7 @@
 #include <limits>
 #include <cerrno>
 #include <cstdlib>
+#include <new>
 #include <esp_timer.h>
 
 #include <esp_log.h>
@@ -339,6 +338,7 @@ esp_err_t sdRpcHandler(httpd_req_t *request) {
 #endif
 
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+#include "browser_keyboard.inc"
 namespace {
 std::uint32_t keyboardNow() { return std::uint32_t(esp_timer_get_time()/1000); }
 esp_err_t keyboardReply(httpd_req_t *request,unsigned code) {
@@ -359,8 +359,7 @@ esp_err_t keyboardReply(httpd_req_t *request,unsigned code) {
 }
 esp_err_t keyboardStatusHandler(httpd_req_t *request) { return keyboardReply(request,200); }
 esp_err_t keyboardRpcHandler(httpd_req_t *request) {
-  // Intent header plus no browser Origin keeps the retired browser input path
-  // unavailable. This is a local bench endpoint, not an Internet-auth service.
+  // Host automation remains separate from the same-origin browser WebSocket.
   char intent[4]{};
   if(httpd_req_get_hdr_value_len(request,"Origin") ||
      httpd_req_get_hdr_value_str(request,"X-Agon-Keyboard",intent,sizeof(intent))!=ESP_OK ||
@@ -410,7 +409,7 @@ bool WiredNetworkService::startHttp() noexcept {
   ++config.max_uri_handlers;
 #endif
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
-  config.max_uri_handlers += 2;
+  config.max_uri_handlers += 3;
 #endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
   config.max_uri_handlers += 2;
@@ -503,11 +502,15 @@ bool WiredNetworkService::startHttp() noexcept {
   }
 #endif
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
-  httpd_uri_t key_status{},key_rpc{};
+  httpd_uri_t key_status{},key_rpc{},key_browser{};
+  key_browser.uri="/keyboard/browser";key_browser.method=HTTP_GET;
+  key_browser.handler=&browserKeyboardHandler;key_browser.is_websocket=true;
+  key_browser.ws_post_handshake_cb=&browserKeyboardOpened;
   key_status.uri="/keyboard/status";key_status.method=HTTP_GET;key_status.handler=&keyboardStatusHandler;
   key_rpc.uri="/keyboard/rpc";key_rpc.method=HTTP_POST;key_rpc.handler=&keyboardRpcHandler;
   if(httpd_register_uri_handler(server,&key_status)!=ESP_OK ||
-     httpd_register_uri_handler(server,&key_rpc)!=ESP_OK) {
+     httpd_register_uri_handler(server,&key_rpc)!=ESP_OK ||
+     httpd_register_uri_handler(server,&key_browser)!=ESP_OK) {
     http_fault_=true;stopHttp();increment(http_start_failures_);return false;
   }
 #endif

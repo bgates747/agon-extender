@@ -252,7 +252,12 @@ void runConsole(VDUStreamProcessor *processor) {
 #endif
     }
     agon::extender::screen_text::poll(processor->getContext().get(), canvasW, canvasH);
+    keyboard.repeat_delay=kbRepeatDelay;keyboard.repeat_rate=kbRepeatRate;
+#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
+    agon::extender::input::remoteLocked([&](auto &r){r.repeat(kbRepeatDelay,kbRepeatRate);return 0;});
+#endif
     keyboard.tick(now,emit);
+    agon::extender::input::usbhost::setLeds(keyboard.ledState());
 #if defined(AGON_EXTENDER_SD_SERVICE)
     // Service records wait behind complete keyboard/reply packets. Only this
     // task touches the UART queue; HTTP callbacks never send bytes themselves.

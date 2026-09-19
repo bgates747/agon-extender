@@ -42,7 +42,7 @@ window.WebSocket=class extends EventTarget {
 ''')
             page.goto(f'http://127.0.0.1:{server.server_port}/')
             assert page.locator('#keyboard').count() == 0
-            assert page.locator('#keyboard-state').count() == 0
+            assert page.locator('#keyboard-state').count() == 1
             page.click('#connect')
             page.wait_for_function("sockets[0]?.sent.length === 1")
             assert page.evaluate('sockets[0].sent') == ['frame']

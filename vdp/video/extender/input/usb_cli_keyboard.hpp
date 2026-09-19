@@ -6,7 +6,7 @@
 namespace agon::extender::input {
 inline ProcessedKey mapUsbCliKey(uint8_t usage,uint8_t mods,uint8_t locale) {
   if (!hidKeySupported(usage) && !(locale==0 && (usage==50 || usage==100)) &&
-      !(usage>=58 && usage<=69) && !(usage>=73 && usage<=82))
+      !(usage>=58 && usage<=69) && !(usage>=73 && usage<=99) && usage!=71)
     return {0,mods,0,1,0}; // Do not interpret an unsupported table placeholder.
   auto key=mapHidKey(usage,mods);
   uint8_t c=key.ascii,vk=key.virtual_key;
@@ -17,6 +17,23 @@ inline ProcessedKey mapUsbCliKey(uint8_t usage,uint8_t mods,uint8_t locale) {
     if (usage==49 || usage==50) c=(mods&2)?'~':'#';
     if (usage==100) c=(mods&2)?'|':'\\';
     if (c!=163 && (usage==31 || usage==52 || usage==49 || usage==50 || usage==100)) vk=hidAsciiVirtual(c);
+  }
+  // FabGL VirtualKey values from the retained upstream enum. Keypad navigation
+  // keeps its distinct virtual keys, as stock PS/2 does with Num Lock off.
+  if (usage==71 || usage==83) return {0,mods,uint8_t(usage==71?139:140),1,0};
+  if (usage>=84 && usage<=88) {
+    constexpr uint8_t chars[]={'/','*','-','+',13}, keys[]={86,83,80,82,144};
+    return {chars[usage-84],mods,keys[usage-84],1,chars[usage-84]};
+  }
+  if (usage>=89 && usage<=99) {
+    if ((mods&32) && !(mods&2)) {
+      const uint8_t digit=usage<=97?usage-88:0;
+      const uint8_t ch=usage==99?'.':uint8_t('0'+digit);
+      return {ch,mods,uint8_t(usage==99?88:12+digit),1,ch};
+    }
+    constexpr uint8_t keys[]={136,153,149,155,158,157,134,151,147,129,131};
+    constexpr uint8_t chars[]={0,10,0,8,0,21,0,11,0,0,127};
+    return {chars[usage-89],mods,keys[usage-89],1,0};
   }
   if (usage==42) { c=8; key.keycode=127; }
   else if (usage>=58 && usage<=69) { c=0; vk=159+usage-58; key.keycode=0; }
@@ -30,6 +47,7 @@ inline ProcessedKey mapUsbCliKey(uint8_t usage,uint8_t mods,uint8_t locale) {
 class UsbCliKeyboard {
  public:
   bool neutral() const { return decoder_.neutral(); }
+  uint8_t ledState() const { return decoder_.ledState(); }
   uint8_t locale{};
   uint16_t repeat_delay{500},repeat_rate{100};
   template<class Emit> void report(const uint8_t *data,size_t size,uint32_t now,Emit emit) {
@@ -73,7 +91,7 @@ class UsbCliKeyboard {
     wait_neutral_=false; repeat_usage_=0;
   }
  private:
-  static bool repeatable(uint8_t u) { return (u>=4 && u<=56) || (u>=73 && u<=82) || u==100; }
+  static bool repeatable(uint8_t u) { return (u>=4 && u<=56) || (u>=73 && u<=82) || (u>=84 && u<=99) || u==100; }
   template<class Emit> void release(const UsbBootKeyboard::Key &raw,Emit emit) {
     auto up=held_[raw.usage]; held_[raw.usage]={}; up.down=0; up.modifiers=raw.processed.modifiers;
     if (up.virtual_key && admitted_ && !wait_neutral_) emit(up);

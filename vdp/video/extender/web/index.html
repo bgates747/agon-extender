@@ -14,12 +14,18 @@
     </header>
 
     <section class="screen-shell" id="video-panel">
-      <canvas id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
+      <canvas tabindex="0" id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
+      <div class="keyboard-strip" id="keyboard-strip">
+        <button id="capture-keyboard" type="button">Capture keyboard</button>
+        <button id="exit-fullscreen" type="button">Exit fullscreen</button>
+        <span id="keyboard-state" role="status">Keyboard released</span>
+        <div id="keyboard-locks"></div>
+      </div>
     </section>
 
     <section class="controls">
       <button id="connect" type="button">Connect</button>
-      <button id="fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen (Esc to exit)">Fullscreen</button>
+      <button id="fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen (mouse to bottom for controls)">Fullscreen</button>
       <button id="demo" type="button">Local test pattern</button>
       <span id="state">disconnected</span>
     </section>

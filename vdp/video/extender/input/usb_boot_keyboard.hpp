@@ -1,6 +1,6 @@
 // USB HID 1.11 Appendix B boot-keyboard report acquisition. This class has one
 // process owner; the USB callback copies bytes to that owner, never edits keys.
-// No report-descriptor parser, software repeat or LED writes in this increment.
+// Boot lock state belongs to this physical keyboard, independent of browser locks.
 #pragma once
 #include <array>
 #include <cstddef>
@@ -13,6 +13,7 @@ class UsbBootKeyboard final {
   enum class Result { accepted, invalid, waiting_neutral, rearmed };
   struct Key { uint8_t usage; ProcessedKey processed; bool mapped; };
 
+  uint8_t ledState() const { return (num_?1:0)|(caps_?2:0)|(scroll_?4:0); }
   bool neutral() const {
     for (const auto &key:held_) if (key.processed.down) return false;
     return true;
@@ -24,7 +25,7 @@ class UsbBootKeyboard final {
     for (unsigned i=4;i<224;++i) release(i,0,emit);
   }
   template<class Emit> void disconnect(Emit emit) {
-    releaseAll(emit); caps_=false; waiting_neutral_=false;
+    releaseAll(emit); caps_=num_=scroll_=false; waiting_neutral_=false;
   }
   template<class Emit> void lostReport(Emit emit) {
     releaseAll(emit); waiting_neutral_=true;
@@ -48,7 +49,9 @@ class UsbBootKeyboard final {
       waiting_neutral_=false; return Result::rearmed;
     }
     if (pressed[57] && !held_[57].processed.down) caps_=!caps_;
-    const uint8_t modifiers=mosModifiers(data[0]) | (caps_?16:0);
+    if (pressed[83] && !held_[83].processed.down) num_=!num_;
+    if (pressed[71] && !held_[71].processed.down) scroll_=!scroll_;
+    const uint8_t modifiers=mosModifiers(data[0]) | (caps_?16:0) | (num_?32:0) | (scroll_?64:0);
     // Emit modifier transitions first, then all releases before new presses.
     for (unsigned i=224;i<232;++i) transition(i,pressed[i],modifiers,emit);
     for (unsigned i=4;i<224;++i) if (!pressed[i]) release(i,modifiers,emit);
@@ -77,6 +80,6 @@ class UsbBootKeyboard final {
     emit(held);
   }
   std::array<Key,232> held_{};
-  bool caps_{},waiting_neutral_{};
+  bool caps_{},num_{},scroll_{},waiting_neutral_{};
 };
 }

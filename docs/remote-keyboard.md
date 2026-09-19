@@ -179,8 +179,8 @@ Caps Lock is provider-specific: browser Capture uses the host's reported state
 when available and refreshes it from browser events. On physical USB takeover,
 P4 uses the USB provider's own Caps state and keeps its indicator synchronized.
 Browser support is cross-platform. Unknown browser state must not be presented
-as known off. Current USB acquisition has no LED writes; the planned adapter
-work includes that synchronization requirement, not a claim it already works.
+as known off. The experimental adapter includes an independent USB LED worker; physical LED
+and disconnect acceptance remain pending.
 
 When Caps state is unavailable at Capture, show unknown until the first reliable
 keyboard event supplies it, then synchronize before translating/delivering that
@@ -206,3 +206,5 @@ reporting must not silently be interpreted as off.
 For lock states the browser cannot reliably report, the control strip offers
 explicitly labelled manual settings. A manually selected state is not presented
 as a host-observed value. This fallback keeps those browsers usable.
+
+Implementation details and local validation boundaries: [browser adapter](tasks/REMOTE-001/B04-implementation.md).

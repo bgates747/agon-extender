@@ -8,6 +8,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/queue.h>
 #include <freertos/task.h>
+#include <freertos/semphr.h>
 #include <esp_intr_alloc.h>
 #include <usb/usb_host.h>
 #include <usb/hid_host.h>
@@ -25,6 +26,29 @@ inline std::atomic<bool> detached{};
 inline std::atomic<unsigned> faults{}, generation{};
 inline bool running{};
 inline unsigned connections{};
+inline bool check(esp_err_t result,const char *operation);
+inline SemaphoreHandle_t ledMutex{};
+inline std::atomic<bool> ledReady{};
+inline std::atomic<unsigned> desiredLeds{},ledEpoch{};
+inline hid_host_device_handle_t pendingClose{}; // console owner only
+inline void setLeds(uint8_t leds) { desiredLeds.store(leds); }
+inline void ledWorker(void *) {
+  int sent=-1;unsigned epoch=0;
+  for(;;) {
+    if(ledReady.load() && !detached.load() && xSemaphoreTake(ledMutex,0)==pdTRUE) {
+      const auto handle=active.load();
+      if(ledEpoch.load()!=epoch){epoch=ledEpoch.load();sent=-1;}
+      uint8_t leds=desiredLeds.load();
+      if(handle && ledReady.load() && !detached.load() && sent!=leds) {
+        // USB control transfer may wait; never perform it on the UART owner.
+        // One attempt per state/connection, with visible failure, no retry flood.
+        sent=leds;check(hid_class_request_set_report(handle,2,0,&leds,1),"keyboard LEDs");
+      }
+      xSemaphoreGive(ledMutex);
+    }
+    vTaskDelay(pdMS_TO_TICKS(20));
+  }
+}
 constexpr unsigned overflow=1,transfer_error=2,link_error=4;
 inline void fault(unsigned value) { generation.fetch_add(1); faults.fetch_or(value); }
 inline bool check(esp_err_t result,const char *operation) {
@@ -71,8 +95,8 @@ inline void hostEvents(void *) {
   }
 }
 inline bool begin() {
-  events=xQueueCreate(32,sizeof(Event));
-  if (!events) return false;
+  events=xQueueCreate(32,sizeof(Event));ledMutex=xSemaphoreCreateMutex();
+  if (!events || !ledMutex) return false;
   usb_host_config_t host{}; host.intr_flags=ESP_INTR_FLAG_LEVEL1;
   host.peripheral_map=0; // Dedicated HS USB-P/USB-N, EXT2.19/20.
   if (!check(usb_host_install(&host),"host install")) return false;
@@ -80,6 +104,7 @@ inline bool begin() {
   hid_host_driver_config_t driver{}; driver.create_background_task=true;
   driver.task_priority=5; driver.stack_size=4096; driver.core_id=tskNO_AFFINITY; driver.callback=connected;
   running=check(hid_host_install(&driver),"HID install");
+  if (running) running=xTaskCreate(ledWorker,"usb-leds",3072,nullptr,4,nullptr)==pdPASS;
   if (running) printf("USB HOST READY: attach one boot keyboard\n");
   return running;
 }
@@ -89,6 +114,15 @@ inline bool attached() { return active.load()!=nullptr && !detached.load(); }
 template<class Report,class Connection,class Lost>
 void pump(Report report,Connection connection,Lost lost) {
   if (!running) return;
+  if(pendingClose) {
+    // Defer deletion while a control transfer owns the handle. Do not stall
+    // UART/video execution waiting for a slow or removed keyboard.
+    if(xSemaphoreTake(ledMutex,0)!=pdTRUE)return;
+    check(hid_host_device_close(pendingClose),"disconnect close");
+    pendingClose=nullptr;active.store(nullptr);xSemaphoreGive(ledMutex);
+    printf("USB DISCONNECTED: held keys released; waiting for keyboard\n");
+    return;
+  }
   const auto bits=faults.exchange(0);
   if (bits) {
     lost(); printf("USB INPUT FAULT flags=%u\n",bits);
@@ -104,13 +138,12 @@ void pump(Report report,Connection connection,Lost lost) {
     if (result==ESP_OK && !detached.load()) result=hid_host_device_start(event.handle);
     if (detached.load()) return;
     if (!check(result,"boot protocol/start")) { check(hid_host_device_close(event.handle),"close failed admission"); return; }
-    connection(true);
+    connection(true);ledEpoch.fetch_add(1);ledReady.store(true);
     printf("USB KEYBOARD READY\n");
   } else if (event.kind==Kind::disconnected) {
-    connection(false);
-    // Driver retained WAIT_USER_DELETION; this second close removes it.
-    check(hid_host_device_close(event.handle),"disconnect close"); active.store(nullptr);
-    printf("USB DISCONNECTED: held keys released; waiting for keyboard\n");
+    ledReady.store(false);connection(false);
+    // Driver retains WAIT_USER_DELETION until the deferred owner close.
+    pendingClose=event.handle;
   } else if (!detached.load() && event.generation==generation.load()) report(event.report,event.size);
 }
 }

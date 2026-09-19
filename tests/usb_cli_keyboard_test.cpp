@@ -8,7 +8,7 @@ using namespace agon::extender::input;
 int main() {
   assert(!mapUsbCliKey(50,0,1).virtual_key);
   assert(mapUsbCliKey(50,0,0).keycode=='#');
-  assert(!mapUsbCliKey(84,0,1).virtual_key); // Keypad is outside this increment.
+  assert(mapUsbCliKey(84,0,1).keycode=='/'); // Keypad is outside this increment.
   UsbCliKeyboard k;std::vector<ProcessedKey> events;
   auto emit=[&](ProcessedKey e){events.push_back(e);};
   std::array<uint8_t,8> report{};

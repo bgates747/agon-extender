@@ -221,3 +221,147 @@ document.addEventListener("fullscreenchange", () => {
   fullscreenButton.textContent = active ? "Exit fullscreen" : "Fullscreen";
   fullscreenButton.setAttribute("aria-label", active ? "Exit fullscreen" : "Enter fullscreen");
 });
+
+// Browser input has its own socket and lifecycle. Video reconnect/credits never
+// acquire or release it. Only P4 acknowledgements establish capture ownership.
+(() => {
+  const panel = document.querySelector('#video-panel');
+  const canvas = document.querySelector('#screen');
+  const button = document.querySelector('#capture-keyboard');
+  const status = document.querySelector('#keyboard-state');
+  const locksPanel = document.querySelector('#keyboard-locks');
+  let socket, generation = 0, sequence = 0, requested = false, captured = false;
+  let lastReply = 0;
+  const held = new Set();
+  const codes = {Enter:40, Escape:41, Backspace:42, Tab:43, Space:44,
+    Minus:45, Equal:46, BracketLeft:47, BracketRight:48, Backslash:49,
+    Semicolon:51, Quote:52, Backquote:53, Comma:54, Period:55, Slash:56,
+    CapsLock:57, ScrollLock:71, Insert:73, Home:74, PageUp:75, Delete:76,
+    End:77, PageDown:78, ArrowRight:79, ArrowLeft:80, ArrowDown:81, ArrowUp:82,
+    NumLock:83, NumpadDivide:84, NumpadMultiply:85, NumpadSubtract:86,
+    NumpadAdd:87, NumpadEnter:88, Numpad0:98, NumpadDecimal:99, IntlBackslash:100,
+    ControlLeft:224, ShiftLeft:225, AltLeft:226, MetaLeft:227,
+    ControlRight:228, ShiftRight:229, AltRight:230, MetaRight:231};
+  for (let i=0; i<26; ++i) codes[`Key${String.fromCharCode(65+i)}`]=4+i;
+  for (let i=1; i<=9; ++i) { codes[`Digit${i}`]=29+i; codes[`Numpad${i}`]=88+i; }
+  codes.Digit0=39;
+  for (let i=1; i<=12; ++i) codes[`F${i}`]=57+i;
+  const locks = ['CapsLock', 'NumLock', 'ScrollLock'].map((name, i) => {
+    const label = document.createElement('label');
+    const select = document.createElement('select');
+    for (const [value,text] of [['auto','Host state (unknown)'],['off','Manual off'],['on','Manual on']]) {
+      const option=document.createElement('option'); option.value=value; option.textContent=text; select.append(option);
+    }
+    label.append(`${name}: `,select); locksPanel.append(label);
+    const lock={name,bit:16<<i,known:false,value:false,select};
+    select.addEventListener('change', () => { if(captured) send(5); });
+    return lock;
+  });
+  function snapshot() {
+    let known=0, value=0;
+    for(const lock of locks) {
+      if(lock.select.value!=='auto' || lock.known) {
+        known|=lock.bit;
+        if(lock.select.value==='on' || (lock.select.value==='auto' && lock.value)) value|=lock.bit;
+      }
+    }
+    return {known,value};
+  }
+  function observe(event) {
+    for(const lock of locks) {
+      // false alone cannot distinguish unsupported reporting from an off lock.
+      // A true observation establishes support. Letters also corroborate Caps.
+      const value=event.getModifierState?.(lock.name);
+      let reliable=value===true || lock.known;
+      if(lock.name==='CapsLock' && /^Key[A-Z]$/.test(event.code || '') && /^[a-zA-Z]$/.test(event.key || '')) {
+        const inferred=(event.key===event.key.toUpperCase())!==event.shiftKey;
+        reliable=typeof value==='boolean' && value===inferred;
+      }
+      if(reliable && typeof value==='boolean') {
+        lock.known=true;lock.value=value;
+        lock.select.options[0].textContent=`Host state (${value?'on':'off'})`;
+      }
+    }
+  }
+  function reset(message) {
+    captured=requested=false;held.clear();generation=sequence=0;
+    button.textContent='Capture keyboard';button.setAttribute('aria-pressed','false');
+    status.textContent=message;
+  }
+  function send(op, usage=0, down=0) {
+    if(socket?.readyState!==WebSocket.OPEN) return false;
+    if(socket.bufferedAmount>4096) { release('Keyboard released: input queue full'); return false; }
+    const data=new Uint8Array(16), view=new DataView(data.buffer);
+    data.set([66,75,1,op]);view.setUint32(4,generation,true);view.setUint32(8,++sequence,true);
+    data[12]=usage;data[13]=down;
+    if(op!==1) { const s=snapshot();data[14]=s.known;data[15]=s.value; }
+    socket.send(data);return true;
+  }
+  function release(message='Keyboard released') {
+    // Close also covers an admission reply still in flight; never auto-recapture.
+    if(socket) { const old=socket;socket=undefined;old.close(); }
+    reset(message);
+  }
+  button.addEventListener('click', event => {
+    if(captured || requested) { release();return; }
+    for(const lock of locks) { lock.known=false;lock.select.options[0].textContent='Host state (unknown)'; }
+    observe(event);requested=true;lastReply=performance.now();status.textContent='Requesting keyboard…';
+    canvas.focus();
+    const ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/keyboard/browser`);
+    socket=ws;ws.binaryType='arraybuffer';
+    ws.onopen=()=>{if(socket===ws)send(1);};
+    ws.onmessage=event=>{
+      if(socket!==ws)return;
+      const data=new Uint8Array(event.data);
+      if(data.length!==16 || data[0]!==66 || data[1]!==75 || data[2]!==1) { release('Keyboard protocol error');return; }
+      if(data[3]!==0) { release(data[3]===2?'Keyboard unavailable: select Extender input and release physical keys':'Keyboard released by P4; capture again');return; }
+      lastReply=performance.now();
+      if(requested) {
+        generation=new DataView(data.buffer).getUint32(4,true);requested=false;captured=true;
+        button.textContent='Release keyboard';button.setAttribute('aria-pressed','true');
+        status.textContent='Keyboard captured';canvas.focus();
+      }
+    };
+    ws.onclose=()=>{if(socket===ws){socket=undefined;reset('Keyboard disconnected; capture again');}};
+    ws.onerror=()=>{if(socket===ws)release('Keyboard connection failed');};
+  });
+  function key(event, down) {
+    if(!captured || event.isComposing)return;
+    const usage=codes[event.code];
+    if(usage===undefined) { status.textContent=`Unsupported key: ${event.code || event.key}`;return; }
+    event.preventDefault();event.stopPropagation();
+    if(event.repeat)return;
+    observe(event);
+    if(down) {
+      if(held.has(usage))return;
+      const manualLock=locks.find(lock=>lock.name===event.code && lock.select.value!=='auto');
+      if(manualLock)manualLock.select.value=manualLock.select.value==='on'?'off':'on';
+      const {known}=snapshot();
+      if((usage>=4 && usage<=29 && !(known&16)) || (usage>=89 && usage<=99 && !(known&32))) {
+        status.textContent='Choose a manual lock state below; this key was not sent';return;
+      }
+      if(send(2,usage,1))held.add(usage);
+    } else if(held.delete(usage)) send(2,usage,0);
+  }
+  canvas.addEventListener('blur',()=>{
+    if(captured) { for(const usage of held)send(2,usage,0);held.clear(); }
+  });
+  canvas.addEventListener('keydown',e=>key(e,true));
+  canvas.addEventListener('keyup',e=>key(e,false));
+  window.addEventListener('blur',()=>release());
+  document.addEventListener('visibilitychange',()=>{if(document.hidden)release();});
+  panel.addEventListener('focusout',event=>{
+    if(!panel.contains(event.relatedTarget) && (captured || requested))release();
+  });
+  window.addEventListener('pagehide',()=>release());
+  document.querySelector('#exit-fullscreen').addEventListener('click',()=>{
+    release();if(document.fullscreenElement)document.exitFullscreen();
+  });
+  setInterval(()=>{
+    if(requested && performance.now()-lastReply>5000)release('Keyboard admission timed out');
+    if(captured) {
+      if(performance.now()-lastReply>5000)release('Keyboard heartbeat lost');
+      else send(3);
+    }
+  },1000);
+})();

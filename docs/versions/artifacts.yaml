@@ -1,10 +1,20 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r88
-updated_at: 2026-09-15T06:59:25Z
+registry_revision: r89
+updated_at: 2026-09-19T00:00:00Z
 
 artifacts:
+  - artifact_id: browser-capture
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: browser-capture-r01
+    status: experimental
+    variants: []
+    description: Separate browser keyboard session over the retained Extender input serializer.
+    notes:
+      - Author standing identity approval covers r01 and registry r89; B04 implementation authorized after contract freeze. No physical deployment or qualification claimed.
+
   - artifact_id: nurples-parity-probe
     kind: test_fixture
     identity_scheme: revision

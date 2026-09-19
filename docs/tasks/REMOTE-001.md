@@ -2,7 +2,7 @@
 
 ## Current plan — browser capture over the working Extender input path
 
-**Behaviour contract frozen by Author, 2026-09-19. Implementation has not started.** Add an explicit
+**Behaviour contract frozen by Author, 2026-09-19. B04 deployed; initial human typing review passed, UI corrections pending.** Add an explicit
 Capture keyboard / Release keyboard toggle to the existing video page, backed by
 the working processed-key input route used by Extender USB and host injection.
 Retain installed video codecs, fullscreen controls and direct screen-text access.
@@ -43,24 +43,34 @@ The historical implementation below is evidence, not the new build baseline.
   browser-reserved shortcuts and fullscreen interaction. Document unsupported keys
   visibly. Reuse existing stock-compatible UART encoding and EMOS admission.
   Behaviour settled in B03-D01–D09. Browser/platform qualification remains B05/B06.
-- [ ] B04 — Implement toggle/UI and P4 adapter with bounded queues, orderly key-up
+- [x] B04 — Implement toggle/UI and P4 adapter with bounded queues, orderly key-up
   cleanup, stale-session rejection and correct wrap-safe lease timing. Keep the
   video service independent of input session expiry and failed input requests.
+  Implemented locally: [wire contract, tests and remaining gates](REMOTE-001/B04-implementation.md).
 - [ ] B05 — Test mapping and state transitions: down/up, modifiers, held movement,
   release while held, blur, hidden tab, disconnected network, page reload, takeover,
   physical input and host-agent input. Reproduce the historical stale-time defect
   as a regression test. Confirm screen readback leaves browser control intact.
-- [ ] B06 — Build and stage on the existing bench; verify firmware and web assets.
+- [x] B06 — Build and stage on the existing bench; verify firmware and web assets.
   Check CLI typing/editing and game held-key input, with video active. Measure input
   delivery separately from visible response; compare against the current baseline.
+  Deployed 2026-09-19: [bounded smoke receipt](REMOTE-001/B04-deployment.json).
+  CLI marker verified; performance and broader human checks remain B07.
 - [ ] B07 — Human browser acceptance, then document the selected interface and
   final bench state. Leave ExCom for remote review. Retain failed evidence and
   rollback; publication follows the Author's review.
 
+### Human review — 2026-09-19
+
+Author reports no perceptible typing latency and working keyboard Caps Lock
+toggling. These are qualitative observations, not instrumented latency results.
+Physical USB takeover is explicitly untested; Author will test it later. Overall
+acceptance remains partial: focus decoration clips edge text, fullscreen no longer
+enlarges the image correctly, and surrounding controls/diagnostics are distracting.
+
 ### Decision register — accepted behaviour
 
-The Author settled the behaviour through one-at-a-time questions. Implementation
-remains unstarted. This register owns the accepted decisions; historical policies
+The Author settled the behaviour through one-at-a-time questions. B04 is deployed with partial human acceptance. This register owns the accepted decisions; historical policies
 below do not override it. No behavioural question remains open in this register.
 
 | Decision | State | Contract or question |
@@ -93,7 +103,7 @@ Escape stays in fullscreen. Qualify supported modes and keep explicit mouse
 access to release/exit. References:
 [Keyboard Lock](https://developer.mozilla.org/en-US/docs/Web/API/Keyboard/lock),
 [Fullscreen API](https://developer.mozilla.org/en-US/docs/Web/API/Fullscreen_API).
-The bottom-reveal/side-fallback design is frozen; implementation has not started.
+The bottom-reveal/side-fallback design is frozen; implementation is in progress.
 Keyboard Lock/platform limits remain a
 qualification requirement, not a promise that all browsers expose Escape.
 
