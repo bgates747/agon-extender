@@ -13,7 +13,7 @@ firmware, compositor, scheduler or sprite changes.
 2. [x] Build/deploy experimental P4 firmware and run matched deterministic
    Nurples trials: prior selection, pair-only and automatic selection. Record
    wire sizes/formats, application cycles and browser submissions separately.
-3. [ ] Evaluate whether the new path merits default selection; retain useful
+3. [x] Evaluate whether the new path merits default selection; retain useful
    code/evidence even if slower. Restore startup, hardware notify, leave Nurples
    available for subjective review, commit discrete work without unrelated dirt.
 
@@ -48,3 +48,10 @@ selected RLE2 throughout the measured Nurples window. Retain pair=1 support
 but restore the prior browser default without pair selection. Preserve the
 experimental image and results, rebuild only this default change, verify served
 assets and run a short Nurples default-client smoke before review.
+
+Closeout passed: original48-byte startup restored/read back; hardware voice
+fresh stage6 receipt verified; prior artifacts rehashed intact. One cleanup
+keyboard HTTP timeout required normal reset into the known SD-service startup
+and a fresh admission. Final default smoke passed; no observers remain.
+Optional pair codec retained, prior browser default restored, interactive
+Nurples review launch recorded locally. Human acceptance remains pending.

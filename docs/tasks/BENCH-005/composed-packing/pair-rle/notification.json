@@ -1,0 +1,9 @@
+{
+  "receipt": "stage=6\r\naudio_commands=pass\r\n",
+  "fresh_service_boot": true,
+  "startup_restored_sha256": "c4407c0c0e7c7a14dc330c3ddb9ce3f6ef509f03e08ff896a71719ea5ed9549f",
+  "firmware": "composed-packing-pair-rle-r01-b2026-09-19-04-14-46Z",
+  "state": "Legacy MOS prompt; SD service exited; observers closed",
+  "human_hearing": "not assumed",
+  "time": 1789791973.6450512
+}
