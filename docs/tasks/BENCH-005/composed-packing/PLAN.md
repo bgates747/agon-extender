@@ -130,3 +130,9 @@ encountered one keyboard HTTP timeout after route switching, before its startup
 was uploaded or measured. Keyboard status subsequently returned ready/neutral.
 A bounded ordinary reset restores known startup before continuing unchanged
 firmware/fixture as sweep03 from mode12; completed measurements are preserved.
+
+Sweep03 completed modes12–26. Staging mode27 hit another one-second HTTP
+keyboard-status timeout; subsequent status was ready/neutral with an expired
+injection lease and SD offline. No mode27 measurements existed. An ordinary
+mainboard reset restored known startup; unchanged sweep04 resumes from27. These
+control-plane interruptions remain separate from rendering/pixel acceptance.

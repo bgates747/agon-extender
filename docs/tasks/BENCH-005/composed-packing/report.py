@@ -16,10 +16,12 @@ for run in a.runs:
     summary={k:trial[k] for k in ['label','frames','fps','mean_bytes','decode_ms','interval_p95_ms','errors']}
     summary['wire_formats']=sorted(set(s['magic'] for s in trial['samples']))
     if 'before_counters' in trial:
+     bc=trial['before_counters'];ac=trial['after_counters']
+     summary['timing_valid']=bool(bc['totals_valid'] and ac['totals_valid'] and bc['lost_completions']==ac['lost_completions'] and bc['overlapping_calls']==ac['overlapping_calls'])
      before={v['name']:v for v in trial['before_counters']['phases']};times={}
      for end in trial['after_counters']['phases']:
       start=before[end['name']];n=end['count']-start['count'];times[end['name']]=(end['total_us']-start['total_us'])/n/1000 if n>0 else None
-     summary['phase_mean_ms']=times
+     summary['phase_mean_ms']=times if summary['timing_valid'] else {}
     row['trials'].append(summary)
    if activity!='moving':
     files=[(modepath/activity/(name+'.rgb222')).read_bytes() for name in ['raw','rle2','packed','auto']];row['identical_pixels']=all(x==files[0] for x in files);row['distinct_colours']=len(set(files[0]))
@@ -37,7 +39,7 @@ print(len(rows),'mode/scene comparisons,',len(exceptions),'transition exceptions
 # Keep detailed timing separate from throughput: these counters are overlapping
 # pipeline phases, not additive pieces of the browser frame interval.
 lines += ['', '## Automatic path timing by mode and workload', '',
- 'Mean milliseconds per observed operation. Snapshot is composition/copy; socket includes encoding and send API time. Credit-to-ready and ready-to-send are pipeline latency counters, not extra work to add to those means. Counter windows include the one-second warmup. Browser decode is measured after warmup. Sorted by lowest automatic fps first.', '',
+ 'Mean milliseconds per observed operation. Snapshot is composition/copy; socket includes encoding and send API time. Credit-to-ready and ready-to-send are pipeline latency counters, not extra work to add to those means. Counter windows include the one-second warmup. Timing means are withheld if recorder loss or overlap increases during that window; browser throughput remains independently measured. Browser decode is measured after warmup. Sorted by lowest automatic fps first.', '',
  '| Mode | Scene | Samples | Snapshot ms | Socket/encode ms | Credit→ready ms | Ready→send ms | Decode ms | p95 presentation interval ms |',
  '|---:|---|---:|---:|---:|---:|---:|---:|---:|']
 for row in sorted(rows,key=lambda r:next(x['fps'] for x in r['trials'] if x['label']=='auto')):
