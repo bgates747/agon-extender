@@ -10,7 +10,7 @@ No mainboard firmware, production game, scheduler or pacing changes.
 
 1. [x] Preserve W08 artifacts; implement separately negotiated six-bit packing
    and browser decoding, including odd pixel counts and malformed input checks.
-2. [ ] Build/deploy the P4 candidate with rollback intact. Run matched Nurples
+2. [x] Build/deploy the P4 candidate with rollback intact. Run matched Nurples
    output trials, recording actual wire formats, bytes, fps and decoding costs.
    Host codec tests may cover every geometry; no new all-mode hardware sweep.
 3. [ ] Record results and limits, restore startup, hardware voice notify and
