@@ -8,7 +8,7 @@ retain lower-depth packing and RLE2 selection, test only Nurples on hardware,
 and finish with the accepted hardware voice cue and an interactive review game.
 No mainboard firmware, production game, scheduler or pacing changes.
 
-1. [ ] Preserve W08 artifacts; implement separately negotiated six-bit packing
+1. [x] Preserve W08 artifacts; implement separately negotiated six-bit packing
    and browser decoding, including odd pixel counts and malformed input checks.
 2. [ ] Build/deploy the P4 candidate with rollback intact. Run matched Nurples
    output trials, recording actual wire formats, bytes, fps and decoding costs.

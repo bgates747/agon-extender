@@ -41,4 +41,4 @@ for offset,value in [(32,3),(33,0),(34,1),(36,64),(37,1),(39,255)]:
 for b in bad:
  p=subprocess.run([NODE,str(R/'decode.mjs')],input=b,stdout=subprocess.PIPE,stderr=subprocess.PIPE);assert p.returncode==2
 (T/'HOST-TESTS.json').write_text(json.dumps(dict(roundtrips=cases,malformed_rejected=len(bad)+19,sixbit=True),indent=2)+'\n')
-print(len(cases),'exact C++ to JS roundtrips;',len(bad),'malformed rejected')
+print(len(cases),'exact C++ to JS roundtrips;',len(bad)+19,'malformed rejected')

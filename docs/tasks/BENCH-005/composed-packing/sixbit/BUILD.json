@@ -1,0 +1,28 @@
+{
+  "build_id": "composed-packing-sixbit-r01-b2026-09-19-03-47-29Z",
+  "parent_build_id": "composed-packing-r02-b2026-09-19-02-00-40Z",
+  "status": "experimental",
+  "commit": "0e87ddaad4405d40666916ee5a39d0b9fc4f5781",
+  "outputs": {
+    "firmware.bin": {
+      "sha256": "f17b03665ee373c6222bb29ef72e54b462a01665fd1555b928d2b34edbe54923",
+      "bytes": 1462432
+    },
+    "firmware.factory.bin": {
+      "sha256": "753e66df5a2eb3c6c60130f518dda2498f04d21b00ba5d53bd3eebfc59d2bde5",
+      "bytes": 1593504
+    },
+    "firmware.elf": {
+      "sha256": "cb6db3906ef7781f3879fbb71056a44565fbec7d4e49e71564113b16e98b44e2",
+      "bytes": 28217236
+    },
+    "bootloader.bin": {
+      "sha256": "90e3c4d54d49610b2cd108c2643725a95e1e757f54e812b21f9ca850f2310cdd",
+      "bytes": 24256
+    },
+    "partitions.bin": {
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+      "bytes": 3072
+    }
+  }
+}
