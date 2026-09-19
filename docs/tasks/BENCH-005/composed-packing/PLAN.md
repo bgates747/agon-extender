@@ -112,3 +112,8 @@ restarted for reliable workload control anyway, apply the already-described
 minimum-size short circuit before the replacement sweep. Preserve candidate01
 and its valid preliminary controls. Repeat host tests and selected silicon
 controls, then use one immutable candidate02 for the full replacement sweep.
+
+Dense mode2 now passes the far-corner black/white check after clearing its buffer
+and flushing creation, with candidate02 installed. Preserve this corrected
+control; it supersedes the missing-tile attempts. The final sweep uses200ms taps,
+explicit buffer replacement, palette setup, far-corner checks and moving markers.
