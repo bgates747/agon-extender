@@ -10,6 +10,7 @@
 namespace agon::extender::input {
 struct ProcessedKey {
   std::uint8_t keycode{}, modifiers{}, virtual_key{}, down{}, ascii{};
+  bool query{}; // synthetic stock &99 request, not a new physical transition
 };
 class ProcessedKeyboard final {
  public:
@@ -24,16 +25,29 @@ class ProcessedKeyboard final {
   bool pop(ProcessedKey &event) noexcept {
     if (!size_) return false;
     event = queue_[head_]; head_ = (head_ + 1) % capacity; --size_;
-    modifiers_ = event.modifiers;
+    if (!event.query) {
+      modifiers_ = event.modifiers;
+      held_[event.virtual_key] = event.down;
+    }
     return true;
   }
   std::size_t size() const noexcept { return size_; }
   std::uint8_t modifiers() const noexcept { return modifiers_; }
-  void reset() noexcept { head_ = size_ = 0; modifiers_ = 0; }
+  bool isDown(unsigned key) const noexcept { return key < held_.size() && held_[key]; }
+  bool queryFault() const noexcept { return query_fault_; }
+  void pushQuery(ProcessedKey event) noexcept {
+    event.query = true;
+    if (!push(event)) query_fault_ = true;
+  }
+  void reset() noexcept {
+    head_ = size_ = 0; modifiers_ = 0; held_.fill(false); query_fault_ = false;
+  }
  private:
   std::array<ProcessedKey, capacity> queue_{};
   std::size_t head_{}, size_{};
   std::uint8_t modifiers_{};
+  std::array<bool, 249> held_{};
+  bool query_fault_{};
 };
 inline ProcessedKeyboard &processedKeyboard() noexcept {
   static ProcessedKeyboard keyboard;

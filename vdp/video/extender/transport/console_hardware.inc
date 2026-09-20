@@ -138,6 +138,7 @@ void runConsole(VDUStreamProcessor *processor) {
       else if(now-tx_at>=5000) {
         console_cancel_tx();s.count=0;transmitting=false;s.session.cancel();
         console_keys.reset();keyboard.admissionBoundary();
+        agon::extender::input::processedKeyboard().reset();
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
         agon::extender::input::remoteLocked([](auto &r){r.boundary(agon::extender::input::RemoteKeyboard::transport);return 0;});
 #endif
@@ -268,6 +269,8 @@ void runConsole(VDUStreamProcessor *processor) {
       if(n) {s.write(0x8D);s.write(uint8_t(n));s.write(record,n);}
     }
 #endif
+    if(agon::extender::input::processedKeyboard().queryFault())
+      s.fail("virtual-key query queue overflow");
     if(s.failure) {
 #if defined(AGON_EXTENDER_TELEMETRY)
       agon::extender::telemetry::reset();

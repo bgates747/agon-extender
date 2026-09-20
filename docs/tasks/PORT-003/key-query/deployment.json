@@ -1,0 +1,20 @@
+{
+  "build_id": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "deployment_record_id": "REMOTE-001-2026-09-20-02-10-51Z",
+  "deployment_record_note": "Inherited maintained launcher record prefix; this run belongs to PORT-003 key-query scope.",
+  "fixture": {
+    "bytes": 9481,
+    "sha256": "667832f1c0bebebd2f34085af371e63bf24e6b62c3a6bf954897626b7b69c981"
+  },
+  "result_sha256": "d873b8c2efe3a2327af4dcd3b3c1fa0b3576ad17f6f76d5e9ae6fc15a5921499",
+  "rows": 269,
+  "all_rows_pass": true,
+  "every_counter_delta": 1,
+  "elapsed_mos_ticks": 1522,
+  "nominal_ticks_per_second": 120,
+  "autoexec_unchanged": true,
+  "terminal_state": "ExCom MOS prompt; SD service exited; keyboard ready, no held or pending keys",
+  "author_review": "pending"
+}

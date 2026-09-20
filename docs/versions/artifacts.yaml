@@ -1,18 +1,30 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r89
-updated_at: 2026-09-19T00:00:00Z
+registry_revision: r92
+updated_at: 2026-09-20T02:08:43Z
 
 artifacts:
+  - artifact_id: key-query-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: key-query-probe-r01
+    status: experimental
+    variants: []
+    description: Stock virtual-key query reply through admitted processed input and EMOS.
+    notes:
+      - Author authorized implementation and hardware test under standing identity approval; registry r92. No general input or out-of-range virtual-key qualification.
+
   - artifact_id: browser-capture
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: browser-capture-r01
+    latest_identity: browser-capture-r03
     status: experimental
     variants: []
     description: Separate browser keyboard session over the retained Extender input serializer.
     notes:
+      - r03 implements C02 connected indication, authoritative display metadata and fullscreen-entry focus repair; standing identity approval covers r03 and registry r91. Experimental hardware review pending.
+      - r02 implements the accepted C01 presentation cleanup and removes manual lock overrides; standing identity approval covers r02 and registry r90. Hardware review pending.
       - Author standing identity approval covers r01 and registry r89; B04 implementation authorized after contract freeze. No physical deployment or qualification claimed.
 
   - artifact_id: nurples-parity-probe

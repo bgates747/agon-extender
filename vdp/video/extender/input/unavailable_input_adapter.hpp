@@ -48,8 +48,35 @@ class UnavailableKeyboard final {
     *caps_lock = caps_lock_;
     *scroll_lock = scroll_lock_;
   }
-  bool isVKDown(fabgl::VirtualKey) const noexcept { return false; }
-  void injectVirtualKey(fabgl::VirtualKey, bool, bool) noexcept {}
+  bool isVKDown(fabgl::VirtualKey key) const noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+    return agon::extender::input::processedKeyboard().isDown(unsigned(key));
+#else
+    return false;
+#endif
+  }
+  void injectVirtualKey(fabgl::VirtualKey key, bool down, bool insert) noexcept {
+#ifdef AGON_EXTENDER_PROCESSED_KEYBOARD
+    // Stock &99 uses append only. No reverse HID map or physical PS/2 device.
+    // Mirror Keyboard::injectVirtualKey's default-codepage ASCII conversion;
+    // retain key-up keycode handling in getKeyboardKey below (agon_ps2.h).
+    // EMOS keyboard ingress currently admits byte virtual keys through 248.
+    // Later upstream enum additions require a separate EMOS contract change.
+    if (unsigned(key) > 248 || insert) return;
+    auto &keyboard = agon::extender::input::processedKeyboard();
+    const auto modifiers = keyboard.modifiers();
+    fabgl::VirtualKeyItem item{};
+    item.vk=key; item.down=true;
+    item.CTRL=modifiers&1; item.SHIFT=(modifiers>>1)&1;
+    item.LALT=(modifiers>>2)&1; item.RALT=(modifiers>>3)&1;
+    item.CAPSLOCK=(modifiers>>4)&1; item.NUMLOCK=(modifiers>>5)&1;
+    item.SCROLLLOCK=(modifiers>>6)&1; item.GUI=(modifiers>>7)&1;
+    const auto ascii=std::uint8_t(fabgl::virtualKeyToASCII(item,nullptr));
+    keyboard.pushQuery({0,modifiers,std::uint8_t(key),std::uint8_t(down),ascii,true});
+#else
+    (void)key; (void)down; (void)insert;
+#endif
+  }
 
  private:
   bool num_lock_{};
@@ -87,7 +114,20 @@ inline bool getKeyboardKey(fabgl::VirtualKeyItem *item) noexcept {
   agon::extender::input::ProcessedKey event;
   if (!agon::extender::input::processedKeyboard().pop(event)) return false;
   *item = {}; // Processed input has no physical PS/2 scan codes.
-  _keycode = event.keycode;
+  if (!event.query) _keycode = event.keycode;
+  else if (event.down) {
+    // Retained stock agon_ps2.h getKeyboardKey translation. On query key-up,
+    // stock deliberately leaves the preceding global keycode unchanged.
+    switch (fabgl::VirtualKey(event.virtual_key)) {
+      case fabgl::VK_LEFT: _keycode=0x08; break;
+      case fabgl::VK_TAB: _keycode=0x09; break;
+      case fabgl::VK_RIGHT: _keycode=0x15; break;
+      case fabgl::VK_DOWN: _keycode=0x0A; break;
+      case fabgl::VK_UP: _keycode=0x0B; break;
+      case fabgl::VK_BACKSPACE: _keycode=0x7F; break;
+      default: _keycode=event.ascii; break;
+    }
+  }
   item->ASCII = event.ascii; item->vk = fabgl::VirtualKey(event.virtual_key);
   item->down = event.down;
   item->CTRL = event.modifiers & 1; item->SHIFT = (event.modifiers >> 1) & 1;

@@ -13,7 +13,7 @@
 #define AGON_EXTENDER_P4_BOOT 1
 #define AGON_EXTENDER_PROCESSED_KEYBOARD 1
 namespace fabgl {
-enum VirtualKey { VK_NONE=0, VK_LAST=248 };
+#include "keys.inc"
 struct VirtualKeyItem {
   uint8_t ASCII{}; VirtualKey vk{}; bool down{};
   bool CTRL{},SHIFT{},LALT{},RALT{},CAPSLOCK{},NUMLOCK{},SCROLLLOCK{},GUI{};

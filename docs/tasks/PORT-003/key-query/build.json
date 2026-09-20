@@ -1,0 +1,34 @@
+{
+  "build_id": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "status": "experimental",
+  "parent_build_id": "browser-capture-r03-b2026-09-19-23-52-41Z",
+  "commit": "54261935d9289f8c0715f0aa7e3b326131bde036",
+  "dirty": true,
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1485232,
+      "sha256": "557567eb4f973282b0ae829b67096c0bfd8d665277ece40c3741288dc41138e9"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1616304,
+      "sha256": "b7d9f741b7f6221d11e98a3d460dde81ba11a9c601e4183ebe3c93c9ee0a07c0"
+    },
+    "firmware.elf": {
+      "bytes": 28333840,
+      "sha256": "9845896abe0e0851af937d03b6434ddad36812c5b09ca0a78bfdf0ecd881aca0"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "855cca71296b178122ea014cb22ced2a36078069ef211d5f9f52632930974354"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    }
+  },
+  "source_delta": {
+    "video/extender/transport/console_hardware.inc": "14ce0b5f0b24cc5e0036e83fac1b74fcf76d90da88afd48fcad36b2024d8984f",
+    "video/extender/input/processed_keyboard.hpp": "4fb6509203d4bea512bdf182316c3d54104b7f9b80451c2fae05e444052e06c4",
+    "video/extender/input/unavailable_input_adapter.hpp": "a2c713918443927e17f19c634c3cc47e35ec4a114a82035d5659cb16e05e1a34"
+  }
+}

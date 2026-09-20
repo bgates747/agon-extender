@@ -35,6 +35,8 @@ def verify(output=None, typing=False, usb_cli=False):
         temp = Path(directory)
         defines = [line for line in (video/'agon.h').read_text().splitlines()
                    if re.match(r'#define\s+(VDPVAR_|PACKET_|CALLBACK_)', line)]
+        enum=(ROOT/'vdp/vendor/vdp-gl/src/fabutils.h').read_text().split('enum VirtualKey {',1)[1].split('};',1)[0]
+        (temp/'keys.inc').write_text('enum VirtualKey {'+enum+'};\n')
         (temp/'constants.inc').write_text('\n'.join(defines)+'\n')
         parts = [function(helpers, name) for name in (
             'inline void setKeyboardLayout(', 'inline bool getKeyboardKey(',

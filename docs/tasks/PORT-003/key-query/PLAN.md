@@ -58,3 +58,11 @@ synthetic query; do not change existing physical/browser packet semantics here.
 Arbitrary malformed stream recovery and a hung whole-board recovery are not
 part of this increment. Baseline failure evidence may be supplied by deterministic
 host checks; do not reflash old firmware merely to reproduce known silence.
+
+
+Research clarification before build: current EMOS ingress admits virtual keys
+through 248 (`emos_keyboard.h::EMOS_KEY_MAX`), while the vendored enum now extends
+beyond a byte. Preserve the established 0..248 adapter range for this slice;
+249..255 requests are consumed without injection, as unsupported current ingress
+values. Do not expand EMOS or send it a packet it rejects. Host tests cover this
+boundary; no compatibility claim is made for newer out-of-range enum entries.
