@@ -117,3 +117,12 @@ open pending review of the exceptions; completion of the bounded execution goal
 is not closure or blanket graphics acceptance. Review the three mainboard
 scanout crashes, two P4 transition restarts, original unfenced instability and
 remaining coverage before disposition. Missing implementations stay deferred.
+
+## Displayed-page follow-up — 2026-09-20
+
+[Two frozen page controls](QUAL-004/page-controls/RESULTS.md) passed on physical
+mainboard and P4: 153,600 pixels, zero differences, independent literal oracles
+and repeat captures all equal. Cumulative static coverage is 68 scenes /
+12,770,304 pixels across the identified campaigns. Six prepared controls remain
+unqualified; earlier crashes remain open. Mainboard firmware/startup restored;
+P4 and EMOS unchanged.

@@ -1,0 +1,38 @@
+[
+  {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "d66b7bdde6a6996498c4e34baf4ba99b5c4edb3e5bf39752339d52ae0bed2581",
+    "p4_sha256": "d66b7bdde6a6996498c4e34baf4ba99b5c4edb3e5bf39752339d52ae0bed2581",
+    "case": "PAGE_FRONT",
+    "mainboard_repeat_equal": true,
+    "p4_sequences": [
+      3,
+      4
+    ],
+    "mainboard_oracle_mismatches": 0,
+    "p4_oracle_mismatches": 0
+  },
+  {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "619f17b876b2a01c1824b3c35dfae394077b4f17bb612fa799559b4457cd3594",
+    "p4_sha256": "619f17b876b2a01c1824b3c35dfae394077b4f17bb612fa799559b4457cd3594",
+    "case": "PAGE_SWAP",
+    "mainboard_repeat_equal": true,
+    "p4_sequences": [
+      7,
+      8
+    ],
+    "mainboard_oracle_mismatches": 0,
+    "p4_oracle_mismatches": 0
+  }
+]

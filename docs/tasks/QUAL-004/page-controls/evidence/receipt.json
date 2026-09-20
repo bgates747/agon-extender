@@ -1,0 +1,78 @@
+{
+  "run": "QUAL-004-2026-09-20-23-20-57Z",
+  "contract_commit": "269ebedf",
+  "mainboard_build": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z",
+  "mainboard_image_sha256": "810481994c38efbfdcc0f525acb8265508859944aba03f8edd4ffd3630c18a67",
+  "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "p4_build": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "p4_factory_sha256": "b7d9f741b7f6221d11e98a3d460dde81ba11a9c601e4183ebe3c93c9ee0a07c0",
+  "p4_identity_basis": "Retained independently verified deployment; not reflashed or reread in this run. EMOS unchanged.",
+  "fixtures": {
+    "player_sha256": "f5d6bf461c3a7b60450d22d73634b934ac946a1eb93f492d389bd808732e78a2",
+    "PAGE_FRONT": {
+      "name": "PAGE_FRONT",
+      "file": "PAGE_FRONT.vdu",
+      "bytes": 71,
+      "mode": 136,
+      "sha256": "a86dcec7e8bb646bd5cd1774e4908e52944e50ce6b10d03fcf53281be8d20f00",
+      "source": "QUAL-004 literal page control",
+      "expected_background_rgb": [
+        170,
+        0,
+        0
+      ],
+      "expected_white_rectangle": [
+        40,
+        40,
+        79,
+        79
+      ],
+      "barrier_sha256": "7c5eebcf37f5b6c770e63c6ae06ca6c453150ee0f95f228850d359ee45f4055d",
+      "state": "prepared; execution outcome is in run records"
+    },
+    "PAGE_SWAP": {
+      "name": "PAGE_SWAP",
+      "file": "PAGE_SWAP.vdu",
+      "bytes": 74,
+      "mode": 136,
+      "sha256": "ce6dab839bb5f4c41616a6a5b43f472acd690c9e6c1c6b54c292d6f68c736b09",
+      "source": "QUAL-004 literal page control",
+      "expected_background_rgb": [
+        0,
+        170,
+        0
+      ],
+      "expected_white_rectangle": [
+        120,
+        100,
+        159,
+        139
+      ],
+      "barrier_sha256": "182364a52d6f8980f5decc1f0979b209fbd9c1f95b664533fce51e95cab1155e",
+      "state": "prepared; execution outcome is in run records"
+    }
+  },
+  "mainboard_backup_sha256": "70e0a4b998aadbf7a747a83383fe76568c0f537039edb47692d0608fb00ab8ca",
+  "mainboard_restore": {
+    "verified": true,
+    "sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e",
+    "source": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z"
+  },
+  "startup_restore": {
+    "verified": true,
+    "sha256": "2f2b00cac0a210e102757c40909e92b0600e1e7851f55ce5c407930c22384fa0"
+  },
+  "final_state": {
+    "keyboard_ready": true,
+    "physical_neutral": true,
+    "held": 0,
+    "pending": 0,
+    "sd_service_online": false,
+    "serial_reader_closed": true,
+    "video_observer_closed": true,
+    "startup_restored": true,
+    "mainboard_app_verified": true,
+    "prompt_visual_verification": "ExCom MOS root prompt and echoed completion text confirmed from final frame"
+  }
+}
