@@ -1,0 +1,1531 @@
+{
+  "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "stock_vdp_tag": "v2.16.0",
+  "latest_locally_available_tag": "v2.16.0",
+  "stock_vdp_clean": true,
+  "stock_vdp_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "stock_vdp_gl_clean": true,
+  "docs_commit": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b",
+  "edp_commit": "db314dd6c494331e63063b17146ef6b1729ed136",
+  "edp_dirty_files": [
+    "M TODO.md",
+    " M docs/development/2026-09-20.md",
+    " M docs/tasks/BENCH-002.md",
+    " M docs/tasks/PLAN-001.md",
+    " M docs/tasks/PORT-006.md",
+    " M docs/tasks/PORT-008.md",
+    " M docs/tasks/REMOTE-001.md",
+    " M docs/tasks/REMOTE-001/C01-ui-cleanup.md",
+    " M docs/tasks/REMOTE-002.md",
+    " M docs/tasks/RESEARCH-003.md",
+    " M docs/tasks/RESEARCH-004.md",
+    " M tests/browser_capture_ui_test.py",
+    " M tests/browser_video_ui_test.py",
+    " M vdp/video/agon_screen.h",
+    " M vdp/video/extender/network/wired_network_service.cpp",
+    " M vdp/video/extender/web/README.md",
+    " M vdp/video/extender/web/app.js",
+    " M vdp/video/extender/web/index.html",
+    " M vdp/video/extender/web/style.css",
+    "?? docs/tasks/PLAN-001/",
+    "?? docs/tasks/REMOTE-001/C01-build.json",
+    "?? docs/tasks/REMOTE-001/C01-deployment.json",
+    "?? docs/tasks/REMOTE-001/C02-build.json",
+    "?? docs/tasks/REMOTE-001/C02-deployment.json",
+    "?? tests/browser_layout_test.py",
+    "?? tests/mode_status_test.cpp",
+    "?? vdp/video/extender/display/mode_status.hpp",
+    "?? vdp/video/extender/network/display_status.hpp"
+  ],
+  "source_selection": {
+    "schema_version": "1.0.0",
+    "environment": "p4-console",
+    "diagnostic_status": "PORT-003 R3 original VDP depth controllers, native packed scanlines, independent P4 frame service; ExCom UART console and native USB keyboard",
+    "generated_build_files": [
+      "video/CMakeLists.txt",
+      "video/idf_component.yml",
+      "CMakeLists.txt"
+    ],
+    "translation_unit_local_build_identity": {
+      "consumer": "video/extender/boot/p4_console.cpp",
+      "generated_header": ".pio/build-identities/p4-console/build_identity.hpp"
+    },
+    "project_translation_units": [
+      "video/extender/boot/p4_console.cpp",
+      "video/extender/diagnostics/frame_timing.cpp",
+      "video/extender/display/cursor_position_adapter.cpp",
+      "video/extender/display/presentation_snapshot_pool.cpp",
+      "video/extender/display/screen_facade_adapter.cpp",
+      "video/extender/display/stock_native_access.cpp",
+      "video/extender/display/stock_p4_service.cpp",
+      "video/extender/display/stock_runtime_controller.cpp",
+      "video/extender/display/stock_scanline.cpp",
+      "video/extender/network/browser_video_service_core.cpp",
+      "video/extender/network/opaque_message.cpp",
+      "video/extender/network/wired_network_service.cpp",
+      "video/extender/port/stock_render_utils.cpp",
+      "video/extender/port/p4_task_watchdog.cpp",
+      "video/extender/web/browser_video_provider.cpp",
+      "video/extender/web/embedded_assets.cpp",
+      "vendor/ESP32Time/ESP32Time.cpp"
+    ],
+    "forbidden_project_translation_units": [
+      "video/extender/boot/p4_parallel_qualification_vdp.cpp",
+      "video/extender/transport/p4_parallel_qualification.cpp",
+      "video/extender/display/logical_frame_service.cpp",
+      "video/extender/display/native_pixel_codec.cpp",
+      "video/extender/display/p4_display_controller.cpp",
+      "video/extender/display/p4_frame_service.cpp",
+      "video/extender/display/palette_state.cpp",
+      "video/extender/display/plane_storage.cpp",
+      "video/extender/display/presentation_compositor.cpp",
+      "video/extender/display/screen_facade_p4_binding.cpp",
+      "video/extender/port/fabutils_port.cpp"
+    ],
+    "vendored_translation_units": [
+      "vendor/vdp-gl/src/canvas.cpp",
+      "vendor/vdp-gl/src/codepages.cpp",
+      "vendor/vdp-gl/src/displaycontroller.cpp",
+      "vendor/vdp-gl/src/fabfonts.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+      "vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp"
+    ],
+    "embedded_text_files": [
+      "video/extender/web/index.html",
+      "video/extender/web/style.css",
+      "video/extender/web/app.js",
+      "video/extender/web/frame_protocol.js",
+      "video/extender/web/webgl2_presenter.js"
+    ],
+    "header_defined_official_implementation": [
+      "video/video.ino",
+      "video/vdu_stream_processor.h",
+      "video/vdu.h",
+      "video/vdu_sys.h",
+      "video/vdu_buffered.h",
+      "video/vdu_context.h",
+      "video/vdu_fonts.h",
+      "video/vdu_sprites.h",
+      "video/vdu_layers.h",
+      "video/context.h",
+      "video/buffers.h",
+      "video/agon_screen.h",
+      "video/agon_ttxt.h",
+      "video/vdp_variables.h",
+      "video/extender/transport/console_hardware.inc"
+    ],
+    "excluded_source_families": [
+      "vendor/vdp-gl/src/VGA*.cpp",
+      "vendor/vdp-gl/src/CVBS*.cpp",
+      "vendor/vdp-gl/src/scene.cpp",
+      "vendor/vdp-gl/src/ps2*.cpp",
+      "vendor/vdp-gl/src/soundgen.cpp",
+      "vendor/vdp-gl/src/network.cpp",
+      "video/agon_ps2.h",
+      "video/agon_audio.h",
+      "video/vdu_audio.h",
+      "video/vdp_protocol.h",
+      "video/updater.h",
+      "video/hexload.h",
+      "video/ymodem.h",
+      "video/zdi.h"
+    ],
+    "managed_dependencies": {
+      "espressif/usb_host_hid": "1.2.1",
+      "espressif/dl_fft": "0.6.0",
+      "espressif/esp-dl": "3.3.9",
+      "espressif/esp_hosted": "2.12.12"
+    },
+    "dependency_lock": "pio/p4-console-dependencies.lock",
+    "component_compile_definitions": [
+      "AGON_EXTENDER_FRAME_TIMING=1",
+      "AGON_EXTENDER_STOCK_RUNTIME=1",
+      "AGON_GRAPHICS_TIMING=1"
+    ]
+  },
+  "selection_sha256": "febe64bb543c9a2d579681640d370a3c6a27084ab92d7dbdfee3c1c5a547de37",
+  "files": [
+    {
+      "family": "vdp-gl",
+      "file": "src/canvas.cpp",
+      "local": "vdp/vendor/vdp-gl/src/canvas.cpp",
+      "state": "identical",
+      "stock_sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+      "local_sha256": "3626baa0df539ed5a8fde03d67d236c5a38636cd914764eca702b5310bde3271",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/canvas.h",
+      "local": "vdp/vendor/vdp-gl/src/canvas.h",
+      "state": "identical",
+      "stock_sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+      "local_sha256": "f220ff61f235810e8d255135a78ae02c2a319b666e2a8ea9843d3342616138f9",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/codepages.cpp",
+      "local": "vdp/vendor/vdp-gl/src/codepages.cpp",
+      "state": "identical",
+      "stock_sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+      "local_sha256": "498cfd73ad3a75b5bed692b1a98ccf87ec7b057d7bca3a01877ca666271f4389",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/codepages.h",
+      "local": "vdp/vendor/vdp-gl/src/codepages.h",
+      "state": "identical",
+      "stock_sha256": "48d4512c6152a914bf8dce74ac810154622a9f6b5e6a8ffef54b681906297210",
+      "local_sha256": "48d4512c6152a914bf8dce74ac810154622a9f6b5e6a8ffef54b681906297210",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/collisiondetector.cpp",
+      "local": "vdp/vendor/vdp-gl/src/collisiondetector.cpp",
+      "state": "identical",
+      "stock_sha256": "e4c11b507622a13e962c9f9ef501d443ae19e8aeb295cf40f439a02922963feb",
+      "local_sha256": "e4c11b507622a13e962c9f9ef501d443ae19e8aeb295cf40f439a02922963feb",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/collisiondetector.h",
+      "local": "vdp/vendor/vdp-gl/src/collisiondetector.h",
+      "state": "identical",
+      "stock_sha256": "37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c",
+      "local_sha256": "37b1998834076c5f6b59c9f984af3423ff0d996722d1ba8f51b123ebe20a442c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/ps2controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/ps2controller.cpp",
+      "state": "identical",
+      "stock_sha256": "81fe66153bb89b31a06f187175e2dd50500ff49af5600bd5c8dcf56d1bb881dd",
+      "local_sha256": "81fe66153bb89b31a06f187175e2dd50500ff49af5600bd5c8dcf56d1bb881dd",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/ps2controller.h",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/ps2controller.h",
+      "state": "identical",
+      "stock_sha256": "d3a2c157a7c6580b233d22957248633ee746ae3ec5bb861a10e8c9f8fa89ba61",
+      "local_sha256": "d3a2c157a7c6580b233d22957248633ee746ae3ec5bb861a10e8c9f8fa89ba61",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/ps2device.cpp",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/ps2device.cpp",
+      "state": "identical",
+      "stock_sha256": "b93dbd9fedff65d3a2602e9760a082b7dffa9424f1ab4b3e8cca1b25d0fce2b6",
+      "local_sha256": "b93dbd9fedff65d3a2602e9760a082b7dffa9424f1ab4b3e8cca1b25d0fce2b6",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/ps2device.h",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/ps2device.h",
+      "state": "identical",
+      "stock_sha256": "6bdf20a01ab67860c7a79d12cd02319aa353bb85191d6bcc1befab88d408048f",
+      "local_sha256": "6bdf20a01ab67860c7a79d12cd02319aa353bb85191d6bcc1befab88d408048f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/tsi2c.cpp",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/tsi2c.cpp",
+      "state": "identical",
+      "stock_sha256": "bcf9558ebdc0619587aad9c686d639d9da27a689335e6da15997036497e2c43d",
+      "local_sha256": "bcf9558ebdc0619587aad9c686d639d9da27a689335e6da15997036497e2c43d",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/comdrivers/tsi2c.h",
+      "local": "vdp/vendor/vdp-gl/src/comdrivers/tsi2c.h",
+      "state": "identical",
+      "stock_sha256": "23c21f7a6227ae6159a081248b90dd553259c3e2d4bd529337c9f5956c6f123a",
+      "local_sha256": "23c21f7a6227ae6159a081248b90dd553259c3e2d4bd529337c9f5956c6f123a",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/DS3231.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/DS3231.cpp",
+      "state": "identical",
+      "stock_sha256": "acbf22763884d4d08c7d4e86b74d6a6c152b4bcb053536a0c1e3e6a281cc35ad",
+      "local_sha256": "acbf22763884d4d08c7d4e86b74d6a6c152b4bcb053536a0c1e3e6a281cc35ad",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/DS3231.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/DS3231.h",
+      "state": "identical",
+      "stock_sha256": "d3c3871d515b714e8f507cc02260f08ddac2078bcf9639882f9b03762c0bfdb0",
+      "local_sha256": "d3c3871d515b714e8f507cc02260f08ddac2078bcf9639882f9b03762c0bfdb0",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/MCP23S17.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/MCP23S17.cpp",
+      "state": "identical",
+      "stock_sha256": "58141f3936e6ffaaf31a9e5f6d17a90f83e4ac61e2ef9c96832fa3bd43b64417",
+      "local_sha256": "58141f3936e6ffaaf31a9e5f6d17a90f83e4ac61e2ef9c96832fa3bd43b64417",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/MCP23S17.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/MCP23S17.h",
+      "state": "identical",
+      "stock_sha256": "8b52f8c378469710e3c3e7cd390bda69f55a57461dc1abe0334f02f7fccc316a",
+      "local_sha256": "8b52f8c378469710e3c3e7cd390bda69f55a57461dc1abe0334f02f7fccc316a",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/cvbsgenerator.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/cvbsgenerator.cpp",
+      "state": "identical",
+      "stock_sha256": "27f56c4b5728edb0bd044b989838c33c6d6dc2f52923d3ddc32e20611c9c87f6",
+      "local_sha256": "27f56c4b5728edb0bd044b989838c33c6d6dc2f52923d3ddc32e20611c9c87f6",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/cvbsgenerator.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/cvbsgenerator.h",
+      "state": "identical",
+      "stock_sha256": "65d5dc413f31770f5bdfd2d757ccd955467066effd4267160fffb12fa7fff596",
+      "local_sha256": "65d5dc413f31770f5bdfd2d757ccd955467066effd4267160fffb12fa7fff596",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/kbdlayouts.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/kbdlayouts.cpp",
+      "state": "identical",
+      "stock_sha256": "83bd70a611ca774c9c1c19eac1942eee95c6c7560e782b8668c50de693aa71ef",
+      "local_sha256": "83bd70a611ca774c9c1c19eac1942eee95c6c7560e782b8668c50de693aa71ef",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/kbdlayouts.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/kbdlayouts.h",
+      "state": "identical",
+      "stock_sha256": "64ad48728c350f9c6a40c5b8450d3064abdb963c9be3fcc82fb39b16045c04bc",
+      "local_sha256": "64ad48728c350f9c6a40c5b8450d3064abdb963c9be3fcc82fb39b16045c04bc",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/keyboard.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/keyboard.cpp",
+      "state": "identical",
+      "stock_sha256": "0a9286530708524a9bce7313bf71d68ebb68f165435ee2e16dfcfc0a497eb09f",
+      "local_sha256": "0a9286530708524a9bce7313bf71d68ebb68f165435ee2e16dfcfc0a497eb09f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/keyboard.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/keyboard.h",
+      "state": "identical",
+      "stock_sha256": "a01e8883e1289335030a422138e179cf67185d6270a2e8b379ff7539a9e5502c",
+      "local_sha256": "a01e8883e1289335030a422138e179cf67185d6270a2e8b379ff7539a9e5502c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/mouse.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/mouse.cpp",
+      "state": "identical",
+      "stock_sha256": "c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530",
+      "local_sha256": "c413a7f086c19541c900aa6245c8a45a5b43c1e1ab52a97fbccf5c69fb834530",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/mouse.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/mouse.h",
+      "state": "identical",
+      "stock_sha256": "ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113",
+      "local_sha256": "ac274443864e82d9cfa5d34b3e88afcd4ab1983230cfc067ad642570355a8113",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/soundgen.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/soundgen.cpp",
+      "state": "identical",
+      "stock_sha256": "0ba6e855a4327a7e01c500e9fee221b7c55e4452bcfa40180abeef687b114c0f",
+      "local_sha256": "0ba6e855a4327a7e01c500e9fee221b7c55e4452bcfa40180abeef687b114c0f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/soundgen.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/soundgen.h",
+      "state": "identical",
+      "stock_sha256": "610ad2de4eb81b00e3d920e1dd35d6719ccce567cb66060c55bcdeb2114ca816",
+      "local_sha256": "610ad2de4eb81b00e3d920e1dd35d6719ccce567cb66060c55bcdeb2114ca816",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/swgenerator.cpp",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/swgenerator.cpp",
+      "state": "identical",
+      "stock_sha256": "4f2340264b226ccf99cfe1758f2ca11ac500a53301a53a1fccbe17c9cc0c5f21",
+      "local_sha256": "4f2340264b226ccf99cfe1758f2ca11ac500a53301a53a1fccbe17c9cc0c5f21",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/devdrivers/swgenerator.h",
+      "local": "vdp/vendor/vdp-gl/src/devdrivers/swgenerator.h",
+      "state": "identical",
+      "stock_sha256": "a2bd02e1e9e8ebbe0783e9fee9530c5032a0dc8e44edbb35a4f29acd3ec80aba",
+      "local_sha256": "a2bd02e1e9e8ebbe0783e9fee9530c5032a0dc8e44edbb35a4f29acd3ec80aba",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga16controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.cpp",
+      "state": "modified",
+      "stock_sha256": "2a5167eeabc0e1ab7660d98bc906b0a97259fd0d7341ec5bd444c5d92ca8ed60",
+      "local_sha256": "44e4242f1636f9e8279933280fe4f83a3490074171f8a5562288311975861a64",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga16controller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga16controller.h",
+      "state": "identical",
+      "stock_sha256": "7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28",
+      "local_sha256": "7ac43eb3f9b77a1e0de7cf8ae44ca13670bbcb02b4826d290a382becfe764a28",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga2controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.cpp",
+      "state": "modified",
+      "stock_sha256": "bfbe92522511398ea17bba6079ac543b02c1380d50fdfa92e13f2988e5919d5c",
+      "local_sha256": "ed4b6ef1c2ef6a81bb3eef1cf7a507b528cf70dc6eec8e5db88b9654905ce2ee",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga2controller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga2controller.h",
+      "state": "identical",
+      "stock_sha256": "d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6",
+      "local_sha256": "d7bcb9c122a01efcdb346d738af180af1f359cbbcc9185f6feaa11ec91ca6ea6",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga4controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.cpp",
+      "state": "modified",
+      "stock_sha256": "bea9c017ad8fc883c6259237e78f1747a2bc154e25318c80225d9c48d47daa51",
+      "local_sha256": "0a82d8a4d35b783dbe6d397433808c7ce981f7c274eb27edcef9e9907102fd85",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga4controller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga4controller.h",
+      "state": "identical",
+      "stock_sha256": "2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd",
+      "local_sha256": "2da7de57732eafaf0533ae38b48f813be9723818964c59c1ef67c3f93132b9cd",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga64controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.cpp",
+      "state": "modified",
+      "stock_sha256": "8a6e3a11daced6d380da7a5cc4f83295bd8ee6bb44d9f821e5bad532976c707b",
+      "local_sha256": "c106c53979d2dc1239636e2ccf98916944cac38d325b24b1e5fabdbb7bccd4ba",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga64controller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga64controller.h",
+      "state": "identical",
+      "stock_sha256": "ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101",
+      "local_sha256": "ff9531dc3213e66507b7d691841d44371af6d5492c00ea6f206d9a0c2650a101",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga8controller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.cpp",
+      "state": "modified",
+      "stock_sha256": "fc6c18dca4c4996d1d9a2b41344ea7ad68a6e2b436b785f0cd3fd70db6036c98",
+      "local_sha256": "575626e044d79b31682ba4197fd9dcd029dc31c6089785f43c40e61369724a96",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vga8controller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vga8controller.h",
+      "state": "identical",
+      "stock_sha256": "badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3",
+      "local_sha256": "badeac33c5405327c645eff5c2e75ea75c35077899dee917158ce28d1f8fb5c3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgabasecontroller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.cpp",
+      "state": "modified",
+      "stock_sha256": "443e24bbd568d9eb75fc069a0001275b6959c88dc941ff4fef7fbe2f3f8264aa",
+      "local_sha256": "21f31a8492350c37c6e44a5ee56b78e9be3eca4b989544c21492230f44ab6a04",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgabasecontroller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgabasecontroller.h",
+      "state": "modified",
+      "stock_sha256": "b57445969deda2e43f118ee633abb5645a0e932b75f1b22ded04c407f3bc7b3b",
+      "local_sha256": "8ae3f9e85f4ab7d32f9ec8e9b33a65772f52bf4b5c2fee386e1c4301aeceab48",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgacontroller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgacontroller.cpp",
+      "state": "identical",
+      "stock_sha256": "77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541",
+      "local_sha256": "77cbb352a896c7d1464fba8dbc1cd4cc33dab6d513d818742aa582868a66b541",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgacontroller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgacontroller.h",
+      "state": "identical",
+      "stock_sha256": "8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa",
+      "local_sha256": "8893d2de6309c602b00490bd24711b8a53f886e54f30c12cbba3e0bf30375cfa",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgapalettedcontroller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp",
+      "state": "modified",
+      "stock_sha256": "5c8f9b6b673d917ed7052a39aaef1f9671b669563f379c40337e3d1a829c2f49",
+      "local_sha256": "d4a52c125c0c10b82f55a3ab153d03895ee94845c115916dbbf9c86338b594cc",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgapalettedcontroller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgapalettedcontroller.h",
+      "state": "identical",
+      "stock_sha256": "d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa",
+      "local_sha256": "d2e351a41010481ebd94e054bc216c6c8bf0f802e33ff50216ff4cced96b96aa",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgatextcontroller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgatextcontroller.cpp",
+      "state": "identical",
+      "stock_sha256": "bf76e8d01ad94218f7fb9e6841e0357e0f35dd32fd90bdcc52e00d6609744906",
+      "local_sha256": "bf76e8d01ad94218f7fb9e6841e0357e0f35dd32fd90bdcc52e00d6609744906",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/dispdrivers/vgatextcontroller.h",
+      "local": "vdp/vendor/vdp-gl/src/dispdrivers/vgatextcontroller.h",
+      "state": "identical",
+      "stock_sha256": "de5d5c85d4a3e9e8a9544f3411edceb3184ec2c658b67e020ae59947771d46ad",
+      "local_sha256": "de5d5c85d4a3e9e8a9544f3411edceb3184ec2c658b67e020ae59947771d46ad",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/displaycontroller.cpp",
+      "local": "vdp/vendor/vdp-gl/src/displaycontroller.cpp",
+      "state": "modified",
+      "stock_sha256": "f3588a684647ef258c024251d17b029e2877c8363b28a570432376f353232902",
+      "local_sha256": "07f6354bf63c8f497c698beabd4eadc702516b420bc3bf6b49da55aea1dfa3d2",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/displaycontroller.h",
+      "local": "vdp/vendor/vdp-gl/src/displaycontroller.h",
+      "state": "modified",
+      "stock_sha256": "603bac727fd1ab61d6f36a8d1a0e533471b849d6c30159b5f95ed4260e9d5c23",
+      "local_sha256": "378f0dd54e11e8e8cea60b24fc1d9b944a75a3ecefce8558bb318b9326ba6fd1",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabfonts.cpp",
+      "local": "vdp/vendor/vdp-gl/src/fabfonts.cpp",
+      "state": "identical",
+      "stock_sha256": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+      "local_sha256": "71c2a00430c2c41a7d38e0935a19922e2629dc667284da1cb2fdae47b8f204f4",
+      "selection": "explicit TU"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabfonts.h",
+      "local": "vdp/vendor/vdp-gl/src/fabfonts.h",
+      "state": "identical",
+      "stock_sha256": "859b5112319f10305681036d17561c57522ce819b10d35dd3649c692afca61b3",
+      "local_sha256": "859b5112319f10305681036d17561c57522ce819b10d35dd3649c692afca61b3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabgl.h",
+      "local": "vdp/vendor/vdp-gl/src/fabgl.h",
+      "state": "identical",
+      "stock_sha256": "2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b",
+      "local_sha256": "2180506bb6e56ec66150383790db415cb7f127c1d2a997b633aa8f06c1ffb07b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabglconf.h",
+      "local": "vdp/vendor/vdp-gl/src/fabglconf.h",
+      "state": "identical",
+      "stock_sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+      "local_sha256": "244afe581be47a3ef0dd21fbe8025f4da6e01ce8e53edc595d3188ef4d3a0ee3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabutils.cpp",
+      "local": "vdp/vendor/vdp-gl/src/fabutils.cpp",
+      "state": "modified",
+      "stock_sha256": "0906c9b846ea60a710f4301c3972d883ce3986600408d35f9ad718c56c8a0aec",
+      "local_sha256": "c279c0ba6712f66402fb3ea355aa70569c0b152093ea24eb63659e8d703a279d",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fabutils.h",
+      "local": "vdp/vendor/vdp-gl/src/fabutils.h",
+      "state": "modified",
+      "stock_sha256": "9badf4ab1a47e4d1e8ede9dc3a93b10f9ffc6f1b2b18616562b483e257e6836d",
+      "local_sha256": "7c52c0383364ad2917c7e0eaa014e011f230049b789ebd23656899e4bbef8651",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_10x20.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_10x20.h",
+      "state": "identical",
+      "stock_sha256": "5518036c2c7eacf9fa38ffafdab482a4bcfefa535d7612ee5990b985343b2211",
+      "local_sha256": "5518036c2c7eacf9fa38ffafdab482a4bcfefa535d7612ee5990b985343b2211",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_4x6.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_4x6.h",
+      "state": "identical",
+      "stock_sha256": "174c235844a3c138debc99676657f7908690de5dcb0231d68ff8d96feff251eb",
+      "local_sha256": "174c235844a3c138debc99676657f7908690de5dcb0231d68ff8d96feff251eb",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_5x7.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_5x7.h",
+      "state": "identical",
+      "stock_sha256": "a1414b1594bd6b8c8c06896d7180be59c45f0c9181c650f65fb65c7a38e7b339",
+      "local_sha256": "a1414b1594bd6b8c8c06896d7180be59c45f0c9181c650f65fb65c7a38e7b339",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_5x8.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_5x8.h",
+      "state": "identical",
+      "stock_sha256": "d8219b5c42c70848ed1c234f3c53b18dead1728618e07dfcd9b9aee7f5af420f",
+      "local_sha256": "d8219b5c42c70848ed1c234f3c53b18dead1728618e07dfcd9b9aee7f5af420f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_6x10.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_6x10.h",
+      "state": "identical",
+      "stock_sha256": "f5640cb5b4d1b31c04f08575d19596f182555db68122e9fa8ecf7fb4c1212b0e",
+      "local_sha256": "f5640cb5b4d1b31c04f08575d19596f182555db68122e9fa8ecf7fb4c1212b0e",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_6x12.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_6x12.h",
+      "state": "identical",
+      "stock_sha256": "d3abda14f52b1331b4d449647f83a02ef2bb83e8a538000a96ee585666564306",
+      "local_sha256": "d3abda14f52b1331b4d449647f83a02ef2bb83e8a538000a96ee585666564306",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_6x13.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_6x13.h",
+      "state": "identical",
+      "stock_sha256": "ce0bad12ea5c3ea132f7d6cf411ff4dc4bdb939486bbfa7cc0a08cde99e8aa5d",
+      "local_sha256": "ce0bad12ea5c3ea132f7d6cf411ff4dc4bdb939486bbfa7cc0a08cde99e8aa5d",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_6x8.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_6x8.h",
+      "state": "identical",
+      "stock_sha256": "d52f022fe461133e00aec000b0071187ad86e210de49aabb4e48846bf50246be",
+      "local_sha256": "d52f022fe461133e00aec000b0071187ad86e210de49aabb4e48846bf50246be",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_6x9.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_6x9.h",
+      "state": "identical",
+      "stock_sha256": "ade7aaaf33c9a1cab52957118f57542c9947780665c2c7b94b55bf867703cdf8",
+      "local_sha256": "ade7aaaf33c9a1cab52957118f57542c9947780665c2c7b94b55bf867703cdf8",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_7x13.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_7x13.h",
+      "state": "identical",
+      "stock_sha256": "360fead4806ffa3dd58af9454f08498a04a5b9a5b670b859bcded55f0bbfcc26",
+      "local_sha256": "360fead4806ffa3dd58af9454f08498a04a5b9a5b670b859bcded55f0bbfcc26",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_7x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_7x14.h",
+      "state": "identical",
+      "stock_sha256": "4bde680c0c2a87040efb1132bf4f6104c9de742cd5c24ccd94c73aa1ce890b79",
+      "local_sha256": "4bde680c0c2a87040efb1132bf4f6104c9de742cd5c24ccd94c73aa1ce890b79",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x13.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x13.h",
+      "state": "identical",
+      "stock_sha256": "f346d4bca71915c1f3c3a65f4b423f89b35823633d62a8a5926117a74a087fc3",
+      "local_sha256": "f346d4bca71915c1f3c3a65f4b423f89b35823633d62a8a5926117a74a087fc3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x14.h",
+      "state": "identical",
+      "stock_sha256": "46ea71695561322a260f29bcc2233377a09654f1eb42e85e22ebae4769c4309e",
+      "local_sha256": "46ea71695561322a260f29bcc2233377a09654f1eb42e85e22ebae4769c4309e",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x16.h",
+      "state": "identical",
+      "stock_sha256": "2b1ad44d7ed12f7b6855668dcbca87c1914d9107e59270b2ba4192249b8f5969",
+      "local_sha256": "2b1ad44d7ed12f7b6855668dcbca87c1914d9107e59270b2ba4192249b8f5969",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x19.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x19.h",
+      "state": "identical",
+      "stock_sha256": "01c69982547e571dae12aa0c5f4415a5fce14d58ef004d40c611f91c22ac6e17",
+      "local_sha256": "01c69982547e571dae12aa0c5f4415a5fce14d58ef004d40c611f91c22ac6e17",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x8.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x8.h",
+      "state": "identical",
+      "stock_sha256": "485dd330c4faf5703b219d9c600d88a9d7276e497b5da45565cf23e69f02c6e3",
+      "local_sha256": "485dd330c4faf5703b219d9c600d88a9d7276e497b5da45565cf23e69f02c6e3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_8x9.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_8x9.h",
+      "state": "identical",
+      "stock_sha256": "0bce90585a6b62a770cac0dd0ecb7e69bad77e8e40a58f956d80aa6d23353e72",
+      "local_sha256": "0bce90585a6b62a770cac0dd0ecb7e69bad77e8e40a58f956d80aa6d23353e72",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_9x15.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_9x15.h",
+      "state": "identical",
+      "stock_sha256": "41ea90a012b0f979d320d9c290a3858c3eaa8e10494d8ad62e54696b7a083414",
+      "local_sha256": "41ea90a012b0f979d320d9c290a3858c3eaa8e10494d8ad62e54696b7a083414",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_9x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_9x16.h",
+      "state": "identical",
+      "stock_sha256": "203936e0e121b01bf7e10f1c21f559b0f75a30ac42214ef59073670200c440d8",
+      "local_sha256": "203936e0e121b01bf7e10f1c21f559b0f75a30ac42214ef59073670200c440d8",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_9x18.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_9x18.h",
+      "state": "identical",
+      "stock_sha256": "669ce4cacf2c9630de885a26d2d453dd9dc3fe3937563fc4ecee169ce831e35a",
+      "local_sha256": "669ce4cacf2c9630de885a26d2d453dd9dc3fe3937563fc4ecee169ce831e35a",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_bigserif_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_bigserif_8x14.h",
+      "state": "identical",
+      "stock_sha256": "9762f308ac726788951f5447b7441f6669820e9f930d23b28267bd94b09543cd",
+      "local_sha256": "9762f308ac726788951f5447b7441f6669820e9f930d23b28267bd94b09543cd",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_bigserif_8x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_bigserif_8x16.h",
+      "state": "identical",
+      "stock_sha256": "12c5f1544694e2b7e9dd9f7094e2569fd3eec481f4326bb792102a40c3c28f2b",
+      "local_sha256": "12c5f1544694e2b7e9dd9f7094e2569fd3eec481f4326bb792102a40c3c28f2b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_block_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_block_8x14.h",
+      "state": "identical",
+      "stock_sha256": "015a1dbb076f503d84a52096befc6b274d7b7dc19486679ce332aefedf24899c",
+      "local_sha256": "015a1dbb076f503d84a52096befc6b274d7b7dc19486679ce332aefedf24899c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_broadway_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_broadway_8x14.h",
+      "state": "identical",
+      "stock_sha256": "c3583b4ec5ea781f14e60f27a6e8d6dda542b2faeb73b76407ae47a04a7b374e",
+      "local_sha256": "c3583b4ec5ea781f14e60f27a6e8d6dda542b2faeb73b76407ae47a04a7b374e",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_computer_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_computer_8x14.h",
+      "state": "identical",
+      "stock_sha256": "e5cc19b707f9c3aa3b484582e89d52e2a414757f5a1b78ac41b4082b264f89de",
+      "local_sha256": "e5cc19b707f9c3aa3b484582e89d52e2a414757f5a1b78ac41b4082b264f89de",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_courier_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_courier_8x14.h",
+      "state": "identical",
+      "stock_sha256": "f7e124e395e0981048030380b6d591f6b6ee2e5110a9e78fe7e4bcefa9163fa4",
+      "local_sha256": "f7e124e395e0981048030380b6d591f6b6ee2e5110a9e78fe7e4bcefa9163fa4",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_lcd_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_lcd_8x14.h",
+      "state": "identical",
+      "stock_sha256": "dd885138a12f8d42d59e15e9852e336657c0708a01454275cee2444216781ebb",
+      "local_sha256": "dd885138a12f8d42d59e15e9852e336657c0708a01454275cee2444216781ebb",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_oldengl_8x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_oldengl_8x16.h",
+      "state": "identical",
+      "stock_sha256": "50a15366cddf31e9185ec4c1a0c4ee2bacdf6dd94a1f9cceb90f20867d505914",
+      "local_sha256": "50a15366cddf31e9185ec4c1a0c4ee2bacdf6dd94a1f9cceb90f20867d505914",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_sanserif_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_sanserif_8x14.h",
+      "state": "identical",
+      "stock_sha256": "1b0b795746cb99df87aa00bcb8aceee0d286b4ff55a607fa5e73074f47233c32",
+      "local_sha256": "1b0b795746cb99df87aa00bcb8aceee0d286b4ff55a607fa5e73074f47233c32",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_sanserif_8x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_sanserif_8x16.h",
+      "state": "identical",
+      "stock_sha256": "f8e6b3283ee31673c89b7e57d85b28209c3c2603f65b95235c25521f144184de",
+      "local_sha256": "f8e6b3283ee31673c89b7e57d85b28209c3c2603f65b95235c25521f144184de",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_slant_8x14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_slant_8x14.h",
+      "state": "identical",
+      "stock_sha256": "3f4ed550943adbcf784db848ccaf8b2966fc8d99fb572110865be3bd26f34309",
+      "local_sha256": "3f4ed550943adbcf784db848ccaf8b2966fc8d99fb572110865be3bd26f34309",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_12.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_12.h",
+      "state": "identical",
+      "stock_sha256": "07a94d88274600fdec3b210d257e3f285dd76762b89b41237047335ab9a90a20",
+      "local_sha256": "07a94d88274600fdec3b210d257e3f285dd76762b89b41237047335ab9a90a20",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_14.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_14.h",
+      "state": "identical",
+      "stock_sha256": "8216599c4bcd9448345720327b09421324881de7d287ce67e36154a76ca90293",
+      "local_sha256": "8216599c4bcd9448345720327b09421324881de7d287ce67e36154a76ca90293",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_15.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_15.h",
+      "state": "identical",
+      "stock_sha256": "606349455b1a4ece5da0ac24ccb90f57da2ee73b652f078d7a5efd4a2ab7c3f4",
+      "local_sha256": "606349455b1a4ece5da0ac24ccb90f57da2ee73b652f078d7a5efd4a2ab7c3f4",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_16.h",
+      "state": "identical",
+      "stock_sha256": "d43d10efecd0bca63c944b7142dd3182415d56271ecbbf7bf7c8effb50bb09ba",
+      "local_sha256": "d43d10efecd0bca63c944b7142dd3182415d56271ecbbf7bf7c8effb50bb09ba",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_17.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_17.h",
+      "state": "identical",
+      "stock_sha256": "e498750266a32587aaa0c379679613094c7fd0399cb8d6b9528e2d91a2e3a2d1",
+      "local_sha256": "e498750266a32587aaa0c379679613094c7fd0399cb8d6b9528e2d91a2e3a2d1",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_18.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_18.h",
+      "state": "identical",
+      "stock_sha256": "b2b34d952ce445bc333714161fa8b3a5ad195fc0337f6c9072d03f44454ba2ac",
+      "local_sha256": "b2b34d952ce445bc333714161fa8b3a5ad195fc0337f6c9072d03f44454ba2ac",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_22.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_22.h",
+      "state": "identical",
+      "stock_sha256": "a9a71b003d0cf1228a8d19c5d6596d7f3cda9c1b7276cbffaa6256ecfc6b7190",
+      "local_sha256": "a9a71b003d0cf1228a8d19c5d6596d7f3cda9c1b7276cbffaa6256ecfc6b7190",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_std_24.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_std_24.h",
+      "state": "identical",
+      "stock_sha256": "a556e5dcb842076678e55acb830df92beceb92ff4e33a5a39b1e032e54008692",
+      "local_sha256": "a556e5dcb842076678e55acb830df92beceb92ff4e33a5a39b1e032e54008692",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/fonts/font_wiggly_8x16.h",
+      "local": "vdp/vendor/vdp-gl/src/fonts/font_wiggly_8x16.h",
+      "state": "identical",
+      "stock_sha256": "a1515a391aa223ed5bd0680131dbe31e996f80ac8d34c978a1a09578da963d1b",
+      "local_sha256": "a1515a391aa223ed5bd0680131dbe31e996f80ac8d34c978a1a09578da963d1b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/images/bitmaps.h",
+      "local": "vdp/vendor/vdp-gl/src/images/bitmaps.h",
+      "state": "identical",
+      "stock_sha256": "a65aeb4c38543a51dbd44a5e37d07a7b5c50b552d8776ba9dd10c0466663e3d4",
+      "local_sha256": "a65aeb4c38543a51dbd44a5e37d07a7b5c50b552d8776ba9dd10c0466663e3d4",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/images/cursors.h",
+      "local": "vdp/vendor/vdp-gl/src/images/cursors.h",
+      "state": "identical",
+      "stock_sha256": "11c77aee31557c396777e6958ee2bf44039928c373bdb3253e2712fd79b8dfa2",
+      "local_sha256": "11c77aee31557c396777e6958ee2bf44039928c373bdb3253e2712fd79b8dfa2",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/network/ICMP.cpp",
+      "local": "vdp/vendor/vdp-gl/src/network/ICMP.cpp",
+      "state": "identical",
+      "stock_sha256": "da51ca4213c232799f8825ffbbd0637639652e30c1bea38b3f720efcdebc6b19",
+      "local_sha256": "da51ca4213c232799f8825ffbbd0637639652e30c1bea38b3f720efcdebc6b19",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/network/ICMP.h",
+      "local": "vdp/vendor/vdp-gl/src/network/ICMP.h",
+      "state": "identical",
+      "stock_sha256": "eee04b61879f3f71f444c7160d23318cf84af6e33044f64f128aae51fce55aa8",
+      "local_sha256": "eee04b61879f3f71f444c7160d23318cf84af6e33044f64f128aae51fce55aa8",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/scene.cpp",
+      "local": "vdp/vendor/vdp-gl/src/scene.cpp",
+      "state": "identical",
+      "stock_sha256": "033f3bbc127cc9c31c9062dd1bf821b448e66b14947d97754fce20ae4fe9906c",
+      "local_sha256": "033f3bbc127cc9c31c9062dd1bf821b448e66b14947d97754fce20ae4fe9906c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/scene.h",
+      "local": "vdp/vendor/vdp-gl/src/scene.h",
+      "state": "identical",
+      "stock_sha256": "58ce6ed123e372f9eb900215eb374dd57be25bbf408796b8f599710eaf1c2b44",
+      "local_sha256": "58ce6ed123e372f9eb900215eb374dd57be25bbf408796b8f599710eaf1c2b44",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/terminal.cpp",
+      "local": "vdp/vendor/vdp-gl/src/terminal.cpp",
+      "state": "identical",
+      "stock_sha256": "a9edb1ee0ca2bdc3a186410f0a6035ef8f7763c8007f48c74639b78af74a8cbc",
+      "local_sha256": "a9edb1ee0ca2bdc3a186410f0a6035ef8f7763c8007f48c74639b78af74a8cbc",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/terminal.h",
+      "local": "vdp/vendor/vdp-gl/src/terminal.h",
+      "state": "identical",
+      "stock_sha256": "ce2e21566864b615e1ef379eb9123458942c2ac58a51f3f75eb605906f9d041d",
+      "local_sha256": "ce2e21566864b615e1ef379eb9123458942c2ac58a51f3f75eb605906f9d041d",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/terminfo.cpp",
+      "local": "vdp/vendor/vdp-gl/src/terminfo.cpp",
+      "state": "identical",
+      "stock_sha256": "20b60a942131534576be21cf9509bd053e1a4990d254c775f8aae56045a8d1d7",
+      "local_sha256": "20b60a942131534576be21cf9509bd053e1a4990d254c775f8aae56045a8d1d7",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/terminfo.h",
+      "local": "vdp/vendor/vdp-gl/src/terminfo.h",
+      "state": "identical",
+      "stock_sha256": "f0eb209afb347c2524e826406171345788f6dbd9d5a53dfde31b28bb42fcfb0a",
+      "local_sha256": "f0eb209afb347c2524e826406171345788f6dbd9d5a53dfde31b28bb42fcfb0a",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/ulp_macro_ex.cpp",
+      "local": "vdp/vendor/vdp-gl/src/ulp_macro_ex.cpp",
+      "state": "identical",
+      "stock_sha256": "368fa9fe76a70707e0c69aeaebb52c886c56b694a31f953cf4598dd32e7dcb1f",
+      "local_sha256": "368fa9fe76a70707e0c69aeaebb52c886c56b694a31f953cf4598dd32e7dcb1f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "vdp-gl",
+      "file": "src/ulp_macro_ex.h",
+      "local": "vdp/vendor/vdp-gl/src/ulp_macro_ex.h",
+      "state": "identical",
+      "stock_sha256": "3806517784bd3451a31a862c1d526f65bbbe42e3be1d4b23cd3929d0676c9a73",
+      "local_sha256": "3806517784bd3451a31a862c1d526f65bbbe42e3be1d4b23cd3929d0676c9a73",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/OneWire_direct_gpio.h",
+      "local": "vdp/video/OneWire_direct_gpio.h",
+      "state": "identical",
+      "stock_sha256": "e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4",
+      "local_sha256": "e95adb8fd2c0e5e1b7134b1bd9abe045264c51282fb4c00174c5519a820df8f4",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon.h",
+      "local": "vdp/video/agon.h",
+      "state": "identical",
+      "stock_sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+      "local_sha256": "9cd4c9d11a7138f282e9e64122d652b98277894f1ae0e61c696f7732d92377e4",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_audio.h",
+      "local": "vdp/video/agon_audio.h",
+      "state": "identical",
+      "stock_sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+      "local_sha256": "bb8ee5b666350eb244e667cdb75ceb00d9a05f9c8a4913b7604210a5a6e6f79e",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_fonts.h",
+      "local": "vdp/video/agon_fonts.h",
+      "state": "modified",
+      "stock_sha256": "e95bf9a7d172797fc57c49d83f031cd899a4a95a6a10f076e72817a5d04a533c",
+      "local_sha256": "b5a2371579c05c691d1267a1f92e38fbe31f5017783096fcca19edbdbb5c4b63",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_palette.h",
+      "local": "vdp/video/agon_palette.h",
+      "state": "identical",
+      "stock_sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "local_sha256": "f4bfef2510e8dec9bd29a4352edb76cd3c22276c77b92798eabcefbdbc2dd5e7",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_ps2.h",
+      "local": "vdp/video/agon_ps2.h",
+      "state": "modified",
+      "stock_sha256": "76dd5fd87e4be895e9a017d648e6f2de64b3273d98da876235ff9868b6ed66b6",
+      "local_sha256": "f3ea3503cf08ef73b2e20200121988649ae59111476604b77d4b683ba63d78bc",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_screen.h",
+      "local": "vdp/video/agon_screen.h",
+      "state": "modified",
+      "stock_sha256": "648dbc7d0ba9d98a3115a4ba307ff7585c6c5e28189c1e8961eff7a3c3d60343",
+      "local_sha256": "baf1a5badb78715e9da071e71705b9cc0349d74755803ca701a5c46bf3c5e605",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/agon_ttxt.h",
+      "local": "vdp/video/agon_ttxt.h",
+      "state": "identical",
+      "stock_sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+      "local_sha256": "d6a2bc11ae9caaf43d8fa4be84fa8a1663fd32738975cea19e8892bfbe9b85a9",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/audio_channel.h",
+      "local": "vdp/video/audio_channel.h",
+      "state": "identical",
+      "stock_sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+      "local_sha256": "0100e83d3921aef6a1195b185842be32a012068914f6d6675da6e8ee3066e22f",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/audio_sample.h",
+      "local": "vdp/video/audio_sample.h",
+      "state": "identical",
+      "stock_sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+      "local_sha256": "e0e5ca212a76e7196e26720e1b4e84f9316164e61c31a2bf84e38941ed9d723e",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/buffer_stream.h",
+      "local": "vdp/video/buffer_stream.h",
+      "state": "modified",
+      "stock_sha256": "6b57aedf9e7fee1b8fdb84660e4eaade788c185ec540f94b00f965f2024c418d",
+      "local_sha256": "c524c5cfc3a150db63762f6385f7f01560acf9c2be879be6ee99742b23e83e4c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/buffers.h",
+      "local": "vdp/video/buffers.h",
+      "state": "modified",
+      "stock_sha256": "f04f4da7521192d05725a7f54a52200c0b7cd9ed067335feaf20baf32ec62751",
+      "local_sha256": "3f9bbe5e51dd2560f7b54ce911feb3f8810352daded8d233e505afffb789bd6d",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/compression.h",
+      "local": "vdp/video/compression.h",
+      "state": "identical",
+      "stock_sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+      "local_sha256": "28b49fa1f2a2d760ea83abfe8f07cd9575c8a0a96345f52cc4d178f57da4fddb",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/context.h",
+      "local": "vdp/video/context.h",
+      "state": "modified",
+      "stock_sha256": "5c4036182bb1ef3712273f44c4b49bdc8466d4d856fdd82ffdd201b999bb6b3e",
+      "local_sha256": "ce86c560d0c0a025756bafd37d6cb61c24b794de4363eb138eefb72790f269ef",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/context/cursor.h",
+      "local": "vdp/video/context/cursor.h",
+      "state": "modified",
+      "stock_sha256": "e0ced4b531dfef9957411dd30be458c431921c2c2be3e2e5f8a7a4ed863ceb8f",
+      "local_sha256": "c747a1c8e4cf3533b820f9e613f861631090afd9a4fe8f0cc4a8c13be33c69a7",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/context/fonts.h",
+      "local": "vdp/video/context/fonts.h",
+      "state": "modified",
+      "stock_sha256": "27acda3a7c8e41f0a6b1c8e1f1a611f7ce3e7d9f8796ca023ee71868976e6ad4",
+      "local_sha256": "ccbec2dbc22692774bb605e002860d6d14ea82715f958179d91e80335e417cf3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/context/graphics.h",
+      "local": "vdp/video/context/graphics.h",
+      "state": "modified",
+      "stock_sha256": "eba700bc2b988af484784c4d90ebc8233a008687f1e5d5b65ab61cc7e6433d2a",
+      "local_sha256": "2161336eb568c14a2babeae9ce9d9bfbc2bad7630e1a30384d263d56b20bd0e5",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/context/viewport.h",
+      "local": "vdp/video/context/viewport.h",
+      "state": "modified",
+      "stock_sha256": "2f69546602eb5b765719b8186688edece1e38b3b0bb0e276325391887451d5ff",
+      "local_sha256": "1ac166e051bf4273270d15f33e9c9507c7577af96567a2f86a2b1dee7ad773bd",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/enhanced_samples_generator.h",
+      "local": "vdp/video/enhanced_samples_generator.h",
+      "state": "identical",
+      "stock_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+      "local_sha256": "55b13014e6138de7746159d0d69b4dc5cb81945fbe5644e03b7bb3f53d7bfe7b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/envelopes/adsr.h",
+      "local": "vdp/video/envelopes/adsr.h",
+      "state": "identical",
+      "stock_sha256": "2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73",
+      "local_sha256": "2cd7dfe6cadbef4016576815e6c61fd6b2c118e9b66030b786600a37ae2a3f73",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/envelopes/frequency.h",
+      "local": "vdp/video/envelopes/frequency.h",
+      "state": "identical",
+      "stock_sha256": "f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425",
+      "local_sha256": "f201b2c9f30f5b3b8fcbf3bb04ba05b0578202e6f876e1c79d84ed6e08a83425",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/envelopes/multiphase_adsr.h",
+      "local": "vdp/video/envelopes/multiphase_adsr.h",
+      "state": "identical",
+      "stock_sha256": "1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf",
+      "local_sha256": "1dc440037fd8d2ef25a3d86c640a4e77ab579834709016c848b881668b4034bf",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/envelopes/types.h",
+      "local": "vdp/video/envelopes/types.h",
+      "state": "identical",
+      "stock_sha256": "d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29",
+      "local_sha256": "d03dbddb17f5b6bb273729ffbe7ddacc3ab44504fe180918386770ef0b175f29",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/hexload.h",
+      "local": "vdp/video/hexload.h",
+      "state": "identical",
+      "stock_sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+      "local_sha256": "1eff521e4f819f3502de21742423801427b9ee9e7c9434652c733320c118e7d9",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/mem_helpers.h",
+      "local": "vdp/video/mem_helpers.h",
+      "state": "identical",
+      "stock_sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+      "local_sha256": "7378941fe5fe647a775bbcb8497dc595454f6954ab4a709a2cf108179902f8d0",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/multi_buffer_stream.h",
+      "local": "vdp/video/multi_buffer_stream.h",
+      "state": "identical",
+      "stock_sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+      "local_sha256": "4de8326e081dc9e0d9e07e04cb5b0dc311f918f8a008bff72ea94238e78af413",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/span.h",
+      "local": "vdp/video/span.h",
+      "state": "identical",
+      "stock_sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+      "local_sha256": "9fcca4b44f88b36b86e80e77e9bf7e4fca67835b3a7f07bdccfccd60faff9c79",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/sprites.h",
+      "local": "vdp/video/sprites.h",
+      "state": "modified",
+      "stock_sha256": "a8a9e7a2039b0bd31645482953477c3060d640c2b4d841da71d81f6ba4e5d7ea",
+      "local_sha256": "02dbe5921f2651b113530dbeb2f8d8b85d47f3f25b33488adf3cbc2ae9e44904",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/ttxtfont.h",
+      "local": "vdp/video/ttxtfont.h",
+      "state": "identical",
+      "stock_sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+      "local_sha256": "8cb0f40bd1c48c1b06eadef4f7c7023a01f7e3b03d4aae523989433576588d6c",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/types.h",
+      "local": "vdp/video/types.h",
+      "state": "identical",
+      "stock_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+      "local_sha256": "0b14cd7fd375145d537335e465459c119c0ba23fa4594f7aeb6709aafd8fb2a5",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/updater.h",
+      "local": "vdp/video/updater.h",
+      "state": "identical",
+      "stock_sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+      "local_sha256": "abd2b681282afb9cab1b6f0ea493202e32d65bf7f0041726bcd81b3246f0714a",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/utils/thread_safe_variant_deque.h",
+      "local": "vdp/video/utils/thread_safe_variant_deque.h",
+      "state": "identical",
+      "stock_sha256": "689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3",
+      "local_sha256": "689c92926a831efc74b30581dc2bad43fc3610890987db25da9d1a5aaf68a1e3",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdp_protocol.h",
+      "local": "vdp/video/vdp_protocol.h",
+      "state": "identical",
+      "stock_sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+      "local_sha256": "c35134abbe4cc47c47d70cd0630bf65b765defa6ea7fd04603c19a4c254138ec",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdp_variables.h",
+      "local": "vdp/video/vdp_variables.h",
+      "state": "modified",
+      "stock_sha256": "d1fefa381cfebff4fcd7446accac30d6649317711a885d3a31bd37572b9c4fa7",
+      "local_sha256": "2bb0237f750b99c157fdacaad294b522495143c7c7fa236e09ea37c12d4a8485",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu.h",
+      "local": "vdp/video/vdu.h",
+      "state": "modified",
+      "stock_sha256": "24923b53a83d77ebf729795d7ecb7343e6f2fed0e9d748d48fc83c8b75e805cb",
+      "local_sha256": "b326130a85259a18064d4443ae4cd833cf4aa814c9cfb06b17c70b801839915c",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_audio.h",
+      "local": "vdp/video/vdu_audio.h",
+      "state": "modified",
+      "stock_sha256": "6a479afd49dbb7111a6b3637cad62f3bfacb8fc8ea514799f89431810ee4ba67",
+      "local_sha256": "3c657e3a598d63a36ec1ed644f918cae49c51c829a0b1fb2f23d8b0869c2474b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_buffered.h",
+      "local": "vdp/video/vdu_buffered.h",
+      "state": "modified",
+      "stock_sha256": "b9d9d93295ddc5fb05c802071057e32ed9755837f029ce381340072352c262f0",
+      "local_sha256": "e27c95a5d587eebe7f64b3213a6cf5c1464b7953343d6556eca7c3da67dbd78d",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_context.h",
+      "local": "vdp/video/vdu_context.h",
+      "state": "identical",
+      "stock_sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+      "local_sha256": "d6ee00a474ac066cdacb227080064b8e4c25986169411e9679ccf7cee24f9863",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_fonts.h",
+      "local": "vdp/video/vdu_fonts.h",
+      "state": "identical",
+      "stock_sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+      "local_sha256": "a11ae024c8830b046152aff7c3dcddd063e9775176654a980ed26bd36bf666df",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_layers.h",
+      "local": "vdp/video/vdu_layers.h",
+      "state": "identical",
+      "stock_sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+      "local_sha256": "2e68541a47fbd686908e07bfb9bc659c754e1ce7e1ccb715bbde2889a335bcca",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_sprites.h",
+      "local": "vdp/video/vdu_sprites.h",
+      "state": "modified",
+      "stock_sha256": "53b0fe1474ba20565cfc31afae993f88eb44084ab8b3c4181d5261a59db3c1eb",
+      "local_sha256": "95aeb568f8ec1fad96ffe320e506c13be32b1fb0404dce5a072a26ca8041bb78",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_stream_processor.h",
+      "local": "vdp/video/vdu_stream_processor.h",
+      "state": "modified",
+      "stock_sha256": "b714a640a7108aec0a242069c5c96b529347655a0d9133e28cd01092bae84753",
+      "local_sha256": "130d942c1a5ee5203ab7d16fa8e7efb456638eaf77506200b71427176d02295f",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/vdu_sys.h",
+      "local": "vdp/video/vdu_sys.h",
+      "state": "modified",
+      "stock_sha256": "29ad91d4bcbede801f3c8da3453f900a6a6cf98fc1a17e6dad5ba274e76e6b77",
+      "local_sha256": "12073c06c063901c48638c0985cb8182866294b70c0d523a7a794958fd29087f",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/version.h",
+      "local": "vdp/video/version.h",
+      "state": "identical",
+      "stock_sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+      "local_sha256": "db32f72b856652ff61aafbaed4bbfe8c755030b48b27fda0c8275811e155c88b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/video.ino",
+      "local": "vdp/video/video.ino",
+      "state": "modified",
+      "stock_sha256": "ce37b9bb557eba621a97ca4d8fb860e2a7af0284ed177a81d0af86391e6a224b",
+      "local_sha256": "28d94663070c34837a1c6df6411f428bea5be0a74eb63c0728b07bf49f0fa0c8",
+      "selection": "declared header"
+    },
+    {
+      "family": "VDP",
+      "file": "video/ymodem.h",
+      "local": "vdp/video/ymodem.h",
+      "state": "identical",
+      "stock_sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+      "local_sha256": "7b1de399410f63298af994fbd9bcd400ef309c63ab7eac4ae2711e9c09455c5b",
+      "selection": "not explicit; includes/omission require trace"
+    },
+    {
+      "family": "VDP",
+      "file": "video/zdi.h",
+      "local": "vdp/video/zdi.h",
+      "state": "identical",
+      "stock_sha256": "89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e",
+      "local_sha256": "89ab5e6e950f80480eb356173f00b0645e103840130f5e86f8c2628f6421e80e",
+      "selection": "not explicit; includes/omission require trace"
+    }
+  ]
+}

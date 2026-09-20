@@ -87,3 +87,9 @@ flashing firmware, running hardware tests, changing upstream code, or publishing
 experimental changes. Scheduling follows the immediate research and subsequent
 Author direction. Future implementation and hardware validation need their own
 bounded plans; the current bench remains undisturbed.
+
+## First-pass delivery — 2026-09-20
+
+The frozen bounded tranche is complete; [findings](AUDIT-007/FINDINGS.md)
+recommend mode-transition lifetime investigation for review. This does not
+complete the exhaustive audit or authorize hardware work.
