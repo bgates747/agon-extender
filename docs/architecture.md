@@ -320,6 +320,16 @@ committed-backend selection are accepted; exact response delivery, parser
 integration, activation-carrier and lifecycle implementation, and qualification
 remain unresolved.
 
+Author clarification, 2026-09-19: Firmware-update commands and Intel HEX/YMODEM maintenance are supported only
+through the stock mainboard path in Legacy mode for now. The operator selects
+Legacy through EMOS before invoking them; EMOS does not silently forward these
+commands from ExCom to mainboard VDP. EDP does not implement their update or
+transfer operations. Project-owned SD service, P4 deployment and ZDI recovery
+remain separate capabilities. This scope decision does not assert that upstream
+has retired or superseded these utilities. Accidental delivery to EDP still
+requires defined rejection/consumption behaviour; empty handlers are not thereby
+qualified as safe.
+
 In **Dual mode**, the onboard VDP remains authoritative for VDU and MOS VDP
 sysvars while the EDP is addressed through EDU and retains results in an
 EDU-owned state domain. Applications and project-owned abstraction layers may

@@ -147,7 +147,7 @@ deterministic Nurples and separate typing measurements are deferred.
   - Finished: --
   - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; QUAL-003 now owns the separately authorized framebuffer-first rerun.
   - Details: [PORT-003](docs/tasks/PORT-003.md)
-  - Active separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), UC01 inventory complete ([findings](docs/tasks/PORT-003/command-consumption/README.md)); UC02/UC03 contracts next, then deterministic sentinels and hardware review. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
+  - Active separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), UC01 inventory complete ([findings](docs/tasks/PORT-003/command-consumption/README.md)); Current authorized slice: [virtual-key query reply](docs/tasks/PORT-003/key-query/PLAN.md), implement and test through EMOS. Wider UC02/UC03 remains open; updater and HEX/YMODEM functionality are strictly Legacy-only. EDP review covers accidental-command containment and remaining application-facing replies, not porting maintenance tools. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
 
 - [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
   - Started: 2026-09-10
@@ -226,7 +226,7 @@ deterministic Nurples and separate typing measurements are deferred.
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08
   - Finished: --
-  - Status: B01 review and B02/B03 behaviour contract frozen 2026-09-19. Includes separate keyboard WebSocket, ownership priority, P4 repeat, locales/locks/keypad and fullscreen controls. B04 deployed; Author reports no perceptible latency and working Caps Lock. C01 UI cleanup implemented locally with passing Chromium input/layout checks; manual lock controls removed. P4 deployed; fullscreen-entry capture fix passes local regression; native Escape exit accepted for now. Hardware validation of the focus fix remains pending. Additional Connect-state and mode/header metadata requests recorded in C01; no coding authorized yet. Physical USB takeover remains untested.
+  - Status: C02 deployed: connection indicator, mode metadata and fullscreen-entry capture repair; local/deployment checks pass. Author defers browser/game input follow-up: Rally appears to hang more than Nurples, regression unknown. Nurples Escape exits fullscreen first and exits the game outside fullscreen. Native fullscreen Escape limitation accepted for now. Remaining visual/capture acceptance and physical USB takeover are not inferred; resume investigation only on renewed direction.
   - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
 
 ## Qualification infrastructure

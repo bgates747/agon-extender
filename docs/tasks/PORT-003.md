@@ -2846,6 +2846,23 @@ This turn is planning-only, followed by hardware voice and stop. The earlier
 PORT-004 deferral is lifted only for this framing/no-op tranche when execution
 resumes; synthesis and output remain deferred.
 
+### Current scope clarification — 2026-09-19
+
+Firmware updater and Intel HEX/YMODEM functionality are strictly Legacy-only.
+No EDP implementation or emulation of those maintenance sessions is planned.
+Their automatic forwarding from ExCom is not supported. Preserve the existing
+EMOS-owned route selection and separate project deployment/recovery tools.
+Do not claim upstream replacements without evidence.
+
+PORT-003-D014 — Accepted: the Author selects this Legacy-only scope to avoid
+spending Extender implementation effort on old maintenance facilities. Recorded
+in ADR-0014 and the architecture. The original UC01 findings remain valid;
+empty handlers can still misinterpret accidentally received bytes. UC02/UC03
+must distinguish that bounded containment obligation from functional support.
+No containment implementation is authorized by this documentation change.
+The remaining application-facing review includes virtual-key query replies and
+unavailable mouse behaviour; preserve the completed audio-framing repair.
+
 1. [x] UC01: Inventory every unimplemented function reachable through the
    selected P4 VDU parser, including audio, updater and other selected adapters.
    Reuse PORT-008 F004 reachability and PORT-004's existing audio grammar work.
@@ -2914,3 +2931,10 @@ identify empty updater consumption and missing virtual-key query reply, separate
 interactive loader release contracts, and mouse reply discrepancies. All45
 reviewed source fingerprints match installed r22. No handlers changed;
 UC02/UC03 contract work is next. Earlier audio completion remains scoped.
+
+
+## Selected UC02/UC03 slice — virtual-key query
+
+Author authorized the [key-query contract](PORT-003/key-query/PLAN.md), coding,
+flash and test, then review with app notification only. This is the C-KQUERY
+slice; wider UC02/UC03 items remain open. Preserve Legacy-only maintenance scope.

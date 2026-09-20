@@ -154,13 +154,17 @@ remain separate and were not exercised.
 
 ## Next decisions and evidence limits
 
-1. Freeze UC02/UC03 for the updater: consume selector, six-byte unlock payload,
+1. Author scope update (2026-09-19): updater and HEX/YMODEM operations are
+   strictly Legacy-only; no EDP functionality is planned. UC02/UC03 concerns
+   accidental-delivery containment only for these families. The earlier proposed
+   updater discard grammar remains a candidate, not an approved implementation:
+   consume selector, six-byte unlock payload,
    or u24-sized body plus checksum with bounded storage; never flash/reboot or
    claim update success. Unknown selectors consume only themselves as stock.
 2. Decide key-query reply semantics using actual processed-key state; neither
    silence nor fabricated key-up should be mistaken for compatible behavior.
-3. Review unavailable mouse replies and interactive loader caller expectations
-   separately. Preserve existing correctly consumed commands.
+3. Review unavailable mouse replies. Treat interactive loader handling only as
+   unsupported-command containment, not an EDP transfer-session implementation. Preserve existing correctly consumed commands.
 4. Add deterministic sentinel/reply tests only after those contracts are frozen.
    This source audit alone does not establish runtime timeouts, memory bounds,
    call-site behavior of all client programs or hardware qualification.

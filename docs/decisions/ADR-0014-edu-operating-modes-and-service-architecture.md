@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-09
+- Last amended: 2026-09-19
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -574,3 +574,21 @@ Applications issue these requests only at complete VDU/query boundaries.
 Default console commands retain their existing fresh-display behavior. This
 explicit comparison facility extends the idle-console scope; it is not
 transparent arbitrary-application migration or an independent transport API.
+
+
+## Legacy-only maintenance scope — 2026-09-19
+
+Firmware-update commands and Intel HEX/YMODEM maintenance are supported only
+through the stock mainboard path in Legacy mode for now. The operator selects
+Legacy through EMOS before invoking them; EMOS does not silently forward these
+commands from ExCom to mainboard VDP. EDP does not implement their update or
+transfer operations. Project-owned SD service, P4 deployment and ZDI recovery
+remain separate capabilities. This scope decision does not assert that upstream
+has retired or superseded these utilities. Accidental delivery to EDP still
+requires defined rejection/consumption behaviour; empty handlers are not thereby
+qualified as safe.
+
+For these command families this narrows decision 21: Dual-mode availability is
+not part of the supported contract. The Author prioritizes existing Extender
+capabilities over porting these stock maintenance tools. PORT-003 owns remaining
+accidental-command containment decisions; this does not authorize implementation.
