@@ -2,14 +2,18 @@
 
 ## Executive summary
 
-**Required by the Author; currently unscheduled.** Audit the complete pinned
+**First graphics-backend source tranche authorized, 2026-09-20.**
+See [the frozen bounded contract](AUDIT-007/FIRST-PASS.md). The broader audit
+remains incomplete; this authorization supersedes its previous scheduling hold.
+
+**Original exhaustive scope:** Audit the complete pinned
 Agon FabGL/vdp-gl fork for code, dependencies and implicit contracts the P4 port
 must retain or minimally adapt. Scheduling awaits findings from QUAL-003's
 immediate focused timing research. This audit will happen whether or not that
 research fixes the current Nurples performance issue; the dependency determines
 sequence and starting points, not whether the audit is required.
 
-Created: 2026-09-15. Owning queue: `TODO.md`. No execution has started.
+Created: 2026-09-15. Owning queue: `TODO.md`. Bounded first-pass execution starts under the linked contract.
 Predecessor: [QUAL-003 P00](QUAL-003/DEBRIEF-PLAN.md#p00--audit-inherited-fabgl-timing-before-selecting-scheduling-changes).
 This task owns the exhaustive work formerly described under P00e.
 
@@ -35,36 +39,36 @@ Record upstream bugs separately, without opportunistic fixes or improvements.
 Golem testing remains on hold. VGA output implementation is not authorized by
 this task; identify reusable mechanisms without assuming VGA must be generated.
 
-## Work items — unscheduled
+## Exhaustive work items — not completed by the bounded first pass
 
-1. [ ] F01: Review the focused research and preceding AUDIT-006/PORT-003 records.
+**AUDIT-007-F01** [ ] Review the focused research and preceding AUDIT-006/PORT-003 records.
    Pin exact upstream, fork, dependency and P4 revisions. Consult official
    documentation first. Preserve official checkouts as read-only references.
    Establish the full file/subsystem inventory, build selections and omission
    list before treating any area as covered.
-2. [ ] F02: Create an exhaustive coverage ledger. Include all subsystem files,
+**AUDIT-007-F02** [ ] Create an exhaustive coverage ledger. Include all subsystem files,
    relevant symbols and build branches, their upstream/P4 counterparts, prior
    audit evidence and unresolved questions. Expand coverage whenever tracing
    reveals another dependency; do not restrict it to currently exposed APIs.
-3. [ ] F03: Trace behavior across callers/callees, virtual dispatch, macros,
+**AUDIT-007-F03** [ ] Trace behavior across callers/callees, virtual dispatch, macros,
    compile-time selection and shared state. Explicitly examine initialization,
    teardown, ownership/lifetime, allocation and memory capabilities, locking,
    ISR/task boundaries, queueing, timing, notifications, completion and output
    side effects. Follow hidden dependencies through omitted and deferred code.
-4. [ ] F04: Compare the actual P4 port against those contracts. Assign each
+**AUDIT-007-F04** [ ] Compare the actual P4 port against those contracts. Assign each
    area a source-backed disposition: retained correctly; necessary adaptation
    verified; required port/adaptation missing; deferred with dependencies and
    consequences identified; or demonstrably unnecessary on this hardware.
    Unresolved relevance is an open finding, not permission to omit code.
-5. [ ] F05: Review the ledger for blind spots. Trace representative public
+**AUDIT-007-F05** [ ] Review the ledger for blind spots. Trace representative public
    operations end to end and audit the omitted/stubbed code in the reverse
    direction for dependencies on active paths. Check that prior hardware or
    feature-scope assumptions have not substituted for source evidence.
-6. [ ] F06: Produce an executive findings report, stock/P4 dependency maps and
+**AUDIT-007-F06** [ ] Produce an executive findings report, stock/P4 dependency maps and
    prioritized required port work with discriminating validation proposals.
    Link confirmed immediate-research findings rather than repeating experiments.
    Separate audit completeness, implementation completeness and test coverage.
-7. [ ] F07: Present the audit for Author review. Promote agreed implementation
+**AUDIT-007-F07** [ ] Present the audit for Author review. Promote agreed implementation
    and validation work into the owning tasks/queue, with explicit contracts.
    Do not close this audit merely because the original performance issue was
    fixed or a game became visually acceptable.
@@ -77,7 +81,8 @@ owners. Findings must explain both what needs porting and why an omission is
 safe where that is claimed. The final review must expose remaining uncertainty;
 unknowns cannot be silently counted as verified coverage.
 
-Defining this task authorizes its durable record, not starting the audit now,
+The original task definition authorized its durable record, not execution. The
+2026-09-20 first-pass contract now authorizes bounded source investigation, not
 flashing firmware, running hardware tests, changing upstream code, or publishing
 experimental changes. Scheduling follows the immediate research and subsequent
 Author direction. Future implementation and hardware validation need their own
