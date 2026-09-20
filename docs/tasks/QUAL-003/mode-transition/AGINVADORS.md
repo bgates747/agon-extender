@@ -1,5 +1,11 @@
 # Aginvadors — added performance-suite workload
 
+**2026-09-20 correction:** the50-Hz inference below was based on the C header,
+but AgonDev `clock()` actually returns raw MOS sysvar time without100-Hz
+conversion. That inference is withdrawn. BENCH-007 measures actual cadence and
+changes production to explicit one-vblank pacing; no20% speedup is established.
+
+
 ## Executive summary
 
 Author adds Aginvadors to the output-pacing test suite. It complements the

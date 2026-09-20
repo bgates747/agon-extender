@@ -1,0 +1,23 @@
+{
+  "source": 255,
+  "updates": 120,
+  "prt_counts_per_second_nominal": 1152000,
+  "clock_resolution_us_nominal": 0.8680555555555556,
+  "overflow_rows": 0,
+  "active_prt": 719846,
+  "pacing_prt": 1576059,
+  "total_prt": 2295905,
+  "active_ms_per_update": 5.207219328703704,
+  "pacing_ms_per_update": 11.400889756944444,
+  "active_percent": 31.353474991343283,
+  "updates_per_second": 60.0,
+  "active_max_prt_counts": 18566,
+  "game": "nur",
+  "route": "legacy",
+  "markers": false,
+  "started": "2026-09-20T05:21:29.792289+00:00",
+  "fixture_to_service_seconds": 27.176855068013538,
+  "retrieval_finished_seconds": 28.153728054021485,
+  "logic_submission_split": "unavailable; interleaved",
+  "browser_video_work": false
+}

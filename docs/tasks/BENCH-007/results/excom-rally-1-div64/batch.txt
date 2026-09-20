@@ -1,0 +1,10 @@
+EMOS excom
+VDU 22 136
+CD /test/gt/rally
+LOAD rtime64.bin
+RUN
+LOAD /test/gt/dump.bin
+RUN
+EMOS LEGACY --keep-display
+LOAD /extender/sdserve.bin
+RUN . /

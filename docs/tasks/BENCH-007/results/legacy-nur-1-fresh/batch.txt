@@ -1,0 +1,16 @@
+EMOS legacy
+VDU 22 20
+CD /test/gt
+LOAD probe.bin
+RUN
+CD /test/gt/nur
+LOAD ntiming.bin
+RUN
+SAVE /test/gt/nur/legacy-nur-1-fresh.raw &48D5F &5A8
+LOAD /test/gt/collect.bin
+RUN
+LOAD /test/gt/dump.bin
+RUN
+EMOS LEGACY --keep-display
+LOAD /extender/sdserve.bin
+RUN . /

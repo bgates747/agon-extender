@@ -1,0 +1,8 @@
+EMOS legacy
+VDU 22 136
+CD /test/gt/rally
+LOAD rtiming.bin
+RUN
+EMOS LEGACY --keep-display
+LOAD /extender/sdserve.bin
+RUN . /

@@ -13,7 +13,7 @@ hardware/implementation tranche beyond this closeout and planning contract.
 
 ## Frozen work contract — 2026-09-20
 
-**PLAN-001-T01** [ ] **Timing closeout.** The agent reviews BENCH-007 implementation, reusable
+**PLAN-001-T01** [x] **Timing closeout.** The agent reviews BENCH-007 implementation, reusable
    documentation, results and firmware-restoration evidence. Identify owning
    repositories and separate scoped changes from unrelated browser/game work.
    Retain the unresolved mainboard sequential-run sprite/heap panic and Rally's
@@ -66,7 +66,7 @@ stable subtask identifiers and checkbox formatting; applied in this revision.
 
 **PLAN-001-G02** [x] Author settled D01: defer Aginvadors optimization.
 
-**PLAN-001-G03** [ ] T01 produces scoped commit groups with retained limitations.
+**PLAN-001-G03** [x] T01 produces scoped commit groups with retained limitations.
 
 **PLAN-001-G04** [ ] T02 produces a disposition table and proposed authoritative
 order for Author review.
@@ -76,3 +76,13 @@ before that new tranche starts.
 
 No firmware identity, emulator launch, bench operation or network change is
 required for this documentation update.
+
+## T01 execution receipt — 2026-09-20
+
+Contract freeze: `01bd48a5`. Reusable timing package: `ba9dd47f` in Extender.
+Existing production one-vblank pacing: `7321a0f` in Pynvaders. Results and
+closeout records are committed separately. Review checks: four analyzer tests,
+ASan/UBSan recorder, normal Aginvadors build and sanitizer-backed simulation,
+85 evidence hashes, 18 CSV validations and 12 serial comparisons all passed.
+No hardware change or push. Mainboard panic and Rally comparison limits remain
+BENCH-007-F01/F02 for T02 disposition. T02 and T03 have not started.

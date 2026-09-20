@@ -1,0 +1,33 @@
+{
+  "source": 0,
+  "updates": 120,
+  "prt_counts_per_second_nominal": 1152000,
+  "clock_resolution_us_nominal": 0.8680555555555556,
+  "overflow_rows": 0,
+  "active_prt": 19688,
+  "pacing_prt": 2274806,
+  "total_prt": 2294494,
+  "active_ms_per_update": 0.1424189814814815,
+  "pacing_ms_per_update": 16.455483217592594,
+  "active_percent": 0.8580541069185624,
+  "updates_per_second": 59.50413223140496,
+  "active_max_prt_counts": 172,
+  "submitted_us": {
+    "mean": 133.65,
+    "p50": 121,
+    "p95": 196,
+    "max": 235
+  },
+  "completed_us": {
+    "mean": 16149.016666666666,
+    "p50": 16193,
+    "p95": 16601,
+    "max": 16672
+  },
+  "drain_us": {
+    "mean": 16015.366666666667,
+    "p50": 16001,
+    "p95": 16481,
+    "max": 16542
+  }
+}

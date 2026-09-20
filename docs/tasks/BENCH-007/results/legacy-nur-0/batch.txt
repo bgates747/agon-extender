@@ -1,0 +1,9 @@
+EMOS legacy
+VDU 22 20
+CD /test/gt/nur
+LOAD ntiming0.bin
+RUN
+SAVE /test/gt/nur/raw.bin &48D5F &5A8
+EMOS LEGACY --keep-display
+LOAD /extender/sdserve.bin
+RUN . /

@@ -1,0 +1,22 @@
+{
+  "source": 255,
+  "updates": 120,
+  "prt_counts_per_second_nominal": 1152000,
+  "clock_resolution_us_nominal": 0.8680555555555556,
+  "overflow_rows": 81,
+  "active_prt": 7531828,
+  "pacing_prt": 1088,
+  "total_prt": 7532916,
+  "active_ms_per_update": null,
+  "pacing_ms_per_update": null,
+  "active_percent": null,
+  "updates_per_second": 15.584415584415584,
+  "active_max_prt_counts": 65535,
+  "game": "rally",
+  "route": "excom",
+  "markers": false,
+  "started": "2026-09-20T05:20:18.558412+00:00",
+  "fixture_to_service_seconds": 15.18678845098475,
+  "retrieval_finished_seconds": 18.818017836951185,
+  "browser_video_work": false
+}

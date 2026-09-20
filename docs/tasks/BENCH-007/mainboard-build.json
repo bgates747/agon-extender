@@ -1,0 +1,17 @@
+{
+  "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "build_id": "game-timing-probe-r01-b2026-09-20-04-46-59Z",
+  "variant": "mainboard",
+  "status": "draft",
+  "provenance": {
+    "commit": "375ce81f1f02640ef929880736c6db9668b0666a",
+    "dirty": true
+  },
+  "outputs": {
+    "firmware.bin": "377d9812c4983d1b75706dd84720d0fca8211adfd99cd06a62cea6cdd91b5e0f",
+    "partitions.bin": "148b959cbff1c38aa8e1d5c0ba9d612c54997b945e56a63f41223eef650653a1",
+    "firmware.elf": "22753ed56a4217d2a62587e261cb9cfa8ca05add24b92bdee7792b453fe47e4d",
+    "bootloader.bin": "f2dfacdea6ae72d0aeeb7c30e525c4c6fc768a041849feac694cbb2ee2224448"
+  }
+}

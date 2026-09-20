@@ -1,0 +1,8 @@
+EMOS excom
+VDU 22 8
+CD /test/gt/inv
+LOAD inv.bin
+RUN
+EMOS LEGACY --keep-display
+LOAD /extender/sdserve.bin
+RUN . /

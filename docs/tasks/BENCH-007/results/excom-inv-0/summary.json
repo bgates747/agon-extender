@@ -1,0 +1,22 @@
+{
+  "source": 255,
+  "updates": 120,
+  "prt_counts_per_second_nominal": 1152000,
+  "clock_resolution_us_nominal": 0.8680555555555556,
+  "overflow_rows": 0,
+  "active_prt": 2004369,
+  "pacing_prt": 682397,
+  "total_prt": 2686766,
+  "active_ms_per_update": 14.49919704861111,
+  "pacing_ms_per_update": 4.936320891203704,
+  "active_percent": 74.60154698995,
+  "updates_per_second": 51.06382978723404,
+  "active_max_prt_counts": 34653,
+  "game": "inv",
+  "route": "excom",
+  "markers": false,
+  "started": "2026-09-20T05:19:11.987030+00:00",
+  "fixture_to_service_seconds": 5.9320600620121695,
+  "retrieval_finished_seconds": 9.683270206965972,
+  "browser_video_work": false
+}

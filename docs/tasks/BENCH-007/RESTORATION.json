@@ -1,0 +1,14 @@
+{
+  "mainboard": {
+    "verified_full_flash": true,
+    "sha256": "70e0a4b998aadbf7a747a83383fe76568c0f537039edb47692d0608fb00ab8ca",
+    "additional_difference": "diagnostic panic wrote core-dump partition; retained before restoring original bytes"
+  },
+  "p4": {
+    "verified": true,
+    "build_id": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+    "sha256": "509ba41096b946217217c1bad444b0ff81ecb40d215f3a1919a2227be6155587"
+  },
+  "emos": "unchanged",
+  "startup_sha256": "2f2b00cac0a210e102757c40909e92b0600e1e7851f55ce5c407930c22384fa0"
+}

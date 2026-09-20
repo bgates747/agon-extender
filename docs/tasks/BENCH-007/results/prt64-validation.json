@@ -1,0 +1,9 @@
+{
+  "passed": true,
+  "divider": 64,
+  "vblank_mean_counts": 4793.016666666666,
+  "immediate_counts": 0,
+  "delay10_counts": 2844,
+  "delay30_counts": 8531,
+  "delay100_counts": 28433
+}

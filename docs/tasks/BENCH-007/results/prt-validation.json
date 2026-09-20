@@ -1,0 +1,16 @@
+{
+  "samples": 120,
+  "divider": 16,
+  "nominal_counts_per_second": 1152000,
+  "vblank_counts": {
+    "min": 19210,
+    "mean": 19210.608333333334,
+    "max": 19217
+  },
+  "immediate_read_counts": 2,
+  "delay10ms_counts": 11379,
+  "delay30ms_counts": 34124,
+  "delay100ms_counts": 65535,
+  "saturation_pass": true,
+  "scope": "18.432MHz nominal clock; delay() software compensation is not an independent calibrated reference"
+}

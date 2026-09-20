@@ -1,0 +1,4 @@
+{
+  "status": "failed",
+  "reason": "Mainboard VDP corrupt heap / LoadProhibited in drawSpriteScanLine. No game CSV accepted. No attribution to fence versus mode transition established."
+}

@@ -1,0 +1,34 @@
+{
+  "build_id": "game-timing-probe-r01-b2026-09-20-05-05-37Z",
+  "status": "experimental",
+  "parent_build_id": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "commit": "375ce81f1f02640ef929880736c6db9668b0666a",
+  "dirty": true,
+  "outputs": {
+    "firmware.bin": {
+      "bytes": 1491520,
+      "sha256": "d8d7b6c5937d79243ff3327268a1af7b83da7574b9fec94484827e4b90ca878b"
+    },
+    "firmware.factory.bin": {
+      "bytes": 1622592,
+      "sha256": "f5cca7049f77ece71fdbb095b2600b45beb9392bc83f9f7e4a7867ee783e75bc"
+    },
+    "firmware.elf": {
+      "bytes": 28375256,
+      "sha256": "17c8262dc6dca51eca4156d040cb94cb1e175df413e2614ebd7220dc9c501b94"
+    },
+    "bootloader.bin": {
+      "bytes": 24256,
+      "sha256": "a5afac936f05856524d98afd79d4dfb418b14cef39f14c9834f509bfca041daf"
+    },
+    "partitions.bin": {
+      "bytes": 3072,
+      "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a"
+    }
+  },
+  "source_delta": {
+    "video/extender/diagnostics/graphics_timing.hpp": "71c24973308575869c1cf1f55ec980e4d050bc484bdf1a085a6c65b6ca6c4cc5",
+    "video/extender/diagnostics/frame_records.hpp": "d403781b1c6942334f6da3668faaa430d0ff38c067564fa520da2d04a5782334",
+    "video/extender/diagnostics/graphics_command.inc": "35c6a1e711740efa7b797aca8e0812e1dc712221618806819797165810fcfcf2"
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "source": 0,
+  "updates": 120,
+  "prt_counts_per_second_nominal": 1152000,
+  "clock_resolution_us_nominal": 0.8680555555555556,
+  "overflow_rows": 120,
+  "active_prt": 7864200,
+  "pacing_prt": 0,
+  "total_prt": 7864200,
+  "active_ms_per_update": null,
+  "pacing_ms_per_update": null,
+  "active_percent": null,
+  "updates_per_second": 9.23076923076923,
+  "active_max_prt_counts": 65535,
+  "submitted_us": {
+    "mean": 79337.2,
+    "p50": 79596,
+    "p95": 98743,
+    "max": 118151
+  },
+  "completed_us": {
+    "mean": 79354.15833333334,
+    "p50": 79610,
+    "p95": 98760,
+    "max": 118171
+  },
+  "drain_us": {
+    "mean": 16.958333333333332,
+    "p50": 17,
+    "p95": 20,
+    "max": 28
+  },
+  "game": "rally",
+  "route": "legacy",
+  "markers": true,
+  "started": "2026-09-20T05:20:40.818115+00:00",
+  "fixture_to_service_seconds": 21.21969260199694,
+  "retrieval_finished_seconds": 25.405898407974746,
+  "browser_video_work": false
+}

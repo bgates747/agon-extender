@@ -5,9 +5,13 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Do now — Approved closeout and planning
+
+- [ ] **PLAN-001 — Timing closeout and next-work selection**: [approved contract](docs/tasks/PLAN-001.md). Close out and commit scoped timing work, reconcile the unfinished queue, then select faithful VDP-to-EDP work. Aginvadors optimization is deferred by Author decision D01 until more tokens are available; browser-performance experiments are parked. This sequence takes priority over historical headings below. T01 complete and committed; T02 queue reconciliation is next, not yet started.
+
 ## Active reusable timing package
 
-- [ ] **BENCH-007 — Paired game/renderer timing**: [frozen contract](docs/tasks/BENCH-007.md). Production Aginvadors one-vblank pacing, reusable mainboard/P4 timing mechanism, isolated three-game variants and paired physical measurements. Author authorizes implementation, firmware deployment and bench control; goal tracking active.
+- [ ] **BENCH-007 — Paired game/renderer timing**: [work and review record](docs/tasks/BENCH-007.md). Measurement package/results complete and committed. Remaining findings BENCH-007-F01/F02: unresolved mainboard sequential-run sprite panic and Rally fixture/gameplay discrepancy; retained for PLAN-001-T02 disposition. Aginvadors optimization is deferred.
 
 ## Current game pacing work
 

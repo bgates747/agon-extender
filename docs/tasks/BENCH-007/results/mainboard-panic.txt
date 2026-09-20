@@ -1,0 +1,19 @@
+CORRUPT HEAP: Bad tail at 0x3ffaGuru Meditation Error: Core  1 panic'ed (LoadProhibited). Exception was unhandled.
+
+Core  1 register dump:
+PC      : 0x4008325a  PS      : 0x00060031  A0      : 0x8008338c  A1      : 0x3ffc035c  
+A2      : 0x3ffb502c  A3      : 0x00000000  A4      : 0x000001df  A5      : 0x00000280  
+A6      : 0x000001e0  A7      : 0x00000d00  A8      : 0x8008325a  A9      : 0x3ffc033c  
+A10     : 0x00000000  A11     : 0x00000000  A12     : 0x3ffb986c  A13     : 0x00060023  
+A14     : 0x00060021  A15     : 0x00000001  SAR     : 0x00000000  EXCCAUSE: 0x0000001c  
+EXCVADDR: 0x0000001c  LBEG    : 0x00000000  LEND    : 0x00000000  LCOUNT  : 0x00000000  
+
+
+Backtrace: 0x40083257:0x3ffc035c |<-CORRUPTED
+
+
+
+
+ELF file SHA256: 22753ed56a4217d2
+
+Rebooting...

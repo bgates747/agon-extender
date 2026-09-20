@@ -1,0 +1,2 @@
+# Captured evidence is byte-exact: retain original CRLF, spacing and hashes.
+* -text -whitespace
