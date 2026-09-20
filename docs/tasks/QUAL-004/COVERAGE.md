@@ -25,7 +25,7 @@ was added. Static image parity does not qualify live resource mutation or transi
 | Hardware and mixed sprites | BSP26/27 | Passed static composed image parity |
 | Custom font creation/selection/mutation/deletion | FONT01, retained PORT-008 case | Passed static image parity |
 | All bitmap storage formats and conversions | Partial existing scenes | Coverage gaps to enumerate after first tranche |
-| Lower-depth palette modes, static Copper | PAL16, COP16_SETUP, COP16_EDIT | Passed mode9 parity and literal oracles; remaining mode9/10/11 cases deferred |
+| Lower-depth palette modes, static Copper | PAL16, COP16_SETUP, COP16_EDIT | Passed mode9 parity; [plain mode10/11 palettes also passed](low-depth/RESULTS.md). Four Copper controls deferred |
 | Double buffering/displayed versus drawing page | PAGE_FRONT/PAGE_SWAP | [Passed both physical controls](page-controls/RESULTS.md), 2026-09-20; static images only |
 | Time-varying Copper/animated scenes | Coherent full-frame acquisition needed | Deferred; stitched static rows cannot qualify |
 | Sprite population stress page BSP30 | Prior mainboard timeout evidence | Deferred from first tranche; no implied pass |
@@ -53,9 +53,10 @@ missing coverage and acquisition failures remain separate from missing features.
 
 1. Feature-gated tile engine/layers and teletext mode7: not exercised here; this
    is missing coverage, not a declaration of missing implementation.
-2. Mode9 Copper replace/reset, mode10 PAL4/COP4_SETUP, mode11 PAL2/COP2_SETUP:
-   six controls prepared and preserved, not qualified. Mode136 PAGE_FRONT/PAGE_SWAP
-   subsequently passed; see [page-control results](page-controls/RESULTS.md).
+2. Mode9 Copper replace/reset, mode10 COP4_SETUP and mode11 COP2_SETUP:
+   four Copper controls prepared and preserved, not qualified. Plain PAL4/PAL2
+   [passed subsequently](low-depth/RESULTS.md), as did mode136
+   [PAGE_FRONT/PAGE_SWAP](page-controls/RESULTS.md).
 3. PAL16 exercises public bitmap storage formats0/1/2 in its selected cases;
    exhaustive conversions, modes and reserved/internal format combinations remain
    outside this finite corpus.

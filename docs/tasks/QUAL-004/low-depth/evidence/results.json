@@ -1,0 +1,250 @@
+[
+  {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "fcfa9ad31d3b5a5b00444d29450a0558ec03743fb3d78ebf55c0099bdb261c1f",
+    "p4_sha256": "fcfa9ad31d3b5a5b00444d29450a0558ec03743fb3d78ebf55c0099bdb261c1f",
+    "case": "PAL4",
+    "mainboard_repeat_equal": true,
+    "p4_sequences": [
+      15,
+      16
+    ],
+    "literal_oracles": {
+      "mainboard": {
+        "scale": 1,
+        "ideal_pixels_match": true,
+        "tiles": [
+          {
+            "name": "paint-before-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba8888-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba2222-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "mono-byte-row-and-creation-colour",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "solid-bitmap-and-alias",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "screen-capture-before-remap",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "xor-white-erases-selected-pixels",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "paint-after-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "invalid-physical-colour-ignored",
+            "mismatches": 0,
+            "first": []
+          }
+        ],
+        "acceptance_basis": "independent ideal pixels",
+        "passed": true
+      },
+      "p4": {
+        "scale": 1,
+        "ideal_pixels_match": true,
+        "tiles": [
+          {
+            "name": "paint-before-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba8888-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba2222-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "mono-byte-row-and-creation-colour",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "solid-bitmap-and-alias",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "screen-capture-before-remap",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "xor-white-erases-selected-pixels",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "paint-after-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "invalid-physical-colour-ignored",
+            "mismatches": 0,
+            "first": []
+          }
+        ],
+        "acceptance_basis": "independent ideal pixels",
+        "passed": true
+      }
+    }
+  },
+  {
+    "width": 320,
+    "height": 240,
+    "pixels": 76800,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "55e8a81122fc3f9a40dc6b7cf82141ede2d79b8147603f09a56cdb5aca1483b2",
+    "p4_sha256": "55e8a81122fc3f9a40dc6b7cf82141ede2d79b8147603f09a56cdb5aca1483b2",
+    "case": "PAL2",
+    "mainboard_repeat_equal": true,
+    "p4_sequences": [
+      19,
+      20
+    ],
+    "literal_oracles": {
+      "mainboard": {
+        "scale": 1,
+        "ideal_pixels_match": true,
+        "tiles": [
+          {
+            "name": "paint-before-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba8888-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba2222-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "mono-byte-row-and-creation-colour",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "solid-bitmap-and-alias",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "screen-capture-before-remap",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "xor-white-erases-selected-pixels",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "paint-after-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "invalid-physical-colour-ignored",
+            "mismatches": 0,
+            "first": []
+          }
+        ],
+        "acceptance_basis": "independent ideal pixels",
+        "passed": true
+      },
+      "p4": {
+        "scale": 1,
+        "ideal_pixels_match": true,
+        "tiles": [
+          {
+            "name": "paint-before-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba8888-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "rgba2222-alpha-and-palette",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "mono-byte-row-and-creation-colour",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "solid-bitmap-and-alias",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "screen-capture-before-remap",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "xor-white-erases-selected-pixels",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "paint-after-palette-change",
+            "mismatches": 0,
+            "first": []
+          },
+          {
+            "name": "invalid-physical-colour-ignored",
+            "mismatches": 0,
+            "first": []
+          }
+        ],
+        "acceptance_basis": "independent ideal pixels",
+        "passed": true
+      }
+    }
+  }
+]

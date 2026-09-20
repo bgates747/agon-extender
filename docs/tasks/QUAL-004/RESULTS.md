@@ -2,10 +2,11 @@
 
 ## Executive summary
 
-**2026-09-20 follow-up:** [two displayed-page controls](page-controls/RESULTS.md)
-also passed, adding 153,600 pixels. Cumulative retained coverage is now **68
-scenes / 12,770,304 pixels**; six prepared controls remain. The first-pass results
-and firmware identities below are preserved as originally measured.
+**2026-09-20 follow-ups:** [two displayed-page controls](page-controls/RESULTS.md)
+and [two plain low-depth controls](low-depth/RESULTS.md) also passed. Cumulative
+retained coverage is now **70 scenes / 12,923,904 pixels**; four prepared Copper
+controls remain. The first-pass results and firmware identities below are
+preserved as originally measured.
 
 **66 distinct static scenes matched pixel for pixel on physical mainboard VDP
 and P4: 12,616,704 compared pixels, zero differences.** This establishes parity

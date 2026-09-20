@@ -126,3 +126,11 @@ and repeat captures all equal. Cumulative static coverage is 68 scenes /
 12,770,304 pixels across the identified campaigns. Six prepared controls remain
 unqualified; earlier crashes remain open. Mainboard firmware/startup restored;
 P4 and EMOS unchanged.
+
+## Plain low-depth follow-up — 2026-09-20
+
+[PAL4 and PAL2](QUAL-004/low-depth/RESULTS.md) passed complete physical image
+comparison and independent literal oracles. Another 153,600 pixels match;
+cumulative coverage is 70 scenes / 12,923,904 pixels. Four prepared Copper
+controls and prior defects remain open. Original startup/mainboard firmware
+restored; P4/EMOS unchanged.

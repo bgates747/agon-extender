@@ -1,0 +1,126 @@
+{
+  "script_sha256": "9b79e80ddca1fa235001057896f5ed5693387932a8e2bf01f2d2c1c660927fbb",
+  "generator_sha256": "992fb29290c993c0a8f95f021f012590dfd1765389e1779ec71bf10a8e644f4b",
+  "mode": 10,
+  "depth": 4,
+  "surface": [
+    320,
+    240
+  ],
+  "command_lines": 69,
+  "colours": {
+    ".": [
+      0,
+      0,
+      0
+    ],
+    "W": [
+      255,
+      255,
+      255
+    ],
+    "R": [
+      255,
+      0,
+      0
+    ],
+    "B": [
+      0,
+      0,
+      255
+    ]
+  },
+  "tiles": [
+    {
+      "name": "paint-before-palette-change",
+      "x": 24,
+      "y": 32,
+      "rows": [
+        "RRRR",
+        "RRRR",
+        "RRRR"
+      ]
+    },
+    {
+      "name": "rgba8888-alpha-and-palette",
+      "x": 68,
+      "y": 32,
+      "rows": [
+        "R.RB",
+        "RR.B",
+        "BRR."
+      ]
+    },
+    {
+      "name": "rgba2222-alpha-and-palette",
+      "x": 112,
+      "y": 32,
+      "rows": [
+        "R.RB",
+        "RR.B",
+        "BRR."
+      ]
+    },
+    {
+      "name": "mono-byte-row-and-creation-colour",
+      "x": 156,
+      "y": 32,
+      "rows": [
+        "R.......R",
+        "RR.R.R.R.",
+        "..RRR...."
+      ]
+    },
+    {
+      "name": "solid-bitmap-and-alias",
+      "x": 200,
+      "y": 32,
+      "rows": [
+        "RRRR",
+        "RRRR",
+        "RRRR"
+      ]
+    },
+    {
+      "name": "screen-capture-before-remap",
+      "x": 244,
+      "y": 32,
+      "rows": [
+        "R.RB",
+        "RR.B",
+        "BRR."
+      ]
+    },
+    {
+      "name": "xor-white-erases-selected-pixels",
+      "x": 24,
+      "y": 72,
+      "rows": [
+        "R..R",
+        "R..R",
+        "R..R"
+      ]
+    },
+    {
+      "name": "paint-after-palette-change",
+      "x": 68,
+      "y": 72,
+      "rows": [
+        "RRRR",
+        "RRRR",
+        "RRRR"
+      ]
+    },
+    {
+      "name": "invalid-physical-colour-ignored",
+      "x": 112,
+      "y": 72,
+      "rows": [
+        "RRRR",
+        "RRRR",
+        "RRRR"
+      ]
+    }
+  ],
+  "scope": "Static palette/depth pixels; no timing or full mode qualification"
+}
