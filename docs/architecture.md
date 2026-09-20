@@ -750,3 +750,23 @@ relative to RGB888, browser WebGL expands colours, and bounded frame credits
 control delivery without a fixed 5 fps throttle. Logical VDP time remains
 independent of network/browser progress. Hardware qualification of the new
 encoding and pacing is tracked in PORT-003.
+
+### Deferred Extender firmware update path — 2026-09-20
+
+Current stock maintenance support remains Legacy-only. Functional P4 EDP
+updating using the stock &A1 interface is a deferred production direction,
+under EMOS-owned routing and explicit update targeting. Both implementation
+and discard-only repairs are deferred; this does not qualify today's empty
+handler. ADR-0014 and PORT-003-D015 record the scope and research.
+
+### Deferred printer output intent — 2026-09-20
+
+VDU 1/2/3 remain desired serial debugging/output facilities for EDP, rather than
+intentional discard-only commands. Their P4 output binding is not yet selected
+or qualified. Research and likely implementation are deferred; this is not a
+v1 delivery commitment. ADR-0014 and PORT-003-D016 refine the earlier exclusion.
+
+Console (&FE) and terminal (&FF) modes share the deferred printer-output scope:
+possible future serial facilities, with one endpoint/coexistence review before
+implementation. Current P4 behavior and EMOS route authority remain unchanged;
+no implementation or qualification is implied (PORT-003-D017).

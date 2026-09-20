@@ -592,3 +592,28 @@ For these command families this narrows decision 21: Dual-mode availability is
 not part of the supported contract. The Author prioritizes existing Extender
 capabilities over porting these stock maintenance tools. PORT-003 owns remaining
 accidental-command containment decisions; this does not authorize implementation.
+
+### Updater future scope clarification — 2026-09-20
+
+The Author defers both functional &A1 updater implementation and discard-only
+repairs until production preparation. Functional P4 EDP updating from Agon SD
+is a retained future direction: agon-flash depends on &A1 rather than replacing
+it. Present supported maintenance remains Legacy-only. EMOS retains target and
+route authority; no automatic forwarding to mainboard VDP is introduced.
+PORT-003-D015 records the decision and future implementation questions.
+
+### Printer output scope clarification — 2026-09-20
+
+The Author retains VDU 1/2/3 as a desired serial debugging/output facility,
+with likely EDP implementation following research. This supersedes a permanent
+exclusion interpretation of the earlier maintenance carve-out, without claiming
+current support or committing the feature to v1. Endpoint selection and work
+remain deferred under PORT-003-D016; EMOS keeps VDU routing authority.
+
+### Shared serial facility scope — 2026-09-20
+
+Console and terminal modes join printer output as deferred serial facilities
+for possible implementation when useful or closer to production. Their shared
+stock programming/data port warrants one endpoint and coexistence review.
+Current support is unchanged; no P4 endpoint or delivery version is selected.
+PORT-003-D017 owns the scope and linked research questions.

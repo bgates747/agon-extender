@@ -53,15 +53,24 @@ starting with updater consumption and explicitly separating interactive transfer
 | C-HEX | `23,28` followed by selector timeout (not a fixed trailing byte) | Empty adapter; stock starts external USB/debug-UART Intel HEX session | Not an inline HEX payload. Separate abort/release contract required |
 | C-YRX | `23,28,1` | Empty adapter; stock sends keyboard-packet byte `C`, receives external YMODEM files then hands them to MOS | Caller may wait forever; interactive endpoint contract required |
 | C-YTX | `23,28,2` | Empty adapter; stock sends `C`, receives MOS file records, then external YMODEM transmission | No bounded total length immediately after selector; separate contract |
-| C-TERM | `23,0,&FF`, no operands | P4 stays Disabled; no reply | Entry framed, but subsequent terminal bytes are not promised safe VDU payload |
-| C-CONSOLE | `23,0,&FE,n:u8` | n consumed; consoleMode forced false; no reply | Framed no-op; do not disable ordinary ExCom route |
-| C-PRINT | `1,char:u8`; `2` on; `3` off | Retained parser consumes fields, writes DBGSerial when enabled. P4 skips DBGSerial.begin; output is unavailable/unqualified, not a proven bounded discard sink | No framing gap identified; qualify/block side effects separately |
+| C-TERM | `23,0,&FF`, no operands | P4 stays Disabled; no reply | Entry framed, subsequent terminal bytes not promised safe VDU payload; deferred with [serial printer/console bucket](printer.md) |
+| C-CONSOLE | `23,0,&FE,n:u8` | n consumed; consoleMode forced false; no reply | Framed no-op; preserve ExCom route; deferred with [serial printer/terminal bucket](printer.md) |
+| C-PRINT | `1,char:u8`; `2` on; `3` off | Retained parser consumes fields, writes DBGSerial when enabled. P4 skips DBGSerial.begin; output is unavailable/unqualified, not a proven bounded discard sink | No framing gap identified; retain intended debugging output, research/implementation deferred ([details](printer.md)) |
 | C-KLAY | `23,0,&81,layout:u8` | Logical layout/native console update retained; no direct reply | Supported state; no blanket stub |
 | C-KSTATE | `23,0,&88,delay:u16,rate:u16,LEDs:u8` | Reads all5 bytes; retained logical state/ranges, packet &88 length5 delay,rate,LEDs | No physical LED/repeat-generation claim; preserve reply |
 | C-KQUERY | `23,0,&99,virtualKey:u8` | Reads key, but isVKDown returns false and injectVirtualKey does nothing; no event | Confirmed missing requested key reply; normal stock event packet &81 length4 keycode,modifiers,VK,down |
 | C-MOUSE | `23,0,&89,op:u8,args` | Retained parser, absent physical backend; see subcommands below | Framing complete; reply/availability issues separate |
 | C-MCURSOR | `23,27,&40,hotX:u8,hotY:u8` | Reads both; current bitmap lookup retained, makeMouseCursor empty; no reply | Safe consumption; no physical cursor creation |
 | C-VARS | `23,0,&F8,id:u16,value:u16`; `&F9,id:u16` | Reads full fields before variable dispatch; mouse/keyboard adapters may receive updates. Some variables enqueue packets | Preserve logical state and event semantics; do not discard whole variable command |
+
+### Updater research and current deferral
+
+C-UP0/C-UP1/C-UP2/C-UP? are deferred, including discard-only changes.
+[Updater research](updater.md) records agon-flash v1.9's actual &A1 use,
+screen-readback dependency and future P4 update requirements. The Author now
+intends revisiting functional EDP updating near production; current applications
+do not use it. This supersedes the recommendation to work on updater consumption
+next, without claiming the existing empty handler is safe.
 
 ### Audio grammar (existing authority)
 

@@ -2938,3 +2938,49 @@ UC02/UC03 contract work is next. Earlier audio completion remains scoped.
 Author authorized the [key-query contract](PORT-003/key-query/PLAN.md), coding,
 flash and test, then review with app notification only. This is the C-KQUERY
 slice; wider UC02/UC03 items remain open. Preserve Legacy-only maintenance scope.
+
+The bounded key-query implementation is deployed and passed 269 hardware query
+checks through EMOS; see [results](PORT-003/key-query/RESULTS.md). Author accepted the bounded coverage; this does not close the wider consumption/reply inventory.
+
+## Mouse work deferred — Author direction, 2026-09-20
+
+Skip mouse command implementation, no-op/reply repair and mouse-specific testing
+for the present tranche. The Author has no currently used Agon application that
+requires a mouse. Existing behavior remains unchanged; this is a priority
+deferral, not mouse compatibility acceptance or a permanent ExCom restriction.
+Revisit P4 EDP mouse support when the new Olimex P4-PC is available and can
+provide a physical USB mouse path; coordinate with P4PC-001. Later Console8
+qualification can exercise the Author's available PS/2 mouse against mainboard
+VDP. Neither future test is authorized to execute by this scheduling decision.
+The inventory's mouse discrepancies remain recorded for that later work.
+
+## Updater deferral and future production scope — 2026-09-20
+
+PORT-003-D015 — Accepted: leave &A1 updater handlers unchanged now, including
+no-op consumption repairs. Current applications do not use them. Revisit
+functional EDP updating near production; agon-flash uses these commands and
+could provide Agon-SD-based P4 updating without a host development environment.
+[Research adjacent to C-UP inventory](PORT-003/command-consumption/updater.md)
+records pinned source, wire grammar and screen-readback dependencies. Present
+Legacy-only support remains; this changes future scope, not current capability.
+Future contract must settle target selection, P4 OTA layout/validation/recovery
+and utility compatibility before implementation. HEX/YMODEM remain deferred.
+
+## Printer output deferred — 2026-09-20
+
+PORT-003-D016 — Accepted intent: preserve VDU 1/2/3 as useful serial debugging
+and output facilities; likely implement working EDP output after research.
+Do not convert them to deliberate discard-only stubs. P4 endpoint selection,
+implementation and qualification remain unresolved and deferred until Author
+resumption. [Research and questions](PORT-003/command-consumption/printer.md)
+are adjacent to C-PRINT. This revises a blanket future exclusion, not current
+support or a promised v1 feature; no code or hardware changes authorized now.
+
+## Shared serial maintenance bucket — 2026-09-20
+
+PORT-003-D017 — Accepted: group console mode (&FE) and terminal mode (&FF)
+with printer output under the [shared deferred serial research](PORT-003/command-consumption/printer.md).
+Revisit when useful or closer to production. Same stock serial port and endpoint,
+logging, programming/recovery considerations; additionally review bidirectional
+input ownership and mode entry/exit. No implementation, endpoint choice or
+qualification is authorized now. Current behavior remains unchanged.
