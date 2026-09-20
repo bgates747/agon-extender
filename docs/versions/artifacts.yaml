@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r92
-updated_at: 2026-09-20T02:08:43Z
+registry_revision: r93
+updated_at: 2026-09-20T05:41:40Z
 
 artifacts:
+  - artifact_id: game-timing-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: game-timing-probe-r01
+    status: experimental
+    variants: [mainboard, p4, aginvadors, nurples, rally]
+    description: Reusable paired game-active, pacing and graphics-completion timing package.
+    notes:
+      - BENCH-007 explicit implementation and physical-test authorization; standing identity approval, registry r93.
   - artifact_id: key-query-probe
     kind: test_fixture
     identity_scheme: revision

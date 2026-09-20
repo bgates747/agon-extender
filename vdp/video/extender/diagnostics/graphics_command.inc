@@ -3,8 +3,8 @@
 // No production callback ABI is established by this temporary probe.
 case 0xEF: {
     int op = readByte_t(), token = readWord_t(), flags = readByte_t();
-    if (op < 1 || op > 4 || token < 0 || flags < 0 ||
-        (op == 4 ? (flags < 2 || flags > 8) : flags > 1)) break;
+    if (op < 1 || op > 10 || token < 0 || flags < 0 ||
+        (op == 4 ? (flags < 2 || flags > 8) : op == 8 ? (flags < 1 || flags > 3) : flags > 1)) break;
     using namespace agon_graphics_timing;
     static uint16_t current_token;
     static bool armed, saved;
@@ -28,6 +28,48 @@ case 0xEF: {
         while (!complete(t) && uint32_t(now()-start)<10000000U) delay(1);
         return complete(t);
     };
+    // Reusable game timing: batch records, no success reply in a frame hot loop.
+    // Diagnostic barriers deliberately remain normal-worker operations. They
+    // perturb pipelining; the package requires pacing-only/empty controls.
+    static agon_frame_records::Recorder frames;
+    static uint16_t frame_session;
+    if (op >= 5) {
+        if (op == 5) {
+            frames.reset();frame_session=uint16_t(token);
+            if (!fence()) { frames.fail(); reply(8,1,0); }
+            else reply(0,0x475431,agon_frame_records::Capacity);
+        }
+        else if (op == 6) {
+            // Reset / preceding end already completed its normal-worker fence.
+            // Do not add a second per-update vblank barrier at begin.
+            frames.begin(uint16_t(token),now());
+        } else if (op == 7) {
+            uint32_t submitted=now();
+            if (!fence()) frames.fail();
+            else frames.end(uint16_t(token),submitted,now());
+        } else if (op == 9) {
+            if(uint16_t(token)!=frame_session){reply(8,2,frames.size());break;}
+            bool ok=frames.stop();reply(0,ok?0:1,frames.size());
+        } else if (op == 8) {
+            auto r=frames.get(unsigned(token));
+            if (!r) reply(8,1,frames.size());
+            else reply(uint8_t(flags),flags==1?r->submitted_us:flags==2?r->completed_us:r->drain_us,frames.size());
+        } else if (op == 10) {
+            // Post-capture only. The stock debug logger uses the board's configured
+            // diagnostic console, not the keyboard port or EMOS VDU stream.
+            if (frames.fault() || !frames.get(0)) reply(8,1,frames.size());
+            else {
+                force_debug_log("GT1,id,submitted_us,completed_us,drain_us\n");
+                for(unsigned i=0;i<frames.size();++i) {
+                    auto r=frames.get(i);
+                    force_debug_log("GT1,%u,%lu,%lu,%lu\n",i,(unsigned long)r->submitted_us,
+                      (unsigned long)r->completed_us,(unsigned long)r->drain_us);
+                }
+                reply(0,0,frames.size());
+            }
+        }
+        break;
+    }
     if (op == 1) {
         if (!fence()) { reply(8,0,1); break; } // normal worker, never forced drain
         current_token = token; armed = true; saved = false;

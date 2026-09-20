@@ -4,6 +4,7 @@
 #pragma once
 #include <stdint.h>
 #ifdef AGON_GRAPHICS_TIMING
+#include "frame_records.hpp"
 #ifdef USERSPACE
 #include <mutex>
 #include <chrono>
