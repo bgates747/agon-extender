@@ -1,0 +1,7 @@
+{
+  "installed_build": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "fixture_parent": "retained historical cadence60.bin; unmodified",
+  "fixture_sha256": "8bd48c691b3f48289554762d99be12f75e66b7ef8ea454c4a62fe71f69559379",
+  "firmware_changes": false,
+  "startup_changes": false
+}

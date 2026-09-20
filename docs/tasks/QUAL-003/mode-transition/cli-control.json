@@ -1,0 +1,180 @@
+{
+  "initial": {
+    "available": true,
+    "mode": 0,
+    "width": 640,
+    "height": 480,
+    "colors": 16,
+    "refresh_hz": 60,
+    "double_buffered": false
+  },
+  "rows": [
+    {
+      "requested_mode": 8,
+      "status": {
+        "available": true,
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      },
+      "canvases": [
+        {
+          "width": 320,
+          "height": 240
+        }
+      ],
+      "stream": {
+        "count": 76,
+        "last_dimensions": [
+          320,
+          240
+        ],
+        "observed_dimensions": [
+          [
+            320,
+            240
+          ],
+          [
+            640,
+            480
+          ]
+        ]
+      }
+    },
+    {
+      "requested_mode": 20,
+      "status": {
+        "available": true,
+        "mode": 20,
+        "width": 512,
+        "height": 384,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      },
+      "canvases": [
+        {
+          "width": 512,
+          "height": 384
+        }
+      ],
+      "stream": {
+        "count": 144,
+        "last_dimensions": [
+          512,
+          384
+        ],
+        "observed_dimensions": [
+          [
+            320,
+            240
+          ],
+          [
+            512,
+            384
+          ]
+        ]
+      }
+    },
+    {
+      "requested_mode": 8,
+      "status": {
+        "available": true,
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      },
+      "canvases": [
+        {
+          "width": 320,
+          "height": 240
+        }
+      ],
+      "stream": {
+        "count": 81,
+        "last_dimensions": [
+          320,
+          240
+        ],
+        "observed_dimensions": [
+          [
+            320,
+            240
+          ],
+          [
+            512,
+            384
+          ]
+        ]
+      }
+    },
+    {
+      "requested_mode": 20,
+      "status": {
+        "available": true,
+        "mode": 20,
+        "width": 512,
+        "height": 384,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      },
+      "canvases": [
+        {
+          "width": 512,
+          "height": 384
+        }
+      ],
+      "stream": {
+        "count": 144,
+        "last_dimensions": [
+          512,
+          384
+        ],
+        "observed_dimensions": [
+          [
+            320,
+            240
+          ],
+          [
+            512,
+            384
+          ]
+        ]
+      }
+    },
+    {
+      "requested_mode": 8,
+      "observer": "off",
+      "status": {
+        "available": true,
+        "mode": 8,
+        "width": 320,
+        "height": 240,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      }
+    },
+    {
+      "requested_mode": 20,
+      "observer": "off",
+      "status": {
+        "available": true,
+        "mode": 20,
+        "width": 512,
+        "height": 384,
+        "colors": 64,
+        "refresh_hz": 60,
+        "double_buffered": false
+      }
+    }
+  ],
+  "errors": []
+}

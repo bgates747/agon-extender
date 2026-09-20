@@ -674,3 +674,22 @@ See [physical assessment](QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md).
 ## Author-directed Gemini cross-reference audit — 2026-09-17
 
 Active documentation-only goal: [contract and findings](QUAL-003/debrief/P01h/codec-screen/discussion/AUDIT.md). Compare supplied claims to existing evidence and official sources; hardware voice at completion. No firmware changes or new benchmarks.
+
+### I006 current-build check — 2026-09-20
+
+Author authorized bounded reproduction after the command-consumption checkpoint.
+[Contract and results](QUAL-003/mode-transition/RESULTS.md): four continuous-output
+CLI transitions and the original Nurples mode-changing fixture produced correct
+current dimensions. Historical stale-size failure not reproduced; cause remains
+unidentified. New same-build pacing pair: streaming on 12.473 application cycles/s,
+off 60.000, both 1,800 records and no VDU fault. Follow-up must isolate this
+output-dependent slowdown separately before a correction; no code/flash performed.
+Bench restored to neutral ExCom prompt, mode0; autoexec unchanged.
+
+### Aginvadors added to pacing suite — 2026-09-20
+
+Author requests Aginvadors as a second game workload. [Baseline and test scope](QUAL-003/mode-transition/AGINVADORS.md)
+records the source-selected mode8 (320×240×64 single-buffered), intended50-Hz
+simulation, prior deployment hash and human near60/dip-to25 browser observations.
+Include it in future request-pacing controls; instrumentation/automation remains
+unprepared. No assumption of mode136 or a qualified60-Hz exception.
