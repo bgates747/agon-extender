@@ -134,3 +134,11 @@ comparison and independent literal oracles. Another 153,600 pixels match;
 cumulative coverage is 70 scenes / 12,923,904 pixels. Four prepared Copper
 controls and prior defects remain open. Original startup/mainboard firmware
 restored; P4/EMOS unchanged.
+
+## Static Mode7 follow-up — 2026-09-20
+
+[TTSTATIC](QUAL-004/teletext/RESULTS.md) matches all 307,200 pixels between
+mainboard and Extender. Static text/colours, mosaics and double-height examples
+pass; dynamic teletext remains unqualified. Cumulative 71 scenes / 13,231,104
+pixels. Four Copper controls and prior defects remain open. Original bench
+restored and verified; no product firmware change.

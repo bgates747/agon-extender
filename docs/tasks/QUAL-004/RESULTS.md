@@ -2,9 +2,10 @@
 
 ## Executive summary
 
-**2026-09-20 follow-ups:** [two displayed-page controls](page-controls/RESULTS.md)
-and [two plain low-depth controls](low-depth/RESULTS.md) also passed. Cumulative
-retained coverage is now **70 scenes / 12,923,904 pixels**; four prepared Copper
+**2026-09-20 follow-ups:** [two displayed-page controls](page-controls/RESULTS.md),
+[two plain low-depth controls](low-depth/RESULTS.md), and
+[static Mode7 teletext](teletext/RESULTS.md) also passed. Cumulative
+retained coverage is now **71 scenes / 13,231,104 pixels**; four prepared Copper
 controls remain. The first-pass results and firmware identities below are
 preserved as originally measured.
 

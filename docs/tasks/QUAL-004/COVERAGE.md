@@ -19,6 +19,7 @@ was added. Static image parity does not qualify live resource mutation or transi
 | Viewports, clears, clipped bitmap plotting | SHP20–23, BSP07 | Passed static image parity |
 | Copy/move/scroll and single-row viewport | SHP22, SCROLL/CLIPROW/COMBINED | Passed static image parity |
 | Default text and graphics text | SHP headings, SHP23 | Passed static image parity |
+| Mode7 static teletext | TTSTATIC | [Passed text, colours, mosaics and double height](teletext/RESULTS.md); dynamic semantics unqualified |
 | Buffered calls, saved contexts, transforms | SHP24, BSP29 | Passed static image parity |
 | Alpha and bitmap cutouts | BSP03 | Passed static image parity |
 | Software sprite movement/update/layers | BSP21/22/25 | Passed static image parity |
@@ -51,8 +52,9 @@ missing coverage and acquisition failures remain separate from missing features.
 
 ## Coverage still unqualified
 
-1. Feature-gated tile engine/layers and teletext mode7: not exercised here; this
-   is missing coverage, not a declaration of missing implementation.
+1. Feature-gated tile engine/layers remain unexercised. Mode7 static text,
+   colours, mosaics and double height [passed](teletext/RESULTS.md); flashing,
+   scrolling and exhaustive control combinations remain unqualified.
 2. Mode9 Copper replace/reset, mode10 COP4_SETUP and mode11 COP2_SETUP:
    four Copper controls prepared and preserved, not qualified. Plain PAL4/PAL2
    [passed subsequently](low-depth/RESULTS.md), as did mode136

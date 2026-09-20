@@ -9,11 +9,11 @@ covers text/colours, contiguous/separated mosaics, held graphics, backgrounds,
 double height and conceal. Flash timing, scrolling and exhaustive teletext parity
 remain outside this bounded run.
 
-**QUAL-004-TT01** [ ] Freeze generator, scene, manifest and this contract before
+**QUAL-004-TT01** [x] Freeze generator, scene, manifest and this contract before
 bench mutation. Preserve actual mainboard flash/startup, verify retained player
 and deployed scene/sidecar hashes. P4/EMOS remain unchanged.
 
-**QUAL-004-TT02** [ ] Temporarily install/verify existing diagnostic. Startup alone
+**QUAL-004-TT02** [x] Temporarily install/verify existing diagnostic. Startup alone
 selects mode7 on both routes. Two fresh-reset mainboard captures and two distinct
 matching P4 generations; compare all 640×480 pixels without tolerance or cropping.
 Independently check a fully filled contiguous white mosaic cell, separation gaps
@@ -21,7 +21,7 @@ in the adjacent separated example, nonempty coloured text and both double-height
 halves. Record actual dimensions. Stop/restore on unexpected reset or incomplete
 capture; no renderer repairs or fixture changes to manufacture a pass.
 
-**QUAL-004-TT03** [ ] Restore exact original startup/mainboard overwritten sectors,
+**QUAL-004-TT03** [x] Restore exact original startup/mainboard overwritten sectors,
 verify, close serial/video observers, release keyboard and SD service, verify MOS
 prompt. Retain evidence and acquisition duration separately from rendering time.
 Report mismatches and coverage limits. No emulator/voice cue or push requested.

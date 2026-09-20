@@ -1,0 +1,17 @@
+{
+  "TTSTATIC/comparison.json": "b98f96e6328ccb30ad914b4a6053e966399de341df9f14c61b0a29d99ecdbe5d",
+  "TTSTATIC/difference.png": "441da7236f6ffdd8fb4cdfa2d9ce7b8d8df8cf2f7a8e82c530714d92266ce613",
+  "TTSTATIC/mainboard-0.serial.gz": "df38e31acf8ce5f9044d0f972bbbd70e781e76e53a3c02039e021c64b399a02e",
+  "TTSTATIC/mainboard-1.serial.gz": "f42c74ac92d56b95d57a0027ff4f5c053c861a7bea470111cfe6cb70daad4258",
+  "TTSTATIC/mainboard.png": "d776a02f21ad2d321ba3b38e184101080d10ff777a587c882fdf9c4357df4106",
+  "TTSTATIC/p4-00.evf.gz": "c67d480435547611182e601cb9f492b303589fdc1d133ea6b3ece45c5a7f9577",
+  "TTSTATIC/p4-01.evf.gz": "20a709699960b975fc10555c2cbe7a5aae4fdca1e800aae4e3964d4b070a99bb",
+  "TTSTATIC/p4-02.evf.gz": "ddab974d0def392f193e2461d7c4bf972de717d5645b82ae665e7d73a46f700d",
+  "TTSTATIC/p4-03.evf.gz": "6bc10441e2db5f428959cd1132f1528593a6b3f774369d130dcad177eafbc5c2",
+  "TTSTATIC/p4.png": "d776a02f21ad2d321ba3b38e184101080d10ff777a587c882fdf9c4357df4106",
+  "check-tests.json": "2acad9cc3f2a7427819fb28cd58a3f8fc097bd0f5ed5404f739d2045a42abb5c",
+  "complete.json": "fb568079cc6f112a81912727707deac8c26bec256b5686d9d50d9017624a59e0",
+  "final-prompt.png": "33c30bf614c3dfb21df1515f661bb2d0ef04aaed3d5a1e5033b96179e177dd41",
+  "receipt.json": "4728640d7584d8a071716c09b0e63e44ab173bd3cd15f5203803be84da194231",
+  "results.json": "c8ce8d3f3631539a048a63a0d06686d409e42ffec9e42640187775e0191e9186"
+}

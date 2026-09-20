@@ -1,0 +1,42 @@
+[
+  {
+    "width": 640,
+    "height": 480,
+    "pixels": 307200,
+    "mismatches": 0,
+    "match": true,
+    "bounds": null,
+    "mainboard_sha256": "b75e91dc1b67bebf41ea8fb75cab983bf0233d44d0d7c77dc536a62aa9ed2a4d",
+    "p4_sha256": "b75e91dc1b67bebf41ea8fb75cab983bf0233d44d0d7c77dc536a62aa9ed2a4d",
+    "case": "TTSTATIC",
+    "mainboard_repeat_equal": true,
+    "p4_sequences": [
+      27,
+      28
+    ],
+    "structural_checks": {
+      "mainboard": {
+        "passed": true,
+        "checks": {
+          "contiguous_white_cell": true,
+          "separated_white_and_black": true,
+          "seven_text_colours": true,
+          "double_height_both_halves_nonempty": true,
+          "unused_bottom_rows_black": true
+        },
+        "scope": "Structural/palette sanity; not an independent font rasterizer"
+      },
+      "p4": {
+        "passed": true,
+        "checks": {
+          "contiguous_white_cell": true,
+          "separated_white_and_black": true,
+          "seven_text_colours": true,
+          "double_height_both_halves_nonempty": true,
+          "unused_bottom_rows_black": true
+        },
+        "scope": "Structural/palette sanity; not an independent font rasterizer"
+      }
+    }
+  }
+]
