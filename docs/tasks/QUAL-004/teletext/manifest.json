@@ -1,0 +1,22 @@
+{
+  "identity": "teletext-static-probe-r01",
+  "name": "TTSTATIC",
+  "file": "TTSTATIC.vdu",
+  "mode": 7,
+  "surface": [
+    640,
+    480
+  ],
+  "text_grid": [
+    40,
+    25
+  ],
+  "cell": [
+    16,
+    19
+  ],
+  "sha256": "febac134199c3da4675728a0abcd3d74d78751d74190195bee0e3b238a1513ee",
+  "barrier_sha256": "fb23d6885b9d4366b149fb4f75bc937bcbb3bbf2657d5cfa97665b9de844b6e9",
+  "bytes": 458,
+  "scope": "Static text, colours, mosaics, held graphics, background, double height and conceal; no flashing"
+}

@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r93
-updated_at: 2026-09-20T05:41:40Z
+registry_revision: r94
+updated_at: 2026-09-20T23:49:19Z
 
 artifacts:
+  - artifact_id: teletext-static-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: teletext-static-probe-r01
+    status: experimental
+    variants: []
+    description: Static Mode7 mainboard and Extender full-image comparison.
+    notes:
+      - Standing identity approval; bounded QUAL-004 teletext contract, registry r94.
   - artifact_id: game-timing-probe
     kind: test_fixture
     identity_scheme: revision
