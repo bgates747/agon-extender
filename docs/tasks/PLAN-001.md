@@ -1,0 +1,78 @@
+# PLAN-001 — Timing closeout and next-work selection
+
+## Executive summary
+
+Author approved the work contract on 2026-09-20, with stable subtask IDs and
+completion checkboxes. Author authorized freeze and T01 execution. Close out the reusable timing package, reconcile the
+unfinished-task queue, then select a bounded tranche of faithful VDP-to-EDP
+implementation. Park further browser-performance experiments pending future
+display hardware. Aginvadors optimization is deferred until the Author has more
+tokens available; it is not a prerequisite or an active investigation here.
+Approval does not mark the execution subtasks complete or authorize a new
+hardware/implementation tranche beyond this closeout and planning contract.
+
+## Frozen work contract — 2026-09-20
+
+**PLAN-001-T01** [ ] **Timing closeout.** The agent reviews BENCH-007 implementation, reusable
+   documentation, results and firmware-restoration evidence. Identify owning
+   repositories and separate scoped changes from unrelated browser/game work.
+   Retain the unresolved mainboard sequential-run sprite/heap panic and Rally's
+   fixture-versus-gameplay discrepancy as explicit follow-ups. After approval,
+   commit the timing package and findings in discrete groups. Do not push without
+   an instruction to publish.
+
+**PLAN-001-T02** [ ] **Queue reconciliation.** The agent checks every open TODO entry against its
+   task record and evidence. Present a compact disposition table: genuinely
+   unfinished implementation, completed work awaiting acceptance, superseded
+   work, or deliberate deferral. Machine completion does not substitute for
+   required human acceptance. Close accepted items in their task and development
+   log before removing them from TODO. Preserve evidence and deferred tasks.
+   Replace conflicting historical priority headings with one clear sequence.
+
+**PLAN-001-T03** [ ] **Next implementation selection.** From the reconciled queue, the agent
+   proposes a bounded faithful VDP-to-EDP tranche with acceptance criteria.
+   Reuse stock implementations where applicable. Park browser transport and
+   compression optimization; correctness regressions remain eligible. Planning
+   does not itself start another hardware experiment or implementation tranche.
+
+## Decision register
+
+### D01 — Optimize Aginvadors before the next porting tranche?
+
+**Resolved — deferred by the Author on 2026-09-20.**
+
+Do not start Aginvadors profiling or optimization under this contract. Revisit
+only when the Author chooses to spend tokens on it. The useful goal of a
+dependable playable 320×240 reference remains recorded, without blocking T03.
+
+Production Aginvadors selects mode 8: 320×240, 64 colours. The measured
+one-vblank build averaged about 51 application updates/s on both routes;
+20 of 120 active updates exceeded one 60-Hz interval. These short runs identify
+deadline misses, not their cause. This is not evidence of an Extender-only
+problem or a remaining 50-Hz cap. See [results](BENCH-007/RESULTS.md) and
+[game baseline](QUAL-003/mode-transition/AGINVADORS.md).
+
+**Retained rationale:** a playable 320×240 reference would help compare
+resolution-dependent costs, but game optimization takes time and tokens away
+from renderer coverage. Nurples remains the stronger current pacing reference.
+If the Author resumes Aginvadors work, scope production improvements separately,
+preserve representative gameplay and the requested 60-Hz target, and define
+repeated workload, deadline-miss and human-playability acceptance before coding.
+
+## Review gates and deliverables
+
+**PLAN-001-G01** [x] Author reviewed and approved this contract, subject to
+stable subtask identifiers and checkbox formatting; applied in this revision.
+
+**PLAN-001-G02** [x] Author settled D01: defer Aginvadors optimization.
+
+**PLAN-001-G03** [ ] T01 produces scoped commit groups with retained limitations.
+
+**PLAN-001-G04** [ ] T02 produces a disposition table and proposed authoritative
+order for Author review.
+
+**PLAN-001-G05** [ ] Author approves the implementation contract proposed by T03
+before that new tranche starts.
+
+No firmware identity, emulator launch, bench operation or network change is
+required for this documentation update.
