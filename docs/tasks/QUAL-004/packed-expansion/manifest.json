@@ -1,0 +1,34 @@
+{
+  "identity": "packed-expansion-probe-r01",
+  "mode": 20,
+  "surface": [
+    512,
+    384
+  ],
+  "cases": [
+    {
+      "name": "PACK1",
+      "bits": 1,
+      "mapping": "inline",
+      "source_sha256": "e9dca3539172b240534a3a2dbd072d9d9ac5cdb64f50604dafdda8656862a7bd",
+      "sha256": "42e272fbd7dcc5bab0b9197cac779f97d66479c7c71ee1e783a327e231911f3d",
+      "oracle_sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d"
+    },
+    {
+      "name": "PACK2",
+      "bits": 2,
+      "mapping": "buffer",
+      "source_sha256": "093cf63664703c3fd5db7b9ddbf4b1dd0fa902f8eac69b31d5f1fa5ad2115a45",
+      "sha256": "248de157563b378ec449494c6bc3ce4bb48b918de4ee642510dde11e3b10f47f",
+      "oracle_sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324"
+    },
+    {
+      "name": "PACK4",
+      "bits": 4,
+      "mapping": "inline",
+      "source_sha256": "1e45b68a379836eb4e4718f7430eb2b53f25d0af8c2635ba492e1673253d4ef6",
+      "sha256": "6a47feceb8fc122e6cd389814cd5953713fc8048ddf281c98c6455ee73a726f1",
+      "oracle_sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04"
+    }
+  ]
+}

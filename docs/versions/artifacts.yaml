@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r95
-updated_at: 2026-09-21T00:18:10Z
+registry_revision: r96
+updated_at: 2026-09-21T02:22:29Z
 
 artifacts:
+  - artifact_id: packed-expansion-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: packed-expansion-probe-r01
+    status: experimental
+    variants: []
+    description: Bounded 1/2/4bpp packed buffer expansion pixel comparison.
+    notes:
+      - Standing identity approval; QUAL-004 BM02 contract, registry r96.
   - artifact_id: sprite-scroll-probe
     kind: test_fixture
     identity_scheme: revision
