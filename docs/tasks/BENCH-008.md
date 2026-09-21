@@ -1,0 +1,48 @@
+# BENCH-008 — Ad hoc AGM-style frame differencing
+
+## Executive summary
+
+Author requests a quick correctness-checked P4/browser experiment, followed by
+manual Nurples/game playtesting. Encode unchanged pixels as transparent zero and
+changed pixels as opaque new RGBA2222 colors, then RLE2. Neither XOR nor arithmetic
+subtraction. No TurboVega, detailed timing campaign, renderer changes or game edits.
+
+B08-01 [x] Record contract and historical reuse: AgonJukebox agz a8f1075,
+tests/rle2_histogram.py::compute_diff_frame and compare_compressions_movie3.py
+use compare-and-replace. RLE2 preserves zero-alpha versus opaque black.
+
+B08-02 [x] Implement an isolated candidate derived from the installed key-query
+build. P4 stores the last successfully transmitted canonical RGB222 frame per
+video connection. Explicit delta negotiation; other clients keep full frames.
+New connection/takeover, missing reference, dimensions/format/period change,
+send failure and periodic recovery require full output. Use full output whenever
+delta RLE2 is no smaller. A skipped renderer frame is allowed: the reference is
+the last sent frame, not the previous generated frame. Include its sequence in
+each delta; browser rejects mismatched references and closes for reconnect.
+
+B08-03 [x] Quickly verify exact reconstruction, unchanged areas, changed-to-black,
+sequence gaps/wrap, reconnect/takeover, dimension changes and full fallback.
+Keep input, request pacing, renderer scheduling and ordinary full-frame support
+unchanged. Decoder references are private per connection and updated only after
+complete validation. Sending references advance only after successful full sends.
+
+B08-04 [ ] Build, preserve installed P4 image, flash and independently verify.
+Check live first-full/subsequent-delta reconstruction and reconnection, input/CLI
+readiness. Preserve mainboard firmware/EMOS/SD startup. Leave manual game comparison
+to Author; no unattended performance campaign, emulator cue or automatic game run.
+
+B08-05 [ ] Report concrete playtest instructions and rollback identity. This is
+an experiment, not replacement of accepted production protocol or reassessment
+of old performance results. Revisit comparisons only after Author feedback.
+
+Standing identity approval: frame-delta-probe-r01, registry r98. Candidate sources
+and build overlays stay isolated from unrelated working-tree changes. Normal
+browser requests delta by default in this candidate; ?full=1 page override uses
+plain full-frame RLE2 for manual A/B. Wire extension EVD1 keeps the32-byte header;
+reserved word holds base sequence, payload is ordinary RLE2 RGBA2222 replacement
+pixels. Full EVF1/EVR1 keeps reserved zero. Full recovery at least every120 sends;
+all decoding reconstructs canonical final RGB222, not browser VDP semantics.
+
+Quick host checks:129exact reconstructed frames,123deltas/six full frames,
+including periodic full recovery and rejection of missing/wrong/truncated
+references. P4 build passed. Physical connection/takeover checks follow deployment.

@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r97
+registry_revision: r98
 updated_at: 2026-09-21T02:22:29Z
 
 artifacts:
+  - artifact_id: frame-delta-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: frame-delta-probe-r01
+    status: experimental
+    variants: []
+    description: Ad hoc AGM replacement-delta RLE2 browser video experiment.
+    notes:
+      - Standing identity approval; BENCH-008; registry r98.
   - artifact_id: packed-expansion-probe
     kind: test_fixture
     identity_scheme: revision
