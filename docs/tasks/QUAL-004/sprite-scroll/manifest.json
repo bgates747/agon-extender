@@ -1,0 +1,46 @@
+{
+  "identity": "sprite-scroll-probe-r01",
+  "surface": [
+    512,
+    384
+  ],
+  "cases": [
+    {
+      "name": "SS_INITIAL",
+      "file": "SS_INITIAL.vdu",
+      "mode": 20,
+      "bytes": 3978,
+      "sha256": "5982460d014e7adc69dfaea57f9716353e5867bb47bbd005eccd68168d196441",
+      "barrier_sha256": "c7b5fc718cbe4d9ad5cd9fb16949ed0971c2b2d660d31220c94606d950f02c1d",
+      "description": "Two separated transparent software sprites on striped background"
+    },
+    {
+      "name": "SS_OVERLAP",
+      "file": "SS_OVERLAP.vdu",
+      "mode": 20,
+      "bytes": 4645,
+      "sha256": "bec7d66fca6115b9b55c253e6108b7282c03164b659f851dc8f48897b5fed06b",
+      "barrier_sha256": "8c1a89c60a8bea8df5919851dcd14e4eea8d3900490398e0ce19e188626370ed",
+      "description": "Four scroll/refill/frame/move updates ending in sprite overlap"
+    },
+    {
+      "name": "SS_EDGES",
+      "file": "SS_EDGES.vdu",
+      "mode": 20,
+      "bytes": 5312,
+      "sha256": "898ee25f9c56af4fa949ee9eb15106a51f08dff41381162a1a102b007209b52a",
+      "barrier_sha256": "952d700f63471668e86d7f71d7a0ec8e7af073f6855300a11a4cf39a28a8a056",
+      "description": "Eight updates; sprites partially outside opposite screen edges"
+    },
+    {
+      "name": "SS_HIDDEN",
+      "file": "SS_HIDDEN.vdu",
+      "mode": 20,
+      "bytes": 5332,
+      "sha256": "6957725eb5f97cb3ff869497f2218133e9dde2e989de38ed253049971eac101a",
+      "barrier_sha256": "e6ab9b768de2c7d8812ee69b8c59d41b06857b04ba96207f3819127e9b1a7424",
+      "description": "Both sprites hidden; complete background must be restored"
+    }
+  ],
+  "hidden_oracle_sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6"
+}
