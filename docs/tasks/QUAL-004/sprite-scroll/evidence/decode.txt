@@ -1,0 +1,3 @@
+0x4008332f: fabgl::VGAPalettedController::drawSpriteScanLine(unsigned char*, int, int, int) at mainboard-diagnostic-source/local-libs/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp:490
+0x4008332c: fabgl::VGAPalettedController::drawSpriteScanLine(unsigned char*, int, int, int) at mainboard-diagnostic-source/local-libs/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp:489
+0x40083388: fabgl::VGAPalettedController::decorateScanLinePixels(unsigned char*, unsigned short) at mainboard-diagnostic-source/local-libs/vdp-gl/src/dispdrivers/vgapalettedcontroller.cpp:407

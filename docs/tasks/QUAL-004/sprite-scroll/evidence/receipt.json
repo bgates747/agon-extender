@@ -1,0 +1,71 @@
+{
+  "contract_commit": "f7b8f0f4",
+  "mainboard_build": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z",
+  "mainboard_image_sha256": "810481994c38efbfdcc0f525acb8265508859944aba03f8edd4ffd3630c18a67",
+  "mainboard_elf_sha256": "cac2c919b5154ccd9f1ae57353f6d67e54c3e8b964b057280557db3b4d3de938",
+  "stock_vdp": "c7ac293d2aa81ddfa693390549bcd909069c8fc3",
+  "stock_gl": "ac2dd5986daf496c43ae8e7fe41836274aec54a0",
+  "p4_build": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "p4_identity_basis": "Retained preceding verified deployment; no P4 flash/readback in this task; EMOS unchanged.",
+  "fixtures": {
+    "player_sha256": "f5d6bf461c3a7b60450d22d73634b934ac946a1eb93f492d389bd808732e78a2",
+    "SS_INITIAL": {
+      "name": "SS_INITIAL",
+      "file": "SS_INITIAL.vdu",
+      "mode": 20,
+      "bytes": 3978,
+      "sha256": "5982460d014e7adc69dfaea57f9716353e5867bb47bbd005eccd68168d196441",
+      "barrier_sha256": "c7b5fc718cbe4d9ad5cd9fb16949ed0971c2b2d660d31220c94606d950f02c1d",
+      "description": "Two separated transparent software sprites on striped background"
+    },
+    "SS_OVERLAP": {
+      "name": "SS_OVERLAP",
+      "file": "SS_OVERLAP.vdu",
+      "mode": 20,
+      "bytes": 4645,
+      "sha256": "bec7d66fca6115b9b55c253e6108b7282c03164b659f851dc8f48897b5fed06b",
+      "barrier_sha256": "8c1a89c60a8bea8df5919851dcd14e4eea8d3900490398e0ce19e188626370ed",
+      "description": "Four scroll/refill/frame/move updates ending in sprite overlap"
+    },
+    "SS_EDGES": {
+      "name": "SS_EDGES",
+      "file": "SS_EDGES.vdu",
+      "mode": 20,
+      "bytes": 5312,
+      "sha256": "898ee25f9c56af4fa949ee9eb15106a51f08dff41381162a1a102b007209b52a",
+      "barrier_sha256": "952d700f63471668e86d7f71d7a0ec8e7af073f6855300a11a4cf39a28a8a056",
+      "description": "Eight updates; sprites partially outside opposite screen edges"
+    },
+    "SS_HIDDEN": {
+      "name": "SS_HIDDEN",
+      "file": "SS_HIDDEN.vdu",
+      "mode": 20,
+      "bytes": 5332,
+      "sha256": "6957725eb5f97cb3ff869497f2218133e9dde2e989de38ed253049971eac101a",
+      "barrier_sha256": "e6ab9b768de2c7d8812ee69b8c59d41b06857b04ba96207f3819127e9b1a7424",
+      "description": "Both sprites hidden; complete background must be restored"
+    }
+  },
+  "mainboard_backup_sha256": "70e0a4b998aadbf7a747a83383fe76568c0f537039edb47692d0608fb00ab8ca",
+  "mainboard_restore": {
+    "verified": true,
+    "sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e",
+    "source": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z"
+  },
+  "startup_restore": {
+    "verified": true,
+    "sha256": "2f2b00cac0a210e102757c40909e92b0600e1e7851f55ce5c407930c22384fa0"
+  },
+  "final_state": {
+    "keyboard_ready": true,
+    "physical_neutral": true,
+    "held": 0,
+    "pending": 0,
+    "sd_service_online": false,
+    "serial_reader_closed": true,
+    "video_observer_closed": true,
+    "startup_restored": true,
+    "mainboard_app_verified": true,
+    "prompt_visual_verification": "ExCom root MOS prompt and echoed stopped/restored text visually confirmed"
+  }
+}

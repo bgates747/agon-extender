@@ -85,3 +85,10 @@ normal single-vblank pacing, and its 30fps review build belongs only under `/tes
 Do not infer deployment targets from an old script's defaults. Existing historical
 fixture paths remain evidence; migrate deliberately, without deleting unrelated
 fixtures or rewriting frozen run records.
+
+## Capture-suite failure handling — 2026-09-20
+
+Apply the Author-approved [capture failure protocol](capture-failure-protocol.md):
+mark failures, recover and continue independent cases, then run marked cases
+without capture instrumentation on the affected endpoint. This supersedes older
+capture stop/retry rules; unrecoverable readiness still blocks further execution.

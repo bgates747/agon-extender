@@ -1,0 +1,16 @@
+{
+  "run": "QUAL-004-2026-09-21-00-22-37Z",
+  "status": "stopped-mainboard-panic",
+  "checkpoint": "SS_INITIAL",
+  "capture_token": 5400,
+  "mainboard_capture_begin_seen": false,
+  "mainboard_complete_images": 0,
+  "p4_scenes_executed": 0,
+  "remaining_checkpoints": "not run",
+  "pc": "0x4008332f",
+  "exception": "LoadProhibited",
+  "exception_address": "0x1c",
+  "symbol": "fabgl::VGAPalettedController::drawSpriteScanLine",
+  "bug": "FWBUG-002",
+  "root_cause": "unresolved; diagnostic timing influence not excluded"
+}

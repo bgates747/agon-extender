@@ -1,0 +1,73 @@
+[
+  {
+    "case": "SS_OVERLAP",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.449033975601196,
+        "sha256": "a2eb4b865895fd8cedb9ca232f399c4e7a21175e3e3f2a262427077e3c65008f",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.443490505218506,
+        "sha256": "a2eb4b865895fd8cedb9ca232f399c4e7a21175e3e3f2a262427077e3c65008f",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "sprite_colour_counts": {
+      "3": 87,
+      "15": 0,
+      "60": 100
+    }
+  },
+  {
+    "case": "SS_EDGES",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.506487369537354,
+        "sha256": "804cee8f7fdfec5e502fb8dd8d9e364e30273c552ca15328da9fac7e304c52c0",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.146528005599976,
+        "sha256": "804cee8f7fdfec5e502fb8dd8d9e364e30273c552ca15328da9fac7e304c52c0",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "sprite_colour_counts": {
+      "3": 74,
+      "15": 0,
+      "60": 13
+    }
+  },
+  {
+    "case": "SS_HIDDEN",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.359410047531128,
+        "sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 24.261564254760742,
+        "sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "oracle_mismatches": 0
+  }
+]

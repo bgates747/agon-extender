@@ -1,0 +1,102 @@
+[
+  {
+    "case": "SS_INITIAL",
+    "passed": true,
+    "sequences": [
+      1636,
+      1637
+    ],
+    "stable": true,
+    "sha256": "288e479efcea85d14961b8563ee393e02cacf5ab0ef68ab6f25dfe831e1b3d8f",
+    "comparison": null,
+    "sprite_colour_counts": {
+      "3": 116,
+      "15": 0,
+      "60": 100
+    },
+    "elapsed_s": 12.512953758239746,
+    "escape_cli_service_passed": true
+  },
+  {
+    "case": "SS_OVERLAP",
+    "passed": true,
+    "sequences": [
+      1640,
+      1641
+    ],
+    "stable": true,
+    "sha256": "a2eb4b865895fd8cedb9ca232f399c4e7a21175e3e3f2a262427077e3c65008f",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "a2eb4b865895fd8cedb9ca232f399c4e7a21175e3e3f2a262427077e3c65008f",
+      "p4_sha256": "a2eb4b865895fd8cedb9ca232f399c4e7a21175e3e3f2a262427077e3c65008f"
+    },
+    "sprite_colour_counts": {
+      "3": 87,
+      "15": 0,
+      "60": 100
+    },
+    "elapsed_s": 12.525965929031372,
+    "escape_cli_service_passed": true
+  },
+  {
+    "case": "SS_EDGES",
+    "passed": true,
+    "sequences": [
+      1644,
+      1645
+    ],
+    "stable": true,
+    "sha256": "804cee8f7fdfec5e502fb8dd8d9e364e30273c552ca15328da9fac7e304c52c0",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "804cee8f7fdfec5e502fb8dd8d9e364e30273c552ca15328da9fac7e304c52c0",
+      "p4_sha256": "804cee8f7fdfec5e502fb8dd8d9e364e30273c552ca15328da9fac7e304c52c0"
+    },
+    "sprite_colour_counts": {
+      "3": 74,
+      "15": 0,
+      "60": 13
+    },
+    "elapsed_s": 12.367898225784302,
+    "escape_cli_service_passed": true
+  },
+  {
+    "case": "SS_HIDDEN",
+    "passed": true,
+    "sequences": [
+      1648,
+      1649
+    ],
+    "stable": true,
+    "sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6",
+      "p4_sha256": "11f72a3fc10e0514b82361e1259c68ddbe891dd9708d6c2534dbeae0815f7af6"
+    },
+    "sprite_colour_counts": {
+      "3": 0,
+      "15": 0,
+      "60": 0
+    },
+    "oracle_mismatches": 0,
+    "elapsed_s": 12.372514724731445,
+    "escape_cli_service_passed": true
+  }
+]

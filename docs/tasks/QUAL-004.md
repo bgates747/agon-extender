@@ -142,3 +142,62 @@ mainboard and Extender. Static text/colours, mosaics and double-height examples
 pass; dynamic teletext remains unqualified. Cumulative 71 scenes / 13,231,104
 pixels. Four Copper controls and prior defects remain open. Original bench
 restored and verified; no product firmware change.
+
+## Sprite/scroll follow-up — stopped on mainboard failure
+
+[Four-checkpoint qualification](QUAL-004/sprite-scroll/RESULTS.md) stopped on
+SS_INITIAL before capture: mainboard LoadProhibited/address0x1c at stock
+drawSpriteScanLine. Same retained FWBUG-002 signature; exact setup trigger and
+diagnostic influence unresolved. No checkpoint passed; no P4 scene executed.
+Existing coverage remains 71 scenes. Original bench restored and verified.
+
+### Diagnostic-free sprite control
+
+Published stock v2.16.0 did not panic during the Author-authorized single
+30-second SS_INITIAL control, and accepted Escape/CLI afterward. See
+[specific evidence and limits](QUAL-004/sprite-scroll/stock-control/RESULTS.md).
+Sprite qualification stays blocked; investigate diagnostic influence before
+asserting a stock-independent upstream crash. Bench restored; no renderer fix.
+
+## Current capture failure protocol — 2026-09-20
+
+Author supersedes earlier stop-on-failure/immediate-retry orchestration with the
+[capture failure protocol](../qualification/capture-failure-protocol.md).
+Continue independent cases after recording/recovering each capture failure;
+after the suite, replay marked cases on official stock mainboard VDP or matching
+EDP without capture instrumentation. Preserve both outcomes; no missing image
+becomes a pass. Existing deferred Copper scope and historical results stand.
+
+## Deferred capture-interference investigation — Author decision 2026-09-20
+
+**QUAL-004-CI01** [ ] Deferred for token budget: investigate whether the mainboard
+capture diagnostic causes or exposes sprite failures through instrumentation,
+binary layout, timing or startup history. Retain FWBUG-002 and the
+[stock control/visual evidence](QUAL-004/sprite-scroll/stock-control/RESULTS.md).
+Do not assert proven diagnostic causation from one clean stock control. When
+resumed, match startup history and fixture bytes, compare instrumented and
+uninstrumented builds, and isolate the smallest relevant diagnostic change
+before proposing a fix. Apply the equivalent capture-free comparison on EDP
+only for failures actually observed there. No implementation authorized now.
+
+Next bounded qualification work remains the outstanding sprite/scroll cases:
+OVERLAP, EDGES and HIDDEN, plus P4 INITIAL which has not run. Apply the new
+mark/recover/continue protocol; collect capture-free controls for failed cases
+after the suite. Keep Copper and diagnostic repair deferred. Missing captures
+remain unqualified even if a human visual control passes.
+
+## Mainboard-only sprite continuation — results
+
+Author-requested OVERLAP, EDGES and HIDDEN each captured twice with identical
+pixels; all six attempts exited and accepted CLI commands. HIDDEN matches its
+independent196608-pixel background oracle exactly. No failure-triggered stock
+control required for this batch. [Evidence and limits](QUAL-004/sprite-scroll/mainboard-followup/RESULTS.md).
+P4 remains deferred; paired total stays71. Earlier INITIAL panic remains open.
+
+## Extender sprite continuation — passed within scope
+
+[All four Extender checks](QUAL-004/sprite-scroll/extender-followup/RESULTS.md)
+completed with stable frames and clean input/CLI return. OVERLAP/EDGES/HIDDEN
+match all589824mainboard pixels; HIDDEN also matches its independent full oracle.
+INITIAL lacks a mainboard capture and is not counted as paired parity. Cumulative
+74paired scenes/13820928pixels; prior diagnostic failure remains deferred.

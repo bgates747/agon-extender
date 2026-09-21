@@ -1,0 +1,10 @@
+{
+  "startup_restored": true,
+  "mainboard_firmware_unchanged": true,
+  "keyboard_ready": true,
+  "cli_service_verified": true,
+  "sd_service_closed": true,
+  "serial_closed": true,
+  "fixture_loaded_not_run": true,
+  "p4_scenes_executed": true
+}

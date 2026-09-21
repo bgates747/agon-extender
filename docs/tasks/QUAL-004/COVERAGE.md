@@ -22,7 +22,7 @@ was added. Static image parity does not qualify live resource mutation or transi
 | Mode7 static teletext | TTSTATIC | [Passed text, colours, mosaics and double height](teletext/RESULTS.md); dynamic semantics unqualified |
 | Buffered calls, saved contexts, transforms | SHP24, BSP29 | Passed static image parity |
 | Alpha and bitmap cutouts | BSP03 | Passed static image parity |
-| Software sprite movement/update/layers | BSP21/22/25 | Passed static image parity |
+| Software sprite movement/update/layers | BSP21/22/25 | Passed static image parity; [OVERLAP/EDGES/HIDDEN accumulated checkpoints](sprite-scroll/extender-followup/RESULTS.md) passed exact parity; INITIAL has stock visual and P4 capture passes but mainboard diagnostic panic remains open |
 | Hardware and mixed sprites | BSP26/27 | Passed static composed image parity |
 | Custom font creation/selection/mutation/deletion | FONT01, retained PORT-008 case | Passed static image parity |
 | All bitmap storage formats and conversions | Partial existing scenes | Coverage gaps to enumerate after first tranche |

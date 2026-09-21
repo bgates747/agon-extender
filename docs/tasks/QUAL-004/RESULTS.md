@@ -4,8 +4,9 @@
 
 **2026-09-20 follow-ups:** [two displayed-page controls](page-controls/RESULTS.md),
 [two plain low-depth controls](low-depth/RESULTS.md), and
-[static Mode7 teletext](teletext/RESULTS.md) also passed. Cumulative
-retained coverage is now **71 scenes / 13,231,104 pixels**; four prepared Copper
+[static Mode7 teletext](teletext/RESULTS.md), and [three accumulated sprite/scroll
+checkpoints](sprite-scroll/extender-followup/RESULTS.md) also passed. Cumulative
+retained coverage is now **74 scenes / 13,820,928 pixels**; four prepared Copper
 controls remain. The first-pass results and firmware identities below are
 preserved as originally measured.
 
@@ -51,6 +52,13 @@ controls are excluded from the66-scene count. Exact identities and prepared inpu
 are in [ARTIFACTS.json](ARTIFACTS.json) and [fixtures](fixtures/README.md).
 Known missing functionality and untested coverage are separated in
 [COVERAGE.md](COVERAGE.md).
+
+## Sprite/scroll follow-up — stopped
+
+[Accumulated movement/scroll checkpoints](sprite-scroll/RESULTS.md) stopped
+before the first capture on another mainboard sprite-scanout panic (FWBUG-002).
+No P4 scene was executed and no pass is added. Existing 71-scene coverage is
+unchanged; the bench was restored.
 
 ## Unfenced alpha finding
 

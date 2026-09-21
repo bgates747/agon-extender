@@ -1,0 +1,10 @@
+{
+  "run_id": "QUAL-004-2026-09-21-00-45-53Z",
+  "panic": false,
+  "capture_token": null,
+  "start_unix": 1789951553.830611,
+  "end_unix": 1789951592.1591434,
+  "elapsed_s": 38.328532695770264,
+  "serial_offset": 194,
+  "command": "RUN . /test/qual004/SS_INITIAL.vdu"
+}

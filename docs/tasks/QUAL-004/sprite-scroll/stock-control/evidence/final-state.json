@@ -1,0 +1,12 @@
+{
+  "keyboard_ready": true,
+  "physical_neutral": true,
+  "held": 0,
+  "pending": 0,
+  "sd_service_online": false,
+  "serial_reader_closed": true,
+  "video_observer_closed": true,
+  "startup_restored": true,
+  "mainboard_app_verified": true,
+  "prompt_visual_verification": "passed"
+}

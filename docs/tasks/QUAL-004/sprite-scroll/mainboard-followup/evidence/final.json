@@ -1,0 +1,13 @@
+{
+  "startup_restored": true,
+  "stock_app_restored_verified": true,
+  "keyboard_ready": true,
+  "cli_service_verified": true,
+  "sd_service_closed": true,
+  "serial_closed": true,
+  "fixture_loaded_not_run": true,
+  "p4_scenes_executed": false,
+  "stock_release": "v2.16.0",
+  "official_app_sha256": "b807beef35823b13a0a056f11b7464cd1b1c6356dce0e4098b78ebe059ded35f",
+  "restored_sectors_sha256": "7923bee5ff89cc80eaeb12622c2bd9e8ddb8311ae04eeaefe847ef940178298e"
+}

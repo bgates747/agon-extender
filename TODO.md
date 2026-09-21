@@ -348,10 +348,10 @@ Current Author goal: [Nurples hardware parity with active web streaming](docs/ta
 ## Current correctness qualification
 
 - [ ] **QUAL-004 — Whole-image graphics correctness on physical VDP and P4**
-  - Overwhelmingly successful first pass; remains open for exception review.
-    66 exact static scene pairs;
-    scanout/restart findings and eight deferred controls retained. Bench restored.
-    Missing functionality marked, not implemented. [Contract/results](docs/tasks/QUAL-004.md).
+  - 74 paired scenes / 13,820,928 pixels matched, including three sprite/scroll
+    checkpoints. Initial scene has stock visual/exit and Extender capture passes;
+    mainboard diagnostic failure remains deferred under QUAL-004-CI01. Four
+    Copper controls remain deferred. [Contract/results](docs/tasks/QUAL-004.md).
 
 Current QUAL-003 image-codec experiment: [RGB888 JPEG then indexed PNG contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/README.md). Completed; [results](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/RESULTS.md) await review. RLE2 wins live Nurples; PNG wins periodic static control only. Baseline restored; hardware voice verified.
 
