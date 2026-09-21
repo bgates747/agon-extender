@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r98
+registry_revision: r102
 updated_at: 2026-09-21T02:22:29Z
 
 artifacts:
+  - artifact_id: browser-reset
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: browser-reset-r02
+    status: experimental
+    variants: []
+    description: Browser control of the existing Pi mainboard reset actuator.
+    notes:
+      - Standing identity approval; REMOTE-003 ad hoc implementation.
   - artifact_id: frame-delta-probe
     kind: test_fixture
     identity_scheme: revision

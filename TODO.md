@@ -229,7 +229,7 @@ deterministic Nurples and separate typing measurements are deferred.
 
 ## Browser input
 
-- [ ] **REMOTE-003 — Browser-requested mainboard reset through P4**: [feasibility study](docs/tasks/REMOTE-003.md). Deferred by Author; study includes dedicated GPIO versus 74-series control expansion. Physical reset button for now; no implementation or wiring authorized.
+- [ ] **[REMOTE-003](docs/tasks/REMOTE-003.md)** — Pi-backed browser reset accepted; direct P4 reset wiring and 74-series expansion remain deferred.
 
 - [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
   - Started: 2026-09-08

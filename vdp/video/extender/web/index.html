@@ -3,50 +3,51 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
-  <title>Agon Extender Video</title>
+  <title>Agon Extender</title>
+  <meta name="agon-reset-url" content="">
   <link rel="stylesheet" href="./style.css">
 </head>
 <body>
   <main>
     <header>
       <h1>Agon Extender</h1>
-      <p>EDP browser video</p>
+      <dl class="display-status">
+        <div><dt>Display</dt><dd id="surface">—</dd></div>
+        <div><dt>Presented fps</dt><dd id="fps">—</dd></div>
+      </dl>
+      <button id="reset-agon" type="button" disabled>Reset Agon</button>
     </header>
 
     <section class="screen-shell" id="video-panel">
-      <canvas tabindex="0" id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
-      <div class="keyboard-strip" id="keyboard-strip">
-        <button id="capture-keyboard" type="button">Capture keyboard</button>
-        <button id="exit-fullscreen" type="button">Exit fullscreen</button>
-        <span id="keyboard-state" role="status">Keyboard released</span>
-        <div id="keyboard-locks"></div>
+      <div class="video-viewport" id="video-viewport">
+        <canvas tabindex="0" id="screen" width="320" height="240" aria-label="Extender video output"></canvas>
+      </div>
+      <div class="controls" id="keyboard-strip">
+        <div class="connection-control">
+          <button id="connect" type="button">Connect</button>
+          <span id="state" role="status">disconnected</span>
+        </div>
+        <button id="fullscreen" type="button" aria-label="Enter fullscreen" title="Mouse to the bottom for fullscreen controls">Fullscreen</button>
+        <div class="capture-control">
+          <button id="capture-keyboard" type="button" aria-pressed="false">Capture keyboard</button>
+          <span id="keyboard-state" role="status">Keyboard released</span>
+        </div>
       </div>
     </section>
 
-    <section class="controls">
-      <button id="connect" type="button">Connect</button>
-      <button id="fullscreen" type="button" aria-label="Enter fullscreen" title="Fullscreen (mouse to bottom for controls)">Fullscreen</button>
+    <details class="diagnostics">
+      <summary>Diagnostics</summary>
       <button id="demo" type="button">Local test pattern</button>
-      <span id="state">disconnected</span>
-    </section>
-
-    <dl class="stats">
-      <div><dt>Sequence</dt><dd id="sequence">—</dd></div>
-      <div><dt>Surface</dt><dd id="surface">—</dd></div>
-      <div><dt>Stride</dt><dd id="stride">—</dd></div>
-      <div><dt>Period</dt><dd id="period">—</dd></div>
-      <div><dt>Received</dt><dd id="received">0</dd></div>
-      <div><dt>Presented</dt><dd id="presented">0</dd></div>
-      <div><dt>Presented fps</dt><dd id="fps">—</dd></div>
-      <div><dt>Sequence gaps</dt><dd id="gaps">0</dd></div>
-    </dl>
-
-    <p class="note">
-      EDP/P4 composes the final image. This browser presents pixels;
-      it does not reproduce VDP palette, Copper, sprite, or cursor behavior.
-    </p>
+      <dl class="stats">
+        <div><dt>Sequence</dt><dd id="sequence">—</dd></div>
+        <div><dt>Stride</dt><dd id="stride">—</dd></div>
+        <div><dt>Period</dt><dd id="period">—</dd></div>
+        <div><dt>Received</dt><dd id="received">0</dd></div>
+        <div><dt>Presented</dt><dd id="presented">0</dd></div>
+        <div><dt>Sequence gaps</dt><dd id="gaps">0</dd></div>
+      </dl>
+    </details>
   </main>
-
   <script type="module" src="./app.js"></script>
 </body>
 </html>

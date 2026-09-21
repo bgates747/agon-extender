@@ -31,3 +31,17 @@ WebGL2 presenter as network frames.
 The wire authority and bounds are frozen in
 `docs/tasks/PORT-003/phase-f/fixtures/evf1-contract.yaml`. Firmware embedding
 and HTTP/WebSocket ownership belong to PORT-006.
+
+### Display status header
+
+The page polls the additive read-only `GET /display/status` endpoint once per
+second while its video WebSocket is open, with one request in flight and a two
+second timeout. It neither claims input ownership nor changes a display mode.
+P4's VDU owner publishes a coherent snapshot after a successful mode commit:
+`available`, `mode`, `width`, `height`, `colors`, `refresh_hz`, `double_buffered`.
+During unavailability/change the endpoint returns HTTP 503 with
+`{"available":false}`; the page shows unavailable rather than guessed fields.
+Dimensions/colors/buffering describe the P4 display, not EVF1 pixel storage.
+Refresh is the official modeline's nominal rate, independent of Presented fps.
+Metadata describes the current committed configuration, not an atomic association
+with a particular queued video frame. Legacy mainboard output is not observed.

@@ -1,127 +1,44 @@
-:root {
-  color-scheme: dark;
-  font-family: system-ui, sans-serif;
-}
-
+:root { color-scheme: dark; font-family: system-ui, sans-serif; }
 * { box-sizing: border-box; }
-
-html, body {
-  margin: 0;
-  min-height: 100%;
-  background: #111;
-  color: #ddd;
-}
-
-body {
-  display: grid;
-  place-items: center;
-  padding: 1.5rem;
-}
-
-main {
-  width: min(96vw, 1000px);
-}
-
-header {
-  display: flex;
-  align-items: baseline;
-  gap: 1rem;
-}
-
-header h1 {
-  margin: 0;
-  font-size: 1.35rem;
-}
-
-header p {
-  margin: 0;
-  color: #999;
-}
-
-.screen-shell {
-  margin-top: 1rem;
-  display: grid;
-  place-items: center;
-  min-height: 300px;
-  overflow: hidden;
-  background: #050505;
-  border: 1px solid #444;
-}
-
-canvas {
-  width: min(92vw, 960px);
-  height: auto;
-  aspect-ratio: 4 / 3;
-  image-rendering: pixelated;
-  background: #000;
-}
-
-.controls {
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: .75rem;
-  margin-top: 1rem;
-}
-
-button {
-  font: inherit;
-  padding: .45rem .8rem;
-}
-
-#state { color: #aaa; }
-
-.stats {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: .5rem 1rem;
-  margin: 1rem 0 0;
-}
-
-.stats div {
-  display: flex;
-  justify-content: space-between;
-  gap: 1rem;
-  border-bottom: 1px solid #333;
-}
-
+html, body { margin: 0; min-height: 100%; background: #111; color: #ddd; }
+body { display: grid; place-items: center; padding: 1.5rem; }
+main { width: 100%; max-width: 1000px; }
+header { display: flex; flex-wrap: wrap; align-items: center; gap: .5rem 2rem; margin-bottom: 1rem; }
+#reset-agon { margin-left: auto; flex-shrink: 0; }
+header h1 { margin: 0; font-size: 1.35rem; }
+.display-status { display: flex; flex-wrap: wrap; gap: .5rem 1.5rem; margin: 0; }
+.display-status div { display: flex; gap: .5rem; }
 dt { color: #999; }
 dd { margin: 0; font-variant-numeric: tabular-nums; }
+.screen-shell { width: 100%; }
+.video-viewport { display: flex; justify-content: center; align-items: center; }
+canvas { display: block; width: 100%; max-width: 960px; height: auto; aspect-ratio: 4 / 3; image-rendering: pixelated; background: #000; }
+/* The capture button conveys focus/ownership; no decoration covers video pixels. */
+#screen:focus { outline: none; }
+.controls { display: flex; align-items: flex-start; flex-wrap: wrap; gap: .6rem 1rem; padding-top: .75rem; }
+.connection-control, .capture-control { display: flex; flex-direction: column; align-items: flex-start; gap: .3rem; min-width: 0; }
+.connection-control { flex: 0 1 17rem; }
+.capture-control { flex: 1 1 13rem; }
+button { font: inherit; padding: .45rem .8rem; cursor: pointer; }
+button:focus-visible { outline: 2px solid #b4d4ef; outline-offset: 2px; }
+#connect.connected, #capture-keyboard[aria-pressed="true"] { background: #244e3f; color: #fff; }
+#state, #keyboard-state { font-size: .85rem; color: #aaa; overflow-wrap: anywhere; }
+.diagnostics { margin-top: 1rem; color: #999; font-size: .85rem; }
+.diagnostics summary { cursor: pointer; margin-bottom: .6rem; }
+.stats { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: .5rem 1rem; margin: .8rem 0; }
+.stats div { display: flex; justify-content: space-between; gap: .5rem; }
 
-.note {
-  color: #999;
-  font-size: .9rem;
-  line-height: 1.4;
-}
-
+/* One toolbar serves both layouts. Its actual height determines the remaining
+   viewport, so wrapped controls never cover or crop Agon pixels. */
+.screen-shell:fullscreen { display: flex; flex-direction: column; width: 100vw; height: 100vh; background: #000; }
+.screen-shell:fullscreen .video-viewport { flex: 1; min-height: 0; width: 100%; }
+.screen-shell:fullscreen canvas { max-width: none; width: min(var(--view-width, 100vw), calc(var(--view-height, 80vh) * 4 / 3)); height: auto; flex: none; }
+.screen-shell:fullscreen .controls { flex: none; width: 100%; padding: .5rem 1rem; opacity: 0; background: #111; transition: opacity .12s; }
+.screen-shell:fullscreen .controls:hover,
+.screen-shell:fullscreen .controls:focus-within { opacity: 1; }
 @media (max-width: 650px) {
-  .stats { grid-template-columns: 1fr 1fr; }
+  body { padding: .6rem; }
+  .controls { gap: .5rem; }
+  .connection-control { flex-basis: 100%; }
+  .stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
-
-/* Fullscreen changes presentation only; preserve the 4:3 viewport and pixels. */
-.screen-shell:fullscreen {
-  width: 100vw;
-  height: 100vh;
-  margin: 0;
-  min-height: 0;
-  border: 0;
-  background: #000;
-}
-.screen-shell:fullscreen canvas {
-  width: min(100vw, calc(100vh * 4 / 3));
-  height: auto;
-}
-
-/* Fullscreen owns its controls; reserve space rather than cover Agon pixels. */
-.keyboard-strip { padding: .5rem; background: #191919; color: #eee; text-align: left; }
-.keyboard-strip button, .keyboard-strip label { margin: .2rem .5rem .2rem 0; }
-.keyboard-strip select { margin-left: .3rem; }
-#keyboard-locks { font-size: .85rem; }
-#exit-fullscreen { display: none; }
-.screen-shell:fullscreen { display: flex; flex-direction: column; justify-content: center; }
-.screen-shell:fullscreen canvas { max-height: calc(100vh - 100px); width: auto; max-width: 100vw; object-fit: contain; }
-.screen-shell:fullscreen .keyboard-strip { position: absolute; bottom: 0; left: 0; right: 0; min-height: 80px; opacity: 0; transition: opacity .15s; }
-.screen-shell:fullscreen .keyboard-strip:hover,
-.screen-shell:fullscreen .keyboard-strip:focus-within { opacity: 1; }
-.screen-shell:fullscreen #exit-fullscreen { display: inline-block; }
-#screen:focus { outline: 2px solid #75c6a0; outline-offset: -2px; }

@@ -33,6 +33,41 @@ let demoTimer = null;
 let demoSequence = 0;
 let rateStart = performance.now();
 let rateFrames = 0;
+let statusAbort = null;
+let statusTimer = null;
+
+function stopDisplayStatus() {
+  clearTimeout(statusTimer);
+  statusTimer = null;
+  statusAbort?.abort();
+  statusAbort = null;
+  connectButton.classList.remove("connected");
+  surfaceNode.textContent = "Display status unavailable";
+}
+
+async function pollDisplayStatus(owner) {
+  if (socket !== owner || owner.readyState !== WebSocket.OPEN) return;
+  const request = new AbortController();
+  statusAbort = request;
+  const timeout = setTimeout(() => request.abort(), 2000);
+  try {
+    const response = await fetch("/display/status", {cache:"no-store", signal:request.signal});
+    if (!response.ok) throw new Error("status unavailable");
+    const value = await response.json();
+    if (!value.available || !Number.isInteger(value.mode) || value.mode < 0 ||
+        ![value.width,value.height,value.colors,value.refresh_hz].every(n => Number.isInteger(n) && n > 0) ||
+        typeof value.double_buffered !== "boolean") throw new Error("invalid display status");
+    if (socket === owner) surfaceNode.textContent =
+      `Mode ${value.mode} ${value.width}x${value.height} ${value.colors} colors ${value.refresh_hz} Hz ${value.double_buffered ? "double" : "single"}-buffered`;
+  } catch (error) {
+    if (socket === owner) surfaceNode.textContent = "Display status unavailable";
+  } finally {
+    clearTimeout(timeout);
+    if (statusAbort === request) statusAbort = null;
+    if (socket === owner && owner.readyState === WebSocket.OPEN)
+      statusTimer = setTimeout(() => pollDisplayStatus(owner), 1000);
+  }
+}
 
 function defaultEndpoint() {
   const scheme = location.protocol === "https:" ? "wss:" : "ws:";
@@ -59,7 +94,7 @@ function resetStats() {
 
 function updateStats(frame) {
   sequenceNode.textContent = String(frame.sequence);
-  surfaceNode.textContent = `${frame.width}×${frame.height} ${frame.pixelFormat === PixelFormat.RGB222 ? "RGB222" : "RGB888"}`;
+  if (demoTimer !== null) surfaceNode.textContent = `Local pattern ${frame.width}x${frame.height}`;
   strideNode.textContent = `${frame.strideBytes} B`;
   periodNode.textContent = frame.presentPeriodUs
     ? `${frame.presentPeriodUs} µs`
@@ -138,6 +173,7 @@ function onSocketMessage(event) {
 }
 
 function disconnect() {
+  stopDisplayStatus();
   const oldSocket = socket;
   socket = null;
   pendingFrame = null;
@@ -166,6 +202,8 @@ function connect() {
   candidate.addEventListener("open", () => {
     if (socket !== candidate) return;
     setState(`connected ${endpoint}`);
+    connectButton.classList.add("connected");
+    pollDisplayStatus(candidate);
     credit.opened(sendCredit);
   });
   candidate.addEventListener("message", (event) => {
@@ -176,6 +214,7 @@ function connect() {
     socket = null;
     pendingFrame = null;
     credit.disconnected();
+    stopDisplayStatus();
     setState("disconnected");
   });
   candidate.addEventListener("error", () => {
@@ -206,12 +245,19 @@ if (new URLSearchParams(location.search).has("demo")) startDemo();
 
 const videoPanel = document.querySelector("#video-panel");
 const fullscreenButton = document.querySelector("#fullscreen");
+const videoViewport = document.querySelector("#video-viewport");
+new ResizeObserver(([entry]) => {
+  videoViewport.style.setProperty("--view-width", `${entry.contentRect.width}px`);
+  videoViewport.style.setProperty("--view-height", `${entry.contentRect.height}px`);
+}).observe(videoViewport);
 fullscreenButton.disabled = !document.fullscreenEnabled;
 fullscreenButton.addEventListener("click", async () => {
   try {
     if (document.fullscreenElement === videoPanel) await document.exitFullscreen();
     else await videoPanel.requestFullscreen();
-    fullscreenButton.blur();
+    // Transfer focus within the panel. Blurring to no destination makes the
+    // focusout handler revoke capture before fullscreenchange can restore it.
+    canvas.focus();
   } catch (error) {
     setState(`Fullscreen unavailable: ${error.message}`);
   }
@@ -229,7 +275,6 @@ document.addEventListener("fullscreenchange", () => {
   const canvas = document.querySelector('#screen');
   const button = document.querySelector('#capture-keyboard');
   const status = document.querySelector('#keyboard-state');
-  const locksPanel = document.querySelector('#keyboard-locks');
   let socket, generation = 0, sequence = 0, requested = false, captured = false;
   let lastReply = 0;
   const held = new Set();
@@ -246,23 +291,14 @@ document.addEventListener("fullscreenchange", () => {
   for (let i=1; i<=9; ++i) { codes[`Digit${i}`]=29+i; codes[`Numpad${i}`]=88+i; }
   codes.Digit0=39;
   for (let i=1; i<=12; ++i) codes[`F${i}`]=57+i;
-  const locks = ['CapsLock', 'NumLock', 'ScrollLock'].map((name, i) => {
-    const label = document.createElement('label');
-    const select = document.createElement('select');
-    for (const [value,text] of [['auto','Host state (unknown)'],['off','Manual off'],['on','Manual on']]) {
-      const option=document.createElement('option'); option.value=value; option.textContent=text; select.append(option);
-    }
-    label.append(`${name}: `,select); locksPanel.append(label);
-    const lock={name,bit:16<<i,known:false,value:false,select};
-    select.addEventListener('change', () => { if(captured) send(5); });
-    return lock;
-  });
+  const locks = ['CapsLock', 'NumLock', 'ScrollLock'].map((name, i) =>
+    ({name, bit:16<<i, known:false, value:false}));
   function snapshot() {
     let known=0, value=0;
     for(const lock of locks) {
-      if(lock.select.value!=='auto' || lock.known) {
+      if(lock.known) {
         known|=lock.bit;
-        if(lock.select.value==='on' || (lock.select.value==='auto' && lock.value)) value|=lock.bit;
+        if(lock.value) value|=lock.bit;
       }
     }
     return {known,value};
@@ -279,7 +315,6 @@ document.addEventListener("fullscreenchange", () => {
       }
       if(reliable && typeof value==='boolean') {
         lock.known=true;lock.value=value;
-        lock.select.options[0].textContent=`Host state (${value?'on':'off'})`;
       }
     }
   }
@@ -302,9 +337,10 @@ document.addEventListener("fullscreenchange", () => {
     if(socket) { const old=socket;socket=undefined;old.close(); }
     reset(message);
   }
+  window.addEventListener('agon-reset-request',()=>release('Keyboard released for reset'));
   button.addEventListener('click', event => {
     if(captured || requested) { release();return; }
-    for(const lock of locks) { lock.known=false;lock.select.options[0].textContent='Host state (unknown)'; }
+    for(const lock of locks) { lock.known=false;lock.value=false; }
     observe(event);requested=true;lastReply=performance.now();status.textContent='Requesting keyboard…';
     canvas.focus();
     const ws=new WebSocket(`${location.protocol==='https:'?'wss':'ws'}://${location.host}/keyboard/browser`);
@@ -334,13 +370,11 @@ document.addEventListener("fullscreenchange", () => {
     observe(event);
     if(down) {
       if(held.has(usage))return;
-      const manualLock=locks.find(lock=>lock.name===event.code && lock.select.value!=='auto');
-      if(manualLock)manualLock.select.value=manualLock.select.value==='on'?'off':'on';
       const {known}=snapshot();
       if((usage>=4 && usage<=29 && !(known&16)) || (usage>=89 && usage<=99 && !(known&32))) {
-        status.textContent='Choose a manual lock state below; this key was not sent';return;
+        status.textContent='Host lock state unavailable; this key was not sent';return;
       }
-      if(send(2,usage,1))held.add(usage);
+      if(send(2,usage,1)) { held.add(usage);status.textContent='Keyboard captured'; }
     } else if(held.delete(usage)) send(2,usage,0);
   }
   canvas.addEventListener('blur',()=>{
@@ -354,8 +388,8 @@ document.addEventListener("fullscreenchange", () => {
     if(!panel.contains(event.relatedTarget) && (captured || requested))release();
   });
   window.addEventListener('pagehide',()=>release());
-  document.querySelector('#exit-fullscreen').addEventListener('click',()=>{
-    release();if(document.fullscreenElement)document.exitFullscreen();
+  document.addEventListener('fullscreenchange',()=>{
+    if(captured)canvas.focus();
   });
   setInterval(()=>{
     if(requested && performance.now()-lastReply>5000)release('Keyboard admission timed out');
@@ -365,3 +399,28 @@ document.addEventListener("fullscreenchange", () => {
     }
   },1000);
 })();
+
+// Optional bench actuator. Endpoint is supplied only by the deployment profile.
+{
+  const button=document.querySelector('#reset-agon');
+  const endpoint=document.querySelector('meta[name="agon-reset-url"]')?.content;
+  button.disabled=!endpoint;
+  button.title=endpoint?'Reset Agon through the bench Pi':'Reset bridge not configured';
+  button.addEventListener('click',async()=>{
+    if(!confirm('Reset Agon now? This interrupts the running program.'))return;
+    window.dispatchEvent(new Event('agon-reset-request'));
+    button.disabled=true;
+    const bytes=crypto.getRandomValues(new Uint8Array(16));
+    bytes[6]=(bytes[6]&15)|64;bytes[8]=(bytes[8]&63)|128;
+    const h=Array.from(bytes,b=>b.toString(16).padStart(2,'0')).join('');
+    const id=`${h.slice(0,8)}-${h.slice(8,12)}-${h.slice(12,16)}-${h.slice(16,20)}-${h.slice(20)}`;
+    const controller=new AbortController(),timer=setTimeout(()=>controller.abort(),7000);
+    try {
+      const response=await fetch(endpoint,{method:'POST',headers:{'Content-Type':'application/json','X-Agon-Reset':'1'},body:JSON.stringify({id}),signal:controller.signal});
+      const result=await response.json();
+      if(!response.ok||result.pulse!=='released')throw Error(result.error||'Reset not confirmed');
+    } catch(error) {
+      alert('Reset not confirmed. Check Agon before trying again.');
+    } finally {clearTimeout(timer);button.disabled=false;}
+  });
+}

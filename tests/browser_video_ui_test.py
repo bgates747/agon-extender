@@ -40,12 +40,26 @@ window.WebSocket=class extends EventTarget {
   close() { this.readyState=3; this.dispatchEvent(new Event('close')); }
 };
 ''')
+            mode = {'available': True, 'mode': 8, 'width': 320, 'height': 240,
+                    'colors': 64, 'refresh_hz': 60, 'double_buffered': False}
+            available = True
+            import json
+            page.route('**/display/status', lambda route: route.fulfill(
+                status=200 if available else 503, content_type='application/json',
+                body=json.dumps(mode if available else {'available': False})))
             page.goto(f'http://127.0.0.1:{server.server_port}/')
             assert page.locator('#keyboard').count() == 0
             assert page.locator('#keyboard-state').count() == 1
             page.click('#connect')
             page.wait_for_function("sockets[0]?.sent.length === 1")
             assert page.evaluate('sockets[0].sent') == ['frame']
+            page.wait_for_function("document.querySelector('#surface').textContent === 'Mode 8 320x240 64 colors 60 Hz single-buffered'")
+            assert page.locator('#connect').evaluate("e => e.classList.contains('connected')")
+            mode.update(mode=140, height=200, colors=16, refresh_hz=70, double_buffered=True)
+            page.wait_for_function("document.querySelector('#surface').textContent === 'Mode 140 320x200 16 colors 70 Hz double-buffered'")
+            available = False
+            page.wait_for_function("document.querySelector('#surface').textContent === 'Display status unavailable'")
+            available = True
             page.evaluate('''async () => {
               const {makeDemoFrame}=await import('/frame_protocol.js');
               sockets[0].dispatchEvent(new MessageEvent('message',
@@ -61,12 +75,15 @@ window.WebSocket=class extends EventTarget {
             assert page.evaluate('sockets[0].sent') == ['frame', 'frame']
             assert page.evaluate('sockets[0].url.endsWith("/video")')
             page.evaluate('sockets[0].close()')
+            assert not page.locator('#connect').evaluate("e => e.classList.contains('connected')")
             page.click('#connect')
             page.wait_for_function("sockets[1]?.sent.length === 1")
             assert page.evaluate('sockets.length') == 2
+            page.click('.diagnostics summary')
             page.click('#demo')
             page.wait_for_timeout(500)
             assert page.evaluate('sockets[1].readyState') == 3
+            assert not page.locator('#connect').evaluate("e => e.classList.contains('connected')")
             assert not errors, errors
             output = ROOT/'agents/excom/video-only-review'
             output.mkdir(parents=True, exist_ok=True)

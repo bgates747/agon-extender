@@ -5,7 +5,7 @@ connected to the Agon reset net. The existing Pi-controlled actuator demonstrate
 that physical route, but the P4 is not wired to it. This study recommends reusing
 the proven actuator principle, subject to pin selection and electrical review.
 The Author has deferred this work and will use the physical reset button for now.
-No reset firmware, endpoint, wiring change or physical test is authorized here.
+The 2026-09-21 ad hoc slice below authorizes the existing Pi actuator through a browser button; direct P4 reset wiring remains deferred.
 
 ## State and scope
 
@@ -128,3 +128,52 @@ run those checks or change the bench as part of this study.
 5. The older [order4 test reboot](QUAL-003/debrief/P01h/codec-screen/order4-p4/RESULTS.md)
    used reset-before-run controls and observed a P4 reboot; it is not evidence
    of an implemented P4-driven Agon reset circuit or a diagnosed reset-driver bug.
+
+## Ad hoc Pi-backed reset button — authorized 2026-09-21
+
+Author requests the existing agent reset action in the browser. This resumes only
+Pi-backed browser control; direct P4 GPIO/reset expansion remains deferred.
+Browser calls a separately configured Pi HTTP bridge, which runs the established
+100 ms GPIO pulse once. P4 serves the button but does not drive reset. No EMOS,
+SD or wiring changes. UI confirms interruption, releases browser keyboard capture,
+never retries an uncertain request, and distinguishes pulse receipt from boot.
+Endpoint and allowed Origin are machine-local configuration, not tracked addresses.
+
+P01 [x] Implement/test a fixed-action bridge: explicit POST, allowed Origin and
+custom header, bounded request size, concurrent-request rejection and duplicate
+request-ID suppression. No user-supplied shell command or automatic retry.
+P02 [x] Add compact Reset Agon button to the existing fullscreen control strip;
+disabled if endpoint unconfigured. Preserve video/input implementation otherwise.
+P03 [x] Deploy Pi service and P4 assets, verify served bytes and one explicit
+browser reset; verify fresh keyboard admission separately. Preserve rollback.
+
+### Ad hoc result — 2026-09-21
+
+P01–P03 completed. `browser-reset-r01-b2026-09-21-20-23-09Z` was built from the
+isolated key-query September20 parent with only index/app browser changes,
+flashed and independently verified; boot identity and USB startup passed.
+Bridge unit test rejected GET, wrong Origin and missing header; duplicate UUID
+executed the mocked pulse once. Existing browser keyboard regression test passed.
+Chromium fetched matching deployed assets, cancelled one confirmation without a
+request, then accepted one explicit button reset. Bridge returned pulse released;
+P4 reported keyboard ready and no held keys after Agon boot. No page JS errors.
+No Mac browser acceptance claimed yet. Local receipts: `agents/browser-reset/`.
+
+Operational authority is now [bench reset](../bench-reset.md). Pi service is
+boot-enabled; no direct P4 reset GPIO, EMOS change or SD modification. Hardware
+reset equivalence was checked against AgonLight2 Rev B sheet 4: physical RESET1
+and the established ZDI1 reset endpoint share RST/EN. Author accepted the deployed upgrade and authorized commit/push.
+
+Registry validation is blocked by a pre-existing light2-harness-r02
+connectivity.yaml integrity mismatch; this task did not edit that hardware
+profile or repair its recorded digest. Firmware build and reset tests passed.
+
+### Header placement revision — 2026-09-21
+
+Author requested Reset Agon at the right end of the branding/FPS header, away
+from normal controls, and removal of the pulse-sent message. r02 implements
+that placement and silent success; errors retain a dialog. The header remains
+outside video fullscreen. Mock-browser check covers header alignment and
+success without layout text; reset actuator/bridge unchanged.
+
+Author acceptance: 2026-09-21, including header placement and silent success.

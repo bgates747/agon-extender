@@ -13,6 +13,10 @@
 // bitmapped-controller integration boundary.
 
 #include <memory>
+#if defined(ESP_PLATFORM)
+#include "extender/display/mode_status.hpp"
+static unsigned browserNominalRefreshHz = 0;
+#endif
 #include <canvas.h>
 
 // The upstream all-in-one FabGL header exported these names globally. Keep the
@@ -277,6 +281,9 @@ bool updateVGAController(uint8_t colours) {
 // - 2: Not enough memory for mode
 //
 int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffered = false) {
+#if defined(ESP_PLATFORM)
+	agon::extender::display::modeStatus.invalidate();
+#endif
 	if (!updateVGAController(colours)) {			// If we can't update the controller then
 		return 1;									// Return the error
 	}
@@ -329,6 +336,12 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	}
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
 	if (!_stockFrameService->attach(*_stockController)) return 2;
+#endif
+#if defined(ESP_PLATFORM)
+	// Read the selected modeline, not a browser frame-delivery interval.
+	agon::extender::display::OfficialModeLine browserTiming{};
+	browserNominalRefreshHz = agon::extender::display::parseOfficialModeline(modeLine, browserTiming)
+		? browserTiming.refresh_hz : 0;
 #endif
 	// Return with no errors
 	return 0;
@@ -540,6 +553,11 @@ int8_t changeMode(uint8_t mode) {
 	debug_log("changeMode: canvas(%d,%d), scale(%f,%f), mode %d, videoMode %d\n\r", canvasW, canvasH, logicalScaleX, logicalScaleY, mode, videoMode);
 	if (errVal == 0) {
 		videoMode = mode;
+#if defined(ESP_PLATFORM)
+		// Publish only committed mode state; stock fallback owns failed changes.
+		agon::extender::display::modeStatus.publish({videoMode, canvasW, canvasH,
+			_VGAColourDepth, browserNominalRefreshHz, _VGAController->isDoubleBuffered()});
+#endif
 	}
 	if (errVal != -1) {
 		restorePalette();

@@ -40,31 +40,46 @@ window.WebSocket=class extends EventTarget {
         page.evaluate("const s=new WebSocket('/video');s.close()")
         assert page.locator('#keyboard-state').inner_text()=='Keyboard captured'
         # Focus outside panel releases; reconnect is never automatic.
-        page.click('#state');assert page.locator('#capture-keyboard').inner_text()=='Capture keyboard'
+        page.click('header h1');assert page.locator('#capture-keyboard').inner_text()=='Capture keyboard'
         page.click('#capture-keyboard');page.wait_for_function("document.querySelector('#keyboard-state').textContent==='Keyboard captured'")
         page.keyboard.down('Shift');page.keyboard.down('a')
         page.evaluate("window.dispatchEvent(new Event('blur'))")
         assert page.evaluate('sockets.at(-1).readyState')==3
         page.evaluate("window.dispatchEvent(new Event('focus'))")
         assert page.locator('#capture-keyboard').inner_text()=='Capture keyboard'
-        # Unknown Num requires explicit fallback. Its manual state goes on wire.
-        page.locator('#keyboard-locks select').nth(1).select_option('on')
+        # Unknown state is not guessed or replaced by manual controls.
+        assert page.locator('select').count()==0
         page.click('#capture-keyboard');page.wait_for_function("document.querySelector('#keyboard-state').textContent==='Keyboard captured'")
         page.evaluate("document.querySelector('#screen').dispatchEvent(new KeyboardEvent('keydown',{code:'Numpad1',key:'1',bubbles:true,cancelable:true}))")
+        assert 'unavailable' in page.locator('#keyboard-state').inner_text()
+        assert page.evaluate('sockets.at(-1).sent.filter(p=>p[3]===2).length')==0
+        page.evaluate("document.querySelector('#screen').dispatchEvent(new KeyboardEvent('keydown',{code:'Numpad1',key:'1',modifierNumLock:true,bubbles:true,cancelable:true}))")
         packet=page.evaluate('sockets.at(-1).sent.at(-1)');assert packet[12:16]==[89,1,32,32],packet
-        assert page.locator('#video-panel #exit-fullscreen').count()==1
-        page.click('#capture-keyboard')
+        # Caps follows host reports both on and off, with no override widget.
+        page.evaluate("document.querySelector('#screen').dispatchEvent(new KeyboardEvent('keydown',{code:'KeyA',key:'A',modifierCapsLock:true,bubbles:true,cancelable:true}))")
+        assert page.evaluate('sockets.at(-1).sent.at(-1)[15] & 16')==16
+        page.evaluate("document.querySelector('#screen').dispatchEvent(new KeyboardEvent('keyup',{code:'KeyA',key:'a',bubbles:true,cancelable:true}))")
+        assert page.evaluate('sockets.at(-1).sent.at(-1)[15] & 16')==0
+        assert page.evaluate("getComputedStyle(document.querySelector('#screen')).outlineStyle")=='none'
+        # Enter fullscreen while already captured; keep the same input session.
+        input_count=page.evaluate('sockets.length')
         page.click('#fullscreen')
         page.wait_for_function("document.fullscreenElement?.id==='video-panel'")
         page.locator('#keyboard-strip').hover()
-        page.click('#capture-keyboard');page.wait_for_function("document.querySelector('#keyboard-state').textContent==='Keyboard captured'")
+        assert page.locator('#keyboard-state').inner_text()=='Keyboard captured'
+        assert page.evaluate('sockets.length')==input_count
+        assert page.evaluate('sockets.at(-1).readyState')==1
         page.locator('#keyboard-strip').hover()
         assert page.locator('#keyboard-state').inner_text()=='Keyboard captured'
         canvas_box=page.locator('#screen').bounding_box();strip_box=page.locator('#keyboard-strip').bounding_box()
         assert canvas_box['y']+canvas_box['height']<=strip_box['y']+1
-        page.click('#exit-fullscreen');page.wait_for_function('!document.fullscreenElement')
+        page.click('#fullscreen');page.wait_for_function('!document.fullscreenElement')
+        assert page.locator('#keyboard-state').inner_text()=='Keyboard captured'
+        assert page.evaluate('sockets.length')==input_count
+        assert page.evaluate('sockets.at(-1).readyState')==1
+        page.click('#capture-keyboard')
         assert page.locator('#capture-keyboard').inner_text()=='Capture keyboard'
         assert not errors,errors
         browser.close()
 finally: server.shutdown()
-print('Browser capture: explicit ownership, key transitions, repeat suppression, focus loss, video independence and manual locks pass')
+print('Browser capture: explicit ownership, key transitions, repeat suppression, focus loss, video independence and host-only locks pass')
