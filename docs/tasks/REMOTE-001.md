@@ -724,3 +724,12 @@ The C01 pending list now includes a green connected-state Connect button and a
 header showing mode number, resolution, colors, nominal Hz and buffering mode,
 followed by the existing Presented fps. Author explicitly requested no coding
 yet; metadata availability must be checked before implementation.
+
+## September 21 cross-host comparison and Jukebox finding
+
+[Mac/Linux observations](REMOTE-001/2026-09-21-mac-comparison.md) distinguish
+presented frame rates, gameplay and keyboard response on the September 19
+checkpoint. Latest pre-rollback P4 image was restored afterward.
+[Tagged Jukebox review](REMOTE-001/JUKEBOX-INPUT-REVIEW.md) records the ExCom
+input failure and successful Legacy controls for classic v0.9.6-beta and
+v0.11.0-beta. No direct timer/UART vector collision found; cause unresolved.
