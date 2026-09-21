@@ -44,3 +44,14 @@ The wider workspace contains unrelated work. Candidate inputs are committed
 separately; record that workspace condition rather than claim a clean product
 build. No new firmware binary is built. Existing immutable diagnostic provenance
 and actual deployed/restored hashes accompany the run.
+
+## Fixture correction before valid paired run
+
+r01 mainboard images passed, but later P4 cases reused accumulated source/map
+buffer blocks: command0 appends; resetting Agon does not reset P4. PACK2 retained
+the PACK1 image (576 differences), PACK4 had1024 differences. This is an invalid
+isolation condition, not evidence of renderer disagreement. Local raw evidence
+is retained; no capture crash occurred. r02/registry r97 explicitly clears each
+source/map buffer before upload, as the original suite did. Same packed bytes,
+mapping, output coordinates and oracle. Repeat both endpoints under r02.
+Existing completion drain precedes clearing and there are no sprite references.
