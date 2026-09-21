@@ -1,0 +1,18 @@
+{
+  "stream": {
+    "frames": 123,
+    "deltas": 121,
+    "full": 2,
+    "exact_static_reconstruction": true,
+    "takeover_first_full": true,
+    "reconnect_first_full": true
+  },
+  "browser": {
+    "canvas_exact_full_delta_match": true,
+    "page_errors": [],
+    "size": [
+      960,
+      720
+    ]
+  }
+}

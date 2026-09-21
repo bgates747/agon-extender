@@ -26,7 +26,7 @@ Keep input, request pacing, renderer scheduling and ordinary full-frame support
 unchanged. Decoder references are private per connection and updated only after
 complete validation. Sending references advance only after successful full sends.
 
-B08-04 [ ] Build, preserve installed P4 image, flash and independently verify.
+B08-04 [x] Build, preserve installed P4 image, flash and independently verify.
 Check live first-full/subsequent-delta reconstruction and reconnection, input/CLI
 readiness. Preserve mainboard firmware/EMOS/SD startup. Leave manual game comparison
 to Author; no unattended performance campaign, emulator cue or automatic game run.
@@ -46,3 +46,17 @@ all decoding reconstructs canonical final RGB222, not browser VDP semantics.
 Quick host checks:129exact reconstructed frames,123deltas/six full frames,
 including periodic full recovery and rejection of missing/wrong/truncated
 references. P4 build passed. Physical connection/takeover checks follow deployment.
+
+
+## Physical result and manual handover
+
+Candidate frame-delta-probe-r01-b2026-09-21-03-36-19Z is flashed and independently
+verified. [Quick correctness results](BENCH-008/RESULTS.md) pass. Mainboard VDP,
+EMOS and SD startup are unchanged. ExCom CLI responds; cursor restored; all agent
+video observers closed. Manual game comparison remains pending.
+
+Refresh the browser page to load the candidate JavaScript. Default page negotiates
+replacement deltas; append `?full=1` to the page URL for full-frame RLE2 comparison.
+Each new connection starts with a full frame. Run the ordinary game unchanged.
+Rollback image is the preserved key-query-probe-r01-b2026-09-20-02-08-44Z candidate;
+private deployment receipts identify the exact saved bytes and restore procedure.
