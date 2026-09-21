@@ -61,7 +61,7 @@ alpha blending as an expected result of these formats.
 
 **QUAL-004-BM01** [x] Inventory public formats and existing evidence. This document.
 
-**QUAL-004-BM02** [ ] Author authorized execution: selected a bounded packed-expansion comparison
+**QUAL-004-BM02** [x] Author authorized execution: selected a bounded packed-expansion comparison
 using existing1/2/4bpp inputs. Mainboard VDP and P4 render identical frozen bytes;
 host compares captures and a small independent expected-pixel pattern. Use the
 accepted capture-failure/control protocol. No renderer changes.
@@ -74,3 +74,5 @@ No fixture generated, firmware built/flashed, emulator started, or hardware test
 for this review. Sprite results were committed separately as `04ec865c`.
 
 Execution checklist: [BM02 contract](../packed-expansion/CONTRACT.md).
+
+BM02 completed: [three paired cases pass](../packed-expansion/RESULTS.md); BM03 remains parked.

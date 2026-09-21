@@ -1,0 +1,10 @@
+{
+  "width": 512,
+  "height": 384,
+  "pixels": 196608,
+  "mismatches": 0,
+  "match": true,
+  "bounds": null,
+  "mainboard_sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04",
+  "p4_sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04"
+}

@@ -1,0 +1,10 @@
+{
+  "input_commit": "110fc061",
+  "workspace_dirty": true,
+  "firmware_rebuilt": false,
+  "mainboard_diagnostic": "mainboard-image-capture-r02-b2026-09-16-12-41-20Z",
+  "p4_unchanged": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "before_flash_sha256": "272ea4577f8b0266b1eca4caddfea994ef4efaed7762e5fa981fd64e332aa526",
+  "startup_before_sha256": "5ffdec71b88147a9565a6f16ae1ac647a9474c859eef939a24643452c9d02161",
+  "test_startup_sha256": "d5417c84a3d061c15054a0691caa74e5565b8cbfe70163d6b2d36195b257ef53"
+}

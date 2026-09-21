@@ -21,13 +21,13 @@ code. Input generation independently decodes the retained packed data to verify
 that formula. No fixture mode switches. Reuse the existing immutable q4draw
 player and mainboard diagnostic, leaving P4/EMOS unchanged.
 
-BM02-P03 [ ] Preserve actual mainboard flash and incoming startup, verify board
+BM02-P03 [x] Preserve actual mainboard flash and incoming startup, verify board
 identity and input readiness, then stage/readback fixtures. Autoexec alone selects
 mode20 on both endpoints and starts the established SD service. Host uses admitted
 keyboard CLI to invoke each independent case after a fresh reset. Firmware and
 startup restoration are mandatory, even after failure.
 
-BM02-P04 [ ] Capture PACK1/PACK2/PACK4 twice on mainboard, then stable distinct
+BM02-P04 [x] Capture PACK1/PACK2/PACK4 twice on mainboard, then stable distinct
 P4 generations. Compare all196608pixels per case without masks/tolerance and
 require the oracle on each endpoint. Retain hashes, raw evidence and acquisition
 start/end/duration separately from preparation; this is not a speed benchmark.
@@ -35,7 +35,7 @@ Follow the [capture failure protocol](../../../qualification/capture-failure-pro
 mark failures, recover readiness, continue independent cases, then execute
 uninstrumented controls for marked cases. Do not repair inputs to erase failures.
 
-BM02-P05 [ ] Restore exact overwritten mainboard sectors/startup; independently
+BM02-P05 [x] Restore exact overwritten mainboard sectors/startup; independently
 verify. Close observers/SD service, release input, prove CLI responsiveness and
 leave the incoming player loaded but not running. Publish bounded results and
 update BM02. No push or emulator notification requested.
@@ -55,3 +55,6 @@ is retained; no capture crash occurred. r02/registry r97 explicitly clears each
 source/map buffer before upload, as the original suite did. Same packed bytes,
 mapping, output coordinates and oracle. Repeat both endpoints under r02.
 Existing completion drain precedes clearing and there are no sprite references.
+
+Completed under r02. [Results](RESULTS.md). Initial invalid run IDs: mainboard
+QUAL-004-2026-09-21-02-26-42Z; Extender QUAL-004-2026-09-21-02-31-29Z.

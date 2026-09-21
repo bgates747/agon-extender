@@ -1,0 +1,86 @@
+[
+  {
+    "case": "PACK1",
+    "passed": true,
+    "sequences": [
+      3,
+      4
+    ],
+    "stable": true,
+    "sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d",
+      "p4_sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d"
+    },
+    "sprite_colour_counts": {
+      "3": 0,
+      "15": 0,
+      "60": 0
+    },
+    "oracle_mismatches": 0,
+    "elapsed_s": 12.051888227462769,
+    "escape_cli_service_passed": true
+  },
+  {
+    "case": "PACK2",
+    "passed": true,
+    "sequences": [
+      7,
+      8
+    ],
+    "stable": true,
+    "sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324",
+      "p4_sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324"
+    },
+    "sprite_colour_counts": {
+      "3": 0,
+      "15": 0,
+      "60": 0
+    },
+    "oracle_mismatches": 0,
+    "elapsed_s": 12.18704867362976,
+    "escape_cli_service_passed": true
+  },
+  {
+    "case": "PACK4",
+    "passed": true,
+    "sequences": [
+      11,
+      12
+    ],
+    "stable": true,
+    "sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04",
+    "comparison": {
+      "width": 512,
+      "height": 384,
+      "pixels": 196608,
+      "mismatches": 0,
+      "match": true,
+      "bounds": null,
+      "mainboard_sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04",
+      "p4_sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04"
+    },
+    "sprite_colour_counts": {
+      "3": 0,
+      "15": 0,
+      "60": 0
+    },
+    "oracle_mismatches": 0,
+    "elapsed_s": 11.986157417297363,
+    "escape_cli_service_passed": true
+  }
+]

@@ -1,0 +1,65 @@
+[
+  {
+    "case": "PACK1",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.71953582763672,
+        "sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.73788022994995,
+        "sha256": "2854543feca1a4863593fafae289fcb0de5d78ee21a6f70b0428e8897113e91d",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "oracle_mismatches": 0
+  },
+  {
+    "case": "PACK2",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.726725816726685,
+        "sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.762330293655396,
+        "sha256": "0e93c8a11942fed57c91678529a3445ed71ce4319506f45fde0b4efe0a093324",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "oracle_mismatches": 0
+  },
+  {
+    "case": "PACK4",
+    "phase": "capture",
+    "attempts": [
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.747470140457153,
+        "sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04",
+        "escape_cli_service_passed": true
+      },
+      {
+        "outcome": "captured",
+        "elapsed_s": 23.96613645553589,
+        "sha256": "9e29f43c65fe95d2c7337d4630bf616aeec5f4a555953509acec144e4fb01c04",
+        "escape_cli_service_passed": true
+      }
+    ],
+    "passed": true,
+    "repeat_equal": true,
+    "oracle_mismatches": 0
+  }
+]
