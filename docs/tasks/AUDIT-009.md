@@ -42,7 +42,7 @@ and update the same coverage ledger and results before stopping.
 
 ## Execution checkpoint
 
-The first bounded pass is recorded in [RESULTS.md](AUDIT-009/RESULTS.md).
+The two bounded passes are recorded in [RESULTS.md](AUDIT-009/RESULTS.md).
 Current operating entry points and selected contracts are consolidated; the
 whole-documentation audit is **not complete**. A09-04/05/06/08 remain open for
 remaining body review and consolidation. The checked validation/walkthrough/

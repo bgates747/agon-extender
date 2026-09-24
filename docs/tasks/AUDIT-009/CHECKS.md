@@ -186,3 +186,15 @@ is outside this batch.
 |---|---|---|
 | B19 | hardware/objects/README; objects.yaml; schema.json; P4-PC library README; PROVENANCE.json | Object guide inspected and validator passed for 41 objects. Library provenance verified for all 39 originals/derivatives; no hash mismatch. This checks stored snapshot integrity, not accuracy of every upstream page or hardware compatibility. |
 | B20 | LICENSING; root LICENSE header; retained agon-vdp-release LICENSE; vdp-gl displaycontroller notice | Scoped notice/provenance check: project GPLv3 text, retained MIT notice and upstream GPLv3-or-later attribution present. No new license terms, legal interpretation or exhaustive redistribution review. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B21 | firmware-bugs; firmware-bugs/mos-tests-coverage; QUAL-004; sprite-scroll/RESULTS; extender-followup/RESULTS; packed-expansion/RESULTS | Reconciled current FWBUG-002/QUAL-004 coverage with later paired passes. Source-baseline MOS findings and dated mos-tests cross-reference retained; no new MOS tests or current-branch defect revalidation. Original failure remains unresolved, not a blanket block on subsequent accepted checkpoints. |
+
+Second-pass checkpoint prepared at 2026-09-24 04:24:31 UTC, within the one-hour
+ceiling. Eight additional batches B14–B21 complete their stated review scope;
+whole-audit coverage remains open. Whitespace checks pass. All 55 TODO-linked
+task/evidence targets exist (this counts repeated and evidence links, not 55
+distinct queue tasks). Added-line private home/mount/LAN pattern scan found no
+matches. Changed file types are Markdown and inventory CSV only. Final mailbox
+empty; sibling EMOS worktree clean. No push performed.

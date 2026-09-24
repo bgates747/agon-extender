@@ -1,5 +1,19 @@
 # QUAL-004 — Whole-image graphics correctness on physical VDP and P4
 
+## Current acceptance summary
+
+Retained coverage is **77 paired static scenes / 14,410,752 pixels** through
+[packed expansion BM02](QUAL-004/packed-expansion/RESULTS.md).
+[Extender sprite/scroll checks](QUAL-004/sprite-scroll/extender-followup/RESULTS.md)
+passed all four checkpoints, with exact mainboard comparison for three;
+INITIAL has a stock visual control, not a mainboard captured reference.
+The earlier diagnostic panic remains [FWBUG-002](../firmware-bugs.md#fwbug-002),
+with QUAL-004-CI01 deferred. BM03 and four Copper controls also remain deferred.
+These are bounded image checks, not complete dynamic parity or performance
+qualification. Earlier totals and installed-state statements below are dated
+execution history; use this summary and TODO for current disposition.
+
+
 ## Executive summary
 
 Author-authorized unattended correctness qualification, bounded to eight hours

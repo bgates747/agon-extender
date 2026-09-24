@@ -104,3 +104,7 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
 | A09-F035 | Example recipes predate SD evidence layout, EMOSlet handover and mode-in-autoexec policy | qualify_keyboard.py still emits LOAD/RUN of the ordinary listener; key-query/screen/receiver hard-code old receipt paths; marker/matrix use relative output | Current example index separates refresh-required fixtures from corrected invocation guidance. Code remains unchanged. PORT-003 owns key-query; REMOTE-002 owns keyboard witnesses/qualifier; DEMO-001 owns hello replay refresh. No automatic authorization to rerun. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F036 | FWBUG-002 still says the first-scene failure blocks all sprite/scroll qualification | Later mainboard/P4 checkpoint results and packed-expansion cumulative count | Corrected bug scope and added current QUAL-004 summary: 77 static pairs; INITIAL diagnostic cause and dynamic parity remain unresolved. No failure erased or fresh acceptance inferred. |
