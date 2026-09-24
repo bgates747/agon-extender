@@ -185,3 +185,12 @@ This cleanup did not modify the transfer protocol or listener binary.
 R05-08 [ ] Improve interactive client session restart handling; ordinary read-only
 use should not require manually deleting state journals. Preserve recovery of
 uncertain mutations. Author identified this usability problem during Mac listing.
+
+## Authorized fast-transfer tasklet — 2026-09-24 UTC
+
+The Author approved an opt-in listener/client fast path before further general
+file-manager work. [Frozen tasklet and checklist](REMOTE-005/FAST-TRANSFER.md)
+cover skipping whole-file verification rereads while retaining staged transfer,
+recovery and transport admission. Local Linux/emulator work only; bench occupied.
+This bounded authorization supersedes the research-only restriction above for
+this tasklet alone; it does not select FTP/SMB/WebDAV or authorize deployment.
