@@ -54,15 +54,17 @@ references. P4 build passed. Physical connection/takeover checks subsequently pa
 
 ## Physical result and manual handover
 
-Candidate frame-delta-probe-r01-b2026-09-21-03-36-19Z is flashed and independently
-verified. [Quick correctness results](BENCH-008/RESULTS.md) pass. Mainboard VDP,
+At the experiment checkpoint, candidate
+frame-delta-probe-r01-b2026-09-21-03-36-19Z was flashed and independently verified.
+It was subsequently rolled back; this is not the current installed selection. [Quick correctness results](BENCH-008/RESULTS.md) pass. Mainboard VDP,
 EMOS and SD startup are unchanged. ExCom CLI responds; cursor restored; all agent
 video observers closed. Author subsequently confirmed correct output in both paths and worse frame rate
 with differencing; see the results below.
 
-Refresh the browser page to load the candidate JavaScript. Default page negotiates
-replacement deltas; append `?full=1` to the page URL for full-frame RLE2 comparison.
-Each new connection starts with a full frame. Run the ordinary game unchanged.
+The experiment's page negotiated replacement deltas by default; `?full=1`
+selected full-frame RLE2 for its manual comparison. Each new connection started
+with a full frame. Those candidate instructions are retired after rollback;
+current browser operation uses the [maintained video contract](../protocols/browser-video.md).
 Rollback image is the preserved key-query-probe-r01-b2026-09-20-02-08-44Z candidate;
 private deployment receipts identify the exact saved bytes and restore procedure.
 

@@ -12,6 +12,7 @@ current behavior. Dated evidence supports claims but is not a second manual.
 | First use, prerequisites, host setup and another project's workflow | [Using Extender](using-extender.md) |
 | Mainboard SD files; checked/fast transfers; sessions and recovery | [Mainboard SD](mainboard-sd.md) |
 | Physical/browser/agent input, ownership and platform limits | [Keyboard input](remote-keyboard.md) |
+| Read visible ExCom text without taking video ownership | [Screen text](screen-text.md) |
 | Normal Agon reset and browser reset button | [Bench reset](bench-reset.md) |
 | Recover an Agon that cannot boot MOS | [MOS recovery](mos-recovery.md) |
 | Where files belong on SD | [SD layout](sd-layout.md) |

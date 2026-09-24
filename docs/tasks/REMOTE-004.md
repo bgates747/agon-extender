@@ -18,6 +18,7 @@ ownership. Preserve capture, physical-keyboard takeover and locale behavior from
 [REMOTE-001](REMOTE-001.md); reuse [PORT-005](PORT-005.md) keyboard semantics.
 
 For copy, first inspect the existing P4 `GET /screen/text` facility from
+the [screen-text guide](../screen-text.md), with evidence under
 [BENCH-006](BENCH-006.md). It uses retained VDP glyph recognition, not an
 independent text buffer: font/colour, unknown-glyph, graphics and non-atomic
 capture limitations matter. A new transcript is an alternative to investigate,

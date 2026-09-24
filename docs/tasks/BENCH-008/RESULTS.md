@@ -1,7 +1,7 @@
 # Quick replacement-delta correctness result
 
-The candidate passed bounded host and physical-browser correctness checks and is
-installed. Subsequent Author playtesting found correct output but worse frame
+The experimental candidate passed bounded host and physical-browser correctness
+checks, then was rolled back at the Author's request. Subsequent Author playtesting found correct output but worse frame
 rate with differencing. Further investigation is deferred; the initial correctness
 checks do not establish a gameplay performance improvement.
 
@@ -42,7 +42,7 @@ browser Presented fps, not renderer/game-loop timing or a controlled benchmark.
 | Mode 0 MOS prompt | 28–30 presented fps | About 15 presented fps | About 46–50% lower; `(delta/full - 1) × 100` |
 | Nurples manual gameplay | Correct display; better frame rate | Correct display; worse frame rate | Not quantified |
 
-The installed implementation adds retained transmission history, a delta scratch
+The experimental implementation added retained transmission history, a delta scratch
 buffer and compressed delta storage. P4 reads current and retained pixels, builds
 the replacement image, compresses full output and eligible delta output to select
 the smaller payload, then copies successfully sent canonical pixels into history.
@@ -54,9 +54,9 @@ cannot be useful with a different implementation.
 XOR is reversible and also produces zero for unchanged pixels. It remains untested;
 changing the pixel operation alone would not eliminate retained history, memory
 traffic or dual encoding. No XOR candidate or optimization is authorized by this
-record. Author deferred further investigation for available tokens. Leave firmware
-unchanged; use the page's `?full=1` override for full-frame RLE2. This remains the
-same experimental firmware, not a claim of restoring the predecessor image.
+record. Author deferred further investigation for available tokens. The initial
+`?full=1` comparison used the same experimental image; it was not a rollback.
+The later restoration below superseded that comparison setup.
 
 
 ### Subsequent disposition

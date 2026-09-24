@@ -108,8 +108,8 @@ or file-integrity evidence accompanies the transcript. Do not publish a speed ra
 The [existing SD contract](../../mainboard-sd.md) already provides directory
 listing, explicit-offset reads and staged writes with integrity/recovery behavior.
 P4 receives host requests; EMOS owns the Extender link; foreground sdserve owns
-MOS filesystem calls. The provisional MOSlet does not make this a background
-filesystem service during arbitrary games, and its admitted Legacy/input conditions
+MOS filesystem calls. The installed `/emos/sdserve.bin` foreground utility does
+not make this a background filesystem service during arbitrary games; Legacy/input conditions
 remain unchanged. See the [earlier comparison](../REMOTE-005/FEATURE-COMPARE.md).
 
 Official MOS documents `mos_uopen`/`mos_ugetc`/`mos_uputc` as UART1 operations,
@@ -122,10 +122,11 @@ reviewed virtual UART interface, including baud, blocking reads, close semantics
 and clients which bypass MOS. An adapted application-side transport is a smaller
 alternative, but is an Author decision, not a change made by this review.
 
-Do not move a large AT interpreter into EMOS ROM. Current provisional MOSlet
-results record only 16 bytes remaining in that candidate; this is a specific
-build result, not a forecast. Code-size, heap and scheduling costs of P4 adaptation
-are unmeasured. Neither Legacy nor ExCom support for new modem clients is proven.
+Do not move a large AT interpreter into EMOS ROM. The research-time candidate
+had only 16 bytes remaining; later [AUDIT-008 measured results](../AUDIT-008/IMPLEMENTATION.md)
+recover 6282 bytes, leaving 6298 free in v0.1.19. That bounded headroom does not
+select an AT implementation or establish its cost. Code-size, heap and scheduling
+costs of P4 adaptation remain unmeasured. Neither Legacy nor ExCom support for new modem clients is proven.
 WiFi setup commands need truthful Ethernet semantics, rather than fake successful
 configuration. File access UX can advance independently of that compatibility work.
 

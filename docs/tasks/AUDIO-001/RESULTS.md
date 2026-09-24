@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-**Worth pursuing, but uncompressed 44.1 kHz/16-bit stereo is not yet feasible at the measured read-and-send budget.** The current Agon card supplies about 189–199 KiB/s; the audio alone needs 172.27 KiB/s. Applying the historical fast parallel result to today's SD measurements predicts approximately 1.07–1.12 seconds of producer work per second of audio, before framing, handovers, video or other overhead. This is a model using separate experiments, not an end-to-end measurement or proof that the hardware cannot be made fast enough.
+**Worth pursuing, but uncompressed 44.1 kHz/16-bit stereo is not yet feasible at the measured read-and-send budget.** The current Agon card supplies about 187–199 KiB/s; the audio alone needs 172.27 KiB/s. Applying the historical fast parallel result to today's SD measurements predicts approximately 1.07–1.13 seconds of producer work per second of audio, before framing, handovers, video or other overhead. This is a model using separate experiments, not an end-to-end measurement or proof that the hardware cannot be made fast enough.
 
 **The next useful experiment is a sustained, CRC-checked SRAM-to-P4 parallel benchmark through EMOS, followed by the combined SD/read/send loop.** The current EMOS byte loop is substantially different from the historical fast assembly loop. Do not promise that old throughput for the integrated path. At today's best SD rate, parallel would need roughly 1.31 MB/s (1.25 MiB/s) just to break even, with no allowance for other work. Alternatively, a verified storage improvement could change the result.
 

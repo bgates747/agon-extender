@@ -2,11 +2,13 @@
 
 ## Executive summary
 
-Nurples now waits two distinct vblanks between main-loop frames. At60Hz this
-caps frame-based updates at30fps (slower if rendering overruns), deliberately
-slowing gameplay. Rally already gates rendering by four MOS clock ticks,
-equivalent to two vblanks; no Rally source modification was necessary.
-Hardware visual smoothness and realized frame rate remain for human review.
+The retained test build waits two distinct vblanks between main-loop frames,
+capping updates at 30/s under a 60-Hz vblank (slower when work overruns).
+Production Nurples was subsequently restored to one vblank; the final deployment
+is recorded below. Rally already gated rendering by four MOS clock ticks and
+needed no source change. Earlier qualitative feedback did not identify the exact
+Nurples installation, so it cannot qualify the later matched bundle. No fresh
+performance or installed-state claim is made by this record.
 
 ## Changes and evidence
 

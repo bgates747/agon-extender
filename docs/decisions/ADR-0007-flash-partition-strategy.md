@@ -6,6 +6,15 @@
 - Last amended: 2026-08-24
 - Qualification: Exact offsets require toolchain validation
 
+## Implementation boundary
+
+The maintained partition table reserves the two application slots and data
+regions. This decision specifies the intended update/recovery model; it is not
+evidence of an implemented P4 network updater or a qualified crash-log product.
+Current build selection is in the [build guide](../building.md).
+[PORT-006](../tasks/PORT-006.md) retains update-service work and
+[DIAG-001](../tasks/DIAG-001.md) retains durable diagnostic requirements.
+
 ## Context
 
 Extender has 16 MB of SPI flash. It must preserve the stock VDP's ability to

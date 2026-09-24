@@ -34,6 +34,29 @@ tools have dependencies in [requirements-dev.txt](../requirements-dev.txt).
 Fresh-machine setup is still rough, and the commands above are the current
 compile entry point rather than a complete installation procedure.
 
+### Selected DevKit configuration
+
+The maintained [board definition](../vdp/boards/olimex_esp32_p4_devkit.json),
+[SDK defaults](../vdp/sdkconfig.defaults) and
+[partition table](../vdp/partitions.csv) select the following baseline. These
+are build inputs, not a fresh measurement of the installed firmware or a P4-PC
+profile.
+
+| Item | Selected configuration / interpretation |
+|---|---|
+| Silicon | Pre-v3 P4 (`esp32p4_es`); generated revision bounds must be checked for the selected build |
+| CPU | SDK selects 360 MHz. The board JSON's descriptive 400 MHz field is not runtime proof; [ADR-0010](decisions/ADR-0010-cpu-frequency.md) records why forced 400 MHz was rejected |
+| Flash | 16 MiB, QIO at 80 MHz. A DIO first-stage image header is expected for this toolchain; verify the second-stage handoff rather than patching that header |
+| PSRAM | 32 MiB target, hex mode at 200 MHz, boot memory test; distinct from internal SRAM |
+| Internal-memory budget | PlatformIO reports 512,000 bytes; this is not physical SRAM capacity and does not include all PSRAM |
+| Application partitions | Two 7 MiB OTA slots, plus NVS, OTA metadata, coredump and reserved data. Partition presence does not implement a network updater or qualify durable crash reporting |
+
+The [recorded bring-up](tasks/SETUP-001.md) passed its bounded canary scope;
+sustained production-load and later-board qualification are separate. SDK defaults
+do not necessarily overwrite a previously generated configuration. Inspect the
+selected build's effective SDK settings when defaults or targets change; retain
+candidate provenance rather than treating an old generated file as authority.
+
 Build outputs are under `vdp/.pio/build/p4-console/`, including `firmware.bin`,
 `firmware.elf` and `firmware.factory.bin`. An ordinary build without an explicit
 build identity carries **`UNVERSIONED-DO-NOT-DEPLOY`**. For an identified bundle

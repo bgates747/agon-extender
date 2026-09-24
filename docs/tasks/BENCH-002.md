@@ -1,21 +1,19 @@
 # BENCH-002 — 30 fps Nurples and Rally human smoothness review
 
-## Current-state clarification — 2026-09-20 queue review
-
-The production/test separation accepted later in this record supersedes the
-initial production slowdown: normal Nurples is single-vblank, while the
-independent test build is two-vblank. The Author supplied qualitative game
-feedback; final task disposition still needs review. No deployment changes here.
-
-
 ## Executive summary
 
-Author requests Nurples wait two vblanks per game-loop frame, deliberately
-slowing frame-based gameplay, and Rally be capped at30fps if not already so.
-Use current nurples-repair code, preserve installed artwork and unrelated dirty work;
-Rally's maintained full game is rally-game, never Golem/historical rally.
-Restore the saved normal P4 firmware, deploy verified game bytes, and notify
-with the standard hardware spoken cue. Human smoothness assessment remains open.
+The pacing comparison was deployed, then separated from production. Normal
+Nurples uses one vblank; the independent `/test/nurples` build uses two.
+Rally already had its 30-Hz render gate and required no source change. The
+[results](BENCH-002/RESULTS.md) retain exact build/deployment evidence.
+
+The Author supplied qualitative feedback, but the earlier observation could
+not identify which old Nurples installation was run. Do not assign it to the
+later fully matched repair bundle. Final task disposition remains for review;
+there is no pending instruction to slow production Nurples, restore an old P4
+image or repeat the test. Refresh paths against current SD policy before reuse.
+The frozen contract below records the original comparison, not a standing
+execution authorization.
 
 ## Frozen execution contract
 

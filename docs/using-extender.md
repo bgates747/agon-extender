@@ -40,7 +40,7 @@ from both. Coordinate with the person at the keyboard.
 | View EDP / type interactively | Open the P4's HTTP page, Connect for video, Capture keyboard for input. [Browser/input behavior and platform limits](remote-keyboard.md#browser-keyboard-capture). Capturing does not admit a disabled EMOS input path. |
 | Send bounded agent input | [Host commands](remote-keyboard.md#host-commands), using `scripts/keyboard.py`. Its journal differs from the SD journal. Do not paste a sequence of dependent CLI commands and infer completion from sleeps. |
 | List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). At a verified controllable prompt, select Legacy and run the foreground `/emos/sdserve.bin` through `EMOS sdserve [--fast] /`. It occupies the MOSlet region, not the ordinary application's load region. |
-| Observe CLI text | `python3 scripts/screen_text.py --url "$EXTENDER_URL"` reads P4's pixel-derived text diagnostic. It observes ExCom output, not MOS command-buffer RAM or the Legacy screen. Recognition depends on the displayed font/image and is not an atomic command-completion receipt. [Scope and evidence](tasks/BENCH-006.md). |
+| Observe CLI text | [Screen-text guide](screen-text.md): P4's pixel-derived readback observes ExCom output, not MOS command-buffer RAM or the Legacy screen. It does not take video ownership or provide an atomic command-completion receipt. |
 | Reset a stuck Agon | [Reset guide](bench-reset.md). The browser button uses an optional Pi bridge, not the SD listener or a native P4 GPIO service. Reset interrupts the running program; use only with authorization and known consequences for open files. |
 | Recover failed MOS firmware | [MOS recovery](mos-recovery.md). A normal reset cannot repair a bad ROM. Recovery tooling has its own readiness and authorization requirements. |
 | Build / install | [Build guide](building.md), [version policy](versions/README.md), and the applicable deployment/qualification record. A compile is not a flash or qualification. |
@@ -49,8 +49,9 @@ from both. Coordinate with the person at the keyboard.
 
 Run host commands from this repository root, or supply an absolute script path.
 On the maintained Linux checkout use `.venv/bin/python`. On macOS the SD,
-keyboard and screen-text clients use Python 3's standard library; their local
-journal locking uses POSIX `fcntl`. Use the Mac's Python interpreter, not a
+keyboard and screen-text clients use Python 3's standard library. Local
+SD/keyboard journal locking uses POSIX `fcntl`; screen-text has no journal.
+Use the Mac's Python interpreter, not a
 Linux virtual-environment executable through a shared filesystem. Native Windows
 is not covered by these client instructions.
 

@@ -1,17 +1,24 @@
 # REMOTE-003 — Browser-requested mainboard reset through P4
 
-P4-controlled mainboard reset appears feasible using a GPIO-driven transistor
-connected to the Agon reset net. The existing Pi-controlled actuator demonstrates
-that physical route, but the P4 is not wired to it. This study recommends reusing
-the proven actuator principle, subject to pin selection and electrical review.
-The Author has deferred this work and will use the physical reset button for now.
-The 2026-09-21 ad hoc slice below authorizes the existing Pi actuator through a browser button; direct P4 reset wiring remains deferred.
+## Executive summary
+
+The Pi-backed browser reset button is implemented and Author-accepted, including
+its top-right header placement and silent success. Use the
+[current reset guide](../bench-reset.md) for operation. P4 serves the page; the
+browser calls the Pi bridge, and the Pi pulses the mainboard reset actuator.
+This is not a P4-driven GPIO reset or a power cycle.
+
+Direct P4 reset remains a deferred feasibility proposal. No P4 reset pin or
+control-expansion circuit is selected. The original study below applies to that
+possible replacement of the Pi dependency; it does not describe browser reset
+as unavailable.
 
 ## State and scope
 
 1. Author requested a feasibility study on 2026-09-19; study complete. The Author
-   deferred further work; implementation remains unstarted. Resume only on explicit
-   Author request. The existing Pi helper remains available, unchanged.
+   deferred direct-P4 implementation, which remains unstarted. Resume that work
+   only on explicit Author request. The later Pi-backed button is implemented;
+   its accepted scope is recorded below.
 2. Desired action: the human requests an Agon reset from the browser; P4 executes
    one physical reset pulse without requiring Pi5 or responsive EMOS.
 3. This is reset, not power cycling, flashing, ZDI recovery or an automatic
@@ -23,7 +30,7 @@ The 2026-09-21 ad hoc slice below authorizes the existing Pi actuator through a 
 
 | Route | Existing evidence | Assessment |
 |---|---|---|
-| Browser → Pi → transistor → Agon reset | Maintained `scripts/reset_agon.py`; accepted 100 ms pulse and observed boot | Possible fallback, but needs a Pi service/authentication surface and preserves the dependency the Author wants to remove. |
+| Browser → Pi → transistor → Agon reset | Maintained `scripts/reset_agon.py`; accepted 100 ms pulse and observed boot | Implemented through the accepted Pi bridge; trusted-LAN controls are not client authentication. Preserves the Pi dependency the deferred direct-P4 proposal would remove. |
 | Browser → P4 → transistor → Agon reset | Existing transistor arrangement works under Pi GPIO control; P4 HTTP and keyboard services already exist | Recommended candidate; requires a suitable allocated P4 output, wiring and new bounded control handling. Not yet qualified. |
 | Browser → P4 → UART → EMOS restart command | Requires responsive EMOS and UART | Cannot replace physical reset when EMOS hangs; not recommended for this request. |
 | Existing P4 ZDI recovery leads | GPIO46/47 connect TCK/TDI, not reset | Not an existing physical-reset connection; do not repurpose recovery firmware for normal operation. |
@@ -96,7 +103,7 @@ one processor pin to each function. No part, bus or wiring is selected.
    unpowered P4 cannot provide this recovery; retain an independent physical/Pi
    fallback if that recovery requirement is accepted.
 
-## Decision register and implementation prerequisites
+## Direct-P4 decision register and implementation prerequisites
 
 | ID | State | Decision needed before implementation |
 |---|---|---|
@@ -105,7 +112,7 @@ one processor pin to each function. No part, bus or wiring is selected.
 | D03 | Open | Move the existing actuator control to P4, or retain independent Pi control with isolated actuators; decide release behaviour if P4 fails during a pulse. |
 | D04 | Open | Select browser control access/confirmation policy and compact UI placement. Existing LAN keyboard access is not automatically authorization for a new reset endpoint. |
 | D05 | Open | Agree pulse timing, duplicate handling, fresh-admission observation and active flash/SD-operation handling. The observed 100 ms Pi pulse is the starting candidate, not new qualification. |
-| D06 | Accepted | Defer further study and implementation; Author uses the physical reset button for now. No expansion architecture is selected. |
+| D06 | Accepted | Defer direct-P4 study/implementation. Physical and Pi-backed browser reset remain available; no expansion architecture is selected. |
 
 After approval, a separate implementation contract must cover GPIO startup and
 release checks, a single explicit reset, unchanged P4 uptime, fresh Agon boot,

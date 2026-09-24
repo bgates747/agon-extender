@@ -3,10 +3,11 @@
 ## Executive summary
 
 **AF01 complete: worth pursuing, but measured SD rates plus historical parallel
-performance do not yet meet uncompressed 44.1 kHz/16-bit stereo.** Current SD
-reads reached 189–199 KiB/s; the target is 172.27 KiB/s before transmission.
-The next step is a sustained integrated parallel benchmark, then combined
-read/send measurement—not a claim that stereo playback works.
+performance do not yet meet uncompressed 44.1 kHz/16-bit stereo.** The six retained SD
+profiles measured approximately 187–199 KiB/s; the target is 172.27 KiB/s before transmission.
+The proposed next experiment is a sustained integrated parallel benchmark,
+then combined read/send measurement. It is deferred in TODO, requires the AF02
+contract, and is not a claim that stereo playback works.
 
 See the [results and evidence](AUDIO-001/RESULTS.md). Six storage profiles passed
 their bounded checks. No firmware flashed; startup preserved. AF02–AF05 remain
@@ -103,3 +104,11 @@ AF01 stopped after approximately 15 minutes, within the one-hour limit. Hardware
 voice execution receipt verified; startup unchanged, service exited to MOS.
 See [notification receipt](AUDIO-001/notification.json). No end-to-end stereo test
 or firmware flash performed. AF02 awaits its integration contract.
+
+## Fixture reuse boundary
+
+The retained storage fixture writes `/test/audio001/data.bin` and `results.csv`.
+Before a new run, refresh its paths against [SD layout](../sd-layout.md), preserve
+its original identified evidence, and prepare a new bounded contract. Do not
+rerun a historical root or test-directory producer as though the documentation
+audit qualified its current deployment. No fixture source changed in this review.

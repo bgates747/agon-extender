@@ -60,3 +60,13 @@ second startup ran FSCHECK automatically before the short pixel diagnostic.
 The returned `R00001/RESULT.TXT` passes; its original bytes, both sentinels and
 collection hashes are retained in [hardware evidence](REMED-003/evidence/hardware/).
 The report is complete for this comparison and remains unsubmitted for review.
+
+## Current disposition and reuse
+
+The report remains an unsubmitted comparison of the exact recorded emulator and
+firmware, not a claim about every later Fab release. Current operation uses the
+[handbook](../README.md); no new emulator build, test or upstream submission is
+pending under this documentation review. Preserve the original identical-binary
+comparison. Before any new physical run, review the fixture's receipts under
+`/extender/fscheck` against [SD layout](../sd-layout.md) and identify a separate
+refreshed candidate rather than modifying frozen evidence.

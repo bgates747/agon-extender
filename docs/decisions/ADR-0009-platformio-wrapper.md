@@ -35,6 +35,12 @@ The wrapper:
 5. reports the selected executable and project; and
 6. forwards all caller-supplied PlatformIO arguments unchanged.
 
+The maintained wrapper also checks the exact Arduino archive pin before a
+`run` invocation, reflecting the recorded framework-package collision. It
+rejects a missing pin rather than accepting registry fallback; it does not
+rewrite PlatformIO arguments. The [build guide](../building.md) owns current
+target selection and the deployed-overlay reproducibility limit.
+
 It does not activate a shell environment, install dependencies, choose a serial
 port, build, clean, upload, or monitor unless the caller explicitly supplies
 the corresponding PlatformIO arguments.
@@ -56,6 +62,7 @@ supported equivalent.
 1. The wrapper is convenience and policy enforcement, not a separate build
    system.
 2. Help, new PlatformIO options, and uncommon targets remain available without
-   wrapper changes because arguments are not interpreted.
+   wrapper changes because arguments are forwarded unchanged; the explicit
+   `run` prerequisite check above remains in force.
 3. Missing local prerequisites produce a focused error rather than falling back
    to globally installed tools.

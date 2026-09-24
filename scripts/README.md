@@ -11,7 +11,7 @@ currently installed firmware or a ready-to-run qualification procedure.
 |---|---|
 | [sdcard.py](sdcard.py) | Mainboard-SD list/read/transfer through an already-running foreground EMOSlet; [SD guide](../docs/mainboard-sd.md) owns checked/fast options and journal recovery |
 | [keyboard.py](keyboard.py) | Bounded agent input through previously admitted Extender input; [keyboard guide](../docs/remote-keyboard.md) owns arbitration, pacing and journal handling |
-| [screen_text.py](screen_text.py) | Pixel-derived P4 text readback, not MOS RAM or Legacy display; [operation guide](../docs/using-extender.md) |
+| [screen_text.py](screen_text.py) | Pixel-derived P4 text readback, not MOS RAM or Legacy display; [screen-text guide](../docs/screen-text.md) |
 | [reset_agon.py](reset_agon.py), [reset_bridge.py](reset_bridge.py) | One Pi-actuated reset and optional browser bridge; [reset guide](../docs/bench-reset.md) owns configuration and effects |
 | [prepare_mos_recovery.py](prepare_mos_recovery.py), [mos_recovery_console.py](mos_recovery_console.py) | Manifest-bound recovery payload and maintained programmer console; [ROM recovery](../docs/mos-recovery.md), not ordinary reset |
 | [agentcoms.py](agentcoms.py) | Durable agent mailbox; machine-local `agentcoms.md` supplies participants/endpoints. Messages do not expand Author authorization |
