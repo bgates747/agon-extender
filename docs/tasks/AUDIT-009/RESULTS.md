@@ -16,6 +16,125 @@ coverage are not body-review coverage. No code, firmware, hardware, SD contents,
 network endpoint or emulator state changed. Changes are committed locally;
 publication was not part of this execution contract.
 
+## A09-03 — user-workflow coverage
+
+**This is A09-03, the original workflow-mapping item, not A09-N03, the later
+remediation-plan review.** The table below makes the existing evidence visible;
+it adds no new test results. The seven workflows and all nine requested fields are explicitly mapped below.
+A09-03 is complete as a documentation map, including identified gaps; this does
+not mean every workflow has passed execution testing or every guide is complete.
+
+“Desk review” means reading instructions, following their links and comparing
+selected claims with source or retained receipts. Local CLI help checks did not
+contact the P4. Neither establishes a fresh Mac, emulator or hardware pass.
+Batch identifiers and the two reader perspectives are in
+[CHECKS.md](CHECKS.md), under “Desk walkthroughs and journey map.”
+
+| Required workflow and review points | Recorded work and current authority | Evidence and remaining limit |
+|---|---|---|
+| **Discover capabilities and start safely:** supported/planned features; installed/repository builds; bench ownership; Linux/Mac differences; local endpoint discovery | [Using Extender](../../using-extender.md) and [handbook](../../README.md) distinguish available services from plans and require the operator's local installed-state/access record. | B01/B03/B08 and Discover/start walkthrough. Desk navigation covered; no fresh Mac execution or verification of the live installation. Host portability follows source/retained use, not a new cross-platform test. |
+| **Transfer files:** EMOSlet invocation/placement; Legacy/input prerequisites; checked/fast pairing; stage/activate; sessions/resume; backup cleanup; held-open files; SD layout | [SD guide](../../mainboard-sd.md), [wire contract](../../protocols/mainboard-sd.md) and [SD layout](../../sd-layout.md) own these instructions. `/emos/sdserve.bin`, prior input admission, journal uncertainty and application-memory limits were reconciled. | B02/B04/B06/B07; Transfer and Uncertain request/stop walkthroughs. Source and `sdcard.py` help checked; no new transfer, cleanup, interruption or resume test. Earlier physical receipts keep their original scope. |
+| **Control and observe remotely:** USB/browser/agent ownership; pacing; locale/locks; capture/release/fullscreen; reset ownership; screen-text limits; video connection | [Keyboard guide](../../remote-keyboard.md), [reset guide](../../bench-reset.md), [screen-text guide](../../screen-text.md) and [video contract](../../protocols/browser-video.md) separate these services and their owners. | B02/B03/B08 and later B41 screen-text review; Observe/control walkthrough. Local keyboard/screen-text help checked. Browser/physical takeover, host-specific key behavior and timing were not newly exercised. Delivery counters are not proof of application execution. |
+| **Run another project's software:** deployment paths; load/run versus utilities; RAM preservation; Legacy/ExCom; supported APIs and command deferrals | [Using Extender](../../using-extender.md), [SD layout](../../sd-layout.md), [console contract](../../protocols/excom-console.md) and [bug register](../../firmware-bugs.md) provide the operating boundaries. | B04/B06/B08 and Run another project walkthrough. Mapping and selected contracts covered; no fresh application run, exhaustive API review or universal compatibility claim. |
+| **Build, update and recover:** ownership; wrappers/guards; identities; firmware selection; emulator profiles; flash approval; rollback; recovery readiness | [Build guide](../../building.md) and [MOS recovery](../../mos-recovery.md) distinguish compilation, identified deployment, reset and recovery. | B04/B08 and Build/recover walkthrough; B42/B43 later build-input review. No fresh compile, flash, rollback or recovery. Deployed-overlay reconstruction remains A09-F009. The walkthrough does **not** document an explicit emulator-profile setup/check sequence; that mapping remains incomplete. |
+| **Interpret tests/performance:** mainboard/Extender; capture interference; browser/render/pacing costs; sample scope; units; historical regressions; bug disposition | [Timing guide](../../testing/game-timing.md), [capture protocol](../../qualification/capture-failure-protocol.md) and [bug register](../../firmware-bugs.md) separate measurements and diagnostic controls. | B03/B05 and combined Interpret tests/future hardware walkthrough. Selected claims and distinctions covered; no new benchmark, comprehensive historical regression review or revalidation of every bug entry. |
+| **Understand hardware and future work:** DevKit/P4-PC; wiring/as-built; USB; SD ownership; HDMI/MIPI/VGA; plans versus capabilities | [Architecture](../../architecture.md), [P4-PC references](../../hardware/esp32-p4-pc/README.md) and handbook expose current versus planned scope; local bench records own actual assembly state. | B05 and combined Interpret tests/future hardware walkthrough. Scoped documentation review only; no physical inspection, new electrical qualification or new local-video capability proof. |
+
+### Required-field accounting
+
+Each table covers all nine requested fields. “Not applicable” means the workflow
+has no such operation; it is not an unperformed test disguised as a pass.
+Operational commands and version requirements remain owned by the linked guides,
+not by this audit snapshot.
+
+#### Discover capabilities and start safely
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Using Extender](../../using-extender.md), then the handbook's job-specific guide. |
+| Host tool; Agon command | Browser/document reader; no Agon command is required for discovery. An operator or prepared startup must admit Extender input before remote typing. |
+| Processor/service owners; transport | Operator owns access/readiness decisions; EMOS owns mode and input admission; P4 owns network services. Reading local documentation uses no board transport; later remote use needs the owner-provided LAN endpoint. |
+| Required firmware/build; SD location | Obtain installed receipts from the owner/local bench record, not checkout HEAD. No SD file is required merely to discover capabilities; prepared startup is `/autoexec.txt` when used. |
+| Output/evidence; stop/recovery | Known owner, installed combination and observed program/service state. Stop when admission, authorization or running application is unknown; no speculative typing/reset. No new installation or Mac check was performed. |
+
+#### Transfer files
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Mainboard SD guide](../../mainboard-sd.md), [wire contract](../../protocols/mainboard-sd.md), [layout](../../sd-layout.md). |
+| Host tool; Agon command | Host Python `scripts/sdcard.py`; at a verified admitted prompt, `EMOS LEGACY`, then `EMOS sdserve [--fast] /`. Host upload and listener fast options must agree. Exact list/get/put/activate/recover/resume/exit syntax belongs to the guide. |
+| Processor/service owners; transport | Host client journals requests over HTTP to P4; P4 bridges its SD service over the EMOS-owned UART link; foreground eZ80 EMOSlet performs mainboard filesystem operations. No background game/file service or command-execution API is implied. |
+| Required firmware/build; SD location | Current recorded pairing is linked from the guide/AUDIT-008 hardware receipt: EMOS v0.1.19, matching P4 gateway and EMOSlet. `/emos/sdserve.bin`; application fallback `/extender/sdserve.bin`; chosen root bounds access. Sibling transaction-file exception, backups and `/agents/extender` placement follow the layout policy. |
+| Output/evidence; stop/recovery | Listing/download, journal and bounded activation/verification result. Fast success omits whole-file reread verification. Keep uncertain requests, use journal recovery/resume; do not overwrite held-open files. Escape or idle host exit returns to the caller, possibly continuing EXEC. No new transfer or failure test performed. |
+
+#### Control and observe remotely
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Keyboard](../../remote-keyboard.md), [video](../../protocols/browser-video.md), [screen text](../../screen-text.md), [reset](../../bench-reset.md). |
+| Host tool; Agon command | Browser Connect/Capture; `scripts/keyboard.py` and `scripts/screen_text.py`; optional browser Reset Agon control. Prior `EMOS KEYINPUT extender` admission is an operator/startup prerequisite, not something a disabled remote path can type for itself. |
+| Processor/service owners; transport | P4 arbitrates USB/browser/agent input and sends stock-compatible packets over UART to EMOS. Host HTTP/keyboard WebSocket and video WebSocket are distinct. P4 supplies ExCom pixels/text; Legacy VGA is not mirrored. Reset uses a separate host-to-Pi HTTP bridge and physical actuator, not P4 UART or ZDI programming. |
+| Required firmware/build; SD location | Match installed browser/input firmware to its owner receipt; reset additionally requires the configured Pi bridge. No SD executable is required for ordinary admitted input/video. Startup may select input in `/autoexec.txt`; host journals stay host-local. |
+| Output/evidence; stop/recovery | Input status acknowledges delivery stages, not MOS execution. Pixel-derived screen text is not MOS RAM or proof of a Legacy prompt. Release capture/held keys and retain uncertain agent state; physical keys override remote ownership. Observe guide limits for locales, locks, fullscreen Escape and takeover. No new platform/input/reset test performed. |
+
+#### Run another project's software
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Using Extender](../../using-extender.md), [SD layout](../../sd-layout.md), [console contract](../../protocols/excom-console.md), application's own instructions and [known bugs](../../firmware-bugs.md). |
+| Host tool; Agon command | Transfer client if needed, then physical/browser/agent keyboard at a verified prompt. Ordinary applications use their documented LOAD/RUN or installed CLI invocation; EMOSlets use `EMOS <utility>`. `EMOS LEGACY` / `EMOS EXCOM` select display route under the console contract. No universal application command is prescribed. |
+| Processor/service owners; transport | eZ80 executes the application; EMOS owns ordinary VDU routing. Mainboard VDP handles Legacy output; P4 EDP handles ExCom. Remote input/file transport follows the preceding workflows; application-specific extra devices are not inferred. |
+| Required firmware/build; SD location | Match application requirements against the installed EMOS/EDP receipts and supported subset. Keep game/project files in their project directories, utilities under their documented dispatch location. EMOSlet versus ordinary LOAD has different application-memory preservation limits. |
+| Output/evidence; stop/recovery | Observe application-specific output/exit and final prompt; universal compatibility is not claimed. Stop on unexpected behavior, retain exact build/mode and consult the bug register. Unknown application state is not permission to inject CLI commands or reset. No application was run for this mapping. |
+
+#### Build, update and recover
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Build guide](../../building.md), [version policy](../../versions/README.md), applicable deployment receipt and [MOS recovery](../../mos-recovery.md). |
+| Host tool; Agon command | P4 wrapper/identified builder and EMOS Makefile/build tooling are linked in the guide. Compilation has no Agon command. Flashing requires the reviewed payload/procedure and authorization; `FLASH` submission alone is not success. Emulator setup is owned by canonical `agon-dev-env` instructions; see the explicit public-guide gap below. |
+| Processor/service owners; transport | Host tools build images. Authorized P4 deployment uses its documented programmer; eZ80 ROM update uses the chosen MOS update/recovery procedure. P4 ZDI recovery is distinct from the Pi reset actuator. Emulator host execution uses a profile-local launcher, not physical bench transport. |
+| Required firmware/build; SD location | Record exact source/toolchain/build identity and known recovery payload. Base `p4-console` is not proven equivalent to all deployed overlays (A09-F009). Maintained install/recovery SD files belong under `/extender`, evidence/backups under `/agents/extender`; emulator SD mapping is profile-owned, not the physical card. |
+| Output/evidence; stop/recovery | Identified images/manifests, independent flash/readback and separate boot/input/service receipts where required. Preserve rollback and pre-erase ROM evidence; stop on mismatch or missing completion. No build, emulator launch, flash or recovery performed. |
+
+#### Interpret tests and performance
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Timing guide](../../testing/game-timing.md), [capture controls](../../qualification/capture-failure-protocol.md), retained result and [bug register](../../firmware-bugs.md). |
+| Host tool; Agon command | Reading retained results needs no tool beyond a document reader and no Agon command. Fresh timing uses the named builders/runner and fixture-specific startup only under its own contract; it is not selected by this map. |
+| Processor/service owners; transport | eZ80 game work/pacing and ESP renderer timestamps have distinct owners/clocks; network presentation is another measurement. Diagnostic UART replies/serial collection and browser Ethernet are not interchangeable timing scopes. |
+| Required firmware/build; SD location | Each retained run names its diagnostic mainboard/P4 and client identities. Fresh runs must refresh historical fixture paths to current SD policy; records belong under `/agents/extender`. Reading results has no firmware or SD prerequisite. |
+| Output/evidence; stop/recovery | Scoped tables, units, clock limits, error/probe counts and capture-interference controls. Never reinterpret missing data as zero cost or failed capture as a renderer defect without its control. Recovery/restoration belongs to the selected test contract. No timing or bug reproduction performed. |
+
+#### Understand hardware and future work
+
+| Required field(s) | Mapping / boundary |
+|---|---|
+| Entry point | [Architecture](../../architecture.md), [P4-PC reference library](../../hardware/esp32-p4-pc/README.md), handbook and owning task. |
+| Host tool; Agon command | Document/schematic reader; no Agon command or hardware tool is needed for this research workflow. |
+| Processor/service owners; transport | Owner's local bench record identifies the assembled DevKit. EMOS owns mainboard SD mediation; future P4-local storage is a separate service. USB acquisition is P4-owned. Proposed HDMI/MIPI/VGA paths remain subject to their own integration; vendor examples are not Extender output implementations. |
+| Required firmware/build; SD location | No firmware/SD prerequisite for reading references. Actual operation requires a profile-specific receipt; DevKit evidence is not P4-PC qualification. Mainboard application storage and planned P4 card storage are not interchangeable. |
+| Output/evidence; stop/recovery | Provenance-bound documentation and an explicit supported/planned distinction. Stop before assuming construction or electrical compatibility; wiring/power/testing require their own review. No physical inspection or new video capability proof. |
+
+### Mapped gaps and retained limits
+
+1. **A09-F009 remains open:** base-build reproduction of later deployed overlays
+   is not established. Its existing implementation owner/contract remains separate.
+2. **A09-F060 — emulator setup documentation:** the build guide depends on a
+   configured Fab profile but does not supply a self-contained external-user
+   setup/verification path. Canonical `agon-dev-env` instructions cover generated
+   profile-local launchers, pinned MOS, SD mappings and host libraries, but this
+   pass neither provisions a profile nor validates macOS setup. Existing A09-04/08
+   own documentation reconciliation; any coupled profile/tool change retains its
+   explicit human validation gate. Do not turn this into an improvised launch recipe.
+3. **Installation-local input is intentional:** endpoint, ownership, current
+   wiring and flashed-build identity must come from the operator/private record.
+   Their absence from public Git is not an incomplete public configuration dump.
+4. **Mapping is complete; qualification is not:** the runtime limits in each row
+   remain with their existing owner tasks. This follow-up only read current guides
+   and completed traceability; it did not reproduce historical acceptance.
+
 ## What changed
 
 | Subject | Result |

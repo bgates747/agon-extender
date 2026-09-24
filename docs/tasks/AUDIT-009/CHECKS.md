@@ -371,3 +371,23 @@ three historical missing targets and no new changed-document findings.
 Whitespace and inventory totals checked: 111 reviewed, 145 partial, 140
 metadata-only, 44 provenance-only, 668 pending; 1108 total. The two remediation
 bodies moved from pending, not partial.
+
+## A09-03 — workflow traceability follow-up
+
+Author approved filling the map after the reporting review. Prior N03 commits
+were pushed through 5d9aac49 before the report edit. Compared the required nine
+fields with using-extender/building, SD start/stop/install guidance, reset and
+ROM recovery boundaries, game-timing use/collection, console mode commands and
+P4-PC reference provenance. Read canonical emulator instructions for ownership
+and setup boundaries only; no emulator-specific procedure/profile was changed.
+RESULTS now accounts explicitly for each field in seven workflow tables.
+
+No new document body is promoted in the inventory and no new runtime test is
+claimed. Existing build gap F009 remains; F060 records the uncompleted portable
+emulator-guide path under existing A09-04/08. A09-03 is complete as mapping,
+not as operational qualification. N04 remains unstarted.
+
+Validation: whitespace passed; 714 Markdown files / 2696 relative links,
+only the same three historical missing targets and no new link findings.
+Seven field-accounting tables cover entry point, tool, command, owner, transport,
+build, SD location, evidence and stop/recovery. No bench endpoints used.

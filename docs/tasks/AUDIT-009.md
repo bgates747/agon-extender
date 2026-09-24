@@ -196,6 +196,12 @@ firmware/build, SD location, output/evidence and stop/recovery behavior. Priorit
 | Interpret tests/performance | Mainboard versus Extender, capture interference, browser versus rendering/pacing costs, sample scope, units, historical regressions and active bug dispositions |
 | Understand hardware and future work | Installed DevKit versus planned P4-PC, wiring/as-built limits, USB/input, SD ownership, HDMI/MIPI/VGA and other deferred work without presenting plans as capabilities |
 
+A09-03 mapping is complete in [RESULTS](AUDIT-009/RESULTS.md): all seven
+workflows account for all nine required fields, including explicit non-applicability
+and evidence limits. A09-F060 assigns incomplete external-user emulator setup
+guidance to existing A09-04/08; profile changes still require their own human
+validation. Mapping completion is not runtime qualification or closure of that gap.
+
 A09-04 [ ] Review the maintained operations documents first. Trace every executable
 example through current CLI help or source; verify option names, path conventions,
 required mode/input state, state-file lifecycle and success/error meaning. Mark
