@@ -1,5 +1,9 @@
 # Initial commissioning and recovery boundary
 
+> Historical SD paths: root artifacts were relocated on 2026-09-21. See the
+> [current layout and relocation manifest](../../sd-layout.md). Preserve this record as
+> historical evidence; refresh installation paths before reuse.
+
 The foreground service and the new owned EMOS gateway are not yet installed on
 the physical Agon. Current startup enables Extender keyboard and stops at MOS;
 the Author subsequently launched Rally Fuji demo manually. Do not interrupt it

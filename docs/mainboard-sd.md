@@ -8,6 +8,14 @@ rollback payloads and original startup. Keep those copies; routine use does not
 require a firmware reinstall. Artifact identities remain candidates in the
 registry; this milestone is not a general firmware release.
 
+## SD locations and archived startup
+
+Follow the [SD layout policy](sd-layout.md). Historical root files were relocated;
+see the [exact mapping](storage/sd-relocation-2026-09-21.json). The old root
+`autoexec.txt.p17bak` is now archived under `/agents/extender/backups/startup`.
+The current service still creates sibling transaction files; `/tmp/extender`
+support is pending, not an implemented feature.
+
 ## Start and stop
 
 The foreground service requires Legacy mode and the accepted Extender keyboard
@@ -31,6 +39,16 @@ still the loaded application, `RUN . /` restarts it without another LOAD.
 Rally and this service run in the foreground at different times; this is not
 background SD access while a game is running. No remote command execution or
 board reset is part of the wire API.
+
+## Provisional MOSlet alternative
+
+On the current development bench, EMOS v0.1.18 admits the SD service in MOSlet
+RAM. With `/mos/sdserve.bin` installed, use `sdserve /` instead of LOAD/RUN.
+This preserves the tested application-memory region and still runs in the
+foreground, in Legacy mode with Extender keyboard selected. Host exit or Escape
+returns to MOS. The ordinary listener remains the fallback. See the
+[bounded provisional results](tasks/REMOTE-005/MOSLET-CHECK.md#provisional-physical-pass)
+before treating this as broader qualification.
 
 ## Host use
 
@@ -117,9 +135,9 @@ new payload bytes per second including staging, multiple complete readbacks,
 activation, old-version verification and audit/state writes. This is a fully
 verified replacement rate, not isolated upload or UART throughput.
 
-Normal startup selects mode 3, enables Extender keyboard, loads the service and
+At commissioning, startup selected mode 3, enabled Extender keyboard, loaded the service and
 runs it with `/`. The consumed one-shot EMOS installer remains guarded. The
-previous startup is retained as `/autoexec.txt.p17bak`; its network replacement
+previous startup was retained as `/autoexec.txt.p17bak` (now relocated per the manifest); its network replacement
 was fully read back after closing the old MOS batch. The final scope change was
 not rebooted again; the same command had passed the native CLI restart check.
 The accepted Rally binary was read in full and is unchanged. See the acceptance

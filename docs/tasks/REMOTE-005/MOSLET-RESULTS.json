@@ -1,0 +1,17 @@
+{
+  "moslet_online": true,
+  "self_write_rejected": true,
+  "roundtrip_bytes": 1024,
+  "application_sentinel_bytes": 4096,
+  "startup_unchanged": true,
+  "return_and_reentry": true,
+  "rom_sha256": "2117e0cae7e3817eb213c3efcf6f0bf8a627d3725a2edc1b4922a2b0a13eaef2",
+  "firmware": {
+    "build_id": "agon-emos-v0.1.18-b2026-09-21-05-03-49Z",
+    "bytes": 131056,
+    "sha256": "6906d62a23b32f738f14da2796f149bca885ec77d1ff0b30029007d8fc2398f5",
+    "source_commit": "26ba8776bc147e262cd45dc808d5869740b1396e",
+    "source_dirty": true
+  },
+  "before_rom_sha256": "f9229e93cd178de4f1045d4464d1173eee2fb0086157a391b72bfa816a569618"
+}

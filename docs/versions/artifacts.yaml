@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r102
-updated_at: 2026-09-21T02:22:29Z
+registry_revision: r103
+updated_at: 2026-09-24T00:53:13Z
 
 artifacts:
   - artifact_id: browser-reset
@@ -14,6 +14,15 @@ artifacts:
     description: Browser control of the existing Pi mainboard reset actuator.
     notes:
       - Standing identity approval; REMOTE-003 ad hoc implementation.
+  - artifact_id: sdserve-moslet-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: sdserve-moslet-probe-r01
+    status: experimental
+    variants: []
+    description: Bounded unchanged-source MOSlet listener build and transfer check.
+    notes:
+      - Standing identity approval; REMOTE-005; registry r99.
   - artifact_id: frame-delta-probe
     kind: test_fixture
     identity_scheme: revision
@@ -239,13 +248,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.16
+    latest_identity: agon-emos-v0.1.18
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.18 is the REMOTE-005 provisional resident sdlink MOSlet admission correction; registry r100, standing identity authorization. Bounded physical transfer and full ROM readback pass; broader qualification is not claimed.
       - BENCH-001 v0.1.16 selects 140-byte v2 traffic telemetry via port/bench-telemetry.mk, substituting UARTFLOW only in that composition. Physical installation, direct ROM identity readback, SD access and feedback driving passed scoped checks; the 200% practice block recorded102 clean laps and299 passes. Native emulator lacks TX-empty IRQ demand; its delayed v2 driving test remains an informative failure. Draft inputs are not qualified or released.
       - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
       - Author accepted the v0.1.11 mainboard graphical review and requested freeze/continue; candidate under standing version preapproval. Physical ExCom and native-reference glyph checks remain open.

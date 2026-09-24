@@ -1,0 +1,955 @@
+{
+  "date": "2026-09-21",
+  "scope": "Identified Extender root files only; no file content changes",
+  "startup_sha256": "5ffdec71b88147a9565a6f16ae1ac647a9474c859eef939a24643452c9d02161",
+  "moves": [
+    {
+      "old": "/AFEXC1.CSV",
+      "new": "/agents/extender/results/AFEXC1.CSV",
+      "bytes": 6183,
+      "sha256": "45da0fc877efd40314e2e6a79f00ea467632bc45a9c96e57eb4bf075d33d2daf"
+    },
+    {
+      "old": "/AFLEG1.CSV",
+      "new": "/agents/extender/results/AFLEG1.CSV",
+      "bytes": 6169,
+      "sha256": "e50b119b1710eb432c0d46c5edf693ec1ad6368ecf3df0de307d854a240b1301"
+    },
+    {
+      "old": "/B01DONE.BIN",
+      "new": "/extender/install/archive/B01DONE.BIN",
+      "bytes": 130071,
+      "sha256": "5f0fa3558a1f4887f97c2b732b87370943e89f62a6e4699c0a4b504218180b73"
+    },
+    {
+      "old": "/B02DONE.BIN",
+      "new": "/extender/install/archive/B02DONE.BIN",
+      "bytes": 130071,
+      "sha256": "1da8330462eed54317e5889cf3f09cb1abaca8b478f7d92b88a3a1d74c9fc70c"
+    },
+    {
+      "old": "/EMBACK.BIN",
+      "new": "/agents/extender/backups/firmware/EMBACK.BIN",
+      "bytes": 116556,
+      "sha256": "076a9c359591b1beecf4716b9dc41648b8cf3122bf6fd4a1b6dbe56e187c44ba"
+    },
+    {
+      "old": "/EMDONE.BIN",
+      "new": "/extender/install/archive/EMDONE.BIN",
+      "bytes": 130344,
+      "sha256": "a46dc6b580aba955f4b873be69c4f5f323d10cd3e67adcb28701da4802227dae"
+    },
+    {
+      "old": "/EMPREV.BIN",
+      "new": "/agents/extender/backups/firmware/EMPREV.BIN",
+      "bytes": 130059,
+      "sha256": "2198f97ac3d1cf0b60b9948abe8af2333c0263e649976d53d1413c7873728a36"
+    },
+    {
+      "old": "/EMV0110.BIN",
+      "new": "/agents/extender/backups/firmware/EMV0110.BIN",
+      "bytes": 127067,
+      "sha256": "2a87f91dffc114813f7193525729d637758b543e3ddf31bd17ce062f0a3d0449"
+    },
+    {
+      "old": "/EMV0112.BIN",
+      "new": "/agents/extender/backups/firmware/EMV0112.BIN",
+      "bytes": 130219,
+      "sha256": "2c261e290cd3e9af44a168775eabef4a514cf3262d9391fc4ce3dfe414ed5a77"
+    },
+    {
+      "old": "/EMV0113.BIN",
+      "new": "/extender/recovery/EMV0113.BIN",
+      "bytes": 130344,
+      "sha256": "a46dc6b580aba955f4b873be69c4f5f323d10cd3e67adcb28701da4802227dae"
+    },
+    {
+      "old": "/EMV017.BIN",
+      "new": "/agents/extender/backups/firmware/EMV017.BIN",
+      "bytes": 122645,
+      "sha256": "61f8fe2763b48de0be270c7d79e1089653b12160a788ee8975a3f1defeb991fe"
+    },
+    {
+      "old": "/EMV018.BIN",
+      "new": "/agents/extender/backups/firmware/EMV018.BIN",
+      "bytes": 126363,
+      "sha256": "7d2716d292525822dc6954d535d75cadf7566779159d2e72826ce0d6f3b6d56e"
+    },
+    {
+      "old": "/EMV019.BIN",
+      "new": "/agents/extender/backups/firmware/EMV019.BIN",
+      "bytes": 126859,
+      "sha256": "0310eb73ad418d8176cd6332f61eb81eca12fbdfc939ad3986fe12675ab99b2e"
+    },
+    {
+      "old": "/EMV030.BIN",
+      "new": "/agents/extender/backups/firmware/EMV030.BIN",
+      "bytes": 117828,
+      "sha256": "371c1e9182b97d11be3c53fb1133b27bd4e566d9209d0b4c475e92c78561cf36"
+    },
+    {
+      "old": "/EMV040.BIN",
+      "new": "/agents/extender/backups/firmware/EMV040.BIN",
+      "bytes": 119863,
+      "sha256": "552f7a22b06e84771e81def293f1127d5278d8fc5f17cefb32187fac881491f8"
+    },
+    {
+      "old": "/EMV050.BIN",
+      "new": "/agents/extender/backups/firmware/EMV050.BIN",
+      "bytes": 119877,
+      "sha256": "09379ccd57d613bd00e51c5a4433c0643f5ad0477595dafa2016213ac5edb642"
+    },
+    {
+      "old": "/EMV060.BIN",
+      "new": "/agents/extender/backups/firmware/EMV060.BIN",
+      "bytes": 120901,
+      "sha256": "89a71acdd5e4e076e74c0865ecf2c2cd1d9b2f69f00135992dba204742880123"
+    },
+    {
+      "old": "/EMV070.BIN",
+      "new": "/agents/extender/backups/firmware/EMV070.BIN",
+      "bytes": 121922,
+      "sha256": "c1fe4d81def840f8415283edb8eb16ed6c786acfc8f121def12c0a3bee58e444"
+    },
+    {
+      "old": "/ESDDONE.BIN",
+      "new": "/extender/install/archive/ESDDONE.BIN",
+      "bytes": 130919,
+      "sha256": "eea1a479516df733688803f775d65c41a7c48a546927c7f07c0a489f8cd09808"
+    },
+    {
+      "old": "/NEXC2.CSV",
+      "new": "/agents/extender/results/NEXC2.CSV",
+      "bytes": 13311,
+      "sha256": "45fc5829c434b1443a327b2c095f122cbf396806c58d99bbbd761c65c1535726"
+    },
+    {
+      "old": "/NLEG1.CSV",
+      "new": "/agents/extender/results/NLEG1.CSV",
+      "bytes": 13311,
+      "sha256": "75a2b95bc51b4415f13e3f1a050781aad7143c738306f46cf037bde08ba0a5dc"
+    },
+    {
+      "old": "/NLEG2.CSV",
+      "new": "/agents/extender/results/NLEG2.CSV",
+      "bytes": 13311,
+      "sha256": "0ea2fc81b7ff7b9824cd722c77e3aa0aea2262a25c135bfd81fa42cf1847dc42"
+    },
+    {
+      "old": "/NP17EH.BIN",
+      "new": "/agents/extender/results/NP17EH.BIN",
+      "bytes": 28824,
+      "sha256": "e3be99283dc7d7e307a3d35fb6fd067cb25007ec9c384ff329c144f37accf196"
+    },
+    {
+      "old": "/NP17ES.BIN",
+      "new": "/agents/extender/results/NP17ES.BIN",
+      "bytes": 28824,
+      "sha256": "40046ea487f39ba31941f562031071ca5d1825c62b3d37102557e9ada048a4ee"
+    },
+    {
+      "old": "/NP17LH.BIN",
+      "new": "/agents/extender/results/NP17LH.BIN",
+      "bytes": 28824,
+      "sha256": "4bdd39dc3d6b97424173f68c1927c2aadbdc6261537b7f904092a8c6379a6399"
+    },
+    {
+      "old": "/NP17LS.BIN",
+      "new": "/agents/extender/results/NP17LS.BIN",
+      "bytes": 28824,
+      "sha256": "186a7ecdb77f371c598bef6584505cf3155f9a7db38f8c1d5742eeb3a5120bb3"
+    },
+    {
+      "old": "/NP17OH.BIN",
+      "new": "/agents/extender/results/NP17OH.BIN",
+      "bytes": 28824,
+      "sha256": "95abd22204dbb9e87621621fe1bf1a50fe3c9e26a1f2ceef82cf41a83d59e0c7"
+    },
+    {
+      "old": "/NP17OS.BIN",
+      "new": "/agents/extender/results/NP17OS.BIN",
+      "bytes": 28824,
+      "sha256": "1ae7a624ee27f9b2e01ac3257ca8729f18f6f760ea5eb751f35145e22a6597db"
+    },
+    {
+      "old": "/NP29H1.BIN",
+      "new": "/agents/extender/results/NP29H1.BIN",
+      "bytes": 28824,
+      "sha256": "a0b919e88512eeaa47087f2c690e71c30d158bf5f894fc1fd842c23d266c3060"
+    },
+    {
+      "old": "/NP29S1.BIN",
+      "new": "/agents/extender/results/NP29S1.BIN",
+      "bytes": 28824,
+      "sha256": "685c66078b2b12d5999633fecab5222e0edeca523dd7cc87323187607e0e1821"
+    },
+    {
+      "old": "/NP29S2.BIN",
+      "new": "/agents/extender/results/NP29S2.BIN",
+      "bytes": 28824,
+      "sha256": "b5a0d8cbe2db233caff2223cba53cc62893c5afb84840d665357422ffb70f7b4"
+    },
+    {
+      "old": "/NP30D1.BIN",
+      "new": "/agents/extender/results/NP30D1.BIN",
+      "bytes": 28824,
+      "sha256": "105819e69d85d2bc077228fed805dc3228448d14bab43f6a94a55c2172fc7935"
+    },
+    {
+      "old": "/NP30D2.BIN",
+      "new": "/agents/extender/results/NP30D2.BIN",
+      "bytes": 28824,
+      "sha256": "a9f4b2d7f3ea1c9c4a6a5348081ac57ee60872ad5636547ca254c75d71fe1643"
+    },
+    {
+      "old": "/NP31S1.BIN",
+      "new": "/agents/extender/results/NP31S1.BIN",
+      "bytes": 28824,
+      "sha256": "35abe976744fc9c390b9652c8d294d9e864816e618b1d4863356d1b16d4e4d9e"
+    },
+    {
+      "old": "/NP32S1.BIN",
+      "new": "/agents/extender/results/NP32S1.BIN",
+      "bytes": 28824,
+      "sha256": "712e7a880db7f2b6f96fd5c07500142c7e8935e9dba42b579b9ae993e8c34ff7"
+    },
+    {
+      "old": "/NP34H1.BIN",
+      "new": "/agents/extender/results/NP34H1.BIN",
+      "bytes": 28824,
+      "sha256": "cad26a38e547872b7fa8f297638f2af0f48c1f360fba5880b1a2f1f87cfb1596"
+    },
+    {
+      "old": "/NP34S1.BIN",
+      "new": "/agents/extender/results/NP34S1.BIN",
+      "bytes": 28824,
+      "sha256": "8b80f0f422f22c4b1628538e0fb1a12107edc9763ad2d856b32ad424a818d553"
+    },
+    {
+      "old": "/NP36H1.BIN",
+      "new": "/agents/extender/results/NP36H1.BIN",
+      "bytes": 28824,
+      "sha256": "931399c7014b31e85fac25c60a5b5da6a8c1a766ceab37b97aea017aaddf6377"
+    },
+    {
+      "old": "/NP36S1.BIN",
+      "new": "/agents/extender/results/NP36S1.BIN",
+      "bytes": 28824,
+      "sha256": "fedc11caa69f772420269c352fb7bd02ac029d6ac9c9a6869d367f318aba5845"
+    },
+    {
+      "old": "/NP37F1.BIN",
+      "new": "/agents/extender/results/NP37F1.BIN",
+      "bytes": 28824,
+      "sha256": "777814b5038c65df6cf4a4cf9f7057055652ad903bb4e0de9832d7d3d9be820e"
+    },
+    {
+      "old": "/NP37H1.BIN",
+      "new": "/agents/extender/results/NP37H1.BIN",
+      "bytes": 28824,
+      "sha256": "d3beb969c0d9ca5fa3658068c1bd80111c704644d037aa3cbdbeff8e7b3f4b92"
+    },
+    {
+      "old": "/NP37S1.BIN",
+      "new": "/agents/extender/results/NP37S1.BIN",
+      "bytes": 28824,
+      "sha256": "d711554c8576cd92a73faec09893f61af6f82edcd9f803d9da4f63eb64c070dd"
+    },
+    {
+      "old": "/NP38H1.BIN",
+      "new": "/agents/extender/results/NP38H1.BIN",
+      "bytes": 28824,
+      "sha256": "bd050c172c10dfd3e05b63d9b868a52337b859c3f26e6da5855c676ca2fd4ca9"
+    },
+    {
+      "old": "/NP38L1.BIN",
+      "new": "/agents/extender/results/NP38L1.BIN",
+      "bytes": 28824,
+      "sha256": "b63a5361e6b0112b3b360e4b12a571d229bf753b3962683e42e34668c33667c0"
+    },
+    {
+      "old": "/NP38L2.BIN",
+      "new": "/agents/extender/results/NP38L2.BIN",
+      "bytes": 28824,
+      "sha256": "8e86eb8076d17e4e30c4d6e8967808ce652aae98c41e21e000b1d237c631fdae"
+    },
+    {
+      "old": "/NP38S1.BIN",
+      "new": "/agents/extender/results/NP38S1.BIN",
+      "bytes": 28824,
+      "sha256": "a9e58d9949efbc3f70af13d2cb15a81acc7c2c8f5f024c08c7bdbd967c909aed"
+    },
+    {
+      "old": "/NP39H1.BIN",
+      "new": "/agents/extender/results/NP39H1.BIN",
+      "bytes": 28824,
+      "sha256": "2b7850c3c6cf5d2cb7b85d59859cbbbbcc38abad1eadec2551ac635d89645639"
+    },
+    {
+      "old": "/NP39S1.BIN",
+      "new": "/agents/extender/results/NP39S1.BIN",
+      "bytes": 28824,
+      "sha256": "fca21b83cb60ce1f1da053bf6fceab1818581663807a6d3bcde910b06e634cb9"
+    },
+    {
+      "old": "/NP40H1.BIN",
+      "new": "/agents/extender/results/NP40H1.BIN",
+      "bytes": 28824,
+      "sha256": "63352fdc375fe02460b95e1bc3538b89baa9016866be5d5c9f81d300434144e4"
+    },
+    {
+      "old": "/NP40H2.BIN",
+      "new": "/agents/extender/results/NP40H2.BIN",
+      "bytes": 28824,
+      "sha256": "43f4098323f19e56fd98d74cab6ffc9778627fae799723a902f80abe710df649"
+    },
+    {
+      "old": "/NP40S1.BIN",
+      "new": "/agents/extender/results/NP40S1.BIN",
+      "bytes": 28824,
+      "sha256": "fb3d6700d393e8854ba042b45b9a440b6ce920cedd5b79cbcc3adebf42a2e434"
+    },
+    {
+      "old": "/NP40S2.BIN",
+      "new": "/agents/extender/results/NP40S2.BIN",
+      "bytes": 28824,
+      "sha256": "a326376a6ef26b029b5e7bc55ff2cf91e28de0fa0f536275b6780a586b10838f"
+    },
+    {
+      "old": "/NP41H1.BIN",
+      "new": "/agents/extender/results/NP41H1.BIN",
+      "bytes": 28824,
+      "sha256": "0a217d3f07d89b887dc9b36abc9fb5093d46dcd122fee33f466dd491ae77194e"
+    },
+    {
+      "old": "/NP41S1.BIN",
+      "new": "/agents/extender/results/NP41S1.BIN",
+      "bytes": 28824,
+      "sha256": "ada74fc5ff2ee035f02d690852b0ba294a186867787ab130dab1a5d898977fbb"
+    },
+    {
+      "old": "/NP42H1.BIN",
+      "new": "/agents/extender/results/NP42H1.BIN",
+      "bytes": 28824,
+      "sha256": "2ece2baab1435c74fb107a37c6e9194d95d9a81d74d15d4102f36396b711baaa"
+    },
+    {
+      "old": "/NP42S1.BIN",
+      "new": "/agents/extender/results/NP42S1.BIN",
+      "bytes": 28824,
+      "sha256": "a722559b09b9aac671e33851210937b3c672025f9f0dc9f37eb22b991fef5c83"
+    },
+    {
+      "old": "/NP43H1.BIN",
+      "new": "/agents/extender/results/NP43H1.BIN",
+      "bytes": 28824,
+      "sha256": "b54d0e29bf38cfadef8690867af31ae6cd0b2379884e7ff2bb35c1cdb91e395a"
+    },
+    {
+      "old": "/NP43S1.BIN",
+      "new": "/agents/extender/results/NP43S1.BIN",
+      "bytes": 28824,
+      "sha256": "e37f1e1b4920e36ee6a75231b01c3bdcd8ebce42bab3f79cfd90c1c3c3dde468"
+    },
+    {
+      "old": "/NP44S1.BIN",
+      "new": "/agents/extender/results/NP44S1.BIN",
+      "bytes": 28824,
+      "sha256": "8951168bed0efbf6874ca64c2b893ad9534f34edf5a2b94b102ed373e3e69b21"
+    },
+    {
+      "old": "/NPE1.BIN",
+      "new": "/agents/extender/results/NPE1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPE2.BIN",
+      "new": "/agents/extender/results/NPE2.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPFE2.BIN",
+      "new": "/agents/extender/results/NPFE2.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPFL2.BIN",
+      "new": "/agents/extender/results/NPFL2.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHA1.BIN",
+      "new": "/agents/extender/results/NPHA1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHD1.BIN",
+      "new": "/agents/extender/results/NPHD1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHD2.BIN",
+      "new": "/agents/extender/results/NPHD2.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHD3.BIN",
+      "new": "/agents/extender/results/NPHD3.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHE1.BIN",
+      "new": "/agents/extender/results/NPHE1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHL1.BIN",
+      "new": "/agents/extender/results/NPHL1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHP1.BIN",
+      "new": "/agents/extender/results/NPHP1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPHW26.BIN",
+      "new": "/agents/extender/results/NPHW26.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPL1.BIN",
+      "new": "/agents/extender/results/NPL1.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPLH3.BIN",
+      "new": "/agents/extender/results/NPLH3.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPLS3.BIN",
+      "new": "/agents/extender/results/NPLS3.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPMTH1.BIN",
+      "new": "/agents/extender/results/NPMTH1.BIN",
+      "bytes": 28824,
+      "sha256": "5dba4a05273f36ea81171e07986e2bd1f34e64435119c4feb721d4fb0881acec"
+    },
+    {
+      "old": "/NPMTS1.BIN",
+      "new": "/agents/extender/results/NPMTS1.BIN",
+      "bytes": 28824,
+      "sha256": "bbb4f5d08f0167e4b70f58561b6d8281ea0caf4a0a9659e07d81db71ac559fe5"
+    },
+    {
+      "old": "/NPPROG.BIN",
+      "new": "/agents/extender/results/NPPROG.BIN",
+      "bytes": 7,
+      "sha256": "ccf556b5eaccc4b3774d37c95728673f5138805e92ae4e702d776fa88ab9fd5c"
+    },
+    {
+      "old": "/NPRES.BIN",
+      "new": "/agents/extender/results/NPRES.BIN",
+      "bytes": 28824,
+      "sha256": "43016022bfb8762c140d24b13a697387833d2a72f1aa7fb16f3d1df3db296991"
+    },
+    {
+      "old": "/NPRUN.ID",
+      "new": "/agents/extender/results/NPRUN.ID",
+      "bytes": 8,
+      "sha256": "70e9f3f8bea5ad6948a02a6e4432a85df7d478ad676db23d37aa1bbc2ff8ab02"
+    },
+    {
+      "old": "/NPRUN.ID.p17bak",
+      "new": "/agents/extender/results/NPRUN.ID.p17bak",
+      "bytes": 8,
+      "sha256": "29c4eada69c92bb88f852feb53c72f69861d40bdeaa90f54e892919b29a130f0"
+    },
+    {
+      "old": "/NPSW26.BIN",
+      "new": "/agents/extender/results/NPSW26.BIN",
+      "bytes": 6608,
+      "sha256": "063d1fe408d5f28668f7dc3ac647e5b84c6d6cc546009db06126107d7664968e"
+    },
+    {
+      "old": "/NPV4E1.BIN",
+      "new": "/agents/extender/results/NPV4E1.BIN",
+      "bytes": 28824,
+      "sha256": "05276b4a6255027a608edc323a9d2169596398b83450836801c12ce03194c5b8"
+    },
+    {
+      "old": "/NPV4E2.BIN",
+      "new": "/agents/extender/results/NPV4E2.BIN",
+      "bytes": 28824,
+      "sha256": "88d7c0b6ede26f4d49896deae33a3053818a86901d0b31ec21c58a189102a086"
+    },
+    {
+      "old": "/NPV4EF.BIN",
+      "new": "/agents/extender/results/NPV4EF.BIN",
+      "bytes": 28824,
+      "sha256": "964566dcc99771dbe792aabd9beb03b379f5853b3572d0531fec79cf55f8d4d1"
+    },
+    {
+      "old": "/NPV4EH.BIN",
+      "new": "/agents/extender/results/NPV4EH.BIN",
+      "bytes": 28824,
+      "sha256": "49c5969ea3de2f49a25fbfccd4695bb1f365a7c71a14514c61d1548835d3aa10"
+    },
+    {
+      "old": "/NPV4LF.BIN",
+      "new": "/agents/extender/results/NPV4LF.BIN",
+      "bytes": 28824,
+      "sha256": "a4cea5477c61dcd54c8ddef841a754001bef6e8167d04220bc536a75ed26e451"
+    },
+    {
+      "old": "/NPV4LH.BIN",
+      "new": "/agents/extender/results/NPV4LH.BIN",
+      "bytes": 28824,
+      "sha256": "d89164c1f7820f6f98bdfa11ac46767f4469302a2133f9d3e1b2188539445fe7"
+    },
+    {
+      "old": "/NPV4LS.BIN",
+      "new": "/agents/extender/results/NPV4LS.BIN",
+      "bytes": 28824,
+      "sha256": "1809bdf8551cf158d4b6b25130423c2c2d3e859ed2eb171e58adf8e7021e3eec"
+    },
+    {
+      "old": "/NPV8EF.BIN",
+      "new": "/agents/extender/results/NPV8EF.BIN",
+      "bytes": 28824,
+      "sha256": "7ebf6177e31f5cd9bfd7a0a5e38723e40385ddcb4c211baedb832c83b35f6b06"
+    },
+    {
+      "old": "/NPV8EH.BIN",
+      "new": "/agents/extender/results/NPV8EH.BIN",
+      "bytes": 28824,
+      "sha256": "e1410b744120d53d0fc46b0ab36af6d5ff4fa9b7746f3548f495eab41303edae"
+    },
+    {
+      "old": "/NPV8ES.BIN",
+      "new": "/agents/extender/results/NPV8ES.BIN",
+      "bytes": 28824,
+      "sha256": "f417b87ee9be630a217bb3d264ff0a4e2c588772f09910f627a40149e4625987"
+    },
+    {
+      "old": "/NPV8OH.BIN",
+      "new": "/agents/extender/results/NPV8OH.BIN",
+      "bytes": 28824,
+      "sha256": "e62800211e88a1540f14104a29688f5219da284a8cd51ed9dfd6b1602a585c98"
+    },
+    {
+      "old": "/NPV8OS.BIN",
+      "new": "/agents/extender/results/NPV8OS.BIN",
+      "bytes": 28824,
+      "sha256": "1d57c289446dd52921c6e3811303785e453d668144110735e9ef37bd82762a77"
+    },
+    {
+      "old": "/NPW43S1.BIN",
+      "new": "/agents/extender/results/NPW43S1.BIN",
+      "bytes": 28824,
+      "sha256": "52e4486c2ac3d6cc82a5a15651afcb71d715456059b216ae86c19c3c4967eafc"
+    },
+    {
+      "old": "/NREJ2.CSV",
+      "new": "/agents/extender/results/NREJ2.CSV",
+      "bytes": 21867,
+      "sha256": "2a132e1ba4102601bc383a2450c295d6349c88c71a2904f9ea1daf9becdc66e5"
+    },
+    {
+      "old": "/P01R1.BIN",
+      "new": "/agents/extender/results/P01R1.BIN",
+      "bytes": 28824,
+      "sha256": "ef535092bb01b7ea98d00b58004685df95cc85709cd3fc2684478e394c7faf9d"
+    },
+    {
+      "old": "/P01R2.BIN",
+      "new": "/agents/extender/results/P01R2.BIN",
+      "bytes": 28824,
+      "sha256": "db5879b16ad50c2a565882e29555c8533cd7bfa0590b456c044f44614ac1ca27"
+    },
+    {
+      "old": "/P01R3.BIN",
+      "new": "/agents/extender/results/P01R3.BIN",
+      "bytes": 28824,
+      "sha256": "b23b938f6ca5b3dd2a8c7edc889e1d29d31d75b7fa613873937a6bf79907d90b"
+    },
+    {
+      "old": "/P01R4.BIN",
+      "new": "/agents/extender/results/P01R4.BIN",
+      "bytes": 28824,
+      "sha256": "e52eaf19b665e4e587ccd06f958680738ad2308de44632cc004b8fff8e8b55b1"
+    },
+    {
+      "old": "/P02R1.BIN",
+      "new": "/agents/extender/results/P02R1.BIN",
+      "bytes": 28824,
+      "sha256": "fe0e8ed89e709ae05ee31d8b0bbb5567548feeead62511f65763683b88656b91"
+    },
+    {
+      "old": "/P02R2.BIN",
+      "new": "/agents/extender/results/P02R2.BIN",
+      "bytes": 28824,
+      "sha256": "e23908c191644c65f05783776d71bfac2e77e28a3fb7ff58fc80cc1ca54181b5"
+    },
+    {
+      "old": "/P02R3.BIN",
+      "new": "/agents/extender/results/P02R3.BIN",
+      "bytes": 28824,
+      "sha256": "532ee949a4d9d92480d44485bc11302c2823e715f285c1d2581280c3989da7c5"
+    },
+    {
+      "old": "/P02R4.BIN",
+      "new": "/agents/extender/results/P02R4.BIN",
+      "bytes": 28824,
+      "sha256": "2c6c9ba5a45fe99472f93ff5a945df5e9c24f17e9b8f33fc074b822eb4d59220"
+    },
+    {
+      "old": "/P02R5.BIN",
+      "new": "/agents/extender/results/P02R5.BIN",
+      "bytes": 28824,
+      "sha256": "8454897f6b1e1edb3fb93e6fbc73110b494b70445823a6b4763e4295cba4ee6f"
+    },
+    {
+      "old": "/P02R6.BIN",
+      "new": "/agents/extender/results/P02R6.BIN",
+      "bytes": 28824,
+      "sha256": "b053795fe5302414d493d05945e4ac83e45408eb2b27366a770fa4dff8c40b70"
+    },
+    {
+      "old": "/P02R7.BIN",
+      "new": "/agents/extender/results/P02R7.BIN",
+      "bytes": 28824,
+      "sha256": "20c04771391903912f814c7336645dddb35e8b7f098ce6ffea6a3d6183e63b63"
+    },
+    {
+      "old": "/P1CD1.BIN",
+      "new": "/agents/extender/results/P1CD1.BIN",
+      "bytes": 28824,
+      "sha256": "d56d44208216313d6d331e78d1f57d9bd5b2a234bffbf8512099f1071848e7dd"
+    },
+    {
+      "old": "/P1CD2.BIN",
+      "new": "/agents/extender/results/P1CD2.BIN",
+      "bytes": 28824,
+      "sha256": "bda94b41008a57844aa03038640ecbaecd5a8dd3621f097fd0bb59f3fe81e3c6"
+    },
+    {
+      "old": "/P1CD3.BIN",
+      "new": "/agents/extender/results/P1CD3.BIN",
+      "bytes": 28824,
+      "sha256": "d3b9cc549405304d42ae4b42503df105713ad95da0e20c90f305d6d8fc3338a4"
+    },
+    {
+      "old": "/P1CD4.BIN",
+      "new": "/agents/extender/results/P1CD4.BIN",
+      "bytes": 28824,
+      "sha256": "a4e3a9f4ef22637f0b2377c0d38fa91ac36fe16fbcb203b3e572d51de3573a3b"
+    },
+    {
+      "old": "/P1CD5.BIN",
+      "new": "/agents/extender/results/P1CD5.BIN",
+      "bytes": 28824,
+      "sha256": "871a79474673edbfb5de469fcba824885885b27348c1ff7f6756989fcc4caf8b"
+    },
+    {
+      "old": "/P1CD6.BIN",
+      "new": "/agents/extender/results/P1CD6.BIN",
+      "bytes": 28824,
+      "sha256": "cd0aa565fc417358211c087ca311b2ab71704e34d2e8be6e15a4a2865e8d9cff"
+    },
+    {
+      "old": "/P1E1.BIN",
+      "new": "/agents/extender/results/P1E1.BIN",
+      "bytes": 28824,
+      "sha256": "287831db424f3de4625665b1e61774f7c0f154993f68946eb4a73348f14c9edc"
+    },
+    {
+      "old": "/P1E2.BIN",
+      "new": "/agents/extender/results/P1E2.BIN",
+      "bytes": 28824,
+      "sha256": "48f7fa0541737e3406d154dd26e23b1ab24f0daf5da3a16b873fc8af573106ed"
+    },
+    {
+      "old": "/P1F1.BIN",
+      "new": "/agents/extender/results/P1F1.BIN",
+      "bytes": 28824,
+      "sha256": "ea01f38061c3949e120dbbad04513cfa080adea81596135168d5b6a7da135df5"
+    },
+    {
+      "old": "/P1F2.BIN",
+      "new": "/agents/extender/results/P1F2.BIN",
+      "bytes": 28824,
+      "sha256": "f869e54eea3ac97dda4e46caabf6631a0e275f31b15855d34830152e9970607c"
+    },
+    {
+      "old": "/P1F3.BIN",
+      "new": "/agents/extender/results/P1F3.BIN",
+      "bytes": 28824,
+      "sha256": "bed442b05421253e2ea5498f3b8d7ac52c76873cdf5d1b55a54d4a2b187f06e9"
+    },
+    {
+      "old": "/P1S1.BIN",
+      "new": "/agents/extender/results/P1S1.BIN",
+      "bytes": 28824,
+      "sha256": "54a046c8a346592dc19b9283ebc2fcf554340c05fa388890ab25c75333213c5e"
+    },
+    {
+      "old": "/P1S2.BIN",
+      "new": "/agents/extender/results/P1S2.BIN",
+      "bytes": 28824,
+      "sha256": "fc94b6d608f10b1fb5eaa04445ce762651ca54adc670243123c385d3d6b38808"
+    },
+    {
+      "old": "/P1W1.BIN",
+      "new": "/agents/extender/results/P1W1.BIN",
+      "bytes": 28824,
+      "sha256": "65bc8fdd083264cb85072b7288043a14aee1f789c06295f177f5c554ee569d3c"
+    },
+    {
+      "old": "/P1W2.BIN",
+      "new": "/agents/extender/results/P1W2.BIN",
+      "bytes": 28824,
+      "sha256": "84741c3987ccc1491922c7f5bea95099e8f7da169d62fff6489893bbab703d9b"
+    },
+    {
+      "old": "/P2G2.BIN",
+      "new": "/agents/extender/results/P2G2.BIN",
+      "bytes": 28824,
+      "sha256": "76a668e9965347bfc287a262cfa3310e1d97e0f3e40a89cf05c10aa3391f7e7d"
+    },
+    {
+      "old": "/P2G3.BIN",
+      "new": "/agents/extender/results/P2G3.BIN",
+      "bytes": 28824,
+      "sha256": "0103b4cc8dd43ca4a4e4cf50ae44ffd056b41e2c4fa5760e32a78890c75b872c"
+    },
+    {
+      "old": "/P2G4.BIN",
+      "new": "/agents/extender/results/P2G4.BIN",
+      "bytes": 28824,
+      "sha256": "f5effef65108503be08b3fd250dbd9daf59e79f524a9961337d70f5535c37333"
+    },
+    {
+      "old": "/P2G5.BIN",
+      "new": "/agents/extender/results/P2G5.BIN",
+      "bytes": 28824,
+      "sha256": "25bff7e279dd52e9cef440872f05977d152e9bb8ee258e37a6a066997c5a93ad"
+    },
+    {
+      "old": "/P2G6.BIN",
+      "new": "/agents/extender/results/P2G6.BIN",
+      "bytes": 28824,
+      "sha256": "cf707a7d02f70430dce02495dab4212f876085b7b86a0afb72370cd3d54cb6be"
+    },
+    {
+      "old": "/P2G7.BIN",
+      "new": "/agents/extender/results/P2G7.BIN",
+      "bytes": 28824,
+      "sha256": "43016022bfb8762c140d24b13a697387833d2a72f1aa7fb16f3d1df3db296991"
+    },
+    {
+      "old": "/P8VDU.BIN",
+      "new": "/agents/extender/fixtures/P8VDU.BIN",
+      "bytes": 118,
+      "sha256": "3befe47e271f0351222ce1748a40bea5b8650f99f55069e1183f73d19f6e754a"
+    },
+    {
+      "old": "/PG1.BIN",
+      "new": "/agents/extender/results/PG1.BIN",
+      "bytes": 28824,
+      "sha256": "4de08c6dc10ed98f8767746a75a841bee324e26939a90ff3d0fc85c74d921e56"
+    },
+    {
+      "old": "/PG2.BIN",
+      "new": "/agents/extender/results/PG2.BIN",
+      "bytes": 28824,
+      "sha256": "3bd71f82e77423d8ccca346410ef7594ae9e389d5a3e0516c809f447a37d40e5"
+    },
+    {
+      "old": "/PG3.BIN",
+      "new": "/agents/extender/results/PG3.BIN",
+      "bytes": 28824,
+      "sha256": "c7c72332caa51a5b7153255f493f0ea54ecc896cafd890a85e10fc500b98513f"
+    },
+    {
+      "old": "/RXEXC01.CSV",
+      "new": "/agents/extender/results/RXEXC01.CSV",
+      "bytes": 2492,
+      "sha256": "a994173468bf4670f9add6d7a0c2cf4f2934d35463cd67b992336d3da93a59d9"
+    },
+    {
+      "old": "/RXEXC02.CSV",
+      "new": "/agents/extender/results/RXEXC02.CSV",
+      "bytes": 2614,
+      "sha256": "1bc36d12f1001ea0fe4f3ac2d8ade433ae5d896392abdd780b578cd5ec58481a"
+    },
+    {
+      "old": "/RXEXC03.CSV",
+      "new": "/agents/extender/results/RXEXC03.CSV",
+      "bytes": 3206,
+      "sha256": "bdff5d96a365bdf67785350ab39c82753a405c6ddd6b5749438d7e6dbfd07972"
+    },
+    {
+      "old": "/RXEXCF1.CSV",
+      "new": "/agents/extender/results/RXEXCF1.CSV",
+      "bytes": 3220,
+      "sha256": "18d6809f2e59674ce2860b3a25b5a938e1cdecf961f8f4dc84624d3d86aa4a4b"
+    },
+    {
+      "old": "/RXLEG01.CSV",
+      "new": "/agents/extender/results/RXLEG01.CSV",
+      "bytes": 2492,
+      "sha256": "a994173468bf4670f9add6d7a0c2cf4f2934d35463cd67b992336d3da93a59d9"
+    },
+    {
+      "old": "/RXLEG02.CSV",
+      "new": "/agents/extender/results/RXLEG02.CSV",
+      "bytes": 2614,
+      "sha256": "1bc36d12f1001ea0fe4f3ac2d8ade433ae5d896392abdd780b578cd5ec58481a"
+    },
+    {
+      "old": "/RXLEG03.CSV",
+      "new": "/agents/extender/results/RXLEG03.CSV",
+      "bytes": 3220,
+      "sha256": "18d6809f2e59674ce2860b3a25b5a938e1cdecf961f8f4dc84624d3d86aa4a4b"
+    },
+    {
+      "old": "/RXLEGF1.CSV",
+      "new": "/agents/extender/results/RXLEGF1.CSV",
+      "bytes": 3220,
+      "sha256": "18d6809f2e59674ce2860b3a25b5a938e1cdecf961f8f4dc84624d3d86aa4a4b"
+    },
+    {
+      "old": "/autoexec.bak",
+      "new": "/agents/extender/backups/startup/autoexec.bak",
+      "bytes": 48,
+      "sha256": "c4407c0c0e7c7a14dc330c3ddb9ce3f6ef509f03e08ff896a71719ea5ed9549f"
+    },
+    {
+      "old": "/autoexec.bak.bak",
+      "new": "/agents/extender/backups/startup/autoexec.bak.bak",
+      "bytes": 1364,
+      "sha256": "c79744ce5017945528f14bd27002f30e7ba72c077c95db12dacb8e0daf25d378"
+    },
+    {
+      "old": "/autoexec.before-slideshow320.txt",
+      "new": "/agents/extender/backups/startup/autoexec.before-slideshow320.txt",
+      "bytes": 73,
+      "sha256": "5a49d421bdf318bbab0af25f380220f2af50bc6f91b9df58d1b67a8d42ea9960"
+    },
+    {
+      "old": "/autoexec.port008-install.txt",
+      "new": "/agents/extender/backups/startup/autoexec.port008-install.txt",
+      "bytes": 71,
+      "sha256": "fc025f5981309f6932ee6b0bf82c2a43383e3a418a69d2526a24648338432887"
+    },
+    {
+      "old": "/autoexec.pre-pinwalk-69d5b80f4651.txt",
+      "new": "/agents/extender/backups/startup/autoexec.pre-pinwalk-69d5b80f4651.txt",
+      "bytes": 31,
+      "sha256": "69d5b80f46513cf15041dff2bbf19c2993726bf5754db96bf8ac7f71a673c18d"
+    },
+    {
+      "old": "/autoexec.pre-port008-20260901-004733.txt",
+      "new": "/agents/extender/backups/startup/autoexec.pre-port008-20260901-004733.txt",
+      "bytes": 205,
+      "sha256": "e6ba3cdc87bb22461d7de131c95a44b680b33304821e9091adfb5066fda597e0"
+    },
+    {
+      "old": "/autoexec.pre-port008-corrective-69d5b80f.txt",
+      "new": "/agents/extender/backups/startup/autoexec.pre-port008-corrective-69d5b80f.txt",
+      "bytes": 31,
+      "sha256": "69d5b80f46513cf15041dff2bbf19c2993726bf5754db96bf8ac7f71a673c18d"
+    },
+    {
+      "old": "/autoexec.pre-port008-timing-69d5b80f.txt",
+      "new": "/agents/extender/backups/startup/autoexec.pre-port008-timing-69d5b80f.txt",
+      "bytes": 31,
+      "sha256": "69d5b80f46513cf15041dff2bbf19c2993726bf5754db96bf8ac7f71a673c18d"
+    },
+    {
+      "old": "/autoexec.stage-a-port008-20260901.txt",
+      "new": "/agents/extender/backups/startup/autoexec.stage-a-port008-20260901.txt",
+      "bytes": 69,
+      "sha256": "9109e37f557efc53302e53e62b28ca64ee0e6984aa6e387d69997f49fa86130e"
+    },
+    {
+      "old": "/autoexec.stage-a-port008-timing-9109e37f.txt",
+      "new": "/agents/extender/backups/startup/autoexec.stage-a-port008-timing-9109e37f.txt",
+      "bytes": 69,
+      "sha256": "9109e37f557efc53302e53e62b28ca64ee0e6984aa6e387d69997f49fa86130e"
+    },
+    {
+      "old": "/autoexec.txt.p17bak",
+      "new": "/agents/extender/backups/startup/autoexec.txt.p17bak",
+      "bytes": 143,
+      "sha256": "d5417c84a3d061c15054a0691caa74e5565b8cbfe70163d6b2d36195b257ef53"
+    },
+    {
+      "old": "/autoexec.txt.pre-wide480",
+      "new": "/agents/extender/backups/startup/autoexec.txt.pre-wide480",
+      "bytes": 89,
+      "sha256": "978e6206a3f83910b2b6e98be81c33cdb064c249a3a3a3d68e93559bd174f5aa"
+    },
+    {
+      "old": "/emos-failed-v0.1.0.bin",
+      "new": "/agents/extender/backups/firmware/emos-failed-v0.1.0.bin",
+      "bytes": 114104,
+      "sha256": "d65384281235ced16a465d6511925f79183da663bc698a87a295642dba939ad2"
+    },
+    {
+      "old": "/emos-installed-pre-corrective-8c356f95.bin",
+      "new": "/agents/extender/backups/firmware/emos-installed-pre-corrective-8c356f95.bin",
+      "bytes": 114082,
+      "sha256": "8c356f95cb901edcf675e8add5567316a324e5c43559f3034c54218f3998f231"
+    },
+    {
+      "old": "/emos-installed-pre-timing-79840484.bin",
+      "new": "/agents/extender/backups/firmware/emos-installed-pre-timing-79840484.bin",
+      "bytes": 114078,
+      "sha256": "7984048405e327e7e3fc6e1dc227d697b0bc7a032bcbeff631b4ecead48275c1"
+    },
+    {
+      "old": "/emos-installed-unversioned-bf7633f9.bin",
+      "new": "/agents/extender/backups/firmware/emos-installed-unversioned-bf7633f9.bin",
+      "bytes": 114069,
+      "sha256": "bf7633f9853e812d806a6528450d268db68541b12df0dcb47b4f68b15a130478"
+    },
+    {
+      "old": "/emos-installed.bin",
+      "new": "/agents/extender/backups/firmware/emos-installed.bin",
+      "bytes": 114085,
+      "sha256": "8f659845c24a9b328f6791a7ac75a2b820df254bc601517d1b2741ed7999987b"
+    },
+    {
+      "old": "/keyboard-state.bin",
+      "new": "/agents/extender/results/keyboard-state.bin",
+      "bytes": 1,
+      "sha256": "4bf5122f344554c53bde2ebb8cd2b7e3d1600ad631c385a5d7cce23c7785459a"
+    },
+    {
+      "old": "/typing-state.bin",
+      "new": "/agents/extender/results/typing-state.bin",
+      "bytes": 1,
+      "sha256": "a8100ae6aa1940d0b663bb31cd466142ebbdbd5187131b92d93818987832eb89"
+    }
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "build_id": "sdserve-moslet-probe-r01-b2026-09-21-04-47-35Z",
+  "source_commit": "26ba8776bc147e262cd45dc808d5869740b1396e",
+  "command": [
+    "make",
+    "AGONDEV_TOOLCHAIN=<agondev>",
+    "RAM_START=0xB0000",
+    "RAM_SIZE=0x8000",
+    "SDSERVE_IDENTIFIED_BUILD=1"
+  ],
+  "bytes": 18987,
+  "sha256": "1d49f74d0a39eb92a33c6a5d3ff5fdfd3064099a71ab86f7dc395176910ed6d3"
+}
