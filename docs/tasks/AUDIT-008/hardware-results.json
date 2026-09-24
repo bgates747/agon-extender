@@ -1,0 +1,46 @@
+{
+  "build": "agon-emos-v0.1.19-b2026-09-24-02-02-56Z",
+  "candidate": {
+    "bytes": 124774,
+    "sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7"
+  },
+  "previous_rom_sha256": "2117e0cae7e3817eb213c3efcf6f0bf8a627d3725a2edc1b4922a2b0a13eaef2",
+  "previous_rom_identity": [
+    "agon-emos-v0.1.18",
+    "agon-emos-v0.1.18-b2026-09-21-05-03-49Z"
+  ],
+  "flash": {
+    "rom_exact": true,
+    "rom_bytes": 131072,
+    "rom_sha256": "26648633b00f9ed1b611ea1a31b6140e4309ba6a32c61de402a858827f79fad9",
+    "automatic_reboot_ready": true,
+    "startup_unchanged": true,
+    "boot_generation_changed": true
+  },
+  "checks": {
+    "outcome": "pass",
+    "listener_sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11",
+    "excom_text_roundtrip": true,
+    "listener_migrated": "/emos/sdserve.bin",
+    "mixed_case_and_arguments": true,
+    "application_sentinel_bytes": 4096,
+    "sentinel_exact": true,
+    "fast_transfer_bytes": 1024,
+    "normal_transfer_bytes": 1024,
+    "return_and_reentry": true,
+    "startup_unchanged": true,
+    "final_state": "Legacy; EMOS sdserve --fast / online",
+    "native_keyboard_human_test": "not performed; host-injected input passed",
+    "missing_utility_returns_to_prompt": true,
+    "runtime_identity_observed": true
+  },
+  "backup_sd_path": "/agents/extender/backups/firmware/em-pre-v019.bin",
+  "payload_sd_path": "/extender/install/em-v019.bin",
+  "scripts_sha256": {
+    "record.py": "18fb36ca210b6b5f5e3d238829f824a4cc48f1e87151830c1c4350a5c3045597",
+    "flash.py": "478a7ff52f187bdb7fa15ffb20a4d20be96842db8dd89421d95ece7b2548e70d",
+    "prepare.py": "655a02006c41ea673e12d5b3f3aa562bf662eaecc6b2dc3e5970e76c3153766c",
+    "verify-rom.py": "d1e58f05557d3b6b17ed28df8d39834a354f197d7f79daa5a7f7ce1fa9e2d5d9",
+    "check.py": "d36fb743e0cd74b0a100ca8a677417c79a2b272bc13e25a703db7af3d9cd436a"
+  }
+}

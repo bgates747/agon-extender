@@ -1,8 +1,8 @@
 # AUDIT-008 — First-tranche implementation results
 
 Local implementation and validation completed 2026-09-24 UTC, within the
-Author's one-hour limit. **No bench, physical SD, reset, network endpoint or
-firmware installation was touched.** Another agent retains the bench.
+Author's one-hour limit. The original local-only run touched no hardware. Subsequent Author-authorized
+[physical deployment and bounded checks](HARDWARE.md) now pass.
 
 ## Measured result
 

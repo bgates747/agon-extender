@@ -3,7 +3,7 @@
 ## Executive summary
 
 Contract refreshed 2026-09-23. The Author approved a one-hour autonomous
-investigation; **A08-01–A08-08 complete; first tranche locally validated, hardware pending**. This promotes the previously deferred idea
+investigation; **A08-01–A08-08 complete; first tranche deployed, bounded hardware checks pass**. This promotes the previously deferred idea
 instead of creating a duplicate task. REMOTE-005 remains the next file-access
 workstream; this task determines which existing resident EMOS functions could
 become SD-loaded foreground utilities, informally “EMOSlets,” to recover ROM for
@@ -179,3 +179,17 @@ All 91 host tests, mandatory selected-profile link checks and isolated Fab CLI
 regression pass. A08-I01–I05 are complete. A08-09 remains open for physical
 acceptance; no bench operation or physical SD migration occurred. Diagnostics
 and other possible extractions remain outside this completed first tranche.
+
+## Physical follow-through authorized — 2026-09-24 UTC
+
+Author released the bench and requested activation of the recent EMOS changes.
+Deploy the already locally validated ordinary v0.1.19 candidate, preserve the
+installed ROM/startup, verify complete ROM readback, then test resident keyboard,
+ExCom/Legacy and the `/emos` listener dispatcher. This supersedes the earlier
+local-only boundary for this follow-through; no new product features are added.
+The already-tested fast listener may move from `/mos` to `/emos` after ROM
+verification. Preserve its known-good fallback and all unrelated files.
+
+Physical deployment is complete: [hardware results](AUDIT-008/HARDWARE.md).
+A08-09 remains open only for the broader acceptance scope; do not describe the
+bench as unavailable or the installed candidate as emulator-only.

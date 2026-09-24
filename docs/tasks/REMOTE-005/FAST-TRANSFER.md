@@ -163,4 +163,8 @@ raw UART bandwidth or SD media speed. Host-injected keyboard setup worked;
 no new human/native-keyboard acceptance is claimed. Local evidence and scripts
 are retained under `agents/fast-transfer-hardware`.
 
+Subsequent [EMOS v0.1.19 deployment](../AUDIT-008/HARDWARE.md) migrated the
+listener to `/emos/sdserve.bin`. Current invocation is `EMOS sdserve --fast /`;
+the timings above retain their original v0.1.18 deployment context.
+
 Author accepted the completed work and authorized commit/push on 2026-09-24 UTC.

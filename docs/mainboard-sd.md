@@ -23,8 +23,7 @@ path. At the ordinary MOS prompt:
 
 ```text
 EMOS KEYINPUT extender
-LOAD /extender/sdserve.bin
-RUN . /
+EMOS sdserve /
 ```
 
 The argument is the absolute allowed filesystem root. `/` permits whole-card
@@ -34,21 +33,20 @@ no-argument default. A root change requires stopping and restarting the applicat
 Video mode belongs in startup; the service does not switch modes.
 
 Escape stops the service and returns to MOS, preserving an unfinished stage.
-Host `exit` does the same only when no transfer is active. If the service is
-still the loaded application, `RUN . /` restarts it without another LOAD.
+Host `exit` does the same only when no transfer is active. Restart the utility
+with `EMOS sdserve /` (or `EMOS sdserve --fast /`).
 Rally and this service run in the foreground at different times; this is not
 background SD access while a game is running. No remote command execution or
 board reset is part of the wire API.
 
-## Provisional MOSlet alternative
+## Current MOSlet installation
 
-On the current development bench, EMOS v0.1.18 admits the SD service in MOSlet
-RAM. With `/mos/sdserve.bin` installed, use `sdserve /` instead of LOAD/RUN.
-This preserves the tested application-memory region and still runs in the
-foreground, in Legacy mode with Extender keyboard selected. Host exit or Escape
-returns to MOS. The ordinary listener remains the fallback. See the
-[bounded provisional results](tasks/REMOTE-005/MOSLET-CHECK.md#provisional-physical-pass)
-before treating this as broader qualification.
+EMOS v0.1.19 dispatches `EMOS sdserve [--fast] /` to `/emos/sdserve.bin`.
+The maintained listener moved from `/mos` to `/emos`; bare `sdserve` is no longer
+its installed invocation. Host-injected keyboard, ExCom/Legacy, listener transfer,
+return/reentry and a 4096-byte application sentinel passed physical checks.
+[Deployment record](tasks/AUDIT-008/HARDWARE.md). Original ordinary listener
+`/extender/sdserve.bin` remains a fallback using LOAD followed by `RUN . /`.
 
 ## Host use
 
@@ -175,10 +173,11 @@ sync/close, staging, backups and recovery remain; fast uploads do **not** verify
 the stored file contents. A bounded physical comparison measured 5.00× throughput
 for 8192-byte activated uploads; see the linked results.
 
-With the MOSlet installed at `/mos/sdserve.bin`, the invocation is:
+With EMOS v0.1.19 and the MOSlet installed at
+`/emos/sdserve.bin`, the invocation is:
 
 ```text
-sdserve --fast /
+EMOS sdserve --fast /
 ```
 
 The scope may precede the switch. The service must be restarted to change modes.
@@ -188,7 +187,7 @@ For a prepared host session, append `--fast` to the ordinary upload command:
 python3 scripts/sdcard.py --url "$EXTENDER_URL" --state "$SESSION_FILE" put local.bin /games/example.bin --activate --fast
 ```
 
-The listener is installed at `/mos/sdserve.bin`; use `sdserve --fast /`.
+The listener is now installed at `/emos/sdserve.bin`; use `EMOS sdserve --fast /`.
 Startup is unchanged. Stop the listener and restart without `--fast` for normal
 verification. The task left fast mode running; add `--fast` to host uploads.
 [Tasklet and validation](tasks/REMOTE-005/FAST-TRANSFER.md).

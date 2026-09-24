@@ -17,7 +17,7 @@ before reuse. No user application directories were relocated.
 | `/agents/extender/backups/firmware` | Historical firmware, including failed candidates; not automatically usable rollback |
 | `/tmp/extender` | Reserved transfer transaction storage; see implementation limitation below |
 | `/mos`, `/bin` | Established executable locations; no backup/evidence dumping |
-| `/emos` | Foreground EMOS-prefixed MOSlets; AUDIT-008 v0.1.19 launcher is locally tested only; no physical migration authorized |
+| `/emos` | Foreground EMOS-prefixed MOSlets; AUDIT-008 v0.1.19 dispatcher physically checked; maintained listener is `/emos/sdserve.bin` |
 
 ## Transaction implementation limitation
 
