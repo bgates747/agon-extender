@@ -48,6 +48,15 @@ Continue the recorded ten-task capability/status batch and existing A09-04/05/
 implementation, new architecture, bench access or firmware changes. Commit
 bounded documentation changes and record exact coverage and continuation.
 
+## Fourth execution window
+
+Author authorized the next documentation tranche on 2026-09-24,
+04:50:15–05:50:15 UTC. Review the ten named task summaries from the previous
+checkpoint against retained evidence, then reconcile their current instructions
+and navigation. Continue existing A09-04/05/06/08 only; no source implementation,
+firmware, bench access, new architecture or upstream publication. Commit bounded
+changes after local checks; record actual coverage and a precise continuation.
+
 ## Execution checkpoint
 
 The three bounded passes are recorded in [RESULTS.md](AUDIT-009/RESULTS.md).
