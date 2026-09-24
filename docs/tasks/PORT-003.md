@@ -1,6 +1,24 @@
 # PORT-003 — Implement the P4 display backend and logical frame service
 
-Current planned addition: [unimplemented-command consumption](#unimplemented-command-consumption-tranche). Task documents only in the current turn; no implementation started.
+## Current scope
+
+The P4 display backend is implemented with restored stock depth controllers and
+native row storage. It is not a complete VDP compatibility claim. Current use,
+build limits and protocols start at the [handbook](../README.md); the dated
+increment records below preserve their original candidates and authorization
+boundaries, not today's installed-image selection or a standing bench plan.
+
+| Area | Current disposition / evidence |
+|---|---|
+| Backend fidelity | Stock restoration completed through physical R3; [later source audit](AUDIT-007/FINDINGS.md) confirms selected controllers/storage. Exhaustive audit remains open |
+| Command consumption | UC01 inventory complete; audio framing and virtual-key query slices accepted. Wider UC02–UC07 remain open; preserve explicit mouse, updater and shared-serial deferrals below |
+| Audio framing | [Bounded results](PORT-004/audio-framing/results/README.md) and Author Rally visual acceptance; no synthesis or full Wolf3D acceptance |
+| Virtual-key query | [269 hardware checks accepted](PORT-003/key-query/RESULTS.md); no blanket malformed-stream or keyboard qualification |
+| Graphics comparison | [QUAL-004](QUAL-004.md) owns current static-scene evidence, capture caveats and remaining dynamic parity |
+| Browser output | [Current wire contract](../protocols/browser-video.md) owns codecs and pacing limits; previous RGB222/RLE2/delta experiments do not select a new default here |
+
+Select future implementation from TODO and freeze its bounded contract before
+coding. This summary does not restart any deferred tranche or benchmark.
 
 ## Governing priority — faithful upstream backend, 2026-09-10
 
@@ -2842,9 +2860,9 @@ The Author requests safe no-op treatment for unimplemented VDP functions:
 P4 EDP must consume each complete command payload without allowing argument
 bytes to become subsequent VDU commands. This is protocol compatibility work,
 not implementation of audio synthesis, a new sink, or an upstream redesign.
-This turn is planning-only, followed by hardware voice and stop. The earlier
-PORT-004 deferral is lifted only for this framing/no-op tranche when execution
-resumes; synthesis and output remain deferred.
+The audio and virtual-key query slices below have since been implemented and
+accepted. The wider checklist is still incomplete; it is not a request to redo
+those accepted slices. Synthesis and output remain deferred.
 
 ### Current scope clarification — 2026-09-19
 
@@ -2860,8 +2878,9 @@ in ADR-0014 and the architecture. The original UC01 findings remain valid;
 empty handlers can still misinterpret accidentally received bytes. UC02/UC03
 must distinguish that bounded containment obligation from functional support.
 No containment implementation is authorized by this documentation change.
-The remaining application-facing review includes virtual-key query replies and
-unavailable mouse behaviour; preserve the completed audio-framing repair.
+Virtual-key query replies are now implemented within the accepted slice below.
+Mouse behaviour and maintenance facilities have explicit later deferrals;
+preserve the completed audio-framing repair.
 
 1. [x] UC01: Inventory every unimplemented function reachable through the
    selected P4 VDU parser, including audio, updater and other selected adapters.
@@ -2929,8 +2948,9 @@ functions, full Wolf3D acceptance or synthesis. Hardware voice sent.
 UC01 inventory completed under one-chunk authorization. [Findings and grammar](PORT-003/command-consumption/README.md)
 identify empty updater consumption and missing virtual-key query reply, separate
 interactive loader release contracts, and mouse reply discrepancies. All45
-reviewed source fingerprints match installed r22. No handlers changed;
-UC02/UC03 contract work is next. Earlier audio completion remains scoped.
+reviewed source fingerprints matched then-installed r22. No handlers changed
+in that inventory pass. The later key-query slice below completes part of
+UC02/UC03; wider coverage remains open. Earlier audio completion remains scoped.
 
 
 ## Selected UC02/UC03 slice — virtual-key query

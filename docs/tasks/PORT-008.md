@@ -1,27 +1,24 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
-## Current-state clarification — 2026-09-20 queue review
+## Current scope
 
-The incomplete-recovery statement in the older executive summary below is
-historical, superseded by the E07P restoration record and later
-[UART findings](PORT-008/uart-alignment/FINDINGS.md), including E08/E09.
-E10 remains unstarted and needs its existing EMOS review/authorization gate.
-This note changes no hardware qualification claim or firmware.
+Bulk UART parity is qualified within E07P's frozen controls, and E08/E09
+correctness/graphics evidence is complete. E10 remains unstarted and requires
+its existing EMOS review/authorization gate. The [UART findings](PORT-008/uart-alignment/FINDINGS.md)
+contain the current cross-component result; EMOS INTEG-014 owns its firmware
+implementation work. Current operation starts at the [handbook](../README.md).
 
+E09 completed 624/624 instrumented intervals with zero error statuses, eight
+unchanged probe differences and no P4 browser snapshots. These measurements
+compare transport/framebuffer work, not production gameplay or browser output.
+E07P's restoration record supersedes the earlier incomplete-recovery checkpoint;
+it does not identify today's installed firmware. Consult the machine-local bench
+record before any new operation.
 
-## Executive summary
-
-EMOS E05 reduces large Extender upload time33.41%. E06's four-byte receive
-trigger saves only0.70% and is reverted;420native/candidate cases and three
-independent captures pass. The heavier IRQ observer has a retained failure
-and is not a native performance oracle. EMOS213a24e and its
-`docs/tasks/INTEG-014/E05.md` / `E06.md` own the results.
-
-**Physical recovery is incomplete.** Both original ESP images are independently
-verified, but original-ROM readback, fresh EMOS keyboard/SD admission and the
-spoken cue remain pending after reset checks failed. Stop further mutations
-and request one physical Agon reset/screen observation, using the authorised
-emulator attention fallback. E07 has not started; no experimental push.
+Dated execution records below retain the original source/build observations and
+review gates. They do not reinstate old bench stops, select obsolete candidates,
+or grant new mutation/publication authority. Broader transport/compatibility work
+remains open; completed bounded controls do not establish every workload's parity.
 
 ## EMOS follow-up planning — 2026-09-13
 
@@ -2262,6 +2259,6 @@ review before EMOS E08 correctness stress and E09 rendering.
 The Author reprioritized the existing F004 reachability obligation through
 [PORT-003 UC01–UC07](PORT-003.md#unimplemented-command-consumption-tranche),
 with audio grammar/status authority in PORT-004. Reuse EMOS-owned routing and
-normal reply paths; do not add transport bypasses. The current turn only updates
-tasks and issues the hardware voice notification, then stops. No transport or
-firmware implementation is started by this note.
+normal reply paths; do not add transport bypasses. That planning checkpoint was
+followed by accepted audio-framing and virtual-key query work; see PORT-003's current scope. The wider inventory and explicit
+maintenance/mouse deferrals remain open. This record authorizes no new test.

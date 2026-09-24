@@ -2,9 +2,14 @@
 
 ## Executive summary
 
-**First graphics-backend source tranche authorized, 2026-09-20.**
-See [the frozen bounded contract](AUDIT-007/FIRST-PASS.md). The broader audit
-remains incomplete; this authorization supersedes its previous scheduling hold.
+The first graphics-backend source tranche is complete; see
+[findings](AUDIT-007/FINDINGS.md). Its subsequent
+[mode-startup investigation](AUDIT-007/MODE-LIFETIME.md) recorded an inherited
+palette defect, with mainboard manifestation reported by the Author (not captured
+by that investigation). The
+[firmware bug register](../firmware-bugs.md) owns the current deferred-fix
+disposition. The exhaustive audit remains incomplete; no new bench work or
+upstream correction is authorized by this summary.
 
 **Original exhaustive scope:** Audit the complete pinned
 Agon FabGL/vdp-gl fork for code, dependencies and implicit contracts the P4 port

@@ -11,10 +11,12 @@ features that genuinely require resident firmware.
 
 Use existing MOSlet loading and calling conventions, not a new executable format.
 The [investigation report](AUDIT-008/REPORT.md) delivers the measured shortlist
-and proposed first tranche. The unchanged-source baseline confirms 16 ROM bytes
-free. Retiring cancelled external-provider machinery is the largest identified
-opportunity; estimated post-change savings are explicitly not measured results.
-The Author approved the bounded first tranche below on 2026-09-24 UTC.
+and proposed first tranche. The pre-change baseline had only 16 ROM bytes
+free. The completed first tranche recovered **6282 ROM bytes**, leaving **6298
+free** in the 128 KiB image; see [measured implementation results](AUDIT-008/IMPLEMENTATION.md)
+and [bounded physical acceptance](AUDIT-008/HARDWARE.md). Original research
+estimates remain historical, not substitutes for those measured results.
+Further extractions and broader acceptance remain outside the completed tranche.
 
 ## Origin and scope
 

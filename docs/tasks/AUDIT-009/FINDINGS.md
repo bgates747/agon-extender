@@ -138,3 +138,7 @@ records. Finding ownership does not authorize implementation or a new bench run.
 |---|---|---|---|
 | A09-F045 | EMOS tooling lacks current/historical map; provider-era physical procedure and old parallel fixture can look current | Source descriptions, stage_emos_media provider paths, prepare_sdserve application build and current resident/utility guide | Added tool index; marked old qualification applicability and corrected source-lineage pointers. Current MOSlet guide remains authoritative. No retired tool or old fixture requalified. |
 | A09-F046 | Retained keyboard exerciser documents root receipt files and /bin deployment paths | EMOS keyboard-api/wire READMEs and existing SD-placement rule | Historical procedures retained; tool index requires refresh before physical reuse. INTEG-009 owns fixture/readiness refresh; source and frozen identities unchanged. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F047 | PORT-003 opens with no implementation started, PORT-008 still demands recovery despite later success, audit introductions lag completed work | Accepted audio/key-query slices; E07P restoration and E09 624-interval result; mode-lifetime disposition; AUDIT-008 measured ROM/hardware receipt | Replaced current opening summaries and stale immediate-next instructions. Long dated evidence stays separate; no broad parity claim, new bench plan or deferred fix. |

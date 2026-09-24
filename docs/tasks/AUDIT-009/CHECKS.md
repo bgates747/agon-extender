@@ -246,3 +246,21 @@ Inventory role labels for retained hardware test captures/procedures and generat
 dependency output were corrected by path. Review states were not promoted by
 that classification. EMOS tool coverage is 17/17 entries; documentation does not
 assert these historical tools currently run with new inputs.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B38 | PORT-003; PORT-008; AUDIT-007; AUDIT-008; PORT-008 UART findings; PORT-003 key-query results; AUDIT-007 findings and MODE-LIFETIME; AUDIT-008 HARDWARE and IMPLEMENTATION summaries | Current opening/status claims reconciled with later evidence; long histories remain partial. E07P restoration/E09 completion supersede incomplete recovery; accepted audio/query slices supersede planning-only claims. Palette mainboard manifestation remains Author-reported, not newly captured. No defect fix, test or acceptance gate added. |
+
+Third-pass checkpoint: 2026-09-24 04:48 UTC, about 22 minutes into the one-hour
+ceiling. Seventeen additional batches B22–B38 completed their stated scopes.
+Script indexes cover 48/48 Extender and 17/17 EMOS root tools. All 55 Extender
+and 17 EMOS TODO-linked task/evidence targets exist. Added-line private home,
+mount and LAN-address pattern checks pass; changes are documentation/CSV only.
+Relative-link scans retain the known 3 Extender / 14 EMOS historical missing
+targets and report no new changed-document failures. Mailbox empty. No bench,
+network endpoint, source implementation, firmware, SD or emulator operation;
+no push. Main handbook use does not depend on finishing every archive body.
+
+Local subject commits: Extender 89efe5d0 (capabilities and tool applicability),
+EMOS 2408f31 (tool index and historical procedure boundaries); final current-task
+summary/coverage closeout is committed separately in Extender.
