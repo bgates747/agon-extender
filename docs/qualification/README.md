@@ -16,6 +16,11 @@ matrix exists. This does not promote the superseded matrix below or confer
 untested compatibility; accepted stage evidence can later be linked to its
 exact obligations.
 
+See the [procedure applicability index](../procedures/README.md) before reusing
+any revisioned recipe. Its recorded pass does not certify current source or
+bench state. Current routine operation belongs in the handbook, not these
+qualification records.
+
 ## Authority and layout
 
 `reviewed/` contains the human-reviewed semantic inputs:

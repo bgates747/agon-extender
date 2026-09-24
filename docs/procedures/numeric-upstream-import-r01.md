@@ -48,7 +48,7 @@ pixels from undefined casts is not an equivalent implementation.
 4. Check floating-point assumptions in actual target commands. `-ffast-math`,
    `-ffinite-math-only` or equivalent assumptions can invalidate NaN rejection;
    do not carry such changes through on the strength of host tests. Reconcile
-   selection against `generated/code-graph.yaml` and the actual build manifest.
+   selection against `docs/dependencies/generated/code-graph.yaml` and the actual build manifest.
    Known old-graph/console-selection drift must not be silently relabelled fixed.
 5. Classify each new site with its valid domain, truncation/rounding, overflow,
    ownership, framing and invalid-input behavior. Enumerate unapproved issues

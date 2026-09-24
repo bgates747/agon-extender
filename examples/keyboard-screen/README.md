@@ -1,5 +1,16 @@
 # Stock VDP text readback diagnostic
 
+## Reuse boundary
+
+This retained fixture is not a current deployment recipe. The source still writes `/extender/key-screen.txt`, and the old handover below loads the ordinary application listener. REMOTE-002 owns a path/EMOSlet handover refresh before a new run.
+Use [SD layout](../../docs/sd-layout.md),
+[current SD operation](../../docs/mainboard-sd.md) and the
+[example index](../README.md). The original instructions below explain its
+retained source/evidence; do not execute them unchanged against today's bench.
+
+## Retained fixture contract
+
+
 This bounded development fixture helped diagnose a lost first command letter
 during REMOTE-002. It requests each text cell using `VDU 23,0,&83,x16,y16`,
 waits for the MOS screen-character reply flag, and saves printable ASCII in

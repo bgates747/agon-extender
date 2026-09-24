@@ -43,6 +43,7 @@ A base build is not yet proven equivalent to the deployed P4 overlay combination
 
 | Need | Authority |
 |---|---|
+| Current versus historical procedure applicability | [Procedure index](procedures/README.md) |
 | Current fixture constraints and accepted input exceptions | [Bench constraints](qualification/bench-constraints.md) |
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Timing scopes, PRT units and package reuse boundary | [Game timing](testing/game-timing.md) |

@@ -1,5 +1,16 @@
 # Network hello-world demonstration
 
+## Reuse boundary
+
+This retained fixture is not a current deployment recipe. The retained demonstration scripts use their original startup/service handover and support-directory receipts. DEMO-001 owns a refresh against current EMOSlet and evidence placement before reuse.
+Use [SD layout](../../docs/sd-layout.md),
+[current SD operation](../../docs/mainboard-sd.md) and the
+[example index](../README.md). The original instructions below explain its
+retained source/evidence; do not execute them unchanged against today's bench.
+
+## Retained fixture contract
+
+
 Two generated `build/message.h` files select different literal messages and
 speech filenames, producing two different `hello.bin` executables. Build with
 the project-local Python from the repository root:

@@ -1,17 +1,20 @@
 # Bounded VDU frame marker
 
-PORT-003 video-throughput experimental fixture. Select mode8 before running;
-the program never selects a video mode. From its SD directory at an idle CLI:
+PORT-003 video-throughput experimental fixture. Select mode 8 only in
+`/autoexec.txt` before invocation (`VDU 22 8`); the program never selects a mode.
+Prepare `/extender/video-marker` for the executable and
+`/agents/extender/results/video-marker` for receipts during an authorized
+deployment. After the chosen display route is ready, invoke at an admitted CLI:
 
-```
-VDU 22 8
-LOAD vidmark.bin
+```text
+CD /agents/extender/results/video-marker
+LOAD /extender/video-marker/vidmark.bin
 RUN
 ```
 
-A cold-boot batch can issue the same commands after the normal Extender setup
-and selected display route. Current bench startup remains unchanged. Build
-with `make -C examples/video-marker AGONDEV_TOOLCHAIN=/path/to/agondev`.
+These paths describe a newly prepared test, not the installed card. Preserve
+previous receipts before reuse. Build with
+`make -C examples/video-marker AGONDEV_TOOLCHAIN=/path/to/agondev`.
 
 For20seconds, the app targets one update each two raw MOS120Hz ticks. It shows
 the low8bits of the Gray-coded target frame at x16+16*bit, y32..43, and its

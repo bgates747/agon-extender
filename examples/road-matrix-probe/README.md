@@ -5,15 +5,20 @@ provenance.json binds the original header and its unchanged startup bytes.
 This is a test article, not a Rally renderer change or a released utility.
 
 Build with `make -C examples/road-matrix-probe AGONDEV_TOOLCHAIN=/path/to/agondev`.
-Select mode8 before invocation; the fixture never switches modes. At the CLI
-or in an autoexec after the selected Extender route is ready:
+Select mode 8 only in `/autoexec.txt`, before invocation (`VDU 22 8`).
+The fixture never switches modes. Prepare `/extender/road-matrix-probe` for
+its executable and `/agents/extender/results/road-matrix-probe` for receipts;
+create and verify these directories during an authorized deployment. At the
+admitted CLI, after the chosen display route is ready:
 
-```
-VDU 22 8
-CD /codex/agon-extender/PORT-003
-LOAD matprobe.bin
+```text
+CD /agents/extender/results/road-matrix-probe
+LOAD /extender/road-matrix-probe/matprobe.bin
 RUN . compute
 ```
+
+These are placement instructions for a newly prepared test, not a claim that
+those paths are installed. Preserve previous receipts before another run.
 
 `compute` preserves all matrix creation, per-block data transforms and target
 buffer replacement, but replaces the two final calls of the transformed PLOT

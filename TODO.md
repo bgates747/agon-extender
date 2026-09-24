@@ -56,7 +56,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[BENCH-001](docs/tasks/BENCH-001.md)** — Bounded telemetry/driving work complete and frozen; human review/remaining game continuation separate. Close accepted scope after review; retain AgonArcade RALLY-22 ownership of further driving.
 
-- [ ] **[REMOTE-002](docs/tasks/REMOTE-002.md)** — Host input implemented, tested and used; historical task text still says active goal/uncommitted. Review remaining physical/human gates and reconcile commit references; do not claim uncommitted implementation from old prose.
+- [ ] **[REMOTE-002](docs/tasks/REMOTE-002.md)** — Host input implemented, tested and used; current task summary links the implementation commit and operating guide. Review remaining physical/human gates; no duplicate implementation required.
 
 - [ ] **[REMED-003](docs/tasks/REMED-003.md)** — Identical filesystem probe passes hardware/raw image and fails directory backend; report prepared. Author reviews report; submitting to upstream requires explicit authorization.
 
@@ -90,7 +90,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[REMOTE-003](docs/tasks/REMOTE-003.md)** — Pi-backed browser reset accepted. Direct P4 reset wiring remains deferred.
 
-- [ ] **[REMOTE-001](docs/tasks/REMOTE-001.md)** — Browser input/UI deployed; game/fullscreen follow-ups explicitly deferred. Preserve current uncommitted UI work; do not expand optimization or infer physical takeover acceptance.
+- [ ] **[REMOTE-001](docs/tasks/REMOTE-001.md)** — Browser input/UI deployed; game/fullscreen follow-ups explicitly deferred. Preserve committed input/UI work; do not expand optimization or infer physical takeover acceptance.
 
 - [ ] **[SETUP-006](docs/tasks/SETUP-006.md)** — Old full-circuit wiring target remains on hold/incomplete. Retain predecessor evidence; reconcile applicability when hardware design resumes.
 

@@ -1,5 +1,16 @@
 # Virtual-key query witness
 
+## Reuse boundary
+
+This retained fixture is not a current deployment recipe. The source still writes `/test/keyquery.csv`, outside the current evidence layout. PORT-003 owns a source/path refresh before a new run.
+Use [SD layout](../../docs/sd-layout.md),
+[current SD operation](../../docs/mainboard-sd.md) and the
+[example index](../README.md). The original instructions below explain its
+retained source/evidence; do not execute them unchanged against today's bench.
+
+## Retained fixture contract
+
+
 Finite SD-loaded MOS application for `VDU 23,0,&99,vk`. The P4 host input
 controller supplies held Shift and `a` events through admitted keyboard input;
 the application observes ordinary EMOS sysvars, not direct UART registers.

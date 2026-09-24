@@ -2991,3 +2991,9 @@ qualification is authorized now. Current behavior remains unchanged.
 finding IDs and evidence. Registration does not authorize repairs or turn
 source-only findings into hardware reproductions. Use the same FWBUG ID for
 any future dedicated disposal task; current dispositions remain in the register.
+
+## Fixture reuse documentation review — 2026-09-24
+
+Key-query writes its receipt to the old `/test` path; refresh that producer before new qualification. Road-matrix and video-marker documentation now places relative outputs under `/agents/extender/results`, with video mode selected only in autoexec. See [AUDIT-009 finding A09-F035](AUDIT-009/FINDINGS.md) and the
+[current example index](../../examples/README.md). This is a precondition for
+future reuse, not authorization to change code or repeat the bench test.

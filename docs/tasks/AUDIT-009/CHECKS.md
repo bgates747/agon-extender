@@ -168,3 +168,21 @@ unlike vanilla FreeRTOS; the précis's word unit was corrected. This is a source
 contract check, not a new stack-usage measurement or a new upstream baseline.
 The broader précis retains its dated release baseline; latest-release discovery
 is outside this batch.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B15 | The nine revisioned Markdown procedures under docs/procedures | Status/identity/applicability triage for all nine. Full bodies inspected for numeric import, canary r03 and frame-service r03; others retain metadata-only or previous partial coverage. Created one current applicability index, leaving frozen recipes intact. Numeric runner and parser/renderer sanitizer commands inspected; only --help executed, no compilation or tests claimed. |
+| B16 | qualification/README; dependencies/UPSTREAM-WATCH; new procedures/README; handbook index | Linked current applicability, verified role separation and import ownership. Corrected the numeric procedure's abbreviated source-graph path. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B17 | TODO; PLAN-001/QUEUE-REVIEW; REMOTE-001; REMOTE-001/C01-ui-cleanup; REMOTE-002; BENCH-004; NET-001 | Selected current-status and acceptance claims checked against retained follow-ups and commits d86739bf, a67aa2d3, c73b458c. Removed stale current-uncommitted/installed claims from entry summaries. No human gate closed. Full historical execution-body verification remains partial. BENCH-004 still lacks the specified peer receipt; empty mailbox checks are not that receipt. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B18 | Six examples/*/README files; assets/notifications/README; sd-layout | Example bodies reviewed against output paths in source and qualify_keyboard.py. Road/video-marker invocation guidance corrected to mode-in-autoexec and evidence working directories. Fixed-path/old-listener fixtures explicitly require owner refresh before reuse; reusable notification receipt remains dated evidence, not current installed proof. No example executed or compiled. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B19 | hardware/objects/README; objects.yaml; schema.json; P4-PC library README; PROVENANCE.json | Object guide inspected and validator passed for 41 objects. Library provenance verified for all 39 originals/derivatives; no hash mismatch. This checks stored snapshot integrity, not accuracy of every upstream page or hardware compatibility. |
+| B20 | LICENSING; root LICENSE header; retained agon-vdp-release LICENSE; vdp-gl displaycontroller notice | Scoped notice/provenance check: project GPLv3 text, retained MIT notice and upstream GPLv3-or-later attribution present. No new license terms, legal interpretation or exhaustive redistribution review. |

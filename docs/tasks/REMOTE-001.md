@@ -1,14 +1,22 @@
 # REMOTE-001 — Develop browser keyboard and remote EMOS control
 
-## Current plan — browser capture over the working Extender input path
+## Current state — browser capture over the Extender input path
 
-**Behaviour contract frozen by Author, 2026-09-19. B04 deployed; initial human typing review passed, UI corrections pending.** Add an explicit
-Capture keyboard / Release keyboard toggle to the existing video page, backed by
-the working processed-key input route used by Extender USB and host injection.
-Retain installed video codecs, fullscreen controls and direct screen-text access.
-The historical implementation below is evidence, not the new build baseline.
+Browser input and UI changes are implemented, committed and deployed within
+recorded scope. `a67aa2d3` retains initial browser capture/review; `c73b458c`
+retains the accepted reset control and display-interface changes. Current
+operation belongs in the [keyboard guide](../remote-keyboard.md) and
+[reset guide](../bench-reset.md).
 
-### Accepted behaviour
+B05/B07 and any explicit physical takeover or visual acceptance gates remain
+open. The [C02 follow-up](REMOTE-001/C01-ui-cleanup.md#author-follow-up--browsergame-input-investigation-deferred)
+records deferred game-input investigation and the native fullscreen Escape
+limit. Old uncommitted/pending-build statements below describe dated checkpoints,
+not missing current implementation. No further input optimization is authorized
+by this status reconciliation.
+
+### Original accepted behaviour
+
 
 1. Start released. Clicking Capture keyboard explicitly requests ownership; show
    captured only after P4 admission succeeds. Display a clear active indicator.

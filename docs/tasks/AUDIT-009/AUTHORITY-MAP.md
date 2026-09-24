@@ -9,6 +9,7 @@ or accepted architecture. Task evidence stays at its recorded location.
 | One current handbook, distinct from evidence | docs/README.md | Index only current role-named guides; historical instructions remain outside routine reading |
 | Discover capabilities, human or agent | root README.md | Replace stale summary; link procedures and bounded evidence |
 | Operate an existing installation from another project | docs/using-extender.md | New short entry point; prerequisites/reading order, not another protocol catalog |
+| Choose a reusable procedure versus historical qualification | docs/procedures/README.md | Current applicability index; preserve exact older procedure identities/evidence |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
 | SD service and client | docs/mainboard-sd.md | Correct prerequisites; own normal/fast/session/recovery examples |
 | SD wire fields and invariants | docs/protocols/mainboard-sd.md | Keep exact packet contract; reconcile foreground MOSlet admission |

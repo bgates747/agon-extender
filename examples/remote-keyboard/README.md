@@ -1,5 +1,16 @@
 # Remote keyboard receiver witness
 
+## Reuse boundary
+
+This retained fixture is not a current deployment recipe. The source receipt and qualifier still use old support-directory evidence paths, and the helper explicitly loads the ordinary application listener. REMOTE-002 owns a path/EMOSlet handover refresh before a new run.
+Use [SD layout](../../docs/sd-layout.md),
+[current SD operation](../../docs/mainboard-sd.md) and the
+[example index](../README.md). The original instructions below explain its
+retained source/evidence; do not execute them unchanged against today's bench.
+
+## Retained fixture contract
+
+
 This finite development example records ordinary MOS keyboard sysvars and the
 128-bit BBC physical-key map. It installs no callback or resident code, selects
 no mode, and returns after Enter release or a 90-second timeout. Its receipt is

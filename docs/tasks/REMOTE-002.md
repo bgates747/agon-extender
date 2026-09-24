@@ -1,14 +1,16 @@
 # REMOTE-002 — Host-controlled typing through the native keyboard path
 
-## Current-state clarification — 2026-09-20 queue review
+## Current state
 
-The active-goal and uncommitted descriptions below are historical checkpoints.
-Host typing is implemented and in routine use; the remaining review gates need
-explicit disposition against retained evidence, not another implementation from
-scratch. Routine use does not prove every physical takeover/visual gate.
+Host typing is implemented, committed and in routine use. The implementation
+was committed in `d86739bf`; later browser arbitration is covered by REMOTE-001
+and ADR-0022. Use the [keyboard guide](../remote-keyboard.md) for operation.
+R02-06's attended/physical acceptance remains explicitly unresolved; routine
+use does not prove every takeover or visual gate.
 
-
-Status: Active goal; contract frozen before implementation. Started 2026-09-13 UTC.
+The following contract and execution entries are retained September 13 evidence.
+Their active-goal, uncommitted and installed-candidate wording applies to those
+checkpoints, not today's worktree, bench state or an authorization to resume.
 
 ## Author instruction and scope
 
@@ -249,3 +251,9 @@ online, and keyboard admission is ready with zero held or pending remote keys.
 No keystrokes were sent after the cue. WAIT for a new Author reply before
 resuming the attended demo; human hearing and full visual acceptance remain
 unconfirmed. Evidence: docs/tasks/REMOTE-002/evidence/review-fixed-cue.json.
+
+## Fixture reuse documentation review — 2026-09-24
+
+The retained receiver/screen witnesses use support-directory receipts and qualify_keyboard.py still generates LOAD/RUN of the ordinary listener. Refresh receipt paths and EMOSlet handover before a new qualification run. See [AUDIT-009 finding A09-F035](AUDIT-009/FINDINGS.md) and the
+[current example index](../../examples/README.md). This is a precondition for
+future reuse, not authorization to change code or repeat the bench test.

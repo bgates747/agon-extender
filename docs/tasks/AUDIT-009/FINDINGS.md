@@ -92,3 +92,15 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | A09-F030 | Legacy mode permits keyboard but appears to forbid already accepted SD service | PORT-017 physical acceptance and current EMOS ext.sdlink service | Current architecture and ADR-0014 acknowledge explicit foreground Legacy SD without implying Dual or general EDU admission. |
 | A09-F031 | SETUP-005 opening says browser deferred and implementation not started | ADR-0022 and current keyboard/console contracts | Current integration summary replaces stale priority; original dated choices retain historical meaning. Wider decisions remain open. |
 | A09-F032 | Upstream précis calls a 4096-byte ESP-IDF task stack 4096 words | Pinned video.ino argument and Espressif task.h byte-unit contract | Corrected unit; no measured high-water or current-release claim. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F033 | Procedure directory mixes active maintenance with old disconnected-board/no-backup qualification recipes | Nine procedure status/identity headers and current build, reset, SD and fixture guidance | New current applicability index distinguishes each scope; frozen recipes unchanged. New qualification still needs its owning task's refreshed contract. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F034 | Input queue/task summaries still call committed UI/host control uncommitted, and viewer task calls an old build installed | Commits d86739bf/a67aa2d3/c73b458c and dated C02 follow-up | Current summaries and TODO corrected, guides linked; physical takeover/visual gates stay open. NET-001 candidate explicitly historical. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F035 | Example recipes predate SD evidence layout, EMOSlet handover and mode-in-autoexec policy | qualify_keyboard.py still emits LOAD/RUN of the ordinary listener; key-query/screen/receiver hard-code old receipt paths; marker/matrix use relative output | Current example index separates refresh-required fixtures from corrected invocation guidance. Code remains unchanged. PORT-003 owns key-query; REMOTE-002 owns keyboard witnesses/qualifier; DEMO-001 owns hello replay refresh. No automatic authorization to rerun. |
