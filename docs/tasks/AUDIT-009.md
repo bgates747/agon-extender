@@ -67,10 +67,10 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-**Contract frozen — Author approved A09-N03 execution on 2026-09-24.**
+**Contract frozen — Author approved A09-N04 execution on 2026-09-24.**
 These four bounded steps subdivide
-existing A09-05/06/08 work; they do not expand the audit. N01 and N02 are complete. Execution now covers **A09-N03 only**; stop after its results
-and commit. A09-N04 remains unstarted. The earlier execution windows are historical
+existing A09-05/06/08 work; they do not expand the audit. N01–N03 are complete. Execution now covers **A09-N04 only**; stop after its results
+and commit. No further tranche is selected. The earlier execution windows are historical
 authorization, not permission to expand this phase.
 
 For each step, the reviewing agent must finish its documentation corrections,
