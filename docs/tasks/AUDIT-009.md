@@ -15,6 +15,30 @@ features, change firmware, use the bench, rerun qualification or reopen settled
 architecture. Unknowns remain explicit; a documented feature is not automatically
 a deployed or qualified feature. TODO.md remains the single unfinished-work index.
 
+## Author clarification — current documentation, not archaeology
+
+Accepted during execution: the eventual deliverable is **one coherent set of
+currently accurate documentation**. A human or agent must not have to compare
+old instructions with later amendments to determine what to do. Current guides
+contain the current contract, prerequisites, limits and procedures only.
+
+Historical designs, qualification receipts and research remain evidence, outside
+the current handbook. Link them when provenance is useful; do not reproduce
+superseded instructions in the operational reading path or rely on a warning
+banner to make contradictory guidance acceptable. When a contract is replaced,
+rewrite the maintained authority and retain the old revision in Git or its
+bounded evidence archive. Current known limitations belong in the handbook;
+chronological explanations belong in evidence. A partial audit must not label
+the whole documentation set current or complete.
+
+## Execution checkpoint
+
+The first bounded pass is recorded in [RESULTS.md](AUDIT-009/RESULTS.md).
+Current operating entry points and selected contracts are consolidated; the
+whole-documentation audit is **not complete**. A09-04/05/06/08 remain open for
+remaining body review and consolidation. The checked validation/walkthrough/
+closeout items apply to this recorded tranche, not unseen documents.
+
 ## Scope and authority
 
 | Material | Review and disposition |
@@ -83,7 +107,7 @@ historical evidence, vendor reference, duplicate or obsolete entry point. Check
 README/index/TODO reachability and document owner. Explicitly record exclusions.
 Do not read every large transcript before deciding its role.
 
-A09-03 [ ] Map the external user's journeys. For each journey, identify its entry
+A09-03 [x] Map the external user's journeys. For each journey, identify its entry
 point, host tool, Agon command, processor/service owners, transport, required
 firmware/build, SD location, output/evidence and stop/recovery behavior. Prioritize:
 
@@ -131,14 +155,15 @@ review if the map changes canonical policy or cross-project ownership.
 
 A09-08 [ ] Consolidate approved, evidenced material in small subject batches.
 Promote recurring task-local procedures to their maintained role-named authority;
-replace duplicates with short contextual links. Give each operating procedure a
+replace duplicates with short contextual links. Remove superseded instructions
+from the current reading path; a history banner alone is not consolidation. Give each operating procedure a
 consistent structure: purpose/status, prerequisites/ownership, exact invocation,
 expected outcome, failure/recovery, stop/final state, limitations and evidence.
 Use plain language first, precise contracts beneath it. Retain provenance for
 borrowed documentation and useful evidence; remove redundant explanations rather
 than building another archive tree. Update all affected inbound links and indexes.
 
-A09-09 [ ] Validate documentation mechanically and by walkthrough. Check repository-
+A09-09 [x] Validate documentation mechanically and by walkthrough. Check repository-
 relative links/anchors, missing targets, task/detail correspondence, command names
 and options against their owning tools, stale path references, contradictory status
 claims and leaked machine-specific details. Inspect generated sources rather than
@@ -146,7 +171,7 @@ patching output alone. Run only safe local help/parser/link checks; no command t
 contacts a board, transfers a file, flashes or resets merely to validate an example.
 Record tooling limitations instead of promising exhaustive semantic validation.
 
-A09-10 [ ] Perform two fresh-reader walkthroughs from the proposed landing page:
+A09-10 [x] Perform two fresh-reader walkthroughs from the proposed landing page:
 a human using Mac/Linux host tools, and an agent in another project. Resolve how
 each finds the endpoint, determines bench ownership/current firmware, starts and
 stops an EMOSlet, chooses checked/fast transfer, handles an uncertain request and
@@ -155,7 +180,7 @@ Use documentation alone initially; record every answer requiring memory, an
 unindexed task or source excavation as a remaining documentation gap. These are
 desk walkthroughs, not hardware acceptance claims.
 
-A09-11 [ ] Close out with coverage accounting. Every inventory item has a review
+A09-11 [x] Close out with coverage accounting. Every inventory item has a review
 state and disposition; every consequential finding is fixed with evidence or has
 an explicit owner/remaining gate. Summarize consolidated authorities and residual
 unknowns for Author review. Update the dated development log and authoritative
@@ -164,7 +189,8 @@ other agents' work or silently publish local bench details.
 
 ## Completion and stopping rules
 
-The deliverable is usable current guidance with traceable limits, not a percentage
+The deliverable is one current handbook with traceable limits and separately
+retained evidence, not a mixture of dated instructions or a percentage
 of files edited. Completion requires a navigable entry point, one maintained
 source per operational contract, reconciled high-impact claims, successful local
 checks/walkthroughs and an explicit unresolved-findings list.

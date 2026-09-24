@@ -54,3 +54,101 @@ possible Markdown slug. These are mechanical checks, not body-review coverage.
 `git diff --check` passed in both repositories after this tranche. Later totals
 and checks will be recorded in the closeout. Private-address/path checks apply
 to additions; historical source citations and Git author metadata are separate.
+
+## Further bounded batches
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B05 | qualification/bench-constraints; qualification/capture-failure-protocol; testing/game-timing; qualification/README; hardware/esp32-p4-pc/README; firmware-bugs; BENCH-007 | Current input exception consolidated. Capture controls and test-measurement distinctions inspected. Timing runner needs procedure refresh before reuse. Bug entries/hardware library only scoped review, not exhaustive revalidation. |
+| B06 | PORT-005; SETUP-005; ADR-0014; REMOTE-005; REMOTE-005/MOSLET-CHECK; TODO; EMOS REMOTE-005 | Current status reconciled with later acceptance; original evidence retained. Completed EMOS listener-MOSlet subtask removed from sibling unfinished queue; wider parent tasks remain. |
+| B07 | protocols/browser-video; QUAL-003/debrief/P01h/CONTRACT; BENCH-005/composed-packing/PROTOCOL; BENCH-005/composed-packing/sixbit/PROTOCOL; dependencies/README; mainboard-sd-qualification-r01 | Promote wire details; retain frozen experiments and qualification identity. Dependency graph and frozen SD procedure explicitly bounded, not treated as current deployment recipes. |
+| B08 | docs/README; using-extender; building; tasks/README; EMOS README; EMOS docs/README; EMOS emos-v1-contract | Apply Author's current-only handbook requirement. Resident ABI rewritten against maintained source; cancelled loader removed from current manual. Two reader walkthroughs below. |
+| B09 | EMOS TODO; INTEG-009; INTEG-010; INTEG-011; INTEG-012; BENCH-001; QUAL-001 | Reconcile first four integration summaries with later Extender physical evidence. BENCH-001/QUAL-001 broader bodies remain partial; no blanket acceptance or queue completion. |
+
+Current EMOS gateway table was checked against `src/emos.h`, `src/emos.c`,
+`src/mos_api.asm`, `src/emos_sdlink.c` and `src/emos_uart_probe.c`. This is source
+inspection, not ABI execution. The table preserves the 66-byte byte-array layout
+and distinguishes resident services from disk utility admission.
+
+Qualification generation: bare `python3` lacked jsonschema; retry using the
+**documented repository virtual environment** succeeded:
+`.venv/bin/python docs/qualification/scripts/regenerate-qualification.py --check`
+reported 17 deterministic files. No generated file changed. A consistent
+superseded candidate matrix is not current-mode acceptance.
+
+Aggregate version validation still fails on the pre-existing r02 connectivity
+hash mismatch. Both affected hardware files are unchanged from b1d799e7.
+No identity was advanced and no digest rewritten to conceal that failure.
+
+## Desk walkthroughs and journey map
+
+These walkthroughs follow links from the new handbook; they do not contact any
+endpoint, run a command on Agon or claim a new Mac/physical test.
+
+| Journey | Human on Mac/Linux | Agent in another project | Result / remaining boundary |
+|---|---|---|---|
+| Discover / start | README → handbook → using-extender; owner supplies URL, bench availability and installed receipt | Same guides; ignored local bench record supplies private configuration | Endpoint and admission are explicit prerequisites, not inferred from checkout or stale status |
+| Transfer | SD guide: local Python interpreter, `/emos/sdserve.bin`, Legacy/admitted input, normal or paired `--fast`, staged versus activated file | Same commands/contracts; local journal retained; independent application RAM preservation limit | Exact examples/options source/help checked; no hardware run |
+| Uncertain request / stop | Same state journal; `resume` repeats only uncertain request; inspect before further action; Escape/EXIT returns to caller | Do not discard uncertainty, assume idle prompt or overwrite an executing batch | Service restart/new journal distinction is explicit; no automatic workflow resume promised |
+| Observe / control | Browser Connect/Capture distinct; USB takeover; fullscreen Escape limitation | keyboard.py pacing/journal; `/screen/text` is ExCom pixel recognition, not MOS RAM or a Legacy prompt proof | Delivery counters do not prove command execution; unknown running application blocks CLI assumptions |
+| Run another project | Current SD placement and LOAD versus EMOSlet distinction; mode/input independent | Preserve unknown/open files; no ad hoc direct UART ownership | Implemented subset and bug register constrain claims; no universal compatibility |
+| Build / recover | Build guide → owning wrappers; reset guide distinct from ROM recovery | Same identities/receipts and owner authorization; no base-build equivalence assumed | F009 remains: public base builder does not reconstruct deployed overlays |
+| Interpret tests / future hardware | Timing guide separates rendering, pacing, transport and fps; handbook distinguishes planned P4-PC/local output | Same scope plus capture controls, stale-runner reuse gate and evidence ownership | No HDMI/P4-local SD capability inferred from vendor samples; no new performance claim |
+
+The two walkthroughs required no unindexed source excavation after the guide
+corrections. Installed state and access authorization necessarily come from the
+owner/local receipt; they are not missing public documentation. Full fresh-build
+reproduction remains an identified product/build gap, not a solved walkthrough.
+
+B10 reviewed `vdp/video/extender/web/protocol.md` and the maintained video
+contract against `wired_network_service.cpp` and `app.js`. Replaced the obsolete
+RGB888-only duplicate with a redirect. Retained single-viewer replacement,
+explicit reconnect, malformed-credit/frame handling and static-response socket
+closure in the canonical contract; did not infer all service failures have the
+same WebSocket close code.
+
+B11 reviewed the complete `protocols/excom-console.md` against EMOS's
+`emos_console.c`/`emos_console_wire.h` and P4's `console_session.hpp`,
+`console_hardware.inc` and `console_wire.h`. The paired wire headers compare
+byte-identically. Updated the obsolete draft-only lead and made prepare-keep's
+zero-challenge request explicit. Other bounds/lease/keep-display behavior agree
+with inspected source. No control request was sent and no fault proof inferred.
+
+B12 reviewed the complete `protocols/mainboard-sd.md` with `mainboard-sd.md`
+and current listener `service.c`/host `sdcard.py`. Removed superseded ROM/reset
+claims from the maintained contract. Corrected ACTIVATE description against its
+actual finished-state, rename, digest and error branches, including the lack of
+a global open-handle monitor. The standalone host `activate` is only an RPC;
+independent target readback belongs to `put --activate` in normal mode or a
+separate explicit comparison. No transfer was executed.
+
+B13 reviewed `mos-recovery.md`, `bench-reset.md` and RECOVERY-001's acceptance
+summary against maintained recovery-console/programmer source. The normal reset
+bridge remains separate from ZDI programming. The current recovery path requires
+a verified durable pre-erase dump and full 128-KiB post-write comparison;
+optional historical-tool wording was removed. `mos_recovery_console.py --help`
+and `prepare_mos_recovery.py --help` succeeded in the repository environment;
+argument help does not open a serial port or generate/deploy a payload.
+
+## Final local checks for this tranche
+
+Final Markdown scan: Extender 709 files / 2394 inline relative links, three
+known predecessor-hardware missing targets; EMOS 75 files / 260 links,
+fourteen migration-handoff missing targets. No flagged local anchors or new
+changed-document failures. A separate check of revised tracked documents found
+no in-repository link target existing only as an ignored local file after the
+handoff correction. External repository/HTTP links were not fetched.
+
+All 51 linked authoritative Extender TODO entries resolve to detail files.
+EMOS's linked entry titles/details resolve too. Cross-repository task mentions
+are not misclassified as missing local task files. Canonical dependency-graph
+validation passed (`graph:agon-extender:vdp-source-selection-v2`); no source-root
+reconstruction or new reviewed graph input was performed.
+
+Final whitespace checks pass in both repositories. A temporary CSV CRLF output
+was normalized back to LF before commit. Added tracked content has no matches
+for the checked private home/mount path or LAN-address patterns; this is a
+bounded pattern check, not a proof against every possible identifying datum.
+No endpoint, board, emulator or SD operation was performed. No source or tool
+implementation changed. The cross-machine mailbox contained no requests at
+both the opening check and the closeout check.

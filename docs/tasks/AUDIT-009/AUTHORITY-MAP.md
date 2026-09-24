@@ -6,6 +6,7 @@ or accepted architecture. Task evidence stays at its recorded location.
 
 | Subject / audience | Maintained authority | Disposition |
 |---|---|---|
+| One current handbook, distinct from evidence | docs/README.md | Index only current role-named guides; historical instructions remain outside routine reading |
 | Discover capabilities, human or agent | root README.md | Replace stale summary; link procedures and bounded evidence |
 | Operate an existing installation from another project | docs/using-extender.md | New short entry point; prerequisites/reading order, not another protocol catalog |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
@@ -26,3 +27,8 @@ or accepted architecture. Task evidence stays at its recorded location.
 
 This map was selected within the approved consolidation scope. No ownership or
 architecture change requiring a new decision is proposed.
+
+Author clarification during execution: the end state is one current set, not
+a collection of dated amendments. Current authorities are rewritten to remove
+superseded instructions. Historical evidence is retained separately or through
+Git; merely adding a warning banner is insufficient for an operating manual.
