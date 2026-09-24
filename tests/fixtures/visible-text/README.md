@@ -13,7 +13,15 @@ manifest and application expose their fixture identity, build timestamp and
 status independently of the installed EMOS build. Prepare P4 separately with
 `scripts/prepare_visible_text.py`. Neither script installs firmware or edits SD.
 
-`LOAD /bin/VTEXT.BIN` followed by `RUN` performs the EMOS-owned exchange.
+For a newly prepared test, deploy the identified binary beneath `/extender`
+following [SD layout](../../../docs/sd-layout.md), then LOAD its verified path
+and RUN. The historical `/bin/VTEXT.BIN` location is not an installation
+instruction. This fixture's dedicated P4 peer and idle UART1 prerequisite are
+not supplied by the current combined console merely because it displays text.
+Already-admitted Extender input can occupy UART1; preserve an independently
+usable input/return path when the owning task prepares the test.
+
+The normal run performs the EMOS-owned exchange.
 `RUN . preview` writes the same generated text through ordinary MOS VDU on the
 onboard display; it is a local rendering check, not UART/P4 evidence.
 `RUN . check` exercises the actual gateway's invalid-address/length/output and

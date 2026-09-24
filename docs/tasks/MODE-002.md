@@ -6,6 +6,14 @@
 - Started: --
 - Finished: --
 
+## Current boundary
+
+This is deferred investigation of **cross-boot automatic retry**, not a missing
+prerequisite for [current console switching](../protocols/excom-console.md).
+Its beta design rules below are requirements to assess when this task resumes,
+not claims that a persistent circuit breaker is installed. Current bounded
+console failure handling retains the committed route on failed admission.
+
 ## Namespace
 
 `MODE` identifies operating-mode lifecycle work as defined by
@@ -41,16 +49,16 @@ restart-loop risk and the Author accepts a concrete mechanism.
 
 ## Regression work
 
-1. Exercise automatic mode requests with absent P4 hardware, incompatible EDP
+M02-R01 [ ] Exercise automatic mode requests with absent P4 hardware, incompatible EDP
    firmware, unavailable transport wiring, timeout, malformed readiness data,
    P4 reset, eZ80 reset, EMOS reset, and reset during each transaction stage.
-2. Determine whether any failure path causes `autoexec.txt` to reissue the same
+M02-R02 [ ] Determine whether any failure path causes `autoexec.txt` to reissue the same
    request indefinitely or creates repeated disruptive transitions despite
    successful Legacy fallback.
-3. Identify which actor causes each reset or retry: EMOS coordinator, EDP/P4
+M02-R03 [ ] Identify which actor causes each reset or retry: EMOS coordinator, EDP/P4
    firmware, eZ80 watchdog/reset path, physical wiring fault, invoked command,
    or operator action.
-4. Record whether one-attempt-per-request behavior is sufficient for v1.
+M02-R04 [ ] Record whether one-attempt-per-request behavior is sufficient for v1.
 
 ## Candidate mechanisms if evidence requires one
 

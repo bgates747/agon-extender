@@ -2,7 +2,10 @@
 
 These examples are normative demonstrations of the rules in
 [`README.md`](README.md). Hashes are shortened only in explanatory prose; real
-manifests contain complete SHA-256 values.
+manifests contain complete SHA-256 values. Hypothetical identities and old
+canary chronology demonstrate syntax; they are not current build selections,
+installed-state reports or wiring instructions. Use the registry and exact
+applicable build/qualification record for those selections.
 
 ## 1. Initial canary
 

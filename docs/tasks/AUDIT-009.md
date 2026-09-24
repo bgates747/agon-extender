@@ -40,6 +40,14 @@ status review. Documentation, source inspection and local checks only; no bench,
 firmware, emulator changes or new architecture choices. Commit bounded progress
 and update the same coverage ledger and results before stopping.
 
+## Third execution window
+
+Author authorized the next one-hour goal on 2026-09-24, 04:26:44–05:26:44 UTC.
+Continue the recorded ten-task capability/status batch and existing A09-04/05/
+06/08 only. Reconcile accepted decisions and actual evidence; no deferred
+implementation, new architecture, bench access or firmware changes. Commit
+bounded documentation changes and record exact coverage and continuation.
+
 ## Execution checkpoint
 
 The two bounded passes are recorded in [RESULTS.md](AUDIT-009/RESULTS.md).

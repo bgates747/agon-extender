@@ -6,6 +6,14 @@
 - Started: --
 - Finished: --
 
+## Current implementation boundary
+
+Existing serial diagnostics, task-local captures and the
+[ROM recovery procedure](../mos-recovery.md) do not implement the durable
+multi-component crash-report product specified here. In particular, a partition
+or native panic facility is not proof that the project envelope, retrieval and
+retention policy have been implemented. Those requirements remain deferred.
+
 ## Namespace
 
 `DIAG` identifies work whose primary product is operator-visible diagnostics,
@@ -68,7 +76,7 @@ versioned machine-readable record without delaying or destabilizing recovery.
 4. Plain-language consequences: program halted or resumed, last known eZ80 PC
    when captured, display/audio/buffer state lost or unknown, input unavailable,
    EDU sessions invalidated, or Legacy restored.
-5. Exact available firmware, MOS/module, protocol, hardware, wiring/profile,
+5. Exact available firmware, EMOS utility/application, protocol, hardware, wiring/profile,
    build, procedure, and run identities under the versioning policy.
 6. Bounded eZ80 PC, SP, register, and stack context where it can be captured
    safely and truthfully.
@@ -83,30 +91,30 @@ retained-before-reset, and unavailable evidence.
 
 ## Work
 
-1. Inventory which diagnostics survive each Legacy, Dual, and exclusive failure
+D01-W01 [ ] Inventory which diagnostics survive each Legacy, Dual, and exclusive failure
    class, including failed EDP display, failed onboard VDP, eZ80/MOS fault,
    transport loss, P4 reset/panic, storage loss, and whole-system reset.
-2. Define a versioned machine-readable envelope and a compact human rendering
+D01-W02 [ ] Define a versioned machine-readable envelope and a compact human rendering
    from the same authoritative record.
-3. Select prioritized sinks per failure class: onboard recovery screen, EDP
+D01-W03 [ ] Select prioritized sinks per failure class: onboard recovery screen, EDP
    screen when healthy, mandatory bounded P4 flash crash area, Agon SD, optional
    P4 microSD, serial diagnostic output, or later network retrieval. Do not
    assume one universal sink.
-4. Define safe capture for eZ80 execution context and bounded stack windows,
+D01-W04 [ ] Define safe capture for eZ80 execution context and bounded stack windows,
    including what MOS support or assembly hooks are required.
-5. Integrate native ESP-IDF panic/reset/backtrace evidence without replacing or
+D01-W05 [ ] Integrate native ESP-IDF panic/reset/backtrace evidence without replacing or
    obscuring upstream diagnostics.
-6. Define recovery-screen ownership. In an exclusive failure, use of the
+D01-W06 [ ] Define recovery-screen ownership. In an exclusive failure, use of the
    onboard VDP is an explicit diagnostic/recovery action after application
    continuity has been disclaimed; it is not transparent display failover.
-7. Bound rendering, capture, storage writes, retry, and timeout behavior so the
+D01-W07 [ ] Bound rendering, capture, storage writes, retry, and timeout behavior so the
    diagnostic path cannot recursively crash, deadlock recovery, loop forever,
    or corrupt a filesystem merely to save a report.
-8. Provide a deterministic export/package suitable for a user bug report and
+D01-W08 [ ] Provide a deterministic export/package suitable for a user bug report and
    document how to retrieve it after fallback or reboot.
-9. Qualify complete, partial, truncated, corrupt, unavailable-sink, repeated-
+D01-W09 [ ] Qualify complete, partial, truncated, corrupt, unavailable-sink, repeated-
    failure, and diagnostic-path-failure cases across all applicable modes.
-10. Evaluate a best-effort pre-activation unmanaged-traffic warning through an
+D01-W10 [ ] Evaluate a best-effort pre-activation unmanaged-traffic warning through an
     Extender-owned display or log. It may state only that no valid EMOS session
     exists, must treat silence as normal Legacy, must not drive Agon-facing
     wiring, and is not required when safe electrical isolation prevents the P4

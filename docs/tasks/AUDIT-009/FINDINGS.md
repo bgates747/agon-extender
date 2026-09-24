@@ -108,3 +108,33 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
 | A09-F036 | FWBUG-002 still says the first-scene failure blocks all sprite/scroll qualification | Later mainboard/P4 checkpoint results and packed-expansion cumulative count | Corrected bug scope and added current QUAL-004 summary: 77 static pairs; INITIAL diagnostic cause and dynamic parity remain unresolved. No failure erased or fresh acceptance inferred. |
+
+## Capability and deferred-work summaries
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F037 | PORT-006 still actively prohibits implemented browser input; PORT-004 says stop before a completed repair and leaves Rally visual acceptance pending | Current keyboard/video guides, ADR-0022 and September 15 audio-framing acceptance | Rewrote current summaries; retained dated evidence. Synthesis, network resilience and remaining human gates are not closed. MODE/DIAG/storage/matrix summaries now distinguish their broader requirements from working bounded services. |
+| A09-F038 | LINK-001 retains active MOS-module research despite Author cancellation | Resident EMOS direction in ADR-0014/SETUP-005 and current EMOS utility contract | Marked the existing research step cancelled and removed the dependency. No new replacement work or architecture introduced. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F039 | Old ADRs can read as blanket unthrottled-video policy or standing flash/demo authorization | Later ADR-0020/0021/0022 and dated REMOTE-002 scope | Added precise current applicability; original engineering decisions retained. Decision directory now has a navigable metadata index, not just an authoring template. No policy/qualification silently changed. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F040 | Policy describes draft as not yet exercised, while current registry retains physically tested EMOS v0.1.19 as draft | artifacts.yaml agon-emos entry and AUDIT-008/HARDWARE | Recorded terminology/status reconciliation for the version-policy owner under A09-05. No automatic promotion or identity edit. Current guides report exact status and bounded evidence separately. Not an operational blocker. |
+| A09-F041 | Blanket failed-evidence retention conflicts with Author's explicit ordinary-setup-mistake exception; baseline filename sentence ambiguous | Standing project instructions and versioning baseline grammar | Clarified existing retention rule and single revision suffix; no evidence removed and no new retention policy selected. Examples explicitly do not select current artifacts. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F042 | Scripts directory exposes current clients and old bench/fixture builders without a shared applicability map | 48 root tools, their module descriptions and already-reviewed operating contracts | New host-tool index covers every root script, links current guides and distinguishes retained test helpers. Metadata classification does not qualify those helpers for reuse. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F043 | Predecessor harness calls held r02 current; assembly directory does not expose missing r03 as-built record | Current hardware index/HW-002 and preserved r01/r02 records | Corrected navigation/applicability without editing pins, profiles, models, generated BOM or historical hashes. Complete r03 assembly remains HW-002 work. |
+| A09-F044 | Text diagnostic instructions retain old support path and can be confused with normal combined-console capability | Current EMOS edu.text-probe requires ordinary app RAM, Legacy and idle UART1; dedicated P4 sample peer | Current fixture guidance requires identified /extender placement and separate prepared peer/input readiness. No source/fixture identity or hardware changed. |
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F045 | EMOS tooling lacks current/historical map; provider-era physical procedure and old parallel fixture can look current | Source descriptions, stage_emos_media provider paths, prepare_sdserve application build and current resident/utility guide | Added tool index; marked old qualification applicability and corrected source-lineage pointers. Current MOSlet guide remains authoritative. No retired tool or old fixture requalified. |
+| A09-F046 | Retained keyboard exerciser documents root receipt files and /bin deployment paths | EMOS keyboard-api/wire READMEs and existing SD-placement rule | Historical procedures retained; tool index requires refresh before physical reuse. INTEG-009 owns fixture/readiness refresh; source and frozen identities unchanged. |

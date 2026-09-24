@@ -90,7 +90,7 @@ retroactively broaden the native USB proof or close this parity checklist.
    EMOS owns resulting settings sysvars. No physical LED claim is implied.
 4. [ ] Maintain ordered key transitions under backpressure. Release held keys
    and modifiers on USB removal or source/session reset; P4 owns USB repeat.
-   For the deferred browser provider, apply its blur/disconnect policy and
+   For the implemented browser provider, preserve its blur/disconnect policy and
    choose one repeat authority to avoid double repeats. On explicit
    browser takeover, emit the previous owner's held-key releases before any
    new owner's input; do not let queued old-session events restore those keys.
@@ -140,7 +140,7 @@ critical path. Exact evidence/provenance for R002 remains in REMED-002 and its
 accepted integrity audit.
 
 
-## Current bounded implementation — controlled P4 keys
+## Historical controlled-sender implementation — September 2026
 
 The Author authorized the P4 sender after freezing the resident EMOS receiver,
 API and recovery emulator checkpoints (EMOS 55466d7; Extender a29ae36).

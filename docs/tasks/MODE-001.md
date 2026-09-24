@@ -6,6 +6,14 @@
 - Started: --
 - Finished: --
 
+## Current bounded implementation
+
+[EMOS console switching](../protocols/excom-console.md) already implements
+bounded Legacy/ExCom transitions, including explicit `--keep-display` to retain
+each processor's own scene. It does not migrate graphics assets or implement
+this task's general four-mode, in-flight quiescence and recovery guarantees.
+The remaining work begins from that implementation, not from an absent switch.
+
 ## Namespace
 
 `MODE` identifies work whose primary subject is operating-mode lifecycle,
@@ -51,24 +59,24 @@ transition may depend on direct VDP/EDP communication or state/buffer transfer.
 
 ## Work
 
-1. Inventory every reset, restart, dispatcher, parser, queue, sysvar, callback,
+M01-W01 [ ] Inventory every reset, restart, dispatcher, parser, queue, sysvar, callback,
    transport, and processor initialization effect used by the beta transition.
-2. Produce a per-transition preservation matrix for eZ80 execution state,
+M01-W02 [ ] Produce a per-transition preservation matrix for eZ80 execution state,
    eZ80 RAM, MOS state, onboard-VDP state, EDP state, transport state, and
    externally visible application behavior.
-3. Define a bounded quiescence protocol that stops new VDU/EDU work, drains or
+M01-W03 [ ] Define a bounded quiescence protocol that stops new VDU/EDU work, drains or
    cancels owned operations, proves a safe boundary, and cannot deadlock the
    running application.
-4. Determine whether Exclusive Compatible↔Exclusive Extended can change only
+M01-W04 [ ] Determine whether Exclusive Compatible↔Exclusive Extended can change only
    transport machinery while preserving EDP device and asset state.
-5. Define prepare, commit, rollback, timeout, failure reporting, and recovery
+M01-W05 [ ] Define prepare, commit, rollback, timeout, failure reporting, and recovery
    when either source or destination cannot quiesce or initialize.
-6. Define explicit application/operator consent and reporting for transitions
+M01-W06 [ ] Define explicit application/operator consent and reporting for transitions
    that preserve eZ80 execution but clear, stale, or hide display-side state.
-7. Build deterministic host tests, emulator tests where representative, and
+M01-W07 [ ] Build deterministic host tests, emulator tests where representative, and
    qualified bench tests for successful transitions, in-flight traffic,
    malformed traffic, timeouts, resets, unavailable processors, and rollback.
-8. Determine which guarantees are safe for v1 and record every remaining
+M01-W08 [ ] Determine which guarantees are safe for v1 and record every remaining
    requirement as mandatory v2 work.
 
 ## Gates

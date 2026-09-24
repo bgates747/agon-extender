@@ -17,8 +17,10 @@ reset the mainboard. The mainboard may control the Extender, not the reverse.
 Bench reset remains a Pi-controlled transistor pulling the mainboard reset
 pin low, independent of P4 firmware and of the ZDI debug protocol.
 
-This decision adds a host tool input surface, not browser focus handling or
-a remote shell/storage command extension. Firmware and automatic boot fixtures
-may be deployed for qualification under the Author's current goal authorization.
-Human review begins with a bespoke hardware spoken alert; live demonstration
-typing waits for the Author's response in chat.
+This decision adds a host-tool input surface, not a remote shell/storage
+command extension. Later [ADR-0022](ADR-0022-browser-keyboard-capture.md) defines
+browser capture and arbitration over the same admitted input path. The current
+[reset guide](../bench-reset.md) describes the Pi-backed browser control without
+changing the physical reset owner. Original deployment and attended-review
+authorization belongs to the dated REMOTE-002 record; this ADR grants no
+standing permission to flash, reset or send demonstration input.

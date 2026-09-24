@@ -198,3 +198,51 @@ task/evidence targets exist (this counts repeated and evidence links, not 55
 distinct queue tasks). Added-line private home/mount/LAN pattern scan found no
 matches. Changed file types are Markdown and inventory CSV only. Final mailbox
 empty; sibling EMOS worktree clean. No push performed.
+
+## Third unattended pass
+
+Authorized window: 2026-09-24 04:26:44–05:26:44 UTC. Baseline Extender
+8c3d67a8; opening worktree and mailbox clean. Documentation/local checks only.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B22 | PORT-006; MODE-001; MODE-002; DIAG-001; PORT-004; PORT-005; PORT-007; P4PC-001; LINK-001; QUAL-001 | Current capability/task summaries inspected; future requirements kept distinct from implemented services. Removed active stale video-only/input-deprecated and pre-framing instructions. Retired LINK-001's cancelled MOS-module reconsideration. Existing unlabelled action steps in MODE/DIAG/LINK normalized to stable IDs/check boxes without adding work. Long task execution histories remain partial. |
+| B23 | PORT-004/audio-framing/results/README; current console/keyboard/SD contracts; qualification/README | Supporting accepted scope: Rally framing visual review accepted, audio synthesis absent; bounded keep-display exists; matrix candidate still superseded; P4-local SD distinct from mainboard service. Evidence review, no new test or current firmware claim. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B24 | ADR-0001–0008 metadata; decisions/README | Navigation/metadata extraction only; no new body or qualification review. Added current decision index with explicit authority/completeness limits. |
+| B25 | ADR-0009–0016 metadata | Index consistency only; prior body-review states preserved. |
+| B26 | ADR-0017–0022; SD-layout ADR | Metadata indexed; bodies of ADR-0018/0019/0022 inspected for current applicability. Original 5-fps removal linked to later pacing/codec decisions; stale goal-specific flash/demo authorization removed from current ADR prose. No accepted architecture changed. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B27 | versions/README; EXAMPLES; REVIEW; SCHEMA; baselines/README; dependencies/schema/README | Body review of policy/field/navigation guidance. Corrected baseline filename explanation and hypothetical-example scope; reconciled failure-retention wording with the Author's existing local rule. No registry/status/hash or evidence changed. Validator implementation inspected for declared shape/status limits, not blanket semantic proof. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B28 | agentcoms.py; analyze_browser_timing.py; bench_job.py; capture_general_poll.py; capture_keyboard.py; capture_uart_flow.py; capture_uart_roundtrip.py; capture_visible_text.py; check_numeric_port.py; console_peer.py | Script role/description inspection for host-tool index only; no hardware, emulator, build or benchmark execution. Previously reviewed active contracts retain their stronger scoped checks. |
+| B29 | keyboard.py; measure_video.py; mos_recovery_console.py; plot_rally_learning.py; prepare_browser_typing.py; prepare_console.py; prepare_console_review.py; prepare_general_poll.py; prepare_keyboard.py; prepare_mos_recovery.py | Script role/description inspection for host-tool index only; no hardware, emulator, build or benchmark execution. Previously reviewed active contracts retain their stronger scoped checks. |
+| B30 | prepare_sd_headless.py; prepare_text_sample.py; prepare_uart_flow.py; prepare_uart_forward.py; prepare_uart_roundtrip.py; prepare_usb_cli.py; prepare_usb_keyboard.py; prepare_visible_text.py; qualify_keyboard.py; qualify_rally_drive.py | Script role/description inspection for host-tool index only; no hardware, emulator, build or benchmark execution. Previously reviewed active contracts retain their stronger scoped checks. |
+| B31 | qualify_rally_headless.py; qualify_rally_traffic.py; qualify_sd_headless.py; qualify_sd_keyboard.py; qualify_sdcard.py; rally_drive.py; rally_race.py; rally_trial.py; report_rally_learning.py; reset_agon.py | Script role/description inspection for host-tool index only; no hardware, emulator, build or benchmark execution. Previously reviewed active contracts retain their stronger scoped checks. |
+| B32 | reset_bridge.py; review_text_sample.py; run_hello_demo.py; screen_text.py; sdcard.py; validate-hardware-objects.py; validate-version-records.py; vdp-pio.sh | Script role/description inspection for host-tool index only; no hardware, emulator, build or benchmark execution. Previously reviewed active contracts retain their stronger scoped checks. |
+
+All 48 root scripts have an index entry. This establishes discoverability and
+role classification, not full body review or current fixture readiness. Script
+descriptions were parsed locally without importing or executing their modules.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B33 | assemblies/README; assembly r01/r02 README; harness r01/r02 README; r02 BOM and signal-view README; LA03 r01 README; visible-text fixture README; HDMI-DRIVERS | Current applicability/provenance review; revisioned circuit and generated artifacts unchanged. Corrected r01's stale current-r02 pointer and assembly index. Visible-text contract checked against current EMOS text-probe bounds/admission; corrected placement/readiness guidance. Large revisioned design bodies only partly reviewed; HDMI report remains a dated source-research result, not tested integration. |
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B34 | EMOS browser_typing_peer; keyboard_api_peer; keyboard_wire_peer; prepare_boot_review; prepare_browser_typing_review; prepare_keyboard_api_review; prepare_sdserve; prepare_usb_cli_review; review_boot; review_general_poll | Tool descriptions parsed without import/execution. prepare_sdserve body/default Makefile and current listener guide checked: identified helper is ordinary application, not MOSlet. |
+| B35 | EMOS review_keyboard; review_uart_flow; review_uart_probe; review_visible_text; stage_emos_media; usb_cli_peer; verify_hardware_capture; new scripts/README; docs/README | Completed all 17 root-tool role entries. stage_emos_media source still expects cancelled provider media; index distinguishes it from EMOSlet installation. No helper run or source changed. |
+| B36 | EMOS port-200-qualification; port-203-hardware; tasks/README; research/README; projects/{emos,emos-utility,keyboard-wire,keyboard-api,port008-forward,integ014-dual-uart}/README | Current applicability checked; original physical procedure clearly historical, module manual points to current utilities, old parallel fixture no longer selects current route. Retained keyboard fixture paths need refresh; no profile/fixture changed. |
+| B37 | EMOS tests/uart_put_cpu/README | Full documentation body inspected for stated scope: linked instruction comparisons, not physical timing or hardware acceptance. No execution. |
+
+Inventory role labels for retained hardware test captures/procedures and generated
+dependency output were corrected by path. Review states were not promoted by
+that classification. EMOS tool coverage is 17/17 entries; documentation does not
+assert these historical tools currently run with new inputs.

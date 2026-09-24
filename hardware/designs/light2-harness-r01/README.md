@@ -1,7 +1,8 @@
 # Light 2 harness r01
 
-This revision is predecessor evidence. Current construction and staged
-validation use [r02](../light2-harness-r02/README.md) under PORT-008-D003.
+This revision is predecessor evidence. The later buffered r02 construction is
+held; the [current hardware index](../../README.md) distinguishes that circuit
+from active simplified r03 wiring and its bounded evidence.
 The revision-specific descriptions below preserve its original scope and do
 not make it the current UART or forward-transport test target.
 

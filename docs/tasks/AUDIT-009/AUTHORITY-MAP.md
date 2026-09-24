@@ -10,6 +10,7 @@ or accepted architecture. Task evidence stays at its recorded location.
 | Discover capabilities, human or agent | root README.md | Replace stale summary; link procedures and bounded evidence |
 | Operate an existing installation from another project | docs/using-extender.md | New short entry point; prerequisites/reading order, not another protocol catalog |
 | Choose a reusable procedure versus historical qualification | docs/procedures/README.md | Current applicability index; preserve exact older procedure identities/evidence |
+| Discover executable host tools | scripts/README.md | Index maintained clients, local checks and retained test helpers; operational contracts remain in the handbook |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
 | SD service and client | docs/mainboard-sd.md | Correct prerequisites; own normal/fast/session/recovery examples |
 | SD wire fields and invariants | docs/protocols/mainboard-sd.md | Keep exact packet contract; reconcile foreground MOSlet admission |
@@ -33,3 +34,7 @@ Author clarification during execution: the end state is one current set, not
 a collection of dated amendments. Current authorities are rewritten to remove
 superseded instructions. Historical evidence is retained separately or through
 Git; merely adding a warning banner is insufficient for an operating manual.
+
+EMOS's `scripts/README.md` indexes its build/review helpers; its current resident
+and foreground-utility manuals remain the operating authorities. Provider-era
+PORT-203 and module-media instructions retain historical evidence status.

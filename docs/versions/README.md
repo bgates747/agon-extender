@@ -250,7 +250,14 @@ uses this sequence:
 6. after a pass, commit qualification/baseline status and optionally add an
    annotated release tag.
 
-Preserve failed-run evidence. Any candidate change after a run begins, however
+Preserve informative failed-run evidence and unresolved failures. Under the
+Author's standing bench-retention rule, once an ordinary setup/operator mistake
+is understood and has no lasting diagnostic value, discard its capture bundle
+and detailed failure narrative while retaining a brief corrective note. This
+exception does not permit deleting an unexplained failure or rewriting a failed
+result as a pass. No evidence is discarded merely by applying this policy text.
+
+Any candidate change after a run begins, however
 small, requires a new commit, build ID, and run ID. Uncommitted or dirty builds
 may be used for exploration but cannot support a `qualified` or `released`
 status.

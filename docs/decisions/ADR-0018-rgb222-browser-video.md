@@ -5,6 +5,13 @@
 - Date: 2026-09-10
 - Related task: PORT-003
 
+Subsequent decisions retain this RGB222 decoding foundation but amend output
+policy: [ADR-0020](ADR-0020-web-output-30fps.md) specifies the normal 512×384
+cadence, and [ADR-0021](ADR-0021-rle2-browser-default.md) selects full-frame RLE2
+as default. The current [video contract](../protocols/browser-video.md) separates
+those decisions from retained experiments. Removing the original 5-fps throttle
+is not blanket authorization for unbounded current requests.
+
 The Author requested that the browser decode RGB222 and that the initial
 5 fps throttle be removed. The existing P4 compositor already produces final
 64-colour pixels, so transmitting three expanded bytes per pixel is redundant.
@@ -23,5 +30,4 @@ reports measured presentation rate separately from the logical frame period.
 
 This decision reduces transmitted pixel payload by three without moving VDP
 semantics into the browser. It does not promise a particular physical frame
-rate, reduce the composition-slot allocation, or authorize interrupting the
-Author's running hardware uptime test.
+rate or reduce the composition-slot allocation.

@@ -6,6 +6,14 @@
 - Started: --
 - Finished: --
 
+## Current boundary and board applicability
+
+This service is not implemented. The working [mainboard-SD service](../mainboard-sd.md)
+reads Agon's card and does not satisfy P4-local storage. This task's original
+DevKit SDMMC references must be reconciled with the actual selected board when
+work resumes: [P4PC-001](P4PC-001.md) records the planned P4-PC target, not a
+qualified replacement pin map. No DevKit pin or LDO choice transfers implicitly.
+
 ## Intent
 
 Implement the project-owned storage service for the Olimex ESP32-P4-DevKit's

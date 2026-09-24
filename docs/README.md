@@ -25,6 +25,7 @@ for precise limits rather than assuming support from a research or example file.
 
 | Need | Current authority |
 |---|---|
+| Discover host clients versus retained development helpers | [Host tool index](../scripts/README.md) |
 | Component builds and deployed-versus-base source limits | [Building](building.md) |
 | Processor ownership and accepted architecture | [Architecture](architecture.md), [repository ownership](../OWNERSHIP.md) |
 | EMOS resident gateway and prefixed utilities | [EMOS documentation](https://github.com/bgates747/agon-emos/blob/main/docs/README.md) |

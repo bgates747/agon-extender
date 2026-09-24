@@ -1,36 +1,28 @@
 # PORT-006 — Implement the Extender network foundation and update service
 
-## Current-state clarification — 2026-09-20 queue review
+## Current state
 
-The video-only/deprecated-browser-input wording below describes the September 9
-checkpoint. Browser input was subsequently reintroduced under
-[REMOTE-001](REMOTE-001.md); it is now deployed, with residual follow-ups deferred.
-This task retains network resilience/update-service obligations. No network
-implementation or qualification is performed by this clarification.
+Wired Ethernet, P4-hosted browser video, browser/agent keyboard input and
+mainboard-SD HTTP transport are implemented within their recorded bounds.
+Network resilience and the broader update/optional-network requirements remain
+open; this task is not a claim of a production OTA or Wi-Fi service.
 
+Use the [browser-video contract](../protocols/browser-video.md),
+[keyboard guide](../remote-keyboard.md) and [mainboard-SD guide](../mainboard-sd.md)
+for current behavior. REMOTE-001 owns browser input, PORT-003 owns rendering,
+encoding and presentation, and PORT-006 owns network connection/backpressure.
+Video still has one current viewer and bounded credit; NET-001 permits explicit
+viewer replacement. The accepted pacing policy and later experiments remain
+distinct, as documented by the video contract.
 
-## State
-
-- Status: Video-only service restored at the Author's request, 2026-09-09.
-  Browser keyboard capture is deprecated. Initial-tranche resilience and the
-  current ExCom browser connection check remain open.
+- Status: Implemented service foundation; remaining resilience/update scope open.
 - Started: 2026-08-27 19:13 EDT
 - Finished: --
 
-## Current priority — video delivery
-
-The video-only service is restored; the Author reports a ten-minute slideshow
-run without browser disconnects or visible faults on 2026-09-10. This is a
-bounded observation, not closure of the remaining resilience work.
-
-PORT-003 now owns the RGB222 encoding and unthrottled snapshot increment under
-the [current browser-video contract](../protocols/browser-video.md). PORT-006
-continues transporting opaque bytes with one client, one credit, complete sends
-and bounded backpressure. Do not revive browser keyboard/timing routes.
-
-The Author requires the current Agon/P4 slideshow uptime run to remain
-undisturbed during local preparation. No device access or physical deployment
-is part of this increment's local review.
+The September 9 video-only rollback and September 10 slideshow observation are
+historical checkpoints. They neither prohibit today's browser input nor prove
+all remaining resilience gates. No historical keep-running instruction below
+identifies the current bench workload.
 
 ## Historical focused-keyboard tranche — deprecated
 

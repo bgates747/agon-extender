@@ -1,31 +1,22 @@
 # PORT-004 — Implement the P4 PCM scheduler and network audio sink
 
-## Current result — audio framing only
+## Current state
 
-The [framing repair](PORT-004/audio-framing/results/README.md) passed paired
-hardware144pixel/48reply checks and an unmuted Rally capture. Installed P4 r21
-retains stock dispatch/replies and returns unavailable statuses; no synthesis.
-Hardware voice sent, Legacy MOS prompt, human full-game review pending.
-Older deferrals below are historical and superseded only for this bounded slice.
+Audio **command framing is implemented; synthesis and audio output remain
+deferred**. The [framing repair](PORT-004/audio-framing/results/README.md) passed
+144 pixel checks and 48 audio replies on each route, with the expected P4
+unavailable statuses. The Author accepted the repaired unmuted Rally display on
+2026-09-15. This does not qualify P4 sound, full Wolf3D gameplay or rendering speed.
 
-## Current framing-only amendment
+The repair supersedes the old prohibition on interim framing changes only for
+that bounded slice. Its r21 build is historical evidence, not the current
+installed identity. Remaining scheduler/sink work below still requires its own
+implementation design and authorization. Do not repeat framing implementation
+because an older unchecked requirement predates its evidence.
 
-The Author has reprioritized safe consumption of unimplemented commands under
-[PORT-003 UC01–UC07](PORT-003.md#unimplemented-command-consumption-tranche).
-This supersedes the prior prohibition on interim audio framing repair **only
-for that tranche**. Audio synthesis, PCM scheduling and sink implementation
-remain deferred. Current turn: task documents and hardware voice only, then
-stop; no implementation or tests. Reuse the existing grammar/reply/framing
-obligations below rather than creating a parallel audio task. Safe no-op execution
-must still consume exact payloads and handle required status replies; it must
-not pretend unavailable audio played. Rally HUD/audio causation requires the
-planned matched mute/enabled and framing tests.
-
-## State
-
-- Status: Deferred by the Author on 2026-09-10 until the Author chooses to begin audio implementation
-- Started: --
-- Finished: --
+- Status: Framing repair accepted within scope; synthesis/output deferred.
+- Started: Framing slice completed in the linked September 15 record.
+- Finished: -- (broader audio implementation remains open)
 
 ## Intent
 
@@ -124,7 +115,7 @@ PORT-003 owns the safe retained-parser binding. PORT-008 and SETUP-005 own the
 transport-reachability and mode-policy portions. This finding does not select
 an audio sink or authorize implementation.
 
-## Deferred Wolf3D/audio framing follow-up — 2026-09-10
+## Historical Wolf3D/framing deferral — 2026-09-10
 
 The Author explicitly defers repair of the audio-command parser until taking
 on audio implementation. This is a scheduling decision, not acceptance of the
@@ -160,6 +151,11 @@ command framing and status replies; retained stock-shaped implementation in
 accompanies this deferral.
 
 
-## Audio-first execution resumed
+## Framing execution disposition
 
-The Author authorizes [framing repair and tests](PORT-004/audio-framing/PLAN.md), with hardware voice at review. This supersedes earlier planning-only/framing deferrals for this bounded slice; synthesis remains deferred.
+The later [framing contract](PORT-004/audio-framing/PLAN.md) and linked results
+superseded the September 10 framing deferral. Host coverage includes known
+command branches, truncation cases and Wolf3D-style sequences. The broad
+requirements above retain unqualified behavior and actual audio work; full
+Wolf3D hardware acceptance remains separate. This record is not an instruction
+to repeat the completed repair or send a new attention cue.

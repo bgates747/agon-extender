@@ -25,7 +25,16 @@ this task's four-mode matrix is not a prerequisite for those observations.
 This task later links accepted evidence to its exact obligations; neither a
 partial circuit result nor an unreviewed matrix can qualify a complete mode.
 
-## Next bounded consumer — browser keyboard
+## Current matrix boundary
+
+The scaffold and deterministic outputs exist under
+[qualification infrastructure](../qualification/README.md). Their three-mode
+candidate remains superseded, and passing generation does not promote it to the
+accepted four-mode vocabulary. SETUP-004's inventory remains authoritative until
+RG2 is accepted. Later input/SD/display evidence does not automatically close
+those matrix review gates.
+
+## Keyboard obligation scope
 
 REMOTE-001/PORT-005/PORT-008 and agon-emos INTEG-009 consume AUDIT-004
 P013/P014 and A003–A005 for exact keyboard packets, event variables, MOS key
