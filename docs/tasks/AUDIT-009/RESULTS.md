@@ -43,14 +43,14 @@ its contents. Every record has a disposition in [INVENTORY.csv](INVENTORY.csv).
 
 | Review state | Extender | EMOS | Total |
 |---|---:|---:|---:|
-| Current body reviewed within recorded scope | 90 | 18 | 108 |
-| Partially reviewed / selected claims only | 114 | 32 | 146 |
+| Current body reviewed within recorded scope | 91 | 18 | 109 |
+| Partially reviewed / selected claims only | 113 | 32 | 145 |
 | Historical metadata classified, body not reviewed | 118 | 22 | 140 |
 | Vendor/reference provenance role only | 44 | 0 | 44 |
 | Pending body review | 631 | 39 | 670 |
 | **Inventory total** | **997** | **111** | **1108** |
 
-Forty-four bounded batches and two documentation-only reader walkthroughs are
+Forty-five bounded batches and two documentation-only reader walkthroughs are
 recorded in [CHECKS.md](CHECKS.md). Reviewed means the document's stated contract
 was inspected against the sources/evidence listed there; it is not a fresh
 hardware or independent fresh-machine acceptance.
@@ -98,8 +98,8 @@ Assigning an owner or exposing a gap does not authorize a fix or bench run.
 The remaining-current-summary batch and first ten build decisions have been
 reviewed within the recorded scope. The next ten documents are now divided into
 [A09-N01–N04 in the main task](../AUDIT-009.md#next-phase), which owns the
-actionable checklist and completion boundaries. A09-N01 is complete. A09-N02 is the next bounded step, but has not been
-started or authorized by this continuation note. A09-N03–N04 also remain unstarted.
+actionable checklist and completion boundaries. A09-N01 and A09-N02 are complete. A09-N03 is next, but has not been
+started or authorized by this continuation note. A09-N04 also remains unstarted.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -172,3 +172,17 @@ Batch B44 and findings A09-F053–F055 retain evidence and limits. Coverage now
 stands at 108 reviewed, 146 partial, 140 metadata-only, 44 provenance-only and
 670 pending records (1108 total). Full audit remains open. No bench or fresh
 build/qualification performed. A09-N02–N04 await further instruction.
+
+## A09-N02 result
+
+Reconciled the full ADR-0015 display contract against maintained source and
+retained qualification scope. Corrected obsolete generic-controller and
+single-worker descriptions; documented separate timer, drawing, output and
+consumer ownership. Native drawing storage remains distinct from RGB222
+presentation snapshots. Consumer-demand composition and elapsed-tick accounting
+do not establish 60 delivered frames/s or absence of streaming interference.
+
+B45 and A09-F056–F057 record evidence. Coverage is now 109 reviewed / 145 partial,
+with 140 metadata-only, 44 provenance-only and 670 pending (1108 total).
+No architecture decision, firmware, code or physical state changed. N03–N04
+remain unstarted. Earlier completed work was pushed before this tranche.

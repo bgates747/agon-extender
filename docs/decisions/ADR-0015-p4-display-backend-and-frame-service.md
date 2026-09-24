@@ -4,7 +4,39 @@
 - Completeness: Complete
 - Date: 2026-08-22
 - Last amended: 2026-09-10
+- Documentation reconciled: 2026-09-24
 - Related tasks: PORT-003, AUDIT-006
+
+## Current implementation and evidence boundary
+
+The [maintained console selection](../../vdp/pio/p4-console-source-selection.json)
+uses the original five depth-controller classes through the P4 runtime binding;
+it excludes the earlier generic controller and frame-service implementation.
+The [build guide](../building.md) distinguishes this source selection from later
+deployed overlays. This decision records the accepted contract, not a claim of
+complete parity or a reproducible image of every installed candidate.
+
+| Responsibility | Current maintained source / limit |
+|---|---|
+| Native storage and rendering | [Runtime controller](../../vdp/video/extender/display/stock_runtime_controller.hpp) binds original per-depth controllers. Native packed rows remain separate from browser snapshot storage. |
+| Logical frame count | [StockClock](../../vdp/video/extender/display/stock_native_access.cpp) advances the writable atomic frame counter from elapsed timer time. The [service](../../vdp/video/extender/display/stock_p4_service.cpp) has a 16,667 microsecond default; the screen facade supplies the selected mode’s refresh-derived period. Elapsed-tick accounting does not prove callback punctuality or 60 presented frames/s. |
+| Drawing | The service wakes a drawing task, which drains retained primitives until empty or suspended, without a primitive-count budget. Immediate drawing and stock completion semantics remain distinct from output publication. |
+| Output preparation | A separate output task prepares native rows under the accepted row exclusion, then normalizes them outside that exclusion into an RGB222 snapshot. It does not send network traffic. |
+| Consumer delivery | The [snapshot pool](../../vdp/video/extender/display/presentation_snapshot_pool.cpp) uses bounded immutable leases. The base service enables demand-driven composition: absent consumer demand does not require copying a full frame on every logical tick. Logical time and drawing continue independently. |
+| Mode lifetime | Service detach joins drawing/output workers and the timer notification boundary before native storage can be retired. The snapshot pool survives native mode replacement; its transition protocol governs outstanding leases. |
+
+Conditional scheduling, row-pair, lookahead and priority experiments in these
+sources are not blanket changes to the accepted one-row exclusion contract.
+Determine active definitions from the identified build; this review does not
+qualify those experiments or infer the installed profile from base defaults.
+
+[PORT-003](../tasks/PORT-003.md) records stock restoration and subsequent
+implementation. [QUAL-004 results](../tasks/QUAL-004/RESULTS.md) establish bounded
+static-image comparisons, with diagnostic-capture caveats and uncovered cases.
+Those results do not establish dynamic parity, freedom from streaming stalls,
+or stock-like timing. Generalized callbacks remain the separately owned
+[ADR-0017](ADR-0017-generalized-edp-callbacks.md) requirement; private timing hooks
+are not its finalized application interface.
 
 ## Context
 
@@ -34,7 +66,7 @@ creating separate VDP renderers or clocks.
    concrete-controller state, native memory organization and fast operations.
    Adapt only evidenced processor-facility and video-output-interface seams.
    The prior requirement to implement one generic controller with project
-   pixel codecs is superseded by AUDIT-006-D001; it describes the existing
+   pixel codecs is superseded by AUDIT-006-D001; it describes the superseded
    implementation, not a mandatory target structure. AUDIT-006-D002 accepts
    the original five depth classes with narrow P4 base/lifecycle/output binding.
    Prefer their original source bodies; verbatim extraction is the fallback
@@ -52,12 +84,12 @@ creating separate VDP renderers or clocks.
    counter seam, and input-owned cursor-position type coupling where required.
 4. Advance official display time from a sink-independent periodic logical
    frame clock using the pinned P4 `esp_timer` substrate. The short timer
-   callback records ticks and wakes a frame-service task; it performs no
-   rendering. Physical sink callbacks report only sink progress and buffer
+   callback accounts elapsed ticks and wakes drawing and output workers; it
+   performs no rendering. Physical sink callbacks report only sink progress and buffer
    availability.
-5. Let the frame-service task replace only the excluded physical VSYNC
-   executor: it owns frame-boundary state and invokes the retained common queue
-   and primitive executor in task context. Preserve upstream queue-depth
+5. Let the P4 frame service replace only the excluded physical VSYNC
+   executor: its drawing worker invokes the retained common queue and primitive
+   executor in task context; logical clock and output work remain separate. Preserve upstream queue-depth
    completion waiting, immediate double-buffered drawing, swap execution, and
    submitter-notification ordering unless a later compatibility decision
    explicitly authorizes different behavior.
@@ -82,12 +114,12 @@ creating separate VDP renderers or clocks.
    never invokes sink code; consumers poll independently. Slow or absent
    consumers may drop presentation generations but may not retain mutable
    logical storage indefinitely, block rendering, or change VDP timing.
-9. Implement and qualify the backend through the phased gates defined by
-   PORT-003: contract canary, synchronous native renderer, logical frame
-   service, palette/Copper/overlays, official mode integration, consumer
-   handoff, and integrated P4 qualification. Each gate requires its own
-   deterministic evidence; compilation or a visible image alone is
-   insufficient.
+9. Backend qualification requires scoped deterministic evidence for native
+   rendering, frame service, palette/Copper/overlays, official modes, consumer
+   handoff and integrated P4 behavior. PORT-003 records the original phased
+   gates and later stock restoration; old candidate passes do not automatically
+   qualify a replacement backend. Compilation or a visible image alone is
+   insufficient, and this decision does not restart historical gate execution.
 10. Keep the vendored common controller's queue, completion wait, primitive
     execution, swap notification, background enable/disable, and dynamic
     payload behavior unchanged in the strict-compatible P4 baseline. The P4

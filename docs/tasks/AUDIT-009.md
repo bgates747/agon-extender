@@ -88,7 +88,7 @@ Reconcile their accepted ownership, upstream-reuse and dependency-selection
 claims with maintained source records and handbook guidance. Distinguish
 accepted requirements from implementation evidence; preserve decision history.
 
-A09-N02 [ ] **Display backend contract.** Review
+A09-N02 [x] **Display backend contract.** Review
 [ADR-0015](../decisions/ADR-0015-p4-display-backend-and-frame-service.md).
 Reconcile framebuffer storage, rendering, frame-service and output ownership
 with maintained guides and retained implementation evidence. Keep intended
@@ -110,8 +110,9 @@ hardware and unexecuted tests from qualified configurations. Update maintained
 instructions, not frozen evidence; no new electrical qualification.
 
 A09-N01 completed within its documentation-only scope; see
-[results](AUDIT-009/RESULTS.md#a09-n01-result) and batch B44. A09-N02–N04
-remain unstarted.
+[results](AUDIT-009/RESULTS.md#a09-n01-result) and batch B44. N02 is also complete; batch B45 and the
+[results](AUDIT-009/RESULTS.md) record its display-contract reconciliation.
+A09-N03–N04 remain unstarted.
 
 ## Scope and authority
 

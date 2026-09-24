@@ -134,8 +134,8 @@ upstream behavior unchanged, including suspected bugs; fixes are deferred.
 Stock lane ordering and inert sync bytes may remain in native storage, with
 normalization confined to the output boundary.
 
-A periodic P4 logical frame clock and frame-service task advance official VDP
-time independently of every output sink. P4 preserves queued primitive
+A short P4 `esp_timer` callback accounts elapsed logical frames independently
+of every output sink and wakes separate drawing and output tasks. P4 preserves queued primitive
 execution through the unchanged common controller, logical frame progression
 and presentation publication, while maintaining stock's separation between
 drawing progress and periodic display progression. Frame counting/output
@@ -157,6 +157,12 @@ takes no native-state lock and does not wait for drawing, output preparation,
 network delivery or a free snapshot slot. Qualification distinguishes actual
 clock jitter from delayed browser presentation. A full queue drain or full
 frame copy is not an allowed exclusion boundary.
+The current base service prepares snapshots on consumer demand, not on every
+logical tick when no sink requests an image. The mode-derived logical
+clock interval (16,667 microseconds for 60 Hz) is distinct from rendering
+completion and browser presentation rate. Elapsed-tick accounting is not proof of bounded callback jitter or
+uninterrupted gameplay; the [display decision](decisions/ADR-0015-p4-display-backend-and-frame-service.md)
+maps current source responsibilities and qualification limits.
 
 The retained common renderer preserves pinned upstream bodies for
 queue submission, completion waits, background draining, dynamic payloads, and

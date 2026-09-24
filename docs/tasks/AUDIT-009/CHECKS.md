@@ -318,3 +318,25 @@ Validation: 714 Markdown files / 2635 relative links; only the same three
 known historical missing targets, no new link findings. CSV coverage totals
 reconciled; whitespace check passed after preserving LF inventory line endings.
 No fresh source-delta verification or claim of full upstream parity.
+
+## A09-N02 — display backend contract
+
+Prior N01 commits pushed to origin/main with no remote divergence. N02 contract
+frozen in 6f583fa0 before execution. No build, benchmark or bench operation.
+
+| Batch | Inputs | Scope / disposition |
+|---|---|---|
+| B45 | ADR-0015 full body; architecture display section; maintained console selection; stock_p4_service.cpp/.hpp; stock_native_access.cpp; stock_runtime_controller.cpp/.hpp; snapshot pool admission/acquisition; agon_screen.h refresh binding; PORT-003 current summary and QUAL-004 results scope | Reconciled current ownership and evidence limits. Original depth controllers remain native storage/rendering owners. Timer accounts elapsed frames and separately wakes drawing/output workers; mode refresh supplies its period. Drawing drains until empty/suspended. Output uses per-row exclusion and normalizes outside it; base snapshots are demand-driven. No fresh jitter, runtime parity or installed-overlay verification. |
+
+ADR-0015 no longer calls the generic controller the existing implementation or
+implies a single frame-service task. Architecture reflects the same maintained
+binding. Original phase gates are evidence of their identified builds, not an
+automatic instruction to restart them. A source/evidence table separates clock,
+drawing, snapshot composition, delivery and mode lifetime. Experimental flags
+are explicitly not qualification of alternate exclusion/scheduling policies.
+Static-image comparisons do not establish animation or performance parity.
+
+N02 validation: whitespace check passed; 714 Markdown files / 2646 relative
+links checked, with the same three historical missing targets and no new
+changed-document findings. No firmware or emulator tests required for these
+documentation-only corrections.
