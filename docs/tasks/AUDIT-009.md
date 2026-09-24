@@ -65,6 +65,50 @@ whole-documentation audit is **not complete**. A09-04/05/06/08 remain open for
 remaining body review and consolidation. The checked validation/walkthrough/
 closeout items apply to this recorded tranche, not unseen documents.
 
+## Next phase
+
+**Contract frozen — Author approved A09-N01 execution on 2026-09-24.**
+These four bounded steps subdivide
+existing A09-05/06/08 work; they do not expand the audit. Execution is limited to **A09-N01 only**; stop after its results and commit.
+A09-N02–N04 remain unstarted. The earlier execution windows are historical
+authorization, not permission to expand this phase.
+
+For each step, the reviewing agent must finish its documentation corrections,
+update the existing inventory/findings/results with actual coverage, validate
+changed links and whitespace, and make a dedicated commit before starting the
+next step. Record unresolved conflicts rather than inventing decisions or
+qualification. Use maintained contracts and retained evidence; no firmware
+changes, bench work, new upstream campaign or deferred implementation.
+
+A09-N01 [ ] **Upstream fidelity and dependency ownership.** Review
+[ADR-0011](../decisions/ADR-0011-upstream-vdp-integration-and-project-structure.md),
+[ADR-0012](../decisions/ADR-0012-vendored-release-dependencies.md) and
+[ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md).
+Reconcile their accepted ownership, upstream-reuse and dependency-selection
+claims with maintained source records and handbook guidance. Distinguish
+accepted requirements from implementation evidence; preserve decision history.
+
+A09-N02 [ ] **Display backend contract.** Review
+[ADR-0015](../decisions/ADR-0015-p4-display-backend-and-frame-service.md).
+Reconcile framebuffer storage, rendering, frame-service and output ownership
+with maintained guides and retained implementation evidence. Keep intended
+behavior distinct from demonstrated behavior; do not start performance tests.
+
+A09-N03 [ ] **Remediation-plan reconciliation.** Review
+[REMED-001](REMED-001.md) and [REMED-002](REMED-002.md).
+Identify which findings are resolved, deferred, superseded or still open using
+their linked evidence. Correct stale current instructions without deleting
+useful historical evidence, reviving obsolete implementation holds or declaring
+unsupported gates complete.
+
+A09-N04 [ ] **Source, driver and electrical-qualification applicability.** Review
+[SETUP-004](SETUP-004.md), [PORT-001](PORT-001.md),
+[PORT-002](PORT-002.md) and [QUAL-002](QUAL-002.md).
+Reconcile driver dispositions, dependency/source maps and qualification scope
+with current accepted contracts and retained receipts. Clearly separate planned
+hardware and unexecuted tests from qualified configurations. Update maintained
+instructions, not frozen evidence; no new electrical qualification.
+
 ## Scope and authority
 
 | Material | Review and disposition |

@@ -95,20 +95,15 @@ Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-Continue existing A09-04/05/06/08; do not restart inventory or create a competing
-queue. The remaining-current-summary batch and first ten build decisions have
-been reviewed within the recorded scope. Next bounded batch: ADR-0011, ADR-0012,
-ADR-0013, ADR-0015, REMED-001, REMED-002, SETUP-004, PORT-001, PORT-002 and
-QUAL-002. Reconcile accepted integration boundaries and current applicability
-against the handbook, source selections and retained dispositions. Long histories
-remain partial until actually reviewed; do not revive old global implementation
-holds or infer qualification from the later working console.
+The remaining-current-summary batch and first ten build decisions have been
+reviewed within the recorded scope. The next ten documents are now divided into
+[A09-N01–N04 in the main task](../AUDIT-009.md#next-phase), which owns the
+actionable checklist and completion boundaries. The Author approved A09-N01 alone; its frozen contract in the main task governs
+execution. A09-N02–N04 remain unstarted.
 
-Use already-reviewed contracts as inputs. Historical transcripts and generated/
-vendor material need explicit provenance/disposition, not implied body review.
-Finish each bounded batch with link checks and honest inventory coverage. Routine
-use already starts at the current handbook; archive completion is not a new
-operational prerequisite. No new bench or deferred implementation is selected.
+Long histories remain partial until actually reviewed. Routine use already
+starts at the current handbook; archive completion is not a new operational
+prerequisite. No new bench or deferred implementation is selected.
 
 ## Second-pass local verification
 
