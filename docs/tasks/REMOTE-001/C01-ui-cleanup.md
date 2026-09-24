@@ -257,3 +257,76 @@ Project `video/agon_screen.h` owns mode commit and actual controller state;
 Existing EVF1 headers lack mode/color-capacity/buffering fields. These facts bound
 the additive status endpoint rather than extending the frame format or guessing
 from its dimensions.
+
+
+### C02 implementation and deployment record
+
+Browser-capture-r03-b2026-09-19-23-52-41Z is installed and independently verified.
+The retained r02 image was preserved before writing. Only seven runtime source
+files changed versus that composition: three web assets, the screen facade, the
+HTTP service, and the two new mode-status snapshot/endpoint headers. Codec credit
+pacing, codec negotiation, input protocols and storage service were preserved.
+See [build](C02-build.json) and [deployment](C02-deployment.json) records.
+
+1. Browser tests pass for active connection colour, actual metadata formatting,
+   single/double buffering, refresh changes, unavailable metadata, reconnect and
+   demo state. Input regression preserves one session on fullscreen entry/exit;
+   genuine focus loss still releases capture.
+2. Layout checks pass at three sizes including a long mode sentence. Concurrent
+   publication/read testing rejects mixed mode snapshots. P4 build passed.
+3. Flash write and independent verification passed; matching startup and USB host
+   readiness observed. Five served web assets match the staged source byte-for-byte.
+   A live browser verified green Connect and `Mode 0 640x480 16 colors 60 Hz
+   single-buffered` against the P4 endpoint. The verification observer was closed.
+4. Agon was running a game before flashing, so no CLI command or screen clear was
+   sent. No Agon reset, EMOS flash or SD change occurred. Keyboard admission was
+   false after P4 restart; Author was told to reset Agon once and refresh the page.
+   Human mode/header/fullscreen review and keyboard readmission remain pending.
+5. Artifact-registry validation passes. Full version validation encounters the
+   pre-existing light2-harness-r02 connectivity hash mismatch, reproduced in HEAD.
+   No hardware evidence or profile was changed to hide that unrelated mismatch.
+
+
+### C02-F01 — Escape does not appear to exit Rally (open)
+
+Author reports Escape ineffective in both normal and fullscreen browser states.
+Do not attribute the normal-window report to the accepted native fullscreen exit
+limitation. No physical key injection, firmware change or reset was performed.
+
+1. Current maintained Rally source (`rally-game/src/main.cpp`, `input`) checks
+   a rising edge of MOS held-key-map key 113. Outside Attract it returns to
+   Attract; in Attract it quits only after input is armed by an all-keys-up sample.
+   Release then a second Escape can therefore be required. The exact installed
+   game binary was not identified in this investigation.
+2. Browser maps DOM Escape to HID usage41. The repeated Chromium input regression
+   emits both down and up. P4's shared USB/browser mapping produces ASCII27 and
+   FabGL virtual key125; EMOS's keyboard table maps VK_ESCAPE to map key113.
+   This source/local-test path does not prove delivery from the Author's browser.
+3. Rally samples current held state, so a down/up pair entirely between samples
+   could be missed. This is a hypothesis, not a demonstrated defect. Compare a
+   deliberate held Escape in a normal browser window, with canvas focus, followed
+   by release and another press if Rally returns to its title/Attract phase.
+4. If that remains ineffective while ordinary game controls work, capture real
+   browser event/packet evidence and downstream keyboard state before changing
+   mappings or adding a workaround. Preserve native fullscreen uncertainty.
+
+
+### Author follow-up — browser/game input investigation deferred
+
+1. Author reports browser keyboard input appears to hang more in Rally than in
+   Nurples. This is qualitative behaviour; no packet delay/loss or owning stage
+   was measured. Rally was not tested with earlier browser-input iterations, so
+   a regression is neither established nor ruled out.
+2. In Nurples, Escape while fullscreen exits browser fullscreen without exiting
+   the game. Once outside fullscreen, Escape exits Nurples correctly. This
+   demonstrates working normal-window Escape in that game and narrows the
+   preceding report; it does not establish Rally's behaviour or prove what key
+   transitions reached EMOS during the native fullscreen exit.
+3. Author explicitly deprioritized this functionality and deferred investigation.
+   Retain C02-F01 and the Rally input-hang observation for follow-up; do not
+   continue diagnosis, introduce timing workarounds or flash another repair
+   without renewed direction. Native fullscreen Escape remains an accepted
+   present limitation. Other C02 visual/capture acceptance is not inferred.
+4. When resumed, compare identical game builds/routes and real browser events,
+   P4 admission/emission and EMOS held-key state. Separate application polling,
+   input transport and delayed video presentation before attributing a cause.

@@ -725,6 +725,32 @@ header showing mode number, resolution, colors, nominal Hz and buffering mode,
 followed by the existing Presented fps. Author explicitly requested no coding
 yet; metadata availability must be checked before implementation.
 
+
+### C02 authorized and deployed
+
+Author authorized freeze, coding and P4 flashing. C02 now implements the green
+Connect state, authoritative P4 display metadata and fullscreen-entry capture fix.
+Local browser/concurrency checks and physical flash/assets/header verification
+pass. Human review remains pending; Agon needs an operator reset to re-establish
+keyboard admission after the P4 restart. No mainboard firmware or SD changes.
+
+
+### Current disposition — browser/game input follow-up deferred
+
+Author reports greater apparent input hangs in Rally than Nurples, with no earlier
+Rally/browser baseline to establish a regression. Nurples Escape leaves fullscreen
+first, then exits the game when pressed outside fullscreen. These observations
+and the deferred investigation are retained in C01/C02-F01. Author directs moving
+on to other priorities; no further browser/game diagnosis or repair is active.
+This is deferral, not full browser-input qualification or blanket C02 acceptance.
+
+## September21 comparison
+
+Author reports newer firmware/browser regressed relative to the restored
+September19 r01 checkpoint. [Mac observations](REMOTE-001/2026-09-21-mac-comparison.md)
+record older-build figures and distinguish persistent game-input trouble. Author
+requests restoration of latest pre-rollback image before their Linux comparison.
+
 ## September 21 cross-host comparison and Jukebox finding
 
 [Mac/Linux observations](REMOTE-001/2026-09-21-mac-comparison.md) distinguish
@@ -733,3 +759,10 @@ checkpoint. Latest pre-rollback P4 image was restored afterward.
 [Tagged Jukebox review](REMOTE-001/JUKEBOX-INPUT-REVIEW.md) records the ExCom
 input failure and successful Legacy controls for classic v0.9.6-beta and
 v0.11.0-beta. No direct timer/UART vector collision found; cause unresolved.
+
+## Consolidated human comparison — 2026-09-21
+
+[Tabular observation summary](REMOTE-001/2026-09-21-observation-summary.md)
+compares the Author's Mac/Chrome and Linux/Firefox observations, preserves the
+mode 20 sequence, separates older/newer firmware, and includes both Jukebox
+versions' Legacy/ExCom controls. Agent measurements are separately labeled.

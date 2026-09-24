@@ -1,0 +1,16 @@
+{
+  "run_id": "REMOTE-001-2026-09-19-23-54-54Z",
+  "build_id": "browser-capture-r03-b2026-09-19-23-52-41Z",
+  "factory_sha256": "ecafe0250c42f664c91e51a419037f51c1cbb8189d8d17c7ad2fce8959630e52",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "browser_acceptance": "pending",
+  "served_assets_verified": true,
+  "live_browser_header_verified": true,
+  "connected_indicator_verified": true,
+  "header": "Mode 0 640x480 16 colors 60 Hz single-buffered",
+  "keyboard_readmission": "pending Author Agon reset",
+  "human_visual_acceptance": "pending",
+  "mainboard_firmware_changed": false,
+  "sd_changed": false
+}

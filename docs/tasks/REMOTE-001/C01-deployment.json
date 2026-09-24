@@ -1,0 +1,14 @@
+{
+  "run_id": "REMOTE-001-2026-09-19-23-10-44Z",
+  "build_id": "browser-capture-r02-b2026-09-19-22-59-34Z",
+  "factory_sha256": "3edb36116c25cba7b3fb47401ad4e0a30c146e8655a942485c6ea0b6262fa941",
+  "write_verified": true,
+  "usb_host_startup_observed": true,
+  "browser_acceptance": "pending",
+  "served_assets_verified": true,
+  "cli_echo_screen_verified": true,
+  "final_route": "ExCom",
+  "human_visual_acceptance": "pending",
+  "mainboard_firmware_changed": false,
+  "sd_changed": false
+}

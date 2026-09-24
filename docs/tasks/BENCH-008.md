@@ -2,7 +2,11 @@
 
 ## Executive summary
 
-Author requests a quick correctness-checked P4/browser experiment, followed by
+Status: initial experiment complete; further investigation deferred by Author on
+2026-09-21. Output was correct, but presented frame rate worsened at the Mode 0
+MOS prompt and in manual Nurples comparison. Author subsequently requested rollback to the pre-experiment firmware. No further implementation or tests scheduled.
+
+Original scope: quick correctness-checked P4/browser experiment followed by
 manual Nurples/game playtesting. Encode unchanged pixels as transparent zero and
 changed pixels as opaque new RGBA2222 colors, then RLE2. Neither XOR nor arithmetic
 subtraction. No TurboVega, detailed timing campaign, renderer changes or game edits.
@@ -31,7 +35,7 @@ Check live first-full/subsequent-delta reconstruction and reconnection, input/CL
 readiness. Preserve mainboard firmware/EMOS/SD startup. Leave manual game comparison
 to Author; no unattended performance campaign, emulator cue or automatic game run.
 
-B08-05 [ ] Report concrete playtest instructions and rollback identity. This is
+B08-05 [x] Report concrete playtest instructions and rollback identity. This is
 an experiment, not replacement of accepted production protocol or reassessment
 of old performance results. Revisit comparisons only after Author feedback.
 
@@ -45,7 +49,7 @@ all decoding reconstructs canonical final RGB222, not browser VDP semantics.
 
 Quick host checks:129exact reconstructed frames,123deltas/six full frames,
 including periodic full recovery and rejection of missing/wrong/truncated
-references. P4 build passed. Physical connection/takeover checks follow deployment.
+references. P4 build passed. Physical connection/takeover checks subsequently passed.
 
 
 ## Physical result and manual handover
@@ -53,10 +57,32 @@ references. P4 build passed. Physical connection/takeover checks follow deployme
 Candidate frame-delta-probe-r01-b2026-09-21-03-36-19Z is flashed and independently
 verified. [Quick correctness results](BENCH-008/RESULTS.md) pass. Mainboard VDP,
 EMOS and SD startup are unchanged. ExCom CLI responds; cursor restored; all agent
-video observers closed. Manual game comparison remains pending.
+video observers closed. Author subsequently confirmed correct output in both paths and worse frame rate
+with differencing; see the results below.
 
 Refresh the browser page to load the candidate JavaScript. Default page negotiates
 replacement deltas; append `?full=1` to the page URL for full-frame RLE2 comparison.
 Each new connection starts with a full frame. Run the ordinary game unchanged.
 Rollback image is the preserved key-query-probe-r01-b2026-09-20-02-08-44Z candidate;
 private deployment receipts identify the exact saved bytes and restore procedure.
+
+
+## Deferred investigation
+
+B08-06 [ ] Deferred until Author resumes: isolate added P4 comparison, full-plus-
+delta compression, reference-copy and browser reconstruction costs before choosing
+an optimization. XOR is a valid alternative representation, not a demonstrated
+speed fix. Retained transmission history is additional buffering, not a display
+page-flip mode. Do not start a profiling campaign or alter installed firmware
+under this deferral. [Manual findings](BENCH-008/RESULTS.md#author-playtest--2026-09-21)
+retain the observed regression and distinguish suspects from measured causes.
+
+
+## Rollback — 2026-09-21
+
+Author requested restoration after the regression. Actual saved pre-experiment P4
+flash prefix was restored and independently verified; boot identified
+key-query-probe-r01-b2026-09-20-02-08-44Z and native USB startup passed. Served
+browser JavaScript no longer contains the delta decoder. One normal Agon reset
+re-admits keyboard input through unchanged startup. Reload the ordinary browser
+URL; `?full=1` is no longer needed. No EMOS/mainboard VDP flash or SD edit.

@@ -1,8 +1,9 @@
 # Quick replacement-delta correctness result
 
 The candidate passed bounded host and physical-browser correctness checks and is
-installed for Author playtesting. These checks establish reconstruction and
-connection recovery, not a gameplay performance improvement.
+installed. Subsequent Author playtesting found correct output but worse frame
+rate with differencing. Further investigation is deferred; the initial correctness
+checks do not establish a gameplay performance improvement.
 
 | Check | Result |
 | --- | --- |
@@ -26,4 +27,41 @@ An initial static-image assertion ran before the CLI/cursor state was establishe
 it was invalid setup, not codec evidence. The reported passing run followed
 verified ExCom CLI output and cursor hiding. Final state restores the cursor.
 No mainboard firmware, EMOS, game binary or SD startup modification was required.
-No frame-rate conclusion is drawn; Author compares games manually next.
+The automated checks above make no frame-rate claim. Subsequent manual findings
+follow.
+
+
+## Author playtest — 2026-09-21
+
+Correct display in both paths; differencing worsened rather than improved frame
+rate. Ranked by the only quantified regression; these are human observations of
+browser Presented fps, not renderer/game-loop timing or a controlled benchmark.
+
+| Workload | Full-frame RLE2 baseline | Replacement delta + RLE2 | Difference from baseline |
+| --- | --- | --- | --- |
+| Mode 0 MOS prompt | 28–30 presented fps | About 15 presented fps | About 46–50% lower; `(delta/full - 1) × 100` |
+| Nurples manual gameplay | Correct display; better frame rate | Correct display; worse frame rate | Not quantified |
+
+The installed implementation adds retained transmission history, a delta scratch
+buffer and compressed delta storage. P4 reads current and retained pixels, builds
+the replacement image, compresses full output and eligible delta output to select
+the smaller payload, then copies successfully sent canonical pixels into history.
+The browser retains and reconstructs a reference as well. This adds memory traffic
+and encoding work; their individual contributions have **not** been measured.
+It is not display double-buffering/page flipping, nor evidence that differencing
+cannot be useful with a different implementation.
+
+XOR is reversible and also produces zero for unchanged pixels. It remains untested;
+changing the pixel operation alone would not eliminate retained history, memory
+traffic or dual encoding. No XOR candidate or optimization is authorized by this
+record. Author deferred further investigation for available tokens. Leave firmware
+unchanged; use the page's `?full=1` override for full-frame RLE2. This remains the
+same experimental firmware, not a claim of restoring the predecessor image.
+
+
+### Subsequent disposition
+
+At Author request, the pre-experiment P4 image was restored and independently
+verified. This supersedes the earlier leave-installed/full-override advice.
+Previous full-frame browser firmware is installed; refresh the ordinary page.
+Further delta investigation remains deferred.
