@@ -81,12 +81,12 @@ summary = {'rom_capacity_bytes': 131072, 'rom_used_bytes': rom,
            'sections': sections, 'objects': dict(objects)}
 (a.output/'BASELINE.json').write_text(json.dumps(summary, indent=2)+'\n')
 with (a.output/'OBJECTS.csv').open('w') as f:
-    w = csv.writer(f)
+    w = csv.writer(f, lineterminator="\n")
     w.writerow(['object','rom','ram','text','rodata','data','bss','vectors'])
     for name, s in sorted(objects.items(), key=lambda x: (-x[1]['rom'], x[0])):
         w.writerow([name, *s.values()])
 with (a.output/'FUNCTIONS.csv').open('w') as f:
-    w = csv.writer(f); w.writerow(['symbol', 'address_hex', 'code_bytes'])
+    w = csv.writer(f, lineterminator="\n"); w.writerow(['symbol', 'address_hex', 'code_bytes'])
     for s in sorted(functions, key=lambda s: (-s['bytes'], s['name'])):
         w.writerow([s['name'], f"0x{s['address']:06x}", s['bytes']])
 print(json.dumps({k:v for k,v in summary.items() if not isinstance(v, dict)}, indent=2))
