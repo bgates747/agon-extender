@@ -10,12 +10,12 @@ This bounded tranche stays within AUDIT-007 rather than creating another audit.
 
 ## Frozen work contract
 
-**AUDIT-007-M01** [ ] Preserve current state and read official mode/Copper/sprite
+**AUDIT-007-M01** [x] Preserve current state and read official mode/Copper/sprite
 contracts. Trace EDP mode selection, worker shutdown, queued draws, native
 controller teardown and resource ownership against pinned stock sources. Record
 historical versus current differences before attempting reproduction.
 
-**AUDIT-007-M02** [ ] Verify bench identity/readiness and preserve startup and
+**AUDIT-007-M02** [x] Verify bench identity/readiness and preserve startup and
 rollback artifacts before mutation. Use existing admitted EMOS/P4 control and
 SD paths. Capture P4 serial before replaying the retained mode9/Copper setup
 sequence; record reset cause/boot identity and exact last completed step. Start
@@ -37,7 +37,7 @@ against mainboard reference. Record any dependency preventing those controls
 instead of declaring full graphics qualification. Fixtures select modes only in
 startup as required by bench constraints; no hidden fixture mode switching.
 
-**AUDIT-007-M05** [ ] Restore original startup and temporary firmware unless a
+**AUDIT-007-M05** [x] Restore original startup and temporary firmware unless a
 verified correction is deliberately left for Author review. Release input,
 serial readers and SD service; verify prompt/input. Save findings, exact scope,
 remaining gaps and restoration receipt. No emulator notification requested.
@@ -58,3 +58,18 @@ Preserve informative failures and stop on unsafe state or missing recovery.
 [first source pass](FINDINGS.md), and [coverage gaps](../QUAL-004/COVERAGE.md).
 Mode9 was reselected during startup; do not describe this as a proven transition
 between two different resolutions or a proven mode-command crash.
+
+## Execution result
+
+Reproduced and diagnosed; [results](mode-lifetime/RESULTS.md). M03/M04 remain
+blocked on the upstream-correction scope decision, not on a speculative local
+fix. Bench restored; Author then requested functional-state confirmation after
+app safety notices. No further bench work.
+
+## Author disposition — 2026-09-20
+
+[FWBUG-001](../../firmware-bugs.md#fwbug-001--palette-deletion-advances-an-erased-map-iterator)
+records the finding. Author reports mainboard manifestation; physical mainboard
+reproduction was not performed by this investigation. Upstream and Extender
+patching are deferred until more credits. M03/M04 are parked, not awaiting
+immediate execution; the original and reproduced evidence remain intact.

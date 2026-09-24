@@ -25,7 +25,7 @@ was added. Static image parity does not qualify live resource mutation or transi
 | Software sprite movement/update/layers | BSP21/22/25 | Passed static image parity; [OVERLAP/EDGES/HIDDEN accumulated checkpoints](sprite-scroll/extender-followup/RESULTS.md) passed exact parity; INITIAL has stock visual and P4 capture passes but mainboard diagnostic panic remains open |
 | Hardware and mixed sprites | BSP26/27 | Passed static composed image parity |
 | Custom font creation/selection/mutation/deletion | FONT01, retained PORT-008 case | Passed static image parity |
-| All bitmap storage formats and conversions | Partial existing scenes | Coverage gaps to enumerate after first tranche |
+| Public bitmap formats and conversions | PAL16/PAL4/PAL2, earlier bitmap tiles and visual suite | All public formats have evidence; [review map](bitmap-coverage/REVIEW.md) separates exact comparisons from visual coverage and proposes reuse of packed-expansion cases |
 | Lower-depth palette modes, static Copper | PAL16, COP16_SETUP, COP16_EDIT | Passed mode9 parity; [plain mode10/11 palettes also passed](low-depth/RESULTS.md). Four Copper controls deferred |
 | Double buffering/displayed versus drawing page | PAGE_FRONT/PAGE_SWAP | [Passed both physical controls](page-controls/RESULTS.md), 2026-09-20; static images only |
 | Time-varying Copper/animated scenes | Coherent full-frame acquisition needed | Deferred; stitched static rows cannot qualify |
@@ -66,3 +66,10 @@ missing coverage and acquisition failures remain separate from missing features.
    P4 setup restarts leave resource lifetime and mode transitions unqualified.
 5. Dynamic Copper, coherent animated frames, BSP30 population stress, physical
    scanout timing and browser output timing require separate qualification.
+
+## Packed expansion follow-up
+
+[BM02 passed](packed-expansion/RESULTS.md): three mode20 cases,1/2/4bpp aligned
+rows, inline mappings and2bpp buffered mapping. Zero differences across589824
+paired pixels; independent full-image oracles pass. Cumulative77paired scenes /
+14410752pixels. Other packing combinations/transforms remain deferred.

@@ -554,3 +554,10 @@ REMED-002 may close only when:
 
 Closing this coordinator does not close another task, corrective action, or
 freeze by implication.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-012](../firmware-bugs.md#fwbug-012). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

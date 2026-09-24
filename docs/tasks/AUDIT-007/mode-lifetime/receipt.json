@@ -1,0 +1,19 @@
+{
+  "build_id": "key-query-probe-r01-b2026-09-20-02-08-44Z",
+  "elf_sha256": "9845896abe0e0851af937d03b6434ddad36812c5b09ca0a78bfdf0ecd881aca0",
+  "scene_sha256": "0c03248e544211fbc61998eddcf2ea5e4e0482cb1daeb74864aacff49e336fa6",
+  "startup_restored_sha256": "2f2b00cac0a210e102757c40909e92b0600e1e7851f55ce5c407930c22384fa0",
+  "outcome": "reproduced P4 panic; no fix applied",
+  "mepc": "0x4001efe0",
+  "symbol": "fabgl::VGAPalettedController::deletePalette(unsigned short)",
+  "source_line": 365,
+  "host_upstream_asan": "heap-use-after-free advancing erased unordered_map iterator",
+  "host_edp_asan": "same failure",
+  "final_prompt_verified": true,
+  "keyboard_ready": true,
+  "held": 0,
+  "pending": 0,
+  "firmware_flashed": false,
+  "startup_restored": true,
+  "scope_limit": "Current replay explains this panic; original uncaptured restarts cannot be identified retroactively with certainty."
+}

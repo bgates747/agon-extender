@@ -162,3 +162,10 @@ no-op work, not completed audio synthesis.
 The Author subsequently tested `mute` and reports that it eliminates the HUD/sky
 problem. This strengthens the audio-framing diagnosis; a corrected unmuted
 firmware test remains required before closing that defect.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-003](../../../firmware-bugs.md#fwbug-003). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

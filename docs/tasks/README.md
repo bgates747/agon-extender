@@ -44,3 +44,12 @@ wiring where known. Distinguish the actor requesting an action from the actor
 authorizing, executing, recording, observing, and recovering it. If ownership
 is genuinely unresolved, say so explicitly and assign the decision to a
 tracked task.
+
+## Firmware defect identities
+
+Use the stable `FWBUG-NNN` identity from [the firmware bug register](../firmware-bugs.md)
+for a promoted defect task (`docs/tasks/FWBUG-NNN.md`), rather than renumbering
+it. Register findings before implementation; link the originating task records
+back to the register item and retain their historical finding IDs. Promotion
+requires a corresponding TODO entry and bounded work contract; a bug register
+entry alone does not start work.

@@ -112,3 +112,10 @@ AF04/AF05 complete: [results](results/README.md). Paired hardware correctness an
 unmuted Rally capture pass. Original startup restored and read back; fresh
 hardware voice receipt passes; Legacy MOS prompt. Human full-game acceptance
 and promotion of reusable gates remain pending. No experimental push.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-004](../../../firmware-bugs.md#fwbug-004). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

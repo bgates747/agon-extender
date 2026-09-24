@@ -355,3 +355,10 @@ evidence, not a production qualification or exhaustive program verification.
 [A-HALIO]: https://github.com/espressif/arduino-esp32/blob/44da992b774f76777bb2e931dd76cfcf12b9fe70/cores/esp32/esp32-hal-uart.c#L340-L436
 [L-KB-TYPEMATIC]: https://github.com/AgonPlatform/vdp-gl/blob/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/devdrivers/keyboard.h#L326-L337
 [L-TYPEMATIC]: https://github.com/AgonPlatform/vdp-gl/blob/ac2dd5986daf496c43ae8e7fe41836274aec54a0/src/comdrivers/ps2device.cpp#L272-L291
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-010](../../firmware-bugs.md#fwbug-010), [FWBUG-011](../../firmware-bugs.md#fwbug-011). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

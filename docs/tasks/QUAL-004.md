@@ -118,6 +118,13 @@ is not closure or blanket graphics acceptance. Review the three mainboard
 scanout crashes, two P4 transition restarts, original unfenced instability and
 remaining coverage before disposition. Missing implementations stay deferred.
 
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-001](../firmware-bugs.md#fwbug-001--palette-deletion-advances-an-erased-map-iterator), [FWBUG-002](../firmware-bugs.md#fwbug-002). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.
+
 ## Displayed-page follow-up — 2026-09-20
 
 [Two frozen page controls](QUAL-004/page-controls/RESULTS.md) passed on physical
@@ -201,3 +208,14 @@ completed with stable frames and clean input/CLI return. OVERLAP/EDGES/HIDDEN
 match all589824mainboard pixels; HIDDEN also matches its independent full oracle.
 INITIAL lacks a mainboard capture and is not counted as paired parity. Cumulative
 74paired scenes/13820928pixels; prior diagnostic failure remains deferred.
+
+## Bitmap coverage inventory and bounded comparison
+
+[Format/conversion map](QUAL-004/bitmap-coverage/REVIEW.md) finds existing evidence
+for every public format and pre-existing packed-expansion/baked-transform fixtures.
+Recommendation is a bounded exact comparison of existing packed-expansion cases,
+not another basic-format smoke. Author subsequently authorized BM02 execution.
+
+BM02 [passed](QUAL-004/packed-expansion/RESULTS.md): 1/2/4bpp packed expansion,
+589824 exact paired pixels and independent oracles, after correcting fixture
+buffer isolation. Cumulative77paired scenes /14410752pixels. BM03 remains deferred.

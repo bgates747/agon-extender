@@ -104,3 +104,10 @@ infrastructure, not a proposed vdp-gl correction.
    demonstrably smaller than the preserved Phase C candidate.
 4. The Author has accepted the final disposition: abandon, retain as research,
    submit upstream, or promote through a separate Extender decision.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-007](../firmware-bugs.md#fwbug-007). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

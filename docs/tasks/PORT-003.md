@@ -2984,3 +2984,10 @@ Revisit when useful or closer to production. Same stock serial port and endpoint
 logging, programming/recovery considerations; additionally review bidirectional
 input ownership and mode entry/exit. No implementation, endpoint choice or
 qualification is authorized now. Current behavior remains unchanged.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-006](../firmware-bugs.md#fwbug-006), [FWBUG-007](../firmware-bugs.md#fwbug-007), [FWBUG-012](../firmware-bugs.md#fwbug-012). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

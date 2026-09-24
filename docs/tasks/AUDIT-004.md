@@ -281,3 +281,10 @@ may challenge buffers, signals, handshakes, and power/reset assumptions. It
 must preserve EMOS ownership of routing and transports unless the Author
 explicitly changes the architecture through its decision process. Neither
 that comparison nor its implementation is authorized by the W1–W5 instructions.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-008](../firmware-bugs.md#fwbug-008), [FWBUG-009](../firmware-bugs.md#fwbug-009), [FWBUG-010](../firmware-bugs.md#fwbug-010), [FWBUG-011](../firmware-bugs.md#fwbug-011). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.

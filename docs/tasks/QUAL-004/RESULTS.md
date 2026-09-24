@@ -196,3 +196,17 @@ Goal began12:11:20 UTC; hardware restoration verified16:09:31 UTC on2026-09-16
 (3h58m11s including preparation, testing and recovery). Reporting finished shortly
 afterward, comfortably before the eight-hour ceiling. This is elapsed project
 work, not graphics execution time.
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-001](../../firmware-bugs.md#fwbug-001--palette-deletion-advances-an-erased-map-iterator), [FWBUG-002](../../firmware-bugs.md#fwbug-002). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.
+
+## Packed expansion follow-up
+
+[BM02 passed](packed-expansion/RESULTS.md): three mode20 cases,1/2/4bpp aligned
+rows, inline mappings and2bpp buffered mapping. Zero differences across589824
+paired pixels; independent full-image oracles pass. Cumulative77paired scenes /
+14410752pixels. Other packing combinations/transforms remain deferred.

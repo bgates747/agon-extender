@@ -532,3 +532,22 @@ remains held. No source correction is included.
 [M-MACRO]: https://github.com/AgonPlatform/agon-mos/blob/8336409351ee5314e02801a7b72a4f1bb5282519/src/macros.inc
 [M-FF]: https://github.com/AgonPlatform/agon-mos/blob/8336409351ee5314e02801a7b72a4f1bb5282519/src_fatfs/ff.c
 [M-FFCONF]: https://github.com/AgonPlatform/agon-mos/blob/8336409351ee5314e02801a7b72a4f1bb5282519/src_fatfs/ffconf.h
+
+## Firmware bug register cross-reference — 2026-09-20
+
+[FWBUG-008](../../firmware-bugs.md#fwbug-008), [FWBUG-009](../../firmware-bugs.md#fwbug-009). These stable bug identities supplement the original
+finding IDs and evidence. Registration does not authorize repairs or turn
+source-only findings into hardware reproductions. Use the same FWBUG ID for
+any future dedicated disposal task; current dispositions remain in the register.
+
+### Later independent test evidence — 2026-09-20
+
+[FWBUG-008/009 MOS-suite cross-reference](../../firmware-bugs/mos-tests-coverage.md)
+adds existing physical EMOS and stock-emulator results for the write dispatcher
+and setlabel wrapper. This supplements, without rewriting, the source-only
+scope of this original audit. Stock standalone hardware excluded both calls.
+
+Author disposition: FWBUG-008/009 are independently discovered and verified;
+mos-tests owns deferred fixes when tokens permit. A demonstrated current
+Extender blocker may instead justify an EMOS-first patch, with patch/evidence
+shared back to mos-tests. Neither is currently established as such a blocker.
