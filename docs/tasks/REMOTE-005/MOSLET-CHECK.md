@@ -1,5 +1,10 @@
 # Bounded listener MOSlet build/check — 2026-09-21
 
+Current use: the later EMOS v0.1.19 deployment moved the listener to
+`/emos/sdserve.bin`; invoke `EMOS sdserve [--fast] /` under the
+[operating guide](../../mainboard-sd.md). The `/mos` instructions and initial
+failures below describe this September 21 experiment, not today's startup.
+
 ## Executive summary
 
 The unchanged listener now passes bounded physical MOSlet checks under provisional

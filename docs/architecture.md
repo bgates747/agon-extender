@@ -110,8 +110,6 @@ classes. Differences require a specific evidenced processor/output dependency;
 generic abstractions, browser serialization and an existing project design do
 not by themselves justify replacement.
 
-The current generic controller, project pixel codecs and flat logical planes
-are implementation choices subject to that rule, not mandatory architecture.
 Retain stock native packing, palette/Copper behavior, bitmap save/readback,
 sprites, cursors, buffering, completion and mode contracts. Contiguous allocation
 may coexist with a logical row-pointer table. Browser and later local-display
@@ -322,10 +320,14 @@ unresolved.
 Both exclusive modes may claim compatibility only for the declared normal
 application-facing surface; Extender v1 explicitly excludes local printer/USB
 serial, console/terminal, ZDI, Intel HEX, YMODEM, updater, and debug facilities
-unless a later accepted decision restores them. EMOS's fixed VDU dispatcher and
-committed-backend selection are accepted; exact response delivery, parser
-integration, activation-carrier and lifecycle implementation, and qualification
-remain unresolved.
+unless a later accepted decision restores them. The deferred printer/console/
+terminal intentions below refine that exclusion without qualifying an output
+binding. EMOS's fixed VDU dispatcher and committed-backend selection are
+implemented for the qualified Legacy/ExCom subset. The
+[console protocol](protocols/excom-console.md) owns its current activation,
+response and lifecycle contract; PORT-003 and QUAL-003 retain wider coverage
+and qualification obligations. Do not interpret a working subset as complete
+compatibility.
 
 Author clarification, 2026-09-19: Firmware-update commands and Intel HEX/YMODEM maintenance are supported only
 through the stock mainboard path in Legacy mode for now. The operator selects

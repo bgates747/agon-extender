@@ -76,7 +76,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[REMOTE-004](docs/tasks/REMOTE-004.md)** — Low-priority copy/paste feasibility: Extender first, possible stock MOS/VDP subset later. Investigate existing input/readback reuse and application-consumption guarantees; proposal before implementation.
 
-- [ ] **[BENCH-007](docs/tasks/BENCH-007.md)** — Package/results committed; only F01 mainboard panic and F02 Rally fixture discrepancy remain. Retain these two unscheduled follow-ups here; measurement implementation is complete, not another half-built package.
+- [ ] **[BENCH-007](docs/tasks/BENCH-007.md)** — Package/results committed; only F01 mainboard panic and F02 Rally fixture discrepancy remain. Retain these two unscheduled follow-ups here; measurement implementation is complete, not another half-built package. Refresh the retained runner/startup procedure before reuse under current fixture rules.
 
 - [ ] **[AUDIO-001](docs/tasks/AUDIO-001.md)** — SD feasibility measured; integrated parallel/audio stages not executed. Keep behind current porting priority; AF02 needs its own bounded contract.
 

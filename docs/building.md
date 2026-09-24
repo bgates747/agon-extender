@@ -1,8 +1,11 @@
 # Building Extender components
 
 Compile entry points, checked against source on 2026-09-24. This is not a
-fresh-machine installation qualification or permission to deploy. Read the
-[operation entry point](using-extender.md) before using an existing bench.
+fresh-machine installation qualification or permission to deploy. **The base
+P4 build does not reconstruct every deployed candidate overlay.** Read the
+[provenance boundary](#deployed-candidates-versus-the-base-target) before selecting
+a replacement for an installed image, and the [operation entry point](using-extender.md)
+before using an existing bench.
 
 ## Building the P4 firmware
 

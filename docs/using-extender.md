@@ -13,6 +13,8 @@ can be interrupted.
    `HARDWARE.local.md`; a public clone deliberately does not contain those
    machine-specific values. A Git checkout is not evidence of flashed firmware.
 2. Establish whether Agon is at a MOS prompt, running a program or serving SD.
+   In Legacy, `/screen/text` cannot establish prompt readiness; use an operator
+   observation or an explicit execution receipt from the prepared workflow.
    Do not type CLI commands into an unknown application. Keyboard delivery
    counters acknowledge input handling, not completion of a MOS command.
 3. **Remote typing requires Extender input to be enabled already.** An operator

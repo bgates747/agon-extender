@@ -2,11 +2,13 @@
 
 ## Executive summary
 
-Research and Author discussion in progress, requested 2026-09-21. Expose Agon's
+External-interface research and Author discussion remain open, requested 2026-09-21. Expose Agon's
 mainboard SD through P4 Ethernet using an ordinary host client or browser UI.
-Compare browser file management, FTP, SMB and WebDAV before choosing. No protocol,
-library, architecture or implementation contract is frozen. No firmware build,
-flash, storage mutation or physical test is authorized by this task record.
+Compare browser file management, FTP, SMB and WebDAV before choosing. No external host protocol/library has been selected. Separately authorized
+MOSlet admission, `/emos` migration and paired fast-transfer work have since
+been implemented and physically checked; use the [current SD guide](../mainboard-sd.md)
+and the [fast-transfer record](REMOTE-005/FAST-TRANSFER.md). The original
+research scope below does not itself authorize further hardware operations.
 
 ## Existing foundation and scope
 

@@ -7,16 +7,11 @@ and [fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md). These are development
 builds, not a general firmware release. This guide does not assert that the
 service is running now: consult the installation owner and current status.
 
-The [original acceptance record](qualification/mainboard-sd/2026-09-13.md)
-covers the older EMOS v0.1.14 / sdserve v0.1.0 combination. Its original
-[bootstrap](tasks/PORT-017/BOOTSTRAP.md) is historical; preserve its rollback
-copies but do not execute its old deployment paths without refresh.
+## SD locations
 
-## SD locations and archived startup
-
-Follow the [SD layout policy](sd-layout.md). Historical root files were relocated;
-see the [exact mapping](storage/sd-relocation-2026-09-21.json). The old root
-`autoexec.txt.p17bak` is now archived under `/agents/extender/backups/startup`.
+Follow the [SD layout policy](sd-layout.md). Retained backups and results belong under
+`/agents/extender`; the [relocation manifest](storage/sd-relocation-2026-09-21.json)
+locates old evidence when needed.
 The current service still creates sibling transaction files; `/tmp/extender`
 support is pending, not an implemented feature.
 
@@ -40,9 +35,8 @@ blindly inject both lines while the first command is still executing.
 
 The argument is the absolute allowed filesystem root. `/` permits whole-card
 development. These services have no authentication; use only on a trusted LAN.
-The installation owner chooses the root explicitly. Initial commissioning
-used `/extender/sdtest` to isolate tests, and that remains the application's
-no-argument default. A root change requires stopping and restarting the application.
+The installation owner chooses the root explicitly. The no-argument default
+is `/extender/sdtest`, which confines access to that test directory. A root change requires stopping and restarting the application.
 Video mode belongs in startup; the service does not switch modes.
 
 Escape stops the service and returns to its caller, preserving an unfinished
@@ -50,7 +44,7 @@ stage. If invoked from EXEC/autoexec, remaining batch commands may run; return
 is not necessarily an idle MOS prompt.
 Host `exit` does the same only when no transfer is active. Restart the utility
 with `EMOS sdserve /` (or `EMOS sdserve --fast /`).
-Rally and this service run in the foreground at different times; this is not
+Applications and this service run in the foreground at different times; this is not
 background SD access while a game is running. No remote command execution or
 board reset is part of the wire API.
 
@@ -144,28 +138,17 @@ unattended cycles against fresh names under `/extender/sdtest`, retaining audit,
 state and result files. It performs no reset, flash, game launch or automatic
 cleanup after unexplained failure. The service must already be running and the
 test directory must exist. Start the listener in normal checked mode for this
-qualifier; it does not opt into fast uploads. The [qualification procedure](procedures/mainboard-sd-qualification-r01.md)
-defines its evidence and limits.
+qualifier; it does not opt into fast uploads. The retained
+[r01 qualification procedure](procedures/mainboard-sd-qualification-r01.md)
+is historical evidence, not a current deployment recipe: its application
+startup and reset restrictions predate the EMOSlet and supported reset bridge.
+Before a new qualification, the owning task must refresh the procedure against
+this guide and the [bench constraints](qualification/bench-constraints.md),
+with an appropriate new identity. Do not silently reuse the old procedure or
+claim that a normal-mode run qualifies fast mode.
 Headless tests use prepared project-local profiles and their mandatory
 `./fab-agon-emulator` entry points. They do not substitute for physical testing
 or the Author's native-keyboard observation.
-
-## Historical commissioning cost — 2026-09-13
-
-The ten physical cycles covered 0..131731 bytes and totalled 951.187 seconds
-of measured cycle time. The largest cycle took 360.381 seconds, or about 365.5
-new payload bytes per second including staging, multiple complete readbacks,
-activation, old-version verification and audit/state writes. This is a fully
-verified replacement rate, not isolated upload or UART throughput.
-
-At commissioning, startup selected mode 3, enabled Extender keyboard, loaded the service and
-ran it with `/`. This is not the present startup contract: the later v0.1.19
-receipt records keyboard setup only, with no automatic listener. The consumed one-shot EMOS installer remains guarded. The
-previous startup was retained as `/autoexec.txt.p17bak` (now relocated per the manifest); its network replacement
-was fully read back after closing the old MOS batch. The final scope change was
-not rebooted again; the same command had passed the native CLI restart check.
-The accepted Rally binary was read in full and is unchanged. See the acceptance
-record for hashes, recovery evidence and the firmware rollback identity.
 
 ## Detached host deployment jobs
 

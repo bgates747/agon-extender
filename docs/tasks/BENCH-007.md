@@ -1,5 +1,11 @@
 # BENCH-007 — Reusable paired game timing package
 
+Documentation reuse note, 2026-09-24: before rerunning the maintained package,
+review [its post-migration reuse boundary](../testing/game-timing.md#reuse-boundary-after-the-emoslet-migration).
+The retained host runner uses the ordinary listener fallback, checked upload
+mode and an EXEC-selected graphics mode. It needs procedure refresh against
+current startup rules before another run; past results remain unchanged.
+
 ## Executive summary
 
 The reusable paired timing package and its scoped hardware results are complete

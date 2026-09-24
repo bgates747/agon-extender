@@ -26,6 +26,20 @@ promotion task must identify the contributing authorities, remove competing
 machine-readable sources of truth, update routine references, and preserve
 traceability without copying task history into the production interface.
 
+## Current documentation versus evidence
+
+The [current handbook](../README.md) is the operating/design entry point for
+humans and agents. When accepted work changes behavior, update its maintained
+role-named guide in place so that it contains only currently accurate guidance.
+Do not require readers to reconcile an old instruction with a later amendment.
+
+Task records, dated experiments and historical decisions preserve provenance;
+they are not competing current manuals. Move reusable guidance to its maintained
+authority and link that authority from the task. Keep superseded instructions
+in Git history or clearly separated evidence, not beneath a warning in the
+current procedure. Unknown implementation/qualification limits remain explicit
+current facts; do not erase those limits to make the handbook look finished.
+
 ## Actor-explicit proposals
 
 The `TRS-80-NNN` namespace owns Extender integration work for TRS-80-derived

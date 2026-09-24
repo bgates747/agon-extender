@@ -10,6 +10,8 @@ a successful compile and a deployed/qualified combination are different things.
 
 ## Start here
 
+The [Extender handbook](docs/README.md) is the current documentation entry point.
+
 1. **Using an existing installation:** [operator and external-agent entry point](docs/using-extender.md).
 2. **Transferring files:** [mainboard SD guide](docs/mainboard-sd.md), including the
    foreground `EMOS sdserve` EMOSlet and paired `--fast` option.

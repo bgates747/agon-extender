@@ -175,8 +175,9 @@ that processor.
     sufficient to retain this surface.
 23. Select mainboard/Extender keyboard choice as the immediate input goal,
     with directly attached USB as the Extender acquisition source. Focused
-    browser input retains its contract but is deferred until explicitly
-    reprioritized. P4 processes selected input and emits stock-compatible VDP keyboard packets
+    browser input retained its contract but was initially deferred. The later
+    accepted [ADR-0022](ADR-0022-browser-keyboard-capture.md) supersedes that
+    scheduling deferral and defines common P4 input arbitration. P4 processes selected input and emits stock-compatible VDP keyboard packets
     over existing r03 UART1 to EMOS. EMOS owns packet reception, canonical key
     sysvars, keymap and application hook effects. Applicable configuration and
     queries use the same UART in the forward direction. No proprietary UART

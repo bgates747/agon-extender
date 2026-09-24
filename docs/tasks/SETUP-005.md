@@ -43,7 +43,7 @@ remain open.
 | SETUP-005-K007 | ExCom sends ordinary CLI/VDU output to EDP; mainboard VGA shows a static mode banner with cursor hidden. No double buffering or periodic redraw; VBlank continues. Dual retains active display roles. | Accepted by the Author, 2026-09-08; ADR-0014 display section. |
 | SETUP-005-K008 | Initially, return to Legacy with a fresh mainboard screen, visible cursor and MOS prompt, preserving keyboard source/layout. | Accepted by the Author, 2026-09-08. Later, consider one-line transition notices and cursor hide/show while preserving the existing background; not a first-increment gate. |
 | SETUP-005-K009 | Bring forward one directly attached USB keyboard using P4 native USB host and `EMOS KEYINPUT extender`; reuse stock packets over r03 UART1. First prove ordinary EMOS CLI on mainboard VGA, independently of browser focus/network. The DevKit USB connector/power assembly is permitted for this input. | Accepted by Author, 2026-09-09; PORT-015 owns implementation and physical proof; ADR-0014 amended. |
-| SETUP-005-K010 | Prioritize selectable `mainboard` / `extender` keyboard input after native USB CLI and gameplay pass. Defer browser input until explicitly reprioritized, preserving its code, decisions and findings. Record the tested USB connection in the hardware specification now; defer the schematic update to the next Author session. | Accepted by Author, 2026-09-09; PORT-015/PORT-005 own input qualification, REMOTE-001 is deferred, HW-002 owns the drawing update. |
+| SETUP-005-K010 | Prioritize selectable `mainboard` / `extender` keyboard input after native USB CLI and gameplay pass. Defer browser input until explicitly reprioritized, preserving its code, decisions and findings. Record the tested USB connection in the hardware specification now; defer the schematic update to the next Author session. | Accepted by Author, 2026-09-09; PORT-015/PORT-005 own input qualification. Browser deferral later superseded by [ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md) and REMOTE-001 implementation; HW-002 owns the drawing update. |
 
 
 K002's initial behavior, K003's receiver direction and K005's independent
@@ -303,7 +303,9 @@ Extender support. Use “stock MOS” for the unmodified official firmware and
 - [ ] **SETUP-005-D007 — Peripheral-input ownership and routing (partially accepted):**
   K009/K010 select native USB keyboard input into P4, then stock keyboard
   packets over UART1 into EMOS, with explicit mainboard/extender selection.
-  K001's browser acquisition remains deferred. Applications use normal MOS key reads, sysvars,
+  K001's browser acquisition was subsequently implemented under REMOTE-001;
+  [ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md) selects common
+  `KEYINPUT extender` admission and P4 provider arbitration. Applications use normal MOS key reads, sysvars,
   virtual keymap and callbacks; no aware-application relay is required. P4
   preserves relevant EDP-local keyboard state and packet semantics. K002/K003
   retain exact source/session/receiver choices; PORT-015/PORT-005 own native

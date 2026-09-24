@@ -57,6 +57,23 @@ AgonDev delay uses PRT0; its clock() returns raw MOS ticks despite the library
 header's100 CLOCKS_PER_SEC declaration. Do not infer game cadence from that
 constant. Vblank, delay and saturation controls precede performance acceptance.
 
+## Reuse boundary after the EMOSlet migration
+
+The retained `tests/performance/run.py` still ends its batch by loading the
+ordinary `/extender/sdserve.bin` fallback. That is deliberate recorded behavior,
+not a claim that it invokes `/emos/sdserve.bin`. The runner also assumes normal
+checked uploads; do not start it against a `--fast` listener. Both layouts and
+session handling are described in the [SD guide](../mainboard-sd.md).
+
+Before another run, refresh and review its generated batch against current
+[bench constraints](../qualification/bench-constraints.md) and
+[SD layout](../sd-layout.md). In particular, it currently selects a video mode
+inside its generated EXEC batch; the standing fixture rule requires mode
+selection in `/autoexec.txt`, before invocation. This documentation audit does
+not alter a frozen runner or authorize that exception. BENCH-007 owns its next
+procedure refresh. Preserve old evidence and do not rerun old command sequences
+as though documentation review qualified a new deployment.
+
 ## Building and running
 
 1. `tests/performance/builders/aginvadors.py`, `rally.py`, and `nurples.py`

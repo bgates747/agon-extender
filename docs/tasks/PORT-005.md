@@ -2,11 +2,20 @@
 
 ## State
 
-- Status: Further keyboard refinements deferred by Author, 2026-09-09, in favor of ExCom and the EDP port. Native USB CLI/gameplay and bounded editing/repeat/reconnect/source-return pass on hardware with PORT-015. Wider mapping, layout, LED/settings and processed-keyboard parity remain open; browser-specific work is deferred with REMOTE-001.
+- Status: Further keyboard refinements deferred by Author, 2026-09-09, in favor of ExCom and the EDP port. Native USB CLI/gameplay and bounded editing/repeat/reconnect/source-return pass on hardware with PORT-015. Wider mapping, layout, LED/settings and processed-keyboard parity remain open; browser capture was subsequently implemented under REMOTE-001; broader parity remains open.
 - Started: 2026-09-08 (P4 controlled-key sender).
 - Finished: --
 
-## Current scheduling — 2026-09-09
+## Current cross-task disposition — 2026-09-24
+
+[REMOTE-001](REMOTE-001.md) implemented the later browser revival and
+[ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md) defines P4 USB/browser/
+agent arbitration behind `EMOS KEYINPUT extender`. The current operating guide is
+[remote keyboard](../remote-keyboard.md). This supersedes browser-deferral wording
+in the September 9 baseline below; it does not mark PORT-005's wider processed-
+keyboard parity checklist complete or claim new USB LED acceptance.
+
+## Historical scheduling baseline — 2026-09-09
 
 The Author is satisfied with ordinary commands/gameplay using USB input in
 Legacy and deferred the proposed Caps Lock LED increment and further keyboard
@@ -17,7 +26,7 @@ regression that blocks that proof without expanding into unrelated parity work.
 ## Intent and ownership
 
 P4 accepts native USB keyboard events from PORT-015 for the immediate goal.
-The deferred browser provider enters through REMOTE-001/PORT-006. The adapter maps selected events to the retained VDP event,
+The later browser provider enters through REMOTE-001/PORT-006. The adapter maps selected events to the retained VDP event,
 virtual-key and modifier vocabulary, updates EDP-local keyboard state and
 callbacks, and emits ordinary stock keyboard packets through PORT-008's UART
 sender. EMOS alone processes those packets into canonical eZ80 keyboard state.
@@ -53,8 +62,8 @@ not suppress browser-originated key packets.
 
 The immediate CLI choices are `EMOS KEYINPUT mainboard` and
 `EMOS KEYINPUT extender`. The latter is deployed and working with the native
-USB P4 candidate. `browser` retains its meaning for the deferred browser
-composition; it is not a second provider in the installed USB candidate.
+USB P4 candidate. The later browser adapter also uses `extender`, under P4
+arbitration; the historical `browser` selector is not required by that adapter.
 The runtime `SET KEYBOARD n` layout must apply consistently to the selected
 path and survive mode changes. Autoexec alone restores settings across boots;
 do not add a separate saved configuration. Do not conflate layout with source,
@@ -65,7 +74,8 @@ or add numeric source codes.
 SETUP-005 K009/K010 prioritize explicit mainboard/extender selection, retained
 layout and stock packet effects. For native USB, verify device removal,
 readmission and source-change cleanup. Browser focus/lease/takeover requirements
-below remain deferred with REMOTE-001 rather than gating native USB completion.
+below have their later implementation/evidence under REMOTE-001; they do not
+retroactively broaden the native USB proof or close this parity checklist.
 
 1. [ ] Preserve keycode, modifier bits, FabGL/vdp-gl virtual-key identity and
    down/up state. Stock event wire form is `81 04 keycode modifiers vkey down`.

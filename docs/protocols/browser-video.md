@@ -132,10 +132,91 @@ end-to-end latency. The “Period” field remains logical VDP time. Sequence ga
 can reflect deliberately skipped intermediate snapshots rather than packet loss.
 Actual throughput and sustained stability require hardware qualification.
 
+## Negotiated complete-frame encodings
+
+The deployed candidate family adds the formats below to the original EVF1
+contract. This section promotes recurring wire details from the linked task
+records. Exact availability and selection still belong to the candidate's
+build/deployment receipt; the base checkout does not include every overlay.
+All listed frames are self-contained, not XOR/subtraction deltas. The later
+differencing experiment was rolled back; [BENCH-008](../tasks/BENCH-008.md)
+retains its correct-image but worse-performance result.
+
+| Request capability | Permitted selected format | Meaning |
+|---|---|---|
+| Plain `/video` | EVF1 | Raw complete frame |
+| `rle2=1` | EVR1 or raw fallback | Complete RLE2 v1.0 file after the 32-byte frame header |
+| `packed=1` | EVP1 or raw fallback | Frame-local palette with 1/2/4-bit indices |
+| `packed=2` | EVP1 or raw fallback | Palette form plus direct six-bit RGB222 |
+| `pair=1` | EVQ1 or raw fallback | Optional experimental pair-RLE; not the ordinary default |
+
+The recorded later default combines `rle2=1&packed=2`: the server chooses an
+eligible smaller representation. Requesting a codec is not proof it was sent;
+record actual magic and bytes. Earlier RLE2 candidates limited decoded frames
+to 512×384; the composed-packing candidate enlarged that bound to 1024×768.
+Do not apply the newer limit to an old deployed image. SRLE2/TurboVega experiments
+have separate envelopes and are not silently substituted into EVR1.
+
+### Shared compressed-frame header
+
+EVR1/EVP1/EVQ1 retain the EVF1 32-byte metadata layout with their own magic,
+version 1 and RGB222 pixel-format 2. Width/height, sequence, flags and logical
+period retain their meanings. Stride must equal width. `payloadBytes` means
+**decoded** width × height, not compressed WebSocket payload size. Encoded
+length is the message length minus 32. Decoders reconstruct canonical EVF1
+metadata and RGB222 pixels and then apply the normal header/size/flag checks.
+No receiver needs an earlier frame to recover after reconnect or mode change.
+
+### EVR1 RLE2 payload
+
+Payload is the complete 14-byte-header RLE2 v1.0 file, including `Cmpr`, decoded
+size, `RLE2` and version 1.0. Final framebuffer RGB222 values are mapped to the
+codec's opaque RGBA2222 domain and converted back on decode; do not reinterpret
+native packed palette indices as those colours. The decoder checks the file
+header, declared size, token/input/output bounds and exact decoded length.
+Raw fallback applies when ineligible, allocation fails or the complete encoded
+message is not smaller. The default does not imply arbitrary-alpha asset parity.
+[Original contract and bounded implementation](../tasks/QUAL-003/debrief/P01h/CONTRACT.md#web-candidate-protocol--evr1-v1-iteration3)
+retain provenance and the earlier size/pacing bounds.
+
+### EVP1 payload
+
+Offsets below are relative to the byte immediately after the frame header.
+
+| Offset | Bytes | Palette form | Direct six-bit form |
+|---|---|---|---|
+| 0 | 1 | Bits/index: 1, 2 or 4 | 6 |
+| 1 | 1 | Palette count: 1..2^bits | 0 |
+| 2 | 2 | Reserved zero | Reserved zero |
+| 4 | Variable | Unique RGB222 palette bytes, then packed indices | Packed RGB222 samples, no palette |
+
+Samples/indices are MSB-first across the complete raster, crossing row boundaries.
+Unused final low bits are zero. Palette indices must be in range and palette
+entries unique values 0..63. Direct six-bit form packs four pixels into three
+bytes. Encoded payload size is `4 + palette_count + ceil(width*height*bits/8)`.
+Malformed lengths, reserved bits, palette values/indices and nonzero padding
+reject the frame. Full decoded colours are retained without quantization.
+[Palette experiment](../tasks/BENCH-005/composed-packing/PROTOCOL.md) and
+[six-bit extension](../tasks/BENCH-005/composed-packing/sixbit/PROTOCOL.md)
+retain selection/allocation evidence; smaller packets do not guarantee lower
+total CPU cost or better gameplay.
+
+### EVQ1 optional pair payload
+
+Each little-endian 16-bit token contains count-minus-one in bits 15:12,
+first RGB222 colour in 11:6 and second in 5:0. Repeat the pair 1–16 times,
+starting at raster offset zero and crossing rows. An odd final pixel is one
+RGB222 byte after the pair tokens. Payload is at most one byte per decoded
+pixel. Reject truncation, overrun, excess bytes and an out-of-range odd tail.
+The proposed literal-flag variant was not deployed and is not this format.
+[Experiment/selection record](../tasks/BENCH-005/composed-packing/pair-rle/PLAN.md)
+retains the revisions: ordinary selection was restored without `pair=1`.
+
 ## Local validation
 
 Run `.venv/bin/python tests/browser_rgb222_test.py` for C++ sanitizer coverage,
 all 64 colours through actual WebGL, format/size/stride changes, malformed
 frames, leases and browser credit. `tests/browser_video_ui_test.py` covers the
-production page's reconnect and video-only behavior. These checks use loopback
+base page's video reconnect behavior. Deployed codec overlays require the
+corresponding candidate tests; these base tests alone do not cover them. These checks use loopback
 and do not contact the P4 or Agon.

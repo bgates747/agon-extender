@@ -21,6 +21,16 @@ machine-evidenced dependencies. The compact source-selection projection lists
 those units separately from immutable upstream file selections so a diagnostic
 canary cannot be mistaken for an exhaustive production source profile.
 
+## Model scope versus deployed builds
+
+The graph is authoritative for its fingerprinted reviewed source baseline and
+declared profiles. It is not a manifest of every later console snapshot or the
+firmware currently installed on a board. In particular, the `p4-default` query
+below must not be treated as the deployed `p4-console` build closure. Use the
+[current build guide](../building.md) for that target's source-selection manifest
+and the unresolved overlay-reconstruction boundary. Regenerating this graph
+without new reviewed inputs does not reconcile those later candidates.
+
 ## Inputs
 
 Install `requirements-dev.txt` in `.venv`, then provide immutable roots matching

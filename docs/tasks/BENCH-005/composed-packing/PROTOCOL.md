@@ -1,5 +1,10 @@
 # EVP1 experimental composed-frame packing
 
+Recurring complete-frame wire details are now consolidated in the
+[maintained browser-video contract](../../../protocols/browser-video.md#negotiated-complete-frame-encodings).
+This record retains the experiment's original selection, limits and evidence;
+it is not an assertion that its exact candidate is currently installed.
+
 ## Executive summary
 
 EVP1 preserves the already-composited RGB222 image exactly using a frame-local
