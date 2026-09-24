@@ -1,0 +1,378 @@
+{
+  "upstream_repository": "https://github.com/OLIMEX/ESP32-P4-PC",
+  "upstream_commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+  "retrieved_utc": "2026-09-21T01:49:30.556511+00:00",
+  "scope": "All top-level board DOCUMENTS, board hardware design excluding 3D package models, board-specific software documentation excluding vendored esp-bsp dependency documents, and product-page linked declarations. Complete software/dependency/3D sources retained in separate upstream clone.",
+  "licenses": {
+    "documentation": "CC-BY-SA-4.0 per upstream README",
+    "hardware": "CERN-OHL-S-2.0 per upstream README; retain embedded notices",
+    "software": "MIT per upstream README/LICENSE; third-party dependencies keep their own notices",
+    "website": "Olimex copyright; unmodified source snapshots, no claim of project ownership"
+  },
+  "files": [
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-1.jpg",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-1.jpg",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-1.jpg",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 59738,
+      "sha256": "2e68489b22435d97afc486ca68c554f871fc044dfa42af9e8548e06a1666cfcc",
+      "modified": false
+    },
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-2.jpg",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-2.jpg",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-2.jpg",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 62349,
+      "sha256": "3a0312a3779a10c7867133428b6f96d0f04d14caadf51ed83b83463d6aa112b3",
+      "modified": false
+    },
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-3.jpg",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-3.jpg",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-3.jpg",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 70962,
+      "sha256": "14f3e4d83ee361325457532e373fcd6d765b45e1567cda979e86580b900c38c8",
+      "modified": false
+    },
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-4.jpg",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-4.jpg",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-4.jpg",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 81536,
+      "sha256": "ad469a0f82b02e71e6b40a82f19a4f027065e0e7901c850f2c0eb43fd6e49a29",
+      "modified": false
+    },
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-user-manual.odt",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-user-manual.odt",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-user-manual.odt",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 711940,
+      "sha256": "8581c8b7969ecb56bf224e7eed27da31dd27795af801e45e2163b57891178ae4",
+      "modified": false
+    },
+    {
+      "path": "upstream/DOCUMENTS/ESP32-P4-PC-user-manual.pdf",
+      "source_path": "DOCUMENTS/ESP32-P4-PC-user-manual.pdf",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/DOCUMENTS/ESP32-P4-PC-user-manual.pdf",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 559195,
+      "sha256": "cbe0a46291060fc521c81857d75f67c2c075371b8db471c8da4f2a94798cb7bf",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pcb",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pcb",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pcb",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 5986843,
+      "sha256": "d2f4f13d200d1394893986a8c9974a575135477b025fc0e2034a36d65d81c680",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_prl",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_prl",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_prl",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 1185,
+      "sha256": "d5fa19804b2861c8f580f24aa238a6b0b57f73ac96c8480d7e01fb0fd385a203",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pro",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pro",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_pro",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 19852,
+      "sha256": "b1523b790a3cd9aac9380c18de3f5d6158242e8450bdf7734544e0050f148e84",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_sch",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_sch",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.kicad_sch",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 1435954,
+      "sha256": "e471c445e89623a362ec29ed9c930582d53cf329c8c33083fa65f8f229fc9b09",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.pdf",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.pdf",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.pdf",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 4833412,
+      "sha256": "8b2810225ef03937aff43ae04db28c52a39db6102009a40e1c034f008c5653f7",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B_BOM.csv",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B_BOM.csv",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B_BOM.csv",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 6935,
+      "sha256": "0655dfa3221eebc5e6c9cc9968adee45c5a51db3da59693c70a3cab36f11c891",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Cu.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Cu.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Cu.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 817755,
+      "sha256": "38635a4ca2de19dc32d7b5ea5a7305717e1946e15897802c8d3d12a8f47689a6",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Mask.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Mask.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Mask.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 25362,
+      "sha256": "5171bd35d5c4de735b3953fe0c8a8f8e2f87dc09305b12237edd306e79b85cd5",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Paste.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Paste.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Paste.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 16521,
+      "sha256": "862e695d7731f39caeec666d10b2b6fdc9b287b5b026c1efd5d92d17344ad198",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Silkscreen.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Silkscreen.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-B_Silkscreen.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 335607,
+      "sha256": "00ff3d3f1771142af0be5c3f075b3b6e4968c020753e73cf39c7d67695fd7993",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-Edge_Cuts.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-Edge_Cuts.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-Edge_Cuts.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 665,
+      "sha256": "c7290ab8943bd9f080c71ec8315102fc20aac467c9a3177fa079922c28fa32da",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Cu.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Cu.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Cu.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 939320,
+      "sha256": "79ae9628c6ea46de5c4c61a8b0b54c311aa932e7fa5c2fa8b05d91bf147172ef",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Mask.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Mask.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Mask.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 28264,
+      "sha256": "098ba4a999453f967ef09a10cbe49e10ffed7fcd3beb6692dc421be829ca96f5",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Paste.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Paste.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Paste.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 19411,
+      "sha256": "88f2249195fc89617e701b3b579df929dab399ba3747f8e3b45cc7d33922873e",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Silkscreen.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Silkscreen.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-F_Silkscreen.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 417673,
+      "sha256": "40ec942a78b84cc25feff245bb549dd450d0518deab16fc335ce963af6fa9101",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In1_Cu.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In1_Cu.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In1_Cu.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 476948,
+      "sha256": "914dcf0ce3479aa592ded4ed5fc6202075a0afe389eebc38f538a24a0a293f94",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In2_Cu.gbr",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In2_Cu.gbr",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-In2_Cu.gbr",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 355114,
+      "sha256": "c57097cd25c14fddbe2b848e90ab12e3c58244742bbf6a0fd129be5851465678",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-NPTH.drl",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-NPTH.drl",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-NPTH.drl",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 791,
+      "sha256": "95b6f16cdfefe0bd6867e8157b507865b9f14397e131a6d6f814f9a9a2ae2b01",
+      "modified": false
+    },
+    {
+      "path": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-PTH.drl",
+      "source_path": "HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-PTH.drl",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/HARDWARE/ESP32-P4-PC-Rev.B/Gerbers/ESP32-P4-PC_Rev_B-PTH.drl",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 10408,
+      "sha256": "368944a704b4609a99dc783789b4ae5564fd28629427fc728cb0757e0b51c653",
+      "modified": false
+    },
+    {
+      "path": "upstream/LICENSE",
+      "source_path": "LICENSE",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/LICENSE",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 1076,
+      "sha256": "2049ea55ea9ea5e615b6c113828441463f1fced84b9387d8f62f26e4fe76205f",
+      "modified": false
+    },
+    {
+      "path": "upstream/README.md",
+      "source_path": "README.md",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/README.md",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 451,
+      "sha256": "0d9fa83ecb968c6817ef0835326f588330f38b72bfa8209f021930422ea64399",
+      "modified": false
+    },
+    {
+      "path": "upstream/SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/README.md",
+      "source_path": "SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/README.md",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/README.md",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 5898,
+      "sha256": "3f78ccf9f1d668a62a28870c70586b4729da03bd02b4d1a7cde4ca21680ac251",
+      "modified": false
+    },
+    {
+      "path": "upstream/SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/arduino-esp32-boards.local.txt",
+      "source_path": "SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/arduino-esp32-boards.local.txt",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/SOFTWARE/Arduino/ESP32-P4-PC-MIPI-LCD-Arduino/arduino-esp32-boards.local.txt",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 578,
+      "sha256": "f7dee6d2eb53e19a0750ef9d69af19adfdf765d7b56dfad4fe0b24e6e367bcb5",
+      "modified": false
+    },
+    {
+      "path": "upstream/SOFTWARE/ESP-IDF/p4_production_test/README.md",
+      "source_path": "SOFTWARE/ESP-IDF/p4_production_test/README.md",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/SOFTWARE/ESP-IDF/p4_production_test/README.md",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 1336,
+      "sha256": "92a910ca0ab22294ef24a4a59d7bf294734a3e7c11105fddb2a171413fd6bbfc",
+      "modified": false
+    },
+    {
+      "path": "upstream/SOFTWARE/ESP-IDF/p4_production_test/components/lan_test/README.md",
+      "source_path": "SOFTWARE/ESP-IDF/p4_production_test/components/lan_test/README.md",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/SOFTWARE/ESP-IDF/p4_production_test/components/lan_test/README.md",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 502,
+      "sha256": "185195e4fb3b543df62820a0e404a0fefc06e1b103c63c7973f4388b7bec74e7",
+      "modified": false
+    },
+    {
+      "path": "upstream/SOFTWARE/ESP-IDF/p4_production_test/components/usb_flash_test/README.md",
+      "source_path": "SOFTWARE/ESP-IDF/p4_production_test/components/usb_flash_test/README.md",
+      "source_url": "https://github.com/OLIMEX/ESP32-P4-PC/blob/89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd/SOFTWARE/ESP-IDF/p4_production_test/components/usb_flash_test/README.md",
+      "commit": "89a7b96e2ec4c3f28b55d768dfda3ba8a86846bd",
+      "bytes": 393,
+      "sha256": "18799f53680f644fd943667f8f6a354139e7b9f63f610a818e3de49a9f997a64",
+      "modified": false
+    },
+    {
+      "path": "website/product-page.html",
+      "source_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/open-source-hardware",
+      "resolved_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/open-source-hardware",
+      "retrieved_utc": "2026-09-21T01:49:30.556511+00:00",
+      "content_type": "text/html; charset=UTF-8",
+      "bytes": 29834,
+      "sha256": "ac538a0a2aafba1369da3906df952035d042c2279e998d590553aeb715a3af1d",
+      "modified": false
+    },
+    {
+      "path": "website/EU-DOC-ESP32-P4-PC.pdf",
+      "source_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/resources/EU-DOC-ESP32-P4-PC.pdf",
+      "resolved_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/resources/EU-DOC-ESP32-P4-PC.pdf",
+      "retrieved_utc": "2026-09-21T01:49:30.556511+00:00",
+      "content_type": "application/pdf",
+      "bytes": 91504,
+      "sha256": "48a759ea1d1e0076926387f45cca26fb1fba385c450257122a35770551e42fbb",
+      "modified": false
+    },
+    {
+      "path": "website/UKCA-ESP32-P4-PC.pdf",
+      "source_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/resources/UKCA-ESP32-P4-PC.pdf",
+      "resolved_url": "https://www.olimex.com/Products/IoT/ESP32-P4/ESP32-P4-PC/resources/UKCA-ESP32-P4-PC.pdf",
+      "retrieved_utc": "2026-09-21T01:49:30.556511+00:00",
+      "content_type": "application/pdf",
+      "bytes": 103310,
+      "sha256": "124752d0a5fb29c7614d85e8c2d0117c7f05bdf87fc17a70aa4bb239b15b0809",
+      "modified": false
+    }
+  ],
+  "derived_files": [
+    {
+      "path": "text/ESP32-P4-PC-user-manual.txt",
+      "derived_from": "upstream/DOCUMENTS/ESP32-P4-PC-user-manual.pdf",
+      "source_sha256": "cbe0a46291060fc521c81857d75f67c2c075371b8db471c8da4f2a94798cb7bf",
+      "conversion": "pdftotext -layout",
+      "tool_version": "pdftotext version 24.02.0",
+      "bytes": 7162,
+      "sha256": "e45a64539a30156a924c0348c34d1b2e99637c75fbf4d201445c8b2f39079c34",
+      "modified": true,
+      "note": "Searchable extraction; original PDF remains authoritative for diagrams/layout."
+    },
+    {
+      "path": "text/ESP32-P4-PC_Rev_B.txt",
+      "derived_from": "upstream/HARDWARE/ESP32-P4-PC-Rev.B/ESP32-P4-PC_Rev_B.pdf",
+      "source_sha256": "8b2810225ef03937aff43ae04db28c52a39db6102009a40e1c034f008c5653f7",
+      "conversion": "pdftotext -layout",
+      "tool_version": "pdftotext version 24.02.0",
+      "bytes": 1632635,
+      "sha256": "a45515563b81eb9b0c016fe1c544101059d43ee719c2d2e7889efa9be80f6fe2",
+      "modified": true,
+      "note": "Searchable extraction; original PDF remains authoritative for diagrams/layout."
+    },
+    {
+      "path": "text/EU-DOC-ESP32-P4-PC.txt",
+      "derived_from": "website/EU-DOC-ESP32-P4-PC.pdf",
+      "source_sha256": "48a759ea1d1e0076926387f45cca26fb1fba385c450257122a35770551e42fbb",
+      "conversion": "pdftotext -layout",
+      "tool_version": "pdftotext version 24.02.0",
+      "bytes": 990,
+      "sha256": "48cfa6320b85fd5f4bcd230dc902014cd9d7ae6c634ed266b79cf00a59cfe24d",
+      "modified": true,
+      "note": "Searchable extraction; original PDF remains authoritative for diagrams/layout."
+    },
+    {
+      "path": "text/UKCA-ESP32-P4-PC.txt",
+      "derived_from": "website/UKCA-ESP32-P4-PC.pdf",
+      "source_sha256": "124752d0a5fb29c7614d85e8c2d0117c7f05bdf87fc17a70aa4bb239b15b0809",
+      "conversion": "pdftotext -layout",
+      "tool_version": "pdftotext version 24.02.0",
+      "bytes": 1074,
+      "sha256": "e7d6e307b1920eb19ffcf1d42891ed1da4de8cc16883fd7d16d2610f74f971ff",
+      "modified": true,
+      "note": "Searchable extraction; original PDF remains authoritative for diagrams/layout."
+    }
+  ]
+}

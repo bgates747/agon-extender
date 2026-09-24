@@ -1,0 +1,42 @@
+                                           OLIMEX Ltd, 2 Pravda St., Plovdiv, Bulgaria
+                                           www.olimex.com tel.+359-32-626259, fax:+359-32-621270
+
+
+
+
+  EU Declaration of Conformity (DoC)
+             We, OLIMEX Ltd, ul. Pravda 2, Plovdiv 4000, Bulgaria
+
+
+Declare under our sole responsibility that the product:
+
+Product name:       ESP32-P4-PC
+
+Trade name: OLIMEX Ltd
+
+to which this declaration relates is in conformity with the essential requirements and
+other relevant requirements of the ROHS Directive (2011/65/EU).
+
+The product is in conformity with the following standards and/or other normative
+documents:
+
+RoHS:       EN IEC 63000:2018
+
+Safety:     EN 62368-1:2014
+
+EMC :       EN 55032:2015, EN 55035:2017,
+            EN 61000-3-2:2014, EN 61000-3-3:2013
+
+
+Technical files held by: OLIMEX Ltd
+
+Place and date of issue(of this DoC): ul. Pravda 2, Plovdiv 4000, Bulgaria
+
+Signed by or for the manufacturer:
+
+
+
+
+Tsvetan Usunov
+January 26, 2026
+

@@ -1,0 +1,208 @@
+ESP32-P4-PC
+
+                        User Manual
+Rev.1.0 February 2026       olimex.com
+                        1
+Table of Contents
+What is ESP32-P4-PC................................................................................................................................3
+  Order codes for ESP32-P4-PC and accessories:...................................................................................4
+HARDWARE.............................................................................................................................................5
+  ESP32-P4-PC layout:............................................................................................................................6
+  UEXT connector:...................................................................................................................................7
+  ESP32-P4-PC UEXT connectors:.........................................................................................................8
+  SD-card interface:..................................................................................................................................9
+  MIPI CSI and DSI connectors:............................................................................................................10
+  Audio connector:.................................................................................................................................11
+  USB-C connector:...............................................................................................................................12
+  Power supply path...............................................................................................................................13
+  ESP32-P4-PC schematics:...................................................................................................................14
+SOFTWARE:...........................................................................................................................................15
+Revision History......................................................................................................................................16
+
+
+
+
+                                                                           2
+What is ESP32-P4-PC
+
+ESP32-P4-PC is complete all in one computer based on ESP32-P4NRW32 Dual core RISC-V
+processor from Espressif.
+
+
+The features of ESP32-P4-PC are:
+   •    Espressif ESP32-P4NRW32 processor:
+        - Dual core 400Mhz RISC-V
+        - 768KB RAM
+        - 32MB PSRAM
+    •   SPI Flash 16MB
+    •   USB JTAG for programming and debugging
+    •   Ethernet MACPHY and connector with POE option via extension
+    •   Camera CSI interface
+    •   LCD Display DSI interface
+    •   HDMI converter and output
+    •   Audio output 3.5mm jack
+    •   LiPo battery charger and step up for Lipo battery operation
+    •   MicroSD card
+    •   Boot and Reset buttons
+    •   UEXT connector
+    •   All free GPIOs available on 0.1″ 2.54 mm 20 pin connector
+    •   Three mounting holes 3.3mm diameter
+    •   Dimensions: (90 x 60)mm
+        ESP32-P4-PC is Open Source Hardware, all CAD files and firmware and available, so people
+        can study and modify.
+
+
+
+
++         Important notice: If ESP32-P4-PC is not mounted in box be careful to not place it on metal
+surface, nor drop metal objects on top of the PCB! This will lead to damage.
+
+
+
+
+                                                 3
+Order codes for ESP32-P4-PC and accessories:
+
+ESP32-P4-PC              ESP32-P4 all in one computer with 4 USB hosts and HDMI display
+CAMERA-OV5647-5MPIX MIPI CSI compatible camera
+MIPI-LCD2.8-640x480      MIPI DSI compatible display
+POEv3                    POE module compatible with ESP32-P4-PC
+CABLE-IDC10-15CM         UEXT cable
+USB-KEYBOARD-PS2         USB keyboard which is compatible with ESP32-P4-PC
+USB-CABLE-AM-USB3-C High speed, High current cable for power supply and programming
+CABLE-HDMI-50CM          HDMI cable
+UEXT modules             many UEXT modules which can connect to Neo6502 UEXT connector
+BATTERY-LiPo1400mAh      LiPo battery compatible with RP2350pc
+
+
+
+
+                                            4
+HARDWARE
+
+
+
+
+           5
+     ESP32-P4-PC layout:
+
+
+
+
+                       Camera MIPI
+                                                              LiPo battery
+                                         Display MIPI
+                       UEXT                                                       USB 3-4
+ Audio 3.5mm jack
+
+
+
+
+                                                                                      USB 1-2
+  HDMI
+
+
+
+
+Ethernet            POE                                                               USB-C
+10/100Mb            connector   Reset button
+                                                        GPIO          Micro SD card
+                                          Boot button   extension
+
+
+
+
+                                               6
+UEXT connector:
+
+UEXT connector stands for Universal EXTension connector and contain +3.3V, GND, I2C, SPI, UART
+signals.
+UEXT connector can be in different shapes.
+The original UEXT connector is 0.1” 2.54mm step boxed plastic connector. All signals are with 3.3V
+levels.
+
+
+
+
+Olimex has developed number of MODULES with this connector. There are temperature, humidity,
+pressure, magnetic field, light sensors. Modules with LCDs, LED matrix, Relays, Bluetooth, Zigbee,
+WiFi, GSM, GPS, RFID, RTC, EKG, sensors and etc.
+
+
+
+
+                                                 7
+ESP32-P4-PC UEXT connectors:
+
+
+
+
+                           8
+SD-card interface:
+
+
+
+
+                     9
+MIPI CSI and DSI connectors:
+
+
+
+
+                               10
+Audio connector:
+
+
+
+
+                   11
+USB-C connector:
+
+It’s used for power supply, serial port programming and JTAG/debugging:
+
+
+
+
+                                                12
+Power supply path
+
+ESP32-P4-PC can be powered by USB-C connector or Ethernet POE, the USB-C connector have
+priority i.e. if both are present the power will be taken from USB-C connector.
+The voltage is labeled +5V-EXT and is used to charge LiPo battery.
+There is option to detect this voltage with GPIO32 via voltage divider, this is not connected by default
+to keep GPIO32 free for other apps if the external power sense is not necessary.
+
+
+The LiPo battery is used only if not External 5V power supply. In this case step up with U14 power all
+5V peripherals. So everything is working even with no external power supply is present.
+GPIO20 can be used to measure the battery charge. By default this port is not connected so GPIO20 is
+free for other applications if no battery sense is necessary.
+
+
+
+
+                                                   13
+ESP32-P4-PC schematics:
+
+ESP32-P4-PC latest schematic is on GitHub
+
+
+
+
+                                            14
+SOFTWARE:
+
+ESP32-P4-PC can be programmed with Espressif IDF. On Product web page there is demo code.
+
+
+
+
+                                              15
+Revision History
+Revision 1.0 February 2026
+
+
+
+
+                             16
+

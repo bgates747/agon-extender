@@ -14,6 +14,12 @@ and useful code here, but substantial cleanup, compatibility work and testing
 remain. Public source availability does not mean a finished product or a
 ready-to-install firmware release.
 
+## P4-PC board documentation and examples
+
+Start with the [Olimex ESP32-P4-PC reference library](docs/hardware/esp32-p4-pc/README.md):
+manual, schematic, design files, searchable text, example instructions and pinned
+provenance. Its index also identifies the complete local upstream software clone.
+
 ## Where the actual code lives
 
 Both firmware repositories are public. Start here to find the component you
@@ -191,6 +197,9 @@ mainboard card. Its file protocol does not provide remote shell execution.
 5. [Qualification records](docs/qualification/README.md) and
    [publication-readiness findings](docs/public-release-readiness.md) document
    what has been checked and where the setup still falls short.
+
+6. [MOS/VDP firmware bug register](docs/firmware-bugs.md) records reproduction
+   conditions, mainboard versus Extender evidence, and fix dispositions.
 
 ## License and upstream work
 
