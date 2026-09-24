@@ -5,6 +5,10 @@ IDs are retained until an item is accepted, rejected, or superseded; its result
 and rationale are then recorded in the current dated development log before the
 item is removed.
 
+## Top priority — Networking prior-art review
+
+- [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Contract prepared; detailed review not started. Takes precedence over the existing do-now queue.
+
 ## Do now — Approved closeout and planning
 
 - [ ] **PLAN-001 — Timing closeout and next-work selection**: [approved contract](docs/tasks/PLAN-001.md). Close out and commit scoped timing work, reconcile the unfinished queue, then select faithful VDP-to-EDP work. Aginvadors optimization is deferred by Author decision D01 until more tokens are available; browser-performance experiments are parked. This sequence takes priority over historical headings below. T01 complete and committed; T02 queue reconciliation is next, not yet started.
