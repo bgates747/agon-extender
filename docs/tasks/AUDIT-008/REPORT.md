@@ -1,5 +1,8 @@
 # AUDIT-008 — Where EMOS can recover ROM
 
+This is the frozen research report. Subsequent implementation measurements and
+validation are recorded in [IMPLEMENTATION.md](IMPLEMENTATION.md).
+
 ## Executive summary
 
 The fresh ordinary EMOS build confirms **16 bytes free out of 128 KiB**. The

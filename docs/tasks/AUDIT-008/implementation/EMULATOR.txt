@@ -1,0 +1,139 @@
+Tom's Fake VDP Version 1.03
+unknown packet VDU 0x17, 0, 0xf8
+unknown packet VDU 0x17, 0, 0x99
+uunknown packet VDU 0x17, 0, 0x94
+
+Agon Platform MOS Version 3.0.2 Arthur
+
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+Unknown packet VDU 0x16
+Unknown packet VDU 0x3
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[autoexec]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+PASS: resident built-in remains available
+/ *EMOS STATUS
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+/ *EmOs PrObE alpha "two words"
+Utility probe: argc=4 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[alpha]
+arg2=["two]
+arg3=[words"]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+PASS: resident built-in remains available
+/ *emos probe return7
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[return7]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+PASS: resident built-in remains available
+
+Access denied or directory full
+/ *emos probe again
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[again]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+PASS: resident built-in remains available
+/ *emos abcdefghijklmnopqrstuvwx boundary
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[boundary]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 0
+PASS: resident built-in remains available
+/ *emos abcdefghijklmnopqrstuvwxy
+
+Invalid parameter
+/ *emos ../probe
+
+Invalid parameter
+/ *emos probe.bin
+
+Invalid parameter
+/ *emos missing
+
+Could not find file
+/ *emos short
+
+Invalid executable
+/ *emos bad
+
+Invalid executable
+/ *emos huge
+
+Load overlaps system area
+/ *emos directory
+
+Invalid executable
+/ *emos wrongmode
+
+Invalid executable
+/ *emos discover
+
+EMOS backend unavailable
+/ *emos clear
+
+EMOS backend unavailable
+/ *emos call core.echo abandoned
+
+EMOS provider not found
+/ *emos fake on
+/ *emos mode dual
+/ *emos status
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Dual
+  VDU route 0, EDU active, adapter fake, mode generation 1
+/ *emos mode legacy
+/ *emos fake off
+/ *emos sdserve /
+SD service unavailable (EMOS 35). Requires ext.sdlink and Extender keyboard.
+
+Error accessing SD card
+/ *LOAD /app.bin 0x40000
+/ *RUN . application
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[application]
+PASS: application nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 2
+PASS: resident built-in remains available
+/ *LOAD /sentinel.bin 0x40000
+/ *emos probe after-app
+Utility probe: argc=2 invocation=1
+arg0=[utilityprobe.bin]
+arg1=[after-app]
+PASS: application sentinel preserved
+PASS: MOSlet nested dispatch rejected
+EMOS identity: agon-emos-v0.1.19, build agon-emos-v0.1.19-b2026-09-24-02-02-56Z, status draft
+EMOS: Legacy
+  VDU route 0, EDU inactive, adapter unavailable, mode generation 2
+PASS: resident built-in remains available
+/ *echo Audit utility checks finished
+Audit utility checks finished
+/ *

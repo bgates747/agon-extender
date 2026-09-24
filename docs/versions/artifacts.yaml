@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r103
-updated_at: 2026-09-24T00:53:13Z
+registry_revision: r104
+updated_at: 2026-09-24T01:53:00Z
 
 artifacts:
+  - artifact_id: emos-utility-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: emos-utility-probe-r01
+    status: draft
+    variants: []
+    description: Local EMOS foreground utility launcher and caller-admission regression probe.
+    notes:
+      - AUDIT-008 standing identity authority; emulator and host checks only; registry r104.
   - artifact_id: browser-reset
     kind: test_fixture
     identity_scheme: revision
@@ -248,13 +257,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.18
+    latest_identity: agon-emos-v0.1.19
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.19 is the AUDIT-008 cancelled-provider retirement and foreground /emos dispatcher; draft local validation only, no physical deployment. Standing identity authority; registry r104.
       - v0.1.18 is the REMOTE-005 provisional resident sdlink MOSlet admission correction; registry r100, standing identity authorization. Bounded physical transfer and full ROM readback pass; broader qualification is not claimed.
       - BENCH-001 v0.1.16 selects 140-byte v2 traffic telemetry via port/bench-telemetry.mk, substituting UARTFLOW only in that composition. Physical installation, direct ROM identity readback, SD access and feedback driving passed scoped checks; the 200% practice block recorded102 clean laps and299 passes. Native emulator lacks TX-empty IRQ demand; its delayed v2 driving test remains an informative failure. Draft inputs are not qualified or released.
       - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.

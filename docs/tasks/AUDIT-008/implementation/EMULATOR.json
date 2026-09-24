@@ -1,0 +1,61 @@
+{
+  "fixture_identity": "emos-utility-probe-r01",
+  "run_id": "AUDIT-008-2026-09-24-02-03-31Z",
+  "elapsed_seconds": 39.34587897100573,
+  "status": "pass",
+  "scope": "Fab CLI loader/ABI checks; fake VDP; no bench or physical SD",
+  "listener_scope": "MOSlet launch and expected unavailable-transport return only",
+  "inputs": {
+    "cli": {
+      "bytes": 1130920,
+      "sha256": "e50cfa33db912bca1010996219f9e779bdda4b3617d9874a0f6e45de3c68523c"
+    },
+    "firmware": {
+      "bytes": 124774,
+      "sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7"
+    },
+    "utility": {
+      "bytes": 7930,
+      "sha256": "c2882efb87dd21d70ebed0b46686f985030b548a50544c2045b7e0fb8db89cd5"
+    },
+    "application": {
+      "bytes": 7930,
+      "sha256": "298c542a3d742153aa893983cbaba447b5f63fc3bbde1621d2813a9ede4ad784"
+    },
+    "listener": {
+      "bytes": 18987,
+      "sha256": "1d49f74d0a39eb92a33c6a5d3ff5fdfd3064099a71ab86f7dc395176910ed6d3"
+    }
+  },
+  "commands": [
+    "EMOS STATUS",
+    "EmOs PrObE alpha \"two words\"",
+    "emos probe return7",
+    "emos probe again",
+    "emos abcdefghijklmnopqrstuvwx boundary",
+    "emos abcdefghijklmnopqrstuvwxy",
+    "emos ../probe",
+    "emos probe.bin",
+    "emos missing",
+    "emos short",
+    "emos bad",
+    "emos huge",
+    "emos directory",
+    "emos wrongmode",
+    "emos discover",
+    "emos clear",
+    "emos call core.echo abandoned",
+    "emos fake on",
+    "emos mode dual",
+    "emos status",
+    "emos mode legacy",
+    "emos fake off",
+    "emos sdserve /",
+    "LOAD /app.bin 0x40000",
+    "RUN . application",
+    "LOAD /sentinel.bin 0x40000",
+    "emos probe after-app",
+    "echo Audit utility checks finished"
+  ],
+  "media_unchanged": true
+}

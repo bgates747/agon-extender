@@ -3,7 +3,7 @@
 ## Executive summary
 
 Contract refreshed 2026-09-23. The Author approved a one-hour autonomous
-investigation; **A08-01–A08-07 complete; first-tranche implementation authorized**. This promotes the previously deferred idea
+investigation; **A08-01–A08-08 complete; first tranche locally validated, hardware pending**. This promotes the previously deferred idea
 instead of creating a duplicate task. REMOTE-005 remains the next file-access
 workstream; this task determines which existing resident EMOS functions could
 become SD-loaded foreground utilities, informally “EMOSlets,” to recover ROM for
@@ -84,7 +84,7 @@ net ROM target, deployment/rollback, and validation. Stop before product changes
 
 ## Authorized implementation and validation
 
-A08-08 [ ] After approval, extract only the selected tranche, retaining stock
+A08-08 [x] After approval, extract only the selected tranche, retaining stock
 MOS idioms and thin resident services. Measure total linked before/after ROM;
 retaining duplicate implementations is not a saving. Preserve the previous image
 and matching SD utilities as a rollback set.
@@ -145,24 +145,24 @@ A08-I01 [x] Freeze research, accepted decisions and this phased contract before
 product edits. Scope is retirement of the cancelled external `.emo` machinery
 and a minimal `/emos` stock-MOSlet dispatcher, not extraction of UART diagnostics.
 
-A08-I02 [ ] Remove external-provider discovery, registry, load/swap/CRC execution
+A08-I02 [x] Remove external-provider discovery, registry, load/swap/CRC execution
 and arbitrary command fallback. Keep gateway ABI 0x51 / C slot 0x20, resident
 services, request validation, busy admission, lifecycle, modes and keyboard.
 Retired discover/clear requests return unavailable; unknown providers return
 not found. Mark historical provider fixtures as historical, not current gates.
 
-A08-I03 [ ] Add built-ins-first, case-insensitive `emos <name> [args]` dispatch to
+A08-I03 [x] Add built-ins-first, case-insensitive `emos <name> [args]` dispatch to
 `/emos/<name>.bin`. Admit only Core/idle CLI; use fixed 0xB0000 MOSlet region and
 stock load/run ABI. Validate leaf and file size, invalidate stale header before
 load, preserve application RAM and global search paths. No new executable ABI.
 
-A08-I04 [ ] Add focused automated checks for dispatch, case/argument handling,
+A08-I04 [x] Add focused automated checks for dispatch, case/argument handling,
 return/re-entry, invalid/missing/oversize files and denied nested invocation.
 Run maintained firmware checks and linked guards. Exercise the candidate in an
 isolated emulator where feasible, including the existing sdserve MOSlet.
 Distinguish emulator filesystem limits from target behavior.
 
-A08-I05 [ ] Account candidate ROM/RAM against the retained 131056-byte baseline,
+A08-I05 [x] Account candidate ROM/RAM against the retained 131056-byte baseline,
 targeting at least 4096 net ROM bytes recovered. Record exact provenance,
 validation, residual limits and physical gates. Commit source and documentation
 as coherent increments; stop at the time budget with incomplete gates explicit.
@@ -170,3 +170,12 @@ as coherent increments; stop at the time budget with incomplete gates explicit.
 Hardware acceptance remains a later gate, including native keyboard and ExCom
 service continuity. Local checks cannot certify physical UART behavior. No
 physical installation or retirement of existing utility entry paths this run.
+
+## First-tranche completion
+
+[Implementation results](AUDIT-008/IMPLEMENTATION.md): final ordinary image
+124774 bytes, 6298 free; **6282 ROM bytes and 3155 static RAM bytes recovered**.
+All 91 host tests, mandatory selected-profile link checks and isolated Fab CLI
+regression pass. A08-I01–I05 are complete. A08-09 remains open for physical
+acceptance; no bench operation or physical SD migration occurred. Diagnostics
+and other possible extractions remain outside this completed first tranche.

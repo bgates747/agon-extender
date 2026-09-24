@@ -1,0 +1,1264 @@
+Archive member included to satisfy reference by file (symbol)
+
+runtime/build/libmos_runtime.a(firmware_printf.o)
+                              obj/main.o (_printf)
+runtime/build/libmos_runtime.a(i48_required.o)
+                              obj/src_fatfs/ff.o (__i48shru)
+runtime/build/libmos_runtime.a(and.o)
+                              obj/src/emos.o (__land)
+runtime/build/libmos_runtime.a(bshl.o)
+                              obj/src/emos_keyboard.o (__bshl)
+runtime/build/libmos_runtime.a(bshru.o)
+                              obj/src/emos_parallel.o (__bshru)
+runtime/build/libmos_runtime.a(frameset.o)
+                              obj/main.o (__frameset)
+runtime/build/libmos_runtime.a(frameset0.o)
+                              obj/src/clock.o (__frameset0)
+runtime/build/libmos_runtime.a(idivs.o)
+                              obj/src/mos.o (__idivs)
+runtime/build/libmos_runtime.a(idvrms.o)
+                              runtime/build/libmos_runtime.a(idivs.o) (__idvrms)
+runtime/build/libmos_runtime.a(idvrmu.o)
+                              runtime/build/libmos_runtime.a(idvrms.o) (__idvrmu)
+runtime/build/libmos_runtime.a(imulu.o)
+                              obj/src/clock.o (__imulu)
+runtime/build/libmos_runtime.a(indcall.o)
+                              obj/src/emos.o (__indcall)
+runtime/build/libmos_runtime.a(indcallhl.o)
+                              obj/src/emos_parallel.o (__indcallhl)
+runtime/build/libmos_runtime.a(ineg_sneg.o)
+                              obj/src/mos_editor.o (__ineg)
+runtime/build/libmos_runtime.a(inot.o)
+                              obj/src/mos_editor.o (__inot)
+runtime/build/libmos_runtime.a(irems.o)
+                              obj/src/mos_sysvars.o (__irems)
+runtime/build/libmos_runtime.a(ishl.o)
+                              obj/src/emos_console.o (__ishl)
+runtime/build/libmos_runtime.a(ishrs.o)
+                              obj/src/mos.o (__ishrs)
+runtime/build/libmos_runtime.a(ladd.o)
+                              obj/src/emos.o (__ladd)
+runtime/build/libmos_runtime.a(lcmps.o)
+                              obj/src_fatfs/ff.o (__lcmps)
+runtime/build/libmos_runtime.a(lcmpu.o)
+                              obj/src/emos.o (__lcmpu)
+runtime/build/libmos_runtime.a(lcmpzero.o)
+                              obj/src/emos.o (__lcmpzero)
+runtime/build/libmos_runtime.a(ldivs.o)
+                              obj/src/timer.o (__ldivs)
+runtime/build/libmos_runtime.a(ldivs_lrems_common.o)
+                              runtime/build/libmos_runtime.a(ldivs.o) (__ldivs_lrems_common)
+runtime/build/libmos_runtime.a(ldivu.o)
+                              obj/src/uart.o (__ldivu)
+runtime/build/libmos_runtime.a(ldvrmu.o)
+                              runtime/build/libmos_runtime.a(ldivu.o) (__ldvrmu)
+runtime/build/libmos_runtime.a(llmulu.o)
+                              runtime/build/libmos_runtime.a(i48_required.o) (__llmulu)
+runtime/build/libmos_runtime.a(llshru.o)
+                              runtime/build/libmos_runtime.a(i48_required.o) (__llshru)
+runtime/build/libmos_runtime.a(lmulu.o)
+                              obj/src_fatfs/ff.o (__lmulu)
+runtime/build/libmos_runtime.a(lneg.o)
+                              obj/src_fatfs/ff.o (__lneg)
+runtime/build/libmos_runtime.a(lnot.o)
+                              obj/src/emos.o (__lnot)
+runtime/build/libmos_runtime.a(lshl.o)
+                              obj/src/emos.o (__lshl)
+runtime/build/libmos_runtime.a(lshrs.o)
+                              runtime/build/libmos_runtime.a(firmware_printf.o) (__lshrs)
+runtime/build/libmos_runtime.a(lshru.o)
+                              obj/src/clock.o (__lshru)
+runtime/build/libmos_runtime.a(lsub.o)
+                              obj/src/emos_parallel_engine.o (__lsub)
+runtime/build/libmos_runtime.a(or.o)
+                              obj/src_fatfs/diskio.o (__lor)
+runtime/build/libmos_runtime.a(sand.o)
+                              obj/src/clock.o (__sand)
+runtime/build/libmos_runtime.a(setflag.o)
+                              obj/main.o (__setflag)
+runtime/build/libmos_runtime.a(sor.o)
+                              obj/src_umm_malloc/umm_malloc.o (__sor)
+runtime/build/libmos_runtime.a(sremu.o)
+                              obj/src/mos.o (__sremu)
+runtime/build/libmos_runtime.a(sshru.o)
+                              obj/src_fatfs/ff.o (__sshru)
+runtime/build/libmos_runtime.a(xor.o)
+                              obj/src/emos.o (__lxor)
+runtime/build/libmos_runtime.a(isspace.o)
+                              obj/src/emos.o (_isspace)
+runtime/build/libmos_runtime.a(isxdigit.o)
+                              obj/src/mos.o (_isxdigit)
+runtime/build/libmos_runtime.a(memchr.o)
+                              obj/src/mos.o (_memchr)
+runtime/build/libmos_runtime.a(memcmp.o)
+                              obj/src/emos.o (_memcmp)
+runtime/build/libmos_runtime.a(memcpy.o)
+                              obj/src/emos.o (_memcpy)
+runtime/build/libmos_runtime.a(memmove.o)
+                              obj/src_umm_malloc/umm_malloc.o (_memmove)
+runtime/build/libmos_runtime.a(memset.o)
+                              obj/src/emos.o (_memset)
+runtime/build/libmos_runtime.a(qsort.o)
+                              obj/src/mos.o (_qsort)
+runtime/build/libmos_runtime.a(strcat.o)
+                              obj/src/mos.o (_strcat)
+runtime/build/libmos_runtime.a(strchr.o)
+                              obj/src/mos_file.o (_strchr)
+runtime/build/libmos_runtime.a(strcmp.o)
+                              obj/main.o (_strcmp)
+runtime/build/libmos_runtime.a(strcpy.o)
+                              obj/src/mos.o (_strcpy)
+runtime/build/libmos_runtime.a(strlen.o)
+                              obj/src/emos.o (_strlen)
+runtime/build/libmos_runtime.a(strncpy.o)
+                              obj/src/mos.o (_strncpy)
+runtime/build/libmos_runtime.a(strrchr.o)
+                              obj/src/emos.o (_strrchr)
+runtime/build/libmos_runtime.a(strspn.o)
+                              obj/src/mos_editor.o (_strspn)
+runtime/build/libmos_runtime.a(strtol.o)
+                              obj/src/mos_sysvars.o (_strtol)
+runtime/build/libmos_runtime.a(tolower.o)
+                              obj/src/emos.o (_tolower)
+runtime/build/libmos_runtime.a(toupper.o)
+                              obj/src/mos.o (_toupper)
+runtime/build/libmos_runtime.a(idivu.o)
+                              runtime/build/libmos_runtime.a(qsort.o) (__idivu)
+runtime/build/libmos_runtime.a(llshrs.o)
+                              runtime/build/libmos_runtime.a(llshru.o) (__llshrs.finish)
+runtime/build/libmos_runtime.a(sdvrmu.o)
+                              runtime/build/libmos_runtime.a(sremu.o) (__sdvrmu)
+runtime/build/libmos_runtime.a(isalpha.o)
+                              runtime/build/libmos_runtime.a(strtol.o) (_isalpha)
+runtime/build/libmos_runtime.a(isdigit.o)
+                              runtime/build/libmos_runtime.a(strtol.o) (_isdigit)
+runtime/build/libmos_runtime.a(isupper.o)
+                              runtime/build/libmos_runtime.a(strtol.o) (_isupper)
+
+Discarded input sections
+
+ .comment       0x00000000       0x77 obj/main.o
+ .comment       0x00000000       0x77 obj/src/clock.o
+ .comment       0x00000000       0x77 obj/src/emos.o
+ .comment       0x00000000       0x77 obj/src/emos_console.o
+ .comment       0x00000000       0x77 obj/src/emos_keyboard.o
+ .comment       0x00000000       0x77 obj/src/emos_parallel.o
+ .comment       0x00000000       0x77 obj/src/emos_parallel_engine.o
+ .comment       0x00000000       0x77 obj/src/emos_sdlink.o
+ .comment       0x00000000       0x77 obj/src/emos_telemetry.o
+ .comment       0x00000000       0x77 obj/src/emos_uart_flow.o
+ .comment       0x00000000       0x77 obj/src/emos_uart_probe.o
+ .comment       0x00000000       0x77 obj/src/i2c.o
+ .comment       0x00000000       0x77 obj/src/mos.o
+ .comment       0x00000000       0x77 obj/src/mos_editor.o
+ .comment       0x00000000       0x77 obj/src/mos_file.o
+ .comment       0x00000000       0x77 obj/src/mos_sysvars.o
+ .comment       0x00000000       0x77 obj/src/strings.o
+ .comment       0x00000000       0x77 obj/src/tests.o
+ .comment       0x00000000       0x77 obj/src/timer.o
+ .comment       0x00000000       0x77 obj/src/uart.o
+ .comment       0x00000000       0x77 obj/src_fatfs/diskio.o
+ .comment       0x00000000       0x77 obj/src_fatfs/ff.o
+ .comment       0x00000000       0x77 obj/src_fatfs/ffsystem.o
+ .comment       0x00000000       0x77 obj/src_fatfs/ffunicode.o
+ .comment       0x00000000       0x77 obj/src_umm_malloc/umm_malloc.o
+ .comment       0x00000000       0x77 runtime/build/libmos_runtime.a(firmware_printf.o)
+ .comment       0x00000000       0x77 runtime/build/libmos_runtime.a(qsort.o)
+ .comment       0x00000000       0x77 runtime/build/libmos_runtime.a(strtol.o)
+
+Memory Configuration
+
+Name             Origin             Length             Attributes
+FLASH            0x00000000         0x00020000         xr
+RAM              0x000bc000         0x00004000         xrw
+*default*        0x00000000         0xffffffff
+
+Linker script and memory map
+
+                0x00000004                        __CS0_LBR_INIT_PARAM = 0x4
+                0x0000000b                        __CS0_UBR_INIT_PARAM = 0xb
+                0x00000008                        __CS0_CTL_INIT_PARAM = 0x8
+                0x00000001                        __CS0_BMC_INIT_PARAM = 0x1
+                0x000000c0                        __CS1_LBR_INIT_PARAM = 0xc0
+                0x000000c7                        __CS1_UBR_INIT_PARAM = 0xc7
+                0x00000008                        __CS1_CTL_INIT_PARAM = 0x8
+                0x00000000                        __CS1_BMC_INIT_PARAM = 0x0
+                0x00000080                        __CS2_LBR_INIT_PARAM = 0x80
+                0x000000bf                        __CS2_UBR_INIT_PARAM = 0xbf
+                0x00000008                        __CS2_CTL_INIT_PARAM = 0x8
+                0x00000000                        __CS2_BMC_INIT_PARAM = 0x0
+                0x00000003                        __CS3_LBR_INIT_PARAM = 0x3
+                0x00000003                        __CS3_UBR_INIT_PARAM = 0x3
+                0x00000018                        __CS3_CTL_INIT_PARAM = 0x18
+                0x00000082                        __CS3_BMC_INIT_PARAM = 0x82
+                0x00000080                        __RAM_CTL_INIT_PARAM = 0x80
+                0x000000b7                        __RAM_ADDR_U_INIT_PARAM = 0xb7
+                0x00000028                        __FLASH_CTL_INIT_PARAM = 0x28
+                0x00000000                        __FLASH_ADDR_U_INIT_PARAM = 0x0
+                0x01194000                        _SYS_CLK_FREQ = 0x1194000
+                0x00000000                        __copy_code_to_ram = 0x0
+                0x00000001                        __crtl = 0x1
+                0x00000000                        __low_rom = ORIGIN (FLASH)
+
+.reset          0x00000000       0x6b
+                0x00000000                        __reset_start = .
+ *(.reset .RESET)
+ .RESET         0x00000000       0x6b obj/asm/src_startup/vectors16.o
+                0x00000000                _reset
+                0x0000006b                        __reset_end = .
+
+.reset_fill     0x0000006b       0x95
+                0x0000006b                        __mos_descriptor_start = .
+ *(.mos_descriptor)
+ .mos_descriptor
+                0x0000006b       0x4f obj/hostfs_descriptor.o
+                0x000000ba                        __mos_descriptor_end = .
+ FILL mask 0xff
+                0x000000ba        0x1 BYTE 0xff
+                0x00000095                        . = 0x95
+ *fill*         0x000000bb       0x45 ff
+
+.ivecs          0x00000100      0x120
+                0x00000100                        __ivecs_start = .
+ *(.ivecs .IVECTS .vectors)
+ .IVECTS        0x00000100      0x120 obj/asm/src_startup/vectors16.o
+                0x00000100                __vector_table
+                0x00000160                __1st_jump_table
+                0x00000220                        __ivecs_end = .
+
+.startup        0x00000220     0x1da7
+                0x00000220                        __startup_start = .
+ *(.startup .STARTUP)
+ .STARTUP       0x00000220      0x167 obj/asm/src/gpio.o
+                0x00000220                GPIOB_SETMODE
+ .STARTUP       0x00000387      0x187 obj/asm/src/interrupts.o
+                0x00000387                _vblank_handler
+                0x000003b7                _uart0_handler
+                0x000003e5                _i2c_handler
+ .STARTUP       0x0000050e      0x42f obj/asm/src/keyboard.o
+                0x0000050e                keyboard_handler
+                0x0000055d                keyboard_lookup
+                0x0000093d                keyboard_lookup_end
+ .STARTUP       0x0000093d       0xf1 obj/asm/src/misc.o
+                0x0000093d                SWITCH_A
+                0x0000094a                SET_AHL24
+                0x00000953                FIX_HLU24
+                0x00000957                FIX_HLU24_no_mb_check
+                0x00000966                SET_ADE24
+                0x00000971                SET_ABC24
+                0x0000097c                SET_AIX24
+                0x00000989                __exec24
+                0x00000989                _exec24
+                0x000009b9                _exec16
+                0x000009b9                __exec16
+                0x000009fb                _wait_timer0
+                0x000009fb                __wait_timer0
+                0x00000a11                _timer0_delay
+ .STARTUP       0x00000a2e      0xac9 obj/asm/src/mos_api.o
+                0x00000a2e                mos_api
+ .STARTUP       0x000014f7        0x9 obj/asm/src/rtc.o
+                0x000014f7                _init_rtc
+                0x000014f7                __init_rtc
+ .STARTUP       0x00001500      0x1f5 obj/asm/src/serial.o
+                0x00001511                UART0_serial_TX
+                0x0000152e                UART1_serial_TX
+                0x00001556                UART0_serial_RX
+                0x00001561                UART1_serial_RX
+                0x00001577                UART0_serial_GETCH
+                0x00001589                UART1_serial_GETCH
+                0x000015a4                UART0_serial_PUTCH
+                0x000015c0                UART1_serial_PUTCH
+                0x000015e5                EMOS_vdu_PUTCH
+                0x00001631                EMOS_vdu_parallel_PUTCH
+                0x0000165b                EMOS_vdu_WRITE
+                0x0000167a                EMOS_vdu_parallel_WRITE
+                0x000016c4                _putch
+                0x000016c4                putch
+                0x000016de                getch
+                0x000016de                _getch
+ .STARTUP       0x000016f5      0x24f obj/asm/src/vdp_protocol.o
+                0x000016f5                vdp_protocol
+                0x00001783                emos_vdp_dispatch
+                0x00001817                emos_keyboard_payload
+ .STARTUP       0x00001944       0x4e obj/asm/src_startup/cstartup.o
+                0x00001944                __c_startup
+ .STARTUP       0x00001992      0x12f obj/asm/src_startup/init_params_f92.o
+                0x00001992                __init
+                0x00001abb                __exit
+                0x00001abb                _abort
+                0x00001abb                _exit
+                0x00001abd                _SysClkFreq
+ .STARTUP       0x00001ac1       0x9b obj/asm/src_startup/vectors16.o
+                0x00001ac1                __nvectors
+                0x00001af0                __default_nmi_handler
+                0x00001af3                __default_mi_handler
+                0x00001af7                _init_default_vectors
+                0x00001af7                __init_default_vectors
+                0x00001b26                __set_vector
+                0x00001b26                _set_vector
+ .STARTUP       0x00001b5c       0x16 obj/asm/src/emos_console_io.o
+                0x00001b5c                _emos_mainboard_put
+                0x00001b66                _emos_vdp_effect
+ .STARTUP       0x00001b72      0x2cc obj/asm/src/emos_keyboard_io.o
+                0x00001b72                _uart1_keyboard_put
+                0x00001bc4                _emos_keyboard_transmit_block
+                0x00001c92                _emos_keyboard_byte
+                0x00001d35                _uart1_keyboard_irq
+                0x00001d6e                _emos_keyboard_lock
+                0x00001d7a                _emos_keyboard_unlock
+                0x00001d84                _emos_keyboard_clock
+                0x00001d89                _emos_keyboard_vector
+                0x00001dbf                _emos_keyboard_effect
+                0x00001dd3                _emos_keyboard_settings
+                0x00001de5                _emos_keyboard_mainboard_layout
+                0x00001e00                _emos_keyboard_irq_entry
+                0x00001e25                emos_keyboard_tick_entry
+ .STARTUP       0x00001e3e      0x189 obj/asm/src/emos_parallel_io.o
+                0x00001e3e                _emos_parallel_io_write_control
+                0x00001e69                _emos_parallel_io_configure
+                0x00001eb2                _emos_parallel_io_try_lock
+                0x00001ee1                _emos_parallel_io_try_begin_entry
+                0x00001f22                _emos_parallel_io_try_reserve_portc
+                0x00001f57                _emos_parallel_io_read_clock
+                0x00001f83                _emos_parallel_io_commit_epoch
+                0x00001fc7                        __startup_end = .
+
+.text           0x00001fc7    0x1aba8
+                0x00001fc7                        __low_code = .
+ *(.text .text.*)
+ .text          0x00001fc7      0x225 obj/asm/src/crash.o
+                0x00001fc7                _on_crash
+ .text          0x000021ec        0x0 obj/asm/src/gpio.o
+ .text          0x000021ec        0x0 obj/asm/src/interrupts.o
+ .text          0x000021ec        0x0 obj/asm/src/keyboard.o
+ .text          0x000021ec        0x0 obj/asm/src/misc.o
+ .text          0x000021ec        0x0 obj/asm/src/mos_api.o
+ .text          0x000021ec        0x0 obj/asm/src/rtc.o
+ .text          0x000021ec      0x351 obj/asm/src/sd.o
+                0x000021ec                _SD_init
+                0x00002262                _SD_readBlocks
+                0x00002316                _SD_writeBlocks
+ .text          0x0000253d        0x0 obj/asm/src/serial.o
+ .text          0x0000253d      0x10e obj/asm/src/spi.o
+                0x0000253d                _init_spi
+                0x000025ab                _spi_read_one
+                0x000025b3                _spi_transfer
+                0x000025c7                _spi_read
+                0x0000260d                _spi_write
+ .text          0x0000264b        0x0 obj/asm/src/vdp_protocol.o
+ .text          0x0000264b        0x0 obj/asm/src_startup/cstartup.o
+ .text          0x0000264b        0x0 obj/asm/src_startup/globals.o
+ .text          0x0000264b        0x0 obj/asm/src_startup/init_params_f92.o
+ .text          0x0000264b        0x0 obj/asm/src_startup/vectors16.o
+ .text          0x0000264b        0x0 obj/asm/src/emos_console_io.o
+ .text          0x0000264b        0x0 obj/asm/src/emos_keyboard_io.o
+ .text          0x0000264b        0x0 obj/asm/src/emos_parallel_io.o
+ .text          0x0000264b      0x415 obj/main.o
+                0x0000264b                _wait_ESP32
+                0x00002755                _init_interrupts
+                0x00002786                _quickrand
+                0x0000278d                _rainbow_msg
+                0x00002858                _bootmsg
+                0x000028a6                _shiftPressed
+                0x000028ba                _main
+ .text          0x00002a60      0x301 obj/src/clock.o
+                0x00002a60                _rtc_update
+                0x00002a9e                _rtc_unpack
+                0x00002b59                _rtc_formatDateTime
+                0x00002bd9                _rtc_formatDate
+                0x00002c58                _rtc_formatTime
+                0x00002c85                _rtc_monthFromName
+                0x00002cf3                _rtc_dayFromName
+ .text          0x00002d61     0x2edd obj/src/emos.o
+                0x00002d61                _emos_read24
+                0x00002d6d                _emos_init
+                0x00002dea                _emos_discover
+                0x0000384e                _emos_clear
+                0x00003890                _emos_gateway
+                0x00004366                _emos_dispatch_command
+                0x0000449e                _emos_application_enter
+                0x00004539                _emos_application_leave
+                0x00004586                _emos_get_mode
+                0x0000458b                _emos_request_mode
+                0x00004821                _emos_cmd
+ .text          0x00005c3e      0x72a obj/src/emos_console.o
+                0x00005c3e                _emos_console_packet
+                0x00005e6e                _emos_console_prepare
+                0x00005fd9                _emos_console_commit
+                0x00006134                _emos_console_publish
+                0x00006198                _emos_console_recover
+                0x000061de                _emos_console_write_stream
+                0x0000620e                _emos_console_write_byte
+                0x0000622d                _emos_console_notice
+ .text          0x00006368      0xac8 obj/src/emos_keyboard.o
+                0x00006368                _emos_keyboard_mainboard
+                0x000063fc                _emos_keyboard_mainboard_settings
+                0x00006413                _emos_keyboard_fault
+                0x00006513                _emos_keyboard_tick
+                0x0000658f                _emos_keyboard_dispatch
+                0x00006660                _emos_keyboard_select
+                0x000069bb                _emos_keyboard_layout
+                0x00006aec                _emos_keyboard_text
+                0x00006c85                _emos_keyboard_transport_claim
+                0x00006cef                _emos_keyboard_transport_release
+                0x00006d2b                _emos_keyboard_send
+ .text          0x00006e30      0x4e8 obj/src/emos_parallel.o
+                0x00006e30                _emos_parallel_init
+                0x00006ec0                _emos_parallel_epoch_enter
+                0x00007035                _emos_parallel_epoch_leave
+                0x000070a6                _emos_parallel_write_stream
+                0x0000713f                _emos_parallel_write_byte
+                0x00007162                _emos_parallel_last_fault
+                0x0000718c                _emos_parallel_epoch_owned
+                0x00007191                _emos_parallel_route_enter
+                0x000071d3                _emos_parallel_route_leave
+                0x000071e6                _emos_parallel_route_write_stream
+                0x00007200                _emos_parallel_route_write_byte
+                0x00007216                _emos_parallel_route_owned
+                0x0000722e                _emos_parallel_uart1_guard_acquire
+                0x0000725d                _emos_parallel_uart1_guard_release
+ .text          0x00007318      0x576 obj/src/emos_parallel_engine.o
+                0x00007318                _emos_parallel_engine_configure
+                0x0000740b                _emos_parallel_engine_open
+                0x00007459                _emos_parallel_engine_close
+                0x000074a4                _emos_parallel_engine_write
+                0x0000776f                _emos_parallel_engine_fault
+                0x0000778e                _emos_parallel_generation_next
+ .text          0x0000788e      0x2ad obj/src/emos_sdlink.o
+                0x0000788e                _emos_sdlink_reset
+                0x000078a3                _emos_sdlink_packet
+                0x000078e2                _emos_sdlink_gateway
+ .text          0x00007b3b        0x0 obj/src/emos_telemetry.o
+ .text          0x00007b3b      0x414 obj/src/emos_uart_flow.o
+                0x00007b3b                _emos_uart_flow
+ .text          0x00007f4f      0x893 obj/src/emos_uart_probe.o
+                0x00007f4f                _emos_uart_probe
+                0x000081bf                _emos_general_poll
+                0x000083fd                _emos_text_valid
+                0x000084a8                _emos_text_probe
+                0x000087c5                _emos_visible_text
+ .text          0x000087e2      0x2dd obj/src/i2c.o
+                0x000087e2                _I2C_setfrequency
+                0x000087ff                _init_I2C
+                0x00008817                _I2C_handletimeout
+                0x00008832                _mos_I2C_OPEN
+                0x00008864                _mos_I2C_CLOSE
+                0x00008872                _mos_I2C_WRITE
+                0x00008992                _mos_I2C_READ
+ .text          0x00008abf     0x55f7 obj/src/mos.o
+                0x00008abf                _mos_error
+                0x00008af5                _mos_getkey
+                0x00008b0a                _mos_input
+                0x00008b6a                _mos_getCommand
+                0x00008bcf                _mos_trim
+                0x00008c85                _mos_runBin
+                0x00008cf2                _mos_execMode
+                0x00008d17                _mos_runBinFile
+                0x00008dfc                _mos_LOAD
+                0x00008eca                _mos_runOrLoadFile
+                0x0000906a                _mos_execAlias
+                0x0000914b                _mos_exec
+                0x0000965f                _mos_cmdDISC
+                0x0000966f                _mos_cmdDIR
+                0x00009768                _mos_DIR
+                0x000098b8                _mos_cmdDO
+                0x000098ce                _mos_cmdTRY
+                0x00009957                _mos_cmdECHO
+                0x000099dd                _mos_cmdPRINTF
+                0x00009b33                _mos_cmdHOTKEY
+                0x00009d48                _printEscapedString
+                0x00009dbb                _mos_cmdIF
+                0x00009eff                _mos_cmdIFTHERE
+                0x0000a030                _mos_cmdLOAD
+                0x0000a0a3                _mos_cmdEXEC
+                0x0000a0df                _mos_EXEC
+                0x0000a1e1                _mos_cmdOBEY
+                0x0000a4e9                _mos_cmdSAVE
+                0x0000a579                _mos_SAVE
+                0x0000a628                _mos_cmdDEL
+                0x0000a8aa                _mos_cmdJMP
+                0x0000a8ea                _mos_cmdLOADFILE
+                0x0000a901                _mos_cmdRUN
+                0x0000a999                _mos_cmdRUNBIN
+                0x0000a9ef                _mos_cmdRUNFILE
+                0x0000aa07                _mos_cmdCD
+                0x0000aa43                _mos_CD
+                0x0000aaa3                _mos_cmdREN
+                0x0000ab11                _mos_REN
+                0x0000af76                _mos_cmdCOPY
+                0x0000afe4                _mos_COPY
+                0x0000b298                _mos_cmdMKDIR
+                0x0000b2d4                _mos_MKDIR
+                0x0000b322                _mos_cmdSET
+                0x0000b3a8                _mos_cmdSETEVAL
+                0x0000b469                _mos_cmdSETMACRO
+                0x0000b4da                _autoPageOutput
+                0x0000b51e                _mos_cmdSHOW
+                0x0000b622                _mos_cmdUNSET
+                0x0000b684                _mos_cmdVDU
+                0x0000b798                _mos_cmdTIME
+                0x0000b8e2                _mos_SETRTC
+                0x0000b984                _mos_GETRTC
+                0x0000b9bb                _mos_cmdMEM
+                0x0000bad9                _mos_cmdCREDITS
+                0x0000bb0b                _mos_cmdTYPE
+                0x0000bb47                _mos_TYPE
+                0x0000bcaa                _mos_cmdCLS
+                0x0000bcbe                _mos_cmdMOUNT
+                0x0000bcc8                _mos_mount
+                0x0000bd17                _printCommandInfo
+                0x0000beae                _mos_cmdHELP
+                0x0000c0fb                _mos_LOAD_API
+                0x0000c13f                _mos_SAVE_API
+                0x0000c183                _mos_CD_API
+                0x0000c1bd                _countDirEntries
+                0x0000c329                _mos_DIR_API
+                0x0000c369                _mos_DIRFallback
+                0x0000c659                _displayDirectory
+                0x0000d348                _mos_DEL
+                0x0000d3dc                _mos_REN_API
+                0x0000d445                _mos_COPY_API
+                0x0000d4ae                _mos_MKDIR_API
+                0x0000d4e8                _mos_FOPEN
+                0x0000d57e                _mos_FCLOSE
+                0x0000d61f                _mos_FGETC
+                0x0000d68e                _mos_GETFIL
+                0x0000d6d4                _fat_EOF
+                0x0000d6f6                _mos_FPUTC
+                0x0000d718                _mos_FREAD
+                0x0000d75d                _mos_FWRITE
+                0x0000d7a2                _mos_FLSEEK
+                0x0000d7cd                _mos_FLSEEKP
+                0x0000d7ea                _mos_FEOF
+                0x0000d81f                _mos_GETERROR
+                0x0000d863                _mos_OSCLI
+                0x0000d897                _mos_UNPACKRTC
+                0x0000d8c6                _mos_SETINTVECTOR
+                0x0000d8e0                _fat_tell
+                0x0000d912                _fat_size
+                0x0000d944                _fat_error
+                0x0000d951                _fat_lseek
+                0x0000d984                _fat_getfree
+                0x0000d9eb                _wait_VDP
+                0x0000da10                _readCWD
+                0x0000da5d                _readYear
+                0x0000dad3                _writeYear
+                0x0000db55                _readDate
+                0x0000dbc2                _writeDate
+                0x0000dd18                _readTime
+                0x0000dd85                _writeTime
+                0x0000de67                _writeVDPSetting
+                0x0000decc                _writeKeyboard
+                0x0000df1c                _writeConsole
+                0x0000df32                _mos_setupSystemVariables
+ .text          0x0000e0b6     0x110b obj/src/mos_editor.o
+                0x0000e0b6                _getModeInformation
+                0x0000e0e4                _readPalette
+                0x0000e128                _doLeftCursor
+                0x0000e133                _doRightCursor
+                0x0000e13e                _insertCharacter
+                0x0000e201                _insertString
+                0x0000e470                _deleteCharacter
+                0x0000e502                _waitKey
+                0x0000e518                _gotoEditLineStart
+                0x0000e569                _gotoEditLineEnd
+                0x0000e5ab                _removeEditLine
+                0x0000e5fe                _handleHotkey
+                0x0000e73b                _findTermStart
+                0x0000e80b                _mos_EDITLINE
+                0x0000ef59                _editHistoryPush
+                0x0000f033                _editHistoryUp
+                0x0000f07b                _editHistoryDown
+                0x0000f0eb                _editHistoryInit
+                0x0000f11c                _editHistorySet
+ .text          0x0000f1c1     0x1690 obj/src/mos_file.o
+                0x0000f1c1                _isDirectory
+                0x0000f2a0                _getFilepathPrefixEnd
+                0x0000f2b6                _getFilepathLeafname
+                0x0000f313                _getDirectoryForPath
+                0x0000f51f                _checkAttribute
+                0x0000f54c                _getLengthForResolvedPath
+                0x0000fa94                _resolvePath
+                0x0001045f                _resolveRelativePath
+                0x00010621                _isMoslet
+                0x000106bd                _getResolvedPath
+                0x00010742                _copyFile
+ .text          0x00010851     0x1a59 obj/src/mos_sysvars.o
+                0x00010851                _getSystemVariable
+                0x00010900                _createSystemVariable
+                0x0001098d                _insertSystemVariable
+                0x000109b6                _createOrUpdateSystemVariable
+                0x00010a3e                _updateSystemVariable
+                0x00010b31                _removeSystemVariable
+                0x00010b9d                _findParentSystemVariable
+                0x00010be0                _setVarVal
+                0x00010df2                _evaluateExpression
+                0x00010ecd                _expandMacro
+                0x00010f56                _readVarVal
+                0x000110db                _expandVariable
+                0x0001123a                _gsInit
+                0x000112e7                _gsDispose
+                0x0001136e                _gsRead
+                0x000117ec                _gsPop
+                0x00011873                _extractNumber
+                0x00011a97                _gsTrans
+                0x00011b8a                _extractString
+                0x00011ce2                _escapeString
+                0x00011e29                _expandVariableToken
+                0x00011e66                _getArgument
+                0x00011eff                _substituteArgs
+                0x00012239                _substituteArguments
+ .text          0x000122aa      0x43d obj/src/strings.o
+                0x000122aa                _strcasecmp
+                0x00012315                _strncasecmp
+                0x000123a2                _stristr
+                0x0001244c                _mos_strnlen
+                0x00012472                _mos_strdup
+                0x000124a8                _mos_strcspn
+                0x000124ee                _mos_strspn
+                0x00012534                _mos_strndup
+                0x00012584                _pmatch
+ .text          0x000126e7        0x0 obj/src/tests.o
+ .text          0x000126e7       0xb3 obj/src/timer.o
+                0x000126e7                _init_timer0
+                0x00012771                _enable_timer0
+                0x0001278b                _get_timer0
+ .text          0x0001279a      0x444 obj/src/uart.o
+                0x0001279a                _init_UART0
+                0x000127ab                _init_UART1
+                0x000127bc                _open_UART0
+                0x00012876                _open_UART1
+                0x00012957                _close_UART1
+                0x00012999                _uart1_claim_rts
+                0x000129e5                _uart1_receive_ready
+                0x00012a28                _uart1_try_get
+                0x00012a6d                _uart1_try_put
+                0x00012abb                _uart1_keyboard_open
+                0x00012b7d                _uart1_keyboard_stop
+                0x00012b92                _uart1_keyboard_close
+                0x00012bd5                _uart1_keyboard_irq_done
+ .text          0x00012bde      0x244 obj/src_fatfs/diskio.o
+                0x00012bde                _SD_getUnlockCode
+                0x00012c24                _SD_init_API
+                0x00012c46                _SD_readBlocks_API
+                0x00012c8d                _SD_writeBlocks_API
+                0x00012cd4                _disk_status
+                0x00012cdc                _disk_initialize
+                0x00012cf0                _disk_read
+                0x00012d1d                _disk_write
+                0x00012d4a                _disk_ioctl
+                0x00012d54                _get_fattime
+ .text          0x00012e22     0x77af obj/src_fatfs/ff.o
+                0x00012e22                _f_mount
+                0x000138a6                _f_open
+                0x00015371                _f_read
+                0x00015748                _f_write
+                0x00015fb2                _f_sync
+                0x0001629b                _f_close
+                0x000162d4                _f_chdrive
+                0x00016310                _f_chdir
+                0x0001645f                _f_getcwd
+                0x00017435                _f_lseek
+                0x00017814                _f_opendir
+                0x00017997                _f_closedir
+                0x000179c1                _f_readdir
+                0x00017a5e                _f_findnext
+                0x00017d3c                _f_findfirst
+                0x00017d6c                _f_stat
+                0x00017dfb                _f_getfree
+                0x0001808c                _f_truncate
+                0x000181e2                _f_unlink
+                0x000185b2                _f_mkdir
+                0x00018b8b                _f_rename
+                0x00018f86                _f_getlabel
+                0x00019124                _f_setlabel
+                0x00019416                _f_gets
+                0x000194bb                _f_putc
+                0x000195e5                _f_puts
+                0x0001963f                _f_printf
+ .text          0x0001a5d1        0x0 obj/src_fatfs/ffsystem.o
+ .text          0x0001a5d1      0x273 obj/src_fatfs/ffunicode.o
+                0x0001a5d1                _ff_uni2oem
+                0x0001a684                _ff_oem2uni
+                0x0001a6e7                _ff_wtoupper
+ .text          0x0001a844      0xcd4 obj/src_umm_malloc/umm_malloc.o
+                0x0001a844                _umm_multi_init_heap
+                0x0001a8eb                _umm_multi_free
+                0x0001aa29                _umm_multi_malloc
+                0x0001acd0                _umm_multi_realloc
+                0x0001b345                _umm_multi_calloc
+                0x0001b389                _umm_init_heap
+                0x0001b3a3                _umm_malloc
+                0x0001b3b9                _umm_calloc
+                0x0001b3d3                _umm_realloc
+                0x0001b3ed                _umm_free
+                0x0001b403                _umm_heap_stats
+ .text          0x0001b518        0x0 obj/hostfs_descriptor.o
+ .text          0x0001b518      0xa17 runtime/build/libmos_runtime.a(firmware_printf.o)
+                0x0001b518                _printf
+                0x0001bddc                _sprintf
+ .text          0x0001bf2f       0x1e runtime/build/libmos_runtime.a(i48_required.o)
+                0x0001bf2f                __i48shru
+                0x0001bf3a                __i48mulu
+ .text          0x0001bf4d       0x1c runtime/build/libmos_runtime.a(and.o)
+                0x0001bf4d                __land
+                0x0001bf52                __iand
+                0x0001bf53                __iand.hijack_land
+ .text          0x0001bf69        0x9 runtime/build/libmos_runtime.a(bshl.o)
+                0x0001bf69                __bshl
+ .text          0x0001bf72        0xa runtime/build/libmos_runtime.a(bshru.o)
+                0x0001bf72                __bshru
+ .text          0x0001bf7c        0xe runtime/build/libmos_runtime.a(frameset.o)
+                0x0001bf7c                __frameset
+ .text          0x0001bf8a        0xb runtime/build/libmos_runtime.a(frameset0.o)
+                0x0001bf8a                __frameset0
+ .text          0x0001bf95        0x7 runtime/build/libmos_runtime.a(idivs.o)
+                0x0001bf95                __idivs
+ .text          0x0001bf9c       0x2e runtime/build/libmos_runtime.a(idvrms.o)
+                0x0001bf9c                __idvrms
+ .text          0x0001bfca       0x18 runtime/build/libmos_runtime.a(idvrmu.o)
+                0x0001bfca                __idvrmu
+                0x0001bfce                __idvrmu.hijack_a_iters_ude_dividend
+ .text          0x0001bfe2       0x30 runtime/build/libmos_runtime.a(imulu.o)
+                0x0001bfe2                __imuls
+                0x0001bfe2                __imulu
+ .text          0x0001c012        0x2 runtime/build/libmos_runtime.a(indcall.o)
+                0x0001c012                __indcall
+ .text          0x0001c014        0x1 runtime/build/libmos_runtime.a(indcallhl.o)
+                0x0001c014                __indcallhl
+ .text          0x0001c015        0x9 runtime/build/libmos_runtime.a(ineg_sneg.o)
+                0x0001c015                __ineg
+                0x0001c015                __sneg
+ .text          0x0001c01e        0xa runtime/build/libmos_runtime.a(inot.o)
+                0x0001c01e                __inot
+ .text          0x0001c028        0x8 runtime/build/libmos_runtime.a(irems.o)
+                0x0001c028                __irems
+ .text          0x0001c030       0x26 runtime/build/libmos_runtime.a(ishl.o)
+                0x0001c030                __sshl
+                0x0001c030                __ishl
+ .text          0x0001c056       0x41 runtime/build/libmos_runtime.a(ishrs.o)
+                0x0001c056                __ishru
+                0x0001c05b                __ishrs
+ .text          0x0001c097        0x6 runtime/build/libmos_runtime.a(ladd.o)
+                0x0001c097                __ladd
+ .text          0x0001c09d        0xd runtime/build/libmos_runtime.a(lcmps.o)
+                0x0001c09d                __lcmps
+ .text          0x0001c0aa        0x8 runtime/build/libmos_runtime.a(lcmpu.o)
+                0x0001c0aa                __lcmpu
+ .text          0x0001c0b2        0xb runtime/build/libmos_runtime.a(lcmpzero.o)
+                0x0001c0b2                __lcmpzero
+ .text          0x0001c0bd       0x18 runtime/build/libmos_runtime.a(ldivs.o)
+                0x0001c0bd                __ldivs
+ .text          0x0001c0d5       0x11 runtime/build/libmos_runtime.a(ldivs_lrems_common.o)
+                0x0001c0d5                __ldivs_lrems_common
+ .text          0x0001c0e6       0x10 runtime/build/libmos_runtime.a(ldivu.o)
+                0x0001c0e6                __ldivu
+ .text          0x0001c0f6       0x24 runtime/build/libmos_runtime.a(ldvrmu.o)
+                0x0001c0f6                __ldvrmu
+ .text          0x0001c11a       0x55 runtime/build/libmos_runtime.a(llmulu.o)
+                0x0001c11a                __llmuls
+                0x0001c11a                __llmulu
+ .text          0x0001c16f       0x1a runtime/build/libmos_runtime.a(llshru.o)
+                0x0001c16f                __llshru
+ .text          0x0001c189       0x5c runtime/build/libmos_runtime.a(lmulu.o)
+                0x0001c189                __lmuls
+                0x0001c189                __lmulu
+ .text          0x0001c1e5        0xd runtime/build/libmos_runtime.a(lneg.o)
+                0x0001c1e5                __lneg
+ .text          0x0001c1f2        0xd runtime/build/libmos_runtime.a(lnot.o)
+                0x0001c1f2                __lnot
+ .text          0x0001c1ff        0xd runtime/build/libmos_runtime.a(lshl.o)
+                0x0001c1ff                __lshl
+ .text          0x0001c20c       0x1b runtime/build/libmos_runtime.a(lshrs.o)
+                0x0001c20c                __lshrs
+                0x0001c218                __lshrs.hijack_lshru
+ .text          0x0001c227       0x10 runtime/build/libmos_runtime.a(lshru.o)
+                0x0001c227                __lshru
+ .text          0x0001c237        0xa runtime/build/libmos_runtime.a(lsub.o)
+                0x0001c237                __lsub
+ .text          0x0001c241       0x1b runtime/build/libmos_runtime.a(or.o)
+                0x0001c241                __lor
+                0x0001c245                __ior
+ .text          0x0001c25c        0x9 runtime/build/libmos_runtime.a(sand.o)
+                0x0001c25c                __sand
+ .text          0x0001c265        0xf runtime/build/libmos_runtime.a(setflag.o)
+                0x0001c265                __setflag
+ .text          0x0001c274        0x9 runtime/build/libmos_runtime.a(sor.o)
+                0x0001c274                __sor
+ .text          0x0001c27d        0x7 runtime/build/libmos_runtime.a(sremu.o)
+                0x0001c27d                __sremu
+ .text          0x0001c284        0xd runtime/build/libmos_runtime.a(sshru.o)
+                0x0001c284                __sshru
+ .text          0x0001c291       0x1b runtime/build/libmos_runtime.a(xor.o)
+                0x0001c291                __lxor
+                0x0001c295                __ixor
+ .text          0x0001c2ac        0xf runtime/build/libmos_runtime.a(isspace.o)
+                0x0001c2ac                _isspace
+ .text          0x0001c2bb       0x15 runtime/build/libmos_runtime.a(isxdigit.o)
+                0x0001c2bb                _isxdigit
+ .text          0x0001c2d0       0x1d runtime/build/libmos_runtime.a(memchr.o)
+                0x0001c2d0                _memchr
+ .text          0x0001c2ed       0x2a runtime/build/libmos_runtime.a(memcmp.o)
+                0x0001c2ed                _memcmp
+ .text          0x0001c317       0x21 runtime/build/libmos_runtime.a(memcpy.o)
+                0x0001c317                _memcpy
+ .text          0x0001c338       0x30 runtime/build/libmos_runtime.a(memmove.o)
+                0x0001c338                _memmove
+ .text          0x0001c368       0x1f runtime/build/libmos_runtime.a(memset.o)
+                0x0001c368                _memset
+ .text          0x0001c387      0x398 runtime/build/libmos_runtime.a(qsort.o)
+                0x0001c387                _qsort
+ .text          0x0001c71f       0x1d runtime/build/libmos_runtime.a(strcat.o)
+                0x0001c71f                _strcat
+ .text          0x0001c73c       0x1f runtime/build/libmos_runtime.a(strchr.o)
+                0x0001c73c                _strchr
+ .text          0x0001c75b       0x19 runtime/build/libmos_runtime.a(strcmp.o)
+                0x0001c75b                _strcmp
+ .text          0x0001c774       0x18 runtime/build/libmos_runtime.a(strcpy.o)
+                0x0001c774                _strcpy
+ .text          0x0001c78c       0x11 runtime/build/libmos_runtime.a(strlen.o)
+                0x0001c78c                _strlen
+ .text          0x0001c79d       0x46 runtime/build/libmos_runtime.a(strncpy.o)
+                0x0001c79d                _strncpy
+ .text          0x0001c7e3       0x1e runtime/build/libmos_runtime.a(strrchr.o)
+                0x0001c7e3                _strrchr
+ .text          0x0001c801       0x31 runtime/build/libmos_runtime.a(strspn.o)
+                0x0001c801                _strspn
+ .text          0x0001c832      0x2b2 runtime/build/libmos_runtime.a(strtol.o)
+                0x0001c832                _strtol
+ .text          0x0001cae4        0xc runtime/build/libmos_runtime.a(tolower.o)
+                0x0001cae4                _tolower
+                0x0001cae7                _tolower.internal
+ .text          0x0001caf0        0xc runtime/build/libmos_runtime.a(toupper.o)
+                0x0001caf0                _toupper
+ .text          0x0001cafc        0x8 runtime/build/libmos_runtime.a(idivu.o)
+                0x0001cafc                __idivu
+ .text          0x0001cb04       0x37 runtime/build/libmos_runtime.a(llshrs.o)
+                0x0001cb04                __llshrs
+                0x0001cb18                __llshrs.hijack_llshru
+                0x0001cb37                __llshrs.finish
+ .text          0x0001cb3b       0x10 runtime/build/libmos_runtime.a(sdvrmu.o)
+                0x0001cb3b                __sdvrmu
+ .text          0x0001cb4b        0xe runtime/build/libmos_runtime.a(isalpha.o)
+                0x0001cb4b                _isalpha
+ .text          0x0001cb59        0xb runtime/build/libmos_runtime.a(isdigit.o)
+                0x0001cb59                _isdigit
+ .text          0x0001cb64        0xb runtime/build/libmos_runtime.a(isupper.o)
+                0x0001cb64                _isupper
+ *(CODE CODE.* .CODE .CODE.*)
+                0x0001cb6f                        __code_end = .
+                0x00001fc7                        __low_romcode = LOADADDR (.text)
+                0x0001aba8                        __len_code = SIZEOF (.text)
+
+.rodata         0x0001cb6f     0x3195
+ *(.rodata .rodata.* .srodata .srodata.*)
+ .rodata        0x0001cb6f       0x89 obj/main.o
+ .rodata        0x0001cbf8      0x116 obj/src/clock.o
+ .rodata        0x0001cd0e      0x420 obj/src/emos.o
+ .rodata        0x0001d12e       0x5e obj/src/emos_console.o
+ .rodata        0x0001d18c        0xc obj/src/emos_parallel.o
+ .rodata        0x0001d198      0x2af obj/src/emos_uart_flow.o
+ .rodata        0x0001d447      0x3fe obj/src/emos_uart_probe.o
+ .rodata        0x0001d845     0x1e81 obj/src/mos.o
+ .rodata        0x0001f6c6       0xe2 obj/src/mos_editor.o
+ .rodata        0x0001f7a8       0x50 obj/src/mos_file.o
+ .rodata        0x0001f7f8       0x2e obj/src/mos_sysvars.o
+ .rodata        0x0001f826       0xdf obj/src_fatfs/ff.o
+ .rodata        0x0001f905      0x3c9 obj/src_fatfs/ffunicode.o
+ .rodata        0x0001fcce       0x36 runtime/build/libmos_runtime.a(firmware_printf.o)
+ *(TEXT TEXT.* .TEXT .TEXT.*)
+ *(STRSECT STRSECT.* .STRSECT .STRSECT.*)
+                0x0001fd04                        __rom_ro_end = .
+
+.data           0x000bc000      0x2ec load address 0x0001fd04
+                0x000bc000                        __low_data = .
+ *(.data .data.* .sdata .sdata.*)
+ .data          0x000bc000        0x0 obj/asm/src/crash.o
+ .data          0x000bc000        0x0 obj/asm/src/gpio.o
+ .data          0x000bc000        0x0 obj/asm/src/interrupts.o
+ .data          0x000bc000        0x0 obj/asm/src/keyboard.o
+ .data          0x000bc000        0x0 obj/asm/src/misc.o
+ .data          0x000bc000        0x0 obj/asm/src/mos_api.o
+ .data          0x000bc000        0x0 obj/asm/src/rtc.o
+ .data          0x000bc000        0x0 obj/asm/src/sd.o
+ .data          0x000bc000        0x0 obj/asm/src/serial.o
+ .data          0x000bc000        0x0 obj/asm/src/spi.o
+ .data          0x000bc000        0x0 obj/asm/src/vdp_protocol.o
+ .data          0x000bc000        0x0 obj/asm/src_startup/cstartup.o
+ .data          0x000bc000        0x0 obj/asm/src_startup/globals.o
+ .data          0x000bc000        0x0 obj/asm/src_startup/init_params_f92.o
+ .data          0x000bc000        0x0 obj/asm/src_startup/vectors16.o
+ .data          0x000bc000        0x0 obj/asm/src/emos_console_io.o
+ .data          0x000bc000        0x0 obj/asm/src/emos_keyboard_io.o
+ .data          0x000bc000        0x0 obj/asm/src/emos_parallel_io.o
+ .data          0x000bc000        0x0 obj/main.o
+ .data          0x000bc000       0x72 obj/src/clock.o
+                0x000bc000                _rtc_days
+                0x000bc02a                _rtc_months
+ .data          0x000bc072        0x0 obj/src/emos.o
+ .data          0x000bc072        0x0 obj/src/emos_console.o
+ .data          0x000bc072        0x0 obj/src/emos_keyboard.o
+ .data          0x000bc072        0x0 obj/src/emos_parallel.o
+ .data          0x000bc072        0x0 obj/src/emos_parallel_engine.o
+ .data          0x000bc072        0x0 obj/src/emos_sdlink.o
+ .data          0x000bc072        0x0 obj/src/emos_telemetry.o
+ .data          0x000bc072        0x0 obj/src/emos_uart_flow.o
+ .data          0x000bc072        0x0 obj/src/emos_uart_probe.o
+ .data          0x000bc072        0x0 obj/src/i2c.o
+ .data          0x000bc072      0x27a obj/src/mos.o
+ .data          0x000bc2ec        0x0 obj/src/mos_editor.o
+ .data          0x000bc2ec        0x0 obj/src/mos_file.o
+ .data          0x000bc2ec        0x0 obj/src/mos_sysvars.o
+ .data          0x000bc2ec        0x0 obj/src/strings.o
+ .data          0x000bc2ec        0x0 obj/src/tests.o
+ .data          0x000bc2ec        0x0 obj/src/timer.o
+ .data          0x000bc2ec        0x0 obj/src/uart.o
+ .data          0x000bc2ec        0x0 obj/src_fatfs/diskio.o
+ .data          0x000bc2ec        0x0 obj/src_fatfs/ff.o
+ .data          0x000bc2ec        0x0 obj/src_fatfs/ffsystem.o
+ .data          0x000bc2ec        0x0 obj/src_fatfs/ffunicode.o
+ .data          0x000bc2ec        0x0 obj/src_umm_malloc/umm_malloc.o
+ .data          0x000bc2ec        0x0 obj/hostfs_descriptor.o
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(firmware_printf.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(i48_required.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(and.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(bshl.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(bshru.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(frameset.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(frameset0.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(idivs.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(idvrms.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(idvrmu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(imulu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(indcall.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(indcallhl.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ineg_sneg.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(inot.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(irems.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ishl.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ishrs.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ladd.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lcmps.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lcmpu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lcmpzero.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ldivs.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ldivs_lrems_common.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ldivu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(ldvrmu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(llmulu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(llshru.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lmulu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lneg.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lnot.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lshl.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lshrs.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lshru.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(lsub.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(or.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(sand.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(setflag.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(sor.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(sremu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(sshru.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(xor.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(isspace.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(isxdigit.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(memchr.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(memcmp.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(memcpy.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(memmove.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(memset.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(qsort.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strcat.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strchr.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strcmp.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strcpy.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strlen.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strncpy.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strrchr.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strspn.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(strtol.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(tolower.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(toupper.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(idivu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(llshrs.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(sdvrmu.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(isalpha.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(isdigit.o)
+ .data          0x000bc2ec        0x0 runtime/build/libmos_runtime.a(isupper.o)
+ *(DATA DATA.* .DATA .DATA.*)
+                0x000bc2ec                        __data_end = .
+                0x0001fd04                        __low_romdata = LOADADDR (.data)
+                0x000002ec                        __len_data = SIZEOF (.data)
+
+.bss            0x000bc2ec     0x16fe load address 0x0001fff0
+                0x000bc2ec                        __low_bss = .
+ *(.bss .bss.* .sbss .sbss.*)
+ .bss           0x000bc2ec        0x0 obj/asm/src/crash.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/gpio.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/interrupts.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/keyboard.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/misc.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/mos_api.o
+ .bss           0x000bc2ec        0x0 obj/asm/src/rtc.o
+ .bss           0x000bc2ec        0x6 obj/asm/src/sd.o
+ .bss           0x000bc2f2        0x0 obj/asm/src/serial.o
+ .bss           0x000bc2f2        0x0 obj/asm/src/spi.o
+ .bss           0x000bc2f2        0x0 obj/asm/src/vdp_protocol.o
+ .bss           0x000bc2f2        0x0 obj/asm/src_startup/cstartup.o
+ .bss           0x000bc2f2       0x78 obj/asm/src_startup/globals.o
+                0x000bc2f2                _clock
+                0x000bc2f2                _sysvars
+                0x000bc2f6                _vpd_protocol_flags
+                0x000bc2f7                _keyascii
+                0x000bc2f8                _keymods
+                0x000bc2f9                _cursorX
+                0x000bc2fa                _cursorY
+                0x000bc2fb                _scrchar
+                0x000bc2fc                _scrpixel
+                0x000bc2ff                _audioChannel
+                0x000bc300                _audioSuccess
+                0x000bc301                _scrwidth
+                0x000bc303                _scrheight
+                0x000bc305                _scrcols
+                0x000bc306                _scrrows
+                0x000bc307                _scrcolours
+                0x000bc308                _scrpixelIndex
+                0x000bc309                _keycode
+                0x000bc30a                _keydown
+                0x000bc30b                _keycount
+                0x000bc30c                _rtc
+                0x000bc314                _keydelay
+                0x000bc316                _keyrate
+                0x000bc318                _keyled
+                0x000bc319                _scrmode
+                0x000bc31a                _rtc_enable
+                0x000bc31b                _mouseX
+                0x000bc31d                _mouseY
+                0x000bc31f                _mouseButtons
+                0x000bc320                _mouseWheel
+                0x000bc321                _mouseXDelta
+                0x000bc323                _mouseYDelta
+                0x000bc325                _errno
+                0x000bc328                _coldBoot
+                0x000bc329                _gp
+                0x000bc32a                _serialFlags
+                0x000bc32b                _callSM
+                0x000bc330                _scratchpad
+                0x000bc338                _keymap
+                0x000bc348                _vdp_protocol_state
+                0x000bc349                _vdp_protocol_cmd
+                0x000bc34a                _vdp_protocol_len
+                0x000bc34b                _vdp_protocol_ptr
+                0x000bc34e                _vdp_protocol_data
+                0x000bc35e                _user_kbvector
+                0x000bc361                _i2c_slave_rw
+                0x000bc362                _i2c_error
+                0x000bc363                _i2c_role
+                0x000bc364                _i2c_msg_ptr
+                0x000bc367                _i2c_msg_size
+                0x000bc368                _history_no
+                0x000bc369                _history_size
+ .bss           0x000bc36a        0x0 obj/asm/src_startup/init_params_f92.o
+ .bss           0x000bc36a        0x0 obj/asm/src_startup/vectors16.o
+ .bss           0x000bc36a        0x0 obj/asm/src/emos_console_io.o
+ .bss           0x000bc36a        0x0 obj/asm/src/emos_keyboard_io.o
+ .bss           0x000bc36a        0x0 obj/asm/src/emos_parallel_io.o
+ .bss           0x000bc36a        0x0 obj/main.o
+ .bss           0x000bc36a        0x0 obj/src/clock.o
+ .bss           0x000bc36a      0xc5f obj/src/emos.o
+                0x000bc36a                _emosVduBackend
+ .bss           0x000bcfc9       0x27 obj/src/emos_console.o
+                0x000bcfea                _emos_console_owned
+                0x000bcfef                _emos_console_keep
+ .bss           0x000bcff0      0x122 obj/src/emos_keyboard.o
+                0x000bcff0                _emos_key_source
+                0x000bcff3                _emos_key_faulted
+                0x000bcff6                _emos_key_rx
+ .bss           0x000bd112       0x28 obj/src/emos_parallel.o
+ .bss           0x000bd13a        0x0 obj/src/emos_parallel_engine.o
+ .bss           0x000bd13a      0x1e6 obj/src/emos_sdlink.o
+ .bss           0x000bd320        0x0 obj/src/emos_telemetry.o
+ .bss           0x000bd320        0xa obj/src/emos_uart_flow.o
+ .bss           0x000bd32a        0x0 obj/src/emos_uart_probe.o
+ .bss           0x000bd32a        0x0 obj/src/i2c.o
+ .bss           0x000bd32a      0x677 obj/src/mos.o
+                0x000bd32a                _depth
+                0x000bd32b                _sdcardDelay
+                0x000bd32c                _vdpSupportsTextPalette
+                0x000bd32d                _cwd
+                0x000bd543                _mosFileObjects
+                0x000bd8a1                _cmd
+ .bss           0x000bd9a1       0x30 obj/src/mos_editor.o
+ .bss           0x000bd9d1        0x0 obj/src/mos_file.o
+ .bss           0x000bd9d1        0x6 obj/src/mos_sysvars.o
+                0x000bd9d1                _mosSystemVariables
+                0x000bd9d4                _trackedTransInfo
+ .bss           0x000bd9d7        0x0 obj/src/strings.o
+ .bss           0x000bd9d7        0x0 obj/src/tests.o
+ .bss           0x000bd9d7        0x0 obj/src/timer.o
+ .bss           0x000bd9d7        0x2 obj/src/uart.o
+                0x000bd9d7                _uart1_keyboard_owned
+ .bss           0x000bd9d9        0x3 obj/src_fatfs/diskio.o
+                0x000bd9d9                _unlockCode
+ .bss           0x000bd9dc        0x6 obj/src_fatfs/ff.o
+ .bss           0x000bd9e2        0x0 obj/src_fatfs/ffsystem.o
+ .bss           0x000bd9e2        0x0 obj/src_fatfs/ffunicode.o
+ .bss           0x000bd9e2        0x8 obj/src_umm_malloc/umm_malloc.o
+                0x000bd9e2                _umm_heap_current
+ .bss           0x000bd9ea        0x0 obj/hostfs_descriptor.o
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(firmware_printf.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(i48_required.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(and.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(bshl.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(bshru.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(frameset.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(frameset0.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(idivs.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(idvrms.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(idvrmu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(imulu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(indcall.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(indcallhl.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ineg_sneg.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(inot.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(irems.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ishl.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ishrs.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ladd.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lcmps.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lcmpu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lcmpzero.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ldivs.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ldivs_lrems_common.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ldivu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(ldvrmu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(llmulu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(llshru.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lmulu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lneg.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lnot.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lshl.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lshrs.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lshru.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(lsub.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(or.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(sand.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(setflag.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(sor.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(sremu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(sshru.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(xor.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(isspace.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(isxdigit.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(memchr.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(memcmp.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(memcpy.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(memmove.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(memset.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(qsort.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strcat.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strchr.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strcmp.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strcpy.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strlen.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strncpy.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strrchr.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strspn.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(strtol.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(tolower.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(toupper.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(idivu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(llshrs.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(sdvrmu.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(isalpha.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(isdigit.o)
+ .bss           0x000bd9ea        0x0 runtime/build/libmos_runtime.a(isupper.o)
+ *(BSS BSS.* .BSS .BSS.*)
+ *(COMMON)
+                0x000bd9ea                        __bss_end = .
+                0x000016fe                        __len_bss = SIZEOF (.bss)
+
+.ivjmptbl       0x000bd9ea       0xc0 load address 0x000216ee
+                0x000bd9ea                        __ivjmptbl_start = .
+ *(.ivjmptbl .ivjmptbl.* IVJMPTBL IVJMPTBL.*)
+ IVJMPTBL       0x000bd9ea       0xc0 obj/asm/src_startup/vectors16.o
+                0x000bd9ea                __2nd_jump_table
+                0x000bdaaa                        __ivjmptbl_end = .
+                0x000bdaaa                        __ram_static_end = (ADDR (.ivjmptbl) + SIZEOF (.ivjmptbl))
+                0x000bdaaa                        __heapbot = __ram_static_end
+                0x000bffff                        __heaptop = ((ORIGIN (RAM) + LENGTH (RAM)) - 0x1)
+                0x000c0000                        __stack = (ORIGIN (RAM) + LENGTH (RAM))
+                0x00000800                        __stack_reserve = 0x800
+                0x000bf800                        __stack_bottom = (__stack - __stack_reserve)
+                0x000bf800                        __heap_limit = __stack_bottom
+                0x0001fff0                        __rom_image_end = (LOADADDR (.data) + SIZEOF (.data))
+
+/DISCARD/
+ *(.comment)
+ *(.note .note.*)
+ *(.eh_frame .eh_frame.*)
+ *(.gnu.attributes)
+                0x00000001                        ASSERT (DEFINED (_reset), MOS link requires a global _reset entry point)
+                0x00000001                        ASSERT ((ADDR (.reset) == ORIGIN (FLASH)), reset must begin at flash address 0)
+                0x00000001                        ASSERT ((SIZEOF (.reset) > 0x0), reset section must not be empty)
+                0x00000001                        ASSERT ((__reset_end <= 0x6b), reset section overlaps the optional descriptor slot at 0x6B)
+                0x00000001                        ASSERT ((((__mos_descriptor_end - __mos_descriptor_start) == 0x0) || ((__mos_descriptor_end - __mos_descriptor_start) == 0x4f)), Fab MOS descriptor table must be exactly 0x4F bytes when present)
+                0x00000001                        ASSERT ((ADDR (.ivecs) == 0x100), interrupt vectors must begin at 0x100)
+                0x00000001                        ASSERT (((ADDR (.ivecs) & 0xff) == 0x0), interrupt vectors must be 256-byte aligned)
+                0x00000001                        ASSERT ((SIZEOF (.ivecs) == 0x120), interrupt vectors and first jump table must occupy exactly 0x120 bytes)
+                0x00000001                        ASSERT ((ADDR (.startup) == 0x220), startup must begin at 0x220)
+                0x00000001                        ASSERT ((SIZEOF (.startup) > 0x0), startup section must not be empty)
+                0x00000001                        ASSERT ((ADDR (.data) == ORIGIN (RAM)), initialized data must begin at 0x0BC000)
+                0x00000001                        ASSERT ((__low_bss >= __data_end), BSS overlaps initialized data)
+                0x00000001                        ASSERT ((__ivjmptbl_start >= __bss_end), RAM interrupt jump table overlaps BSS)
+                0x00000001                        ASSERT ((SIZEOF (.ivjmptbl) == 0xc0), second interrupt jump table must contain 48 four-byte entries)
+                0x00000001                        ASSERT ((__rom_image_end <= (ORIGIN (FLASH) + LENGTH (FLASH))), MOS firmware image exceeds the 128 KiB flash window)
+                0x00000001                        ASSERT ((__ram_static_end <= __stack), MOS static sections exceed the 16 KiB internal RAM window)
+                0x00000001                        ASSERT ((__heapbot <= __stack_bottom), MOS static sections consume the reserved 2 KiB stack)
+LOAD obj/asm/src/crash.o
+LOAD obj/asm/src/gpio.o
+LOAD obj/asm/src/interrupts.o
+LOAD obj/asm/src/keyboard.o
+LOAD obj/asm/src/misc.o
+LOAD obj/asm/src/mos_api.o
+LOAD obj/asm/src/rtc.o
+LOAD obj/asm/src/sd.o
+LOAD obj/asm/src/serial.o
+LOAD obj/asm/src/spi.o
+LOAD obj/asm/src/vdp_protocol.o
+LOAD obj/asm/src_startup/cstartup.o
+LOAD obj/asm/src_startup/globals.o
+LOAD obj/asm/src_startup/init_params_f92.o
+LOAD obj/asm/src_startup/vectors16.o
+LOAD obj/asm/src/emos_console_io.o
+LOAD obj/asm/src/emos_keyboard_io.o
+LOAD obj/asm/src/emos_parallel_io.o
+LOAD obj/main.o
+LOAD obj/src/clock.o
+LOAD obj/src/emos.o
+LOAD obj/src/emos_console.o
+LOAD obj/src/emos_keyboard.o
+LOAD obj/src/emos_parallel.o
+LOAD obj/src/emos_parallel_engine.o
+LOAD obj/src/emos_sdlink.o
+LOAD obj/src/emos_telemetry.o
+LOAD obj/src/emos_uart_flow.o
+LOAD obj/src/emos_uart_probe.o
+LOAD obj/src/i2c.o
+LOAD obj/src/mos.o
+LOAD obj/src/mos_editor.o
+LOAD obj/src/mos_file.o
+LOAD obj/src/mos_sysvars.o
+LOAD obj/src/strings.o
+LOAD obj/src/tests.o
+LOAD obj/src/timer.o
+LOAD obj/src/uart.o
+LOAD obj/src_fatfs/diskio.o
+LOAD obj/src_fatfs/ff.o
+LOAD obj/src_fatfs/ffsystem.o
+LOAD obj/src_fatfs/ffunicode.o
+LOAD obj/src_umm_malloc/umm_malloc.o
+LOAD obj/hostfs_descriptor.o
+LOAD runtime/build/libmos_runtime.a
+OUTPUT(bin/MOS.elf elf32-z80)

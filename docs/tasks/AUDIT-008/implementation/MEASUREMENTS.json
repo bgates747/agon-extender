@@ -1,0 +1,1075 @@
+{
+  "rom_capacity_bytes": 131072,
+  "rom_used_bytes": 124774,
+  "rom_free_bytes": 6298,
+  "rom_free_percent": 4.80499267578125,
+  "static_ram_bytes": 3671,
+  "stack_reserve_bytes": 2048,
+  "heap_arena_bytes": 10665,
+  "linker_fill_bytes": 70,
+  "build_identities": [
+    "agon-emos-v0.1.19-b2026-09-24-02-02-56Z"
+  ],
+  "artifacts": {
+    "MOS.bin": {
+      "bytes": 124774,
+      "sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7"
+    },
+    "MOS.elf": {
+      "bytes": 322488,
+      "sha256": "b902861310d4a0025bd4e94db99f2c69065192ac71388c095d084149768dfb41"
+    },
+    "MOS.map": {
+      "bytes": 75363,
+      "sha256": "3589ba53e326232be70063d604cae815e1c29b2d0b4651c88c5c7fb4431285c5"
+    }
+  },
+  "sections": {
+    ".reset": {
+      "bytes": 107,
+      "vma": 0,
+      "rom": true
+    },
+    ".reset_fill": {
+      "bytes": 149,
+      "vma": 107,
+      "rom": true
+    },
+    ".ivecs": {
+      "bytes": 288,
+      "vma": 256,
+      "rom": true
+    },
+    ".startup": {
+      "bytes": 7591,
+      "vma": 544,
+      "rom": true
+    },
+    ".text": {
+      "bytes": 103395,
+      "vma": 8135,
+      "rom": true
+    },
+    ".rodata": {
+      "bytes": 12496,
+      "vma": 111530,
+      "rom": true
+    },
+    ".data": {
+      "bytes": 748,
+      "vma": 770048,
+      "rom": true
+    },
+    ".bss": {
+      "bytes": 2731,
+      "vma": 770796,
+      "rom": false
+    },
+    ".ivjmptbl": {
+      "bytes": 192,
+      "vma": 773527,
+      "rom": false
+    }
+  },
+  "objects": {
+    "obj/asm/src_startup/vectors16.o": {
+      "rom": 550,
+      "ram": 192,
+      "text": 262,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 480
+    },
+    "obj/hostfs_descriptor.o": {
+      "rom": 79,
+      "ram": 0,
+      "text": 0,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 79
+    },
+    "obj/asm/src/gpio.o": {
+      "rom": 359,
+      "ram": 0,
+      "text": 359,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/interrupts.o": {
+      "rom": 391,
+      "ram": 0,
+      "text": 391,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/keyboard.o": {
+      "rom": 1071,
+      "ram": 0,
+      "text": 1071,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/misc.o": {
+      "rom": 241,
+      "ram": 0,
+      "text": 241,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/mos_api.o": {
+      "rom": 2761,
+      "ram": 0,
+      "text": 2761,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/rtc.o": {
+      "rom": 9,
+      "ram": 0,
+      "text": 9,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/serial.o": {
+      "rom": 501,
+      "ram": 0,
+      "text": 501,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/vdp_protocol.o": {
+      "rom": 591,
+      "ram": 0,
+      "text": 591,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src_startup/cstartup.o": {
+      "rom": 78,
+      "ram": 0,
+      "text": 78,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src_startup/init_params_f92.o": {
+      "rom": 303,
+      "ram": 0,
+      "text": 303,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/emos_console_io.o": {
+      "rom": 22,
+      "ram": 0,
+      "text": 22,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/emos_keyboard_io.o": {
+      "rom": 716,
+      "ram": 0,
+      "text": 716,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/emos_parallel_io.o": {
+      "rom": 393,
+      "ram": 0,
+      "text": 393,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/crash.o": {
+      "rom": 549,
+      "ram": 0,
+      "text": 549,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src/sd.o": {
+      "rom": 849,
+      "ram": 6,
+      "text": 849,
+      "rodata": 0,
+      "data": 0,
+      "bss": 6,
+      "vectors": 0
+    },
+    "obj/asm/src/spi.o": {
+      "rom": 270,
+      "ram": 0,
+      "text": 270,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/asm/src_startup/globals.o": {
+      "rom": 0,
+      "ram": 120,
+      "text": 0,
+      "rodata": 0,
+      "data": 0,
+      "bss": 120,
+      "vectors": 0
+    },
+    "obj/main.o": {
+      "rom": 1182,
+      "ram": 0,
+      "text": 1045,
+      "rodata": 137,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/clock.o": {
+      "rom": 1161,
+      "ram": 114,
+      "text": 769,
+      "rodata": 278,
+      "data": 114,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/emos.o": {
+      "rom": 6901,
+      "ram": 12,
+      "text": 5977,
+      "rodata": 924,
+      "data": 0,
+      "bss": 12,
+      "vectors": 0
+    },
+    "obj/src/emos_console.o": {
+      "rom": 1928,
+      "ram": 39,
+      "text": 1834,
+      "rodata": 94,
+      "data": 0,
+      "bss": 39,
+      "vectors": 0
+    },
+    "obj/src/emos_keyboard.o": {
+      "rom": 2760,
+      "ram": 290,
+      "text": 2760,
+      "rodata": 0,
+      "data": 0,
+      "bss": 290,
+      "vectors": 0
+    },
+    "obj/src/emos_parallel.o": {
+      "rom": 1268,
+      "ram": 40,
+      "text": 1256,
+      "rodata": 12,
+      "data": 0,
+      "bss": 40,
+      "vectors": 0
+    },
+    "obj/src/emos_parallel_engine.o": {
+      "rom": 1398,
+      "ram": 0,
+      "text": 1398,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/emos_sdlink.o": {
+      "rom": 685,
+      "ram": 486,
+      "text": 685,
+      "rodata": 0,
+      "data": 0,
+      "bss": 486,
+      "vectors": 0
+    },
+    "obj/src/emos_telemetry.o": {
+      "rom": 0,
+      "ram": 0,
+      "text": 0,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/emos_uart_flow.o": {
+      "rom": 1731,
+      "ram": 10,
+      "text": 1044,
+      "rodata": 687,
+      "data": 0,
+      "bss": 10,
+      "vectors": 0
+    },
+    "obj/src/emos_uart_probe.o": {
+      "rom": 3217,
+      "ram": 0,
+      "text": 2195,
+      "rodata": 1022,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/i2c.o": {
+      "rom": 733,
+      "ram": 0,
+      "text": 733,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/mos.o": {
+      "rom": 30320,
+      "ram": 2289,
+      "text": 21942,
+      "rodata": 7744,
+      "data": 634,
+      "bss": 1655,
+      "vectors": 0
+    },
+    "obj/src/mos_editor.o": {
+      "rom": 4589,
+      "ram": 48,
+      "text": 4363,
+      "rodata": 226,
+      "data": 0,
+      "bss": 48,
+      "vectors": 0
+    },
+    "obj/src/mos_file.o": {
+      "rom": 5856,
+      "ram": 0,
+      "text": 5776,
+      "rodata": 80,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/mos_sysvars.o": {
+      "rom": 6791,
+      "ram": 6,
+      "text": 6745,
+      "rodata": 46,
+      "data": 0,
+      "bss": 6,
+      "vectors": 0
+    },
+    "obj/src/strings.o": {
+      "rom": 1085,
+      "ram": 0,
+      "text": 1085,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/tests.o": {
+      "rom": 0,
+      "ram": 0,
+      "text": 0,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/timer.o": {
+      "rom": 179,
+      "ram": 0,
+      "text": 179,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src/uart.o": {
+      "rom": 1092,
+      "ram": 2,
+      "text": 1092,
+      "rodata": 0,
+      "data": 0,
+      "bss": 2,
+      "vectors": 0
+    },
+    "obj/src_fatfs/diskio.o": {
+      "rom": 580,
+      "ram": 3,
+      "text": 580,
+      "rodata": 0,
+      "data": 0,
+      "bss": 3,
+      "vectors": 0
+    },
+    "obj/src_fatfs/ff.o": {
+      "rom": 30862,
+      "ram": 6,
+      "text": 30639,
+      "rodata": 223,
+      "data": 0,
+      "bss": 6,
+      "vectors": 0
+    },
+    "obj/src_fatfs/ffsystem.o": {
+      "rom": 0,
+      "ram": 0,
+      "text": 0,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src_fatfs/ffunicode.o": {
+      "rom": 1596,
+      "ram": 0,
+      "text": 627,
+      "rodata": 969,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "obj/src_umm_malloc/umm_malloc.o": {
+      "rom": 3284,
+      "ram": 8,
+      "text": 3284,
+      "rodata": 0,
+      "data": 0,
+      "bss": 8,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(firmware_printf.o)": {
+      "rom": 2637,
+      "ram": 0,
+      "text": 2583,
+      "rodata": 54,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(i48_required.o)": {
+      "rom": 30,
+      "ram": 0,
+      "text": 30,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(and.o)": {
+      "rom": 28,
+      "ram": 0,
+      "text": 28,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(bshl.o)": {
+      "rom": 9,
+      "ram": 0,
+      "text": 9,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(bshru.o)": {
+      "rom": 10,
+      "ram": 0,
+      "text": 10,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(frameset.o)": {
+      "rom": 14,
+      "ram": 0,
+      "text": 14,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(frameset0.o)": {
+      "rom": 11,
+      "ram": 0,
+      "text": 11,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(idivs.o)": {
+      "rom": 7,
+      "ram": 0,
+      "text": 7,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(idvrms.o)": {
+      "rom": 46,
+      "ram": 0,
+      "text": 46,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(idvrmu.o)": {
+      "rom": 24,
+      "ram": 0,
+      "text": 24,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(imulu.o)": {
+      "rom": 48,
+      "ram": 0,
+      "text": 48,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(indcall.o)": {
+      "rom": 2,
+      "ram": 0,
+      "text": 2,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(indcallhl.o)": {
+      "rom": 1,
+      "ram": 0,
+      "text": 1,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ineg_sneg.o)": {
+      "rom": 9,
+      "ram": 0,
+      "text": 9,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(inot.o)": {
+      "rom": 10,
+      "ram": 0,
+      "text": 10,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(irems.o)": {
+      "rom": 8,
+      "ram": 0,
+      "text": 8,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ishl.o)": {
+      "rom": 38,
+      "ram": 0,
+      "text": 38,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ishrs.o)": {
+      "rom": 65,
+      "ram": 0,
+      "text": 65,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ladd.o)": {
+      "rom": 6,
+      "ram": 0,
+      "text": 6,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lcmps.o)": {
+      "rom": 13,
+      "ram": 0,
+      "text": 13,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lcmpu.o)": {
+      "rom": 8,
+      "ram": 0,
+      "text": 8,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lcmpzero.o)": {
+      "rom": 11,
+      "ram": 0,
+      "text": 11,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ldivs.o)": {
+      "rom": 24,
+      "ram": 0,
+      "text": 24,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ldivs_lrems_common.o)": {
+      "rom": 17,
+      "ram": 0,
+      "text": 17,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ldivu.o)": {
+      "rom": 16,
+      "ram": 0,
+      "text": 16,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(ldvrmu.o)": {
+      "rom": 36,
+      "ram": 0,
+      "text": 36,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(llmulu.o)": {
+      "rom": 85,
+      "ram": 0,
+      "text": 85,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(llshru.o)": {
+      "rom": 26,
+      "ram": 0,
+      "text": 26,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lmulu.o)": {
+      "rom": 92,
+      "ram": 0,
+      "text": 92,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lneg.o)": {
+      "rom": 13,
+      "ram": 0,
+      "text": 13,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lnot.o)": {
+      "rom": 13,
+      "ram": 0,
+      "text": 13,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lshl.o)": {
+      "rom": 13,
+      "ram": 0,
+      "text": 13,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lshrs.o)": {
+      "rom": 27,
+      "ram": 0,
+      "text": 27,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lshru.o)": {
+      "rom": 16,
+      "ram": 0,
+      "text": 16,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(lsub.o)": {
+      "rom": 10,
+      "ram": 0,
+      "text": 10,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(or.o)": {
+      "rom": 27,
+      "ram": 0,
+      "text": 27,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(sand.o)": {
+      "rom": 9,
+      "ram": 0,
+      "text": 9,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(setflag.o)": {
+      "rom": 15,
+      "ram": 0,
+      "text": 15,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(sor.o)": {
+      "rom": 9,
+      "ram": 0,
+      "text": 9,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(sremu.o)": {
+      "rom": 7,
+      "ram": 0,
+      "text": 7,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(sshru.o)": {
+      "rom": 13,
+      "ram": 0,
+      "text": 13,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(xor.o)": {
+      "rom": 27,
+      "ram": 0,
+      "text": 27,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(isspace.o)": {
+      "rom": 15,
+      "ram": 0,
+      "text": 15,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(isxdigit.o)": {
+      "rom": 21,
+      "ram": 0,
+      "text": 21,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(memchr.o)": {
+      "rom": 29,
+      "ram": 0,
+      "text": 29,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(memcmp.o)": {
+      "rom": 42,
+      "ram": 0,
+      "text": 42,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(memcpy.o)": {
+      "rom": 33,
+      "ram": 0,
+      "text": 33,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(memmove.o)": {
+      "rom": 48,
+      "ram": 0,
+      "text": 48,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(memset.o)": {
+      "rom": 31,
+      "ram": 0,
+      "text": 31,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(qsort.o)": {
+      "rom": 920,
+      "ram": 0,
+      "text": 920,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strcat.o)": {
+      "rom": 29,
+      "ram": 0,
+      "text": 29,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strchr.o)": {
+      "rom": 31,
+      "ram": 0,
+      "text": 31,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strcmp.o)": {
+      "rom": 25,
+      "ram": 0,
+      "text": 25,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strcpy.o)": {
+      "rom": 24,
+      "ram": 0,
+      "text": 24,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strlen.o)": {
+      "rom": 17,
+      "ram": 0,
+      "text": 17,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strncpy.o)": {
+      "rom": 70,
+      "ram": 0,
+      "text": 70,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strrchr.o)": {
+      "rom": 30,
+      "ram": 0,
+      "text": 30,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strspn.o)": {
+      "rom": 49,
+      "ram": 0,
+      "text": 49,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(strtol.o)": {
+      "rom": 690,
+      "ram": 0,
+      "text": 690,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(tolower.o)": {
+      "rom": 12,
+      "ram": 0,
+      "text": 12,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(toupper.o)": {
+      "rom": 12,
+      "ram": 0,
+      "text": 12,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(idivu.o)": {
+      "rom": 8,
+      "ram": 0,
+      "text": 8,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(llshrs.o)": {
+      "rom": 55,
+      "ram": 0,
+      "text": 55,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(sdvrmu.o)": {
+      "rom": 16,
+      "ram": 0,
+      "text": 16,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(isalpha.o)": {
+      "rom": 14,
+      "ram": 0,
+      "text": 14,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(isdigit.o)": {
+      "rom": 11,
+      "ram": 0,
+      "text": 11,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    },
+    "runtime/build/libmos_runtime.a(isupper.o)": {
+      "rom": 11,
+      "ram": 0,
+      "text": 11,
+      "rodata": 0,
+      "data": 0,
+      "bss": 0,
+      "vectors": 0
+    }
+  }
+}
