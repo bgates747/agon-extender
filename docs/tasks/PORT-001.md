@@ -1,5 +1,13 @@
 # PORT-001 — Build the VDU-to-EDU dependency graph system
 
+## Current applicability
+
+Routine use starts at the promoted [dependency workflow](../dependencies/README.md).
+This completed task retains original acceptance, not current firmware selection.
+Its fingerprinted graph/declared profiles are not a complete manifest of later
+console overlays; the [build guide](../building.md) owns current selection and
+its reconstruction limits.
+
 ## State
 
 - Status: Complete
@@ -16,9 +24,7 @@ retained, replaced, adapted, stubbed, or qualified.
 
 The graph is continuing engineering infrastructure, not a one-time survey
 artifact. It must remain useful for implementation, upstream release updates,
-impact analysis, testing, debugging, review, and production qualification. No
-command is predetermined as the first proof slice; select a representative seed
-after reviewing the schema and available evidence.
+impact analysis, testing, debugging, review, and production qualification. VDU 22 was the accepted first proof slice, linked below.
 
 ## Inputs
 
@@ -66,23 +72,10 @@ after reviewing the schema and available evidence.
 
 ## Durable layout
 
-Task-local implementation and initial outputs live under:
-
-```text
-docs/tasks/PORT-001/
-├── scripts/
-├── schema/
-├── reviewed/
-└── generated/
-    ├── code-graph.yaml
-    ├── commands/
-    └── diagrams/
-```
-
-If the system is accepted for continuing production use, promote its scripts,
-schema, and maintenance documentation to an appropriately named durable project
-tool boundary. Do not place one-off extraction scripts in the repository's
-top-level `scripts/` directory.
+The accepted implementation lives under `docs/dependencies/`: scripts, schema,
+reviewed inputs and generated graph/projections. Its README owns regeneration
+and queries. This task silo retains original proposal/proof evidence only, not
+an alternative tool installation. Promotion is complete.
 
 ## Requirements
 
@@ -123,7 +116,7 @@ and first proof completed PORT-001. PORT-002 subsequently promoted the reusable
 system to `docs/dependencies/`; this task retains the original proposal and
 acceptance history while linking to the current durable artifacts.
 
-## Review gates
+## Original review gates — completed
 
 1. Stop after proposing the graph schema, evidence model, and representative
    command-slice output shape. Obtain Author approval before implementing the

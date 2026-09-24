@@ -10,12 +10,27 @@
 - Started: 2026-09-04 18:32 EDT
 - Finished: --
 
+## Current applicability
+
+This hold concerns HW-001's incomplete **r02** complete circuit. The later
+[HW-002 r03 draft and USB addition](../../hardware/designs/light2-harness-r03/README.md)
+record a different direct-UART arrangement with bounded input evidence. Its
+drawing is not a verified complete as-built or full electrical qualification.
+Do not transfer r02 measurements to r03 or treat rejection of r02's intermediate
+bias proposal as rejection of r03's separate resistor design.
+
+The [current architecture](../architecture.md) permits explicitly admitted
+Extender keyboard and mainboard-SD services in Legacy. Qualification must name
+whether these services are inactive or admitted; ordinary Legacy VDU remains
+onboard. Accepted service traffic is not unsolicited activation. No complete
+power/reset/mode matrix is passed by this documentation clarification.
+
 ## Intent
 
 Qualify the Agon Light 2, onboard VDP, Extender P4, selected transport harness,
 and attached measurement fixtures as one assembled system across power, reset,
-idle, transfer, failure, and recovery states. Establish that legacy mode makes
-Extender electrically and logically absent and that no supported power/reset
+idle, transfer, failure, and recovery states. Establish the specified quiescent or explicitly admitted Legacy service state
+and that no supported power/reset
 ordering back-powers, contends, wedges, or damages either board.
 
 This task owns AUDIT-001 requirements `C15` and `C16` and wiring/fixture findings
@@ -58,9 +73,9 @@ production isolation requirements.
 8. Keep Console8 outside the Light 2 result; it requires its own harness and
    later qualification.
 9. Prove the accepted pull-discovery policy: EDP/P4 firmware and carrier wiring
-   produce no proactive presence traffic or unsafe P4-to-eZ80 signal while
-   Legacy is committed or a transaction is uncommitted; EMOS explicitly arms
-   the receiver and initiates discovery.
+   produce no unadmitted presence traffic or unsafe P4-to-eZ80 signal.
+   Distinguish inactive Legacy from explicitly admitted keyboard/SD services;
+   EMOS arms the receiver and initiates the applicable service/discovery exchange.
 10. Prove the accepted pre-activation fail-safe design boundary for every
     supported power, reset, mode, and GPIO-ownership state: hardware-safe
     defaults keep P4-to-Agon drivers disabled independently of P4 firmware and
@@ -113,8 +128,9 @@ of containing the measurement record.
    draft unpowered inspection, settled voltage and optional digital-startup
    worksheet. The Author requires permanent parts only; the expanded step
    depends on HW-001-Q011's permanent input-bias successor proposal. No readings
-   or physical execution are recorded. Approve the circuit/identity change
-   under HW-001, then record the applicable procedure review here.
+   or physical execution are recorded. This is a suspended proposal, not a
+   request to approve or resume it. A successor needs a new owner-reviewed
+   scope before a procedure is prepared.
 
 ### QUAL-002.1 — Define the qualification state matrix
 
@@ -199,13 +215,13 @@ current bench state before execution.
   define the relevant transport ownership and controlled candidate before an
   active-transfer test, not before power or passive-bias observations.
 - Accepted `SETUP-005-D002` supplies the lifecycle foundation. REMED-001's
-  four-mode freeze, open SETUP-005 decisions, HW-001-Q003/Q007/Q010, and this
+  remaining four-mode conformance hold, open SETUP-005 decisions, HW-001-Q003/Q007/Q010, and this
   task's corrected execution gates still block approval of the full physical
   mode matrix.
-- REMED-001's four-mode conformance freeze must explicitly release the
-  applicable mode-dependent scope before that scope is physically qualified.
-  Bounded tests that neither exercise nor claim those modes use their stage
-  gates under PORT-008-D003; they do not release the full freeze.
+- Applicable mode-dependent claims require their owner-reviewed scope and
+  qualification gates. Later bounded UART/console acceptances do not release
+  this full-circuit hold. Mode-neutral stages retain narrower gates; none
+  promotes the incomplete four-mode matrix.
 - REMED-002 F008's frozen-input identity block was reconciled on 2026-09-01.
   A later connectivity/profile hash mismatch was recorded on 2026-09-05;
   HW-001 must reconcile it before r02 is claimed as a clean frozen
@@ -234,7 +250,7 @@ current bench state before execution.
 2. Every supported assembled-system state has a passed run or an explicit
    bounded qualification statement explaining why another evidence method is
    sufficient.
-3. Legacy electrical/logical absence, either-order power, independent reset,
+3. Legacy quiescence and explicit-service boundaries, either-order power, independent reset,
    transfer interruption, and recovery claims are supported without
    unexplained observation gaps.
 4. Late P4 power-on, explicit EMOS discovery while P4 is still booting,

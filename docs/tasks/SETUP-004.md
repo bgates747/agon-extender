@@ -1,5 +1,24 @@
 # SETUP-004 — Determine upstream I/O driver disposition
 
+## Current applicability
+
+This completed survey records dispositions, not implementation of every retained
+service. [ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md)
+and [architecture](../architecture.md) own accepted boundaries;
+[building](../building.md) identifies actual console selection.
+
+| Area | Current disposition / limit |
+|---|---|
+| Video | Retain original depth controllers/native rows through narrow P4 bindings. The generic replacement proposal is superseded by stock restoration. |
+| Input | Omit FabGL PS/2 acquisition. P4 USB/browser/agent providers use common EMOS admission under ADR-0022. Application-forwarded non-echo events and mouse integration remain separate scope. |
+| Audio | Runtime/synthesis retention is intended implementation; accepted command consumption is not audio output. PORT-004 owns remaining work. |
+| Storage | PORT-007 owns future P4-local SD. Current mainboard SD uses the EMOSlet, not FabGL FileBrowser or a P4-local filesystem. |
+| Hardware | r01 is historical survey context. HW-001/r02 and HW-002/r03 have separate states/evidence; none is selected by this survey. |
+| Generated inventories | Retained extraction/decision evidence for their baseline; not proof of later compiled profiles. Use the durable dependency workflow and current console manifest. |
+
+Dated execution records preserve earlier analysis. Current ADRs and this map
+govern reuse; survey completion starts no build or qualification campaign.
+
 ## State
 
 - Status: Complete — all subsystem dispositions accepted or explicitly deferred
@@ -14,9 +33,9 @@ ESP32-PICO-to-P4 porting while preserving the externally observable behavior
 required for VDP backward compatibility.
 
 Begin from the documented VDU interface rather than implementation internals.
-The Author will review each command or command family in
-[`SETUP-004/VDU-inventory.md`](SETUP-004/VDU-inventory.md) and state which
-observable behavior Extender promises to preserve. Driver disposition follows
+The Author reviewed command families in
+[`SETUP-004/VDU-inventory.md`](SETUP-004/VDU-inventory.md) to establish the intended
+compatibility boundary. Driver disposition follows
 from that product-level compatibility boundary.
 
 This is a survey and disposition task. It does not implement driver removals,
@@ -92,13 +111,12 @@ ADR or an amendment to ADR-0013.
 ## Initial accepted boundary
 
 Per ADR-0013, FabGL PS/2 controller and physical keyboard/mouse support will
-not be ported or built for Extender. Existing input responsibilities remain
-with the Agon main board and onboard VDP. Any future Extender input facility is
-project-owned. The survey must still trace protocol and compile-time coupling
+not be ported or built for Extender. Mainboard PS/2 acquisition remains
+with its onboard VDP; P4 USB/browser/agent acquisition is project-owned. The survey must still trace protocol and compile-time coupling
 before assigning the precise **Omit**, **Stub**, or **Replace** mechanics.
 
 Retain keyboard and mouse command parsing and externally visible protocol state
-needed by exclusive compatibility mode, while leaving cooperative-mode routing
+needed by exclusive compatibility mode, while leaving broader Dual-mode composition
 unresolved. This retained surface does not reverse the physical-driver boundary:
 upstream PS/2 acquisition remains excluded, and couplings such as sprite command
 `&40` calling mouse-owned cursor code require a project-owned adapter or
@@ -109,9 +127,10 @@ Retain the complete buffered-callback facility unconditionally. Commands 80 and
 suppress later protocol packets. Exclusive compatibility mode requires those
 indirect MOS-visible effects to match the official VDP behavior.
 
-The Extender application interface is a stable, explicit EDU API with both
-directly linked and optional resident-service implementations. The resident
-service does not intercept stock VDU restart paths. See
+EMOS owns ordinary VDU dispatch, transport admission and committed mode.
+Explicit EDU bindings must use its documented interface; no independent
+application/resident bypass is supported. The generalized EDU surface is not
+implied complete by this survey. See
 [ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
 
 ### Known diagnostic-output constraint
@@ -955,36 +974,19 @@ refreshed.
 
 #### W1D-Q03 — Concrete VGA controller family
 
-- **Status:** Accepted — Replace (2026-08-22)
+- **Status:** Original replacement disposition superseded by accepted
+  AUDIT-006-D001/D002 restoration; physical engine replacement retained.
 - **Candidate:** `display-vga-concrete-controller-family`
-- **Question:** Replace the five concrete ESP32 VGA controllers with an
-  Extender-owned framebuffer and logical-frame backend, preserving their
-  application-visible behavior and reusing separable rendering algorithms
-  where practical?
-- **Recommendation:** **Replace.** Their physical engine depends on classic
-  ESP32 GPIO-matrix/I2S1/DMA/ISR behavior and cannot serve network/browser or
-  P4-native local sinks. The replacement must preserve stock mode dimensions,
-  palette quantization, Copper scanline effects, sprite composition, readback,
-  double buffering, frame progression, waits, callbacks, and failure/fallback
-  behavior as closely as practical.
-- **Alternatives/tradeoffs:** Porting the old physical VGA engine has no
-  selected hardware destination and retains severe architecture coupling;
-  omitting the family without replacement breaks all output. Refactoring the
-  vendored classes into clean renderer and scanout layers might salvage more
-  code but would be broad upstream surgery. A project-owned backend can instead
-  preserve the facade and use old algorithms as a behavioral reference.
-- **Downstream effect:** Acceptance creates follow-on implementation and
-  qualification work for the backend, frame service, network sink, and later
-  MIPI sinks. `PORT-002` must distinguish the vendored old controllers from
-  whichever sources are actually selected.
-- **Disposition:** **Replace.** Provide an Extender-owned concrete
-  `BitmappedDisplayController` implementation with framebuffer production and
-  logical frame progression independent of any one output sink. Preserve stock
-  mode dimensions, palette quantization, Copper scanline effects, sprite
-  composition, readback, double buffering, frame waits and counters,
-  callbacks, and mode failure/fallback behavior as closely as practical. Reuse
-  separable upstream algorithms where that reduces risk, but do not retain the
-  classic-ESP32 GPIO-matrix, I2S1, DMA-chain, or VSync-ISR physical engine.
+- **Current disposition:** Retain the original five depth classes, native
+  memory organization and reusable rendering bodies. Replace only unavailable
+  processor/output bindings. A generic controller or browser-friendly flat
+  framebuffer is not required. See
+  [ADR-0015](../decisions/ADR-0015-p4-display-backend-and-frame-service.md).
+- **Owner/evidence:** PORT-003 owns runtime and scoped qualification. Historical
+  generated dispositions do not override its current build selection.
+- **Provenance:** The original proposal remains in Git and the
+  [backend audit](AUDIT-006/video-backend-audit.md). This reconciliation changes
+  no generated inventory, code or qualification result.
 
 #### W1D-Q04 — Hardware VGA text controller
 
@@ -1233,40 +1235,24 @@ projections are refreshed.
 
 #### W1F-Q01 — Official input compatibility integration
 
-- **Status:** Accepted — Replace as revised (2026-08-22)
 - **Candidate:** `input-official-compatibility-integration`
-- **Question:** Replace the direct FabGL keyboard/mouse bindings inside the
-  official integration with a project-owned processed-event injection adapter,
-  initially fed explicitly by EDU-aware eZ80 applications, while preserving the
-  official packets, callbacks, VDP variables, control-key and paged-mode
-  behavior, logical mouse state, and cursor effects when events are supplied?
-- **Recommendation:** **Replace.** The proof of concept needs an explicit EDU
-  input-injection path, not transparent routing. Literal retention starts the
-  excluded physical PS/2 stack and cannot consume application-forwarded events.
-  A narrow adapter preserves useful official behavior and source shape while
-  changing the event source beneath it. Injected events should update EDP-local
-  input variables, callbacks, control-key/paged-mode logic, mouse position, and
-  cursor effects, but should not automatically emit `PACKET_KEYCODE` or
-  `PACKET_MOUSE` back to the eZ80 that just forwarded them; later compatibility
-  profiles may enable packet emission through an explicit routing policy.
-- **Alternatives/tradeoffs:** Retaining the bindings contradicts accepted
-  hardware ownership and fails on P4; omission breaks legacy-visible behavior;
-  a broad rewrite creates unnecessary divergence. Aware-application forwarding
-  is sufficient for the proof of concept; any more automatic v1 route remains
-  a separate `SETUP-005-D007` decision. Automatic packet echo risks duplicate
-  input or a forwarding loop.
-- **Downstream effect:** Q02 and Q03 may exclude the physical keyboard and mouse
-  engines only after this adapter satisfies their official consumers. Display
-  cursor rendering remains owned by Work 1.d.
-- **Disposition:** **Replace** the direct device-object bindings with
-  a narrow processed-event injection adapter. The proof-of-concept source is an
-  EDU-aware application that reads stock VDP input and forwards it explicitly.
-  Preserve official event, packet, callback, state, control-key, paged-mode, and
-  cursor semantics for later profiles, but update only EDP-local state and
-  behavior by default in the proof of concept; do not echo injected input or
-  presume transparent routing.
+- **Status:** Accepted processed-event boundary; provider policy now follows
+  [ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md).
+- **Current disposition:** Replace direct FabGL PS/2 bindings with P4-owned
+  processed input. USB, captured browser and agent events share EMOS's admitted
+  Extender keyboard source. P4 sends stock-compatible packets to EMOS, which
+  retains ordinary VDU routing and canonical keyboard state.
+- **Scope:** Later aware-application forwarding retains non-echo behavior;
+  that historical proof restriction does not suppress packets from current
+  original P4 input sources. Mouse integration remains separate/deferred.
+- **Evidence:** The [keyboard guide](../remote-keyboard.md) links bounded
+  acceptance. Original extraction records are not current input qualification.
 
 #### W1F-Q02 — Keyboard device and layout engine
+
+The following original rationale concerns the physical FabGL PS/2 stack. Its
+future-input assumption is superseded by the current P4 providers described
+in Q01; it does not exclude their locale/key mapping implementation.
 
 - **Status:** Accepted — Omit from build; retain in vendor tree (2026-08-22)
 - **Candidate:** `input-vdp-gl-keyboard-and-layout`
@@ -1461,8 +1447,8 @@ unclassified evidence. `PORT-007` owns the independent v1 P4 DevKit microSD
 implementation; no firmware, source selection, or build configuration changed
 during this survey.
 
-## Review gate
+## Review gate — completed survey
 
-Stop after producing and explaining the provisional disposition matrix. Do not
-alter source selection, add stubs, or modify VDP/vdp-gl code until the Author
-has reviewed the affected subsystem group.
+Subsystem review closed on the recorded date. Later implementation or reopening
+requires its own owner-task contract; this survey does not restart review or
+authorize source changes.

@@ -162,14 +162,14 @@ its contents. Every record has a disposition in [INVENTORY.csv](INVENTORY.csv).
 
 | Review state | Extender | EMOS | Total |
 |---|---:|---:|---:|
-| Current body reviewed within recorded scope | 93 | 18 | 111 |
-| Partially reviewed / selected claims only | 113 | 32 | 145 |
+| Current body reviewed within recorded scope | 96 | 18 | 114 |
+| Partially reviewed / selected claims only | 114 | 32 | 146 |
 | Historical metadata classified, body not reviewed | 118 | 22 | 140 |
 | Vendor/reference provenance role only | 44 | 0 | 44 |
-| Pending body review | 629 | 39 | 668 |
+| Pending body review | 625 | 39 | 664 |
 | **Inventory total** | **997** | **111** | **1108** |
 
-Forty-six bounded batches and two documentation-only reader walkthroughs are
+Forty-seven bounded batches and two documentation-only reader walkthroughs are
 recorded in [CHECKS.md](CHECKS.md). Reviewed means the document's stated contract
 was inspected against the sources/evidence listed there; it is not a fresh
 hardware or independent fresh-machine acceptance.
@@ -217,8 +217,9 @@ Assigning an owner or exposing a gap does not authorize a fix or bench run.
 The remaining-current-summary batch and first ten build decisions have been
 reviewed within the recorded scope. The next ten documents are now divided into
 [A09-N01–N04 in the main task](../AUDIT-009.md#next-phase), which owns the
-actionable checklist and completion boundaries. A09-N01–N03 are complete. A09-N04 is next, but remains unstarted and is not
-authorized by this continuation note.
+actionable checklist and completion boundaries. A09-N01–N04 are complete within
+their recorded scopes. Select a further bounded review with the Author before
+starting another tranche; this continuation note grants no new scope.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -320,3 +321,20 @@ B46 and A09-F058/F059 record scope and evidence. Historical execution and
 P001–P044 provenance records remain intact. Coverage is 111 reviewed / 145 partial,
 140 metadata-only, 44 provenance-only and 668 pending (1108 total). No code,
 architecture decision, generated model or bench state changed. N04 is unstarted.
+
+## A09-N04 result
+
+Current instructions now distinguish accepted source infrastructure, superseded
+driver proposals and still-unqualified electrical claims.
+
+| Document | Correction | Coverage / remaining limit |
+|---|---|---|
+| SETUP-004 | Replaced generic-controller and application-only keyboard guidance with accepted native framebuffer, P4 input and EMOS routing ownership; separated audio/storage plans and hardware revisions. | Partial: current instructions and selected dispositions reviewed. Long historical driver records, generated surveys and every source claim were not revalidated. |
+| PORT-001 | Points routine dependency work to the promoted guide; original proof selection and review gates are completed history. | Body reviewed; no graph regeneration or new build. |
+| PORT-002 | Removed obsolete review pause and qualified original absence-of-vendoring claims against current source-baseline records. | Body reviewed; declared profiles remain distinct from live firmware selection. |
+| QUAL-002 | Distinguished the held r02 complete circuit from bounded r03 UART use, and inactive Legacy from EMOS-admitted services. Removed obsolete instruction to resume a suspended proposal. | Body reviewed; full electrical qualification remains on hold. No hardware inspection or tests. |
+
+B47 and A09-F061–F063 record scope and corrections. Coverage is now 114 reviewed,
+146 partial, 140 metadata-only, 44 provenance-only and 664 pending (1108 total).
+All four N01–N04 steps are complete; the overall audit remains open. No code,
+architecture decision, generated model, firmware or physical state changed.

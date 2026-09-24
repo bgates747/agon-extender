@@ -101,7 +101,7 @@ their linked evidence. Correct stale current instructions without deleting
 useful historical evidence, reviving obsolete implementation holds or declaring
 unsupported gates complete.
 
-A09-N04 [ ] **Source, driver and electrical-qualification applicability.** Review
+A09-N04 [x] **Source, driver and electrical-qualification applicability.** Review
 [SETUP-004](SETUP-004.md), [PORT-001](PORT-001.md),
 [PORT-002](PORT-002.md) and [QUAL-002](QUAL-002.md).
 Reconcile driver dispositions, dependency/source maps and qualification scope
@@ -112,7 +112,10 @@ instructions, not frozen evidence; no new electrical qualification.
 A09-N01 completed within its documentation-only scope; see
 [results](AUDIT-009/RESULTS.md#a09-n01-result) and batch B44. N02 is also complete; batch B45 and the
 [results](AUDIT-009/RESULTS.md) record its display-contract reconciliation.
-N03 is complete in batch B46; A09-N04 remains unstarted.
+N03 is complete in batch B46; N04 is complete in batch B47. N04 reviewed current
+applicability, with selected rather than exhaustive coverage of SETUP-004
+historical driver records. All four next-phase steps are complete; no further
+tranche is selected.
 
 ## Scope and authority
 

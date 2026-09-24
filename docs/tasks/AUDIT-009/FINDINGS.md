@@ -180,3 +180,11 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
 | A09-F060 | Build journey references a configured emulator but lacks a self-contained external-user profile setup/verification path | docs/building.md delegates identified EMOS review to a configured Fab; canonical agon-dev-env emulator guidance supplies local setup/launcher/SD rules, not a newly validated portable install | Gap explicitly mapped in RESULTS. Existing A09-04/08 own guide reconciliation; coupled emulator changes require human validation. No profile changed or launched. |
+
+## A09-N04 — source, driver and qualification applicability
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F061 | PORT-001/002 still direct promotion and gate review already completed, and imply no current vendored sources | Maintained dependency guide/source-baselines and completed gate records | Current instructions corrected; generated graph and build qualification unchanged. |
+| A09-F062 | SETUP-004 generic renderer, application-only input and independent EDU binding conflict with accepted current ownership | ADR-0015/AUDIT-006 backend boundary, ADR-0022 and maintained keyboard/architecture guidance | Selected dispositions corrected. Remaining historical survey review stays under A09-05/06/08; no source implementation changed. |
+| A09-F063 | QUAL-002 r02 hold and total Legacy absence language can misclassify later r03 and explicitly admitted services | HW-001 hold, HW-002 r03 draft, current architecture and prior remediation review | Applicability corrected; complete electrical matrix remains unqualified under QUAL-002. No historical measurements transferred between designs. |

@@ -391,3 +391,18 @@ Validation: whitespace passed; 714 Markdown files / 2696 relative links,
 only the same three historical missing targets and no new link findings.
 Seven field-accounting tables cover entry point, tool, command, owner, transport,
 build, SD location, evidence and stop/recovery. No bench endpoints used.
+
+## A09-N04 — applicability review
+
+| Batch | Inspected scope | Disposition |
+|---|---|---|
+| B47 | PORT-001, PORT-002 and QUAL-002 bodies; SETUP-004 current instructions and selected display/input/audio/storage dispositions; supporting dependency guide/source-baselines, HW-001 hold and r03 design summary, previously reviewed architecture/ADRs | Reconciled promoted infrastructure, superseded renderer/input guidance and distinct hardware/service qualification scopes. SETUP-004 remains partial; generated records and long historical execution claims were not exhaustively revalidated. |
+
+Contract frozen in 270a43e0 before edits. No build, graph regeneration, bench,
+emulator, firmware or new physical qualification. Three pending bodies become
+reviewed; one becomes partial. Totals: 114 reviewed, 146 partial, 140 metadata-only,
+44 provenance-only, 664 pending; 1108 total. Findings F061–F063 retain boundaries.
+
+N04 validation: whitespace passed; 714 Markdown files / 2710 relative links,
+with the same three historical missing targets and no changed-document findings.
+Mailbox empty at closeout. No bench endpoints used.

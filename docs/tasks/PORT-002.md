@@ -1,5 +1,18 @@
 # PORT-002 — Integrate vendored-source selection and upstream merge guidance
 
+## Current applicability
+
+The infrastructure was accepted and promoted to the
+[dependency workflow](../dependencies/README.md). Its fingerprinted profile scope
+is distinct from [current console selection](../building.md); graph acceptance
+is neither a P4 build nor qualification of later deployed overlays.
+
+The implementation record describes August acceptance. Later managed imports
+are recorded in [source-baselines.yaml](../dependencies/reviewed/source-baselines.yaml);
+original external-reference classifications do not mean sources are still absent
+from this repository. Refresh generated data through reviewed inputs, never by
+hand-editing it to match a prose summary.
+
 ## State
 
 - Status: Complete — Review Gate 2 approved
@@ -79,8 +92,7 @@ Status: closed and approved by the Author on 2026-08-22. The accepted decisions
 were frozen before implementation. Schema 2.0, durable tooling, complete source
 manifests, normalized profile selections, source-region seams, projections,
 queries, merge-attention comparison, documentation, and the six-case proof are
-implemented. Work is paused at Review Gate 2 before the promoted system is
-treated as routine production infrastructure.
+implemented. Review Gate 2 subsequently accepted promotion, as recorded below.
 
 ## Review Gate 2
 
@@ -121,7 +133,7 @@ between declared source selection and a successfully compiled P4 firmware.
 
 ## Implementation record
 
-All nine work items are implemented for review:
+All nine work items were implemented for the accepted August review:
 
 1. schema 2.0 models exhaustive files, source regions, observed/declared build
    profiles, and normalized profile/subject selections;
@@ -145,8 +157,9 @@ Implementation facts and gotchas:
   intermediate. The enrichment pass removes its obsolete node scalar and emits
   the sole canonical schema-2 graph; the reviewed overlay is likewise ignored
   rather than tracked as a second large authority.
-- The immutable inputs remain external `upstream-reference` trees. PORT-002
-  imports no firmware source and deliberately makes no false `vendored` claim.
+- At this original checkpoint inputs were external `upstream-reference`
+  trees and PORT-002 imported no firmware. Current managed-import declarations
+  are linked above.
 - The four exact source manifests contain 5,164 files; vdp-gl's documentation,
   examples, images, and generated documentation account for most of them. They
   remain visible as non-runtime or available content instead of being silently
