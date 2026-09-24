@@ -1,5 +1,13 @@
 # RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment
 
+## Current-state clarification — 2026-09-20 queue review
+
+The candidate-left-installed statement below describes this experiment's own
+review handover, not today's bench. Later experiments and recorded restorations
+supersede it as an installed-state description. The twelve-run research result
+still awaits disposition; no rerun or new deployment is implied.
+
+
 ## Executive summary
 
 Author authorizes replacing the bench P4's VDP application temporarily with a

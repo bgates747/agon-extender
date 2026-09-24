@@ -21,7 +21,7 @@ hardware/implementation tranche beyond this closeout and planning contract.
    commit the timing package and findings in discrete groups. Do not push without
    an instruction to publish.
 
-**PLAN-001-T02** [ ] **Queue reconciliation.** The agent checks every open TODO entry against its
+**PLAN-001-T02** [x] **Queue reconciliation.** The agent checks every open TODO entry against its
    task record and evidence. Present a compact disposition table: genuinely
    unfinished implementation, completed work awaiting acceptance, superseded
    work, or deliberate deferral. Machine completion does not substitute for
@@ -68,7 +68,7 @@ stable subtask identifiers and checkbox formatting; applied in this revision.
 
 **PLAN-001-G03** [x] T01 produces scoped commit groups with retained limitations.
 
-**PLAN-001-G04** [ ] T02 produces a disposition table and proposed authoritative
+**PLAN-001-G04** [x] T02 produces a disposition table and proposed authoritative
 order for Author review.
 
 **PLAN-001-G05** [ ] Author approves the implementation contract proposed by T03
@@ -85,4 +85,25 @@ closeout records are committed separately. Review checks: four analyzer tests,
 ASan/UBSan recorder, normal Aginvadors build and sanitizer-backed simulation,
 85 evidence hashes, 18 CSV validations and 12 serial comparisons all passed.
 No hardware change or push. Mainboard panic and Rally comparison limits remain
-BENCH-007-F01/F02 for T02 disposition. T02 and T03 have not started.
+BENCH-007-F01/F02 for T02 disposition. T02 and T03 had not started at that receipt.
+
+## T02 review delivery — 2026-09-20
+
+Author authorized T02 after the T01 closeout. Reviewed all 45 incoming entries
+against their task records and later linked evidence: one active planning task,
+ten with remaining implementation/documentation, eleven review/disposition
+items, twenty-two parked/unscheduled items, and one already-completed research
+item. [Disposition table](PLAN-001/QUEUE-REVIEW.md) covers every original ID.
+
+TODO now has one current sequence and separate candidate/review/parked groups.
+RESEARCH-004's already-completed entry is removed with task/log closure; all
+other acceptance gates remain. Targeted current-state notes distinguish old
+recovery, installation, input and production-pacing claims from later evidence.
+The existing 30-Hz ADR versus later higher-rate records is flagged for future
+scope reconciliation, not silently resolved by this queue edit.
+
+T02 was delivered for review; the Author subsequently authorized the bounded
+AUDIT-007 first source pass for T03. Its contract was frozen in `db314dd6`.
+[Findings](AUDIT-007/FINDINGS.md) now propose mode-transition lifetime work.
+T03/G05 remain open pending selection and approval of that implementation
+contract. No code, hardware operation or new benchmark was performed.

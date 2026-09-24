@@ -1,5 +1,13 @@
 # REMOTE-002 — Host-controlled typing through the native keyboard path
 
+## Current-state clarification — 2026-09-20 queue review
+
+The active-goal and uncommitted descriptions below are historical checkpoints.
+Host typing is implemented and in routine use; the remaining review gates need
+explicit disposition against retained evidence, not another implementation from
+scratch. Routine use does not prove every physical takeover/visual gate.
+
+
 Status: Active goal; contract frozen before implementation. Started 2026-09-13 UTC.
 
 ## Author instruction and scope

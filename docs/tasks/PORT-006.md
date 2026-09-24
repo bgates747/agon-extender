@@ -1,5 +1,14 @@
 # PORT-006 — Implement the Extender network foundation and update service
 
+## Current-state clarification — 2026-09-20 queue review
+
+The video-only/deprecated-browser-input wording below describes the September 9
+checkpoint. Browser input was subsequently reintroduced under
+[REMOTE-001](REMOTE-001.md); it is now deployed, with residual follow-ups deferred.
+This task retains network resilience/update-service obligations. No network
+implementation or qualification is performed by this clarification.
+
+
 ## State
 
 - Status: Video-only service restored at the Author's request, 2026-09-09.

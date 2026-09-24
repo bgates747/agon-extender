@@ -1,5 +1,14 @@
 # PORT-008 — Implement and qualify the compatibility transport
 
+## Current-state clarification — 2026-09-20 queue review
+
+The incomplete-recovery statement in the older executive summary below is
+historical, superseded by the E07P restoration record and later
+[UART findings](PORT-008/uart-alignment/FINDINGS.md), including E08/E09.
+E10 remains unstarted and needs its existing EMOS review/authorization gate.
+This note changes no hardware qualification claim or firmware.
+
+
 ## Executive summary
 
 EMOS E05 reduces large Extender upload time33.41%. E06's four-byte receive

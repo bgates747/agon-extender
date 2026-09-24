@@ -1,364 +1,131 @@
 # Agon Extender TODO
 
-This is the project's single authoritative list of unfinished work. Stable item
-IDs are retained until an item is accepted, rejected, or superseded; its result
-and rationale are then recorded in the current dated development log before the
-item is removed.
+This is the single authoritative unfinished-work index. Task files own detailed
+subtasks, gates and evidence. Completed history remains in task records and the
+development log. Ordering below replaces historical competing priority headings;
+classification does not grant new execution or waive human acceptance.
 
 ## Top priority — Networking prior-art review
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Contract prepared; detailed review not started. Takes precedence over the existing do-now queue.
 
-## Do now — Approved closeout and planning
-
-- [ ] **PLAN-001 — Timing closeout and next-work selection**: [approved contract](docs/tasks/PLAN-001.md). Close out and commit scoped timing work, reconcile the unfinished queue, then select faithful VDP-to-EDP work. Aginvadors optimization is deferred by Author decision D01 until more tokens are available; browser-performance experiments are parked. This sequence takes priority over historical headings below. T01 complete and committed; T02 queue reconciliation is next, not yet started.
-
-## Active reusable timing package
-
-- [ ] **BENCH-007 — Paired game/renderer timing**: [work and review record](docs/tasks/BENCH-007.md). Measurement package/results complete and committed. Remaining findings BENCH-007-F01/F02: unresolved mainboard sequential-run sprite panic and Rally fixture/gameplay discrepancy; retained for PLAN-001-T02 disposition. Aginvadors optimization is deferred.
-
-## Current game pacing work
-
-- [ ] **BENCH-002 — 30 fps Nurples/Rally human review**
-  - Details: [contract](docs/tasks/BENCH-002.md). Two vblanks per Nurples frame;
-    verify Rally30Hz, restore normal P4, narrow deployment, hardware voice.
-  - Status: Deployed and hardware voice verified; Nurples ExCom launch commands
-    acknowledged. Await human smoothness review; Rally already30Hz and unchanged.
-
-## Accepted web-output contract
-
-512×384 web output is capped at30fps for normal fixtures. Native rendering may
-remain60Hz. QUAL-003 P06e-30 owns pacing/admission implementation and production
-qualification; higher-rate stress work needs explicit authorization. See
-[ADR-0020](docs/decisions/ADR-0020-web-output-30fps.md) and
-[work plan](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-
-- [ ] **BENCH-004 — Cross-machine agent mailbox**: [contract](docs/tasks/BENCH-004.md); Linux implementation/tests and hardware voice complete; awaiting Mac peer round-trip.
-
-## Current Author-directed research
-
-- [ ] **AUDIO-001 — SD-to-parallel stereo streaming feasibility**: [plan](docs/tasks/AUDIO-001.md). First assess Agon SD/SRAM/send throughput and EMOS-owned split routing; mainboard video, Extender audio via network. AF01 complete: current SD 189–199 KiB/s; sequential read/send budget below stereo target using historical parallel rate. [Results](docs/tasks/AUDIO-001/RESULTS.md); AF02 integrated parallel benchmark is next.
-
-- [ ] **P4PC-001 — Olimex P4-PC bring-up and Agon integration**: [plan](docs/tasks/P4PC-001.md). Board backordered from Mouser US; breadboard harness and standalone/HDMI scope recorded. Documentation only so far; pin mapping and hardware qualification pending. Mouse support deferred until this board can provide USB mouse input; later Console8 PS/2 mouse testing recorded.
-
-- [x] **RESEARCH-004 — P4 HDMI hardware purchasing and compatibility**
-  - Details: [contract](docs/tasks/RESEARCH-004.md). Single-board GPIO/Ethernet/HDMI first; US-available compatible adapter fallback. Research complete; no exact drop-in match. US-stocked adapter requires an interposer; hardware voice receipt verified. Results: [assessment](docs/tasks/RESEARCH-004/RESULTS.md).
-
-- [ ] **RESEARCH-003 — Standalone P4 rendering and Ethernet reference experiment**
-  - Status: Twelve standalone runs complete:47.02–47.29fps exact full-frame output while rendering;60fps delivery unmet. Candidate left installed for review with rollback retained; emulator spoken cue verified; awaiting Author review.
-  - Details: [RESEARCH-003](docs/tasks/RESEARCH-003.md)
-
-- [ ] **RESEARCH-002 — Espressif P4 board network-video throughput claims**
-  - Status: Retrospective research complete; awaiting Author review. Link/encoder limits do not establish sustained frame-serving throughput.
-  - Details: [RESEARCH-002](docs/tasks/RESEARCH-002.md)
-  - Boundary: Documentation only; no new benchmark, firmware change or compression execution.
-
-- [ ] **RESEARCH-001 — P4 rendering/network pacing literature search**
-  - Status: C1–C5 source reviews complete; synthesis in RESEARCH-001/C5/README.md. Hardware voice receipt verified. Await Author review; RLE prerequisite satisfied, no implementation started.
-  - Details: [RESEARCH-001](docs/tasks/RESEARCH-001.md)
-  - Boundary: Research only; hardware voice at review, no firmware changes.
-
-## Current Author-directed review — Overnight debrief
-
-QUAL-003 owns the [performance debrief and review contract](docs/tasks/QUAL-003/DEBRIEF-PLAN.md).
-[P01g payload ladder](docs/tasks/QUAL-003/debrief/P01g/README.md) is at its review
-stop:48KiB passes;96KiB fails terminal query15 with35.981native completions/s,
-55.710ms p95 and23.817Mbit/s delivered payload. [Results](docs/tasks/QUAL-003/debrief/P01g/RESULTS.md).
-Larger/repeated/browser rungs stopped. Exact r43/startup restored.
-[P01h RLE2](docs/tasks/QUAL-003/debrief/P01h/README.md) has a tested clean-sheet
-asset decoder and negotiated web encoder candidate, ready for bounded-results review.
-One matched Nurples trial recovered 30 application fps versus 12.8 with raw output.
-Remaining qualification gates and default promotion stay open; see its results.
-Its SRLE2 follow-up has completed the scoped [native/browser replay tasklet](docs/tasks/QUAL-003/debrief/P01h/srle2/web/RESULTS.md):
-1,440 exact paced frames, 22 browser edge/lifecycle checks and independent native
-codec controls pass. Original-source output/lifetime corrections are in source;
-the earlier compiled P4 image is obsolete. Browser candidate review and corrected
-P4 SRLE2 hardware results are ready in the [assessment](docs/tasks/QUAL-003/debrief/P01h/srle2/hardware/RESULTS.md): retain asset decoding; live SRLE2 is slower than matched RLE2. QUAL-003-I006 current-build mode-switch check did not reproduce stale dimensions; [new paired evidence](docs/tasks/QUAL-003/mode-transition/RESULTS.md) records 12.473 game cycles/s with streaming versus 60 without. Bounded output-interference diagnosis is the next proposed follow-up; include [Aginvadors](docs/tasks/QUAL-003/mode-transition/AGINVADORS.md) alongside Nurples in request-pacing controls. Final restoration and review closeout belong to the hardware contract.
-Current codec follow-up: [settings/PNG staged contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/README.md). Linux/browser phase complete; results and shortlist await review. P4 phase waits for shortlist approval and bench release.
-Order4 block-size follow-up: [screen and findings](docs/tasks/QUAL-003/debrief/P01h/codec-screen/blocks/README.md), bench-free under QUAL-003; no P4 deployment authorized by this host run.
-Order4 silicon follow-up: [assessment](docs/tasks/QUAL-003/debrief/P01h/codec-screen/order4-p4/RESULTS.md). Matched tests completed with qualification limits: order4 improves on order3 and sometimes beats RLE2, but delivery varies and the reset-control extension rebooted under RLE2. Retain baseline; further diagnosis requires a separate work item.
-
-Golem excluded; no experimental push.
-
-## Current Author-directed sequence — Audits before game benchmarks
-
-Complete the numeric-conversion audit and unsupported-command audit before
-benchmarking games. RX07 enumerates only; RX08 retains mandatory Author review
-before RX09 corrections, RX10 deterministic stock comparisons and RX11 reusable
-gates. PORT-003 UC01–UC07 covers the wider command-consumption audit; its audio
-slice now has Author visual acceptance. Then QUAL-003 owns matched current Rally
-and a bespoke deterministic Nurples fixture on mainboard VDP and P4 EDP.
-See [the sequencing contract](docs/tasks/QUAL-003/rally-excom/PLAN.md#audit-first-game-benchmark-sequence).
-Earlier priority headings below preserve historical context and do not override
-this sequence. Golem and actual P4 audio synthesis remain excluded.
-
-## First priority — Stock UART alignment
-
-- [ ] **PORT-008 — Stock-compatible UART performance and correctness**
-  - Status: E07P bulk parity qualified in ordinary and bench EMOS: each passes384 exact controls, three captures and strict symmetric return timing. Exact original bench firmware/startup restored; CLI/SD/input verified and hardware voice acknowledged. Graphics and short-command latency are not included in that parity claim. No experimental push.
-  - Details: [PORT-008](docs/tasks/PORT-008.md), [bounded plan](docs/tasks/PORT-008/uart-alignment/PLAN.md)
-  - Companion: [E07P owner scheduling](docs/tasks/PORT-008/uart-alignment/E07P-owner.md) is complete; minimal stock-loop alignment retained. [Current findings](docs/tasks/PORT-008/uart-alignment/FINDINGS.md) link qualification/restoration evidence.
-  - Next: Author review of completed E08 correctness and E09 rendering evidence, then explicit EMOS INTEG-014 E10 authorization. No automatic follow-up or experimental push.
-
-## Previous goal — Resident Rally telemetry and driving
-
-- [ ] **BENCH-001 — Initial experiments**
-  - Started: 2026-09-13 UTC
-  - Status: Local work frozen in commits by explicit Author instruction. No new
-    experiments until the next graphics-suite contract is agreed. Resident telemetry/driving and bounded physical practice are
-    machine-complete; the hour is exhausted. Final native v2 integration passes
-    with the explicit TEST-002 UART1 model correction; original failures remain
-    preserved. Human review is open. Unattended full-game continuation is
-    sequenced in AgonArcade RALLY-22, then video speed and faithful VDP coverage.
-    No overnight progress alerts; human review/commit approval remain separate.
-  - Details: [BENCH-001](docs/tasks/BENCH-001.md)
-
-## Host-controlled typing — Implementation review
-
-- [ ] **REMOTE-002 — Type commands through the existing Extender keyboard path**
-  - Started: 2026-09-13 UTC
-  - Status: Contract committed; host/headless and physical input/CLI/SD checks pass.
-    First attended typing received positive feedback, but exposed a stale-clock
-    lease bug. r15 clock/pacing fixes and extended physical cursor/CLI/SD retest
-    pass. Author returned and is convinced typing works; requested practical
-    CLI experiments under BENCH-001 instead of another typing demonstration.
-    Uncommitted; remaining review disposition and commit approval not recorded.
-  - Details: [REMOTE-002](docs/tasks/REMOTE-002.md)
-
-## Remaining queue — Exclusive Compatible console and EDP
-
-PORT-017 was accepted on 2026-09-13 UTC and removed from the unfinished list.
-See [the dated log](docs/development/2026-09-13.md) and
-[SD operating guide](docs/mainboard-sd.md). The following order is retained;
-no downstream implementation was started as part of SD delivery.
-
-Native USB keyboard bring-up is complete: ordinary MOS commands and gameplay
-work in Legacy. On 2026-09-09 the Author deferred further keyboard refinements
-and selected actual ExCom operation and the retained VDP-to-EDP port as the
-next priority. The first ordinary ExCom console is now accepted, including
-observed Legacy return and re-entry. Build on that working UART console. Use the existing UART-only r03 path; parallel
-transport stays on hold. Browser input remains deferred; browser video is the
-initial Extender display. The USB schematic waits until 2026-09-10.
-
-The previous first priority was a faithful stock video backend.
-AUDIT-006 is accepted and closed with implementation assigned to PORT-003.
-The original-controller R1/R2 implementation is accepted. R3 starts with
-the completed P4-only deployment and qualitative repaired-Nurples review.
-That prior sequence selected QUAL-003's curated finite graphics timing tranche;
-deterministic Nurples and separate typing measurements are deferred.
-
-- [ ] **QUAL-003 — Compare mainboard VDP and Extender EDP graphics**
-  - Started: 2026-09-09
-  - Status: Overnight debrief ready for review. Complete E09 framebuffer-only evidence shows faster P4 execution scopes; streamed Nurples averages about60 refresh completions/s but fails repeated spacing parity. Current Rally hardware FPS unmeasured. P00/P01/P02 bounded controls complete; P01c/d reveals streaming lock stalls with material probe sensitivity. P01e captured network-task displacement of the snapshot lock owner, but diagnostic overhead qualification failed. P01f baseline/scheduling/audit continuation authorized in discrete chunks; Golem on hold, no experimental push.
-  - Details: [QUAL-003](docs/tasks/QUAL-003.md)
-  - Current priority: [Rally Legacy/ExCom diagnosis](docs/tasks/QUAL-003/rally-excom/PLAN.md), Review stop: RX06 repair eliminates all 14 road-section differences; 80/80 samples now match stock. [Findings](docs/tasks/QUAL-003/rally-excom/FINDINGS.md). RX07 enumeration complete: [inventory](docs/tasks/QUAL-003/rally-excom/rx07/README.md). RX08 approved N02–N06; [RX09/RX10 guards and stock comparisons](docs/tasks/QUAL-003/rally-excom/rx09/PLAN.md) pass machine checks; human review pending. RX11 reusable import protection complete; [results](docs/tasks/QUAL-003/rally-excom/rx11/README.md). Golem excluded.
-
-
-- [ ] **PORT-003 — Implement the P4 display backend and logical frame service**
-  - Started: 2026-08-22 10:14 EDT
-  - Finished: --
-  - Status: Paused for Author catch-up, prior P4 image restored and Legacy keyboard/SD recovery verified. Large-surface probe separates snapshot cost (640×480 mean16.660ms) but rejects incomplete socket-send accounting at observer teardown; L04 remains open in video-throughput/LARGE-SURFACE.md. Earlier video increment remains scoped machine evidence. No optimization/publication claim; QUAL-003 now owns the separately authorized framebuffer-first rerun.
-  - Details: [PORT-003](docs/tasks/PORT-003.md)
-  - Active separate tranche: [UC01–UC07 safe no-op command consumption](docs/tasks/PORT-003.md#unimplemented-command-consumption-tranche), UC01 inventory complete ([findings](docs/tasks/PORT-003/command-consumption/README.md)); Current authorized slice: [virtual-key query reply](docs/tasks/PORT-003/key-query/PLAN.md), 269 hardware query replies passed; bounded repair accepted. Printer, console and terminal facilities share one serial-port bucket; [research/implementation deferred until useful or production preparation](docs/tasks/PORT-003/command-consumption/printer.md). Mouse work deferred until P4-PC mouse bring-up. &A1 updater work (including discard-only repair) deferred to production preparation; [research](docs/tasks/PORT-003/command-consumption/updater.md). Wider UC02/UC03 remains open; updater and HEX/YMODEM functionality are strictly Legacy-only. EDP review covers accidental-command containment and remaining application-facing replies, not porting maintenance tools. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
-
-- [ ] **REMED-003 — Reproduce Fab filesystem create-new and sync failures**
-  - Started: 2026-09-10
-  - Finished: --
-  - Status: Hardware and raw-image PASS; upstream directory backend reproduces both failures. Report and reproducible attachment ready for Author review; unsubmitted.
-  - Details: [REMED-003](docs/tasks/REMED-003.md)
-
-- [ ] **AUDIT-005 — Review stock MOS reuse and EMOS UART execution costs**
-  - Started: 2026-09-10
-  - Finished: --
-  - Status: W9/W10 measurements frozen for follow-up: point output improves but ordinary-query stalls remain and Nurples has large ExCom hangs. Further attribution moves to AUDIT-006; stock-reuse audit closure remains open.
-  - Details: [AUDIT-005](docs/tasks/AUDIT-005.md)
-
-
-**PORT-008 retained compatibility context (active priority above)**
-  - Started: 2026-08-29 19:12 EDT
-  - Finished: --
-  - Status: First ExCom hardware console and Nurples gameplay accepted; native USB input and browser graphics work over UART. Selected font, bitmap/affine, context, palette/depth, staged sprite and Copper cases preserve stock native pixels on physical P4, with Legacy/SD recovery. Inherited reflected-edge and active sprite-kind conversion failures remain explicit; guarded conversion passes. Copper reconnect snapshots retain the preceding state before fresh output. Local review pending. N002 remains closed. Wider command qualification is open; r02 hardware/parallel work stays on hold.
-  - Details: [PORT-008](docs/tasks/PORT-008.md)
-
-
-## TRS-80 integration
-
-- [ ] **TRS-80-001 — Design TRS-OS integration and reusable network storage for Extender**
-  - Started: 2026-09-13 (ecosystem survey and task definition).
-  - Status: Initial survey and Linux reference acquisition complete (14 repos, two archives); architecture and protocol selection open. Future owned TRS-80 project should prefer selected vendoring. Coordinate with current EMOS/Extender work before implementation; existing console/graphics queue remains in place.
-  - Details: [TRS-80-001](docs/tasks/TRS-80-001.md)
-
-## Scheduled hardware documentation
-
-- [ ] **HW-003 — Assess alternate ESP32-P4 development board**
-  - Started: 2026-09-13
-  - Finished: --
-  - Status: Desk assessment ready; promising full Waveshare kit, requires pin remapping and specimen qualification. Electrotux in Chile has decided to purchase a test unit; exact variant/revision and adaptation scope remain pending.
-  - Details: [HW-003](docs/tasks/HW-003.md)
-
-- [ ] **HW-002 — Review simplified wiring for Exclusive Compatible**
-  - Started: 2026-09-07 17:36 EDT
-  - Finished: --
-  - Status: USB keyboard addition specified; schematic/model update deferred until 2026-09-10. Existing endpoint review remains open.
-  - Details: [HW-002](docs/tasks/HW-002.md)
-
-## Required audits — currently unscheduled
-
-- [ ] **AUDIT-007 — Exhaustive Agon FabGL port completeness audit**
-  - Status: Author-required, unscheduled pending QUAL-003 P00 immediate timing
-    research. Required regardless of whether that research produces a fix;
-    the dependency controls sequencing, not scope or commitment. Not started.
-  - Details: [AUDIT-007](docs/tasks/AUDIT-007.md)
-
-## Other active work
-
-- [ ] **NET-001 — Replace the active video viewer on a new connection**
-  - Implemented on r20; six hardware connections/five takeovers passed. Hardware voice sent; awaiting Author browser acceptance.
-  - Details: [NET-001](docs/tasks/NET-001.md); preserve one-client bounded delivery and RX06 repair.
-
-
-- [ ] **PORT-006 — Implement the Extender network foundation and update service**
-  - Started: 2026-08-27 19:13 EDT
-  - Finished: --
-  - Status: Video-only service restored; supports PORT-003 RGB222 delivery. Browser input remains retired; network resilience work remains open.
-  - Details: [PORT-006](docs/tasks/PORT-006.md)
-
-## Deferred keyboard refinements
-
-- [ ] **PORT-005 — Implement the processed-keyboard input adapter**
-  - Started: 2026-09-08 (P4 controlled-key sender).
-  - Finished: --
-  - Status: Further keyboard refinements, including the proposed Caps Lock LED increment, deferred by Author on 2026-09-09. Preserve working USB input; repair only keyboard regressions that block the ExCom increment.
-  - Details: [PORT-005](docs/tasks/PORT-005.md)
-
-## Browser input
-
-- [ ] **[REMOTE-003](docs/tasks/REMOTE-003.md)** — Pi-backed browser reset accepted; direct P4 reset wiring and 74-series expansion remain deferred.
-
-- [ ] **REMOTE-001 — Develop browser keyboard and remote EMOS control**
-  - Started: 2026-09-08
-  - Finished: --
-  - Status: C02 deployed: connection indicator, mode metadata and fullscreen-entry capture repair; local/deployment checks pass. Author defers browser/game input follow-up: Rally appears to hang more than Nurples, regression unknown. Nurples Escape exits fullscreen first and exits the game outside fullscreen. Native fullscreen Escape limitation accepted for now. Remaining visual/capture acceptance and physical USB takeover are not inferred; resume investigation only on renewed direction.
-  - Details: [REMOTE-001](docs/tasks/REMOTE-001.md)
-
-## Qualification infrastructure
-
-- [ ] **QUAL-001 — Establish the durable compatibility qualification matrix**
-  - Started: 2026-08-22 22:59 EDT
-  - Finished: --
-  - Details: [QUAL-001](docs/tasks/QUAL-001.md)
-
-## Audit remediation
-
-- [ ] **REMED-001 — Reconcile the repository with the four-mode operating architecture**
-  - Started: 2026-08-23 17:02 EDT
-  - Finished: --
-  - Details: [REMED-001](docs/tasks/REMED-001.md)
-
-- [ ] **REMED-002 — Remediate open-task implementation and evidence-integrity findings**
-  - Started: 2026-09-01 12:52 EDT
-  - Finished: --
-  - Details: [REMED-002](docs/tasks/REMED-002.md)
-
-## Setup
+## Do now — PLAN-001
 
-- [ ] **SETUP-005 — Resolve remaining operating-mode integration decisions**
-  - Started: 2026-08-21 00:49 EDT
-  - Finished: --
-  - Status: Immediate keyboard decisions accepted; broader integration remains open.
-  - Details: [SETUP-005](docs/tasks/SETUP-005.md)
-
-- [ ] **SETUP-006 — Establish the Light 2 Extender wiring target**
-  - Started: 2026-08-24 19:09 EDT
-  - Finished: --
-  - Status: On hold; physical wiring and as-built record incomplete.
-  - Details: [SETUP-006](docs/tasks/SETUP-006.md)
-
-## Hardware design
-
-- [ ] **HW-001 — Design and qualify the V1 UART and forward-parallel interface**
-  - Started: 2026-08-28 13:06 EDT
-  - Finished: --
-  - Status: Design, wiring, and testing on hold; incomplete and full circuit untested.
-  - Details: [HW-001](docs/tasks/HW-001.md)
-
-## Porting
-
-- [ ] **PORT-004 — Implement the P4 PCM scheduler and network audio sink**
-  - Started: --
-  - Finished: --
-  - Status: Audio synthesis/output deferred. Interim command framing/no-op work reprioritized under PORT-003 UC01–UC07; retains audio reply and Wolf3D regression obligations. Audio-first repair passes hardware checks; [results and review](docs/tasks/PORT-004/audio-framing/results/README.md).
-  - Details: [PORT-004](docs/tasks/PORT-004.md)
-
-- [ ] **PORT-007 — Implement the P4 DevKit microSD storage service**
-  - Started: --
-  - Finished: --
-  - Status: Required v1 capability, scheduled after the first beta; EMOS must be able to read the P4 card. Future MicroPython is a storage consumer, not a prerequisite.
-  - Details: [PORT-007](docs/tasks/PORT-007.md)
-
-## System qualification
-
-- [ ] **QUAL-002 — Qualify assembled-system electrical absence, power, and reset behavior**
-  - Started: 2026-09-04 18:32 EDT
-  - Finished: --
-  - Status: Present-hardware qualification on hold; full circuit untested.
-  - Details: [QUAL-002](docs/tasks/QUAL-002.md)
-
-## Upstream research
-
-- [ ] **UPSTREAM-001 — A/B test vdp-gl lifecycle corrections for a possible upstream PR**
-  - Started: --
-  - Finished: --
-  - Details: [UPSTREAM-001](docs/tasks/UPSTREAM-001.md)
-
-## Operating-mode lifecycle
-
-- [ ] **MODE-001 — Develop state-preserving operating-mode transitions**
-  - Started: --
-  - Finished: --
-  - Details: [MODE-001](docs/tasks/MODE-001.md)
-
-- [ ] **MODE-002 — Evaluate automatic mode-request retry protection**
-  - Started: --
-  - Finished: --
-  - Details: [MODE-002](docs/tasks/MODE-002.md)
-
-## Failure diagnostics
-
-- [ ] **DIAG-001 — Implement recoverable failure reporting and crash records**
-  - Started: --
-  - Finished: --
-  - Details: [DIAG-001](docs/tasks/DIAG-001.md)
-
-## Interprocessor links
-
-- [ ] **LINK-001 — Research a direct onboard-VDP/EDP high-speed link**
-  - Started: --
-  - Finished: --
-  - Details: [LINK-001](docs/tasks/LINK-001.md)
-
-## Future software capabilities
-
-- [ ] **PORT-016 — Add MicroPython scripting to EDP**
-  - Started: --
-  - Finished: --
-  - Status: Long-term capability requested by Author, 2026-09-10. Implementation deferred; inclusion in v1 remains undecided. Not a dependency of the current performance investigation.
-  - Details: [PORT-016](docs/tasks/PORT-016.md)
-
-Current Author goal: [Nurples hardware parity with active web streaming](docs/tasks/QUAL-003/nurples-parity/PLAN.md). This takes priority over unrelated audit continuations; existing gates remain recorded.
-
-- [ ] **BENCH-003** — Paused by Author: first Legacy acquisition timed out; no FPS conclusion. Do not resume automatically. See [record](docs/tasks/BENCH-003.md).
-
-## Current correctness qualification
-
-- [ ] **QUAL-004 — Whole-image graphics correctness on physical VDP and P4**
-  - 74 paired scenes / 13,820,928 pixels matched, including three sprite/scroll
-    checkpoints. Initial scene has stock visual/exit and Extender capture passes;
-    mainboard diagnostic failure remains deferred under QUAL-004-CI01. Four
-    Copper controls remain deferred. [Contract/results](docs/tasks/QUAL-004.md).
-
-Current QUAL-003 image-codec experiment: [RGB888 JPEG then indexed PNG contract](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/README.md). Completed; [results](docs/tasks/QUAL-003/debrief/P01h/codec-screen/image-p4/RESULTS.md) await review. RLE2 wins live Nurples; PNG wins periodic static control only. Baseline restored; hardware voice verified.
-
-- [ ] **BENCH-005 — Keyboard/visible response latency**: [contract](docs/tasks/BENCH-005.md). First measurement pass complete: [results](docs/tasks/BENCH-005/RESULTS.md). Client cap adds visible latency; Legacy app-ack provider absent. Follow-up receipt instrumentation/console timing pending.
-
-- [ ] **BENCH-006 — Direct ExCom screen-text readback and Legacy follow-up.** See [task](docs/tasks/BENCH-006.md).
+- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
+
+- [ ] **[PLAN-001 — Timing closeout and next-work selection](docs/tasks/PLAN-001.md)**. T01 committed; T02 reconciliation prepared for review in [the disposition table](docs/tasks/PLAN-001/QUEUE-REVIEW.md). T03 source audit and mode-startup investigation delivered; inherited palette defect recorded, with upstream/Extender patches deferred for credits. Aginvadors optimization and further browser-performance experiments are deferred.
+
+## Next-work candidates and remaining implementation
+
+- [ ] **[PORT-003](docs/tasks/PORT-003.md)** — Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals.
+
+- [ ] **[AUDIT-007](docs/tasks/AUDIT-007.md)** — First bounded source pass complete; exhaustive FabGL completeness audit remains open. Use as a candidate source of bounded fidelity work; do not make a whole audit an automatic prerequisite.
+
+- [ ] **[PORT-008](docs/tasks/PORT-008.md)** — Bulk UART parity qualified; E08/E09 evidence complete; E10 unstarted. Review existing evidence and coordinate with EMOS INTEG-014 before new transport work.
+
+- [ ] **[QUAL-003](docs/tasks/QUAL-003.md)** — Many bounded results complete; correctness gaps and review gates remain; browser experiments parked. Separate retained correctness/exception work from dormant performance branches; no automatic new run.
+
+- [ ] **[PORT-006](docs/tasks/PORT-006.md)** — Network service works; resilience/update-service scope incomplete. Browser keyboard was reintroduced. Keep remaining network obligations; browser input belongs to REMOTE-001, not a retired-service claim.
+
+- [ ] **[QUAL-001](docs/tasks/QUAL-001.md)** — Matrix scaffold exists; four-mode reconciliation and validator integrity gates remain. Retain infrastructure work; partial records do not certify complete compatibility.
+
+- [ ] **[REMED-001](docs/tasks/REMED-001.md)** — Some architecture promotions complete; broader conformance/replacement work incomplete. Reconcile only applicable remaining obligations; old global freeze wording is not evidence that accepted ExCom ceased to work.
+
+- [ ] **[REMED-002](docs/tasks/REMED-002.md)** — Findings have mixed fixes, deferrals and outstanding validation. Retain finding IDs and owning-task gates; no blanket closure from successful gameplay.
+
+- [ ] **[SETUP-005](docs/tasks/SETUP-005.md)** — Immediate ExCom/input decisions accepted; broader mode-integration questions remain. Resolve decisions only when selected scope depends on them; do not reopen settled keyboard choices.
+
+- [ ] **[HW-002](docs/tasks/HW-002.md)** — Simplified wiring accepted within scope; USB schematic/as-built and endpoint review incomplete. Keep documentation obligations; remove the obsolete tomorrow/date framing from the queue.
+
+
+## Review and closeout queue — no automatic new experiments
+
+- [ ] **[BENCH-002](docs/tasks/BENCH-002.md)** — 30-Hz test deployment exists; later feedback and production/test split supersede initial awaiting-review wording. Review final disposition; production Nurples is single-vblank and the slower build is test-only.
+
+- [ ] **[BENCH-004](docs/tasks/BENCH-004.md)** — Mailbox implementation/local tests complete; task still lacks an explicit Mac handshake receipt. Locate or obtain a peer round-trip only if needed; empty mailbox checks do not establish that gate.
+
+- [ ] **[RESEARCH-001](docs/tasks/RESEARCH-001.md)** — Five source reviews complete; synthesis available. Accept/archive research separately from any proposed optimization; no new search or implementation.
+
+- [ ] **[RESEARCH-002](docs/tasks/RESEARCH-002.md)** — Published-throughput research complete. Accept/archive findings; published link/codec rates are not measured application throughput.
+
+- [ ] **[RESEARCH-003](docs/tasks/RESEARCH-003.md)** — Twelve standalone runs complete; 60-fps delivery unmet. Historical candidate-left-installed note is obsolete as a current bench description. Review bounded result; consult latest restoration authority rather than assume the old candidate is installed.
+
+- [ ] **[BENCH-001](docs/tasks/BENCH-001.md)** — Bounded telemetry/driving work complete and frozen; human review/remaining game continuation separate. Close accepted scope after review; retain AgonArcade RALLY-22 ownership of further driving.
+
+- [ ] **[REMOTE-002](docs/tasks/REMOTE-002.md)** — Host input implemented, tested and used; historical task text still says active goal/uncommitted. Review remaining physical/human gates and reconcile commit references; do not claim uncommitted implementation from old prose.
+
+- [ ] **[REMED-003](docs/tasks/REMED-003.md)** — Identical filesystem probe passes hardware/raw image and fails directory backend; report prepared. Author reviews report; submitting to upstream requires explicit authorization.
+
+- [ ] **[NET-001](docs/tasks/NET-001.md)** — Viewer takeover implemented; six connections/five handovers passed. Retain pending human browser acceptance; later use does not automatically establish every gate.
+
+- [ ] **[QUAL-004](docs/tasks/QUAL-004.md)** — 77 static scene pairs matched, including [static teletext](docs/tasks/QUAL-004/teletext/RESULTS.md). [Sprite/scroll follow-up](docs/tasks/QUAL-004/sprite-scroll/RESULTS.md): stock INITIAL visual/exit control passed; mainboard OVERLAP/EDGES/HIDDEN passed repeat capture, HIDDEN also full oracle. Extender checks passed; three checkpoints match mainboard exactly, INITIAL has visual control only. [Packed expansion BM02](docs/tasks/QUAL-004/packed-expansion/RESULTS.md) passed; BM03 parked. Capture-interference investigation QUAL-004-CI01 and four Copper controls deferred; no claim of complete dynamic-sprite parity.
+
+- [ ] **[AUDIT-005](docs/tasks/AUDIT-005.md)** — Stock reuse findings retained; later UART work supersedes old current-slowdown narrative. Propose audit closure with remaining obligations mapped to PORT-008/PORT-003; do not rerun old investigations.
+
+
+## Parked, blocked and unscheduled work
+
+- [ ] **[AUDIT-008](docs/tasks/AUDIT-008.md)** — Deferred until fresh tokens and Author resumption: audit EMOS ROM overhead and investigate `/emos` utilities dispatched through the `emos` CLI prefix; stock MOSlet reuse, measured savings, proposal before implementation.
+
+- [ ] **[BENCH-008](docs/tasks/BENCH-008.md)** — Correct output but worse frame rate with replacement deltas; initial experiment complete. B08-06 cost investigation deferred until Author resumes; pre-experiment P4 firmware restored after the regression.
+
+- [ ] **[RESEARCH-005](docs/tasks/RESEARCH-005.md)** — Deferred VGA pillarboxing, P4 VGA output and aspect-preserving output research; FabGL investigation and existing P4 VGA driver lead retained. No implementation or bench work scheduled.
+
+- [ ] **[REMOTE-004](docs/tasks/REMOTE-004.md)** — Low-priority copy/paste feasibility: Extender first, possible stock MOS/VDP subset later. Investigate existing input/readback reuse and application-consumption guarantees; proposal before implementation.
+
+- [ ] **[BENCH-007](docs/tasks/BENCH-007.md)** — Package/results committed; only F01 mainboard panic and F02 Rally fixture discrepancy remain. Retain these two unscheduled follow-ups here; measurement implementation is complete, not another half-built package.
+
+- [ ] **[AUDIO-001](docs/tasks/AUDIO-001.md)** — SD feasibility measured; integrated parallel/audio stages not executed. Keep behind current porting priority; AF02 needs its own bounded contract.
+
+- [ ] **[P4PC-001](docs/tasks/P4PC-001.md)** — Board backordered; plan only, delivered revision/HDMI qualification absent. Resume with hardware availability and authorization; preserve current DevKit bench.
+
+- [ ] **[TRS-80-001](docs/tasks/TRS-80-001.md)** — Ecosystem survey/reference acquisition complete; architecture unselected. Retain future design work; no new implementation implied.
+
+- [ ] **[HW-003](docs/tasks/HW-003.md)** — Alternate board desk assessment complete; collaborator specimen unresolved. Await exact hardware/variant and separate adaptation scope.
+
+- [ ] **[PORT-005](docs/tasks/PORT-005.md)** — Native USB input works; broader keyboard parity/settings refinements deferred. Preserve working input and fix blocking regressions only; browser-specific follow-up remains separate.
+
+- [ ] **[REMOTE-003](docs/tasks/REMOTE-003.md)** — Pi-backed browser reset accepted. Direct P4 reset wiring remains deferred.
+
+- [ ] **[REMOTE-001](docs/tasks/REMOTE-001.md)** — Browser input/UI deployed; game/fullscreen follow-ups explicitly deferred. Preserve current uncommitted UI work; do not expand optimization or infer physical takeover acceptance.
+
+- [ ] **[SETUP-006](docs/tasks/SETUP-006.md)** — Old full-circuit wiring target remains on hold/incomplete. Retain predecessor evidence; reconcile applicability when hardware design resumes.
+
+- [ ] **[HW-001](docs/tasks/HW-001.md)** — Old full r02 circuit incomplete and unqualified. Do not treat simplified harness success as full r02 qualification; re-scope before resuming.
+
+- [ ] **[PORT-004](docs/tasks/PORT-004.md)** — Audio command framing slice passed; actual synthesis/output deferred. Retain Wolf3D and wider audio obligations; framing success does not implement sound.
+
+- [ ] **[PORT-007](docs/tasks/PORT-007.md)** — P4-local SD service not started; required v1 work scheduled after beta. Keep distinct from the accepted mainboard SD service; EMOS read access remains required.
+
+- [ ] **[QUAL-002](docs/tasks/QUAL-002.md)** — Full-circuit electrical absence/power/reset qualification on hold. Requires applicable hardware design and separate physical contract.
+
+- [ ] **[UPSTREAM-001](docs/tasks/UPSTREAM-001.md)** — Lifecycle correction A/B research not started. No upstream fixes imported into strict-compatible first-pass port by default.
+
+- [ ] **[MODE-001](docs/tasks/MODE-001.md)** — Broader state-preserving transitions not implemented; bounded ExCom switching already exists. Retain future transition contracts without describing current ExCom as absent.
+
+- [ ] **[MODE-002](docs/tasks/MODE-002.md)** — Post-beta automatic retry-protection evaluation not started. Require evidence and explicit scope before adding retry machinery.
+
+- [ ] **[DIAG-001](docs/tasks/DIAG-001.md)** — General recoverable diagnostics/crash-record product work not started. Retain release requirement and evidence/privacy decisions; task-local capture is not the full feature.
+
+- [ ] **[LINK-001](docs/tasks/LINK-001.md)** — Direct onboard-VDP/EDP link is optional deferred research. Not a prerequisite for existing keyboard/ExCom path.
+
+- [ ] **[PORT-016](docs/tasks/PORT-016.md)** — MicroPython long-term feature; v1 placement undecided. No timing or input dependency; remain deferred.
+
+- [ ] **[BENCH-003](docs/tasks/BENCH-003.md)** — Author stopped after first Legacy acquisition timeout; no FPS conclusion. Do not restart; BENCH-007 does not retroactively pass this different experiment.
+
+- [ ] **[BENCH-005](docs/tasks/BENCH-005.md)** — Initial latency and later packing/mode investigations retained; further output experiments now parked. Retain unresolved Legacy acknowledgement/readout limits; no new browser-performance work.
+
+- [ ] **[BENCH-006](docs/tasks/BENCH-006.md)** — ExCom text readback implemented; Legacy S04 explicitly deferred. Keep only Legacy follow-up as remaining scope; preserve functioning ExCom endpoint.
+
+## Governing limits
+
+EMOS owns ordinary VDU routing and Extender activation/transports. Preserve
+accepted Legacy/ExCom, input and mainboard SD capabilities. Official references
+stay read-only. No Golem, upstream publication, new hardware qualification or
+experimental push follows from queue cleanup.
+
+[ADR-0020](docs/decisions/ADR-0020-web-output-30fps.md) remains unchanged. Its
+scope versus later higher-rate client/experiment records must be reconciled
+before future output qualification; do not assume that a current firmware cap
+has been verified. See PLAN-001-N04 in the disposition table. Old experiment
+headings no longer compete with the approved current sequence.

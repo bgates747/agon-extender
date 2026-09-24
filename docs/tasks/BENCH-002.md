@@ -1,5 +1,13 @@
 # BENCH-002 — 30 fps Nurples and Rally human smoothness review
 
+## Current-state clarification — 2026-09-20 queue review
+
+The production/test separation accepted later in this record supersedes the
+initial production slowdown: normal Nurples is single-vblank, while the
+independent test build is two-vblank. The Author supplied qualitative game
+feedback; final task disposition still needs review. No deployment changes here.
+
+
 ## Executive summary
 
 Author requests Nurples wait two vblanks per game-loop frame, deliberately
