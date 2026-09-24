@@ -132,6 +132,23 @@ end-to-end latency. The “Period” field remains logical VDP time. Sequence ga
 can reflect deliberately skipped intermediate snapshots rather than packet loss.
 Actual throughput and sustained stability require hardware qualification.
 
+## Viewer ownership and errors
+
+The P4 service admits one video viewer. A new successful WebSocket handshake
+replaces the old viewer, closing its socket with code 1000 and reason
+`Viewer replaced`; old credits and leases do not transfer to the new client.
+The old page stays open and requires an explicit Connect to reclaim video.
+Video ownership is distinct from keyboard capture ownership.
+
+Malformed frame/credit handling uses protocol error 1002. A refused busy
+admission uses 1013; browser presentation failure uses 1011. A disconnected
+socket must not be treated as an acknowledged presentation. Static page assets
+close their HTTP connections after sending, freeing slots for viewer admission.
+The service is for a trusted LAN; it provides neither TLS nor authentication.
+Source ownership: [P4 network service](../../vdp/video/extender/network/wired_network_service.cpp)
+and [browser client](../../vdp/video/extender/web/app.js), with the candidate
+codecs/pacing boundary described above.
+
 ## Negotiated complete-frame encodings
 
 The deployed candidate family adds the formats below to the original EVF1

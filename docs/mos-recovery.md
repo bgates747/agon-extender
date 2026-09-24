@@ -3,18 +3,17 @@
 ## Executive summary
 
 Recover an Agon that cannot reach MOS using an external programmer connected
-to the eZ80 ZDI interface. The **P4 method actually succeeded on this bench on
-2026-08-31**; the spare WROOM method was only planned. Keep the onboard VDP
+to the eZ80 ZDI interface. The maintained **P4 method has scoped physical
+acceptance**; the spare WROOM alternative is unqualified. Keep the onboard VDP
 installed, verify the programmed eZ80 flash, then separately prove boot and
 keyboard/service recovery. An SD payload or a successful `FLASH` command
 submission is not proof of a restored ROM.
 
 Procedure identity: **mos-recovery-r01**. Status: maintained protocol;
 maintained implementation; scoped physical recovery passed on the recorded bench.
-Created 2026-09-14 at the Author's explicit request. This is enduring operating
-documentation, not a disposable task or an automatically executing checklist.
-Initial publication was documentation-only. The Author subsequently authorized
-recovery of known-good EMOS under [RECOVERY-001](tasks/RECOVERY-001.md).
+This is enduring operating documentation, not an automatically executing
+checklist. [RECOVERY-001](tasks/RECOVERY-001.md) retains the exact physical
+payload, restoration and acceptance evidence.
 
 ## Maintenance contract
 
@@ -33,20 +32,12 @@ recovery of known-good EMOS under [RECOVERY-001](tasks/RECOVERY-001.md).
 
 ## Authority and current readiness
 
-The [successful P4 run](tasks/PORT-008/emos-hardware-diagnostic/README.md#prepared-one-shot-zdi-recovery)
-uploaded and verified both RAM payloads, executed the upstream flash agent,
-read back the programmed MOS image and checked its CRC32. After the Author
-reset the target, MOS booted. That image embedded a particular corrective
-EMOS build; it is **not** a generic stock-MOS recovery image.
-
-Its source remains at
-`vdp/video/extender/diagnostic/p4_zdi_mos_recovery.cpp`, with the associated
-payload generator under `docs/tasks/PORT-008/emos-hardware-diagnostic/`.
-Both are retired historical references, not current execution entry points.
-The maintained replacement now builds under `p4-mos-recovery`, selecting
+The maintained programmer builds under `p4-mos-recovery`, selecting
 `vdp/video/extender/recovery/mos_recovery.cpp`. The connected-harness recovery
-under RECOVERY-001 passed; this validates the recorded board, payload and build,
-not arbitrary targets. Historical selectors remain retired. Prepare payloads with:
+under [RECOVERY-001](tasks/RECOVERY-001.md) passed for its recorded board,
+payload and build; it does not qualify arbitrary targets or payloads. Use the
+maintained implementation and a deliberately selected ROM, not a historical
+payload-specific diagnostic. Prepare its embedded payload with:
 
 ```sh
 .venv/bin/python scripts/prepare_mos_recovery.py \
@@ -98,8 +89,7 @@ path. It maps GPIO26/27, unlike the P4 mapping below.
    a keyboardless boot proof and a separately prepared EMOS installation path.
 6. Prepare a manifest-bound programmer with explicit operator arming, finite
    timeouts, identity refusal and complete logs. Booting or opening its USB
-   console must not silently start another erase. The historical ten-second
-   automatic trigger was a workaround, not a requirement for the new tool.
+   console must not silently start an erase.
 7. Present the exact payload, wiring, replacement P4 image and rollback route
    before destructive execution. This protocol is not blanket flash authority.
 
@@ -112,9 +102,8 @@ The normal Extender harness may remain connected. The maintained programmer
 explicitly releases GPIO9–15, 17, 20–23, 26–27 and 32–33 as inputs with no
 internal pulls; no product transport is selected. Only GPIO46/47 drive ZDI.
 The pinned Arduino startup has no board-variant GPIO initialization, and the
-console uses internal USB Serial/JTAG rather than a harness UART. This replaces
-the historical blanket isolation requirement at the Author's direction.
-Preserve the normal connection inventory; reassess any different harness.
+console uses internal USB Serial/JTAG rather than a harness UART. Preserve
+the normal connection inventory; reassess any different harness.
 
 | Programmer connection | Target Agon Light2 ZDI1 |
 |---|---|
@@ -149,19 +138,19 @@ for the independently accepted reset circuit.
    mismatch; investigate wiring or a different target rather than weakening
    the gate. Establish a fresh target-reset epoch if required by the tool;
    never combine stale halted state with a new capture.
-3. If supported by the prepared tool, halt once and preserve the existing
-   128 KiB flash before erasing. Record the PC and useful startup state in the
-   same halt epoch. The historical tool verifies new flash but is not evidence
-   of an implemented pre-erase dump feature. If unavailable, explicitly record
-   the evidence loss before proceeding; do not claim a ROM backup was taken.
+3. The maintained host/tool pair requires a complete verified 128 KiB
+   pre-erase dump. Halt once, retain that dump durably and record PC/startup
+   state in the same epoch. The host must not send RESTORE without the verified
+   dump; an already-matching image requires no erase. Failure to obtain this
+   prerequisite stops restoration, rather than falling back to an old tool.
 4. After explicit arming, follow the upstream algorithm to establish target
    state and load the flash agent and chosen MOS into RAM. Read back both RAM
    uploads and verify their lengths and CRCs before executing the flash agent.
 5. Execute the agent, wait within a documented bound for its completion, then
-   independently read back the complete programmed MOS payload and verify it
-   against the selected bytes. Prefer a retained byte-for-byte dump and SHA-256
-   as well as the upstream CRC check. Receipt of a command or agent completion
-   alone is insufficient. Record the verified address range explicitly.
+   independently read back all 128 KiB. The maintained host compares every byte
+   against the selected image plus FF padding, and retains the dump and SHA-256
+   as well as checking dump CRC. Receipt of a command or agent completion alone
+   is insufficient. Record the verified address range explicitly.
 6. On any programming/readback failure, leave the owned target halted, preserve
    logs and report failure. No automatic erase/retry cycle. An identity refusal
    before ownership must not halt or otherwise mutate the target.
@@ -210,23 +199,18 @@ is not physical recovery evidence.
    Do not disable verification to avoid it; qualify the execution environment
    and report any watchdog interruption or incomplete readback as a failure.
 
-## Revision record
+## Provenance and current bench arrangement
 
-1. **r01, 2026-09-14:** Establish enduring P4-based protocol from successful
-   historical evidence. No tool refresh, wiring, flash or recovery performed.
-   Author reports reset and full power cycling still yield VDP branding and a
-   stationary cursor with no keyboard response. Current cause remains unknown.
-2. **r01 execution, 2026-09-14:** Maintained implementation restored the full
-   pre-E05 128 KiB EMOS ROM with independent host byte comparison; original P4
-   restored/verified, fresh EMOS keyboard admission, CLI execution and SD
-   read/write passed. All harness and recovery wiring remained connected. See
-   RECOVERY-001 for human review and notification status. Failed flash was mostly
-   FF, including the reset entry; the cause of the normal update failure is open.
+[RECOVERY-001](tasks/RECOVERY-001.md) retains the r01 implementation's accepted
+recovery, full ROM/P4 verification and subsequent working-game observation.
+The [earlier P4 diagnostic](tasks/PORT-008/emos-hardware-diagnostic/README.md#prepared-one-shot-zdi-recovery)
+is historical evidence, not a current execution entry point. Retired selectors
+and embedded payloads remain retired; do not use them as generic stock recovery.
 
-The Author subsequently confirmed Rally works and retained the P4/ZDI leads,
-Pi5 reset, sniffers and full normal harness for future recovery use. Treat this
-as the standing bench arrangement until notified otherwise; do not require
-repeated wiring setup. Current machine details remain in HARDWARE.local.md.
+The accepted arrangement permits normal harness, P4/ZDI leads and Pi reset to
+remain connected. Current presence and device identities belong in
+`HARDWARE.local.md`; verify them before use rather than repeating wiring merely
+because an old procedure started with a disconnected harness.
 
 ## Ordinary FLASH completion guard
 

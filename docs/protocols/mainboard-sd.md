@@ -1,12 +1,11 @@
 # Mainboard SD service wire contract
 
-Protocol major 1, initially frozen on 2026-09-12 in commit 51917e6. This is the
-maintained contract for the EMOS-owned gateway, P4 service and foreground
-`sdserve` application. The unchanged candidate combination passed the scoped
-physical acceptance on 2026-09-13 UTC; see the
-[acceptance record](../qualification/mainboard-sd/2026-09-13.md) and
-[operating guide](../mainboard-sd.md). Record contract revisions before changing
-the wire layout. Artifact lifecycle/release status is separate from that result.
+Protocol major 1, maintained for the EMOS-owned gateway, P4 service and
+foreground `sdserve` application/EMOSlet. The [operating guide](../mainboard-sd.md)
+owns current invocation, installation and recorded deployment. The supported
+fast-mode capability is explicit below; it does not change the packet layout.
+Record contract revisions before changing wire behavior. Artifact lifecycle and
+qualification apply to exact combinations, not every implementation of major 1.
 
 ## Actors and ownership
 
@@ -23,9 +22,10 @@ the wire layout. Artifact lifecycle/release status is separate from that result.
    expose UART registers/interrupt vectors. It resets application admission on
    application entry/exit, transport fault and explicit close.
 4. The `sdserve` eZ80 application/EMOSlet owns file operations in foreground context.
-   EMOS does not run a filesystem server in its ISR. Normal Rally execution
-   does not include this service; first qualification occurs at the MOS CLI.
-5. P4-local SD and onboard VDP are not endpoints. Stock VDP firmware remains.
+   EMOS does not run a filesystem server in its ISR. A running game does not
+   simultaneously run this foreground listener.
+5. P4-local SD and onboard VDP are not endpoints; this service neither updates
+   nor requires a file-transfer handler in onboard VDP.
 
 ## Packet layout
 
@@ -132,7 +132,7 @@ or recovery targets before creating any sibling files.
 | ACTIVATE | transfer:u32 | empty |
 | CANCEL | transfer:u32 | empty |
 | RECOVER | action:u8, path | state:u8 |
-| EXIT | empty | empty, then close service and return to MOS |
+| EXIT | empty | empty, then close service and return to caller |
 
 HELLO features bit0 read, bit1 staged write, bit2 listing, bit3 recovery.
 Bit4 (0x10), added by sdserve v0.2.0, means the listener was explicitly started
@@ -155,10 +155,6 @@ filesystem failures, do advance and are cached. CRC-invalid records are dropped.
 Status 4 is exclusively a stale session. An invalid/inactive transfer ID within
 the current session returns bad request (1), advancing and caching normally;
 it must not be confused with a session rejection that did not execute.
-
-Pre-deployment clarification, 2026-09-13: the staged-path bound and transfer-ID
-status above prevent unreadable long-named stages and ambiguity in the client's
-retry/sequence recovery. Wire fields and numeric statuses remain unchanged.
 
 Paths use bounded ASCII byte strings, resolved to absolute MOS paths;
 reject embedded NUL, traversal and overlength rather than truncating. The
@@ -184,13 +180,18 @@ the last CRC covers its first 16 bytes. Write/sync/close metadata before data
 admission. Its immutable expected identity is used for post-restart recovery.
 These sidecar suffixes are reserved and cannot themselves be client targets.
 
-In normal mode activation validates the staged contents against their declared
-identity; fast mode omits that reread. Activation closes every target handle, moves an
-existing target to backup, then renames the stage to target. On failure retain
-all recoverable copies and report RECOVERY_REQUIRED. Verify the final target
-before success in normal mode; fast mode skips only that whole-file digest.
-Then remove metadata; retain the backup for explicit recovery
-cleanup. There is no automatic execution or deletion of the previous version.
+ACTIVATE requires this session's active, finished transfer; FINISH has already
+closed the stage and performed the normal-mode stage digest. ACTIVATE does not
+repeat that stage digest. It checks sibling state, moves an existing target to
+backup, then renames the stage to target. Normal mode verifies the activated
+target's size/CRC; fast mode skips that target digest. It then removes metadata,
+retaining the backup for explicit recovery cleanup. Filesystem failures return
+the corresponding error; invalid sibling state returns RECOVERY_REQUIRED.
+Inspect retained files after failure rather than assuming a rename completed.
+
+The listener does not close other MOS users' handles or provide global open-file
+locking. Do not replace an executing file or an open EXEC/autoexec batch. There
+is no automatic execution or deletion of the previous version.
 
 RECOVER action 0 inspects (state bits: target=1, part=2, metadata=4, backup=8;
 metadata-invalid=16), action 1 restores backup only when the target is absent,
@@ -210,12 +211,6 @@ against power failure. Do not delete the only good copy or report ACTIVE on an
 uncertain close/rename. Cancellation cleans only the identified stage; recovery
 never follows an unvalidated pointer/path from a damaged record.
 
-Pre-deployment clarification, 2026-09-13: action 2 includes the explicit
-absent-target/no-backup case above. Otherwise interrupting a first upload would
-leave an unrecoverable orphan despite the host retaining its original bytes.
-The wire layout and action numbers do not change; no deployed implementation
-has consumed the earlier wording.
-
 Service responses identify bad input, unsupported operation, busy, stale session,
 sequence conflict, file error, integrity failure and recovery-required distinctly.
 Include the underlying MOS/FatFS error where available. No raw POSIX success
@@ -228,27 +223,30 @@ network servicing exists. Inspect installed supported loaders before proposing
 a single commissioning card transfer. Typed commands cannot create a nonexistent
 loader. Do not patch resident addresses to avoid the ownership contract.
 
-The pre-implementation EMOS baseline was 130344 bytes against a 131072-byte
-ROM limit. The accepted v0.1.14 build is 130919 bytes (153 spare); the 18974-byte
-foreground application keeps bulk file/CRC code out of ROM. All wrapper/link
-guards pass for that exact build. Core static RAM ends at BDAAA, below the BF800
-stack boundary; this is a linker bound, not a stack high-water measurement.
-Steady state includes one 240-byte EMOS mailbox, a 244-byte transmit buffer,
-bounded parser storage, one P4 pending/result pair and <=256-byte application
-I/O chunks, in addition to ordinary firmware queues. Recheck fit for new builds.
+Resident steady state includes one 240-byte EMOS receive mailbox and a 244-byte
+transmit buffer. The listener uses bounded parser storage and I/O chunks; P4
+retains one pending/result pair in addition to ordinary firmware queues. The
+current resident and listener layouts have separate ROM/RAM bounds. Use the
+[EMOS contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-v1-contract.md)
+and [build guide](../building.md), and recheck guards for each candidate rather
+than applying an old firmware's spare-byte measurement to a new build.
 
 Host fixtures must cover arbitrary binary starts, empty files, >64KiB transfers,
 lost ACKs, duplicate/conflicting requests, truncation, bad CRC, stale sessions,
 disk errors and interrupted activation. Physical qualification checks readback,
-keyboard coexistence and ten unattended cycles. Timing offload, graphics and
-Golem do not belong to this gate. Hard-hang recovery is unproven; never toggle
-the unresolved reset circuit or conflate VDP USB reset with whole-Agon reset.
+keyboard coexistence and ten unattended cycles in the retained normal-mode
+qualification. Fast-mode checks require their own declared scope. Graphics and
+timing offload do not belong to this gate. A hung eZ80 cannot service requests;
+the independent [reset bridge](../bench-reset.md) is a separate authorized
+operation, not a wire-protocol recovery or proof of transaction completion.
+Preserve uncertain-transfer evidence and distinguish P4 reset from Agon reset.
 
 References: official MOS API.md filesystem/UART sections; EMOS
 src/emos_keyboard.c, src/emos.c and docs/emos-v1-contract.md; P4
-console_hardware.inc/console_stream.hpp and wired_network_service.cpp. Source
-baseline EMOS e48d431; Extender 7e21dfe. Exact accepted build/source identities
-are recorded in the linked acceptance record; consult current source for changes.
+console_hardware.inc/console_stream.hpp and wired_network_service.cpp. Listener
+file semantics are implemented by agon-emos projects/sdserve/src/service.c; host
+verification is in scripts/sdcard.py. The operating guide links exact retained
+builds and acceptance limits. Frozen procedures require review before reuse.
 
 ## Opt-in fast upload (bounded physical validation)
 

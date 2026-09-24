@@ -75,8 +75,11 @@ examples. These examples use a placeholder address:
 
 GET refuses to overwrite its local output. PUT without `--activate` leaves the
 candidate staged and prints the transfer ID for `activate ID` or `cancel ID`.
-Normal PUT verifies the Agon-computed length/CRC and a complete host readback before
-activation, then reads the active target back as well. Replacing an existing
+Normal PUT verifies the Agon-computed length/CRC and a complete host stage
+readback. With `put --activate`, it also reads the activated target back. The
+standalone `activate ID` command sends only ACTIVATE; it does not add that host
+readback. Use GET and compare independently if that is required after a separate
+activation. Replacing an existing
 target retains its previous bytes as `.p17bak`. After confirming the new file,
 `recover PATH cleanup` removes that backup. A subsequent upload refuses any
 pre-existing stage, journal or backup; it never silently overwrites recovery

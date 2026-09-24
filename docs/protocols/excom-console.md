@@ -1,8 +1,10 @@
 # Bounded ExCom UART console control
 
-Draft implementation contract for PORT-008 and EMOS INTEG-010. The Author
-authorized idle-CLI Legacy↔ExCom switching in PORT-008-D005. This document
-defines the first paired console composition, not full EDP compatibility.
+Maintained bounded control contract for EMOS and P4 EDP. Idle-CLI
+Legacy↔ExCom switching and explicit application display preservation are
+implemented; [PORT-008](../tasks/PORT-008.md) and [QUAL-003](../tasks/QUAL-003.md)
+retain scoped physical evidence. This contract does not imply full EDP
+compatibility or every reset/fault case is qualified.
 
 EMOS owns UART1 at 1152000/8N1 RTS/CTS. Ordinary VDU bytes and stock keyboard
 and display reply packets keep their existing formats. P4 uses the retained
@@ -23,7 +25,7 @@ forward terminal-mode command. No packet acknowledges a public MOS write.
 | 2 | Wire version 1 |
 | 3 | Operation: prepare=1, commit=2, leave=3, abort=4, prepare-keep=5; reply sets bit 7 |
 | 4–7 | Nonzero EMOS transaction counter, little endian |
-| 8–11 | P4 challenge, little endian; zero only in prepare request |
+| 8–11 | P4 challenge, little endian; zero in prepare/prepare-keep requests |
 | 12 | Contract selector 1: bounded compatible UART console |
 | 13 | Reserved/result; must be zero |
 | 14–15 | CRC-16/CCITT, polynomial 1021h, initial FFFFh, no reflection or final XOR, over bytes 0–13; little endian |
