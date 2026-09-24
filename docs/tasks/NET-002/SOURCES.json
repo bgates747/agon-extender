@@ -1,0 +1,42 @@
+{
+  "review_date": "2026-09-23",
+  "scope": "Read-only source review; no firmware execution or compatibility qualification",
+  "repositories": {
+    "Agon-Software": {
+      "url": "https://github.com/Radiotux/Agon-Software",
+      "commit": "e265db1de57c49142420324945c666049dc1ec53",
+      "description": "e265db1"
+    },
+    "PerryZi": {
+      "url": "https://github.com/SanPollo/PerryZi",
+      "commit": "ec165814cd9a1b140aff65ac0786eac1a0b1a414",
+      "description": "1.2.4"
+    },
+    "PerryZi.wiki": {
+      "url": "https://github.com/SanPollo/PerryZi.wiki.git",
+      "commit": "f0b456c2d9cd3f5cbad018f5b79f6adccff0e4b2",
+      "description": "f0b456c"
+    },
+    "Zimodem": {
+      "url": "https://github.com/bozimmerman/Zimodem",
+      "commit": "a24225cc1b6c219e6c0764a4e6b1a388356a1dd5",
+      "description": "4.0.2-29-ga24225c"
+    },
+    "agon-projects": {
+      "url": "https://github.com/sijnstra/agon-projects",
+      "commit": "ed135a709fc398929943658e7dbf1f1a2c28212c",
+      "description": "v0.9.2-144-ged135a7"
+    },
+    "agon-snail": {
+      "url": "https://github.com/nihirash/agon-snail",
+      "commit": "66071373943a34024e38214b6d8346316b2ddce6",
+      "description": "6607137"
+    },
+    "official-docs": {
+      "commit": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b"
+    },
+    "EMOS": {
+      "commit": "f047b6a652eb3dd7c3ca2645f044536b054a0fdc"
+    }
+  }
+}

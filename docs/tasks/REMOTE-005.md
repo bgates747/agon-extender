@@ -165,7 +165,8 @@ provisional; P4 and mainboard VDP stay unchanged.
 Provisional correction and physical checks now pass; see [MOSlet results](REMOTE-005/MOSLET-CHECK.md#provisional-physical-pass). The earlier admission blocker is resolved. Broader network access research remains open.
 
 ROM simplification and proposed `/emos` CLI utility placement are separately
-tracked in [AUDIT-008](AUDIT-008.md), deferred until fresh tokens. They do not
+tracked in [AUDIT-008](AUDIT-008.md), whose refreshed investigation contract
+awaits Author review. They do not
 expand this task or authorize moving the installed listener.
 
 ## SD layout decision and transaction follow-up — 2026-09-21

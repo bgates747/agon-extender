@@ -1,13 +1,17 @@
-# AUDIT-008 — EMOS ROM simplification and SD-loaded utilities
+# AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets
 
 ## Executive summary
 
-Deferred at the Author's request until a fresh token allotment and explicit
-resumption. Review whether EMOS contains unnecessary general-purpose machinery,
-and investigate loading foreground Extender utilities from `/emos` through the
-`emos` CLI prefix. Keep the resident replacement MOS small and reuse stock MOS
-code wherever practical. This records a direction for investigation, not an
-approved implementation or filesystem migration.
+Contract refreshed 2026-09-23 at the Author's request; **awaiting review before
+investigation or implementation**. This promotes the previously deferred idea
+instead of creating a duplicate task. REMOTE-005 remains the next file-access
+workstream; this task determines which existing resident EMOS functions could
+become SD-loaded foreground utilities, informally “EMOSlets,” to recover ROM for
+features that genuinely require resident firmware.
+
+Use existing MOSlet loading and calling conventions, not a new executable format.
+The investigation must deliver a ranked, measured shortlist and a minimal
+implementation proposal. No code movement is approved by this write-up.
 
 ## Origin and scope
 
@@ -24,28 +28,84 @@ The eZ80's resident EMOS remains responsible for ordinary VDU routing, keyboard
 reception, Extender transports and committed operating mode. P4/EDP changes and
 new file-transfer protocols are outside this task.
 
-## Deferred work items
+## Investigation contract
 
-A08-01 [ ] Account for resident ROM from the actual linked image and map. Identify
-used service dispatch, dormant module machinery, diagnostics and command setup
-code. Separate necessary behavior from historical scaffolding; identify stock
-MOS code that can be reused. Do not assume a restriction is unnecessary merely
-because a recent test did not exercise it.
+A08-01 [ ] Establish the current ROM baseline in the project-owned EMOS checkout.
+Read official MOS API/loading documentation first, then source where needed.
+Record source revision, build configuration, compiler/linker versions, linker
+map, occupied ROM span and free bytes. Reconcile the retained 16-byte-headroom
+result against the current build; do not treat that historical result as a new
+measurement. Account for alignment, shared helpers, constants, dead stripping
+and fixed-address sections before attributing bytes to functions.
 
-A08-02 [ ] Propose a minimal resident/SD split. Classify code by whether it must
-remain available while applications run, not speed alone. Quantify plausible
-ROM savings and dispatcher cost; preserve boot and recovery without an SD card.
+A08-02 [ ] Inventory resident Extender-specific commands and support routines.
+For each candidate record its callers, code/data contribution, runtime state,
+interrupt dependencies, frequency, and whether applications or startup require
+it outside a CLI invocation. Inspect diagnostics, status/help formatting,
+one-shot configuration/install tooling and unused scaffolding as candidate
+classes, not predetermined removals. Distinguish moving code, deleting proven
+unused code, and reusing existing stock MOS code.
 
-A08-03 [ ] Investigate resident EMOS CLI dispatch of `emos <command> [arguments]`
-to `/emos/<command>.bin`, reusing the stock MOSlet loader and calling convention.
-Specify case-insensitive lookup, resident-command precedence, arguments, return
-codes, missing-card/file behavior, RAM ownership and preservation of loaded
-applications. No new relocatable module format or plugin framework.
+A08-03 [ ] Classify each candidate as must remain resident, suitable foreground
+EMOSlet, split resident mechanism/SD utility, or unresolved. Keep UART interrupt
+handling, keyboard reception, ordinary VDU routing, transport admission, committed
+mode state and APIs needed during applications resident. Evaluate command parsing
+separately from the state transition it requests. Preserve usable boot, input,
+mode recovery and error reporting when the SD card or utility is unavailable.
 
-A08-04 [ ] Present the bounded implementation contract and open decisions to the
-Author before coding. If subsequently authorized, compare ROM size and ordinary
-MOS/EMOS behavior, test utility invocation and failure returns, and preserve the
-working firmware as rollback. Move only justified foreground utility code.
+A08-04 [ ] Investigate the smallest dispatcher for case-insensitive
+`emos <command> [arguments]` loading `/emos/<command>.bin` through the stock
+MOSlet loader. Specify built-in precedence, unknown-command behavior, arguments,
+return codes, maximum path/command lengths and missing/corrupt/incompatible-file
+handling. Compare incremental dispatcher cost against savings; don't add a
+plugin registry, relocator, general module framework or background service.
+
+A08-05 [ ] Check RAM and ABI feasibility for shortlisted candidates. Include
+MOSlet load extent, stack/heap, shared runtime state, loaded application
+preservation, caller-memory admission, callbacks and pointers retained after
+exit. Specify version compatibility between resident EMOS and SD utilities and
+how an interrupted update recovers. Reuse existing version/SD placement policies;
+no executable migration or new installation scheme during investigation.
+
+A08-06 [ ] Produce a ranked table: candidate, current linked ROM contribution,
+remaining resident portion, added dispatcher/shared cost, estimated net bytes
+recovered, RAM cost, behavior/dependencies, risk and recommendation. Avoid double
+counting shared code. Express net headroom in bytes and percent of 128 KiB.
+Clearly separate estimates from measured before/after link results. Prefer a
+small first tranche with useful net savings and straightforward validation.
+A finding that no safe extraction is worthwhile is an acceptable outcome.
+
+A08-07 [ ] Present the shortlist and first-tranche implementation contract for
+Author review. Include explicit resident/SD ownership, proposed files and commands,
+net ROM target, deployment/rollback, and validation. Stop before product changes.
+
+## Conditional implementation and validation — not yet authorized
+
+A08-08 [ ] After approval, extract only the selected tranche, retaining stock
+MOS idioms and thin resident services. Measure total linked before/after ROM;
+retaining duplicate implementations is not a saving. Preserve the previous image
+and matching SD utilities as a rollback set.
+
+A08-09 [ ] Validate normal/invalid command invocation, case handling, arguments,
+return/re-entry, missing SD/utility and version mismatch. Verify application RAM
+preservation and no live callbacks into unloaded MOSlet memory. Exercise ordinary
+MOS behavior, Legacy/ExCom switching and both keyboard sources where affected.
+Use focused emulator checks before separately authorized physical deployment;
+update canonical installation/recovery documentation only for accepted behavior.
+
+## Deliverables and boundaries
+
+The research deliverable is a compact report under `AUDIT-008/` with a pinned
+baseline, candidate table and recommended first extraction. Shared provider ABI
+and firmware changes belong in the project-owned agon-emos checkout, coordinated
+with its task records; official MOS remains a read-only reference. This task does
+not redesign the SD protocol, implement networking features, remove stock MOS
+capabilities or revive the cancelled relocatable-module development path.
+
+The investigation is not a prerequisite to every REMOTE-005 improvement. It
+becomes a dependency when a proposed change needs resident ROM beyond measured
+headroom. Moving the already disk-resident sdserve executable between directories
+is organization, not ROM recovery.
 
 ## Decision register and gates
 
@@ -61,6 +121,7 @@ D03 — Unresolved: which resident code can move to SD without breaking APIs,
 application execution, boot or recovery. Account for shared services and MOSlet
 RAM conflicts before selecting candidates.
 
-No implementation, builds, SD changes or bench operations are authorized by this
-record. REMOTE-005 retains ownership of file-access work and its provisional
+For this turn, documentation preparation only is authorized. After research
+approval, local baseline builds may support A08-01; implementation, SD changes
+and bench operations still require their own approved tranche. REMOTE-005 retains ownership of file-access work and its provisional
 MOSlet evidence; this task owns only ROM simplification and CLI utility placement.

@@ -7,11 +7,13 @@ classification does not grant new execution or waive human acceptance.
 
 ## Top priority — Networking prior-art review
 
-- [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Contract prepared; detailed review not started. Takes precedence over the existing do-now queue.
+- [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.
 
 ## Do now — PLAN-001
 
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
+
+- [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — Refreshed investigation contract awaiting Author review: identify resident code suitable for stock-format MOSlets, quantify net ROM savings and preserve essential resident services. No implementation authorized.
 
 - [ ] **[PLAN-001 — Timing closeout and next-work selection](docs/tasks/PLAN-001.md)**. T01 committed; T02 reconciliation prepared for review in [the disposition table](docs/tasks/PLAN-001/QUEUE-REVIEW.md). T03 source audit and mode-startup investigation delivered; inherited palette defect recorded, with upstream/Extender patches deferred for credits. Aginvadors optimization and further browser-performance experiments are deferred.
 
@@ -65,7 +67,6 @@ classification does not grant new execution or waive human acceptance.
 
 ## Parked, blocked and unscheduled work
 
-- [ ] **[AUDIT-008](docs/tasks/AUDIT-008.md)** — Deferred until fresh tokens and Author resumption: audit EMOS ROM overhead and investigate `/emos` utilities dispatched through the `emos` CLI prefix; stock MOSlet reuse, measured savings, proposal before implementation.
 
 - [ ] **[BENCH-008](docs/tasks/BENCH-008.md)** — Correct output but worse frame rate with replacement deltas; initial experiment complete. B08-06 cost investigation deferred until Author resumes; pre-experiment P4 firmware restored after the regression.
 
