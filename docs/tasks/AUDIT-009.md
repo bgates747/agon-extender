@@ -80,7 +80,7 @@ next step. Record unresolved conflicts rather than inventing decisions or
 qualification. Use maintained contracts and retained evidence; no firmware
 changes, bench work, new upstream campaign or deferred implementation.
 
-A09-N01 [ ] **Upstream fidelity and dependency ownership.** Review
+A09-N01 [x] **Upstream fidelity and dependency ownership.** Review
 [ADR-0011](../decisions/ADR-0011-upstream-vdp-integration-and-project-structure.md),
 [ADR-0012](../decisions/ADR-0012-vendored-release-dependencies.md) and
 [ADR-0013](../decisions/ADR-0013-vdp-survey-integration-boundaries.md).
@@ -108,6 +108,10 @@ Reconcile driver dispositions, dependency/source maps and qualification scope
 with current accepted contracts and retained receipts. Clearly separate planned
 hardware and unexecuted tests from qualified configurations. Update maintained
 instructions, not frozen evidence; no new electrical qualification.
+
+A09-N01 completed within its documentation-only scope; see
+[results](AUDIT-009/RESULTS.md#a09-n01-result) and batch B44. A09-N02–N04
+remain unstarted.
 
 ## Scope and authority
 

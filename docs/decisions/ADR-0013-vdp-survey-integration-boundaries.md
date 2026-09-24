@@ -4,7 +4,25 @@
 - Completeness: Complete
 - Date: 2026-08-20
 - Last amended: 2026-09-10
+- Documentation reconciled: 2026-09-24
 - Related tasks: SETUP-003, SETUP-004, PORT-002, PORT-003, PORT-005, PORT-007, REMOTE-001, AUDIT-006
+
+## Current applicability
+
+These are accepted integration boundaries, not an assertion that every retained
+service is implemented. The [console selection](../../vdp/pio/p4-console-source-selection.json)
+compiles the original depth-controller rendering paths with P4 adaptations.
+It excludes the original audio runtime; the
+[current architecture](../architecture.md) distinguishes command consumption
+from still-unimplemented synthesis/output. Mouse injection and P4-local SD
+service remain separate scope, not implied working services. Mainboard SD
+access through the EMOSlet listener is a different capability.
+
+[ADR-0014](ADR-0014-edu-operating-modes-and-service-architecture.md) and
+[ADR-0022](ADR-0022-browser-keyboard-capture.md) govern current input selection:
+P4 arbitrates physical USB, captured browser and host-agent input; EMOS admits
+the common Extender source and owns ordinary VDU routing. The
+[keyboard guide](../remote-keyboard.md) records supported use and limits.
 
 ## Context
 
@@ -36,7 +54,7 @@ ESP32-specific `esp32/ulp.h`.
    backward compatibility requires it. Separate that compatibility obligation
    from reuse of the upstream physical driver that originally supplied the
    behavior.
-5. Extender-specific input facilities, if introduced, are project-owned. Put
+5. Extender-specific input facilities are project-owned. Put
    their interfaces and implementations in the Extender-owned source boundary;
    do not force them through unused FabGL PS/2 or stock peripheral machinery.
 6. Use explicit build selection, adapters, or narrow compatibility boundaries
@@ -151,22 +169,23 @@ ESP32-specific `esp32/ulp.h`.
     Delivery may drop or resynchronize when necessary. Rev 1 does not guarantee
     the stock analog-output location, analog distortion, or sink latency.
 26. Replace direct FabGL physical-input bindings with a processed-event
-    adapter. Under ADR-0014's 2026-09-08 amendment, the first source is focused
-    browser keyboard input. P4 preserves applicable VDP variables, callbacks,
-    control-key/paged-mode behavior and emits stock keyboard packets to EMOS
+    adapter. Under ADR-0014 and ADR-0022, P4 arbitrates native USB, captured
+    browser and host-agent keyboard input. P4 preserves applicable VDP variables,
+    callbacks, control-key/paged-mode behavior and emits stock keyboard packets to EMOS
     over UART. The former aware-application forwarding profile remains later
     scope and retains non-echo behavior for copied events only.
-27. Keep physical keyboard, PS/2 scan-code tasks and device control excluded
+27. Keep FabGL physical PS/2 keyboard, scan-code tasks and device control excluded
     from the P4 build while preserving complete vendored sources. Retain stock
     virtual-key/event vocabulary and reuse applicable pure mapping semantics
-    for browser input. Physical onboard keyboard ownership does not require
+    for Extender input. Physical onboard keyboard ownership does not require
     browser keys to pass through the onboard VDP.
 28. Omit vdp-gl's physical mouse device, PS/2 packet decoder, update task,
     queues, acceleration, and direct display-positioning engine from the P4
     build while retaining the complete sources in the vendored release. The
-    onboard VDP remains the physical packet-processing owner; application-
-    forwarded processed mouse fields feed the EDP injection adapter, which owns
-    only EDP-local state and cursor effects.
+    onboard VDP remains the physical packet-processing owner. The deferred
+    application-forwarding design assigns processed mouse fields to an EDP
+    injection adapter owning only EDP-local state and cursor effects; this
+    does not claim that adapter is implemented.
 29. Omit vdp-gl's independently compiled `ICMP.cpp` helper from the P4 build
     while retaining it in the complete vendored release. It has no official VDP
     consumer or visible compatibility surface and binds directly to a local
@@ -219,8 +238,9 @@ ESP32-specific `esp32/ulp.h`.
 6. Upstream integration review must use generated build-selection evidence and
    dependency boundaries rather than infer importance from the presence of a
    file in the vendor tree.
-7. Work 1.c must validate the SPI, GPIO, interrupt, and link fallout from
-   excluding MCP23S17 before the source filter becomes an implementation change.
+7. MCP23S17 exclusion requires evidence covering SPI, GPIO, interrupt and
+   link fallout. SETUP-004 owns its validation record; this architectural
+   consequence is not a standing instruction to rerun a historical work item.
 8. Every retained GPIO consumer must use an explicit target hardware profile
    and receive pin-mux and electrical qualification; no stock pin mapping is
    inherited merely because the portable API survives.
@@ -269,11 +289,12 @@ ESP32-specific `esp32/ulp.h`.
     the replacement sink and remains a separate operating-mode decision.
 22. The input adapter provides a stable seam between official display-local
     input behavior and whichever event route an operating mode selects. The
-    proof-of-concept route validates aware applications only; transparent v1
-    routing remains separately unresolved.
-23. Source selection must not pull the keyboard task and layout tables back into
-    the P4 image merely because shared virtual-key declarations remain visible
-    in the complete vendor tree.
+    former aware-application proof of concept is historical. Current EMOS
+    routing and common P4 keyboard admission follow ADR-0014 and ADR-0022;
+    their existence does not establish full v1 peripheral parity.
+23. Source selection must not pull the FabGL PS/2 keyboard task and its layout
+    tables back into the P4 image merely because shared virtual-key declarations
+    remain visible in the complete vendor tree.
 24. Shared mouse event/status vocabulary may remain available to the adapter,
     but it must not pull the physical decoder, task, queues, acceleration, or
     display-positioning implementation into the P4 image.

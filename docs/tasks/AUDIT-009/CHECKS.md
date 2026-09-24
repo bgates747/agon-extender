@@ -290,3 +290,31 @@ B39–B43 complete within their recorded scope; full audit remains open. Final
 mailbox empty. Both source repositories were clean at entry; EMOS remains
 unchanged. Local commits: 580c4ab5 freezes scope, ccb347c1 consolidates task/build
 and screen-text guidance; final coverage closeout committed separately. No push.
+
+## A09-N01 — upstream fidelity and dependency ownership
+
+Contract frozen in 1beae077 before review. Documentation/source inspection only;
+no goal time allowance was requested for this bounded step. No bench, build,
+network request, firmware, emulator or upstream checkout change.
+
+| Batch | Inputs | Scope / disposition |
+|---|---|---|
+| B44 | ADR-0011, ADR-0012, ADR-0013 | All three decision bodies read. Compared against maintained architecture, ADR-0014/0022, keyboard/build guides, reviewed source-baselines.yaml, vendor library.json records, p4-console-source-selection.json and select_sources.py. PlatformIO C++17/platform pins and the console dependency lock inspected as build inputs. No source-baseline regeneration or new upstream release survey. |
+
+ADR-0011 now distinguishes recorded import identity from newest-release policy
+and reiterates the already accepted first-port fidelity/no incidental bug-fix
+rule. ADR-0012 records selected ESP32Time 2.0.6 and CRC 1.0.4 and distinguishes
+vendored upstream libraries from managed components/toolchain downloads.
+ADR-0013 aligns input with accepted P4 USB/browser/agent arbitration, limits the
+physical-keyboard exclusion to FabGL PS/2, and separates deferred services from
+implemented capability. Decision status/completeness and architectural choices
+are unchanged. The build guide provides the corresponding current navigation.
+
+Reviewed graph declarations are fingerprinted historical inputs, not a complete
+present-day patched-tree audit. No exhaustive compatibility delta or new runtime
+qualification is claimed. Findings A09-F053–F055 record these corrections.
+
+Validation: 714 Markdown files / 2635 relative links; only the same three
+known historical missing targets, no new link findings. CSV coverage totals
+reconciled; whitespace check passed after preserving LF inventory line endings.
+No fresh source-delta verification or claim of full upstream parity.

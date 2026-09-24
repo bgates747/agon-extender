@@ -43,14 +43,14 @@ its contents. Every record has a disposition in [INVENTORY.csv](INVENTORY.csv).
 
 | Review state | Extender | EMOS | Total |
 |---|---:|---:|---:|
-| Current body reviewed within recorded scope | 87 | 18 | 105 |
-| Partially reviewed / selected claims only | 117 | 32 | 149 |
+| Current body reviewed within recorded scope | 90 | 18 | 108 |
+| Partially reviewed / selected claims only | 114 | 32 | 146 |
 | Historical metadata classified, body not reviewed | 118 | 22 | 140 |
 | Vendor/reference provenance role only | 44 | 0 | 44 |
 | Pending body review | 631 | 39 | 670 |
 | **Inventory total** | **997** | **111** | **1108** |
 
-Forty-three bounded batches and two documentation-only reader walkthroughs are
+Forty-four bounded batches and two documentation-only reader walkthroughs are
 recorded in [CHECKS.md](CHECKS.md). Reviewed means the document's stated contract
 was inspected against the sources/evidence listed there; it is not a fresh
 hardware or independent fresh-machine acceptance.
@@ -98,8 +98,8 @@ Assigning an owner or exposing a gap does not authorize a fix or bench run.
 The remaining-current-summary batch and first ten build decisions have been
 reviewed within the recorded scope. The next ten documents are now divided into
 [A09-N01–N04 in the main task](../AUDIT-009.md#next-phase), which owns the
-actionable checklist and completion boundaries. The Author approved A09-N01 alone; its frozen contract in the main task governs
-execution. A09-N02–N04 remain unstarted.
+actionable checklist and completion boundaries. A09-N01 is complete. A09-N02 is the next bounded step, but has not been
+started or authorized by this continuation note. A09-N03–N04 also remain unstarted.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -159,3 +159,16 @@ EMOS received no changes in this pass. Changes are committed locally, not pushed
 
 This fourth tranche reached its bounded checkpoint in approximately 9 minutes,
 within the one-hour limit. The next review batch is recorded above.
+
+## A09-N01 result
+
+Reviewed and reconciled ADR-0011/0012/0013 only, plus supporting current guide
+navigation. Corrected stale input ownership and unresolved-version wording;
+clarified the boundary between accepted design, selected source, dependency
+provenance and deployed qualification. ESP32Time 2.0.6 and CRC 1.0.4 were already
+selected; no code, dependency or architecture change was needed.
+
+Batch B44 and findings A09-F053–F055 retain evidence and limits. Coverage now
+stands at 108 reviewed, 146 partial, 140 metadata-only, 44 provenance-only and
+670 pending records (1108 total). Full audit remains open. No bench or fresh
+build/qualification performed. A09-N02–N04 await further instruction.

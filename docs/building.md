@@ -88,6 +88,22 @@ and `.pio/` outputs are disposable. Start tracing execution at
 retained browser-VDP boot code and
 [console transport](../vdp/video/extender/transport/console_hardware.inc).
 
+### Upstream source and library pins
+
+The [reviewed import identities](dependencies/reviewed/source-baselines.yaml)
+record VDP `v2.16.0`, vdp-gl `all-the-plots`, ESP32Time `2.0.6` and CRC `1.0.4`.
+The first two have pinned Git commits; the latter two use registry-package
+path/content evidence. These are recorded imports, not a fresh upstream release
+survey. The three libraries are vendored under `vdp/vendor/`; compiled subsets
+come from the target selection above, not directory presence.
+
+The [vendoring decision](decisions/ADR-0012-vendored-release-dependencies.md)
+does not cover the entire toolchain: platform/framework packages and the console's
+pinned managed components still have their own acquisition and lock records.
+The [dependency graph's scope](dependencies/README.md#model-scope-versus-deployed-builds)
+is narrower than all later console overlays; its historical verification is not
+a complete compatibility-delta audit of the currently deployed firmware.
+
 ## Building EMOS and the SD application
 
 EMOS is built separately from the P4 firmware. Its current AgonDev build uses

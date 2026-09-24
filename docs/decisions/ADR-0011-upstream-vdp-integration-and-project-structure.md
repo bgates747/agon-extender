@@ -3,7 +3,23 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
+- Documentation reconciled: 2026-09-24
 - Related task: SETUP-003
+
+## Current applicability
+
+The recorded import baseline is VDP `v2.16.0`; this is not a claim that it
+remains the newest upstream release. New imports follow the tagged-release
+policy below. The [build guide](../building.md#which-files-actually-get-compiled)
+identifies the maintained console selection; the
+[dependency graph](../dependencies/README.md#model-scope-versus-deployed-builds)
+covers its recorded profiles, not every later deployed console overlay.
+Neither a graph nor this decision proves a complete current compatibility delta.
+
+The accepted [rendering fidelity rule](../architecture.md) also retains
+reusable native framebuffer algorithms and, for the first faithful port,
+upstream behavior including suspected bugs. This decision does not authorize
+upstream bug fixes or renderer redesign as incidental cleanup.
 
 ## Context
 

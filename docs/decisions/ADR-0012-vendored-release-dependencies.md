@@ -3,7 +3,24 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-20
+- Documentation reconciled: 2026-09-24
 - Related task: SETUP-003
+
+## Current applicability
+
+This decision covers the three upstream VDP libraries named below. Their
+vendored presence does not mean every library is compiled into every target.
+The [console source selection](../../vdp/pio/p4-console-source-selection.json)
+selects ESP32Time and specific vdp-gl translation units; CRC is retained in the
+repository but is not a selected console translation unit.
+
+Platform/compiler packages and separately pinned ESP-IDF managed components
+remain distinct dependencies. The console manifest and its
+[dependency lock](../../vdp/pio/p4-console-dependencies.lock) record the latter.
+The [build guide](../building.md) describes package acquisition; vendoring these
+three libraries does not make a fresh full-toolchain build offline. The
+[graph scope](../dependencies/README.md#model-scope-versus-deployed-builds)
+also limits what existing import/delta evidence establishes for later builds.
 
 ## Context
 
@@ -17,7 +34,7 @@ Official VDP `v2.16.0` also declares three source dependencies:
 
 The vdp-gl reference was initially mistaken for a moving branch because Git URL
 fragment syntax can name either a branch or tag. Inspection of the official
-remote refs established that `all-the-plots` is an immutable tag at
+remote refs established that `all-the-plots` was resolved to the pinned commit
 `ac2dd5986daf496c43ae8e7fe41836274aec54a0`.
 
 The two PlatformIO version ranges can resolve to different releases over time.
@@ -37,9 +54,11 @@ and contributor workflow complexity.
    uses Git.
 4. For the `v2.16.0` baseline, use vdp-gl tag `all-the-plots` at
    `ac2dd5986daf496c43ae8e7fe41836274aec54a0`.
-5. Resolve the exact official tagged versions of ESP32Time and CRC under
-   SETUP-003 before importing them. Do not retain the compatible version ranges
-   as active build inputs.
+5. Use the selected published releases ESP32Time `2.0.6` and CRC `1.0.4`,
+   recorded in the [reviewed source baselines](../dependencies/reviewed/source-baselines.yaml).
+   Those registry-package identities have no recorded Git commit; package
+   path/content verification supplies their immutable source evidence. Do not
+   retain compatible version ranges as active build inputs.
 6. Record each dependency in project version metadata with:
    - upstream name and repository;
    - tag or published version;
