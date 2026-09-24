@@ -13,7 +13,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
 
-- [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — Refreshed investigation contract awaiting Author review: identify resident code suitable for stock-format MOSlets, quantify net ROM savings and preserve essential resident services. No implementation authorized.
+- [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — A08-01–07 research complete: 16 ROM bytes free confirmed; cancelled provider cluster contains 6,052 code bytes. Proposed retirement plus minimal `/emos` launcher awaits review; no implementation authorized.
 
 - [ ] **[PLAN-001 — Timing closeout and next-work selection](docs/tasks/PLAN-001.md)**. T01 committed; T02 reconciliation prepared for review in [the disposition table](docs/tasks/PLAN-001/QUEUE-REVIEW.md). T03 source audit and mode-startup investigation delivered; inherited palette defect recorded, with upstream/Extender patches deferred for credits. Aginvadors optimization and further browser-performance experiments are deferred.
 

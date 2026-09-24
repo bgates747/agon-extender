@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-19
+- Last amended: 2026-09-24
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -617,3 +617,17 @@ for possible implementation when useful or closer to production. Their shared
 stock programming/data port warrants one endpoint and coexistence review.
 Current support is unchanged; no P4 endpoint or delivery version is selected.
 PORT-003-D017 owns the scope and linked research questions.
+
+## Foreground EMOS utilities — 2026-09-24 clarification
+
+The Author approved retiring the remaining cancelled external `.emo` provider
+loader and registry. Resident EMOS keeps the gateway ABI, routing, transports,
+keyboard, mode ownership and compiled services. Historical provider evidence is
+not a supported deployment path.
+
+EMOS may launch ordinary fixed-address MOSlets from `/emos/<name>.bin` through
+`emos <name> [args]` at an idle CLI, after resident built-ins take precedence.
+This is foreground stock executable loading, not revival of relocatable modules,
+provider discovery, swap files or background services. Invocation from an active
+application or MOSlet is rejected. Stock search paths remain unchanged.
+[AUDIT-008](../tasks/AUDIT-008.md) owns implementation and qualification.

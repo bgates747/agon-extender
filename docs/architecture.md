@@ -770,3 +770,13 @@ Console (&FE) and terminal (&FF) modes share the deferred printer-output scope:
 possible future serial facilities, with one endpoint/coexistence review before
 implementation. Current P4 behavior and EMOS route authority remain unchanged;
 no implementation or qualification is implied (PORT-003-D017).
+
+### Foreground EMOS utilities
+
+Resident EMOS retains gateway, transport, keyboard and display-mode ownership.
+The accepted `/emos/<name>.bin` foreground MOSlet dispatch follows
+[ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md):
+built-ins first, idle CLI only, ordinary fixed-address MOSlet format. Cancelled
+external `.emo` provider loading is retired; no background module framework is
+introduced. Implementation and validation are tracked in
+[AUDIT-008](tasks/AUDIT-008.md).

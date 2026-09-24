@@ -1,0 +1,209 @@
+{
+  "scope": "A08-01 through A08-07 source research and unchanged-source local baseline build; no deployment",
+  "pre_research_extender_commit": "8ea1908defb5692bbb7f27c1b664ed29ec66348f",
+  "repositories": {
+    "agon-emos": {
+      "commit": "f047b6a652eb3dd7c3ca2645f044536b054a0fdc",
+      "remote": "https://github.com/bgates747/agon-emos.git",
+      "clean_tracked_and_untracked": true
+    },
+    "mos-agondev": {
+      "commit": "90034c2348761c42bab4217ce5b0f906922dc0e4",
+      "remote": "https://github.com/bgates747/mos-agondev.git",
+      "clean_tracked_and_untracked": true
+    },
+    "agon-mos": {
+      "commit": "8336409351ee5314e02801a7b72a4f1bb5282519",
+      "remote": "https://github.com/AgonPlatform/agon-mos.git",
+      "clean_tracked_and_untracked": true,
+      "tag": "v3.0.2"
+    },
+    "agon-docs": {
+      "commit": "f9806bd3cbff6ed5d1c08bef1d51fed11764b86b",
+      "remote": "https://github.com/AgonPlatform/agon-docs.git",
+      "clean_tracked_and_untracked": false
+    },
+    "agondev": {
+      "commit": "b67ab2444a63267a42193f204889d466765d8dd2",
+      "remote": "https://github.com/AgonPlatform/agondev.git",
+      "clean_tracked_and_untracked": true
+    }
+  },
+  "emos_source_sha256": {
+    "src/emos.c": "60b93d0e526ab196fb328bfe3f05d5db637bcd37efac3041665a225b2d84d883",
+    "src/emos.h": "f27e00bee7637c1f03b200609cf89bdc4bb3f183c5e233776c031b6c27f06295",
+    "src/emos_uart_flow.c": "375d4ffc335ff75b4e8e5734f5111c76bd7003e44aed4fd8867fdb672560f5bd",
+    "src/emos_uart_probe.c": "6af28f71cb261345f7e25ec1e806fb64d66e9ef35fca4fbe97c0a5d3c9a872a0",
+    "src/emos_sdlink.c": "b03846d05b9733a26adae5fa344f212fc1abc4d78517d70f8e18d1cea48e4fc1",
+    "src/emos_console.c": "134addf3d2622eeb63ca170e76a6d8d9b4ce0a7cd6d1dd845c64710cfae6ad67",
+    "src/emos_keyboard.c": "181356dbcef6b43865e6dcd206182786c17824c670858fd015363d8ae0b09051",
+    "src/uart.c": "7c83912c9b27ccfe60b129384e81cf8704f0ba58a2aea1c73dde00534fbfac28",
+    "src/mos.c": "a9015067c8fa47989563b5fd877576f868745f255cfeac22c22e0c66ba6d0293",
+    "src/mos_file.c": "6339d3ada02522e707c7dcc03fcbce0c2fc01aea47d8c973e83ba1b8372d6eda",
+    "src/mos_api.asm": "230ad762f03ce4f3d58d4aeba3bf5b122ee340725906c36be679a247fc4a79b6",
+    "src/misc.asm": "e147e4a350ceca6c5f8f77becec7148c76bb322d16cde777fb73cb4fd9f945fb",
+    "src/config.h": "0eb6b42f47dd05f75289af21adff6163c26da6f9ddc4001534340b6fcb19b8e4",
+    "port/mos-agondev.mk": "b0916d545256b9e3fde849a2080175a6e1d161933c2f3dbec6ae2e8cc1ba44cb",
+    "port/identity.mk": "ed6fe5ab2884fdb263f7989c27e8a131eec0aa88693d259a82c57217910b1ea2"
+  },
+  "build_command": "make -C <agon-emos> firmware-check MOS_AGONDEV_ROOT=<isolated-clean-port-checkout> MOS_AGONDEV_PYTHON=<python> PYTHON=<python> PYTHON_ENV=<venv> AGONDEV_TOOLCHAIN=<agondev-release> PROVENANCE_DIR=<fresh-evidence-directory>",
+  "preparation": "Canonical prepare-mos target with maintained agon-emos source. Isolated clone of recorded mos-agondev commit; no generated source edits.",
+  "compiler_and_assembler": [
+    {
+      "path": "${TOOLCHAIN}/bin/ez80-none-elf-clang",
+      "sha256": "34670dda66966bc83b59bafe97bbe84fd7ca20ad15728eb3f3753097d22dc51d",
+      "size": 99248360,
+      "version_command": [
+        "${TOOLCHAIN}/bin/ez80-none-elf-clang",
+        "--version"
+      ],
+      "version_output": "clang version 15.0.7 (https://github.com/AgonPlatform/agon-llvm-project.git c76386c0083e6a6236ff774275227e2389f85538)\nTarget: ez80-none-unknown-elf\nThread model: posix\nInstalledDir: ${TOOLCHAIN}/bin",
+      "version_output_sha256": "28d1f1bf72a8316a58101e13cf334e36cd0cd829ceda61f2dd5a20c0cd8242fe"
+    },
+    {
+      "path": "${TOOLCHAIN}/bin/ez80-none-elf-as",
+      "sha256": "00dec630d1c386521887e6af0bb1b2045f66ae6f181f84491269f020a0342bdb",
+      "size": 1279536,
+      "version_command": [
+        "${TOOLCHAIN}/bin/ez80-none-elf-as",
+        "--version"
+      ],
+      "version_output": "GNU assembler (GNU Binutils) 2.45\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or later.\nThis program has absolutely no warranty.\nThis assembler was configured for a target of `z80-none-elf'.",
+      "version_output_sha256": "cc1a940e5475591b746851a1f9522f85959d97fb19979a9052d212e456c977eb"
+    }
+  ],
+  "linker": [
+    {
+      "path": "${TOOLCHAIN}/bin/ez80-none-elf-ld",
+      "sha256": "2f4321d67956d8389bc28661b8684f8e054ee3b4e9eb890245f6c9afa33434cf",
+      "size": 1486960,
+      "version_command": [
+        "${TOOLCHAIN}/bin/ez80-none-elf-ld",
+        "--version"
+      ],
+      "version_output": "GNU ld (GNU Binutils) 2.45\nCopyright (C) 2025 Free Software Foundation, Inc.\nThis program is free software; you may redistribute it under the terms of\nthe GNU General Public License version 3 or (at your option) a later version.\nThis program has absolutely no warranty.",
+      "version_output_sha256": "e4ec1fbe7a098548e6f09acdfaf937a0f29772be5ec8d19b953d337ea6aec8be"
+    }
+  ],
+  "compiler_command": [
+    "${TOOLCHAIN}/bin/ez80-none-elf-clang",
+    "-Iinclude",
+    "-I${PREPARED}/src",
+    "-I${PREPARED}/src_fatfs",
+    "-I${PREPARED}/src_startup",
+    "-I${PREPARED}/src_umm_malloc",
+    "-nostdinc",
+    "-isystem",
+    "${TOOLCHAIN}/include",
+    "-DAGONDEV",
+    "-D_EZ80",
+    "-D_EZ80F92",
+    "-DNDEBUG",
+    "-DEMOS_SOURCE_IDENTITY=\"agon-emos-v0.1.18\"",
+    "-DEMOS_BUILD_ID=\"agon-emos-v0.1.18-b2026-09-24-01-29-36Z\"",
+    "-DEMOS_ARTIFACT_STATUS=\"draft\"",
+    "-target",
+    "ez80-none-elf",
+    "-march=ez80",
+    "-mllvm",
+    "-z80-gas-style",
+    "-mllvm",
+    "-z80-print-zero-offset",
+    "-std=gnu17",
+    "-Wall",
+    "-Wextra",
+    "-Werror=return-type",
+    "-Oz",
+    "-ffreestanding",
+    "-fno-threadsafe-statics",
+    "-fno-integrated-as",
+    "-B${TOOLCHAIN}/bin",
+    "-Wa,-march=ez80+full",
+    "-MD",
+    "-MF",
+    "obj/src/emos.d",
+    "-c",
+    "${PREPARED}/src/emos.c",
+    "-o",
+    "obj/src/emos.o"
+  ],
+  "linker_command": [
+    "${TOOLCHAIN}/bin/ez80-none-elf-ld",
+    "--orphan-handling=error",
+    "-T",
+    "ld/mos.ld",
+    "-Map",
+    "bin/MOS.map",
+    "--dependency-file",
+    "bin/MOS.link.d",
+    "--trace",
+    "-o",
+    "bin/MOS.elf",
+    "obj/asm/src/crash.o",
+    "obj/asm/src/gpio.o",
+    "obj/asm/src/interrupts.o",
+    "obj/asm/src/keyboard.o",
+    "obj/asm/src/misc.o",
+    "obj/asm/src/mos_api.o",
+    "obj/asm/src/rtc.o",
+    "obj/asm/src/sd.o",
+    "obj/asm/src/serial.o",
+    "obj/asm/src/spi.o",
+    "obj/asm/src/vdp_protocol.o",
+    "obj/asm/src_startup/cstartup.o",
+    "obj/asm/src_startup/globals.o",
+    "obj/asm/src_startup/init_params_f92.o",
+    "obj/asm/src_startup/vectors16.o",
+    "obj/asm/src/emos_console_io.o",
+    "obj/asm/src/emos_keyboard_io.o",
+    "obj/asm/src/emos_parallel_io.o",
+    "obj/main.o",
+    "obj/src/clock.o",
+    "obj/src/emos.o",
+    "obj/src/emos_console.o",
+    "obj/src/emos_keyboard.o",
+    "obj/src/emos_parallel.o",
+    "obj/src/emos_parallel_engine.o",
+    "obj/src/emos_sdlink.o",
+    "obj/src/emos_telemetry.o",
+    "obj/src/emos_uart_flow.o",
+    "obj/src/emos_uart_probe.o",
+    "obj/src/i2c.o",
+    "obj/src/mos.o",
+    "obj/src/mos_editor.o",
+    "obj/src/mos_file.o",
+    "obj/src/mos_sysvars.o",
+    "obj/src/strings.o",
+    "obj/src/tests.o",
+    "obj/src/timer.o",
+    "obj/src/uart.o",
+    "obj/src_fatfs/diskio.o",
+    "obj/src_fatfs/ff.o",
+    "obj/src_fatfs/ffsystem.o",
+    "obj/src_fatfs/ffunicode.o",
+    "obj/src_umm_malloc/umm_malloc.o",
+    "obj/hostfs_descriptor.o",
+    "runtime/build/libmos_runtime.a"
+  ],
+  "checks": [
+    "prepared-source provenance",
+    "runtime allowlist",
+    "linker layout and five negative controls",
+    "resolved firmware and hostfs descriptor",
+    "UART divisor",
+    "parallel linked paths",
+    "keyboard linked IRQ and guards",
+    "console linked dispatch",
+    "gateway ABI",
+    "VDU dispatch"
+  ],
+  "not_tested": [
+    "hardware",
+    "emulator execution",
+    "new dispatcher",
+    "extracted utilities",
+    "stack high-water",
+    "post-removal link size"
+  ],
+  "limits": "Local baseline hash is not an installed-firmware claim. Header and strings change build identity but retain measured byte counts."
+}
