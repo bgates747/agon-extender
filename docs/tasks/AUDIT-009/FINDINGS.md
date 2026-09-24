@@ -167,3 +167,10 @@ records. Finding ownership does not authorize implementation or a new bench run.
 |---|---|---|---|
 | A09-F056 | ADR-0015 calls the superseded generic controller current and describes one worker ambiguously | Console selection excludes old backend; StockP4Service timerEntry/drawLoop/outputLoop; StockClock and runtime controller | Corrected ADR and architecture to existing timer/drawing/output ownership, without changing accepted semantics or code. |
 | A09-F057 | Logical cadence and original phase gates can be mistaken for delivered FPS and current full qualification | Mode-derived startClock period, on-demand snapshot pool, PORT-003 restoration, QUAL-004 bounded static-image evidence | Added source/evidence map, conditional-build limits and explicit timing/parity boundary. Dynamic qualification and overlay reconstruction remain existing task scopes, not passes granted by this review. |
+
+## A09-N03 — remediation plans
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F058 | REMED-001's global freeze and sole-prototype exception predate accepted UART/ExCom and hardware ownership | Current SETUP-005 boundary and PORT-008-D005; TODO; qualification infrastructure and QUAL-002 hold | Reconciled remaining conformance hold and stale sequencing instructions. Four-mode model and complete-circuit gates remain open; dated execution records retained. |
+| A09-F059 | REMED-002 describes implemented network fixes and resolved input ownership as wholly pending; F016 disagrees across coordinators | PORT-006 F003/F012 implementation/host-test receipt; REMOTE-001/LINK-001 split; REMED-002 Work 4.c and QUAL-002 state | Marked F010 ownership and F016 status bookkeeping resolved; network physical validation still open. Updated finding/remaining-work summaries without closing either remediation task or parallel corrective action. |

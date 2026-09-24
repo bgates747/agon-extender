@@ -1,11 +1,25 @@
 # REMED-001 — Reconcile the repository with the four-mode operating architecture
 
-## State
+## Current scope
 
-- Status: In progress — Work 1 and the accepted D001/D002/F009 architecture
-  promotions are complete; the remediation freeze remains active for open
-  SETUP-005 decisions, task reconciliation, and four-mode qualification
-  replacement work
+Broader four-mode conformance and qualification-model replacement remain open.
+Accepted D001/D002 authority promotions are complete. The implemented, bounded
+Legacy/ExCom console and common Extender keyboard service are separately
+accepted increments; this coordinator does not withdraw their authorization or
+require the obsolete three-mode matrix for routine use. Begin with the
+[handbook](../README.md), [console contract](../protocols/excom-console.md) and
+[keyboard guide](../remote-keyboard.md).
+
+| Boundary | Current disposition / authority |
+|---|---|
+| Architecture | [SETUP-005](SETUP-005.md) owns remaining cross-mode decisions; [ADR-0014](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md) owns accepted decisions. Common keyboard admission follows [ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md). |
+| Bounded mode switching | PORT-008-D005 permits idle-CLI ExCom/Legacy transitions without restart. The broader F018 restart-carrier question remains open but is not a prerequisite for that increment. |
+| Qualification model | The superseded three-mode candidate remains unsuitable as four-mode authority. Work 4 and QUAL-001 review gates remain open; working ExCom is not replacement-matrix acceptance. |
+| Electrical qualification | QUAL-002's incomplete r02 assembly remains on hold. Later UART/keyboard evidence applies only to its identified configuration and does not qualify that complete circuit. |
+| Remediation coordination | F009 authority promotion and F016 qualification-task status correction are recorded. F018 and remaining conformance work retain their owners; no global closure is claimed. |
+
+- Status: In progress — remaining conformance and qualification work only;
+  bounded accepted implementation is governed by its owner contracts.
 - Started: 2026-08-23 17:02 EDT
 - Finished: --
 
@@ -27,7 +41,7 @@ and the accepted four-mode vocabulary:
 
 - **Legacy mode** — `mode:extender:legacy`;
 - **Exclusive Compatible mode** —
-  `mode:extender:exclusive-compatible`, short form **Compatible**;
+  `mode:extender:exclusive-compatible`, short forms **Compatible** / **ExCom**;
 - **Exclusive Extended mode** — `mode:extender:exclusive-extended`, short form
   **Extended**; and
 - **Dual mode** — `mode:extender:dual`.
@@ -37,44 +51,30 @@ questions, invent firmware or protocols, change wiring, run the bench, or
 silently reinterpret accepted source dispositions. Each substantive decision
 remains with its named owner and Author review gate.
 
-## Current-state freeze
+## Remaining conformance hold
 
-From this task's start, the audited operating-mode state and every
-mode-dependent consumer are frozen as **incomplete and potentially erroneous**
-until this task closes or explicitly releases a bounded artifact:
+The original repository-wide freeze has been narrowed by subsequent accepted
+owner-task increments. Its remaining purpose is to prevent stale mode records
+or unqualified circuitry from becoming authority. It is not a present global
+stop on implemented UART, input, SD-service or ExCom operation.
 
-1. Do not use the current three-mode QUAL-001 records or generated views as
-   architectural authority, implementation input, or qualification scope.
-2. Do not implement mode selection, transparent routing, response ownership,
-   mode-dependent input/RTC/audio behavior, or mode transitions from stale
-   terminology or classifications.
-3. Do not perform a mode-dependent physical qualification run or create a new
-   run identity against the superseded model.
-4. Do not hand-edit generated qualification or dependency artifacts. Correct
-   their reviewed authorities and regenerate them deterministically.
-5. Preserve existing historical logs, runs, procedures, and predecessor
-   evidence. They may describe the decisions or vocabulary in force at the
-   time, but they are not current mode authority.
-6. Treat current firmware and mode-neutral qualification as neither invalidated
-   nor mode-qualified. The audit found no implemented Extender system-mode
-   behavior; this freeze prevents new claims rather than presuming existing
-   code is defective.
-7. `light2-harness-r01` remains predecessor split-link evidence only. Current
-   construction and component validation use r02's ordered circuit subsets
-   under PORT-008-D003; r01 is not a stock-UART candidate.
-
-The Author-accepted [staged process](../qualification/staged-circuit-validation.md)
-permits preparation of mode-neutral circuit/component checks with their own
-relevant prerequisites. Such a stage does not require the unfinished complete
-mode matrix or release firmware. Physical execution still requires its
-reviewed stage procedure and authorization; any test that exercises or claims
-mode-dependent behavior remains subject to the freeze above.
-
-This is a governance freeze, not a byte-for-byte source snapshot or release.
-No commit, tag, version promotion, or generated-data promotion is authorized by
-the governance freeze itself. The later source-freeze commits preserve the
-review set but do not release this freeze, assign a version, or promote any
-generated evidence.
+1. Do not use superseded three-mode QUAL-001 records as four-mode architecture
+   or qualification authority. Correct reviewed inputs and regenerate through
+   Work 4 before promotion; do not hand-edit generated artifacts.
+2. New claims outside accepted owner-task scope still require the relevant
+   SETUP-005 decisions, artifact identities and qualification gates. Completed
+   UART/console work does not settle Dual, Exclusive Extended or all v1 claims.
+3. The retired r01 split-link and unfinished r02 complete circuit retain their
+   recorded boundaries. Neither is qualified by later r03 UART operation.
+   Current physical operations require the maintained bench/procedure records
+   and separate authorization, not an old recipe in this task.
+4. Preserve dated evidence and its original outcomes. Later acceptance may
+   supersede instructions, but cannot retroactively qualify predecessor runs.
+5. [Staged circuit validation](../qualification/staged-circuit-validation.md)
+   permits bounded component evidence without promoting the unfinished full
+   mode matrix. Qualification remains limited to the selected stage and build.
+6. This reconciliation releases no remaining whole-system or matrix gate and
+   grants no implementation, deployment, hardware or publication authority.
 
 ## Authority and dependencies
 
@@ -212,10 +212,9 @@ hardware design, deployment, or physical test.
   [`mode-lifecycle-analysis.md`](REMED-001/mode-lifecycle-analysis.md).
 - [ ] **2.e** Resolve D003 response delivery and MOS parser ownership for both
   exclusive modes and the separate EDU result domain in Dual mode. Defer final
-  disposition until PORT-008 has produced the bounded Exclusive Extended
-  vertical slice authorized by SETUP-005-D003; use its code and evidence to
-  answer the cross-mode questions rather than attempting to settle them from a
-  source survey alone.
+  disposition through SETUP-005 using the applicable owner-task evidence.
+  The original parallel vertical-slice dependency is historical sequencing,
+  not a blocker on accepted UART response handling or the bounded console.
 - [ ] **2.f** Resolve D004 support boundaries for non-EDU-aware software in
   Dual mode without implying mirrored VDU traffic or shared canonical state.
 - [ ] **2.g** Resolve D005 audio ownership and whether any mode may explicitly
@@ -237,23 +236,19 @@ hardware design, deployment, or physical test.
 - [ ] **2.m** Update ADR-0014 and `docs/architecture.md` only with accepted
   decisions, retain unresolved items in SETUP-005, and review ADR completeness.
 
-**Review Gate A:** The Author accepts all remaining SETUP-005 dispositions and
-the resulting normative four-mode contract before production mode-dependent
-implementation or qualification planning is released. PORT-008's bounded
-Exclusive Extended response prototype is the sole current exception: it may
-produce D003 discovery evidence under its fixed-backend, single-EMOS-writer,
-Author-approved prototype gate but cannot make a production or cross-mode
-claim.
+**Review Gate A:** Full four-mode promotion requires the remaining SETUP-005
+choices and normative contract review. Independently accepted bounded work,
+including current UART input and idle-CLI ExCom/Legacy switching, follows its
+owner contract rather than waiting for unrelated cross-mode questions.
 
-### Current input amendment — 2026-09-08
+### Current input and transition applicability
 
-SETUP-005 K001 selects browser → P4 → stock UART1 keyboard packets → EMOS as
-the next increment. D003/D007 and Work 2.i are partially resolved for direction
-and ownership; K002/K003 retain session/receiver details and broader mouse/
-mode composition stays open. ADR-0014, architecture and the ownership inventory
-are amended. The dated execution records below preserve earlier physical-input
-assumptions; they do not require an onboard relay for browser keys. Parallel
-work remains held while this bounded UART increment is reviewed.
+P4 USB, captured browser and host-agent providers share EMOS's admitted
+Extender keyboard source under ADR-0022. Legacy permits this independently
+selected input service. SETUP-005's current integration boundary and the
+maintained guides above own use; the dated execution records below preserve
+earlier browser-first, onboard-relay and restart assumptions, not current
+implementation instructions. Broader mouse/mode composition remains open.
 
 ### Work 2.a execution record
 
@@ -504,10 +499,10 @@ electrical proof; protocol/parser tasks own bounded malformed-input evidence.
 - [ ] **3.c** Preserve PORT-008's existing enhanced split-link work under
   Exclusive Extended and remove every implication that its harness qualifies
   Exclusive Compatible.
-- [ ] **3.d** Add the explicit trigger for a later hardware-design task: create
-  it only after Exclusive Compatible firmware requirements are mature enough
-  to drive a circuit. That task must own design review, new revisioned hardware,
-  safety review, procedures, and physical qualification.
+- [ ] **3.d** Reconcile the existing HW-001 design ownership and later UART
+  profiles against accepted firmware demands. Preserve design, revision,
+  procedure and qualification gates; do not create a duplicate hardware task
+  from the original pre-HW-001 sequencing instruction.
 - [ ] **3.e** Reconcile QUAL-002 with all four modes, including Legacy
   electrical absence, both exclusive ownership states, Dual coexistence, power
   and reset order, failure, and recovery.
@@ -537,10 +532,10 @@ electrical proof; protocol/parser tasks own bounded malformed-input evidence.
   do not make cross-boot `autoexec.txt` circuit breaking a beta requirement or
   v1 contract without demonstrated need and separate Author acceptance.
 
-**Review Gate B:** The Author accepts the reconciled task ownership, task split,
-and sequencing before any newly authorized production task begins
-implementation. PORT-008's existing-task prototype exception remains bounded
-by its own Author gate and cannot silently establish the final task split.
+**Review Gate B:** The Author accepts any remaining task ownership/split and
+sequencing changes before work newly dependent on them begins. Existing
+accepted owner-task increments retain their bounded authority; they do not
+automatically resolve every four-mode task split.
 
 ## Work 4 — Correct the durable qualification model
 
@@ -613,9 +608,10 @@ mode-dependent qualification uses it as authority.
 - [ ] **6.b** Rename or qualify `legacy_uart_candidate` through the hardware
   profile's normal revision process so it cannot be mistaken for Legacy mode or
   Exclusive Compatible hardware authority.
-- [ ] **6.c** Do not create or test Exclusive Compatible hardware until Work
-  2.k is accepted and the separate hardware-design task is registered and
-  approved.
+- [ ] **6.c** Reconcile each existing Exclusive Compatible hardware profile
+  with its accepted firmware requirements, design owner and bounded evidence.
+  New or broader physical claims require their own gates; this checklist does
+  not invalidate later accepted UART profiles or authorize new testing.
 - [ ] **6.d** Reconcile procedure templates and future run manifests so every
   mode-dependent claim names one official mode ID, transport profile, artifact
   identities, owner task, and accepted qualification boundary.
@@ -684,21 +680,21 @@ mode-dependent qualification uses it as authority.
 6. Historical evidence remains intact and clearly separated from current
    authority.
 7. The Author accepts the final conformance report and explicitly releases the
-   remediation freeze.
+   remaining conformance hold; bounded prior acceptances are not global closure.
 
 ## Accepted REMED-002 coordination
 
 The Author accepted REMED-001's split responsibilities for F009, F016, and
 F018 in [REMED-002](REMED-002.md). The underlying evidence remains in
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
-This intake does not release or replace the current four-mode freeze.
+This intake does not release remaining four-mode qualification gates.
 
 1. [x] **F009:** Treat promotion of accepted SETUP-005-D002 lifecycle content
    into ADR-0014 and `docs/architecture.md` as a prerequisite, not deferred
    cleanup, before downstream implementation consumes that decision.
-2. [ ] **F016:** Require QUAL-002's local state and dependencies to name this
-   freeze and the corrected four-mode release gates; its earlier plan approval
-   cannot imply permission for mode-dependent physical qualification.
+2. [x] **F016:** QUAL-002 names the remaining remediation/four-mode gates
+   and incomplete-circuit hold; REMED-002 Work 4.c records this status
+   correction. This closes task-status bookkeeping, not electrical qualification.
 3. [ ] **F018:** Coordinate SETUP-005's actor-explicit decision for the beta
    restart carrier, retained target ownership, EMOS commit point, and Legacy
    fallback. Do not assign implementation to MODE-001 or MODE-002 implicitly;
@@ -707,8 +703,8 @@ This intake does not release or replace the current four-mode freeze.
 
 F009 completed on 2026-09-01. ADR-0014 and `docs/architecture.md` now contain
 the full accepted D002 lifecycle contract and correct the stale unresolved-
-dispatcher and controlled-mirroring statements. D003--D008, F016, F018, and
-the four-mode conformance freeze remain open.
+dispatcher and controlled-mirroring statements. Broader D003--D008 choices, F018 and four-mode conformance remain open.
+F016 task-status reconciliation is recorded above; it does not pass QUAL-002.
 
 REMED-001 owns mode conformance and freeze release. REMED-002 owns the audit
 disposition and cross-finding closure register; neither document substitutes

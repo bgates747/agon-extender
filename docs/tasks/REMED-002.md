@@ -1,24 +1,26 @@
 # REMED-002 — Remediate open-task implementation and evidence-integrity findings
 
-## Keyboard-priority amendment — 2026-09-08
+## Current scope
 
-SETUP-005 K001 selects the existing UART browser-keyboard path. F010 therefore
-keeps LINK-001 outside its critical path; F019/R003 apply to session admission
-and EMOS source authority while preserving stock keyboard wire bytes. R002's
-ordered-event risk remains in PORT-005. The historical audit findings are not
-rewritten or marked fixed by this documentation amendment.
+This coordination register remains open. Findings have a mixture of recorded
+corrections, bounded tests, deferrals and outstanding qualification. The dated
+parallel-production records below are not the current UART deployment plan or
+an instruction to resume that work. Use [PORT-008](PORT-008.md) for current
+transport scope and the [handbook](../README.md) for operation.
 
-## State
+| Findings / work | Current disposition |
+|---|---|
+| F001/F002/F022; Work 2.a | Recorded upstream observations; correction remains deferred under the existing trigger/decision rules. No blanket fix or full regression claim. |
+| F003/F012; Work 2.b/2.c | PORT-006 records complete-or-error sends, retained server ownership and host fault injection. Physical link-loss/failed-stop lifecycle coverage remains open; these are partially validated corrections, not missing implementation or full closure. |
+| F004; Work 2.d | PORT-003/PORT-004 record accepted bounded audio grammar consumption. Synthesis and wider command coverage remain separate; maintenance/update commands retain explicit legacy/deferred scope. |
+| F008/F009/F016 | Recorded artifact-identity, authority-promotion and qualification-task-status corrections. Their closure does not pass physical or full-mode qualification. |
+| F010; Work 4.b | Ownership split is resolved: REMOTE-001 owns browser input over existing UART; LINK-001 is later direct-link research. No direct link is required for the implemented keyboard path. |
+| F018; Work 4.e | Broader restart-carrier design remains open. SETUP-005 records PORT-008-D005's accepted idle-CLI transition without restart; F018 does not block that increment. |
+| F019/R003; Work 4.f/4.i | ADR-0022 and current keyboard guide define common P4 arbitration, EMOS admission and revocation. REMOTE-001 retains platform/takeover and gameplay limits; no full security or input qualification is inferred. |
+| P001–P044 and parallel runtime gates | Retain exact dated defect/correction provenance and explicit open validations. Current UART success does not close parallel target-runtime, activation or evidence-tool gates. |
 
-- Status: In progress — Gate 1 complete; PORT-003 Work 2.a findings recorded
-  and broad hardening deferred under D004/D012; REMED-002-D003 resolved in
-  favor of replacement production data-plane objects; the P4 and EMOS
-  forward-data-plane compositions are software-integrated and local defects
-  P008--P044 are recorded at the bounded host/source/build level; P034--P040
-  have retained corrections, P042/P043 have checkpointed provisional corrections,
-  and P041/P044 retain explicitly open validation/normalization paths,
-  while owner-task target-runtime, provenance, activation, return, artifact,
-  and physical remediation remains pending
+- Status: In progress — mixed dispositions; remaining work stays with the named
+  owners. No global remediation closure or new implementation authorization.
 - Started: 2026-09-01 12:52 EDT
 - Finished: --
 
@@ -77,7 +79,7 @@ an accepted architecture decision, and operating the physical bench.
    Its containment and resolution conditions remain binding.
 3. [REMED-001](REMED-001.md) owns the four-mode conformance freeze. REMED-002
    may coordinate F009, F016, and F018, but cannot release, replace, or weaken
-   that freeze.
+   the remaining conformance/matrix hold; later bounded acceptances retain their scope.
 4. Existing implementation and setup owners include
    [PORT-003](PORT-003.md), [PORT-004](PORT-004.md),
    [PORT-005](PORT-005.md), [PORT-006](PORT-006.md),
@@ -98,8 +100,10 @@ an accepted architecture decision, and operating the physical bench.
 
 ## Active containment
 
-PORT-008-D003 now sequences component work through r02's ordered circuit
-stages under [staged circuit validation](../qualification/staged-circuit-validation.md).
+The retained r02 component plan follows
+[staged circuit validation](../qualification/staged-circuit-validation.md).
+Current UART work follows PORT-008's later accepted contracts; this section
+does not restart r02 construction or retired parallel firmware.
 Apply each finding to the code, observation method, and claim actually selected
 by the stage. The deferred release-pair tool program is not a blanket gate on
 power/bias or other independently evidenced circuit checks. Existing defects
@@ -113,7 +117,9 @@ Until the relevant owner task and the Author release a narrower boundary:
 2. Do not promote the retired PORT-008 sender, receiver, analyzer, or the
    source-frozen but unidentified replacement integration as product firmware
    or qualified transport. Its recorded builds predate the source freeze.
-3. Keep EMOS ordinary Legacy VDU routing on the onboard UART path. EMOS owns
+3. Keep EMOS ordinary Legacy VDU routing on the onboard UART path. Explicitly
+   admitted Extender keyboard and SD services follow their accepted separate
+   contracts; they do not redirect ordinary VDU. EMOS owns
    any request to activate the Extender transport; the P4 must not self-assert
    bus ownership merely because it booted.
 4. Do not advance PORT-003 Gate G until a reviewable Gate G contract exists and
@@ -127,8 +133,8 @@ Until the relevant owner task and the Author release a narrower boundary:
    does not qualify construction or electrical behavior. The later
    connectivity/profile discrepancy recorded on 2026-09-05 is now HW-001's
    explicit S3 controlled-input blocker.
-7. Do not begin mode-dependent QUAL-002 physical work while REMED-001's freeze
-   remains active or treat QUAL-002's older local approval wording as a release.
+7. QUAL-002's complete-circuit/mode gates remain held. Its older approval
+   wording and later bounded UART acceptance do not release those gates.
 8. Preserve all task-controlled historical failed-run evidence and predecessor
    patch bytes. Dirty state alone is not an audit exclusion: review and mark
    stale maintained files unless an explicit current Author exclusion applies.
@@ -146,20 +152,20 @@ stay in the audit record.
 |---|---|---|---|
 | F001 | Upstream `vdp-gl` synchronization defect reimplemented locally; Extender-specific manifestation not yet demonstrated | PORT-003 research record | Recorded; correction deferred pending D012 trigger evidence |
 | F002 | Upstream mutation-exclusion defect with plausible local amplification; Extender-specific manifestation not yet demonstrated | PORT-003 research record | Recorded; correction deferred pending D012 trigger evidence |
-| F003 | Permanent EDP runtime exposure of an upstream ESP-IDF defect | PORT-006; PORT-003 browser regression coverage | Accepted split |
+| F003 | Permanent EDP runtime exposure of an upstream ESP-IDF defect | PORT-006; PORT-003 browser regression coverage | Correction and host fault injection recorded; physical resilience gate open (PORT-006) |
 | F004 | Local EDP parser-integration defect; audio temporary, safe rejection durable | PORT-003, PORT-004, PORT-008, and SETUP-005 | Accepted split |
 | F005 | Local PORT-008 prototype porting defect | PORT-008 | Accepted |
 | F006 | Local durable qualification-tool defect | QUAL-001 | Accepted |
 | F007 | Local durable staging/provenance-tool defect | PORT-003 and PORT-008 | Accepted split |
 | F008 | Local hardware artifact-control drift | HW-001; consumed by PORT-008 and QUAL-002 | Remediated 2026-09-01; digest and projections reconciled, physical gates unchanged |
 | F009 | Local normative-authority promotion defect | SETUP-005 and REMED-001 | Remediated 2026-09-01; accepted D002 content promoted |
-| F010 | Local task-ownership conflict | REMOTE-001 and LINK-001; implementation requires separate task authority | Accepted split |
+| F010 | Local task-ownership conflict | REMOTE-001 and LINK-001 | Resolved ownership split: existing-UART browser input versus later direct-link research; see Work 4.b |
 | F011 | Local qualification test-oracle defect | PORT-003 | Accepted |
-| F012 | Permanent EDP teardown-ownership defect on an upstream failure path | PORT-006 | Accepted |
+| F012 | Permanent EDP teardown-ownership defect on an upstream failure path | PORT-006 | Correction and host fault injection recorded; physical lifecycle validation remains open |
 | F013 | Local PORT-008 prototype lifecycle regression | PORT-008 | Accepted |
 | F014 | Local uncommitted PORT-008 evidence-tool defect | PORT-008 | Accepted |
 | F015 | Local PORT-008 version-record drift | PORT-008 | Accepted |
-| F016 | Local qualification task-status defect | QUAL-002 and REMED-001 | Accepted split |
+| F016 | Local qualification task-status defect | QUAL-002 and REMED-001 | Task-status correction recorded in Work 4.c; physical qualification remains held |
 | F017 | Local preimplementation Gate G incompleteness | PORT-003 after prerequisites | Accepted |
 | F018 | Local mode-lifecycle design gap | SETUP-005 and REMED-001; implementation requires separate task authority | Accepted split |
 | F019 | Local remote-authorization design blocker | REMOTE-001, with PORT-006 and EMOS dependencies | Accepted |
@@ -170,10 +176,12 @@ stay in the audit record.
 | R002 | Prospective input-injection risk in intentionally retained upstream behavior | PORT-005 design and tests | Retained |
 | R003 | Prospective remote-exposure risk beyond the accepted trusted-LAN boundary | REMOTE-001, with PORT-006 dependencies | Retained |
 
-## Existing PORT-008 provenance register
+## Retained PORT-008 provenance register
 
-These entries prevent the remediation plan from silently omitting defects that
-PORT-008 recorded before the audit. They do not create duplicate findings.
+These entries retain the identified parallel/provenance development checkpoints.
+Their correction and pending-test labels describe those exact objects, not an
+assessment of the current UART image. They neither create duplicate findings
+nor authorize reuse of the old builds. PORT-008 owns remaining revalidation.
 
 | Recorded defect | Present boundary | Coordinated disposition | State |
 |---|---|---|---|
@@ -229,7 +237,7 @@ PORT-008 recorded before the audit. They do not create duplicate findings.
 | REMED-002-D001 | Accept the audit classes, proposed owners, containment, and review order as the initial remediation register? | Accepted by the Author, 2026-09-01 12:57 EDT | Accepted rows are promoted into owner tasks; split rows retain the actor-specific owner division recorded above |
 | REMED-002-D002 | Should upstream reports or contributions for F001--F003 extend UPSTREAM-001 or receive separate task authority? | Deferred until an Extender-specific trigger or separately prioritized upstream test exists | Determines future external contribution tracking; creates no present local-correction obligation |
 | REMED-002-D003 | Should the exact PORT-008 prototype adapters be repaired only for bounded investigation or be replaced with production objects? | Accepted by the Author, 2026-09-01: replace; retain exact adapters only as evidence or last-resort diagnosis | PORT-008 now software-integrates the new epoch-preconditioned production data-plane objects and a separately identified fixed-backend qualification composition; no new physical run has occurred, and target-runtime, provenance, activation, return, artifact, and intended-circuit work remain separately gated |
-| REMED-002-D004 | Should source-level upstream defects be corrected during present Extender work without evidence of a distinct Extender trigger? | Accepted by the Author, 2026-09-01 | No. Record them, defer correction and regression design, and reopen only if deterministic evidence meets PORT-003-D012 or the defect blocks a selected Extender function. Current priority remains forward-parallel transport. |
+| REMED-002-D004 | Should source-level upstream defects be corrected during present Extender work without evidence of a distinct Extender trigger? | Accepted by the Author, 2026-09-01 | No. Record them, defer correction and regression design, and reopen only if deterministic evidence meets PORT-003-D012 or the defect blocks a selected Extender function. The then-current forward-parallel priority is historical; TODO owns sequencing. |
 
 PORT-008-D003, accepted 2026-09-05, changes that immediate sequencing to staged
 r02 circuit validation, beginning with relevant power/bias and UART subsets.
@@ -327,12 +335,12 @@ task's existing Author gates and the containments above.
   analysis and the rejected comprehensive correction. D004/D012 defer local
   correction and isolating regression design until reproducible evidence shows
   a distinct Extender trigger or obstruction of a selected Extender function.
-- [ ] **2.b** PORT-006 must make WebSocket transmission correct under positive
-  short writes or pin a verified upstream correction, then fault-inject
-  congestion and preserve immutable snapshot ownership through completion.
-- [ ] **2.c** PORT-006 must retain ownership of a live HTTP server across every
-  failed stop or rollback path, define callback lifetime, and validate retry,
-  destruction, and partial-start failure for F012.
+- [ ] **2.b** PORT-006 retains the implemented complete-or-error send
+  correction and host fault injection. Reconcile remaining physical resilience
+  evidence before F003 closure; preserve snapshot ownership through completion.
+- [ ] **2.c** PORT-006 retains the implemented live-server ownership and
+  stop/retry correction with host fault injection. Complete its remaining
+  physical lifecycle qualification before closing F012.
 - [ ] **2.d** PORT-003, PORT-004, PORT-008, and SETUP-005 must ensure every
   reachable audio or updater command consumes or safely rejects its complete
   grammar before the retained parser resumes.
@@ -472,9 +480,9 @@ disposition.
 - [x] **4.a** SETUP-005 and REMED-001 must promote all accepted lifecycle,
   reset, discovery, recovery, and transition decisions into ADR-0014 and the
   normative architecture before downstream implementation consumes them.
-- [ ] **4.b** REMOTE-001 and LINK-001 must separate remote product ownership
-  from direct-link research; any accepted implementation must receive a
-  separately approved owner task.
+- [x] **4.b** REMOTE-001 owns the accepted existing-UART browser-input
+  implementation; LINK-001 explicitly separates optional direct-link research.
+  This closes the ownership conflict only, not every REMOTE-001 validation gate.
 - [x] **4.c** QUAL-002 exposes REMED-001's active freeze and corrected
   four-mode prerequisites in its local state and gates; the freeze remains
   unreleased.
@@ -489,7 +497,9 @@ disposition.
   keyboard packets on 2026-09-08; preserve origin/authority in the admitted
   session and EMOS ingress, not a proprietary per-key UART envelope. Normal
   keyboard authority includes stock command-line/key effects. Structured agent
-  requests remain separate. This policy/implementation work is still open.
+  requests remain separate. ADR-0022 and the maintained keyboard guide now record the accepted
+  common-source policy and implementation. Remaining owner-task validation
+  stays open; do not redesign the session simply because this checklist remains unchecked.
 - [ ] **4.g** DIAG-001 must define classification, redaction, authentication,
   retention, export, and erase policy before capturing or exporting memory.
 - [ ] **4.h** HW-001, SETUP-006, PORT-007, and the hardware-object promotion

@@ -340,3 +340,34 @@ N02 validation: whitespace check passed; 714 Markdown files / 2646 relative
 links checked, with the same three historical missing targets and no new
 changed-document findings. No firmware or emulator tests required for these
 documentation-only corrections.
+
+## A09-N03 — remediation-plan reconciliation
+
+Contract frozen in e4a06f79 before editing either remediation plan. Opening
+worktree/mailbox were clean. Documentation only; no source, generator, build,
+firmware, network or bench operation.
+
+| Batch | Inputs | Scope / disposition |
+|---|---|---|
+| B46 | REMED-001 and REMED-002 bodies; supporting current SETUP-005 integration/F018 statement, PORT-008 summary, PORT-006 F003/F012 execution record, REMOTE-001 and LINK-001 ownership, QUAL-002 state, qualification README, original preactivation corrective action scope | Replaced obsolete global current-state instructions with bounded applicability and explicit remaining gates. Preserved dated execution/provenance evidence. Current UART/ExCom acceptance is not global four-mode, parallel, or electrical qualification. |
+
+F010 ownership separation is recorded complete from REMOTE-001/LINK-001; F016
+status bookkeeping is reconciled with already checked REMED-002 Work 4.c and
+QUAL-002's explicit hold. Neither closes underlying physical/user gates.
+F003/F012 now describe implemented, host-tested corrections with physical
+resilience validation still open. F018 remains open outside the separately
+accepted no-restart CLI increment. Superseded hardware-task-creation and
+parallel-first sequencing instructions no longer direct current work.
+
+All historical P001–P044 correction identities and evidence remain intact.
+Their individual source fixes and test outcomes were not rerun or independently
+reproved. Both remediation tasks remain open; generated matrix and dependency
+records were not changed. Review-state promotion covers document bodies and
+current applicability only, not exhaustive validation of linked historical
+artifacts or wholesale closure of the underlying findings.
+
+N03 validation: 714 Markdown files / 2654 relative links, with only the same
+three historical missing targets and no new changed-document findings.
+Whitespace and inventory totals checked: 111 reviewed, 145 partial, 140
+metadata-only, 44 provenance-only, 668 pending; 1108 total. The two remediation
+bodies moved from pending, not partial.

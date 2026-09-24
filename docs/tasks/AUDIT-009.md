@@ -94,7 +94,7 @@ Reconcile framebuffer storage, rendering, frame-service and output ownership
 with maintained guides and retained implementation evidence. Keep intended
 behavior distinct from demonstrated behavior; do not start performance tests.
 
-A09-N03 [ ] **Remediation-plan reconciliation.** Review
+A09-N03 [x] **Remediation-plan reconciliation.** Review
 [REMED-001](REMED-001.md) and [REMED-002](REMED-002.md).
 Identify which findings are resolved, deferred, superseded or still open using
 their linked evidence. Correct stale current instructions without deleting
@@ -112,7 +112,7 @@ instructions, not frozen evidence; no new electrical qualification.
 A09-N01 completed within its documentation-only scope; see
 [results](AUDIT-009/RESULTS.md#a09-n01-result) and batch B44. N02 is also complete; batch B45 and the
 [results](AUDIT-009/RESULTS.md) record its display-contract reconciliation.
-A09-N03–N04 remain unstarted.
+N03 is complete in batch B46; A09-N04 remains unstarted.
 
 ## Scope and authority
 
