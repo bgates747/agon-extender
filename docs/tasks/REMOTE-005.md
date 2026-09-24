@@ -194,3 +194,7 @@ cover skipping whole-file verification rereads while retaining staged transfer,
 recovery and transport admission. Local Linux/emulator work only; bench occupied.
 This bounded authorization supersedes the research-only restriction above for
 this tasklet alone; it does not select FTP/SMB/WebDAV or authorize deployment.
+
+Fast tasklet now deployed with bounded physical checks passing; see its checked
+contract and paired normal/fast timing results. Author accepted the work and authorized commit/push; broader network-access
+research is unchanged.

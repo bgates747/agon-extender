@@ -65,7 +65,7 @@ examples. These examples use a placeholder address:
 
 GET refuses to overwrite its local output. PUT without `--activate` leaves the
 candidate staged and prints the transfer ID for `activate ID` or `cancel ID`.
-PUT verifies the Agon-computed length/CRC and a complete host readback before
+Normal PUT verifies the Agon-computed length/CRC and a complete host readback before
 activation, then reads the active target back as well. Replacing an existing
 target retains its previous bytes as `.p17bak`. After confirming the new file,
 `recover PATH cleanup` removes that backup. A subsequent upload refuses any
@@ -164,3 +164,31 @@ retry, cleanup, service exit, reset, firmware flash or game launch. Wrap a prepa
 deployment script when additional verified steps are required. A running record
 without a terminal result after host interruption is unknown, not success.
 Only one SD client may use the service at a time, even with different journals.
+
+## Opt-in fast transfer — bounded physical pass
+
+The deployed draft sdserve v0.2.0 uses the same executable and transport. Start
+it with `--fast` to omit whole-file stage/target CRC rereads; supply `--fast` to
+the host `put` command to omit its two full downloads. Both ends must agree.
+Normal invocation remains fully checked. Packet checks, checked writes and
+sync/close, staging, backups and recovery remain; fast uploads do **not** verify
+the stored file contents. A bounded physical comparison measured 5.00× throughput
+for 8192-byte activated uploads; see the linked results.
+
+With the MOSlet installed at `/mos/sdserve.bin`, the invocation is:
+
+```text
+sdserve --fast /
+```
+
+The scope may precede the switch. The service must be restarted to change modes.
+For a prepared host session, append `--fast` to the ordinary upload command:
+
+```sh
+python3 scripts/sdcard.py --url "$EXTENDER_URL" --state "$SESSION_FILE" put local.bin /games/example.bin --activate --fast
+```
+
+The listener is installed at `/mos/sdserve.bin`; use `sdserve --fast /`.
+Startup is unchanged. Stop the listener and restart without `--fast` for normal
+verification. The task left fast mode running; add `--fast` to host uploads.
+[Tasklet and validation](tasks/REMOTE-005/FAST-TRANSFER.md).

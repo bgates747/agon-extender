@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Active ad hoc fast-transfer tasklet (local-only); broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
+- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
 
 - [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — First tranche implemented locally: cancelled provider loader retired, /emos MOSlet dispatcher added; 6,282 ROM bytes recovered. Compile/link and emulator validation recorded; physical acceptance deferred while bench is occupied.
 

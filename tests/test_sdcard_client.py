@@ -1,3 +1,7 @@
+import ctypes as C
+import contextlib
+import io
+import subprocess
 import importlib.util
 import json
 from pathlib import Path
@@ -47,5 +51,50 @@ class ClientTests(unittest.TestCase):
             c=sd.Client('http://fixture',Path(temp)/'state.json')
             with self.assertRaises(ValueError):c.upload('/'+('a'*112),b'')
             self.assertIsNone(c.state['pending']);c.lock.close()
+
+class RealEngineUploadTests(unittest.TestCase):
+    @classmethod
+    def setUpClass(cls):
+        cls.build=tempfile.TemporaryDirectory();root=ROOT.parent/'agon-emos'
+        lib=Path(cls.build.name)/'sd.so'
+        subprocess.run(['cc','-std=c17','-Wall','-Wextra','-Werror',
+            '-Wno-misleading-indentation','-fsanitize=undefined','-fPIC','-shared',
+            '-I'+str(root/'tests/sdserve_host'),str(root/'projects/sdserve/src/service.c'),
+            str(root/'tests/sdserve_host/fs.c'),'-o',str(lib)],check=True)
+        cls.lib=C.CDLL(str(lib))
+        cls.lib.service_request.argtypes=[C.c_char_p,C.c_uint,C.c_void_p]
+    @classmethod
+    def tearDownClass(cls):cls.build.cleanup()
+    def exercise(self,listener_fast,client_fast,size=4096):
+        with tempfile.TemporaryDirectory() as temp:
+            disk=Path(temp);(disk/'test').mkdir()
+            self.lib.fs_root(str(disk).encode())
+            self.assertEqual(self.lib.service_init_mode(b'/test',101,listener_fast),1)
+            c=sd.Client('http://fixture',disk/'state.json');ops=[]
+            def exchange(request):
+                ops.append(request[12]);out=C.create_string_buffer(240)
+                n=self.lib.service_request(request,len(request),out)
+                return sd.response(out.raw[:n],request)
+            c.exchange=exchange;data=bytes(i%256 for i in range(size));output=io.StringIO()
+            try:
+                with contextlib.redirect_stdout(output):
+                    if listener_fast!=client_fast:
+                        with self.assertRaisesRegex(sd.RemoteError,'mode mismatch'):
+                            c.upload('/test/game.bin',data,True,fast=client_fast)
+                        self.assertEqual(ops,[1]);self.assertEqual(list((disk/'test').iterdir()),[])
+                        return
+                    c.upload('/test/game.bin',data,True,fast=client_fast)
+                self.assertEqual((disk/'test/game.bin').read_bytes(),data)
+                self.assertEqual(self.lib.fs_read_bytes(),20+(0 if client_fast else 4*size))
+                self.assertEqual(ops.count(4),0 if client_fast else 2*max(1,(size+215)//216))
+                if client_fast:self.assertNotIn('SHA256',output.getvalue())
+                else:self.assertIn('Verified stage SHA256',output.getvalue())
+            finally:c.lock.close();self.lib.service_stop()
+    def test_readbacks_omitted_only_when_both_ends_opt_in(self):
+        for fast in (False,True):
+            for size in (0,213,4096):
+                with self.subTest(fast=fast,size=size):self.exercise(fast,fast,size)
+    def test_mismatch_refused_before_begin(self):
+        for fast in (False,True):self.exercise(fast,not fast)
 
 if __name__=='__main__':unittest.main()

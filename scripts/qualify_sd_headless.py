@@ -28,6 +28,8 @@ from qualify_sdcard import AuditedClient,error_checks,exercise as qualify_cycles
 def run(a):
     media=a.sdcard.resolve();record={'outcome':'fail','scope':__doc__,'events':[]}
     config=json.loads((media/'fixture.json').read_text())
+    record['fast']=config.get('fast',False)
+    record['moslet']=config.get('moslet',False)
     disk=media/'working.img';shutil.copyfile(media/'seed.img',disk)
     lib=C.CDLL(str(media/'sd-peer.so'));lock=threading.RLock()
     lib.peer_post.argtypes=[C.c_char_p,C.c_uint,C.c_void_p,C.POINTER(C.c_uint),C.c_uint]
@@ -105,7 +107,10 @@ def run(a):
                 record['qualification_controller_smoke']=True
             for i,size in enumerate([] if config.get('qualification_smoke') or config.get('disk_full') else config['sizes']):
                 data=random.Random(size).randbytes(size);t=time.monotonic()
-                client.upload('/extender/sdtest/game.bin',data,True)
+                client.upload('/extender/sdtest/game.bin',data,True,fast=config.get('fast',False))
+                # Independent test oracle, deliberately outside the fast upload.
+                if config.get('fast') and client.download('/extender/sdtest/game.bin')!=data:
+                    raise RuntimeError('Fast upload external byte comparison failed')
                 info=client.rpc(2,path_payload('/extender/sdtest/game.bin'))
                 if len(info)!=5 or struct.unpack_from('<I',info)[0]!=size:raise RuntimeError('STAT mismatch')
                 listing=client.rpc(3,struct.pack('<I',0)+path_payload('/extender/sdtest'))

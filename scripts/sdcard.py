@@ -124,26 +124,38 @@ class Client:
             if len(chunk)!=min(216,total-offset):raise RemoteError('Unexpected READ count')
             result.extend(chunk);offset+=len(chunk)
         return bytes(result)
-    def upload(self,path,data,activate=False):
+    def upload(self,path,data,activate=False,*,fast=False):
         encoded=path_payload(path)
         if len(encoded)>113:raise ValueError('Staged target must be at most 112 bytes to allow sibling readback')
+        # Re-query mode even for a resumed client state. No BEGIN or file
+        # mutation occurs when the requested verification mode mismatches.
+        hello=self.rpc(1)
+        if len(hello)!=8:raise RemoteError('Malformed HELLO response')
+        boot,chunk,features=struct.unpack('<IHH',hello)
+        if chunk!=212 or features&15!=15:raise RemoteError('Missing required capabilities')
+        if bool(features&16)!=bool(fast):
+            raise RemoteError('Upload mode mismatch: use put --fast with sdserve --fast, or normal mode on both')
         tid=secrets.randbelow(0xffffffff)+1;crc=zlib.crc32(data)
         got=self.rpc(5,struct.pack('<III',tid,len(data),crc)+encoded)
         if got!=struct.pack('<II',tid,0):raise RemoteError('Unexpected BEGIN acknowledgement')
-        print(f'Transfer {tid}, {len(data)} bytes; stage only until verified activation',flush=True)
+        print(f'Transfer {tid}, {len(data)} bytes; '+
+              ('fast mode, no whole-file readback' if fast else 'stage only until verified activation'),flush=True)
         for offset in range(0,len(data),212):
             chunk=data[offset:offset+212]
             got=self.rpc(6,struct.pack('<II',tid,offset)+chunk)
             if got!=struct.pack('<II',tid,offset+len(chunk)):raise RemoteError('Unexpected WRITE acknowledgement')
         if self.rpc(7,struct.pack('<I',tid))!=struct.pack('<II',len(data),crc):
             raise RemoteError('Unexpected FINISH identity')
-        stage=self.download(path+'.p17part')
-        if stage!=data:raise RemoteError('Independent host stage readback differs')
-        print(f'Verified stage SHA256 {hashlib.sha256(data).hexdigest()}',flush=True)
+        if not fast:
+            stage=self.download(path+'.p17part')
+            if stage!=data:raise RemoteError('Independent host stage readback differs')
+            print(f'Verified stage SHA256 {hashlib.sha256(data).hexdigest()}',flush=True)
         if activate:
             self.rpc(8,struct.pack('<I',tid))
-            if self.download(path)!=data:raise RemoteError('Activated file readback differs; backup retained')
-            print('Activated and read back; previous target retained as .p17bak',flush=True)
+            if not fast:
+                if self.download(path)!=data:raise RemoteError('Activated file readback differs; backup retained')
+            print(('Activated without whole-file verification' if fast else 'Activated and read back')+
+                  '; previous target retained as .p17bak',flush=True)
         else:print(f'Use activate {tid} or cancel {tid} with this state file',flush=True)
         return tid
 
@@ -155,7 +167,7 @@ def main():
     for name in ('status','resume','exit'):commands.add_parser(name)
     for name in ('stat','list'):commands.add_parser(name).add_argument('path')
     get=commands.add_parser('get');get.add_argument('path');get.add_argument('output',type=Path)
-    put=commands.add_parser('put');put.add_argument('input',type=Path);put.add_argument('path');put.add_argument('--activate',action='store_true')
+    put=commands.add_parser('put');put.add_argument('input',type=Path);put.add_argument('path');put.add_argument('--activate',action='store_true');put.add_argument('--fast',action='store_true',help='Skip whole-file readbacks; requires sdserve --fast')
     for name in ('activate','cancel'):commands.add_parser(name).add_argument('transfer',type=int)
     recover=commands.add_parser('recover');recover.add_argument('path')
     recover.add_argument('action',choices=('inspect','restore','abandon','cleanup'),default='inspect',nargs='?')
@@ -176,7 +188,7 @@ def main():
         data=client.download(a.path)
         with a.output.open('xb') as f:f.write(data)
         print(f'{len(data)} bytes, SHA256 {hashlib.sha256(data).hexdigest()}')
-    elif a.command=='put':client.upload(a.path,a.input.read_bytes(),a.activate)
+    elif a.command=='put':client.upload(a.path,a.input.read_bytes(),a.activate,fast=a.fast)
     elif a.command in ('activate','cancel'):client.rpc(8 if a.command=='activate' else 9,struct.pack('<I',a.transfer))
     elif a.command=='exit':client.rpc(11)
     else:

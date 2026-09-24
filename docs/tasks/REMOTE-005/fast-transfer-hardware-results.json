@@ -1,0 +1,133 @@
+{
+  "started": "2026-09-24T02:31:02.713177+00:00",
+  "outcome": "pass",
+  "scope": "Host monotonic upload-through-activation on physical Agon SD; independent test readbacks excluded",
+  "cycles": [
+    {
+      "mode": "normal",
+      "invocation": 0,
+      "bytes": 0,
+      "upload_activate_seconds": 1.2349912649951875,
+      "bytes_per_second": 0.0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "independent_readback": true,
+      "previous_backup_exact": false
+    },
+    {
+      "mode": "normal",
+      "invocation": 0,
+      "bytes": 213,
+      "upload_activate_seconds": 1.6136388049999368,
+      "bytes_per_second": 131.99980028988477,
+      "sha256": "fa8c8cc8ab1b50bed4f54676b09340ec81027b2b278bd49c08a4fa151071fc65",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "normal",
+      "invocation": 0,
+      "bytes": 8192,
+      "upload_activate_seconds": 16.05416956100089,
+      "bytes_per_second": 510.2724229286933,
+      "sha256": "a3f636f144d4b3f148b67b3832a22ad2bc2f43289dea813b86d61f44c8dc3ec1",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "fast",
+      "invocation": 1,
+      "bytes": 0,
+      "upload_activate_seconds": 1.0251599229959538,
+      "bytes_per_second": 0.0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "fast",
+      "invocation": 1,
+      "bytes": 213,
+      "upload_activate_seconds": 1.1896765220008092,
+      "bytes_per_second": 179.04026519895896,
+      "sha256": "86ff6498689d5cdf3a18ddba69a442d9eb1efb2308bd46cb1de26f442cbd9544",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "fast",
+      "invocation": 1,
+      "bytes": 8192,
+      "upload_activate_seconds": 3.340858103001665,
+      "bytes_per_second": 2452.064633526256,
+      "sha256": "1a6c75a50e9155602445a5a4722337169f2fd723fbe286c3dbfa47f31f6f877f",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "normal",
+      "invocation": 2,
+      "bytes": 8192,
+      "upload_activate_seconds": 16.765785904004588,
+      "bytes_per_second": 488.6141363670463,
+      "sha256": "e78f5090e015af08dce9960596a9ad4a9b8c1f6794b3c1c90dc4e3652056c0b9",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    },
+    {
+      "mode": "fast",
+      "invocation": 3,
+      "bytes": 8192,
+      "upload_activate_seconds": 3.224355928003206,
+      "bytes_per_second": 2540.6624401646563,
+      "sha256": "0e50b089a57b2cf91db38636a857fd98e37895bd182a4555c67444ad1a6dbd12",
+      "independent_readback": true,
+      "previous_backup_exact": true
+    }
+  ],
+  "startup_unchanged": true,
+  "mode_mismatch_refused": true,
+  "self_write_refused": true,
+  "return_and_reentry": true,
+  "terminal_state": "sdserve --fast / running; firmware and startup unchanged",
+  "seconds": 100.97228597800131,
+  "ended": "2026-09-24T02:32:43.685599+00:00",
+  "deployment": {
+    "build": {
+      "build_id": "sdserve-v0.2.0-b2026-09-24-02-21-03Z",
+      "dirty": true,
+      "source_commit": "4764bead465adb616644b8ca34d224ecb0d2bbc1",
+      "sources": {
+        "Makefile": "47f0a798299eb6cdb16323e0ca439ed2072ba4e03d7a873154ac27e2711a45b2",
+        "build/build_identity.h": "8a73f6a6b095ba0baafe63cc0015dce85a593ae052edda1833379fcdc57dbe0a",
+        "src/main.c": "dc34674ae7ca1f473345bbf839d126eed067a0b9ae4e4845c2a74eeaca18147f",
+        "src/service.c": "1351f17997479599fb9c8f50135db3a0afd13c3c2906700e73cf781c1d455fc7",
+        "src/service.h": "7e80b9210bbcd673b14f4b2dcadd5f92ca15db922389c5e483322ebfa11fa56c",
+        "src/sd_wire.h": "7fc9686c7e4fbe51c664ce648aef8ce4abd066c13b1b009c1d308ace542f94d8",
+        "src/emos_gateway.asm": "8e9537635a31c46392c245b99e735ba3b14513d7301e4f42960246f6d99b1f62"
+      }
+    },
+    "binary": {
+      "bytes": 19243,
+      "sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11"
+    },
+    "installed": "/mos/sdserve.bin",
+    "backup": "/agents/extender/backups/sdserve-pre-fast-20260924.bin",
+    "startup_unchanged": true,
+    "firmware_unchanged": true,
+    "verified_readback": true
+  },
+  "comparison": {
+    "payload_bytes": 8192,
+    "repeats_per_mode": 2,
+    "normal_mean_seconds": 16.40997773250274,
+    "fast_mean_seconds": 3.2826070155024354,
+    "speedup": 4.999068622897898,
+    "elapsed_reduction_percent": 79.99627379749165
+  },
+  "scripts_sha256": {
+    "record.py": "08beec1f62418e56a798575de35d79e16427f55a239e9c16b4c81ac3177be965",
+    "deploy.py": "4b4a45f980aaa21cad8d60482451e3e05e499406183687e9a7034acb29dde876",
+    "test.py": "48867586d0277ee50224d62878298f6ecbdb37f60584c7b8191f1995175d978d",
+    "start.py": "9208a518fdbc656654d21a83f9b10b02b07bb236a9c11ebe3b3533f3c3c49a25"
+  }
+}

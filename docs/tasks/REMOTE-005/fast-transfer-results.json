@@ -1,0 +1,117 @@
+{
+  "fixture": "sdserve-fast-probe-r01",
+  "registry": "r105",
+  "scope": "Linux host and isolated raw-FAT emulator only; no hardware timing claim",
+  "build": {
+    "build_id": "sdserve-v0.2.0-b2026-09-24-02-21-03Z",
+    "dirty": true,
+    "source_commit": "4764bead465adb616644b8ca34d224ecb0d2bbc1",
+    "sources": {
+      "Makefile": "47f0a798299eb6cdb16323e0ca439ed2072ba4e03d7a873154ac27e2711a45b2",
+      "build/build_identity.h": "8a73f6a6b095ba0baafe63cc0015dce85a593ae052edda1833379fcdc57dbe0a",
+      "src/main.c": "dc34674ae7ca1f473345bbf839d126eed067a0b9ae4e4845c2a74eeaca18147f",
+      "src/service.c": "1351f17997479599fb9c8f50135db3a0afd13c3c2906700e73cf781c1d455fc7",
+      "src/service.h": "7e80b9210bbcd673b14f4b2dcadd5f92ca15db922389c5e483322ebfa11fa56c",
+      "src/sd_wire.h": "7fc9686c7e4fbe51c664ce648aef8ce4abd066c13b1b009c1d308ace542f94d8",
+      "src/emos_gateway.asm": "8e9537635a31c46392c245b99e735ba3b14513d7301e4f42960246f6d99b1f62"
+    }
+  },
+  "binary": {
+    "bytes": 19243,
+    "sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11"
+  },
+  "runs": {
+    "fast": {
+      "result": {
+        "outcome": "pass",
+        "scope": "Bounded real eZ80/EMOS/FatFS run with the maintained P4 queue and host client.\n\nAlways headless, even when the canonical review wrapper supplies --graphical.\nThat argument is accepted solely for wrapper compatibility; no visual claim.\nThe peer models bytes/CTS, not physical baud, FIFO overrun or P4 scheduling.\n",
+        "events": [
+          "keyboard admitted",
+          "dropped one WRITE response"
+        ],
+        "fast": true,
+        "moslet": true,
+        "orphan_recovery": true,
+        "service_exit_response": true,
+        "cycles": [
+          {
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "seconds": 0.5435472079989268
+          },
+          {
+            "size": 213,
+            "sha256": "fa8c8cc8ab1b50bed4f54676b09340ec81027b2b278bd49c08a4fa151071fc65",
+            "seconds": 1.1784274310048204
+          }
+        ],
+        "seconds": 3.2059135519957636,
+        "uart_sha256": "8a198a996cabd5f242e14944eadb9c55c5deba79d6a5df811185a7e6bc19e244"
+      },
+      "inputs": {
+        "status": "provisional, unqualified, no deployment",
+        "fast": true,
+        "moslet": true,
+        "sizes": [
+          0,
+          213
+        ],
+        "qualification_smoke": false,
+        "disk_full": false,
+        "keyboard_smoke": false,
+        "runtime_manifest_sha256": "446caa45878bf2eca812f73dd7f08669ca0cb78bbdd80750d61b5ecb384b874a",
+        "seed_sha256": "521d1514b498a8761718f0ad16a7899c7a24ba077d9058fda23a74e81495e0f1",
+        "application_sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11",
+        "firmware_sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7",
+        "source_commit": "aa86287748f7dbba7243e299e14e3e9b0704a016",
+        "source_dirty": true
+      }
+    },
+    "normal": {
+      "result": {
+        "outcome": "pass",
+        "scope": "Bounded real eZ80/EMOS/FatFS run with the maintained P4 queue and host client.\n\nAlways headless, even when the canonical review wrapper supplies --graphical.\nThat argument is accepted solely for wrapper compatibility; no visual claim.\nThe peer models bytes/CTS, not physical baud, FIFO overrun or P4 scheduling.\n",
+        "events": [
+          "keyboard admitted",
+          "dropped one WRITE response"
+        ],
+        "fast": false,
+        "moslet": true,
+        "orphan_recovery": true,
+        "service_exit_response": true,
+        "cycles": [
+          {
+            "size": 0,
+            "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+            "seconds": 0.5932179989977158
+          },
+          {
+            "size": 213,
+            "sha256": "fa8c8cc8ab1b50bed4f54676b09340ec81027b2b278bd49c08a4fa151071fc65",
+            "seconds": 1.3636018879988114
+          }
+        ],
+        "seconds": 3.4588043699986883,
+        "uart_sha256": "d4b8fe46f6ae4f3e13b82323169423d0973cefc210662507be61448926eec6c1"
+      },
+      "inputs": {
+        "status": "provisional, unqualified, no deployment",
+        "fast": false,
+        "moslet": true,
+        "sizes": [
+          0,
+          213
+        ],
+        "qualification_smoke": false,
+        "disk_full": false,
+        "keyboard_smoke": false,
+        "runtime_manifest_sha256": "446caa45878bf2eca812f73dd7f08669ca0cb78bbdd80750d61b5ecb384b874a",
+        "seed_sha256": "425aafb42344a009fa8a26b4e11137c581cc89af5d6532ae77822810d9b58fdf",
+        "application_sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11",
+        "firmware_sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7",
+        "source_commit": "aa86287748f7dbba7243e299e14e3e9b0704a016",
+        "source_dirty": true
+      }
+    }
+  }
+}

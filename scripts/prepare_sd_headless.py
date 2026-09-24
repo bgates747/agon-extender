@@ -21,7 +21,10 @@ def main():
                    help='Exercise the physical-run controller with ten small raw-FAT cycles')
     p.add_argument('--disk-full',action='store_true',help='Leave twelve free FAT clusters and test write exhaustion/recovery')
     p.add_argument('--keyboard-smoke',action='store_true',help='Replay mapped Escape and typed RUN while the keyboard observer executes')
+    p.add_argument('--moslet',action='store_true',help='Invoke /emos/sdserve.bin through EMOS utility dispatch')
+    p.add_argument('--fast',action='store_true',help='Opt-in listener and host fast upload mode')
     a=p.parse_args();output=a.output.absolute()
+    if a.fast and (a.disk_full or a.qualification_smoke or a.keyboard_smoke):p.error('Fast is supported only by the ordinary upload smoke')
     if sum((a.disk_full,a.qualification_smoke,a.keyboard_smoke))>1:p.error('Select one qualification workload')
     if not output.is_relative_to(ROOT/'.emulator'):raise ValueError('Output must be in project .emulator')
     output.mkdir(parents=True,exist_ok=False)
@@ -29,17 +32,19 @@ def main():
     for name,digest in manifest['files'].items():
         if sha(runtime/name)!=digest:raise ValueError('Changed UART test runtime: '+name)
     media=output/'sdcard';(media/'extender/sdtest').mkdir(parents=True)
-    shutil.copyfile(a.application,media/'extender/sdserve.bin')
+    appdir=media/('emos' if a.moslet else 'extender');appdir.mkdir(exist_ok=True)
+    shutil.copyfile(a.application,appdir/'sdserve.bin')
     journal=b'SDT1'+struct.pack('<III',1,4,zlib.crc32(b'data'))
     (media/'extender/sdtest/orphan.bin.p17meta').write_bytes(journal+struct.pack('<I',zlib.crc32(journal)))
     (media/'extender/sdtest/orphan.bin.p17part').write_bytes(b'da')
     if a.disk_full:(media/'extender/sdtest/full.bin').write_bytes(b'previous preserved target\n')
-    (media/'autoexec.txt').write_bytes(b'VDU 22 3\r\nSET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n'
-        b'LOAD /extender/sdserve.bin\r\nRUN . /extender/sdtest\r\n')
+    args=('--fast ' if a.fast else '')+'/extender/sdtest'
+    launch=('EMOS sdserve '+args if a.moslet else 'LOAD /extender/sdserve.bin\r\nRUN . '+args)
+    (media/'autoexec.txt').write_bytes(('VDU 22 3\r\nSET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n'+launch+'\r\n').encode('ascii'))
     seed=media/'seed.img'
     with seed.open('wb') as f:f.truncate(32*1024*1024)
     subprocess.run(['mkfs.fat','-F','16',str(seed)],check=True,stdout=subprocess.DEVNULL)
-    subprocess.run([str(a.mcopy),'-i',str(seed),'-s',str(media/'autoexec.txt'),str(media/'extender'),'::/'],check=True)
+    subprocess.run([str(a.mcopy),'-i',str(seed),'-s',str(media/'autoexec.txt'),str(media/'extender'),*([str(media/'emos')] if a.moslet else []),'::/'],check=True)
     if a.disk_full:
         # This fixture owns a newly created FAT16 image. Allocate real clusters
         # before boot, so the real FatFS writer encounters media exhaustion;
@@ -68,6 +73,7 @@ def main():
     shutil.copyfile(a.firmware,output/'MOS.bin');shutil.copyfile(a.firmware_map,output/'MOS.map')
     (media/'fixture.json').write_text(json.dumps({
         'status':'provisional, unqualified, no deployment',
+        'fast':a.fast,'moslet':a.moslet,
         'sizes':[0,213] if a.quick else [0,1,212,213,65537,131731],
         'qualification_smoke':a.qualification_smoke,
         'disk_full':a.disk_full,

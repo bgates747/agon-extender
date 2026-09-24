@@ -121,13 +121,20 @@ or recovery targets before creating any sibling files.
 | READ | offset:u32, count:u16 (<=216), path | total-size:u32, actual data (0..count bytes) |
 | BEGIN_WRITE | transfer:u32, length:u32, expected-crc:u32, path | transfer:u32, next-offset:u32 |
 | WRITE | transfer:u32, offset:u32, data (1..212 bytes) | transfer:u32, next-offset:u32 |
-| FINISH_WRITE | transfer:u32 | verified-size:u32, verified-crc:u32 |
+| FINISH_WRITE | transfer:u32 | size:u32, crc:u32 (measured normally; declared identity in fast mode) |
 | ACTIVATE | transfer:u32 | empty |
 | CANCEL | transfer:u32 | empty |
 | RECOVER | action:u8, path | state:u8 |
 | EXIT | empty | empty, then close service and return to MOS |
 
-HELLO features bit0 read, bit1 staged write, bit2 listing, bit3 recovery. LIST
+HELLO features bit0 read, bit1 staged write, bit2 listing, bit3 recovery.
+Bit4 (0x10), added by sdserve v0.2.0, means the listener was explicitly started
+with `--fast`: FINISH/ACTIVATE omit whole-file digest rereads. Protocol major,
+packet CRC, framing and operation payload sizes remain unchanged. The updated
+host queries HELLO before BEGIN and rejects mismatched listener/`put --fast`
+selections. Without bit4, normal verification semantics apply.
+
+LIST
 returns at most one entry, advances a zero-based filesystem enumeration cursor,
 and skips dot entries; a concurrent directory change invalidates a stable-list
 assumption. Names too long for a record return an error, not a truncated path.
@@ -158,8 +165,10 @@ truncating the current target. WRITE includes transfer ID and exact next offset.
 Check filesystem return codes and byte counts. ACK of WRITE means accepted into
 the open staged file, not power-failure durability.
 
-FINISH_WRITE syncs and closes with checked results, reads the stage back and
-verifies length/CRC before declaring VERIFIED. ACTIVATE is separate and preserves
+FINISH_WRITE requires the complete declared byte count and syncs/closes with
+checked results. Normally it then rereads the stage and verifies length/CRC.
+With bit4 set, it instead echoes the declared size/CRC without measuring them.
+The internal state is finished, not necessarily verified. ACTIVATE is separate and preserves
 a recoverable old target. For target T, siblings are T.p17part (staged data),
 T.p17meta (fixed metadata) and T.p17bak (previous target). BEGIN rejects any
 pre-existing sibling rather than overwriting a prior transaction. Metadata is
@@ -171,7 +180,8 @@ These sidecar suffixes are reserved and cannot themselves be client targets.
 Activation validates the staged identity, closes every target handle, moves an
 existing target to backup, then renames the stage to target. On failure retain
 all recoverable copies and report RECOVERY_REQUIRED. Verify the final target
-before success, then remove metadata; retain the backup for explicit recovery
+before success in normal mode; fast mode skips only that whole-file digest.
+Then remove metadata; retain the backup for explicit recovery
 cleanup. There is no automatic execution or deletion of the previous version.
 
 RECOVER action 0 inspects (state bits: target=1, part=2, metadata=4, backup=8;
@@ -231,3 +241,18 @@ src/emos_keyboard.c, src/emos.c and docs/emos-v1-contract.md; P4
 console_hardware.inc/console_stream.hpp and wired_network_service.cpp. Source
 baseline EMOS e48d431; Extender 7e21dfe. Exact accepted build/source identities
 are recorded in the linked acceptance record; consult current source for changes.
+
+## Opt-in fast upload (bounded physical validation)
+
+The listener selects fast mode for its whole foreground invocation. The host
+`put --fast` skips its independent stage and activated-target READ comparisons,
+and reports activation without verification, never a verified SHA256. It still
+computes the expected CRC for immutable recovery metadata. Packet CRC, exact
+write counts, sync/close errors, sequence/replay, path/root/self protection,
+staging and backups are unchanged. Recovery's existing checks are unchanged.
+An older host still performs its own full readbacks, but does not know about the
+missing listener checks; use the paired updated host for explicit mode selection.
+
+This can accept corruption that full readback catches. It does not promise
+power-atomic replacement. Downloads and directory operations are unchanged.
+See [implementation and evidence](../tasks/REMOTE-005/FAST-TRANSFER.md).

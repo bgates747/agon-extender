@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r104
-updated_at: 2026-09-24T01:53:00Z
+registry_revision: r105
+updated_at: 2026-09-24T02:21:03Z
 
 artifacts:
+  - artifact_id: sdserve-fast-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: sdserve-fast-probe-r01
+    status: experimental
+    variants: []
+    description: Opt-in fast MOSlet transfer host and raw-FAT emulator checks.
+    notes:
+      - REMOTE-005 standing identity approval; registry r105; no physical deployment.
   - artifact_id: emos-utility-probe
     kind: test_fixture
     identity_scheme: revision
@@ -143,8 +152,8 @@ artifacts:
   - artifact_id: sdserve
     kind: application
     identity_scheme: semantic_version
-    latest_identity: sdserve-v0.1.0
-    status: candidate
+    latest_identity: sdserve-v0.2.0
+    status: draft
     variants: []
     description: Foreground mainboard SD service through the owned EMOS gateway.
     notes:
