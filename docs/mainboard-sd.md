@@ -1,12 +1,16 @@
 # Mainboard SD service operating guide
 
-EMOS v0.1.14, uart-excom-console r12 and sdserve v0.1.0 passed the scoped
-physical file-transfer and native-keyboard checks. See the
-[acceptance record](qualification/mainboard-sd/2026-09-13.md) for exact builds
-and limits. The [initial installation](tasks/PORT-017/BOOTSTRAP.md) preserves
-rollback payloads and original startup. Keep those copies; routine use does not
-require a firmware reinstall. Artifact identities remain candidates in the
-registry; this milestone is not a general firmware release.
+The current recorded installation uses EMOS v0.1.19 and the sdserve v0.2.0
+**foreground EMOSlet** at `/emos/sdserve.bin`. Checked and opt-in fast transfers
+pass bounded physical checks; see the [latest deployment](tasks/AUDIT-008/HARDWARE.md)
+and [fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md). These are development
+builds, not a general firmware release. This guide does not assert that the
+service is running now: consult the installation owner and current status.
+
+The [original acceptance record](qualification/mainboard-sd/2026-09-13.md)
+covers the older EMOS v0.1.14 / sdserve v0.1.0 combination. Its original
+[bootstrap](tasks/PORT-017/BOOTSTRAP.md) is historical; preserve its rollback
+copies but do not execute its old deployment paths without refresh.
 
 ## SD locations and archived startup
 
@@ -18,21 +22,32 @@ support is pending, not an implemented feature.
 
 ## Start and stop
 
-The foreground service requires Legacy mode and the accepted Extender keyboard
-path. At the ordinary MOS prompt:
+The service requires Legacy display routing and an already admitted Extender
+keyboard path. An operator with a working keyboard, or prepared autoexec, must
+have selected `EMOS KEYINPUT extender` beforehand. A remote agent cannot send
+that command through an input path that is still disabled. Establish a verified
+MOS prompt before typing anything; see [starting state](using-extender.md#establish-the-starting-state).
+
+Once input is available, at that prompt:
 
 ```text
-EMOS KEYINPUT extender
+EMOS LEGACY
 EMOS sdserve /
 ```
 
+For fast mode, substitute `EMOS sdserve --fast /` on the second line. Do not
+blindly inject both lines while the first command is still executing.
+
 The argument is the absolute allowed filesystem root. `/` permits whole-card
-development; normal service startup now uses this root. Initial commissioning
+development. These services have no authentication; use only on a trusted LAN.
+The installation owner chooses the root explicitly. Initial commissioning
 used `/extender/sdtest` to isolate tests, and that remains the application's
 no-argument default. A root change requires stopping and restarting the application.
 Video mode belongs in startup; the service does not switch modes.
 
-Escape stops the service and returns to MOS, preserving an unfinished stage.
+Escape stops the service and returns to its caller, preserving an unfinished
+stage. If invoked from EXEC/autoexec, remaining batch commands may run; return
+is not necessarily an idle MOS prompt.
 Host `exit` does the same only when no transfer is active. Restart the utility
 with `EMOS sdserve /` (or `EMOS sdserve --fast /`).
 Rally and this service run in the foreground at different times; this is not
@@ -45,12 +60,15 @@ EMOS v0.1.19 dispatches `EMOS sdserve [--fast] /` to `/emos/sdserve.bin`.
 The maintained listener moved from `/mos` to `/emos`; bare `sdserve` is no longer
 its installed invocation. Host-injected keyboard, ExCom/Legacy, listener transfer,
 return/reentry and a 4096-byte application sentinel passed physical checks.
-[Deployment record](tasks/AUDIT-008/HARDWARE.md). Original ordinary listener
-`/extender/sdserve.bin` remains a fallback using LOAD followed by `RUN . /`.
+[Deployment record](tasks/AUDIT-008/HARDWARE.md). The ordinary listener
+`/extender/sdserve.bin` remains a fallback using `LOAD /extender/sdserve.bin`
+followed by `RUN . /`. Unlike the EMOSlet, LOAD replaces ordinary application
+memory. Neither form is a background service.
 
 ## Host use
 
-Use the repository's `.venv/bin/python`. Resolve the Extender address from the
+On the maintained Linux host use the repository's `.venv/bin/python`; on macOS
+use its local `python3` (standard-library client with POSIX file locking). Resolve the Extender address from the
 local bench guidance; do not put credentials or private addresses into tracked
 examples. These examples use a placeholder address:
 
@@ -72,7 +90,9 @@ evidence. `stat PATH`, `recover PATH inspect` and `list DIRECTORY` aid inspectio
 
 Keep the same `--state` file between commands. One host process locks it at a
 time. Its exact pending request is saved before transmission. After an uncertain
-network timeout, `resume` retries those same bytes; do not issue a new transfer
+network timeout, `resume` retries those same bytes, not the remaining upload
+workflow. Inspect its result and the retained transaction before deciding whether
+to finish, cancel or recover; do not issue a new transfer
 or discard the state because an acknowledgement was lost. Default request
 timeout is 60 seconds; `--timeout SECONDS` changes it.
 
@@ -102,13 +122,17 @@ preserving a target or backup; ambiguous/damaged metadata is retained. `cleanup`
 removes a backup only after the active file can be read. Consult the
 [wire contract](protocols/mainboard-sd.md) before recovering an unfamiliar state. FAT rename is not power-failure atomic.
 
-A hung eZ80 cannot service SD requests. Automatic whole-Agon reset remains
-unqualified; the old reset circuit must not be actuated. USB serial opens may
+A hung eZ80 cannot service SD requests. The independently authorized
+[Pi reset bridge](bench-reset.md) uses the corrected reset circuit; reset is not
+an SD protocol operation or an automatic recovery step. Preserve uncertain
+transaction evidence before deciding to interrupt Agon. USB serial opens may
 reset P4, so normal network file work must not open its serial monitor.
 
 ## Rebuild and repeat the checks
 
-EMOS source and the ordinary C application belong to `agon-emos`. Its wrappers
+EMOS source and both listener layouts belong to `agon-emos`. See the
+[build guide](building.md#building-emos-and-the-sd-application) for the MOSlet versus
+ordinary application build distinction. Its wrappers
 are `scripts/prepare_boot_review.py` and `scripts/prepare_sdserve.py`; they
 require clean committed candidates and record source/tool hashes. P4 uses this
 repository's `scripts/prepare_console.py`. Supply project-local paths from the
@@ -119,13 +143,14 @@ snapshots. Use new evidence directories for each identified build/run.
 unattended cycles against fresh names under `/extender/sdtest`, retaining audit,
 state and result files. It performs no reset, flash, game launch or automatic
 cleanup after unexplained failure. The service must already be running and the
-test directory must exist. The [qualification procedure](procedures/mainboard-sd-qualification-r01.md)
+test directory must exist. Start the listener in normal checked mode for this
+qualifier; it does not opt into fast uploads. The [qualification procedure](procedures/mainboard-sd-qualification-r01.md)
 defines its evidence and limits.
 Headless tests use prepared project-local profiles and their mandatory
 `./fab-agon-emulator` entry points. They do not substitute for physical testing
 or the Author's native-keyboard observation.
 
-## Measured cost and current delivery
+## Historical commissioning cost — 2026-09-13
 
 The ten physical cycles covered 0..131731 bytes and totalled 951.187 seconds
 of measured cycle time. The largest cycle took 360.381 seconds, or about 365.5
@@ -134,7 +159,8 @@ activation, old-version verification and audit/state writes. This is a fully
 verified replacement rate, not isolated upload or UART throughput.
 
 At commissioning, startup selected mode 3, enabled Extender keyboard, loaded the service and
-runs it with `/`. The consumed one-shot EMOS installer remains guarded. The
+ran it with `/`. This is not the present startup contract: the later v0.1.19
+receipt records keyboard setup only, with no automatic listener. The consumed one-shot EMOS installer remains guarded. The
 previous startup was retained as `/autoexec.txt.p17bak` (now relocated per the manifest); its network replacement
 was fully read back after closing the old MOS batch. The final scope change was
 not rebooted again; the same command had passed the native CLI restart check.
@@ -157,7 +183,8 @@ returns immediately. Stop monitoring; inspect `result.json` and `output.log` on
 later Author follow-up. The worker records start/end UTC and monotonic elapsed
 seconds, return code and success/failure; `request.json` preserves exact argv
 and working directory. Success means the wrapped command returned zero; the SD
-client verifies staged and activated bytes before doing so. There is no automatic
+client in the normal-mode example verifies staged and activated bytes before
+doing so. Adding `--fast` removes that verification guarantee. There is no automatic
 retry, cleanup, service exit, reset, firmware flash or game launch. Wrap a prepared
 deployment script when additional verified steps are required. A running record
 without a terminal result after host interruption is unknown, not success.
@@ -171,7 +198,9 @@ the host `put` command to omit its two full downloads. Both ends must agree.
 Normal invocation remains fully checked. Packet checks, checked writes and
 sync/close, staging, backups and recovery remain; fast uploads do **not** verify
 the stored file contents. A bounded physical comparison measured 5.00× throughput
-for 8192-byte activated uploads; see the linked results.
+for 8192-byte activated uploads (two runs per mode, EMOS v0.1.18, independent
+readbacks outside timing); see the linked results. That is end-to-end replacement
+throughput for this fixture, not raw SD speed or a general fivefold guarantee.
 
 With EMOS v0.1.19 and the MOSlet installed at
 `/emos/sdserve.bin`, the invocation is:
@@ -187,7 +216,7 @@ For a prepared host session, append `--fast` to the ordinary upload command:
 python3 scripts/sdcard.py --url "$EXTENDER_URL" --state "$SESSION_FILE" put local.bin /games/example.bin --activate --fast
 ```
 
-The listener is now installed at `/emos/sdserve.bin`; use `EMOS sdserve --fast /`.
-Startup is unchanged. Stop the listener and restart without `--fast` for normal
-verification. The task left fast mode running; add `--fast` to host uploads.
+Stop the listener and restart without `--fast` for normal verification. Query
+current service state rather than assuming that an earlier task's final mode is
+still running. The host rejects a normal/fast mode mismatch before BEGIN.
 [Tasklet and validation](tasks/REMOTE-005/FAST-TRANSFER.md).

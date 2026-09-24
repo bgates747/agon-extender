@@ -70,13 +70,13 @@ result or explicitly labelled inference. Do not turn plausible behavior into fac
 
 ## Review order and discrete work items
 
-A09-01 [ ] Establish the review baseline. Record branch/commit and dirty state for
+A09-01 [x] Establish the review baseline. Record branch/commit and dirty state for
 Extender and EMOS; preserve unrelated work. Identify which machine-local record
 owns currently installed artifacts. Record relevant canonical policies and existing
 review work, especially PLAN-001 queue reconciliation, so this audit does not
 repeat an already resolved investigation. No endpoint access is required.
 
-A09-02 [ ] Inventory documentation and references. Enumerate tracked documents,
+A09-02 [x] Inventory documentation and references. Enumerate tracked documents,
 script/example READMEs, relevant help producers and generated sources; identify
 local operational handoff inputs separately. Classify current authority, draft,
 historical evidence, vendor reference, duplicate or obsolete entry point. Check
@@ -120,7 +120,7 @@ identities and approvals. Add a short later-disposition link where old prose loo
 like current guidance; do not rewrite old results into present-day claims. Do not
 close a task merely because its code compiled or an unrelated game worked.
 
-A09-07 [ ] Propose the consolidation map before moving content. Prefer existing
+A09-07 [x] Propose the consolidation map before moving content. Prefer existing
 role-named guides, including mainboard SD, remote keyboard/control, SD layout,
 recovery and protocols. Define a compact root landing page with a capability/status
 overview and links to human quick starts, agent operation instructions and detailed

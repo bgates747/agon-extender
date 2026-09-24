@@ -17,11 +17,12 @@ the wire layout. Artifact lifecycle/release status is separate from that result.
    service with stock keyboard traffic at whole-packet boundaries, prioritizing
    pending keyboard events. RTS/CTS remains enabled at 1152000 8N1.
 3. EMOS owns the resident gateway service, `ext.sdlink`, behind the existing
-   gateway ABI. It admits a foreground application only in Legacy with Extender
+   gateway ABI. It admits the foreground ordinary application or supported
+   `ext.sdlink` MOSlet caller only in Legacy with Extender
    keyboard selected and healthy. It does not select ExCom, disable input or
    expose UART registers/interrupt vectors. It resets application admission on
    application entry/exit, transport fault and explicit close.
-4. The `sdserve` eZ80 application owns file operations in foreground context.
+4. The `sdserve` eZ80 application/EMOSlet owns file operations in foreground context.
    EMOS does not run a filesystem server in its ISR. Normal Rally execution
    does not include this service; first qualification occurs at the MOS CLI.
 5. P4-local SD and onboard VDP are not endpoints. Stock VDP firmware remains.
@@ -58,7 +59,13 @@ An incomplete envelope has a 250ms total assembly deadline. No interleaving
 inside a record; a full 240-byte return record takes about 2.1ms on this UART.
 
 EMOS admission/copy must be bounded, including pointer/capacity checks in
-ordinary application RAM. The receive ISR stores at most one admitted record;
+the permitted caller region. Current `emos_sdlink.c` bounds complete buffers to
+`0x040000 <= address < 0x0B8000`, including the MOSlet region, with containment
+checks for their lengths. This is the resident SD service's supported MOSlet
+exception, not admission of external `.emo` providers. See the
+[EMOS utility contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-utilities.md)
+and [deployment evidence](../tasks/AUDIT-008/HARDWARE.md).
+The receive ISR stores at most one admitted record;
 the foreground copies it under a bounded interrupt lock. CRC/file semantics
 belong in the application; valid keyboard packets never wait for filesystem I/O.
 Oversized/unowned frames are consumed by declared length, not scanned as keys.
@@ -177,7 +184,8 @@ the last CRC covers its first 16 bytes. Write/sync/close metadata before data
 admission. Its immutable expected identity is used for post-restart recovery.
 These sidecar suffixes are reserved and cannot themselves be client targets.
 
-Activation validates the staged identity, closes every target handle, moves an
+In normal mode activation validates the staged contents against their declared
+identity; fast mode omits that reread. Activation closes every target handle, moves an
 existing target to backup, then renames the stage to target. On failure retain
 all recoverable copies and report RECOVERY_REQUIRED. Verify the final target
 before success in normal mode; fast mode skips only that whole-file digest.

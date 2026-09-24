@@ -1,47 +1,47 @@
-# Extender browser video assets
+# Extender browser assets
 
-These project-owned assets implement the primary EDP video presentation path.
-EDP/P4 serves them directly from firmware through PORT-006; no Pi, filesystem,
-or external web server is a product runtime dependency.
+EDP/P4 embeds and serves these assets; no separate npm build is required.
+The browser presents final P4-composed pixels and forwards captured keyboard
+transitions. It does not reproduce VDP palette, Copper, sprite or cursor logic.
+Network services use plain HTTP/WebSocket on a trusted LAN without authentication.
 
-The Author retired browser keyboard capture on 2026-09-09. The active page is
-restored byte-for-byte from the pre-input video baseline (`a53dffd`): video
-connection, frame statistics and the local test pattern only. Keyboard input
-comes from the separately selected mainboard or P4 USB device. The shared HTTP
-service provides no keyboard or timing endpoint. Earlier browser-input source
-and UI tests remain reproducible at their recorded Git commits; REMOTE-001
-retains the evidence and unresolved findings.
+**Checkout assets and deployed assets are not interchangeable baselines.**
+This directory contains the maintained base assets. Later deployed candidates
+also use retained source snapshots and task-local codec/pacing transformations.
+For example, the base `frame_protocol.js` parses EVF1 RGB888/RGB222, whereas
+recorded installed candidates also decode RLE2/packed frames. The ordinary
+`prepare_console.py` builder does not reconstruct every such overlay. Consult
+[build provenance limits](../../../../docs/building.md#deployed-candidates-versus-the-base-target)
+before replacing installed firmware or claiming exact reproduction.
 
-The current first-tranche firmware serves plain HTTP and WebSocket only on the
-trusted bench LAN. Open `http://<observed-dhcp-address>/`; `https://` is not
-implemented. TLS, authentication, and wider network exposure remain explicitly
-deferred.
+| Subject | Maintained authority |
+|---|---|
+| Operation, prerequisites and platform limits | [Using Extender](../../../../docs/using-extender.md) |
+| Video wire format, RLE2 default, pacing and measurement scope | [Browser video contract](../../../../docs/protocols/browser-video.md) |
+| Host/browser/USB arbitration, lock state and capture | [Keyboard guide](../../../../docs/remote-keyboard.md) |
+| Optional browser reset button and Pi bridge | [Reset guide](../../../../docs/bench-reset.md) |
+| Exact browser-capture candidate checks | [REMOTE-001 implementation](../../../../docs/tasks/REMOTE-001/B04-implementation.md) |
 
-`frame_protocol.js` is the strict browser authority for EVF1 v1 and its
-one-credit browser state machine. `webgl2_presenter.js` uploads only final
-P4-composed RGB888 pixels. It does not reproduce palette, Copper, sprite,
-cursor, or other VDP behavior. `app.js` binds those pieces to the page and
-grants the next `frame` credit only after the animation loop presents the
-preceding accepted frame.
+The source selection in `vdp/pio/p4-console-source-selection.json` identifies
+embedded files. `app.js` connects the page, presenter, credit flow, display status
+and browser input. `frame_protocol.js` validates base frames and credit state;
+`webgl2_presenter.js` handles final RGB888/RGB222 pixels with nearest-neighbour
+sampling. `index.html` and `style.css` own page layout. Codec additions in an
+identified deployment must be traced through that build's parent/overlay record.
 
-For a browser-only check, serve this directory over ordinary HTTP and open
-`/?demo`. The generated test pattern traverses the same strict EVF1 parser and
-WebGL2 presenter as network frames.
+For a browser-only **base-asset** check, serve this directory over HTTP and open
+`/?demo`. That exercises its parser/presenter, not P4 transport, MOS keyboard
+admission or every deployed codec. Repository tests include
+`tests/browser_rgb222_test.py`, `tests/browser_capture_ui_test.py` and
+`tests/browser_video_ui_test.py`; read each test's scope before using its result
+as evidence for an installed candidate.
 
-The wire authority and bounds are frozen in
-`docs/tasks/PORT-003/phase-f/fixtures/evf1-contract.yaml`. Firmware embedding
-and HTTP/WebSocket ownership belong to PORT-006.
+## Display status
 
-### Display status header
-
-The page polls the additive read-only `GET /display/status` endpoint once per
-second while its video WebSocket is open, with one request in flight and a two
-second timeout. It neither claims input ownership nor changes a display mode.
-P4's VDU owner publishes a coherent snapshot after a successful mode commit:
-`available`, `mode`, `width`, `height`, `colors`, `refresh_hz`, `double_buffered`.
-During unavailability/change the endpoint returns HTTP 503 with
-`{"available":false}`; the page shows unavailable rather than guessed fields.
-Dimensions/colors/buffering describe the P4 display, not EVF1 pixel storage.
-Refresh is the official modeline's nominal rate, independent of Presented fps.
-Metadata describes the current committed configuration, not an atomic association
-with a particular queued video frame. Legacy mainboard output is not observed.
+While video is connected the page polls `GET /display/status` once per second,
+with one request in flight and a two-second timeout. P4 publishes `available`,
+`mode`, `width`, `height`, `colors`, `refresh_hz`, `double_buffered`; unavailable
+returns HTTP 503. The header describes P4's committed display configuration,
+not Legacy mainboard output, not the EVF1 storage format, and not an atomic
+association with a particular queued frame. Nominal refresh and Presented fps
+are different values. This read does not acquire keyboard ownership.

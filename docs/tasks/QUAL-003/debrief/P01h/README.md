@@ -245,7 +245,7 @@ No flash or runtime tests until Author release; RLE2 web wire format unchanged.
 ## Author decision — 2026-09-19
 
 RLE2 is now the accepted default for browser video output, frozen in
-[ADR-0021](../../../../../decisions/ADR-0021-rle2-browser-default.md) and the canonical
+[ADR-0021](../../../../decisions/ADR-0021-rle2-browser-default.md) and the canonical
 browser-video contract. This resolves default-selection approval only; remaining
 qualification/promotion gates above are not silently marked complete. Future
 client/deployment checks must verify RLE2 remains the default negotiation.

@@ -106,8 +106,10 @@ the top edge, where browser fullscreen notices can conflict. Placing the control
 beside the video is the fallback. Revealing the strip alone does not release
 capture; explicit release or actual focus/session loss retains its normal effect.
 
-This records accepted behaviour, not completed implementation. The earlier browser
-candidate remains historical evidence; the working Extender route is the new basis.
+This ADR records accepted behaviour, not qualification. Implementation and
+remaining platform/human acceptance are tracked in [REMOTE-001](../tasks/REMOTE-001.md);
+[the maintained guide](../remote-keyboard.md) describes current operation. Earlier
+browser candidates remain historical evidence.
 
 The ordinary browser UI presents one unobscured video surface. Capture indication
 belongs outside the video pixels. Fullscreen enlarges the image to the available

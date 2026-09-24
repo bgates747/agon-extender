@@ -33,6 +33,24 @@ approved stress experiment. The earlier60fps web target is deferred; eventual
 
 Authority: [ADR-0020](../decisions/ADR-0020-web-output-30fps.md).
 
+### Implementation and later experiment boundary
+
+The accepted 30-fps ceiling above is not proof of an installed limiter.
+[BENCH-005](../tasks/BENCH-005.md#browser-pacing-continuation) later received
+explicit authorization for a 60-Hz client-request experiment, and retained
+browser candidates use that pacing. [The cross-agent review](../tasks/QUAL-003/mode-transition/AGENT-QUESTIONS.md)
+distinguishes those candidates from the earlier 30-Hz capped gameplay result.
+Neither establishes a general 60-fps high-resolution acceptance or revokes
+ADR-0020. Resolving the current normal-output policy versus retained experimental
+configuration remains with QUAL-003/BENCH-005; this audit changes neither code
+nor architecture. Do not report measured browser fps as game-loop throughput.
+
+The base checkout and deployed candidates differ: codec/pacing overlays were
+applied in isolated snapshots. See [build provenance](../building.md#deployed-candidates-versus-the-base-target).
+The wire sections below describe the original format and later contracts;
+verify the exact candidate's negotiated encoding rather than assuming the base
+`frame_protocol.js` includes every deployed extension.
+
 ## Ownership and presentation
 
 EDP on P4 interprets VDU commands and composes the complete displayed image,

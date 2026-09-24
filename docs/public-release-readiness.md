@@ -7,6 +7,23 @@ settings. Later on the same date, the Author explicitly directed publication;
 both firmware repositories are now public. The Author subsequently approved
 committing and pushing the reviewed publication material.
 
+## Later disposition — documentation review, 2026-09-24
+
+The findings below describe the September 13 review and are retained as evidence.
+They are not a current setup recipe or a repeat of the privacy/security audit.
+
+| Original finding | Current disposition |
+|---|---|
+| 1 — Source access | Resolved by the recorded publication; later SD gateway/listener commits are now in the maintained EMOS main branch. |
+| 2 — Setup documentation | [Build guide](building.md) now gives compile entry points. Fresh-clone reproduction of the latest deployed P4 overlays remains unproven; see its provenance boundary. |
+| 3 — SD trust wording | Corrected beside [service startup](mainboard-sd.md#start-and-stop): unauthenticated trusted-LAN use and explicit root scope. |
+| 4 — Existing failed checks | This documentation audit has not rerun the version validator or macOS compiler test. Retain the failures until their owning checks establish a disposition; do not infer repair from other passes. |
+| 5 — Capability promises | [README](../README.md) distinguishes implemented input/SD/video from deferred audio, storage and physical outputs. |
+| 6 — Social preview | Export remains available. Repository-settings selection was not checked by this audit. |
+
+No new firmware build, installation, external-site check or security scan supports
+this later note. [AUDIT-009](tasks/AUDIT-009.md) owns the documentation review.
+
 ## Findings
 
 ### 1. Required EMOS source availability — resolved

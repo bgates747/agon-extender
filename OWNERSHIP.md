@@ -7,7 +7,7 @@ repositories. Each current artifact and task must have one authoritative owner.
    hardware, operating-mode and transport contracts, cross-processor
    architecture, wiring, system integration, and product-level qualification.
 2. `agon-emos` owns Extender MOS (EMOS): maintained MOS-derived source,
-   eZ80-side Extender behavior, EMOS APIs and module/service implementation,
+   eZ80-side Extender behavior, EMOS APIs, foreground utility dispatch and resident service implementation,
    product-specific tests, implementation tasks, and EMOS qualification.
 3. The canonical `agon-mos` and `agon-vdp` directories are read-only stock
    references, kept clean at their most recent official tagged releases.

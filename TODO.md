@@ -13,7 +13,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Author-approved one-hour documentation audit: current human/agent operating guidance, evidence reconciliation and canonical-document consolidation; no bench work.
 
-- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Provisional sdserve MOSlet passes bounded physical transfers/memory checks with EMOS v0.1.18. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
+- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. sdserve now runs from `/emos` on EMOS v0.1.19 after bounded physical transfer/memory checks. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
 
 - [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — First tranche deployed: cancelled provider loader retired, /emos MOSlet dispatcher active; 6,282 ROM bytes recovered. Local and bounded physical checks pass; broader acceptance remains.
 

@@ -1,7 +1,10 @@
 # Host-controlled keyboard input
 
-This accepted contract is implemented provisionally in REMOTE-002. Hardware
-qualification and attended review are recorded separately in the task.
+The host API is implemented under [REMOTE-002](tasks/REMOTE-002.md); browser
+capture is implemented under [REMOTE-001](tasks/REMOTE-001.md). Their recorded
+qualification scopes and outstanding platform/gameplay limits remain separate.
+For the input-admission prerequisite, begin with
+[using an existing installation](using-extender.md#establish-the-starting-state).
 
 The PC sends bounded, numbered keyboard requests to the P4 over Ethernet. A
 separate automation input source joins the existing processed-key path after
@@ -98,7 +101,7 @@ batch command returning establishes EOF and closes that batch. Do not replace
 startup while it is held open, or assume that Escape alone establishes a CLI.
 
 The network handler enqueues input; it never writes UART or MOS memory. This
-does not restore browser keyboard focus/leases, add a remote shell to the SD
+host API does not acquire browser capture, add a remote shell to the SD
 wire API, or grant the P4 independent mainboard-control authority. The PC is
 the initiating operator. Ordinary application commands execute through MOS.
 
@@ -128,19 +131,16 @@ commands inside the verified finite batch; establish prompt readiness separately
 before typing its EXEC command. The optional text readback diagnostic is in
 `examples/keyboard-screen`; it observes rendered characters, not MOS memory.
 
-## Planned browser adapter
+## Browser keyboard capture
 
 Accepted browser capture behaviour is recorded in
-[ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md). Implementation is planned
-under REMOTE-001; the existing host-only HTTP contract remains unchanged until
-that work is implemented and qualified.
-
-The browser adapter will use a separate keyboard WebSocket, independent of
+[ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md). The implemented browser
+adapter uses a separate keyboard WebSocket, `/keyboard/browser`, independent of
 video connection and Legacy/ExCom display routing. When EMOS admits Extender
 input, the operator can continue typing in Legacy and issue `emos excom` at
 the MOS prompt. Legacy mainboard output is not mirrored into the browser.
 Video-only loss does not release capture; input loss, focus loss and explicit
-release do. This is the accepted design, not currently deployed browser support.
+release do. The host-only HTTP API above remains distinct.
 
 Physical USB keypress takes priority over browser capture: P4 discards pending
 browser events and releases browser-held keys before delivering the physical
@@ -150,7 +150,7 @@ Explicit browser Capture overrides host-agent keyboard automation, cancelling
 queued agent events and releasing its held keys before browser input is admitted.
 Agent keyboard acquisition receives busy while browser capture is active. After
 release, the agent must acquire a fresh session; cancelled input is not replayed.
-This planned keyboard arbitration does not revoke video or screen-text access.
+This keyboard arbitration does not revoke video or screen-text access.
 
 Among browser sessions, latest explicit Capture wins. P4 discards the displaced
 browser's pending input and releases its held keys before admitting the new owner.
@@ -220,3 +220,14 @@ the former connection-URL slot, with connection status directly below Connect.
 Resolution and presented fps appear next to the branding above the image. The
 ordinary page omits the expanded debug block; diagnostic data remains available
 to tooling. These accepted UI corrections do not change keyboard ownership.
+
+### Known browser limits
+
+Fullscreen Escape may be consumed by the browser to exit fullscreen rather than
+reach Agon. The current implementation does not use Keyboard Lock. Windowed
+Escape worked in the recorded Nurples test; that does not prove every game's
+input path. Fullscreen-entry capture loss received a targeted fix; browser/OS
+reserved shortcuts still require platform-specific observation. Rally keyboard
+stalls and streaming-related gameplay latency remain deferred follow-up, not
+proof that packets are lost in EMOS. See the dated observations in
+[REMOTE-001](tasks/REMOTE-001.md) and the [streaming comparison](tasks/QUAL-003.md).

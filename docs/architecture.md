@@ -1,5 +1,12 @@
 # Agon Extender Architecture
 
+**Implementation status note (2026-09-24):** accepted architecture and deployed
+experiments are distinct. In particular, the 30-fps web-output contract remains
+accepted while later browser candidates retain an authorized 60-Hz request
+experiment. See the [video contract's implementation boundary](protocols/browser-video.md#implementation-and-later-experiment-boundary)
+and [build provenance limits](building.md#deployed-candidates-versus-the-base-target).
+This note does not change an architectural decision or qualify an experiment.
+
 This document describes the current accepted architecture. Open questions and
 implementation work belong in `TODO.md` and the corresponding tracked files
 under `docs/tasks/` rather than here.
@@ -351,8 +358,7 @@ additional operating mode or ordinary-VDU route.
 EMOS is one complete backward-compatible replacement for stock MOS, not a
 side-by-side companion. It is the only supported software authority for
 ordinary VDU routing, Extender transport ownership, and committed mode.
-Applications, linked EDU bindings, TSR-like programs, future MOS Modules, and
-optional resident services
+Applications, linked EDU bindings, and optional resident services
 request those operations through EMOS and do not install independent hooks or
 claim UART/GPIO ownership. The proof-of-concept and v1 contract enforce this
 across supported software; they do not attempt adversarial isolation from
@@ -534,11 +540,12 @@ named destination mode; `EDU` explicitly addresses Extender functionality while
 contract is in [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md#cli-and-keyboard-selection--2026-09-08).
 
 `EMOS KEYINPUT mainboard` selects the Agon mainboard keyboard;
-`EMOS KEYINPUT extender` selects Extender-connected hardware input, initially a
-USB keyboard through the P4 DevKit's native host controller. These are the
-immediate input choices. `EMOS KEYINPUT browser` retains its focused-browser
-meaning, but browser-input development is deferred until explicitly
-reprioritized. PORT-015 records native USB implementation and qualification.
+`EMOS KEYINPUT extender` selects P4's common input source: native USB, explicit
+browser capture or host-agent automation, arbitrated on P4. Browser capture does
+not require the historical `EMOS KEYINPUT browser` selector. This supersedes the
+earlier browser-input deferral; see [ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md)
+and the [keyboard guide](remote-keyboard.md). PORT-015 records native USB
+implementation and qualification; REMOTE-001/002 record the remote providers.
 With no source argument, the command reports the selected source.
 `SET KEYBOARD n` remains the distinct runtime layout selection with the same
 effect across modes. `EMOS LEGACY` preserves the selected keyboard source;
@@ -588,8 +595,7 @@ preclude future compile-time performance profiles that exploit P4 resources at
 the cost of legacy behavioral fidelity. EDU-aware applications must discover
 the active profile's advertised capabilities rather than infer them.
 
-The immediate input goal is selectable Agon-mainboard or Extender-connected
-keyboard input. P4 acquires one directly attached USB HID boot keyboard,
+The input choices are Agon-mainboard or Extender-connected keyboard input. P4 acquires one directly attached USB HID boot keyboard,
 translates its events into retained stock VDP keyboard semantics and emits
 normal VDP keyboard packets to EMOS over the existing r03 four-signal UART1 link at
 1,152,000 baud, 8N1 with RTS/CTS. Keyboard configuration/query traffic uses the
@@ -612,13 +618,15 @@ autoexec alone restores the desired selection after reboot. Source changes
 release held state before admitting the new source; no dual-keyboard mixing
 is selected.
 
-Browser-input development is deferred, not a prerequisite for these choices.
-Its retained contract requires P4 to accept input from one controlling browser
-session at a time. On focus loss/disconnect P4 releases held keys and stops
-that session's keyboard delivery.
-Other sessions may view within supported video connection limits. Explicit
-takeover revokes the previous owner and releases its held keys before input
-from the new owner is admitted; focus alone does not transfer control.
+Browser input follows [ADR-0022](decisions/ADR-0022-browser-keyboard-capture.md).
+P4 admits one controlling browser session at a time. Explicit Capture overrides
+host-agent input; a physical USB keypress overrides browser and agent input.
+P4 releases the displaced provider's held keys and discards its pending events
+before admitting the new provider. Latest explicit browser Capture wins among
+browser sessions; opening/reconnecting a page alone does not take ownership.
+Input-socket loss, focus loss or explicit release revokes browser capture;
+video-only disconnect does not. Reacquisition is explicit. Human browser key
+transitions are not subject to the host-agent API's 20 ms pacing policy.
 
 Session admission and revocation precede stock packet delivery. The selected
 browser session is a keyboard authority, including normal stock key effects;
