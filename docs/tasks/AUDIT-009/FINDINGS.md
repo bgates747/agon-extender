@@ -142,3 +142,13 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
 | A09-F047 | PORT-003 opens with no implementation started, PORT-008 still demands recovery despite later success, audit introductions lag completed work | Accepted audio/key-query slices; E07P restoration and E09 624-interval result; mode-lifetime disposition; AUDIT-008 measured ROM/hardware receipt | Replaced current opening summaries and stale immediate-next instructions. Long dated evidence stays separate; no broad parity claim, new bench plan or deferred fix. |
+
+## Fourth-pass task and current-guide reconciliation
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F048 | Pacing/delta task openings still imply old candidates are current and direct reset study hides the accepted Pi browser button | BENCH-002 later production/test split; BENCH-008 rollback; REMOTE-003 accepted header revision and maintained reset guide | Rewrote present summaries and retired immediate old-candidate instructions. No fresh installation or human-gameplay claim. Direct-P4 reset remains deferred. |
+| A09-F049 | Screen-text routine instructions still live in implementation silo and omit important retrieval limits | Actual screen_text.py, P4 shared-state capture and HTTP registration | Promoted one maintained screen-text guide with failure/timeout, ownership and sampling limits. Task README now links it; code unchanged. |
+| A09-F050 | Networking decision brief uses obsolete 16-byte free-ROM figure; audio summary omits slowest retained profile | AUDIT-008 measured image headroom; AUDIO-001 six-row CSV | Current integration comparison now uses 6298 free bytes without approving an AT port. Audio range corrected to about 187–199 KiB/s and modeled 1.07–1.13 s. No new performance measurement or calibration. |
+| A09-F051 | Historical storage probes still write receipts outside current evidence location | AUDIO-001 source /test/audio001; REMED-003 frozen fixture /extender/fscheck results | Owning tasks require path/identity refresh before new physical use. Exact old-binary comparison/evidence retained; no source or emulator procedure changed. |
+| A09-F052 | Early build decisions can obscure current pin guard and make OTA reservation look like update-service readiness | Maintained wrapper, SDK defaults, board JSON, partitions and bounded bring-up result | Current build table and ADR applicability clarify existing behavior. No toolchain upgrade, build, hardware qualification or accepted-policy change. |

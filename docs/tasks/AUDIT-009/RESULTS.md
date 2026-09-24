@@ -9,7 +9,7 @@ SD, keyboard, reset/recovery and protocol guides. The same rule now governs
 future documentation changes. Historical evidence remains separate; no frozen
 experiment is silently reclassified as a current deployment recipe.
 
-**The full audit remains open.** Three bounded passes prioritize external-agent
+**The full audit remains open.** Four bounded passes prioritize external-agent
 operation, current contracts and applicability within the Author's separate
 one-hour allowances. Inventory and link
 coverage are not body-review coverage. No code, firmware, hardware, SD contents,
@@ -31,6 +31,8 @@ publication was not part of this execution contract.
 | Task summaries | Current capability and main porting summaries reconciled; accepted framing/query repairs and recovered ROM no longer hidden behind obsolete planning/recovery instructions |
 | Tool and decision discovery | All 48 Extender and 17 EMOS root scripts indexed by role; decision metadata indexed separately from implementation/qualification |
 | Historical fixture boundaries | Old provider-media staging, physical qualification and keyboard/text fixture prerequisites distinguished from current combined console/EMOSlet use |
+| Screen readback | Recurring instructions promoted from BENCH-006 to one source-checked guide, including shared-result and timeout/error limits |
+| Deferred studies / build decisions | Test pacing and delta rollback summaries reconciled; Pi browser reset separated from deferred direct-P4 reset; current build parameters and unimplemented updater boundary explicit |
 
 ## Coverage
 
@@ -41,14 +43,14 @@ its contents. Every record has a disposition in [INVENTORY.csv](INVENTORY.csv).
 
 | Review state | Extender | EMOS | Total |
 |---|---:|---:|---:|
-| Current body reviewed within recorded scope | 65 | 18 | 83 |
-| Partially reviewed / selected claims only | 119 | 32 | 151 |
+| Current body reviewed within recorded scope | 87 | 18 | 105 |
+| Partially reviewed / selected claims only | 117 | 32 | 149 |
 | Historical metadata classified, body not reviewed | 118 | 22 | 140 |
 | Vendor/reference provenance role only | 44 | 0 | 44 |
-| Pending body review | 650 | 39 | 689 |
-| **Inventory total** | **996** | **111** | **1107** |
+| Pending body review | 631 | 39 | 670 |
+| **Inventory total** | **997** | **111** | **1108** |
 
-Thirty-eight bounded batches and two documentation-only reader walkthroughs are
+Forty-three bounded batches and two documentation-only reader walkthroughs are
 recorded in [CHECKS.md](CHECKS.md). Reviewed means the document's stated contract
 was inspected against the sources/evidence listed there; it is not a fresh
 hardware or independent fresh-machine acceptance.
@@ -85,26 +87,28 @@ hardware or independent fresh-machine acceptance.
 | F024 | Held r02 hardware connectivity digest mismatch predates audit | HW-002 / hardware-version owner |
 | F040 | Draft-status definition conflicts with physically tested artifacts still recorded as draft; no silent promotion | Version-policy owner / A09-05 |
 | F046 | Historical EMOS keyboard fixtures need current placement/readiness review before reuse | INTEG-009 |
+| F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
 
-[FINDINGS.md](FINDINGS.md) records all 47 findings and their dispositions.
+[FINDINGS.md](FINDINGS.md) records all 52 findings and their dispositions.
 Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
 Continue existing A09-04/05/06/08; do not restart inventory or create a competing
-queue. The recorded capability batch, current porting summaries and tool indexes
-are complete within their stated review scope. Next bounded batch: remaining
-current task summaries for ADMIN-001, AUDIO-001, BENCH-002, BENCH-006, BENCH-008,
-REMOTE-003, REMOTE-004, REMED-003, NET-002 and UPSTREAM-001. Compare their opening
-instructions and unfinished steps with the reconciled queue and retained final
-results. Do not restart deferred experiments or submit upstream reports.
+queue. The remaining-current-summary batch and first ten build decisions have
+been reviewed within the recorded scope. Next bounded batch: ADR-0011, ADR-0012,
+ADR-0013, ADR-0015, REMED-001, REMED-002, SETUP-004, PORT-001, PORT-002 and
+QUAL-002. Reconcile accepted integration boundaries and current applicability
+against the handbook, source selections and retained dispositions. Long histories
+remain partial until actually reviewed; do not revive old global implementation
+holds or infer qualification from the later working console.
 
-Then continue remaining partial contract/decision bodies and classify older
-records by purpose. Historical transcripts and generated/vendor material need
-explicit provenance/disposition, not implied body review. Finish each bounded
-batch with link checks and honest inventory coverage. Routine use already starts
-at the current handbook; archive completion is not a new operational prerequisite.
+Use already-reviewed contracts as inputs. Historical transcripts and generated/
+vendor material need explicit provenance/disposition, not implied body review.
+Finish each bounded batch with link checks and honest inventory coverage. Routine
+use already starts at the current handbook; archive completion is not a new
+operational prerequisite. No new bench or deferred implementation is selected.
 
 ## Second-pass local verification
 
@@ -142,3 +146,21 @@ an implied acceptance of unread historical bodies.
 
 This third tranche reached its checkpoint in approximately 22 minutes, within
 the one-hour ceiling. Its recorded next batch is documentation review only.
+
+## Fourth-pass local verification
+
+The ten named task summaries were reviewed, followed by the first ten build
+ADRs and their configuration inputs. Screen-text instructions now have a maintained
+role-named guide; the task retains evidence and its local check. Networking ROM
+headroom and the storage-study range were reconciled with existing measured data.
+No research claim was promoted to hardware proof or a new implementation decision.
+
+The relative-link scan covers 714 Markdown files and 2607 inline relative links,
+with only the same three historical missing targets and no new changed-document
+failure. All 55 Extender TODO targets and 17 sibling EMOS targets exist. New
+private-path/address checks and whitespace checks pass. `screen_text.py --help`
+was executed locally; no endpoint, build, firmware, SD or emulator operation.
+EMOS received no changes in this pass. Changes are committed locally, not pushed.
+
+This fourth tranche reached its bounded checkpoint in approximately 9 minutes,
+within the one-hour limit. The next review batch is recorded above.

@@ -16,7 +16,7 @@ or accepted architecture. Task evidence stays at its recorded location.
 | SD wire fields and invariants | docs/protocols/mainboard-sd.md | Keep exact packet contract; reconcile foreground MOSlet admission |
 | Keyboard operation and arbitration | docs/remote-keyboard.md | Own host/browser behavior; replace planned-only wording with evidenced current status |
 | Video transport and presentation | docs/protocols/browser-video.md | Keep wire/pacing authority; expose unresolved implementation-policy divergence |
-| Screen-text operation | docs/using-extender.md, linking BENCH-006 evidence and script | Promote concise usage; no duplicate pixel/recognition specification |
+| Screen-text operation | docs/screen-text.md | Current use, HTTP sampling/failure contract and source links; BENCH-006 retains dated evidence/local check only |
 | Reset versus ROM recovery | docs/bench-reset.md and docs/mos-recovery.md | Keep separate; remove obsolete prohibition from SD guide, not historic evidence |
 | SD paths | docs/sd-layout.md | Keep current production/evidence/temporary placement and transaction exception |
 | Firmware ABI and /emos dispatch | agon-emos docs/emos-utilities.md | EMOS owns ABI; Extender guides link rather than reimplement description |

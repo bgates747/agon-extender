@@ -264,3 +264,29 @@ no push. Main handbook use does not depend on finishing every archive body.
 Local subject commits: Extender 89efe5d0 (capabilities and tool applicability),
 EMOS 2408f31 (tool index and historical procedure boundaries); final current-task
 summary/coverage closeout is committed separately in Extender.
+
+## Fourth unattended pass
+
+Authorized window: 2026-09-24 04:50:15–05:50:15 UTC. Baseline Extender 836d399d,
+EMOS 2408f31; both worktrees and opening mailbox clean. Contract frozen in
+580c4ab5. Documentation/source inspection and safe local checks only.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B39 | ADMIN-001; AUDIO-001; BENCH-002; BENCH-006; BENCH-008; REMOTE-003; REMOTE-004; REMED-003; NET-002; UPSTREAM-001 | Entire task bodies read for current scope, status and authorization. Reconciled test-only pacing, completed text readback, delta rollback and implemented Pi browser reset. Closed/deferred research remains closed/deferred; no human gate waived or old experiment restarted. |
+| B40 | AUDIO-001/RESULTS and sdbench source/CSV; BENCH-002/RESULTS; BENCH-006/RESULTS and README; BENCH-008/RESULTS; NET-002/REVIEW; REMED-003 issue draft; ADMIN-001 findings opening | Supporting evidence/applicability checked. Storage range corrected from its six retained rows, not new timing. ROM headroom updated from already-reviewed AUDIT-008. Networking upstream claims and emulator defect were not freshly revalidated. Historical fixture output paths need owner refresh. |
+| B41 | screen_text.py; network/screen_text.hpp; HTTP registration; new screen-text guide; handbook; using-extender; host-tool index; bench-reset | Current source/guide comparison: sampling bounds, shared pending/result consumption, 200/202/409, polling and timeout limits. Promoted recurring screen-text instructions out of the task silo, leaving evidence/local check there. Executed only screen_text.py --help; no endpoint, compile or capture. Reset comparison used existing maintained contract, not hardware inspection. |
+| B42 | ADR-0001–0010 | Full decision bodies read; source/build boundaries, framework, silicon, flash, memory, partitions, CMake, wrapper and frequency compared with the following batch. Kept original architectural decisions and qualification distinctions. Added updater/crash-product applicability and documented existing wrapper pin guard. |
+| B43 | platformio.ini selected sections; board JSON; sdkconfig.defaults; partitions.csv; vdp-pio.sh; generated CMake adapters; SETUP-001 bring-up/configuration excerpts; building guide | Read-only configuration and retained evidence check. Build guide now separates 360-MHz SDK from 400-MHz board field, first-stage DIO header from configured QIO, and partition reservation from implemented services. Local generated SDK bounds 199 observed only as generated state, not a new qualified build. No build/dependency install or physical operation. |
+
+The storage CSV advertises CLOCKS_PER_SEC=100, and source uses clock() with that
+application constant. Range calculations here follow its stated convention;
+no independent wall-clock calibration is added. The six rows yield 186.86–199.22
+KiB/s and modeled read-plus-historical-send 1.0700–1.1272 seconds per audio second.
+The historical send and current read observations are still separate experiments.
+
+Fourth-pass checkpoint: approximately 9 minutes, below the one-hour ceiling.
+B39–B43 complete within their recorded scope; full audit remains open. Final
+mailbox empty. Both source repositories were clean at entry; EMOS remains
+unchanged. Local commits: 580c4ab5 freezes scope, ccb347c1 consolidates task/build
+and screen-text guidance; final coverage closeout committed separately. No push.
