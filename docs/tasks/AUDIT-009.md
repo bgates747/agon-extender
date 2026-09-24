@@ -31,6 +31,15 @@ bounded evidence archive. Current known limitations belong in the handbook;
 chronological explanations belong in evidence. A partial audit must not label
 the whole documentation set current or complete.
 
+## Second execution window
+
+Author authorized another unattended one-hour goal on 2026-09-24:
+04:07:22–05:07:22 UTC. Continue the existing A09-04/05/06/08 work from the
+recorded architecture/hardware/decision batch, then maintained procedure and
+status review. Documentation, source inspection and local checks only; no bench,
+firmware, emulator changes or new architecture choices. Commit bounded progress
+and update the same coverage ledger and results before stopping.
+
 ## Execution checkpoint
 
 The first bounded pass is recorded in [RESULTS.md](AUDIT-009/RESULTS.md).

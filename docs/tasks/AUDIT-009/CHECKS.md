@@ -152,3 +152,19 @@ bounded pattern check, not a proof against every possible identifying datum.
 No endpoint, board, emulator or SD operation was performed. No source or tool
 implementation changed. The cross-machine mailbox contained no requests at
 both the opening check and the closeout check.
+
+## Second unattended pass
+
+Window authorized 2026-09-24 04:07:22–05:07:22 UTC. Starting commits:
+Extender 461b59f4, EMOS b2eff09; both worktrees clean. Opening mailbox empty.
+
+| Batch | Inputs (at most ten) | Scope / disposition |
+|---|---|---|
+| B14 | architecture; architecture/vdp-upstream-precis; decisions/README; hardware/README; SETUP-005; HW-002; r03 hardware README; ADR-0014; ADR-0016; ADR-0017 | Architecture body reconciled with current guide/evidence boundaries. Hardware and callback capability claims corrected; Legacy SD exception promoted from accepted PORT-017 operation. SETUP-005/ADR-0014 historical decisions retain dates with current authority explicit. HW-002 remains partial; no circuit or architecture decision changed. |
+
+The pinned upstream video.ino creates processLoop with stack argument 4096.
+Espressif's installed FreeRTOS task.h explicitly defines this argument in bytes,
+unlike vanilla FreeRTOS; the précis's word unit was corrected. This is a source
+contract check, not a new stack-usage measurement or a new upstream baseline.
+The broader précis retains its dated release baseline; latest-release discovery
+is outside this batch.

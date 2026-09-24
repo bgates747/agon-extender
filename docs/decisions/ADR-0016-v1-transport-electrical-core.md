@@ -7,6 +7,15 @@
 - Related task: HW-001
 - Open-decision tracker: HW-001
 
+## Current applicability
+
+This accepted decision defines the **held r02 buffered circuit**, not the
+active simplified r03 bench wiring. [HW-002](../tasks/HW-002.md) and the
+[hardware index](../../hardware/README.md) record the latter's bounded evidence
+and remaining drawing/electrical review. No buffer-enable or power-domain
+isolation property here transfers to r03. The held circuit's status is not
+changed by this documentation clarification.
+
 ## Context
 
 Exclusive Compatible and Exclusive Extended require one common physical

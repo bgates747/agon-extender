@@ -16,8 +16,10 @@ completion is one use case within that goal.
 
 ## Decision
 
-Generalized callbacks are a supported production EDP capability. Applications
-have a documented return path for EDP events, results and state information.
+Generalized callbacks are a production EDP requirement. The implementation must
+provide applications a documented return path for EDP events, results and state
+information. Acceptance does not establish that this general interface exists
+today; the consequences below retain that implementation boundary.
 The goal is meaningful interaction with EDP beyond submitting display commands.
 Render-completion notification and its benchmark consumer are initial use
 cases, not the definition or limit of the facility.

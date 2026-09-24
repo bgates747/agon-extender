@@ -21,16 +21,20 @@ driver disposition survey. SETUP-004 determines what code and behavior must be
 retained, replaced, stubbed, omitted, or deferred; this task determines how the
 retained behavior is routed between processors and MOS.
 
-## Current priority — mainboard/Extender keyboard selection (2026-09-09)
+## Current integration boundary
 
-The accepted browser keyboard slice now has physical typing and measured
-latency/connection findings. On 2026-09-09 the Author selected PORT-015's
-direct USB keyboard, now passing ordinary EMOS CLI and gameplay on mainboard
-VGA. K010 makes selectable mainboard/Extender input the immediate goal and
-defers browser input until explicitly reprioritized. Existing UART/keyboard
-ownership decisions apply. Only the
-keyboard portions of D003/D007 are on this path; other mode/service decisions
-remain open.
+Selectable mainboard/Extender input and bounded Legacy/ExCom console switching
+are implemented. P4 USB, browser and agent keyboard providers now share
+`EMOS KEYINPUT extender` under [ADR-0022](../decisions/ADR-0022-browser-keyboard-capture.md).
+Use the [keyboard guide](../remote-keyboard.md) and
+[console contract](../protocols/excom-console.md) for current operation.
+PORT-015 retains native-input proof; REMOTE-001 retains browser acceptance and
+limits. The older decisions below record how this direction was reached, not
+an instruction to defer the implemented browser path.
+
+The accepted foreground [mainboard-SD service](../mainboard-sd.md) is an
+additional explicit Legacy service under EMOS transport ownership. It does not
+activate ordinary EDP/EDU routing or settle the wider D003–D008 decisions.
 
 | Decision | Accepted direction or remaining question | State / owner |
 |---|---|---|
@@ -48,7 +52,8 @@ remain open.
 
 K002's initial behavior, K003's receiver direction and K005's independent
 keyboard source are settled; K006 settles autoexec-only persistence. The
-Author approved the documentation freeze; implementation has not started. No broad
+original documentation freeze preceded implementation; the current guides above
+record the later implemented subset. No broad
 mode-transition redesign or complete four-mode matrix is a prerequisite for
 an explicitly bounded keyboard test. Product mode integration remains gated.
 
@@ -66,10 +71,16 @@ commit Dual. EMOS still owns activation, transport and canonical state. K006
 restores startup selections only by executing autoexec commands. The immediate
 startup/source/receiver decisions are settled; broader task questions remain
 outside this first increment.
-The Author approved freezing these decisions on 2026-09-08; no implementation
-has started.
+The Author approved the original decision freeze on 2026-09-08. Subsequent
+implementation and acceptance are linked in the current integration boundary.
 
-## Later display refinement
+## Display preservation
+
+The bounded `--keep-display` option now implements explicit per-display
+preservation; see the current console contract and ADR-0014. It does not
+migrate resources between the two processors. The original preference below
+explains that decision rather than requesting another implementation.
+
 
 The Author would prefer eventually retaining the mainboard display contents,
 including a user-chosen background, with one-line mode-change confirmations

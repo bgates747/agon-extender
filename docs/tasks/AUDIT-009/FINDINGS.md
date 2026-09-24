@@ -82,3 +82,13 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
 | A09-F027 | Maintained recovery sequence calls pre-erase dump optional despite current host guard | `mos_recovery_console.py` requires verified durable before-ROM before RESTORE and compares full 128 KiB afterward; maintained programmer requires DUMP first | Corrected current manual to its existing implementation, removed obsolete fallback wording and led with maintained programmer. Historical recovery retained through evidence links. Documentation erratum only: no new procedure identity, tool or hardware execution. |
+
+## Architecture and hardware reconciliation
+
+| ID | Class and affected claim | Evidence / correction | State / owner |
+|---|---|---|---|
+| A09-F028 | Architecture applies held four-chip r02 isolation to active r03; hardware index denies later bounded validation | HW-002, r03 specification, PORT-008/015 and existing SD/console acceptance | Fixed current architecture/index and ADR-0016 applicability. Full r03 electrical/as-built review remains HW-002; no circuit promoted or frozen model edited. |
+| A09-F029 | Accepted future callbacks/audio requirements read as implemented capabilities | ADR-0017 consequences and PORT-004/QUAL-003 scope | Explicit implementation-boundary table and requirement wording. No generalized callback ABI or audio implementation claimed. |
+| A09-F030 | Legacy mode permits keyboard but appears to forbid already accepted SD service | PORT-017 physical acceptance and current EMOS ext.sdlink service | Current architecture and ADR-0014 acknowledge explicit foreground Legacy SD without implying Dual or general EDU admission. |
+| A09-F031 | SETUP-005 opening says browser deferred and implementation not started | ADR-0022 and current keyboard/console contracts | Current integration summary replaces stale priority; original dated choices retain historical meaning. Wider decisions remain open. |
+| A09-F032 | Upstream précis calls a 4096-byte ESP-IDF task stack 4096 words | Pinned video.ino argument and Espressif task.h byte-unit contract | Corrected unit; no measured high-water or current-release claim. |

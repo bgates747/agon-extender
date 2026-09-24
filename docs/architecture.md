@@ -1,15 +1,27 @@
 # Agon Extender Architecture
 
-**Implementation status note (2026-09-24):** accepted architecture and deployed
-experiments are distinct. In particular, the 30-fps web-output contract remains
-accepted while later browser candidates retain an authorized 60-Hz request
-experiment. See the [video contract's implementation boundary](protocols/browser-video.md#implementation-and-later-experiment-boundary)
-and [build provenance limits](building.md#deployed-candidates-versus-the-base-target).
-This note does not change an architectural decision or qualify an experiment.
+This document defines the accepted design, including requirements whose
+implementation remains deferred. It is not a claim of complete compatibility.
+[The handbook](README.md) owns current operation; [TODO](../TODO.md) and linked
+tasks own incomplete implementation and decisions. No new architecture is
+established by a successful experiment or by this documentation reconciliation.
 
-This document describes the current accepted architecture. Open questions and
-implementation work belong in `TODO.md` and the corresponding tracked files
-under `docs/tasks/` rather than here.
+## Implementation boundary
+
+| Area | Current boundary | Authority |
+|---|---|---|
+| Ordinary display | Legacy and bounded ExCom over UART work; Dual/Exclusive Extended remain broader design requirements | [Console contract](protocols/excom-console.md), PORT-003 / SETUP-005 |
+| Input | Mainboard selection and admitted Extender USB/browser/agent input; platform/fault limits remain | [Keyboard guide](remote-keyboard.md) |
+| Mainboard SD | Foreground EMOSlet through resident `ext.sdlink` in Legacy; not a background filesystem | [SD guide](mainboard-sd.md) |
+| Generalized callbacks | Accepted production requirement; current private timing callback is not the finalized general ABI | [ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md) |
+| Audio / P4-local SD / local video | Accepted or researched directions, not current working output/storage capabilities | PORT-004 / PORT-007 / P4PC-001 |
+| Hardware | Simplified r03 UART/USB path has bounded evidence; drawing/as-built work remains. Four-chip r02 is held | [Hardware index](../hardware/README.md), HW-002 |
+| Web pacing | Accepted 30-fps contract at 512×384 differs from retained authorized 60-Hz experiments | [Video boundary](protocols/browser-video.md#implementation-and-later-experiment-boundary) |
+| Rebuild | Base target does not reconstruct every deployed overlay | [Build limits](building.md#deployed-candidates-versus-the-base-target) |
+
+The remaining sections state design obligations unless an implemented subset is
+identified explicitly. Full fault recovery, generalized EDU APIs and compatibility
+coverage must not be inferred from the working console or diagnostic services.
 
 ## Browser-video default encoding
 
@@ -21,8 +33,8 @@ change the separately accepted output pacing policy.
 
 ## Web-output cadence
 
-The accepted512×384 web-output contract is30 complete frames/s. Normal test
-fixtures must cap snapshot/output admission at30fps, independently of native
+The accepted 512×384 web-output contract is 30 complete frames/s. Normal test
+fixtures must cap snapshot/output admission at 30 fps, independently of native
 rendering and application cadence. See [browser-video contract](protocols/browser-video.md)
 and [ADR-0020](decisions/ADR-0020-web-output-30fps.md). This target still needs
 representative production/browser qualification; it is not a blanket measured guarantee.
@@ -156,8 +168,9 @@ compatibility retains upstream queue-depth completion behavior even though a
 separate A/B research task may evaluate stronger semantics for an upstream
 contribution.
 
-Generalized callbacks are a production EDP capability, giving applications a
-documented return path for EDP events, results and state information. This
+Generalized callbacks are an accepted production EDP requirement: applications
+are to receive a documented return path for EDP events, results and state. The
+current private timing callback is not that finalized general interface. This
 supports meaningful interaction beyond submitting display commands. EMOS
 retains transport and application mediation under the EDU service contract.
 Render completion and the graphics benchmark are initial use cases within the
@@ -193,6 +206,9 @@ shared Sprite/display types survive independently. No Scene task, mutex,
 collision callback, or parallel sprite scheduler is selected unless a future
 Extender feature adopts it explicitly.
 
+The following audio paragraphs define the accepted implementation direction;
+current EDP command-consumption support does not provide audio synthesis or a
+working output sink. PORT-004/AUDIO-001 own that deferred implementation.
 The official header-defined VDP audio runtime remains the audio integration
 boundary. Preserve its parser, `PACKET_AUDIO` acknowledgements, channel state,
 envelopes, buffer-backed samples, playback timing, audio-control task, and VDU
@@ -233,48 +249,36 @@ PORT-007 owns the EMOS interface and storage integration.
 Future installed-application, media, network-file, or browser interfaces consume
 that storage capability without defining its physical backend.
 
-## Hardware design target
+## Hardware design and active evidence
 
-[`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md) is the
-preserved predecessor harness and historical forward-prototype target. It
-preserves the physically exercised eight-bit forward-bus pin map, installed-
-view routing geometry, series resistance, and control-signal evidence. It is
-not the V1 common-UART electrical design and must not be promoted by relabeling
-or incremental modification.
+The active bounded UART/USB work uses the simplified
+[`light2-harness-r03`](../hardware/designs/light2-harness-r03/README.md)
+arrangement: eight Port C lanes with 220-ohm series resistors and 15-kohm
+pull-ups to Agon 3.3 V, common ground, separate positive supply rails and no
+four-chip isolation circuit. UART uses four lanes; the former parallel handshake
+signals remain disconnected. Native USB uses the separately specified P4
+connector/power path. HW-002 owns the incomplete drawing/as-built update and
+endpoint review; PORT-015 and PORT-008 retain bounded input/UART evidence.
+Working tests do not qualify all power/reset states or establish a released
+hardware design.
 
-[`light2-harness-r02`](../hardware/designs/light2-harness-r02/README.md) is the
-frozen controlled-beta candidate and provisional V1 transport core. It uses two
-Agon-powered `SN74LVC244AN` forward buffers, one Agon-powered `SN74LV125AN`
-UART-return buffer, and one P4-powered `SN74LV125AN` as four low-only isolated
-control sinks. It provides one common eZ80 UART1 TX/RX/RTS/CTS circuit for both
-exclusive modes and retains one-way `D0..D7`, `CLOCK`, `VALID_N`, and
-`READY_N` for Exclusive Extended. Positive 3.3 V rails remain separate and all
-cross-board drivers default disabled. R1--R13 are frozen at 220 ohms for this
-candidate. See
-[ADR-0016](decisions/ADR-0016-v1-transport-electrical-core.md).
+[ADR-0016](decisions/ADR-0016-v1-transport-electrical-core.md) records the
+accepted but **held** four-chip `light2-harness-r02` candidate and provisional
+V1 transport core. Its UART/parallel enable groups and hardware-default isolation
+belong to that circuit, not the active direct-wire r03 arrangement. Full r02
+construction and qualification remain incomplete; its retained connectivity
+profile also has the unresolved integrity mismatch recorded by the audit.
+Neither this document nor ordinary r03 gameplay authorizes resuming r02 or
+silently promotes r03 to the released replacement architecture. HW-001/HW-002
+own that reconciliation.
 
-This selection does not qualify target-speed UART, reset recovery, Legacy
-electrical absence, construction, or Console8 adaptation. HW-001 owns those
-remaining design and evidence gates before the topology can become a released
-V1 hardware artifact.
-
-R02 is the retained candidate design; its design work, construction, and
-validation are on hold by Author direction as of 2026-09-07. Full-circuit
-wiring is incomplete and the complete circuit is untested. The following
-process description does not authorize resuming work. Its
-connectivity model owns the circuit, its maintained physical schematic guides
-construction. Signal views isolate functions for tracing/debugging; a separate
-wiring order defines cumulative assemblies suitable for powered tests, including
-every required input state and shared-bank dependency. The construction plan
-uses permanent circuit parts only; any required electrical addition follows
-normal successor-revision approval. Tests use production-candidate P4 and EMOS components where
-applicable; scoped diagnostic firmware may isolate measurements such as power
-and bias. Evidence authenticates the tested stage and candidate code before
-eventual release consumption is compared. The complete product firmware and
-unrelated mode decisions are not prerequisites for a mode-neutral circuit
-measurement. The accepted
-[staged process](qualification/staged-circuit-validation.md) defines these
-boundaries without changing EMOS ownership or qualifying untested behavior.
+[`light2-harness-r01`](../hardware/designs/light2-harness-r01/README.md)
+preserves predecessor forward-prototype evidence. Do not reuse one revision's
+pin, probe, isolation or construction assumptions for another. The
+[hardware index](../hardware/README.md) identifies their authorities; the
+[staged validation process](qualification/staged-circuit-validation.md) governs
+newly authorized construction/testing without requiring unrelated firmware work.
+Machine-local installed state remains separate from all design records.
 
 ## EDU operating modes and application interface
 
@@ -404,7 +408,7 @@ missing or incompatible prerequisite, EMOS returns or reports a bounded failure
 through an available accepted caller or diagnostic path. Any pre-commit failure
 restores the current stable mode with routing unchanged and no partial
 publication; this routing-coherence guarantee does not depend on preserving the
-initiating program or other processor state. A successful presence/version
+initiating program or other processor state. For the general mode-service design, a successful presence/version
 probe activates EDP and commits Dual; a failed probe leaves Legacy. Exclusive
 entry likewise begins in Legacy. Legacy is the mandatory transition hub: EMOS
 commits Legacy before attempting a different non-Legacy destination, and no
@@ -432,8 +436,9 @@ The first idle-console Legacy↔Exclusive Compatible increment may switch
 without rebooting, as accepted in PORT-008-D005. EMOS preserves keyboard
 source/layout and presents a fresh destination screen/prompt. It retains
 transactional readiness, parser/queue quiescence and bounded failure recovery;
-this authorizes neither in-flight application switching nor display-state
-preservation or migration. The older disruptive controlled-restart baseline
+ordinary commands do not authorize in-flight application switching or display
+migration. The explicit `--keep-display` application exception below preserves
+each processor's own display without migrating assets. The older disruptive controlled-restart baseline
 applies outside this bounded exception and remains an acceptable v1 fallback.
 Preserving loaded eZ80 program, data, and resident processor state is an
 aspirational v1 target and a firm v2 requirement under MODE-001; preservation
@@ -495,11 +500,13 @@ Extender command or API may fail normally. Direct linked-client ownership of
 UART1, parallel GPIO, interrupt vectors, or EDP lifecycle under stock MOS is
 outside the supported architecture.
 
-Project hardware and firmware apply fail-safe pre-activation design: carrier
-hardware keeps P4-to-Agon drivers disabled through hardware defaults rather
-than relying only on P4 firmware, and the EDP accepts only a bounded EMOS
-activation exchange before exposing ordinary VDU, EDU, update, or persistent
-write operations. Supported pre-activation logic patterns or GPIO-direction
+The accepted buffered r02 design requires hardware-default driver isolation;
+the active direct-wire r03 arrangement does not provide those buffer enables.
+Do not infer power-domain or contention isolation from software ownership or
+pull-up resistors. EDP gates ordinary display activation through the bounded
+EMOS exchange. Explicit resident keyboard and foreground SD services have their
+own admission and do not implicitly enable ordinary VDU routing. Supported
+pre-activation logic patterns or GPIO-direction
 changes may be ignored or fail safely without opening another operation. These
 rules govern every project-produced design, build,
 example, and test. They are not a privilege boundary or warranty for arbitrary
@@ -513,9 +520,12 @@ In **Legacy mode**, the onboard VDP retains ordinary VDU and display behavior,
 including maintenance/operator facilities omitted by Extender. Explicitly
 selected browser or native USB keyboard input may continue through P4 and EMOS; it is the
 accepted exception to older total Extender absence/quiescence requirements.
-EMOS retains canonical keyboard state ownership. Other EDP/EDU service remains
-inactive. In
-Dual mode those facilities may likewise remain available through ordinary VDU
+EMOS retains canonical keyboard state ownership. The foreground mainboard-SD
+listener is another explicitly admitted Legacy
+service: EMOS owns its transport through `ext.sdlink`, and sdserve performs file
+I/O on eZ80. It does not activate the ordinary EDP display/EDU plane or imply
+Dual. Other general EDP/EDU service remains inactive. In Dual mode those
+facilities may likewise remain available through ordinary VDU
 to the onboard VDP; they are not implemented by Extender.
 
 During ExCom, EMOS leaves a static mode/status notice on mainboard VGA and

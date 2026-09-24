@@ -94,7 +94,8 @@ Arduino supplies the framework entry and calls `setup()` and `loop()`.
 3. initializes the startup video mode and copies the default font;
 4. configures the MOS/eZ80 VDP protocol UART;
 5. constructs one `VDUStreamProcessor` around `VDPSerial`;
-6. creates `processLoop`, pinned to core 0 at priority 3 with a 4096-word stack;
+6. creates `processLoop`, pinned to core 0 at priority 3 with a 4096-byte stack (ESP-IDF counts this argument in bytes, not vanilla
+   FreeRTOS stack words);
 7. initializes audio; and
 8. prints the firmware version on the boot screen.
 

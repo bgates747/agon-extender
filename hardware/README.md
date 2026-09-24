@@ -9,14 +9,16 @@ The durable role vocabulary for hardware objects is maintained under
 only. Pins, nets, components, and electrical connectivity remain authoritative
 inside the applicable revisioned design or fixture profile.
 
-The current simplified-wiring review draft is
-[`light2-harness-r03`](designs/light2-harness-r03/README.md), requested under
-[HW-002](../docs/tasks/HW-002.md) for the first Exclusive Compatible proof.
-It records eight direct Port C lanes with 220 Ω series resistors and 15 kΩ
-pull-ups to Agon 3.3 V. The editable KiCad drawing and SVG/PDF previews are
-kept beside its draft connectivity authority. Circuit acceptance, as-built
-confirmation and physical validation remain open; no existing assembly or
-test result is reclassified as r03.
+The active bench arrangement uses the simplified
+[`light2-harness-r03`](designs/light2-harness-r03/README.md) UART wiring and
+P4 USB keyboard connection. Its eight direct Port C lanes have 220 Ω series
+resistors and 15 kΩ pull-ups to Agon 3.3 V. Bounded UART, keyboard and ExCom
+results are recorded under [PORT-008](../docs/tasks/PORT-008.md),
+[PORT-015](../docs/tasks/PORT-015.md) and the linked qualification records.
+Those results do not complete circuit qualification. The KiCad draft does not
+yet include the accepted USB connection, and full as-built/power/reset review
+remains with [HW-002](../docs/tasks/HW-002.md). Do not infer the buffered r02
+isolation guarantees from the direct r03 wiring.
 
 The held frozen candidate is
 [`light2-harness-r02`](designs/light2-harness-r02/README.md). Its

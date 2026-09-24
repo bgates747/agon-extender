@@ -7,6 +7,16 @@
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
+## Current reading boundary
+
+This decision retains dated amendments. For implemented operation use the
+[current console contract](../protocols/excom-console.md),
+[keyboard guide](../remote-keyboard.md) and [SD guide](../mainboard-sd.md).
+[ADR-0022](ADR-0022-browser-keyboard-capture.md) supersedes the original separate
+browser source and browser-input deferral: P4 arbitrates USB/browser/agent
+providers behind `EMOS KEYINPUT extender`. Broader four-mode requirements below
+are not a claim that all four modes are implemented.
+
 ## Context
 
 Extender needs an application-facing command path distinct from the stock VDU
@@ -468,8 +478,12 @@ selecting Legacy is not an instruction to shut down the keyboard path.
 
 This amends earlier total electrical/logical absence and quiescence requirements
 for Legacy: they exclude the explicitly selected keyboard service and its
-required UART traffic. Other EDP/EDU service remains inactive in Legacy;
-keyboard-only activity does not imply Dual or permit unrelated EDP traffic.
+required UART traffic. Later accepted [mainboard-SD service](../mainboard-sd.md)
+also admits explicit foreground Legacy traffic through EMOS-owned `ext.sdlink`;
+see [PORT-017](../tasks/PORT-017.md) and its scoped physical acceptance. Neither
+service activates ordinary EDP display routing or implies Dual. Other general
+EDP/EDU service remains inactive in Legacy; keyboard admission alone does not
+permit unrelated traffic.
 Stock MOS gains no Extender capability from this amendment. Cold-boot input
 selection is a separate setting from preservation across mode changes.
 
