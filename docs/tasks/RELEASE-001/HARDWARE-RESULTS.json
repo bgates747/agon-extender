@@ -40,11 +40,18 @@
     ],
     "page_errors": []
   },
-  "scope": "Linux Chromium automation against physical P4 and Agon; no human gameplay, physical USB takeover or Mac acceptance",
+  "scope": "Automated scope: Linux Chromium against physical P4 and Agon. Separate Author acceptance below; human host/game/mode not specified.",
   "remaining": [
-    "Human physical USB input/takeover",
-    "Human browser reset and re-admission",
-    "Human gameplay/UI comparison",
-    "Corrected replacement package; no current selection"
-  ]
+    "R01-08: corrected replacement package and current selection"
+  ],
+  "author_acceptance": {
+    "date_utc": "2026-09-25",
+    "report": "tests pass",
+    "passed": [
+      "Browser typing and physical-keyboard takeover",
+      "Familiar-game review",
+      "Browser Reset Agon"
+    ],
+    "host_game_mode": "not specified"
+  }
 }

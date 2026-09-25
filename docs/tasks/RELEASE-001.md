@@ -8,11 +8,11 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-07 in progress; corrected r55 physical automated checks pass; human acceptance and replacement packaging pending.**
-Consolidate the mapped P4 composition, produce clean identified control/corrected
-builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
-and host inputs within their existing ownership. No physical deployment or
-emulator modification is authorized by this tranche.
+**State: R01-07 complete; Author accepts the corrected r55 installation. R01-08 is next.**
+Physical automated checks and the requested human input, gameplay and reset
+review passed. Preserve that exact combination. The failed r01 archive remains
+non-deployable; R01-08 must assemble and verify its corrected replacement before
+advancing the current selection. No new hardware work is started by acceptance.
 “Approved for current use” does not silently confer formal `qualified` or
 `released` status. TODO.md owns priority; this file owns the discrete work.
 
@@ -142,7 +142,7 @@ gate for any emulator-related changes. Record untested hardware behavior as
 such. Test the documented installation path by desk walkthrough and verify that
 another agent does not need historical task knowledge to select its inputs.
 
-R01-07 [ ] **Validate on the bench and obtain acceptance.** Only after bench
+R01-07 [x] **Validate on the bench and obtain acceptance.** Only after bench
 availability and deployment authorization, the operator deploys the candidate
 with the preserved rollback ready. Use the R01-02 matrix: boot/SD, USB and browser
 input, Legacy/ExCom switching, browser video, reset bridge, screen-text access,
@@ -153,7 +153,8 @@ rules. A failure retains the old approved selection; restore it when required.
 Record exact passes, failures and exclusions; obtain Author acceptance.
 
 R01-08 [ ] **Promote and close the reconstruction gap.** After acceptance, the
-agent advances the single current selection, updates the handbook/build/tool/SD
+agent packages the exact accepted r55 combination as a new immutable bundle,
+verifies its inventory and corrected bootloader configuration, then advances the single current selection, updates the handbook/build/tool/SD
 instructions and records compatibility and rollback. Update A09-F009 only to the
 extent reproduction was proved; broader qualification remains with its owners.
 Commit logically by owning repository. Publication/push follows the applicable
@@ -168,12 +169,10 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-The present execution boundary is **R01-07**, authorized after local validation.
-Prepare a separately identified reset-configured P4 build, preserve/verify actual
-incoming firmware and SD state, and execute the bounded hardware matrix when
-bench availability and foreground state are established. Preserve the frozen r01
-bundle. Human input/gameplay observations remain separate acceptance gates.
-Do not promote current before explicit acceptance. New firmware
+R01-07 is complete after explicit Author acceptance on 2026-09-25 UTC.
+R01-08 is the next separately authorized chunk. Preserve the accepted binaries
+and frozen failed r01 bundle; do not rebuild or reflash accepted firmware merely
+to package it. No current selection has yet been promoted. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
