@@ -1,6 +1,7 @@
 # Current installation
 
-**extender-installation-r02** is the Author-accepted local DevKit combination.
+**v0.1.0** is the Author-accepted production version, tagged `v0.1.0`.
+It selects the unchanged **extender-installation-r02** local DevKit bundle.
 [Current selection](current.yaml) points to its
 [immutable manifest](bundles/extender-installation-r02/bundle.yaml) and archive
 checksums. This is the single installation selection authority; extracted

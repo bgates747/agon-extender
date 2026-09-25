@@ -1,4 +1,6 @@
 schema_version: 1
+production_version: v0.1.0
+git_tag: v0.1.0
 baseline_id: extender-installation-r02
 status: qualified
 bundle: bundles/extender-installation-r02/bundle.yaml

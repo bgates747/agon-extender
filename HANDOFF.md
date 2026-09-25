@@ -1,10 +1,8 @@
 # Returning developer / external-agent orientation
 
 Documentation checkpoint: 2026-09-25 UTC. Begin with [README](README.md) and
-[using an existing installation](docs/using-extender.md). Read the canonical
-workspace instructions named in the local `AGENTS.md`, when present, before
-work. That ignored file is supplied by the maintained workspace, not a public
-clone prerequisite. [TODO](TODO.md) owns
+[using an existing installation](docs/using-extender.md). Read the tracked `AGENTS.md` and the canonical workspace instructions it
+references before work. Machine-specific bench configuration remains ignored. [TODO](TODO.md) owns
 unfinished work; this handoff is not a competing task queue.
 
 ## Current recorded position

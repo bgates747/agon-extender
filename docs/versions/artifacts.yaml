@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r111
-updated_at: 2026-09-25T02:49:00Z
+registry_revision: r112
+updated_at: 2026-09-25T03:06:35Z
 
 artifacts:
   - artifact_id: extender-installation
@@ -14,6 +14,7 @@ artifacts:
     description: Author-accepted local DevKit installation; bounded RELEASE-001 scope.
     notes:
       - RELEASE-001 R01-08 authorized after physical acceptance; r02 baseline owns scope and exact composition.
+      - Author-approved production version/tag v0.1.0 selects unchanged r02; component identities remain independent.
   - artifact_id: sdserve-fast-probe
     kind: test_fixture
     identity_scheme: revision

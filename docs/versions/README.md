@@ -315,5 +315,22 @@ The selected bundle records component identities independently; do not rename
 historical builds or rebuild accepted firmware merely to change its label.
 
 A release tag does not itself authorize publishing local-only binaries or remove
-source/license review requirements. Until the Author settles the production
-version scheme and number, retain acceptance and explicitly mark tagging pending.
+source/license review requirements. If a future production number is unresolved, retain acceptance and explicitly
+mark tagging pending.
+
+
+### Production version convention
+
+On 2026-09-25 UTC the Author approved **v0.1.0** for the complete accepted
+production combination, selecting `extender-installation-r02`. Its annotated Git
+tag is `v0.1.0`. `production/current.yaml` records the production version, tag and
+immutable bundle reference together.
+
+During early development, compatible production increments advance `v0.1.x`.
+Minor changes are reserved for Author-agreed milestones or developmental breaking
+changes; major1 marks an explicitly agreed stability milestone. Each production
+version remains subject to Author approval or existing explicit version authority.
+Component versions and build identities remain independent. Installation bundle
+revisions identify immutable packaging records; they are not firmware versions.
+A production version can name an already accepted exact bundle without rebuilding
+or renaming its binaries or editing its archived manifests.

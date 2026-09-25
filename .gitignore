@@ -9,8 +9,7 @@
 /docs/dependencies/generated/base-code-graph.yaml
 /docs/dependencies/generated/reviewed-overlay.yaml
 
-# Local Codex handoff (may contain machine-specific paths and instructions)
-/AGENTS.md
+# Machine-local agent evidence and bench configuration
 /agents/
 /HARDWARE.local.md
 
