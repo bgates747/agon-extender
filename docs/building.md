@@ -1,8 +1,9 @@
 # Building Extender components
 
-Compile entry points, checked against source on 2026-09-24. This is not a
-fresh-machine installation qualification or permission to deploy. **The consolidated
-P4 drafts have clean local build proof, but await hardware equivalence validation.** Read the
+Compile entry points and the accepted combination are indexed by the
+[production selection](../production/README.md). The r55 clean build passed bounded
+physical and Author review. This is not a fresh-machine installation qualification
+or permission to deploy. Read the
 [provenance boundary](#deployed-candidates-versus-the-base-target) before selecting
 a replacement for an installed image, and the [operation entry point](using-extender.md)
 before using an existing bench.
@@ -189,18 +190,17 @@ for dispatch and memory limits. No build command in this guide deploys firmware.
 
 ## Deployed candidates versus the base target
 
-[R01-04](tasks/RELEASE-001/R01-04.md) consolidated the selected installed
-composition and recorded fresh control/corrected builds. The maintained target
-now includes the retained codecs, browser decoders, selected build flags and
-hash-guarded DSP derivative. Hidden snapshot overlays are no longer needed for
-those local builds. The current installation is **unchanged**: packaging,
-hardware equivalence and promotion remain explicit release-task gates.
+The maintained `p4-console` target includes the selected codecs, browser decoders,
+build flags and hash-guarded DSP derivative. It no longer requires hidden task
+snapshot overlays. The accepted r55 build additionally fixes the separate
+bootloader configuration path and checks both silicon ranges before freezing an
+image. See the [current bundle](../production/README.md) for exact binaries and
+[physical acceptance](tasks/RELEASE-001/R01-07.md) for the bounded scope.
 
-These draft P4 images do not byte-match the preserved reset build. New identities,
-source/debug paths, an unset reset endpoint and the authorized query correction
-are recorded differences; they do not prove all changes harmless. Keep the
-preserved rollback until hardware validation passes. No new performance result
-or change to request pacing is implied.
+EMOS and the listener reproduce historical bytes exactly. P4 r55 is a separately
+identified clean reconstruction, not byte-identical to the old installed reset
+build. Compression negotiation and reset configuration are explicit in its
+manifest. No new FPS guarantee or change to request pacing is implied.
 
 ### Exact EMOS and MOSlet reproduction
 

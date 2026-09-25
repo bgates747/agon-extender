@@ -1,0 +1,8 @@
+commit: 555d1487c038c1a4ac3eafb06f033af4b309dbf2
+files:
+  scripts/sdcard.py: af07d1bd2c302a97db36b2599a307799dccb805bacfa632e901b874f69e8fa0c
+  scripts/keyboard.py: 2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525
+  scripts/screen_text.py: 85e769496f10d4aaeb7f6eb0603358b646333c70f237845858d669a105637e42
+  scripts/reset_agon.py: ac2956eab5dafc147097051a2d2ed0f9a5ae1b6deed1220fb23eeadece888f0d
+  scripts/reset_bridge.py: d824722464576fc476209fc9723ee3cf723f8276c12faf3c57b1fe1b86018f59
+  requirements-dev.txt: 76c1fea5b6829193d0ba0d159fc47c0749f262fc4efe351f7a3e7e7652d42c7e

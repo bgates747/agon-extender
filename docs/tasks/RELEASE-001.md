@@ -8,11 +8,10 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-07 complete; Author accepts the corrected r55 installation. R01-08 is next.**
-Physical automated checks and the requested human input, gameplay and reset
-review passed. Preserve that exact combination. The failed r01 archive remains
-non-deployable; R01-08 must assemble and verify its corrected replacement before
-advancing the current selection. No new hardware work is started by acceptance.
+**State: complete — accepted extender-installation-r02 is current.**
+[Production selection](../../production/README.md) is the routine entry point.
+[R01-08 closeout](RELEASE-001/R01-08.md) records exact packaging and validation.
+No new hardware work is started by promotion.
 “Approved for current use” does not silently confer formal `qualified` or
 `released` status. TODO.md owns priority; this file owns the discrete work.
 
@@ -64,7 +63,9 @@ complete R01-02. [Source composition](RELEASE-001/R01-03.md) completes R01-03;
 [R01-04 build results](RELEASE-001/R01-04.md) complete local reconstruction and
 compression checks. [R01-05 packaging](RELEASE-001/R01-05.md) supplies the
 unselected local bundle. [R01-06 local validation](RELEASE-001/R01-06.md) passes
-within its explicit scope. No installed firmware changed.
+within its explicit scope. R01-07 later identified and fixed a bootloader
+configuration mismatch, deployed r55 and obtained Author acceptance. R01-08
+replaced the failed package and selected the accepted combination.
 
 ## Decision register
 
@@ -152,7 +153,7 @@ performance campaign. Preserve unrelated SD files and observe capture-interferen
 rules. A failure retains the old approved selection; restore it when required.
 Record exact passes, failures and exclusions; obtain Author acceptance.
 
-R01-08 [ ] **Promote and close the reconstruction gap.** After acceptance, the
+R01-08 [x] **Promote and close the reconstruction gap.** After acceptance, the
 agent packages the exact accepted r55 combination as a new immutable bundle,
 verifies its inventory and corrected bootloader configuration, then advances the single current selection, updates the handbook/build/tool/SD
 instructions and records compatibility and rollback. Update A09-F009 only to the
@@ -169,10 +170,9 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-R01-07 is complete after explicit Author acceptance on 2026-09-25 UTC.
-R01-08 is the next separately authorized chunk. Preserve the accepted binaries
-and frozen failed r01 bundle; do not rebuild or reflash accepted firmware merely
-to package it. No current selection has yet been promoted. New firmware
+R01-01–08 are complete. Preserve accepted artifacts and the failed historical
+r01 bundle. Further changes require their own bounded task and validation; this
+closeout does not start downstream development. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.

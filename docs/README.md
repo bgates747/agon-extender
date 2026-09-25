@@ -5,6 +5,9 @@ consolidated under [AUDIT-009](tasks/AUDIT-009.md); its remaining coverage gaps
 are explicit. It must not require comparing old task amendments to determine
 current behavior. Dated evidence supports claims but is not a second manual.
 
+The [current approved local installation](../production/README.md) selects exact
+firmware, EMOSlet and host-tool archives with hashes and installation guidance.
+
 ## Use an existing installation
 
 | Need | Current guide |

@@ -119,8 +119,9 @@ not by this audit snapshot.
 
 ### Mapped gaps and retained limits
 
-1. **A09-F009 remains open:** base-build reproduction of later deployed overlays
-   is not established. Its existing implementation owner/contract remains separate.
+1. **A09-F009 resolved for the current DevKit combination:**
+   [R01-08](../RELEASE-001/R01-08.md) records clean reconstruction, physical
+   acceptance and the current bundle. Broader compatibility remains unqualified.
 2. **A09-F060 — emulator setup documentation:** the build guide depends on a
    configured Fab profile but does not supply a self-contained external-user
    setup/verification path. Canonical `agon-dev-env` instructions cover generated

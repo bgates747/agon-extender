@@ -5,10 +5,6 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
-## Next priority — Approved installation bundle
-
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–07 complete; Author accepted corrected r55 after automated and human checks. Next: R01-08 packages the exact accepted combination, verifies it and selects the current bundle. Failed r01 package remains non-deployable.
-
 ## Networking prior-art review — awaiting review
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.

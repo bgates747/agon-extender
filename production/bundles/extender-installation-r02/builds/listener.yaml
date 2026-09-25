@@ -1,0 +1,18 @@
+schema_version: 1
+build:
+  artifact_id: sdserve
+  source_identity: sdserve-v0.2.0
+  build_id: sdserve-v0.2.0-b2026-09-24-02-21-03Z
+  status: draft
+provenance:
+  commit: 2408f3165af0af2d1edd7ebf3c3df0aca552e016
+  dirty: false
+  builder_commit: 90034c2348761c42bab4217ce5b0f906922dc0e4
+  compiler_sha256: 34670dda66966bc83b59bafe97bbe84fd7ca20ad15728eb3f3753097d22dc51d
+outputs:
+- filename: sdserve.bin
+  sha256: bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11
+  size_bytes: 19243
+notes:
+- Exact historical payload reproduction; component label retained; installation acceptance
+  in baseline

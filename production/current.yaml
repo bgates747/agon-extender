@@ -1,0 +1,8 @@
+schema_version: 1
+baseline_id: extender-installation-r02
+status: qualified
+bundle: bundles/extender-installation-r02/bundle.yaml
+bundle_sha256: 1fc90f395fabfdb4dff8b4c450820cde8ee297c3fde771ce76e36b3473f230df
+archive_directory: ../dist/production/extender-installation-r02
+acceptance: ../docs/tasks/RELEASE-001/R01-07.md
+scope: Local Olimex DevKit combination; no public distribution or other-board qualification

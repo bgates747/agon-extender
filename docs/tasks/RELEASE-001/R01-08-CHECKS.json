@@ -1,0 +1,14 @@
+{
+  "outcome": "pass",
+  "runtime_files": 28,
+  "source_members_verified": 6,
+  "archive_copies_verified": 2,
+  "negative_cases": 6,
+  "seconds": 1.877,
+  "hardware_actions": 0,
+  "rebuilds": 0,
+  "current_selection": "pass",
+  "changed_document_links": "pass",
+  "artifact_registry": "pass",
+  "global_version_check": "blocked by pre-existing light2-harness-r02 connectivity hash mismatch"
+}

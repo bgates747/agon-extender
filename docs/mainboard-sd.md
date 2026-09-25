@@ -3,8 +3,9 @@
 The current recorded installation uses EMOS v0.1.19 and the sdserve v0.2.0
 **foreground EMOSlet** at `/emos/sdserve.bin`. Checked and opt-in fast transfers
 pass bounded physical checks; see the [latest deployment](tasks/AUDIT-008/HARDWARE.md)
-and [fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md). These are development
-builds, not a general firmware release. This guide does not assert that the
+and [fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md). The [current local installation bundle](../production/README.md) pins these
+accepted binaries and matching host tools. Component development labels remain;
+this is not a public firmware release. This guide does not assert that the
 service is running now: consult the installation owner and current status.
 
 ## SD locations

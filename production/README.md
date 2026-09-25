@@ -1,24 +1,35 @@
-# Installation bundles
+# Current installation
 
-No bundle is selected for normal installation yet. `current.yaml` will be created
-only after hardware validation and Author acceptance. The bench may run a separately recorded validation candidate; this directory
-does not promote that candidate for normal installation.
+**extender-installation-r02** is the Author-accepted local DevKit combination.
+[Current selection](current.yaml) points to its
+[immutable manifest](bundles/extender-installation-r02/bundle.yaml) and archive
+checksums. This is the single installation selection authority; extracted
+packages do not select or install themselves.
 
-| Bundle | Role |
+| Component | Selected build |
 |---|---|
-| [extender-installation-r01](bundles/extender-installation-r01/bundle.yaml) | Do not deploy: incompatible clean-build bootloader discovered in R01-07; retained evidence |
+| P4 | `uart-excom-console-r55-b2026-09-25-02-18-28Z` |
+| EMOS | `agon-emos-v0.1.19-b2026-09-24-02-02-56Z` |
+| Foreground EMOSlet | `sdserve-v0.2.0-b2026-09-24-02-21-03Z`, installed in `/emos` |
+| Host clients | Exact versions and hashes in `builds/host.yaml` within the bundle |
 
-The first hardware attempt exposed a silicon-configuration mismatch in the
-clean-built bootloader. See [failure and correction](../docs/tasks/RELEASE-001/R01-07.md).
-Local validation did not establish boot compatibility.
+On the maintained checkout, the runtime and source/support archives are in
+`dist/production/extender-installation-r02/`, with external `SHA256SUMS`.
+These generated local archives are not in Git and have no public download.
+Another operator obtains both archives and recorded hashes from the build owner;
+cloning this repository alone does not fetch them. Retain both archives together.
 
-Start with the [installation guide](../docs/installing.md). Each immutable bundle
-record names payload hashes and its authoritative [baseline](../docs/versions/baselines/extender-installation-r01.yaml).
-Binaries and corresponding sources are generated under ignored `dist/production/`;
-no public binary download has been published. An operator needs the named archives
-and checksums, not access to an agent's private directory.
+Use the [installation guide](../docs/installing.md) for verification, selective
+installation, input bootstrap and rollback. Routine operation begins at the
+[handbook](../docs/README.md). [Acceptance](../docs/tasks/RELEASE-001/R01-07.md)
+and [packaging checks](../docs/tasks/RELEASE-001/R01-08.md) define the scope.
 
-The package builder copies pinned canonical inputs. Never edit an extracted
-package to create another candidate; change maintained inputs and allocate the
-next bundle revision. [RELEASE-001](../docs/tasks/RELEASE-001.md) owns remaining
-packaging validation, bench acceptance and promotion.
+The firmware embeds this bench's private reset endpoint. It is local-only;
+other endpoints require a new identified build. Public redistribution remains
+subject to [source/license review](NOTICES.md). No blanket all-mode, other-board
+or performance qualification is implied. Historical component draft labels are
+retained; the installation baseline records bounded qualification.
+
+The earlier `extender-installation-r01` is failed preparation evidence with an
+incompatible bootloader. **Do not deploy it.** Its immutable records and archives
+remain retained; they are not an alternative current installation.

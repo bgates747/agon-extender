@@ -1,6 +1,6 @@
 # Returning developer / external-agent orientation
 
-Documentation checkpoint: 2026-09-24 UTC. Begin with [README](README.md) and
+Documentation checkpoint: 2026-09-25 UTC. Begin with [README](README.md) and
 [using an existing installation](docs/using-extender.md). Read the canonical
 workspace instructions named in the local `AGENTS.md`, when present, before
 work. That ignored file is supplied by the maintained workspace, not a public
@@ -23,12 +23,11 @@ unfinished work; this handoff is not a competing task queue.
    [Keyboard ownership](docs/remote-keyboard.md) applies in Legacy and ExCom.
    Remote typing requires Extender input to be admitted already; do not ask an
    agent to enable its own disabled path through that path.
-4. Accepted browser policy is full-frame RLE2, not inter-frame differencing.
-   The retained reset-button build instead requests raw `/video`; its codec
-   support remains present but unrequested by the ordinary page.
-   [Composition review](docs/tasks/RELEASE-001/R01-03.md) records this discrepancy
-   and removed explicit credit spacing. Performance impact is unmeasured; no
-   correction is deployed.
+4. The [current local bundle](production/README.md) selects accepted P4 r55,
+   EMOS v0.1.19 and sdserve v0.2.0 with pinned host tools. Browser output requests
+   full-frame RLE2/packed compression, not inter-frame differencing. Clean builds
+   include the selected composition and validate both bootloader/application
+   silicon settings. The earlier r01 package is non-deployable historical evidence.
 5. Remote reset uses the separate Pi bridge described in the
    [reset guide](docs/bench-reset.md). It is neither a P4 reset nor a power cycle.
 6. [AUDIT-009](docs/tasks/AUDIT-009.md) is reconciling documentation. Its inventory

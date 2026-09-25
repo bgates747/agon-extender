@@ -1,0 +1,42 @@
+schema_version: 1
+build:
+  artifact_id: uart-excom-console
+  source_identity: uart-excom-console-r55
+  build_id: uart-excom-console-r55-b2026-09-25-02-18-28Z
+  status: draft
+  created_at: '2026-09-25T02:18:28.521613+00:00'
+provenance:
+  commit: b835307270d3f0fac1be01b587e62163cc392dac
+  dirty: false
+  sdkconfig_sha256: ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5
+outputs:
+- filename: uart-excom-console-r55-b2026-09-25-02-18-28Z.bin
+  sha256: a2d41a29ee9f5b42a10df9c3d724202b1db5ab561f3c3fc29f134f4f15fe54cb
+  size_bytes: 1486848
+- filename: uart-excom-console-r55-b2026-09-25-02-18-28Z.elf
+  sha256: cef73088f724198c939dda4e412397bea2247057ddec1b540ff306d27aef3e0d
+  size_bytes: 28338056
+- filename: uart-excom-console-r55-b2026-09-25-02-18-28Z.factory.bin
+  sha256: 882581b298ce731cf475a9aff72fb459e638f3c303e93fc60e6216601839f194
+  size_bytes: 1617920
+- filename: dependencies.lock
+  sha256: d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722
+  size_bytes: 8845
+- filename: partitions.bin
+  sha256: e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a
+  size_bytes: 3072
+- filename: bootloader.bin
+  sha256: d1d96be7be65cc3de01121ea9f6a2fe55d2e60bae478b3af306dac6ae4fab82b
+  size_bytes: 24256
+silicon_configs:
+  application:
+    sha256: 84843028a57db6e4c561f1f2164458a521281416399aad5878d0809384e66b3f
+    minimum: 100
+    maximum: 199
+  bootloader:
+    sha256: 099b7594fb62b518b4876567eaad1e3f16a1845f9527cd7fec2e511e6a14a512
+    minimum: 100
+    maximum: 199
+notes:
+- ELF retained privately, not in runtime package
+- Private reset endpoint embedded; local-only bundle
