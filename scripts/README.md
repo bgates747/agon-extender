@@ -25,6 +25,7 @@ current bench ownership, foreground state or firmware admission.
 | Tool | Scope |
 |---|---|
 | [vdp-pio.sh](vdp-pio.sh), [prepare_console.py](prepare_console.py) | In-place compile / clean isolated P4 bundle; [build guide](../docs/building.md) distinguishes local reconstruction from pending hardware equivalence |
+| [package_installation.py](package_installation.py), [verify_installation.py](verify_installation.py) | Local draft packaging / extracted-package integrity; [production entry point](../production/README.md). Neither installs or selects a bundle |
 | [reproduce_sd_components.py](reproduce_sd_components.py) | Isolated exact-hash EMOS/MOSlet reproduction using owning repositories; no deployment |
 | [check_numeric_port.py](check_numeric_port.py) | Bounded pinned-input and sanitized host regressions; [import procedure](../docs/procedures/numeric-upstream-import-r01.md) still requires fresh source/target review |
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |

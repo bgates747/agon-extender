@@ -229,3 +229,30 @@ not be deployed with a historical identity. A genuinely changed build needs a
 new timestamp through the owning project's identified build procedure.
 The helper builds the **MOSlet**, not an ordinary LOAD/RUN application, and does
 not modify an emulator, SD card or board.
+
+## Local installation packaging
+
+The [production entry point](../production/README.md) distinguishes draft bundles
+from the future current selection. R01-05's frozen packaging recipe is at commit
+`9b3f77ca`; use that clean checkout and the pinned R01-04 build directories to
+recreate its inputs. Do not silently regenerate the same identity from newer
+source. Paths below name local generated build directories, not runtime
+dependencies or public storage locations:
+
+```sh
+.venv/bin/python scripts/package_installation.py \
+  --p4-build agents/release001/builds/corrected \
+  --sd-build agents/release001/builds/sd-components \
+  --emos-source ../agon-emos --builder-source ../mos-agondev
+.venv/bin/python scripts/verify_installation.py \
+  dist/production/extender-installation-r01/extender-installation-r01
+```
+
+The builder refuses an existing output directory and verifies selected payload
+hashes. It produces runtime/source archives and external archive checksums; gzip
+and packaging timestamps are not claimed byte-reproducible. The immutable bundle
+record selects the particular retained archives by SHA-256, not by recompression.
+Neither command flashes, resets, writes SD media, enables a service or creates
+a current selection. Source/license publication limits are in
+[NOTICES](../production/NOTICES.md). R01-06 owns the broader installation-path
+walkthrough and remaining local validation.

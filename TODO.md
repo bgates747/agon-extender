@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–04 complete: preserved baseline, mapped composition, clean P4 drafts and exact EMOS/MOSlet reproduction. Compression correction tested locally; installed firmware unchanged. Next R01-05 packages the installation candidate; hardware acceptance and promotion remain pending.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–05 complete; local unselected draft archives and production entry point exist. Next R01-06 independently validates installation guidance/local matrix. Hardware acceptance, configured reset, unresolved VDP identity and promotion remain gated; installed firmware unchanged.
 
 ## Networking prior-art review — awaiting review
 

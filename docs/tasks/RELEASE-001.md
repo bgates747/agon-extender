@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-05 authorized on 2026-09-24; package locally, no deployment.**
+**State: R01-05 complete locally on 2026-09-24; unselected draft, no deployment.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or
@@ -62,7 +62,8 @@ hashes, rollback material and unresolved live-identity limits. R01-01 is complet
 within that stated scope. [Bundle specification and validation matrix](RELEASE-001/R01-02.md)
 complete R01-02. [Source composition](RELEASE-001/R01-03.md) completes R01-03;
 [R01-04 build results](RELEASE-001/R01-04.md) complete local reconstruction and
-compression checks. No installed firmware changed.
+compression checks. [R01-05 packaging](RELEASE-001/R01-05.md) supplies the
+unselected local bundle. No installed firmware changed.
 
 ## Decision register
 
@@ -125,7 +126,7 @@ images; report nondeterministic metadata separately. If bytes differ, document
 why and require equivalence validation rather than claiming exact reproduction.
 Deliver build commands, manifests and automated integrity/input checks.
 
-R01-05 [ ] **Assemble the installation candidate.** The agent packages identified
+R01-05 [x] **Assemble the installation candidate.** The agent packages identified
 outputs, pinned host tools/dependencies, checksums and operator instructions.
 Clearly distinguish EMOSlet from ordinary application payloads. Document initial
 input admission, SD placement, flash order/offsets where applicable, verification,
