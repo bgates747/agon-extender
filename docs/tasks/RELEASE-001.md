@@ -8,10 +8,11 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: contract approved; R01-03 authorized on 2026-09-24.** Preservation
-and bundle specification are complete. This tranche traces retained P4 sources,
-transformations and build inputs to a bounded composition map. No maintained
-source migration, build, deployment or firmware change is authorized here.
+**State: R01-04 and compression correction authorized on 2026-09-24.**
+Consolidate the mapped P4 composition, produce clean identified control/corrected
+builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
+and host inputs within their existing ownership. No physical deployment or
+emulator modification is authorized by this tranche.
 “Approved for current use” does not silently confer formal `qualified` or
 `released` status. TODO.md owns priority; this file owns the discrete work.
 
@@ -66,7 +67,7 @@ R01-04 remains unstarted. No installed firmware changed.
 
 | ID | State | Recommendation, alternatives and downstream effect |
 |---|---|---|
-| R01-D01 | Open — browser compression discrepancy | Preserve an exact-behavior control build first, then authorize restoring `?rle2=1&packed=2` as a separately identified and tested correction before promotion. Alternative: explicitly retain raw browser default as a documented departure from ADR-0021. Prerequisites: clean reconstruction and known rollback. The reset build lost both compressed requests and explicit 60-Hz spacing; do not also change pacing under this correction. Existing QUAL-003/BENCH-005 own that separate policy question. No fix or release exception is approved by R01-03. |
+| R01-D01 | Accepted — 2026-09-24 | Author authorized restoring `?rle2=1&packed=2` during R01-04. Preserve a clean raw-request control first, then identify/test the correction separately. Verify negotiation in built browser assets and paired encoder/decoder behavior. Keep current request pacing unchanged; its policy question remains with QUAL-003/BENCH-005. No deployment or release promotion is implied. |
 
 This is an implementation discrepancy, not a new architectural decision. The
 accepted compression requirement remains unchanged; source review does not
@@ -164,10 +165,10 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-The present execution boundary is **R01-03 only**, after committing this scope
-update. Deliver the selected source composition map and missing-input limits;
-do not consolidate or build it yet. R01-04 and later chunks require
-continuation authorization. New firmware
+The present execution boundary is **R01-04 plus accepted R01-D01**, after
+committing and syncing this scope update. Deliver clean builds, regression checks
+and explicit reproducibility limits. R01-05 and later chunks require continuation
+authorization. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
