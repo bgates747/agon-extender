@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-06 authorized; independent local validation, no deployment.**
+**State: R01-06 complete locally; configured reset and live identity gates remain before bench deployment.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or
@@ -63,7 +63,8 @@ within that stated scope. [Bundle specification and validation matrix](RELEASE-0
 complete R01-02. [Source composition](RELEASE-001/R01-03.md) completes R01-03;
 [R01-04 build results](RELEASE-001/R01-04.md) complete local reconstruction and
 compression checks. [R01-05 packaging](RELEASE-001/R01-05.md) supplies the
-unselected local bundle. No installed firmware changed.
+unselected local bundle. [R01-06 local validation](RELEASE-001/R01-06.md) passes
+within its explicit scope. No installed firmware changed.
 
 ## Decision register
 
@@ -134,7 +135,7 @@ service startup/stop and rollback. Retain configurable local endpoints outside
 the bundle. Generate packages from canonical sources; never maintain a second
 editable script/browser tree. Candidate packaging does not advance current.
 
-R01-06 [ ] **Validate locally.** The agent exercises manifest/hash checks,
+R01-06 [x] **Validate locally.** The agent exercises manifest/hash checks,
 component selection, clean builds and applicable host tests. Use emulator checks
 only where they provide meaningful evidence; honor the explicit human approval
 gate for any emulator-related changes. Record untested hardware behavior as

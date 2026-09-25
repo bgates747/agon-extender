@@ -1,0 +1,70 @@
+{
+  "started_at": "2026-09-25T01:42:28.531525+00:00",
+  "finished_at": "2026-09-25T01:45:57.671766+00:00",
+  "clock": "UTC wall duration includes investigation; individual test seconds use host monotonic clock, not target performance",
+  "results": [
+    {
+      "check": "archive-integrity",
+      "exit_code": 0,
+      "seconds": 0.095
+    },
+    {
+      "check": "package-negative",
+      "exit_code": 0,
+      "seconds": 0.129
+    },
+    {
+      "check": "sdcard",
+      "exit_code": 0,
+      "seconds": 1.365
+    },
+    {
+      "check": "keyboard",
+      "exit_code": 0,
+      "seconds": 1.024
+    },
+    {
+      "check": "reset_bridge",
+      "exit_code": 0,
+      "seconds": 0.577
+    },
+    {
+      "check": "sdcard-help",
+      "exit_code": 0
+    },
+    {
+      "check": "keyboard-help",
+      "exit_code": 0
+    },
+    {
+      "check": "screen_text-help",
+      "exit_code": 0
+    },
+    {
+      "check": "reset_agon-help",
+      "exit_code": 0
+    },
+    {
+      "check": "reset_bridge-help",
+      "exit_code": 0
+    }
+  ],
+  "setup_corrections": [
+    "Provided pinned sibling EMOS source to SD host fixture",
+    "Reset duplicate test permits documented transient busy while previous HTTP handler releases lock; asserts one mocked pulse"
+  ],
+  "wall_elapsed_seconds": 209.14,
+  "auxiliary": {
+    "screen_text_pending_then_ready": "pass",
+    "pulse_success_release_mock": "pass",
+    "pulse_failure_release_mock": "pass",
+    "invalid_configuration_no_pulse": "pass",
+    "seconds": 0.765,
+    "hardware_operations": 0
+  },
+  "browser_capture": "pass: exact corrected-build assets, local Chromium and synthetic WebSocket",
+  "clean_build_evidence": "R01-04 clean manifests and all pinned P4 output hashes rechecked; no redundant rebuild",
+  "archive_check": "both archives match authoritative tracked hashes; fresh runtime extraction verified",
+  "hardware_operations": 0,
+  "emulator_changes": 0
+}

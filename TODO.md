@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–05 complete; local unselected draft archives and production entry point exist. Next R01-06 independently validates installation guidance/local matrix. Hardware acceptance, configured reset, unresolved VDP identity and promotion remain gated; installed firmware unchanged.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–06 complete; unselected draft passes local package/client validation. Before R01-07 deployment, preserve configured browser reset and resolve live/onboard VDP identities. Hardware acceptance and promotion remain gated; installed firmware unchanged.
 
 ## Networking prior-art review — awaiting review
 
