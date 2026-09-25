@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-05 complete locally on 2026-09-24; unselected draft, no deployment.**
+**State: R01-06 authorized; independent local validation, no deployment.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or
@@ -167,12 +167,12 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-The present execution boundary is **R01-05**, authorized after R01-04 review.
-Package the corrected P4 draft and exact-reproduced EMOS/MOSlet with pinned
-host inputs, checksums, source/notices and maintained install/rollback guidance.
-Allocate extender-installation-r01 as a draft combination under standing version
-preapproval. Keep current selection absent. No flash, reset, SD write or emulator
-change; later chunks require continuation authorization. New firmware
+The present execution boundary is **R01-06**. Check retained clean-build evidence,
+extract and validate the frozen archives, exercise the packaged host clients and
+browser through local fixtures, and walk installation/rollback as a new reader.
+Do not modify the immutable r01 bundle. Record blockers rather than silently
+repackaging or advancing current. No bench, SD, reset or emulator changes.
+R01-07 and promotion require continuation authorization. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
