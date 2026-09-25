@@ -54,7 +54,10 @@ interface. Stop any serial observer. `p4/flash-layout.json` records esptool sett
 and offsets: bootloader `0x2000`, partitions `0x8000`, OTA initializer `0xf000`,
 application `0x20000`. The supplied `p4/firmware.factory.bin` is the matching
 combined prefix and is written at **0x0**. Do not write the standalone application
-at zero or perform a blanket erase. Example commands, only after preflight:
+at zero or perform a blanket erase. The combined prefix also overwrites any
+mutable data lying within its address range (including NVS/OTA metadata); retain
+a full readback and resolve any settings that must survive before proceeding.
+Example commands, only after preflight:
 
 ```sh
 python3 -m esptool --chip esp32p4 --port "$P4_SERIAL" --baud 460800 \
