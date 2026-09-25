@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-04 complete locally on 2026-09-24; no physical deployment.**
+**State: R01-05 authorized on 2026-09-24; package locally, no deployment.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or
@@ -166,10 +166,12 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-The present execution boundary is **R01-04 plus accepted R01-D01**, after
-committing and syncing this scope update. Deliver clean builds, regression checks
-and explicit reproducibility limits. R01-05 and later chunks require continuation
-authorization. New firmware
+The present execution boundary is **R01-05**, authorized after R01-04 review.
+Package the corrected P4 draft and exact-reproduced EMOS/MOSlet with pinned
+host inputs, checksums, source/notices and maintained install/rollback guidance.
+Allocate extender-installation-r01 as a draft combination under standing version
+preapproval. Keep current selection absent. No flash, reset, SD write or emulator
+change; later chunks require continuation authorization. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
 close electrical qualification, all-mode compatibility or the documentation audit.
