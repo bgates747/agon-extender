@@ -202,7 +202,7 @@ else:
 # existing dependency source. The recipe checks the exact selected DSP source
 # and generates its derivative under CMake's build directory, never in the
 # managed component. PORT-003 owns the evidence and pending review gate.
-if os.environ.get("AGON_EXTENDER_DSP_LIFETIME_FIX") == "1":
+if selection.get("dsp_matrix_lifetime_fix", False) or os.environ.get("AGON_EXTENDER_DSP_LIFETIME_FIX") == "1":
     if environment != "p4-console":
         raise RuntimeError("DSP lifetime experiment is scoped to p4-console")
     with root_path.open("a") as root_file:

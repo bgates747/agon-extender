@@ -13,7 +13,6 @@
   },
   "project_translation_units": [
     "video/extender/boot/p4_console.cpp",
-    "video/extender/diagnostics/frame_timing.cpp",
     "video/extender/display/cursor_position_adapter.cpp",
     "video/extender/display/presentation_snapshot_pool.cpp",
     "video/extender/display/screen_facade_adapter.cpp",
@@ -104,8 +103,7 @@
   },
   "dependency_lock": "pio/p4-console-dependencies.lock",
   "component_compile_definitions": [
-    "AGON_EXTENDER_FRAME_TIMING=1",
-    "AGON_EXTENDER_STOCK_RUNTIME=1",
-    "AGON_GRAPHICS_TIMING=1"
-  ]
+    "AGON_EXTENDER_STOCK_RUNTIME=1"
+  ],
+  "dsp_matrix_lifetime_fix": true
 }

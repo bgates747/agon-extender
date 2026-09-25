@@ -1,5 +1,8 @@
 #include "display_status.hpp"
 #include "screen_text.hpp"
+#include "pair_rle.hpp"
+#include "packed_frame.hpp"
+#include "extender/diagnostics/rle2/bench.hpp"
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
 #include "extender/diagnostics/output_isolation.hpp"
 #endif
@@ -41,6 +44,14 @@
 #endif
 
 namespace agon::extender::network {
+// Only HTTP task accesses these after startup; one active video connection.
+static uint8_t *rle2_scratch=nullptr;
+static bool rle2_requested=false, packed_requested=false, sixbit_requested=false;
+static uint8_t *packed_scratch=nullptr, *pair_scratch=nullptr;
+static bool pair_requested=false;
+static uint64_t rle2_encode_us=0,rle2_attempts=0,rle2_frames=0;
+
+
 namespace {
 
 constexpr char kTag[] = "extender_net";
@@ -404,8 +415,11 @@ esp_err_t telemetryHandler(httpd_req_t *request) {
 bool WiredNetworkService::startHttp() noexcept {
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
+  if(!pair_scratch)pair_scratch=(uint8_t*)heap_caps_malloc(786432,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+  if(!packed_scratch)packed_scratch=(uint8_t*)heap_caps_malloc(589828,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
+  if(!rle2_scratch)rle2_scratch=(uint8_t*)heap_caps_malloc(786446,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 8; // includes read-only display metadata
+  config.max_uri_handlers = 9; // screen/display metadata and retained RLE2 diagnostic
 #if defined(AGON_EXTENDER_TELEMETRY)
   ++config.max_uri_handlers;
 #endif
@@ -461,6 +475,8 @@ bool WiredNetworkService::startHttp() noexcept {
     }
   }
 
+  httpd_uri_t codec{};codec.uri="/diagnostics/rle2";codec.method=HTTP_GET;codec.handler=&rle2bench::handler;
+  if(httpd_register_uri_handler(server,&codec)!=ESP_OK){http_fault_=true;stopHttp();return false;}
   httpd_uri_t video{};
   video.uri = "/video";
   video.method = HTTP_GET;
@@ -562,6 +578,11 @@ esp_err_t WiredNetworkService::videoPostHandshake(
     httpd_req_t *request) noexcept {
   auto *service = static_cast<WiredNetworkService *>(request->user_ctx);
   if (service == nullptr) return ESP_FAIL;
+  char query[32]{};
+  rle2_requested=httpd_req_get_url_query_str(request,query,sizeof(query))==ESP_OK && (std::strcmp(query,"rle2=1")==0 || std::strcmp(query,"rle2=1&packed=1")==0 || (std::strcmp(query,"rle2=1&packed=2")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0));
+  pair_requested=std::strcmp(query,"pair=1")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0;
+  sixbit_requested=std::strcmp(query,"packed=2")==0 || (std::strcmp(query,"rle2=1&packed=2")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0);
+  packed_requested=sixbit_requested || std::strcmp(query,"packed=1")==0 || std::strcmp(query,"rle2=1&packed=1")==0;
   auto const socket = httpd_req_to_sockfd(request);
   std::lock_guard<std::mutex> guard(service->video_dispatch_mutex_);
   auto const previous = service->video_.client();
@@ -716,21 +737,58 @@ void WiredNetworkService::performQueuedSend() noexcept {
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   agon_output_isolation::Scope isolatedSend(agon_output_isolation::Phase::Send);
 #endif
+  // HTTP task serializes negotiation, scratch use and complete sends. Snapshot
+  // lease is immutable here; no graphics lock is acquired for compression.
+  std::array<OpaqueMessageSegment,2> compressed{};
+  uint8_t compressed_header[32];
+  auto segments=view.segments.data();size_t count=view.segment_count;
+  size_t transmitted=view.total_bytes;
+  if(rle2_requested && rle2_scratch && count==2 && segments[0].size==32) {
+    auto h=segments[0].data;const auto n=segments[1].size;
+    const size_t width=size_t(h[12])|(size_t(h[13])<<8);
+    const size_t height=size_t(h[14])|(size_t(h[15])<<8);
+    if(std::memcmp(h,"EVF1",4)==0 && h[6]==2 && n<=786432 && n==width*height && rle2::get32(h+16)==width && rle2::get32(h+20)==n){
+      auto begin=esp_timer_get_time();auto encoded=rle2::encode_auto(segments[1].data,n,rle2_scratch,786446,true);
+      rle2_encode_us+=esp_timer_get_time()-begin;++rle2_attempts;
+      if(encoded && encoded.bytes<n){
+        std::memcpy(compressed_header,h,32);compressed_header[2]='R';
+        compressed[0]={compressed_header,32};compressed[1]={rle2_scratch,encoded.bytes};
+        segments=compressed.data();count=2;transmitted=32+encoded.bytes;++rle2_frames;
+      }
+    }
+  }
+  if(packed_requested && packed_scratch && view.segment_count==2 && view.segments[0].size==32) {
+    auto h=view.segments[0].data;auto pixels=view.segments[1];
+    size_t w=size_t(h[12])|(size_t(h[13])<<8),hh=size_t(h[14])|(size_t(h[15])<<8);
+    if(std::memcmp(h,"EVF1",4)==0 && h[6]==2 && pixels.size==w*hh && rle2::get32(h+16)==w && rle2::get32(h+20)==pixels.size) {
+      auto bytes=packed_frame::encode(pixels.data,pixels.size,packed_scratch,589828,transmitted-32,sixbit_requested);
+      if(bytes){std::memcpy(compressed_header,h,32);compressed_header[2]='P';
+        compressed[0]={compressed_header,32};compressed[1]={packed_scratch,bytes};
+        segments=compressed.data();count=2;transmitted=32+bytes;}
+    }
+  }
+  if(pair_requested && pair_scratch && view.segment_count==2 && view.segments[0].size==32) {
+    auto h=view.segments[0].data;auto pixels=view.segments[1];
+    const size_t w=size_t(h[12])|(size_t(h[13])<<8),hh=size_t(h[14])|(size_t(h[15])<<8);
+    if(std::memcmp(h,"EVF1",4)==0 && h[6]==2 && pixels.size==w*hh && rle2::get32(h+16)==w && rle2::get32(h+20)==pixels.size){
+      const size_t limit=(!rle2_requested && !packed_requested)?pixels.size+1:transmitted-32;
+      auto bytes=pair_rle::encode(pixels.data,pixels.size,pair_scratch,786432,limit);
+      if(bytes){std::memcpy(compressed_header,h,32);compressed_header[2]='Q';
+        compressed[0]={compressed_header,32};compressed[1]={pair_scratch,bytes};
+        segments=compressed.data();count=2;transmitted=32+bytes;}
+    }
+  }
   esp_err_t result = ESP_OK;
-  for (std::size_t index = 0; index < view.segment_count; ++index) {
-    httpd_ws_frame_t frame{};
-    frame.fragmented = view.segment_count > 1;
-    frame.final = index + 1 == view.segment_count;
-    frame.type = index == 0 ? HTTPD_WS_TYPE_BINARY : HTTPD_WS_TYPE_CONTINUE;
-    frame.payload = const_cast<std::uint8_t *>(view.segments[index].data);
-    frame.len = view.segments[index].size;
-    result = httpd_ws_send_frame_async(server, socket, &frame);
-    if (result != ESP_OK) break;
+  for(size_t index=0;index<count;++index){
+    httpd_ws_frame_t frame{};frame.fragmented=count>1;frame.final=index+1==count;
+    frame.type=index==0?HTTPD_WS_TYPE_BINARY:HTTPD_WS_TYPE_CONTINUE;
+    frame.payload=const_cast<uint8_t*>(segments[index].data);frame.len=segments[index].size;
+    result=httpd_ws_send_frame_async(server,socket,&frame);if(result!=ESP_OK)break;
   }
 
-  timing.finish(result == ESP_OK ? view.total_bytes : 0);
+  timing.finish(result == ESP_OK ? transmitted : 0);
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
-  isolatedSend.finish(result == ESP_OK ? view.total_bytes : 0, result == ESP_OK);
+  isolatedSend.finish(result == ESP_OK ? transmitted : 0, result == ESP_OK);
 #endif
   if (result == ESP_OK) {
     video_.complete(socket, OpaqueReleaseDisposition::Sent);

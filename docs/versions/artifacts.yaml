@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r105
-updated_at: 2026-09-24T02:21:03Z
+registry_revision: r106
+updated_at: 2026-09-25T01:15:44Z
 
 artifacts:
   - artifact_id: sdserve-fast-probe
@@ -634,9 +634,10 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r22
+    latest_identity: uart-excom-console-r52
     status: draft
     variants: []
+    # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
       - r18 adds the QUAL-003 RX06 checked fixed-point conversion seam. Physical candidate preserves installed r17 parent settings; hardware comparison pending. Standing identity/deployment authorization applies.

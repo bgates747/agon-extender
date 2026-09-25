@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r22",
+  "source_identity": "uart-excom-console-r52",
   "status": "draft",
-  "note": "QUAL-003 RX09 approved N02-N06 P4 numeric guards; retains r21 audio framing, NET-001 takeover and RX06 road fix. Hardware qualification pending."
+  "note": "RELEASE-001 R01-04 clean reconstruction control; preserves raw browser request. No physical qualification."
 }
