@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–06 complete; unselected draft passes local package/client validation. Before R01-07 deployment, preserve configured browser reset and resolve live/onboard VDP identities. Hardware acceptance and promotion remain gated; installed firmware unchanged.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-07 in progress: hardware exposed an incompatible clean-build bootloader; r01 package must not be deployed. Corrected silicon configuration and guarded r55 build prepared. Complete hardware/SD checks and human acceptance before replacement packaging and promotion.
 
 ## Networking prior-art review — awaiting review
 

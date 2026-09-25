@@ -1,8 +1,8 @@
 # Installation bundles
 
 No bundle is selected for normal installation yet. `current.yaml` will be created
-only after hardware validation and Author acceptance. The existing bench remains
-on its recorded installation; this directory does not upgrade it.
+only after hardware validation and Author acceptance. The bench may run a separately recorded validation candidate; this directory
+does not promote that candidate for normal installation.
 
 | Bundle | Role |
 |---|---|
