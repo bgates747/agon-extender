@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r106
-updated_at: 2026-09-25T01:15:44Z
+registry_revision: r107
+updated_at: 2026-09-25T01:19:21Z
 
 artifacts:
   - artifact_id: sdserve-fast-probe
@@ -634,7 +634,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r52
+    latest_identity: uart-excom-console-r53
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.

@@ -193,7 +193,8 @@ function connect() {
   disconnect();
   resetStats();
 
-  const endpoint = defaultEndpoint();
+  // Negotiate the installed lossless codecs; presentation-credit pacing is unchanged.
+  const endpoint = defaultEndpoint() + "?rle2=1&packed=2";
   setState(`connecting ${endpoint}`);
   const candidate = new WebSocket(endpoint);
   candidate.binaryType = "arraybuffer";

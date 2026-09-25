@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r52",
+  "source_identity": "uart-excom-console-r53",
   "status": "draft",
-  "note": "RELEASE-001 R01-04 clean reconstruction control; preserves raw browser request. No physical qualification."
+  "note": "RELEASE-001 R01-04 corrected compression negotiation; otherwise r52 composition. No physical qualification."
 }
