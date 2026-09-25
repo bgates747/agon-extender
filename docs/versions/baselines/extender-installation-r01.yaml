@@ -1,0 +1,43 @@
+schema_version: 1
+baseline:
+  baseline_id: extender-installation
+  revision: r01
+  status: draft
+  description: Unselected locally assembled installation candidate; no deployment
+    acceptance
+  compatibility_scope: Olimex P4 DevKit with retained mainboard VDP; UART ExCom, USB/browser
+    input and SD MOSlet
+artifacts:
+- artifact_id: uart-excom-console
+  identity: uart-excom-console-r53
+  build_id: uart-excom-console-r53-b2026-09-25-01-19-22Z
+  variant: null
+- artifact_id: agon-emos
+  identity: agon-emos-v0.1.19
+  build_id: agon-emos-v0.1.19-b2026-09-24-02-02-56Z
+  variant: null
+- artifact_id: sdserve
+  identity: sdserve-v0.2.0
+  build_id: sdserve-v0.2.0-b2026-09-24-02-21-03Z
+  variant: null
+external_dependencies:
+- name: mainboard-vdp
+  identity: null
+  role: Retain installed image; exact release identity unresolved, blocks promotion
+compatibility:
+  requires: []
+  known_incompatible:
+  - P4-PC board profile is not this DevKit build
+  unqualified:
+  - Combined hardware equivalence
+  - Mac acceptance of corrected browser
+  - Full mode/peripheral coverage
+qualification:
+  procedure:
+    artifact_id: null
+    identity: null
+  run_ids: []
+notes:
+- Author authorized R01-05; standing identity preapproval covers this draft combination.
+- No current selection or public distribution.
+- Browser reset URL unset; optional absent profile only.

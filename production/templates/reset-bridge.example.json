@@ -1,0 +1,6 @@
+{
+  "bind": "127.0.0.1",
+  "port": 8090,
+  "origins": ["http://REPLACE_WITH_P4_HOST"],
+  "command": ["sudo", "-n", "bash", "/opt/agon-extender/reset-pulse.sh", "REPLACE_WITH_GPIOCHIP", "REPLACE_WITH_GPIO"]
+}

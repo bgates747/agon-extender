@@ -1,0 +1,9 @@
+[Unit]
+Description=Agon explicit browser reset bridge
+After=network.target
+[Service]
+User=REPLACE_WITH_SERVICE_USER
+ExecStart=/usr/bin/python3 /opt/agon-extender/reset_bridge.py --config /etc/agon-extender/reset-bridge.json
+Restart=on-failure
+[Install]
+WantedBy=multi-user.target

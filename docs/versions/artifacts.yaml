@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r107
-updated_at: 2026-09-25T01:19:21Z
+registry_revision: r108
+updated_at: 2026-09-25T01:31:12Z
 
 artifacts:
+  - artifact_id: extender-installation
+    kind: installation_bundle
+    identity_scheme: revision
+    latest_identity: extender-installation-r01
+    status: draft
+    variants: []
+    description: Unselected local installation combination; no hardware promotion.
+    notes:
+      - RELEASE-001 R01-05 authorized under standing version preapproval; baseline owns composition.
   - artifact_id: sdserve-fast-probe
     kind: test_fixture
     identity_scheme: revision
