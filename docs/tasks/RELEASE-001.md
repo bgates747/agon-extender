@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-07 in progress; corrected r55 boot/assets pass, staged SD reinsertion and remaining acceptance pending.**
+**State: R01-07 in progress; corrected r55 physical automated checks pass; human acceptance and replacement packaging pending.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or

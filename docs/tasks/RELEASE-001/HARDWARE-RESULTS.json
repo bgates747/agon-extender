@@ -1,0 +1,50 @@
+{
+  "p4_build": "uart-excom-console-r55-b2026-09-25-02-18-28Z",
+  "emos_build": "agon-emos-v0.1.19-b2026-09-24-02-02-56Z",
+  "listener_build": "sdserve-v0.2.0-b2026-09-24-02-21-03Z",
+  "sd": {
+    "listener": {
+      "bytes": 19243,
+      "sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11"
+    },
+    "rom": {
+      "bytes": 131072,
+      "sha256": "26648633b00f9ed1b611ea1a31b6140e4309ba6a32c61de402a858827f79fad9"
+    },
+    "checked_transfer": true,
+    "startup_restored": true,
+    "fast_transfer_with_external_readback": true,
+    "seconds": 121.4143256339994
+  },
+  "browser": {
+    "video_presented": true,
+    "browser_letters_shift_backspace_enter": true,
+    "video_reconnect_capture_retained": true,
+    "browser_control_in_legacy_and_excom": true,
+    "display": "Mode 0 640x480 16 colors 60 Hz single-buffered",
+    "websockets": [
+      {
+        "url": "?rle2=1&packed=2",
+        "frames": 105,
+        "formats": [
+          "EVR1"
+        ]
+      },
+      {
+        "url": "?rle2=1&packed=2",
+        "frames": 219,
+        "formats": [
+          "EVR1"
+        ]
+      }
+    ],
+    "page_errors": []
+  },
+  "scope": "Linux Chromium automation against physical P4 and Agon; no human gameplay, physical USB takeover or Mac acceptance",
+  "remaining": [
+    "Human physical USB input/takeover",
+    "Human browser reset and re-admission",
+    "Human gameplay/UI comparison",
+    "Corrected replacement package; no current selection"
+  ]
+}

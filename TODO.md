@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-07 in progress: hardware exposed an incompatible clean-build bootloader; r01 package must not be deployed. Corrected silicon configuration and guarded r55 build prepared. Complete hardware/SD checks and human acceptance before replacement packaging and promotion.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-07 in progress: hardware exposed an incompatible clean-build bootloader; r01 package must not be deployed. Corrected r55 passes bounded physical ROM/SD/browser/route checks. Human input/gameplay/reset acceptance and replacement packaging remain before promotion.
 
 ## Networking prior-art review — awaiting review
 
