@@ -67,3 +67,19 @@ it. Register findings before implementation; link the originating task records
 back to the register item and retain their historical finding IDs. Promotion
 requires a corresponding TODO entry and bounded work contract; a bug register
 entry alone does not start work.
+
+## Tested acceptance closes into production
+
+Explicit Author approval after testing authorizes the owning agent to promote
+that accepted result into the maintained production location as part of closeout.
+Package exact tested bytes, verify and retain the new immutable bundle, update
+`production/current.yaml` and the current handbook/operating guides, then commit
+and tag the promotion with the agreed production version. Keep rollback and
+bounded evidence. Do not leave accepted deliverables only in a task silo.
+
+The version must already be approved, or the agent must obtain that decision.
+An annotated immutable Git tag identifies the commit containing the selected
+bundle and documentation; push the commit and tag under the Author's repository
+publication authorization. Existing tags and archived bundles are not rewritten.
+See [versioning policy](../versions/README.md). This does not start unrelated
+work or authorize public distribution of private/local-only archives.

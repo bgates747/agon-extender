@@ -299,3 +299,21 @@ rules. Passing it does not qualify the artifacts described by a manifest.
 
 Machine-local topology, credentials, account information, and private specimen
 identifiers must not appear in tracked version records.
+
+## Production promotion tags
+
+After explicit Author acceptance of tested work, the owning agent completes
+production promotion and current documentation as part of closeout. The agent
+packages the exact accepted combination, verifies its archives and selects it
+through `production/current.yaml`. Approval does not expand the tested scope.
+
+Each promotion must receive an **annotated Git tag using the production version
+agreed with the Author**. Tag the commit containing the verified selection and
+updated documentation. Publish that commit and tag under the Author's repository
+publication authorization. Never move or overwrite a published version tag.
+The selected bundle records component identities independently; do not rename
+historical builds or rebuild accepted firmware merely to change its label.
+
+A release tag does not itself authorize publishing local-only binaries or remove
+source/license review requirements. Until the Author settles the production
+version scheme and number, retain acceptance and explicitly mark tagging pending.
