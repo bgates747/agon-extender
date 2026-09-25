@@ -23,16 +23,20 @@ def rehash(root):
     (root/'SHA256SUMS').write_text(''.join(hashlib.sha256(f.read_bytes()).hexdigest()+'  '+str(f.relative_to(root))+'\n' for f in sorted(root.rglob('*')) if f.is_file() and f.name!='SHA256SUMS'))
 
 with tempfile.TemporaryDirectory() as tmp:
-    for case in ('tamper','missing','extra','symlink','identity'):
+    for case in ('tamper','missing','extra','symlink','identity','silicon'):
         root=Path(tmp)/case;shutil.copytree(a.package,root)
         f=root/'sd/emos/sdserve.bin'
         if case=='tamper':f.write_bytes(f.read_bytes()+b'x')
         elif case=='missing':f.unlink()
         elif case=='extra':(root/'surprise.bin').write_bytes(b'x')
         elif case=='symlink':f.unlink();f.symlink_to(a.package.resolve()/'sd/emos/sdserve.bin')
+        elif case=='silicon':
+            path=root/'builds/bootloader-sdkconfig.h'
+            path.write_text(path.read_text().replace('CONFIG_ESP32P4_REV_MIN_FULL 100','CONFIG_ESP32P4_REV_MIN_FULL 301'))
+            meta=root/'builds/p4.yaml';m=yaml.safe_load(meta.read_text());m['silicon_configs']['bootloader']['sha256']=hashlib.sha256(path.read_bytes()).hexdigest();meta.write_text(yaml.safe_dump(m));rehash(root)
         else:
             path=root/'baseline.yaml';m=yaml.safe_load(path.read_text());m['artifacts'][0]['build_id']='incorrect';path.write_text(yaml.safe_dump(m));rehash(root)
         try:verify(root)
         except ValueError:pass
         else:raise AssertionError('accepted '+case)
-print('PASS: intact package and five rejection cases')
+print('PASS: intact package and six rejection cases')

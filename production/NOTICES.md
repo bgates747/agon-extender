@@ -1,6 +1,6 @@
 # Source and licensing record
 
-This is a local, unselected draft, not a public binary release or a claim that
+This is an accepted local installation, not a public binary release or a claim that
 all redistribution obligations have been discharged. Keep both runtime and
 source/support archives. Public publication remains gated.
 
@@ -22,6 +22,7 @@ builder licensing gap, review selected linked library obligations and supply any
 missing corresponding-source/tool inputs. No ownership of third-party code is
 claimed, and source headers remain unmodified by packaging.
 
-The runtime archive contains no private reset endpoint, accounts, device identity,
-credentials, sudo policy or private backup. Do not publish operator configuration,
+The accepted local runtime firmware embeds the commissioned private reset
+endpoint. Its plaintext configuration is kept outside tracked records. The
+archive contains no accounts, credentials, sudo policy or full-device backup. Do not publish operator configuration,
 full-device backups or debug ELFs/logs containing local build paths.

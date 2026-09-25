@@ -232,27 +232,32 @@ not modify an emulator, SD card or board.
 
 ## Local installation packaging
 
-The [production entry point](../production/README.md) distinguishes draft bundles
-from the future current selection. R01-05's frozen packaging recipe is at commit
-`9b3f77ca`; use that clean checkout and the pinned R01-04 build directories to
-recreate its inputs. Do not silently regenerate the same identity from newer
-source. Paths below name local generated build directories, not runtime
-dependencies or public storage locations:
+The [production entry point](../production/README.md) and `production/current.yaml`
+select the accepted immutable bundle. r02 packages the exact physically tested
+r55 outputs; it does not rebuild or flash them. A clean source export must pass
+both application and bootloader silicon-configuration checks. The maintained
+pre-build hook resolves the configuration path absolutely for both CMake builds.
+
+The selected inputs are in
+[the packaging selection](../production/bundles/extender-installation-r02/selection.json).
+Local generated build directories are inputs, not runtime dependencies:
 
 ```sh
 .venv/bin/python scripts/package_installation.py \
-  --p4-build agents/release001/builds/corrected \
+  --selection production/bundles/extender-installation-r02/selection.json \
+  --p4-build agents/release001/builds/reset-corrected \
   --sd-build agents/release001/builds/sd-components \
   --emos-source ../agon-emos --builder-source ../mos-agondev
 .venv/bin/python scripts/verify_installation.py \
-  dist/production/extender-installation-r01/extender-installation-r01
+  dist/production/extender-installation-r02/extender-installation-r02
 ```
 
-The builder refuses an existing output directory and verifies selected payload
-hashes. It produces runtime/source archives and external archive checksums; gzip
-and packaging timestamps are not claimed byte-reproducible. The immutable bundle
-record selects the particular retained archives by SHA-256, not by recompression.
-Neither command flashes, resets, writes SD media, enables a service or creates
-a current selection. Source/license publication limits are in
-[NOTICES](../production/NOTICES.md). R01-06 owns the broader installation-path
-walkthrough and remaining local validation.
+The builder requires a clean packaging checkout and refuses an existing output
+directory. Use the immutable bundle's recorded packaging commit to reconstruct
+its recipe; do not reuse the identity for changed inputs. Archive timestamps are
+not claimed reproducible: select retained archives by recorded SHA-256.
+Neither command deploys or creates the current selection. The configured local
+firmware contains a private reset endpoint. Its build-owner configuration remains
+local; changing it requires a newly identified build. Public source/license
+limits remain in [NOTICES](../production/NOTICES.md). The failed r01 archive is
+historical evidence and must not be deployed.

@@ -1,0 +1,49 @@
+schema_version: 1
+baseline:
+  baseline_id: extender-installation
+  revision: r02
+  status: qualified
+  description: Author-accepted local DevKit installation; bounded RELEASE-001 hardware
+    scope
+  compatibility_scope: Olimex P4 DevKit with retained mainboard VDP; UART ExCom, USB/browser
+    input and SD MOSlet
+artifacts:
+- artifact_id: uart-excom-console
+  identity: uart-excom-console-r55
+  build_id: uart-excom-console-r55-b2026-09-25-02-18-28Z
+  variant: null
+- artifact_id: agon-emos
+  identity: agon-emos-v0.1.19
+  build_id: agon-emos-v0.1.19-b2026-09-24-02-02-56Z
+  variant: null
+- artifact_id: sdserve
+  identity: sdserve-v0.2.0
+  build_id: sdserve-v0.2.0-b2026-09-24-02-21-03Z
+  variant: null
+external_dependencies:
+- name: mainboard-vdp
+  identity: AgonPlatform VDP v2.16.0
+  role: Retain installed mainboard; retained image matches official release asset,
+    not supplied or freshly reflashed
+compatibility:
+  requires: []
+  known_incompatible:
+  - P4-PC board profile is not this DevKit build
+  unqualified:
+  - Full mode/peripheral coverage
+  - Human browser/host/game combination not specified
+  - Other board profiles
+  - Public redistribution
+qualification:
+  procedure:
+    artifact_id: null
+    identity: null
+  run_ids:
+  - RELEASE-001-2026-09-25-02-20-52Z
+notes:
+- Author acceptance 2026-09-25 UTC; RELEASE-001/R01-07.md records automated and human
+  scope.
+- Historical component draft labels retained; qualified installation scope does not
+  relabel binaries.
+- Local-only configured reset profile; firmware embeds a private bridge endpoint.
+- No public distribution; source/license review remains outstanding.

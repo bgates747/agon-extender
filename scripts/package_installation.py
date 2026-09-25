@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Assemble R01-05's pinned local draft; never select, deploy or overwrite it."""
+"""Assemble an explicit pinned local bundle; never select, deploy or overwrite it."""
 import argparse
 import hashlib
 import io
@@ -11,7 +11,6 @@ import tarfile
 import yaml
 
 ROOT=Path(__file__).resolve().parents[1]
-NAME='extender-installation-r01'
 
 def sha(p):
     with p.open('rb') as f:return hashlib.file_digest(f,'sha256').hexdigest()
@@ -42,18 +41,32 @@ def main():
     p=argparse.ArgumentParser(description=__doc__)
     for name in ('p4-build','sd-build','emos-source','builder-source'):
         p.add_argument('--'+name,type=Path,required=True)
-    p.add_argument('--output',type=Path,default=ROOT/'dist/production'/NAME)
+    p.add_argument('--selection',type=Path,required=True)
+    p.add_argument('--output',type=Path)
     a=p.parse_args()
     if git(ROOT,'status','--porcelain').strip():p.error('commit packaging inputs first')
     commit=git(ROOT,'rev-parse','HEAD').decode().strip()
-    out=a.output.absolute();out.mkdir(parents=True,exist_ok=False)
+    result=json.loads(a.selection.read_text());NAME=result['name']
+    import re
+    if not re.fullmatch(r'extender-installation-r[0-9]+',NAME):raise ValueError('invalid bundle identity')
+    out=(a.output or ROOT/'dist/production'/NAME).absolute();out.mkdir(parents=True,exist_ok=False)
     runtime=out/NAME;runtime.mkdir();support=out/(NAME+'-sources');support.mkdir()
-    result=json.loads((ROOT/'docs/tasks/RELEASE-001/BUILD-RESULTS.json').read_text())
-    selected=result['p4']['corrected'];project=a.p4_build/'source/vdp'
+    selected=result['p4'];project=a.p4_build/'source/vdp'
     m=yaml.safe_load((a.p4_build/'build-manifest.yaml').read_text())
     if m['build']!=selected['build'] or m['provenance']['commit']!=selected['source_commit'] or m['provenance']['dirty']:
         raise ValueError('wrong P4 build')
-    if m.get('reset_url'):raise ValueError('r01 is the optional-reset-absent profile')
+    if selected['reset_profile']!='configured-private' or not m.get('reset_url'):
+        raise ValueError('selected private reset profile missing')
+    if hashlib.sha256(m['reset_url'].encode()).hexdigest()!=selected['reset_url_sha256']:
+        raise ValueError('reset configuration mismatch')
+    for role,relative in [('application','config/sdkconfig.h'),('bootloader','bootloader/config/sdkconfig.h')]:
+        cfg=project/'.pio/build/p4-console'/relative
+        pin=selected['silicon_configs'][role]
+        if (pin['minimum'],pin['maximum'])!=(100,199):raise ValueError('wrong silicon range')
+        text=cfg.read_text()
+        for key,value in [('MIN',100),('MAX',199)]:
+            if f'#define CONFIG_ESP32P4_REV_{key}_FULL {value}\n' not in text:raise ValueError('silicon configuration mismatch')
+        add_file(cfg,runtime/'builds'/(role+'-sdkconfig.h'),pin['sha256'])
     files={x['filename']:x for x in selected['outputs']}
     build_id=selected['build']['build_id']
     for suffix,dst in [('.bin','firmware.bin'),('.factory.bin','firmware.factory.bin')]:
@@ -99,11 +112,12 @@ def main():
             if f.is_file() and any(word in f.name.lower() for word in ('license','copying','notice')):
                 notices.append({'path':prefix+'/'+str(f.relative_to(base)),'sha256':sha(f)})
     (support/'dependency-notices.json').write_text(json.dumps(notices,indent=2)+'\n')
-    builds=runtime/'builds';builds.mkdir()
+    builds=runtime/'builds';builds.mkdir(exist_ok=True)
     p4_manifest={'schema_version':1,'build':selected['build'],
         'provenance':{'commit':selected['source_commit'],'dirty':False,
         'sdkconfig_sha256':selected['sdkconfig_sha256']},'outputs':selected['outputs'],
-        'notes':['ELF retained privately, not in runtime package','Reset endpoint unset']}
+        'silicon_configs':selected['silicon_configs'],
+        'notes':['ELF retained privately, not in runtime package','Private reset endpoint embedded; local-only bundle']}
     (builds/'p4.yaml').write_text(yaml.safe_dump(p4_manifest,sort_keys=False))
     for role,artifact,identity in [('emos','agon-emos','agon-emos-v0.1.19'),('listener','sdserve','sdserve-v0.2.0')]:
         item=sd['outputs'][role]
@@ -113,11 +127,11 @@ def main():
             'builder_commit':sd['source_commits']['mos-agondev'],'compiler_sha256':sd['compiler_sha256']},
             'outputs':[{'filename':'em-v019.bin' if role=='emos' else 'sdserve.bin',
             'sha256':item['sha256'],'size_bytes':item['size_bytes']}],
-            'notes':['Exact historical payload reproduction; no new qualification']}
+            'notes':['Exact historical payload reproduction; component label retained; installation acceptance in baseline']}
         (builds/(role+'.yaml')).write_text(yaml.safe_dump(value,sort_keys=False))
     (builds/'host.yaml').write_text(yaml.safe_dump(host,sort_keys=False))
     info={'schema_version':1,'baseline':'baseline.yaml','selection':'unselected','packaging_commit':commit,
-          'p4_reset_profile':'absent','expected_emos_rom':{'size_bytes':131072,'padding_byte':255,'sha256':hashlib.sha256(rom.read_bytes().ljust(131072,b'\xff')).hexdigest()},
+          'p4_reset_profile':selected['reset_profile'],'expected_emos_rom':{'size_bytes':131072,'padding_byte':255,'sha256':hashlib.sha256(rom.read_bytes().ljust(131072,b'\xff')).hexdigest()},
           'source_commits':{'p4':selected['source_commit'],'host':host['commit'],**sd['source_commits']},
           'publication':'local only; source/license review required before public distribution',
           'files':{str(f.relative_to(runtime)):{'sha256':sha(f),'size_bytes':f.stat().st_size} for f in sorted(runtime.rglob('*')) if f.is_file()}}

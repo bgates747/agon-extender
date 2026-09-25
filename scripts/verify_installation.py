@@ -20,7 +20,7 @@ def verify(root):
     manifest=yaml.safe_load(member('bundle.yaml').read_text())
     if manifest['schema_version']!=1 or manifest['selection']!='unselected':raise ValueError('unexpected package selection')
     baseline=yaml.safe_load(member(manifest['baseline']).read_text())
-    if baseline['baseline']['status']!='draft':raise ValueError('not the reviewed draft')
+    if baseline['baseline']['status']!='qualified':raise ValueError('not an accepted installation')
     required={'p4/firmware.bin','p4/firmware.factory.bin','p4/bootloader.bin','p4/partitions.bin','p4/boot_app0.bin','p4/flash-layout.json','sd/emos/sdserve.bin','sd/extender/install/em-v019.bin','scripts/sdcard.py','scripts/keyboard.py','scripts/screen_text.py','scripts/reset_agon.py','scripts/reset_bridge.py','INSTALL.md','NOTICES.md','baseline.yaml','builds/p4.yaml','builds/emos.yaml','builds/listener.yaml'}
     if not required.issubset(manifest['files']):raise ValueError('missing required inventory')
     for name,record in manifest['files'].items():
@@ -49,6 +49,12 @@ def verify(root):
         if entry['build_id']!=build['build']['build_id'] or entry['identity']!=build['build']['source_identity']:raise ValueError('baseline/build disagreement')
         if build['build']['build_id'].encode() not in member(payload).read_bytes():raise ValueError('embedded identity missing')
         if not any(x['sha256']==sha(member(payload)) for x in build['outputs']):raise ValueError('build/output mismatch')
+    p4=yaml.safe_load(member('builds/p4.yaml').read_text())
+    for role in ('application','bootloader'):
+        pin=p4['silicon_configs'][role];cfg=member('builds/'+role+'-sdkconfig.h')
+        if sha(cfg)!=pin['sha256'] or (pin['minimum'],pin['maximum'])!=(100,199):raise ValueError('silicon pin mismatch')
+        for key,value in [('MIN',100),('MAX',199)]:
+            if f'#define CONFIG_ESP32P4_REV_{key}_FULL {value}\n' not in cfg.read_text():raise ValueError('incompatible silicon configuration')
     return len(checks)
 
 if __name__=='__main__':

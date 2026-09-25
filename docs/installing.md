@@ -1,10 +1,11 @@
 # Installing an Extender bundle
 
-The first bundle is an **unselected draft**, not an approved upgrade. Packaging
-and local checks do not authorize flashing. The operator must obtain bench
-availability and deployment approval, preserve the actual incoming installation,
-and follow the validation gate before replacing it. No installer runs on archive
-extraction. No `current.yaml` selection exists yet.
+Use `production/current.yaml` in the source repository to select the approved
+local installation and its immutable bundle record. The accepted combination is
+P4 console r55, EMOS v0.1.19 and sdserve v0.2.0. Acceptance covers the recorded
+DevKit checks, not other boards, every video mode or a public binary release.
+Installing on another bench still requires identifying and preserving its current
+state. No installer runs on archive extraction.
 
 ## Package and prerequisites
 
@@ -19,12 +20,13 @@ third-party notices; publication is not yet approved.
 The runtime package contains `p4/`, `sd/`, `scripts/`, `reset/`, `builds/`,
 `baseline.yaml`, `bundle.yaml`, `INSTALL.md`, `NOTICES.md` and `SHA256SUMS`.
 Its P4 profile is the Olimex ESP32-P4 DevKit, not the future P4-PC. Keep the
-installed onboard VDP unchanged. Its exact release identity still needs resolving
-before promotion. No mainboard VDP image or FLASH utility is shipped.
+installed onboard VDP unchanged. The retained mainboard image matches official VDP v2.16.0; that historical
+match is not a fresh readback of another board. No mainboard VDP image or FLASH utility is shipped.
 
 Host clients need Python 3 on Linux/macOS, with the standard library (`fcntl`
-requires POSIX). They do not need a copied virtual environment. P4 flashing uses
-the recorded esptool 5.3 tool environment. Optional reset uses an independently
+requires POSIX). They do not need a copied virtual environment. P4 builds use esptool 5.3; the physical deployment used esptool 4.12.
+The examples below use the 5.x hyphenated CLI; 4.12 uses `write_flash` and
+`verify_flash`. Select the syntax for your installed version. Optional reset uses an independently
 commissioned Pi circuit, SSH where applicable, libgpiod v2 `gpioset`, `pinctrl`,
 Bash and GNU timeout. Do not derive wiring, devices or credentials from this
 package; keep those in private operator configuration.
@@ -68,10 +70,11 @@ python3 -m esptool --chip esp32p4 --port "$P4_SERIAL" \
 ```
 
 Observe the exact startup identity and USB/network readiness separately from
-flash verification. This package's browser reset button is deliberately disabled:
-there is no private bridge URL. To retain a working browser reset button, prepare
-a separately identified P4 build with `prepare_console.py --reset-url ...`, then
-repackage/revalidate it; do not patch binary assets or replace this bundle.
+flash verification. This local package preserves the accepted browser reset
+endpoint in its firmware. It is specific to the commissioned bench. Do not assume
+it is usable elsewhere or publish it. A different endpoint requires a new
+identified build and validation, not an edited package. Templates remain
+unconfigured; no private service configuration or credentials are distributed.
 
 I04 — Install EMOS only if the existing ROM is not already the exact packaged
 version. With the SD mounted on the host, stage
@@ -136,7 +139,8 @@ from another host. Restrict any sudo permission to the reviewed pulse command;
 no sudo policy or credentials are supplied. Do not enable a placeholder service.
 
 The pulse helper preserves the existing 100 ms pulse and release trap; it has
-only been syntax-checked in this package. The bridge never pulses on startup.
+passed local mocked release-path checks; the existing commissioned bridge
+also passed the Author's reset test. Template installation on another Pi is untested. The bridge never pulses on startup.
 A configured browser needs a matching P4 build with the bridge URL embedded.
 Successful pulse response is not proof of Agon boot. The Pi drives the same
 mainboard reset net as its physical button; it does not reset P4 or power-cycle
