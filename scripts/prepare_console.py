@@ -70,6 +70,20 @@ def main():
              'source_sha256':snapshot()}
     if before != after:
         raise SystemExit('source changed during build; no bundle frozen')
+    # The separately configured bootloader must target the same physical silicon.
+    # An application-only sdkconfig hash missed a rev3 bootloader in R01-07.
+    silicon_configs = {}
+    for name, relative in (
+        ('application', '.pio/build/p4-console/config/sdkconfig.h'),
+        ('bootloader', '.pio/build/p4-console/bootloader/config/sdkconfig.h'),
+    ):
+        config = project / relative
+        text = config.read_text()
+        for setting, value in (('CONFIG_ESP32P4_REV_MIN_FULL', 100),
+                               ('CONFIG_ESP32P4_REV_MAX_FULL', 199)):
+            if f'#define {setting} {value}\n' not in text:
+                raise SystemExit(f'{name} silicon mismatch: expected {setting}={value}')
+        silicon_configs[name] = {'sha256': sha(config), 'minimum': 100, 'maximum': 199}
     files = []
     for suffix in ('bin','elf','factory.bin'):
         source = project/('.pio/build/p4-console/firmware.'+suffix)
@@ -112,6 +126,7 @@ def main():
                 'created_at':now.isoformat()},'reset_url':args.reset_url,'provenance':before,'outputs':files,
                 'managed_component_sha256':dependency_files, 'embedded_asset_sha256':assets,
                 'effective_sdkconfig_sha256':sha(project/'pio/p4-console.sdkconfig'),
+                'silicon_configs':silicon_configs,
                 'scope':'Explicit ExCom ordinary UART console, native USB input and retained browser video',
                 'host_phy':'dedicated P4 HS USB_DP/USB_DN, separate from USB Serial/JTAG',
                 'notes':['UART1 1152000/8N1 RTS/CTS; no physical deployment or SD edits by this builder.',

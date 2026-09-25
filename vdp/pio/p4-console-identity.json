@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r54",
+  "source_identity": "uart-excom-console-r55",
   "status": "draft",
-  "note": "RELEASE-001 R01-07 reset-configured hardware candidate; r53 implementation unchanged."
+  "note": "RELEASE-001 R01-07: absolute shared SDK configuration fixes pre-v3 bootloader selection; reset-configured candidate."
 }

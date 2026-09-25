@@ -6,7 +6,11 @@ on its recorded installation; this directory does not upgrade it.
 
 | Bundle | Role |
 |---|---|
-| [extender-installation-r01](bundles/extender-installation-r01/bundle.yaml) | Unselected draft package: corrected browser compression; local build checks only |
+| [extender-installation-r01](bundles/extender-installation-r01/bundle.yaml) | Do not deploy: incompatible clean-build bootloader discovered in R01-07; retained evidence |
+
+The first hardware attempt exposed a silicon-configuration mismatch in the
+clean-built bootloader. See [failure and correction](../docs/tasks/RELEASE-001/R01-07.md).
+Local validation did not establish boot compatibility.
 
 Start with the [installation guide](../docs/installing.md). Each immutable bundle
 record names payload hashes and its authoritative [baseline](../docs/versions/baselines/extender-installation-r01.yaml).

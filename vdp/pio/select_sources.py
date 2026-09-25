@@ -18,6 +18,17 @@ Import("env")  # type: ignore[name-defined]  # Provided by PlatformIO/SCons.
 
 environment = env.subst("$PIOENV")  # type: ignore[name-defined]
 project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
+# PlatformIO forwards this path unchanged into the separate ESP-IDF bootloader
+# CMake directory. A relative path there silently generates default silicon
+# settings (P4 rev3) instead of our pre-v3 application configuration. R01-07
+# observed an illegal instruction at bootloader entry on the rev1.3 bench.
+# Resolve our selected configuration before either CMake invocation; do not
+# patch PlatformIO or depend on an old bootloader build cache.
+sdkconfig_path = env.BoardConfig().get("build.esp-idf.sdkconfig_path")
+if sdkconfig_path:
+    env.BoardConfig().update(
+        "build.esp-idf.sdkconfig_path", str((project_dir / sdkconfig_path).resolve())
+    )
 environment_selection = project_dir / f"pio/{environment}-source-selection.json"
 selection_path = (
     environment_selection
