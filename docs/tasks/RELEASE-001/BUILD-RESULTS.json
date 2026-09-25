@@ -1,0 +1,348 @@
+{
+  "scope": "R01-04 clean local builds; no physical deployment or equivalence qualification",
+  "p4": {
+    "control": {
+      "build": {
+        "artifact_id": "uart-excom-console",
+        "source_identity": "uart-excom-console-r52",
+        "build_id": "uart-excom-console-r52-b2026-09-25-01-15-45Z",
+        "status": "draft",
+        "created_at": "2026-09-25T01:15:45.473233+00:00"
+      },
+      "source_commit": "70a39d4f86314e097c1d46295d7d319dc8dce522",
+      "dirty": false,
+      "outputs": [
+        {
+          "filename": "uart-excom-console-r52-b2026-09-25-01-15-45Z.bin",
+          "sha256": "34e85f47a150d0526de6bcb6ecbad6d6f19ad8f7aa342266ee3cfccb2f2d4b1e",
+          "size_bytes": 1486720
+        },
+        {
+          "filename": "uart-excom-console-r52-b2026-09-25-01-15-45Z.elf",
+          "sha256": "56d94e87290a85cc26bd952d5adc45f388e971c146dacde25d3038f0b56b86b5",
+          "size_bytes": 28338048
+        },
+        {
+          "filename": "uart-excom-console-r52-b2026-09-25-01-15-45Z.factory.bin",
+          "sha256": "4355a9d3d0a19b2fd98f61057fe85bf9704ee26cf7fbd6995873f481b8ce218d",
+          "size_bytes": 1617792
+        },
+        {
+          "filename": "dependencies.lock",
+          "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+          "size_bytes": 8845
+        },
+        {
+          "filename": "partitions.bin",
+          "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+          "size_bytes": 3072
+        },
+        {
+          "filename": "bootloader.bin",
+          "sha256": "e409bd1db647fed4fbba802013af1dd129c50848c2f89f70772bec69e8b74602",
+          "size_bytes": 23728
+        }
+      ],
+      "sdkconfig_sha256": "ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5",
+      "reset_endpoint_configured": false,
+      "browser_checks": {
+        "outcome": "pass",
+        "expected_negotiation": "raw",
+        "embedded_assets": {
+          "index.html": "cefafed10f70b7b8a66f28e6f0d0a18b656ab9bd93705248b79993a51d858e10",
+          "app.js": "9522f0bfa34f97b25fe2ea2bad0610eb8f60332d2e53ba438a3f414ce07c0f79",
+          "style.css": "e2e79a93df0d8bfedf142064a239de2b6e61d362a7ab091fa4f1bb0b667f7437",
+          "frame_protocol.js": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217",
+          "webgl2_presenter.js": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2"
+        },
+        "codec_vectors": 48,
+        "formats": [
+          "EVF1",
+          "EVP1",
+          "EVQ1",
+          "EVR1"
+        ]
+      },
+      "compiler_evidence": [
+        {
+          "source": "video/extender/display/stock_p4_service.cpp",
+          "definitions": [
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        },
+        {
+          "source": "video/extender/network/wired_network_service.cpp",
+          "definitions": [
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        },
+        {
+          "source": ".pio/build/p4-console/agon-extender-dsp/mat.cpp",
+          "definitions": [
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        }
+      ]
+    },
+    "corrected": {
+      "build": {
+        "artifact_id": "uart-excom-console",
+        "source_identity": "uart-excom-console-r53",
+        "build_id": "uart-excom-console-r53-b2026-09-25-01-19-22Z",
+        "status": "draft",
+        "created_at": "2026-09-25T01:19:22.326082+00:00"
+      },
+      "source_commit": "816866495390052a9de9812202fb9c964969afd8",
+      "dirty": false,
+      "outputs": [
+        {
+          "filename": "uart-excom-console-r53-b2026-09-25-01-19-22Z.bin",
+          "sha256": "33d8f7e6f47abcfe026b51c9164af4d6341649f9ed1ae112122bd16c98174311",
+          "size_bytes": 1486816
+        },
+        {
+          "filename": "uart-excom-console-r53-b2026-09-25-01-19-22Z.elf",
+          "sha256": "cce4fcb6f79d7b57a23d64e1bcf9acaab46730c06664e32679b105fad3c0ac9f",
+          "size_bytes": 28338048
+        },
+        {
+          "filename": "uart-excom-console-r53-b2026-09-25-01-19-22Z.factory.bin",
+          "sha256": "f91b5bb45f5c588a2ee02e0ff22b1fe2819397917ede1351a6f8946615c98ee6",
+          "size_bytes": 1617888
+        },
+        {
+          "filename": "dependencies.lock",
+          "sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722",
+          "size_bytes": 8845
+        },
+        {
+          "filename": "partitions.bin",
+          "sha256": "e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a",
+          "size_bytes": 3072
+        },
+        {
+          "filename": "bootloader.bin",
+          "sha256": "7d9da51f0791dc9b1270191870758b1f7eecbc3d3a1a06f0d0c61b06d9a959aa",
+          "size_bytes": 23728
+        }
+      ],
+      "sdkconfig_sha256": "ba10c962927e8a3ddd267413898bcbe8f37172a498c8e27d82b6e0ceeb036bb5",
+      "reset_endpoint_configured": false,
+      "browser_checks": {
+        "outcome": "pass",
+        "expected_negotiation": "compressed",
+        "embedded_assets": {
+          "index.html": "cefafed10f70b7b8a66f28e6f0d0a18b656ab9bd93705248b79993a51d858e10",
+          "app.js": "5401574eeabc069b11ba65cd49c46510a6133ef31cdebae446401a1f4aa2fb28",
+          "style.css": "e2e79a93df0d8bfedf142064a239de2b6e61d362a7ab091fa4f1bb0b667f7437",
+          "frame_protocol.js": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217",
+          "webgl2_presenter.js": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2"
+        },
+        "codec_vectors": 48,
+        "formats": [
+          "EVF1",
+          "EVP1",
+          "EVQ1",
+          "EVR1"
+        ]
+      },
+      "compiler_evidence": [
+        {
+          "source": "video/extender/display/stock_p4_service.cpp",
+          "definitions": [
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        },
+        {
+          "source": "video/extender/network/wired_network_service.cpp",
+          "definitions": [
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        },
+        {
+          "source": ".pio/build/p4-console/agon-extender-dsp/mat.cpp",
+          "definitions": [
+            "AGON_EXTENDER_CANARY=1",
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_VIDEO_TIMING=1",
+            "AGON_EXTENDER_INTERNAL_POOLS=1",
+            "AGON_EXTENDER_DRAW_FOUR=1",
+            "AGON_EXTENDER_DRAW_TWICE=1",
+            "AGON_EXTENDER_REFRESH_TRACE=1",
+            "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+            "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+            "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+            "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+          ],
+          "standards_in_order": [
+            "gnu++17",
+            "gnu++2b"
+          ]
+        }
+      ]
+    }
+  },
+  "sd_components": {
+    "source_commits": {
+      "agon-emos": "2408f3165af0af2d1edd7ebf3c3df0aca552e016",
+      "mos-agondev": "90034c2348761c42bab4217ce5b0f906922dc0e4"
+    },
+    "outputs": {
+      "emos": {
+        "build_id": "agon-emos-v0.1.19-b2026-09-24-02-02-56Z",
+        "sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7",
+        "size_bytes": 124774,
+        "expected_sha256": "817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7",
+        "identical": true
+      },
+      "listener": {
+        "build_id": "sdserve-v0.2.0-b2026-09-24-02-21-03Z",
+        "sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11",
+        "size_bytes": 19243,
+        "expected_sha256": "bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11",
+        "identical": true
+      }
+    },
+    "compiler_sha256": "34670dda66966bc83b59bafe97bbe84fd7ca20ad15728eb3f3753097d22dc51d",
+    "scope": "Byte reproduction and existing link checks; no deployment or new hardware acceptance"
+  },
+  "host_inputs": {
+    "commit": "555d1487c038c1a4ac3eafb06f033af4b309dbf2",
+    "files": {
+      "scripts/sdcard.py": "af07d1bd2c302a97db36b2599a307799dccb805bacfa632e901b874f69e8fa0c",
+      "scripts/keyboard.py": "2bd907921d80315f9d83761213e8125527a07f849ff488e128188b0f114c6525",
+      "scripts/screen_text.py": "85e769496f10d4aaeb7f6eb0603358b646333c70f237845858d669a105637e42",
+      "scripts/reset_agon.py": "ac2956eab5dafc147097051a2d2ed0f9a5ae1b6deed1220fb23eeadece888f0d",
+      "scripts/reset_bridge.py": "d824722464576fc476209fc9723ee3cf723f8276c12faf3c57b1fe1b86018f59",
+      "requirements-dev.txt": "76c1fea5b6829193d0ba0d159fc47c0749f262fc4efe351f7a3e7e7652d42c7e"
+    }
+  }
+}

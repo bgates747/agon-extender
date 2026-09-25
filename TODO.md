@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–03 preservation, bundle specification and source map complete. Reset-build browser lost compressed requests and explicit credit spacing; R01-D01 records correction boundary. Next R01-04 reconstructs a clean control; no firmware changed or production release declared.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01–04 complete: preserved baseline, mapped composition, clean P4 drafts and exact EMOS/MOSlet reproduction. Compression correction tested locally; installed firmware unchanged. Next R01-05 packages the installation candidate; hardware acceptance and promotion remain pending.
 
 ## Networking prior-art review — awaiting review
 

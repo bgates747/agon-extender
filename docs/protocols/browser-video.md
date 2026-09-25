@@ -20,7 +20,9 @@ Authority: [ADR-0021](../decisions/ADR-0021-rle2-browser-default.md).
 its P4 uses raw frames despite retaining the encoders. Its parent requested
 `rle2=1&packed=2`. [Source/binary comparison](../tasks/RELEASE-001/R01-03.md)
 confirms the change; no performance effect was measured. The accepted requirement
-above remains in force, and RELEASE-001 R01-D01 owns correction disposition.
+above remains in force. [R01-04](../tasks/RELEASE-001/R01-04.md) restores the
+query in a locally tested draft; the installed firmware has not yet been replaced.
+The correction leaves request pacing unchanged.
 
 
 ## Accepted web-output ceiling — 2026-09-16

@@ -8,7 +8,7 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: R01-04 and compression correction authorized on 2026-09-24.**
+**State: R01-04 complete locally on 2026-09-24; no physical deployment.**
 Consolidate the mapped P4 composition, produce clean identified control/corrected
 builds and verify the actual embedded browser assets. Rebuild/pin EMOS, listener
 and host inputs within their existing ownership. No physical deployment or
@@ -61,7 +61,8 @@ are not established by this task proposal.
 hashes, rollback material and unresolved live-identity limits. R01-01 is complete
 within that stated scope. [Bundle specification and validation matrix](RELEASE-001/R01-02.md)
 complete R01-02. [Source composition](RELEASE-001/R01-03.md) completes R01-03;
-R01-04 remains unstarted. No installed firmware changed.
+[R01-04 build results](RELEASE-001/R01-04.md) complete local reconstruction and
+compression checks. No installed firmware changed.
 
 ## Decision register
 
@@ -71,8 +72,8 @@ R01-04 remains unstarted. No installed firmware changed.
 
 This is an implementation discrepancy, not a new architectural decision. The
 accepted compression requirement remains unchanged; source review does not
-establish the performance effect. R01-04 may reproduce the control when
-separately authorized, but promotion cannot silently ignore this conflict.
+establish the performance effect. The raw control and corrected draft were built separately; promotion still
+requires the later hardware/acceptance gate.
 
 ## Proposed durable layout
 
@@ -115,7 +116,7 @@ Record included/excluded changes and parent provenance; do not apply every old
 experimental patch. Identify missing source inputs explicitly. Deliver a bounded
 composition map before editing the production build.
 
-R01-04 [ ] **Consolidate and reproduce builds.** The build owners integrate only
+R01-04 [x] **Consolidate and reproduce builds.** The build owners integrate only
 R01-03's selected composition into maintained source and one documented P4 build
 entry point. Pin EMOS, EMOSlet and host-client inputs without migrating ownership.
 Build from clean recorded commits into fresh output directories, with no hidden

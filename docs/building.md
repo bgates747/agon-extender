@@ -1,8 +1,8 @@
 # Building Extender components
 
 Compile entry points, checked against source on 2026-09-24. This is not a
-fresh-machine installation qualification or permission to deploy. **The base
-P4 build does not reconstruct every deployed candidate overlay.** Read the
+fresh-machine installation qualification or permission to deploy. **The consolidated
+P4 drafts have clean local build proof, but await hardware equivalence validation.** Read the
 [provenance boundary](#deployed-candidates-versus-the-base-target) before selecting
 a replacement for an installed image, and the [operation entry point](using-extender.md)
 before using an existing bench.
@@ -24,19 +24,38 @@ git clone https://github.com/bgates747/agon-extender.git
 cd agon-extender
 python3 -m venv .venv
 .venv/bin/python -m pip install platformio==6.1.19 PyYAML==6.0.3
-./scripts/vdp-pio.sh run -e p4-console
+.venv/bin/python scripts/prepare_console.py --output agents/release-build
 ```
 
-The [wrapper](../scripts/vdp-pio.sh) selects the root `.venv/bin/pio` and runs it
-inside `vdp/`. PlatformIO downloads the selected compiler/framework packages;
-allow space and time for the first build. Additional documentation/validation
-tools have dependencies in [requirements-dev.txt](../requirements-dev.txt).
-Fresh-machine setup is still rough, and the commands above are the current
-compile entry point rather than a complete installation procedure.
+[prepare_console.py](../scripts/prepare_console.py) requires a clean committed
+checkout, exports `vdp/` into a fresh output directory, and invokes the selected
+target there. It records identity, output/asset hashes, managed-component hashes,
+effective SDK configuration and verbose compiler/tool logs. Downloaded tool
+packages may be reused, but previous build objects and agent snapshots are not.
+The output directory must not exist. Do not modify tracked inputs during a build.
+
+Use optional `--reset-url "$RESET_BRIDGE_URL"` to configure the browser reset
+bridge. The default is unset, leaving the reset button disabled. The endpoint is
+recorded only in the local build manifest and generated page; never commit a
+private endpoint. Request pacing is unchanged; the browser requests
+`?rle2=1&packed=2` for the retained lossless compression selection.
+
+After building, with Playwright and Chromium installed in the local environment:
+
+```sh
+.venv/bin/python tests/browser_bundle_test.py --bundle agents/release-build
+```
+
+This checks actual embedded asset bytes, browser negotiation and paired codec
+outputs without a board connection. It does not measure P4 performance. The
+[wrapper](../scripts/vdp-pio.sh) remains a low-level in-place compile convenience,
+not the clean identified-bundle entry point. PlatformIO downloads pinned tools;
+fresh-machine setup and packaging remain separate validation gates.
 
 ### Selected DevKit configuration
 
 The maintained [board definition](../vdp/boards/olimex_esp32_p4_devkit.json),
+[console SDK configuration](../vdp/pio/p4-console.sdkconfig),
 [SDK defaults](../vdp/sdkconfig.defaults) and
 [partition table](../vdp/partitions.csv) select the following baseline. These
 are build inputs, not a fresh measurement of the installed firmware or a P4-PC
@@ -170,21 +189,43 @@ for dispatch and memory limits. No build command in this guide deploys firmware.
 
 ## Deployed candidates versus the base target
 
-The commands above compile the repository's base `p4-console` target. They do
-**not** establish byte-for-byte or feature-for-feature reproduction of the
-installed September candidates. Several deployed codec, renderer and browser
-increments were built from isolated source snapshots with retained task-local
-transformations. `scripts/prepare_console.py` invokes the base target directly;
-it is not a reconstruction of that chain.
+[R01-04](tasks/RELEASE-001/R01-04.md) consolidated the selected installed
+composition and recorded fresh control/corrected builds. The maintained target
+now includes the retained codecs, browser decoders, selected build flags and
+hash-guarded DSP derivative. Hidden snapshot overlays are no longer needed for
+those local builds. The current installation is **unchanged**: packaging,
+hardware equivalence and promotion remain explicit release-task gates.
 
-Trace the exact candidate from its deployment receipt and parent build before
-preparing a replacement. Useful provenance entry points are
-[BENCH-005 pacing/packing](tasks/BENCH-005.md),
-[REMOTE-001 browser implementation](tasks/REMOTE-001/B04-implementation.md) and
-[REMOTE-003 reset deployment](tasks/REMOTE-003.md#ad-hoc-result--2026-09-21).
-Some snapshot inputs are ignored local artifacts; a clean public checkout is
-not yet proven sufficient to reconstruct the latest installed P4 combination.
-Do not deploy a base build as an equivalent replacement merely because it
-compiles. The documentation audit records this gap as
-[A09-F009](tasks/AUDIT-009/FINDINGS.md); consolidating source/build overlays
-requires a separate implementation contract, not a documentation-only fix.
+These draft P4 images do not byte-match the preserved reset build. New identities,
+source/debug paths, an unset reset endpoint and the authorized query correction
+are recorded differences; they do not prove all changes harmless. Keep the
+preserved rollback until hardware validation passes. No new performance result
+or change to request pacing is implied.
+
+### Exact EMOS and MOSlet reproduction
+
+[reproduce_sd_components.py](../scripts/reproduce_sd_components.py) clones clean
+owning repositories into a fresh directory, uses the existing MOS builder and
+AgonDev toolchain, and requires expected historical hashes. For the selected
+recorded installation (substitute local checkout/tool paths):
+
+```sh
+.venv/bin/python scripts/reproduce_sd_components.py \
+  --emos-source ../agon-emos --builder-source ../mos-agondev \
+  --toolchain ../mos-agondev/toolchains/agondev \
+  --builder-python ../mos-agondev/.venv/bin/python \
+  --output agents/sd-reproduction \
+  --emos-build-id agon-emos-v0.1.19-b2026-09-24-02-02-56Z \
+  --listener-build-id sdserve-v0.2.0-b2026-09-24-02-21-03Z \
+  --emos-sha256 817deb27aa6139dcfbf616f10f799f90d2eed08c17e87883f57d6cc8583195d7 \
+  --listener-sha256 bd7dc38aeac564d2df3da5a7c2dc1cd902ebf1973ef96140307649023f3dbb11
+```
+
+The exact commits and compiler hash are in the
+[reproduction record](tasks/RELEASE-001/BUILD-RESULTS.json). Select those commits
+in clean local checkouts if current source has advanced. Reused timestamps are
+permitted solely for exact hash reproduction; differing outputs fail and must
+not be deployed with a historical identity. A genuinely changed build needs a
+new timestamp through the owning project's identified build procedure.
+The helper builds the **MOSlet**, not an ordinary LOAD/RUN application, and does
+not modify an emulator, SD card or board.
