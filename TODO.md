@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — Contract approved; R01-01 identification/preservation authorized. Preserve the working combination, reconstruct its source/build inputs, package matching firmware/EMOSlets/host tools, then validate before promotion. R01-02–08 await continuation; no deployment authorized by queue placement.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01 preservation complete with explicit live-identity limits. Next R01-02 defines bundle/acceptance boundaries; source reconstruction, packaging and validation follow. No firmware changed or production release declared; R01-02–08 await continuation.
 
 ## Networking prior-art review — awaiting review
 

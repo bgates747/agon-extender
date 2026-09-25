@@ -54,6 +54,12 @@ HARDWARE.local.md and confirm bench ownership. Before an eZ80 fixture, also read
 [bench constraints](../qualification/bench-constraints.md). Current live contents
 are not established by this task proposal.
 
+## R01-01 checkpoint
+
+[Preservation result](RELEASE-001/R01-01.md) records the component table, exact
+hashes, rollback material and unresolved live-identity limits. R01-01 is complete
+within that stated scope; R01-02 remains unstarted. No installed firmware changed.
+
 ## Proposed durable layout
 
 Use a role-named `production/README.md` as the single selection entry point,
@@ -71,7 +77,7 @@ history. An unapproved reconstruction must never replace the current selection.
 
 ## Discrete work chunks
 
-R01-01 [ ] **Preserve and identify the working installation.** The agent inspects
+R01-01 [x] **Preserve and identify the working installation.** The agent inspects
 retained deployment receipts and, when bench access is authorized, verifies live
 identities/readbacks through existing tools without changing firmware. Preserve
 P4 images/flash companions, EMOS, EMOSlet, compatible host/browser sources and

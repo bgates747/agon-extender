@@ -198,7 +198,7 @@ hardware or independent fresh-machine acceptance.
 
 | Finding | What remains | Existing owner |
 |---|---|---|
-| F009 | Base P4 builder does not reproduce the deployed snapshot/overlay combination; a clean public rebuild is not established | PORT-003 / build owner; implementation contract required |
+| F009 | Base P4 builder does not reproduce the deployed snapshot/overlay combination; a clean public rebuild is not established | RELEASE-001 / PORT-003 build owner; preservation complete, reconstruction pending |
 | F008 | Accepted 30-fps normal contract and authorized 60-Hz retained experiments need final configuration/policy reconciliation | QUAL-003 / BENCH-005 |
 | F019 | Retained timing runner selects mode in EXEC and uses the ordinary listener fallback; refresh procedure before reuse | BENCH-007 |
 | F020 | Frozen SD qualification r01 predates current EMOSlet/reset operation; refresh before another qualification | REMOTE-005 / SD qualification owner |
