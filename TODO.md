@@ -7,7 +7,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next priority — Approved installation bundle
 
-- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01 preservation complete with explicit live-identity limits. Next R01-02 defines bundle/acceptance boundaries; source reconstruction, packaging and validation follow. No firmware changed or production release declared; R01-02–08 await continuation.
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — R01-01 preservation and R01-02 bundle/acceptance specification complete. Next R01-03 maps deployed P4 source composition before implementation. Live-identity limits remain; no firmware changed or production release declared. R01-03–08 await continuation.
 
 ## Networking prior-art review — awaiting review
 

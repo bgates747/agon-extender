@@ -58,7 +58,8 @@ are not established by this task proposal.
 
 [Preservation result](RELEASE-001/R01-01.md) records the component table, exact
 hashes, rollback material and unresolved live-identity limits. R01-01 is complete
-within that stated scope; R01-02 remains unstarted. No installed firmware changed.
+within that stated scope. [Bundle specification and validation matrix](RELEASE-001/R01-02.md)
+complete R01-02. R01-03 remains unstarted. No installed firmware changed.
 
 ## Proposed durable layout
 
@@ -86,7 +87,7 @@ records, provenance and a rollback recipe. Distinguish installed, available and
 Author-accepted artifacts. Unknown identity is a stop condition for replacement,
 not permission to choose the newest timestamp. Deliver a component/evidence table.
 
-R01-02 [ ] **Define the bundle and acceptance boundary.** From R01-01, the agent
+R01-02 [x] **Define the bundle and acceptance boundary.** From R01-01, the agent
 specifies required/optional components, storage, manifest reuse, the current
 selection mechanism, licenses and installation order. Record the exact feature
 set to preserve and known failures. Resolve lifecycle labels without rewriting
