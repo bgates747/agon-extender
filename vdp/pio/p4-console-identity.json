@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r53",
+  "source_identity": "uart-excom-console-r54",
   "status": "draft",
-  "note": "RELEASE-001 R01-04 corrected compression negotiation; otherwise r52 composition. No physical qualification."
+  "note": "RELEASE-001 R01-07 reset-configured hardware candidate; r53 implementation unchanged."
 }

@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r108
-updated_at: 2026-09-25T01:31:12Z
+registry_revision: r109
+updated_at: 2026-09-25T02:01:45Z
 
 artifacts:
   - artifact_id: extender-installation
@@ -643,7 +643,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r53
+    latest_identity: uart-excom-console-r54
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
