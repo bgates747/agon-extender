@@ -1,7 +1,8 @@
 # Installing an Extender bundle
 
 Use `production/current.yaml` in the source repository to select the approved
-local installation and its immutable bundle record. The accepted combination is
+local installation and its immutable bundle record. Production **v0.1.0** selects
+`extender-installation-r02`; the tag does not rename packaged components. The accepted combination is
 P4 console r55, EMOS v0.1.19 and sdserve v0.2.0. Acceptance covers the recorded
 DevKit checks, not other boards, every video mode or a public binary release.
 Installing on another bench still requires identifying and preserving its current
