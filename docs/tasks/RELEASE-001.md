@@ -8,10 +8,10 @@ preserve the exact working installation; then consolidate its source and build
 process without losing deployed features. A successful base P4 build is not yet
 an equivalent replacement for the deployed snapshot/overlay combination.
 
-**State: contract approved; R01-02 authorized on 2026-09-24.** R01-01
-preservation is complete. The Author requested a commit cycle and continuation
-to bundle specification and acceptance boundaries. This tranche is documentation
-only: no source migration, build, deployment or firmware change.
+**State: contract approved; R01-03 authorized on 2026-09-24.** Preservation
+and bundle specification are complete. This tranche traces retained P4 sources,
+transformations and build inputs to a bounded composition map. No maintained
+source migration, build, deployment or firmware change is authorized here.
 “Approved for current use” does not silently confer formal `qualified` or
 `released` status. TODO.md owns priority; this file owns the discrete work.
 
@@ -152,9 +152,9 @@ be reported before promotion; they do not authorize a redesign. No modernizing
 or incidental cleanup is hidden in reconstruction. Preserve existing work in all
 repositories and use isolated worktrees when needed.
 
-The present execution boundary is **R01-02 only**, after committing this scope
-update. Deliver the concrete bundle specification and validation matrix; do not
-create or promote a production bundle. R01-03 and later chunks require
+The present execution boundary is **R01-03 only**, after committing this scope
+update. Deliver the selected source composition map and missing-input limits;
+do not consolidate or build it yet. R01-04 and later chunks require
 continuation authorization. New firmware
 identities and registry changes follow the existing version authority; exact
 historical binaries retain their identities. A packaging milestone does not
