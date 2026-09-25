@@ -5,13 +5,17 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
-## Top priority — Networking prior-art review
+## Next priority — Approved installation bundle
+
+- [ ] **[RELEASE-001 — Reproducible approved installation bundle](docs/tasks/RELEASE-001.md)** — Contract approved; R01-01 identification/preservation authorized. Preserve the working combination, reconstruct its source/build inputs, package matching firmware/EMOSlets/host tools, then validate before promotion. R01-02–08 await continuation; no deployment authorized by queue placement.
+
+## Networking prior-art review — awaiting review
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.
 
 ## Do now — PLAN-001
 
-- [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Four bounded passes: current handbook, screen-text guide, capability summaries and procedure/example/tool indexes consolidated; 105 bodies reviewed within recorded scope and 149 partial, with full audit still open. Continue A09-04/05/06/08 from its results; no bench work.
+- [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Four bounded passes: current handbook, screen-text guide, capability summaries and procedure/example/tool indexes consolidated; 114 bodies reviewed within recorded scope and 146 partial, with full audit still open. Continue A09-04/05/06/08 from its results; no bench work.
 
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. sdserve now runs from `/emos` on EMOS v0.1.19 after bounded physical transfer/memory checks. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration and interactive session handling remain.
 
