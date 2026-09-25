@@ -1,0 +1,420 @@
+{
+  "scope": "R01-03 offline source/build composition; no fresh compile or physical test",
+  "contract_commit": "b8a80e3d",
+  "compared_head": "b8a80e3da6825035dc228ecd96094c5d8823c522",
+  "selected_build": "browser-reset-r02-b2026-09-21-20-37-00Z",
+  "tracked_vdp_files_equal": 5332,
+  "tracked_differences": [
+    {
+      "path": "dependencies.lock",
+      "head_sha256": "4d56967db59c9d565d2a8d80ac4dc788fabcc956e36eebf72cc6d1c7d9c9a102",
+      "snapshot_sha256": "d3309e8800ea74e5e58f3351d4383805f4b3484902082dece2a5b1083969c722"
+    },
+    {
+      "path": "pio/p4-console-identity.json",
+      "head_sha256": "f5ddd36ff6fb8065df160879ac259f2e0a126e6e0eb0e6f57f224683f7782883",
+      "snapshot_sha256": "a170944e5f7e66db28757674d531a8e4d6c864b9c5c746254bc89a774fbbf882"
+    },
+    {
+      "path": "pio/p4-console-source-selection.json",
+      "head_sha256": "febe64bb543c9a2d579681640d370a3c6a27084ab92d7dbdfee3c1c5a547de37",
+      "snapshot_sha256": "f04cdc35260a49b4fb8c2b83920b6c753f28bbfc3e29c87c63b88504137080ad"
+    },
+    {
+      "path": "pio/p4-mos-recovery-source-selection.json",
+      "head_sha256": "1340e14d3f1a3c4caf8cd939552a9cf0df642d7c8483a2b8e283f359f1b8d19a",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "pio/select_sources.py",
+      "head_sha256": "9e54826e8dbd62653fab9b0787d0e8a783a5e1ba9512591dcb98743fc90e1aa2",
+      "snapshot_sha256": "ff0f6ba375bc4c70d64c38a60e62e93b41c6976a525f68d9ffec7358dd731893"
+    },
+    {
+      "path": "platformio.ini",
+      "head_sha256": "52aae2b2a86babd8806e40adf82336d64f8577d34931d8b5e0ad834773ff12ee",
+      "snapshot_sha256": "d92f4070b962f4551ba76bee2de7e2ebd44c1bb451343a075803c1cc7b1c0e21"
+    },
+    {
+      "path": "video/extender/diagnostics/frame_records.hpp",
+      "head_sha256": "d403781b1c6942334f6da3668faaa430d0ff38c067564fa520da2d04a5782334",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/graphics_command.inc",
+      "head_sha256": "35c6a1e711740efa7b797aca8e0812e1dc712221618806819797165810fcfcf2",
+      "snapshot_sha256": "f24956c05a6328f21f130142512d1a69aa5b7d5bde27b411892b50602ce82a72"
+    },
+    {
+      "path": "video/extender/diagnostics/graphics_timing.hpp",
+      "head_sha256": "71c24973308575869c1cf1f55ec980e4d050bc484bdf1a085a6c65b6ca6c4cc5",
+      "snapshot_sha256": "615a12656335509a57cf0b3d645c95764590aeb9c05c63a1c819f925c974a996"
+    },
+    {
+      "path": "video/extender/diagnostics/lock_wake_trace.hpp",
+      "head_sha256": "c68cd8fd72a22c4d412322982e2d6e15419b1821bba6beac9e9540c1d0ad1bd0",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/native_wait_trace.hpp",
+      "head_sha256": "ae95dea5d4aec50dcaf4a2e1092dc58350d3671df32e1c631083d7a4bf599e48",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/output_isolation.hpp",
+      "head_sha256": "6c4d6640d5e58f316339ad0fdfc91380b66e51813152163f8b8e9731a1c3bdcd",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/owner_trace.hpp",
+      "head_sha256": "8b3e503eed56a54a0ce3185e5812e725c44affd7e2dd84c0d1cdc7713f09eb87",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/owner_trace_hooks.h",
+      "head_sha256": "f3e9a7c20924cd70c90560e5d91d905b9340972527ffba9fd7214bab9d5180f8",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/diagnostics/refresh_trace.hpp",
+      "head_sha256": "d26abe17e07d6d863eb0bd18e42fba0400405b71158d0f128d39ae4bc2d00b3a",
+      "snapshot_sha256": "9ec71d3ea9722edb950c5540584b43abc9d799e9151a4feb8434779f43729bc9"
+    },
+    {
+      "path": "video/extender/diagnostics/row_priority.hpp",
+      "head_sha256": "c1032d45e9ece3d74ad3b42921ac488826bad476025c2eca6188467eb84bd891",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/display/stock_native_access.hpp",
+      "head_sha256": "f3bf29d5080e9e396bcdd1b6722f90523c031f3fac2f8ed9726cd2f0e2d161a3",
+      "snapshot_sha256": "0393de0a9f3f987c409b8b7332d57b9dee3f7934ca999f1cf518b2e70786bfdb"
+    },
+    {
+      "path": "video/extender/display/stock_p4_service.cpp",
+      "head_sha256": "2949a7468c7bb60daa717c631e1b3578f47b00cac52383ff7a62bc6de6da3f5f",
+      "snapshot_sha256": "24b6324e0e274e599c05ba4f0d172fdffa0c3ce85dc398770153ebd316d63808"
+    },
+    {
+      "path": "video/extender/display/stock_p4_service.hpp",
+      "head_sha256": "7f03916e3d21d414fbda9fc218b603a7e47d927e88534e674d2afbde1c4ea713",
+      "snapshot_sha256": "97f02bfe715a8e9e4202bf9c0ab9d3a8817a9794830f9ff7acca74318878b615"
+    },
+    {
+      "path": "video/extender/network/wired_network_service.cpp",
+      "head_sha256": "b815b7ee4b43eae8bf515ff43a58b27c79c04b7758bebc04f72ba2281b8b55d2",
+      "snapshot_sha256": "7b7c7e2e18bbcab4869a62f498ce4167933f41e1e288faf0f01720f6ab7ae4a9"
+    },
+    {
+      "path": "video/extender/recovery/mos_recovery.cpp",
+      "head_sha256": "9856f9e80bbc31806e1df06948986069357d4807c2d42aa852a88a3d25ccd885",
+      "snapshot_sha256": null
+    },
+    {
+      "path": "video/extender/web/README.md",
+      "head_sha256": "44a8ca5cf8d72bf0f25458ae09c276f5e4ada996d724a4582c0c338509aa5eed",
+      "snapshot_sha256": "b42e91dc8d8f236ae2e45926ce67a70eaddb3c2876afa93c216253425384c03f"
+    },
+    {
+      "path": "video/extender/web/frame_protocol.js",
+      "head_sha256": "63f49a65e021dc5595d0c2e713b9e9d8585eb9f3f053463227e1c60d83b235a4",
+      "snapshot_sha256": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217"
+    },
+    {
+      "path": "video/extender/web/index.html",
+      "head_sha256": "cefafed10f70b7b8a66f28e6f0d0a18b656ab9bd93705248b79993a51d858e10",
+      "snapshot_sha256": "fe1ee8e88455e1eaf5a2b081aa5017e92dbafbf53b2d2e71c5d98ca81a37e743"
+    },
+    {
+      "path": "video/extender/web/protocol.md",
+      "head_sha256": "c7ca850007f1364450e3bd96544752c386993e4ee6dddf7d0871dc1a7aba007e",
+      "snapshot_sha256": "1549bbc302df4265fc27a8125ffaf0c3c4dc2b3bafffa57f5e2e41d44611d510"
+    },
+    {
+      "path": "video/vdu_buffered.h",
+      "head_sha256": "e27c95a5d587eebe7f64b3213a6cf5c1464b7953343d6556eca7c3da67dbd78d",
+      "snapshot_sha256": "ae361105a136b9cecfe7c4da643960ee10db299482b2394d315f8af825c24078"
+    }
+  ],
+  "disk_union_differences": [
+    {
+      "path": "video/CMakeLists.txt",
+      "snapshot_sha256": "0f65c7586b13953545961e9c16f7ba8f00676d01e9cbe1a937d12d0ad6aeb5d4",
+      "head_sha256": "66099abdbefe2b090058528766503880fe3bbaa0ddb84f6d4693570ac27c55c1",
+      "disposition": "Generated; regenerate from console selection"
+    },
+    {
+      "path": "video/extender/diagnostic/generated/p4_zdi_mos_recovery_payload.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "e327cbb9b11721ac495ae626c64107b525bcffee03f71bde5ef87a09b30c640b",
+      "disposition": "Keep separate recovery target; not selected console input"
+    },
+    {
+      "path": "video/extender/diagnostics/frame_records.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "d403781b1c6942334f6da3668faaa430d0ff38c067564fa520da2d04a5782334",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/graphics_command.inc",
+      "snapshot_sha256": "f24956c05a6328f21f130142512d1a69aa5b7d5bde27b411892b50602ce82a72",
+      "head_sha256": "35c6a1e711740efa7b797aca8e0812e1dc712221618806819797165810fcfcf2",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/graphics_timing.hpp",
+      "snapshot_sha256": "615a12656335509a57cf0b3d645c95764590aeb9c05c63a1c819f925c974a996",
+      "head_sha256": "71c24973308575869c1cf1f55ec980e4d050bc484bdf1a085a6c65b6ca6c4cc5",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/lock_wake_trace.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "c68cd8fd72a22c4d412322982e2d6e15419b1821bba6beac9e9540c1d0ad1bd0",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/native_wait_trace.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "ae95dea5d4aec50dcaf4a2e1092dc58350d3671df32e1c631083d7a4bf599e48",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/output_isolation.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "6c4d6640d5e58f316339ad0fdfc91380b66e51813152163f8b8e9731a1c3bdcd",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/owner_trace.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "8b3e503eed56a54a0ce3185e5812e725c44affd7e2dd84c0d1cdc7713f09eb87",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/owner_trace_hooks.h",
+      "snapshot_sha256": null,
+      "head_sha256": "f3e9a7c20924cd70c90560e5d91d905b9340972527ffba9fd7214bab9d5180f8",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/refresh_trace.hpp",
+      "snapshot_sha256": "9ec71d3ea9722edb950c5540584b43abc9d799e9151a4feb8434779f43729bc9",
+      "head_sha256": "d26abe17e07d6d863eb0bd18e42fba0400405b71158d0f128d39ae4bc2d00b3a",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/diagnostics/rle2/bench.hpp",
+      "snapshot_sha256": "7fb6f9247d9cf86e09b4681eb64b2737f30a6931b443f70e4f29deebf25eb30a",
+      "head_sha256": null,
+      "disposition": "Promote exact tracked research counterpart"
+    },
+    {
+      "path": "video/extender/diagnostics/rle2/rle2.hpp",
+      "snapshot_sha256": "f579f5facc061987f3d7ddb8f2029da6dbdec86c2154898b4c848bab30da67fd",
+      "head_sha256": null,
+      "disposition": "Promote exact tracked research counterpart"
+    },
+    {
+      "path": "video/extender/diagnostics/row_priority.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "c1032d45e9ece3d74ad3b42921ac488826bad476025c2eca6188467eb84bd891",
+      "disposition": "Retain separate diagnostics; preserve selected disabled/enabled scope"
+    },
+    {
+      "path": "video/extender/display/stock_native_access.hpp",
+      "snapshot_sha256": "0393de0a9f3f987c409b8b7332d57b9dee3f7934ca999f1cf518b2e70786bfdb",
+      "head_sha256": "f3bf29d5080e9e396bcdd1b6722f90523c031f3fac2f8ed9726cd2f0e2d161a3",
+      "disposition": "Retain ordinary native semantics; reconcile optional tracing only"
+    },
+    {
+      "path": "video/extender/display/stock_p4_service.cpp",
+      "snapshot_sha256": "24b6324e0e274e599c05ba4f0d172fdffa0c3ce85dc398770153ebd316d63808",
+      "head_sha256": "2949a7468c7bb60daa717c631e1b3578f47b00cac52383ff7a62bc6de6da3f5f",
+      "disposition": "Retain ordinary native semantics; reconcile optional tracing only"
+    },
+    {
+      "path": "video/extender/display/stock_p4_service.hpp",
+      "snapshot_sha256": "97f02bfe715a8e9e4202bf9c0ab9d3a8817a9794830f9ff7acca74318878b615",
+      "head_sha256": "7f03916e3d21d414fbda9fc218b603a7e47d927e88534e674d2afbde1c4ea713",
+      "disposition": "Retain ordinary native semantics; reconcile optional tracing only"
+    },
+    {
+      "path": "video/extender/network/packed_frame.hpp",
+      "snapshot_sha256": "4880b408714d6b52597c12436021170b3eb8d808e2442d47fb6bdeaa85b1b98a",
+      "head_sha256": null,
+      "disposition": "Promote exact tracked research counterpart"
+    },
+    {
+      "path": "video/extender/network/pair_rle.hpp",
+      "snapshot_sha256": "6f484ab6acd727878c967e8de522486c1fe3c8e74a0cb67851e56a4170cd4461",
+      "head_sha256": null,
+      "disposition": "Promote exact tracked research counterpart"
+    },
+    {
+      "path": "video/extender/network/wired_network_service.cpp",
+      "snapshot_sha256": "7b7c7e2e18bbcab4869a62f498ce4167933f41e1e288faf0f01720f6ab7ae4a9",
+      "head_sha256": "b815b7ee4b43eae8bf515ff43a58b27c79c04b7758bebc04f72ba2281b8b55d2",
+      "disposition": "Integrate codec negotiation/send and diagnostic route; preserve unrelated guarded work"
+    },
+    {
+      "path": "video/extender/recovery/generated/mos_recovery_payload.hpp",
+      "snapshot_sha256": null,
+      "head_sha256": "e0572787d4f3dc110b69a7b528e467759e74a6be74b4af4781543fd51593738e",
+      "disposition": "Keep separate recovery target; not selected console input"
+    },
+    {
+      "path": "video/extender/recovery/generated/mos_recovery_payload.json",
+      "snapshot_sha256": null,
+      "head_sha256": "db5aa7906fdd15130775470e66e9e20e7a9c3c03efa729ec73e057f87adb0c25",
+      "disposition": "Keep separate recovery target; not selected console input"
+    },
+    {
+      "path": "video/extender/recovery/mos_recovery.cpp",
+      "snapshot_sha256": null,
+      "head_sha256": "9856f9e80bbc31806e1df06948986069357d4807c2d42aa852a88a3d25ccd885",
+      "disposition": "Keep separate recovery target; not selected console input"
+    },
+    {
+      "path": "video/extender/web/README.md",
+      "snapshot_sha256": "b42e91dc8d8f236ae2e45926ce67a70eaddb3c2876afa93c216253425384c03f",
+      "head_sha256": "44a8ca5cf8d72bf0f25458ae09c276f5e4ada996d724a4582c0c338509aa5eed",
+      "disposition": "Retain maintained current documentation; correct observed mismatch separately"
+    },
+    {
+      "path": "video/extender/web/frame_protocol.js",
+      "snapshot_sha256": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217",
+      "head_sha256": "63f49a65e021dc5595d0c2e713b9e9d8585eb9f3f053463227e1c60d83b235a4",
+      "disposition": "Preserve full-frame RLE2/packing/pair decoders"
+    },
+    {
+      "path": "video/extender/web/index.html",
+      "snapshot_sha256": "fe1ee8e88455e1eaf5a2b081aa5017e92dbafbf53b2d2e71c5d98ca81a37e743",
+      "head_sha256": "cefafed10f70b7b8a66f28e6f0d0a18b656ab9bd93705248b79993a51d858e10",
+      "disposition": "Private reset configuration; generate from local input, do not publish snapshot endpoint"
+    },
+    {
+      "path": "video/extender/web/protocol.md",
+      "snapshot_sha256": "1549bbc302df4265fc27a8125ffaf0c3c4dc2b3bafffa57f5e2e41d44611d510",
+      "head_sha256": "c7ca850007f1364450e3bd96544752c386993e4ee6dddf7d0871dc1a7aba007e",
+      "disposition": "Retain maintained current documentation; correct observed mismatch separately"
+    },
+    {
+      "path": "video/idf_component.yml",
+      "snapshot_sha256": "d588a20f706c4238b28c0fd9089d9d6cd630a59675848588d7e025c4945bbb47",
+      "head_sha256": null,
+      "disposition": "Generated; regenerate from console selection"
+    },
+    {
+      "path": "video/vdu_buffered.h",
+      "snapshot_sha256": "ae361105a136b9cecfe7c4da643960ee10db299482b2394d315f8af825c24078",
+      "head_sha256": "e27c95a5d587eebe7f64b3213a6cf5c1464b7953343d6556eca7c3da67dbd78d",
+      "disposition": "Preserve installed RLE2 asset decode block without changing retained TVC branch"
+    },
+    {
+      "path": "pio/p4-console-identity.json",
+      "snapshot_sha256": "a170944e5f7e66db28757674d531a8e4d6c864b9c5c746254bc89a774fbbf882",
+      "head_sha256": "f5ddd36ff6fb8065df160879ac259f2e0a126e6e0eb0e6f57f224683f7782883",
+      "disposition": "Allocate new build identity under existing policy; historical identity unchanged"
+    },
+    {
+      "path": "pio/p4-console-source-selection.json",
+      "snapshot_sha256": "f04cdc35260a49b4fb8c2b83920b6c753f28bbfc3e29c87c63b88504137080ad",
+      "head_sha256": "febe64bb543c9a2d579681640d370a3c6a27084ab92d7dbdfee3c1c5a547de37",
+      "disposition": "Explicit console selection; retain other targets, record final compile flags"
+    },
+    {
+      "path": "pio/p4-mos-recovery-source-selection.json",
+      "snapshot_sha256": null,
+      "head_sha256": "1340e14d3f1a3c4caf8cd939552a9cf0df642d7c8483a2b8e283f359f1b8d19a",
+      "disposition": "Keep separate recovery target; not selected console input"
+    },
+    {
+      "path": "pio/select_sources.py",
+      "snapshot_sha256": "ff0f6ba375bc4c70d64c38a60e62e93b41c6976a525f68d9ffec7358dd731893",
+      "head_sha256": "9e54826e8dbd62653fab9b0787d0e8a783a5e1ba9512591dcb98743fc90e1aa2",
+      "disposition": "Explicit console selection; retain other targets, record final compile flags"
+    }
+  ],
+  "vendor_snapshot_files_equal": 5117,
+  "codec_origins": [
+    {
+      "selected_path": "video/extender/diagnostics/rle2/rle2.hpp",
+      "tracked_source": "docs/tasks/QUAL-003/debrief/P01h/codec/rle2.hpp",
+      "sha256": "f579f5facc061987f3d7ddb8f2029da6dbdec86c2154898b4c848bab30da67fd"
+    },
+    {
+      "selected_path": "video/extender/diagnostics/rle2/bench.hpp",
+      "tracked_source": "docs/tasks/QUAL-003/debrief/P01h/codec/bench.hpp",
+      "sha256": "7fb6f9247d9cf86e09b4681eb64b2737f30a6931b443f70e4f29deebf25eb30a"
+    },
+    {
+      "selected_path": "video/extender/network/packed_frame.hpp",
+      "tracked_source": "docs/tasks/BENCH-005/composed-packing/sixbit/packed.hpp",
+      "sha256": "4880b408714d6b52597c12436021170b3eb8d808e2442d47fb6bdeaa85b1b98a"
+    },
+    {
+      "selected_path": "video/extender/network/pair_rle.hpp",
+      "tracked_source": "docs/tasks/BENCH-005/composed-packing/pair-rle/pair.hpp",
+      "sha256": "6f484ab6acd727878c967e8de522486c1fe3c8e74a0cb67851e56a4170cd4461"
+    }
+  ],
+  "embedded_assets": [
+    {
+      "file": "app.js",
+      "sha256": "9522f0bfa34f97b25fe2ea2bad0610eb8f60332d2e53ba438a3f414ce07c0f79",
+      "exact_bytes_in_firmware": true
+    },
+    {
+      "file": "index.html",
+      "sha256": "fe1ee8e88455e1eaf5a2b081aa5017e92dbafbf53b2d2e71c5d98ca81a37e743",
+      "exact_bytes_in_firmware": true
+    },
+    {
+      "file": "frame_protocol.js",
+      "sha256": "4164bb3124ab2d8f628f2ee610b80f940274da0cbfeb6ecd9debd68e75d92217",
+      "exact_bytes_in_firmware": true
+    },
+    {
+      "file": "style.css",
+      "sha256": "e2e79a93df0d8bfedf142064a239de2b6e61d362a7ab091fa4f1bb0b667f7437",
+      "exact_bytes_in_firmware": true
+    },
+    {
+      "file": "webgl2_presenter.js",
+      "sha256": "240c4707d9ee374ab7524b35b608e8fb6cd86d2a198bd24d70b53cd060736db2",
+      "exact_bytes_in_firmware": true
+    }
+  ],
+  "console_dependency_lock_equal": true,
+  "declared_platformio_flags": [
+    "-D AGON_EXTENDER_P4_BOOT=1",
+    "-D AGON_EXTENDER_STOCK_RUNTIME=1",
+    "-D AGON_EXTENDER_SD_SERVICE=1",
+    "-D AGON_EXTENDER_REMOTE_KEYBOARD=1",
+    "-D AGON_EXTENDER_TELEMETRY=1",
+    "-D AGON_EXTENDER_VIDEO_POLL_MS=1",
+    "-D AGON_EXTENDER_VIDEO_TIMING=1",
+    "-D AGON_EXTENDER_INTERNAL_POOLS=1",
+    "-D AGON_EXTENDER_DRAW_FOUR=1",
+    "-D AGON_EXTENDER_DRAW_TWICE=1",
+    "-D AGON_EXTENDER_REFRESH_TRACE=1",
+    "-D AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+    "-D AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+    "-D AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+    "-D AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+    "-D AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+    "-D AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+    "-D AGON_EXTENDER_PACKED_ROW=1",
+    "-D AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1"
+  ],
+  "cmake_display_unit_definitions": [
+    "AGON_EXTENDER_STOCK_RUNTIME=1"
+  ],
+  "final_scons_flags": "Not recovered as full invocation; R01-04 must capture. CMake flags are not final SCons proof.",
+  "browser_query": "/video",
+  "parent_browser_query": "/video?rle2=1&packed=2",
+  "explicit_credit_spacing_ms": null,
+  "parent_explicit_credit_spacing_ms": "1000/60",
+  "runtime_performance_effect": "not measured"
+}

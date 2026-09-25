@@ -8,12 +8,20 @@ evidence for their recorded builds.
 
 ## Default encoding — accepted 2026-09-19
 
-Browser video output defaults to **RLE2 compression**, requesting `?rle2=1` in
+The accepted browser-video default is **RLE2 compression**, requesting `?rle2=1` in
 clients using the current negotiation interface. This is full-frame compression,
 not frame differencing. Retain raw compatibility/fallback and explicit test codec
 overrides. This decision does not change pacing or expand supported formats.
 Client replacements and firmware deployments must preserve and verify this default.
 Authority: [ADR-0021](../decisions/ADR-0021-rle2-browser-default.md).
+
+**Recorded implementation discrepancy:** the preserved
+`browser-reset-r02-b2026-09-21-20-37-00Z` browser requests plain `/video`, so
+its P4 uses raw frames despite retaining the encoders. Its parent requested
+`rle2=1&packed=2`. [Source/binary comparison](../tasks/RELEASE-001/R01-03.md)
+confirms the change; no performance effect was measured. The accepted requirement
+above remains in force, and RELEASE-001 R01-D01 owns correction disposition.
+
 
 ## Accepted web-output ceiling — 2026-09-16
 
@@ -38,7 +46,9 @@ Authority: [ADR-0020](../decisions/ADR-0020-web-output-30fps.md).
 The accepted 30-fps ceiling above is not proof of an installed limiter.
 [BENCH-005](../tasks/BENCH-005.md#browser-pacing-continuation) later received
 explicit authorization for a 60-Hz client-request experiment, and retained
-browser candidates use that pacing. [The cross-agent review](../tasks/QUAL-003/mode-transition/AGENT-QUESTIONS.md)
+earlier browser candidates use that pacing. The retained reset build subsequently
+removed explicit 60-Hz credit spacing; its ordinary page returns credits after
+presentation without that fixed interval. [The cross-agent review](../tasks/QUAL-003/mode-transition/AGENT-QUESTIONS.md)
 distinguishes those candidates from the earlier 30-Hz capped gameplay result.
 Neither establishes a general 60-fps high-resolution acceptance or revokes
 ADR-0020. Resolving the current normal-output policy versus retained experimental
@@ -167,7 +177,7 @@ retains its correct-image but worse-performance result.
 | `packed=2` | EVP1 or raw fallback | Palette form plus direct six-bit RGB222 |
 | `pair=1` | EVQ1 or raw fallback | Optional experimental pair-RLE; not the ordinary default |
 
-The recorded later default combines `rle2=1&packed=2`: the server chooses an
+The retained pre-reset browser default combines `rle2=1&packed=2`: the server chooses an
 eligible smaller representation. Requesting a codec is not proof it was sent;
 record actual magic and bytes. Earlier RLE2 candidates limited decoded frames
 to 512×384; the composed-packing candidate enlarged that bound to 1024×768.

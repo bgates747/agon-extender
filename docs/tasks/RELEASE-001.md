@@ -59,7 +59,19 @@ are not established by this task proposal.
 [Preservation result](RELEASE-001/R01-01.md) records the component table, exact
 hashes, rollback material and unresolved live-identity limits. R01-01 is complete
 within that stated scope. [Bundle specification and validation matrix](RELEASE-001/R01-02.md)
-complete R01-02. R01-03 remains unstarted. No installed firmware changed.
+complete R01-02. [Source composition](RELEASE-001/R01-03.md) completes R01-03;
+R01-04 remains unstarted. No installed firmware changed.
+
+## Decision register
+
+| ID | State | Recommendation, alternatives and downstream effect |
+|---|---|---|
+| R01-D01 | Open — browser compression discrepancy | Preserve an exact-behavior control build first, then authorize restoring `?rle2=1&packed=2` as a separately identified and tested correction before promotion. Alternative: explicitly retain raw browser default as a documented departure from ADR-0021. Prerequisites: clean reconstruction and known rollback. The reset build lost both compressed requests and explicit 60-Hz spacing; do not also change pacing under this correction. Existing QUAL-003/BENCH-005 own that separate policy question. No fix or release exception is approved by R01-03. |
+
+This is an implementation discrepancy, not a new architectural decision. The
+accepted compression requirement remains unchanged; source review does not
+establish the performance effect. R01-04 may reproduce the control when
+separately authorized, but promotion cannot silently ignore this conflict.
 
 ## Proposed durable layout
 
@@ -95,7 +107,7 @@ frozen evidence. Present material identity/publication/policy decisions to the
 Author before acting; do not create a release merely by naming a directory
 production. Deliver the concrete packaging specification and validation matrix.
 
-R01-03 [ ] **Recover the P4 source composition.** The P4 build owner maps each
+R01-03 [x] **Recover the P4 source composition.** The P4 build owner maps each
 selected deployed change to maintained source or a retained transformation,
 including renderer, codec, browser input/UI, reset integration and SD gateway.
 Record included/excluded changes and parent provenance; do not apply every old

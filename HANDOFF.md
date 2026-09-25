@@ -23,9 +23,12 @@ unfinished work; this handoff is not a competing task queue.
    [Keyboard ownership](docs/remote-keyboard.md) applies in Legacy and ExCom.
    Remote typing requires Extender input to be admitted already; do not ask an
    agent to enable its own disabled path through that path.
-4. Browser video defaults to full-frame RLE2, not inter-frame differencing.
-   Streaming performance and compatibility limitations remain. Accepted pacing
-   versus implementation is an audit finding, not permission to change firmware.
+4. Accepted browser policy is full-frame RLE2, not inter-frame differencing.
+   The retained reset-button build instead requests raw `/video`; its codec
+   support remains present but unrequested by the ordinary page.
+   [Composition review](docs/tasks/RELEASE-001/R01-03.md) records this discrepancy
+   and removed explicit credit spacing. Performance impact is unmeasured; no
+   correction is deployed.
 5. Remote reset uses the separate Pi bridge described in the
    [reset guide](docs/bench-reset.md). It is neither a P4 reset nor a power cycle.
 6. [AUDIT-009](docs/tasks/AUDIT-009.md) is reconciling documentation. Its inventory
