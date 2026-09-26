@@ -125,3 +125,22 @@ Replacement relies on the inspected ESP-IDF 5.5.5
 `components/fatfs/vfs/vfs_fat.c` implementation: `vfs_fat_rename` calls `f_rename`
 without POSIX overwrite emulation. The local staging/backup protocol is necessary
 for that contract; it is not an upstream patch. No MOS/VDP ABI changes are made.
+
+## Physical qualification procedure — authorized 2026-09-26
+
+N07-07 [ ] Build committed r56 console candidate (registry r114), preserve and
+verify installed P4 flash before replacement, verify flash/readback and boot
+identity. Keep the approved production selection unchanged until acceptance.
+Use current local bench identity/reset configuration. Stop on unexpected
+installed firmware rather than assuming the bench still matches production.
+
+N07-08 [ ] Mount without formatting; record capacity/root listing read-only.
+Use one newly created `/agents/extender` test subtree only. Test byte-verified
+new/replacement transfers, interrupted replacement, nested copy/move/list/search,
+conflicts/root guard, recursive delete and final cleanup. Capture durable results.
+Check port-80 keyboard/display service coexistence; do not infer gameplay or
+all-mode performance from an HTTP health check. Restore input readiness if needed.
+
+The whole-registry validator currently reports a light2-harness-r02 connectivity
+hash mismatch in existing hardware records. No hardware design file is changed by
+this tranche; do not repair or re-baseline it as part of the SD firmware work.

@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r55",
+  "source_identity": "uart-excom-console-r56",
   "status": "draft",
-  "note": "RELEASE-001 R01-07: absolute shared SDK configuration fixes pre-v3 bootloader selection; reset-configured candidate."
+  "note": "PORT-007: P4-local SD HTTP file/directory management candidate; physical qualification authorized."
 }

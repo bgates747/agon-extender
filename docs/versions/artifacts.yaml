@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r113
-updated_at: 2026-09-26T21:29:17Z
+registry_revision: r114
+updated_at: 2026-09-26T22:35:02Z
 
 artifacts:
   - artifact_id: extender-installation
@@ -644,12 +644,13 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r55
+    latest_identity: uart-excom-console-r56
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r56 adds PORT-007 P4-local SD HTTP file management; standing identity approval and Author deployment/test authorization. Registry r114; physical qualification pending.
       - Selected r55 build passed RELEASE-001 R01-07 and is part of qualified extender-installation-r02. Historical draft label retained; older revision notes below are historical, not current installation status. Registry r113.
       - r18 adds the QUAL-003 RX06 checked fixed-point conversion seam. Physical candidate preserves installed r17 parent settings; hardware comparison pending. Standing identity/deployment authorization applies.
       - r17 selects BENCH-001 v2 six-opponent telemetry on the owned Legacy UART path. Physical flash/readback and native USB startup were verified; paired v0.1.16 driving and fresh-run/held-Escape exit checks pass. Prior images are retained. Draft inputs and exploratory driving do not constitute a qualified release; see BENCH-001 evidence.
