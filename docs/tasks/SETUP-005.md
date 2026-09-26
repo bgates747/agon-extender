@@ -119,8 +119,24 @@ The Author accepted the following formal names and stable identities on
 operating-mode context. “Exclusive” is mandatory in the two official names.
 On 2026-09-08 the Author also accepted **ExCom** as conversational shorthand
 for **Exclusive Compatible**, retaining its formal name and stable identity.
+On 2026-09-26 the Author accepted **ExExt** for **Exclusive Extended**.
 Naming is resolved; lifecycle, routing, reverse capabilities, carve-outs, and
 the remaining questions below stay open.
+
+## Accepted clarification — 2026-09-26
+
+SETUP-005-D009 [x] — Author reaffirmed ExCom UART-only/no parallel traffic,
+ExExt as Exclusive Extended with standard VDU parallel forwarding, and Dual
+as mainboard VDU plus explicit EDP/EDU. ExExt compatibility remains separately
+qualified. Existing applications need no output-call rewrite to benefit in
+ExExt. Keyboard-source selection remains independent.
+
+The existing MOS API gateway (`0x51`, C slot `0x20`) is the explicit service
+entry, not a new RST vector or external-module mechanism. General EDU drawing,
+Dual and ExExt implementation remain pending. See the current
+[architecture](../architecture.md) and
+[ADR amendment](../decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
+This acceptance does not close the other lifecycle/interface questions.
 
 ## Accepted MOS terminology
 

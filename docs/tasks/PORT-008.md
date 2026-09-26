@@ -20,6 +20,21 @@ review gates. They do not reinstate old bench stops, select obsolete candidates,
 or grant new mutation/publication authority. Broader transport/compatibility work
 remains open; completed bounded controls do not establish every workload's parity.
 
+## Mainline parallel remit — 2026-09-26
+
+The Author reaffirmed eight-bit parallel transport as core Extender work.
+ExCom remains UART-only; ExExt (Exclusive Extended) enables existing standard
+VDU applications to use the faster forward pipe, with separately qualified
+compatibility. Dual remains mainboard VDU plus explicit EDU. The
+[current architecture](../architecture.md) governs these distinctions.
+
+Resume parallel work by reconciling existing sender/receiver code with current
+wiring and production, qualifying bounded transfers and UART/input handovers,
+then feeding EDP's existing VDU stream. This is direction for the next bounded
+contract, not permission to execute old qualification scripts. Audio and
+[TRS-80 integration](TRS-80-003.md) consume the common transport; neither owns
+a private fork. Reverse high-speed parallel is not implicitly added to scope.
+
 ## EMOS follow-up planning — 2026-09-13
 
 The Author reports pushing the previous 44 commits and requested an EMOS

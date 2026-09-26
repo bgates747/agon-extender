@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Partial
 - Date: 2026-08-20
-- Last amended: 2026-09-24
+- Last amended: 2026-09-26
 - Related tasks: SETUP-004, SETUP-005
 - Open-decision tracker: SETUP-005
 
@@ -16,6 +16,28 @@ This decision retains dated amendments. For implemented operation use the
 browser source and browser-input deferral: P4 arbitrates USB/browser/agent
 providers behind `EMOS KEYINPUT extender`. Broader four-mode requirements below
 are not a claim that all four modes are implemented.
+
+## Mode and entry-point clarification — 2026-09-26
+
+The Author reaffirmed the four-mode design and named Exclusive Extended
+**ExExt**. Exclusive Compatible remains **ExCom**; two independently controlled
+displays remain **Dual**. ExCom retains UART-only traffic, without parallel
+transfer. ExExt enables standard VDU output over the eight-bit forward pipe,
+allowing existing applications to benefit without rewritten output calls.
+ExExt compatibility must be qualified separately; it is not assumed identical
+to ExCom. These are deliberate mode semantics, not merely a display destination
+plus an automatically selected faster transport.
+
+In Dual, ordinary VDU/RST output addresses mainboard VDP and explicit EDU
+addresses P4 EDP; output is not mirrored. EDU uses the existing MOS API gateway
+(API `0x51`, C slot `0x20`) rather than a new RST vector. EMOS owns transport,
+activation and state separation. The resident gateway is implemented; general
+EDU drawing and Dual/ExExt production operation are not thereby implemented.
+
+Parallel transport remains mainline Extender work under PORT-008, reusable by
+higher-level services rather than owned by a single consuming application.
+Legacy/ExCom are the currently implemented bounded modes. This clarification
+neither changes installed firmware nor qualifies additional modes.
 
 ## Context
 

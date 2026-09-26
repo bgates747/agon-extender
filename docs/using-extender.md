@@ -33,6 +33,16 @@ admission epoch and readiness; do not reuse an old ready indication. Explicit
 browser capture overrides agent input, and a physical USB keypress takes over
 from both. Coordinate with the person at the keyboard.
 
+## Planned modes versus installed commands
+
+Current production implements Legacy and bounded **ExCom** (Exclusive
+Compatible). ExCom uses UART, not the parallel pipe. **ExExt** (Exclusive
+Extended) is the planned enhanced mode that carries ordinary VDU output over
+the eight-bit parallel path, without application output-call changes; it needs
+separate compatibility qualification. **Dual** is the planned mainboard-VDU /
+Extender-EDU two-display mode. Neither is presented here as an available CLI
+command. The [architecture](architecture.md) owns the full mode/API distinction.
+
 ## Choose the job
 
 | Job | Procedure and boundary |

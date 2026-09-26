@@ -294,6 +294,24 @@ it on the ESP32-P4. EDU names the command set, API, and logical facility; EDP
 names the processor and its firmware. The terms intentionally parallel Agon's
 existing VDU and VDP terminology.
 
+The accepted short names are **ExCom** (Exclusive Compatible) and **ExExt**
+(Exclusive Extended); **Dual** remains the two-display mode. Transport behavior
+is part of the distinction between the exclusive modes, not an independent
+policy that silently upgrades ExCom to parallel operation.
+
+| Mode | Ordinary VDU destination and transport | Explicit EDU destination | Implementation boundary |
+|---|---|---|---|
+| Legacy | Mainboard VDP, stock mainboard UART | Ordinary EDU plane inactive; documented service exceptions remain | Implemented bounded production subset |
+| ExCom | P4 EDP over UART; no parallel traffic | Separate EMOS-owned interface to EDP where supported | Implemented bounded production subset |
+| ExExt | P4 EDP with eight-bit forward parallel transport available for standard VDU commands; UART response/control epochs | Separate EMOS-owned interface | Planned; parallel integration and compatibility unqualified |
+| Dual | Mainboard VDP; never mirrored | P4 EDP, separate result domain | Planned; general EDU interface unimplemented |
+
+ExExt lets existing VDU applications benefit from faster transport without
+rewriting their output calls. It does not promise ExCom-equivalent timing or
+compatibility: differences may prove small, but require separate qualification.
+Keyboard source remains independently selected; EMOS arbitrates any shared-pin
+handover so parallel operation does not silently abandon input/control traffic.
+
 Extender-aware programs address the P4 through an explicit, stable, versioned
 EDU API owned by EMOS. Synchronous foreground applications may link a client
 binding, but that binding invokes EMOS and does not own the transport,
@@ -311,7 +329,7 @@ Keep changes small and upstream-reviewable while preserving the EDU contract.
 See
 [ADR-0014](decisions/ADR-0014-edu-operating-modes-and-service-architecture.md).
 
-In **Exclusive Compatible mode**, the EDP is the sole compatibility display
+In **Exclusive Compatible (ExCom) mode**, the EDP is the sole compatibility display
 processor and uses the stock VDP UART transport contract. It owns the
 stock-compatible command and response stream while MOS retains canonical VDP
 sysvar storage, completion flags, and the mechanism that updates them. The
@@ -319,7 +337,7 @@ selected hardware core provides all four eZ80 UART1 signals independently of
 the predecessor split-link harness; its exact firmware behavior and physical
 qualification remain under HW-001 and PORT-008.
 
-In **Exclusive Extended mode**, the EDP has the same exclusive compatibility
+In **Exclusive Extended (ExExt) mode**, the EDP has the same exclusive compatibility
 authority and logical MOS/eZ80 integration reach. Commands may use the
 eight-bit forward parallel path; response, control, and fallback traffic uses
 the same common four-signal UART circuit as Exclusive Compatible during
@@ -489,6 +507,16 @@ and Dual, to the EDP stock-compatible backend in Exclusive Compatible, and to
 the EDP enhanced backend in Exclusive Extended. Explicit EDU calls remain a
 separate versioned interface with a separate result domain, even in an
 exclusive mode where both interfaces reach the EDP.
+
+No new RST vector is allocated for EDU. The existing MOS API dispatcher reaches
+the resident EMOS gateway through API `0x51`; C-function slot `0x20` is its C
+entry. A versioned request identifies the service and input/output buffers;
+a client binding may hide that request construction. The maintained
+[EMOS gateway contract](https://github.com/bgates747/agon-emos/blob/main/docs/emos-v1-contract.md)
+owns the exact ABI. The gateway exists, but general EDU drawing services and
+Dual mode do not follow merely from its presence. The same distinction keeps
+ordinary VDU queries in the canonical MOS result domain and explicit EDU results
+separate. Do not resurrect the cancelled external module/provider loader.
 
 An EDU-aware application may therefore combine VDU and EDU calls without
 creating another operating mode. In Dual this intentionally coordinates two
