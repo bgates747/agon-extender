@@ -81,6 +81,14 @@ still open. Check links and selection integrity locally; no rebuild, deployment,
 emulator or fresh-machine qualification. Record remaining scope and stop after
 this batch.
 
+A09-N06 [ ] **Artifact status versus qualified composition.** Author authorized
+execution on 2026-09-26. Reconcile F040 using the version policy, artifact
+registry, selected baseline, production guide and retained acceptance. Preserve
+immutable build labels and exact bytes; distinguish component records from
+qualified combinations. Correct stale deployment notes with a registry revision
+under standing version authority. No new component qualification, rebuild,
+tag, deployment or promotion is implied. Record checks and stop after this batch.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
