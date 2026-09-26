@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r56",
+  "source_identity": "uart-excom-console-r57",
   "status": "draft",
-  "note": "PORT-007: P4-local SD HTTP file/directory management candidate; physical qualification authorized."
+  "note": "PORT-007: P4-local SD HTTP file/directory management candidate; drain rejected upload bodies so clients receive HTTP errors."
 }

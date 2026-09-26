@@ -144,3 +144,9 @@ all-mode performance from an HTTP health check. Restore input readiness if neede
 The whole-registry validator currently reports a light2-harness-r02 connectivity
 hash mismatch in existing hardware records. No hardware design file is changed by
 this tranche; do not repair or re-baseline it as part of the SD firmware work.
+
+
+Physical r56 finding: 1 MiB byte round trip passes, but rejecting an existing
+upload destination closed TCP with unread bytes; urllib saw connection reset
+rather than HTTP 409. r57 drains bounded fixed-length request data before an
+early rejection response. Preserve this failure as informative protocol evidence.

@@ -193,22 +193,45 @@ esp_err_t get(httpd_req_t *r) {
   if (fclose(f)) result = ESP_FAIL;
   return result == ESP_OK ? httpd_resp_send_chunk(r, nullptr, 0) : ESP_FAIL;
 }
+// Drain a rejected fixed-length upload before replying. Closing with unread TCP
+// bytes can reset the peer while it is sending, hiding our useful HTTP error.
+// Bound both declared size and socket receive timeout; never wait without limits.
+bool drainUpload(httpd_req_t *r, size_t left) {
+  if (left > 512U * 1024U * 1024U) return false;
+  char data[4096];
+  while (left) {
+    int n = httpd_req_recv(r, data, std::min(left, sizeof(data)));
+    if (n <= 0) return false;
+    left -= n;
+  }
+  return true;
+}
+esp_err_t rejectUpload(httpd_req_t *r, const char *status, const char *message) {
+  drainUpload(r, r->content_len);
+  return reply(r, status, message);
+}
 esp_err_t put(httpd_req_t *r) {
-  if (!intent(r)) return reply(r, "403 Forbidden", "Explicit CLI write intent required");
+  if (!intent(r)) return rejectUpload(r, "403 Forbidden", "Explicit CLI write intent required");
   if (!httpd_req_get_hdr_value_len(r, "Content-Length") || httpd_req_get_hdr_value_len(r, "Transfer-Encoding"))
-    return reply(r, "411 Length Required", "Use a fixed Content-Length");
+    return rejectUpload(r, "411 Length Required", "Use a fixed Content-Length");
   Query q(r); std::string path; bool replace = q.flag("replace");
-  if (!q.path("path", path) || path == "/") return reply(r, "400 Bad Request", "Invalid file path/options");
-  if (r->content_len > 512U * 1024U * 1024U) return reply(r, "413 Content Too Large", "Maximum upload 512 MiB");
-  if (!mount()) return reply(r, "503 Service Unavailable", "SD unavailable");
+  if (!q.path("path", path) || path == "/") return rejectUpload(r, "400 Bad Request", "Invalid file path/options");
+  if (r->content_len > 512U * 1024U * 1024U) return rejectUpload(r, "413 Content Too Large", "Maximum upload 512 MiB");
+  if (!mount()) return rejectUpload(r, "503 Service Unavailable", "SD unavailable");
   Upload upload(root + path, replace);
-  if (!upload.open()) return failure(r);
+  if (!upload.open()) {
+    int saved = errno; drainUpload(r, r->content_len); errno = saved;
+    return failure(r);
+  }
   char data[4096]; size_t left = r->content_len;
   while (left) {
     int n = httpd_req_recv(r, data, std::min(left, sizeof(data)));
     if (n <= 0) return ESP_FAIL;
-    if (!upload.write(data, n)) return failure(r);
     left -= n;
+    if (!upload.write(data, n)) {
+      int saved = errno; drainUpload(r, left); errno = saved;
+      return failure(r);
+    }
   }
   if (!upload.finish()) return failure(r, true);
   return reply(r, "201 Created", "Stored");
