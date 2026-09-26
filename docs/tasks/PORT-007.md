@@ -110,3 +110,22 @@ classic-ESP32 SDSPI/SPIFFS backend.
 HW-001 owns current r02 construction mapping; SETUP-006 retains historical
 design provenance. The audit evidence remains in
 [`AUDIT-2026-09-01-001`](../decisions/AUDIT-2026-09-01-001-open-task-and-implementation-integrity.md).
+
+## P4-local network slice — 2026-09-26
+
+Author reports a 32 GiB card installed and authorizes implementation of the
+minimum network service for CLI scripting/curl, with current documentation.
+[Bounded contract](PORT-007/NETWORK-CONTRACT.md) owns this slice. Broader EMOS
+reads, hotplug qualification and general storage work above remain incomplete.
+
+| Option | Experience | Disposition |
+|---|---|---|
+| HTTP endpoints | curl/scripts; optional browser UI later | Selected first; existing ESP-IDF server stack |
+| Browser file manager | Interactive list/upload/download | Deferred UI; can reuse HTTP storage operations |
+| WebDAV | Desktop-mounted HTTP filesystem | Deferred; client compatibility and locking need separate review |
+| FTP | Dedicated transfer client | Deferred; another protocol/server to maintain |
+| SMB | Familiar network share | Deferred; larger protocol and compatibility scope |
+
+No browser manager or alternate protocol is implemented by the first slice.
+Use one P4-owned filesystem, independent of the Agon listener. The earlier
+post-beta sequencing is superseded for this expressly authorized slice only.
