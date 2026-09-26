@@ -129,3 +129,8 @@ reads, hotplug qualification and general storage work above remain incomplete.
 No browser manager or alternate protocol is implemented by the first slice.
 Use one P4-owned filesystem, independent of the Agon listener. The earlier
 post-beta sequencing is superseded for this expressly authorized slice only.
+
+The network slice now has a development implementation and
+[current operator instructions](../p4-sd.md). It is not yet a physically qualified
+or promoted production feature. The broader unchecked storage work above is
+not closed by host filesystem tests or compilation.

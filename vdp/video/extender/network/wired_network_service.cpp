@@ -1,3 +1,6 @@
+#if defined(AGON_EXTENDER_SD_SERVICE)
+#include "extender/storage/local/http.hpp"
+#endif
 #include "display_status.hpp"
 #include "screen_text.hpp"
 #include "pair_rle.hpp"
@@ -413,6 +416,10 @@ esp_err_t telemetryHandler(httpd_req_t *request) {
 #endif
 
 bool WiredNetworkService::startHttp() noexcept {
+
+#if defined(AGON_EXTENDER_SD_SERVICE)
+  if (!local_sd::startHttp()) ESP_LOGW(kTag, "P4 SD HTTP server unavailable");
+#endif
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
 
   if(!pair_scratch)pair_scratch=(uint8_t*)heap_caps_malloc(786432,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);

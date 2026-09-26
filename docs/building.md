@@ -264,3 +264,22 @@ firmware contains a private reset endpoint. Its build-owner configuration remain
 local; changing it requires a newly identified build. Public source/license
 limits remain in [NOTICES](../production/NOTICES.md). The failed r01 archive is
 historical evidence and must not be deployed.
+
+## P4-local SD HTTP candidate
+
+The standard `p4-console` source selection includes
+`video/extender/storage/local/http.cpp`. The selected console SDK configuration
+uses heap-backed FatFS long filenames, required by upload staging names. Other
+fixture targets do not acquire this service automatically.
+
+Host-only filesystem checks:
+
+```sh
+g++ -std=c++17 -Wall -Wextra -Werror -I vdp/video \
+  tests/storage/p4_local_files_test.cpp -o /tmp/p4-local-files-test
+/tmp/p4-local-files-test
+```
+
+A low-level PlatformIO compile is not an identified release or evidence that the
+physical SD card mounts. Follow the normal identified build/deployment workflow
+before bench qualification. See [P4 SD operations](p4-sd.md).

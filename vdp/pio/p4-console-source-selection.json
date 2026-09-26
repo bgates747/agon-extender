@@ -27,7 +27,8 @@
     "video/extender/port/p4_task_watchdog.cpp",
     "video/extender/web/browser_video_provider.cpp",
     "video/extender/web/embedded_assets.cpp",
-    "vendor/ESP32Time/ESP32Time.cpp"
+    "vendor/ESP32Time/ESP32Time.cpp",
+    "video/extender/storage/local/http.cpp"
   ],
   "forbidden_project_translation_units": [
     "video/extender/boot/p4_parallel_qualification_vdp.cpp",

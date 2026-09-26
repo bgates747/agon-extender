@@ -13,6 +13,7 @@ firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 | Need | Current guide |
 |---|---|
 | First use, prerequisites, host setup and another project's workflow | [Using Extender](using-extender.md) |
+| P4-local SD development endpoint | [P4 SD HTTP guide](p4-sd.md), candidate only; not in selected production |
 | Mainboard SD files; checked/fast transfers; sessions and recovery | [Mainboard SD](mainboard-sd.md) |
 | Physical/browser/agent input, ownership and platform limits | [Keyboard input](remote-keyboard.md) |
 | Read visible ExCom text without taking video ownership | [Screen text](screen-text.md) |
@@ -21,8 +22,8 @@ firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 | Where files belong on SD | [SD layout](sd-layout.md) |
 
 Remote input requires prior EMOS admission. The SD listener is foreground,
-requires Legacy mode and runs as `/emos/sdserve.bin`. P4-local SD and physical
-HDMI output are not current installed capabilities. Consult the operating guides
+requires Legacy mode and runs as `/emos/sdserve.bin`. P4-local SD HTTP access has a development implementation, not yet deployed or
+accepted; physical HDMI output is not a current installed capability. Consult the operating guides
 for precise limits rather than assuming support from a research or example file.
 
 ## Develop against the current interfaces
