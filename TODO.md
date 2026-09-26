@@ -21,6 +21,10 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
+- [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; implementation unstarted.
+
+- [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — Panel received; official DevKit example and V1/V2 differences researched. Identify delivered revision, prove vendor output, then integrate a bounded EDP display sink. Research/plan only; bench execution unstarted.
+
 - [ ] **[PORT-003](docs/tasks/PORT-003.md)** — Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals.
 
 - [ ] **[AUDIT-007](docs/tasks/AUDIT-007.md)** — First bounded source pass complete; exhaustive FabGL completeness audit remains open. Use as a candidate source of bounded fidelity work; do not make a whole audit an automatic prerequisite.
