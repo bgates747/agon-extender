@@ -70,3 +70,33 @@ Standard `p4-console` compilation passed with heap-backed long filenames enabled
 generated SDK configuration confirms that selection. Hardware qualification is
 still pending and the completed items above describe this bounded development
 slice only.
+
+## Author scope expansion — complete CLI file management
+
+The Author supersedes the create-only limitation. HTTP remains the transport;
+P4 owns execution on its local card. Implement file replacement, stat, directory
+creation (optional parents), file/directory move, file/directory copy, deletion
+(optional recursive), recursive listing and recursive name/content search.
+Provide a Python CLI for convenient scripting as well as documented curl calls.
+No GUI, filesystem formatting, POSIX permissions/symlinks, background indexing,
+or concurrent external writers are implied by file management on FAT.
+
+N07-04 [ ] Implement shared filesystem operations and HTTP adapters. Replacement
+uploads finish staging before changing the existing file; retain a backup through
+rename and restore it on a reported installation failure where possible. FAT
+replacement is not power-loss atomic. Copies and recursive deletions report
+partial completion on failure, without claiming rollback. Reject root mutation,
+self/descendant copies/moves and traversal. Bound recursion to 16 levels and
+stream file contents/results rather than buffering whole trees. Search supports
+case-insensitive basename wildcards and optional case-sensitive literal content.
+
+N07-05 [ ] Add a sessionless standard-library Python client covering all methods,
+recursive host upload/download, and exact curl documentation. Explain recursive
+partial failure, reserved staging names/recovery, fixed-length uploads and LAN
+access. Preserve the existing production/physical qualification boundary.
+
+N07-06 [ ] Test nested directories, replacement/interruption preservation,
+copy/move/delete, recursive search, binary content across chunk boundaries,
+root/descendant rejection, depth limits and host CLI against a local HTTP peer.
+Compile the standard P4 target and record results without claiming hardware
+qualification. Commit the completed source and documentation together.
