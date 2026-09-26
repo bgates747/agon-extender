@@ -140,3 +140,8 @@ reviewing the create-only restriction: replacement, recursive copy/delete/list,
 move/rename, mkdir with parents, metadata and filename/content search. A
 sessionless Python client complements curl. This supersedes the earlier minimum
 operation set; physical qualification/production acceptance remain pending.
+
+[Hardware results](PORT-007/HARDWARE-RESULTS.md): r57 passes the bounded physical
+file-management and coexistence suite. Earlier physical-pending notes describe
+the development boundary; current remaining gate is Author acceptance/promotion.
+Broader EMOS/P4 storage integration remains separate unfinished work.

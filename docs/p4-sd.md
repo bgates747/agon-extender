@@ -1,9 +1,9 @@
 # P4-local SD file management
 
 The development firmware provides a sessionless HTTP file manager for the P4's
-own card, with a Python CLI and curl interface. It is **not yet deployed or part
-of production v0.1.0**. Host tests and compilation do not qualify the physical
-card. See [implementation contract and evidence](tasks/PORT-007/NETWORK-CONTRACT.md).
+own card, with a Python CLI and curl interface. Candidate **r57 is deployed on the local DevKit and passes bounded hardware
+checks**, but is not yet selected production v0.1.0. See the
+[hardware results](tasks/PORT-007/HARDWARE-RESULTS.md) for scope. See [implementation contract and evidence](tasks/PORT-007/NETWORK-CONTRACT.md).
 
 ## Ownership and setup
 
@@ -129,9 +129,8 @@ use the Python client if preserving an existing host file until success matters.
    their contents and deliberately clean them up. Creating/copying/moving names
    containing these reserved suffixes is forbidden. Recursive deletion explicitly
    removes everything inside its target, including staging/backup files.
-6. Typical errors: 400 invalid path/options/type/depth, 403 root mutation or
-   missing write intent, 404 missing entry, 409 existing destination/nonempty
-   directory/stale staging, 411 missing upload length, 413 oversized upload,
+6. Typical errors: 400 invalid path/options/type/depth, 403 root mutation, missing write intent, or FatFS refusal to remove a
+   nonempty directory; 404 missing entry; 409 existing destination/stale staging; 411 missing upload length, 413 oversized upload,
    503 mount unavailable, 507 no space, 500 filesystem failure. Error responses
    close the HTTP session. Streaming list/search failures terminate the response
    before valid JSON completion; callers must reject truncated results.

@@ -102,7 +102,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[PORT-004](docs/tasks/PORT-004.md)** — Audio command framing slice passed; actual synthesis/output deferred. Retain Wolf3D and wider audio obligations; framing success does not implement sound.
 
-- [ ] **[PORT-007](docs/tasks/PORT-007.md)** — P4-local SD HTTP file/directory management candidate implemented; physical qualification pending. Broader storage remains required v1 work. Keep distinct from the accepted mainboard SD service; EMOS read access remains required.
+- [ ] **[PORT-007](docs/tasks/PORT-007.md)** — P4-local SD HTTP file/directory management r57 passes bounded hardware checks; Author acceptance/promotion pending. Broader storage remains required v1 work. Keep distinct from the accepted mainboard SD service; EMOS read access remains required.
 
 - [ ] **[QUAL-002](docs/tasks/QUAL-002.md)** — Full-circuit electrical absence/power/reset qualification on hold. Requires applicable hardware design and separate physical contract.
 

@@ -1,8 +1,8 @@
 # PORT-007 — P4-local HTTP file access
 
 Current scope is full CLI file/directory management, as authorized in the
-expansion below. Development source and host checks are complete; physical
-qualification and production promotion remain pending. The original minimum
+expansion below. Development source, host checks and bounded hardware checks are complete;
+Author acceptance and production promotion remain pending. The original minimum
 scope below is retained as superseded decision history, not operating guidance.
 
 ## Original frozen scope — superseded operation subset
@@ -128,13 +128,13 @@ for that contract; it is not an upstream patch. No MOS/VDP ABI changes are made.
 
 ## Physical qualification procedure — authorized 2026-09-26
 
-N07-07 [ ] Build committed r56 console candidate (registry r114), preserve and
+N07-07 [x] Build committed r56 console candidate (registry r114), preserve and
 verify installed P4 flash before replacement, verify flash/readback and boot
 identity. Keep the approved production selection unchanged until acceptance.
 Use current local bench identity/reset configuration. Stop on unexpected
 installed firmware rather than assuming the bench still matches production.
 
-N07-08 [ ] Mount without formatting; record capacity/root listing read-only.
+N07-08 [x] Mount without formatting; record capacity/root listing read-only.
 Use one newly created `/agents/extender` test subtree only. Test byte-verified
 new/replacement transfers, interrupted replacement, nested copy/move/list/search,
 conflicts/root guard, recursive delete and final cleanup. Capture durable results.
@@ -150,3 +150,6 @@ Physical r56 finding: 1 MiB byte round trip passes, but rejecting an existing
 upload destination closed TCP with unread bytes; urllib saw connection reset
 rather than HTTP 409. r57 drains bounded fixed-length request data before an
 early rejection response. Preserve this failure as informative protocol evidence.
+
+[Physical results](HARDWARE-RESULTS.md): r57 passes the bounded suite after the
+r56 rejected-upload correction. Production selection is unchanged.
