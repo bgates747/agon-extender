@@ -59,13 +59,13 @@ migration handoff remains evidence outside the current reading path.
 | A09-F018 | Bench constraint reads as banning all interactive tests despite accepted replacement input | BC-001's later PORT-015 acceptance and current keyboard guide | Rewritten as one current constraint: mainboard input unavailable; admitted P4 input permitted; installation/recovery cannot depend on unavailable input. No qualification expanded. |
 | A09-F019 | Timing-package reuse can appear ready under current fixture policy | `tests/performance/run.py` still generates mode selection in EXEC and ordinary application listener return; current AGENTS requires mode selection in autoexec | Guide and BENCH-007/TODO flag procedure refresh before reuse. BENCH-007 owns future runner/procedure work; no runner changed. |
 | A09-F020 | Frozen SD qualification procedure predates current EMOSlet/reset behavior | mainboard-sd-qualification-r01 versus current service and reset guides | Current SD guide identifies r01 as historical, not a current deployment recipe. REMOTE-005/SD qualification owner must refresh it before new acceptance. Frozen identity unchanged. |
-| A09-F021 | Canonical dependency graph may be mistaken for deployed P4 build closure | Reviewed `p4-default` profile versus actual `p4-console` selection and task overlays | Dependency guide now states exact baseline scope and links current build boundary. Underlying reconstruction gap remains F009. |
+| A09-F021 | Canonical dependency graph may be mistaken for deployed P4 build closure | Reviewed `p4-default` profile versus actual `p4-console` selection and task overlays | Dependency guide now states exact baseline scope and links current build boundary. F009 was subsequently closed for selected r55 by RELEASE-001; historical graph scope remains narrower. |
 | A09-F022 | EMOS queue and task opening states lag later physical evidence | INTEG-009–012 original pending states versus PORT-015, PORT-008, QUAL-003 and game-timing results | Current summaries reconciled; broader parity and production callback gates remain open. No blanket task closure. |
 | A09-F023 | Recurring browser encoding details scattered across experiments | P01h RLE2, BENCH-005 palette/direct-six-bit and pair contracts | Promoted established wire details to protocols/browser-video.md; task contracts link current authority. Optional candidate encodings remain distinct from accepted default and base-checkout support. |
 | A09-F024 | Aggregate version validation already fails | light2-harness-r02 connectivity digest differs from its profile; both files unchanged from audit baseline | Existing failure retained, not repaired by rewriting hashes. Hardware/version-record owner under HW-002 must reconcile provenance before using that held design. |
 
 All consequential unresolved findings have an existing owner: F008 pacing
-reconciliation (QUAL-003/BENCH-005), F009 build reconstruction (PORT-003),
+reconciliation (QUAL-003/BENCH-005), F009 is now resolved for selected r55 (RELEASE-001);
 F019 timing-procedure refresh (BENCH-007), F020 SD qualification refresh
 (REMOTE-005), F024 held hardware integrity (HW-002/version records). F012/F016
 are archive-navigation defects owned by their respective hardware/migration
@@ -188,3 +188,11 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | A09-F061 | PORT-001/002 still direct promotion and gate review already completed, and imply no current vendored sources | Maintained dependency guide/source-baselines and completed gate records | Current instructions corrected; generated graph and build qualification unchanged. |
 | A09-F062 | SETUP-004 generic renderer, application-only input and independent EDU binding conflict with accepted current ownership | ADR-0015/AUDIT-006 backend boundary, ADR-0022 and maintained keyboard/architecture guidance | Selected dispositions corrected. Remaining historical survey review stays under A09-05/06/08; no source implementation changed. |
 | A09-F063 | QUAL-002 r02 hold and total Legacy absence language can misclassify later r03 and explicitly admitted services | HW-001 hold, HW-002 r03 draft, current architecture and prior remediation review | Applicability corrected; complete electrical matrix remains unqualified under QUAL-002. No historical measurements transferred between designs. |
+
+## A09-N05 — production authority reconciliation
+
+| ID | Claim / evidence | Disposition |
+|---|---|---|
+| A09-F064 | Handbook and audit summary still describe deployed-build reconstruction as unproven, contrary to RELEASE-001 R01-07/08 and selected r55 manifest | Fixed current handbook and F009 summary references; historical batch evidence retained. No new qualification. |
+| A09-F065 | Build guide gives in-place output path immediately after clean-builder instructions; prepare_console.py exports under output/source and copies identified artifacts to output | Corrected output locations and distinguished low-level wrapper. Source inspection only; no build. |
+| A09-F066 | Inventory/authority map predates tracked AGENTS and production selection/install guides | Added four current authorities and re-reviewed three existing entries in B48; not an exhaustive post-release inventory refresh. |

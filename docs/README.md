@@ -43,7 +43,9 @@ for precise limits rather than assuming support from a research or example file.
 The architecture includes accepted design beyond implemented coverage. Current
 operation is bounded by the guides and recorded qualifications; an accepted
 architecture is not a claim that every mode/peripheral has been implemented.
-A base build is not yet proven equivalent to the deployed P4 overlay combination.
+The selected r55 DevKit composition has a clean build and bounded physical
+acceptance; use the production manifests rather than historical overlay recipes.
+Other boards and complete peripheral compatibility remain unqualified.
 
 ## Test and qualify
 

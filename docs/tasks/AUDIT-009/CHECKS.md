@@ -406,3 +406,19 @@ reviewed; one becomes partial. Totals: 114 reviewed, 146 partial, 140 metadata-o
 N04 validation: whitespace passed; 714 Markdown files / 2710 relative links,
 with the same three historical missing targets and no changed-document findings.
 Mailbox empty at closeout. No bench endpoints used.
+
+## A09-N05 — production authority reconciliation
+
+B48: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
+docs/installing.md, production/README.md and production/current.yaml reviewed.
+Compared retained RELEASE-001 R01-08 receipts, current selection/manifest and
+prepare_console.py export/output code. Contract frozen in152d7f07.
+
+Local checks: current immutable bundle SHA-256 matches current.yaml;139 inline
+relative file targets in nine reviewed/changed documents exist. This check
+excludes external URLs and anchor resolution. Whitespace check passed after
+preserving LF endings in the inventory. No help command that contacts hardware,
+build, archive extraction, emulator or physical test executed.
+
+Coverage:1112 records,118 reviewed/146 partial/140 metadata-only/44 provenance-only/
+664 pending. Four added authorities; three re-reviewed existing bodies.

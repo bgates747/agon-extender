@@ -77,8 +77,11 @@ do not necessarily overwrite a previously generated configuration. Inspect the
 selected build's effective SDK settings when defaults or targets change; retain
 candidate provenance rather than treating an old generated file as authority.
 
-Build outputs are under `vdp/.pio/build/p4-console/`, including `firmware.bin`,
-`firmware.elf` and `firmware.factory.bin`. An ordinary build without an explicit
+For the clean builder, intermediate outputs are under
+`<output>/source/vdp/.pio/build/p4-console/`. Identified `.bin`, `.elf` and
+`.factory.bin` files are copied to the requested output directory and listed
+in its build manifest. Only the low-level in-place wrapper writes to the
+working checkout's `vdp/.pio/build/p4-console/`. An ordinary build without an explicit
 build identity carries **`UNVERSIONED-DO-NOT-DEPLOY`**. For an identified bundle
 from clean, committed source, use the existing builder with a new output path:
 

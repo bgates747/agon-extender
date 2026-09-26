@@ -11,6 +11,9 @@ or accepted architecture. Task evidence stays at its recorded location.
 | Operate an existing installation from another project | docs/using-extender.md | New short entry point; prerequisites/reading order, not another protocol catalog |
 | Choose a reusable procedure versus historical qualification | docs/procedures/README.md | Current applicability index; preserve exact older procedure identities/evidence |
 | Discover executable host tools | scripts/README.md | Index maintained clients, local checks and retained test helpers; operational contracts remain in the handbook |
+| Select approved components | production/README.md and production/current.yaml | One current selector, immutable bundle manifests; local archive acquisition and distribution limits explicit |
+| Install and roll back | docs/installing.md | Maintained verification/bootstrap/install/recovery sequence; task receipts supply evidence only |
+| Agent entry and promotion policy | AGENTS.md | Tracked portable instructions; private bench configuration remains ignored |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
 | SD service and client | docs/mainboard-sd.md | Correct prerequisites; own normal/fast/session/recovery examples |
 | SD wire fields and invariants | docs/protocols/mainboard-sd.md | Keep exact packet contract; reconcile foreground MOSlet admission |

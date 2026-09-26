@@ -71,7 +71,7 @@ N01–N04 are complete. The Author authorized the next bounded documentation
 subtask on 2026-09-26 after preserving and pushing prior work. **A09-N05** is
 selected below; previous one-hour windows are historical, not a new time budget.
 
-A09-N05 [ ] **Production-selection closeout reconciliation.** Review exactly
+A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
 seven current bodies: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
 docs/installing.md, production/README.md and production/current.yaml. Compare
 against retained RELEASE-001 acceptance/package receipts and maintained build
@@ -122,8 +122,9 @@ A09-N01 completed within its documentation-only scope; see
 [results](AUDIT-009/RESULTS.md) record its display-contract reconciliation.
 N03 is complete in batch B46; N04 is complete in batch B47. N04 reviewed current
 applicability, with selected rather than exhaustive coverage of SETUP-004
-historical driver records. All four next-phase steps are complete; no further
-tranche is selected.
+historical driver records. N01–N04 and the later N05 production reconciliation are complete.
+The next bounded candidate is F040 version/status reconciliation under A09-05/06;
+no further execution is included in N05.
 
 ## Scope and authority
 

@@ -36,7 +36,7 @@ Batch identifiers and the two reader perspectives are in
 | **Transfer files:** EMOSlet invocation/placement; Legacy/input prerequisites; checked/fast pairing; stage/activate; sessions/resume; backup cleanup; held-open files; SD layout | [SD guide](../../mainboard-sd.md), [wire contract](../../protocols/mainboard-sd.md) and [SD layout](../../sd-layout.md) own these instructions. `/emos/sdserve.bin`, prior input admission, journal uncertainty and application-memory limits were reconciled. | B02/B04/B06/B07; Transfer and Uncertain request/stop walkthroughs. Source and `sdcard.py` help checked; no new transfer, cleanup, interruption or resume test. Earlier physical receipts keep their original scope. |
 | **Control and observe remotely:** USB/browser/agent ownership; pacing; locale/locks; capture/release/fullscreen; reset ownership; screen-text limits; video connection | [Keyboard guide](../../remote-keyboard.md), [reset guide](../../bench-reset.md), [screen-text guide](../../screen-text.md) and [video contract](../../protocols/browser-video.md) separate these services and their owners. | B02/B03/B08 and later B41 screen-text review; Observe/control walkthrough. Local keyboard/screen-text help checked. Browser/physical takeover, host-specific key behavior and timing were not newly exercised. Delivery counters are not proof of application execution. |
 | **Run another project's software:** deployment paths; load/run versus utilities; RAM preservation; Legacy/ExCom; supported APIs and command deferrals | [Using Extender](../../using-extender.md), [SD layout](../../sd-layout.md), [console contract](../../protocols/excom-console.md) and [bug register](../../firmware-bugs.md) provide the operating boundaries. | B04/B06/B08 and Run another project walkthrough. Mapping and selected contracts covered; no fresh application run, exhaustive API review or universal compatibility claim. |
-| **Build, update and recover:** ownership; wrappers/guards; identities; firmware selection; emulator profiles; flash approval; rollback; recovery readiness | [Build guide](../../building.md) and [MOS recovery](../../mos-recovery.md) distinguish compilation, identified deployment, reset and recovery. | B04/B08 and Build/recover walkthrough; B42/B43 later build-input review. No fresh compile, flash, rollback or recovery. Deployed-overlay reconstruction remains A09-F009. The walkthrough does **not** document an explicit emulator-profile setup/check sequence; that mapping remains incomplete. |
+| **Build, update and recover:** ownership; wrappers/guards; identities; firmware selection; emulator profiles; flash approval; rollback; recovery readiness | [Build guide](../../building.md) and [MOS recovery](../../mos-recovery.md) distinguish compilation, identified deployment, reset and recovery. | B04/B08 and Build/recover walkthrough; B42/B43 later build-input review. No fresh compile, flash, rollback or recovery. A09-F009 was subsequently resolved for selected r55 by RELEASE-001; see N05 below. The walkthrough does **not** document an explicit emulator-profile setup/check sequence; that mapping remains incomplete. |
 | **Interpret tests/performance:** mainboard/Extender; capture interference; browser/render/pacing costs; sample scope; units; historical regressions; bug disposition | [Timing guide](../../testing/game-timing.md), [capture protocol](../../qualification/capture-failure-protocol.md) and [bug register](../../firmware-bugs.md) separate measurements and diagnostic controls. | B03/B05 and combined Interpret tests/future hardware walkthrough. Selected claims and distinctions covered; no new benchmark, comprehensive historical regression review or revalidation of every bug entry. |
 | **Understand hardware and future work:** DevKit/P4-PC; wiring/as-built; USB; SD ownership; HDMI/MIPI/VGA; plans versus capabilities | [Architecture](../../architecture.md), [P4-PC references](../../hardware/esp32-p4-pc/README.md) and handbook expose current versus planned scope; local bench records own actual assembly state. | B05 and combined Interpret tests/future hardware walkthrough. Scoped documentation review only; no physical inspection, new electrical qualification or new local-video capability proof. |
 
@@ -94,7 +94,7 @@ not by this audit snapshot.
 | Entry point | [Build guide](../../building.md), [version policy](../../versions/README.md), applicable deployment receipt and [MOS recovery](../../mos-recovery.md). |
 | Host tool; Agon command | P4 wrapper/identified builder and EMOS Makefile/build tooling are linked in the guide. Compilation has no Agon command. Flashing requires the reviewed payload/procedure and authorization; `FLASH` submission alone is not success. Emulator setup is owned by canonical `agon-dev-env` instructions; see the explicit public-guide gap below. |
 | Processor/service owners; transport | Host tools build images. Authorized P4 deployment uses its documented programmer; eZ80 ROM update uses the chosen MOS update/recovery procedure. P4 ZDI recovery is distinct from the Pi reset actuator. Emulator host execution uses a profile-local launcher, not physical bench transport. |
-| Required firmware/build; SD location | Record exact source/toolchain/build identity and known recovery payload. Base `p4-console` is not proven equivalent to all deployed overlays (A09-F009). Maintained install/recovery SD files belong under `/extender`, evidence/backups under `/agents/extender`; emulator SD mapping is profile-owned, not the physical card. |
+| Required firmware/build; SD location | Record exact source/toolchain/build identity and known recovery payload. The selected r55 composition closes A09-F009; historical overlays are not current installation choices. Maintained install/recovery SD files belong under `/extender`, evidence/backups under `/agents/extender`; emulator SD mapping is profile-owned, not the physical card. |
 | Output/evidence; stop/recovery | Identified images/manifests, independent flash/readback and separate boot/input/service receipts where required. Preserve rollback and pre-erase ROM evidence; stop on mismatch or missing completion. No build, emulator launch, flash or recovery performed. |
 
 #### Interpret tests and performance
@@ -199,7 +199,7 @@ hardware or independent fresh-machine acceptance.
 
 | Finding | What remains | Existing owner |
 |---|---|---|
-| F009 | Base P4 builder does not reproduce the deployed snapshot/overlay combination; a clean public rebuild is not established | RELEASE-001 / PORT-003 build owner; preservation complete, reconstruction pending |
+| F009 — resolved | Selected r55 clean reconstruction and exact EMOS/listener reproduction are accepted; public redistribution and other-board qualification remain separate limits | RELEASE-001 R01-08; no remaining reconstruction task for this combination |
 | F008 | Accepted 30-fps normal contract and authorized 60-Hz retained experiments need final configuration/policy reconciliation | QUAL-003 / BENCH-005 |
 | F019 | Retained timing runner selects mode in EXEC and uses the ordinary listener fallback; refresh procedure before reuse | BENCH-007 |
 | F020 | Frozen SD qualification r01 predates current EMOSlet/reset operation; refresh before another qualification | REMOTE-005 / SD qualification owner |
@@ -339,3 +339,20 @@ B47 and A09-F061–F063 record scope and corrections. Coverage is now 114 review
 146 partial, 140 metadata-only, 44 provenance-only and 664 pending (1108 total).
 All four N01–N04 steps are complete; the overall audit remains open. No code,
 architecture decision, generated model, firmware or physical state changed.
+
+## A09-N05 result
+
+B48 reviewed seven production-facing authorities and reconciled RELEASE-001
+closeout. Corrected stale handbook/F009 reconstruction claims and clean-build
+output locations. Selection, immutable manifest and retained acceptance agree;
+private configured artifacts remain local-only. No new build, hardware, network
+or emulator operation. F064–F066 record corrections.
+
+Inventory now has 1112 entries: {'reviewed': 118, 'partial': 146, 'pending': 664, 'metadata-only': 140, 'provenance-only': 44}. Four newly indexed production
+authorities account for the increase; three existing bodies were re-reviewed.
+This does not claim complete inventory freshness after all recent additions.
+
+Next bounded candidate: A09-05/06 reconciliation of F040 (artifact draft versus
+qualified installation status) against the version policy and RELEASE-001.
+Keep emulator gap F060 and hardware digest F024 open under their existing gates.
+No deferred feature implementation is required merely to document those limits.
