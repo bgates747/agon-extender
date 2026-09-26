@@ -205,7 +205,7 @@ hardware or independent fresh-machine acceptance.
 | F020 | Frozen SD qualification r01 predates current EMOSlet/reset operation; refresh before another qualification | REMOTE-005 / SD qualification owner |
 | F035 | Fixed-path examples and old qualifier/service handovers need code/procedure refresh before reuse | PORT-003, REMOTE-002, DEMO-001 |
 | F024 | Held r02 hardware connectivity digest mismatch predates audit | HW-002 / hardware-version owner |
-| F040 | Draft-status definition conflicts with physically tested artifacts still recorded as draft; no silent promotion | Version-policy owner / A09-05 |
+| F040 — resolved | N06 distinguishes build/lineage status from later qualified installation; r113 corrects deployment notes | A09-05 documentation correction; no component-wide promotion |
 | F046 | Historical EMOS keyboard fixtures need current placement/readiness review before reuse | INTEG-009 |
 | F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
@@ -356,3 +356,18 @@ Next bounded candidate: A09-05/06 reconciliation of F040 (artifact draft versus
 qualified installation status) against the version policy and RELEASE-001.
 Keep emulator gap F060 and hardware digest F024 open under their existing gates.
 No deferred feature implementation is required merely to document those limits.
+
+## A09-N06 result
+
+Closed F040: version policy no longer defines draft as proof of no testing.
+Immutable build labels and qualified baseline status have distinct scopes.
+Corrected EMOS/listener/P4 registry notes to point to actual selected-build
+acceptance; registry r113, no firmware or production-selection changes.
+B49 covers five records; prior historical receipts are not rewritten.
+
+Next bounded candidate: reconcile F008's documented browser pacing distinction
+against the current selected source and accepted ADRs, documentation only. If
+policy still differs from behavior, retain that explicit limitation and its
+owner; do not change pacing as part of this audit.
+
+N06 coverage:1114 records;121 reviewed,146 partial,140 metadata-only,44 provenance-only,663 pending. Two new records and one formerly pending body reviewed.

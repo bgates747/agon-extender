@@ -81,7 +81,7 @@ still open. Check links and selection integrity locally; no rebuild, deployment,
 emulator or fresh-machine qualification. Record remaining scope and stop after
 this batch.
 
-A09-N06 [ ] **Artifact status versus qualified composition.** Author authorized
+A09-N06 [x] **Artifact status versus qualified composition.** Author authorized
 execution on 2026-09-26. Reconcile F040 using the version policy, artifact
 registry, selected baseline, production guide and retained acceptance. Preserve
 immutable build labels and exact bytes; distinguish component records from

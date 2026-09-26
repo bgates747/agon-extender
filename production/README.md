@@ -29,7 +29,9 @@ The firmware embeds this bench's private reset endpoint. It is local-only;
 other endpoints require a new identified build. Public redistribution remains
 subject to [source/license review](NOTICES.md). No blanket all-mode, other-board
 or performance qualification is implied. Historical component draft labels are
-retained; the installation baseline records bounded qualification.
+retained; the installation baseline records bounded qualification. See the
+[status interpretation](../docs/versions/README.md#status-belongs-to-a-record-and-its-declared-scope):
+a build-time draft label does not negate its later recorded acceptance.
 
 The earlier `extender-installation-r01` is failed preparation evidence with an
 incompatible bootloader. **Do not deploy it.** Its immutable records and archives

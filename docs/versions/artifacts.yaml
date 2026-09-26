@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r112
-updated_at: 2026-09-25T03:06:35Z
+registry_revision: r113
+updated_at: 2026-09-26T21:29:17Z
 
 artifacts:
   - artifact_id: extender-installation
@@ -167,7 +167,7 @@ artifacts:
     variants: []
     description: Foreground mainboard SD service through the owned EMOS gateway.
     notes:
-      - PORT-017 commissioning proposal followed by Author card-preparation instruction; registry r71. Physical qualification pending.
+      - Selected sdserve v0.2.0 MOSlet build passed checked/fast transfer and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns combination scope. Historical draft label retained; no general qualification of other layouts/builds. Registry r113 supersedes the earlier pending-deployment note.
   - artifact_id: mainboard-sd-qualification
     kind: test_procedure
     identity_scheme: revision
@@ -283,7 +283,7 @@ artifacts:
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
-      - v0.1.19 is the AUDIT-008 cancelled-provider retirement and foreground /emos dispatcher; draft local validation only, no physical deployment. Standing identity authority; registry r104.
+      - v0.1.19 is the AUDIT-008 cancelled-provider retirement and foreground /emos dispatcher. Its exact selected build passed bounded physical checks and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns qualified combination scope. Historical draft label retained, not a no-deployment claim. Registry r113 corrects the earlier r104 note.
       - v0.1.18 is the REMOTE-005 provisional resident sdlink MOSlet admission correction; registry r100, standing identity authorization. Bounded physical transfer and full ROM readback pass; broader qualification is not claimed.
       - BENCH-001 v0.1.16 selects 140-byte v2 traffic telemetry via port/bench-telemetry.mk, substituting UARTFLOW only in that composition. Physical installation, direct ROM identity readback, SD access and feedback driving passed scoped checks; the 200% practice block recorded102 clean laps and299 passes. Native emulator lacks TX-empty IRQ demand; its delayed v2 driving test remains an informative failure. Draft inputs are not qualified or released.
       - Author accepted the paired visual review and authorized hardware deployment on 2026-09-09; candidate freeze under standing version preapproval. Physical results remain pending.
@@ -650,6 +650,7 @@ artifacts:
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - Selected r55 build passed RELEASE-001 R01-07 and is part of qualified extender-installation-r02. Historical draft label retained; older revision notes below are historical, not current installation status. Registry r113.
       - r18 adds the QUAL-003 RX06 checked fixed-point conversion seam. Physical candidate preserves installed r17 parent settings; hardware comparison pending. Standing identity/deployment authorization applies.
       - r17 selects BENCH-001 v2 six-opponent telemetry on the owned Legacy UART path. Physical flash/readback and native USB startup were verified; paired v0.1.16 driving and fresh-run/held-Escape exit checks pass. Prior images are retained. Draft inputs and exploratory driving do not constitute a qualified release; see BENCH-001 evidence.
       - r15 retains the r14 clock correction and fixes inter-batch pacing; a new regression rejects r14's immediate next-batch event. Standing identity/deployment authorization applies; repeat physical review pending.

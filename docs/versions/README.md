@@ -84,7 +84,7 @@ Allowed status values are:
 
 | Status | Meaning |
 |---|---|
-| `draft` | Defined or under construction; not yet exercised. |
+| `draft` | Defined or under construction; this record makes no qualification claim. |
 | `experimental` | Exercised for investigation; no qualification claim. |
 | `candidate` | Frozen for a stated qualification procedure. |
 | `qualified` | Passed the recorded procedure for a declared compatibility scope. |
@@ -100,6 +100,26 @@ compatibility finding, not a lifecycle status.
 Qualification is contextual. A manifest must say what procedure, hardware,
 dependencies, and compatibility scope were qualified; `qualified` never means
 “works with everything.”
+
+### Status belongs to a record and its declared scope
+
+Build manifests and embedded diagnostics preserve the status recorded when the
+bytes were produced. A later test does not rewrite that historical label or
+require rebuilding accepted bytes. A later qualified baseline identifies the
+exact builds, evidence and accepted combination. Read that baseline together
+with `production/current.yaml` to determine selected installation status.
+
+A component-lineage registry entry is not qualification of every build or every
+combination of that component. A retained `draft` label therefore does not mean
+that no subsequent test or deployment occurred. Registry notes must identify
+later acceptance instead of continuing to claim no deployment. Independent
+component promotion, when undertaken, still requires its own declared scope;
+a qualified installation does not silently qualify all component variants.
+
+For production v0.1.0, the r02 installation baseline is qualified within its
+recorded local DevKit scope. Its P4/EMOS/listener build labels remain unchanged.
+This distinction implements the already accepted exact-byte promotion policy;
+it does not certify other modes, boards, public distribution or new builds.
 
 ## Increment rules and authority
 

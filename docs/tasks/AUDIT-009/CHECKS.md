@@ -422,3 +422,13 @@ build, archive extraction, emulator or physical test executed.
 
 Coverage:1112 records,118 reviewed/146 partial/140 metadata-only/44 provenance-only/
 664 pending. Four added authorities; three re-reviewed existing bodies.
+
+## A09-N06 — status scope reconciliation
+
+B49: docs/versions/README.md, artifacts.yaml, baselines/extender-installation-r02.yaml,
+production/README.md and RELEASE-001/R01-08.md. Frozen contract54761306.
+Registry-only validator passes; unchanged selected manifest SHA-256 passes;
+whitespace passes. No new aggregate-validator success claimed: F024 remains.
+No build, emulator, hardware or artifact promotion. Inventory1114 entries:
+121 reviewed,146 partial,140 metadata-only,44 provenance-only,663 pending.
+Two new records indexed, one pending body reviewed, two existing bodies refreshed.

@@ -122,7 +122,7 @@ records. Finding ownership does not authorize implementation or a new bench run.
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
-| A09-F040 | Policy describes draft as not yet exercised, while current registry retains physically tested EMOS v0.1.19 as draft | artifacts.yaml agon-emos entry and AUDIT-008/HARDWARE | Recorded terminology/status reconciliation for the version-policy owner under A09-05. No automatic promotion or identity edit. Current guides report exact status and bounded evidence separately. Not an operational blocker. |
+| A09-F040 | Policy describes draft as not yet exercised, while current registry retains physically tested EMOS v0.1.19 as draft | artifacts.yaml agon-emos entry and AUDIT-008/HARDWARE | Resolved in N06: policy distinguishes frozen build/lineage labels from later qualified combinations; r113 registry notes identify actual deployment and r02 acceptance. No binary relabelling or independent component promotion. |
 | A09-F041 | Blanket failed-evidence retention conflicts with Author's explicit ordinary-setup-mistake exception; baseline filename sentence ambiguous | Standing project instructions and versioning baseline grammar | Clarified existing retention rule and single revision suffix; no evidence removed and no new retention policy selected. Examples explicitly do not select current artifacts. |
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
@@ -196,3 +196,11 @@ records. Finding ownership does not authorize implementation or a new bench run.
 | A09-F064 | Handbook and audit summary still describe deployed-build reconstruction as unproven, contrary to RELEASE-001 R01-07/08 and selected r55 manifest | Fixed current handbook and F009 summary references; historical batch evidence retained. No new qualification. |
 | A09-F065 | Build guide gives in-place output path immediately after clean-builder instructions; prepare_console.py exports under output/source and copies identified artifacts to output | Corrected output locations and distinguished low-level wrapper. Source inspection only; no build. |
 | A09-F066 | Inventory/authority map predates tracked AGENTS and production selection/install guides | Added four current authorities and re-reviewed three existing entries in B48; not an exhaustive post-release inventory refresh. |
+
+## A09-N06 — lifecycle scope
+
+F040 closed by clarified record-scoped status and corrected deployment notes.
+B49 inspected version policy, registry, selected r02 baseline, production guide
+and RELEASE-001 R01-08 receipt. Exact-byte acceptance remains authoritative;
+no previously untested component/variant receives a qualification claim. Registry
+r113 updates notes only; selected bundle, production tag and binaries unchanged.
