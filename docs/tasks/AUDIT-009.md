@@ -67,11 +67,19 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-**Contract frozen — Author approved A09-N04 execution on 2026-09-24.**
-These four bounded steps subdivide
-existing A09-05/06/08 work; they do not expand the audit. N01–N03 are complete. Execution now covers **A09-N04 only**; stop after its results
-and commit. No further tranche is selected. The earlier execution windows are historical
-authorization, not permission to expand this phase.
+N01–N04 are complete. The Author authorized the next bounded documentation
+subtask on 2026-09-26 after preserving and pushing prior work. **A09-N05** is
+selected below; previous one-hour windows are historical, not a new time budget.
+
+A09-N05 [ ] **Production-selection closeout reconciliation.** Review exactly
+seven current bodies: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
+docs/installing.md, production/README.md and production/current.yaml. Compare
+against retained RELEASE-001 acceptance/package receipts and maintained build
+scripts. Correct stale reconstruction claims, add missing production authorities
+to the audit map/inventory, and reconcile A09-F009 everywhere it is described as
+still open. Check links and selection integrity locally; no rebuild, deployment,
+emulator or fresh-machine qualification. Record remaining scope and stop after
+this batch.
 
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
