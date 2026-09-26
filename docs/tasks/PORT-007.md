@@ -134,3 +134,9 @@ The network slice now has a development implementation and
 [current operator instructions](../p4-sd.md). It is not yet a physically qualified
 or promoted production feature. The broader unchecked storage work above is
 not closed by host filesystem tests or compilation.
+
+The Author expanded the network slice to full file/directory management after
+reviewing the create-only restriction: replacement, recursive copy/delete/list,
+move/rename, mkdir with parents, metadata and filename/content search. A
+sessionless Python client complements curl. This supersedes the earlier minimum
+operation set; physical qualification/production acceptance remain pending.

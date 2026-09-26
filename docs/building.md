@@ -283,3 +283,19 @@ g++ -std=c++17 -Wall -Wextra -Werror -I vdp/video \
 A low-level PlatformIO compile is not an identified release or evidence that the
 physical SD card mounts. Follow the normal identified build/deployment workflow
 before bench qualification. See [P4 SD operations](p4-sd.md).
+
+Additional P4-local file management checks (Linux host):
+
+```sh
+g++ -std=c++17 -Wall -Wextra -Werror -I vdp/video \
+  tests/storage/p4_local_replace_failure_test.cpp -Wl,--wrap=rename \
+  -o /tmp/p4-local-replace-test
+/tmp/p4-local-replace-test
+.venv/bin/python -m unittest discover -s tests/storage -p 'test_*.py' -v
+```
+
+The replacement test injects an installation rename failure and verifies old-file
+restoration. Python tests use a localhost HTTP peer to check client framing,
+command dispatch and tree transfers; they do not execute ESP-IDF handlers or
+qualify an SD card. The console HTTP URI limit is 2048 bytes to accommodate two
+encoded paths; recursive filesystem traversal is bounded to 16 levels.

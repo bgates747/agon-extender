@@ -20,6 +20,14 @@ Use the local project's Python environment on Linux. The operation guide covers
 Mac clients and local journal paths. A command's `--help` describes syntax, not
 current bench ownership, foreground state or firmware admission.
 
+## P4-local storage candidate client
+
+[p4sd.py](p4sd.py) provides sessionless file/directory management of the P4's
+own card over HTTP port8080: transfers, copy/move/delete, recursive trees and
+search. See [P4 SD guide](../docs/p4-sd.md) for syntax, recovery and limits.
+This requires the development candidate; it is not in production v0.1.0 and
+must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
+
 ## Current build and local-validation entry points
 
 | Tool | Scope |

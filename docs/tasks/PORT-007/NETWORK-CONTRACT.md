@@ -1,6 +1,11 @@
 # PORT-007 — P4-local HTTP file access
 
-## Summary and frozen scope
+Current scope is full CLI file/directory management, as authorized in the
+expansion below. Development source and host checks are complete; physical
+qualification and production promotion remain pending. The original minimum
+scope below is retained as superseded decision history, not operating guidance.
+
+## Original frozen scope — superseded operation subset
 
 Author authorized implementation on 2026-09-26. Provide a small standard-firmware
 service for curl/scripts: status, directory listing, file download and new-file
@@ -81,7 +86,7 @@ Provide a Python CLI for convenient scripting as well as documented curl calls.
 No GUI, filesystem formatting, POSIX permissions/symlinks, background indexing,
 or concurrent external writers are implied by file management on FAT.
 
-N07-04 [ ] Implement shared filesystem operations and HTTP adapters. Replacement
+N07-04 [x] Implement shared filesystem operations and HTTP adapters. Replacement
 uploads finish staging before changing the existing file; retain a backup through
 rename and restore it on a reported installation failure where possible. FAT
 replacement is not power-loss atomic. Copies and recursive deletions report
@@ -90,13 +95,33 @@ self/descendant copies/moves and traversal. Bound recursion to 16 levels and
 stream file contents/results rather than buffering whole trees. Search supports
 case-insensitive basename wildcards and optional case-sensitive literal content.
 
-N07-05 [ ] Add a sessionless standard-library Python client covering all methods,
+N07-05 [x] Add a sessionless standard-library Python client covering all methods,
 recursive host upload/download, and exact curl documentation. Explain recursive
 partial failure, reserved staging names/recovery, fixed-length uploads and LAN
 access. Preserve the existing production/physical qualification boundary.
 
-N07-06 [ ] Test nested directories, replacement/interruption preservation,
+N07-06 [x] Test nested directories, replacement/interruption preservation,
 copy/move/delete, recursive search, binary content across chunk boundaries,
 root/descendant rejection, depth limits and host CLI against a local HTTP peer.
 Compile the standard P4 target and record results without claiming hardware
 qualification. Commit the completed source and documentation together.
+
+## Expanded-scope validation
+
+1. Native C++ tests pass with warnings-as-errors and separately with
+   AddressSanitizer/UndefinedBehaviorSanitizer: nested create/copy/move/delete,
+   depth/root/descendant bounds, replacement/interruption preservation, stale
+   backup retention, wildcard matching and content spanning a read boundary.
+2. Linux linker fault injection forces the final upload rename to fail; original
+   bytes are restored and the upload staging file is cleaned up.
+3. Python localhost HTTP tests pass: binary framing/length and escaping,
+   recursive host upload/download, all command dispatch options and incomplete
+   download preservation. This peer does not implement ESP-IDF firmware.
+4. Standard p4-console target compiles with ESP-IDF 5.5.5. Firmware HTTP adapters,
+   physical SD operation, interrupted physical writes and video/input coexistence
+   still require a separately identified candidate deployment and bench run.
+
+Replacement relies on the inspected ESP-IDF 5.5.5
+`components/fatfs/vfs/vfs_fat.c` implementation: `vfs_fat_rename` calls `f_rename`
+without POSIX overwrite emulation. The local staging/backup protocol is necessary
+for that contract; it is not an upstream patch. No MOS/VDP ABI changes are made.
