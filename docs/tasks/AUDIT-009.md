@@ -196,6 +196,14 @@ implementation/qualification gates, and select a bounded documentation-only
 continuation. Preserve dated evidence and incomplete coverage. No source,
 profile, bench or deferred implementation work; validate links and consistency.
 
+A09-N22 [ ] **Hardware corrective-action applicability.** Review the UART1
+pin-label correction and pre-activation READY_N containment records against
+the maintained pin generator, electrical guidance, architecture and PORT-008.
+Clarify resolved labels, retired prototype behavior and still-open activation
+gates. Do not regenerate drawings, change wiring/source, qualify hardware or
+close the READY corrective action. Validate local links/whitespace and record
+bounded inventory coverage before committing.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
