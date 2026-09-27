@@ -3,7 +3,7 @@ from pathlib import Path
 import subprocess,tempfile
 from processed_keyboard_test import function
 root=Path(__file__).resolve().parents[1]
-body=function((root/'vdp/video/extender/network/wired_network_service.cpp').read_text(),'esp_err_t WiredNetworkService::assetHandler(')
+body=function((root/'vdp/video/extender/network/http_video_service.cpp').read_text(),'esp_err_t HttpVideoService::assetHandler(')
 fake=r'''
 #include <cassert>
 #include <cstring>
@@ -20,14 +20,14 @@ int httpd_resp_set_hdr(httpd_req_t*,const char *name,const char *value){if(!strc
 int httpd_resp_send(httpd_req_t*,const char *data,ssize_t size){assert(size==3&&!memcmp(data,"abc",3));++sent;return send_result;}
 int httpd_req_to_sockfd(httpd_req_t*r){return r->socket;}
 int httpd_sess_trigger_close(void*,int fd){assert(fd==7);++closed;return close_result;}
-class WiredNetworkService {public:static int assetHandler(httpd_req_t*) noexcept;};
+class HttpVideoService {public:static int assetHandler(httpd_req_t*) noexcept;};
 '''
 checks=r'''
 int main(){web::EmbeddedAsset asset{(const uint8_t*)"abc",3,"text/plain"};httpd_req_t r{&asset,(void*)1,7};
-assert(WiredNetworkService::assetHandler(&r)==0&&sent==1&&closed==1&&close_header);
-send_result=-1;assert(WiredNetworkService::assetHandler(&r)==-1&&closed==1);
-send_result=0;close_result=-2;assert(WiredNetworkService::assetHandler(&r)==-2&&closed==2);
-r.user_ctx=nullptr;assert(WiredNetworkService::assetHandler(&r)==-500&&closed==2);
+assert(HttpVideoService::assetHandler(&r)==0&&sent==1&&closed==1&&close_header);
+send_result=-1;assert(HttpVideoService::assetHandler(&r)==-1&&closed==1);
+send_result=0;close_result=-2;assert(HttpVideoService::assetHandler(&r)==-2&&closed==2);
+r.user_ctx=nullptr;assert(HttpVideoService::assetHandler(&r)==-500&&closed==2);
 puts("PASS: exact asset response, connection close, send/close failure propagation, invalid asset");}
 '''
 with tempfile.TemporaryDirectory() as td:

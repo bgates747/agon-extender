@@ -22,6 +22,7 @@
     "video/extender/display/stock_scanline.cpp",
     "video/extender/network/browser_video_service_core.cpp",
     "video/extender/network/opaque_message.cpp",
+    "video/extender/network/http_video_service.cpp",
     "video/extender/network/wired_network_service.cpp",
     "video/extender/port/stock_render_utils.cpp",
     "video/extender/port/p4_task_watchdog.cpp",

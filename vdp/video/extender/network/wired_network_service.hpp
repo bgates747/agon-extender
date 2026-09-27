@@ -17,7 +17,7 @@
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
 
-#include "extender/network/browser_video_service_core.hpp"
+#include "extender/network/http_video_service.hpp"
 
 namespace agon::extender::network {
 
@@ -40,7 +40,7 @@ struct WiredNetworkMetrics {
   std::uint32_t socket_send_failures{};
 };
 
-class WiredNetworkService final {
+class WiredNetworkService final : public HttpVideoService {
  public:
   explicit WiredNetworkService(OpaqueMessageProvider &provider) noexcept;
   ~WiredNetworkService();
@@ -64,53 +64,23 @@ class WiredNetworkService final {
   };
 
   static void workerEntry(void *context) noexcept;
-  static void queuedSend(void *context) noexcept;
-  static esp_err_t socketOpened(httpd_handle_t server, int socket) noexcept;
-  static esp_err_t assetHandler(httpd_req_t *request) noexcept;
-  static esp_err_t videoHandler(httpd_req_t *request) noexcept;
-  static esp_err_t videoPostHandshake(httpd_req_t *request) noexcept;
-  static void socketClosed(httpd_handle_t server, int socket) noexcept;
-
   void onNetworkEvent(DevkitEthernet::Event event) noexcept;
   void worker() noexcept;
   void processEvents(std::uint32_t events) noexcept;
   bool startHttp() noexcept;
   void stopHttp() noexcept;
-  void attemptVideoSend() noexcept;
-  void performQueuedSend() noexcept;
-  void closeVideo(httpd_req_t *request, std::uint16_t code,
-                  char const *reason) noexcept;
+  void negotiate(httpd_req_t *) noexcept override;
+  esp_err_t sendMessage(httpd_handle_t, int, OpaqueMessageView const &) noexcept override;
+  bool allowSend() noexcept override;
   void reportLease() const noexcept;
-  void notifyWorker() noexcept;
-  void increment(std::atomic<std::uint32_t> &counter) noexcept;
-
-  OpaqueMessageProvider &provider_;
-  BrowserVideoServiceCore video_{};
-  // NET-001: serialize worker acquisition/queueing with HTTP-task takeover.
-  // Keep at most one queued callback; it belongs to its original socket, never
-  // whichever client happens to be current when the callback runs.
-  std::mutex video_dispatch_mutex_;
-#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
-  // Diagnostic-only: no storage or clock reads in ordinary production builds.
-  std::atomic<std::uint32_t> video_credit_at_{};
-  std::uint32_t video_queued_at_{}; // guarded by video_dispatch_mutex_
-#endif
-  bool video_send_queued_{};
-  VideoClientId queued_video_client_{kNoVideoClient};
+  void notifyWorker() noexcept override;
   std::atomic<WiredServiceState> state_{WiredServiceState::Stopped};
   std::atomic<std::uint32_t> pending_events_{};
   std::atomic<bool> stop_requested_{};
   std::atomic<TaskHandle_t> worker_task_{};
-  std::atomic<httpd_handle_t> server_{};
-  bool http_fault_{}; // worker-owned; a failed rollback retains its live handle
   DevkitEthernet ethernet_;
 
-  std::atomic<std::uint32_t> http_starts_{};
-  std::atomic<std::uint32_t> http_stops_{};
-  std::atomic<std::uint32_t> http_start_failures_{};
-  std::atomic<std::uint32_t> queued_sends_{};
-  std::atomic<std::uint32_t> queue_failures_{};
-  std::atomic<std::uint32_t> socket_send_failures_{};
+
 };
 
 }  // namespace agon::extender::network

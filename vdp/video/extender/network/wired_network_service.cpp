@@ -58,11 +58,6 @@ static uint64_t rle2_encode_us=0,rle2_attempts=0,rle2_frames=0;
 namespace {
 
 constexpr char kTag[] = "extender_net";
-// Restore the video-only baseline's ESP-IDF 5.5.5 default socket timeout.
-// Browser-input work shortened it to one second, which also affected video.
-// Keep complete-or-error writes (F003) without that experimental deadline.
-constexpr int kVideoSendWaitSeconds = 5;
-constexpr std::uint8_t kFrameRequest[] = {'f', 'r', 'a', 'm', 'e'};
 // PORT-003 isolated polling-latency comparison. Keep the ordinary value until
 // review; a shorter wait changes scheduling demand, not the frame/credit API.
 #ifndef AGON_EXTENDER_VIDEO_POLL_MS
@@ -78,7 +73,7 @@ constexpr UBaseType_t kWorkerPriority = 3;
 
 WiredNetworkService::WiredNetworkService(
     OpaqueMessageProvider &provider) noexcept
-    : provider_(provider) {}
+    : HttpVideoService(provider) {}
 
 WiredNetworkService::~WiredNetworkService() {
   stop();
@@ -86,16 +81,6 @@ WiredNetworkService::~WiredNetworkService() {
   // The static product service has process lifetime; a failed stop is fatal
   // for a hypothetical shorter-lived owner rather than a use-after-free.
   if (server_.load()!=nullptr) abort();
-}
-
-void WiredNetworkService::increment(
-    std::atomic<std::uint32_t> &counter) noexcept {
-  std::uint32_t value = counter.load(std::memory_order_relaxed);
-  while (value != std::numeric_limits<std::uint32_t>::max() &&
-         !counter.compare_exchange_weak(value, value + 1,
-                                        std::memory_order_relaxed,
-                                        std::memory_order_relaxed)) {
-  }
 }
 
 bool WiredNetworkService::start() noexcept {
@@ -238,44 +223,6 @@ void WiredNetworkService::reportLease() const noexcept {
            lease.mask.c_str(), lease.gateway.c_str(), lease.dns.c_str());
 }
 
-namespace {
-int completeSend(httpd_handle_t, int fd, const char *data, size_t length, int flags) {
-  // F003: IDF 5.5.5 WebSocket callers accept a positive short send. This
-  // override returns the whole requested segment or an error, never a prefix.
-  size_t sent=0;
-  const auto start=esp_timer_get_time();
-  while (sent<length) {
-    if (esp_timer_get_time()-start>kVideoSendWaitSeconds*1000000LL) {
-      return HTTPD_SOCK_ERR_TIMEOUT;
-    }
-    const auto n=send(fd,data+sent,length-sent,flags);
-    if (n<0 && errno==EINTR) continue;
-    if (n<=0) return HTTPD_SOCK_ERR_FAIL;
-    sent+=size_t(n);
-  }
-  return int(sent);
-}
-}
-esp_err_t WiredNetworkService::socketOpened(httpd_handle_t server,int socket) noexcept {
-  return httpd_sess_set_send_override(server,socket,&completeSend);
-}
-esp_err_t WiredNetworkService::assetHandler(httpd_req_t *request) noexcept {
-  auto const *asset = static_cast<web::EmbeddedAsset const *>(request->user_ctx);
-  if (asset == nullptr || asset->data == nullptr || asset->size == 0)
-    return httpd_resp_send_500(request);
-  httpd_resp_set_type(request, asset->media_type);
-  httpd_resp_set_hdr(request, "Cache-Control", "no-store");
-  // NET-001: idle page-download keep-alives can occupy all seven HTTP slots,
-  // preventing a replacement viewer from even reaching its WS handshake.
-  // Assets are finite responses; release their sockets, never the live stream.
-  httpd_resp_set_hdr(request, "Connection", "close");
-  auto const result = httpd_resp_send(request,
-                         reinterpret_cast<char const *>(asset->data),
-                         static_cast<ssize_t>(asset->size));
-  if (result != ESP_OK) return result;
-  return httpd_sess_trigger_close(request->handle, httpd_req_to_sockfd(request));
-}
-
 #if defined(AGON_EXTENDER_FRAME_TIMING)
 namespace {
 esp_err_t timingHandler(httpd_req_t *request) {
@@ -412,80 +359,25 @@ bool WiredNetworkService::startHttp() noexcept {
   if(!pair_scratch)pair_scratch=(uint8_t*)heap_caps_malloc(786432,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   if(!packed_scratch)packed_scratch=(uint8_t*)heap_caps_malloc(589828,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
   if(!rle2_scratch)rle2_scratch=(uint8_t*)heap_caps_malloc(786446,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT);
-  httpd_config_t config = HTTPD_DEFAULT_CONFIG();
-  config.max_uri_handlers = 9; // screen/display metadata and retained RLE2 diagnostic
-#if defined(AGON_EXTENDER_TELEMETRY)
-  ++config.max_uri_handlers;
-#endif
-#if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
-  config.max_uri_handlers += 3;
-#endif
-#if defined(AGON_EXTENDER_SD_SERVICE)
-  config.max_uri_handlers += 2;
-#endif
-#if defined(AGON_EXTENDER_FRAME_TIMING)
-  ++config.max_uri_handlers; // five assets + video + diagnostic GET
-#endif
-#if defined(AGON_EXTENDER_VIDEO_TIMING)
-  ++config.max_uri_handlers;
-#endif
-  config.open_fn = &socketOpened;
-  config.send_wait_timeout = kVideoSendWaitSeconds;
-  config.lru_purge_enable = false;
-  config.global_user_ctx = this;
-  config.global_user_ctx_free_fn = nullptr;
-  config.close_fn = &socketClosed;
-  httpd_handle_t server = nullptr;
-  if (httpd_start(&server, &config) != ESP_OK) {
-    increment(http_start_failures_);
-    ESP_LOGE(kTag, "HTTP server start failed");
-    return false;
-  }
-  server_.store(server, std::memory_order_release);
+  auto const &assets = web::embeddedBrowserAssets();
+  HttpVideoConfig options;
+  options.max_uri_handlers = 18; // common assets/video plus optional console routes
+  if (!startServer(assets.data(), assets.size(), options)) return false;
+  auto const server = server_.load(std::memory_order_acquire);
   httpd_uri_t screen{};
   screen.uri="/screen/text";screen.method=HTTP_GET;screen.handler=&screen_text::handle;
-  if(httpd_register_uri_handler(server,&screen)!=ESP_OK){httpd_stop(server);server_.store(nullptr);return false;}
+  if(httpd_register_uri_handler(server,&screen)!=ESP_OK){http_fault_=true;stopHttp();return false;}
 
 
   httpd_uri_t displayStatus{};
   displayStatus.uri="/display/status"; displayStatus.method=HTTP_GET;
   displayStatus.handler=&display_status::handle;
   if(httpd_register_uri_handler(server,&displayStatus)!=ESP_OK) {
-    httpd_stop(server); server_.store(nullptr); return false;
-  }
-
-  for (auto const &asset : web::embeddedBrowserAssets()) {
-    httpd_uri_t uri{};
-    uri.uri = asset.route;
-    uri.method = HTTP_GET;
-    uri.handler = &assetHandler;
-    uri.user_ctx = const_cast<web::EmbeddedAsset *>(&asset);
-    if (httpd_register_uri_handler(server, &uri) != ESP_OK) {
-      ESP_LOGE(kTag, "HTTP route registration failed: %s", asset.route);
-      http_fault_=true;
-      stopHttp();
-      increment(http_start_failures_);
-      return false;
-    }
+    http_fault_=true;stopHttp();return false;
   }
 
   httpd_uri_t codec{};codec.uri="/diagnostics/rle2";codec.method=HTTP_GET;codec.handler=&rle2bench::handler;
   if(httpd_register_uri_handler(server,&codec)!=ESP_OK){http_fault_=true;stopHttp();return false;}
-  httpd_uri_t video{};
-  video.uri = "/video";
-  video.method = HTTP_GET;
-  video.handler = &videoHandler;
-  video.user_ctx = this;
-  video.is_websocket = true;
-  video.ws_post_handshake_cb = &videoPostHandshake;
-  if (httpd_register_uri_handler(server, &video) != ESP_OK) {
-    ESP_LOGE(kTag, "video WebSocket registration failed");
-    http_fault_=true;
-    stopHttp();
-    increment(http_start_failures_);
-    return false;
-  }
-
 #if defined(AGON_EXTENDER_FRAME_TIMING)
   httpd_uri_t timing{};
   timing.uri = "/diagnostics/frame-timing";
@@ -541,7 +433,6 @@ bool WiredNetworkService::startHttp() noexcept {
   }
 #endif
   http_fault_=false;
-  increment(http_starts_);
   ESP_LOGI(kTag, "HTTP browser service ready");
   return true;
 }
@@ -550,182 +441,19 @@ void WiredNetworkService::stopHttp() noexcept {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   input::remoteLocked([](auto &r){r.cancel(input::RemoteKeyboard::disconnected);return 0;});
 #endif
-  auto const server = server_.load(std::memory_order_acquire);
-  if (server == nullptr) return;
-  if (httpd_stop(server) == ESP_OK) {
-    // HTTP task has terminated; no queued callback can still use these fields.
-    { std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
-      video_send_queued_ = false;
-      queued_video_client_ = kNoVideoClient;
-    }
-    server_.store(nullptr,std::memory_order_release);
-    http_fault_=false;
-    increment(http_stops_);
-    ESP_LOGI(kTag, "HTTP browser service stopped");
-  } else {
-    http_fault_=true;
-    ESP_LOGE(kTag, "HTTP browser service stop failed; live handle retained");
-  }
+  stopServer();
 }
 
-esp_err_t WiredNetworkService::videoPostHandshake(
-    httpd_req_t *request) noexcept {
-  auto *service = static_cast<WiredNetworkService *>(request->user_ctx);
-  if (service == nullptr) return ESP_FAIL;
+void WiredNetworkService::negotiate(httpd_req_t *request) noexcept {
   char query[32]{};
   rle2_requested=httpd_req_get_url_query_str(request,query,sizeof(query))==ESP_OK && (std::strcmp(query,"rle2=1")==0 || std::strcmp(query,"rle2=1&packed=1")==0 || (std::strcmp(query,"rle2=1&packed=2")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0));
   pair_requested=std::strcmp(query,"pair=1")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0;
   sixbit_requested=std::strcmp(query,"packed=2")==0 || (std::strcmp(query,"rle2=1&packed=2")==0 || std::strcmp(query,"rle2=1&packed=2&pair=1")==0);
   packed_requested=sixbit_requested || std::strcmp(query,"packed=1")==0 || std::strcmp(query,"rle2=1&packed=1")==0;
-  auto const socket = httpd_req_to_sockfd(request);
-  std::lock_guard<std::mutex> guard(service->video_dispatch_mutex_);
-  auto const previous = service->video_.client();
-  if (previous >= 0 && previous != socket) {
-    // Handshake and actual sends execute on the same HTTP task. The dispatch
-    // mutex also excludes worker acquisition; releasing the old lease cannot
-    // race a send. Old queued work is retained but cannot target the new client.
-    service->video_.disconnect(previous);
-    const std::uint8_t payload[] = {0x03, 0xe8, 'V','i','e','w','e','r',' ',
-      'r','e','p','l','a','c','e','d'};
-    httpd_ws_frame_t close{};
-    close.type = HTTPD_WS_TYPE_CLOSE;
-    close.payload = const_cast<std::uint8_t *>(payload);
-    close.len = sizeof(payload);
-    httpd_ws_send_frame_async(request->handle, previous, &close);
-    httpd_sess_trigger_close(request->handle, previous);
-    ESP_LOGI(kTag, "video viewer replaced fd=%d by fd=%d", previous, socket);
-  }
-  if (service->video_.connect(socket) == VideoConnectResult::Accepted) {
-    ESP_LOGI(kTag, "video client accepted fd=%d", socket);
-    return ESP_OK;
-  }
-  ESP_LOGW(kTag, "video client refused fd=%d", socket);
-  service->closeVideo(request, 1013, "video client busy");
-  return ESP_OK;
 }
 
-void WiredNetworkService::closeVideo(httpd_req_t *request,
-                                     std::uint16_t code,
-                                     char const *reason) noexcept {
-  std::array<std::uint8_t, 64> payload{};
-  payload[0] = static_cast<std::uint8_t>(code >> 8U);
-  payload[1] = static_cast<std::uint8_t>(code);
-  auto const reason_size = std::strlen(reason);
-  auto const copied = reason_size < payload.size() - 2 ? reason_size
-                                                       : payload.size() - 2;
-  std::memcpy(payload.data() + 2, reason, copied);
-  httpd_ws_frame_t close{};
-  close.type = HTTPD_WS_TYPE_CLOSE;
-  close.payload = payload.data();
-  close.len = copied + 2;
-  auto const socket = httpd_req_to_sockfd(request);
-  httpd_ws_send_frame(request, &close);
-  video_.disconnect(socket);
-  httpd_sess_trigger_close(request->handle, socket);
-}
-
-esp_err_t WiredNetworkService::videoHandler(httpd_req_t *request) noexcept {
-  auto *service = static_cast<WiredNetworkService *>(request->user_ctx);
-  if (service == nullptr) return ESP_FAIL;
-  auto const socket = httpd_req_to_sockfd(request);
-
-  httpd_ws_frame_t frame{};
-  auto result = httpd_ws_recv_frame(request, &frame, 0);
-  if (result != ESP_OK) return result;
-  if (frame.type != HTTPD_WS_TYPE_TEXT || frame.len != sizeof(kFrameRequest)) {
-    ESP_LOGW(kTag, "video protocol error fd=%d", socket);
-    service->closeVideo(request, 1002, "expected frame credit");
-    return ESP_OK;
-  }
-  std::array<std::uint8_t, sizeof(kFrameRequest)> payload{};
-  frame.payload = payload.data();
-  result = httpd_ws_recv_frame(request, &frame, payload.size());
-  if (result != ESP_OK) return result;
-  if (std::memcmp(payload.data(), kFrameRequest, payload.size()) != 0) {
-    ESP_LOGW(kTag, "video protocol error fd=%d", socket);
-    service->closeVideo(request, 1002, "expected frame credit");
-    return ESP_OK;
-  }
-
-#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
-  // Publish before admission makes the credit visible to the network worker.
-  // Invalid/duplicate requests invalidate the diagnostic run, never change VDU.
-  service->video_credit_at_.store(diagnostics::videoTimingNow(), std::memory_order_release);
-#endif
-  auto const credit = service->video_.requestFrame(socket);
-  if (credit != VideoCreditResult::Accepted) {
-    ESP_LOGW(kTag, "duplicate or invalid video credit fd=%d", socket);
-    service->closeVideo(request, 1002, "duplicate frame credit");
-    return ESP_OK;
-  }
-  service->notifyWorker();
-  return ESP_OK;
-}
-
-void WiredNetworkService::attemptVideoSend() noexcept {
-#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
-  if (agon_output_isolation::blocksNetwork()) return;
-#endif
-  std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
-  if (video_send_queued_) return;
-  auto const prepared = video_.tryPrepare(provider_);
-  if (prepared == VideoPrepareResult::NoCredit ||
-      prepared == VideoPrepareResult::NoNewMessage ||
-      prepared == VideoPrepareResult::Disconnected)
-    return;
-  if (prepared == VideoPrepareResult::ProviderUnavailable ||
-      prepared == VideoPrepareResult::ProviderInvalid) {
-    auto const socket = video_.client();
-    ESP_LOGE(kTag, "video provider unavailable or invalid fd=%d", socket);
-    auto const server = server_.load(std::memory_order_acquire);
-    if (server != nullptr && socket >= 0)
-      httpd_sess_trigger_close(server, socket);
-    return;
-  }
-
-  auto const server = server_.load(std::memory_order_acquire);
-  if (server == nullptr ||
-      httpd_queue_work(server, &queuedSend, this) != ESP_OK) {
-    increment(queue_failures_);
-    auto const socket = video_.client();
-    video_.complete(socket, OpaqueReleaseDisposition::Failed);
-    ESP_LOGE(kTag, "video send queue failed fd=%d", socket);
-    if (server != nullptr && socket >= 0)
-      httpd_sess_trigger_close(server, socket);
-    return;
-  }
-#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
-  diagnostics::videoDispatchTiming(diagnostics::Phase::Queue,
-      video_credit_at_.load(std::memory_order_acquire));
-  video_queued_at_ = diagnostics::videoTimingNow();
-#endif
-  queued_video_client_ = video_.client();
-  video_send_queued_ = true;
-  increment(queued_sends_);
-}
-
-void WiredNetworkService::queuedSend(void *context) noexcept {
-  static_cast<WiredNetworkService *>(context)->performQueuedSend();
-}
-
-void WiredNetworkService::performQueuedSend() noexcept {
-  std::lock_guard<std::mutex> guard(video_dispatch_mutex_);
-  if (!video_send_queued_) return;
-  auto const socket = queued_video_client_;
-  video_send_queued_ = false;
-  queued_video_client_ = kNoVideoClient;
-  auto const view = video_.sendingView(socket);
-  auto const server = server_.load(std::memory_order_acquire);
-  if (server == nullptr || socket < 0 || !view.valid() ||
-      httpd_ws_get_fd_info(server, socket) !=
-          HTTPD_WS_CLIENT_WEBSOCKET) {
-    video_.complete(socket, OpaqueReleaseDisposition::Disconnected);
-    return;
-  }
-
-#if defined(AGON_EXTENDER_VIDEO_DISPATCH_TIMING)
-  diagnostics::videoDispatchTiming(diagnostics::Phase::TxEnqueue, video_queued_at_);
-#endif
+esp_err_t WiredNetworkService::sendMessage(httpd_handle_t server, int socket,
+    OpaqueMessageView const &view) noexcept {
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::SocketSend,
       static_cast<std::uint32_t>(view.segment_count));
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
@@ -772,35 +500,21 @@ void WiredNetworkService::performQueuedSend() noexcept {
         segments=compressed.data();count=2;transmitted=32+bytes;}
     }
   }
-  esp_err_t result = ESP_OK;
-  for(size_t index=0;index<count;++index){
-    httpd_ws_frame_t frame{};frame.fragmented=count>1;frame.final=index+1==count;
-    frame.type=index==0?HTTPD_WS_TYPE_BINARY:HTTPD_WS_TYPE_CONTINUE;
-    frame.payload=const_cast<uint8_t*>(segments[index].data);frame.len=segments[index].size;
-    result=httpd_ws_send_frame_async(server,socket,&frame);if(result!=ESP_OK)break;
-  }
+  const auto result = sendSegments(server, socket, segments, count);
 
   timing.finish(result == ESP_OK ? transmitted : 0);
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   isolatedSend.finish(result == ESP_OK ? transmitted : 0, result == ESP_OK);
 #endif
-  if (result == ESP_OK) {
-    video_.complete(socket, OpaqueReleaseDisposition::Sent);
-  } else {
-    increment(socket_send_failures_);
-    video_.complete(socket, OpaqueReleaseDisposition::Failed);
-    ESP_LOGE(kTag, "video socket send failed fd=%d err=%d", socket, result);
-    httpd_sess_trigger_close(server, socket);
-  }
+  return result;
 }
 
-void WiredNetworkService::socketClosed(httpd_handle_t server,
-                                       int socket) noexcept {
-  auto *service = static_cast<WiredNetworkService *>(
-      httpd_get_global_user_ctx(server));
-  if (service != nullptr && service->video_.disconnect(socket))
-    ESP_LOGI(kTag, "video client disconnected fd=%d", socket);
-  lwip_close(socket);
+bool WiredNetworkService::allowSend() noexcept {
+#ifdef AGON_EXTENDER_OUTPUT_ISOLATION
+  return !agon_output_isolation::blocksNetwork();
+#else
+  return true;
+#endif
 }
 
 }  // namespace agon::extender::network

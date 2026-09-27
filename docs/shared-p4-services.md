@@ -4,7 +4,8 @@ Extender owns the common implementations; consumers such as detached MAME own
 their entry point, workers, device adapters and UI. Pin a committed source tree
 and select only the required headers/translation units. This development boundary
 has host lifecycle tests and a console compile check, **not detached-runtime or
-hardware qualification**. Selected production and installed r57 are unchanged.
+hardware qualification**. Selected production is unchanged; source checks do not identify the currently
+installed peer firmware. Consult the machine-local bench receipt for that.
 
 ## DevKit Ethernet / DHCP
 
@@ -61,8 +62,8 @@ combine it with mounted MAME images, including read-only guest mounts, yet. A fi
 interface must precede that integration; this Ethernet extraction supplies none.
 The public header exposes startHttp only; mount state and HTTP task telemetry
 are private. Use HTTP status for card readiness, not direct access from another
-worker. Raw HID delivery and shared browser-provider interfaces also remain separate
-work. No complete MAME platform composition is implied by this header.
+worker. Raw HID delivery remains separate work. The shared browser transport below
+accepts a consumer-owned provider. No complete MAME platform composition is implied by this header.
 
 ## Source consumption and checks
 
@@ -92,3 +93,76 @@ promoting this source change; do not flash a local unversioned compile as r57.
 
 Owning work: [TRS-80 integration](tasks/TRS-80-003.md). The TRS-80 project owns its
 SHARE-01 source-consumption/build contract and its MAME adapter implementation.
+
+
+## HTTP / browser-video transport
+
+Include `vdp/video/extender/network/http_video_service.hpp`. Compile these three
+translation units, with `vdp/video` on the include path:
+
+1. `extender/network/http_video_service.cpp`
+2. `extender/network/browser_video_service_core.cpp`
+3. `extender/network/opaque_message.cpp`
+
+The IDF component dependencies are `esp_http_server`, `esp_timer`, `lwip` and
+`log` plus normal C++ runtime support. Enable `CONFIG_HTTPD_WS_SUPPORT` and
+`CONFIG_HTTPD_WS_POST_HANDSHAKE_CB_SUPPORT`. Current checks use IDF 5.5.5.
+No console, VDP, EMOS, Arduino Ethernet, local SD or embedded console asset
+translation units are needed. The optional dispatch-timing define adds its
+existing diagnostic dependency; detached consumers leave it disabled.
+
+Construct `network::HttpVideoService` with an `OpaqueMessageProvider&`, then call
+`startServer(assets, count, config)` with consumer-owned `web::EmbeddedAsset`
+metadata. The server adds GET asset routes and `/video`. It never initializes
+Ethernet or SD. The consumer must establish network readiness and serialize
+start, stop and periodic `poll()` calls on its own worker. There is no internal
+pump thread; a frame credit notifies the console worker through an override,
+whereas the base class waits for the consumer's next poll.
+
+Provider, asset table, asset strings/bytes, and the complete service object must
+remain alive until `stopServer()` succeeds. Provider acquisition is nonblocking;
+leases remain immutable through send completion and receive exactly one release.
+Start/stop/poll must not be invoked from HTTP callbacks. Failed stop retains its
+server/context and marks the service faulted: retain the object and retry from
+its owner. Destruction with a live server aborts rather than allowing callbacks
+into a destroyed object. Successful stop permits restart.
+
+The base adapter sends provider segments unchanged (raw EVF1 for the current
+TRS-80 pattern provider), with one outstanding `frame` text credit and one viewer.
+A replacement viewer closes the previous viewer; old queued work cannot target
+its replacement. Failed queue/send/disconnect releases the pending lease. The
+shared complete-or-error socket override retains the IDF 5.5.5 positive-short-write
+workaround. Finite asset responses request connection close to free HTTP slots.
+EVF1 encoding, rendering, pacing and browser UI remain the consumer's responsibility.
+The normal Extender console uses this same adapter and retains its existing codec
+negotiation/compression, routes and worker through overrides; detached consumers
+need not import those facilities.
+
+| Server | Listen port | IDF control port | Client sockets | Internal sockets |
+|---|---:|---:|---:|---:|
+| Video defaults | 80 | 32768 | 7 | 3 |
+| P4 SD service | 8080 | 32769 | 2 | 3 |
+
+Each server needs a distinct listen and control port. IDF's per-server admission
+check does **not** reserve enough global sockets for other servers. Both defaults
+together require capacity for 15 sockets, plus other live lwIP users. The console's
+retained `CONFIG_LWIP_MAX_SOCKETS=10` is not a sufficient worst-case combined budget.
+Detached consumers must explicitly raise their framework budget or reduce client
+limits and verify concurrent asset/video/SD traffic. This extraction does not
+silently change console socket configuration or claim that capacity qualified.
+
+Checks (from repository root):
+
+```sh
+bash tests/network/run_http_video.sh
+.venv/bin/python tests/video_asset_close_test.py
+.venv/bin/pio run -d vdp -e p4-console
+.venv/bin/python tests/network/compile_http_video_detached.py
+```
+
+The first compiles the actual adapter against HTTP/socket fakes with ASan/UBSan;
+legacy takeover/containment test entry points invoke it too. The last compiles a
+minimal detached consumer translation unit against actual P4/IDF headers after
+the console build; it is not an independent consumer firmware link or runtime
+qualification. TRS-80 owns its whole-firmware link and physical integration check.
+Extraction evidence: [TRS-80-004](tasks/TRS-80-004.md).
