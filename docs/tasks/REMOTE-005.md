@@ -422,7 +422,7 @@ for the first tranche. Promote accepted ADR/normative text only after review;
 record explicitly deferred capabilities. Keep the host sandbox and browser mock
 as separate evidence, not P4 acceptance.
 
-R05-A02 [ ] Trace stock MOS CLI input/dispatch, execution context, application
+R05-A02 [x] Trace stock MOS CLI input/dispatch, execution context, application
 entry/exit and MOSlet loading against current EMOS. Include Legacy/ExCom SD
 coexistence: current src/emos_sdlink.c explicitly rejects non-Legacy mode; that
 guard is observed policy, not proof that removing it is safe. Pin docs/source revisions;
@@ -513,3 +513,10 @@ Author authorized code review of stock MOS/EMOS safe CLI dispatch, application
 caller memory and Legacy/ExCom coexistence. Record feasible hooks, blockers and
 minimal changes; no firmware edits or bench operations. Earlier accepted decisions
 remain authoritative; the overall proposal is not yet an implementation release.
+
+R05-A02 completed 2026-09-27: [source review](REMOTE-005/ADMISSION-REVIEW.md).
+Stock line editor blocks in waitKey; Core policy is not CLI-idle state. Existing
+utility loader is suitable only for safe CLI-origin entry; application calls
+should use a linked foreground helper plus resident gateway. ExCom needs changes
+in both P4 parser/send admission and EMOS guard. No code or bench changes.
+D07 SDK/resident split requires review before A03/A05 implementation freeze.
