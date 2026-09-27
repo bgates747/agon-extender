@@ -204,6 +204,13 @@ gates. Do not regenerate drawings, change wiring/source, qualify hardware or
 close the READY corrective action. Validate local links/whitespace and record
 bounded inventory coverage before committing.
 
+A09-N23 [ ] **September integrity-audit summary reconciliation.** Review only
+its opening authority/status, disposition summary and conclusion against the
+current REMED-002 coordinator and owner links. Separate corrected, deferred and
+still-open findings; remove obsolete blanket implications without reopening
+source investigations or closing qualification. Preserve dated evidence. Check
+links/whitespace and update coverage; no source, profile or bench operations.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
