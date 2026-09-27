@@ -262,3 +262,16 @@ review, not runtime qualification. B06 proposal is presented in BROWSER-RESEARCH
 implementation items R05-P01–P04 are proposals awaiting Author review. Preferred
 approach is selective MIT frontend reuse, existing relay and serialized browser
 orchestration, with additional EMOSlet directory primitives. D03 remains open.
+
+## R05-P01 execution contract — accepted 2026-09-27
+
+Author authorized the proposed isolated browser mock. Adapt the small embedded
+frontend's layout/interaction concepts with retained MIT provenance; keep all
+mock assets under REMOTE-005. Demonstrate folder navigation, filtered bulk
+selection, recursive queue expansion (including empty directories and >100
+entries), sequential progress, cancellation/retry, and offline/busy states.
+Use synthetic content only. File inputs may inspect names/sizes but must not
+read or transfer user file contents. No P4/Agon calls, service lifecycle change,
+firmware build or deployment. Validate in a local browser with synthetic cases;
+provide an accessible preview for Author review. Runtime browser coverage must
+be stated precisely. D02–D05 and backend implementation remain separate gates.
