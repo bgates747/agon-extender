@@ -115,6 +115,14 @@ refresh to REMOTE-005 with explicit prerequisites. Preserve frozen r01 and code;
 no new procedure identity, emulator work, deployment or execution. Update scoped
 inventory/findings/results, validate links and whitespace, then commit.
 
+A09-N10 [ ] **Example reuse guidance (F035).** Review all six example READMEs
+and index against receipt producers and keyboard/hello host helpers. Separate
+source-inspected placement instructions from blocked historical recipes. Remove
+obsolete operational recipes from current example entry points, preserve them
+as historical evidence, and give existing owning tasks explicit refresh items.
+No source, fixture identity, emulator setup or bench change. Validate links and
+whitespace, update scoped inventory/results and commit.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
