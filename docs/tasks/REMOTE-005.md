@@ -415,6 +415,13 @@ invent an Overwrite-header requirement for ordinary PUT. Verify real-client
 request sequences and conditional failures before claiming the UI's choice is
 preserved. Skipped items must never be replayed as pending work.
 
+D16 [x] Accepted 2026-09-27: application developers may link a small synchronous
+transfer helper into their programs. The helper executes foreground orchestration
+with caller-owned memory; resident EMOS retains admission and transport ownership.
+Do not load a nested EMOSlet or move the whole transfer engine into ROM. D07's
+exact ABI, memory bounds and error/cancellation details remain implementation
+contract work. This decision does not authorize direct UART/GPIO access.
+
 ### Development, deployment and test work items
 
 R05-A01 [ ] Freeze the Author-reviewed architecture and settle D02–D10 as needed
@@ -519,4 +526,4 @@ Stock line editor blocks in waitKey; Core policy is not CLI-idle state. Existing
 utility loader is suitable only for safe CLI-origin entry; application calls
 should use a linked foreground helper plus resident gateway. ExCom needs changes
 in both P4 parser/send admission and EMOS guard. No code or bench changes.
-D07 SDK/resident split requires review before A03/A05 implementation freeze.
+D16 now accepts the SDK/resident split; exact A03/A05 contracts remain to be frozen.

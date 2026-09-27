@@ -149,3 +149,10 @@ outcomes and do not promise whole-tree rollback.
 Remove P4 staging after confirmed successful completion. Retain interrupted data
 only while required for recovery; do not create a permanent mirror of Agon SD.
 Download snapshot lifetime includes completion of its admitted serving operation.
+
+## Application interface placement — accepted 2026-09-27
+
+Application developers link a small synchronous transfer helper into their
+programs. It performs foreground orchestration using caller-owned memory while
+resident EMOS owns admission and transport. No nested EMOSlet loading, direct
+UART/GPIO access or full resident file-transfer engine is introduced.
