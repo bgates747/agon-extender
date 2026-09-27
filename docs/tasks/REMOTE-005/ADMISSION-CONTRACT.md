@@ -121,8 +121,7 @@ legacy-only peer without an identified capability/bootstrap handshake. Productio
 wire capability/version changes follow the version policy before build/deployment.
 
 Control header: bytes 0–2 retain SD and major 1; byte 3 is control kind; bytes
-4–7 are nonzero control session; 8–11 sequence; 12 operation; 13 result (requests
-zero); 14–15 payload length; 16–19 existing CRC. Integer fields little endian.
+4–7 are nonzero control session; 8–11 sequence; 12 operation; 13 result (zero except DECIDE rejection and CLOSE terminal reason); 14–15 payload length; 16–19 existing CRC. Integer fields little endian.
 Header session is control-channel identity, not a user account or file transaction.
 
 Common payload prefix, 28 bytes:
@@ -189,7 +188,9 @@ retires prior reply expectations; other controls are single-flight. Initial time
 is 24 clock ticks (200 ms at the existing 120 Hz MOS clock), with Legacy discovery
 retried no more than once per 120 ticks. These are bounded development defaults,
 not measured latency promises. A timed-out job has an uncertain result, never a
-fresh automatic mutation retry. P4 expires unclaimed offers after 200 ms. Clock
+fresh automatic mutation retry. P4 expires unclaimed offers after 200 ms and provisional DECIDE grants after
+1 second without READY; neither state permits filesystem execution. CLOSE
+withdraws a provisional grant when a key wins. Clock
 stalls must also be bounded in the foreground implementation.
 
 Origin values: 0 none, 1 external, 2 local application. Classes: 0 none, 1 stat,

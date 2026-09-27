@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r57",
+  "source_identity": "uart-excom-console-r58",
   "status": "draft",
-  "note": "PORT-007: P4-local SD HTTP file/directory management candidate; drain rejected upload bodies so clients receive HTTP errors."
+  "note": "REMOTE-005 A04 optional diagnostic admission peer; --admission-probe builds are temporary and must be restored to normal console after testing."
 }

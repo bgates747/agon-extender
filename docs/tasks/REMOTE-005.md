@@ -544,3 +544,11 @@ bounded descriptors and finite `/emos/sdjob.bin` dispatch. A03 is complete as a
 design. A04 implements the minimal resident boundary; actual staging, filesystem
 operations and application SDK remain later items. No physical deployment in this
 tranche. Emulator-coupled source remains uncommitted pending Author review.
+
+## R05-A04 implementation — 2026-09-27
+
+Resident boundary implemented in EMOS; [results](REMOTE-005/A04-RESULTS/README.md)
+record passing build/linked checks, 112 host tests and five UART-peer emulator
+cases. A04 awaits human emulator review before commit. No finite file engine, P4
+staging or physical deployment is implied. Source remains uncommitted; production
+is unchanged.

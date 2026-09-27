@@ -1,0 +1,20 @@
+{
+  "status": "uncommitted-development-not-deployable",
+  "emos_base_commit": "19486d7d01e9b3b31deb232f07fb042995b16513",
+  "source_sha256": {
+    "main.c": "3eb216abfacc807b7ca54efdff33de8a3b66afcefdcbe2c61c332ba2035ea50f",
+    "src/mos.c": "0dfb4b738a81264940492690a717d6cd9bf7f15c88695bfd9b561effd9400db0",
+    "src/mos_editor.c": "d68df23402b420bae74b4b492ff5fb88f739d786cdcc01d004f20baeca205ef4",
+    "src/mos_editor.h": "75e1880a89e2fe437336395c33baaea21b1ad8621ca887725bc9d59677ed47c4",
+    "src/emos.c": "0c5bee67c2af645ea50a3bece31de46dbeef3ba3070636f40e258eee442a8960",
+    "src/emos_sdlink.c": "794f506be4e955189966678a6f3f5a9cd1d2ed2c95bd4c7fc945fe41d77fb528",
+    "src/emos_admission.c": "7d97fd42e0018509b187a4cbebdac1fac68d4361b5140df8a2819e00eaffbd03",
+    "src/emos_admission.h": "6f368b1bf6f936b650027dc034e3dfbf3edda24347ce5e24ffbe4aeea3ab7756",
+    "port/mos-agondev.mk": "322d388ed4bf2d57031a11ce9c086a7d8f6b0b9df2ce900eb28186b9121564a8",
+    "scripts/admission_peer.py": "ccebedf811e10a1267f8a6989cdf364eda40e0c86e9eced581a6a4a4360e1644",
+    "projects/admission-probe/src/main.c": "987cc35618142fcc481ae7be14af2c4dc02d9c97767233fe2f97de65dc0aaaeb"
+  },
+  "firmware_sha256": "eb28a19ea38e48c3f3ffc55a68e191f734f3496b329b2d595356cb8783a1fd7c",
+  "utility_sha256": "85715f81af55b3d0c5839980f061c0b9786adedfc1d8a64e83e7bf975e5571bf",
+  "emulator_sha256": "15b377a4271f9738afcc2fcd2fdc8914d5f1fc6f930895ff9710eb66f7bd1087"
+}

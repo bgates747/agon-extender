@@ -250,6 +250,26 @@ esp_err_t videoTimingHandler(httpd_req_t *request) {
 #if defined(AGON_EXTENDER_SD_SERVICE)
 namespace {
 std::uint32_t sdNow() { return std::uint32_t(esp_timer_get_time()/1000); }
+#if AGON_EXTENDER_ADMISSION_PROBE
+esp_err_t admissionProbeHandler(httpd_req_t *request) {
+  char command='0';
+  if(request->method==HTTP_POST) {
+    if(request->content_len!=1 || httpd_req_recv(request,&command,1)!=1 || command<'0'||command>'3')
+      return httpd_resp_send_err(request,HTTPD_400_BAD_REQUEST,"Expected diagnostic case 0..3");
+    portENTER_CRITICAL(&storage::sd_mutex);
+    bool ok=!storage::sd_service.online(sdNow()) && storage::admission_probe.arm(command-'0',sdNow());
+    portEXIT_CRITICAL(&storage::sd_mutex);
+    if(!ok)return httpd_resp_send_err(request,HTTPD_503_SERVICE_UNAVAILABLE,"No fresh idle poll or probe busy");
+  }
+  char body[220];
+  portENTER_CRITICAL(&storage::sd_mutex);
+  auto &p=storage::admission_probe;
+  int n=snprintf(body,sizeof(body),"{\"diagnostic\":true,\"hello\":%u,\"poll\":%u,\"decide\":%u,\"close\":%u,\"last\":%u,\"armed\":%u}",p.hellos,p.polls,p.decides,p.closes,p.last,p.armed);
+  portEXIT_CRITICAL(&storage::sd_mutex);
+  httpd_resp_set_type(request,"application/json");
+  return httpd_resp_send(request,body,n);
+}
+#endif
 esp_err_t sdStatusHandler(httpd_req_t *request) {
   bool online,pending;std::uint32_t boot;
   storage::sdStatus(sdNow(),online,pending,boot);
@@ -403,6 +423,15 @@ bool WiredNetworkService::startHttp() noexcept {
   }
 #endif
 #if defined(AGON_EXTENDER_SD_SERVICE)
+#if AGON_EXTENDER_ADMISSION_PROBE
+  httpd_uri_t probe_get{},probe_post{};
+  probe_get.uri=probe_post.uri="/diagnostics/admission";
+  probe_get.method=HTTP_GET;probe_post.method=HTTP_POST;
+  probe_get.handler=probe_post.handler=&admissionProbeHandler;
+  if(httpd_register_uri_handler(server,&probe_get)!=ESP_OK || httpd_register_uri_handler(server,&probe_post)!=ESP_OK) {
+    http_fault_=true;stopHttp();increment(http_start_failures_);return false;
+  }
+#endif
   httpd_uri_t sd_status{},sd_rpc{};
   sd_status.uri="/sd/status";sd_status.method=HTTP_GET;sd_status.handler=&sdStatusHandler;
   sd_rpc.uri="/sd/rpc";sd_rpc.method=HTTP_POST;sd_rpc.handler=&sdRpcHandler;

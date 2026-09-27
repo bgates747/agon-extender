@@ -1,0 +1,28 @@
+{
+  "outcome": "pass",
+  "case": "utility",
+  "controls": [
+    1,
+    2,
+    3,
+    10,
+    1,
+    2,
+    1,
+    2,
+    1,
+    2,
+    1,
+    2,
+    1,
+    2,
+    1,
+    2,
+    1,
+    1
+  ],
+  "key_packets": 54,
+  "firmware_sha256": "eb28a19ea38e48c3f3ffc55a68e191f734f3496b329b2d595356cb8783a1fd7c",
+  "elapsed_seconds": 2.399,
+  "scope": "real eZ80 firmware with controlled UART peer; no P4/hardware claim"
+}

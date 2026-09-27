@@ -266,7 +266,14 @@ void runConsole(VDUStreamProcessor *processor) {
        !s.count && !transmitting && !console_admit_pending) {
       uint8_t record[SD_MAX_RECORD];
       unsigned n=agon::extender::storage::sdTake(record,now);
-      if(n) {s.write(0x8D);s.write(uint8_t(n));s.write(record,n);}
+      if(n) {
+#if AGON_EXTENDER_ADMISSION_PROBE
+        using namespace agon::extender::storage;
+        portENTER_CRITICAL(&sd_mutex);auto inject=admission_probe.race;admission_probe.race=0;portEXIT_CRITICAL(&sd_mutex);
+        if(inject) {const uint8_t key[]={0x81,4,'x',0,0,1};s.write(key,sizeof(key));}
+#endif
+        s.write(0x8D);s.write(uint8_t(n));s.write(record,n);
+      }
     }
 #endif
     if(agon::extender::input::processedKeyboard().queryFault())
