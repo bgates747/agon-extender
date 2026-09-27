@@ -437,7 +437,7 @@ produce the minimal safe-point/admission design and memory map. Prove a request
 cannot slip between idle checking and application dispatch. Stop for a bounded
 choice if safe auto-dispatch or application calling cannot preserve stock state.
 
-R05-A03 [ ] Define admission/control messages, capability negotiation and states:
+R05-A03 [x] Define admission/control messages, capability negotiation and states:
 idle, external job admitted, application running, application-owned transfer,
 closing/fault. Include request/boot identity, close/cancel and busy rejection.
 EMOS polls/adopts pending intent at safe points; P4 cannot grant itself access.
@@ -536,3 +536,11 @@ cases. A03 remains unchecked until numeric results, descriptor fragmentation and
 capability bootstrap are frozen for implementation. No code or bench changes.
 A native client's folder gesture is multiple admitted protocol operations, not
 an atomic directory job; client concurrency compatibility remains an explicit test.
+
+## R05-A03 freeze / A04 start — 2026-09-27
+
+Finalized revision-1 controls, safe Legacy-only bootstrap, capability-gated ExCom,
+bounded descriptors and finite `/emos/sdjob.bin` dispatch. A03 is complete as a
+design. A04 implements the minimal resident boundary; actual staging, filesystem
+operations and application SDK remain later items. No physical deployment in this
+tranche. Emulator-coupled source remains uncommitted pending Author review.

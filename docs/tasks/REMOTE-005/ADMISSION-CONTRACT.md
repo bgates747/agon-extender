@@ -111,10 +111,10 @@ specified by the ABI and display route must survive. Exact C/assembly SDK functi
 signatures and supported caller modes are A05 implementation details, not permission
 to bypass the existing gateway range checks.
 
-## Control framing proposal
+## Control framing — revision 1
 
 Reuse SD's 20-byte header, CRC and 240-byte maximum. Existing kinds 1–3 and
-operations 1–11 keep their meanings. Proposed control kinds: 4 request, 5 reply.
+operations 1–11 keep their meanings. Control kinds: 4 request, 5 reply.
 Old sd_valid rejects these kinds; paired implementation must demultiplex them
 before the old file-service validator. Do not send experimental controls to a
 legacy-only peer without an identified capability/bootstrap handshake. Production
@@ -140,11 +140,10 @@ Common payload prefix, 28 bytes:
 Remaining 192 bytes hold operation-specific negotiation or descriptor pieces.
 A complete two-path descriptor may exceed one record under existing 120-byte
 path limits. Use bounded descriptor fragments with total length, offset and final
-checksum; refuse overlaps/out-of-range fragments. Freeze descriptor schema before
-A04/A05 coding; never truncate paths or silently reduce supported path lengths.
+checksum; refuse overlaps/out-of-range fragments. The descriptor schema below applies; never truncate paths or silently reduce supported path lengths.
 No native C struct packing is the wire ABI.
 
-Control operations (proposed values within control namespace):
+Control operations (values within control namespace):
 
 | Value | Operation | Initiator and result |
 | --- | --- | --- |
@@ -164,6 +163,57 @@ is latched by the external foreground utility. Application helper does not impos
 Escape behavior. Existing file records execute only under the active grant and
 matching derived file session; opening that session must bind it to the job.
 Manual sdserve keeps its explicit, separate lifecycle and cannot share the grant.
+
+## Bootstrap and bounded descriptors
+
+The only pre-negotiation probe is HELLO in Legacy mode, with an empty common
+prefix and flags bit 0 (revision-1 admission). Old P4's inactive F6 parser consumes
+the complete bounded envelope and sd_valid rejects kind 4; it does not interpret
+its body as VDU. This source-verified discard permits the probe without modifying
+stock VDU. No probe is sent into an unnegotiated active ExCom parser.
+
+HELLO reply supplies a nonzero 64-bit P4 incarnation and capability bits: bit 0
+admission v1, bit 1 active-ExCom framing, bit 2 finite external jobs, bit 3
+application jobs. Reserved bits must be zero in revision 1. EMOS requires bits
+0 and 2 for external admission, plus bit 1 in ExCom. Negotiation alone grants
+nothing: a matching POLL and DECIDE exchange under that incarnation is required.
+A stale HELLO reply cannot authorize work on a freshly booted peer. P4 must use
+a fresh nonzero random incarnation after boot/HELLO, echoing session and sequence.
+EMOS invalidates negotiation on transport fault; it does not try to bootstrap in
+ExCom. Return to Legacy permits renegotiation. This is an initial availability
+limit, not permission to silently switch display modes.
+
+Session, sequence, generation and grant counters never wrap into reuse: exhaustion
+closes admission until a clean handshake. A HELLO retry uses a new sequence and
+retires prior reply expectations; other controls are single-flight. Initial timeout
+is 24 clock ticks (200 ms at the existing 120 Hz MOS clock), with Legacy discovery
+retried no more than once per 120 ticks. These are bounded development defaults,
+not measured latency promises. A timed-out job has an uncertain result, never a
+fresh automatic mutation retry. P4 expires unclaimed offers after 200 ms. Clock
+stalls must also be bounded in the foreground implementation.
+
+Origin values: 0 none, 1 external, 2 local application. Classes: 0 none, 1 stat,
+2 list, 3 upload, 4 download, 5 mkdir, 6 move, 7 copy, 8 delete. HELLO carries
+capabilities in prefix flags; all other prefix flags are zero. FINISH appends a
+one-byte outcome: 0 no mutation, 1 committed, 2 partial directory completion,
+3 recovery required. Its result field separately reports success/failure.
+
+A descriptor is at most 248 bytes: class u8, options u8 (bit 0 overwrite,
+bit 1 recursive), source length u16, destination length u16, reserved u16 zero,
+then exact non-NUL path bytes (each <=120). Paths retain existing normalized SD
+path rules; absent paths have zero length, never implicit current directory.
+Fragment body: total u16, offset u16, descriptor CRC32 u32, up to184 bytes.
+Fragments must be contiguous, nonoverlapping and consistent with the total/CRC;
+no allocation based on an untrusted length. A POLL offer carries job/class only;
+after claim the utility retrieves descriptors before READY. APP_BEGIN descriptors
+use the same bounded codec. No descriptor or file mutation is executed in the ISR.
+
+The private CLI wake is not a MOS editline API return. It dispatches only the
+fixed `/emos/sdjob.bin`, a finite-job utility distinct from manual `sdserve`.
+Missing or invalid utility closes the grant and restores the prompt. Old sdserve
+is never launched with unrecognized options as a substitute. READY belongs to
+the finite utility after validating its descriptor. A04 proves dispatch and
+failure cleanup; filesystem/SDK implementation remains A05–A08.
 
 ## Incarnation, retries and stale work
 
@@ -188,9 +238,8 @@ current admission; that differs from a hidden P4 deferred queue.
 
 ## Results and cancellation
 
-Control result domain: OK, NO_WORK, BUSY, OFFLINE, STALE, UNSUPPORTED, INVALID,
-IO_ERROR, CANCEL_PENDING, CANCELLED, RECOVERY_REQUIRED. Freeze numeric values with
-codec tests before firmware compilation. Existing file status values are unchanged.
+Control results are respectively 0 through 10: OK, NO_WORK, BUSY, OFFLINE,
+STALE, UNSUPPORTED, INVALID, IO_ERROR, CANCEL_PENDING, CANCELLED, RECOVERY_REQUIRED. Existing file status values are unchanged.
 Result must carry whether mainboard commit is confirmed, not merely staged on P4.
 
 Suggested HTTP mapping: busy/temporary unavailability -> 503 with explicit reason;
@@ -233,8 +282,7 @@ concurrent native-client requests all retire or recover ownership predictably.
 
 ## Delivery boundary
 
-A03 state/message design is delivered. Numeric/schema details explicitly marked
-above are codec-freeze prerequisites within A03 before source implementation, not
-implemented wire claims. No benchmark, emulator, firmware or hardware work occurred.
+A03 state/message contract is frozen for implementation, including numeric results,
+descriptor bounds and Legacy bootstrap. This is not an implemented wire claim. No benchmark, emulator, firmware or hardware work occurred.
 The job-per-operation definition and native-client concurrency tests prevent us
 from accidentally promising a whole GUI folder gesture is one protocol transaction.
