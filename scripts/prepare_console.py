@@ -24,7 +24,10 @@ def main():
     parser.add_argument('--output', required=True, type=Path)
     parser.add_argument('--reset-url', help='Optional operator reset bridge URL; local manifest only')
     parser.add_argument('--admission-probe', action='store_true', help='Explicit temporary A04 hardware peer; never production')
+    parser.add_argument('--staged-webdav', action='store_true', help='Enable experimental Legacy finite-job WebDAV runtime')
     args = parser.parse_args()
+    if args.staged_webdav and args.admission_probe:
+        parser.error('runtime and diagnostic admission peer are mutually exclusive')
     if args.reset_url and urlsplit(args.reset_url).scheme not in ('http','https'):
         parser.error('reset URL must use HTTP(S)')
     output = args.output.absolute()
@@ -59,6 +62,9 @@ def main():
     if args.admission_probe:
         config=project/'video/extender/diagnostics/admission/config.hpp'
         config.write_text(config.read_text().replace('AGON_EXTENDER_ADMISSION_PROBE 0','AGON_EXTENDER_ADMISSION_PROBE 1'))
+    if args.staged_webdav:
+        config=project/'video/extender/storage/webdav/runtime.hpp'
+        config.write_text(config.read_text().replace('AGON_EXTENDER_STAGED_WEBDAV 0','AGON_EXTENDER_STAGED_WEBDAV 1'))
     # Reuse downloaded tools only, never build products or managed source trees.
     (project/'.pio').mkdir()
     packages = ROOT/'vdp/.pio/packages'
@@ -127,7 +133,7 @@ def main():
     (output/'tool-versions.txt').write_text(tool_versions)
     manifest = {'schema_version':1,'build':{'artifact_id':identity['artifact_id'],
                 'source_identity':source_identity,'build_id':build_id,'status':status,
-                'created_at':now.isoformat()},'admission_probe':args.admission_probe,'reset_url':args.reset_url,'provenance':before,'outputs':files,
+                'created_at':now.isoformat()},'staged_webdav':args.staged_webdav,'admission_probe':args.admission_probe,'reset_url':args.reset_url,'provenance':before,'outputs':files,
                 'managed_component_sha256':dependency_files, 'embedded_asset_sha256':assets,
                 'effective_sdkconfig_sha256':sha(project/'pio/p4-console.sdkconfig'),
                 'silicon_configs':silicon_configs,

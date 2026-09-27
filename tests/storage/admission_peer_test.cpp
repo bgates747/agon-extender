@@ -84,6 +84,11 @@ int main() {
     assert(f.call(9, 0, 1) == 48);
     assert(f.call(10) == 48);
     assert(f.peer.phase == Peer::closed && f.peer.success);
+    auto completed = f.peer.binding;
+    f.hello(); // resident re-entry can precede HTTP worker wakeup
+    f.poll();
+    assert(f.peer.phase == Peer::closed && f.peer.success);
+    assert(f.peer.binding == completed);
     f.peer.retire();
     assert(f.peer.phase == Peer::idle);
     assert(!f.peer.reserve(f.p, 10, f.now));

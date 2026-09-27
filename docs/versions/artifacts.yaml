@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r117
-updated_at: 2026-09-27T21:30:16Z
+registry_revision: r118
+updated_at: 2026-09-28T00:00:00Z
 
 artifacts:
+  - artifact_id: sdjob
+    kind: application
+    identity_scheme: semantic_version
+    latest_identity: sdjob-v0.1.0
+    status: draft
+    variants: []
+    description: Finite admitted Legacy SD job EMOSlet; checked engine, fixed B0000 utility.
+    notes:
+      - REMOTE-005 A09-A11 under standing Author version preapproval and released-bench authority; no production promotion.
   - artifact_id: app-transfer-probe
     kind: test_fixture
     identity_scheme: revision
@@ -285,7 +294,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.21
+    latest_identity: agon-emos-v0.1.22
     status: draft
     variants:
       - port008-forward
@@ -655,7 +664,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r59
+    latest_identity: uart-excom-console-r60
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.

@@ -105,3 +105,18 @@ the display route or fall back to manual service.
 client disconnect, keyboard/CLI races, stack high-water and native clients. Verify
 ordinary manual service and rollback. Only then consider enabling/promotion under
 the Author's acceptance and version policy.
+
+## A09 deployment preparation
+
+Author released the bench and authorized the largest independently executable
+tranche. Registry r118 allocates EMOS v0.1.22, P4 console r60 and sdjob v0.1.0
+under standing version preapproval. These are experimental deployment candidates,
+not production selection. `prepare_console.py --staged-webdav` enables the runtime
+only in the exported build. The utility builder accepts `--utility sdjob`.
+
+The actual eZ80 finite utility passes HELLO/STAT/READ, FINISH/CLOSE and MOS prompt
+return with the real P4 admission peer in the retained UART emulator harness.
+This exposed a scheduling race: resident EMOS sends HELLO immediately after CLOSE,
+so the P4 must retain its terminal receipt until the HTTP worker consumes it.
+A regression now covers HELLO and POLL before terminal retirement. This is local
+functional evidence, not physical timing or FAT durability evidence.

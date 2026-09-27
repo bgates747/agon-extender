@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r59",
+  "source_identity": "uart-excom-console-r60",
   "status": "draft",
-  "note": "REMOTE-005 A04 optional diagnostic admission peer; --admission-probe builds are temporary and must be restored to normal console after testing."
+  "note": "REMOTE-005 A09-A11 candidate; --staged-webdav explicitly enables Legacy finite-job runtime. Ordinary builds remain disabled."
 }

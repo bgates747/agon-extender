@@ -195,7 +195,11 @@ public:
       std::memset(control_ + 20, 0, 28);
       std::memcpy(control_ + 20, nonce_, 8);
       control_[46] = 5; // Legacy external only
-      phase = interrupted ? failed : idle;
+      // EMOS renegotiates immediately after CLOSE. Retain the terminal
+      // receipt until the HTTP worker observes it; scheduling must not turn
+      // an already completed mutation into an uncertain failure.
+      if (phase != closed)
+        phase = interrupted ? failed : idle;
       pollValid_ = false;
       fileSize_ = answerSize_ = 0;
       nextJob_ = 0;
