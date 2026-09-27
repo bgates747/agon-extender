@@ -363,7 +363,7 @@ inline void Context::setActiveCursor(CursorType type) {
 		case CursorType::Text:
 			activeCursor = &textCursor;
 			changeFont(textFont, textFontData, 0);
-			setCharacterOverwrite(true);
+			setCharacterOverwrite(!transparentText);
 			setActiveViewport(ViewportType::Text);
 			updateTextCursorPosition();
 			break;

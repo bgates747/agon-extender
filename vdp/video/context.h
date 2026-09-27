@@ -101,6 +101,9 @@ class Context {
 		Rect			textViewport;					// Text viewport
 		Rect			graphicsViewport;				// Graphics viewport
 
+		// TEXT-001: private prototype VDP variable 0x10F1; not an upstream allocation.
+		bool transparentText = false;
+
 		// Graphics management data
 		fabgl::PaintOptions			gpofg;				// Graphics paint options foreground
 		fabgl::PaintOptions			gpobg;				// Graphics paint options background
@@ -459,6 +462,7 @@ Context::Context(const Context &c) {
 	// pathPoints and lastPlotCommand are currently completely transient, so don't need to be copied
 
 	// Text painting options
+	transparentText = c.transparentText;
 	tfg = c.tfg;
 	tbg = c.tbg;
 	tfgc = c.tfgc;
@@ -511,6 +515,10 @@ bool Context::readVariable(uint16_t var, uint16_t * value) {
 		return false;
 	}
 	switch (var) {
+		case 0xF1: // TEXT-001 private text-background painting option
+			if (value) *value = transparentText ? 1 : 0;
+			break;
+
 		// Mode variables
 		// 0 is "mode flags" - omitting for now
 		case 1:		// Text columns - 1 (characters)
@@ -996,6 +1004,14 @@ void Context::setVariable(uint16_t var, uint16_t value) {
 		return;
 	}
 	switch (var) {
+		case 0xF1: // TEXT-001: keep colour, erase and scrolling behaviour unchanged.
+			if (!ttxtMode && value <= 1) {
+				transparentText = value != 0;
+				setCharacterOverwrite(textCursorActive() && !transparentText);
+				plottingText = false;
+			}
+			break;
+
 		// Mode variables (0-13)
 		// All mode variables are read-only
 

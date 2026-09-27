@@ -6,8 +6,9 @@ Feasible without a new glyph renderer. Stock VDP already controls glyph backgrou
 painting with `GlyphOptions::FillBackground`; cursor selection forces it on for
 text and off for graphics. EDP retains that path. Recommend an explicit per-context
 text-transparency flag, leaving colour numbers and ordinary PRINT byte streams
-unchanged. Investigation complete; command allocation and behaviour approval are
-required before implementation. No firmware or bench changes in this task pass.
+unchanged. Investigation complete; the Author approved the first-pass separate flag with
+normal destructive erase/scroll behaviour. Command allocation and the detailed
+implementation contract remain before implementation. No firmware or bench changes in this task pass.
 
 ## Contract and bounded checklist
 
@@ -17,7 +18,7 @@ T01-01 [x] Read official text/colour/cursor contracts and identify stock draw pa
 T01-02 [x] Compare EDP path; identify reset/context/font, erase, scrolling, cursor
 and readback implications. Distinguish source findings from runtime proof.
 T01-03 [x] Recommend a minimal interface and enumerate approval choices and tests.
-T01-04 [ ] Author reviews scope and selects behaviour; allocate command only after
+T01-04 [x] Author reviews scope and selects behaviour; allocate command only after
 checking the applicable command namespace. Implementation needs its own frozen
 contract, version identities and qualification. No numeric opcode reserved here.
 
@@ -46,7 +47,7 @@ no runtime transparency experiment performed.
 
 ## Proposed first implementation scope
 
-D01 — Recommendation awaiting Author approval: add an explicit text-background
+D01 — First-pass direction approved by the Author: add an explicit text-background
 painting option, separate from VDU 17 colour selection. Do not reinterpret a
 palette alias as transparent; that would change valid existing programs. A
 VDU extension controls the option; ordinary MOS output, BASIC PRINT and C printf
@@ -60,7 +61,7 @@ Mode/context reset restores opaque; context save/copy/restore preserves the flag
 until reset. Font changes must not accidentally re-enable fill. VDU 17 continues
 to set the stored colour used by explicit clears and erases regardless of flag.
 
-D03 — Recommendation awaiting approval: preserve existing destructive operations.
+D03 — Approved by the Author for the first pass: preserve existing destructive operations.
 VDU 8 moves the cursor; VDU 127 deletes with background fill; CLS fills the text
 viewport; scrolling moves all its pixels and fills exposed space. Printing a
 space in transparent mode paints nothing; overprinting does not remove old ink.
@@ -109,3 +110,84 @@ Compare mainboard and EDP against a deterministic patterned background and pixel
 expectations; retain human visual review where capture changes behaviour. Fixtures
 select mode in autoexec before invocation. Source implementation and testing await
 scope approval; no upstream publication is authorized by this research task.
+
+## Author review
+
+The Author approved transparent printing with normal destructive erase and
+scrolling for a first pass. This accepts D01/D03 direction; detailed reset,
+context and special-mode semantics remain recommendations to settle in the
+implementation contract. No command number or firmware identity assigned.
+
+## Implementation contract — Author authorized
+
+T01-05 [x] Implement per-context transparent text flag in maintained EDP context
+code and apply the same bounded patch to an isolated Fab native VDP source copy.
+Use experimental VDP variable 0x10F1 (unassigned in the inspected reference),
+value 0 opaque / 1 transparent, other values ignored. This is a private prototype
+allocation, not an upstream assignment. Use the existing VDU 23,0,F8 word/word
+parser and read-variable path. Teletext ignores writes. Preserve colour/erase/
+scroll semantics; copy flag with context, clear on context/mode reset, restore
+on context activation and VDU 4. No EMOS change or physical firmware deployment.
+
+T01-06 [x] Build bespoke native VDP on Linux using existing emulator build inputs;
+reuse the unchanged emulator executable on Lenovo. Verify actual pixel differences
+against opaque glyph output and a patterned background, plus toggle/reset cases.
+Compile maintained P4 code. Keep all emulator-coupled changes uncommitted until
+Author visual acceptance.
+
+T01-07 [x] Install isolated project `.emulator/text-001` profile on Lenovo with
+verified stock MOS and bespoke VDP; demo executable uses ordinary text cursor
+printing over rainbow stripes. Video mode selected by autoexec before running.
+Leave the everyday profile unchanged. Launch only when ready for visual review.
+
+
+## Prototype result — visual acceptance pending
+
+Native pixel checks pass: opaque-derived glyph mask over a coloured background,
+transparent spaces, opaque restoration, VDU 4/5 and saved-context restoration,
+destructive delete and full context reset. P4 console compile/link passes in
+29.37 seconds; no P4 deployment performed. The native module uses Fab's retained
+2.16.0 userspace-adapted source, commit
+`1056ee38ec1cc68ed327bd32ee47d04b1c30597c`, not a claim of stock physical VDP proof.
+The same bounded modifications are in maintained EDP context sources.
+
+Reproduction helpers live alongside this document: `build_native.py`,
+`apply-native-prototype.py`, `make_demo.py`, `check_pixels.py`. Build receipt,
+module, native pixel result and screenshots are retained in ignored local task
+evidence. The Lenovo profile uses stock MOS 3.0.2, the unchanged installed Fab
+executable, and this bespoke VDP; everyday emulator untouched. Local deployment
+paths are recorded in the ignored receipt. Mode 0 is selected by autoexec.
+
+The visual fixture uses the stock buffered-command API to submit its VDU 4 text
+and graphics together: the retained native emulator loses some glyph rendering
+when its UART delivers separate text fragments (also observed by the prior console
+review harness). A paced direct stream did not remedy it. This is a demo delivery
+workaround, not a P4 fix or a throughput claim. Native pixel tests separately
+exercise the direct text stream and feature state.
+
+Set transparency: byte sequence `23,0,248,241,16,1,0`; disable with final word
+`0,0`. These use the existing set-variable protocol and private variable 0x10F1.
+Full reset clears it; font-only reset preserves it. Partial text-colour reset
+retains the flag in this prototype. Teletext ignores writes. Clear-variable does
+not clear VDU state: explicitly set zero, as with other VDU variables.
+Changes remain uncommitted pending Author emulator validation.
+
+
+Final Lenovo window capture verifies the full labelled rainbow demonstration,
+including opaque and transparent ordinary text, visible spaces and exit guidance.
+Author clarified that earlier window exits were manual, not emulator crashes.
+The final buffered workload renders all labels; direct native pixel validation
+remains separately retained. Visual acceptance still belongs to the Author.
+
+## Author-requested sharing package
+
+Built a flashable classic ESP32 mainboard VDP application image from a separate
+copy of official v2.16.0 plus the same context patch and a TEXT001 prototype build
+label. PlatformIO espressif32 6.6.0 build passes (13.16 seconds); no flashing done.
+Retained stock dependency vdp-gl commit ac2dd5986daf496c43ae8e7fe41836274aec54a0.
+Discord sharing archive contains application firmware (not an emulator module),
+stock-relative patch, Agon demo source/binary, exact build sources/dependencies,
+licenses, README and checksums. Dependency examples/generated docs omitted; build
+sources retained. Archive copied to the Author's Lenovo desktop and SHA verified.
+Private location and package bytes remain in local task evidence. Mainboard
+physical qualification and Author emulator acceptance remain separate gates.

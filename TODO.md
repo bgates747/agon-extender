@@ -11,7 +11,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Transparent text — scope review
 
-- [ ] **[TEXT-001 — Transparent text backgrounds](docs/tasks/TEXT-001.md)** — Investigation complete; existing glyph renderer supports it. Review proposed flag, erase/scroll semantics and exclusions before implementation.
+- [ ] **[TEXT-001 — Transparent text backgrounds](docs/tasks/TEXT-001.md)** — Prototype implemented; native pixel checks and P4 compile pass. Lenovo bespoke rainbow demo awaits Author visual acceptance; no hardware deployment.
 
 ## Do now — PLAN-001
 

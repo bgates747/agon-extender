@@ -178,7 +178,7 @@ void Context::resetFonts() {
 	graphicsFont = nullptr;
 	textFontData = nullptr;
 	graphicsFontData = nullptr;
-	setCharacterOverwrite(true);
+	setCharacterOverwrite(textCursorActive() && !transparentText);
 
 	// reset the text cursor sprite, as it's size may have changed
 	updateTextCursorBitmap();

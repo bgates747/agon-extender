@@ -802,6 +802,7 @@ void Context::plotPending(int16_t peeked) {
 //
 void Context::plotString(const std::string& s) {
 	if (!ttxtMode && !plottingText) {
+		setCharacterOverwrite(textCursorActive() && !transparentText);
 		if (textCursorActive()) {
 			setClippingRect(textViewport);
 			canvas->setPenColor(tfg);
@@ -984,6 +985,7 @@ void Context::resetTextPainting() {
 // Reset graphics context, called after a mode change
 //
 void Context::reset() {
+	transparentText = false; // TEXT-001: reset/mode change restores stock opaque text.
 	defaultViewport = Rect(0, 0, canvasW - 1, canvasH - 1);
 	resetGraphicsPainting();
 	resetTextPainting();
@@ -997,6 +999,7 @@ void Context::reset() {
 // Activate the context, setting up canvas as required
 //
 void Context::activate() {
+	setCharacterOverwrite(textCursorActive() && !transparentText);
 	plottingText = false;
 	if (!ttxtMode) {
 		canvas->selectFont(font == nullptr ? &FONT_AGON : font.get());
