@@ -123,6 +123,13 @@ as historical evidence, and give existing owning tasks explicit refresh items.
 No source, fixture identity, emulator setup or bench change. Validate links and
 whitespace, update scoped inventory/results and commit.
 
+A09-N11 [ ] **New shared-service documentation coverage.** Review p4-sd.md,
+shared-p4-services.md and TRS-80-003.md against current host/API source,
+production selection and retained build/review evidence. Add missing inventory
+and authority-map entries, reconcile current versus historical claims and
+check handbook navigation. No network requests, firmware, emulator or bench
+changes; peer candidate review remains separate. Validate links and commit.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
