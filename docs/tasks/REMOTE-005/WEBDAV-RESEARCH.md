@@ -118,3 +118,12 @@ This is feasibility/source research and client inventory only. No WebDAV client
 has yet transferred files in this project. Main risk is integration semantics,
 not lack of a shared Linux protocol. Recommended next work is W03's cheap
 usability control, before choosing a server port, SD staging scheme or lifecycle.
+
+## W03 execution update — 2026-09-27
+
+[Host control results](webdav-trial/README.md): both Linux GVfs clients mounted
+and passed 129-file bidirectional hash checks, nested/empty directories,
+rename/overwrite/deletion. Both native GUIs were asked to open the share. Human
+usability acceptance and Finder remain pending, so W03 is not marked fully
+complete. Unix metadata-preserving copy hit EOPNOTSUPP; byte-copy tests pass.
+No embedded candidate or Agon/P4 testing is implied.

@@ -307,3 +307,8 @@ Exercise native Linux GVfs clients on Pop!_OS and Lenovo for nested/empty folder
 on Lenovo for human interaction review. Mac/Finder remains pending if unavailable.
 No Agon/P4 endpoints or storage involved; no firmware changes. This validates a
 host reference server/client interaction, not the embedded candidate.
+
+R05-W03 staged for human review: disposable WebDAV share is available on the
+host. Both Linux GVfs byte-transfer suites pass; native GUI acceptance and Finder
+remain pending. See [trial results](REMOTE-005/webdav-trial/README.md). No bench
+or production changes; host-server results do not qualify the embedded adapter.
