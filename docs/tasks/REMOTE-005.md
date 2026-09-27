@@ -331,8 +331,9 @@ WebDAV adapter, not a claim that all filesystem or lifecycle work disappears.
 
 ### Remaining bounded design decisions
 
-D06 [ ] Define CLI safe point and ownership duration. Recommend EMOS admit one
-bounded job only when no command executes and no input line is partly typed;
+D06 [x] Author accepted 2026-09-27: external admission only at an empty, idle
+CLI prompt; partly typed input means busy and must remain untouched. EMOS admits
+one bounded job only when no command executes and no input line is partly typed;
 serialize command dispatch with that admission. New input must be preserved or
 handled explicitly, never lost or interpreted as transfer data. Trace stock CLI
 and application dispatch before selecting hooks. No filesystem work in ISR.
@@ -352,10 +353,12 @@ otherwise any spool is provisional. Busy rejection never becomes delayed deliver
 Measure native client behavior while mainboard copy proceeds before choosing
 lease/HTTP deadlines. Do not acknowledge mainboard success early.
 
-D09 [ ] Define mode and client concurrency. Recommend retaining current Legacy
-restriction for first automatic mainboard service; reject unsupported modes
-without silently switching displays. Application-initiated scope must explicitly
-state whether/how it can operate beyond that boundary. One admitted mainboard job
+D09 [ ] Author requests Legacy and ExCom transfer support wherever feasible,
+without automatic display switching. A02 must investigate removing the current
+Legacy-only gateway guard and trace UART framing, ownership and cleanup under
+concurrent ExCom display traffic. Both external idle-CLI and application-origin
+paths must cover both modes; report a concrete blocker rather than silently
+retaining a Legacy-only implementation. One admitted mainboard job
 at a time; WebDAV sockets are not equivalent to owners. Define conflicts with CLI
 sdcard.py/manual sdserve, keyboard packets, and stale client retry. No pretend locks.
 
@@ -375,7 +378,9 @@ record explicitly deferred capabilities. Keep the host sandbox and browser mock
 as separate evidence, not P4 acceptance.
 
 R05-A02 [ ] Trace stock MOS CLI input/dispatch, execution context, application
-entry/exit and MOSlet loading against current EMOS. Pin docs/source revisions;
+entry/exit and MOSlet loading against current EMOS. Include Legacy/ExCom SD
+coexistence: current src/emos_sdlink.c explicitly rejects non-Legacy mode; that
+guard is observed policy, not proof that removing it is safe. Pin docs/source revisions;
 produce the minimal safe-point/admission design and memory map. Prove a request
 cannot slip between idle checking and application dispatch. Stop for a bounded
 choice if safe auto-dispatch or application calling cannot preserve stock state.
@@ -429,7 +434,7 @@ builds, preserve production rollback and SD files, verify deployed bytes and
 input/recovery readiness. Do not flash while TRS-80 owns the bench. Install only
 the selected fixture paths; video-mode selection belongs in autoexec if needed.
 
-R05-A11 [ ] Hardware-qualify idle external operations and both application-origin
+R05-A11 [ ] Hardware-qualify Legacy and ExCom idle external operations and both application-origin
 directions against Agon SD with byte hashes and explicit busy rejection while a
 user application runs. Test missing/full staging media, interruption recovery,
 concurrent CLI/native client, repeated operations and keyboard/video coexistence.

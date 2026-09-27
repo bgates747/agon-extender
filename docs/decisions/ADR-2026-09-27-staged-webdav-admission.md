@@ -16,7 +16,8 @@ mainboard filesystem operations from an interrupt.
 ## Proposed admission model
 
 EMOS is the authority for whether mainboard work may start. External requests
-are admitted only at a safe idle CLI point. EMOS rejects them as busy while a
+are admitted only at an empty, idle CLI prompt. Partly typed commands cause busy
+rejection and remain untouched (Author agreed 2026-09-27). EMOS rejects them as busy while a
 user application runs, including read, listing and mutation requests requiring
 mainboard access. Rejected work is not queued to execute after the application
 exits. P4's cached indication of CLI state cannot authorize a transfer.
@@ -62,9 +63,10 @@ owns mainboard filesystem execution. Preserve loaded application memory and type
 CLI input; missing utilities must produce an error and leave a usable prompt.
 
 Keep ordinary CLI transfer tools working. Physical transfer remains the existing
-UART service for this tranche. ExExt/parallel transport is separate work. This
-proposal does not presume that the current Legacy-only admission can be removed
-safely or that a MOSlet may overwrite a calling application's memory.
+UART service for this tranche. ExExt/parallel transport is separate work. The target is transfer support in both Legacy and ExCom, preserving the selected
+display route. Removing the current Legacy-only admission requires explicit
+coexistence investigation and qualification. A MOSlet may not overwrite a calling
+application's memory.
 
 No implementation, deployment or production selection follows merely from this
 proposed ADR. Remaining design choices and the development/test gates are in
