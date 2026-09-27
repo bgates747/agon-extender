@@ -305,6 +305,22 @@ frame service unpinned is preferable. Pinning a task does not reserve a core.
    complete. At that point compare measured P4 task placement, contention and
    responsiveness with stock's division of work before proposing any change.
 
+P03-SCHED-01 [ ] **Open, deferred: staged scheduling reconstruction.** Author
+raised on 2026-09-26 as a possible way to isolate streaming slowdowns. First map
+which tasks, locks, queues, priorities and affinities come from FabGL versus
+project-added P4 rendering/composition/network code. Preserve the working baseline
+and investigate in a separate experimental composition, retaining drawing
+algorithms, framebuffer format and EMOS transport ownership. Measure renderer-only
+replay, then composition, compression without networking, prepared-frame network
+transmission, and finally the combined live path. Change one scheduling/ownership
+variable at a time. Record CPU work, blocked time/lock ownership, queue occupancy,
+and PSRAM/cache traffic where measurable; distinguish memory capacity, bandwidth
+and network/output rate. The 7 MiB flash application partition is not runtime RAM.
+The goal is evidence of who blocks whom and why, not a presumed FabGL or RTOS
+fault. No full rewrite, bench run or fresh browser-performance campaign authorized
+by this note. Select/freeze a bounded experiment only when this deferred review
+is explicitly resumed.
+
 These are conditional dispositions of one review, not authorization to change
 affinity, priority or scheduling now. Record which branch applies when the
 current performance investigation closes.
