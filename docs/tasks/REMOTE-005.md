@@ -470,7 +470,7 @@ Keep current ordinary/fast CLI transfer behavior compatible and test it separate
 Local implementation and qualification: [A07 results](REMOTE-005/A07-RESULTS.md).
 Not installed or physically qualified; deployment remains downstream.
 
-R05-A08 [ ] Adapt pinned WebDAV protocol code to the admitted storage interface,
+R05-A08 [x] Adapt pinned WebDAV protocol code to the admitted storage interface,
 not direct destructive POSIX overwrites. Keep video/input serving independent.
 Test PROPFIND/GET/range/PUT/MKCOL/MOVE/COPY/DELETE, truthful locking/ownership,
 Finder body handling and negative conditions. WebDAV response success follows
@@ -480,8 +480,9 @@ Local WebDAV adapter and real-engine checks completed:
 [A08 contract](REMOTE-005/A08-CONTRACT.md), [results and remaining runtime fence](REMOTE-005/A08-RESULTS.md),
 [runtime contract](REMOTE-005/A08-RUNTIME.md) and
 [runtime foundation results](REMOTE-005/A08-RUNTIME-RESULTS.md).
-A08 remains open for the actual grant/queue, finite utility, private media ownership
-and dedicated listener/worker composition. No endpoint was enabled or deployed.
+A08 local runtime integration now passes; see [connected results](REMOTE-005/A08-INTEGRATION-RESULTS.md).
+This includes the actual grant/queue, finite utility, private media ownership
+and dedicated listener/worker composition. No endpoint was enabled on a device or deployed.
 
 R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
 Exercise an interleaving matrix: external request at idle/partly typed CLI/app,

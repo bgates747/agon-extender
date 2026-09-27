@@ -1,5 +1,8 @@
 # A08 runtime foundations — local results
 
+This foundation checkpoint is superseded for current completion state by
+[connected runtime results](A08-INTEGRATION-RESULTS.md); retained below as bounded evidence.
+
 2026-09-27. Development only; bench untouched and production selection unchanged.
 
 | Component | Implemented and checked | Still required |

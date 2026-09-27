@@ -322,5 +322,10 @@ without a successful terminal handoff is unavailable, not completed storage work
 The finite utility must obtain the matching FINISH acknowledgement before reporting
 success. Manual OPEN and application leases retain their separate ownership.
 
-This implements the resident boundary only. There is not yet a finite utility or
-normal P4 endpoint consuming this handoff; it must not be advertised as deployed.
+The finite utility and gated P4 runtime now consume this handoff in local tests.
+Finite ownership has two receive slots for a control ACK followed by a file
+request; other owners retain one slot. STATUS reply appends one byte: 0 continue,
+1 finish requested; result 8 latches cancellation. The utility never interrupts
+activation mid-call. It rejects terminal success while a transfer is unfinished.
+Only Legacy external-job capability bits 0 and 2 are advertised by an explicitly
+enabled runtime. Ordinary builds keep the runtime disabled; this is not deployed.

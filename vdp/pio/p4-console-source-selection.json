@@ -29,7 +29,11 @@
     "video/extender/web/browser_video_provider.cpp",
     "video/extender/web/embedded_assets.cpp",
     "vendor/ESP32Time/ESP32Time.cpp",
-    "video/extender/storage/local/http.cpp"
+    "video/extender/storage/local/http.cpp",
+    "video/extender/storage/webdav/adapter.cpp",
+    "video/extender/storage/webdav/wire_backend.cpp",
+    "video/extender/storage/webdav/connection.cpp",
+    "video/extender/storage/webdav/runtime.cpp"
   ],
   "forbidden_project_translation_units": [
     "video/extender/boot/p4_parallel_qualification_vdp.cpp",

@@ -1,4 +1,4 @@
-#include "extender/storage/admission/peer.hpp"
+#include "extender/storage/admission/channel.hpp"
 #include <cassert>
 #include <cstdio>
 using namespace agon::extender::storage::admission;
@@ -45,6 +45,15 @@ struct Fixture {
     assert(call(4) == 48);
     assert(peer.phase == Peer::active);
   }
+};
+struct QuietAccess : Access {
+  Fixture &f;
+  bool busy = false;
+  explicit QuietAccess(Fixture &v) : f(v) {}
+  void locked(const std::function<void(Peer &)> &fn) override { fn(f.peer); }
+  bool manualBusy() override { return busy; }
+  std::uint32_t now() override { return f.now; }
+  void pause() override { ++f.now; }
 };
 int main() {
   {
@@ -149,6 +158,24 @@ int main() {
     sd_seal(q);
     q[16] ^= 1;
     assert(!f.peer.submit(f.b, q, 20, f.now));
+  }
+  {
+    Fixture f;
+    f.hello();
+    f.poll();
+    QuietAccess access(f);
+    Channel channel(access);
+    Binding b;
+    std::uint32_t session = 0;
+    access.busy = true;
+    assert(channel.enter({"HEAD", "/", "", false, false}, b, session) == 503);
+    assert(f.peer.phase == Peer::idle);
+    access.busy = false;
+    assert(channel.enter({"HEAD", "/", "", false, false}, b, session) == 503);
+    assert(f.now < 1600 &&
+           f.peer.phase ==
+               Peer::idle); // missing DECIDE retires; no deferred job
+    assert(channel.enter({"HEAD", "/", "", false, false}, b, session) == 503);
   }
   puts("admission peer: grant lifecycle, single-flight data, stale replies, "
        "cancellation, duplicate conflict and timeouts pass");

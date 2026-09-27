@@ -54,7 +54,13 @@ parent binding; no new wire opcode or identity substitution was introduced.
    dedicated worker starts with a 32-KiB budget, to be measured on hardware. File
    buffers are bounded but metadata strings/vectors still require heap budgeting.
 
-## Remaining A08 integration fence
+## Runtime integration follow-up
+
+The following fence has now been implemented and locally tested; see
+[connected runtime results](A08-INTEGRATION-RESULTS.md). Physical/native-client
+qualification remains open and the endpoint defaults disabled.
+
+### Original integration fence
 
 These are completion conditions for existing A08, not a separate invented task:
 connect Channel to the actual console-owned control/file queue, require exact

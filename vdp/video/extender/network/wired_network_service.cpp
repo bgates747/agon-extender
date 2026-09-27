@@ -1,5 +1,6 @@
 #if defined(AGON_EXTENDER_SD_SERVICE)
 #include "extender/storage/local/http.hpp"
+#include "extender/storage/webdav/runtime.hpp"
 #endif
 #include "display_status.hpp"
 #include "screen_text.hpp"
@@ -374,6 +375,9 @@ esp_err_t telemetryHandler(httpd_req_t *request) {
 bool WiredNetworkService::startHttp() noexcept {
 
 #if defined(AGON_EXTENDER_SD_SERVICE)
+#if AGON_EXTENDER_STAGED_WEBDAV
+  if (!webdav::startRuntime()) ESP_LOGW(kTag, "Staged WebDAV unavailable");
+#endif
   if (!local_sd::startHttp()) ESP_LOGW(kTag, "P4 SD HTTP server unavailable");
 #endif
   if (server_.load(std::memory_order_acquire) != nullptr) return !http_fault_;
