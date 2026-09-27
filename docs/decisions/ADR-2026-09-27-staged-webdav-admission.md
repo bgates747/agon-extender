@@ -126,3 +126,11 @@ Keep this Agon file service password-free: no user accounts, usernames or
 passwords in the current implementation scope. Any reachable client may request
 access, subject to EMOS admission and single-job ownership. Session/job identifiers
 coordinate transfers; they are not credentials.
+
+## Existing destination behavior — accepted 2026-09-27
+
+Honor the native host file manager's replace/skip choice through the applicable
+WebDAV method and conditional-request semantics. Replace only when the request
+authorizes it; otherwise report a collision. Do not prompt again on Agon.
+Retain per-file staging and recovery during replacement. A skipped item is not
+queued for later execution.

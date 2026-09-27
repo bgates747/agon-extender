@@ -400,6 +400,15 @@ first iteration: completed files remain, uncompleted entries are reported, and
 cancellation stops further work. Default verification policy remains explicit;
 this decision does not silently enable fast mode or weaken existing guarantees.
 
+D14 [x] Accepted 2026-09-27: honor the native file manager's replace/skip
+instructions. P4 honors explicit overwrite intent and rejects conflicting
+operations without it; no second confirmation on Agon. Preserve staged
+replacement/recovery. The adapter must map each WebDAV method's actual
+conditional/overwrite semantics correctly (PUT and MOVE/COPY differ); do not
+invent an Overwrite-header requirement for ordinary PUT. Verify real-client
+request sequences and conditional failures before claiming the UI's choice is
+preserved. Skipped items must never be replayed as pending work.
+
 ### Development, deployment and test work items
 
 R05-A01 [ ] Freeze the Author-reviewed architecture and settle D02–D10 as needed
