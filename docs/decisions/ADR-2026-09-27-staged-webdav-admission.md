@@ -143,3 +143,9 @@ Deletion is permanent; there is no Agon recycle bin. Confirmation belongs to
 the host file manager, with no additional Agon prompt. Client confirmation
 behavior is not guaranteed by the protocol. Recursive operations retain per-entry
 outcomes and do not promise whole-tree rollback.
+
+## Staging cleanup — accepted 2026-09-27
+
+Remove P4 staging after confirmed successful completion. Retain interrupted data
+only while required for recovery; do not create a permanent mirror of Agon SD.
+Download snapshot lifetime includes completion of its admitted serving operation.

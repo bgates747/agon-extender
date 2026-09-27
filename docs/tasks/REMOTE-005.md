@@ -501,3 +501,15 @@ clients or background access. Commit/publish under applicable authorization.
 
 Execution boundary: proposed plan only. Pause here for Author review before A01
 freeze or any source/firmware changes. No new service behavior is implemented.
+
+D15 [x] Accepted 2026-09-27: P4 removes staging after confirmed successful
+completion; retain interrupted data only while needed for recovery. For downloads,
+serving/range-read lifetime must end safely before cleanup. No permanent mirror
+of Agon SD. Do not delete incomplete recovery evidence merely to reclaim space.
+
+## R05-A02 source review authorization — 2026-09-27
+
+Author authorized code review of stock MOS/EMOS safe CLI dispatch, application
+caller memory and Legacy/ExCom coexistence. Record feasible hooks, blockers and
+minimal changes; no firmware edits or bench operations. Earlier accepted decisions
+remain authoritative; the overall proposal is not yet an implementation release.
