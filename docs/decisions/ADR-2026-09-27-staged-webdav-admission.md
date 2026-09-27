@@ -134,3 +134,12 @@ WebDAV method and conditional-request semantics. Replace only when the request
 authorizes it; otherwise report a collision. Do not prompt again on Agon.
 Retain per-file staging and recovery during replacement. A skipped item is not
 queued for later execution.
+
+## File-management scope — accepted 2026-09-27
+
+The first implementation includes bulk file and whole-directory transfers,
+folder creation, rename/move, and deletion of files and nonempty directories.
+Deletion is permanent; there is no Agon recycle bin. Confirmation belongs to
+the host file manager, with no additional Agon prompt. Client confirmation
+behavior is not guaranteed by the protocol. Recursive operations retain per-entry
+outcomes and do not promise whole-tree rollback.

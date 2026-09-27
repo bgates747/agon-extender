@@ -54,7 +54,13 @@ vendored by this note.
 
 D01 [ ] Browser trial completed and parked as fallback. Lenovo WebDAV usability trial passed two-way transfers; staged WebDAV is now the proposed implementation direction, pending architecture review.
 
-D02 [ ] Partially settled: select/deselect all for bulk transfers of loose files and whole-directory operations are required. Investigate uploads/downloads preserving hierarchy, empty directories, create/rename/move/delete, overwrite conflicts and partial failure. Exact initial operation set and destructive-operation behavior remain to be settled from findings.
+D02 [x] Accepted scope: bulk loose-file and whole-directory upload/download;
+create folders, rename/move, and delete files or nonempty directories in the first
+implementation. Deletion is permanent, with confirmation owned by the host file
+manager and no Agon recycle bin. Do not promise every client presents a dialog;
+P4 executes valid admitted requests, not inferred user intent. Preserve empty
+folders and report partial recursive outcomes. D13/D14 govern recovery and
+replace/skip behavior. Implementation details remain in the bounded A work items.
 
 D03 [ ] Proposed automatic EMOS-owned foreground servicing at a safe idle CLI point. Reject external requests while a user application runs; allow explicit application-initiated transfers. Current manual Legacy listener remains the implemented behavior until the proposal is approved and qualified.
 
