@@ -1,5 +1,13 @@
 # AUDIT-007 — Exhaustive Agon FabGL port completeness audit
 
+## Current disposition — 2026-09-27
+
+Parked by the Author. The completed first graphics-backend source pass and
+mode-startup investigation remain retained evidence. The exhaustive remainder
+(F01–F07) is not an active work queue; resume only on explicit Author direction.
+Existing deferred fixes and feature decisions remain with their recorded owners.
+Parking neither establishes exhaustive parity nor reactivates those deferrals.
+
 ## Executive summary
 
 The first graphics-backend source tranche is complete; see
@@ -13,10 +21,9 @@ upstream correction is authorized by this summary.
 
 **Original exhaustive scope:** Audit the complete pinned
 Agon FabGL/vdp-gl fork for code, dependencies and implicit contracts the P4 port
-must retain or minimally adapt. Scheduling awaits findings from QUAL-003's
-immediate focused timing research. This audit will happen whether or not that
-research fixes the current Nurples performance issue; the dependency determines
-sequence and starting points, not whether the audit is required.
+must retain or minimally adapt. The original sequencing depended on QUAL-003's focused timing research.
+The Author's 2026-09-27 parking decision supersedes that automatic continuation;
+the scope below is retained for a possible future resumption.
 
 Created: 2026-09-15. Owning queue: `TODO.md`. Bounded first-pass execution starts under the linked contract.
 Predecessor: [QUAL-003 P00](QUAL-003/DEBRIEF-PLAN.md#p00--audit-inherited-fabgl-timing-before-selecting-scheduling-changes).

@@ -32,7 +32,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[PORT-003](docs/tasks/PORT-003.md)** — Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals.
 
-- [ ] **[AUDIT-007](docs/tasks/AUDIT-007.md)** — First bounded source pass complete; exhaustive FabGL completeness audit remains open. Use as a candidate source of bounded fidelity work; do not make a whole audit an automatic prerequisite.
+- [ ] **[AUDIT-007](docs/tasks/AUDIT-007.md)** — Parked by the Author: first graphics-backend review and mode-startup investigation delivered; exhaustive remainder deferred. Resume only on explicit Author direction; preserve existing finding owners and feature deferrals.
 
 - [ ] **[PORT-008](docs/tasks/PORT-008.md)** — Bulk UART parity qualified; E08/E09 evidence complete; E10 unstarted. Review existing evidence and coordinate with EMOS INTEG-014 before new transport work.
 
