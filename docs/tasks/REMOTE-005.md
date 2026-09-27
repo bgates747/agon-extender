@@ -563,3 +563,9 @@ peer, including caller memory, external-request exclusion and return to CLI.
 Normal P4 is restored after qualification. See
 [application results](REMOTE-005/A05-RESULTS.md). Real P4 SD staging remains A06;
 ExCom transfer support remains downstream. Production selection is unchanged.
+
+## R05-A06 local development — 2026-09-27
+
+Author released the bench to TRS-80 and authorized development only. The bounded
+[A06 contract](REMOTE-005/A06-CONTRACT.md) covers staging/recovery storage and local
+fault tests. No hardware/network tests, flashing, or production change until cleared.
