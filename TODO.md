@@ -11,6 +11,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
+- [ ] **[TRS-80-004](docs/tasks/TRS-80-004.md)** — Extract shared HTTP/video transport for the detached consumer; preserve console behavior; host/framework checks only, no bench switch.
+
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Four bounded passes: current handbook, screen-text guide, capability summaries and procedure/example/tool indexes consolidated; 121 bodies reviewed within recorded scope and 146 partial, with full audit still open. Continue A09-04/05/06/08 from its results; no bench work.
 
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. sdserve now runs from `/emos` on EMOS v0.1.19 after bounded physical transfer/memory checks. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration, interactive session handling and R05-10 qualification-procedure refresh remain.
