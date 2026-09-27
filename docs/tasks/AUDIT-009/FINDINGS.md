@@ -275,3 +275,10 @@ A09-F069 — Historical pin-label validation and proactive-READY containment cou
 be mistaken for current whole-tree verification or a fault in accepted UART-only
 ExCom. Added precise applicability and owning links. The original parallel
 activation corrective action remains open; no wiring or evidence changed.
+
+## A09-N23 — Integrity summary applicability
+
+A09-F070 — September audit conclusion still said F003 required correction and
+its old disposition order could read as current backlog. Added present-state
+summary aligned with REMED-002, distinguishing partial correction, deferral and
+closure. Retained underlying historical observations and open physical gates.

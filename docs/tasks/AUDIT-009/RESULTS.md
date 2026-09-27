@@ -210,12 +210,12 @@ hardware or independent fresh-machine acceptance.
 | F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
 
-[FINDINGS.md](FINDINGS.md) records findings through F069 and their dispositions.
+[FINDINGS.md](FINDINGS.md) records findings through F070 and their dispositions.
 Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-A09-N01–N22 are complete within their documented scopes. Select the next small
+A09-N01–N23 are complete within their documented scopes. Select the next small
 pending/partial documentation batch under A09-04/05/06/08 before execution.
 No implementation or bench work is selected. Historical batch continuation
 notes describe their own checkpoint, not current instructions.
@@ -539,3 +539,11 @@ requirements and PORT-008. Corrected present applicability, not historical
 capture facts. Label correction remains resolved; parallel activation remains
 open. Two pending records become partial; no archived Fritzing bytes, generator
 outputs or physical behavior were revalidated. No source/profile/bench changes.
+
+## A09-N23 result
+
+B66 reviewed the September integrity audit's summary/disposition/conclusion
+against REMED-002's current register. Added a current applicability table and
+explicitly historical ordering/conclusion; preserved original findings and
+provenance extensions. One pending inventory record becomes partial. This is
+not a full-body or source-investigation review. No code/profile/bench changes.

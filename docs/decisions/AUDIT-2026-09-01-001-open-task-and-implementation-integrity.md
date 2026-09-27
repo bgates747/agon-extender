@@ -9,6 +9,30 @@
 - Provenance extension: 2026-09-01
 - Work 2.a extension: 2026-09-01
 
+## Current applicability
+
+This is a dated integrity audit, not the current implementation backlog.
+[REMED-002](../tasks/REMED-002.md) owns the consolidated finding dispositions
+and work register. “Accepted” in that register means accepted disposition,
+not necessarily implemented, tested or closed. Use the [handbook](../README.md)
+for current operation; the reviewed 18-task snapshot is not today's task count.
+
+| Finding group | Current reading and owner |
+|---|---|
+| F001/F002/F022 | Deferred upstream observations under the existing D012 trigger rules; [PORT-003](../tasks/PORT-003.md). No new local correction authorized. |
+| F003/F012 | Corrections and host fault injection recorded by [PORT-006](../tasks/PORT-006.md); physical resilience/lifecycle coverage remains open. They are not wholly unimplemented corrections. |
+| F004 | Bounded audio command consumption accepted under PORT-003/[PORT-004](../tasks/PORT-004.md). Wider command coverage, synthesis and maintenance deferrals remain distinct. |
+| F008/F009/F010/F016 | Recorded artifact, authority and task-ownership/status corrections. Historical F008 closure is not proof that later hardware records are consistent. |
+| F018 | Broader restart-carrier question remains with [SETUP-005](../tasks/SETUP-005.md); its accepted idle-CLI Legacy/ExCom transition is not blocked by this old general question. |
+| F019/R003 | Current P4 arbitration and EMOS admission follow [keyboard guidance](../remote-keyboard.md); platform acceptance and broader exposure/security limits remain with REMOTE-001. |
+| F005–F007/F011/F013–F015/F017/F020/F021, R001/R002 and provenance extensions | Consult REMED-002's named owners and individual gates. This summary review makes no new closure claim and does not promote affected historical evidence. |
+
+The recommended ordering and implementation statements below describe the
+original checkpoint unless explicitly dated otherwise. They neither reinstate a
+global freeze nor authorize a current run. Parallel activation and evidence-tool
+gates remain applicable to work relying on those paths; accepted UART operation
+does not close them. No original defect investigation was rerun for this update.
+
 ## Purpose and authority boundary
 
 This audit records a repository-wide adversarial review of the work indexed by
@@ -1241,9 +1265,10 @@ the second failed run is not reconstructed by the later combined snapshot.
     focused-view checks successfully. Items 5 and 6 preserve the original
     failure observation; they are not the current validator state.
 
-## Disposition order recommended for Author review
+## Historical disposition order recommended for Author review
 
-This order is advisory and does not authorize work:
+This original ordering is retained as history. Current work selection follows
+REMED-002 and the authoritative TODO, not this list:
 
 1. Contain demonstrated local runtime and hardware-ownership risks: F003--F005,
    F012, plus the existing preactivation corrective action.
@@ -1256,7 +1281,7 @@ This order is advisory and does not authorize work:
    R001--R003 in their named task designs. Retain F001, F002, and F022 as
    upstream research observations until D012 trigger evidence exists.
 
-## Audit conclusion
+## Historical audit conclusion
 
 The repository's existing success-path validation is substantial and mostly
 reproducible. Demonstrated parser-framing, WebSocket transmission, clock-

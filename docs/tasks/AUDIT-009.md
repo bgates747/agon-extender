@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Current checkpoint: **A09-N01–N22 complete within their bounded scopes; the
+Current checkpoint: **A09-N01–N23 complete within their bounded scopes; the
 whole-documentation audit remains open.** Historical one-hour windows below
 record earlier authorization, not a current time budget.
 
@@ -70,7 +70,7 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-N01–N22 are complete within their recorded scopes. The remaining queue below
+N01–N23 are complete within their recorded scopes. The remaining queue below
 owns continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
@@ -204,7 +204,7 @@ gates. Do not regenerate drawings, change wiring/source, qualify hardware or
 close the READY corrective action. Validate local links/whitespace and record
 bounded inventory coverage before committing.
 
-A09-N23 [ ] **September integrity-audit summary reconciliation.** Review only
+A09-N23 [x] **September integrity-audit summary reconciliation.** Review only
 its opening authority/status, disposition summary and conclusion against the
 current REMED-002 coordinator and owner links. Separate corrected, deferred and
 still-open findings; remove obsolete blanket implications without reopening

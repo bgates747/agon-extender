@@ -550,3 +550,9 @@ Source inspection confirms generator and assertions use PC0/TXD1, PC1/RXD1,
 PC2/RTS1 and PC3/CTS1 on pins 17–20. Current electrical guidance distinguishes
 UART roles from parallel epochs. Checked changed local links and whitespace;
 no generator, migration tool, hardware validator or bench command executed.
+
+## B66 — Integrity-audit summary
+
+Compared opening and final audit summaries with REMED-002's current-scope table
+and F001–F022/R001–R003 ownership register. Local links and whitespace checked;
+no original defect tests, validators, build or physical operation rerun.
