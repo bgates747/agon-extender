@@ -130,6 +130,13 @@ and authority-map entries, reconcile current versus historical claims and
 check handbook navigation. No network requests, firmware, emulator or bench
 changes; peer candidate review remains separate. Validate links and commit.
 
+A09-N12 [ ] **Early EMOS integration status.** Review opening status and
+supersession of agon-emos INTEG-001–003 against its TODO, retired profile and
+Extender PORT-008/009/current handbook. Correct only present-day applicability,
+not historical execution claims or unfinished proof gates. Both repositories'
+changes are documentation-only; no emulator/source/bench changes. Record scoped
+coverage, validate links, commit each owning repository.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
