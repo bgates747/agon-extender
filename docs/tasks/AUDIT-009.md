@@ -170,6 +170,15 @@ PORT-008 scope. Clarify historical application/headroom/restoration statements;
 preserve measured results and E10's unstarted gate. Documentation only, no
 source, emulator or bench changes. Record bounded coverage and commit by owner.
 
+A09-N18 [ ] **External-agent emulator setup guidance (F060).** Trace the
+maintained setup tool and EMOS build/review entry points. Add a bounded Linux
+profile setup and verification guide, distinguishing stock application review,
+EMOS diagnostics and native VDP modules from P4 hardware. Record prerequisites,
+SD ownership, launcher checks and known portability limits. Documentation only:
+no profile generation, launch, source edits or bench use. Validate commands by
+source/help inspection and links mechanically; retain fresh-host/runtime
+qualification as unperformed. Update audit evidence and commit separately.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
