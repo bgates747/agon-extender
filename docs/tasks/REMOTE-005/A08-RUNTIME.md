@@ -5,7 +5,7 @@ keeping deployment disabled and the occupied bench untouched. Local engine tests
 are not substitutes for physical UART/card or native-file-manager qualification.
 This completes existing A08 integration work; A09–A12 retain their original gates.
 
-A08-R01 [ ] Serialize P4 local-card operations and staging ownership. Reserve the
+A08-R01 [x] Serialize P4 local-card operations and staging ownership. Reserve the
 private spool namespace against reads, writes and ancestor/tree operations. Mount
 once under the same guard; do not format or delete retained evidence.
 
@@ -35,3 +35,13 @@ Ordinary MOS filesystem contracts remain the official documented APIs; no new
 hardware/VDU protocol is introduced. Private control refinements must be recorded
 in ADMISSION-CONTRACT.md beside the implementation. Initial runtime must not
 advertise ExCom or application staging capabilities that it does not implement.
+
+## Local progress — ownership and admission foundations
+
+R01 is implemented and host/target-build checked. Physical mount/card behavior
+remains unqualified. R02 has a tested, fixed-size peer state engine, but is not
+connected to the console queue. R03 has its minimal resident handoff, but the
+finite `sdjob` utility itself remains to be implemented. R04–R06 are not complete.
+See [runtime results](A08-RUNTIME-RESULTS.md). These distinctions are intentional:
+there is no usable staged WebDAV endpoint yet, and hardware is not the only
+remaining dependency.

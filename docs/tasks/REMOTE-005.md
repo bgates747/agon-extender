@@ -477,7 +477,9 @@ Finder body handling and negative conditions. WebDAV response success follows
 mainboard completion. Resolve D04 exposure policy before device deployment.
 
 Local WebDAV adapter and real-engine checks completed:
-[A08 contract](REMOTE-005/A08-CONTRACT.md), [results and remaining runtime fence](REMOTE-005/A08-RESULTS.md).
+[A08 contract](REMOTE-005/A08-CONTRACT.md), [results and remaining runtime fence](REMOTE-005/A08-RESULTS.md),
+[runtime contract](REMOTE-005/A08-RUNTIME.md) and
+[runtime foundation results](REMOTE-005/A08-RUNTIME-RESULTS.md).
 A08 remains open for the actual grant/queue, finite utility, private media ownership
 and dedicated listener/worker composition. No endpoint was enabled or deployed.
 

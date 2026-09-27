@@ -5,7 +5,11 @@
 #include <filesystem>
 using namespace agon::extender::local_sd;
 int main(){
+ {MediaLease first;assert(first);{MediaLease second;assert(!second);}}
+ {MediaLease again;assert(again);}
  std::string path;
+ for(auto p:{"/tmp/extender/spool", "/TMP/EXTENDER/SPOOL/x", "/tmp/extender/%73pool/x"})assert(!decodePath(p,path));
+ assert(spoolAncestor("/TMP/EXTENDER"));assert(!spoolAncestor("/tmp/extender-other"));
  for(auto bad:{"", "relative", "/../x", "/a/%2e%2e/x", "/a%00b", "/a%5cb", "/a//b", "/a/", "/a.", "/a%20", "/a.ext-upload", "/A.EXT-UPLOAD", "/a%252fb"})assert(!decodePath(bad,path));
  assert(decodePath("/",path)&&path=="/");assert(decodePath("/a%20b/x.bin",path)&&path=="/a b/x.bin");
  assert(jsonString("a\"\n")=="\"a\\\"\\u000a\"");
@@ -24,6 +28,13 @@ int main(){
  {Upload u(std::string(dir)+"/empty");assert(u.open());assert(u.finish());}
 
  const std::string root(dir);
+ assert(makeDirectory(root,"/tmp/extender/spool",true));
+ {std::ofstream hidden(root+"/tmp/extender/spool/record");hidden<<"retained";}
+ unsigned visible=0;
+ auto visibleVisitor=[&](const std::string &p,const struct stat &){assert(!privateSpool(p));++visible;return true;};
+ assert(walk(root,"/tmp",true,visibleVisitor));
+ assert(visible==1); // /tmp/extender visible, private spool subtree absent
+
  auto contents = [](const std::string &p) {
    std::ifstream f(p, std::ios::binary);
    return std::string(std::istreambuf_iterator<char>(f), {});

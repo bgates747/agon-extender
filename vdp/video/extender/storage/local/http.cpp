@@ -216,6 +216,7 @@ esp_err_t put(httpd_req_t *r) {
     return rejectUpload(r, "411 Length Required", "Use a fixed Content-Length");
   Query q(r); std::string path; bool replace = q.flag("replace");
   if (!q.path("path", path) || path == "/") return rejectUpload(r, "400 Bad Request", "Invalid file path/options");
+  if (spoolAncestor(path)) return rejectUpload(r, "403 Forbidden", "Private staging ancestor protected");
   if (r->content_len > 512U * 1024U * 1024U) return rejectUpload(r, "413 Content Too Large", "Maximum upload 512 MiB");
   if (!mount()) return rejectUpload(r, "503 Service Unavailable", "SD unavailable");
   Upload upload(root + path, replace);
@@ -244,6 +245,9 @@ esp_err_t mutate(httpd_req_t *r) {
   bool copy = !strncmp(r->uri, "/copy", 5), move = !strncmp(r->uri, "/move", 5);
   if (!q.path("path", path, remove) || ((copy || move) && !q.path("to", destination)))
     return reply(r, "400 Bad Request", "Invalid path/options");
+  if (spoolAncestor(path) || privateSpool(path) ||
+      ((copy || move) && (spoolAncestor(destination) || privateSpool(destination))))
+    return reply(r, "403 Forbidden", "Private staging namespace protected");
   if (path == "/" && (remove || copy || move)) return reply(r, "403 Forbidden", "Root mutation forbidden");
   if (move && replace) return reply(r, "400 Bad Request", "Move requires an absent destination");
   if (!mount()) return reply(r, "503 Service Unavailable", "SD unavailable");
@@ -256,6 +260,24 @@ esp_err_t mutate(httpd_req_t *r) {
   return reply(r, "200 OK", "Complete");
 }
 }
+bool prepareSpool(std::string &directory) noexcept {
+  if (!mount()) return false;
+  for (const char *part : {"/tmp", "/tmp/extender", "/tmp/extender/spool"}) {
+    std::string full = std::string(root) + part;
+    if (mkdir(full.c_str(), 0777)) {
+      struct stat st{};
+      if (errno != EEXIST || stat(full.c_str(), &st) || !S_ISDIR(st.st_mode)) return false;
+    }
+  }
+  directory=std::string(root)+"/tmp/extender/spool";
+  return true;
+}
+template<esp_err_t (*Handler)(httpd_req_t *)>
+esp_err_t guarded(httpd_req_t *request) {
+  MediaLease lease;
+  if (!lease) return reply(request, "503 Service Unavailable", "P4 card is owned by another operation");
+  return Handler(request);
+}
 bool startHttp() noexcept {
   if (server) return true;
   httpd_config_t cfg = HTTPD_DEFAULT_CONFIG();
@@ -264,16 +286,16 @@ bool startHttp() noexcept {
   cfg.recv_wait_timeout = 5; cfg.send_wait_timeout = 5;
   if (httpd_start(&server, &cfg) != ESP_OK) return false;
   const httpd_uri_t routes[] = {
-    {.uri="/status", .method=HTTP_GET, .handler=status, .user_ctx=nullptr},
-    {.uri="/stat", .method=HTTP_GET, .handler=metadata, .user_ctx=nullptr},
-    {.uri="/list", .method=HTTP_GET, .handler=listing, .user_ctx=nullptr},
-    {.uri="/search", .method=HTTP_GET, .handler=listing, .user_ctx=nullptr},
-    {.uri="/file", .method=HTTP_GET, .handler=get, .user_ctx=nullptr},
-    {.uri="/file", .method=HTTP_PUT, .handler=put, .user_ctx=nullptr},
-    {.uri="/entry", .method=HTTP_DELETE, .handler=mutate, .user_ctx=nullptr},
-    {.uri="/directory", .method=HTTP_POST, .handler=mutate, .user_ctx=nullptr},
-    {.uri="/copy", .method=HTTP_POST, .handler=mutate, .user_ctx=nullptr},
-    {.uri="/move", .method=HTTP_POST, .handler=mutate, .user_ctx=nullptr}
+    {.uri="/status", .method=HTTP_GET, .handler=guarded<status>, .user_ctx=nullptr},
+    {.uri="/stat", .method=HTTP_GET, .handler=guarded<metadata>, .user_ctx=nullptr},
+    {.uri="/list", .method=HTTP_GET, .handler=guarded<listing>, .user_ctx=nullptr},
+    {.uri="/search", .method=HTTP_GET, .handler=guarded<listing>, .user_ctx=nullptr},
+    {.uri="/file", .method=HTTP_GET, .handler=guarded<get>, .user_ctx=nullptr},
+    {.uri="/file", .method=HTTP_PUT, .handler=guarded<put>, .user_ctx=nullptr},
+    {.uri="/entry", .method=HTTP_DELETE, .handler=guarded<mutate>, .user_ctx=nullptr},
+    {.uri="/directory", .method=HTTP_POST, .handler=guarded<mutate>, .user_ctx=nullptr},
+    {.uri="/copy", .method=HTTP_POST, .handler=guarded<mutate>, .user_ctx=nullptr},
+    {.uri="/move", .method=HTTP_POST, .handler=guarded<mutate>, .user_ctx=nullptr}
   };
   for (auto &route : routes) {
     if (httpd_register_uri_handler(server, &route) != ESP_OK) {

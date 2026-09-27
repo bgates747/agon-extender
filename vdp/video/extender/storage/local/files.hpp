@@ -1,5 +1,6 @@
 #pragma once
 // P4-local file service primitives. No Agon protocol or board dependency.
+#include "media.hpp"
 #include <string>
 #include <utility>
 #include <cstdio>
@@ -20,6 +21,7 @@ inline bool decodePath(const std::string &encoded, std::string &path, bool allow
     path+=char(c);
   }
   if(path.empty()||path.front()!='/'||path.size()>240)return false;
+  if(privateSpool(path))return false;
   if(path=="/")return true;
   size_t start=1;
   while(start<path.size()){
@@ -158,6 +160,7 @@ bool walk(const std::string &root, const std::string &path, bool recursive,
     if (!entry) { ok = errno == 0; break; }
     if (!strcmp(entry->d_name, ".") || !strcmp(entry->d_name, "..")) continue;
     std::string child = join(path, entry->d_name);
+    if (privateSpool(child)) continue;
     struct stat st{};
     if (stat((root + child).c_str(), &st)) { ok = false; break; }
     if (!visit(child, st)) { ok = false; break; }

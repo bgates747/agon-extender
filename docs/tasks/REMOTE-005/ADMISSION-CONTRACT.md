@@ -304,3 +304,23 @@ The linked helper's source/CRC pass and staging checks use the existing file eng
 The helper and resident lease are development implementations; a normal P4 image
 must not advertise capability bit 3 until its corresponding staging implementation
 and job-bound validator exist. Active ExCom remains gated off.
+
+## A08 finite-utility resident handoff — development
+
+Private `ext.sdlink` operation 5 takes only its opcode and requires exactly 36
+output bytes. EMOS grants it only while its claimed utility is running and no
+other sdlink owner exists. Output is binding[28], control session u32, last control
+sequence u32. It diverts control replies into the existing foreground mailbox;
+it does not publish READY or start filesystem work.
+
+Operation 6 takes opcode plus last utility control sequence u32 and failure u8
+(0 success, 1 failure), with no output. Only that finite lease may report once.
+A backwards/exhausted sequence or repeated terminal report is rejected. The
+utility must report its latest sequence even after a failed control exchange;
+resident EMOS advances from it when sending CLOSE. Returning zero from a utility
+without a successful terminal handoff is unavailable, not completed storage work.
+The finite utility must obtain the matching FINISH acknowledgement before reporting
+success. Manual OPEN and application leases retain their separate ownership.
+
+This implements the resident boundary only. There is not yet a finite utility or
+normal P4 endpoint consuming this handoff; it must not be advertised as deployed.
