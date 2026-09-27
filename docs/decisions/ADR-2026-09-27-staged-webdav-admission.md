@@ -110,3 +110,12 @@ Expose the entire Agon mainboard SD card from `/` by default. No configurable
 subdirectory-selection feature is required for the first iteration. Preserve
 path validation and rejection of deleting the filesystem root. P4-local staging
 remains separate from the exported Agon filesystem.
+
+## Transfer serialization — accepted 2026-09-27
+
+Allow one active transfer job at a time. Competing clients receive a busy response;
+do not introduce multi-user scheduling or silently queue their work. The same
+ownership rule covers external clients, explicit CLI tools and application-origin
+transfers. Multiple HTTP sockets from a native client are not by themselves
+separate jobs; implementation must preserve client compatibility while enforcing
+EMOS's single admitted mainboard owner.

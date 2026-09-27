@@ -58,7 +58,7 @@ D02 [ ] Partially settled: select/deselect all for bulk transfers of loose files
 
 D03 [ ] Proposed automatic EMOS-owned foreground servicing at a safe idle CLI point. Reject external requests while a user application runs; allow explicit application-initiated transfers. Current manual Legacy listener remains the implemented behavior until the proposal is approved and qualified.
 
-D04 [ ] Partially settled: expose the whole Agon SD card (root `/`) by default, as accepted 2026-09-27. Do not add a root-selection UI/configuration requirement for the first iteration. Existing path validation and rejection of deleting the filesystem root remain; P4-local staging is not part of this exported namespace. Client ownership, authentication and serialization remain to be settled.
+D04 [ ] Partially settled: expose the whole Agon SD card (root `/`) by default, as accepted 2026-09-27. Do not add a root-selection UI/configuration requirement for the first iteration. Existing path validation and rejection of deleting the filesystem root remain; P4-local staging is not part of this exported namespace. One active transfer job at a time is accepted 2026-09-27; competing clients receive busy rather than being queued. Authentication and precise client/job identity remain to be settled. Multiple HTTP connections from one native client must not automatically be treated as different owners.
 
 D05 [ ] Select protocol/library and bounded acceptance contract after compatibility, resource and license review.
 
