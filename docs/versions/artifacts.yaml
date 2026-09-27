@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r116
-updated_at: 2026-09-27T20:42:51Z
+registry_revision: r117
+updated_at: 2026-09-27T21:30:16Z
 
 artifacts:
+  - artifact_id: app-transfer-probe
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: app-transfer-probe-r01
+    status: experimental
+    variants: []
+    description: Bounded application transfer and caller-memory fixture; controlled peer only.
+    notes:
+      - REMOTE-005 A05 standing identity approval; not a user file-transfer program.
   - artifact_id: extender-installation
     kind: installation_bundle
     identity_scheme: revision
@@ -276,13 +285,14 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.20
+    latest_identity: agon-emos-v0.1.21
     status: draft
     variants:
       - port008-forward
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.21 adds the R05-A05 application-owned SD lease; candidate under standing identity preapproval, not production.
       - v0.1.20 is the REMOTE-005 A04 idle admission hardware candidate under standing version authorization; no automatic file service or production promotion.
       - v0.1.19 is the AUDIT-008 cancelled-provider retirement and foreground /emos dispatcher. Its exact selected build passed bounded physical checks and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns qualified combination scope. Historical draft label retained, not a no-deployment claim. Registry r113 corrects the earlier r104 note.
       - v0.1.18 is the REMOTE-005 provisional resident sdlink MOSlet admission correction; registry r100, standing identity authorization. Bounded physical transfer and full ROM readback pass; broader qualification is not claimed.
@@ -645,7 +655,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r58
+    latest_identity: uart-excom-console-r59
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.

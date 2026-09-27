@@ -5,26 +5,30 @@
 #include <cstdint>
 #include <cstring>
 #include "../../storage/sd_wire.h"
+#include "application_peer.hpp"
 namespace agon::extender::storage {
 struct AdmissionProbe {
+  ApplicationProbe application;
   std::uint8_t reply[48]{}, nonce[8]{}, grant[8]{};
   unsigned length=0, armed=0, race=0, hellos=0,polls=0,decides=0,closes=0,last=0;
   std::uint32_t poll_at=0, armed_at=0, job=0,generation=0;
   bool valid_poll=false,offered=false;
   bool arm(unsigned which,std::uint32_t now) {
+    if(application.active){++application.blocked;return false;}
     if(which>3)return false;
     if(which && (!valid_poll || now-poll_at>150 || armed || offered || length))return false;
     armed=which;armed_at=now;return true;
   }
   bool receive(const std::uint8_t *p,unsigned n,std::uint32_t now,std::uint32_t a,std::uint32_t b) {
+    if(application.receive(p,n,nonce))return true;
     if(n!=48 || p[0]!='S'||p[1]!='D'||p[2]!=1||p[3]!=4||sd_u16(p+14)!=28)return false;
     auto c=sd_crc_update(0xffffffffU,p,16);c=sd_crc_update(c,p+20,28)^0xffffffffU;
     if(c!=sd_u32(p+16))return true;
     if(length)return true; // One request/reply at a time, never overwrite.
     std::memcpy(reply,p,48);reply[3]=5;reply[13]=0;
     if(p[12]==1) {
-      ++hellos;sd_put32(nonce,a?a:1);sd_put32(nonce+4,b?b:1);
-      std::memset(reply+20,0,28);std::memcpy(reply+20,nonce,8);reply[46]=5;
+      application.reset();++hellos;sd_put32(nonce,a?a:1);sd_put32(nonce+4,b?b:1);
+      std::memset(reply+20,0,28);std::memcpy(reply+20,nonce,8);reply[46]=13;
       valid_poll=offered=false;armed=0;
     } else {
       if(std::memcmp(p+20,nonce,8))return true;
@@ -46,7 +50,7 @@ struct AdmissionProbe {
     if(p[12]==2 && offered && armed==2) {reply[16]^=1;armed=0;offered=false;}
     return true;
   }
-  unsigned take(std::uint8_t *p) {auto n=length;std::memcpy(p,reply,n);length=0;return n;}
+  unsigned take(std::uint8_t *p) {if(application.pending)return application.take(p);auto n=length;std::memcpy(p,reply,n);length=0;return n;}
 };
 inline AdmissionProbe admission_probe;
 }

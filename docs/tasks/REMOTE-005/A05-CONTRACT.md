@@ -56,3 +56,17 @@ Record tested versus deferred boundaries and leave the bench recoverable.
 
 Frozen for execution under Author's instruction to proceed to the next planned
 step, 2026-09-27. Existing version preapproval applies; physical bench is available.
+
+
+## Paired bench preparation
+
+Author's bench authorization continues for this tranche. The controlled P4 peer
+will serve one fixed 1027-byte synthetic RAM file and validate one fixed RAM
+upload; it has no SD access. Its application support remains behind the explicit
+admission-probe build option, disabled in normal firmware. Freeze identified
+EMOS v0.1.21 / P4 r59 candidates, preserve current A04 rollback and startup, and
+verify both installed images. Run the ADL caller directly, observe external offer
+rejection while its lease is active, retrieve its durable result and verify the
+received bytes. Archive test files and restore normal P4 r57, unchanged startup,
+and a responsive prompt. Full production P4 staging remains A06; this test peer
+must not be promoted as that implementation.

@@ -4,7 +4,7 @@ using namespace agon::extender::storage;
 int main(){
  AdmissionProbe p;uint8_t r[48]{},out[48];
  sd_header(r,4,1,1,1,0,28);r[46]=1;sd_seal(r);
- assert(p.receive(r,48,0,17,23));assert(p.take(out)==48&&out[46]==5);
+ assert(p.receive(r,48,0,17,23));assert(p.take(out)==48&&out[46]==13);
  r[12]=2;r[46]=0;memcpy(r+20,out+20,8);sd_put32(r+28,1);sd_seal(r);
  assert(p.receive(r,48,10,0,0));assert(p.take(out)==48&&out[13]==1);
  assert(p.arm(1,11));assert(p.receive(r,48,12,0,0));p.take(out);assert(out[32]&&out[44]==1);

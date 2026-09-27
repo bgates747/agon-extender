@@ -553,3 +553,10 @@ cases. A04 subsequently passed bounded hardware qualification after a cleanup fi
 see [physical results](REMOTE-005/A04-HARDWARE.md). No finite file engine, P4
 staging or physical deployment is implied. Source remains uncommitted; production
 is unchanged.
+
+## R05-A05 development — 2026-09-27
+
+[Bounded contract](REMOTE-005/A05-CONTRACT.md) owns this tranche. Resident lease
+and linked helper are implemented; host checks and eZ80 send/caller return pass.
+Physical integration awaits P4 staging; full results are in
+[application results](REMOTE-005/A05-RESULTS.md). No bench firmware changed.

@@ -261,10 +261,12 @@ esp_err_t admissionProbeHandler(httpd_req_t *request) {
     portEXIT_CRITICAL(&storage::sd_mutex);
     if(!ok) {httpd_resp_set_status(request,"503 Service Unavailable");return httpd_resp_sendstr(request,"No fresh idle poll or probe busy");}
   }
-  char body[220];
+  char body[360];
   portENTER_CRITICAL(&storage::sd_mutex);
   auto &p=storage::admission_probe;
   int n=snprintf(body,sizeof(body),"{\"diagnostic\":true,\"hello\":%u,\"poll\":%u,\"decide\":%u,\"close\":%u,\"last\":%u,\"armed\":%u}",p.hellos,p.polls,p.decides,p.closes,p.last,p.armed);
+  n-=1;
+  n+=snprintf(body+n,sizeof(body)-n,",\"app_active\":%s,\"app_bytes\":%u,\"app_complete\":%u,\"blocked\":%u}",p.application.active?"true":"false",p.application.written,p.application.complete,p.application.blocked);
   portEXIT_CRITICAL(&storage::sd_mutex);
   httpd_resp_set_type(request,"application/json");
   return httpd_resp_send(request,body,n);

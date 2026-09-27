@@ -287,3 +287,20 @@ A03 state/message contract is frozen for implementation, including numeric resul
 descriptor bounds and Legacy bootstrap. This is not an implemented wire claim. No benchmark, emulator, firmware or hardware work occurred.
 The job-per-operation definition and native-client concurrency tests prevent us
 from accidentally promising a whole GUI folder gesture is one protocol transaction.
+
+## A05 application helper refinement — 2026-09-27
+
+For the linked application implementation, resident APP_OPEN returns a fresh
+boot-local token only to actual foreground application/MOSlet execution. The
+helper uses that token for control session/generation and the two grant words;
+fresh Legacy HELLO establishes P4 incarnation. APP_BEGIN replies contain only the
+28-byte common prefix: the first accepted descriptor fragment assigns a nonzero
+P4 job, retained across remaining fragments. READY requires all descriptor bytes.
+The application initiates checked file records as a client; P4 serves only the
+bound declared source/destination. File-session ID is CRC32 of the final common
+prefix (replace zero with 1). Control and file sequences are independent.
+SEND/RECEIVE do not expose an arbitrary incoming file-command server in the caller.
+The linked helper's source/CRC pass and staging checks use the existing file engine.
+The helper and resident lease are development implementations; a normal P4 image
+must not advertise capability bit 3 until its corresponding staging implementation
+and job-bound validator exist. Active ExCom remains gated off.
