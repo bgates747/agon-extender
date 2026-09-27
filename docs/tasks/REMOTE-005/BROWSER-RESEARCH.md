@@ -165,7 +165,7 @@ old listener builds must report unsupported rather than misinterpret requests.
 
 ### Proposed implementation sequence — for Author review
 
-R05-P01 [ ] Adapt the small MIT frontend in an isolated host mock: directory
+R05-P01 [x] Adapt the small MIT frontend in an isolated host mock: directory
 navigation, selection, per-file queue/progress/cancel and offline/busy states.
 Use synthetic trees including empty directories and more than 100 entries.
 No device traffic or firmware change. Show the UI before building the full service.
@@ -185,3 +185,5 @@ No throughput campaign. Follow production promotion only after acceptance.
 
 D03 remains open. Recommended next decision is lifecycle after Author reviews
 this proposed frontend/service split; no convenience launcher has been assumed.
+
+R05-P01 delivered 2026-09-27: [isolated mock and validation](browser-mock/README.md). Author usability review pending; P02–P04 remain unstarted.

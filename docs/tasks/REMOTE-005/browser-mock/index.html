@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; connect-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+<title>Extender · File manager preview</title><link rel="stylesheet" href="style.css"><script defer src="app.js"></script></head>
+<body><main>
+<header><div><span class="eyebrow">Agon Extender</span><h1>Files</h1></div><span class="badge">Local mock · no device connection</span></header>
+<p class="notice">Synthetic Agon SD contents. Transfers are simulated; nothing is uploaded, downloaded or changed on your devices.</p>
+<section class="browser" aria-label="File browser">
+<div class="toolbar"><button id="up">↑ Up</button><nav id="path" aria-label="Current directory"></nav><label class="filter">Filter <input id="filter" type="search" placeholder="File or folder name"></label></div>
+<div class="actions"><button id="all">Select all</button><button id="download" class="primary">Download selection</button><button id="upload">Choose files…</button><button id="folder">Choose folder…</button><button id="mkdir">New folder…</button><span id="selection"></span></div>
+<input id="files" type="file" multiple hidden><input id="folders" type="file" multiple webkitdirectory hidden>
+<div class="table-wrap"><table><thead><tr><th><span class="sr">Select</span></th><th>Name</th><th>Kind</th><th class="number">Size</th></tr></thead><tbody id="listing"></tbody></table></div>
+<p id="listing-note" class="caption"></p>
+</section>
+<section class="queue"><div class="section-head"><div><h2>Transfer queue</h2><p class="caption">One item at a time. Directory downloads represent one ZIP; no archive is created in this preview.</p></div><button id="cancel">Cancel remaining</button><button id="retry">Retry incomplete</button><button id="clear">Clear finished</button></div>
+<p id="queue-summary" role="status" aria-live="polite">No transfers queued.</p><progress id="overall" max="100" value="0"></progress><ol id="queue-list"></ol></section>
+<details class="lab"><summary>Preview controls</summary><div class="lab-controls"><label>Simulated service <select id="service"><option value="ready">Ready</option><option value="offline">Offline</option><option value="busy">Busy — another client</option></select></label><button id="fail">Fail next item once</button><button id="reset">Reset synthetic files</button></div><p class="caption">Use /stress for 128 files and an empty directory. These controls simulate states; they do not start or stop sdserve.</p></details>
+<p id="message" role="status" aria-live="polite"></p>
+<dialog id="new-folder"><form method="dialog"><h2>New synthetic folder</h2><label>Name <input id="new-name" required maxlength="80"></label><p class="caption">Preview only; resets when you reload.</p><button value="cancel" formnovalidate>Cancel</button><button id="create-folder" value="create" class="primary">Create</button></form></dialog>
+<footer>File-manager layout adapted from Holger Lembke’s MIT-licensed ESPFMfGK. <a href="README.md">Scope and provenance</a></footer>
+</main></body></html>

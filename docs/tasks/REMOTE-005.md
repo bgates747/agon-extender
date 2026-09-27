@@ -275,3 +275,7 @@ read or transfer user file contents. No P4/Agon calls, service lifecycle change,
 firmware build or deployment. Validate in a local browser with synthetic cases;
 provide an accessible preview for Author review. Runtime browser coverage must
 be stated precisely. D02–D05 and backend implementation remain separate gates.
+
+R05-P01 delivered: [browser mock](REMOTE-005/browser-mock/README.md). Synthetic
+navigation, selection, directory queue and interruption controls pass local
+Chromium checks; Author usability review pending. No backend or bench changes.
