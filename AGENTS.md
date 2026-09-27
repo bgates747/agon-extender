@@ -76,6 +76,15 @@ distinction so they know when to capture the screen. Do not alter a frozen
 fixture just to label an attention cue; prepare the label in its launcher or
 next reviewed profile.
 
+## External consumers and TRS-80 segregation
+
+Follow `OWNERSHIP.md`: reusable services and transport accommodations belong
+here; all TRS-80 execution code and machine-specific adapters belong only in
+the TRS-80 project. Do not import MAME/TRS-80 runtime code, conditional targets
+or machine-specific test fixtures into Extender. Keep generic service tests here
+and consumer integration tests there. Coordination task names do not override
+this implementation boundary.
+
 ## Task details and local research
 
 Tracked task details live under `docs/tasks/`. Machine-local agent references

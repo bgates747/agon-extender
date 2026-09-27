@@ -27,3 +27,23 @@ emulator staging are disposable outputs. Cross-component requirements remain
 here, but implementation work is assigned to the repository whose processor,
 firmware, software, or hardware performs it. Historical records may name former
 commits and branches as provenance; they do not restore superseded ownership.
+
+## TRS-80 consumer boundary
+
+Extender may accommodate TRS-80 through reusable P4 services, transport APIs,
+resource ownership and EMOS integration contracts. These implementations must
+remain independent of the emulated machine. The dependency runs from the
+TRS-80 project to explicitly selected Extender interfaces, never from Extender
+to the TRS-80 runtime.
+
+All code that runs or specifically adapts TRS-80 belongs only in the TRS-80
+project: MAME machine/CPU emulation, Model 4 devices and memory maps, guest
+OS integration, machine-specific protocol interpretation, framebuffer conversion,
+input mappings and startup/UI composition. Do not vendor that implementation
+into Extender, including as a conditional build or test fixture. Common-service
+tests here use generic providers/fakes; TRS-80 integration tests live there.
+
+Extender task documents may retain coordination, feasibility and interface
+requirements for this consumer. Their presence does not assign ownership of
+TRS-80 implementation to this repository. If a requested change mixes reusable
+service work and machine-specific glue, split it at this boundary before coding.

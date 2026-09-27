@@ -7,6 +7,16 @@ has host lifecycle tests and a console compile check, **not detached-runtime or
 hardware qualification**. Selected production is unchanged; source checks do not identify the currently
 installed peer firmware. Consult the machine-local bench receipt for that.
 
+## Consumer-specific code stays with the consumer
+
+The [repository ownership boundary](../OWNERSHIP.md) is mandatory. Extender owns
+reusable services and their generic tests. The TRS-80 project alone owns MAME,
+TRS-80 device/guest behavior, its framebuffer and input adapters, and its runtime
+composition. Extender must not import those implementations or require that
+project to build. Shared APIs may accommodate its needs without encoding
+TRS-80 machine semantics. Consumer qualification remains in the consumer's
+repository; coordination notes here are not a second implementation tree.
+
 ## DevKit Ethernet / DHCP
 
 Include `vdp/video/extender/network/devkit_ethernet.hpp` and add `vdp/video` to the
