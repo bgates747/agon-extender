@@ -137,6 +137,13 @@ not historical execution claims or unfinished proof gates. Both repositories'
 changes are documentation-only; no emulator/source/bench changes. Record scoped
 coverage, validate links, commit each owning repository.
 
+A09-N13 [ ] **Completed UART diagnostic records.** Review EMOS INTEG-004–006
+against PORT-010–012 closeout and current command dispatch. Clarify historical
+installation/pending statements and current reuse constraints without rewriting
+measurements, exception acceptance or frozen identities. Documentation only;
+no diagnostic invocation, emulator change or bench operation. Record bounded
+coverage, check links/whitespace and commit changes in their owning repositories.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
