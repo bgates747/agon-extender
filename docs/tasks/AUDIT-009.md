@@ -100,6 +100,14 @@ if no accepted replacement policy is evidenced. Update inventory/findings/result
 check local links/whitespace, commit this documentation-only batch and stop.
 No bench use, firmware changes, rebuild or new rate decision.
 
+A09-N08 [ ] **Timing-package reuse guidance (F019).** Review the current timing
+guide against retained run.py, BENCH-007, bench constraints and SD operating
+instructions. Separate historical runner behavior from current prerequisites;
+remove contradictory runnable guidance and give the procedure-refresh work an
+explicit owner. Preserve source and historical evidence. Update scoped audit
+records, validate local links/whitespace and commit. No runner execution,
+implementation, emulator changes or bench use; peer TRS-80 work continues independently.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
