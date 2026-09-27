@@ -215,3 +215,9 @@ Removed obsolete claims that compression restoration was not deployed or that
 current builds still require historical overlays. ADR-0020 remains unchanged in
 substance. F008 stays open for its existing owner, not for missing description
 of the current client. No bench access or new throughput measurement.
+
+## B54 — new shared-service coverage
+
+| ID | Finding | Evidence | Disposition |
+|---|---|---|---|
+| A09-F067 | Newly maintained service guides absent from inventory; integration opening predates extraction | Current CLI/API and retained peer link result | Indexed guides and partial integration-task review; clarified mounted=false success, recursive search and API gaps. Historical scope distinguished from completed extraction; no production/runtime promotion. |

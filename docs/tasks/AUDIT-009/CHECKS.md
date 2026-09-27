@@ -469,3 +469,10 @@ B53 contract 087caabe. Source-inspected six example receipt producers and
 qualify_keyboard/run_hello_demo helpers. 183 relative Markdown file targets
 exist; anchors/external URLs excluded. Four historical snapshots indexed.
 No build/test/bench execution or emulator changes. Whitespace check passed.
+
+## A09-N11 — shared-service guides
+
+B54 contract 73b4d36c. Inspected CLI/parser and SD HTTP/public headers, shared
+Ethernet guide/source and retained peer build result. 91 relative file targets
+exist; anchors/external URLs excluded. Whitespace passed. Two reviewed guides
+and one partial task added; no runtime tests or bench changes.

@@ -123,7 +123,7 @@ as historical evidence, and give existing owning tasks explicit refresh items.
 No source, fixture identity, emulator setup or bench change. Validate links and
 whitespace, update scoped inventory/results and commit.
 
-A09-N11 [ ] **New shared-service documentation coverage.** Review p4-sd.md,
+A09-N11 [x] **New shared-service documentation coverage.** Review p4-sd.md,
 shared-p4-services.md and TRS-80-003.md against current host/API source,
 production selection and retained build/review evidence. Add missing inventory
 and authority-map entries, reconcile current versus historical claims and

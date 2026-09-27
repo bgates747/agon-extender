@@ -424,3 +424,14 @@ marker relative-output placement matches their source, without fresh runtime
 qualification. Owning tasks now carry explicit refresh IDs for existing F035.
 No code, build, emulator setup or hardware changed. Four new provenance records;
 existing review states unchanged. Inventory 1118 records: {'reviewed': 121, 'partial': 146, 'pending': 663, 'metadata-only': 140, 'provenance-only': 48}.
+
+## A09-N11 result
+
+B54 adds missing P4 SD, shared-service and integration-task inventory coverage.
+Reviewed SD CLI/HTTP options, lazy mount, production selection, shared public
+interfaces and retained peer link evidence. Clarified status exit semantics,
+CLI recursive search, absent image exclusion, private mount/telemetry and
+stale initial-planning wording. Handbook links already select the right guides.
+Two guide bodies reviewed; integration task partially reviewed for current
+status (native feasibility sources not re-audited). Inventory 1121: {'reviewed': 123, 'partial': 147, 'pending': 663, 'metadata-only': 140, 'provenance-only': 48}.
+No network request, build, firmware, emulator or bench operation.

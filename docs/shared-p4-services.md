@@ -57,17 +57,21 @@ Ethernet does not start storage. A detached consumer's server composition must
 avoid duplicate port/control-socket assignments and budget lwIP sockets.
 
 The existing HTTP server serializes only its own filesystem requests. Do not
-combine it with writable mounted MAME images yet. A filesystem/image ownership
+combine it with mounted MAME images, including read-only guest mounts, yet. A filesystem/image ownership
 interface must precede that integration; this Ethernet extraction supplies none.
-Raw HID delivery and shared browser-provider interfaces also remain separate
+The public header exposes startHttp only; mount state and HTTP task telemetry
+are private. Use HTTP status for card readiness, not direct access from another
+worker. Raw HID delivery and shared browser-provider interfaces also remain separate
 work. No complete MAME platform composition is implied by this header.
 
 ## Source consumption and checks
 
 Use a detached/pinned checkout; keep the pin/hash receipt in the consuming
 project. Do not silently update to mutable Extender HEAD or copy this header into
-a separately maintained fork. The TRS-80 owner evaluates Arduino component
-closure, flash size and heap use before deciding its final framework composition.
+a separately maintained fork. The TRS-80 owner recorded an Arduino/MAME/Ethernet/SD link pass with unchanged
+common source at 2ecd55b8: 13,755,248-byte binary, 924,816 bytes of partition
+headroom. This does not establish runtime heap, stack or DHCP behavior. The
+consumer owns those measurements and its framework composition.
 Common-interface changes require both consumers' review and independent checks.
 
 Linux lifecycle checks:

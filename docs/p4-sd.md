@@ -22,13 +22,16 @@ port-80 video/input server. There is no browser GUI, FTP, SMB or WebDAV service.
    raw card capacity, filesystem size and free bytes (null if unavailable).
 4. The server serializes its own requests. No other P4 consumer may write this
    filesystem or use mounted writable disk images concurrently. Future MAME/EMOS
-   integration must coordinate ownership explicitly.
+   integration must coordinate ownership explicitly. Read-only guest images are
+   not automatically safe either: HTTP may replace/delete their backing files.
+   No image-lease API is implemented; detached service tests keep guests disabled.
 
 ## Python CLI
 
 Use Python 3.9 or newer (standard library only), using this checkout's virtual
-environment on Linux. There are no session state files. Each command prints JSON
-and exits nonzero on failure. `--timeout SECONDS` defaults to 120; long searches
+environment on Linux. There are no session state files. Successful commands print JSON; transport, HTTP and client errors exit nonzero.
+`status` can exit zero with `mounted: false`: scripts must inspect that field
+before treating storage as ready. `--timeout SECONDS` defaults to 120; long searches
 or recursive operations may need a larger timeout.
 
 ```sh
@@ -48,7 +51,8 @@ python3 scripts/p4sd.py --url "$P4_SD_URL" delete /games/renamed --recursive
 ```
 
 The destination is always the **exact destination path**, not an implicit
-"copy into this directory" convention. Recursive host uploads/downloads merge
+"copy into this directory" convention. The Python CLI always searches recursively; HTTP callers can request
+`recursive=0`. Recursive host uploads/downloads merge
 directory structure; files conflict unless `--replace` is supplied. Directory
 copies performed on P4 create a new tree and do not merge existing trees.
 Moves/renames require an absent destination. `copy --replace` replaces a file,

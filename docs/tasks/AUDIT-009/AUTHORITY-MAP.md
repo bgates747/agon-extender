@@ -16,6 +16,8 @@ or accepted architecture. Task evidence stays at its recorded location.
 | Agent entry and promotion policy | AGENTS.md | Tracked portable instructions; private bench configuration remains ignored |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
 | SD service and client | docs/mainboard-sd.md | Correct prerequisites; own normal/fast/session/recovery examples |
+| P4-local SD candidate operations | docs/p4-sd.md | Own CLI/HTTP and failure limits; not the mainboard listener or selected production |
+| Shared P4 service consumption | docs/shared-p4-services.md | Current callable APIs and consumer obligations; TRS-80-003 retains integration research/evidence |
 | SD wire fields and invariants | docs/protocols/mainboard-sd.md | Keep exact packet contract; reconcile foreground MOSlet admission |
 | Keyboard operation and arbitration | docs/remote-keyboard.md | Own host/browser behavior; replace planned-only wording with evidenced current status |
 | Video transport and presentation | docs/protocols/browser-video.md | Keep wire/pacing authority; expose unresolved implementation-policy divergence |
