@@ -573,3 +573,6 @@ fault tests. No hardware/network tests, flashing, or production change until cle
 A06 storage implementation now passes local filesystem/fault tests and P4 object
 compilation. [Results](REMOTE-005/A06-RESULTS.md) document the API and integration
 boundary. No endpoint instantiates the spool, and no bench operation occurred.
+
+A07 development proceeds under the [frozen local contract](REMOTE-005/A07-CONTRACT.md).
+Bench remains assigned elsewhere; no deployment is authorized.
