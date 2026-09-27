@@ -456,7 +456,7 @@ return-state preservation, errors and cancellation. Simultaneous external reques
 must be rejected, including while the application is waiting for its own transfer.
 Do not fulfill this item by externally typing commands into a running application.
 
-R05-A06 [ ] Implement P4 SD spool/manifest layer with bounded buffers, incremental
+R05-A06 [x] Implement P4 SD spool/manifest layer with bounded buffers, incremental
 CRC, quotas and cleanup. Test partial file versus complete snapshot, missing/full
 card, reset, stale boot/admission, transfer failure and abandonment. Reuse current
 checked UART transfer unchanged where possible; no parallel-link work. Specify
@@ -569,3 +569,7 @@ ExCom transfer support remains downstream. Production selection is unchanged.
 Author released the bench to TRS-80 and authorized development only. The bounded
 [A06 contract](REMOTE-005/A06-CONTRACT.md) covers staging/recovery storage and local
 fault tests. No hardware/network tests, flashing, or production change until cleared.
+
+A06 storage implementation now passes local filesystem/fault tests and P4 object
+compilation. [Results](REMOTE-005/A06-RESULTS.md) document the API and integration
+boundary. No endpoint instantiates the spool, and no bench operation occurred.

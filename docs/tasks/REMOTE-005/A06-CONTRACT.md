@@ -4,32 +4,32 @@ Implement the storage layer locally, without enabling a new network/UART service
 Author restricts this tranche to development and local tests; TRS-80 owns the bench.
 No device access, reset, flash, remote test or production selection change.
 
-A06-01 [ ] Define a single-owner, caller-supplied quota and bounded-buffer spool.
+A06-01 [x] Define a single-owner, caller-supplied quota and bounded-buffer spool.
 Use a dedicated, already provisioned P4-card directory, separate from Agon paths.
 The future mount/service owner supplies the directory only after mount validation.
 No automatic creation beneath an absent mount; no RAM fallback. Preserve unknown
 files and reject an occupied/unrecognized staging directory.
 
-A06-02 [ ] Persist an immutable, checksummed job manifest containing the complete
+A06-02 [x] Persist an immutable, checksummed job manifest containing the complete
 admission identity, descriptor, declared size and optional expected CRC. Bind every
 operation to that identity. Stream consecutive bounded chunks and incremental CRC;
 never allocate the whole file. Seal only after sync, close and independent readback.
 Expose reads only from a sealed snapshot, never from a partially received upload.
 
-A06-03 [ ] Journal the boundary before remote activation, then explicit confirmed
+A06-03 [x] Journal the boundary before remote activation, then explicit confirmed
 commit. Loss of acknowledgement, reset or invalidated admission must retain bytes;
 neither complete local staging nor a reboot implies mainboard success. New owners
 cannot resume old work. Cleanup requires explicit abandonment/release or persisted
 commit; interrupted cleanup must remain distinguishable from an unconfirmed job.
 Do not claim FAT power-loss atomicity or implement a hidden retry queue.
 
-A06-04 [ ] Test real local filesystem execution plus injected write/sync failures:
+A06-04 [x] Test real local filesystem execution plus injected write/sync failures:
 empty/binary/chunk-boundary files, quota, missing storage, partial versus complete,
 wrong identities, corruption/truncation, invalidation/restart, uncertain commit,
 confirmed commit, explicit abandonment and interrupted cleanup. Preserve unrelated
 files. Compile the same storage code with the P4 toolchain where available.
 
-A06-05 [ ] Document API/ownership, placement, recovery order, test evidence and
+A06-05 [x] Document API/ownership, placement, recovery order, test evidence and
 remaining wiring. Keep existing manual listener, P4 HTTP storage, UART protocol,
 normal capability flags and approved firmware unchanged. A later integration
 tranche must serialize this layer with local-card HTTP operations and implement
@@ -56,3 +56,6 @@ active leases/native-client timing before deployment.
 
 Frozen for local execution, 2026-09-27, under Author's explicit development-only
 instruction. No new deployable firmware identity or emulator profile is created.
+
+Local implementation complete; [results](A06-RESULTS.md) separate host/target
+compile evidence from pending integration and hardware qualification.
