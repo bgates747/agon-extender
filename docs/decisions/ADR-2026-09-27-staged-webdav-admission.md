@@ -125,5 +125,4 @@ EMOS's single admitted mainboard owner.
 Keep this Agon file service password-free: no user accounts, usernames or
 passwords in the current implementation scope. Any reachable client may request
 access, subject to EMOS admission and single-job ownership. Session/job identifiers
-coordinate transfers; they are not credentials. A future Linux environment may
-establish its own authentication policy; no such implementation is selected here.
+coordinate transfers; they are not credentials.
