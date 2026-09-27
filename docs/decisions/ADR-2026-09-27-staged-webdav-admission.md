@@ -22,6 +22,11 @@ user application runs, including read, listing and mutation requests requiring
 mainboard access. Rejected work is not queued to execute after the application
 exits. P4's cached indication of CLI state cannot authorize a transfer.
 
+Once admitted, the external transfer occupies the foreground CLI until completion,
+cancellation or failure cleanup. EMOS does not dispatch another command or user
+application during that interval. The selected display mode remains unchanged.
+The Author accepted this foreground ownership on 2026-09-27.
+
 A running eZ80 application may explicitly initiate transfers in either direction
 through an EMOS-owned API. This is a separate, locally initiated admission path;
 an external client cannot obtain it by setting an origin flag in a packet.

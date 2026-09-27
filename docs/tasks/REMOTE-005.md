@@ -331,6 +331,13 @@ WebDAV adapter, not a claim that all filesystem or lifecycle work disappears.
 
 ### Remaining bounded design decisions
 
+D11 [x] Accepted 2026-09-27: an admitted external transfer occupies the foreground
+CLI until completion, cancellation or failure cleanup. EMOS does not dispatch
+another command or user application during that ownership interval. Retain the
+selected display mode. Preserve keyboard responsiveness for the defined cancel
+mechanism; exact handling of other keystrokes is to be specified without silently
+executing commands typed during the transfer afterward.
+
 D06 [x] Author accepted 2026-09-27: external admission only at an empty, idle
 CLI prompt; partly typed input means busy and must remain untouched. EMOS admits
 one bounded job only when no command executes and no input line is partly typed;
