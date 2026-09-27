@@ -1,5 +1,5 @@
 /* Isolated simulation; no network or user-file content access.
-   ESPFMfGK layout/serial-upload idioms informed this adaptation, MIT notice
+   ESPFMfGK layout/serial-upload idioms informed this adaptation, full upstream notice
    retained. Queue, synthetic backend, selection and event handling are new. */
 'use strict';
 const $ = id => document.getElementById(id);

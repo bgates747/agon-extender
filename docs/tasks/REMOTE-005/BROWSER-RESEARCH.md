@@ -52,7 +52,7 @@ into ignored research storage; no upstream code executed or product code vendore
 
 | Candidate | Source-backed result | Recommendation |
 | --- | --- | --- |
-| ESPFMfGK | LICENSE.md is MIT (resolves API's ambiguous label). Separate filemanager/fm.html, fm.css and fm.js; C++ depends on Arduino WiFi/WebServer/FS. fm.js uploadFile uses a local multipart endpoint and file.name; multi-file scheduling uses uploaddone. ZIP implementation also directly uses FS/WebServer. | Preferred small frontend starting point. Retain attribution, adapt UI/idioms only; replace transport calls with our adapter. Directory selection, detailed errors and cancellation still require work. Do not import backend or optional gzip-js machinery. |
+| ESPFMfGK | LICENSE.md has MIT text followed by a Siemens exclusion: not standard MIT; this explains the ambiguous API label. Separate filemanager/fm.html, fm.css and fm.js; C++ depends on Arduino WiFi/WebServer/FS. fm.js uploadFile uses a local multipart endpoint and file.name; multi-file scheduling uses uploaddone. ZIP implementation also directly uses FS/WebServer. | Small frontend design reference; production code reuse requires resolving its nonstandard license. Retain attribution, adapt UI/idioms only; replace transport calls with our adapter. Directory selection, detailed errors and cancellation still require work. Do not import backend or optional gzip-js machinery. |
 | esp-fs-webserver | LICENSE is Apache-2.0. FSWebServer.cpp handleFileUpload/Create/Delete acts on local FS; editor bundles are generated, README points to an external page-source location. Includes Wi-Fi configuration and OTA outside this task. | Less suitable as reusable editable frontend until page provenance is resolved. No reason to replace our server with its synchronous Arduino server. |
 | ESP32-File-Server | LICENSE is MIT. web_ui.h contains toggleSelectAll, recursive scanEntry and an upload queue. ESP32_File_Server.ino uses SD/WebServer, FTP, WebSockets, ArduinoJson and updater facilities. | Useful individual UI idioms, not wholesale framework adoption. Reject its transfer/ZIP implementation as our baseline. |
 
@@ -165,7 +165,7 @@ old listener builds must report unsupported rather than misinterpret requests.
 
 ### Proposed implementation sequence — for Author review
 
-R05-P01 [x] Adapt the small MIT frontend in an isolated host mock: directory
+R05-P01 [x] Adapt the small frontend design in an isolated host mock: directory
 navigation, selection, per-file queue/progress/cancel and offline/busy states.
 Use synthetic trees including empty directories and more than 100 entries.
 No device traffic or firmware change. Show the UI before building the full service.
@@ -187,3 +187,14 @@ D03 remains open. Recommended next decision is lifecycle after Author reviews
 this proposed frontend/service split; no convenience launcher has been assumed.
 
 R05-P01 delivered 2026-09-27: [isolated mock and validation](browser-mock/README.md). Author usability review pending; P02–P04 remain unstarted.
+
+### License correction caught during P01 packaging
+
+The complete ESPFMfGK LICENSE.md excludes Siemens, subsidiaries and parties
+delivering the software to Siemens. Earlier standard-MIT characterization was
+incorrect; retain the exact text and do not promote it as unrestricted MIT code.
+P01 is newly written simulation logic and presentation informed by layout/serial
+queue concepts; no upstream JS runtime or C++ was imported. Before production,
+choose independently implemented UI or a fully reviewed permissive alternative,
+or obtain appropriate upstream terms. This changes the reuse recommendation,
+not the accepted browser workflow. Do not silently remove the upstream exclusion.

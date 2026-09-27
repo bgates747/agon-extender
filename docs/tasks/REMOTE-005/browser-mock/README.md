@@ -39,7 +39,7 @@ Layout/interaction adaptation informed by Holger Lembke's ESPFMfGK, revision
 ac3b699c35705d34df06ed4a978fb5add4310463, particularly filemanager/fm.html,
 fm.css and fm.js (path navigation, file list, status and serial upload idioms).
 Upstream: https://github.com/holgerlembke/ESPFMfGK/tree/ac3b699c35705d34df06ed4a978fb5add4310463
-MIT notice retained in LICENSE.upstream.md.
+Full upstream notice retained in LICENSE.upstream.md.
 
 This mock rewrites presentation and orchestration for synthetic data; it does
 not integrate the upstream runtime or claim framework integration is complete.
@@ -63,3 +63,7 @@ Run with the static preview above:
 ```sh
 .venv/bin/python docs/tasks/REMOTE-005/browser-mock/test_mock.py
 ```
+
+License clarification: the retained upstream notice includes a Siemens exclusion
+and is not standard MIT. This mock has new implementation code; production reuse
+of upstream code is not approved by this preview. See the research correction.
