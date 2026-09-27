@@ -103,3 +103,10 @@ This is recoverable replacement, not unconditional power-failure atomicity on FA
 Directory transfers are not all-or-nothing in the first iteration: completed files
 remain and incomplete entries are reported. No new filesystem transaction layer
 or silent relaxation of the checked/fast transfer contract is selected.
+
+## Exported namespace — accepted 2026-09-27
+
+Expose the entire Agon mainboard SD card from `/` by default. No configurable
+subdirectory-selection feature is required for the first iteration. Preserve
+path validation and rejection of deleting the filesystem root. P4-local staging
+remains separate from the exported Agon filesystem.
