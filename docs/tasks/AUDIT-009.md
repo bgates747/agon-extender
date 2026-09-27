@@ -187,6 +187,13 @@ from repository selection and device verification. Documentation only; no
 packaging, installation, firmware, profile or bench operations. Check CLI help,
 links and whitespace; record bounded coverage and commit separately.
 
+A09-N20 [ ] **Audit status and remaining-queue reconciliation.** Compare current
+checklists, results, findings and inventory counts. Remove superseded next-step
+instructions from current summaries, separate documentation review from owned
+implementation/qualification gates, and select a bounded documentation-only
+continuation. Preserve dated evidence and incomplete coverage. No source,
+profile, bench or deferred implementation work; validate links and consistency.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
