@@ -279,3 +279,12 @@ be stated precisely. D02–D05 and backend implementation remain separate gates.
 R05-P01 delivered: [browser mock](REMOTE-005/browser-mock/README.md). Synthetic
 navigation, selection, directory queue and interruption controls pass local
 Chromium checks; Author usability review pending. No backend or bench changes.
+
+## Author review — browser mock parked, 2026-09-27
+
+Author found the mock visually suitable but browser transfers clunky. Preserve
+R05-P01 code as a fallback for further investigation if other approaches fail.
+Do not proceed to browser backend implementation. D01's browser-first trial is
+complete; final interface selection is reopened. D02 bulk/directory requirements
+remain. D03 remains unanswered. Next suggested investigation is WebDAV for native
+host file-manager access; suggestion alone does not authorize implementation.

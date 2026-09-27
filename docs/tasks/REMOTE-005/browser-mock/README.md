@@ -1,5 +1,8 @@
 # Browser file-manager mock — R05-P01
 
+Parked after Author review on 2026-09-27: retain as a fallback if other interfaces
+do not pan out. No browser-backend implementation selected.
+
 Local, static usability preview. No P4/Agon connection, firmware changes, actual
 transfers or file-content reads. File pickers inspect only names, sizes and
 relative paths. Queue progress and service states are simulated. Reload resets

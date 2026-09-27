@@ -22,3 +22,10 @@ does not add background access or change the currently required Legacy service.
 Preserve the working CLI service. Investigate frontend reuse and mainboard API
 gaps before implementation. FTP, SMB and WebDAV remain alternative research,
 not selected interfaces. Remaining decisions belong to the linked task.
+
+## Amendment — 2026-09-27 usability review
+
+The browser-first trial produced a mock that the Author found clunky for transfers.
+Retain the mock as a fallback; browser backend implementation is not selected.
+Final interface selection is reopened in REMOTE-005. Bulk loose-file selection
+and whole-directory operation requirements remain applicable to alternatives.

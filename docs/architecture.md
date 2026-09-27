@@ -837,8 +837,8 @@ introduced. Implementation and validation are tracked in
 
 ### Planned browser file access
 
-The selected next user interface for mainboard SD is browser file management,
+The browser file-management trial for mainboard SD is parked as a fallback,
 including bulk selection and whole-directory operations. The browser uses P4
-HTTP and EMOS-owned mainboard service access. Library selection and added
-operations remain investigation scope; this is not implemented browser behavior.
+HTTP and EMOS-owned mainboard service access. Final interface selection is reopened after usability review. Library selection
+and added operations remain investigation scope; this is not implemented browser behavior.
 See [the decision](decisions/ADR-2026-09-27-browser-file-access.md).
