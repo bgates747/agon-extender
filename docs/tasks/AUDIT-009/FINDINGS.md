@@ -268,3 +268,10 @@ implemented modes; Phase C corrective status still read as current pre-physical
 state. Current applicability sections now link accepted Legacy/ExCom and later
 backend results, preserve unresolved four-mode qualification, and distinguish
 historical containment from present authorization. Corrected documentation only.
+
+## A09-N22 — Hardware corrective records
+
+A09-F069 — Historical pin-label validation and proactive-READY containment could
+be mistaken for current whole-tree verification or a fault in accepted UART-only
+ExCom. Added precise applicability and owning links. The original parallel
+activation corrective action remains open; no wiring or evidence changed.

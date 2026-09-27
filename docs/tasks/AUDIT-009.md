@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Current checkpoint: **A09-N01–N21 complete within their bounded scopes; the
+Current checkpoint: **A09-N01–N22 complete within their bounded scopes; the
 whole-documentation audit remains open.** Historical one-hour windows below
 record earlier authorization, not a current time budget.
 
@@ -70,7 +70,7 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-N01–N21 are complete within their recorded scopes. The remaining queue below
+N01–N22 are complete within their recorded scopes. The remaining queue below
 owns continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
@@ -196,7 +196,7 @@ implementation/qualification gates, and select a bounded documentation-only
 continuation. Preserve dated evidence and incomplete coverage. No source,
 profile, bench or deferred implementation work; validate links and consistency.
 
-A09-N22 [ ] **Hardware corrective-action applicability.** Review the UART1
+A09-N22 [x] **Hardware corrective-action applicability.** Review the UART1
 pin-label correction and pre-activation READY_N containment records against
 the maintained pin generator, electrical guidance, architecture and PORT-008.
 Clarify resolved labels, retired prototype behavior and still-open activation

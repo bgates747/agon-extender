@@ -7,6 +7,23 @@
 - Originating commit: `1a19574f27de173ed0f41d04295e0503e3bc93de`
 - Authoritative work tracker: `docs/tasks/SETUP-006.md`
 
+## Current applicability
+
+The label correction is resolved. The maintained
+[scaffold generator](../tasks/SETUP-006/SETUP-006.3-fritzing/generate.py)
+and its assertions retain PC0/TXD1, PC1/RXD1, PC2/RTS1 and PC3/CTS1 on
+header pins 17–20. This source review does not regenerate or requalify the
+archived Fritzing files. Their hashes, checks and approval below describe the
+original corrective outcome, not a fresh whole-repository validation.
+
+UART alternate-function names identify the eZ80 pins; they do not establish
+which function is selected in a particular parallel/UART epoch. Consult the
+[electrical requirements](../tasks/SETUP-006/SETUP-006.4-wiring-design/electrical-requirements.md)
+for current resource-sharing constraints and [SETUP-006](../tasks/SETUP-006.md)
+for the owning design work. Correct labels alone do not prove electrical safety,
+flow control or current as-built wiring. The containment/procedure below is the
+completed historical correction, not an instruction to rerun migration tools.
+
 ## Trigger
 
 During SETUP-006.4 GPIO review, the official Agon Light 2 pinout disproved four

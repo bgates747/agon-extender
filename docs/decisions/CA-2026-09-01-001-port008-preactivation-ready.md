@@ -8,6 +8,29 @@
 - Affected source baseline: `agon-extender` commit `45c45d5` plus tracked-dirty corrective work
 - Authoritative work tracker: `docs/tasks/PORT-008.md`
 
+## Current applicability
+
+This open corrective action concerns the retired forward-parallel prototype and
+its production activation replacement. It does not describe the currently
+accepted UART-only ExCom composition as asserting that prototype's READY_N.
+[PORT-008](../tasks/PORT-008.md) owns parallel reintegration and this action's
+remaining activation gates; [architecture](../architecture.md) owns current
+mode/service boundaries. No closure or electrical qualification is granted here.
+
+Current Legacy operation permits explicitly admitted Extender keyboard and
+foreground SD service. Those exceptions do not authorize the parallel receiver
+to assert readiness or acquire shared GPIOs without EMOS. Nor does accepted
+UART/General Poll evidence satisfy this record's parallel activation and
+CLOCK/READY requirements.
+
+The U4/control-sink names, rejected D001 alternative, captures and proposed
+physical observations below belong to their identified historical circuit.
+Before applying the resolution conditions to a new circuit, PORT-008 and the
+hardware owner must reconcile them with the current design and obtain the
+required approval. Do not silently transplant that wiring, treat its old probe
+plan as ready to run, or waive the EMOS-owned activation obligation. The
+September stage permissions are historical, not present bench authorization.
+
 ## Trigger
 
 The third physical PORT-008 attempt again failed while `/autoexec.txt` line 1

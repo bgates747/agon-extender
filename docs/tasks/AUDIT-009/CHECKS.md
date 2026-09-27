@@ -543,3 +543,10 @@ retained; inventory classifications unchanged.
 Reviewed the two N21 records against current architecture and owning task
 summaries. Local links and whitespace checked. No code, build, profile, device
 or generated qualification data changed. No new historical correctness claim.
+
+## B65 — Hardware corrective-action applicability
+
+Source inspection confirms generator and assertions use PC0/TXD1, PC1/RXD1,
+PC2/RTS1 and PC3/CTS1 on pins 17–20. Current electrical guidance distinguishes
+UART roles from parallel epochs. Checked changed local links and whitespace;
+no generator, migration tool, hardware validator or bench command executed.
