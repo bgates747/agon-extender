@@ -527,3 +527,12 @@ utility loader is suitable only for safe CLI-origin entry; application calls
 should use a linked foreground helper plus resident gateway. ExCom needs changes
 in both P4 parser/send admission and EMOS guard. No code or bench changes.
 D16 now accepts the SDK/resident split; exact A03/A05 contracts remain to be frozen.
+
+## R05-A03 design delivery — 2026-09-27
+
+[Admission contract](REMOTE-005/ADMISSION-CONTRACT.md) defines actors, states,
+external/app flows, control framing proposal, retry/reset/cancellation and test
+cases. A03 remains unchecked until numeric results, descriptor fragmentation and
+capability bootstrap are frozen for implementation. No code or bench changes.
+A native client's folder gesture is multiple admitted protocol operations, not
+an atomic directory job; client concurrency compatibility remains an explicit test.
