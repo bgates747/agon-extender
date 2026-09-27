@@ -454,3 +454,11 @@ constraints and timing guide. Two scoped inventory dispositions changed; states
 and counts unchanged. Checked 134 relative file targets across changed Markdown;
 all exist. Anchors/external URLs excluded. git diff --check passed. No runner,
 build, emulator, hardware or network test performed.
+
+## A09-N09 — SD qualification reuse
+
+B52 contract 03467a55. Read retained r01, both qualification controllers and
+current SD/reset/layout constraints; no test execution. Five scoped inventory
+dispositions updated, states/counts unchanged. 164 relative Markdown file targets
+exist; anchors/external URLs excluded. Whitespace check passed. Frozen procedure
+and source scripts unchanged.

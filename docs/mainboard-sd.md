@@ -126,7 +126,7 @@ an SD protocol operation or an automatic recovery step. Preserve uncertain
 transaction evidence before deciding to interrupt Agon. USB serial opens may
 reset P4, so normal network file work must not open its serial monitor.
 
-## Rebuild and repeat the checks
+## Build ownership and qualification reuse boundary
 
 EMOS source and both listener layouts belong to `agon-emos`. See the
 [build guide](building.md#building-emos-and-the-sd-application) for the MOSlet versus
@@ -137,7 +137,7 @@ repository's `scripts/prepare_console.py`. Supply project-local paths from the
 environment guidance; do not edit generated MOS port worktrees or runtime
 snapshots. Use new evidence directories for each identified build/run.
 
-`scripts/qualify_sdcard.py --url ... --output agents/sd/new-run` runs ten
+The retained `scripts/qualify_sdcard.py` controller implements ten
 unattended cycles against fresh names under `/extender/sdtest`, retaining audit,
 state and result files. It performs no reset, flash, game launch or automatic
 cleanup after unexplained failure. The service must already be running and the
@@ -146,9 +146,14 @@ qualifier; it does not opt into fast uploads. The retained
 [r01 qualification procedure](procedures/mainboard-sd-qualification-r01.md)
 is historical evidence, not a current deployment recipe: its application
 startup and reset restrictions predate the EMOSlet and supported reset bridge.
-Before a new qualification, the owning task must refresh the procedure against
-this guide and the [bench constraints](qualification/bench-constraints.md),
-with an appropriate new identity. Do not silently reuse the old procedure or
+Before a new qualification, [REMOTE-005 R05-10](tasks/REMOTE-005.md) owns refreshing
+the procedure against this guide and the
+[bench constraints](qualification/bench-constraints.md), with an appropriate new
+identity. The retained keyboard observer also prints `RUN . /` and describes
+an already-loaded ordinary application. That restart instruction must become
+`EMOS sdserve /` for the current EMOSlet, after verified Legacy/input readiness;
+reusing the old observer unchanged would give the operator the wrong instruction.
+Review both controllers and their test-target/evidence placement before reuse. Do not silently reuse the old procedure or
 claim that a normal-mode run qualifies fast mode.
 Headless tests use prepared project-local profiles and their mandatory
 `./fab-agon-emulator` entry points. They do not substitute for physical testing

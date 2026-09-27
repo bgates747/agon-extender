@@ -22,7 +22,7 @@ procedure does not authorize a flash, reset, wiring change or new qualification.
 | [Frame service r03](p4-frame-service-qualification-r03.md) | Passed sink-independent August candidate with r01 harness and Agon disconnected | Not a recipe for the current r03-connected console; no browser/graphics/input qualification implied |
 | [Browser video r01](p4-browser-video-qualification-r01.md) | Candidate for first EVF1 startup-frame service | Predates current console, codecs and input; refresh under PORT-003 before any new use |
 | [PORT-008 forward r01](port-008-forward-qualification-r01.md) | Rejected and superseded transport composition | Do not execute; current transport authority remains with PORT-008 |
-| [Mainboard SD r01](mainboard-sd-qualification-r01.md) | Retained candidate procedure associated with scoped September acceptance | Predates EMOSlet placement and maintained reset support; refresh under REMOTE-005 before new qualification |
+| [Mainboard SD r01](mainboard-sd-qualification-r01.md) | Retained candidate procedure associated with scoped September acceptance | Predates EMOSlet placement and maintained reset support; refresh under [REMOTE-005 R05-10](../tasks/REMOTE-005.md) before new qualification; old keyboard observer still requests ordinary-application RUN |
 
 Preserve these identities and their evidence. Do not copy old fixed payloads,
 startup files, no-backup assumptions or disconnected-board preconditions into a

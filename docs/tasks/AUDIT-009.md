@@ -108,7 +108,7 @@ explicit owner. Preserve source and historical evidence. Update scoped audit
 records, validate local links/whitespace and commit. No runner execution,
 implementation, emulator changes or bench use; peer TRS-80 work continues independently.
 
-A09-N09 [ ] **SD qualification reuse guidance (F020).** Compare the retained r01
+A09-N09 [x] **SD qualification reuse guidance (F020).** Compare the retained r01
 procedure and qualification scripts with current EMOSlet, reset and SD-layout
 contracts. Clarify current-guide/index applicability and assign the existing
 refresh to REMOTE-005 with explicit prerequisites. Preserve frozen r01 and code;

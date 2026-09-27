@@ -403,3 +403,14 @@ EMOSlet return, input readiness, path and startup refresh. F019's documentation
 is reconciled; the runner implementation remains unchanged and reuse-blocked.
 Two inventory dispositions updated without changing review states or counts.
 No firmware, emulator, bench operation or new performance result.
+
+## A09-N09 result
+
+B52 compared retained SD r01 and both qualification controllers with current
+EMOSlet/reset/layout guidance. qualify_sd_keyboard.py still requests RUN . /;
+this is an ordinary-application restart, not the current EMOSlet invocation.
+The current guide now separates controller description from permission to rerun.
+REMOTE-005 R05-10 owns the existing refresh, including admission, checked/fast
+scope, active batch protection, reset and evidence placement. Frozen procedure
+and scripts are unchanged. Five scoped inventory dispositions refreshed with
+review states/counts unchanged. No bench, emulator or implementation work.

@@ -200,3 +200,28 @@ this tasklet alone; it does not select FTP/SMB/WebDAV or authorize deployment.
 Fast tasklet now deployed with bounded physical checks passing; see its checked
 contract and paired normal/fast timing results. Author accepted the work and authorized commit/push; broader network-access
 research is unchanged.
+
+## Qualification procedure refresh
+
+R05-10 [ ] Refresh the retained mainboard SD qualification procedure before its
+next execution; owns [AUDIT-009 F020](AUDIT-009/FINDINGS.md). Prepare a bounded
+implementation/validation contract and new procedure identity first.
+
+1. The operator selects exact component builds from the production authority
+   or an explicitly identified candidate; preserve the original r01 evidence.
+2. The operator establishes Legacy mode, prior Extender input admission and
+   checked-mode `EMOS sdserve /`. The host keyboard observer must instruct this
+   EMOSlet restart after Escape, not `RUN . /` of an ordinary application.
+3. The host controller must preserve active EXEC/autoexec files and unknown
+   transaction state. Reconcile test targets and retained evidence with the
+   current SD layout; do not relocate live sibling journals into `/tmp/extender`.
+4. Replace the obsolete reset-circuit prohibition with the maintained reset
+   guide's explicit authorization/evidence boundary. No automatic reset or
+   serial opening becomes part of transfer recovery.
+5. Keep checked-transfer qualification distinct from fast-mode evidence,
+   physical keyboard observations distinct from injected packets, and physical
+   recovery distinct from host fault injection. Validate refreshed instructions
+   and tools before declaring the procedure ready; respect emulator review gates
+   if a refreshed test changes an emulator setup.
+
+The documentation audit neither edits r01/scripts nor authorizes this test run.
