@@ -14,6 +14,7 @@ or accepted architecture. Task evidence stays at its recorded location.
 | Select approved components | production/README.md and production/current.yaml | One current selector, immutable bundle manifests; local archive acquisition and distribution limits explicit |
 | Install and roll back | docs/installing.md | Maintained verification/bootstrap/install/recovery sequence; task receipts supply evidence only |
 | Agent entry and promotion policy | AGENTS.md | Tracked portable instructions; private bench configuration remains ignored |
+| Set up Linux application emulation | docs/emulator-setup.md | Role-named setup/verification guidance; EMOS/native VDP and hardware boundaries explicit |
 | Build firmware | docs/building.md | Promote existing README build material, retain source ownership and deployment distinction |
 | SD service and client | docs/mainboard-sd.md | Correct prerequisites; own normal/fast/session/recovery examples |
 | P4-local SD candidate operations | docs/p4-sd.md | Own CLI/HTTP and failure limits; not the mainboard listener or selected production |

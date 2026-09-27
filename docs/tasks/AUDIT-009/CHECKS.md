@@ -563,3 +563,27 @@ Read prior-art note and searched EMOS Markdown plus Extender current build/
 handbook and ROM-audit references. Only historical research/devlog references
 found. Original PORT-207 completion retained; no build, source audit or bench
 operation. Inventory closure is applicability review, not reproduction evidence.
+
+## B68 — Current handbook closeout
+
+1. Desk-reviewed root/handbook navigation and current use, mainboard SD, P4 SD,
+   keyboard, screen-text, reset, recovery, SD-layout, build, install and emulator
+   guidance. Compared relevant script parsers and behaviors, sdserve argument
+   parsing, screen-text/HTTP registration, reset bridge/helper, production
+   selection and browser negotiation. Shared-service ownership and protocol/
+   procedure/qualification applicability were checked within selected scope.
+2. Local Markdown destination/heading checks: **291 references across 23
+   documents**, zero unresolved destinations/anchors. Scanner handles inline
+   Markdown links and common heading slugs; not every Markdown dialect or
+   external URL. Report retained locally in agents/audit009-n25/checks.json.
+3. **18 CLI help checks passed**: sdcard, keyboard, screen_text, p4sd, reset_agon,
+   reset_bridge, prepare_mos_recovery, mos_recovery_console, prepare_console,
+   verify_installation, package_installation, plus SD put/recover, keyboard
+   type/hold and P4 SD search/copy/get. Help exits before endpoint/file operations.
+4. production/current.yaml's bundle SHA-256 matches its local target. Maintained
+   app.js matches r55 source bytes, SHA-256
+   5401574eeabc069b11ba65cd49c46510a6133ef31cdebae446401a1f4aa2fb28.
+   No archive was recreated and no installed device was queried.
+5. Changed-document whitespace and new private-path/address scan pass. No new
+   source tests, emulator launches, network calls or hardware qualification.
+   Original inventory states and historical evidence retain their limits.

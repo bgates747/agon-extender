@@ -2,12 +2,12 @@
 
 ## Executive summary
 
-Current checkpoint: **A09-N01–N24 complete within their bounded scopes; the
-whole-documentation audit remains open.** Historical one-hour windows below
+Current checkpoint: **A09-N01–N25 complete within their bounded scopes; the
+whole-documentation audit remains open.** The [current-handbook closeout](AUDIT-009/CLOSEOUT.md)
+separates usable guidance from remaining coverage and product gates. Historical one-hour windows below
 record earlier authorization, not a current time budget.
 
-Review
-Extender documentation against maintained code, accepted decisions and retained
+Review Extender documentation against maintained code, accepted decisions and retained
 validation, then consolidate routine instructions into a small set of reliable
 entry points. A person or an agent working on another project must be able to
 find a supported capability, identify its prerequisites and limits, and use it
@@ -68,10 +68,10 @@ whole-documentation audit is **not complete**. A09-04/05/06/08 remain open for
 remaining body review and consolidation. The checked validation/walkthrough/
 closeout items apply to this recorded tranche, not unseen documents.
 
-## Next phase
+## Completed bounded reviews
 
-N01–N24 are complete within their recorded scopes. The remaining queue below
-owns continuation; old execution windows and dated batch notes are history.
+N01–N25 are complete within their recorded scopes. The closeout and remaining-scope section below
+own continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
 seven current bodies: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
@@ -218,7 +218,7 @@ references. B67 found PORT-207 already completed, no current operational or
 ROM-reduction dependency, and no new implementation need. Retain as historical
 research; applicability review closed, without rerunning old measurements.
 
-A09-N25 [ ] **Current-handbook scouring and scoped closeout.** Author requests a
+A09-N25 [x] **Current-handbook scouring and scoped closeout.** Author requests a
 thorough final pass of current user/agent guidance, not historical inventory
 mining. Walk the handbook's direct links and core use/SD/input/reset/text/build/
 install/emulator guides against maintained CLI/source and production selection.
@@ -285,10 +285,10 @@ historical evidence. Update inventory/results and check links. Documentation onl
 no firmware, emulator, hardware or compatibility implementation. Completed in B64: current applicability reconciled; original source observations
 and historical evidence were not exhaustively revalidated.
 
-After N21, select another small batch from pending/partial inventory entries
-under A09-04/05/06/08. Do not treat all historical files as an operational blocker
-or all partially reviewed bodies as complete. Reconcile current user-facing
-claims first, then their supporting historical records.
+N25 completes the final current-handbook pass. Remaining historical inventory
+coverage is not an automatic next-work queue. Reopen a bounded documentation
+review when a current workflow depends on an unresolved record or guidance
+changes; preserve partial/pending labels until that review occurs.
 
 Implementation and qualification are **outside this audit**: browser pacing
 (F008), timing/SD/example procedure refresh (F019/F020/F035/F046/F051), and held
@@ -467,6 +467,6 @@ campaigns, architecture redesign or wholesale task reordering are implied.
 
 After each batch, retain a short next-batch pointer and progress state so another
 agent can continue without repeating discovery. Stop for Author input only on a
-material unresolved decision or expanded scope. The Author now authorizes documentation execution within the one-hour window.
-No bench work is authorized. Stop at the deadline with honest partial coverage,
-remaining findings and a precise continuation point if the full audit cannot fit.
+material unresolved decision or expanded scope. The earlier one-hour windows are historical. Current N25 authorization covers
+this documentation closeout only, with no bench work. Remaining broad coverage
+stays explicit; no unattended goal or new deadline is implied.

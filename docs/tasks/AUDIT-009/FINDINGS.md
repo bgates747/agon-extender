@@ -282,3 +282,11 @@ A09-F070 — September audit conclusion still said F003 required correction and
 its old disposition order could read as current backlog. Added present-state
 summary aligned with REMED-002, distinguishing partial correction, deferral and
 closure. Retained underlying historical observations and open physical gates.
+
+## A09-N25 — Current handbook closeout
+
+| ID | Finding | Disposition |
+|---|---|---|
+| A09-F071 | Root README retained pre-r55 reconstruction gap and future-only P4 SD wording; candidate prose could be mistaken for live bench identity | Corrected source/build and candidate capability claims; current installed receipt remains separate from production selection |
+| A09-F072 | Verifier Python minimum, recovery host prerequisites and direct reset invocation were not explicit in owning guides | Documented Python 3.11/PyYAML verifier, Linux udev/PySerial recovery and commissioned SSH/sudo/GPIO reset dependencies; no new platform qualification |
+| A09-F073 | SD timeout prose obscured fixed status timeout/per-RPC deadline and host full-file buffering | Corrected operational limits; uncertainty retains journal and does not resume an entire upload automatically |

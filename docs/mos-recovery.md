@@ -48,7 +48,11 @@ payload-specific diagnostic. Prepare its embedded payload with:
 .venv/bin/python -m unittest discover -s tests -p test_mos_recovery.py -v
 ```
 
-These are preparation commands, not deployment commands. On the USB host,
+These are preparation commands, not deployment commands. The maintained host
+console requires Linux `udevadm`, Python with PySerial, access to the identified
+USB device, and a fresh output directory. Its device-identity check is Linux
+specific; this is not a macOS serial-console recipe. Opening USB can reset P4
+even when no RESTORE is requested. On the USB host,
 `scripts/mos_recovery_console.py --help` documents capture arguments. Default
 behavior is dump-only; `--restore` allows the exact SHA-bound restore command
 only after a complete verified pre-erase dump. An already-matching ROM is not

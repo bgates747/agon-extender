@@ -50,6 +50,7 @@ command. The [architecture](architecture.md) owns the full mode/API distinction.
 | View EDP / type interactively | Open the P4's HTTP page, Connect for video, Capture keyboard for input. [Browser/input behavior and platform limits](remote-keyboard.md#browser-keyboard-capture). Capturing does not admit a disabled EMOS input path. |
 | Send bounded agent input | [Host commands](remote-keyboard.md#host-commands), using `scripts/keyboard.py`. Its journal differs from the SD journal. Do not paste a sequence of dependent CLI commands and infer completion from sleeps. |
 | List, retrieve or replace mainboard SD files | [SD operating guide](mainboard-sd.md). At a verified controllable prompt, select Legacy and run the foreground `/emos/sdserve.bin` through `EMOS sdserve [--fast] /`. It occupies the MOSlet region, not the ordinary application's load region. |
+| Manage the P4’s own SD card | [P4 SD guide](p4-sd.md): candidate service on port 8080, independent of EMOS and the Agon card. Not in selected production v0.1.0; verify installed firmware first. |
 | Observe CLI text | [Screen-text guide](screen-text.md): P4's pixel-derived readback observes ExCom output, not MOS command-buffer RAM or the Legacy screen. It does not take video ownership or provide an atomic command-completion receipt. |
 | Reset a stuck Agon | [Reset guide](bench-reset.md). The browser button uses an optional Pi bridge, not the SD listener or a native P4 GPIO service. Reset interrupts the running program; use only with authorization and known consequences for open files. |
 | Recover failed MOS firmware | [MOS recovery](mos-recovery.md). A normal reset cannot repair a bad ROM. Recovery tooling has its own readiness and authorization requirements. |
@@ -58,7 +59,11 @@ command. The [architecture](architecture.md) owns the full mode/API distinction.
 ## Host and SD paths
 
 Run host commands from this repository root, or supply an absolute script path.
-On the maintained Linux checkout use `.venv/bin/python`. On macOS the SD,
+On the maintained Linux checkout use `.venv/bin/python`. For a fresh host-client
+checkout without that environment, `python3 -m venv .venv` creates it; the SD,
+keyboard and screen-text clients need no pip packages. P4-local SD's client
+requires Python 3.9 or newer. Build, package and recovery tools have additional
+dependencies documented in their own guides. On macOS the SD,
 keyboard and screen-text clients use Python 3's standard library. Local
 SD/keyboard journal locking uses POSIX `fcntl`; screen-text has no journal.
 Use the Mac's Python interpreter, not a

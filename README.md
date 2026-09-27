@@ -17,13 +17,14 @@ The [Extender handbook](docs/README.md) is the current documentation entry point
    foreground `EMOS sdserve` EMOSlet and paired `--fast` option.
 3. **Building:** [component build guide](docs/building.md). Select `p4-console`
    explicitly; PlatformIO's default target is a historical bring-up target.
-   The base target does not yet reconstruct all deployed candidate overlays.
+   The accepted r55 console was reconstructed from maintained source; select
+   exact approved bytes through [production](production/README.md), not Git HEAD.
 4. **Unfinished work:** [TODO](TODO.md). Task records preserve dated evidence;
    they are not automatically current operating instructions.
 
 ## Capabilities and limits
 
-Current documentation review: **24 September 2026**. Results apply to the
+Current handbook review: **27 September 2026** (documentation/source inspection). Results apply to the
 recorded builds and bench, not every Agon/P4 combination.
 
 | Capability | Current status and authority |
@@ -33,7 +34,8 @@ recorded builds and bench, not every Agon/P4 combination.
 | Browser video and observation | P4 serves the page and final rendered pixels, with full-frame RLE2 by default. Browser output can slow gameplay; presented fps is not application-loop or native-rendering throughput. [Video contract](docs/protocols/browser-video.md). |
 | Agon mainboard SD | Foreground `EMOS sdserve [--fast] /` supports listing, reads and recoverable staged replacement. Normal mode verifies whole files; fast mode omits those verification passes. EMOSlet installation and latest scoped physical checks: [operating guide](docs/mainboard-sd.md). It does not run alongside a game. |
 | Remote reset | An optional Pi-hosted bridge pulses the Agon's reset circuit; the browser button uses that bridge. This is not P4-native reset or power cycling. [Reset guide](docs/bench-reset.md). |
-| Future / deferred | P4-local SD: [PORT-007](docs/tasks/PORT-007.md). Audio: [PORT-004](docs/tasks/PORT-004.md). Parallel transport, MicroPython and physical video outputs remain separate work; see [TODO](TODO.md). |
+| P4-local SD | Development candidate provides CLI/HTTP file and directory management; bounded r57 hardware checks recorded, outside selected production v0.1.0. [P4 SD guide](docs/p4-sd.md). Current bench firmware must be checked separately. |
+| Future / deferred | Audio: [PORT-004](docs/tasks/PORT-004.md). Parallel transport, MicroPython and physical video outputs remain separate work; see [TODO](TODO.md). |
 
 Network services use plain HTTP/WebSocket on a trusted LAN, without
 authentication. The SD root passed to `sdserve` bounds access; `/` exposes the

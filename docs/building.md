@@ -18,7 +18,8 @@ make them alternative supported firmware configurations.
 The current build uses PlatformIO with the Arduino/ESP-IDF hybrid framework.
 The repository pins pioarduino `55.03.311` and Arduino-ESP32 `3.3.11`. The
 maintainer's Linux build environment uses PlatformIO Core `6.1.19`. From a
-POSIX shell with Git and Python 3 available:
+POSIX shell with Git and Python 3 available (use Python 3.11 or newer if
+also running the installation packaging/verifier tools):
 
 ```sh
 git clone https://github.com/bgates747/agon-extender.git

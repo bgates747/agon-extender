@@ -41,6 +41,24 @@ Machine-specific SSH identity and desktop helper path remain in HARDWARE.local.m
 The P4 is not connected as a reset controller and no P4/VDP firmware operation
 is part of this pulse. See DEMO-001 evidence for the accepted demonstration.
 
+## Host reset command
+
+From the Extender checkout, after confirming reset authorization and the current
+bench state:
+
+```sh
+.venv/bin/python scripts/reset_agon.py --config "$RESET_CONFIG"
+```
+
+`RESET_CONFIG` is an owner-provided local JSON file with `ssh` (complete SSH argv),
+`chip` (gpiochip name) and `gpio` (line number). The wrapper uses noninteractive
+`sudo -n bash -s` on the Pi; the existing authorized SSH/sudo setup must already
+work without a password prompt. The Pi needs Bash, GNU `timeout`, libgpiod v2
+`gpioset` and `pinctrl`. These are prerequisites, not instructions to change
+privileges or wiring. On macOS use the local `python3`, not a Linux virtualenv.
+A zero exit confirms the actuator command completed; observe Agon boot and fresh
+input admission separately. Do not replay an uncertain pulse automatically.
+
 ## Browser button through the bench Pi
 
 The header's top-right **Reset Agon** button uses `scripts/reset_bridge.py` on the Pi;

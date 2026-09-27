@@ -9,9 +9,9 @@ SD, keyboard, reset/recovery and protocol guides. The same rule now governs
 future documentation changes. Historical evidence remains separate; no frozen
 experiment is silently reclassified as a current deployment recipe.
 
-**The full audit remains open.** Four bounded passes prioritize external-agent
-operation, current contracts and applicability within the Author's separate
-one-hour allowances. Inventory and link
+**The full audit remains open.** N01–N25 and the earlier bounded passes are
+complete in their recorded scopes. The [current-handbook closeout](CLOSEOUT.md)
+is the concise current result; earlier one-hour allowances are historical. Inventory and link
 coverage are not body-review coverage. No code, firmware, hardware, SD contents,
 network endpoint or emulator state changed. Changes are committed locally;
 publication was not part of this execution contract.
@@ -210,15 +210,15 @@ hardware or independent fresh-machine acceptance.
 | F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
 
-[FINDINGS.md](FINDINGS.md) records findings through F070 and their dispositions.
+[FINDINGS.md](FINDINGS.md) records findings through F073 and their dispositions.
 Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-A09-N01–N24 are complete within their documented scopes. Select the next small
-pending/partial documentation batch under A09-04/05/06/08 before execution.
-No implementation or bench work is selected. Historical batch continuation
-notes describe their own checkpoint, not current instructions.
+The current-handbook pass is complete through N25. Remaining historical
+inventory review is not automatically promoted. Use the closeout's known-gap
+owners and reopen documentation work when a current workflow requires it.
+No deferred implementation or bench work is selected.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -558,3 +558,17 @@ research; the FatFS workaround remains conditional on reproducing its compiler
 failure, not an active obligation. Classify the note as historical research and
 close this applicability review. Old build-size figures were not remeasured.
 One pending inventory item becomes reviewed; no EMOS files changed.
+
+## A09-N25 result
+
+B68 completed the scoped current-handbook closeout; see [CLOSEOUT](CLOSEOUT.md)
+for the usable entry points and remaining owners. Corrected stale root build/
+P4-SD capability claims, installed-versus-selected wording, verifier/recovery/
+reset prerequisites, and SD timeout/whole-file-buffering limits. Frozen archives
+and unrelated prototype edits were preserved. No bench, endpoint, emulator,
+source implementation or firmware operation. No automatic archive-mining
+continuation: broad A09-04/05/06/08 remain incomplete.
+
+Inventory checkpoint: 1123 records; {'reviewed': 126, 'partial': 162, 'pending': 647, 'metadata-only': 140, 'provenance-only': 48}. Existing review states
+were retained for guides; the new closeout is reviewed. Counts are not runtime
+coverage or unfinished-task counts.

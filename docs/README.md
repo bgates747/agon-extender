@@ -1,8 +1,8 @@
 # Extender handbook
 
-Start here for current operation and contracts. This handbook is being
-consolidated under [AUDIT-009](tasks/AUDIT-009.md); its remaining coverage gaps
-are explicit. It must not require comparing old task amendments to determine
+Start here for current operation and contracts. The [handbook closeout](tasks/AUDIT-009/CLOSEOUT.md)
+records checked workflows and remaining limits; the broader [AUDIT-009](tasks/AUDIT-009.md)
+historical review is incomplete. It must not require comparing old task amendments to determine
 current behavior. Dated evidence supports claims but is not a second manual.
 
 Production **v0.1.0** is the accepted local combination. The [current approved local installation](../production/README.md) selects exact
@@ -22,8 +22,9 @@ firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 | Where files belong on SD | [SD layout](sd-layout.md) |
 
 Remote input requires prior EMOS admission. The SD listener is foreground,
-requires Legacy mode and runs as `/emos/sdserve.bin`. P4-local SD HTTP access has a deployed r57 candidate with bounded hardware
-checks passed, awaiting acceptance; physical HDMI output is not a current installed capability. Consult the operating guides
+requires Legacy mode and runs as `/emos/sdserve.bin`. P4-local SD HTTP access passed bounded r57 candidate checks but is outside the
+selected production bundle. Neither this page nor the selected bundle identifies
+the firmware currently on an occupied bench. Physical HDMI output remains unqualified. Consult the operating guides
 for precise limits rather than assuming support from a research or example file.
 
 ## Develop against the current interfaces

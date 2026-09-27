@@ -91,8 +91,12 @@ time. Its exact pending request is saved before transmission. After an uncertain
 network timeout, `resume` retries those same bytes, not the remaining upload
 workflow. Inspect its result and the retained transaction before deciding whether
 to finish, cancel or recover; do not issue a new transfer
-or discard the state because an acknowledgement was lost. Default request
-timeout is 60 seconds; `--timeout SECONDS` changes it.
+or discard the state because an acknowledgement was lost. The default
+RPC retry deadline is 60 seconds; `--timeout SECONDS` changes that deadline
+per request, not the duration of a whole transfer. The separate `/sd/status`
+query uses a fixed three-second network timeout. The host loads uploads and
+downloads into memory as complete files; this client is not a streaming or
+whole-file-resume tool.
 
 After a service restart, retain the old state and use a new state filename.
 Inspect the journal explicitly. The boot value is an advisory time-derived

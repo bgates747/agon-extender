@@ -36,7 +36,8 @@ package; keep those in private operator configuration.
 
 After verifying the archive hashes and extracting the runtime package, the
 maintained source checkout provides an additional structural check. From the
-Extender repository root, with the build guide's Python/PyYAML environment:
+Extender repository root, with Python 3.11 or newer and PyYAML available
+(the verifier uses `hashlib.file_digest`):
 
 ```sh
 .venv/bin/python scripts/verify_installation.py "$EXTRACTED_RUNTIME_ROOT"
