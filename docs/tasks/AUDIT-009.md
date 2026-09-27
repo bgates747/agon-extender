@@ -100,7 +100,7 @@ if no accepted replacement policy is evidenced. Update inventory/findings/result
 check local links/whitespace, commit this documentation-only batch and stop.
 No bench use, firmware changes, rebuild or new rate decision.
 
-A09-N08 [ ] **Timing-package reuse guidance (F019).** Review the current timing
+A09-N08 [x] **Timing-package reuse guidance (F019).** Review the current timing
 guide against retained run.py, BENCH-007, bench constraints and SD operating
 instructions. Separate historical runner behavior from current prerequisites;
 remove contradictory runnable guidance and give the procedure-refresh work an

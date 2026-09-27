@@ -2,7 +2,9 @@
 
 ## Executive summary
 
-Reusable diagnostic support for mainboard VDP and P4 EDP. Scoped controls and
+Experimental diagnostic support for mainboard VDP and P4 EDP. The retained host
+runner is **not ready for another bench run** until its procedure is refreshed
+under [BENCH-007](../tasks/BENCH-007.md). Offline analysis remains available. Scoped controls and
 paired game captures passed; see the [retained results](../tasks/BENCH-007/RESULTS.md)
 for limits and the unresolved mainboard sequential-run panic. Artifact status
 remains experimental; this is not general production qualification. Shared
@@ -74,7 +76,7 @@ not alter a frozen runner or authorize that exception. BENCH-007 owns its next
 procedure refresh. Preserve old evidence and do not rerun old command sequences
 as though documentation review qualified a new deployment.
 
-## Building and running
+## Package components and preparation requirements
 
 1. `tests/performance/builders/aginvadors.py`, `rally.py`, and `nurples.py`
    accept `--source` and a fresh `--output` directory. Supply the current
@@ -89,8 +91,9 @@ as though documentation review qualified a new deployment.
    disables renderer markers and `1` enables them. Both cases use the identical
    game binary and PRT reads. Missing or invalid configuration refuses capture.
    Normal production Aginvadors contains none of this instrumentation.
-4. Select mode through MOS CLI/startup before invocation:8 for Aginvadors,
-   136 for Rally,20 for Nurples. Place runtime data in the isolated test
+4. The operator must select mode in `/autoexec.txt`, before fixture invocation:
+   8 for Aginvadors,136 for Rally,20 for Nurples. Do not select it in the
+   fixture or an EXEC batch. Place runtime data in the isolated test
    directory. Do not run these derivatives on unprepared production directories.
 5. C variants write120 rows after capture. Nurples stores120 raw active/total PRT
    records and MOS timestamps in RAM; save the symbol-delimited range before
@@ -126,13 +129,15 @@ measurement. This gives nominal288,000 counts/s,3.472us/count and227.55ms range.
 Other fixtures default to /16. Always retain the selected divisor beside raw
 counts and pass the same value to the analyzer; never mix raw counts across them.
 
-The reusable `tests/performance/run.py` accepts `--url`, `--output`, `--route`,
+The retained, presently reuse-blocked `tests/performance/run.py` accepts `--url`, `--output`, `--route`,
 `--game`, `--markers`, and a unique `--run-name`. It requires an already-running
 SD service and exclusive bench ownership. It does not flash or reset boards.
 For Nurples supply the exact binary's `--symbols`; for the wider Rally build
-supply `--rally-binary rtime64.bin --prt-divider 64`. Prepared files belong under
-/test/gt, with game directories inv/rally/nur and common helpers at /test/gt.
-CLI batches select the mode outside the applications and return to the SD service.
+supply `--rally-binary rtime64.bin --prt-divider 64`. Historical runs placed files under `/test/gt`, with game directories
+inv/rally/nur and common helpers there. These are retained evidence paths, not
+a new deployment prescription; reconcile them with current bench constraints
+and SD layout during procedure refresh. The old EXEC batch switches modes and
+loads the ordinary listener fallback; neither is the current startup procedure.
 The operator must prepare firmware, runtime assets and the admitted keyboard path
 before invoking it. No browser observer should request video during this baseline.
 

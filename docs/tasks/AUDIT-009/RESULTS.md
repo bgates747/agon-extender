@@ -391,3 +391,15 @@ read-only/source-and-document review before considering any runner reuse.
 F024 hardware digest and F060 emulator setup remain under their existing gates.
 
 Coverage unchanged: 1114 records; 140 metadata-only, 146 partial, 663 pending, 44 provenance-only, 121 reviewed.
+
+## A09-N08 result
+
+B51 reviewed timing-package reuse passages against run.py and current bench/SD
+contracts. The guide contradicted its own warning by permitting CLI/batch mode
+selection and presenting historical deployment paths as current instructions.
+It now clearly blocks runner reuse, requires autoexec-only mode selection and
+separates historical paths from deployment. BENCH-007 B07-R01 explicitly owns
+EMOSlet return, input readiness, path and startup refresh. F019's documentation
+is reconciled; the runner implementation remains unchanged and reuse-blocked.
+Two inventory dispositions updated without changing review states or counts.
+No firmware, emulator, bench operation or new performance result.

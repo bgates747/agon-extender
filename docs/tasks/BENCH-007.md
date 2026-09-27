@@ -15,6 +15,20 @@ Original mainboard/P4 firmware restoration and usable CLI/input were recorded.
 Artifact status remains experimental. The original execution goal is complete.
 Aginvadors optimization is deferred; unresolved findings below remain explicit.
 
+## Procedure refresh before reuse
+
+B07-R01 [ ] Refresh `tests/performance/run.py` and its deployment procedure before
+another bench invocation (audit A09-F019 in the
+[AUDIT-009 findings](AUDIT-009/FINDINGS.md)). The operator prepares video mode
+in `/autoexec.txt` and verifies admitted Extender input before the host sends
+commands. The runner must return to the current foreground EMOSlet via
+`EMOS sdserve /` in Legacy mode, with checked transfers; it must not assume an
+ordinary application fallback is installed. Reconcile isolated game paths with
+current bench constraints, preserve exact-build Nurples RAM collection before
+loading another application, and validate the refreshed procedure under a
+separate bounded test contract. Historical captures and runner source remain
+unchanged by the documentation audit; this is not new execution authorization.
+
 ## Frozen work contract — 2026-09-20
 
 1. Record exact game, compiler, EMOS, VDP and P4 source/build identities and

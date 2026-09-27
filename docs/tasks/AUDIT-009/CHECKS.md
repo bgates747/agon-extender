@@ -446,3 +446,11 @@ or ADR amendment inferred. Five inventory dispositions refreshed with states
 unchanged:1114 records,121 reviewed,146 partial,140 metadata-only,44 provenance-only,
 663 pending. Local relative file-target scan and git diff --check pass; anchor
 resolution and external URLs not validated. No hardware, build or emulator work.
+
+## A09-N08 — timing reuse guidance
+
+B51 contract 8a50860a; inspected run.py without executing it, current bench
+constraints and timing guide. Two scoped inventory dispositions changed; states
+and counts unchanged. Checked 134 relative file targets across changed Markdown;
+all exist. Anchors/external URLs excluded. git diff --check passed. No runner,
+build, emulator, hardware or network test performed.
