@@ -450,7 +450,7 @@ Keep filesystem code out of resident ROM where practical; measure ROM/RAM impact
 Test missing utility, partial CLI input, loaded program preservation, keyboard
 continuity, app entry/exit, and clean restoration after transfer errors.
 
-R05-A05 [ ] Implement/test application-initiated transfer entry points and a tiny
+R05-A05 [x] Implement/test application-initiated transfer entry points and a tiny
 eZ80 caller fixture for both directions. Demonstrate correct caller-memory and
 return-state preservation, errors and cancellation. Simultaneous external requests
 must be rejected, including while the application is waiting for its own transfer.
@@ -558,5 +558,8 @@ is unchanged.
 
 [Bounded contract](REMOTE-005/A05-CONTRACT.md) owns this tranche. Resident lease
 and linked helper are implemented; host checks and eZ80 send/caller return pass.
-Physical integration awaits P4 staging; full results are in
-[application results](REMOTE-005/A05-RESULTS.md). No bench firmware changed.
+Both directions now pass on physical EMOS v0.1.21 with a RAM-only diagnostic P4
+peer, including caller memory, external-request exclusion and return to CLI.
+Normal P4 is restored after qualification. See
+[application results](REMOTE-005/A05-RESULTS.md). Real P4 SD staging remains A06;
+ExCom transfer support remains downstream. Production selection is unchanged.

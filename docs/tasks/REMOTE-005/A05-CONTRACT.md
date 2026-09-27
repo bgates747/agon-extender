@@ -5,33 +5,33 @@ SD transport and the foreground checked file engine; do not load an EMOSlet over
 the caller. Controlled-peer tests establish both directions before P4 staging
 exists. They do not qualify WebDAV or persistent P4 spool behavior.
 
-A05-01 [ ] Extend resident `ext.sdlink` with application-owned open, using actual
+A05-01 [x] Extend resident `ext.sdlink` with application-owned open, using actual
 EMOS execution policy. Core/ISR/nested callers cannot acquire it. Return a fresh
 execution token; retain only bounded transport buffers and ownership in ROM/RAM.
 Route control replies to the application's mailbox only while this owner exists.
 Existing manual listener calls and external CLI admission retain their behavior.
 
-A05-02 [ ] Add a synchronous linked C helper for P4-to-Agon receive and
+A05-02 [x] Add a synchronous linked C helper for P4-to-Agon receive and
 Agon-to-P4 send. Validate/copy two absolute ASCII paths, negotiate capabilities,
 fragment APP_BEGIN descriptors, bind the file session to the returned job/grant,
 and close ownership on every return. The caller supplies an optional cancellation
 predicate; the helper does not impose Escape or retain a callback afterward.
 The first supported caller ABI is AgonDev ADL C, ordinary applications/MOSlets.
 
-A05-03 [ ] Reuse existing checked file records and mainboard file engine.
+A05-03 [x] Reuse existing checked file records and mainboard file engine.
 The application initiates every exchange. Receive reads a P4 source and stages/
 activates the Agon destination through the existing checked engine. Send reads
 the Agon source and requests P4 checked staging/activation. Do not report success
 before matching terminal confirmation. No retry of an uncertain mutation. Preserve
 recovery evidence on interruption; no whole-directory or fast option in this helper.
 
-A05-04 [ ] Execute host tests with real helper/file-engine code and a controlled
+A05-04 [x] Execute host tests with real helper/file-engine code and a controlled
 peer: both directions, binary/chunk boundaries, wrong identities/CRC, unavailable
 peer, busy/unsupported, cancellation before and during transfer, and caller-memory
 preservation. Check the existing listener separately. Compile the ADL fixture and
 EMOS through maintained wrappers; measure added ROM and stop if it will not fit.
 
-A05-05 [ ] Exercise actual eZ80 caller execution before hardware deployment where
+A05-05 [x] Exercise actual eZ80 caller execution before hardware deployment where
 supported. Physical tests require a paired application-capable peer; never advertise
 support through the normal P4 image before A06 supplies its staging implementation.
 Record tested versus deferred boundaries and leave the bench recoverable.
@@ -70,3 +70,6 @@ rejection while its lease is active, retrieve its durable result and verify the
 received bytes. Archive test files and restore normal P4 r57, unchanged startup,
 and a responsive prompt. Full production P4 staging remains A06; this test peer
 must not be promoted as that implementation.
+
+Completed within this bounded scope; see [results](A05-RESULTS.md). Application
+transfers remain Legacy-only and the physical peer is diagnostic RAM storage.
