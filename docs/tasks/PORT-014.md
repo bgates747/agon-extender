@@ -1,5 +1,17 @@
 # PORT-014 — EMOS UART text rendered by EDP in the browser
 
+## Current applicability — 2026-09-26
+
+This completed diagnostic retains its original candidates and acceptance limits.
+The old startup, rollback and installation checkpoints below do not select
+current firmware or authorize replay. Use the [handbook](../README.md) and
+[production selection](../../production/README.md). Current Legacy diagnostics
+still require a paired peer and unoccupied UART1; normal Extender keyboard
+ownership must be addressed in a reviewed setup/recovery procedure before reuse.
+Later ExCom operation does not broaden this early diagnostic's qualification.
+
+## Retained task record
+
 Status: complete — r03 hardware count, waveform and Author-confirmed repeat runs passed.
 Completed: 2026-09-08.
 Started: 2026-09-08.

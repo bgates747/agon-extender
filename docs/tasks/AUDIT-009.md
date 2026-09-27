@@ -144,7 +144,7 @@ measurements, exception acceptance or frozen identities. Documentation only;
 no diagnostic invocation, emulator change or bench operation. Record bounded
 coverage, check links/whitespace and commit changes in their owning repositories.
 
-A09-N14 [ ] **General Poll and visible-text history.** Reconcile EMOS
+A09-N14 [x] **General Poll and visible-text history.** Reconcile EMOS
 INTEG-007–008 and PORT-013–014 applicability with their final acceptance and
 current diagnostic constraints. Preserve analyzer exceptions, version-numbering
 history and parser-versus-visible-output evidence distinctions. Documentation

@@ -489,3 +489,9 @@ No compilation, tests, emulator or physical operations.
 B56 contract de691628; EMOS 420ddcf. 104 relative Markdown file targets exist;
 anchors/external URLs excluded. Whitespace passed. Dispatch/source inspection
 and retained closeout comparison only; no runtime or waveform revalidation.
+
+## A09-N14 — poll/text records
+
+B57 contract dfe7c78d; EMOS f62d675. 85 relative file targets exist; anchors
+and external URLs excluded. Whitespace passed. Retained closeout/source-contract
+comparison only; no hardware or emulator execution.

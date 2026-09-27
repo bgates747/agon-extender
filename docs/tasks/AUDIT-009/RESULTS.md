@@ -455,3 +455,12 @@ paired-peer requirement and keyboard ownership conflict. Retained the accepted
 without reinterpretation or remeasurement. EMOS commit 420ddcf. Three entries
 advance from pending to partial; manifests/waveforms not exhaustively revalidated.
 Inventory 1121: {'reviewed': 123, 'partial': 153, 'pending': 657, 'metadata-only': 140, 'provenance-only': 48}. No source/fixture/emulator/bench changes.
+
+## A09-N14 result
+
+B57 reconciled INTEG-007–008 and PORT-013–014 current applicability with final
+acceptance. Preserved General Poll's accepted short acquisition/tail exceptions
+and visible-count evidence separation: 11 transactions, one captured run, three
+Author-confirmed runs. Version reset remains distinct builds, not relabelling.
+EMOS f62d675; two pending inventory entries advance to partial. No fresh waveform,
+build, emulator or physical validation. Historical artifacts remain unchanged.

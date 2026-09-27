@@ -233,3 +233,9 @@ of the current client. No bench access or new throughput measurement.
 | ID | Finding | Evidence | Disposition |
 |---|---|---|---|
 | A09-F069 | Completed UART task sequences retain present-tense installation/pending language and omit current keyboard ownership conflict | INTEG-004–006, PORT-010–012 closeout, current emos_cmd | Added current applicability and historical record boundaries; Legacy alone does not release UART1 keyboard ownership. EMOS 420ddcf. Original acceptance, including shortened acquisition, unchanged. |
+
+## B57 — early display diagnostics
+
+A09-F069 also applies to INTEG-007–008 / PORT-013–014 historical deployment
+wording. B57 clarifies current applicability without changing analyzer exceptions,
+version reset or acknowledgement-versus-visible-output acceptance.

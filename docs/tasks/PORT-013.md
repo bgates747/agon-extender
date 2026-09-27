@@ -1,5 +1,17 @@
 # PORT-013 — General Poll through the retained EDP handler
 
+## Current applicability — 2026-09-26
+
+This completed diagnostic retains its original candidates and acceptance limits.
+The old startup, rollback and installation checkpoints below do not select
+current firmware or authorize replay. Use the [handbook](../README.md) and
+[production selection](../../production/README.md). Current Legacy diagnostics
+still require a paired peer and unoccupied UART1; normal Extender keyboard
+ownership must be addressed in a reviewed setup/recovery procedure before reuse.
+Later ExCom operation does not broaden this early diagnostic's qualification.
+
+## Retained task record
+
 Status: complete; Author accepted analyzer exceptions. Started: 2026-09-08. Completed: 2026-09-08.
 
 ## Scope and decisions
