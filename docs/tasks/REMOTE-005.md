@@ -239,20 +239,26 @@ R05-B01 [x] Record D01 and the accepted portion of D02; leave D03 open.
 R05-B02 [x] Identify embedded-oriented candidates and pin initial review revisions;
 compare advertised bulk/directory support and identify existing SD API gaps.
 
-R05-B03 [ ] Inspect shortlisted source and actual licenses/dependencies. Separate
+R05-B03 [x] Inspect shortlisted source and actual licenses/dependencies. Separate
 reusable browser assets from local-filesystem/server assumptions; estimate asset
 sizes and P4 adapter work without claiming unmeasured runtime costs. Prefer a
 frontend adapter to replacing our HTTP service or adding unrelated Wi-Fi/OTA code.
 
-R05-B04 [ ] Assess Firefox/Chromium/Safari folder upload/download mechanisms,
+R05-B04 [x] Assess Firefox/Chromium/Safari folder upload/download mechanisms,
 empty-directory preservation, ZIP versus direct downloads, bounded host/P4 memory,
 serialized RPC transfers, progress/cancellation/retry, filename/path limits and
 per-file outcomes. Define what select-all includes when filtering or paging.
 
-R05-B05 [ ] Map each proposed operation to current EMOSlet/P4/host ownership;
+R05-B05 [x] Map each proposed operation to current EMOSlet/P4/host ownership;
 identify required mainboard API additions, reuse P4-local SD idioms where sound,
 and preserve staging/recovery and root restrictions. Do not silently substitute
 P4-local storage for Agon SD or presume background mainboard access.
 
-R05-B06 [ ] Present a recommended reuse approach, gaps and bounded implementation
+R05-B06 [x] Present a recommended reuse approach, gaps and bounded implementation
 proposal. Then return to D02/D03 with evidence; do not decide lifecycle in advance.
+
+Browser investigation delivered 2026-09-27: B03–B05 are source/documentation
+review, not runtime qualification. B06 proposal is presented in BROWSER-RESEARCH;
+implementation items R05-P01–P04 are proposals awaiting Author review. Preferred
+approach is selective MIT frontend reuse, existing relay and serialized browser
+orchestration, with additional EMOSlet directory primitives. D03 remains open.
