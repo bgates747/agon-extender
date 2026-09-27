@@ -86,3 +86,20 @@ application's memory.
 No implementation, deployment or production selection follows merely from this
 proposed ADR. Remaining design choices and the development/test gates are in
 REMOTE-005's R05-A work items and D06–D10.
+
+## Cancellation and recovery — accepted 2026-09-27
+
+Escape on Agon requests cancellation of external foreground transfers. Return to
+CLI only after safe cleanup. Application-origin transfers retain application-owned
+keyboard policy; EMOS does not impose Escape cancellation on the caller.
+
+Preserve the established per-file staged replacement and recovery mechanism:
+prepare and verify the new file under the selected transfer contract, retain the
+old target as backup during activation, and retire it only after confirmed
+success. Cancellation during activation waits for completion or a recoverable
+failure boundary. Do not erase the only confirmed good copy during cleanup.
+
+This is recoverable replacement, not unconditional power-failure atomicity on FAT.
+Directory transfers are not all-or-nothing in the first iteration: completed files
+remain and incomplete entries are reported. No new filesystem transaction layer
+or silent relaxation of the checked/fast transfer contract is selected.

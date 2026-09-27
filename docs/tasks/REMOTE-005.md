@@ -383,6 +383,23 @@ lifetime. Keep P4 staging hidden from the exported Agon namespace. Use the SD
 layout's reserved transaction concept with a documented P4-local placement;
 never reuse a mainboard path by assumption.
 
+D12 [x] Accepted 2026-09-27: Escape on Agon cancels an externally initiated
+transfer, returning to CLI after safe cleanup. EMOS does not impose Escape
+cancellation on application-origin transfers; the application owns key policy.
+The synchronous ABI must not promise application-side event processing while
+blocked; any cooperative cancellation mechanism requires explicit ABI design.
+
+D13 [x] Accepted 2026-09-27: preserve existing file-level staged replacement and
+recovery. Write/close/verify the stage, preserve the old destination as backup,
+activate the stage and confirm success before retiring the backup, following the
+existing checked/fast-mode contract. Do not claim unconditional power-loss
+atomicity on FAT. Once activation begins, defer cancellation until that sequence
+completes or reaches a recoverable error state. Retain recovery evidence rather
+than deleting the only good copy. No all-or-nothing directory guarantee in the
+first iteration: completed files remain, uncompleted entries are reported, and
+cancellation stops further work. Default verification policy remains explicit;
+this decision does not silently enable fast mode or weaken existing guarantees.
+
 ### Development, deployment and test work items
 
 R05-A01 [ ] Freeze the Author-reviewed architecture and settle D02–D10 as needed
