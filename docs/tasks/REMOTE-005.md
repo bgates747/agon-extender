@@ -288,3 +288,12 @@ Do not proceed to browser backend implementation. D01's browser-first trial is
 complete; final interface selection is reopened. D02 bulk/directory requirements
 remain. D03 remains unanswered. Next suggested investigation is WebDAV for native
 host file-manager access; suggestion alone does not authorize implementation.
+
+## WebDAV investigation — 2026-09-27
+
+Author authorized investigation including Pop!_OS, Lenovo and macOS after
+preserving outstanding work. [WebDAV findings](REMOTE-005/WEBDAV-RESEARCH.md)
+record completed W01/W02, actual Linux client inventory, pinned standard-MIT
+ESP-IDF server review and the mainboard CRC/staging mismatch. W03 proposes a
+host-only native-file-manager usability trial; W04 remains conditional. D03 and
+D04 are still open. No device or native-client transfer qualification yet.
