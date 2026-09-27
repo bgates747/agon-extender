@@ -119,3 +119,11 @@ ownership rule covers external clients, explicit CLI tools and application-origi
 transfers. Multiple HTTP sockets from a native client are not by themselves
 separate jobs; implementation must preserve client compatibility while enforcing
 EMOS's single admitted mainboard owner.
+
+## Authentication scope — accepted 2026-09-27
+
+Keep this Agon file service password-free: no user accounts, usernames or
+passwords in the current implementation scope. Any reachable client may request
+access, subject to EMOS admission and single-job ownership. Session/job identifiers
+coordinate transfers; they are not credentials. A future Linux environment may
+establish its own authentication policy; no such implementation is selected here.
