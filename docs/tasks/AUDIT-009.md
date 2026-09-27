@@ -170,7 +170,7 @@ PORT-008 scope. Clarify historical application/headroom/restoration statements;
 preserve measured results and E10's unstarted gate. Documentation only, no
 source, emulator or bench changes. Record bounded coverage and commit by owner.
 
-A09-N18 [ ] **External-agent emulator setup guidance (F060).** Trace the
+A09-N18 [x] **External-agent emulator setup guidance (F060).** Trace the
 maintained setup tool and EMOS build/review entry points. Add a bounded Linux
 profile setup and verification guide, distinguishing stock application review,
 EMOS diagnostics and native VDP modules from P4 hardware. Record prerequisites,

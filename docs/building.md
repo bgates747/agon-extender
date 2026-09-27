@@ -154,7 +154,9 @@ With its default layout, firmware outputs are in
 `../mos-agondev/projects/mos-port/bin/`. For identified builds and automated
 qualification, see
 [prepare_boot_review.py](https://github.com/bgates747/agon-emos/blob/main/scripts/prepare_boot_review.py);
-that workflow also requires a configured Fab emulator.
+that workflow also requires a configured Fab runtime and runs automated
+runtime checks. Start with [emulator setup](emulator-setup.md) for profile
+ownership, stock-versus-EMOS selection and validation limits.
 
 The maintained `agon-emos` repository contains the resident SD gateway and
 `projects/sdserve/`. The listener is built separately from resident EMOS. Its

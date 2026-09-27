@@ -493,3 +493,13 @@ restored images are not current selection. Timing evidence does not establish
 browser or game performance; E10 remains unstarted. EMOS commit 19486d7.
 Two pending records become partial; underlying evidence bodies remain unreviewed.
 Inventory 1121: {'reviewed': 123, 'partial': 157, 'pending': 653, 'metadata-only': 140, 'provenance-only': 48}. No source, emulator, build or bench changes.
+
+## A09-N18 result
+
+B61 added the role-named emulator setup guide and linked it from the handbook
+and build guide. Source inspection exposed the Extender preset's payload
+requirements, separate runtime override and Wayland default; EMOS preparation
+is a build/runtime-check workflow, not an interactive profile generator. F060's
+documentation gap is addressed within Linux stock-profile scope. Fresh-host,
+macOS and bespoke runtime qualification are not claimed. No emulator profile,
+source, firmware or hardware changed. Unrelated prototype work remains intact.

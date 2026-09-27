@@ -515,3 +515,11 @@ INTEG-013/014 relative file links verified locally; whitespace passed in both
 repositories. Compared current sdserve guide, utility guide, AUDIT-008 hardware
 receipt and PORT-008/E09 summaries without replaying tests. Two inventory
 records advanced pending to partial, preserving wider review boundaries.
+
+## B61 — External-agent emulator setup guidance
+
+Reviewed shared emulator/bespoke guidance, setup_emulator.py and EMOS
+prepare_boot_review.py against docs/building.md. Added docs/emulator-setup.md.
+Checked setup CLI help, local Markdown link targets and changed-file whitespace.
+No setup, build, launch or bench command executed. New guide reviewed within
+this bounded source/contract scope; build-guide inventory scope remains partial.

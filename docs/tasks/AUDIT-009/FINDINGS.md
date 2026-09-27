@@ -181,7 +181,7 @@ records. Finding ownership does not authorize implementation or a new bench run.
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
-| A09-F060 | Build journey references a configured emulator but lacks a self-contained external-user profile setup/verification path | docs/building.md delegates identified EMOS review to a configured Fab; canonical agon-dev-env emulator guidance supplies local setup/launcher/SD rules, not a newly validated portable install | Gap explicitly mapped in RESULTS. Existing A09-04/08 own guide reconciliation; coupled emulator changes require human validation. No profile changed or launched. |
+| A09-F060 | Build journey references a configured emulator but lacks a self-contained external-user profile setup/verification path | docs/building.md delegates identified EMOS review to a configured Fab; canonical agon-dev-env emulator guidance supplies local setup/launcher/SD rules, not a newly validated portable install | N18/B61 supplies docs/emulator-setup.md with source-checked Linux preset instructions and explicit EMOS/native/host boundaries. Documentation gap addressed; fresh-host and runtime qualification remain unperformed. No profile changed or launched. |
 
 ## A09-N04 — source, driver and qualification applicability
 
