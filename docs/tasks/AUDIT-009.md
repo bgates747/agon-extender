@@ -89,6 +89,17 @@ qualified combinations. Correct stale deployment notes with a registry revision
 under standing version authority. No new component qualification, rebuild,
 tag, deployment or promotion is implied. Record checks and stop after this batch.
 
+A09-N07 [ ] **Browser pacing policy versus selected behavior (F008).** Review
+ADR-0020, the current browser-video guide, architecture pacing summary,
+BENCH-005's historical 30/60-Hz statements and web-pacing plan against selected
+r55 source and retained acceptance. Compare the current r57 client without
+contacting the board. State separately policy, client credit behavior and
+measured/application rates. Reconcile obsolete overlay/installation wording
+where it obscures that comparison; retain F008's implementation/decision gate
+if no accepted replacement policy is evidenced. Update inventory/findings/results,
+check local links/whitespace, commit this documentation-only batch and stop.
+No bench use, firmware changes, rebuild or new rate decision.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
