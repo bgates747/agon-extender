@@ -41,6 +41,13 @@ and responds only through the admitted service. Existing keyboard traffic and
 UART RTS/CTS are unchanged. No direct GPIO access, parallel bus reversal or new
 logic circuitry is part of this design.
 
+## Staging requirement
+
+P4-local SD staging is required for this new service. If staging media is absent
+or has insufficient space, report a clear failure; do not silently fall back to
+RAM-only staging or a different transfer method. This does not disable existing
+explicit CLI transfer tools. Accepted by the Author on 2026-09-27.
+
 ## Proposed upload and download paths
 
 Upload: host WebDAV client sends bytes to P4; P4 stages them on its local SD and

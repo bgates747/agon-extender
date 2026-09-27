@@ -354,7 +354,11 @@ without loading a MOSlet over the calling program; do not assume reentrancy or
 MOSlet safety. EMOS derives origin from actual execution/call context, not a P4
 claim. File transfers only, not unsolicited host access to the application's SD.
 
-D08 [ ] Define staging lifetime/quota and HTTP timing. Recommend bounded staging
+D08 [ ] Partially accepted 2026-09-27: P4-local SD staging is required for the
+new staged transfer service. Absent/full staging media produces a clear failure;
+no alternate transport or RAM-only fallback. Existing explicit CLI transfer tools
+remain separate and unchanged. Define staging lifetime/quota and HTTP timing.
+Recommend bounded staging
 on P4 SD with complete/partial manifests, mainboard boot/admission identity,
 cleanup and explicit errors on full/missing media. No unbounded P4 RAM buffering.
 P4 should obtain admission before accepting an expensive upload where practical;
