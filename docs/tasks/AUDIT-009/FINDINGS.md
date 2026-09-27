@@ -239,3 +239,9 @@ of the current client. No bench access or new throughput measurement.
 A09-F069 also applies to INTEG-007–008 / PORT-013–014 historical deployment
 wording. B57 clarifies current applicability without changing analyzer exceptions,
 version reset or acknowledgement-versus-visible-output acceptance.
+
+## B58 — keyboard and ExCom milestone boundaries
+
+| ID | Finding | Evidence | Disposition |
+|---|---|---|---|
+| A09-F070 | Historical separate browser/USB compositions and original ExCom exclusions/ROM size can read as current limitations | Current keyboard guide, EMOS selector guard, INTEG-011 and AUDIT-008 | Added current operation summaries in EMOS 97ad3f6; distinguish P4 arbitration from EMOS source switching. Preserve wider parity and lifecycle gates; old build figures remain historical. |

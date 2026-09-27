@@ -464,3 +464,12 @@ and visible-count evidence separation: 11 transactions, one captured run, three
 Author-confirmed runs. Version reset remains distinct builds, not relabelling.
 EMOS f62d675; two pending inventory entries advance to partial. No fresh waveform,
 build, emulator or physical validation. Historical artifacts remain unchanged.
+
+## A09-N15 result
+
+B58 reviewed current-scope passages of INTEG-009/010 against keyboard guidance,
+resident selector guard and later display-preservation/ROM results. Corrected
+provider-era applicability and old current-size wording. Both task scopes remain
+open for broader parity/lifecycle work. EMOS 97ad3f6; two existing partial records
+refreshed, counts/states unchanged. Historical whole bodies not revalidated.
+No source, build, emulator or bench operation.

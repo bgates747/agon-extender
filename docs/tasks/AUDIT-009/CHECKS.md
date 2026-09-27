@@ -495,3 +495,9 @@ and retained closeout comparison only; no runtime or waveform revalidation.
 B57 contract dfe7c78d; EMOS f62d675. 85 relative file targets exist; anchors
 and external URLs excluded. Whitespace passed. Retained closeout/source-contract
 comparison only; no hardware or emulator execution.
+
+## A09-N15 — keyboard/ExCom scope
+
+B58 contract 64ccd83f; EMOS 97ad3f6. 26 relative targets in task/changed EMOS
+documents exist; anchors/external URLs excluded. Whitespace passed. Source
+selector inspection and current-guide comparison only; no new runtime proof.
