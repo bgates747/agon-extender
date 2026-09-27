@@ -157,7 +157,7 @@ acceptance. Correct current summaries without treating full historical bodies
 as revalidated. Preserve outstanding parity/lifecycle gates. Documentation only;
 no source, emulator or bench changes. Validate and commit by repository.
 
-A09-N16 [ ] **Display preservation and private timing callbacks.** Review
+A09-N16 [x] **Display preservation and private timing callbacks.** Review
 INTEG-011/012 against current dispatch/reply code and retained graphics/timing
 results. Clarify stale pending/headroom statements and private ISR callback
 limits; do not generalize measured completion to scanout or public ABI support.

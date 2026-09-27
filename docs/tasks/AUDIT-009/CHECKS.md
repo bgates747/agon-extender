@@ -501,3 +501,9 @@ comparison only; no hardware or emulator execution.
 B58 contract 64ccd83f; EMOS 97ad3f6. 26 relative targets in task/changed EMOS
 documents exist; anchors/external URLs excluded. Whitespace passed. Source
 selector inspection and current-guide comparison only; no new runtime proof.
+
+## A09-N16 — display/callback scope
+
+B59 contract a62d0b59; EMOS d4e009d. 18 relative file targets checked; anchors
+and external URLs excluded. Whitespace passed. Code inspected without execution;
+retained evidence compared without recapture or requalification.

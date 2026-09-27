@@ -473,3 +473,12 @@ provider-era applicability and old current-size wording. Both task scopes remain
 open for broader parity/lifecycle work. EMOS 97ad3f6; two existing partial records
 refreshed, counts/states unchanged. Historical whole bodies not revalidated.
 No source, build, emulator or bench operation.
+
+## A09-N16 result
+
+B59 checked INTEG-011/012 against emos_cmd, console reply admission, assembly
+graphics_reply and retained QUAL-003/BENCH-007 evidence. Clarified independent
+scene preservation, original size/pending checkpoints, single ISR vector and
+transient payload lifetime. Completion is not scanout; private callback reception
+is not a generalized ABI. EMOS d4e009d; two partial dispositions refreshed, counts
+unchanged. No code, emulator, build or bench work; broader gates preserved.

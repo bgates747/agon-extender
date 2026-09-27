@@ -245,3 +245,10 @@ version reset or acknowledgement-versus-visible-output acceptance.
 | ID | Finding | Evidence | Disposition |
 |---|---|---|---|
 | A09-F070 | Historical separate browser/USB compositions and original ExCom exclusions/ROM size can read as current limitations | Current keyboard guide, EMOS selector guard, INTEG-011 and AUDIT-008 | Added current operation summaries in EMOS 97ad3f6; distinguish P4 arbitration from EMOS source switching. Preserve wider parity and lifecycle gates; old build figures remain historical. |
+
+## B59 — display preservation and callback scope
+
+A09-F070's historical-versus-current clarification extends to INTEG-011/012.
+Existing private-ABI distinction was correct; added explicit shared-vector,
+transient payload and scanout limits, plus current capture-control/reuse links.
+No new implementation defect or generalized callback support claimed.
