@@ -2,8 +2,11 @@
 
 ## Executive summary
 
-**Author approved execution: one-hour unattended run, 2026-09-24
-03:12:34–04:12:34 UTC.** Review
+Current checkpoint: **A09-N01–N20 complete within their bounded scopes; the
+whole-documentation audit remains open.** Historical one-hour windows below
+record earlier authorization, not a current time budget.
+
+Review
 Extender documentation against maintained code, accepted decisions and retained
 validation, then consolidate routine instructions into a small set of reliable
 entry points. A person or an agent working on another project must be able to
@@ -67,9 +70,8 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-N01–N04 are complete. The Author authorized the next bounded documentation
-subtask on 2026-09-26 after preserving and pushing prior work. **A09-N05–N07** are
-complete below; previous one-hour windows are historical, not a new time budget.
+N01–N20 are complete within their recorded scopes. The remaining queue below
+owns continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
 seven current bodies: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
@@ -187,7 +189,7 @@ from repository selection and device verification. Documentation only; no
 packaging, installation, firmware, profile or bench operations. Check CLI help,
 links and whitespace; record bounded coverage and commit separately.
 
-A09-N20 [ ] **Audit status and remaining-queue reconciliation.** Compare current
+A09-N20 [x] **Audit status and remaining-queue reconciliation.** Compare current
 checklists, results, findings and inventory counts. Remove superseded next-step
 instructions from current summaries, separate documentation review from owned
 implementation/qualification gates, and select a bounded documentation-only
@@ -236,8 +238,30 @@ A09-N01 completed within its documentation-only scope; see
 N03 is complete in batch B46; N04 is complete in batch B47. N04 reviewed current
 applicability, with selected rather than exhaustive coverage of SETUP-004
 historical driver records. N01–N04 and the later N05 production reconciliation are complete.
-The next bounded candidate is F040 version/status reconciliation under A09-05/06;
-no further execution is included in N05.
+F040 was resolved by N06; it is not a remaining work item.
+
+## Remaining documentation queue
+
+A09-N21 [ ] **Historical decision applicability, two documents only.** Review
+`docs/decisions/AUDIT-2026-08-23-001-operating-mode-semantics.md` and
+`docs/decisions/CA-2026-08-22-001-phase-c-compatibility-scope.md` against current
+architecture and SETUP-005. Identify obsolete instructions or still-owned gates;
+correct current applicability without changing accepted architecture or rewriting
+historical evidence. Update inventory/results and check links. Documentation only;
+no firmware, emulator, hardware or compatibility implementation. This is the next
+bounded candidate, not yet executed.
+
+After N21, select another small batch from pending/partial inventory entries
+under A09-04/05/06/08. Do not treat all historical files as an operational blocker
+or all partially reviewed bodies as complete. Reconcile current user-facing
+claims first, then their supporting historical records.
+
+Implementation and qualification are **outside this audit**: browser pacing
+(F008), timing/SD/example procedure refresh (F019/F020/F035/F046/F051), and held
+hardware integrity (F024) retain their existing owners in the results table.
+Historical broken references (F012/F016) remain documentation provenance work;
+repair requires the archive owner's evidence, not guessed paths. Fresh-host and
+physical validation are not granted by a documentation pass.
 
 ## Scope and authority
 
@@ -323,9 +347,9 @@ firmware/build, SD location, output/evidence and stop/recovery behavior. Priorit
 
 A09-03 mapping is complete in [RESULTS](AUDIT-009/RESULTS.md): all seven
 workflows account for all nine required fields, including explicit non-applicability
-and evidence limits. A09-F060 assigns incomplete external-user emulator setup
-guidance to existing A09-04/08; profile changes still require their own human
-validation. Mapping completion is not runtime qualification or closure of that gap.
+and evidence limits. N18 addressed A09-F060 with the Linux emulator setup guide;
+fresh-host/runtime qualification remains unperformed. Profile changes still
+require human validation. Mapping completion is not runtime qualification.
 
 A09-04 [ ] Review the maintained operations documents first. Trace every executable
 example through current CLI help or source; verify option names, path conventions,

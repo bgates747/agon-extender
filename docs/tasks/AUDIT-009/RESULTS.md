@@ -195,7 +195,7 @@ hardware or independent fresh-machine acceptance.
    fresh public-clone reproduction and macOS execution were not requalified.
    Details and scan totals are in CHECKS; this is not an exhaustive link proof.
 
-## Remaining consequential issues
+## Implementation, qualification and archive gates outside current guide corrections
 
 | Finding | What remains | Existing owner |
 |---|---|---|
@@ -210,17 +210,16 @@ hardware or independent fresh-machine acceptance.
 | F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
 
-[FINDINGS.md](FINDINGS.md) records all 52 findings and their dispositions.
+[FINDINGS.md](FINDINGS.md) records findings through F067 and their dispositions.
 Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-The remaining-current-summary batch and first ten build decisions have been
-reviewed within the recorded scope. The next ten documents are now divided into
-[A09-N01–N04 in the main task](../AUDIT-009.md#next-phase), which owns the
-actionable checklist and completion boundaries. A09-N01–N04 are complete within
-their recorded scopes. Select a further bounded review with the Author before
-starting another tranche; this continuation note grants no new scope.
+A09-N01–N20 are complete within their documented scopes. The main task's
+remaining documentation queue owns the next bounded candidate, A09-N21:
+applicability of two historical mode/compatibility decisions. No implementation
+or bench work is selected. Old “next” statements in dated batch receipts record
+that checkpoint only and do not override this continuation.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -512,3 +511,14 @@ stale pending-hardware-equivalence wording and documented offline verification
 without conflating a self-consistent package, current selection and installed
 bytes. F067 resolved within this documentation scope. Existing inventory states
 unchanged; no package generated or checked, no emulator or bench operation.
+
+## A09-N20 result
+
+B63 reconciled current task/results/TODO summaries; removed the obsolete F040
+continuation and F060 gap wording. Counts from INVENTORY.csv: 1,122 records —
+124 reviewed, 157 partial, 653 pending, 140 metadata-only, 48 provenance-only.
+These are document/tool records, not 1,122 unfinished tasks. The inventory is a
+retained scoped enumeration, not proof that every newly created file is listed.
+Historical batch counts remain unchanged. Current continuation is N21 in the
+main checklist; implementation/hardware obligations remain with their owners.
+No underlying historical body was newly reviewed and no coverage state advanced.
