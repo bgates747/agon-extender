@@ -31,6 +31,7 @@ for precise limits rather than assuming support from a research or example file.
 | Need | Current authority |
 |---|---|
 | Discover host clients versus retained development helpers | [Host tool index](../scripts/README.md) |
+| Common P4 service boundaries for other projects | [Shared services](shared-p4-services.md), development interface and consumer obligations |
 | Component builds and hardware-equivalence limits | [Building](building.md) |
 | Installation bundles and selection status | [Production entry point](../production/README.md), [installation guide](installing.md) |
 | Processor ownership and accepted architecture | [Architecture](architecture.md), [repository ownership](../OWNERSHIP.md) |

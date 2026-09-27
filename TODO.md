@@ -21,7 +21,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
-- [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; implementation unstarted.
+- [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; common Ethernet boundary extracted for detached build evaluation; hybrid feasibility and image leases remain open.
 
 - [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — Panel received; official DevKit example and V1/V2 differences researched. Identify delivered revision, prove vendor output, then integrate a bounded EDP display sink. Research/plan only; bench execution unstarted.
 

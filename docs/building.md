@@ -299,3 +299,7 @@ restoration. Python tests use a localhost HTTP peer to check client framing,
 command dispatch and tree transfers; they do not execute ESP-IDF handlers or
 qualify an SD card. The console HTTP URI limit is 2048 bytes to accommodate two
 encoded paths; recursive filesystem traversal is bounded to 16 levels.
+
+Detached consumers should start with [shared P4 service boundaries](shared-p4-services.md),
+not the complete console translation-unit selection. The Ethernet header is
+Arduino-backed but independent of VDP, EMOS and HTTP route composition.

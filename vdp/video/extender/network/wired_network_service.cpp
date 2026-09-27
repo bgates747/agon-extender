@@ -105,17 +105,9 @@ bool WiredNetworkService::start() noexcept {
 
   stop_requested_.store(false, std::memory_order_release);
   pending_events_.store(0, std::memory_order_release);
-  network_event_handle_ = Network.onEvent(
-      [this](arduino_event_id_t event, arduino_event_info_t) {
-        onNetworkEvent(event);
-      });
-  network_event_registered_ = true;
-
   TaskHandle_t task = nullptr;
   if (xTaskCreate(&workerEntry, "extender-net", kWorkerStackBytes, this,
                   kWorkerPriority, &task) != pdPASS) {
-    Network.removeEvent(network_event_handle_);
-    network_event_registered_ = false;
     state_.store(WiredServiceState::Faulted, std::memory_order_release);
     ESP_LOGE(kTag, "network worker creation failed");
     return false;
@@ -124,7 +116,9 @@ bool WiredNetworkService::start() noexcept {
 
   // Olimex ESP32-P4-DevKit Rev D1 IP101GRI wiring. DHCP remains the
   // NetworkInterface default; no address is compiled into this call.
-  if (!ETH.begin(ETH_PHY_IP101, 1, 31, 52, 51, EMAC_CLK_EXT_IN)) {
+  if (!ethernet_.start([](void *context, DevkitEthernet::Event event) noexcept {
+        static_cast<WiredNetworkService *>(context)->onNetworkEvent(event);
+      }, this)) {
     ESP_LOGE(kTag, "ETH.begin failed");
     state_.store(WiredServiceState::Faulted, std::memory_order_release);
     stop();
@@ -146,11 +140,7 @@ void WiredNetworkService::stop() noexcept {
   while (worker_task_.load(std::memory_order_acquire) != nullptr)
     vTaskDelay(pdMS_TO_TICKS(1));
 
-  if (network_event_registered_) {
-    Network.removeEvent(network_event_handle_);
-    network_event_registered_ = false;
-  }
-  ETH.end();
+  ethernet_.stop();
   state_.store(WiredServiceState::Stopped, std::memory_order_release);
   ESP_LOGI(kTag, "wired service stopped");
 }
@@ -176,15 +166,15 @@ void WiredNetworkService::notifyWorker() noexcept {
   if (task != nullptr) xTaskNotifyGive(task);
 }
 
-void WiredNetworkService::onNetworkEvent(arduino_event_id_t event) noexcept {
+void WiredNetworkService::onNetworkEvent(DevkitEthernet::Event event) noexcept {
   std::uint32_t bit = 0;
   switch (event) {
-    case ARDUINO_EVENT_ETH_START: bit = EthernetStarted; break;
-    case ARDUINO_EVENT_ETH_CONNECTED: bit = EthernetConnected; break;
-    case ARDUINO_EVENT_ETH_GOT_IP: bit = EthernetGotIp; break;
-    case ARDUINO_EVENT_ETH_LOST_IP: bit = EthernetLostIp; break;
-    case ARDUINO_EVENT_ETH_DISCONNECTED: bit = EthernetDisconnected; break;
-    case ARDUINO_EVENT_ETH_STOP: bit = EthernetStopped; break;
+    case DevkitEthernet::Event::Started: bit = EthernetStarted; break;
+    case DevkitEthernet::Event::Connected: bit = EthernetConnected; break;
+    case DevkitEthernet::Event::GotIp: bit = EthernetGotIp; break;
+    case DevkitEthernet::Event::LostIp: bit = EthernetLostIp; break;
+    case DevkitEthernet::Event::Disconnected: bit = EthernetDisconnected; break;
+    case DevkitEthernet::Event::Stopped: bit = EthernetStopped; break;
     default: return;
   }
   pending_events_.fetch_or(bit, std::memory_order_release);
@@ -199,7 +189,7 @@ void WiredNetworkService::worker() noexcept {
   while (!stop_requested_.load(std::memory_order_acquire)) {
     auto const events = pending_events_.exchange(0, std::memory_order_acq_rel);
     if (events != 0) processEvents(events);
-    if (http_fault_) { stopHttp(); if (!http_fault_ && ETH.hasIP()) processEvents(EthernetGotIp); }
+    if (http_fault_) { stopHttp(); if (!http_fault_ && ethernet_.hasIP()) processEvents(EthernetGotIp); }
     if (state() == WiredServiceState::LeasedServing) attemptVideoSend();
     ulTaskNotifyTake(pdTRUE, pdMS_TO_TICKS(kWorkerPollMilliseconds));
   }
@@ -223,16 +213,16 @@ void WiredNetworkService::processEvents(std::uint32_t events) noexcept {
   // not arbitrary bit order, decides whether HTTP may remain active.
   if ((events & (EthernetLostIp | EthernetDisconnected | EthernetStopped)) !=
           0 &&
-      !ETH.hasIP()) {
+      !ethernet_.hasIP()) {
     stopHttp();
-    auto const next = ETH.linkUp() ? WiredServiceState::LinkUpNoLease
+    auto const next = ethernet_.linkUp() ? WiredServiceState::LinkUpNoLease
                                    : WiredServiceState::LinkDown;
     state_.store(next, std::memory_order_release);
     if ((events & EthernetLostIp) != 0) ESP_LOGW(kTag, "DHCP lease lost");
     if ((events & EthernetDisconnected) != 0)
       ESP_LOGW(kTag, "Ethernet link disconnected");
   }
-  if ((events & EthernetGotIp) != 0 && ETH.hasIP()) {
+  if ((events & EthernetGotIp) != 0 && ethernet_.hasIP()) {
     reportLease();
     if (startHttp())
       state_.store(WiredServiceState::LeasedServing,
@@ -243,12 +233,9 @@ void WiredNetworkService::processEvents(std::uint32_t events) noexcept {
 }
 
 void WiredNetworkService::reportLease() const noexcept {
-  auto const ip = ETH.localIP().toString();
-  auto const mask = ETH.subnetMask().toString();
-  auto const gateway = ETH.gatewayIP().toString();
-  auto const dns = ETH.dnsIP().toString();
-  ESP_LOGI(kTag, "DHCP ip=%s netmask=%s gateway=%s dns=%s", ip.c_str(),
-           mask.c_str(), gateway.c_str(), dns.c_str());
+  auto const lease = ethernet_.lease();
+  ESP_LOGI(kTag, "DHCP ip=%s netmask=%s gateway=%s dns=%s", lease.address.c_str(),
+           lease.mask.c_str(), lease.gateway.c_str(), lease.dns.c_str());
 }
 
 namespace {

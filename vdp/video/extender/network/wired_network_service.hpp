@@ -12,8 +12,7 @@
 #include <atomic>
 #include <cstdint>
 
-#include <ETH.h>
-#include <Network.h>
+#include "extender/network/devkit_ethernet.hpp"
 #include <esp_http_server.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -72,7 +71,7 @@ class WiredNetworkService final {
   static esp_err_t videoPostHandshake(httpd_req_t *request) noexcept;
   static void socketClosed(httpd_handle_t server, int socket) noexcept;
 
-  void onNetworkEvent(arduino_event_id_t event) noexcept;
+  void onNetworkEvent(DevkitEthernet::Event event) noexcept;
   void worker() noexcept;
   void processEvents(std::uint32_t events) noexcept;
   bool startHttp() noexcept;
@@ -104,8 +103,7 @@ class WiredNetworkService final {
   std::atomic<TaskHandle_t> worker_task_{};
   std::atomic<httpd_handle_t> server_{};
   bool http_fault_{}; // worker-owned; a failed rollback retains its live handle
-  network_event_handle_t network_event_handle_{};
-  bool network_event_registered_{};
+  DevkitEthernet ethernet_;
 
   std::atomic<std::uint32_t> http_starts_{};
   std::atomic<std::uint32_t> http_stops_{};
