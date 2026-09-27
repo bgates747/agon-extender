@@ -259,7 +259,7 @@ esp_err_t admissionProbeHandler(httpd_req_t *request) {
     portENTER_CRITICAL(&storage::sd_mutex);
     bool ok=!storage::sd_service.online(sdNow()) && storage::admission_probe.arm(command-'0',sdNow());
     portEXIT_CRITICAL(&storage::sd_mutex);
-    if(!ok)return httpd_resp_send_err(request,HTTPD_503_SERVICE_UNAVAILABLE,"No fresh idle poll or probe busy");
+    if(!ok) {httpd_resp_set_status(request,"503 Service Unavailable");return httpd_resp_sendstr(request,"No fresh idle poll or probe busy");}
   }
   char body[220];
   portENTER_CRITICAL(&storage::sd_mutex);
