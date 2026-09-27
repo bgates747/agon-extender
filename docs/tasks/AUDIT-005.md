@@ -8,15 +8,27 @@ forward payload while P4 continuously permits transmission. Reverse idle
 mostly overlaps Agon RTS withholding permission. Both decoders and all payload
 checks pass. The current EMOS C sender still matches this audit's per-byte
 call/deadline lead; no EMOS change or instruction-level cost proof accompanies
-that measurement. A separately bounded stock-reuse follow-up remains necessary.
+that measurement. Subsequent stock-reuse work is tracked by PORT-008; this paragraph records the
+evidence and attribution limits at that earlier checkpoint.
 
 ## State
 
-- Status: W1–W9 findings accepted; W10 results and reported game regression preserved. AUDIT-006 has completed the bounded timing investigation and now owns the priority-one full video-backend fidelity audit. All 48 cases and Legacy keyboard pass, but ordinary-query stalls and substantial Nurples hangs remain. No further corrective firmware change selected.
+- Status: Administratively closed by the Author on 2026-09-27. May be reopened if future work establishes a need.
 - Task drafted: 2026-09-10
 - Started: 2026-09-10
-- Finished: --
+- Administratively closed: 2026-09-27
 - Preserved Extender checkpoint: `258d0d9` (partially working RGB222/ExCom)
+
+### Administrative closeout
+
+Retain the findings, measurements and historical work instructions below as
+evidence, not an active execution queue. Closure does not assert that every
+investigated defect was fixed or every qualification completed. Later UART
+implementation and qualification belong to [PORT-008](PORT-008.md); remaining
+video-backend fidelity and performance work belongs to [PORT-003](PORT-003.md).
+Their current task records supersede this audit's historical descriptions of
+current firmware and next steps. No old investigation is automatically rerun.
+The Author may reopen this audit when a concrete unresolved question warrants it.
 
 The Author accepted the plan, then accepted the
 [W1 source identities and path map](AUDIT-005/baseline-and-path-map.md) and

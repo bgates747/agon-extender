@@ -73,7 +73,6 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[QUAL-004](docs/tasks/QUAL-004.md)** — 77 static scene pairs matched, including [static teletext](docs/tasks/QUAL-004/teletext/RESULTS.md). [Sprite/scroll follow-up](docs/tasks/QUAL-004/sprite-scroll/RESULTS.md): stock INITIAL visual/exit control passed; mainboard OVERLAP/EDGES/HIDDEN passed repeat capture, HIDDEN also full oracle. Extender checks passed; three checkpoints match mainboard exactly, INITIAL has visual control only. [Packed expansion BM02](docs/tasks/QUAL-004/packed-expansion/RESULTS.md) passed; BM03 parked. Capture-interference investigation QUAL-004-CI01 and four Copper controls deferred; no claim of complete dynamic-sprite parity.
 
-- [ ] **[AUDIT-005](docs/tasks/AUDIT-005.md)** — Stock reuse findings retained; later UART work supersedes old current-slowdown narrative. Propose audit closure with remaining obligations mapped to PORT-008/PORT-003; do not rerun old investigations.
 
 
 ## Parked, blocked and unscheduled work
