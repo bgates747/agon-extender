@@ -49,15 +49,17 @@ No resource footprint or throughput comparisons have been measured. Pin exact
 source revisions and establish licenses before reuse; no upstream source is
 vendored by this note.
 
-## Decision register — discuss one at a time
+## Decisions — settle one at a time
 
-| ID | State | Decision and consequences |
-| --- | --- | --- |
-| D01 | Open | Primary experience: browser transfers, dedicated transfer client, or Finder-mounted share. Browser minimizes new protocol machinery; mounted share adds compatibility and filesystem semantics. Author preference selects the research direction. |
-| D02 | Open | Initial operations: list/download/upload versus rename, delete, mkdir and overwrite. Check each against existing SD-service guarantees before offering it. |
-| D03 | Open | Service lifecycle: explicit operator start/stop of sdserve versus a separately scoped convenience launcher. Foreground/Legacy limitation remains unless explicitly redesigned. |
-| D04 | Open | Client ownership, authentication, exposed root and serialization; define behavior when service is offline, disconnected or occupied by existing tools. |
-| D05 | Open | Select protocol/library and bounded acceptance contract after compatibility, resource and license review. |
+D01 [ ] Primary experience: browser transfers, dedicated transfer client, or Finder-mounted share. Browser minimizes new protocol machinery; mounted share adds compatibility and filesystem semantics. Author preference selects the research direction.
+
+D02 [ ] Initial operations: list/download/upload versus rename, delete, mkdir and overwrite. Check each against existing SD-service guarantees before offering it.
+
+D03 [ ] Service lifecycle: explicit operator start/stop of sdserve versus a separately scoped convenience launcher. Foreground/Legacy limitation remains unless explicitly redesigned.
+
+D04 [ ] Client ownership, authentication, exposed root and serialization; define behavior when service is offline, disconnected or occupied by existing tools.
+
+D05 [ ] Select protocol/library and bounded acceptance contract after compatibility, resource and license review.
 
 ## Research work items
 
