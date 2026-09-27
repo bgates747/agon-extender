@@ -482,3 +482,14 @@ scene preservation, original size/pending checkpoints, single ISR vector and
 transient payload lifetime. Completion is not scanout; private callback reception
 is not a generalized ABI. EMOS d4e009d; two partial dispositions refreshed, counts
 unchanged. No code, emulator, build or bench work; broader gates preserved.
+
+
+## A09-N17 result
+
+B60 reconciled INTEG-013/014 opening applicability with current EMOSlet guidance,
+ROM recovery receipt and PORT-008/E09 scope. Original SD acceptance remains
+valid; later packaging is foreground, not background. Historical flash sizes and
+restored images are not current selection. Timing evidence does not establish
+browser or game performance; E10 remains unstarted. EMOS commit 19486d7.
+Two pending records become partial; underlying evidence bodies remain unreviewed.
+Inventory 1121: {'reviewed': 123, 'partial': 157, 'pending': 653, 'metadata-only': 140, 'provenance-only': 48}. No source, emulator, build or bench changes.

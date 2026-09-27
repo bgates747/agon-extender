@@ -164,6 +164,12 @@ limits; do not generalize measured completion to scanout or public ABI support.
 Preserve wider gates and historical evidence. Documentation only, no bench or
 emulator changes; validate links/whitespace and commit by repository.
 
+A09-N17 [x] **SD gateway and UART timing applicability.** Review INTEG-013/014
+opening summaries against current EMOSlet guidance, ROM-recovery receipts and
+PORT-008 scope. Clarify historical application/headroom/restoration statements;
+preserve measured results and E10's unstarted gate. Documentation only, no
+source, emulator or bench changes. Record bounded coverage and commit by owner.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the

@@ -507,3 +507,11 @@ selector inspection and current-guide comparison only; no new runtime proof.
 B59 contract a62d0b59; EMOS d4e009d. 18 relative file targets checked; anchors
 and external URLs excluded. Whitespace passed. Code inspected without execution;
 retained evidence compared without recapture or requalification.
+
+
+## B60 — A09-N17
+
+INTEG-013/014 relative file links verified locally; whitespace passed in both
+repositories. Compared current sdserve guide, utility guide, AUDIT-008 hardware
+receipt and PORT-008/E09 summaries without replaying tests. Two inventory
+records advanced pending to partial, preserving wider review boundaries.
