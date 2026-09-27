@@ -297,3 +297,13 @@ record completed W01/W02, actual Linux client inventory, pinned standard-MIT
 ESP-IDF server review and the mainboard CRC/staging mismatch. W03 proposes a
 host-only native-file-manager usability trial; W04 remains conditional. D03 and
 D04 are still open. No device or native-client transfer qualification yet.
+
+## R05-W03 execution authorization — 2026-09-27
+
+Author authorized the host-only WebDAV usability control. Serve generated files
+only from an isolated temporary directory, with an isolated server environment.
+Exercise native Linux GVfs clients on Pop!_OS and Lenovo for nested/empty folders,
+128 files, bidirectional byte checks, rename and sandbox deletion. Open the share
+on Lenovo for human interaction review. Mac/Finder remains pending if unavailable.
+No Agon/P4 endpoints or storage involved; no firmware changes. This validates a
+host reference server/client interaction, not the embedded candidate.
