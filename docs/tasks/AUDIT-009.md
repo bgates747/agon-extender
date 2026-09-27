@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Current checkpoint: **A09-N01–N23 complete within their bounded scopes; the
+Current checkpoint: **A09-N01–N24 complete within their bounded scopes; the
 whole-documentation audit remains open.** Historical one-hour windows below
 record earlier authorization, not a current time budget.
 
@@ -70,7 +70,7 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-N01–N23 are complete within their recorded scopes. The remaining queue below
+N01–N24 are complete within their recorded scopes. The remaining queue below
 owns continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
@@ -210,6 +210,13 @@ current REMED-002 coordinator and owner links. Separate corrected, deferred and
 still-open findings; remove obsolete blanket implications without reopening
 source investigations or closing qualification. Preserve dated evidence. Check
 links/whitespace and update coverage; no source, profile or bench operations.
+
+A09-N24 [x] **Rainbow MOS relevance triage.** Author requested checking whether
+historical prior-art notes merit current work and closing the review if not.
+Read the note and original completion receipt; search current guide/task
+references. B67 found PORT-207 already completed, no current operational or
+ROM-reduction dependency, and no new implementation need. Retain as historical
+research; applicability review closed, without rerunning old measurements.
 
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate

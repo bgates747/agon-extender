@@ -556,3 +556,10 @@ no generator, migration tool, hardware validator or bench command executed.
 Compared opening and final audit summaries with REMED-002's current-scope table
 and F001–F022/R001–R003 ownership register. Local links and whitespace checked;
 no original defect tests, validators, build or physical operation rerun.
+
+## B67 — Rainbow relevance triage
+
+Read prior-art note and searched EMOS Markdown plus Extender current build/
+handbook and ROM-audit references. Only historical research/devlog references
+found. Original PORT-207 completion retained; no build, source audit or bench
+operation. Inventory closure is applicability review, not reproduction evidence.

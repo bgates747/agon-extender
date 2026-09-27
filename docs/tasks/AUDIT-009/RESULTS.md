@@ -215,7 +215,7 @@ Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-A09-N01–N23 are complete within their documented scopes. Select the next small
+A09-N01–N24 are complete within their documented scopes. Select the next small
 pending/partial documentation batch under A09-04/05/06/08 before execution.
 No implementation or bench work is selected. Historical batch continuation
 notes describe their own checkpoint, not current instructions.
@@ -547,3 +547,14 @@ against REMED-002's current register. Added a current applicability table and
 explicitly historical ordering/conclusion; preserved original findings and
 provenance extensions. One pending inventory record becomes partial. This is
 not a full-body or source-investigation review. No code/profile/bench changes.
+
+## A09-N24 result
+
+B67 read EMOS docs/prior-art-rainbow-mos.md and found its original PORT-207
+completion in research/devlog/2026-08-24-port-200.md. Reference searches found
+no current handbook, build-guide, EMOS TODO or AUDIT-008 dependency requiring
+a new comparison. No Rainbow code was imported according to the retained
+research; the FatFS workaround remains conditional on reproducing its compiler
+failure, not an active obligation. Classify the note as historical research and
+close this applicability review. Old build-size figures were not remeasured.
+One pending inventory item becomes reviewed; no EMOS files changed.
