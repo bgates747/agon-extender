@@ -150,6 +150,13 @@ current diagnostic constraints. Preserve analyzer exceptions, version-numbering
 history and parser-versus-visible-output evidence distinctions. Documentation
 only; no source, emulator, fixture or bench changes. Validate and commit.
 
+A09-N15 [ ] **Keyboard and ordinary ExCom milestones.** Review INTEG-009/010
+current scope, CLI/source-provider language and qualification boundaries against
+current keyboard/operation guides, later display-preservation work and retained
+acceptance. Correct current summaries without treating full historical bodies
+as revalidated. Preserve outstanding parity/lifecycle gates. Documentation only;
+no source, emulator or bench changes. Validate and commit by repository.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
