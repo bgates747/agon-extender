@@ -312,3 +312,11 @@ R05-W03 staged for human review: disposable WebDAV share is available on the
 host. Both Linux GVfs byte-transfer suites pass; native GUI acceptance and Finder
 remain pending. See [trial results](REMOTE-005/webdav-trial/README.md). No bench
 or production changes; host-server results do not qualify the embedded adapter.
+
+## Author feedback — WebDAV trial
+
+2026-09-27: Author confirmed two-way transfers worked in the Lenovo native
+file-manager trial. Retain this bounded usability acceptance. Pop!_OS GUI and
+Finder checks remain pending; automated GVfs evidence for both Linux hosts is
+unchanged. No Agon-backed implementation or production promotion is implied.
+Next discussion remains D03 lifecycle, then D04 ownership and upload staging.

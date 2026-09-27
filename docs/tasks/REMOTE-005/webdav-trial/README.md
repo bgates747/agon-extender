@@ -29,7 +29,7 @@ This is the interaction being evaluated, not representative Agon throughput.
 | 129-file upload/download with SHA-256 comparison | Pass | Pass |
 | Nested and empty folders | Pass | Pass |
 | Rename, overwrite and recursive sandbox deletion | Pass | Pass |
-| Native GUI usability acceptance | Pending | Pending |
+| Native GUI usability acceptance | Pending | Author confirmed two-way transfers |
 | Embedded P4/EMOSlet integration | Not tested | Not tested |
 
 Automated script exercised the GVfs FUSE mount with ordinary byte I/O; it did
@@ -47,3 +47,8 @@ The initial Pop!_OS GUI launch lacked display environment and failed. Relaunched
 using its existing desktop-session display variables. No desktop configuration
 was changed. Lenovo's gio-open request returned successfully; human confirmation
 of the visible window remains necessary.
+
+Author confirmation: two-way transfers worked on Lenovo's native file-manager
+trial. This accepts that bounded interaction, not all operations, Mac/Pop!_OS GUI
+behavior, or an Agon-backed implementation. The temporary host sandbox is not a
+production Extender feature and requires no firmware promotion or release tag.
