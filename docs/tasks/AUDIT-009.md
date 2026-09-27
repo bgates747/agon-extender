@@ -157,6 +157,13 @@ acceptance. Correct current summaries without treating full historical bodies
 as revalidated. Preserve outstanding parity/lifecycle gates. Documentation only;
 no source, emulator or bench changes. Validate and commit by repository.
 
+A09-N16 [ ] **Display preservation and private timing callbacks.** Review
+INTEG-011/012 against current dispatch/reply code and retained graphics/timing
+results. Clarify stale pending/headroom statements and private ISR callback
+limits; do not generalize measured completion to scanout or public ABI support.
+Preserve wider gates and historical evidence. Documentation only, no bench or
+emulator changes; validate links/whitespace and commit by repository.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
