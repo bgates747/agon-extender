@@ -221,3 +221,9 @@ of the current client. No bench access or new throughput measurement.
 | ID | Finding | Evidence | Disposition |
 |---|---|---|---|
 | A09-F067 | Newly maintained service guides absent from inventory; integration opening predates extraction | Current CLI/API and retained peer link result | Indexed guides and partial integration-task review; clarified mounted=false success, recursive search and API gaps. Historical scope distinguished from completed extraction; no production/runtime promotion. |
+
+## B55 — early EMOS integration status
+
+| ID | Finding | Evidence | Disposition |
+|---|---|---|---|
+| A09-F068 | Parallel scheduling hold cites completed UART keyboard dependency; early one-way probe limits read as current | EMOS INTEG-001–003/TODO, retired port008-forward profile, later keyboard/ExCom and PORT-008 mainline parallel remit | EMOS 1aa297e and PORT-009 applicability clarify history versus current work. Parallel proof/physical gates remain open; retired payload is not current deployment readiness. |

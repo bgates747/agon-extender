@@ -476,3 +476,10 @@ B54 contract 73b4d36c. Inspected CLI/parser and SD HTTP/public headers, shared
 Ethernet guide/source and retained peer build result. 91 relative file targets
 exist; anchors/external URLs excluded. Whitespace passed. Two reviewed guides
 and one partial task added; no runtime tests or bench changes.
+
+## A09-N12 — early integration
+
+B55 contract de2e9758; EMOS documentation commit 1aa297e. 102 relative file
+targets exist across changed documentation; anchors/external URLs excluded.
+Whitespace passed. Three pending inventory items advanced to partial only.
+No compilation, tests, emulator or physical operations.

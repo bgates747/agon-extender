@@ -435,3 +435,13 @@ stale initial-planning wording. Handbook links already select the right guides.
 Two guide bodies reviewed; integration task partially reviewed for current
 status (native feasibility sources not re-audited). Inventory 1121: {'reviewed': 123, 'partial': 147, 'pending': 663, 'metadata-only': 140, 'provenance-only': 48}.
 No network request, build, firmware, emulator or bench operation.
+
+## A09-N12 result
+
+B55 reviewed opening/scheduling/supersession of EMOS INTEG-001–003 against
+its queue, retired profile and later cross-component evidence. Corrected the
+obsolete keyboard dependency and historical probe applicability. No task
+acceptance broadened, proof gate closed or fixture executed. EMOS changes are
+commit 1aa297e. Three pending entries become partial, not whole-body reviewed.
+Inventory 1121: {'reviewed': 123, 'partial': 150, 'pending': 660, 'metadata-only': 140, 'provenance-only': 48}. Historical target/build records remain unvalidated
+by this documentation pass.

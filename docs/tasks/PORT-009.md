@@ -4,7 +4,15 @@ Status: complete — exact 18-byte P4 receipt and same-run Agon Legacy return co
 Started: 2026-09-07. The Author directed “make it so” after accepting one fixed
 forward UART message as the next implementation chunk.
 
-## Scope and decisions
+## Current applicability — 2026-09-26
+
+The scope below records the original one-way 115200-baud diagnostic. Its absence
+of a product UART ingress, return path and ExCom activation is historical;
+[PORT-008](PORT-008.md) and the [current handbook](../README.md) describe later
+implemented capability and remaining limits. Preserve this probe's exact
+acceptance separately. Its original startup is not a current deployment recipe.
+
+## Original scope and decisions
 
 1. An SD-loaded diagnostic caller invokes the installed EMOS v0.2.0 UART1 APIs.
    EMOS owns opening, transmitting and closing; the caller never accesses GPIO,

@@ -130,7 +130,7 @@ and authority-map entries, reconcile current versus historical claims and
 check handbook navigation. No network requests, firmware, emulator or bench
 changes; peer candidate review remains separate. Validate links and commit.
 
-A09-N12 [ ] **Early EMOS integration status.** Review opening status and
+A09-N12 [x] **Early EMOS integration status.** Review opening status and
 supersession of agon-emos INTEG-001–003 against its TODO, retired profile and
 Extender PORT-008/009/current handbook. Correct only present-day applicability,
 not historical execution claims or unfinished proof gates. Both repositories'

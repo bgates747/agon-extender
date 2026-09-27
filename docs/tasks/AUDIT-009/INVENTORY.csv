@@ -1025,9 +1025,9 @@ agon-emos,docs/qualification/minimal-boot/stock-preflight-2026-09-07.md,historic
 agon-emos,docs/repository-migration.md,maintained documentation,human and agent,docs,agon-emos,docs/repository-migration.md,reviewed,current body reviewed; corrections/retention in CHECKS and FINDINGS
 agon-emos,docs/tasks/AUDIT-008.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,reviewed,current body reviewed; corrections/retention in CHECKS and FINDINGS
 agon-emos,docs/tasks/BENCH-001.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,partial,scoped status/contracts inspected; remaining body/evidence not exhaustively reviewed
-agon-emos,docs/tasks/INTEG-001.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
-agon-emos,docs/tasks/INTEG-002.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
-agon-emos,docs/tasks/INTEG-003.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
+agon-emos,docs/tasks/INTEG-001.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,partial,B55: opening status/supersession and scheduling reviewed; historical build/target proof not revalidated; EMOS commit 1aa297e
+agon-emos,docs/tasks/INTEG-002.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,partial,B55: opening status/supersession and scheduling reviewed; historical build/target proof not revalidated; EMOS commit 1aa297e
+agon-emos,docs/tasks/INTEG-003.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,partial,B55: opening status/supersession and scheduling reviewed; historical build/target proof not revalidated; EMOS commit 1aa297e
 agon-emos,docs/tasks/INTEG-004.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
 agon-emos,docs/tasks/INTEG-005.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
 agon-emos,docs/tasks/INTEG-006.md,task,human and agent,docs/tasks,agon-emos,retain source/provenance,pending,reconcile status with TODO/evidence; retain identity
