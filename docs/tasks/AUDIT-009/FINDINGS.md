@@ -252,3 +252,11 @@ A09-F070's historical-versus-current clarification extends to INTEG-011/012.
 Existing private-ABI distinction was correct; added explicit shared-vector,
 transient payload and scanout limits, plus current capture-control/reuse links.
 No new implementation defect or generalized callback support claimed.
+
+## A09-N19 — installation verification guidance
+
+A09-F067 — Host-tool index still called hardware equivalence pending after r55
+acceptance. Corrected to the accepted reconstruction and later-build limits.
+Installation guidance now explains offline structural verification, its PyYAML
+dependency, supported layout and external production-selection boundary. Source
+inspection only; no new package, device or publication qualification.

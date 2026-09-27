@@ -179,7 +179,7 @@ no profile generation, launch, source edits or bench use. Validate commands by
 source/help inspection and links mechanically; retain fresh-host/runtime
 qualification as unperformed. Update audit evidence and commit separately.
 
-A09-N19 [ ] **Installation-tool claims and offline verification.** Review the
+A09-N19 [x] **Installation-tool claims and offline verification.** Review the
 host-tool index, installation/build guides and production selection against
 package_installation.py and verify_installation.py. Correct stale qualification
 wording and explain the offline verifier's scope, dependencies and distinction

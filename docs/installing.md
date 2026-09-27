@@ -32,6 +32,42 @@ commissioned Pi circuit, SSH where applicable, libgpiod v2 `gpioset`, `pinctrl`,
 Bash and GNU timeout. Do not derive wiring, devices or credentials from this
 package; keep those in private operator configuration.
 
+## Offline package verification
+
+After verifying the archive hashes and extracting the runtime package, the
+maintained source checkout provides an additional structural check. From the
+Extender repository root, with the build guide's Python/PyYAML environment:
+
+```sh
+.venv/bin/python scripts/verify_installation.py "$EXTRACTED_RUNTIME_ROOT"
+```
+
+`EXTRACTED_RUNTIME_ROOT` is the extracted directory containing `bundle.yaml`,
+not the archive or source/support directory. This verifier imports PyYAML;
+that dependency is separate from the standard-library-only operator clients.
+It reads files only and does not install, execute packaged programs, connect
+to devices or select a release.
+
+| Check | What a pass establishes |
+|---|---|
+| Inventory and checksums | Listed file sizes/hashes agree; unexpected or unlisted files are rejected |
+| Component identities | Baseline/build records and embedded payload build IDs agree |
+| Flash composition | Recorded component bytes appear at their declared offsets in the factory image |
+| EMOS image | ROM padded to 128 KiB agrees with the recorded hash |
+| P4 silicon settings | Packaged application/bootloader configuration records match the verifier's pre-v3 revision bounds |
+
+The checker targets the retained DevKit package layout and identities; it is
+not a generic validator for future boards or arbitrary releases. The package's
+`selection: unselected` is intentional: repository `production/current.yaml`
+selects an immutable bundle externally. The checker requires a qualified
+baseline but does not itself compare the package with that current selection.
+Check the selected bundle and archive hashes independently before deployment.
+
+Internal checksum agreement is not proof of origin or a fresh hardware test.
+Obtain expected hashes from the selected trusted record. A pass neither grants
+publication permission nor establishes that installed firmware matches the
+package. The operator sequence below owns those separate deployment checks.
+
 ## Operator sequence after deployment approval
 
 I01 — Preserve the incoming state. Identify both boards, firmware, active

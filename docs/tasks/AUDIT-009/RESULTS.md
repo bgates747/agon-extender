@@ -503,3 +503,12 @@ is a build/runtime-check workflow, not an interactive profile generator. F060's
 documentation gap is addressed within Linux stock-profile scope. Fresh-host,
 macOS and bespoke runtime qualification are not claimed. No emulator profile,
 source, firmware or hardware changed. Unrelated prototype work remains intact.
+
+## A09-N19 result
+
+B62 reconciled scripts/README.md and docs/installing.md against packaging and
+verification source, the build guide and selected production record. Corrected
+stale pending-hardware-equivalence wording and documented offline verification
+without conflating a self-consistent package, current selection and installed
+bytes. F067 resolved within this documentation scope. Existing inventory states
+unchanged; no package generated or checked, no emulator or bench operation.

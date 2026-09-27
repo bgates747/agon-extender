@@ -523,3 +523,10 @@ prepare_boot_review.py against docs/building.md. Added docs/emulator-setup.md.
 Checked setup CLI help, local Markdown link targets and changed-file whitespace.
 No setup, build, launch or bench command executed. New guide reviewed within
 this bounded source/contract scope; build-guide inventory scope remains partial.
+
+## B62 — Installation-tool claims
+
+Inputs: scripts/README.md, docs/installing.md, docs/building.md, production/README.md,
+production/current.yaml, package_installation.py and verify_installation.py.
+Source/CLI-help review, local links and whitespace checks only. No archive
+extraction, packaging, installation, device comparison or firmware execution.
