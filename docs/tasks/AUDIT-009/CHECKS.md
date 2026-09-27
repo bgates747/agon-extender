@@ -462,3 +462,10 @@ current SD/reset/layout constraints; no test execution. Five scoped inventory
 dispositions updated, states/counts unchanged. 164 relative Markdown file targets
 exist; anchors/external URLs excluded. Whitespace check passed. Frozen procedure
 and source scripts unchanged.
+
+## A09-N10 — example guidance
+
+B53 contract 087caabe. Source-inspected six example receipt producers and
+qualify_keyboard/run_hello_demo helpers. 183 relative Markdown file targets
+exist; anchors/external URLs excluded. Four historical snapshots indexed.
+No build/test/bench execution or emulator changes. Whitespace check passed.

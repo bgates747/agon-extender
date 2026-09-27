@@ -414,3 +414,13 @@ REMOTE-005 R05-10 owns the existing refresh, including admission, checked/fast
 scope, active batch protection, reset and evidence placement. Frozen procedure
 and scripts are unchanged. Five scoped inventory dispositions refreshed with
 review states/counts unchanged. No bench, emulator or implementation work.
+
+## A09-N10 result
+
+B53 inspected six example guides, receipt producers and keyboard/hello host
+helpers. Four guides now explain purpose and blockers without obsolete runnable
+recipes; historical recipes remain linked snapshots with provenance. Matrix and
+marker relative-output placement matches their source, without fresh runtime
+qualification. Owning tasks now carry explicit refresh IDs for existing F035.
+No code, build, emulator setup or hardware changed. Four new provenance records;
+existing review states unchanged. Inventory 1118 records: {'reviewed': 121, 'partial': 146, 'pending': 663, 'metadata-only': 140, 'provenance-only': 48}.

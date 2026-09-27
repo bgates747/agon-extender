@@ -257,3 +257,10 @@ unconfirmed. Evidence: docs/tasks/REMOTE-002/evidence/review-fixed-cue.json.
 The retained receiver/screen witnesses use support-directory receipts and qualify_keyboard.py still generates LOAD/RUN of the ordinary listener. Refresh receipt paths and EMOSlet handover before a new qualification run. See [AUDIT-009 finding A09-F035](AUDIT-009/FINDINGS.md) and the
 [current example index](../../examples/README.md). This is a precondition for
 future reuse, not authorization to change code or repeat the bench test.
+
+## Example reuse follow-up
+
+R02-EX01 [ ] Refresh remote-keyboard and keyboard-screen receipt producers, qualify_keyboard.py consumers and finite handover batches together. Use current evidence placement and Legacy EMOS sdserve / return; preserve active batch protection, prior input admission and explicit final service state. Validate under a separate bounded contract before reuse.
+
+Owns the existing [AUDIT-009 F035](AUDIT-009/FINDINGS.md) refresh requirement;
+this audit does not authorize implementation or another test run.

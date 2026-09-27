@@ -105,7 +105,7 @@ records. Finding ownership does not authorize implementation or a new bench run.
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
-| A09-F035 | Example recipes predate SD evidence layout, EMOSlet handover and mode-in-autoexec policy | qualify_keyboard.py still emits LOAD/RUN of the ordinary listener; key-query/screen/receiver hard-code old receipt paths; marker/matrix use relative output | Current example index separates refresh-required fixtures from corrected invocation guidance. Code remains unchanged. PORT-003 owns key-query; REMOTE-002 owns keyboard witnesses/qualifier; DEMO-001 owns hello replay refresh. No automatic authorization to rerun. |
+| A09-F035 | Example recipes predate SD evidence layout, EMOSlet handover and mode-in-autoexec policy | qualify_keyboard.py still emits LOAD/RUN of the ordinary listener; key-query/screen/receiver hard-code old receipt paths; marker/matrix use relative output | B53 removes obsolete recipes from four current example entry points, retaining snapshots. PORT-003 P03-EX01, REMOTE-002 R02-EX01 and DEMO-001 D01-EX01 own refresh. Matrix/marker placement is source-inspected only. Code unchanged; no new run authorized. |
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|

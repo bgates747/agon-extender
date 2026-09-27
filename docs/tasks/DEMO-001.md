@@ -168,3 +168,10 @@ pending-review statements above describe earlier checkpoints, not current gates.
 The retained hello installer/service continuation and receipt placement predate current SD layout and the EMOSlet. Refresh them before replay; original acceptance remains valid for its recorded candidate. See [AUDIT-009 finding A09-F035](AUDIT-009/FINDINGS.md) and the
 [current example index](../../examples/README.md). This is a precondition for
 future reuse, not authorization to change code or repeat the bench test.
+
+## Example reuse follow-up
+
+D01-EX01 [ ] Refresh hello receipt/observer paths, startup backup placement and the complete installer/EMOSlet handover before replay. Preserve open batch files, original startup, rollback and separate human audio/visual acceptance. Identify refreshed artifacts and validate under a separate bounded contract.
+
+Owns the existing [AUDIT-009 F035](AUDIT-009/FINDINGS.md) refresh requirement;
+this audit does not authorize implementation or another test run.

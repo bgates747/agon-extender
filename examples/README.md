@@ -6,10 +6,10 @@ Do not replay a historical deployment just because its source remains buildable.
 
 | Example | Purpose | Reuse boundary |
 |---|---|---|
-| [Key query](key-query/README.md) | Stock virtual-key query and event-counter witness | PORT-003 must refresh hard-coded receipt placement before new runs |
-| [Keyboard screen](keyboard-screen/README.md) | Stock rendered-character query diagnostic | REMOTE-002 must refresh receipt placement and listener handover |
-| [Remote keyboard](remote-keyboard/README.md) | eZ80 witness for host-injected events | REMOTE-002 must refresh qualifier/receipt paths and listener handover |
-| [Network hello](network-hello/README.md) | File replacement and ordinary VDP speech demonstration | DEMO-001's original installer is historical; refresh startup/service handover before replay |
+| [Key query](key-query/README.md) | Stock virtual-key query and event-counter witness | PORT-003 P03-EX01 must refresh hard-coded receipt placement before new runs |
+| [Keyboard screen](keyboard-screen/README.md) | Stock rendered-character query diagnostic | REMOTE-002 R02-EX01 must refresh receipt placement and listener handover |
+| [Remote keyboard](remote-keyboard/README.md) | eZ80 witness for host-injected events | REMOTE-002 R02-EX01 must refresh qualifier/receipt paths and listener handover |
+| [Network hello](network-hello/README.md) | File replacement and ordinary VDP speech demonstration | DEMO-001 D01-EX01 owns the historical installer; refresh startup/service handover before replay |
 | [Road matrix](road-matrix-probe/README.md) | Separate buffered computation from final drawing | Current placement guidance uses explicit evidence working directory; source still records submission, not completed rendering |
 | [Video marker](video-marker/README.md) | Observable frame progress marker | Current placement guidance uses explicit evidence working directory; no scanout/completion claim |
 
@@ -19,3 +19,7 @@ selects the video mode before invocation. Prepare directories and validate
 current keyboard, route and foreground-service readiness. Source/build checks
 do not establish current bench applicability. No examples were run or deployed
 by the documentation audit.
+
+The four refresh-required guides link retained recipes outside the current
+operating path. The last two rows provide source-inspected placement only, not
+a new build, installation or hardware pass.
