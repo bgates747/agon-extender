@@ -124,6 +124,98 @@ class Client:
             if len(chunk)!=min(216,total-offset):raise RemoteError('Unexpected READ count')
             result.extend(chunk);offset+=len(chunk)
         return bytes(result)
+    def directory_capability(self):
+        hello=self.rpc(1)
+        if len(hello)!=8 or not struct.unpack_from('<H',hello,6)[0]&32:
+            raise RemoteError('Directory operations require the development listener capability 0x20')
+    @staticmethod
+    def operation_path(path):
+        path_payload(path)
+        if path!='/' and (path.endswith('/') or any(x in ('','.','..') or x.endswith(('.', ' ')) for x in path[1:].split('/'))):
+            raise ValueError('Use a normalized absolute path')
+        if any(ord(c)<32 or c in ':\\*?"<>|' for c in path):raise ValueError('Invalid path character')
+        return path
+    def stat_entry(self,path):
+        data=self.rpc(2,path_payload(self.operation_path(path)))
+        if len(data)!=5:raise RemoteError('Malformed STAT response')
+        size,attributes=struct.unpack('<IB',data);return size,attributes
+    def entries(self,path):
+        self.operation_path(path);cursor=0
+        while True:
+            data=self.rpc(3,struct.pack('<I',cursor)+path_payload(path))
+            if len(data)<5 or data[4] not in (0,1):raise RemoteError('Malformed LIST response')
+            next_cursor=struct.unpack_from('<I',data)[0]
+            if data[4]:
+                if len(data)!=5 or next_cursor!=cursor:raise RemoteError('Malformed LIST end')
+                return
+            if len(data)<11 or len(data)!=11+data[10] or next_cursor!=cursor+1:
+                raise RemoteError('Malformed LIST entry')
+            name=data[11:].decode('ascii')
+            if not name or '/' in name or name in ('.','..'):raise RemoteError('Unsafe directory entry')
+            child=self.operation_path(path.rstrip('/')+'/'+name)
+            yield child,struct.unpack_from('<I',data,6)[0],data[5]
+            cursor=next_cursor
+    def make_directory(self,path,*,parents=False,report=lambda *args:None):
+        self.directory_capability();self.operation_path(path)
+        paths=['/'+ '/'.join(path[1:].split('/')[:i]) for i in range(1,len(path[1:].split('/'))+1)] if parents else [path]
+        for item in paths:
+            if parents:
+                try:
+                    _,attr=self.stat_entry(item)
+                except RemoteError as e:
+                    if e.status!=6 or e.detail not in (b'\x04',b'\x05'):raise
+                else:
+                    if not attr&16:raise RemoteError('Parent is not a directory: '+item)
+                    continue
+            self.rpc(12,path_payload(item));report('mkdir',item)
+    def move(self,source,destination):
+        self.directory_capability();self.operation_path(source);self.operation_path(destination)
+        a=source.encode('ascii');b=destination.encode('ascii')
+        descriptor=struct.pack('<BBHHH',6,0,len(a),len(b),0)+a+b
+        for offset in range(0,len(descriptor),184):
+            piece=descriptor[offset:offset+184];end=offset+len(piece)
+            reply=self.rpc(14,struct.pack('<HHI',len(descriptor),offset,zlib.crc32(descriptor))+piece)
+            if reply!=struct.pack('<HB',end,int(end==len(descriptor))):raise RemoteError('Unexpected MOVE acknowledgement; inspect both paths')
+    def remove(self,path,*,recursive=False,report=lambda *args:None):
+        self.directory_capability();self.operation_path(path)
+        def walk(current,depth):
+            if depth>16:raise ValueError('Directory depth limit (16) exceeded')
+            # Ask the engine to enforce its export-root/journal/utility guards
+            # BEFORE deleting descendants, not merely at the final rmdir.
+            self.rpc(13,b'\x01'+path_payload(current))
+            _,attr=self.stat_entry(current)
+            if attr&16 and recursive:
+                # Restart enumeration after mutation: FAT cursors may move.
+                while True:
+                    child=next(self.entries(current),None)
+                    if child is None:break
+                    walk(child[0],depth+1)
+            self.rpc(13,b'\x00'+path_payload(current));report('remove',current)
+        walk(path,0)
+    def copy(self,source,destination,*,recursive=False,replace=False,fast=False,report=lambda *args:None):
+        self.directory_capability();self.operation_path(source);self.operation_path(destination)
+        a,b=source.lower(),destination.lower()
+        if a==b or b.startswith(a.rstrip('/')+'/') or a.startswith(b.rstrip('/')+'/'):
+            raise ValueError('Source and destination trees must not overlap')
+        def walk(src,dst,depth):
+            if depth>16:raise ValueError('Directory depth limit (16) exceeded')
+            self.operation_path(dst);_,attr=self.stat_entry(src)
+            try:_,target_attr=self.stat_entry(dst);exists=True
+            except RemoteError as e:
+                if e.status!=6 or e.detail not in (b'\x04',b'\x05'):raise
+                exists=False;target_attr=0
+            if attr&16:
+                if not recursive:raise ValueError('Directory copy requires --recursive')
+                if exists:raise RemoteError('Directory merge/replacement is unsupported: '+dst)
+                self.rpc(12,path_payload(dst));report('mkdir',dst)
+                for child,_,_ in self.entries(src):walk(child,dst+'/'+child.rsplit('/',1)[1],depth+1)
+            else:
+                if exists and (not replace or target_attr&16):raise RemoteError('Destination exists: '+dst)
+                # Host CLI only: same whole-file host-memory behavior as get/put.
+                # The P4 native adapter must use its bounded SD spool instead.
+                self.upload(dst,self.download(src),True,fast=fast);report('copy',dst)
+        walk(source,destination,0)
+
     def upload(self,path,data,activate=False,*,fast=False):
         encoded=path_payload(path)
         if len(encoded)>113:raise ValueError('Staged target must be at most 112 bytes to allow sibling readback')
@@ -166,6 +258,10 @@ def main():
     commands=p.add_subparsers(dest='command',required=True)
     for name in ('status','resume','exit'):commands.add_parser(name)
     for name in ('stat','list'):commands.add_parser(name).add_argument('path')
+    mkdir=commands.add_parser('mkdir');mkdir.add_argument('path');mkdir.add_argument('--parents',action='store_true')
+    remove=commands.add_parser('remove');remove.add_argument('path');remove.add_argument('--recursive',action='store_true')
+    move=commands.add_parser('move');move.add_argument('source');move.add_argument('destination')
+    copy=commands.add_parser('copy');copy.add_argument('source');copy.add_argument('destination');copy.add_argument('--recursive',action='store_true');copy.add_argument('--replace',action='store_true');copy.add_argument('--fast',action='store_true')
     get=commands.add_parser('get');get.add_argument('path');get.add_argument('output',type=Path)
     put=commands.add_parser('put');put.add_argument('input',type=Path);put.add_argument('path');put.add_argument('--activate',action='store_true');put.add_argument('--fast',action='store_true',help='Skip whole-file readbacks; requires sdserve --fast')
     for name in ('activate','cancel'):commands.add_parser(name).add_argument('transfer',type=int)
@@ -175,7 +271,12 @@ def main():
     if a.command=='status':print(json.dumps(client.status(),indent=2));return
     if a.command=='resume':print('Recovered response:',client.resolve().hex());return
     client.connect()
-    if a.command=='stat':
+    report=lambda operation,path:print(json.dumps({'completed':operation,'path':path}),flush=True)
+    if a.command=='mkdir':client.make_directory(a.path,parents=a.parents,report=report)
+    elif a.command=='remove':client.remove(a.path,recursive=a.recursive,report=report)
+    elif a.command=='move':client.move(a.source,a.destination);report('move',a.destination)
+    elif a.command=='copy':client.copy(a.source,a.destination,recursive=a.recursive,replace=a.replace,fast=a.fast,report=report)
+    elif a.command=='stat':
         print(dict(zip(('size','attributes'),struct.unpack('<IB',client.rpc(2,path_payload(a.path))))))
     elif a.command=='list':
         cursor=0

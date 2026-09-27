@@ -216,3 +216,19 @@ Stop the listener and restart without `--fast` for normal verification. Query
 current service state rather than assuming that an earlier task's final mode is
 still running. The host rejects a normal/fast mode mismatch before BEGIN.
 [Tasklet and validation](tasks/REMOTE-005/FAST-TRANSFER.md).
+
+## Development-only directory commands
+
+The development client adds `mkdir PATH --parents`, `move SOURCE DESTINATION`,
+`remove PATH --recursive`, and `copy SOURCE DESTINATION --recursive`. These
+require a new listener capability and are **not available on the installed
+v0.2.0 listener**. Do not replace production artifacts from a development build.
+
+COPY accepts explicit `--replace` for files and `--fast` with the existing
+fast-mode limitations. MOVE never overwrites; directory COPY never merges.
+Checked replacement retains backup siblings. Successful entries print JSON
+receipts; failure/cancellation leaves previously completed entries in place.
+Recursive depth is limited to 16; the host buffers one copied file at a time.
+Keep the existing session journal for uncertain operations. Physical deployment
+and future idle-CLI/ExCom integration remain unqualified. See
+[local results](tasks/REMOTE-005/A07-RESULTS.md).

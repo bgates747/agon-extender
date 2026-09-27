@@ -97,4 +97,65 @@ class RealEngineUploadTests(unittest.TestCase):
     def test_mismatch_refused_before_begin(self):
         for fast in (False,True):self.exercise(fast,not fast)
 
+    @contextlib.contextmanager
+    def directory_fixture(self):
+        with tempfile.TemporaryDirectory() as temp:
+            disk=Path(temp);(disk/'test').mkdir();self.lib.fs_root(str(disk).encode())
+            self.assertEqual(self.lib.service_init_mode(b'/test',101,0),1)
+            c=sd.Client('http://fixture',disk/'state.json')
+            def exchange(request):
+                out=C.create_string_buffer(240);n=self.lib.service_request(request,len(request),out)
+                return sd.response(out.raw[:n],request)
+            c.exchange=exchange
+            try:yield c,disk
+            finally:c.lock.close();self.lib.service_stop()
+    def test_directory_copy_move_delete_and_receipts(self):
+        with self.directory_fixture() as (c,disk):
+            rows=[];report=lambda *args:rows.append(args)
+            c.make_directory('/test/source/empty/deep',parents=True,report=report)
+            (disk/'test/source/a').write_bytes(b'\0\xffabc')
+            with contextlib.redirect_stdout(io.StringIO()):c.copy('/test/source','/test/copied',recursive=True,report=report)
+            self.assertEqual((disk/'test/copied/a').read_bytes(),b'\0\xffabc')
+            self.assertTrue((disk/'test/copied/empty/deep').is_dir())
+            self.assertIn(('copy','/test/copied/a'),rows)
+            c.move('/test/copied','/test/moved');self.assertFalse((disk/'test/copied').exists())
+            c.remove('/test/moved',recursive=True,report=report);self.assertFalse((disk/'test/moved').exists())
+            self.assertIn(('remove','/test/moved'),rows)
+    def test_root_preflight_before_recursive_deletion(self):
+        with self.directory_fixture() as (c,disk):
+            (disk/'test/keep').write_bytes(b'keep')
+            for p in ('/','/test','/TEST'):
+                with self.assertRaises(sd.RemoteError):c.remove(p,recursive=True)
+            self.assertEqual((disk/'test/keep').read_bytes(),b'keep')
+    def test_copy_collisions_and_retained_replacement(self):
+        with self.directory_fixture() as (c,disk):
+            (disk/'test/a').write_bytes(b'new');(disk/'test/b').write_bytes(b'old')
+            with self.assertRaises(sd.RemoteError):c.copy('/test/a','/test/b')
+            with contextlib.redirect_stdout(io.StringIO()):c.copy('/test/a','/test/b',replace=True)
+            self.assertEqual((disk/'test/b').read_bytes(),b'new');self.assertEqual((disk/'test/b.p17bak').read_bytes(),b'old')
+            with self.assertRaises(sd.RemoteError):c.move('/test/a','/test/b')
+            with self.assertRaises(ValueError):c.copy('/test','/test/child',recursive=True)
+    def test_recursive_failure_keeps_completed_entries(self):
+        with self.directory_fixture() as (c,disk):
+            c.make_directory('/test/source')
+            (disk/'test/source/one').write_bytes(b'one');(disk/'test/source/two').write_bytes(b'two')
+            rows=[]
+            def stop(op,path):
+                rows.append((op,path))
+                if op=='copy':raise InterruptedError('operator cancellation')
+            with contextlib.redirect_stdout(io.StringIO()),self.assertRaises(InterruptedError):
+                c.copy('/test/source','/test/copy',recursive=True,report=stop)
+            copied=[p for op,p in rows if op=='copy'];self.assertEqual(len(copied),1)
+            self.assertTrue((disk/copied[0][1:]).exists());self.assertEqual(len(list((disk/'test/copy').iterdir())),1)
+    def test_old_listener_rejects_new_operations_before_mutation(self):
+        with self.directory_fixture() as (c,disk):
+            real=c.exchange;ops=[]
+            def old(request):
+                ops.append(request[12]);status,data=real(request)
+                if request[12]==1:data=data[:6]+struct.pack('<H',15)
+                return status,data
+            c.exchange=old
+            with self.assertRaises(sd.RemoteError):c.make_directory('/test/no')
+            self.assertEqual(ops,[1]);self.assertFalse((disk/'test/no').exists())
+
 if __name__=='__main__':unittest.main()

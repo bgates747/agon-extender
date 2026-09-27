@@ -462,10 +462,13 @@ card, reset, stale boot/admission, transfer failure and abandonment. Reuse curre
 checked UART transfer unchanged where possible; no parallel-link work. Specify
 recovery before ever deleting the only confirmed good copy.
 
-R05-A07 [ ] Add required mainboard utility directory operations and client support.
+R05-A07 [x] Add required mainboard utility directory operations and client support.
 Test root containment, ASCII/path limits, nested/empty directories, collisions,
 non-empty removal, overwrite interruption and per-entry recursive outcomes.
 Keep current ordinary/fast CLI transfer behavior compatible and test it separately.
+
+Local implementation and qualification: [A07 results](REMOTE-005/A07-RESULTS.md).
+Not installed or physically qualified; deployment remains downstream.
 
 R05-A08 [ ] Adapt pinned WebDAV protocol code to the admitted storage interface,
 not direct destructive POSIX overwrites. Keep video/input serving independent.

@@ -262,3 +262,27 @@ missing listener checks; use the paired updated host for explicit mode selection
 This can accept corruption that full readback catches. It does not promise
 power-atomic replacement. Downloads and directory operations are unchanged.
 See [implementation and evidence](../tasks/REMOTE-005/FAST-TRANSFER.md).
+
+## Development directory extension (not deployed)
+
+The locally tested listener advertises HELLO capability bit 0x20. Hosts must
+require that bit before using operations 12–14; current installed v0.2.0 does
+not advertise it. Existing framing and operations 1–11 are unchanged.
+
+1. MKDIR (12): one length-prefixed path using the existing path encoding.
+2. REMOVE (13): mode byte followed by one length-prefixed path. Mode 0 deletes
+   one file or empty directory; mode 1 validates mutation guards without changing
+   storage. A recursive client must preflight before descending into children.
+3. MOVE (14): total length u16, offset u16, descriptor CRC32 u32, then at most
+   184 descriptor bytes. Descriptor: class 6 u8, options 0 u8, source length u16,
+   destination length u16, reserved 0 u16, then exact source and destination
+   bytes. Each path is at most 120 bytes; descriptor at most 248 bytes. Reply:
+   next offset u16 and completion u8. Only the complete validated descriptor
+   executes a rename. No overwrite is supported.
+
+The listener enforces case-insensitive export containment, root/journal/live
+utility protection and rejects mutations during staged file transactions. Another
+operation or new session discards partial move assembly. Exact duplicate records
+use existing reply replay, including the final rename acknowledgement. Host
+recursion is bounded, reports completed entries and has no all-tree atomicity.
+See [local results](../tasks/REMOTE-005/A07-RESULTS.md) for qualification limits.
