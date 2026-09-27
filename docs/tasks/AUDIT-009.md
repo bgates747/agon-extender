@@ -179,6 +179,14 @@ no profile generation, launch, source edits or bench use. Validate commands by
 source/help inspection and links mechanically; retain fresh-host/runtime
 qualification as unperformed. Update audit evidence and commit separately.
 
+A09-N19 [ ] **Installation-tool claims and offline verification.** Review the
+host-tool index, installation/build guides and production selection against
+package_installation.py and verify_installation.py. Correct stale qualification
+wording and explain the offline verifier's scope, dependencies and distinction
+from repository selection and device verification. Documentation only; no
+packaging, installation, firmware, profile or bench operations. Check CLI help,
+links and whitespace; record bounded coverage and commit separately.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
