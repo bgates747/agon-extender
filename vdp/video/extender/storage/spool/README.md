@@ -91,3 +91,15 @@ g++ -std=c++17 -Wall -Wextra -Werror -fsanitize=address,undefined -g \
 Tests use actual temporary files and a small syscall fault seam for ENOSPC, sync
 and removal errors. No device or network operations. See the task's
 [A06 results](../../../../../docs/tasks/REMOTE-005/A06-RESULTS.md) for exact scope.
+
+## WebDAV COPY integration refinement
+
+The development WebDAV backend also admits external COPY (class 7) file stages.
+It retains the original class-7 binding, and records each copied file's source and
+destination in the slot descriptor. It never fabricates a new upload/download
+identity to reuse a parent grant. Only external origin is supported for this class;
+application COPY remains rejected. The worker owns subtree/path authorization
+and serial traversal under the parent operation. The on-card record size/version
+and existing upload/download behavior are unchanged. This is locally tested, not
+a deployed capability; the admission Channel and namespace reservation remain
+composition obligations. See the adjacent WebDAV README.

@@ -55,11 +55,13 @@ inline bool path(const std::uint8_t *p,unsigned n) {
   }
   return true;
 }
+// External COPY (class 7) stages each file under the unchanged parent grant.
+// Its descriptor names that file pair; the worker must enforce subtree scope.
 inline bool valid(const Job &j) {
   const auto *b=j.binding.data(), *d=j.descriptor.data();
   auto nonzero=[](const std::uint8_t *p,unsigned n){unsigned x=0;while(n--)x|=*p++;return x!=0;};
   if(!nonzero(b,8)||!nonzero(b+8,4)||!nonzero(b+12,4)||!nonzero(b+16,8)||
-     (b[24]!=1&&b[24]!=2)||(b[25]!=3&&b[25]!=4)||b[26]||b[27])return false;
+     (b[24]!=1&&b[24]!=2)||(b[25]!=3&&b[25]!=4&&!(b[25]==7&&b[24]==1))||b[26]||b[27])return false;
   if(j.descriptorSize<8 || j.descriptorSize>descriptorLimit || d[0]!=b[25] || (d[1]&~1U) || d[6] || d[7])return false;
   unsigned a=sd_u16(d+2),z=sd_u16(d+4);
   return 8+a+z==j.descriptorSize && path(d+8,a) && path(d+8+a,z);

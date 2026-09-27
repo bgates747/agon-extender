@@ -43,6 +43,9 @@ int main(){
   assert(s.confirmed(j.binding)==Result::ok);assert(s.discard(j.binding)==Result::ok);assert(fs::is_empty(dir));
  }
  fresh();auto j=job(3);Spool s(dir,3);assert(s.begin(job(4))==Result::quota);
+ auto copy=j;copy.binding[24]=1;copy.binding[25]=7;copy.descriptor[0]=7;
+ assert(valid(copy));copy.binding[24]=2;assert(!valid(copy));
+ copy.binding[24]=1;copy.descriptor[0]=3;assert(!valid(copy));
  auto invalid=j;invalid.binding[0]=0;assert(s.begin(invalid)==Result::invalid);
  invalid=j;invalid.descriptorSize=249;assert(s.begin(invalid)==Result::invalid);
  assert(s.begin(j)==Result::ok);assert(s.append(j.binding,1,"abc",3)==Result::invalid);

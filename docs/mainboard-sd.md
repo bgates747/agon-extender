@@ -232,3 +232,9 @@ Recursive depth is limited to 16; the host buffers one copied file at a time.
 Keep the existing session journal for uncertain operations. Physical deployment
 and future idle-CLI/ExCom integration remain unqualified. See
 [local results](tasks/REMOTE-005/A07-RESULTS.md).
+
+The development WebDAV adapter has local HTTP/wire-engine checks, including
+recursive operations and staged uploads. It is **not enabled on P4**; there is
+no new share URL or replacement invocation for the installed listener. Runtime
+admission/media/worker composition and native-client acceptance remain pending.
+See [A08 development results](tasks/REMOTE-005/A08-RESULTS.md).

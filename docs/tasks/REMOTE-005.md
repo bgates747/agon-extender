@@ -476,6 +476,11 @@ Test PROPFIND/GET/range/PUT/MKCOL/MOVE/COPY/DELETE, truthful locking/ownership,
 Finder body handling and negative conditions. WebDAV response success follows
 mainboard completion. Resolve D04 exposure policy before device deployment.
 
+Local WebDAV adapter and real-engine checks completed:
+[A08 contract](REMOTE-005/A08-CONTRACT.md), [results and remaining runtime fence](REMOTE-005/A08-RESULTS.md).
+A08 remains open for the actual grant/queue, finite utility, private media ownership
+and dedicated listener/worker composition. No endpoint was enabled or deployed.
+
 R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
 Exercise an interleaving matrix: external request at idle/partly typed CLI/app,
 app-origin upload/download, duplicate requests, disconnect/reconnect, reset and
