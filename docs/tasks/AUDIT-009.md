@@ -218,6 +218,18 @@ references. B67 found PORT-207 already completed, no current operational or
 ROM-reduction dependency, and no new implementation need. Retain as historical
 research; applicability review closed, without rerunning old measurements.
 
+A09-N25 [ ] **Current-handbook scouring and scoped closeout.** Author requests a
+thorough final pass of current user/agent guidance, not historical inventory
+mining. Walk the handbook's direct links and core use/SD/input/reset/text/build/
+install/emulator guides against maintained CLI/source and production selection.
+Check local navigation, executable examples, dependencies, ownership, current
+versus candidate claims and recovery boundaries. Correct evidenced discrepancies;
+write a compact role-based readiness/remaining-gap table. Preserve frozen
+packages, unrelated prototype edits and incomplete archival coverage. No network
+endpoint, device, build, emulator profile/launch or qualification execution.
+Record actual checked scope, source/help/link evidence and limits; commit only
+this documentation work. Do not declare the original exhaustive audit complete.
+
 For each step, the reviewing agent must finish its documentation corrections,
 update the existing inventory/findings/results with actual coverage, validate
 changed links and whitespace, and make a dedicated commit before starting the
