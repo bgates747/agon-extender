@@ -38,6 +38,8 @@ attention instructions are not continuing execution authorization.
 | [ADR-0022 — Explicit browser keyboard capture](ADR-0022-browser-keyboard-capture.md) | Accepted / Complete |
 | [SD separation of support files, evidence and transactions](ADR-2026-09-21-sd-layout.md) | Accepted / Complete |
 
+[Browser mainboard SD access](ADR-2026-09-27-browser-file-access.md): Accepted / Partial; remaining decisions in REMOTE-005.
+
 When changing an ADR's identity, title, status or completeness, update this index.
 Do not infer a new decision or change qualification status merely to make the
 index look complete.

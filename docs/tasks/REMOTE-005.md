@@ -2,9 +2,10 @@
 
 ## Executive summary
 
-External-interface research and Author discussion remain open, requested 2026-09-21. Expose Agon's
-mainboard SD through P4 Ethernet using an ordinary host client or browser UI.
-Compare browser file management, FTP, SMB and WebDAV before choosing. No external host protocol/library has been selected. Separately authorized
+Author selected browser transfers on 2026-09-27. Investigate embedded-oriented
+file-manager reuse, select/deselect all for bulk loose-file transfers, and whole
+directory operations before selecting a library or implementation contract.
+D03 service lifecycle discussion waits for this investigation. Separately authorized
 MOSlet admission, `/emos` migration and paired fast-transfer work have since
 been implemented and physically checked; use the [current SD guide](../mainboard-sd.md)
 and the [fast-transfer record](REMOTE-005/FAST-TRANSFER.md). The original
@@ -21,7 +22,7 @@ do not substitute direct GPIO/storage access or bypass EMOS ownership.
 
 The current service requires Legacy mode and runs in the foreground. It does not
 provide background SD access while a game runs. A familiar host protocol does
-not remove this limitation. P4-local SD storage is a separate future backend,
+not remove this limitation. P4-local SD storage is a separate backend,
 not the requested first target. Preserve existing transfer staging, verification,
 recovery and allowed-root semantics when evaluating an adapter.
 
@@ -51,11 +52,11 @@ vendored by this note.
 
 ## Decisions — settle one at a time
 
-D01 [ ] Primary experience: browser transfers, dedicated transfer client, or Finder-mounted share. Browser minimizes new protocol machinery; mounted share adds compatibility and filesystem semantics. Author preference selects the research direction.
+D01 [x] Accepted 2026-09-27: browser transfers. Prefer adapting an existing framework, especially an embedded-oriented one, after investigation. FTP/SMB/WebDAV are retained alternatives, not current implementation targets.
 
-D02 [ ] Initial operations: list/download/upload versus rename, delete, mkdir and overwrite. Check each against existing SD-service guarantees before offering it.
+D02 [ ] Partially settled: select/deselect all for bulk transfers of loose files and whole-directory operations are required. Investigate uploads/downloads preserving hierarchy, empty directories, create/rename/move/delete, overwrite conflicts and partial failure. Exact initial operation set and destructive-operation behavior remain to be settled from findings.
 
-D03 [ ] Service lifecycle: explicit operator start/stop of sdserve versus a separately scoped convenience launcher. Foreground/Legacy limitation remains unless explicitly redesigned.
+D03 [ ] Deferred until browser investigation is presented. Service lifecycle: explicit operator start/stop of sdserve versus a separately scoped convenience launcher. Foreground/Legacy limitation remains unless explicitly redesigned.
 
 D04 [ ] Client ownership, authentication, exposed root and serialization; define behavior when service is offline, disconnected or occupied by existing tools.
 
@@ -66,7 +67,7 @@ D05 [ ] Select protocol/library and bounded acceptance contract after compatibil
 R05-01 [x] Record requested mainboard-SD target, existing service limitation,
 options and upstream leads.
 
-R05-02 [ ] Review D01 with Author before expanding implementation research.
+R05-02 [x] Review D01 with Author before expanding implementation research.
 
 R05-03 [ ] For shortlisted options, inspect pinned source/API, license and
 P4/ESP-IDF/Ethernet fit. Map required filesystem operations, seek/range access,
@@ -227,3 +228,31 @@ implementation/validation contract and new procedure identity first.
    if a refreshed test changes an emulator setup.
 
 The documentation audit neither edits r01/scripts nor authorizes this test run.
+
+## Browser investigation — 2026-09-27
+
+Research only; no product implementation, vendoring, deployment or bench use.
+Findings: [browser reuse investigation](REMOTE-005/BROWSER-RESEARCH.md).
+
+R05-B01 [x] Record D01 and the accepted portion of D02; leave D03 open.
+
+R05-B02 [x] Identify embedded-oriented candidates and pin initial review revisions;
+compare advertised bulk/directory support and identify existing SD API gaps.
+
+R05-B03 [ ] Inspect shortlisted source and actual licenses/dependencies. Separate
+reusable browser assets from local-filesystem/server assumptions; estimate asset
+sizes and P4 adapter work without claiming unmeasured runtime costs. Prefer a
+frontend adapter to replacing our HTTP service or adding unrelated Wi-Fi/OTA code.
+
+R05-B04 [ ] Assess Firefox/Chromium/Safari folder upload/download mechanisms,
+empty-directory preservation, ZIP versus direct downloads, bounded host/P4 memory,
+serialized RPC transfers, progress/cancellation/retry, filename/path limits and
+per-file outcomes. Define what select-all includes when filtering or paging.
+
+R05-B05 [ ] Map each proposed operation to current EMOSlet/P4/host ownership;
+identify required mainboard API additions, reuse P4-local SD idioms where sound,
+and preserve staging/recovery and root restrictions. Do not silently substitute
+P4-local storage for Agon SD or presume background mainboard access.
+
+R05-B06 [ ] Present a recommended reuse approach, gaps and bounded implementation
+proposal. Then return to D02/D03 with evidence; do not decide lifecycle in advance.

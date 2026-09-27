@@ -834,3 +834,11 @@ built-ins first, idle CLI only, ordinary fixed-address MOSlet format. Cancelled
 external `.emo` provider loading is retired; no background module framework is
 introduced. Implementation and validation are tracked in
 [AUDIT-008](tasks/AUDIT-008.md).
+
+### Planned browser file access
+
+The selected next user interface for mainboard SD is browser file management,
+including bulk selection and whole-directory operations. The browser uses P4
+HTTP and EMOS-owned mainboard service access. Library selection and added
+operations remain investigation scope; this is not implemented browser behavior.
+See [the decision](decisions/ADR-2026-09-27-browser-file-access.md).
