@@ -16,7 +16,7 @@ classification does not grant new execution or waive human acceptance.
 ## Do now — PLAN-001
 
 
-- [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — N01–N20 complete within bounded scopes; full audit remains open. Current handbook consolidated; next documentation candidate N21 reviews two historical mode/compatibility decisions. Remaining implementation and qualification belong to their existing tasks; no bench work.
+- [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — N01–N21 complete within bounded scopes; full audit remains open. Current handbook consolidated; historical mode/compatibility applicability reconciled; select the next bounded inventory batch. Remaining implementation and qualification belong to their existing tasks; no bench work.
 
 - [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. sdserve now runs from `/emos` on EMOS v0.1.19 after bounded physical transfer/memory checks. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration, interactive session handling and R05-10 qualification-procedure refresh remain.
 

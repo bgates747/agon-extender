@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-Current checkpoint: **A09-N01–N20 complete within their bounded scopes; the
+Current checkpoint: **A09-N01–N21 complete within their bounded scopes; the
 whole-documentation audit remains open.** Historical one-hour windows below
 record earlier authorization, not a current time budget.
 
@@ -70,7 +70,7 @@ closeout items apply to this recorded tranche, not unseen documents.
 
 ## Next phase
 
-N01–N20 are complete within their recorded scopes. The remaining queue below
+N01–N21 are complete within their recorded scopes. The remaining queue below
 owns continuation; old execution windows and dated batch notes are history.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
@@ -242,14 +242,14 @@ F040 was resolved by N06; it is not a remaining work item.
 
 ## Remaining documentation queue
 
-A09-N21 [ ] **Historical decision applicability, two documents only.** Review
+A09-N21 [x] **Historical decision applicability, two documents only.** Review
 `docs/decisions/AUDIT-2026-08-23-001-operating-mode-semantics.md` and
 `docs/decisions/CA-2026-08-22-001-phase-c-compatibility-scope.md` against current
 architecture and SETUP-005. Identify obsolete instructions or still-owned gates;
 correct current applicability without changing accepted architecture or rewriting
 historical evidence. Update inventory/results and check links. Documentation only;
-no firmware, emulator, hardware or compatibility implementation. This is the next
-bounded candidate, not yet executed.
+no firmware, emulator, hardware or compatibility implementation. Completed in B64: current applicability reconciled; original source observations
+and historical evidence were not exhaustively revalidated.
 
 After N21, select another small batch from pending/partial inventory entries
 under A09-04/05/06/08. Do not treat all historical files as an operational blocker

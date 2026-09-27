@@ -1,11 +1,34 @@
 # CA-2026-08-22-001 — Phase C compatibility-scope review
 
 - Document type: Corrective action
-- Status: Resolved — corrected candidate approved; physical qualification pending
+- Status: Resolved corrective action — original candidate evidence retained; later qualification belongs to PORT-003
 - Date opened: 2026-08-22
 - Affected task: PORT-003 Phase C
 - Affected commit: `8aecb0e1a9efb671db2bff56143b11ab7b69aae5`
 - Authoritative work tracker: `docs/tasks/PORT-003.md`
+
+## Current applicability
+
+This corrective action records the August 22 Phase C candidate and its upstream
+behavior restoration. Its statements that the canary has no facade, transport
+or physical qualification describe that candidate, not today's Extender.
+[PORT-003](../tasks/PORT-003.md) owns the later stock-controller/row-storage
+restoration and current bounded results; [architecture](../architecture.md)
+owns the maintained backend contract. Production selection remains external to
+this historical record.
+
+The controlling rule survives: preserve inherited observable behavior unless an
+explicitly accepted change authorizes departure. D008's stronger completion,
+notification and cancellation semantics were removed from the strict candidate.
+Their optional A/B investigation remains [UPSTREAM-001](../tasks/UPSTREAM-001.md),
+not an implied product improvement or current implementation instruction.
+
+The immediate containment and corrective checklist below are historical steps
+with the outcome recorded at the end. They do not impose a new global freeze or
+require rerunning the superseded canary procedure. Later physical results do not
+constitute exhaustive timing/ordering parity or erase the original process
+finding. Current remaining qualification stays with PORT-003 and its linked
+qualification tasks.
 
 ## Trigger
 

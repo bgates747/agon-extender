@@ -537,3 +537,9 @@ Compared task checklist, current RESULTS continuation, FINDINGS, TODO summary
 and CSV review-state counts. Checked changed local document links/whitespace.
 No source, profile, package or hardware operation. Historical counts and receipts
 retained; inventory classifications unchanged.
+
+## B64 — Historical mode and Phase C applicability
+
+Reviewed the two N21 records against current architecture and owning task
+summaries. Local links and whitespace checked. No code, build, profile, device
+or generated qualification data changed. No new historical correctness claim.

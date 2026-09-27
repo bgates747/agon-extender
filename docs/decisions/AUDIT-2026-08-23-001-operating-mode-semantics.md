@@ -1,12 +1,36 @@
 # AUDIT-2026-08-23-001 — Operating-mode semantics and ownership consistency
 
-- Status: Complete — findings await Author disposition
+- Status: Historical audit complete — dispositions tracked by REMED-001 and SETUP-005
 - Date: 2026-08-23
 - Trigger: Author clarification during QUAL-001 Review Gate 2
 - Scope: All tracked architecture, decisions, tasks, qualification data,
   procedures, hardware records, implementation, tests, generated artifacts,
   and development logs that encode Extender operating-mode semantics
 - Owning task: QUAL-001
+
+## Current applicability
+
+This is the August 23 audit baseline, not the current operating contract.
+[Architecture](../architecture.md) and
+[ADR-0014](ADR-0014-edu-operating-modes-and-service-architecture.md) own accepted
+mode semantics. [REMED-001](../tasks/REMED-001.md) tracks remaining conformance;
+[SETUP-005](../tasks/SETUP-005.md) owns unresolved architecture decisions.
+Do not restart the naming discussion or treat this record's original instructions
+as a second work queue.
+
+| Historical statement | Current disposition |
+|---|---|
+| No implemented modes; missing UART task | Bounded Legacy/ExCom routing exists under [PORT-008](../tasks/PORT-008.md). The original absence statements describe the audit date, not current firmware. |
+| Compatible/Extended short forms | Current accepted abbreviations are ExCom and ExExt; Dual remains separately addressed mainboard VDU and EDP EDU. |
+| Legacy implies total logical absence | Current architecture permits explicitly admitted Extender keyboard and foreground SD service in Legacy. That does not activate ordinary EDP display routing or waive electrical constraints. |
+| Equal exclusive ownership | Both exclusive modes use EMOS-mediated ownership, but ExExt parallel transport and parity remain unqualified; ownership equivalence is not a timing or compatibility result. |
+| Three-mode qualification data need replacement | Still open under [QUAL-001](../tasks/QUAL-001.md) RG2-02R and REMED-001. Bounded ExCom acceptance does not promote the obsolete matrix. |
+| Full compatibility / maintenance question | Current architecture retains explicit maintenance deferrals and Legacy-only handling; a mode name does not restore omitted functionality. Broader decisions stay in SETUP-005. |
+| Historical harness qualification | Applies only to its named circuit. [QUAL-002](../tasks/QUAL-002.md) and hardware owners retain full electrical gates; later receipts do not qualify the predecessor assembly. |
+
+The findings, coverage table and disposition questions below retain their dated
+observations. This applicability review does not revalidate every original
+source observation, close Dual/ExExt work or grant physical qualification.
 
 ## Purpose and authority boundary
 
@@ -404,10 +428,11 @@ separately addressed onboard-VDP and EDP operation.
 | Public overview | README | Add mode summary after terminology is frozen. |
 | Historical evidence | development logs, procedures, run manifests, `legacy-evidence/` | Preserve; add supersession provenance later. |
 
-## Issues requiring later Author disposition
+## Historical questions referred to the owning tasks
 
 These are audit findings, not decisions or an independent actionable checklist.
-They will be promoted into SETUP-005 or another approved task before work begins.
+Consult SETUP-005 and REMED-001 for current decisions and remaining work;
+this historical list does not reopen resolved questions.
 
 1. Does “full compatibility” restore the maintenance/operator facilities
    currently carved out of Extender v1, or do those carve-outs apply to both

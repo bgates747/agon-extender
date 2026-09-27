@@ -260,3 +260,11 @@ acceptance. Corrected to the accepted reconstruction and later-build limits.
 Installation guidance now explains offline structural verification, its PyYAML
 dependency, supported layout and external production-selection boundary. Source
 inspection only; no new package, device or publication qualification.
+
+## A09-N21 — Historical applicability
+
+A09-F068 — August mode audit still announced pending naming disposition and no
+implemented modes; Phase C corrective status still read as current pre-physical
+state. Current applicability sections now link accepted Legacy/ExCom and later
+backend results, preserve unresolved four-mode qualification, and distinguish
+historical containment from present authorization. Corrected documentation only.

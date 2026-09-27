@@ -210,16 +210,15 @@ hardware or independent fresh-machine acceptance.
 | F051 | Historical storage-probe receipt paths need current placement review before a new physical run | AUDIO-001 / REMED-003 |
 | F012, F016 | Historical cross-references need provenance repair; current handbook does not depend on them | Hardware archive / EMOS migration record owners |
 
-[FINDINGS.md](FINDINGS.md) records findings through F067 and their dispositions.
+[FINDINGS.md](FINDINGS.md) records findings through F068 and their dispositions.
 Assigning an owner or exposing a gap does not authorize a fix or bench run.
 
 ## Exact continuation
 
-A09-N01–N20 are complete within their documented scopes. The main task's
-remaining documentation queue owns the next bounded candidate, A09-N21:
-applicability of two historical mode/compatibility decisions. No implementation
-or bench work is selected. Old “next” statements in dated batch receipts record
-that checkpoint only and do not override this continuation.
+A09-N01–N21 are complete within their documented scopes. Select the next small
+pending/partial documentation batch under A09-04/05/06/08 before execution.
+No implementation or bench work is selected. Historical batch continuation
+notes describe their own checkpoint, not current instructions.
 
 Long histories remain partial until actually reviewed. Routine use already
 starts at the current handbook; archive completion is not a new operational
@@ -522,3 +521,12 @@ retained scoped enumeration, not proof that every newly created file is listed.
 Historical batch counts remain unchanged. Current continuation is N21 in the
 main checklist; implementation/hardware obligations remain with their owners.
 No underlying historical body was newly reviewed and no coverage state advanced.
+
+## A09-N21 result
+
+B64 reconciled the two historical operating-mode/Phase C records with current
+architecture, SETUP-005, REMED-001 and PORT-003 dispositions. Added current
+applicability tables/links; preserved original findings, superseded candidate
+evidence, QUAL-001 RG2-02R and broader parity/electrical gates. Two pending
+inventory entries become partial: summary applicability reviewed, historical
+source/evidence not exhaustively revalidated. No source or bench operation.
