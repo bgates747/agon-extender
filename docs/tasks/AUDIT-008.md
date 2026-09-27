@@ -1,5 +1,22 @@
 # AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets
 
+## Current disposition — 2026-09-27
+
+Delivered ROM-simplification/dispatcher tranche closed out by Author agreement.
+Further extraction is parked: ROM savings alone are no longer a reason to split
+resident functions. Reconsider only when measured ROM pressure returns or a
+specific optional utility benefits materially from independent SD updates,
+infrequent large functionality, or isolated experimentation. Balance those
+benefits against SD availability, loading delays, deployment and ABI complexity.
+Resident EMOS retains boot/recovery essentials, keyboard handling, transport
+ownership and ordinary VDU routing. The foreground SD listener remains an EMOSlet.
+
+This administrative closeout preserves the bounded validation evidence; it does
+not mark the broader A08-09 matrix complete. Its unperformed checks remain
+recorded below as parked qualification, to revisit when relevant changes or
+failures justify them. No new firmware, production version or extraction is
+selected by this decision.
+
 ## Executive summary
 
 Contract refreshed 2026-09-23. The Author approved a one-hour autonomous
@@ -16,7 +33,8 @@ free. The completed first tranche recovered **6282 ROM bytes**, leaving **6298
 free** in the 128 KiB image; see [measured implementation results](AUDIT-008/IMPLEMENTATION.md)
 and [bounded physical acceptance](AUDIT-008/HARDWARE.md). Original research
 estimates remain historical, not substitutes for those measured results.
-Further extractions and broader acceptance remain outside the completed tranche.
+Further extractions and broader qualification remain outside the completed tranche
+and are parked under the current disposition above.
 
 ## Origin and scope
 
@@ -91,7 +109,7 @@ MOS idioms and thin resident services. Measure total linked before/after ROM;
 retaining duplicate implementations is not a saving. Preserve the previous image
 and matching SD utilities as a rollback set.
 
-A08-09 [ ] Validate normal/invalid command invocation, case handling, arguments,
+A08-09 [ ] **Parked broader qualification; not a delivered-tranche blocker.** Validate normal/invalid command invocation, case handling, arguments,
 return/re-entry, missing SD/utility and version mismatch. Verify application RAM
 preservation and no live callbacks into unloaded MOSlet memory. Exercise ordinary
 MOS behavior, Legacy/ExCom switching and both keyboard sources where affected.
