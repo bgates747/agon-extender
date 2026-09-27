@@ -15,14 +15,11 @@ overrides. This decision does not change pacing or expand supported formats.
 Client replacements and firmware deployments must preserve and verify this default.
 Authority: [ADR-0021](../decisions/ADR-0021-rle2-browser-default.md).
 
-**Recorded implementation discrepancy:** the preserved
-`browser-reset-r02-b2026-09-21-20-37-00Z` browser requests plain `/video`, so
-its P4 uses raw frames despite retaining the encoders. Its parent requested
-`rle2=1&packed=2`. [Source/binary comparison](../tasks/RELEASE-001/R01-03.md)
-confirms the change; no performance effect was measured. The accepted requirement
-above remains in force. [R01-04](../tasks/RELEASE-001/R01-04.md) restores the
-query in a locally tested draft; the installed firmware has not yet been replaced.
-The correction leaves request pacing unchanged.
+The selected production r55 browser requests `?rle2=1&packed=2`. The earlier
+reset-only build accidentally requested raw `/video`; that discrepancy was
+corrected in [RELEASE-001](../tasks/RELEASE-001/R01-07.md) and is not the current
+selected behavior. The P4 may still select raw fallback when compression is
+ineligible or larger. Restoring codec negotiation did not add a pacing limiter.
 
 
 ## Accepted web-output ceiling — 2026-09-16
@@ -45,23 +42,41 @@ Authority: [ADR-0020](../decisions/ADR-0020-web-output-30fps.md).
 
 ### Implementation and later experiment boundary
 
-The accepted 30-fps ceiling above is not proof of an installed limiter.
-[BENCH-005](../tasks/BENCH-005.md#browser-pacing-continuation) later received
-explicit authorization for a 60-Hz client-request experiment, and retained
-earlier browser candidates use that pacing. The retained reset build subsequently
-removed explicit 60-Hz credit spacing; its ordinary page returns credits after
-presentation without that fixed interval. [The cross-agent review](../tasks/QUAL-003/mode-transition/AGENT-QUESTIONS.md)
-distinguishes those candidates from the earlier 30-Hz capped gameplay result.
-Neither establishes a general 60-fps high-resolution acceptance or revokes
-ADR-0020. Resolving the current normal-output policy versus retained experimental
-configuration remains with QUAL-003/BENCH-005; this audit changes neither code
-nor architecture. Do not report measured browser fps as game-loop throughput.
+| Scope | Authority or observed source behavior |
+|---|---|
+| Normal policy at 512×384 | ADR-0020 specifies a 30 complete-frame/s ceiling, including output admission; it does not claim implementation |
+| Earlier controlled client | BENCH-005 K01 used an explicit 30 credits/s limiter; this describes that historical test |
+| Authorized later experiment | BENCH-005 W01–W02 raised the explicit client ceiling to 60/s; this did not replace the policy |
+| Selected production r55 | Browser sends the first credit on connection, then returns one after presentation in `requestAnimationFrame`; no explicit 30/60-fps time limiter |
+| P4-local SD candidate r57 | Same browser `app.js` bytes as r55; storage qualification did not change pacing |
 
-The base checkout and deployed candidates differ: codec/pacing overlays were
-applied in isolated snapshots. See [build provenance](../building.md#deployed-candidates-versus-the-base-target).
-The wire sections below describe the original format and later contracts;
-verify the exact candidate's negotiated encoding rather than assuming the base
-`frame_protocol.js` includes every deployed extension.
+The selected client follows browser presentation opportunities and one-frame
+credit/backpressure. A browser's refresh cadence is not a guaranteed 60-Hz clock,
+nor a P4 output-admission ceiling. Network, encoding, rendering and browser load
+can each reduce observed presentation rate. Frame-header nominal period, presented
+fps and application loop cycles/s are distinct measurements.
+
+Source comparison: selected r55 commit
+`b835307270d3f0fac1be01b587e62163cc392dac` and r57 source commit
+`1ebef276bd435be44625f046d115fec90503c3c3` share `app.js` SHA-256
+`5401574eeabc069b11ba65cd49c46510a6133ef31cdebae446401a1f4aa2fb28`.
+The maintained [animation loop](../../vdp/video/extender/web/app.js) calls
+`credit.presented(sendCredit)` after presenting; the
+[credit state](../../vdp/video/extender/web/frame_protocol.js) sends `frame`
+without a rate timer. This is source evidence, not a fresh throughput test.
+
+**Remaining limitation:** the selected ordinary browser path does not enforce
+ADR-0020's normal ceiling. Bounded installation acceptance is not evidence that
+the ceiling was implemented or replaced. QUAL-003/BENCH-005 retain the policy
+versus implementation follow-up (A09-F008); this documentation audit neither
+changes the rate nor authorizes a new output policy. The
+[cross-agent comparison](../tasks/QUAL-003/mode-transition/AGENT-QUESTIONS.md)
+remains historical evidence distinguishing the earlier capped and later trials.
+
+Historical codec/pacing experiments used isolated overlays. The current selected
+composition is now maintained and reproducible through the
+[build guide](../building.md); do not treat old overlay requirements as the
+current build procedure. Verify a specific historical build by its own receipt.
 
 ## Ownership and presentation
 
@@ -179,7 +194,7 @@ retains its correct-image but worse-performance result.
 | `packed=2` | EVP1 or raw fallback | Palette form plus direct six-bit RGB222 |
 | `pair=1` | EVQ1 or raw fallback | Optional experimental pair-RLE; not the ordinary default |
 
-The retained pre-reset browser default combines `rle2=1&packed=2`: the server chooses an
+The selected production browser default combines `rle2=1&packed=2`: the server chooses an
 eligible smaller representation. Requesting a codec is not proof it was sent;
 record actual magic and bytes. Earlier RLE2 candidates limited decoded frames
 to 512×384; the composed-packing candidate enlarged that bound to 1024×768.
@@ -246,6 +261,8 @@ retains the revisions: ordinary selection was restored without `pair=1`.
 Run `.venv/bin/python tests/browser_rgb222_test.py` for C++ sanitizer coverage,
 all 64 colours through actual WebGL, format/size/stride changes, malformed
 frames, leases and browser credit. `tests/browser_video_ui_test.py` covers the
-base page's video reconnect behavior. Deployed codec overlays require the
-corresponding candidate tests; these base tests alone do not cover them. These checks use loopback
-and do not contact the P4 or Agon.
+page's video reconnect behavior. For a prepared current bundle, use
+`tests/browser_bundle_test.py --bundle <directory>` as described in the
+[build guide](../building.md); the older base tests alone do not validate every
+compressed envelope. Historical overlays require their own retained checks.
+These local checks do not contact the P4 or Agon.

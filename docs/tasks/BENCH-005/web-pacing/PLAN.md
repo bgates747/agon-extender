@@ -51,3 +51,12 @@ which exploration to try next before any further tests or implementation.
 W07a read-only audit authorized and executed: [findings](../packed-output/RESULTS.md).
 Installed RLE2 excludes mode 0 by pixel-count limit; reassess experiment order
 before implementing native packed output. W07 implementation remains pending.
+
+
+## Later disposition — documentation review 2026-09-26
+
+This plan records an authorized 30-to-60 request-cap experiment, not a replacement
+of ADR-0020. Selected r55 and later r57 instead share a presentation-credit client
+with no explicit interval limiter. [Current pacing authority](../../../protocols/browser-video.md)
+distinguishes these states. Existing W03/W04 gates are not closed by installation
+acceptance or this source review; no new performance comparison was run.

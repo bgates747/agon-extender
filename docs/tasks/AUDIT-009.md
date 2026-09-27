@@ -68,8 +68,8 @@ closeout items apply to this recorded tranche, not unseen documents.
 ## Next phase
 
 N01–N04 are complete. The Author authorized the next bounded documentation
-subtask on 2026-09-26 after preserving and pushing prior work. **A09-N05** is
-selected below; previous one-hour windows are historical, not a new time budget.
+subtask on 2026-09-26 after preserving and pushing prior work. **A09-N05–N07** are
+complete below; previous one-hour windows are historical, not a new time budget.
 
 A09-N05 [x] **Production-selection closeout reconciliation.** Review exactly
 seven current bodies: AGENTS.md, HANDOFF.md, docs/README.md, docs/building.md,
@@ -89,7 +89,7 @@ qualified combinations. Correct stale deployment notes with a registry revision
 under standing version authority. No new component qualification, rebuild,
 tag, deployment or promotion is implied. Record checks and stop after this batch.
 
-A09-N07 [ ] **Browser pacing policy versus selected behavior (F008).** Review
+A09-N07 [x] **Browser pacing policy versus selected behavior (F008).** Review
 ADR-0020, the current browser-video guide, architecture pacing summary,
 BENCH-005's historical 30/60-Hz statements and web-pacing plan against selected
 r55 source and retained acceptance. Compare the current r57 client without

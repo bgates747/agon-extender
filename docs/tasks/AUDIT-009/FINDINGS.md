@@ -12,7 +12,7 @@ The task checklist owns execution; this register tracks claims and dispositions.
 | A09-F005 | Obsolete reset prohibition in mainboard-sd.md | bench-reset.md and REMOTE-003 document corrected Pi actuator/button; SD protocol itself still has no reset | Fixed: independent reset path linked; ROM recovery distinct |
 | A09-F006 | Wrong browser asset claims: no keyboard endpoints, RGB888 only, pre-input page | Current wired_network_service.cpp registers /keyboard/browser; base decoder supports RGB222 and deployed overlays provide later codecs | Fixed: source README gives role/links and base-versus-overlay boundary |
 | A09-F007 | SD protocol admission wording excludes supported MOSlet RAM | EMOS v0.1.18 gateway changes and v0.1.19 physical /emos checks | Fixed: source-confirmed caller ranges and ownership |
-| A09-F008 | Normative 30fps text versus later 60Hz browser request behavior | architecture.md/ADR-0020 versus BENCH-005, QUAL-003 and app.js | Documented unresolved: normal contract versus retained experiment; QUAL-003/BENCH-005 |
+| A09-F008 | Normative 30fps policy versus selected presentation-driven browser credits | architecture.md/ADR-0020 versus BENCH-005, QUAL-003 and app.js | Documented unresolved: normal contract versus retained experiment; QUAL-003/BENCH-005 |
 
 Resolution evidence and additional findings will be appended per bounded batch.
 
@@ -30,12 +30,14 @@ physical LED/platform acceptance is preserved, not promoted to a pass.
 F007 was checked against `agon-emos/src/emos_sdlink.c`'s complete-buffer range
 `0x040000..0x0B7FFF` and the retained AUDIT-008 hardware result.
 
-F008 is **documented but unresolved**, owned by QUAL-003/BENCH-005: ADR-0020
-accepts 30fps at 512×384 and explicitly does not claim a production limiter.
-BENCH-005 authorized a later 60-Hz request experiment. Retained candidates use
-that experiment; no evidence reviewed here establishes a general replacement
-of the normal-output contract. Current guides distinguish them and point to
-the cross-agent comparison. No rate or firmware was changed.
+F008 is **implementation/policy unresolved, documentation reconciled in B50**.
+ADR-0020 still specifies 30fps at 512×384. BENCH-005's 30/60-Hz configurations
+are historical controls/experiments. Selected production r55 and candidate r57
+have identical app.js bytes and return credit after browser presentation with
+no explicit 30/60 limiter. The maintained guide now states that exact behavior;
+installation acceptance does not replace the rate policy. QUAL-003/BENCH-005
+retain the remaining implementation/decision gate. No code or rate changed.
+
 
 | ID | Class and affected claim | Evidence / correction | State / owner |
 |---|---|---|---|
@@ -204,3 +206,12 @@ B49 inspected version policy, registry, selected r02 baseline, production guide
 and RELEASE-001 R01-08 receipt. Exact-byte acceptance remains authoritative;
 no previously untested component/variant receives a qualification claim. Registry
 r113 updates notes only; selected bundle, production tag and binaries unchanged.
+
+## B50 — selected browser pacing
+
+Reviewed the pacing/selection passages in five documents against the selected
+r55 commit and r57 source, retained RELEASE-001 acceptance and BrowserCreditState.
+Removed obsolete claims that compression restoration was not deployed or that
+current builds still require historical overlays. ADR-0020 remains unchanged in
+substance. F008 stays open for its existing owner, not for missing description
+of the current client. No bench access or new throughput measurement.

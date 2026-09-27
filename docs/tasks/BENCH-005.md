@@ -45,7 +45,13 @@ Official local Agon docs MOS API and VDP commands; agondev input wrappers and MO
 interrupt implementation; existing BENCH-001 telemetry contract; installed web
 client decoder and scripts/keyboard.py. Record concrete APIs in results/source.
 
-## K01 findings / instrumentation refinement
+## K01 findings / instrumentation refinement — historical configuration
+
+The rate statement below belongs to K01's tested client. Selected production r55
+now returns credits after browser presentation without an explicit time limiter.
+Use the [current pacing boundary](../protocols/browser-video.md) for present
+behavior. The historical control and its measurements are preserved.
+
 
 Installed web client explicitly limits frame credits to 30/s at all resolutions.
 Preserve this setting for the comparison. Browser-origin keyboard requests are

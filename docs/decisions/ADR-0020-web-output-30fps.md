@@ -25,3 +25,11 @@ remains a future goal. Protocol encodings are unchanged by this cadence decision
 QUAL-003 owns application of this contract to active fixtures and production
 qualification. Historical evidence and frozen input identities are preserved.
 This decision does not claim a production firmware limiter has been implemented.
+
+
+## Current implementation reference
+
+The [browser-video guide](../protocols/browser-video.md) records the selected
+client's presentation-driven credits without an explicit 30/60-fps limiter and
+distinguishes the later authorized experiment. This implementation observation
+does not amend this accepted decision or qualify its ceiling as implemented.

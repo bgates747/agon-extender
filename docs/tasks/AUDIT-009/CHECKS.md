@@ -432,3 +432,17 @@ whitespace passes. No new aggregate-validator success claimed: F024 remains.
 No build, emulator, hardware or artifact promotion. Inventory1114 entries:
 121 reviewed,146 partial,140 metadata-only,44 provenance-only,663 pending.
 Two new records indexed, one pending body reviewed, two existing bodies refreshed.
+
+## A09-N07 — selected browser pacing
+
+B50 reviewed pacing/selection passages in architecture.md, protocols/browser-video.md,
+ADR-0020, BENCH-005.md and BENCH-005/web-pacing/PLAN.md. Contract cc6c0d64.
+Compared selected r55 app.js at b835307270d3f0fac1be01b587e62163cc392dac
+with maintained r57 source; both SHA-256
+5401574eeabc069b11ba65cd49c46510a6133ef31cdebae446401a1f4aa2fb28.
+Inspected animationLoop and BrowserCreditState: no explicit frame interval.
+Retained release receipts establish compression restoration; no new performance
+or ADR amendment inferred. Five inventory dispositions refreshed with states
+unchanged:1114 records,121 reviewed,146 partial,140 metadata-only,44 provenance-only,
+663 pending. Local relative file-target scan and git diff --check pass; anchor
+resolution and external URLs not validated. No hardware, build or emulator work.

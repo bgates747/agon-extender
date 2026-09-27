@@ -16,7 +16,7 @@ established by a successful experiment or by this documentation reconciliation.
 | Generalized callbacks | Accepted production requirement; current private timing callback is not the finalized general ABI | [ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md) |
 | Audio / P4-local SD / local video | Accepted or researched directions, not current working output/storage capabilities | PORT-004 / PORT-007 / P4PC-001 |
 | Hardware | Simplified r03 UART/USB path has bounded evidence; drawing/as-built work remains. Four-chip r02 is held | [Hardware index](../hardware/README.md), HW-002 |
-| Web pacing | Accepted 30-fps contract at 512×384 differs from retained authorized 60-Hz experiments | [Video boundary](protocols/browser-video.md#implementation-and-later-experiment-boundary) |
+| Web pacing | Accepted 30-fps contract at 512×384 is not enforced by the selected presentation-credit browser client | [Video boundary](protocols/browser-video.md#implementation-and-later-experiment-boundary) |
 | Rebuild | Base target does not reconstruct every deployed overlay | [Build limits](building.md#deployed-candidates-versus-the-base-target) |
 
 The remaining sections state design obligations unless an implemented subset is
@@ -33,7 +33,7 @@ change the separately accepted output pacing policy.
 
 ## Web-output cadence
 
-The accepted 512×384 web-output contract is 30 complete frames/s. Normal test
+The accepted 512×384 web-output contract is 30 complete frames/s. The selected r55 browser has no explicit rate limiter; its presentation-driven credits must not be described as either a guaranteed 60 Hz or an enforced 30 fps. Normal test
 fixtures must cap snapshot/output admission at 30 fps, independently of native
 rendering and application cadence. See [browser-video contract](protocols/browser-video.md)
 and [ADR-0020](decisions/ADR-0020-web-output-30fps.md). This target still needs

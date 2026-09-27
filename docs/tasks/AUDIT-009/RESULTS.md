@@ -200,7 +200,7 @@ hardware or independent fresh-machine acceptance.
 | Finding | What remains | Existing owner |
 |---|---|---|
 | F009 — resolved | Selected r55 clean reconstruction and exact EMOS/listener reproduction are accepted; public redistribution and other-board qualification remain separate limits | RELEASE-001 R01-08; no remaining reconstruction task for this combination |
-| F008 | Accepted 30-fps normal contract and authorized 60-Hz retained experiments need final configuration/policy reconciliation | QUAL-003 / BENCH-005 |
+| F008 | Current selected client is documented as presentation-driven without a rate limiter; applying or explicitly revising the accepted 30-fps policy remains unresolved | QUAL-003 / BENCH-005 |
 | F019 | Retained timing runner selects mode in EXEC and uses the ordinary listener fallback; refresh procedure before reuse | BENCH-007 |
 | F020 | Frozen SD qualification r01 predates current EMOSlet/reset operation; refresh before another qualification | REMOTE-005 / SD qualification owner |
 | F035 | Fixed-path examples and old qualifier/service handovers need code/procedure refresh before reuse | PORT-003, REMOTE-002, DEMO-001 |
@@ -371,3 +371,23 @@ policy still differs from behavior, retain that explicit limitation and its
 owner; do not change pacing as part of this audit.
 
 N06 coverage:1114 records;121 reviewed,146 partial,140 metadata-only,44 provenance-only,663 pending. Two new records and one formerly pending body reviewed.
+
+## A09-N07 result
+
+B50 reconciles F008's documentation: selected r55 and r57 share identical app.js
+bytes, with credit returned after requestAnimationFrame presentation and no
+explicit 30/60-Hz timer. The accepted 30-fps/512×384 policy is not thereby
+implemented or superseded. Historical 30-Hz and 60-Hz trials remain distinct.
+Corrected adjacent obsolete raw-negotiation/overlay statements using retained
+RELEASE-001 evidence. No firmware change, benchmark, network or bench operation.
+
+Five existing inventory dispositions refreshed for the reviewed passages; no
+whole-body review-state upgrade or new inventory record claimed. F008 remains
+with QUAL-003/BENCH-005 for implementation/policy resolution. This bounded audit
+step is complete, not an acceptance of a new frame-rate policy.
+
+Next bounded candidate: A09-04/08's existing F019 timing-runner guidance mismatch,
+read-only/source-and-document review before considering any runner reuse.
+F024 hardware digest and F060 emulator setup remain under their existing gates.
+
+Coverage unchanged: 1114 records; 140 metadata-only, 146 partial, 663 pending, 44 provenance-only, 121 reviewed.
