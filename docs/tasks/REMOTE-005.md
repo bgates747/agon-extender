@@ -52,11 +52,11 @@ vendored by this note.
 
 ## Decisions — settle one at a time
 
-D01 [x] Accepted 2026-09-27: browser transfers. Prefer adapting an existing framework, especially an embedded-oriented one, after investigation. FTP/SMB/WebDAV are retained alternatives, not current implementation targets.
+D01 [ ] Browser trial completed and parked as fallback. Lenovo WebDAV usability trial passed two-way transfers; staged WebDAV is now the proposed implementation direction, pending architecture review.
 
 D02 [ ] Partially settled: select/deselect all for bulk transfers of loose files and whole-directory operations are required. Investigate uploads/downloads preserving hierarchy, empty directories, create/rename/move/delete, overwrite conflicts and partial failure. Exact initial operation set and destructive-operation behavior remain to be settled from findings.
 
-D03 [ ] Deferred until browser investigation is presented. Service lifecycle: explicit operator start/stop of sdserve versus a separately scoped convenience launcher. Foreground/Legacy limitation remains unless explicitly redesigned.
+D03 [ ] Proposed automatic EMOS-owned foreground servicing at a safe idle CLI point. Reject external requests while a user application runs; allow explicit application-initiated transfers. Current manual Legacy listener remains the implemented behavior until the proposal is approved and qualified.
 
 D04 [ ] Client ownership, authentication, exposed root and serialization; define behavior when service is offline, disconnected or occupied by existing tools.
 
@@ -320,3 +320,134 @@ file-manager trial. Retain this bounded usability acceptance. Pop!_OS GUI and
 Finder checks remain pending; automated GVfs evidence for both Linux hosts is
 unchanged. No Agon-backed implementation or production promotion is implied.
 Next discussion remains D03 lifecycle, then D04 ownership and upload staging.
+
+## Proposed staged WebDAV architecture — review gate
+
+Author requested a written proposal and development/deployment/test plan, then a
+pause. [Proposed ADR](../decisions/ADR-2026-09-27-staged-webdav-admission.md)
+records actors, admission, staging and transport boundaries. No implementation
+is authorized by this writeup. P4 staging is a proposed simplification of the
+WebDAV adapter, not a claim that all filesystem or lifecycle work disappears.
+
+### Remaining bounded design decisions
+
+D06 [ ] Define CLI safe point and ownership duration. Recommend EMOS admit one
+bounded job only when no command executes and no input line is partly typed;
+serialize command dispatch with that admission. New input must be preserved or
+handled explicitly, never lost or interpreted as transfer data. Trace stock CLI
+and application dispatch before selecting hooks. No filesystem work in ISR.
+
+D07 [ ] Define application-initiated ABI and memory model. Recommend a synchronous,
+cooperative EMOS API with caller-owned buffers and explicit source/destination,
+root and direction. Determine whether foreground code can reuse utility routines
+without loading a MOSlet over the calling program; do not assume reentrancy or
+MOSlet safety. EMOS derives origin from actual execution/call context, not a P4
+claim. File transfers only, not unsolicited host access to the application's SD.
+
+D08 [ ] Define staging lifetime/quota and HTTP timing. Recommend bounded staging
+on P4 SD with complete/partial manifests, mainboard boot/admission identity,
+cleanup and explicit errors on full/missing media. No unbounded P4 RAM buffering.
+P4 should obtain admission before accepting an expensive upload where practical;
+otherwise any spool is provisional. Busy rejection never becomes delayed delivery.
+Measure native client behavior while mainboard copy proceeds before choosing
+lease/HTTP deadlines. Do not acknowledge mainboard success early.
+
+D09 [ ] Define mode and client concurrency. Recommend retaining current Legacy
+restriction for first automatic mainboard service; reject unsupported modes
+without silently switching displays. Application-initiated scope must explicitly
+state whether/how it can operate beyond that boundary. One admitted mainboard job
+at a time; WebDAV sockets are not equivalent to owners. Define conflicts with CLI
+sdcard.py/manual sdserve, keyboard packets, and stale client retry. No pretend locks.
+
+D10 [ ] Define filesystem/export behavior. Recommend new mkdir/rename/unlink
+primitives in the EMOSlet, restricted roots, explicit overwrite/recovery rules,
+per-entry recursive results and no all-tree atomicity promise. Specify WebDAV
+metadata/ETags, temporary sidecars, unsupported properties and range snapshot
+lifetime. Keep P4 staging hidden from the exported Agon namespace. Use the SD
+layout's reserved transaction concept with a documented P4-local placement;
+never reuse a mainboard path by assumption.
+
+### Development, deployment and test work items
+
+R05-A01 [ ] Freeze the Author-reviewed architecture and settle D02–D10 as needed
+for the first tranche. Promote accepted ADR/normative text only after review;
+record explicitly deferred capabilities. Keep the host sandbox and browser mock
+as separate evidence, not P4 acceptance.
+
+R05-A02 [ ] Trace stock MOS CLI input/dispatch, execution context, application
+entry/exit and MOSlet loading against current EMOS. Pin docs/source revisions;
+produce the minimal safe-point/admission design and memory map. Prove a request
+cannot slip between idle checking and application dispatch. Stop for a bounded
+choice if safe auto-dispatch or application calling cannot preserve stock state.
+
+R05-A03 [ ] Define admission/control messages, capability negotiation and states:
+idle, external job admitted, application running, application-owned transfer,
+closing/fault. Include request/boot identity, close/cancel and busy rejection.
+EMOS polls/adopts pending intent at safe points; P4 cannot grant itself access.
+Tests must distinguish ISR receipt from foreground authorization/execution.
+No external-request replay after an application returns to CLI.
+
+R05-A04 [ ] Implement/test minimal resident EMOS admission and foreground dispatch
+in the project-owned EMOS checkout. Reuse existing gateway and MOS machinery.
+Keep filesystem code out of resident ROM where practical; measure ROM/RAM impact.
+Test missing utility, partial CLI input, loaded program preservation, keyboard
+continuity, app entry/exit, and clean restoration after transfer errors.
+
+R05-A05 [ ] Implement/test application-initiated transfer entry points and a tiny
+eZ80 caller fixture for both directions. Demonstrate correct caller-memory and
+return-state preservation, errors and cancellation. Simultaneous external requests
+must be rejected, including while the application is waiting for its own transfer.
+Do not fulfill this item by externally typing commands into a running application.
+
+R05-A06 [ ] Implement P4 SD spool/manifest layer with bounded buffers, incremental
+CRC, quotas and cleanup. Test partial file versus complete snapshot, missing/full
+card, reset, stale boot/admission, transfer failure and abandonment. Reuse current
+checked UART transfer unchanged where possible; no parallel-link work. Specify
+recovery before ever deleting the only confirmed good copy.
+
+R05-A07 [ ] Add required mainboard utility directory operations and client support.
+Test root containment, ASCII/path limits, nested/empty directories, collisions,
+non-empty removal, overwrite interruption and per-entry recursive outcomes.
+Keep current ordinary/fast CLI transfer behavior compatible and test it separately.
+
+R05-A08 [ ] Adapt pinned WebDAV protocol code to the admitted storage interface,
+not direct destructive POSIX overwrites. Keep video/input serving independent.
+Test PROPFIND/GET/range/PUT/MKCOL/MOVE/COPY/DELETE, truthful locking/ownership,
+Finder body handling and negative conditions. WebDAV response success follows
+mainboard completion. Resolve D04 exposure policy before device deployment.
+
+R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
+Exercise an interleaving matrix: external request at idle/partly typed CLI/app,
+app-origin upload/download, duplicate requests, disconnect/reconnect, reset and
+external request during an app-origin job. Record distinct expected busy versus
+unsupported/offline/error results; verify no delayed rejected work executes.
+Measure durations to select justified timeout bounds, not optimize throughput.
+
+R05-A10 [ ] Prepare a separately authorized deployment after bench release: read
+current local hardware/fixture constraints, select/version exact P4+EMOS+utility
+builds, preserve production rollback and SD files, verify deployed bytes and
+input/recovery readiness. Do not flash while TRS-80 owns the bench. Install only
+the selected fixture paths; video-mode selection belongs in autoexec if needed.
+
+R05-A11 [ ] Hardware-qualify idle external operations and both application-origin
+directions against Agon SD with byte hashes and explicit busy rejection while a
+user application runs. Test missing/full staging media, interruption recovery,
+concurrent CLI/native client, repeated operations and keyboard/video coexistence.
+Record source/destination durability separately; no framebuffer streaming
+performance campaign. Restore a known recoverable CLI state after tests.
+
+R05-A12 [ ] Run native file-manager acceptance on Pop!_OS COSMIC Files, Lenovo
+Thunar and macOS Finder. Test loose bulk files (>100), directories/empty folders,
+selected destinations, collisions, progress/cancel, rename/delete, busy errors and
+reconnection. Capture per-client outcomes and hashes, including latency/timeouts
+while staging. Human acceptance is distinct from automated GVfs checks.
+
+R05-A13 [ ] On Author acceptance, promote exact tested firmware/utilities and
+instructions through the production bundle/version/tag process. Update handbook,
+mainboard SD guide, P4 storage guide, wire/API contracts, client instructions and
+recovery/cleanup guidance. Retain evidence and rollback; stop temporary host
+servers/mounts only after their review purpose ends. Do not claim untested modes,
+clients or background access. Commit/publish under applicable authorization.
+
+Execution boundary: proposed plan only. Pause here for Author review before A01
+freeze or any source/firmware changes. No new service behavior is implemented.

@@ -40,6 +40,8 @@ attention instructions are not continuing execution authorization.
 
 [Browser mainboard SD access](ADR-2026-09-27-browser-file-access.md): Accepted / Partial; remaining decisions in REMOTE-005.
 
+[Staged WebDAV with EMOS admission](ADR-2026-09-27-staged-webdav-admission.md): Proposed / Partial; review and open decisions in REMOTE-005.
+
 When changing an ADR's identity, title, status or completeness, update this index.
 Do not infer a new decision or change qualification status merely to make the
 index look complete.
