@@ -3,8 +3,10 @@
 The development EMOS image builds, all 112 host tests pass, and five real-eZ80
 emulator runs pass against a controlled UART peer. This establishes the private
 CLI wake and finite-utility dispatch boundary, not working WebDAV transfers.
-No P4 source, hardware, physical SD or production selection was changed.
-Emulator-coupled source is uncommitted pending Author validation.
+Subsequent Author-authorized physical qualification passed after one resident
+cleanup correction; see [hardware checkpoint](../A04-HARDWARE.md) and
+[results](hardware.json). Normal P4 r57 is restored; corrected EMOS v0.1.20
+is a tested development candidate. Production selection remains unchanged.
 
 ## Scope and evidence
 
@@ -51,10 +53,10 @@ loads only `/emos/sdjob.bin --admitted`. The manual sdserve command is unchanged
 
 ## Remaining boundaries
 
-R05-A04 is implemented with automated checks passing; human emulator validation
-remains before commit. A05–A08 must supply the linked application helper, finite
+R05-A04 has automated and bounded physical checks passing. The Author released
+the bench for hardware qualification in place of the pending graphical review. A05–A08 must supply the linked application helper, finite
 file utility, descriptor handling, job-bound data, confirmed completion/cleanup,
 P4 staging and WebDAV. READY/actual filesystem success is intentionally unavailable
 in this A04 implementation. Test double capability advertisement does not qualify
-those endpoints. Paired ExCom and physical testing remain A09–A12; no bench work
-was performed. This candidate must not replace production.
+those endpoints. Full paired ExCom file transfers and broader qualification remain A09–A12;
+this physical pass covers only admission and finite-probe dispatch. This candidate must not replace production.

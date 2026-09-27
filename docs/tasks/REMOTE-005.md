@@ -444,7 +444,7 @@ EMOS polls/adopts pending intent at safe points; P4 cannot grant itself access.
 Tests must distinguish ISR receipt from foreground authorization/execution.
 No external-request replay after an application returns to CLI.
 
-R05-A04 [ ] Implement/test minimal resident EMOS admission and foreground dispatch
+R05-A04 [x] Implement/test minimal resident EMOS admission and foreground dispatch
 in the project-owned EMOS checkout. Reuse existing gateway and MOS machinery.
 Keep filesystem code out of resident ROM where practical; measure ROM/RAM impact.
 Test missing utility, partial CLI input, loaded program preservation, keyboard
@@ -549,6 +549,7 @@ tranche. Emulator-coupled source remains uncommitted pending Author review.
 
 Resident boundary implemented in EMOS; [results](REMOTE-005/A04-RESULTS/README.md)
 record passing build/linked checks, 112 host tests and five UART-peer emulator
-cases. A04 awaits human emulator review before commit. No finite file engine, P4
+cases. A04 subsequently passed bounded hardware qualification after a cleanup fix;
+see [physical results](REMOTE-005/A04-HARDWARE.md). No finite file engine, P4
 staging or physical deployment is implied. Source remains uncommitted; production
 is unchanged.

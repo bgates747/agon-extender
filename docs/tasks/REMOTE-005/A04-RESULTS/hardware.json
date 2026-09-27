@@ -1,0 +1,138 @@
+{
+  "flash-result": {
+    "rom_exact": true,
+    "rom_bytes": 131072,
+    "rom_sha256": "fa01b1ecda8b14974a624c2e50f00cedcfc60a0cd6dfb4dc60460e322de37cd9",
+    "automatic_reboot_ready": true,
+    "startup_unchanged": true
+  },
+  "flash-fix-result": {
+    "rom_exact": true,
+    "rom_bytes": 131072,
+    "rom_sha256": "70e266780465336b128ac214f1ad26b4350e94daa940236838a8e5de44847ed8",
+    "automatic_reboot_ready": true,
+    "startup_unchanged": true
+  },
+  "missing-physical": {
+    "case": "missing",
+    "before": {
+      "diagnostic": true,
+      "hello": 2366,
+      "poll": 2738,
+      "decide": 1,
+      "close": 1,
+      "last": 7,
+      "armed": 0
+    },
+    "after": {
+      "diagnostic": true,
+      "hello": 2366,
+      "poll": 2739,
+      "decide": 2,
+      "close": 2,
+      "last": 7,
+      "armed": 0
+    },
+    "pass": true
+  },
+  "corrupt-physical": {
+    "case": "corrupt",
+    "before": {
+      "diagnostic": true,
+      "hello": 2367,
+      "poll": 2742,
+      "decide": 2,
+      "close": 2,
+      "last": 7,
+      "armed": 0
+    },
+    "after": {
+      "diagnostic": true,
+      "hello": 2367,
+      "poll": 2743,
+      "decide": 2,
+      "close": 2,
+      "last": 7,
+      "armed": 0
+    },
+    "pass": true
+  },
+  "race-physical": {
+    "case": "race",
+    "before": {
+      "diagnostic": true,
+      "hello": 2368,
+      "poll": 2752,
+      "decide": 3,
+      "close": 3,
+      "last": 9,
+      "armed": 0
+    },
+    "after": {
+      "diagnostic": true,
+      "hello": 2368,
+      "poll": 2753,
+      "decide": 4,
+      "close": 4,
+      "last": 9,
+      "armed": 0
+    },
+    "pass": true
+  },
+  "utility-physical": {
+    "case": "utility",
+    "before": {
+      "diagnostic": true,
+      "hello": 2368,
+      "poll": 3578,
+      "decide": 4,
+      "close": 4,
+      "last": 9,
+      "armed": 0
+    },
+    "after": {
+      "diagnostic": true,
+      "hello": 2369,
+      "poll": 3624,
+      "decide": 5,
+      "close": 5,
+      "last": 5,
+      "armed": 0
+    },
+    "pass": true
+  },
+  "probe-result": {
+    "memory_4096_preserved": true,
+    "nested_dispatch_rejected": true,
+    "application_editor_pass": true,
+    "durable_result": "A04 memory nested-editor PASS\n",
+    "manual_listener_no_idle_polls": true,
+    "startup_unchanged": true
+  },
+  "emos": {
+    "build": "agon-emos-v0.1.20-b2026-09-27-21-03-57Z",
+    "source": "01d07a9",
+    "size": 127492,
+    "sha256": "4e70bb1ddc54bb47dc7b5cf347361b36d3ef85cabcdafbec6ec257faea8ab742"
+  },
+  "probe": {
+    "sha256": "681db5f6dde9550fb01aef5e5a6d21595aa56de966214b55487b6205089acae9",
+    "bytes": 1754
+  },
+  "p4_peer": {
+    "build": "uart-excom-console-r58-b2026-09-27-20-44-48Z",
+    "source": "2e2014f7",
+    "admission_probe": true
+  },
+  "scope": "Physical idle CLI admission and finite test utility only; no automatic file engine or ExCom data parser",
+  "final": {
+    "normal_p4_restored": "uart-excom-console-r57-b2026-09-26-22-46-38Z",
+    "excom_echo_observed": true,
+    "legacy_sd_read_pass": true,
+    "startup_unchanged": true,
+    "probe_removed": true,
+    "keyboard_ready_neutral": true,
+    "listener_offline": true,
+    "production_promoted": false
+  }
+}
