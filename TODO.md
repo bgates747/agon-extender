@@ -9,6 +9,10 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.
 
+## Transparent text — scope review
+
+- [ ] **[TEXT-001 — Transparent text backgrounds](docs/tasks/TEXT-001.md)** — Investigation complete; existing glyph renderer supports it. Review proposed flag, erase/scroll semantics and exclusions before implementation.
+
 ## Do now — PLAN-001
 
 
