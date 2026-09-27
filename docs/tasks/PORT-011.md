@@ -1,5 +1,18 @@
 # PORT-011 — Prove UART RTS/CTS pause, resume and timeout
 
+## Current applicability — 2026-09-26
+
+Completed historical diagnostic. The recorded candidate versions, deployment
+instructions and remaining-at-the-time gates below belong to that run, not the
+current installed console. Current operation uses the [handbook](../README.md)
+and [production selection](../../production/README.md). Diagnostic replay needs
+its own refreshed paired-peer/startup contract: Legacy alone does not free UART1
+while Extender keyboard input owns it. Preserve input/recovery readiness under
+[bench constraints](../qualification/bench-constraints.md); no replay is authorized
+by this documentation review. Original acceptance and capture limits stand.
+
+## Retained task record
+
 Status: complete. Author accepted the UART flow test as PASS, including the
 explicit shortened-acquisition exception. Candidate identities are unchanged.
 Started: 2026-09-08.

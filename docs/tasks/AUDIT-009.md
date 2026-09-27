@@ -137,7 +137,7 @@ not historical execution claims or unfinished proof gates. Both repositories'
 changes are documentation-only; no emulator/source/bench changes. Record scoped
 coverage, validate links, commit each owning repository.
 
-A09-N13 [ ] **Completed UART diagnostic records.** Review EMOS INTEG-004–006
+A09-N13 [x] **Completed UART diagnostic records.** Review EMOS INTEG-004–006
 against PORT-010–012 closeout and current command dispatch. Clarify historical
 installation/pending statements and current reuse constraints without rewriting
 measurements, exception acceptance or frozen identities. Documentation only;

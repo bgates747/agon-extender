@@ -1,5 +1,18 @@
 # PORT-012 — Prove UART flow control at 1,152,000 baud
 
+## Current applicability — 2026-09-26
+
+Completed historical diagnostic. The recorded candidate versions, deployment
+instructions and remaining-at-the-time gates below belong to that run, not the
+current installed console. Current operation uses the [handbook](../README.md)
+and [production selection](../../production/README.md). Diagnostic replay needs
+its own refreshed paired-peer/startup contract: Legacy alone does not free UART1
+while Extender keyboard input owns it. Preserve input/recovery readiness under
+[bench constraints](../qualification/bench-constraints.md); no replay is authorized
+by this documentation review. Original acceptance and capture limits stand.
+
+## Retained task record
+
 Status: complete. Started: 2026-09-08. Finished: 2026-09-08.
 
 ## Scope and accepted decisions

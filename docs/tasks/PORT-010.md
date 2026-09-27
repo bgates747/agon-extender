@@ -1,5 +1,18 @@
 # PORT-010 — Prove an acknowledged UART round trip
 
+## Current applicability — 2026-09-26
+
+Completed historical diagnostic. The recorded candidate versions, deployment
+instructions and remaining-at-the-time gates below belong to that run, not the
+current installed console. Current operation uses the [handbook](../README.md)
+and [production selection](../../production/README.md). Diagnostic replay needs
+its own refreshed paired-peer/startup contract: Legacy alone does not free UART1
+while Extender keyboard input owns it. Preserve input/recovery readiness under
+[bench constraints](../qualification/bench-constraints.md); no replay is authorized
+by this documentation review. Original acceptance and capture limits stand.
+
+## Retained task record
+
 Status: complete. Started: 2026-09-07. Finished: 2026-09-08.
 
 The [acknowledged hardware run](../../hardware/designs/light2-harness-r03/tests/PORT-010-2026-09-08-04-39-39Z/README.md)

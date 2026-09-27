@@ -483,3 +483,9 @@ B55 contract de2e9758; EMOS documentation commit 1aa297e. 102 relative file
 targets exist across changed documentation; anchors/external URLs excluded.
 Whitespace passed. Three pending inventory items advanced to partial only.
 No compilation, tests, emulator or physical operations.
+
+## A09-N13 — UART diagnostic records
+
+B56 contract de691628; EMOS 420ddcf. 104 relative Markdown file targets exist;
+anchors/external URLs excluded. Whitespace passed. Dispatch/source inspection
+and retained closeout comparison only; no runtime or waveform revalidation.

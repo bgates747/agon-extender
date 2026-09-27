@@ -445,3 +445,13 @@ acceptance broadened, proof gate closed or fixture executed. EMOS changes are
 commit 1aa297e. Three pending entries become partial, not whole-body reviewed.
 Inventory 1121: {'reviewed': 123, 'partial': 150, 'pending': 660, 'metadata-only': 140, 'provenance-only': 48}. Historical target/build records remain unvalidated
 by this documentation pass.
+
+## A09-N13 result
+
+B56 reconciled INTEG-004–006 completed state with PORT-010–012 and current
+UARTTEST/UARTFLOW dispatch. Clarified dated installation/pending checkpoints,
+paired-peer requirement and keyboard ownership conflict. Retained the accepted
+27.57632-second flow capture exception and full target-baud acquisition claim
+without reinterpretation or remeasurement. EMOS commit 420ddcf. Three entries
+advance from pending to partial; manifests/waveforms not exhaustively revalidated.
+Inventory 1121: {'reviewed': 123, 'partial': 153, 'pending': 657, 'metadata-only': 140, 'provenance-only': 48}. No source/fixture/emulator/bench changes.
