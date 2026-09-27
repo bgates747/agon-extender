@@ -345,8 +345,10 @@ serialize command dispatch with that admission. New input must be preserved or
 handled explicitly, never lost or interpreted as transfer data. Trace stock CLI
 and application dispatch before selecting hooks. No filesystem work in ISR.
 
-D07 [ ] Define application-initiated ABI and memory model. Recommend a synchronous,
-cooperative EMOS API with caller-owned buffers and explicit source/destination,
+D07 [ ] Partially accepted 2026-09-27: application-initiated transfers are
+synchronous; the caller waits for completion or failure and receives a defined
+result before resuming. No background completion callbacks. Remaining ABI and
+memory model must specify caller-owned buffers and explicit source/destination,
 root and direction. Determine whether foreground code can reuse utility routines
 without loading a MOSlet over the calling program; do not assume reentrancy or
 MOSlet safety. EMOS derives origin from actual execution/call context, not a P4

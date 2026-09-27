@@ -30,6 +30,9 @@ The Author accepted this foreground ownership on 2026-09-27.
 A running eZ80 application may explicitly initiate transfers in either direction
 through an EMOS-owned API. This is a separate, locally initiated admission path;
 an external client cannot obtain it by setting an origin flag in a packet.
+Application-initiated calls are synchronous: the application waits for completion
+or failure and receives a defined result before resuming. No background completion
+callbacks are introduced (Author accepted 2026-09-27).
 The application cooperatively performs or delegates its foreground work; EMOS
 does not create a background filesystem task or run FAT operations in an ISR.
 
