@@ -25,11 +25,28 @@ void worker(void *arg) {
   auto source=static_cast<uint8_t*>(heap_caps_aligned_alloc(64,bytes,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
   if (!source) { ESP_LOGE("lcd","RGB output allocation failed"); vTaskDelete(nullptr); return; }
   auto panel=extender_lcd_panel_create();
-#if AGON_EXTENDER_LCD_PATTERN
+#if AGON_EXTENDER_LCD_PATTERN == 1
   // TRM 42.4.2.3.1: native top-to-bottom W,Y,C,G,M,R,B,K.
   // With ribbon at left these are landscape left-to-right vertical bars.
   ESP_ERROR_CHECK(esp_lcd_dpi_panel_set_pattern(panel,MIPI_DSI_PATTERN_BAR_HORIZONTAL));
   ESP_LOGI("lcd","DSI hardware pattern: ribbon-left order white yellow cyan green magenta red blue black");
+  heap_caps_free(source);
+  vTaskDelete(nullptr); return;
+#endif
+#if AGON_EXTENDER_LCD_PATTERN == 2
+  // Same TRM bars as the host generator, but CPU-written into fb0. No PPA,
+  // no buffer swaps, no renderer. Isolates memory/VDMA/DSI bridge input.
+  void *static_fb;
+  ESP_ERROR_CHECK(esp_lcd_dpi_panel_get_frame_buffer(panel,1,&static_fb));
+  const uint8_t rgb[8][3]={{255,255,255},{255,255,0},{0,255,255},{0,255,0},
+                         {255,0,255},{255,0,0},{0,0,255},{0,0,0}};
+  auto dst=static_cast<uint8_t*>(static_fb);
+  for(unsigned y=0;y<640;++y) for(unsigned x=0;x<480;++x) {
+    auto color=rgb[y/80]; auto pixel=dst+(y*480+x)*3;
+    pixel[0]=color[2];pixel[1]=color[1];pixel[2]=color[0];
+  }
+  ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(panel,0,0,480,640,static_fb));
+  ESP_LOGI("lcd","DSI static framebuffer pattern: ribbon-left white yellow cyan green magenta red blue black; no PPA or buffer swaps");
   heap_caps_free(source);
   vTaskDelete(nullptr); return;
 #endif
