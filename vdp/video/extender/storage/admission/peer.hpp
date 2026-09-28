@@ -56,6 +56,9 @@ public:
     }
     return true;
   }
+  std::uint32_t pollAge(std::uint32_t now) const {
+    return pollValid_ ? now - pollAt_ : 0xffffffffU;
+  }
   bool idleReady(std::uint32_t now) const {
     return phase == idle && pollValid_ && now - pollAt_ <= 150;
   }

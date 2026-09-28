@@ -11,6 +11,7 @@ struct Access {
   virtual bool manualBusy() = 0; // called under the queue lock
   virtual std::uint32_t now() = 0;
   virtual void pause() = 0;
+  virtual void rejected(unsigned, std::uint32_t, bool) {}
 };
 class Channel final : public webdav::Channel {
   Access &access_;
@@ -66,16 +67,23 @@ public:
     sd_put16(d.data() + 4, dst.size());
     d.insert(d.end(), src.begin(), src.end());
     d.insert(d.end(), dst.begin(), dst.end());
-    bool accepted = false;
+    bool accepted = false, manual = false;
+    unsigned phase = 0;
+    std::uint32_t age = 0;
     access_.locked([&](Peer &p) {
-      if (!access_.manualBusy() &&
+      manual = access_.manualBusy();
+      if (!manual &&
           p.reserve(d.data(), d.size(), access_.now())) {
         binding = p.binding;
         accepted = true;
       }
+      phase = p.phase;
+      age = p.pollAge(access_.now());
     });
-    if (!accepted)
+    if (!accepted) {
+      access_.rejected(phase, age, manual);
       return 503;
+    }
     bool done = false, ready = false;
     wait(1500, [&] {
       access_.locked([&](Peer &p) {

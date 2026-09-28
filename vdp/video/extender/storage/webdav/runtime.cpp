@@ -6,6 +6,7 @@
 #include "connection.hpp"
 #include <atomic>
 #include <cerrno>
+#include <cstdio>
 #include <esp_timer.h>
 #include <freertos/FreeRTOS.h>
 #include <freertos/task.h>
@@ -30,6 +31,12 @@ public:
     return std::uint32_t(esp_timer_get_time() / 1000);
   }
   void pause() override { vTaskDelay(1); }
+  void rejected(unsigned phase, std::uint32_t age, bool manual) override {
+    // Candidate diagnostic runs outside the queue critical section. No UART1
+    // traffic: this goes to the P4 USB programming/debug console only.
+    std::printf("WebDAV admission unavailable: phase=%u poll_age_ms=%lu manual=%u\n",
+                phase, static_cast<unsigned long>(age), unsigned(manual));
+  }
 };
 class Socket final : public Stream {
   int fd_;

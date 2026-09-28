@@ -23,8 +23,10 @@ struct Out : Output {
   std::string body;
   std::map<std::string, std::string> headers;
   bool aborted = false, fail = false;
+  std::function<void()> onHeaders;
   bool begin(int s, const std::map<std::string, std::string> &h,
              std::int64_t n) override {
+    if (onHeaders) onHeaders();
     status = s;
     headers = h;
     length = n;
@@ -250,7 +252,11 @@ int main() {
     r = run(a, "HEAD", "/file");
     assert(r.status == 200 && r.body.empty() && r.length == 6);
     assert(run(a, "GET", "/dir").status == 405);
-    assert(run(a, "GET", "/missing").status == 404);
+    In empty;
+    Out missing;
+    missing.onHeaders = [&] { assert(!f.active); };
+    a.handle({"HEAD", "/missing", {}}, empty, missing);
+    assert(missing.status == 404);
     f.terminal = 500;
     r = run(a, "GET", "/file");
     assert(r.status == 500 && r.body.empty());
