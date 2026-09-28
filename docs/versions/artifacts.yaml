@@ -1,10 +1,19 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r119
-updated_at: 2026-09-28T03:00:00Z
+registry_revision: r120
+updated_at: 2026-09-28T04:50:52Z
 
 artifacts:
+  - artifact_id: lcd-vendor-demo
+    kind: test_fixture
+    identity_scheme: revision
+    latest_identity: lcd-vendor-demo-r01
+    status: draft
+    variants: []
+    description: Pinned Olimex V2 standalone DSI LVGL demonstration.
+    notes:
+      - LCD-001; standing identity approval and explicit September 28 flash authorization. Build and flash digest pass; visual review pending. Not Extender production.
   - artifact_id: sdjob
     kind: application
     identity_scheme: semantic_version
