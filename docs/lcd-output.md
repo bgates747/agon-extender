@@ -20,6 +20,14 @@ large modes are downsampled, so their smallest details may not remain legible.
 PPA performs only unit-scale rotation into native480×640 scanout buffers. The
 original renderer and sprite/scanline composition are unchanged.
 
+The tested rev1.3 P4/V2 panel requires native horizontal HBP/HFP19/11 at the
+vendor16MHz pixel clock, retaining htotal514 and active width480. Use ordinary
+documented RGB888 memory order B,G,R; do not apply the earlier experimental
+R,B,G channel compensation. The Author confirms matching Legacy and ExCom LCD
+colors and all four one-pixel edges in the mode0 asymmetric fixture with this
+combination. This is bounded candidate evidence, not application/gameplay or
+production qualification.
+
 The current two-buffer handoff conservatively waits two DSI completions before
 reusing the previous scanout buffer. Its update ceiling is therefore roughly
 23fps with the unchanged vendor16MHz timing. Physical panel refresh, application

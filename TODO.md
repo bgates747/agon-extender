@@ -30,7 +30,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; common Ethernet boundary extracted for detached build evaluation; hybrid feasibility and image leases remain open.
 
-- [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — Panel received; official DevKit example and V1/V2 differences researched. Identify delivered revision, prove vendor output, then integrate a bounded EDP display sink. Research/plan only; bench execution unstarted.
+- [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — V2 panel and bounded EDP sink are working experimentally. Mode0 color/edge output passes with HBP/HFP19/11 and ordinary B,G,R packing; complete services, application/gameplay review and production decision.
 
 - [ ] **[PORT-003](docs/tasks/PORT-003.md)** — Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals.
 
