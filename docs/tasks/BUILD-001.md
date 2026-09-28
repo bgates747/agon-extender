@@ -101,7 +101,10 @@ The Author accepted these decisions with the contract on 2026-09-28.
 
 ## Work contract
 
-### B01-01 [ ] Research official integration contracts
+### B01-01 [x] Research official integration contracts
+
+The bounded conclusions and exact official sources are recorded in
+[RESEARCH.md](BUILD-001/RESEARCH.md).
 
 Read current official ESP-IDF build-system, component-manager, configuration,
 tool-installation and compilation-database documentation. Read official
@@ -111,19 +114,23 @@ by the project. Consult source only where the official documentation is
 insufficient. Record exact documentation, releases, commits and conclusions in
 a bounded précis under `docs/tasks/BUILD-001/` before implementation.
 
-B01-01a [ ] Determine whether Arduino-ESP32 can be acquired reproducibly as a
+B01-01a [x] Determine whether Arduino-ESP32 can be acquired reproducibly as a
 managed component at the required version or must be supplied through a pinned
 project-owned component source; record integrity and offline-build implications.
 
-B01-01b [ ] Establish the native ESP-IDF mechanism for per-profile `sdkconfig`
+B01-01b [x] Establish the native ESP-IDF mechanism for per-profile `sdkconfig`
 defaults, partition tables, embedded files, component dependencies and C/C++
 compile options used by this project.
 
-B01-01c [ ] Establish how the native build emits `compile_commands.json`, map
+B01-01c [x] Establish how the native build emits `compile_commands.json`, map
 files, size reports, flash images and dependency locks, and how each artifact is
 bound to the selected profile and source revision.
 
 ### B01-02 [ ] Inventory and preserve the current build contract
+
+Inventory and controls are recorded in [INVENTORY.md](BUILD-001/INVENTORY.md).
+The recommended profile dispositions await Author review; no profile has yet
+been excluded from migration.
 
 Before changing build files, record the exact repositories, production
 selection, development source, PlatformIO platform/framework packages,
@@ -132,20 +139,23 @@ toolchains, generated component files and dependency locks. Inventory every
 diagnostic, obsolete experiment or frozen evidence. Pause for Author review of
 the classification before excluding a profile from migration.
 
-B01-02a [ ] Capture the current actual SCons compile and link actions for the
+B01-02a [x] Capture the current actual SCons compile and link actions for the
 combined ExCom+LCD target, its selected translation units, definitions, include
 paths, language standards, component dependencies, embedded assets, partition
 table, `sdkconfig`, ELF/map/image sizes and immutable output hashes.
 
-B01-02b [ ] Run the currently applicable host-side checks and retain their exact
+B01-02b [x] Run the currently applicable host-side checks and retain their exact
 commands and results as pre-migration controls. Do not initiate a hardware run
 without a separately reviewed procedure and explicit Author authorization.
 
-B01-02c [ ] Identify every script, document, CI action, qualification profile,
+B01-02c [x] Identify every script, document, CI action, qualification profile,
 packaging step or operator procedure that invokes PlatformIO or consumes its
 output layout.
 
 ### B01-03 [ ] Review the native-build design
+
+The proposal is recorded in [DESIGN.md](BUILD-001/DESIGN.md) and now pauses for
+Author acceptance before any maintained build-path change.
 
 Produce the proposed directory/component graph, source/profile authority,
 dependency acquisition and lock strategy, isolated tool environment, output
@@ -154,15 +164,15 @@ profile maps to native ESP-IDF configuration and how the wrapper prevents stale
 generated inputs. Pause for Author acceptance of the design before changing the
 maintained build path.
 
-B01-03a [ ] Name the owner and lifecycle of every generated file. A generator
+B01-03a [x] Name the owner and lifecycle of every generated file. A generator
 must fail on stale or inconsistent inputs and must not make generated CMake a
 second hand-edited source of truth.
 
-B01-03b [ ] Define a build-graph validator that compares declared sources,
+B01-03b [x] Define a build-graph validator that compares declared sources,
 compiled objects, linked objects and compilation-database entries, with explicit
 handling for framework and third-party component internals.
 
-B01-03c [ ] Define rollback so an unsuccessful native migration can restore the
+B01-03c [x] Define rollback so an unsuccessful native migration can restore the
 preserved hybrid build without altering production or discarding evidence.
 
 ### B01-04 [ ] Implement the native ESP-IDF/CMake build

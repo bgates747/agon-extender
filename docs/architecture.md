@@ -53,8 +53,10 @@ equivalent modules under unrelated names.
 
 ## Repository layout
 
-The complete PlatformIO project and VDP firmware live under the repository's
-top-level `vdp/` directory. Within that project, `vdp/video/` mirrors the
+The complete P4 build project and VDP firmware live under the repository's
+top-level `vdp/` directory. During BUILD-001 migration that directory contains
+both the operational hybrid PlatformIO rollback path and the accepted native
+ESP-IDF/CMake target structure. Within the project, `vdp/video/` mirrors the
 official VDP source directory.
 
 New Extender capabilities and extended functions live under:
@@ -63,9 +65,9 @@ New Extender capabilities and extended functions live under:
 vdp/video/extender/
 ```
 
-This location is inside the firmware source directory selected by the official
-PlatformIO project while retaining a clear ownership boundary. Existing
-upstream files remain at their official relative paths. Calls between the
+This location is inside the firmware source directory selected by the project's
+neutral build-profile manifest while retaining a clear ownership boundary.
+Existing upstream files remain at their official relative paths. Calls between the
 upstream-shaped compatibility port and Extender-owned modules must use narrow,
 documented integration points.
 
@@ -612,9 +614,11 @@ semantics are tracked under SETUP-005-D006.
 
 ## Firmware build model
 
-PlatformIO remains the outer project, dependency, build, upload, and monitoring
-workflow, preserving the official VDP project's familiar development idioms.
-The ESP32-P4 environment combines the Arduino and ESP-IDF frameworks.
+Native ESP-IDF/CMake is the accepted outer project, dependency and build
+authority. The project retains Arduino-ESP32 as a pinned ESP-IDF component
+rather than selecting two competing outer frameworks. BUILD-001 owns the
+additive migration and cutover; until that work is accepted, the existing
+PlatformIO/SCons workflow remains the operational comparison and rollback path.
 
 Arduino preserves the application-level structure expected by official
 `agon-vdp`, including its sketch entry point and Arduino-oriented APIs and
@@ -622,9 +626,10 @@ libraries. ESP-IDF supplies the lower-level target configuration and native P4
 facilities needed for silicon revision handling, memory, partitions, USB,
 Ethernet, multimedia peripherals, and future Extender functions.
 
-The hybrid framework choice must pass a minimal build and physical-board canary
-before it becomes the foundation for source adaptation. See
-[ADR-0002](decisions/ADR-0002-hybrid-firmware-framework.md).
+The native build must prove selected, compiled and linked graph agreement,
+configuration/dependency equivalence and bounded physical behavior before it
+replaces the operational hybrid build. See
+[ADR-0023](decisions/ADR-0023-native-esp-idf-build-authority.md).
 
 FreeRTOS supplied by ESP-IDF remains the firmware concurrency substrate.
 Extender replaces inherited ESP32-PICO watchdog disabling and core-placement
@@ -766,19 +771,22 @@ history or exports. Browser or local video may present a surviving
 human-readable report but is not durable by itself. Diagnostic persistence must
 never delay safe recovery.
 
-PlatformIO owns hybrid project orchestration. The project begins without
-project-authored CMake files; a tracked `CMakeLists.txt` is added only when a
-specific build requirement demonstrates that PlatformIO's generated hybrid
-structure is insufficient. Any such file must be the smallest boundary needed
-and must not reorganize the upstream-compatible `video/` tree. See
-[ADR-0008](decisions/ADR-0008-minimal-cmake-boundary.md).
+Native ESP-IDF/CMake is the accepted sole top-level build authority for
+maintained P4 firmware. Arduino-ESP32 remains a pinned ESP-IDF component so the
+upstream-compatible VDP lifecycle and Arduino APIs do not require a runtime
+rewrite. One neutral checked-in manifest owns buildable profiles and selected
+project sources; a project-owned wrapper binds pinned project-scoped ESP-IDF
+source/tools, fresh profile output, dependency locks and build identity. The
+native CMake/Ninja graph must compile and link the same declared source closure,
+and its compilation database is authoritative only after validation against the
+linked objects. See
+[ADR-0023](decisions/ADR-0023-native-esp-idf-build-authority.md).
 
-The tracked `scripts/vdp-pio.sh` wrapper locates the repository root, requires
-the root `.venv/bin/pio`, selects `vdp/` as the PlatformIO project directory,
-and forwards PlatformIO arguments unchanged. It performs no implicit build,
-upload, installation, port selection, or environment activation. Direct
-PlatformIO invocation remains supported. See
-[ADR-0009](decisions/ADR-0009-platformio-wrapper.md).
+BUILD-001 is implementing that accepted direction additively. Until its
+equivalence evidence and cutover are accepted, `scripts/vdp-pio.sh` and the
+hybrid PlatformIO/SCons build remain the operational build and rollback path;
+they are not the target architecture. Neither the accepted direction nor a
+development build changes the selected production bundle.
 
 The primary Rev-D1 pre-v3 board environment configures the CPU at 360 MHz. A
 forced 400 MHz candidate repeatedly asserted during clock initialization on the

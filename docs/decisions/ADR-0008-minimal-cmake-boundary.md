@@ -1,8 +1,13 @@
 # ADR-0008 — Add CMake only when the hybrid build proves it necessary
 
-- Status: Accepted
+- Status: Superseded
 - Completeness: Complete
 - Date: 2026-08-20
+
+Superseded on 2026-09-28 by
+[ADR-0023](ADR-0023-native-esp-idf-build-authority.md) after the generated
+CMake graph ceased to describe the objects actually linked by SCons. The
+existing hybrid path remains available for BUILD-001 comparison and rollback.
 
 ## Context
 

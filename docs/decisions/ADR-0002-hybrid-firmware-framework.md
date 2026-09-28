@@ -1,8 +1,14 @@
 # ADR-0002 — Use PlatformIO with Arduino and ESP-IDF together
 
-- Status: Accepted
+- Status: Superseded
 - Completeness: Complete
 - Date: 2026-08-20
+
+Superseded on 2026-09-28 by
+[ADR-0023](ADR-0023-native-esp-idf-build-authority.md). Arduino remains, but as
+a pinned ESP-IDF component under native ESP-IDF/CMake rather than under a
+PlatformIO/SCons outer build. The hybrid path remains the operational rollback
+build until BUILD-001's accepted cutover.
 
 ## Context
 

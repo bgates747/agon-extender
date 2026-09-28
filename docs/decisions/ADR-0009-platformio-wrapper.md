@@ -1,8 +1,13 @@
 # ADR-0009 — Provide a transparent PlatformIO wrapper
 
-- Status: Accepted
+- Status: Superseded
 - Completeness: Complete
 - Date: 2026-08-20
+
+Superseded as the long-term maintained interface on 2026-09-28 by
+[ADR-0023](ADR-0023-native-esp-idf-build-authority.md). This wrapper remains the
+operational hybrid-build interface during BUILD-001's additive migration and
+rollback interval.
 
 ## Context
 
