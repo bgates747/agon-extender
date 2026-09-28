@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r61",
+  "source_identity": "uart-excom-console-r62",
   "status": "draft",
-  "note": "REMOTE-005 A09-A11 candidate; --staged-webdav explicitly enables Legacy finite-job runtime. Ordinary builds remain disabled."
+  "note": "LCD-001 opt-in --lcd V2 landscape PPA output; candidate, not production."
 }
