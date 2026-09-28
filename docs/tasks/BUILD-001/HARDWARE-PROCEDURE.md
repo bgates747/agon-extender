@@ -22,8 +22,7 @@ belongs in this procedure.
 
 ## Preconditions and stopping conditions
 
-B01-H01 [ ] The Author explicitly authorizes this exact procedure and resolves
-B01-HQ01 below.
+B01-H01 [ ] The Author explicitly authorizes this exact procedure.
 
 B01-H02 [ ] The operator confirms the current P4 identity, EMOS v0.1.19,
 foreground `sdserve` v0.2.0, admitted Extender keyboard and recoverable MOS CLI.
@@ -57,17 +56,20 @@ read-only checks of the SD service, browser status endpoint and one browser
 frame while the LCD sink remains active. Browser disconnected and connected
 observations remain separate; no performance equivalence is inferred.
 
-B01-H08 [ ] Run the mode20 static-grid control under the resolved B01-HQ01 mode
-selection rule. The Author must observe A1 through H6 in order, all asymmetric
-edges, 64-pixel pillarboxes and 48-pixel letterboxes. One bounded raw Ethernet
-snapshot must agree with the LCD; its collection then disconnects.
+B01-H08 [ ] Run a mode20 static-grid control only after `/autoexec.txt` selects
+mode20 before fixture launch. The automated fixture must not switch modes. The
+Author must observe A1 through H6 in order, all asymmetric edges, 64-pixel
+pillarboxes and 48-pixel letterboxes. One bounded raw Ethernet snapshot must
+agree with the LCD; its collection then disconnects. This checks geometry and
+presentation but does not reproduce the asset-loaded mode-switch failure.
 
-B01-H09 [ ] From a fresh controlled startup, run both retained Nurples allocation
-orders without replacing production game files: the late-mode20 control and
-early-mode20 `nvis20.bin`. Record LCD layout, keyboard/Escape behavior, HTTP
-availability and any allocation/fallback report separately. The expected known
-result is late-mode20 fallback/failure versus visually correct early-mode20;
-the migration must not silently change it. A changed result is evidence to
+B01-H09 [ ] After every automated hardware pass has terminated, hand control to
+the Author for manual execution of Nurples and any other real game that changes
+mode after loading significant VDP-buffer assets. Record LCD layout,
+keyboard/Escape behavior, HTTP availability and any allocation/fallback report
+separately. These manual cases preserve the known late-switch failure for its
+own resolution outside this audit; they do not authorize an automated fixture
+to switch modes or an opportunistic fix. A changed result is evidence to
 investigate, not automatic acceptance or failure attribution.
 
 B01-H10 [ ] Exercise the accepted ordinary boot smoke and clean recovery path.
@@ -83,17 +85,11 @@ unless the Author explicitly directs the candidate to remain temporarily for
 continued BUILD-001 review. Independently verify restored identity. This is
 rollback, not production promotion of the candidate.
 
-## Unresolved instruction conflict
+## Mode-selection disposition
 
-B01-HQ01 [ ] The current repository-level instruction requires every test
-fixture's video mode to be selected in `/autoexec.txt` and forbids fixture
-programs from switching modes. The previously accepted mode20 grid and Nurples
-allocation-order controls deliberately switch modes inside their applications;
-that behavior is the discriminator being tested. Historical task text and
-fixture READMEs therefore conflict with the current repository instruction.
-
-Before execution, the Author must choose either a bounded exception allowing
-these two retained fixtures to control their mode for B01-H08/B01-H09, or a
-redesigned test. Selecting mode20 in `/autoexec.txt` can check geometry but
-cannot reproduce the late-versus-early allocation-order question, so it is not
-an equivalent substitute.
+B01-HQ01 [x] The Author declined an exception to the repository mode-selection
+rule. Automated fixtures select their mode only through `/autoexec.txt`. The
+asset-loaded switch failure belongs to real applications such as Nurples and is
+deferred until the end of the automated passes for manual Author testing. The
+manual result remains a separate known-defect case requiring later resolution
+outside this audit.

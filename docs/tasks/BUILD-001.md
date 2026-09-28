@@ -241,10 +241,12 @@ B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
 keyboard/input, SD service, browser service, native LCD output and clean recovery
 using targeted tests chosen to detect build-migration regressions.
 
-B01-06b [ ] Re-run the accepted mode20 static-grid control and the known Nurples
-allocation-order case without changing application behavior. The native build
-must preserve the known result unless separately owned evidence proves the old
-result was itself a build defect.
+B01-06b [ ] Run the mode20 static-grid control as an automated fixture with its
+mode selected only in `/autoexec.txt`. After all automated passes finish, the
+Author manually runs Nurples and other real applications that switch modes
+after loading significant VDP-buffer assets. Preserve those late-switch
+failures as separately owned defects outside this audit; do not grant automated
+fixtures a mode-switch exception or repair the defect opportunistically.
 
 B01-06c [ ] Keep runtime monitoring bounded. Reusable unattended tests must print
 progress on the legacy mainboard display where practical and invoke the existing
