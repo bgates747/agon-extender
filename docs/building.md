@@ -306,3 +306,6 @@ encoded paths; recursive filesystem traversal is bounded to 16 levels.
 Detached consumers should start with [shared P4 service boundaries](shared-p4-services.md),
 not the complete console translation-unit selection. The Ethernet header is
 Arduino-backed but independent of VDP, EMOS and HTTP route composition.
+
+The optional development `--lcd` build is described in [LCD output](lcd-output.md);
+it is not enabled in ordinary builds or the selected production bundle.

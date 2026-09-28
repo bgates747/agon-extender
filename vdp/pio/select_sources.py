@@ -16,6 +16,10 @@ import re
 Import("env")  # type: ignore[name-defined]  # Provided by PlatformIO/SCons.
 
 
+# Keep C++ language flags out of C component compilations (esp-modbus uses -Werror).
+# IDF owns its language standards; selected vendored C++ objects retain C++17.
+env.Append(CXXFLAGS=["-std=gnu++17"])  # type: ignore[name-defined]
+
 environment = env.subst("$PIOENV")  # type: ignore[name-defined]
 project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
 # PlatformIO forwards this path unchanged into the separate ESP-IDF bootloader
