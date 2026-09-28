@@ -221,7 +221,7 @@ int main() {
     Fake f;
     Adapter a(f, "http://local:8080");
     auto r = run(a, "OPTIONS", "/");
-    assert(r.status == 200 && f.begins == 0 && !r.headers.count("DAV"));
+    assert(r.status == 200 && f.begins == 0 && r.headers.at("DAV") == "<https://github.com/bgates747/agon-extender/blob/main/docs/protocols/staged-webdav.md>");
     assert(r.headers.at("Allow").find("LOCK") == std::string::npos);
     assert(run(a, "LOCK", "/file").status == 405 && f.begins == 0);
     for (auto p : {"/../file", "/a%2fb", "/a%00b", "/a%", "/a%0", "/x//y",

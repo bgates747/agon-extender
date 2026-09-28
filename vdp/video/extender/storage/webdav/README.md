@@ -35,7 +35,7 @@ production bundle are unchanged. Native-client and physical qualification remain
 
 | Method | Implemented local behavior |
 | --- | --- |
-| OPTIONS | Allow list; no unsupported DAV class or persistent lock advertisement |
+| OPTIONS | Allow list and [capability URI](../../../../../docs/protocols/staged-webdav.md); no DAV class or persistent lock advertisement |
 | PROPFIND | Depth 0/1, at most 512 children; bounded allprop/propname/explicit prop XML subset; unknown properties receive 404 propstat |
 | GET / HEAD | Verified P4 SD snapshot for GET; exact length; single open/closed/suffix byte ranges; HEAD has no body |
 | PUT | Fixed Content-Length or chunked with X-Expected-Entity-Length; complete local stage before checked EMOSlet transfer/activation |

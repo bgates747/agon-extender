@@ -244,9 +244,10 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
   }
   const auto &m = q.method;
   if (m == "OPTIONS") {
-    reply(out, 200, "", {{"Allow", allow}});
+    reply(out, 200, "", {{"Allow", allow},
+      {"DAV", "<https://github.com/bgates747/agon-extender/blob/main/docs/protocols/staged-webdav.md>"}});
     return;
-  } // no DAV class claim yet
+  } // Explicit extension capability, not DAV class 1/2/3 conformance.
   if (m != "PROPFIND" && m != "GET" && m != "HEAD" && m != "PUT" &&
       m != "MKCOL" && m != "MOVE" && m != "COPY" && m != "DELETE") {
     reply(out, 405, "", {{"Allow", allow}});
