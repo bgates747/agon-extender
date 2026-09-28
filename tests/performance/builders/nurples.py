@@ -6,7 +6,11 @@ parser=argparse.ArgumentParser(description=__doc__)
 parser.add_argument('--source',type=Path,required=True)
 parser.add_argument('--output',type=Path,required=True)
 parser.add_argument('--no-markers',action='store_true',help='Build pacing-only PRT control')
+parser.add_argument('--open-ended',action='store_true',
+                    help='Build visual LCD fixture that runs until Escape, without timing records')
 args=parser.parse_args()
+if args.no_markers and args.open_ended:
+ parser.error('--no-markers and --open-ended are separate fixture variants')
 if args.output.exists():parser.error('output must be a fresh directory')
 args.output.parent.mkdir(parents=True,exist_ok=True)
 from pathlib import Path
@@ -20,11 +24,15 @@ s=s.replace('    call vdu_vblank\n','    call gt_submit\n    call vdu_vblank\n  
 start=s.index('; poll keyboard for escape keypress',s.index('main_loop:'))
 end=s.index('; escape not pressed so loop',start)
 tail=s[start:end];s=s[:start]+s[end:];s=s.replace('    call gt_submit\n',tail+'    call gt_submit\n',1)
-s=s.replace('    call vdu_set_screen_mode','    ; Startup/CLI owns video mode')
+if not args.open_ended:
+ s=s.replace('    call vdu_set_screen_mode','    ; Startup/CLI owns video mode')
 s=s.replace('main_end:\n','main_end:\n    call gt_prt_close\n')
 s=s.replace('; --- MAIN PROGRAM FILE ---','    include "gt.inc"\n; --- MAIN PROGRAM FILE ---')
 (out/'asm/nurples.asm').write_text(s)
-p=out/'asm/state_game_init.inc';s=p.read_text().replace('    call vdu_set_screen_mode','    ; Startup owns mode20').replace('    call choose_joystick','    call player_joystick_disable').replace('    call waitKeypress','    ; Noninteractive benchmark')
+p=out/'asm/state_game_init.inc';s=p.read_text()
+if not args.open_ended:
+ s=s.replace('    call vdu_set_screen_mode','    ; Startup owns mode20')
+s=s.replace('    call choose_joystick','    call player_joystick_disable').replace('    call waitKeypress','    ; Noninteractive benchmark')
 p.write_text(s)
 p=out/'asm/player_state.inc';p.write_text(p.read_text().replace('ld bc,0*256','ld bc,sprite_right*128').replace('ld de,sprite_bottom*256','ld de,sprite_bottom*128'))
 p=out/'asm/player_shields.inc';s=p.read_text().replace('update_shields:\n','update_shields:\n    ld a,64\n    ld (player_shields),a\n    or a\n    ret\n; Test-only invulnerability; production damage code retained below.\n');p.write_text(s)
@@ -113,7 +121,15 @@ prt='\n'.join(x for x in prt.splitlines() if not x.strip().startswith(('.section
 with (out/'asm/gt.inc').open('a') as f:f.write('\n'+prt+'\n')
 if args.no_markers:
  p=out/'asm/gt.inc';p.write_text(p.read_text().replace('gt_send:\n','gt_send:\n    ret ; Pacing-only control: suppress renderer markers\n'))
-subprocess.run(['ez80asm','-s','nurples.asm','../ntiming.bin'],cwd=out/'asm',check=True)
+binary='ntiming.bin'
+if args.open_ended:
+ p=out/'asm/nurples.asm';s=p.read_text()
+ for call in ('gt_reset','gt_begin','gt_submit','gt_end','gt_prt_close'):
+  s=s.replace('    call '+call, '    or a ; Open-ended visual fixture: '+call+' disabled')
+ p.write_text(s)
+ binary='nvisual.bin'
+subprocess.run(['ez80asm','-s','nurples.asm','../'+binary],cwd=out/'asm',check=True)
 
 from provenance import record
-record(args.source,args.output,markers=not args.no_markers)
+record(args.source,args.output,markers=not args.no_markers and not args.open_ended,
+       open_ended=args.open_ended)

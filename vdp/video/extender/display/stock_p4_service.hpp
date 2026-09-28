@@ -51,5 +51,7 @@ class StockP4Service {
   std::atomic<TaskHandle_t> output_task_{};
   std::atomic<bool> stopping_{true};
   std::uint32_t period_us_{};
+  std::size_t published_width_{};
+  std::size_t published_height_{};
 };
 } // namespace agon::extender::display

@@ -19,6 +19,8 @@ class StockRuntimeController {
   virtual fabgl::VGAPalettedController &paletted() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
+  virtual bool prepareFrame(std::uint8_t *destination, unsigned width,
+                            unsigned height) = 0;
 #if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
   virtual void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) {
     for (unsigned i=0;i<count;++i) prepareRow(y+i, signal+i*stride);
@@ -95,6 +97,22 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
 #if defined(AGON_EXTENDER_VIDEO_ROW_TIMING)
     row_timing_.add(acquired - before, finished - acquired);
 #endif
+  }
+  bool prepareFrame(std::uint8_t *destination, unsigned width,
+                    unsigned height) override {
+    if (!destination || width != unsigned(this->m_viewPortWidth) ||
+        height != unsigned(this->m_viewPortHeight) || width > 1024)
+      return false;
+    // LCD-001 diagnostic: stabilize framebuffer selection, sprites and
+    // Copper/palette state across the complete task-synthesized scanout.
+    AGON_STOCK_NATIVE_GUARD;
+    alignas(8) std::uint8_t signal[1024];
+    for (unsigned y=0; y<height; ++y) {
+      prepareRowLocked(y, signal);
+      StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
+          signal, destination+y*width, width);
+    }
+    return true;
   }
 #if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
   void prepareRows(int y, unsigned count, std::uint8_t *signal, unsigned stride) override {
