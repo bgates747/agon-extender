@@ -58,6 +58,24 @@ struct QuietAccess : Access {
   void pause() override { ++f.now; }
 };
 int main() {
+  { // A quiet cancelled operation is unsuccessful, but cleanup is healthy.
+    Fixture f; f.ready();
+    f.peer.cancel(f.b, true); f.peer.cancel(f.b, true);
+    assert(f.call(7)==49 && f.out[13]==0 && f.out[48]==1);
+    f.p[48]=0; assert(f.call(9,0,1)==48 && f.out[13]==0);
+    assert(f.call(10)==48 && f.peer.phase==Peer::closed && !f.peer.success);
+  }
+  { // In-flight data cannot be downgraded to a clean cancellation.
+    Fixture f; f.ready(); std::uint8_t request[20];
+    sd_header(request,SD_REQUEST,f.peer.fileSession(),1,SD_HELLO,0,0);sd_seal(request);
+    assert(f.peer.submit(f.b,request,20,f.now));
+    f.peer.cancel(f.b,true); f.peer.cancel(f.b,true);
+    assert(f.call(7)==49 && f.out[13]==8);
+  }
+  { // A prior transport fault remains poisoned even if later called orderly.
+    Fixture f; f.ready(); f.peer.cancel(f.b); f.peer.cancel(f.b,true);
+    assert(f.call(7)==49 && f.out[13]==8);
+  }
   {
     Fixture f;
     assert(!f.peer.reserve(f.p, 10, 1));

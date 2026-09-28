@@ -13,6 +13,9 @@ struct Channel {
                        std::uint8_t *, unsigned &) = 0;
   virtual int leave(const spool::Binding &) = 0; // matching terminal close ACK
   virtual void cancel(const spool::Binding &) = 0;
+  // Healthy client cancellation may use orderly terminal cleanup. Other
+  // channel implementations retain conservative cancellation by default.
+  virtual void stop(const spool::Binding &b) { cancel(b); }
 };
 class WireBackend : public Backend {
 public:

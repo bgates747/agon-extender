@@ -126,8 +126,10 @@ int WireBackend::finish() {
   return s;
 }
 void WireBackend::cancel() {
-  if (active_)
-    channel_.cancel(binding_);
+  if (active_) {
+    if (poisoned_) channel_.cancel(binding_);
+    else channel_.stop(binding_);
+  }
   active_ = false;
   store_.invalidate();
   snapshot_ = false;

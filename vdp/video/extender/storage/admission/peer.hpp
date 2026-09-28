@@ -88,7 +88,7 @@ public:
     since_ = now;
     success = false;
     fileSize_ = answerSize_ = 0;
-    poisoned_ = false;
+    poisoned_ = cancelled_ = false;
     return true;
   }
   bool submit(const Binding &b, const std::uint8_t *p, unsigned n,
@@ -120,9 +120,16 @@ public:
     since_ = now;
     return true;
   }
-  void cancel(const Binding &b) {
+  void cancel(const Binding &b, bool orderly = false) {
     if (b == binding && owned()) {
-      poisoned_ = true;
+      // A client EOF is not a UART fault. Only a healthy quiet boundary may
+      // request normal FINISH; the utility still rejects open write stages.
+      // Preserve poison across repeated requests and never call a cancelled
+      // operation successful merely because terminal cleanup succeeded.
+      const bool quiet = (phase == active || (phase == closing && cancelled_)) &&
+                         !fileSize_ && !answerSize_;
+      poisoned_ = poisoned_ || !orderly || !quiet;
+      cancelled_ = true;
       phase = closing;
       fileSize_ = answerSize_ = 0;
     }
@@ -282,7 +289,7 @@ public:
           seen_ = now;
         } else if (op == 9 && (phase == active || phase == closing) &&
                    n == 49 && p[48] <= 3) {
-          success = !p[13] && !poisoned_;
+          success = !p[13] && !poisoned_ && !cancelled_;
           phase = finished;
           seen_ = now;
         } else if (op == 10 && n == 48) {
@@ -313,7 +320,7 @@ private:
            cachedSize_ = 0, fileSize_ = 0, answerSize_ = 0;
   std::uint32_t descriptorCrc_ = 0, nextJob_ = 0, generation_ = 0, pollAt_ = 0,
                 since_ = 0, seen_ = 0, lastSequence_ = 0, controlSession_ = 0;
-  bool pollValid_ = false, fileSent_ = false, poisoned_ = false;
+  bool pollValid_ = false, fileSent_ = false, poisoned_ = false, cancelled_ = false;
   static bool nonzero(const std::uint8_t *p, unsigned n) {
     unsigned a = 0;
     while (n--)

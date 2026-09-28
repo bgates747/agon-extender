@@ -158,8 +158,11 @@ public:
       handBack();
     return done && ok ? 200 : 503;
   }
-  void cancel(const Binding &b) override {
-    access_.locked([&](Peer &p) { p.cancel(b); });
+  void cancel(const Binding &b) override { endCancelled(b, false); }
+  void stop(const Binding &b) override { endCancelled(b, true); }
+private:
+  void endCancelled(const Binding &b, bool orderly) {
+    access_.locked([&](Peer &p) { p.cancel(b, orderly); });
     wait(5500, [&] {
       bool done = false;
       access_.locked([&](Peer &p) {

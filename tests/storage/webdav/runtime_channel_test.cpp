@@ -23,6 +23,7 @@ static Binding grant;
 static unsigned sequence;
 static std::atomic<bool> stop{false}, eligible{false};
 static unsigned jobs;
+static std::atomic<unsigned> failed_jobs{0};
 static auto epoch = std::chrono::steady_clock::now();
 static std::uint32_t now() {
   return std::chrono::duration_cast<std::chrono::milliseconds>(
@@ -107,6 +108,7 @@ static void resident() {
     }
     if (run) {
       int result = sdjob_run();
+      if(result)++failed_jobs;
       std::lock_guard<std::mutex> lock(mutex_);
       control(10, result ? 7 : 0);
       ++jobs;
@@ -187,9 +189,16 @@ int main() {
           201);
   request("DELETE /folder HTTP/1.1\r\nHost: host:8081\r\n\r\n", 204);
   assert(!std::filesystem::exists(root + "/agon/folder"));
+  // EOF while staging on P4: no Agon destination, no failed utility return,
+  // no re-handshake by this resident model, and a fresh operation succeeds.
+  request("PUT /aborted HTTP/1.1\r\nHost: host:8081\r\nContent-Length: 99\r\n\r\nshort",400);
+  assert(!std::filesystem::exists(root+"/agon/aborted"));
+  auto again=request("GET /hello HTTP/1.1\r\nHost: host:8081\r\n\r\n",200);
+  assert(again.substr(again.size()-5)=="hello");
+  assert(!failed_jobs);
   stop = true;
   worker.join();
-  assert(jobs == 7);
+  assert(jobs == 9);
   std::filesystem::remove_all(root);
   puts("actual HTTP, Channel, Peer, finite MOSlet and engine: "
        "PUT/GET/MKCOL/COPY/PROPFIND/MOVE/recursive DELETE pass");
