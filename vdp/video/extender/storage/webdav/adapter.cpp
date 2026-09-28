@@ -365,7 +365,14 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
   // A zero-length response completes at its headers. Finish cancellation
   // before sending error/precondition responses, not afterward in ~Lease.
   auto respond = [&](int code, const std::string &body = "", Headers h = {}) {
-    lease.cancel();
+    // Missing paths and unmet preconditions are normal completed queries,
+    // not a lost backend. FINISH still rejects an unfinished transfer stage.
+    if (!lease.closed && (code == 404 || code == 412 || code == 304)) {
+      const int ended = lease.finish();
+      if (ended != 200) code = ended;
+    } else {
+      lease.cancel();
+    }
     reply(out, code, body, std::move(h));
   };
   Entry existing;

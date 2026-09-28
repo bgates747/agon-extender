@@ -72,3 +72,39 @@ The exact rejected command is not known. Keyboard readiness alone is insufficien
 as a CLI-ready deployment gate. Do not classify this as a corrupt flash or silently
 reissue FLASH. The next deployment waits for an admitted read-only WebDAV request
 before injecting post-boot commands.
+
+## CLI error reporting observed during physical tests
+
+The Author observed three `EMOS backend unavailable` messages separated by many
+linefeeds. Source inspection confirms that the finite utility returns MOS error
+35 on cancellation/failure; the resident main loop prints that result using the
+ordinary MOS error formatter. The P4 adapter currently cancels admitted jobs even
+for ordinary HTTP results such as missing-file 404 and overwrite-precondition
+412. Both occurred in the retained run, alongside a later failed directory
+request. Thus this message alone does not establish that the P4 disconnected.
+The exact three screen messages are not individually correlated to requests.
+
+Expected HTTP rejections need clean job completion rather than a generic CLI
+backend-failure report when no transport failure or unfinished write exists.
+Actual transport failures must remain distinguishable. Repeated prompt/linefeed
+output during automatic jobs also requires correction before ordinary-use
+acceptance; the Author's report is retained as a usability failure.
+
+The corrected hardware pair passed checked 4096-byte upload/download, HEAD,
+byte-range retrieval, overwrite rejection, COPY and MOVE. A following GET still
+returned 503, and a repeated tiny MOVE/GET test reproduced that admission failure.
+Thirty consecutive HEAD requests passed. These results do not constitute full
+suite acceptance. Native Linux discovery also rejected the missing DAV header;
+a local diagnostic proxy supplying a non-class capability URI allowed mount and
+listing, but direct native-client qualification remains open.
+
+## September 28 timing correction under qualification
+
+A host regression reproduces spurious expiry when the UART caller supplies a
+one-millisecond older sample than the HTTP caller that just activated a grant.
+Unsigned subtraction interpreted that ordering as nearly 49 days elapsed. The
+P4 now samples shared-queue time inside the lock and bounds elapsed ordering
+across older samples and clock wrap. Real five-second expiry remains tested.
+This is a demonstrated code defect; hardware causality awaits the corrected run.
+Normal missing-path and precondition responses now finish their admitted job
+cleanly instead of cancelling it. Incomplete stages still fail terminal checks.

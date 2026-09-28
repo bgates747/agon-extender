@@ -182,6 +182,15 @@ int main() {
                Peer::idle); // missing DECIDE retires; no deferred job
     assert(channel.enter({"HEAD", "/", "", false, false}, b, session) == 503);
   }
+  {
+    Fixture f;
+    f.ready();
+    // A different task sampled its clock just before this grant was created.
+    f.peer.expire(f.now - 1);
+    assert(f.peer.phase == Peer::active);
+    f.peer.expire(f.now + 5001);
+    assert(f.peer.phase == Peer::failed);
+  }
   puts("admission peer: grant lifecycle, single-flight data, stale replies, "
        "cancellation, duplicate conflict and timeouts pass");
 }

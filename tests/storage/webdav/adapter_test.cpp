@@ -255,8 +255,10 @@ int main() {
     In empty;
     Out missing;
     missing.onHeaders = [&] { assert(!f.active); };
+    const int cancellations = f.cancels, completions = f.finishes;
     a.handle({"HEAD", "/missing", {}}, empty, missing);
     assert(missing.status == 404);
+    assert(f.cancels == cancellations && f.finishes == completions + 1);
     f.terminal = 500;
     r = run(a, "GET", "/file");
     assert(r.status == 500 && r.body.empty());

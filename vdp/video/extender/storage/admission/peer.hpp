@@ -9,6 +9,13 @@
 namespace agon::extender::storage::admission {
 using Binding = std::array<std::uint8_t, 28>;
 class Peer {
+  // UART and HTTP callers can sample time before competing for the lock.
+  // A slightly older sample is not a 49-day timeout. Deadlines are all well
+  // below half the uint32 clock period, so signed ordering also handles wrap.
+  static std::uint32_t age(std::uint32_t now, std::uint32_t then) {
+    const auto delta = now - then;
+    return delta < 0x80000000U ? delta : 0;
+  }
 public:
   enum Phase {
     offline,
@@ -57,15 +64,15 @@ public:
     return true;
   }
   std::uint32_t pollAge(std::uint32_t now) const {
-    return pollValid_ ? now - pollAt_ : 0xffffffffU;
+    return pollValid_ ? age(now, pollAt_) : 0xffffffffU;
   }
   bool idleReady(std::uint32_t now) const {
-    return phase == idle && pollValid_ && now - pollAt_ <= 150;
+    return phase == idle && pollValid_ && age(now, pollAt_) <= 150;
   }
   bool owned() const { return phase >= armed && phase <= finished; }
   bool reserve(const std::uint8_t *descriptor, unsigned n, std::uint32_t now) {
     expire(now);
-    if (phase != idle || !pollValid_ || now - pollAt_ > 150 ||
+    if (phase != idle || !pollValid_ || age(now, pollAt_) > 150 ||
         !validDescriptor(descriptor, n) || nextJob_ == 0xffffffffU)
       return false;
     std::memcpy(descriptor_, descriptor, n);
@@ -128,14 +135,14 @@ public:
     }
   }
   void expire(std::uint32_t now) {
-    if ((phase == armed || phase == offered) && now - since_ > 200)
+    if ((phase == armed || phase == offered) && age(now, since_) > 200)
       fail();
-    if (phase == claimed && now - since_ > 1000)
+    if (phase == claimed && age(now, since_) > 1000)
       fail();
     if ((phase == active || phase == closing || phase == finished) &&
-        now - seen_ > 5000)
+        age(now, seen_) > 5000)
       fail();
-    if (phase == idle && pollValid_ && now - pollAt_ > 150)
+    if (phase == idle && pollValid_ && age(now, pollAt_) > 150)
       pollValid_ = false;
   }
   unsigned take(std::uint8_t *out, std::uint32_t now) {
