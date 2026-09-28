@@ -7,7 +7,7 @@ ROOT=Path(__file__).resolve().parents[1]
 class RuntimeTests(unittest.TestCase):
     def test_admission_and_media(self):
         with tempfile.TemporaryDirectory() as directory:
-            for name in ("admission_peer_test", "p4_local_files_test"):
+            for name in ("admission_peer_test", "p4_local_files_test", "envelope_test"):
                 exe=Path(directory)/name
                 subprocess.run(["g++", "-std=c++17", "-Wall", "-Wextra", "-Werror",
                     "-fsanitize=address,undefined", "-g", "-I"+str(ROOT/"vdp/video"),

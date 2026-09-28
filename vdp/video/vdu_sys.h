@@ -4,6 +4,9 @@
 #ifndef VDU_SYS_H
 #define VDU_SYS_H
 
+#if defined(AGON_EXTENDER_SD_SERVICE)
+#include "extender/storage/envelope.hpp"
+#endif
 #include <algorithm>
 #include <vector>
 
@@ -191,6 +194,14 @@ void VDUStreamProcessor::vdu_sys_video() {
 			}
 		}	break;
 #ifdef AGON_EXTENDER_CONSOLE
+#if defined(AGON_EXTENDER_SD_SERVICE)
+        case 0xF6: {
+            if (!agon::extender::storage::readEnvelope(
+                [&](){return readByte_t();},
+                [](const uint8_t *p,unsigned n){consoleSdReceive(p,n);}))
+                consoleSdIncomplete();
+        } break;
+#endif
         case CONSOLE_OPCODE: {
             uint8_t control[CONSOLE_SIZE];
             if (readIntoBuffer(control,sizeof(control)) == 0) consoleControl(this,control);

@@ -67,6 +67,8 @@ class VDUStreamProcessor;
 ConsoleStream *beginConsole();
 void runConsole(VDUStreamProcessor *);
 void consoleControl(VDUStreamProcessor *, const uint8_t *p);
+void consoleSdReceive(const uint8_t *p,unsigned n);
+void consoleSdIncomplete();
 void consoleLayout(int region);
 void consolePoll();
 inline void setVDPProtocolDuplex(bool) { /* UART1 is full duplex for this composition. */ }

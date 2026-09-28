@@ -32,6 +32,12 @@ void console_cancel_tx() {
   ESP_ERROR_CHECK(uart_set_pin(UART_NUM_1,12,22,11,23));
 }
 }
+#if defined(AGON_EXTENDER_SD_SERVICE)
+void consoleSdReceive(const uint8_t *p,unsigned n) {
+  agon::extender::storage::sdReceive(p,n,millis());
+}
+void consoleSdIncomplete() { console_stream->fail("incomplete SD envelope"); }
+#endif
 void consoleLayout(int region) {
 #if defined(AGON_EXTENDER_REMOTE_KEYBOARD)
   agon::extender::input::remoteLocked([](auto &r){r.boundary();return 0;});
@@ -262,7 +268,7 @@ void runConsole(VDUStreamProcessor *processor) {
 #if defined(AGON_EXTENDER_SD_SERVICE)
     // Service records wait behind complete keyboard/reply packets. Only this
     // task touches the UART queue; HTTP callbacks never send bytes themselves.
-    if(!s.session.active() && !used && !discard && console_keys.empty() &&
+    if(!used && !discard && console_keys.empty() &&
        !s.count && !transmitting && !console_admit_pending) {
       uint8_t record[SD_MAX_RECORD];
       unsigned n=agon::extender::storage::sdTake(record,now);
