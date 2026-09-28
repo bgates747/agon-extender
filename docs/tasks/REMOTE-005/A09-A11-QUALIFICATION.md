@@ -302,3 +302,29 @@ acknowledgements, poisoned exchanges, failed cleanup and unfinished Agon write
 stages retain conservative Legacy renegotiation. Already completed mutations are
 not rolled back or retried. Broader A11 media/interruption and application-origin
 coverage remain open; no production promotion or native GUI acceptance claimed.
+
+### Application-owned card transfers — A11 contract
+
+Author authorized the next paired bench tranche. Replace the old RAM-peer-only
+qualification with P4-card-backed application transfers in both directions and
+Legacy/ExCom. Reuse the linked EMOS application helper, checked Agon engine, P4
+spool and local-card activation idioms. A dedicated worker owns filesystem work;
+the console owner exchanges bounded packets only. P4's application handshake has
+its own incarnation/session, separate from idle CLI admission. Its HELLO marks
+origin 2 (application), allowing the two channels to remain distinct. This marker
+is routing, not permission: EMOS's local execution policy remains authoritative.
+
+EMOS permits application OPEN in ExCom only after resident negotiation confirms
+both application and active-parser capabilities. Healthy application closure
+preserves the resident CLI incarnation; manual listener remains Legacy-only.
+No implicit mode switching, background mainboard filesystem work, application
+replacement, authentication or directory-transfer API is introduced. Existing
+helper path/overwrite/checksum and uncertainty rules remain in force.
+
+Validate portable real-helper/card-engine exchanges and ownership/fault bounds,
+then build/install identified P4+EMOS and a dedicated ADL fixture. Read back exact
+bytes in both directions, preserve a caller sentinel, reject external requests
+while the fixture is running (including outside its transfer), and prove CLI
+service resumes after return in both modes. Preserve rollback/startup and finish
+at a recoverable prompt. Production and broader media/reset fault acceptance
+remain separate.
