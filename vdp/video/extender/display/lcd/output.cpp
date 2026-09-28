@@ -25,6 +25,14 @@ void worker(void *arg) {
   auto source=static_cast<uint8_t*>(heap_caps_aligned_alloc(64,bytes,MALLOC_CAP_SPIRAM|MALLOC_CAP_8BIT));
   if (!source) { ESP_LOGE("lcd","RGB output allocation failed"); vTaskDelete(nullptr); return; }
   auto panel=extender_lcd_panel_create();
+#if AGON_EXTENDER_LCD_PATTERN
+  // TRM 42.4.2.3.1: native top-to-bottom W,Y,C,G,M,R,B,K.
+  // With ribbon at left these are landscape left-to-right vertical bars.
+  ESP_ERROR_CHECK(esp_lcd_dpi_panel_set_pattern(panel,MIPI_DSI_PATTERN_BAR_HORIZONTAL));
+  ESP_LOGI("lcd","DSI hardware pattern: ribbon-left order white yellow cyan green magenta red blue black");
+  heap_caps_free(source);
+  vTaskDelete(nullptr); return;
+#endif
   void *fb[2];
   ESP_ERROR_CHECK(esp_lcd_dpi_panel_get_frame_buffer(panel,2,&fb[0],&fb[1]));
   esp_lcd_dpi_panel_event_callbacks_t callbacks{};
