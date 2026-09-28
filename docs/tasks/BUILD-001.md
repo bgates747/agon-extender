@@ -158,8 +158,9 @@ output layout.
 The proposal is recorded in [DESIGN.md](BUILD-001/DESIGN.md) and now pauses for
 Author acceptance before any maintained build-path change. The Author accepted
 the source/profile authority, wrapper and graph-validator design on 2026-09-28;
-dependency/tool acquisition and the implementation boundary remain under
-review.
+the Author then accepted managed Arduino-ESP32 3.3.11 and project-scoped
+official ESP-IDF 5.5.5 source/tools. The additive implementation boundary
+remains under review.
 
 Produce the proposed directory/component graph, source/profile authority,
 dependency acquisition and lock strategy, isolated tool environment, output
