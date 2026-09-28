@@ -1,17 +1,18 @@
-# Legacy finite-job qualification
+# Finite-job qualification — Legacy and ExCom
 
 The Author released the bench for autonomous qualification. Local target and host
-checks pass. The first physical tranche is limited to automatic external jobs in
-Legacy mode; ExCom and application-origin staged file jobs remain unfinished.
+checks pass. The latest bounded physical tranche covers automatic external jobs
+in Legacy and negotiated ExCom. Application-origin staged file jobs and broader
+fault/native-client acceptance remain unfinished.
 Production v0.1.0 is not replaced by these candidate builds.
 
 ## Selected candidates
 
 | Component | Identity | Source |
 | --- | --- | --- |
-| Resident EMOS | agon-emos-v0.1.22-b2026-09-28-01-40-45Z | agon-emos dd3527e |
+| Resident EMOS | agon-emos-v0.1.22-b2026-09-28-02-01-12Z | agon-emos 1e3373f |
 | Finite utility | sdjob-v0.1.0-b2026-09-28-01-41-18Z | agon-emos dd3527e |
-| P4 | uart-excom-console-r60-b2026-09-28-00-35-51Z | Extender c820550c; explicit staged-WebDAV export |
+| P4 | uart-excom-console-r60-b2026-09-28-02-01-18Z | Extender e95be229; explicit staged-WebDAV export |
 
 Registry r118 and these draft identities use the Author's standing version
 preapproval. No new production version/tag is selected.
@@ -221,3 +222,39 @@ the authorized bench, repeated ExCom root/file operations followed by Legacy
 recovery, preserving startup and rollback. Broader A11 faults and A12 desktop
 acceptance remain open. Record actual results rather than inferring them from
 compilation or Legacy tests.
+
+### Negotiated ExCom results — September 28 UTC
+
+The selected pair above is installed. EMOS is 128,493 bytes (+87 from the prior
+candidate); its entire 128 KiB ROM readback matches, SHA256
+`2faea97b8044eadcaed7d93704e35e7ee9119c0887698a3a10a20f83122968f9`.
+P4 was backed up, flashed, independently verified and its boot identity checked.
+The finite utility and 38-byte startup file are unchanged. Production remains
+unchanged. Exact deployment receipts, scripts, screen-text samples and result
+JSON are retained in the ignored runtime hardware silo (`excom-deployment`,
+`peer-p4-excom`, `excom-basic-results.json`, `excom-abort-observations.json` and
+`excom-recovery-results.json`).
+
+| Check | Result |
+| --- | --- |
+| Target builds / EMOS qualification | PASS; 132 owner tests plus linked guards; exported P4 build |
+| Portable active F6 reader | PASS under sanitizers; all 256 declared lengths and every truncated prefix; following VDU remains untouched |
+| ExCom root/file/directory suite | PASS; 18 HTTP requests, 44.88 seconds summed request time, exact 4096-byte payload/range checks, protected overwrite, COPY/MOVE and recursive DELETE |
+| Partial CLI line | PASS; 503 while typing, 200 after Escape clears line |
+| Client EOF during upload | No destination created; cancellation invalidates ExCom admission, subsequent request returns 503 |
+| Explicit Legacy recovery | PASS; absent incomplete destination confirmed, existing file unchanged, ExCom re-entry and five further exact reads pass |
+| Keyboard/display coexistence | PASS; sampled EDP text contains injected before/after markers, including after the abort; no implicit mode change |
+| Final state | Legacy idle admission passes; Extender keyboard ready/neutral, zero queued/held events; manual listener offline |
+
+The initial abort check expected immediate ExCom recovery and failed with 503.
+This is retained as a limitation, not disguised as a passing immediate-recovery
+test: the current finite utility reports cancellation as unsuccessful completion,
+so EMOS deliberately invalidates the negotiated admission. This includes a client
+EOF even before destination activation, not only physical UART failures. EMOS
+prints `EMOS backend unavailable` but remains responsive; explicitly return to
+Legacy to renegotiate, then ExCom may be selected again. No automatic retry or
+mode switch was added. Friendlier cancellation recovery can be considered within
+the remaining A11 interruption work; this bounded tranche does not close A11.
+Application-origin integration, broader media faults and native desktop acceptance
+are still open. No browser streaming performance or human visual acceptance is
+claimed by these checks.

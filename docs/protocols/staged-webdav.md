@@ -8,8 +8,14 @@ unsupported locking or property updates.
 
 P4 stages data on its local card. Resident EMOS admits each mainboard operation
 only at an eligible idle CLI and runs `/emos/sdjob.bin` as a finite EMOSlet.
-The currently connected candidate supports Legacy external requests only.
-ExCom, application-origin integration and native-client acceptance remain in
+The development implementation supports finite external requests in Legacy and
+ExCom after Legacy capability negotiation. Successful ExCom jobs retain that
+negotiation; an aborted job or transport fault requires returning to Legacy to
+renegotiate. An interrupted client upload currently takes this conservative
+recovery path too. Keyboard/display operation remains available.
+There is no implicit display switch. Manual listeners and application-owned
+leases remain Legacy-only. Bounded Legacy/ExCom physical checks pass; broader
+fault checks, application-origin integration and native-client acceptance remain in
 [REMOTE-005](../tasks/REMOTE-005.md). No manual listener is required for this API;
 an active manual listener instead excludes automatic jobs.
 

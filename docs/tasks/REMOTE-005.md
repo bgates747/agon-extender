@@ -513,6 +513,10 @@ user application runs. Test missing/full staging media, interruption recovery,
 concurrent CLI/native client, repeated operations and keyboard/video coexistence.
 Record source/destination durability separately; no framebuffer streaming
 performance campaign. Restore a known recoverable CLI state after tests.
+Bounded Legacy and negotiated ExCom external operations now pass; see
+[qualification results](REMOTE-005/A09-A11-QUALIFICATION.md). A client-aborted
+ExCom job currently requires Legacy renegotiation; broader interruption/media
+and application-origin coverage remain open.
 
 R05-A12 [ ] Run native file-manager acceptance on Pop!_OS COSMIC Files, Lenovo
 Thunar and macOS Finder. Test loose bulk files (>100), directories/empty folders,

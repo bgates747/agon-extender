@@ -2,7 +2,7 @@
 
 The portable HTTP adapter and wire backend are locally tested against the real
 EMOSlet C file engine and P4 spool. Ordinary builds leave them disabled. The explicit
-`prepare_console.py --staged-webdav` candidate starts the Legacy-only runtime on
+`prepare_console.py --staged-webdav` candidate starts the finite Legacy/negotiated-ExCom runtime on
 port 8081; physical/native-client acceptance remains separate. The current manual listener, video server and
 production bundle are unchanged. Native-client and physical qualification remain.
 
