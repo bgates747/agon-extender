@@ -11,7 +11,7 @@ Production v0.1.0 is not replaced by these candidate builds.
 | --- | --- | --- |
 | Resident EMOS | agon-emos-v0.1.22-b2026-09-28-00-04-04Z | agon-emos 70a4908 |
 | Finite utility | sdjob-v0.1.0-b2026-09-27-23-45-52Z | agon-emos e6a23cb |
-| P4 | uart-excom-console-r60-b2026-09-28-00-04-06Z | Extender 1b26cf52; explicit staged-WebDAV export |
+| P4 | uart-excom-console-r60-b2026-09-28-00-35-51Z | Extender c820550c; explicit staged-WebDAV export |
 
 Registry r118 and these draft identities use the Author's standing version
 preapproval. No new production version/tag is selected.
@@ -46,10 +46,10 @@ operation or treat loss of a live grant as success.
 
 ## Physical evidence
 
-Physical execution is in progress. Exact manifests, logs and rollback bytes are
+The bounded Legacy physical tranche below has completed. Exact manifests, logs and rollback bytes are
 retained under ignored `agents/remote005-webdav-runtime`. The actual incoming P4
 full flash was saved before replacement; mainboard ROM and unchanged startup were
-also preserved. Update this section with terminal outcomes before closeout.
+also preserved. This is candidate evidence, not production acceptance.
 
 The first physical sequence exposed a handback gap: HEAD of an absent path
 returned 404, then an immediate MKCOL received 503. A separately spaced diagnostic
@@ -108,3 +108,44 @@ across older samples and clock wrap. Real five-second expiry remains tested.
 This is a demonstrated code defect; hardware causality awaits the corrected run.
 Normal missing-path and precondition responses now finish their admitted job
 cleanly instead of cancelling it. Incomplete stages still fail terminal checks.
+
+## Corrected physical results — September 28 UTC
+
+| Check | Outcome | Boundary |
+| --- | --- | --- |
+| P4 deployment | PASS | Independent byte verification, matching boot identity and USB host readiness; prior image retained |
+| EMOS installation | PASS | Corrective v0.1.22 full 128 KiB ROM readback matches; utility bytes verified earlier |
+| Consecutive file operations | PASS | 16 requests; checked 4096-byte upload/download, HEAD, range, overwrite rejection, COPY, MOVE, listing, directory creation and recursive deletion |
+| Repeated MOVE/read handback | PASS | 20 consecutive pairs plus setup (42 requests), 35.71 seconds host wall time; no retries or client delays |
+| Partly typed CLI | PASS | External operation rejected; Escape returns to successful idle admission |
+| Interrupted upload | PASS | Client EOF does not publish an incomplete destination; subsequent request works |
+| Concurrent HTTP worker | PASS | Competing request rejected; recovery after the first connection closes |
+| Manual listener ownership | PASS | Automatic request rejected while manual listener is active; manual byte readback and unchanged startup verified |
+| ExCom boundary | PASS for rejection only | Automatic file request refused; return to Legacy restores access. ExCom file service remains unimplemented |
+| Native Linux GVfs/GIO | PASS for bounded subdirectory smoke | Direct mount/list/read/write/rename/delete/mkdir/rmdir, exact file readback; no diagnostic proxy |
+| Root PROPFIND | FAIL | Depth 0 and 1 return 500; manual root enumeration succeeds. Root metadata handling remains open |
+
+The basic operation sequence took 41.74 seconds summed across individual HTTP
+requests, measured by the host monotonic clock. This excludes deployment and
+later fault/native tests and is not a throughput-optimization result. Detailed
+request durations, local output, identities, rollback bytes and file hashes are
+retained in the ignored runtime qualification directory.
+
+Hardware also exposed a distinct response/resource-release race: the next request
+could reach the acceptor after the client received its preceding response but
+before the old worker released its media lease. This produced the bare worker
+503 response. A one-byte completion barrier now releases the final response byte
+only after storage teardown and worker admission release. It does not queue or
+replay requests. Partial-write and completion-order regressions pass. The corrected
+basic run required neither client sleeps nor mutation retries.
+
+Native discovery uses the documented extension capability URI rather than claiming
+DAV class 1/2/3. GVfs emitted a missing `standard::size` metadata warning during
+its successful smoke; visual file-manager acceptance and broader metadata behavior
+remain unqualified. Root access must be fixed before claiming the whole-card
+native workflow works. No macOS Finder or Lenovo GUI acceptance is claimed.
+
+The CLI linefeed cause is identified separately: `mos_input` prints a newline for
+its private service return and the next main-loop iteration prints another prompt.
+No new EMOS UI change was flashed in this correction. Successful automatic jobs
+still disturb the CLI presentation; that remains an A11 usability follow-up.

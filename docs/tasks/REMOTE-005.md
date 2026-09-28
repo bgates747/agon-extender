@@ -488,6 +488,11 @@ linked qualification results, not implied by the earlier local pass.
 
 Current A09–A11 evidence: [Legacy finite-job qualification](REMOTE-005/A09-A11-QUALIFICATION.md).
 
+The September 28 UTC correction passes bounded Legacy file/fault operations and
+Linux GVfs subdirectory transfers. A09/A11/A12 remain open for their broader
+matrices. A11 follow-ups include root metadata failure and automatic-job CLI
+newline/prompt noise; A12 still requires actual desktop-client acceptance.
+
 R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
 Exercise an interleaving matrix: external request at idle/partly typed CLI/app,
 app-origin upload/download, duplicate requests, disconnect/reconnect, reset and
@@ -495,7 +500,7 @@ external request during an app-origin job. Record distinct expected busy versus
 unsupported/offline/error results; verify no delayed rejected work executes.
 Measure durations to select justified timeout bounds, not optimize throughput.
 
-R05-A10 [ ] Prepare a separately authorized deployment after bench release: read
+R05-A10 [x] Prepare a separately authorized deployment after bench release: read
 current local hardware/fixture constraints, select/version exact P4+EMOS+utility
 builds, preserve production rollback and SD files, verify deployed bytes and
 input/recovery readiness. Do not flash while TRS-80 owns the bench. Install only
