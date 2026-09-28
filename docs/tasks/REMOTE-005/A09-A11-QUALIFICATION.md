@@ -196,3 +196,28 @@ operations. GUI acceptance on each desktop, broader interleavings/media faults,
 ExCom and application-origin integration remain open. No production promotion.
 Final state: normal Legacy prompt, ready neutral Extender keyboard, manual
 listener stopped, temporary native mount and test session closed.
+
+### Next bounded A11 tranche: negotiated ExCom finite jobs
+
+Frozen work contract: enable the existing external finite job in ExCom after
+Legacy capability negotiation. P4 consumes F6 only at the retained VDU 23,0
+command boundary, drains invalid declared payloads without interpreting them as
+VDU, and queues 8D replies through its sole console UART owner. EMOS admits the
+finite utility in ExCom only with the negotiated capability; manual listener and
+application-owned leases remain Legacy-only in this tranche. Successful ExCom
+completion retains the negotiated incarnation for subsequent jobs; a transport
+failure invalidates it and requires Legacy renegotiation. No implicit mode
+switch, parallel transport, production promotion or new file operations.
+
+Research basis: official `agon-docs/docs/vdp/System-Commands.md` defines the
+VDU 23,0 dispatcher; its `VDU-Commands.md` line-pattern command VDU 23,246 is a
+different namespace. The maintained `vdu_sys.h` supplies the actual command
+boundary, while `console_hardware.inc` currently recognizes F6 only in Legacy.
+The admission contract already assigns capability bit 1 to active ExCom framing.
+
+Validation: owner host tests for capability/ownership/completion/failure;
+bounded packet-consumption regression and P4 build; paired actual firmware on
+the authorized bench, repeated ExCom root/file operations followed by Legacy
+recovery, preserving startup and rollback. Broader A11 faults and A12 desktop
+acceptance remain open. Record actual results rather than inferring them from
+compilation or Legacy tests.
