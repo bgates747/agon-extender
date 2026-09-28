@@ -325,7 +325,13 @@ success. Manual OPEN and application leases retain their separate ownership.
 The finite utility and gated P4 runtime now consume this handoff in local tests.
 Finite ownership has two receive slots for a control ACK followed by a file
 request; other owners retain one slot. STATUS reply appends one byte: 0 continue,
-1 finish requested; result 8 latches cancellation. The utility never interrupts
-activation mid-call. It rejects terminal success while a transfer is unfinished.
-Only Legacy external-job capability bits 0 and 2 are advertised by an explicitly
-enabled runtime. Ordinary builds keep the runtime disabled; this is not deployed.
+1 finish requested. A healthy client cancellation at a quiet file-record boundary
+uses result 0 for orderly FINISH/CLOSE, while P4 records the operation as cancelled,
+not successful. Result 8 indicates a poisoned cancellation: it cannot be downgraded
+by a later orderly request. The utility never interrupts activation mid-call and
+rejects terminal success while a transfer is unfinished. Only acknowledged clean
+closure retains EMOS's negotiated ExCom capability; a failed closure still
+requires Legacy renegotiation. Capability bits 0, 1 and 2 are advertised by the
+explicit staged runtime (Legacy and negotiated ExCom external finite jobs).
+Ordinary builds keep this runtime disabled; candidate bench deployment does not
+replace selected production.

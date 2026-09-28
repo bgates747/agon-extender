@@ -12,7 +12,7 @@ Production v0.1.0 is not replaced by these candidate builds.
 | --- | --- | --- |
 | Resident EMOS | agon-emos-v0.1.22-b2026-09-28-02-01-12Z | agon-emos 1e3373f |
 | Finite utility | sdjob-v0.1.0-b2026-09-28-01-41-18Z | agon-emos dd3527e |
-| P4 | uart-excom-console-r60-b2026-09-28-02-01-18Z | Extender e95be229; explicit staged-WebDAV export |
+| P4 | uart-excom-console-r60-b2026-09-28-02-19-56Z | Extender e2193f07; explicit staged-WebDAV export |
 
 Registry r118 and these draft identities use the Author's standing version
 preapproval. No new production version/tag is selected.
@@ -275,3 +275,30 @@ Validate clean stop versus in-flight/poisoned cancellation in host tests, the
 actual HTTP/Peer/finite-utility chain with a truncated upload and subsequent job,
 and physical repeated ExCom aborted uploads followed by exact reads/new writes.
 Preserve startup, current EMOS/utility and rollback; finish at a recoverable CLI.
+
+### Clean cancellation results — September 28 UTC
+
+The selected P4 build now distinguishes orderly client cancellation from a
+poisoned exchange. EMOS, `/emos/sdjob.bin` and startup are unchanged. P4 backup,
+independent flash verification and matching boot identity are retained under
+`hardware/peer-p4-clean-cancel`; run evidence is under `hardware/clean-cancel`
+in the ignored runtime silo.
+
+| Check | Result |
+| --- | --- |
+| Quiet cancellation / repeated stop | PASS; STATUS requests healthy stop; FINISH/CLOSE complete but P4 never reports the cancelled operation successful |
+| In-flight record or prior poison | PASS; cannot downgrade to orderly cancellation |
+| Actual HTTP/Peer/finite utility/engine | PASS under sanitizers; truncated PUT returns error, creates no destination, utility returns cleanly and subsequent GET succeeds without a fresh HELLO |
+| Existing unfinished-stage / lost-READY tests | PASS; terminal failure behavior retained |
+| Identified P4 build and physical deployment | PASS; independent verification and boot identity |
+| Three physical ExCom upload cancellations | PASS; after each EOF, absent destination, exact 4096-byte existing-file read and a fresh write/read, without reset, mode switch or request retry |
+| Keyboard/display and final recovery | PASS; before/after text markers, no backend-unavailable diagnostic; returned to Legacy with idle admission and ready neutral keyboard |
+
+The physical sequence made 16 HTTP requests (32.39 seconds summed request time),
+plus three intentionally incomplete raw uploads and keyboard/text observations.
+This is functional evidence, not a throughput comparison. The earlier blanket
+client-abort limitation is superseded for these clean cancellations. Missing
+acknowledgements, poisoned exchanges, failed cleanup and unfinished Agon write
+stages retain conservative Legacy renegotiation. Already completed mutations are
+not rolled back or retried. Broader A11 media/interruption and application-origin
+coverage remain open; no production promotion or native GUI acceptance claimed.

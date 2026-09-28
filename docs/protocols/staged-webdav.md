@@ -10,9 +10,12 @@ P4 stages data on its local card. Resident EMOS admits each mainboard operation
 only at an eligible idle CLI and runs `/emos/sdjob.bin` as a finite EMOSlet.
 The development implementation supports finite external requests in Legacy and
 ExCom after Legacy capability negotiation. Successful ExCom jobs retain that
-negotiation; an aborted job or transport fault requires returning to Legacy to
-renegotiate. An interrupted client upload currently takes this conservative
-recovery path too. Keyboard/display operation remains available.
+negotiation. Clean client cancellation also preserves it after acknowledged
+FINISH/CLOSE at a quiet wire boundary: no partial upload destination is activated
+and the next ExCom job can proceed. A poisoned exchange, failed cleanup or
+unfinished Agon write stage still requires Legacy renegotiation. Cancellation
+does not promise rollback of mutations already completed. Keyboard/display
+operation remains available.
 There is no implicit display switch. Manual listeners and application-owned
 leases remain Legacy-only. Bounded Legacy/ExCom physical checks pass; broader
 fault checks, application-origin integration and native-client acceptance remain in
