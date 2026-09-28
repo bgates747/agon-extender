@@ -135,7 +135,7 @@ mistaking framework internals for unreviewed application code.
 
 ## Migrated profiles
 
-Subject to acceptance of the inventory classification, the initial manifest
+Under the Author-accepted inventory classification, the initial manifest
 contains three buildable profiles:
 
 | Profile | Native purpose |
@@ -182,7 +182,8 @@ cutover does not alter those authorities.
 
 ## Review decisions requested
 
-B01-DR01 [ ] Accept or amend the profile classification in `INVENTORY.md`.
+B01-DR01 [x] The Author accepted the profile classification in `INVENTORY.md`
+on 2026-09-28.
 
 B01-DR02 [ ] Accept or amend this source/profile authority and wrapper design.
 

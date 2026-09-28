@@ -1,7 +1,7 @@
 # BUILD-001 B01-02 — Current build inventory and profile disposition
 
-Status: inventory complete; proposed profile dispositions await Author review.
-Captured: 2026-09-28. No hardware was changed.
+Status: inventory and profile dispositions accepted by the Author on
+2026-09-28. Captured: 2026-09-28. No hardware was changed.
 
 ## Bound identities
 
@@ -70,7 +70,7 @@ does not describe the linked object paths. It is therefore not authoritative
 for current actual-action analysis. The native design must make CMake own both
 compilation and the final link, then validate the database against the ELF map.
 
-## Proposed profile classification
+## Accepted profile classification
 
 “Migrate” means BUILD-001 must represent the profile before retiring the hybrid
 path. “Freeze” means retain its source manifest and historical evidence but do
@@ -102,7 +102,8 @@ rejection record but no buildable native target.
 | `p4-zdi-probe` | Tombstone | Explicitly retired; current hook already refuses it. |
 | `p4-zdi-mos-recovery` | Tombstone | Explicitly retired; current hook already refuses it. |
 
-The frozen diagnostic manifests and builders remain useful historical oracles,
+The Author accepted this classification on 2026-09-28. The frozen diagnostic
+manifests and builders remain useful historical oracles,
 but maintaining twenty native profiles would preserve the accidental phase
 structure that BUILD-001 is intended to remove. If a frozen diagnostic becomes
 necessary later, its owner can define a current native profile from the retained

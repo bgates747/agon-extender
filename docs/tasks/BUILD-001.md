@@ -44,7 +44,7 @@ depending on unrecorded global developer state?
 B01-Q03 [ ] How does each maintained P4 build profile express configuration,
 feature flags, dependencies, embedded files, partitions and output identity?
 
-B01-Q04 [ ] Which current PlatformIO environments are maintained product or
+B01-Q04 [x] Which current PlatformIO environments are maintained product or
 diagnostic profiles that must migrate, and which are obsolete or frozen evidence
 that must be disposed explicitly rather than copied forward?
 
@@ -126,11 +126,12 @@ B01-01c [x] Establish how the native build emits `compile_commands.json`, map
 files, size reports, flash images and dependency locks, and how each artifact is
 bound to the selected profile and source revision.
 
-### B01-02 [ ] Inventory and preserve the current build contract
+### B01-02 [x] Inventory and preserve the current build contract
 
 Inventory and controls are recorded in [INVENTORY.md](BUILD-001/INVENTORY.md).
-The recommended profile dispositions await Author review; no profile has yet
-been excluded from migration.
+The Author accepted the profile dispositions on 2026-09-28: migrate the console,
+maintained MOS recovery and active PORT-008 non-release qualification profiles;
+freeze superseded diagnostics; preserve rejected profiles as tombstones.
 
 Before changing build files, record the exact repositories, production
 selection, development source, PlatformIO platform/framework packages,
@@ -279,7 +280,7 @@ unless the Author separately accepts a finding and itemized repair.
 
 B01-G01 [x] The Author accepted and froze this contract before B01-01 began.
 
-B01-G02 [ ] Official integration research and current-profile inventory are
+B01-G02 [x] Official integration research and current-profile inventory are
 complete before the native design is accepted.
 
 B01-G03 [ ] One checked-in authority selects sources and profiles; CMake's actual
