@@ -11,7 +11,10 @@ the historical r57 result does not establish what firmware is running now. See t
 
 P4 owns SDMMC/FatFS directly; Agon, EMOS, `sdserve` and the parallel pipe do not
 participate. The storage HTTP task listens on port **8080**, separate from the
-port-80 video/input server. There is no browser GUI, FTP, SMB or WebDAV service.
+port-80 video/input server. This port is not FTP, SMB or WebDAV. The separate
+[staged mainboard WebDAV candidate](mainboard-sd.md) uses port 8081 and the P4
+card for private staging; its visible files belong to Agon SD. Shared storage
+leases can make P4-local operations temporarily busy during staged jobs.
 
 1. Obtain the P4 address from the operator. Set `P4_SD_URL` to
    `http://P4_HOST:8080`, substituting that address. This is a trusted-LAN service

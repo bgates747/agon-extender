@@ -486,7 +486,7 @@ and dedicated listener/worker composition. The Author subsequently released the
 bench for A09–A11 candidate deployment; current outcomes are recorded in the
 linked qualification results, not implied by the earlier local pass.
 
-Current A09–A11 evidence: [Legacy finite-job qualification](REMOTE-005/A09-A11-QUALIFICATION.md).
+Current A09–A11 evidence: [Legacy/ExCom finite-job and application qualification](REMOTE-005/A09-A11-QUALIFICATION.md).
 
 The September 28 UTC correction passes bounded Legacy file/fault operations and
 Linux GVfs subdirectory transfers. A09/A11/A12 remain open for their broader
@@ -535,9 +535,10 @@ servers/mounts only after their review purpose ends. Do not claim untested modes
 clients or background access. Commit/publish under applicable authorization.
 
 Execution boundary: Author-approved implementation and released-bench qualification.
-Legacy finite jobs are the first enabled candidate tranche. ExCom external jobs,
-application-origin staged jobs, broader native-client qualification and production
-promotion remain gated by their unfinished items above.
+Legacy/negotiated ExCom finite external jobs and application-origin card transfers
+have bounded physical passes. Broader media/interruption coverage, native-client
+acceptance and production promotion remain gated by the unfinished items above.
+Current user instructions are in the [mainboard SD guide](../mainboard-sd.md).
 
 D15 [x] Accepted 2026-09-27: P4 removes staging after confirmed successful
 completion; retain interrupted data only while needed for recovery. For downloads,

@@ -4,7 +4,9 @@ The portable HTTP adapter and wire backend are locally tested against the real
 EMOSlet C file engine and P4 spool. Ordinary builds leave them disabled. The explicit
 `prepare_console.py --staged-webdav` candidate starts the finite Legacy/negotiated-ExCom runtime on
 port 8081; physical/native-client acceptance remains separate. The current manual listener, video server and
-production bundle are unchanged. Native-client and physical qualification remain.
+production bundle are unchanged. Bounded Legacy/ExCom physical checks, including application-owned card transfers,
+pass; broader media/interruption qualification and native-client acceptance remain.
+See the [operating guide](../../../../../docs/mainboard-sd.md).
 
 ## Composition boundary
 
@@ -29,7 +31,8 @@ production bundle are unchanged. Native-client and physical qualification remain
    card lease without formatting; there is no RAM fallback.
 5. The finite utility/control peer and transport/media owners are not provided by
    a test Channel. Do not enable an endpoint until these are implemented and
-   qualified. Both Legacy/ExCom deployment gates remain in the parent task.
+   qualified. The explicit candidate supplies these owners; broader qualification gates remain
+   in the parent task.
 
 ## Behavior and limits
 
@@ -90,7 +93,8 @@ still consume heap and must be budgeted. Target compiler stack estimates include
 5120 bytes for Adapter::handle, 4160 for stagedPut, 4128 for spool digest and 1280
 for serveConnection. Their nested upload path exceeds an 8-KiB HTTP task stack.
 A dedicated worker needs a conservative stack budget (32 KiB initial development
-candidate), followed by target high-water measurement; no runtime task exists yet.
+candidate), followed by target high-water measurement. The explicit candidate
+now supplies the dedicated runtime task.
 
 Run `python -m unittest discover -s tests -p test_webdav_adapter.py -v` using the
 project venv. Set `AGON_P4_CXX` to the P4 cross compiler for target object checks.

@@ -1,12 +1,99 @@
 # Mainboard SD service operating guide
 
-The current recorded installation uses EMOS v0.1.19 and the sdserve v0.2.0
-**foreground EMOSlet** at `/emos/sdserve.bin`. Checked and opt-in fast transfers
-pass bounded physical checks; see the [latest deployment](tasks/AUDIT-008/HARDWARE.md)
-and [fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md). The [current local installation bundle](../production/README.md) pins these
-accepted binaries and matching host tools. Component development labels remain;
-this is not a public firmware release. This guide does not assert that the
-service is running now: consult the installation owner and current status.
+Two mainboard transfer methods exist. **Selected production v0.1.0** provides
+checked/fast transfers through the foreground `sdserve` EMOSlet in Legacy mode.
+The **newer development candidate** adds automatic, P4-card-staged WebDAV jobs
+at the idle MOS prompt in Legacy and negotiated ExCom, plus application-initiated
+card transfers. Bounded hardware checks pass; this candidate has not been promoted
+to production. Verify the installed component receipt rather than assuming Git
+HEAD or the selected bundle describes the bench.
+
+| Method | Client / endpoint | Agon requirement | Status |
+|---|---|---|---|
+| Foreground checked/fast listener | `scripts/sdcard.py`, P4 HTTP origin | Manually start `/emos/sdserve.bin`; Legacy only | Selected production; instructions below |
+| Automatic staged mainboard files | HTTP/WebDAV, port 8081 | Eligible idle CLI; paired resident EMOS and `/emos/sdjob.bin`; mounted P4 staging card | Development; bounded Legacy/ExCom hardware pass |
+| Application-owned card transfer | Linked `emos_file_transfer()` helper | Application explicitly initiates its own transfer | Development; bounded bidirectional Legacy/ExCom hardware pass |
+| P4-local card management | `scripts/p4sd.py` or curl, port 8080 | No Agon listener or EMOS required | Separate development service; [P4 SD guide](p4-sd.md) |
+
+The [production bundle](../production/README.md) pins accepted binaries and host
+tools. [Qualification results](tasks/REMOTE-005/A09-A11-QUALIFICATION.md) pin the
+newer tested combination: EMOS v0.1.23, finite sdjob v0.1.0 and P4 r61 with the
+explicit staged-WebDAV composition. Later builds need their own installation
+receipt; this guide does not assert a service is currently running.
+
+## Automatic staged transfers — development candidate
+
+No `EMOS sdserve` invocation is needed. P4 accepts the network request and stages
+file data on its own SD card; EMOS authorizes the mainboard operation at an
+eligible idle CLI and invokes `/emos/sdjob.bin` for the finite job. Mainboard data
+uses the existing P4–eZ80 UART transport, not the parallel pipe. A running ordinary
+application or manual listener excludes external jobs; rejected work is not
+queued to run later. Do not type commands or launch an application during a job.
+
+The paired components and finite utility must already be installed. Legacy
+capability negotiation must have completed before using ExCom transfers. Jobs do
+not switch displays. Obtain the installed service address from the operator and
+set `AGON_DAV_URL` to `http://P4_HOST:8081` (no trailing slash). Unlike `sdcard.py`,
+these HTTP requests need no host session JSON file and have no `--fast` option.
+They use checked staging. The exposed root is the Agon card, subject to protected
+service paths; it is not the P4 card.
+
+Examples below operate on a deliberately chosen scratch directory. Run them
+individually and inspect each result before the next dependent operation:
+
+```sh
+curl --fail-with-body -X PROPFIND -H 'Depth: 1' "$AGON_DAV_URL/"
+curl --fail-with-body -X MKCOL "$AGON_DAV_URL/transfer-demo"
+curl --fail-with-body -T local.bin "$AGON_DAV_URL/transfer-demo/example.bin"
+curl --fail-with-body -o downloaded.bin "$AGON_DAV_URL/transfer-demo/example.bin"
+curl --fail-with-body -X MOVE -H "Destination: $AGON_DAV_URL/transfer-demo/renamed.bin" -H 'Overwrite: F' "$AGON_DAV_URL/transfer-demo/example.bin"
+curl --fail-with-body -X DELETE "$AGON_DAV_URL/transfer-demo/renamed.bin"
+```
+
+GET/HEAD, directory listing, MKCOL, file/directory COPY, MOVE and recursive DELETE
+are supported within the [adapter limits](../vdp/video/extender/storage/webdav/README.md).
+DELETE on a directory is recursive. MOVE never replaces an existing destination;
+directory COPY does not merge. Ordinary PUT may replace a file and retains the
+existing sibling backup; another replacement can fail until that backup has been
+reviewed and explicitly resolved. A recursive operation can partially complete:
+inspect HTTP 207 bodies, not just curl's exit status. No whole-tree or power-loss
+atomicity is promised. Never automatically replay an uncertain mutation.
+
+Linux file managers can try `dav://P4_HOST:8081/`; Finder's Connect to Server uses
+`http://P4_HOST:8081/`. Bounded Linux GVfs transfers passed, but the full Pop!_OS,
+Lenovo and Finder acceptance matrix remains open. This limited API is not a claim
+of full WebDAV conformance: no locks, property updates, authentication or TLS.
+Use the trusted LAN only. Paths are bounded ASCII; see the adapter contract for
+length and directory-size limits.
+
+A busy/ineligible request may return 503; it is not evidence of permission to
+reset Agon. Verify the active program/service and wait for a known idle CLI.
+Clean cancelled uploads passed recovery in ExCom without switching modes;
+poisoned exchanges, failed cleanup or unfinished Agon write stages still require
+deliberate recovery and Legacy renegotiation. Preserve uncertain staging evidence.
+Large-file deadlines, absent/full media, reset/interruption and retained-stage
+recovery remain incompletely qualified. Do not delete recovery files to make a
+retry appear successful.
+
+## Application-initiated transfers — development candidate
+
+A running application may explicitly call `emos_file_transfer()` to SEND from
+Agon SD to P4 SD or RECEIVE in the reverse direction. External clients remain
+excluded throughout the application's lifetime, including outside its transfer.
+This does not provide background execution or overwrite the caller with sdjob.
+Both directions passed 4,097-byte exact-readback checks in Legacy and negotiated
+ExCom, with caller-memory preservation and CLI service recovery. Linking and
+result semantics belong to the component owner's
+[application helper guide](https://github.com/bgates747/agon-emos/blob/main/lib/sdapp/README.md);
+the [protocol guide](protocols/staged-webdav.md) explains ownership.
+
+## Foreground listener — selected production
+
+The following instructions apply to `sdserve`/`sdcard.py`, not the automatic
+WebDAV endpoint. EMOS v0.1.19 and sdserve v0.2.0 provide the selected production
+baseline. Checked and fast transfers passed bounded physical checks; see the
+[deployment](tasks/AUDIT-008/HARDWARE.md) and
+[fast comparison](tasks/REMOTE-005/FAST-TRANSFER.md).
 
 ## SD locations
 
@@ -229,12 +316,9 @@ fast-mode limitations. MOVE never overwrites; directory COPY never merges.
 Checked replacement retains backup siblings. Successful entries print JSON
 receipts; failure/cancellation leaves previously completed entries in place.
 Recursive depth is limited to 16; the host buffers one copied file at a time.
-Keep the existing session journal for uncertain operations. Physical deployment
-and future idle-CLI/ExCom integration remain unqualified. See
-[local results](tasks/REMOTE-005/A07-RESULTS.md).
+Keep the existing session journal for uncertain operations. These foreground-client additions are distinct from the automatic staged API
+above; their local evidence is in [A07 results](tasks/REMOTE-005/A07-RESULTS.md).
 
-The development WebDAV adapter has local HTTP/wire-engine checks, including
-recursive operations and staged uploads. It is **not enabled on P4**; there is
-no new share URL or replacement invocation for the installed listener. Runtime
-admission/media/worker composition and native-client acceptance remain pending.
-See [A08 development results](tasks/REMOTE-005/A08-RESULTS.md).
+Automatic staged WebDAV now has bounded physical coverage as described above.
+The earlier [A08 results](tasks/REMOTE-005/A08-RESULTS.md) are historical local-test
+evidence, not the current deployment boundary.

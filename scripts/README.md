@@ -72,3 +72,12 @@ The documentation audit inspected tool descriptions and selected active contract
 it did not rerun these historical helpers or certify their current deployment
 readiness. Source and retained evidence remain available for an owner to prepare
 a new bounded test without rediscovering the original purpose.
+
+## Newer staged mainboard transfers
+
+The paired development WebDAV service uses port 8081 and ordinary curl/native
+file-manager requests, not `sdcard.py` or its session journal. It automatically
+runs finite jobs at an eligible idle CLI in Legacy/negotiated ExCom. See the
+[mainboard SD guide](../docs/mainboard-sd.md) for setup, commands and bounded
+qualification. `p4sd.py` on port 8080 manages the separate P4-local card. Neither
+new service is in selected production v0.1.0.

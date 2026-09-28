@@ -14,15 +14,19 @@ firmware, EMOSlet and host-tool archives with hashes and installation guidance.
 |---|---|
 | First use, prerequisites, host setup and another project's workflow | [Using Extender](using-extender.md) |
 | P4-local SD file/directory management candidate | [P4 SD HTTP guide](p4-sd.md), candidate only; not in selected production |
-| Mainboard SD files; checked/fast transfers; sessions and recovery | [Mainboard SD](mainboard-sd.md) |
+| Mainboard SD: foreground checked/fast, candidate automatic WebDAV and application transfers | [Mainboard SD](mainboard-sd.md) |
 | Physical/browser/agent input, ownership and platform limits | [Keyboard input](remote-keyboard.md) |
 | Read visible ExCom text without taking video ownership | [Screen text](screen-text.md) |
 | Normal Agon reset and browser reset button | [Bench reset](bench-reset.md) |
 | Recover an Agon that cannot boot MOS | [MOS recovery](mos-recovery.md) |
 | Where files belong on SD | [SD layout](sd-layout.md) |
 
-Remote input requires prior EMOS admission. The SD listener is foreground,
-requires Legacy mode and runs as `/emos/sdserve.bin`. P4-local SD HTTP access passed bounded r57 candidate checks but is outside the
+Remote input requires prior EMOS admission. The production SD listener is foreground,
+requires Legacy mode and runs as `/emos/sdserve.bin`. Newer paired development
+firmware additionally supports automatic staged mainboard WebDAV on port 8081
+at an idle CLI in Legacy/negotiated ExCom, and application-initiated card transfers.
+These passed bounded hardware checks but are not in selected production; the
+[mainboard SD guide](mainboard-sd.md) supplies current usage and limits. P4-local SD HTTP access passed bounded r57 candidate checks but is outside the
 selected production bundle. Neither this page nor the selected bundle identifies
 the firmware currently on an occupied bench. Physical HDMI output remains unqualified. Consult the operating guides
 for precise limits rather than assuming support from a research or example file.
