@@ -181,7 +181,7 @@ handling for framework and third-party component internals.
 B01-03c [x] Define rollback so an unsuccessful native migration can restore the
 preserved hybrid build without altering production or discarding evidence.
 
-### B01-04 [ ] Implement the native ESP-IDF/CMake build
+### B01-04 [x] Implement the native ESP-IDF/CMake build
 
 Introduce the minimum checked-in CMake components, profile data and project-owned
 wrapper needed to build the preserved P4 source closure with native ESP-IDF.
@@ -189,35 +189,38 @@ Retain Arduino-ESP32 as the pinned component selected in B01-01. Keep product
 source edits separate from build changes and itemize any unavoidable adapter by
 symbol, reason, test and removal condition.
 
-B01-04a [ ] Reproduce source selection, language standards, definitions, include
+B01-04a [x] Reproduce source selection, language standards, definitions, include
 paths, link inputs, embedded assets, partitions, `sdkconfig` values and managed
 dependencies for the combined ExCom+LCD target.
 
-B01-04b [ ] Map each accepted maintained diagnostic profile without reintroducing
+B01-04b [x] Map each accepted maintained diagnostic profile without reintroducing
 an outer build graph or profile-specific hand-edited source list.
 
-B01-04c [ ] Emit immutable build identity, dependency lock, ELF, map, flash
+B01-04c [x] Emit immutable build identity, dependency lock, ELF, map, flash
 images, size reports and canonical compilation database into a profile-specific
 output directory.
 
-B01-04d [ ] Ensure a clean checkout can provision or locate the pinned tools and
+B01-04d [x] Ensure a clean checkout can provision or locate the pinned tools and
 components through documented, project-scoped commands. Do not modify global
 developer packages or hide machine-specific paths in tracked files.
 
 ### B01-05 [ ] Validate build-graph and artifact equivalence
 
+Host evidence and the one remaining static-analysis smoke are recorded in
+[VALIDATION.md](BUILD-001/VALIDATION.md).
+
 Run clean native builds and compare them with the B01-02 controls. Triage every
 difference before hardware use; do not treat a successful link as equivalence.
 
-B01-05a [ ] Prove that every intended project translation unit is compiled once,
+B01-05a [x] Prove that every intended project translation unit is compiled once,
 every linked project object is represented by the selected source authority, and
 the canonical compilation database covers the real linked project closure.
 
-B01-05b [ ] Compare configuration, partition layout, embedded assets, symbols,
+B01-05b [x] Compare configuration, partition layout, embedded assets, symbols,
 sections, map ownership, IRAM/DRAM/PSRAM/flash use and image sizes. Explain and
 dispose every material difference.
 
-B01-05c [ ] Repeat clean builds in fresh output directories and compare outputs.
+B01-05c [x] Repeat clean builds in fresh output directories and compare outputs.
 Record deterministic hashes where achieved; identify and bound any intentional
 timestamp, path or tool metadata that prevents byte-for-byte reproducibility.
 
@@ -288,10 +291,10 @@ B01-G01 [x] The Author accepted and froze this contract before B01-01 began.
 B01-G02 [x] Official integration research and current-profile inventory are
 complete before the native design is accepted.
 
-B01-G03 [ ] One checked-in authority selects sources and profiles; CMake's actual
+B01-G03 [x] One checked-in authority selects sources and profiles; CMake's actual
 compiled and linked graph agrees with it.
 
-B01-G04 [ ] The pinned native toolchain and Arduino component build every accepted
+B01-G04 [x] The pinned native toolchain and Arduino component build every accepted
 maintained P4 profile from clean project-scoped state.
 
 B01-G05 [ ] Material configuration, dependency, section, size and binary

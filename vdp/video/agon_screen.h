@@ -49,7 +49,11 @@ std::unique_ptr<agon::extender::display::P4DisplayController>	_VGAController;		/
 std::unique_ptr<agon::extender::display::P4FrameService>	_P4FrameService;
 std::unique_ptr<agon::extender::display::ScreenFacadeAdapter>	_screenFacadeAdapter;
 
-inline fabgl::BitmappedDisplayController * activeDisplayController() { return _VGAController.get(); }
+// BUILD-001 native CMake keeps the active PORT-008 diagnostic type-safe: the
+// non-stock cursor seam requires the concrete P4 controller, while callers
+// needing the FabGL base still receive it through normal derived-to-base
+// conversion. Remove only when the cursor seam accepts the common base type.
+inline agon::extender::display::P4DisplayController * activeDisplayController() { return _VGAController.get(); }
 inline auto & displaySnapshotPool() { return _VGAController->snapshotPool(); }
 #endif
 

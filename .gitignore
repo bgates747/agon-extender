@@ -32,6 +32,9 @@
 /vdp/video/CMakeLists.txt
 # Generated for the selected environment by the same source-selection hook.
 /vdp/video/idf_component.yml
+!/vdp/native/
+!/vdp/native/CMakeLists.txt
+/vdp/native/managed_components/
 .cache/
 .clang_complete
 .gcc-flags.json
@@ -58,6 +61,8 @@ venv/
 env/
 ENV/
 build/
+!/vdp/build/
+!/vdp/build/p4-profiles.json
 dist/
 downloads/
 *.egg-info/
