@@ -258,3 +258,20 @@ the remaining A11 interruption work; this bounded tranche does not close A11.
 Application-origin integration, broader media faults and native desktop acceptance
 are still open. No browser streaming performance or human visual acceptance is
 claimed by these checks.
+
+### Clean cancellation contract — A11 continuation
+
+Author authorized implementation and the bench remains available. P4 may request
+an orderly stop after a client cancellation only when the checked wire backend
+is healthy and its peer has no outstanding file record/reply. The existing
+STATUS stop flag with result 0 lets the unchanged finite utility clean up and
+acknowledge FINISH; resident EMOS then closes the grant normally and retains
+ExCom negotiation. P4 must still classify the HTTP operation as cancelled, never
+successful or replayable. A poisoned exchange, missing acknowledgement, failed
+utility cleanup or open Agon write stage retains the fault path. No protocol
+layout, EMOSlet ABI or production change is required.
+
+Validate clean stop versus in-flight/poisoned cancellation in host tests, the
+actual HTTP/Peer/finite-utility chain with a truncated upload and subsequent job,
+and physical repeated ExCom aborted uploads followed by exact reads/new writes.
+Preserve startup, current EMOS/utility and rollback; finish at a recoverable CLI.
