@@ -12,6 +12,19 @@ int main() {
   std::vector<unsigned char> wide(640*240,3);
   assert(agon::extender::display::lcd::expand(wide.data(),640,240,640,out.data()));
   assert(out[0]==0 && out[(120*640)*3+2]==255 && out[(360*640)*3+2]==0);
+  std::vector<unsigned char> mode20(512*384);
+  for(unsigned y=0;y<384;++y)for(unsigned x=0;x<512;++x)
+    mode20[y*512+x]=(x+3*y)%64;
+  assert(agon::extender::display::lcd::expand(mode20.data(),512,384,512,out.data()));
+  for(unsigned y=0;y<480;++y)for(unsigned x=0;x<640;++x) {
+    auto p=&out[(y*640+x)*3];
+    if (x<64 || x>=576 || y<48 || y>=432) {
+      assert(p[0]==0 && p[1]==0 && p[2]==0);
+    } else {
+      auto v=mode20[(y-48)*512+(x-64)];
+      assert(p[0]==((v>>4)&3)*85 && p[1]==((v>>2)&3)*85 && p[2]==(v&3)*85);
+    }
+  }
   const unsigned char primaries[]={3,12,48,15,51,60,63};
   const unsigned char packed[][3]={{0,0,255},{0,255,0},{255,0,0},
     {0,255,255},{255,0,255},{255,255,0},{255,255,255}};
