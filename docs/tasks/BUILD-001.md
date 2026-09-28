@@ -1,0 +1,309 @@
+# BUILD-001 — Native ESP-IDF/CMake P4 build authority
+
+## Executive summary
+
+**Accepted by the Author on 2026-09-28; frozen by the commit containing this
+contract.** Replace
+the P4 firmware's PlatformIO/SCons outer build with native ESP-IDF/CMake while
+retaining Arduino-ESP32 as a pinned ESP-IDF component. The migration establishes
+one authoritative build graph for source selection, compiler options,
+dependencies, generated assets, partitions and linked objects. It must preserve
+the current combined ExCom and LCD behavior; it must not become a VDP rewrite or
+silently repair the resource-lifecycle defect that AUDIT-010 is intended to
+examine.
+
+BUILD-001 is the prerequisite to AUDIT-010's baseline freeze. The
+migration must finish, be reviewed and have its resulting source/build identity
+recorded before AUDIT-010 A10-02 begins. Until the Author accepts this contract,
+no implementation, dependency installation, firmware build, flash, reset, SD
+mutation, production selection or audit-baseline change was authorized before
+the Author accepted this document.
+
+Created: 2026-09-28. Owning queue: `TODO.md`. Related owners:
+[AUDIT-010](AUDIT-010.md), [LCD-001](LCD-001.md), [PORT-003](PORT-003.md),
+[PORT-006](PORT-006.md) and [QUAL-001](QUAL-001.md).
+
+## Purpose
+
+Make ESP-IDF/CMake the sole top-level build authority for maintained ESP32-P4
+firmware. Arduino-ESP32 remains available as an ESP-IDF component for the
+Arduino APIs and upstream-derived code that currently depend on it. Native
+ESP-IDF facilities remain native components. The resulting build must expose
+the real linked translation-unit closure to CMake and emit a trustworthy
+compilation database suitable for AUDIT-010's analysis tools.
+
+The migration must answer these immutable questions:
+
+B01-Q01 [ ] Which checked-in artifact is the single authority for selected source
+files, and how does CMake consume it without a competing PlatformIO selection?
+
+B01-Q02 [ ] How are the ESP-IDF release, tools, Arduino-ESP32 component, managed
+components and non-managed third-party sources pinned and reproduced without
+depending on unrecorded global developer state?
+
+B01-Q03 [ ] How does each maintained P4 build profile express configuration,
+feature flags, dependencies, embedded files, partitions and output identity?
+
+B01-Q04 [ ] Which current PlatformIO environments are maintained product or
+diagnostic profiles that must migrate, and which are obsolete or frozen evidence
+that must be disposed explicitly rather than copied forward?
+
+B01-Q05 [ ] What evidence demonstrates functional equivalence and explains every
+material ELF, map, image-size, dependency or runtime difference introduced by
+the build migration?
+
+B01-Q06 [ ] When can PlatformIO/SCons source selection and its generated CMake
+facade be removed from the maintained P4 path without losing rollback,
+provenance or a still-used profile?
+
+## Scope and boundaries
+
+The implementation scope is the maintained ESP32-P4 firmware build under
+`vdp/`, its project-owned build helpers, configuration, source-selection data,
+dependencies, generated assets, tests and current build documentation. Inspect
+`../agon-emos` and `../mos-agondev` only where their tools or artifacts consume a
+P4 build identity. Official `../../agon-docs`, `../../agon-vdp` and
+`../../agon-mos` remain read-only references.
+
+Preserve the current application behavior and selected source closure unless a
+change is strictly necessary to express the same program under ESP-IDF. Small
+compatibility adapters are permitted only when identified individually and
+covered by targeted tests. Porting Arduino-dependent application code to pure
+ESP-IDF is outside scope. Repairing LCD behavior, the late-mode20 allocation
+failure, browser resource exhaustion, rendering semantics or unrelated defects
+is outside scope; record newly exposed defects for their owning tasks.
+
+Production firmware and `production/current.yaml` remain unchanged throughout
+the migration. A successful development migration does not authorize production
+promotion, a version number, a tag or publication. Do not remove the existing
+working build path until the replacement has passed this contract and the Author
+accepts the cutover.
+
+Git history and superseded implementations are outside routine discovery. If
+current authorities and artifacts cannot resolve a material build contract,
+pause before historical review and present the exact question, proposed commits
+or date range and stopping condition for Author acceptance.
+
+## Decision register
+
+The Author accepted these decisions with the contract on 2026-09-28.
+
+| ID | State | Recommended decision | Consequence |
+|---|---|---|---|
+| B01-D01 | [x] Accepted | Native ESP-IDF/CMake becomes the sole top-level authority for maintained P4 builds. | The outer PlatformIO/SCons graph no longer decides which P4 objects are linked. |
+| B01-D02 | [x] Accepted | Retain the exact compatible Arduino-ESP32 release as a pinned ESP-IDF component. | Existing Arduino APIs can remain while new native ESP-IDF code does not pass through an Arduino build authority. |
+| B01-D03 | [x] Accepted | Retain one neutral, checked-in P4 source/profile manifest and generate or validate CMake inputs deterministically from it. | Source provenance remains machine-readable while CMake compiles the same declared closure; generated files are never a second editable authority. |
+| B01-D04 | [x] Accepted | Provide one project-owned wrapper around the pinned native ESP-IDF tools and isolated tool state. | Operators receive repeatable profile selection and identity capture without relying on an ambient `idf.py` installation. |
+| B01-D05 | [x] Accepted | Migrate every maintained current or diagnostic P4 profile; explicitly classify obsolete profiles instead of preserving them by default. | Cutover cannot silently strand a qualification or recovery build, while historical experiments do not become permanent maintenance obligations. |
+| B01-D06 | [x] Accepted | Judge migration by source/configuration equivalence, explained binary differences and runtime qualification, not presumed byte identity. | Link ordering and native build metadata may change, but unexplained behavioral or material image differences block acceptance. |
+| B01-D07 | [x] Accepted | Freeze AUDIT-010's source baseline only after BUILD-001 acceptance. | Static analysis observes the actual native CMake build graph rather than the current hybrid graph's unused object descriptions. |
+| B01-D08 | [x] Accepted | Retire the maintained PlatformIO/SCons path only after rollback and clean-build evidence are retained. | The migration remains reversible until the replacement is accepted; frozen historical evidence is not rewritten. |
+
+## Work contract
+
+### B01-01 [ ] Research official integration contracts
+
+Read current official ESP-IDF build-system, component-manager, configuration,
+tool-installation and compilation-database documentation. Read official
+Arduino-ESP32 documentation for use as an ESP-IDF component and establish the
+exact Arduino/ESP-IDF compatibility contract for the versions currently pinned
+by the project. Consult source only where the official documentation is
+insufficient. Record exact documentation, releases, commits and conclusions in
+a bounded précis under `docs/tasks/BUILD-001/` before implementation.
+
+B01-01a [ ] Determine whether Arduino-ESP32 can be acquired reproducibly as a
+managed component at the required version or must be supplied through a pinned
+project-owned component source; record integrity and offline-build implications.
+
+B01-01b [ ] Establish the native ESP-IDF mechanism for per-profile `sdkconfig`
+defaults, partition tables, embedded files, component dependencies and C/C++
+compile options used by this project.
+
+B01-01c [ ] Establish how the native build emits `compile_commands.json`, map
+files, size reports, flash images and dependency locks, and how each artifact is
+bound to the selected profile and source revision.
+
+### B01-02 [ ] Inventory and preserve the current build contract
+
+Before changing build files, record the exact repositories, production
+selection, development source, PlatformIO platform/framework packages,
+toolchains, generated component files and dependency locks. Inventory every
+`platformio.ini` environment and classify it as maintained product, maintained
+diagnostic, obsolete experiment or frozen evidence. Pause for Author review of
+the classification before excluding a profile from migration.
+
+B01-02a [ ] Capture the current actual SCons compile and link actions for the
+combined ExCom+LCD target, its selected translation units, definitions, include
+paths, language standards, component dependencies, embedded assets, partition
+table, `sdkconfig`, ELF/map/image sizes and immutable output hashes.
+
+B01-02b [ ] Run the currently applicable host-side checks and retain their exact
+commands and results as pre-migration controls. Do not initiate a hardware run
+without a separately reviewed procedure and explicit Author authorization.
+
+B01-02c [ ] Identify every script, document, CI action, qualification profile,
+packaging step or operator procedure that invokes PlatformIO or consumes its
+output layout.
+
+### B01-03 [ ] Review the native-build design
+
+Produce the proposed directory/component graph, source/profile authority,
+dependency acquisition and lock strategy, isolated tool environment, output
+layout, build-identity format and operator commands. Show how each maintained
+profile maps to native ESP-IDF configuration and how the wrapper prevents stale
+generated inputs. Pause for Author acceptance of the design before changing the
+maintained build path.
+
+B01-03a [ ] Name the owner and lifecycle of every generated file. A generator
+must fail on stale or inconsistent inputs and must not make generated CMake a
+second hand-edited source of truth.
+
+B01-03b [ ] Define a build-graph validator that compares declared sources,
+compiled objects, linked objects and compilation-database entries, with explicit
+handling for framework and third-party component internals.
+
+B01-03c [ ] Define rollback so an unsuccessful native migration can restore the
+preserved hybrid build without altering production or discarding evidence.
+
+### B01-04 [ ] Implement the native ESP-IDF/CMake build
+
+Introduce the minimum checked-in CMake components, profile data and project-owned
+wrapper needed to build the preserved P4 source closure with native ESP-IDF.
+Retain Arduino-ESP32 as the pinned component selected in B01-01. Keep product
+source edits separate from build changes and itemize any unavoidable adapter by
+symbol, reason, test and removal condition.
+
+B01-04a [ ] Reproduce source selection, language standards, definitions, include
+paths, link inputs, embedded assets, partitions, `sdkconfig` values and managed
+dependencies for the combined ExCom+LCD target.
+
+B01-04b [ ] Map each accepted maintained diagnostic profile without reintroducing
+an outer build graph or profile-specific hand-edited source list.
+
+B01-04c [ ] Emit immutable build identity, dependency lock, ELF, map, flash
+images, size reports and canonical compilation database into a profile-specific
+output directory.
+
+B01-04d [ ] Ensure a clean checkout can provision or locate the pinned tools and
+components through documented, project-scoped commands. Do not modify global
+developer packages or hide machine-specific paths in tracked files.
+
+### B01-05 [ ] Validate build-graph and artifact equivalence
+
+Run clean native builds and compare them with the B01-02 controls. Triage every
+difference before hardware use; do not treat a successful link as equivalence.
+
+B01-05a [ ] Prove that every intended project translation unit is compiled once,
+every linked project object is represented by the selected source authority, and
+the canonical compilation database covers the real linked project closure.
+
+B01-05b [ ] Compare configuration, partition layout, embedded assets, symbols,
+sections, map ownership, IRAM/DRAM/PSRAM/flash use and image sizes. Explain and
+dispose every material difference.
+
+B01-05c [ ] Repeat clean builds in fresh output directories and compare outputs.
+Record deterministic hashes where achieved; identify and bound any intentional
+timestamp, path or tool metadata that prevents byte-for-byte reproducibility.
+
+B01-05d [ ] Run applicable host tests, build-graph validation and AUDIT-010's
+accepted compiler/static-analysis smoke checks against the canonical database.
+Tool findings remain audit inputs and are not repaired inside this migration
+unless they prove a migration error.
+
+### B01-06 [ ] Perform bounded hardware equivalence qualification
+
+After B01-05 passes, prepare a run sheet that names the exact firmware, bench
+state, expected observations, rollback image, evidence paths and stopping
+conditions. Read `HARDWARE.local.md` and current bench constraints, then obtain
+explicit Author authorization before flashing or resetting the P4 or deploying
+fixtures.
+
+B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
+keyboard/input, SD service, browser service, native LCD output and clean recovery
+using targeted tests chosen to detect build-migration regressions.
+
+B01-06b [ ] Re-run the accepted mode20 static-grid control and the known Nurples
+allocation-order case without changing application behavior. The native build
+must preserve the known result unless separately owned evidence proves the old
+result was itself a build defect.
+
+B01-06c [ ] Keep runtime monitoring bounded. Reusable unattended tests must print
+progress on the legacy mainboard display where practical and invoke the existing
+audible success/failure notification without overwriting a retained failure
+message.
+
+### B01-07 [ ] Cut over maintained build consumers
+
+After the Author accepts B01-05 and B01-06 evidence, update maintained build,
+test, package and operator entry points to use native ESP-IDF/CMake. Update the
+handbook and `docs/building.md`; preserve machine-local details only in ignored
+records. Remove or quarantine PlatformIO/SCons generation only after every
+B01-02 consumer has migrated or received an explicit disposition.
+
+B01-07a [ ] Retain enough identified hybrid-build material and instructions to
+reproduce the pre-migration baseline during the agreed rollback interval without
+presenting it as the current build authority.
+
+B01-07b [ ] Verify that maintained documentation contains one canonical P4 build
+procedure and does not direct operators to stale PlatformIO output paths.
+
+B01-07c [ ] Present production impact separately. Do not promote, version, tag or
+publish a native-built firmware until the Author accepts a production proposal
+under the repository's normal promotion rules.
+
+### B01-08 [ ] Hand the canonical baseline to AUDIT-010
+
+Record the accepted native-build commit, exact tool/component locks, selected
+profile, build identity, artifact hashes and canonical compilation database in
+AUDIT-010's baseline ledger. Amend AUDIT-010's accepted contract only as needed
+to replace its A10-P01 hybrid-build assumption, preserving the original frozen
+contract and documenting Author acceptance of the sequencing change.
+
+B01-08a [ ] Demonstrate that AUDIT-010 analysis commands consume actual linked
+project actions rather than unused CMake object descriptions.
+
+B01-08b [ ] Leave the known LCD/mode20/browser resource behavior as an audit case
+unless the Author separately accepts a finding and itemized repair.
+
+## Gates and success criteria
+
+B01-G01 [x] The Author accepted and froze this contract before B01-01 began.
+
+B01-G02 [ ] Official integration research and current-profile inventory are
+complete before the native design is accepted.
+
+B01-G03 [ ] One checked-in authority selects sources and profiles; CMake's actual
+compiled and linked graph agrees with it.
+
+B01-G04 [ ] The pinned native toolchain and Arduino component build every accepted
+maintained P4 profile from clean project-scoped state.
+
+B01-G05 [ ] Material configuration, dependency, section, size and binary
+differences are explained, and targeted host tests pass.
+
+B01-G06 [ ] Author-approved hardware equivalence checks pass with rollback
+available and without changing production selection.
+
+B01-G07 [ ] Maintained consumers and documentation use the native path; obsolete
+PlatformIO profiles and helpers have explicit dispositions.
+
+B01-G08 [ ] AUDIT-010 receives a trustworthy canonical compilation database and
+an immutable accepted baseline before its exhaustive review begins.
+
+BUILD-001 is complete only when B01-G01 through B01-G08 are satisfied and the
+Author accepts the migration result. Completion does not by itself constitute
+production promotion.
+
+## Evidence and change discipline
+
+Store research, inventories, comparison tables, raw build-graph reports and
+reviewed result summaries under `docs/tasks/BUILD-001/`; keep bulky generated
+build trees and machine-local paths out of Git. Every retained run names its
+source commit, profile, tool/component identities, command, output hashes and
+result. Use stable `B01-*` identifiers in findings and review discussion.
+
+Commit the accepted contract separately before research or implementation.
+Thereafter keep research/design, implementation, validation and cutover changes
+reviewable; do not combine unrelated product fixes with build migration. Preserve
+dirty work in all participating repositories and never rewrite frozen task
+evidence.
