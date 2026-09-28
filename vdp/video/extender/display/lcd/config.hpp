@@ -13,3 +13,8 @@
 #ifndef AGON_EXTENDER_LCD_LEGACY_TIMING
 #define AGON_EXTENDER_LCD_LEGACY_TIMING 0
 #endif
+
+// Bench-only native horizontal active-window phase. Keep HBP+HFP constant.
+#ifndef AGON_EXTENDER_LCD_HPHASE
+#define AGON_EXTENDER_LCD_HPHASE 0
+#endif

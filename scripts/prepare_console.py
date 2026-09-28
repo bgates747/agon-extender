@@ -29,13 +29,19 @@ def main():
     parser.add_argument('--lcd-pattern', action='store_true', help='Bench-only DSI hardware color bars; requires --lcd')
     parser.add_argument('--lcd-framebuffer-pattern', action='store_true', help='Bench-only CPU-written RGB888 bars; requires --lcd')
     parser.add_argument('--lcd-legacy-timing', action='store_true', help='Bench-only IDF5.4.1 host timing comparison; requires static framebuffer pattern')
+    parser.add_argument('--lcd-hphase', type=int, choices=(-1, 0, 1), default=0,
+                        help='Bench-only native horizontal porch phase; requires --lcd')
     args = parser.parse_args()
     if args.lcd_legacy_timing and not args.lcd_framebuffer_pattern:
         parser.error('--lcd-legacy-timing requires --lcd-framebuffer-pattern')
+    if args.lcd_legacy_timing and args.lcd_hphase:
+        parser.error('--lcd-legacy-timing and --lcd-hphase are separate diagnostics')
     if args.lcd_framebuffer_pattern and (not args.lcd or args.lcd_pattern):
         parser.error('--lcd-framebuffer-pattern requires --lcd and excludes --lcd-pattern')
     if args.lcd_pattern and not args.lcd:
         parser.error('--lcd-pattern requires --lcd')
+    if args.lcd_hphase and not args.lcd:
+        parser.error('--lcd-hphase requires --lcd')
     if args.staged_webdav and args.admission_probe:
         parser.error('runtime and diagnostic admission peer are mutually exclusive')
     if args.reset_url and urlsplit(args.reset_url).scheme not in ('http','https'):
@@ -84,6 +90,8 @@ def main():
         config.write_text(config.read_text().replace('AGON_EXTENDER_LCD_PATTERN 0','AGON_EXTENDER_LCD_PATTERN 2'))
     if args.lcd_legacy_timing:
         config.write_text(config.read_text().replace('AGON_EXTENDER_LCD_LEGACY_TIMING 0','AGON_EXTENDER_LCD_LEGACY_TIMING 1'))
+    if args.lcd_hphase:
+        config.write_text(config.read_text().replace('AGON_EXTENDER_LCD_HPHASE 0',f'AGON_EXTENDER_LCD_HPHASE {args.lcd_hphase}'))
     # Reuse downloaded tools only, never build products or managed source trees.
     (project/'.pio').mkdir()
     packages = ROOT/'vdp/.pio/packages'
@@ -153,6 +161,7 @@ def main():
     manifest = {'schema_version':1,'build':{'artifact_id':identity['artifact_id'],
                 'source_identity':source_identity,'build_id':build_id,'status':status,
                 'created_at':now.isoformat()},'lcd':args.lcd,'lcd_legacy_timing':args.lcd_legacy_timing,'lcd_pattern':args.lcd_pattern,'lcd_framebuffer_pattern':args.lcd_framebuffer_pattern,'staged_webdav':args.staged_webdav,'admission_probe':args.admission_probe,'reset_url':args.reset_url,'provenance':before,'outputs':files,
+                'lcd_hphase':args.lcd_hphase,
                 'managed_component_sha256':dependency_files, 'embedded_asset_sha256':assets,
                 'effective_sdkconfig_sha256':sha(project/'pio/p4-console.sdkconfig'),
                 'silicon_configs':silicon_configs,

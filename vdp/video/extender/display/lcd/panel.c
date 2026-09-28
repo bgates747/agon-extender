@@ -13,6 +13,9 @@
 #include "esp_log.h"
 #include "hal/mipi_dsi_host_ll.h"
 #include "hal/mipi_dsi_brg_ll.h"
+#if AGON_EXTENDER_LCD_HPHASE < -1 || AGON_EXTENDER_LCD_HPHASE > 1
+#error "AGON_EXTENDER_LCD_HPHASE must be -1, 0, or 1"
+#endif
 static const st7701_lcd_init_cmd_t lcd_init_cmds[] = {
     // Command2 BK3 Selection: Enable the BK function of Command2
     {0xFF, (uint8_t []){0x77, 0x01, 0x00, 0x00, 0x13}, 5, 0},
@@ -96,7 +99,9 @@ esp_lcd_panel_handle_t extender_lcd_panel_create(void) {
         .dpi_clk_src=MIPI_DSI_DPI_CLK_SRC_DEFAULT,.dpi_clock_freq_mhz=16,
         .pixel_format=LCD_COLOR_PIXEL_FORMAT_RGB888,.num_fbs=2,
         .video_timing={.h_size=480,.v_size=640,
-            .hsync_pulse_width=4,.hsync_back_porch=20,.hsync_front_porch=10,
+            .hsync_pulse_width=4,
+            .hsync_back_porch=20+AGON_EXTENDER_LCD_HPHASE,
+            .hsync_front_porch=10-AGON_EXTENDER_LCD_HPHASE,
             .vsync_pulse_width=4,.vsync_back_porch=14,.vsync_front_porch=8},
         .in_color_format=LCD_COLOR_FMT_RGB888,.out_color_format=LCD_COLOR_FMT_RGB888};
     st7701_vendor_config_t vendor={.init_cmds=lcd_init_cmds,
@@ -106,6 +111,9 @@ esp_lcd_panel_handle_t extender_lcd_panel_create(void) {
         .rgb_ele_order=LCD_RGB_ELEMENT_ORDER_RGB,.bits_per_pixel=24,.vendor_config=&vendor};
     esp_lcd_panel_handle_t panel;
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7701(io,&dev,&panel));
+    ESP_LOGI("lcd","Native horizontal phase=%d, HBP/HFP=%d/%d, total=514",
+        AGON_EXTENDER_LCD_HPHASE,20+AGON_EXTENDER_LCD_HPHASE,
+        10-AGON_EXTENDER_LCD_HPHASE);
     // LCD-001 diagnostic only. IDF5.4.1 truncates each timing product;
     // IDF5.5.5 rounds them and compensates the total. At 500Mbps/16MHz
     // the former gives 15+78+1875+39=2007 host byte clocks, versus2008.
