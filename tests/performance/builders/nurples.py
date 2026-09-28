@@ -8,9 +8,13 @@ parser.add_argument('--output',type=Path,required=True)
 parser.add_argument('--no-markers',action='store_true',help='Build pacing-only PRT control')
 parser.add_argument('--open-ended',action='store_true',
                     help='Build visual LCD fixture that runs until Escape, without timing records')
+parser.add_argument('--early-mode20',action='store_true',
+                    help='Open-ended diagnostic: enter mode 20 before loading assets and omit the gameplay mode switch')
 args=parser.parse_args()
 if args.no_markers and args.open_ended:
  parser.error('--no-markers and --open-ended are separate fixture variants')
+if args.early_mode20 and not args.open_ended:
+ parser.error('--early-mode20 requires --open-ended')
 if args.output.exists():parser.error('output must be a fresh directory')
 args.output.parent.mkdir(parents=True,exist_ok=True)
 from pathlib import Path
@@ -32,6 +36,20 @@ s=s.replace('; --- MAIN PROGRAM FILE ---','    include "gt.inc"\n; --- MAIN PROG
 p=out/'asm/state_game_init.inc';s=p.read_text()
 if not args.open_ended:
  s=s.replace('    call vdu_set_screen_mode','    ; Startup owns mode20')
+if args.early_mode20:
+ old='''    ld a,8;+128 ; 136   320   240   64    60hz double-buffered
+    call vdu_set_screen_mode'''
+ new='''    ld a,20 ; Diagnostic: allocate 512x384 before loading any assets
+    call vdu_set_screen_mode'''
+ if s.count(old)!=1:raise RuntimeError('expected one splash mode switch')
+ s=s.replace(old,new,1)
+ old='''    ld a,20
+    call vdu_set_screen_mode
+    xor a'''
+ new='''    ; Diagnostic: mode 20 was selected before asset loading
+    xor a'''
+ if s.count(old)!=1:raise RuntimeError('expected one gameplay mode switch')
+ s=s.replace(old,new,1)
 s=s.replace('    call choose_joystick','    call player_joystick_disable').replace('    call waitKeypress','    ; Noninteractive benchmark')
 p.write_text(s)
 p=out/'asm/player_state.inc';p.write_text(p.read_text().replace('ld bc,0*256','ld bc,sprite_right*128').replace('ld de,sprite_bottom*256','ld de,sprite_bottom*128'))
@@ -132,4 +150,4 @@ subprocess.run(['ez80asm','-s','nurples.asm','../'+binary],cwd=out/'asm',check=T
 
 from provenance import record
 record(args.source,args.output,markers=not args.no_markers and not args.open_ended,
-       open_ended=args.open_ended)
+       open_ended=args.open_ended,early_mode20=args.early_mode20)
