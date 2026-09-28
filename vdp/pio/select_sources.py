@@ -16,10 +16,6 @@ import re
 Import("env")  # type: ignore[name-defined]  # Provided by PlatformIO/SCons.
 
 
-# Keep C++ language flags out of C component compilations (esp-modbus uses -Werror).
-# IDF owns its language standards; selected vendored C++ objects retain C++17.
-env.Append(CXXFLAGS=["-std=gnu++17"])  # type: ignore[name-defined]
-
 environment = env.subst("$PIOENV")  # type: ignore[name-defined]
 project_dir = Path(env.subst("$PROJECT_DIR"))  # type: ignore[name-defined]
 # PlatformIO forwards this path unchanged into the separate ESP-IDF bootloader
@@ -162,7 +158,7 @@ cmake_text += ")\n"
 # normatively C++17 (ADR-0011), so pin the generated application component at
 # its actual compiler boundary. Without this line the visible platformio.ini
 # setting is silently ineffective.
-cmake_text += 'target_compile_options(${COMPONENT_LIB} PRIVATE "-std=gnu++17")\n'
+cmake_text += 'target_compile_options(${COMPONENT_LIB} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>")\n'
 if component_compile_definitions:
     cmake_text += "target_compile_definitions(${COMPONENT_LIB} PRIVATE\n"
     cmake_text += "".join(
