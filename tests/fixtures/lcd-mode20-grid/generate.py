@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Generate a static native-pixel 512x384 grid with an app-owned mode switch."""
+"""Generate a static native-pixel 512x384 grid for startup-selected mode 20."""
 import struct
 from pathlib import Path
 
@@ -7,7 +7,7 @@ WIDTH, HEIGHT = 512, 384
 COLS, ROWS = 8, 6
 CELL_W, CELL_H = WIDTH // COLS, HEIGHT // ROWS
 
-v = bytearray([22, 20, 20, 17, 128, 17, 7, 12, 23, 1, 0,
+v = bytearray([20, 17, 128, 17, 7, 12, 23, 1, 0,
                23, 0, 192, 0, 26])
 palette = [
     (0, 0, 0), (255, 0, 0), (0, 255, 0), (0, 0, 255),

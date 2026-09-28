@@ -62,6 +62,9 @@ Author must observe A1 through H6 in order, all asymmetric edges, 64-pixel
 pillarboxes and 48-pixel letterboxes. One bounded raw Ethernet snapshot must
 agree with the LCD; its collection then disconnects. This checks geometry and
 presentation but does not reproduce the asset-loaded mode-switch failure.
+The maintained generator produces a 1,691-byte `grid.bin` with SHA-256
+`a44d9e4ba6f23c603158130ac3d47039e411047bb34435fb52458968e7492e8d`;
+its first VDU byte is20 (viewport reset), not22 (mode selection).
 
 B01-H09 [ ] After every automated hardware pass has terminated, hand control to
 the Author for manual execution of Nurples and any other real game that changes
