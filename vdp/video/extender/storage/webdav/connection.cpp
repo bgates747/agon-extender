@@ -107,6 +107,17 @@ bool fieldChar(char c) {
          (c >= '0' && c <= '9') || std::strchr("!#$%&'*+-.^_`|~", c);
 }
 } // namespace
+void rejectConnection(Stream &stream) {
+  Connection io(stream);
+  unsigned marker = 0;
+  for (unsigned n = 0; n < 4096; ++n) {
+    char c;
+    if (io.read(&c, 1) != 1) { stream.close(); return; }
+    marker = (marker << 8) | static_cast<unsigned char>(c);
+    if (marker == 0x0d0a0d0aU) { io.error(503); return; }
+  }
+  io.error(413);
+}
 void serveConnection(Adapter &adapter, Stream &stream) {
   Connection io(stream);
   std::string head;

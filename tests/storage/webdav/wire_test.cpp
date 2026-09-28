@@ -125,6 +125,12 @@ struct MemoryStream : Stream {
   void close() override { closed = true; }
 };
 int main() {
+  MemoryStream busy;
+  busy.input = "HEAD /autoexec.txt HTTP/1.1\r\nHost: test\r\n\r\n";
+  rejectConnection(busy);
+  assert(busy.closed && busy.at == busy.input.size());
+  assert(busy.output.find("HTTP/1.1 503 ") == 0);
+
   char temp[] = "/tmp/webdav-wire-XXXXXX";
   std::string root = mkdtemp(temp), disk = root + "/agon", stage = root + "/p4";
   fs::create_directory(disk);

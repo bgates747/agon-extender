@@ -14,4 +14,7 @@ struct Stream : Input {
 // chunked path therefore works without patching esp_http_server's session recv
 // callback.
 void serveConnection(Adapter &, Stream &);
+// Consume a bounded request header before refusing: closing an unread TCP
+// request can reset the socket before the client receives its busy status.
+void rejectConnection(Stream &);
 } // namespace agon::extender::webdav

@@ -328,3 +328,11 @@ while the fixture is running (including outside its transfer), and prove CLI
 service resumes after return in both modes. Preserve rollback/startup and finish
 at a recoverable prompt. Production and broader media/reset fault acceptance
 remain separate.
+
+Application-card first physical run: Legacy receive/send and caller sentinel
+passed (4,097 bytes, exact independent readback). The host exclusion check exposed
+a P4 HTTP defect: early media-busy rejection closed an unread request, allowing
+TCP reset to obscure its 503 response. The correction consumes a bounded header
+before refusal; the real-engine wire test covers fragmented HEAD and response.
+Requalification follows. Fixture invocation is `RUN . legacy` or `RUN . excom`;
+MOS requires the explicit default-address placeholder before arguments.

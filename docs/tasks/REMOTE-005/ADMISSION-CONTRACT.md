@@ -335,3 +335,21 @@ requires Legacy renegotiation. Capability bits 0, 1 and 2 are advertised by the
 explicit staged runtime (Legacy and negotiated ExCom external finite jobs).
 Ordinary builds keep this runtime disabled; candidate bench deployment does not
 replace selected production.
+
+
+## A11 application-card handshake refinement — 2026-09-28
+
+The linked helper's HELLO uses origin 2, revision flag 1, and otherwise empty
+common-prefix fields. Resident EMOS first classifies the caller and grants its
+application lease; this marker is not authorization by itself. In ExCom, resident
+Legacy negotiation must already have advertised bits 0, 1 and 3. P4 allocates a
+separate application incarnation and preserves the idle CLI incarnation. Thus
+application CLOSE does not require a display switch to restore external CLI jobs.
+Ordinary bootstrap and recovery from invalidated negotiation remain Legacy-only.
+
+The P4 application storage worker owns local card access for the lease. Its UART
+mailbox copies bounded records only. Application RECEIVE snapshots a P4 file into
+the checked spool; SEND stages and checks bytes before local activation. Successful
+CLOSE releases the spool and media lease. Failed or uncertain staging is retained
+for inspection; it is never blindly replayed. The paired runtime advertises all
+four revision-1 capability bits; capabilities alone never authorize a file job.

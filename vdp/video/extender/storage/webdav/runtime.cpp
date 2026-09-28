@@ -67,9 +67,7 @@ public:
   }
 };
 void unavailable(Stream &s) {
-  const char response[] = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: "
-                          "0\r\nConnection: close\r\n\r\n";
-  (void)s.send(response, sizeof response - 1);
+  rejectConnection(s);
 }
 void unavailable(int fd) {
   Socket s(fd);

@@ -16,9 +16,10 @@ and the next ExCom job can proceed. A poisoned exchange, failed cleanup or
 unfinished Agon write stage still requires Legacy renegotiation. Cancellation
 does not promise rollback of mutations already completed. Keyboard/display
 operation remains available.
-There is no implicit display switch. Manual listeners and application-owned
-leases remain Legacy-only. Bounded Legacy/ExCom physical checks pass; broader
-fault checks, application-origin integration and native-client acceptance remain in
+There is no implicit display switch. Manual listeners remain Legacy-only. The application-card candidate adds linked
+application transfers in Legacy and negotiated ExCom, with separate P4 ownership
+and no implicit display switch. Bounded Legacy/ExCom physical checks pass; broader
+fault checks, application-origin hardware qualification and native-client acceptance remain in
 [REMOTE-005](../tasks/REMOTE-005.md). No manual listener is required for this API;
 an active manual listener instead excludes automatic jobs.
 
