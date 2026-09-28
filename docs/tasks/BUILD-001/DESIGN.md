@@ -1,7 +1,8 @@
 # BUILD-001 B01-03 — Proposed native-build design
 
-Status: complete proposal awaiting Author acceptance, 2026-09-28. No maintained
-build files have been changed.
+Status: source/profile authority, wrapper and validator design accepted by the
+Author on 2026-09-28. Dependency/tool acquisition and implementation-boundary
+decisions remain under review. No maintained build files have been changed.
 
 ## Design outcome
 
@@ -185,7 +186,8 @@ cutover does not alter those authorities.
 B01-DR01 [x] The Author accepted the profile classification in `INVENTORY.md`
 on 2026-09-28.
 
-B01-DR02 [ ] Accept or amend this source/profile authority and wrapper design.
+B01-DR02 [x] The Author accepted this source/profile authority, wrapper and
+validator design on 2026-09-28.
 
 B01-DR03 [ ] Accept or amend managed Arduino-ESP32 3.3.11 plus project-scoped
 official ESP-IDF 5.5.5 source/tools as the acquisition strategy.

@@ -156,7 +156,10 @@ output layout.
 ### B01-03 [ ] Review the native-build design
 
 The proposal is recorded in [DESIGN.md](BUILD-001/DESIGN.md) and now pauses for
-Author acceptance before any maintained build-path change.
+Author acceptance before any maintained build-path change. The Author accepted
+the source/profile authority, wrapper and graph-validator design on 2026-09-28;
+dependency/tool acquisition and the implementation boundary remain under
+review.
 
 Produce the proposed directory/component graph, source/profile authority,
 dependency acquisition and lock strategy, isolated tool environment, output
