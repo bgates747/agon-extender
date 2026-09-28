@@ -2,6 +2,7 @@
 #include "runtime.hpp"
 #if AGON_EXTENDER_STAGED_WEBDAV
 #include "../admission/channel.hpp"
+#include "../application/engine.hpp"
 #include "../local/media.hpp"
 #include "../sd_target.hpp"
 #include "connection.hpp"
@@ -27,7 +28,7 @@ public:
     f(storage::sd_peer);
     portEXIT_CRITICAL(&storage::sd_mutex);
   }
-  bool manualBusy() override { return storage::sd_service.online(now()); }
+  bool manualBusy() override { return storage::sd_application.owned || storage::sd_service.online(now()); }
   std::uint32_t now() override {
     return std::uint32_t(esp_timer_get_time() / 1000);
   }
@@ -104,6 +105,44 @@ void worker(void *arg) {
   completion.complete();
   vTaskDelete(nullptr);
 }
+// Application packets are consumed by a dedicated foreground storage worker.
+// Queue critical sections only copy bytes; FAT operations never hold sd_mutex.
+void applicationLoop(void *) {
+  std::unique_ptr<local_sd::MediaLease> lease;
+  std::unique_ptr<storage::application::Engine> engine;
+  std::uint8_t request[240], response[240];
+  for (;;) {
+    unsigned n=0;
+    auto now=std::uint32_t(esp_timer_get_time()/1000);
+    bool expired=false;
+    portENTER_CRITICAL(&storage::sd_mutex);
+    auto &q=storage::sd_application;
+    if(q.owned && !q.requestSize && !q.responseSize && std::uint32_t(now-q.touched)>5000 && std::uint32_t(now-q.touched)<0x80000000U) {
+      q.owned=false;expired=true;
+    }
+    if(q.requestSize){n=q.requestSize;std::memcpy(request,q.request,n);q.requestSize=0;q.working=true;}
+    portEXIT_CRITICAL(&storage::sd_mutex);
+    if(expired){engine.reset();lease.reset();}
+    if(n) {
+      unsigned got=0;bool close=false;
+      if(!engine && storage::application::Mailbox::hello(request,n)) {
+        lease=std::make_unique<local_sd::MediaLease>();std::string directory;
+        if(*lease && local_sd::prepareSpool(directory))
+          engine=std::make_unique<storage::application::Engine>(local_sd::mediaRoot(),directory,esp_random(),esp_random());
+        else {
+          std::memcpy(response,request,48);response[3]=5;response[13]=2;sd_seal(response);got=48;close=true;
+        }
+      }
+      if(engine){got=engine->process(request,n,response);close=engine->closed;}
+      if(close){engine.reset();lease.reset();}
+      portENTER_CRITICAL(&storage::sd_mutex);
+      if(got){std::memcpy(q.response,response,got);q.responseSize=got;}
+      q.working=false;q.closing=close;
+      portEXIT_CRITICAL(&storage::sd_mutex);
+    }
+    vTaskDelay(1);
+  }
+}
 void acceptLoop(void *arg) {
   int server = static_cast<int>(reinterpret_cast<intptr_t>(arg));
   for (;;) {
@@ -145,6 +184,8 @@ bool startRuntime() noexcept {
     ::close(fd);
     return false;
   }
+  if(xTaskCreate(applicationLoop,"sd-application",WorkerStack,nullptr,1,nullptr)!=pdPASS)
+    return false;
   portENTER_CRITICAL(&storage::sd_mutex);
   storage::sd_runtime_ready = true;
   portEXIT_CRITICAL(&storage::sd_mutex);

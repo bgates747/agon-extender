@@ -7,6 +7,7 @@
 #include "webdav/runtime.hpp"
 #if AGON_EXTENDER_STAGED_WEBDAV
 #include "admission/peer.hpp"
+#include "application/mailbox.hpp"
 #include <esp_random.h>
 #endif
 #include "../diagnostics/admission/config.hpp"
@@ -22,14 +23,16 @@ inline SdService sd_service;
 #error Diagnostic admission and staged runtime cannot own the same queue
 #endif
 inline admission::Peer sd_peer;
+inline application::Mailbox sd_application;
 inline bool sd_runtime_ready=false;
 #endif
 inline unsigned sdTake(std::uint8_t *out,std::uint32_t now) {
   portENTER_CRITICAL(&sd_mutex);
   now = std::uint32_t(esp_timer_get_time() / 1000);
 #if AGON_EXTENDER_STAGED_WEBDAV
-  auto n=sd_runtime_ready?sd_peer.take(out,now):0;
-  if(!n&&!sd_peer.owned())n=sd_service.take(out,now);
+  auto n=sd_runtime_ready?sd_application.take(out):0;
+  if(!n && !sd_application.owned)n=sd_runtime_ready?sd_peer.take(out,now):0;
+  if(!n&&!sd_peer.owned()&&!sd_application.owned)n=sd_service.take(out,now);
 #elif AGON_EXTENDER_ADMISSION_PROBE
   auto n=admission_probe.take(out);
   if(!n)n=sd_service.take(out,now);
@@ -44,6 +47,7 @@ inline void sdReceive(const std::uint8_t *p,unsigned n,std::uint32_t now) {
   portENTER_CRITICAL(&sd_mutex);
   now = std::uint32_t(esp_timer_get_time() / 1000);
   if(!sd_runtime_ready)sd_service.receive(p,n,now);
+  else if(sd_application.receive(p,n,now,sd_peer.owned()||sd_service.online(now))) {}
   else if(!sd_peer.receive(p,n,now,a,b)&&!sd_peer.owned())sd_service.receive(p,n,now);
 #elif AGON_EXTENDER_ADMISSION_PROBE
   auto a=esp_random(),b=esp_random();
@@ -58,7 +62,7 @@ inline unsigned sdPost(const std::uint8_t *p,unsigned n,std::uint8_t *out,
                        unsigned &out_length,std::uint32_t now) {
   portENTER_CRITICAL(&sd_mutex);
 #if AGON_EXTENDER_STAGED_WEBDAV
-  if(sd_peer.owned()){out_length=0;portEXIT_CRITICAL(&sd_mutex);return 503;}
+  if(sd_peer.owned()||sd_application.owned){out_length=0;portEXIT_CRITICAL(&sd_mutex);return 503;}
 #endif
   auto result=sd_service.post(p,n,out,out_length,now);
   portEXIT_CRITICAL(&sd_mutex);return result;

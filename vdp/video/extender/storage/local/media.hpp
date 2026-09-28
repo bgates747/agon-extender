@@ -34,4 +34,5 @@ inline bool spoolAncestor(const std::string &path) {
 }
 // Caller MUST hold MediaLease. No formatter, unmount or recovery-file deletion.
 bool prepareSpool(std::string &vfsDirectory) noexcept;
+const char *mediaRoot() noexcept;
 } // namespace agon::extender::local_sd

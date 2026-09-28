@@ -260,6 +260,7 @@ esp_err_t mutate(httpd_req_t *r) {
   return reply(r, "200 OK", "Complete");
 }
 }
+const char *mediaRoot() noexcept { return root; }
 bool prepareSpool(std::string &directory) noexcept {
   if (!mount()) return false;
   for (const char *part : {"/tmp", "/tmp/extender", "/tmp/extender/spool"}) {

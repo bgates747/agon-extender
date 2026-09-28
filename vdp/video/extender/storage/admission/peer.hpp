@@ -214,7 +214,7 @@ public:
       sd_put32(nonce_ + 4, randomB ? randomB : 1);
       std::memset(control_ + 20, 0, 28);
       std::memcpy(control_ + 20, nonce_, 8);
-      control_[46] = 7; // External finite jobs, including negotiated ExCom F6 framing
+      control_[46] = 15; // External/application jobs and negotiated ExCom framing
       // EMOS renegotiates immediately after CLOSE. Retain the terminal
       // receipt until the HTTP worker observes it; scheduling must not turn
       // an already completed mutation into an uncertain failure.

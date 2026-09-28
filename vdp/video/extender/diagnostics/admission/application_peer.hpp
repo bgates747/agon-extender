@@ -13,6 +13,7 @@ struct ApplicationProbe {
   void reset(){pending=offset=total=size=written=0;active=ready=finished=false;file_sequence=0;}
   unsigned take(std::uint8_t *p){auto n=pending;std::memcpy(p,reply,n);pending=0;return n;}
   bool receive(const std::uint8_t *p,unsigned n,const std::uint8_t *nonce){
+    if(n==48 && p[3]==4 && p[12]==1)return false; // shared diagnostic HELLO
     if(n<20 || n>240 || p[0]!='S'||p[1]!='D'||p[2]!=1 || sd_u16(p+14)!=n-20)return false;
     if(p[3]!=1 && !(p[3]==4 && n>=48 && p[44]==2))return false;
     auto crc=sd_crc_update(0xffffffffU,p,16);crc=sd_crc_update(crc,p+20,n-20)^0xffffffffU;

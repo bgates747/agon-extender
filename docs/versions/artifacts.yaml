@@ -1,8 +1,8 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r118
-updated_at: 2026-09-27T23:45:00Z
+registry_revision: r119
+updated_at: 2026-09-28T03:00:00Z
 
 artifacts:
   - artifact_id: sdjob
@@ -17,10 +17,10 @@ artifacts:
   - artifact_id: app-transfer-probe
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: app-transfer-probe-r01
+    latest_identity: app-transfer-probe-r02
     status: experimental
     variants: []
-    description: Bounded application transfer and caller-memory fixture; controlled peer only.
+    description: Bounded card-backed application transfer, caller-memory and external-exclusion fixture.
     notes:
       - REMOTE-005 A05 standing identity approval; not a user file-transfer program.
   - artifact_id: extender-installation
@@ -294,7 +294,7 @@ artifacts:
   - artifact_id: agon-emos
     kind: firmware
     identity_scheme: semantic_version
-    latest_identity: agon-emos-v0.1.22
+    latest_identity: agon-emos-v0.1.23
     status: draft
     variants:
       - port008-forward
@@ -665,7 +665,7 @@ artifacts:
   - artifact_id: uart-excom-console
     kind: test_fixture
     identity_scheme: revision
-    latest_identity: uart-excom-console-r60
+    latest_identity: uart-excom-console-r61
     status: draft
     variants: []
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
