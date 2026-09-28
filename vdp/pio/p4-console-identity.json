@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r65",
+  "source_identity": "uart-excom-console-r66",
   "status": "draft",
-  "note": "LCD-001 opt-in --lcd V2 landscape PPA output; DSI static framebuffer isolation; not production."
+  "note": "LCD-001 opt-in --lcd V2 landscape PPA output; DSI old/new host timing comparison; not production."
 }

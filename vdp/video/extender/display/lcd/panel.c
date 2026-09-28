@@ -10,6 +10,9 @@
 #include "esp_lcd_st7701.h"
 #include "esp_lcd_panel_ops.h"
 #include "esp_ldo_regulator.h"
+#include "esp_log.h"
+#include "hal/mipi_dsi_host_ll.h"
+#include "hal/mipi_dsi_brg_ll.h"
 static const st7701_lcd_init_cmd_t lcd_init_cmds[] = {
     // Command2 BK3 Selection: Enable the BK function of Command2
     {0xFF, (uint8_t []){0x77, 0x01, 0x00, 0x00, 0x13}, 5, 0},
@@ -103,6 +106,21 @@ esp_lcd_panel_handle_t extender_lcd_panel_create(void) {
         .rgb_ele_order=LCD_RGB_ELEMENT_ORDER_RGB,.bits_per_pixel=24,.vendor_config=&vendor};
     esp_lcd_panel_handle_t panel;
     ESP_ERROR_CHECK(esp_lcd_new_panel_st7701(io,&dev,&panel));
+    // LCD-001 diagnostic only. IDF5.4.1 truncates each timing product;
+    // IDF5.5.5 rounds them and compensates the total. At 500Mbps/16MHz
+    // the former gives 15+78+1875+39=2007 host byte clocks, versus2008.
+    // No pixel/channel rewrite. Remove this comparison after root-cause review.
+#if AGON_EXTENDER_LCD_LEGACY_TIMING
+    const float ratio=500.0f/16.0f/8.0f;
+    mipi_dsi_host_ll_dpi_set_horizontal_timing(MIPI_DSI_LL_GET_HOST(0),
+        (uint32_t)(4*ratio),(uint32_t)(20*ratio),
+        (uint32_t)(480*ratio),(uint32_t)(10*ratio));
+    ESP_LOGI("lcd","Using IDF5.4.1 host timing calculation: 15/78/1875/39");
+#endif
+    ESP_LOGI("lcd","Bridge pixel format register=%08lx, horizontal=%08lx/%08lx",
+        (unsigned long)MIPI_DSI_LL_GET_BRG(0)->pixel_type.val,
+        (unsigned long)MIPI_DSI_LL_GET_BRG(0)->dpi_h_cfg0.val,
+        (unsigned long)MIPI_DSI_LL_GET_BRG(0)->dpi_h_cfg1.val);
     ESP_ERROR_CHECK(esp_lcd_panel_reset(panel));
     ESP_ERROR_CHECK(esp_lcd_panel_init(panel));
     ESP_ERROR_CHECK(esp_lcd_panel_disp_sleep(panel,false));
