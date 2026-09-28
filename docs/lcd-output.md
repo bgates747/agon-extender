@@ -34,3 +34,10 @@ reusing the previous scanout buffer. Its update ceiling is therefore roughly
 frame timing and these output updates are different measurements. Simultaneous
 browser/LCD output shares snapshot availability and is not performance-qualified.
 The previous vendor demo's LVGL CPU/fps counters do not measure this adapter.
+
+LCD-001 owns adapting the paired game/performance package used for the earlier
+Ethernet/browser work. Its baseline must separate renderer work, snapshot
+pressure, RGB expansion, PPA rotation, DSI handoff/completion and physical panel
+presentation. Measure LCD-only before simultaneous browser output. The retained
+runner is currently reuse-blocked pending BENCH-007 procedure refresh; do not
+rerun its historical batch unchanged.
