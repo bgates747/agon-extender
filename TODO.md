@@ -15,6 +15,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — Accepted contract frozen for execution. Research model-associated large-project risks and suitable free/open-source analysis tools first; pause for Author review, then audit the Extender implementation for architectural cohesion, ownership, allocation/lifetime, failure handling and accumulated ad hoc behavior.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 
