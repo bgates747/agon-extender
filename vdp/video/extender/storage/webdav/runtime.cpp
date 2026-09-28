@@ -1,3 +1,4 @@
+#include "completion_stream.hpp"
 #include "runtime.hpp"
 #if AGON_EXTENDER_STAGED_WEBDAV
 #include "../admission/channel.hpp"
@@ -64,38 +65,43 @@ public:
     }
   }
 };
-void unavailable(int fd) {
-  Socket s(fd);
+void unavailable(Stream &s) {
   const char response[] = "HTTP/1.1 503 Service Unavailable\r\nContent-Length: "
                           "0\r\nConnection: close\r\n\r\n";
   (void)s.send(response, sizeof response - 1);
 }
+void unavailable(int fd) {
+  Socket s(fd);
+  unavailable(s);
+}
 void worker(void *arg) {
   int fd = static_cast<int>(reinterpret_cast<intptr_t>(arg));
+  Socket socket(fd);
+  CompletionStream completion(socket);
   {
     local_sd::MediaLease lease;
     std::string directory;
     if (!lease || !local_sd::prepareSpool(directory))
-      unavailable(fd);
+      unavailable(completion);
     else {
       sockaddr_in local{};
       socklen_t n = sizeof local;
       char address[INET_ADDRSTRLEN]{};
       if (getsockname(fd, reinterpret_cast<sockaddr *>(&local), &n) ||
           !inet_ntop(AF_INET, &local.sin_addr, address, sizeof address))
-        unavailable(fd);
+        unavailable(completion);
       else {
         QueueAccess access;
         storage::admission::Channel channel(access);
         WireBackend backend(channel, directory, Quota);
         Adapter adapter(backend, "http://" + std::string(address) + ":" +
                                      std::to_string(Port));
-        Socket socket(fd);
-        serveConnection(adapter, socket);
+        serveConnection(adapter, completion);
       }
     }
   }
   workerBusy.clear();
+  completion.complete();
   vTaskDelete(nullptr);
 }
 void acceptLoop(void *arg) {

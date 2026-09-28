@@ -1,3 +1,5 @@
+#include "extender/storage/webdav/completion_stream.hpp"
+#include <string>
 #include "extender/storage/admission/channel.hpp"
 #include <cassert>
 #include <cstdio>
@@ -190,6 +192,28 @@ int main() {
     assert(f.peer.phase == Peer::active);
     f.peer.expire(f.now + 5001);
     assert(f.peer.phase == Peer::failed);
+  }
+  {
+    struct Wire : agon::extender::webdav::Stream {
+      std::string bytes; bool closed = false;
+      int read(void *, size_t) override { return 0; }
+      int send(const void *p, size_t n) override {
+        n = std::min<size_t>(n, 2); // exercise partial writes
+        bytes.append(static_cast<const char *>(p), n); return n;
+      }
+      void close() override { closed = true; }
+    } wire;
+    agon::extender::webdav::CompletionStream stream(wire);
+    std::string text = "HTTP response";
+    size_t at = 0;
+    while (at < text.size()) {
+      int n = stream.send(text.data() + at, text.size() - at);
+      assert(n > 0); at += n;
+    }
+    stream.close();
+    assert(!wire.closed && wire.bytes == text.substr(0, text.size() - 1));
+    stream.complete();
+    assert(wire.closed && wire.bytes == text);
   }
   puts("admission peer: grant lifecycle, single-flight data, stale replies, "
        "cancellation, duplicate conflict and timeouts pass");
