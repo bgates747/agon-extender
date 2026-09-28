@@ -336,3 +336,53 @@ TCP reset to obscure its 503 response. The correction consumes a bounded header
 before refusal; the real-engine wire test covers fragmented HEAD and response.
 Requalification follows. Fixture invocation is `RUN . legacy` or `RUN . excom`;
 MOS requires the explicit default-address placeholder before arguments.
+
+### Application-card hardware qualification — 2026-09-28
+
+| Component | Exact tested identity |
+|---|---|
+| P4, staged-WebDAV composition | uart-excom-console-r61-b2026-09-28-03-12-48Z; source 6c6bea3b |
+| EMOS | agon-emos-v0.1.23-b2026-09-28-02-43-51Z; source 21a9ba2; 128,574 bytes |
+| ADL fixture | app-transfer-probe-r02-b2026-09-28-02-44-14Z; source 21a9ba2; 30,352 bytes |
+| Finite external utility | sdjob-v0.1.0-b2026-09-28-01-41-18Z; unchanged |
+
+P4 flash was independently verified and its USB boot identity matched. EMOS's
+entire 128 KiB ROM matched the candidate padded with erased bytes, SHA256
+`46a986fd7632bb207678923d5c1a0f9f8feb7439df71e3513d7356b6a2f9814a`.
+Previous firmware and startup were preserved. No startup or display-mode change
+was introduced by the fixture. Invocation: LOAD then `RUN . legacy` or
+`RUN . excom`; the r02 fixture's abbreviated usage message omits the required dot.
+
+| Check | Legacy | ExCom |
+|---|---|---|
+| P4 card → Agon card, 4,097 bytes | PASS, independent exact readback | PASS, independent exact readback; repeated |
+| Agon card → P4 card, same bytes | PASS, independent exact readback | PASS, independent exact readback; repeated |
+| 4,096-byte caller memory sentinel | PASS | PASS |
+| External HEAD while application runs | 503 at approximately 2, 11, 17 seconds | 503 at 2, 11, 17 seconds; repeat also at 27 seconds in the final ordinary-application window |
+| External CLI service after application return | PASS | PASS without a mode switch |
+| Active display route before/after | Legacy command path | Captured EDP text markers before/after confirmed route; no backend-unavailable message |
+| Fixture duration, MOS ticks at nominal 120 Hz | 3,800 (31.67 s) | 3,788 (31.57 s); repeat 3,794 (31.62 s) |
+
+Durations include two deliberate ten-second exclusion windows and checked
+transfer work. They are not throughput measurements or a calibrated host-clock
+comparison. Exact payload SHA256:
+`1cc058bed7e06a6848f7db9250c279ed321d03c5a3f48e45c860833683c5ec18`.
+
+Portable real-helper/Agon-engine/P4-spool tests also pass both directions,
+overwrite and empty files. EMOS target build, linked guards and 132 owner tests
+pass. The corrected busy-response test exercises fragmented request/response
+delivery. The paired P4 target build passes.
+
+Final state: Legacy idle CLI, Extender input ready and neutral, no held/pending
+events, manual listener offline, startup unchanged. No viewer/native mount was
+retained. Local manifests, rollback, ROM readback, payloads, screen text and JSON
+samples are under the ignored hardware/application-deployment,
+hardware/application-tests and hardware/peer-p4-application-busy evidence folders
+in the active local REMOTE-005 runtime silo.
+
+This closes the bounded application-card integration requirement, not all A11.
+Large-file deadlines, absent/full media, reset/interruption and retained-stage
+recovery still need their own qualification. Failed/uncertain stages remain
+conservative; no automatic replay or discard is claimed. Native desktop
+acceptance and production promotion remain separate. Selected production v0.1.0
+is unchanged.

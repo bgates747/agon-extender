@@ -19,7 +19,7 @@ operation remains available.
 There is no implicit display switch. Manual listeners remain Legacy-only. The application-card candidate adds linked
 application transfers in Legacy and negotiated ExCom, with separate P4 ownership
 and no implicit display switch. Bounded Legacy/ExCom physical checks pass; broader
-fault checks, application-origin hardware qualification and native-client acceptance remain in
+fault checks, large-file/media/interruption qualification and native-client acceptance remain in
 [REMOTE-005](../tasks/REMOTE-005.md). No manual listener is required for this API;
 an active manual listener instead excludes automatic jobs.
 
@@ -31,3 +31,26 @@ Concurrent or ineligible requests fail rather than queue. Clients must not retry
 an uncertain mutation automatically. A successful response follows job completion
 and release of shared storage resources; it does not promise power-loss atomicity
 for a whole directory operation.
+
+
+## Application-owned card transfers
+
+The paired development EMOS v0.1.23/P4 r61 composition supports the linked
+`emos_file_transfer()` helper in Legacy and previously negotiated ExCom.
+The application remains loaded and executes its own foreground checked file
+engine. RECEIVE means P4 card to Agon card; SEND means Agon card to P4 card.
+It does not run the external finite EMOSlet over the caller, change display mode,
+or provide background application filesystem access.
+
+P4 owns an independent application session and local-card worker. Its UART task
+only exchanges bounded packets. The worker snapshots/stages data using the
+checked spool and activates a validated destination. Healthy CLOSE preserves the
+resident CLI negotiation. External requests remain ineligible for the whole
+application lifetime, including before and after its own transfer.
+
+Both directions passed bounded 4,097-byte physical checks, caller-memory
+preservation, busy rejection and CLI recovery in both modes. This is not broad
+media/reset or large-file qualification. Consult the component-owner
+`agon-emos/lib/sdapp/README.md` for linking, path limits and result semantics, and
+[qualification results](../tasks/REMOTE-005/A09-A11-QUALIFICATION.md) for exact builds.
+Manual `sdserve` remains a separate Legacy-only foreground service.

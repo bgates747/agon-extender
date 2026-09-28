@@ -516,8 +516,10 @@ performance campaign. Restore a known recoverable CLI state after tests.
 Bounded Legacy and negotiated ExCom external operations now pass; see
 [qualification results](REMOTE-005/A09-A11-QUALIFICATION.md). Clean client-aborted
 uploads now recover in ExCom; poisoned or unfinished Agon transactions retain
-Legacy renegotiation. Broader interruption/media and application-origin coverage
-remain open.
+Legacy renegotiation. Application-owned P4-card transfers now pass both directions
+in Legacy and negotiated ExCom, with exact bytes, caller memory preservation,
+external busy rejection and CLI recovery. Broader interruption/media coverage
+remains open.
 
 R05-A12 [ ] Run native file-manager acceptance on Pop!_OS COSMIC Files, Lenovo
 Thunar and macOS Finder. Test loose bulk files (>100), directories/empty folders,
