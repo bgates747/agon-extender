@@ -9,9 +9,9 @@ Production v0.1.0 is not replaced by these candidate builds.
 
 | Component | Identity | Source |
 | --- | --- | --- |
-| Resident EMOS | agon-emos-v0.1.22-b2026-09-27-23-46-40Z | agon-emos e6a23cb |
+| Resident EMOS | agon-emos-v0.1.22-b2026-09-28-00-04-04Z | agon-emos 70a4908 |
 | Finite utility | sdjob-v0.1.0-b2026-09-27-23-45-52Z | agon-emos e6a23cb |
-| P4 | uart-excom-console-r60-b2026-09-27-23-45-52Z | Extender c1e879e7; explicit staged-WebDAV export |
+| P4 | uart-excom-console-r60-b2026-09-28-00-04-06Z | Extender 1b26cf52; explicit staged-WebDAV export |
 
 Registry r118 and these draft identities use the Author's standing version
 preapproval. No new production version/tag is selected.
@@ -23,7 +23,7 @@ preapproval. No new production version/tag is selected.
 | Actual eZ80 utility + actual P4 Peer | PASS: HELLO/STAT/READ, exact bytes, FINISH/CLOSE, return to prompt |
 | Missing utility, absent peer, corrupt reply, key-before-grant race | PASS in maintained UART-peer emulator harness |
 | EMOS tests and linked guards | PASS: 129 tests, ABI/VDU/UART/parallel/keyboard checks |
-| Target firmware | 128,369-byte EMOS ROM; identified 23,230-byte finite utility; P4 clean exported build passed |
+| Target firmware | 128,397-byte corrected EMOS ROM; identified 23,230-byte finite utility; P4 clean exported build passed |
 | Actual HTTP/Channel/Peer/finite utility/checked engine | PASS with host FatFS/gateway substitutions and sanitizers |
 | Adapter and media tests | PASS; target-object-only test skipped without optional compiler setting, superseded here by complete identified P4 build |
 
