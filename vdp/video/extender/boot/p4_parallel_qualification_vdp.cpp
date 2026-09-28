@@ -7,7 +7,11 @@
 // bridge, never both.
 
 #define AGON_EXTENDER_PORT008_NONRELEASE_QUALIFICATION 1
+#if defined(AGON_EXTENDER_NATIVE_BUILD)
+#define AGON_EXTENDER_BUILD_IDENTITY_HEADER "agon_extender_build_identity.hpp"
+#else
 #define AGON_EXTENDER_BUILD_IDENTITY_HEADER \
   "../../../.pio/build-identities/p4-port008-nonrelease-qualification/build_identity.hpp"
+#endif
 
 #include "p4_browser_vdp.cpp"
