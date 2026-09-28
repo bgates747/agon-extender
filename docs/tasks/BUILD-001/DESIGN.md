@@ -1,9 +1,8 @@
 # BUILD-001 B01-03 — Proposed native-build design
 
-Status: source/profile authority, wrapper, validator and dependency/tool
-acquisition design accepted by the Author on 2026-09-28. The additive
-implementation boundary remains under review. No maintained build files have
-been changed.
+Status: design and additive implementation through host equivalence accepted by
+the Author on 2026-09-28. Hardware procedure and deployment remain a separate
+review gate. No hardware action is authorized here.
 
 ## Design outcome
 
@@ -194,5 +193,6 @@ B01-DR03 [x] The Author accepted managed Arduino-ESP32 3.3.11 plus
 project-scoped official ESP-IDF 5.5.5 source/tools as the acquisition strategy
 on 2026-09-28.
 
-B01-DR04 [ ] Accept additive implementation through host equivalence only;
-hardware procedure and flash authorization remain a later review.
+B01-DR04 [x] The Author authorized additive implementation through host
+equivalence on 2026-09-28; hardware procedure and flash authorization remain a
+later review.
