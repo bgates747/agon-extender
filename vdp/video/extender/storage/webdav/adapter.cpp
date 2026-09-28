@@ -350,37 +350,45 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
   struct Lease {
     Backend &b;
     bool closed = false;
-    ~Lease() {
+    void cancel() {
       if (!closed)
         b.cancel();
+      closed = true;
     }
+    ~Lease() { cancel(); }
     int finish() {
       int s = b.finish();
       closed = true;
       return s;
     }
   } lease{backend_};
+  // A zero-length response completes at its headers. Finish cancellation
+  // before sending error/precondition responses, not afterward in ~Lease.
+  auto respond = [&](int code, const std::string &body = "", Headers h = {}) {
+    lease.cancel();
+    reply(out, code, body, std::move(h));
+  };
   Entry existing;
   status = backend_.stat(source, existing);
   bool exists = status == 200;
   if (status != 200 && status != 404) {
-    reply(out, status);
+    respond(status);
     return;
   }
   if ((q.header("if-match") == "*" && !exists) ||
       (q.header("if-none-match") == "*" && exists)) {
-    reply(out, (exists && q.header("if-none-match") == "*" &&
+    respond((exists && q.header("if-none-match") == "*" &&
                 (m == "GET" || m == "HEAD"))
                    ? 304
                    : 412);
     return;
   }
   if (!exists && m != "PUT" && m != "MKCOL") {
-    reply(out, 404);
+    respond(404);
     return;
   }
   if (exists && (!validEntry(existing) || existing.path != source)) {
-    reply(out, 500);
+    respond(500);
     return;
   }
   Body body(input, length, chunked);
@@ -392,7 +400,7 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
       requestBody.append(buf.data(), got);
     Props props;
     if (got < 0 || !Properties(requestBody, props).parse()) {
-      reply(out, 400);
+      respond(400);
       return;
     }
     // Bound listing metadata before emitting 207; a listing failure cannot be
@@ -416,11 +424,11 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
         return true;
       });
     if (full || invalid || status != 200) {
-      reply(out, full ? 507 : invalid ? 500 : status);
+      respond(full ? 507 : invalid ? 500 : status);
       return;
     }
     if ((status = lease.finish()) != 200) {
-      reply(out, status);
+      respond(status);
       return;
     }
     if (!out.begin(207,
@@ -451,14 +459,14 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
   }
   if (m == "GET" || m == "HEAD") {
     if (existing.directory) {
-      reply(out, 405);
+      respond(405);
       return;
     }
     Range selected;
     status =
         range(m == "HEAD" ? "" : q.header("range"), existing.size, selected);
     if (status != 200 && status != 206) {
-      reply(out, status, "",
+      respond(status, "",
             {{"Content-Range", "bytes */" + std::to_string(existing.size)}});
       return;
     }
@@ -475,12 +483,12 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
       snap.active = true;
       auto s = backend_.snapshot(source, size);
       if (s != 200 || size != existing.size) {
-        reply(out, s == 200 ? 409 : s);
+        respond(s == 200 ? 409 : s);
         return;
       }
     }
     if (int s = lease.finish(); s != 200) {
-      reply(out, s);
+      respond(s);
       return;
     }
     Headers h{{"Content-Type", "application/octet-stream"},
@@ -514,7 +522,7 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
   Outcome result;
   if (m == "PUT") {
     if (exists && existing.directory) {
-      reply(out, 409);
+      respond(409);
       return;
     }
     result = backend_.put(source, length, op.overwrite, body);
@@ -522,7 +530,7 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
       result.status = 500;
   } else if (m == "MKCOL") {
     if (exists) {
-      reply(out, 405);
+      respond(405);
       return;
     }
     result = backend_.mkdir(source);
@@ -532,18 +540,18 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
     Entry target;
     int s = backend_.stat(op.destination, target);
     if (s != 200 && s != 404) {
-      reply(out, s);
+      respond(s);
       return;
     }
     if (s == 200 && !op.overwrite) {
-      reply(out, 412);
+      respond(412);
       return;
     }
     exists = s == 200;
     // Current MOVE primitive cannot replace, and tree COPY cannot merge. Refuse
     // before changing anything, never emulate overwrite via destructive delete.
     if (exists && (m == "MOVE" || target.directory || existing.directory)) {
-      reply(out, 501);
+      respond(501);
       return;
     }
     result = m == "MOVE" ? backend_.move(source, op.destination, false)
@@ -562,15 +570,15 @@ void Adapter::handle(const Request &q, Input &input, Output &out) {
           std::to_string(result.completed) +
           " completed entries; remaining work not "
           "executed.</D:responsedescription></D:multistatus>";
-      reply(out, 207, xmlBody, {{"Content-Type", "application/xml"}});
+      respond(207, xmlBody, {{"Content-Type", "application/xml"}});
     } else
-      reply(out, result.status);
+      respond(result.status);
     return;
   }
   if ((status = lease.finish()) != 200) {
-    reply(out, status);
+    respond(status);
     return;
   }
-  reply(out, m == "DELETE" ? 204 : exists ? 204 : 201);
+  respond(m == "DELETE" ? 204 : exists ? 204 : 201);
 }
 } // namespace agon::extender::webdav

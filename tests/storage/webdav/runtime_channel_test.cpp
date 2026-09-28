@@ -155,9 +155,9 @@ int main() {
   std::thread worker(resident);
   Access access;
   storage::admission::Channel channel(access);
+  while (!eligible)
+    std::this_thread::sleep_for(std::chrono::milliseconds(1));
   auto request = [&](const std::string &text, unsigned status) {
-    while (!eligible)
-      std::this_thread::sleep_for(std::chrono::milliseconds(1));
     webdav::WireBackend backend(channel, root + "/spool", 1024 * 1024);
     webdav::Adapter adapter(backend, "http://host:8081");
     Stream stream(text);

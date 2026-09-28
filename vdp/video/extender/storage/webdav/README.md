@@ -1,8 +1,9 @@
 # Admitted mainboard WebDAV adapter — development only
 
 The portable HTTP adapter and wire backend are locally tested against the real
-EMOSlet C file engine and P4 spool. They are **not started by the firmware** and
-are not a deployed WebDAV service. The current manual listener, video server and
+EMOSlet C file engine and P4 spool. Ordinary builds leave them disabled. The explicit
+`prepare_console.py --staged-webdav` candidate starts the Legacy-only runtime on
+port 8081; physical/native-client acceptance remains separate. The current manual listener, video server and
 production bundle are unchanged. Native-client and physical qualification remain.
 
 ## Composition boundary
@@ -11,7 +12,7 @@ production bundle are unchanged. Native-client and physical qualification remain
    belong to a dedicated transfer worker with bounded socket read/write deadlines.
    It retains header read-ahead and decodes Finder-style chunked PUT without
    modifying `esp_http_server` or touching the existing video/input connection.
-   No accept loop, port or worker is created by this module.
+   `runtime.cpp` supplies that dedicated acceptor/worker when explicitly enabled.
 2. `Adapter` translates HTTP semantics and rejects concurrent calls immediately.
    Its atomic guard is additional bookkeeping, not EMOS permission. Local OPTIONS
    requires no grant; every mainboard-backed request requires `Backend::begin`.
@@ -24,7 +25,8 @@ production bundle are unchanged. Native-client and physical qualification remain
    No direct UART writer, fresh mutation retry or delayed job queue is permitted.
 4. The composition must reserve the supplied P4 spool directory against local-card
    HTTP operations and mount changes. It supplies an explicit quota and verified
-   mounted directory; there is no automatic provisioning or RAM fallback.
+   mounted directory. The runtime creates its private spool directory under the
+   card lease without formatting; there is no RAM fallback.
 5. The finite utility/control peer and transport/media owners are not provided by
    a test Channel. Do not enable an endpoint until these are implemented and
    qualified. Both Legacy/ExCom deployment gates remain in the parent task.

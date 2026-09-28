@@ -482,7 +482,11 @@ Local WebDAV adapter and real-engine checks completed:
 [runtime foundation results](REMOTE-005/A08-RUNTIME-RESULTS.md).
 A08 local runtime integration now passes; see [connected results](REMOTE-005/A08-INTEGRATION-RESULTS.md).
 This includes the actual grant/queue, finite utility, private media ownership
-and dedicated listener/worker composition. No endpoint was enabled on a device or deployed.
+and dedicated listener/worker composition. The Author subsequently released the
+bench for A09–A11 candidate deployment; current outcomes are recorded in the
+linked qualification results, not implied by the earlier local pass.
+
+Current A09–A11 evidence: [Legacy finite-job qualification](REMOTE-005/A09-A11-QUALIFICATION.md).
 
 R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
 Exercise an interleaving matrix: external request at idle/partly typed CLI/app,
@@ -517,8 +521,10 @@ recovery/cleanup guidance. Retain evidence and rollback; stop temporary host
 servers/mounts only after their review purpose ends. Do not claim untested modes,
 clients or background access. Commit/publish under applicable authorization.
 
-Execution boundary: proposed plan only. Pause here for Author review before A01
-freeze or any source/firmware changes. No new service behavior is implemented.
+Execution boundary: Author-approved implementation and released-bench qualification.
+Legacy finite jobs are the first enabled candidate tranche. ExCom external jobs,
+application-origin staged jobs, broader native-client qualification and production
+promotion remain gated by their unfinished items above.
 
 D15 [x] Accepted 2026-09-27: P4 removes staging after confirmed successful
 completion; retain interrupted data only while needed for recovery. For downloads,

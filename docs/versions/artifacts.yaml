@@ -2,7 +2,7 @@
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
 registry_revision: r118
-updated_at: 2026-09-28T00:00:00Z
+updated_at: 2026-09-27T23:45:00Z
 
 artifacts:
   - artifact_id: sdjob
@@ -301,6 +301,7 @@ artifacts:
       - bench-telemetry
     description: Project-owned backward-compatible MOS build with EMOS services and mode authority.
     notes:
+      - v0.1.22 adds finite-job private binding/terminal exchange and two-slot finite reception; REMOTE-005 A09-A11 candidate under standing preapproval.
       - v0.1.21 adds the R05-A05 application-owned SD lease; candidate under standing identity preapproval, not production.
       - v0.1.20 is the REMOTE-005 A04 idle admission hardware candidate under standing version authorization; no automatic file service or production promotion.
       - v0.1.19 is the AUDIT-008 cancelled-provider retirement and foreground /emos dispatcher. Its exact selected build passed bounded physical checks and Author acceptance in RELEASE-001 R01-07; extender-installation-r02 owns qualified combination scope. Historical draft label retained, not a no-deployment claim. Registry r113 corrects the earlier r104 note.
@@ -670,6 +671,7 @@ artifacts:
     # RELEASE-001 R01-04; standing Author version preapproval. r23-r51 remain reserved.
     description: Legacy/ExCom UART console with native USB input, retained EDP browser video and explicit display-preserving application switches.
     notes:
+      - r60 adds explicitly enabled Legacy finite-job WebDAV runtime; REMOTE-005 A09-A11 under standing preapproval, not production.
       - r57 preserves HTTP errors for rejected uploads by draining the request body; PORT-007 physical finding. Registry r115 under standing authorization.
       - r56 adds PORT-007 P4-local SD HTTP file management; standing identity approval and Author deployment/test authorization. Registry r114; physical qualification pending.
       - Selected r55 build passed RELEASE-001 R01-07 and is part of qualified extender-installation-r02. Historical draft label retained; older revision notes below are historical, not current installation status. Registry r113.

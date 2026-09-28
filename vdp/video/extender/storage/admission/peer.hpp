@@ -56,6 +56,9 @@ public:
     }
     return true;
   }
+  bool idleReady(std::uint32_t now) const {
+    return phase == idle && pollValid_ && now - pollAt_ <= 150;
+  }
   bool owned() const { return phase >= armed && phase <= finished; }
   bool reserve(const std::uint8_t *descriptor, unsigned n, std::uint32_t now) {
     expire(now);

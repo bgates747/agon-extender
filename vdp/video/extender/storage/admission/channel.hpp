@@ -28,6 +28,16 @@ class Channel final : public webdav::Channel {
     return false;
   }
 
+  void handBack() {
+    // Wait for the previous job's return-to-CLI poll before completing HTTP.
+    // This is not admission or a queue for a new request. A key/app may win;
+    // after 200 ms return the already-known outcome without changing it.
+    wait(200, [&] {
+      bool idle = false;
+      access_.locked([&](Peer &p) { idle = p.idleReady(access_.now()); });
+      return idle;
+    });
+  }
 public:
   explicit Channel(Access &a) : access_(a) {}
   int enter(const webdav::Operation &op, Binding &binding,
@@ -136,6 +146,8 @@ public:
     });
     if (!done)
       cancel(b);
+    if (done)
+      handBack();
     return done && ok ? 200 : 503;
   }
   void cancel(const Binding &b) override {
@@ -154,6 +166,7 @@ public:
       });
       return done;
     });
+    handBack();
   }
 };
 } // namespace agon::extender::storage::admission
