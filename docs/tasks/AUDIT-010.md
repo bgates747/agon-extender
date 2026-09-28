@@ -2,7 +2,7 @@
 
 ## Executive summary
 
-**Draft for Author review; not frozen or authorized for execution.** Review the
+**Accepted contract frozen by commit `8e300da5` on 2026-09-28.** Review the
 Extender as an integrated product rather than another sequence of local fixes.
 The first subtask researches documented and credibly reported failure patterns
 of the exact GPT-6.0 and GPT-5.6 coding models, plus free/open-source tools that
@@ -146,10 +146,10 @@ authorship or enlarge current-source coverage.
 
 ## Work contract
 
-### A10-01 [ ] Model-risk and analysis-tool research
+### A10-01 [x] Model-risk and analysis-tool research
 
 Research comes first and produces
-`docs/tasks/AUDIT-010/AI-RISK-AND-TOOLS.md`, an ancillary document owned directly
+[AI-RISK-AND-TOOLS.md](AUDIT-010/AI-RISK-AND-TOOLS.md), an ancillary document owned directly
 by A10-01. Use current official OpenAI documentation for supported facts about the
 exact GPT-6.0 and GPT-5.6 models. If either label is not publicly documented,
 record that limit rather than substituting a different model. Clearly separate
@@ -158,28 +158,28 @@ and subjective community reports.
 
 The research has these immutable subitems:
 
-A10-01a [ ] Identify failure modes relevant to long-lived, large-context software work:
+A10-01a [x] Identify failure modes relevant to long-lived, large-context software work:
    incomplete dependency tracing, locally correct/global inconsistent changes,
    instruction drift, fabricated API assumptions, weak error paths, concurrency
    and lifetime mistakes, test overfitting, false completion claims, and review
    bias toward generated code.
 
-A10-01b [ ] Determine what evidence exists for differences between GPT-6.0 and GPT-5.6,
+A10-01b [x] Determine what evidence exists for differences between GPT-6.0 and GPT-5.6,
    without converting popularity or anecdotes into measured comparative claims.
 
-A10-01c [ ] Survey external tools that are genuinely free and open source and applicable
+A10-01c [x] Survey external tools that are genuinely free and open source and applicable
    to this repository's C/C++, Python, assembly, build files and embedded ESP-IDF
    environment. Record license, maintained source, supported languages, analysis
    class, compilation-database needs, likely signal, expected false positives,
    resource cost and whether target execution is required.
 
-A10-01d [ ] Include candidates for compiler diagnostics/sanitizers where host execution
+A10-01d [x] Include candidates for compiler diagnostics/sanitizers where host execution
    is meaningful, static analysis, semantic queries, dependency/architecture
    checks, duplicate/dead-code detection, Python analysis, security scanning and
    repository policy enforcement. Do not recommend an AI-branded scanner merely
    because this audit was prompted by AI-generated code.
 
-A10-01e [ ] Map every recommended check to a concrete Extender risk and state what the
+A10-01e [x] Map every recommended check to a concrete Extender risk and state what the
    tool cannot establish. Recommend the smallest justified tool set for A10-04;
    installation or execution waits for Author review of the research result.
 
@@ -478,6 +478,6 @@ revises AUDIT-010-D001 through D010.
 
 A10-G02 [x] The agent commits the accepted contract as its own frozen checkpoint.
 
-A10-G03 [ ] A10-01 begins only after A10-G02. Its findings receive a later
+A10-G03 [x] A10-01 began only after A10-G02. Its findings receive this later
 commit and review; they must not be backfilled into the already frozen contract
 as though known at its creation.
