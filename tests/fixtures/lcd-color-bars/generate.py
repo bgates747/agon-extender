@@ -13,9 +13,9 @@ text(2,3,'Top edge WHITE / bottom edge MAGENTA / Esc exits')
 names=['BLACK','RED','GREEN','BLUE','CYAN','MAGENTA','YELLOW','WHITE']
 for i,name in enumerate(names):
  rect(i,i*80,112,i*80+79,359);text(i*10+1,6,name)
-text(2,40,'Expected pure primaries above; labels name the intended color.')
-text(2,42,'Left border RED; right border BLUE; Top edge WHITE; bottom edge MAGENTA.')
-text(2,43,'Top-left W / top-right Y; bottom-left C / bottom-right M.')
+text(2,47,'Expected pure primaries above; labels name the intended color.')
+text(2,48,'Borders: left RED; right BLUE; top WHITE; bottom MAGENTA.')
+text(2,49,'Top-left W / top-right Y; bottom-left C / bottom-right M.')
 rect(1,0,1,0,478);rect(3,639,1,639,478)
 rect(7,0,0,639,0);rect(5,0,479,639,479)
 rect(7,1,8,16,23);rect(6,623,8,638,23)

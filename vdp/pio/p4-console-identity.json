@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r69",
+  "source_identity": "uart-excom-console-r70",
   "status": "draft",
-  "note": "LCD-001 opt-in --lcd V2 landscape PPA output; native horizontal porch-phase diagnostic; not production."
+  "note": "LCD-001 opt-in --lcd V2 landscape PPA output; 19/11 porch phase with ordinary BGR888 packing; not production."
 }

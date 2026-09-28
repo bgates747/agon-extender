@@ -43,9 +43,9 @@ void worker(void *arg) {
   auto dst=static_cast<uint8_t*>(static_fb);
   for(unsigned y=0;y<640;++y) for(unsigned x=0;x<480;++x) {
     auto color=rgb[y/80]; auto pixel=dst+(y*480+x)*3;
-    // LCD-001 r65/r66 proved this rev1.3 bridge path emits R=byte0, G=byte2,
-    // B=byte1.  Pack R,B,G; this control bypasses PPA and renderer input.
-    pixel[0]=color[0];pixel[1]=color[2];pixel[2]=color[1];
+    // Documented RGB888 memory order. The 19/11 porch phase corrects the
+    // earlier line/byte rotation; do not compensate that timing fault here.
+    pixel[0]=color[2];pixel[1]=color[1];pixel[2]=color[0];
   }
   ESP_ERROR_CHECK(esp_lcd_panel_draw_bitmap(panel,0,0,480,640,static_fb));
   ESP_LOGI("lcd","DSI static framebuffer pattern: ribbon-left white yellow cyan green magenta red blue black; no PPA or buffer swaps");

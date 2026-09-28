@@ -3,11 +3,11 @@
 #include <cstdint>
 #include <cstring>
 namespace agon::extender::display::lcd {
-// Preserve aspect ratio, nearest-neighbor.  This ESP32-P4 rev 1.3 DSI path maps
-// its nominal RGB888 framebuffer bytes as output R=byte0, G=byte2, B=byte1 on
-// the qualified V2 panel path.  Store R,B,G so the emitted DPI channels are
-// R,G,B.  This hardware-specific packing is output conversion only, never the
-// native renderer's storage format.
+// Preserve aspect ratio, nearest-neighbor. Output uses the documented RGB888
+// memory layout B,G,R. LCD-001 established that the earlier apparent channel
+// permutation was a scan-phase symptom: HBP/HFP 19/11 restores both line
+// alignment and ordinary packing. This conversion never changes renderer
+// storage.
 inline bool expand(const std::uint8_t *src, unsigned w, unsigned h,
                    unsigned stride, std::uint8_t *dst) {
   if (!src || !dst || !w || !h || stride<w) return false;
@@ -21,7 +21,7 @@ inline bool expand(const std::uint8_t *src, unsigned w, unsigned h,
     auto out=dst+((y+oy)*640+ox)*3;
     for (unsigned x=0;x<dw;++x) {
       auto v=row[std::size_t(x)*w/dw];
-      *out++=(v&3)*85; *out++=((v>>4)&3)*85; *out++=((v>>2)&3)*85;
+      *out++=((v>>4)&3)*85; *out++=((v>>2)&3)*85; *out++=(v&3)*85;
     }
   }
   return true;
