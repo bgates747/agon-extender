@@ -148,6 +148,12 @@ authorship or enlarge current-source coverage.
 
 ### A10-01 [x] Model-risk and analysis-tool research
 
+The Author reviewed the research and accepted A10-SET01 through A10-SET07 on
+2026-09-28. BUILD-001's bounded host smoke provisioned LLVM 23.1.2 and Cppcheck
+2.22.0 in ignored project state and validated a selected native compilation
+action. Full source-wide execution remains A10-04 work after the native build
+baseline is accepted; smoke findings do not authorize an early fix.
+
 Research comes first and produces
 [AI-RISK-AND-TOOLS.md](AUDIT-010/AI-RISK-AND-TOOLS.md), an ancillary document owned directly
 by A10-01. Use current official OpenAI documentation for supported facts about the

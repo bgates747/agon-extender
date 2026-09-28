@@ -204,7 +204,7 @@ B01-04d [x] Ensure a clean checkout can provision or locate the pinned tools and
 components through documented, project-scoped commands. Do not modify global
 developer packages or hide machine-specific paths in tracked files.
 
-### B01-05 [ ] Validate build-graph and artifact equivalence
+### B01-05 [x] Validate build-graph and artifact equivalence
 
 Host evidence and the one remaining static-analysis smoke are recorded in
 [VALIDATION.md](BUILD-001/VALIDATION.md).
@@ -224,7 +224,7 @@ B01-05c [x] Repeat clean builds in fresh output directories and compare outputs.
 Record deterministic hashes where achieved; identify and bound any intentional
 timestamp, path or tool metadata that prevents byte-for-byte reproducibility.
 
-B01-05d [ ] Run applicable host tests, build-graph validation and AUDIT-010's
+B01-05d [x] Run applicable host tests, build-graph validation and AUDIT-010's
 accepted compiler/static-analysis smoke checks against the canonical database.
 Tool findings remain audit inputs and are not repaired inside this migration
 unless they prove a migration error.
@@ -297,7 +297,7 @@ compiled and linked graph agrees with it.
 B01-G04 [x] The pinned native toolchain and Arduino component build every accepted
 maintained P4 profile from clean project-scoped state.
 
-B01-G05 [ ] Material configuration, dependency, section, size and binary
+B01-G05 [x] Material configuration, dependency, section, size and binary
 differences are explained, and targeted host tests pass.
 
 B01-G06 [ ] Author-approved hardware equivalence checks pass with rollback

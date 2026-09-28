@@ -4,6 +4,7 @@
 import json
 from pathlib import Path
 import unittest
+import importlib.util
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -45,6 +46,26 @@ class NativeP4ProfilesTest(unittest.TestCase):
                          ["video/extender/boot/p4_console.cpp"])
         self.assertIn("video/extender/display/lcd/output.cpp", sources)
         self.assertIn("video/extender/display/lcd/panel.c", sources)
+
+    def test_clang_translation_changes_only_known_gcc_target_flags(self):
+        script = ROOT / "scripts/prepare_p4_clang_database.py"
+        spec = importlib.util.spec_from_file_location("clang_db", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        entry = {
+            "directory": str(ROOT), "file": str(VDP / "sample.cpp"),
+            "output": "sample.o",
+            "command": "riscv32-esp-elf-g++ -DKEEP=1 "
+                       "-march=rv32imafc_zicsr_zifencei_xesppie "
+                       "-fstrict-volatile-bitfields -fno-tree-switch-conversion "
+                       "-Ikeep -c sample.cpp -o sample.o",
+        }
+        translated = module.translate(entry, Path("/opt/llvm"))["arguments"]
+        self.assertIn("-DKEEP=1", translated)
+        self.assertIn("-Ikeep", translated)
+        self.assertIn("-march=rv32imafc_zicsr_zifencei", translated)
+        self.assertNotIn("-fstrict-volatile-bitfields", translated)
+        self.assertNotIn("-fno-tree-switch-conversion", translated)
 
 
 if __name__ == "__main__":

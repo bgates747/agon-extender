@@ -88,14 +88,28 @@ memory impact is material and must be included in B01-06 hardware qualification.
    pointer type; ordinary base-class callers still convert normally. This path
    is absent from the accepted stock-runtime console composition.
 
-## Remaining host gate
+## Static-analysis smoke
 
-B01-V06 [ ] Run and record the accepted AUDIT-010 static-analysis smoke against
-the canonical native compilation database. This host has `clang` but does not
-currently provide `clang-tidy` or `cppcheck`; tool acquisition and commands must
-follow AUDIT-010's accepted research rather than inventing a migration-local
-scanner policy.
+B01-V06 [x] The Author accepted AUDIT-010's recommended tool selections on
+2026-09-28. LLVM 23.1.2 was installed in ignored project state from the official
+Linux X64 release archive; its SHA-256
+`6382de1c1a210ce5a5cc49d18bc8444d137742e7cbf9b19f4ae602bb1ab52534`
+matches the release's signed provenance payload. Cppcheck 2.22.0 was built into
+ignored project state from official tag commit
+`a436ca35ed1887bee789765122b65ed2d7a7e045`.
 
-After B01-V06, present the exact B01-06 hardware run sheet and stop for Author
-authorization. Do not flash, reset, deploy or alter production selection from
-this host evidence.
+Cppcheck imported the canonical database and parsed
+`presentation_snapshot_pool.cpp` with no parser error or reported result under
+the bounded warning/style/performance/portability smoke. The first Clang-Tidy
+invocation correctly rejected GCC-only `xesppie`,
+`-fstrict-volatile-bitfields` and `-fno-tree-switch-conversion` inputs; this was
+retained as tool-integration evidence rather than misreported as source failure.
+`scripts/prepare_p4_clang_database.py` now validates the exact 35 selected
+actions and emits a report-only Clang view that removes only the two unsupported
+GCC flags, removes the unsupported ISA suffix and supplies the pinned
+Espressif C++ headers. Clang-Tidy then parsed the representative unit with exit
+status zero. Its warnings are AUDIT-010 inputs and were not repaired here.
+
+The remaining step is the separately authorized hardware procedure in
+[HARDWARE-PROCEDURE.md](BUILD-001/HARDWARE-PROCEDURE.md). Do not flash, reset,
+deploy or alter production selection from this host evidence.
