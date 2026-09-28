@@ -42,6 +42,26 @@ void worker(void *arg) {
   // native(x,y)=(479-source_y,source_x), i.e. 270deg CCW into native RAM.
   op.rotation_angle=PPA_SRM_ROTATION_ANGLE_270;
   op.scale_x=1;op.scale_y=1;op.mode=PPA_TRANS_MODE_BLOCKING;
+  // Diagnostic: exercise every byte with an asymmetric pattern before using
+  // renderer data. Uniform boot-screen corners cannot detect channel/row shifts.
+  for (unsigned y=0;y<480;++y) for(unsigned x=0;x<640;++x) {
+    auto a=source+(y*640+x)*3;
+    a[0]=uint8_t(x+3*y); a[1]=uint8_t(5*x+y+71); a[2]=uint8_t(x+7*y+139);
+  }
+  op.out.buffer=fb[1];
+  ESP_ERROR_CHECK(ppa_do_scale_rotate_mirror(ppa,&op));
+  unsigned mismatches=0;
+  auto diagnostic=static_cast<uint8_t*>(fb[1]);
+  for (unsigned y=0;y<480;++y) for(unsigned x=0;x<640;++x) {
+    auto a=source+(y*640+x)*3;
+    auto b=diagnostic+(x*480+479-y)*3;
+    if(std::memcmp(a,b,3)) {
+      if(!mismatches) ESP_LOGE("lcd","PPA first mismatch source(%u,%u): expected %02x %02x %02x got %02x %02x %02x",x,y,a[0],a[1],a[2],b[0],b[1],b[2]);
+      ++mismatches;
+    }
+  }
+  ESP_LOGI("lcd","PPA full asymmetric check: %u / 307200 pixels mismatched",mismatches);
+  if(mismatches) { vTaskDelete(nullptr); return; }
   unsigned next=1, count=0; uint64_t generation=0;
   int64_t last=esp_timer_get_time();
   ESP_LOGI("lcd","Landscape output ready: ribbon-left, 640x480, PPA rotation; browser optional");
