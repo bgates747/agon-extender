@@ -490,8 +490,9 @@ Current A09–A11 evidence: [Legacy finite-job qualification](REMOTE-005/A09-A11
 
 The September 28 UTC correction passes bounded Legacy file/fault operations and
 Linux GVfs subdirectory transfers. A09/A11/A12 remain open for their broader
-matrices. A11 follow-ups include root metadata failure and automatic-job CLI
-newline/prompt noise; A12 still requires actual desktop-client acceptance.
+matrices. The subsequent root/CLI correction passes root metadata/listing and the renewed
+Legacy operation/fault suite. Silent CLI continuation passes target execution
+and compiled wrapper checks. A12 still requires actual desktop-client acceptance.
 
 R05-A09 [ ] Run host fault tests and emulator eZ80 tests before bench deployment.
 Exercise an interleaving matrix: external request at idle/partly typed CLI/app,

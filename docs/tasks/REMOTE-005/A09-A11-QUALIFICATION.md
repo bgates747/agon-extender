@@ -9,8 +9,8 @@ Production v0.1.0 is not replaced by these candidate builds.
 
 | Component | Identity | Source |
 | --- | --- | --- |
-| Resident EMOS | agon-emos-v0.1.22-b2026-09-28-00-04-04Z | agon-emos 70a4908 |
-| Finite utility | sdjob-v0.1.0-b2026-09-27-23-45-52Z | agon-emos e6a23cb |
+| Resident EMOS | agon-emos-v0.1.22-b2026-09-28-01-40-45Z | agon-emos dd3527e |
+| Finite utility | sdjob-v0.1.0-b2026-09-28-01-41-18Z | agon-emos dd3527e |
 | P4 | uart-excom-console-r60-b2026-09-28-00-35-51Z | Extender c820550c; explicit staged-WebDAV export |
 
 Registry r118 and these draft identities use the Author's standing version
@@ -149,3 +149,50 @@ The CLI linefeed cause is identified separately: `mos_input` prints a newline fo
 its private service return and the next main-loop iteration prints another prompt.
 No new EMOS UI change was flashed in this correction. Successful automatic jobs
 still disturb the CLI presentation; that remains an A11 usability follow-up.
+
+## Root and CLI follow-up — candidate prepared September 28 UTC
+
+The Author released the bench again and explicitly allowed replacing the TRS-80
+composition. Its actual full P4 flash was saved before restoring the verified
+Extender r60 candidate; no TRS-80 source was changed.
+
+Root failure is the checked engine's incorrect use of stock `ffs_stat("/")`:
+official MOS v3.0.2 FatFS intentionally rejects the origin directory. The engine
+now opens/closes that directory before reporting root metadata. The host FatFS
+substitute now reproduces the upstream rejection; the new root regression fails
+on the old engine and passes with the correction. No stock FatFS patch is needed.
+
+Resident EMOS now handles private service returns inside its CLI input wrapper,
+after editor storage has been freed, without printing another newline/prompt on
+success. Errors still print a diagnostic and fresh prompt. Public editor and
+ordinary command CR/ESC behavior are unchanged. The compiled wrapper regression
+covers repeated jobs and an error followed by recovery. Actual eZ80 execution
+with the new ROM and utility passed FINISH/CLOSE and exactly one retained prompt.
+132 owner tests and linked firmware checks pass; paired host file-engine checks
+also pass. Physical deployment/results follow separately below.
+
+### Root/CLI deployment and results
+
+The updated resident ROM is 128,406 bytes; full 128 KiB physical readback matches
+its padded image exactly. The identified finite utility is 23,325 bytes and was
+read back byte-for-byte after installation. P4 is unchanged from the corrected
+r60 build in the selected-candidate table. Mainboard startup and manual listener
+remain unchanged. The previous ROM, utility and actual incoming P4 image are
+retained for rollback.
+
+| Renewed check | Result |
+| --- | --- |
+| Root PROPFIND, Depth 0 and 1 | PASS; root metadata and full immediate-child listing |
+| File/directory operation sequence | PASS; 18 HTTP requests including root, 45.36 seconds summed host request time; exact payload/range checks |
+| Partial CLI, interrupted upload, worker contention, manual listener ownership | PASS; subsequent eligible operation succeeds |
+| ExCom boundary | PASS for refusal and Legacy recovery only; not ExCom transfer support |
+| Linux native root mount | PASS; direct GVfs/GIO root mount/list and test-subdirectory read/write/rename/delete/mkdir/rmdir; exact 4096-byte download |
+| Silent CLI continuation | PASS in actual eZ80 execution (one prompt after a completed job) and compiled wrapper test (success/error/resume); same ROM physically read back |
+
+The prior root failure is closed for this candidate. The CLI newline correction
+is installed; separate visual human acceptance is not claimed. GVfs still emits
+the previously observed missing-directory-size metadata warning, despite passing
+operations. GUI acceptance on each desktop, broader interleavings/media faults,
+ExCom and application-origin integration remain open. No production promotion.
+Final state: normal Legacy prompt, ready neutral Extender keyboard, manual
+listener stopped, temporary native mount and test session closed.
