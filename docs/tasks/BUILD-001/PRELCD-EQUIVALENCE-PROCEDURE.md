@@ -97,7 +97,7 @@ analysis found the web capture's upper-right yellow marker to be a solid
 was introduced only while viewing the retained image and is not framebuffer
 evidence.
 
-B01-PE08 [ ] With `/autoexec.txt` selecting mode20 before launch, the runner
+B01-PE08 [x] With `/autoexec.txt` selecting mode20 before launch, the runner
 executes the static grid fixture without allowing the fixture to switch modes.
 Expected Legacy and browser geometry is the complete A1-through-H6 grid in
 order with all asymmetric edge markers at the native 512-by-384 extent. There
@@ -108,8 +108,8 @@ The maintained build produces a 1,691-byte `grid.bin` with SHA-256
 
 The automated portion passed and retained a complete 768-by-576 browser
 framebuffer capture with A1 through H6 in order and all four asymmetric corner
-markers. The Author's Legacy-output observation remains the open acceptance
-part of this item.
+markers. The Author then confirmed the corrected Legacy-only run displayed the
+complete grid correctly on the physical monitor.
 
 B01-PE09 [x] Each automated case prints concise progress on Legacy output where
 practical and durably records start, end and duration. The runner invokes the

@@ -166,5 +166,8 @@ correct. The Author's direct fullscreen web capture also matches the fixture.
 Its upper-right yellow marker is a solid 27-by-27 component (729 of 729 pixels),
 disposing a later apparent one-pixel indentation as a viewing-presentation
 artifact rather than retained framebuffer evidence. The corrected Legacy-only
-mode-20 observation and deliberately deferred manual asset-heavy applications
-remain open, so B01-HR10 is not yet accepted or complete.
+mode-20 run was then separately staged without `EMOS EXCOM`; the Author
+confirmed its physical display was correct. The original 38-byte startup was
+restored and independently read back before a fresh reset. The deliberately
+deferred manual asset-heavy applications remain open, so B01-HR10 is not yet
+accepted or complete.
