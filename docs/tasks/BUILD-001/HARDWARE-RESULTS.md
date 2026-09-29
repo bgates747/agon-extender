@@ -65,9 +65,30 @@ LCD implementation as a necessary cause of the boot loop. The defect belongs to
 BUILD-001's native ESP-IDF dependency/configuration/initialization boundary and
 must be diagnosed there before another candidate is prepared.
 
-B01-HR07 [ ] Compare the native and working hybrid r61 `esp_hosted`, remote-Wi-Fi
+B01-HR07 [x] Compare the native and working hybrid r61 `esp_hosted`, remote-Wi-Fi
 and SDIO component selection, linker retention, initialization registration and
 Kconfig closure. Explain why native whole-archive linkage reaches
 `sdio_mempool_create` without its required pool, then implement the smallest
 build-boundary correction with host evidence. Do not alter product behavior or
 reintroduce LCD while resolving this migration defect.
+
+The native linker correctly honored ESP-Hosted 2.12.12's `WHOLE_ARCHIVE`
+property and therefore retained its constructor. That constructor started the
+unused remote-Wi-Fi SDIO transport before `app_main` and requested a DMA-capable
+mempool which could not be allocated from early internal RAM. The working
+hybrid link omitted the otherwise-unreferenced constructor; Extender uses the
+P4's wired Ethernet and did not provide remote Wi-Fi as product behavior.
+Commit `eadc2925e436754f5b7e0beddf088b01ded504ba` explicitly disables
+`ESP_WIFI_REMOTE_ENABLED` and `ESP_HOSTED_ENABLED` in the maintained P4
+configuration. Host validation passed, the Hosted constructor and failing SDIO
+allocator disappeared from the link map, and the application shrank from
+1,721,632 to 1,491,072 bytes.
+
+B01-HR08 [x] Flash and independently compare corrected candidate
+`build001-eadc2925-wired-prelcd`, then run a bounded boot and HTTP canary. All
+four regions matched before boot. Serial identified app `eadc2925`, ELF prefix
+`a90568060`, ESP-IDF v5.5.5, USB keyboard readiness, Ethernet DHCP address
+`192.168.0.16`, and `HTTP browser service ready`, with no assertion or reboot.
+Two HTTP checks returned `200 OK`; a second reset reproduced the clean boot.
+The corrected candidate remains installed. This passes the migration boot
+defect only; broader B01-06 functional equivalence remains open.

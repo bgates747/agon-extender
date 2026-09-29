@@ -63,3 +63,22 @@ The selected production r55 image was restored and all four regions matched
 before boot. One ordinary Agon reset restored fresh ready/neutral Extender
 input. The accepted Legacy spoken failure cue ran before the final visible
 `BUILD-001 PRELCD FAIL: SDIO INIT` line. EMOS and SD files were unchanged.
+
+## Corrected follow-up
+
+B01-PB07 [x] Correct the native-only startup defect without adding LCD or
+changing product behavior. Commit `eadc2925e436754f5b7e0beddf088b01ded504ba`
+disables unused remote Wi-Fi and ESP-Hosted in the common P4 configuration;
+Extender's maintained network service is wired Ethernet. This prevents native
+CMake from retaining ESP-Hosted's early SDIO constructor and removes the failed
+DMA-pool allocation.
+
+B01-PB08 [x] Build, bind, flash and independently compare candidate
+`build001-eadc2925-wired-prelcd`. Application SHA-256 is
+`7fea756ec20eb28dd0d2ef5238fa02115b99d6fc813923fe56d05b02daf57e3b`;
+ELF SHA-256 is
+`a90568060509cdbac05c1ef76559d38c671d912e404156c43ea70d93001f982e`.
+Serial reached USB keyboard readiness, Ethernet DHCP and HTTP readiness twice
+without assertion or reset loop. HTTP returned `200 OK` twice after the first
+boot and again after the retained evidence reset. The candidate remains
+installed; broader functional equivalence is still pending.
