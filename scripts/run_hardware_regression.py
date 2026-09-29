@@ -82,24 +82,6 @@ def close_retained_backup(client, path: str, evidence: Path) -> None:
             raise RuntimeError(f"{path}: retained-backup close returned {remaining.hex()}")
 
 
-def remove_if_present(client, path: str) -> None:
-    from sdcard import RemoteError
-    try:
-        client.stat_entry(path)
-    except RemoteError as error:
-        if error.status == 6 and error.detail in (b"\x04", b"\x05"):
-            return
-        raise
-    client.remove(path)
-    try:
-        client.stat_entry(path)
-    except RemoteError as error:
-        if error.status == 6 and error.detail in (b"\x04", b"\x05"):
-            return
-        raise
-    raise RuntimeError(f"{path}: stale result remained after removal")
-
-
 def parse_result(data: bytes) -> dict[str, str]:
     result = {}
     for raw in data.decode("ascii").splitlines():
@@ -157,6 +139,9 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     reset_and_wait(reset, url)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
+    type_line(url, output / "keyboard-remove-result.json",
+              "IFTHERE /agents/extender/results/a10-rp04.txt Then "
+              "DELETE /agents/extender/results/a10-rp04.txt")
     type_line(url, output / "keyboard-stage-service.json", "EMOS sdserve --fast /")
     client = wait_sd_service(url, output / "sd-stage.json")
     original_startup = b""
@@ -165,7 +150,6 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         original_startup = client.download("/autoexec.txt")
         for directory in ("/extender/fixtures", "/agents/extender/results"):
             require_directory(client, directory)
-        remove_if_present(client, "/agents/extender/results/a10-rp04.txt")
         target = "/extender/fixtures/FWBUG008.bin"
         close_retained_backup(client, target, output / "prior-fixture-backup.bin")
         client.upload(target, binary.read_bytes(), True, fast=True)
