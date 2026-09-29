@@ -148,12 +148,31 @@ left `BUILD-001 AUTOMATED PASS` as its final Legacy result.
 
 ## Manual application pass and closeout
 
-B01-PE10 [ ] Only after all automated cases terminate, the Author manually runs
+B01-PE10 [x] Only after all automated cases terminate, the Author manually runs
 Nurples and any other selected asset-heavy application that changes video mode
 after loading VDP buffers. Record mode-switch success, Legacy/ExCom rendering,
 keyboard/Escape behavior and browser availability separately. These known
 late-switch cases remain outside BUILD-001 repair scope and are not granted an
 automated-fixture exception.
+
+The retained `/test/nurples/nurples.bin` two-vblank review build ran correctly
+in Legacy: its application-owned low-resolution splash-to-mode20 transition,
+complete rendering, gameplay/restart behavior and Escape return all passed. Its
+approximately half-speed cadence is intentional at two vblank waits per update.
+The identical executable failed its late mode20 transition in ExCom and retained
+the same 320-by-240 geometry previously observed during the LCD experiment.
+Escape returned control and EMOS was explicitly returned to Legacy. This proves
+that LCD code is not necessary for the symptom. Because the installed candidate
+is a native-CMake reproduction, it does not yet prove that the original hybrid
+r61 binary behaved the same way.
+
+B01-PE10a [ ] With separate authorization, flash the retained exact hybrid r61
+factory image, repeat only the same ExCom Nurples sequence, then restore and
+independently verify the exact native candidate. A matching failure establishes
+the defect as inherited pre-migration behavior; a hybrid pass makes the native
+build difference a blocking BUILD-001 migration regression. Preserve the
+original startup and do not alter EMOS, application files or production
+selection.
 
 B01-PE11 [ ] Run the accepted ordinary boot smoke and recovery check. On a full
 pass, leave the final Legacy result visible and invoke the spoken completion

@@ -169,5 +169,23 @@ artifact rather than retained framebuffer evidence. The corrected Legacy-only
 mode-20 run was then separately staged without `EMOS EXCOM`; the Author
 confirmed its physical display was correct. The original 38-byte startup was
 restored and independently read back before a fresh reset. The deliberately
-deferred manual asset-heavy applications remain open, so B01-HR10 is not yet
-accepted or complete.
+deferred manual Nurples test then passed its application-owned low-resolution
+splash-to-mode20 transition, complete graphics, gameplay/restart behavior and
+clean Escape return in Legacy. Its observed half speed is the selected test
+binary's documented two-vblank/approximately-30-Hz behavior.
+
+The identical executable failed its late mode20 transition in ExCom and retained
+the same 320-by-240 geometry seen during the LCD experiment. Escape and an
+explicit return to Legacy recovered normal admitted input. This proves that LCD
+code is not necessary for the failure, but it does not yet distinguish inherited
+hybrid-r61 behavior from a native-build regression. B01-HR10 therefore remains
+open pending one exact hybrid-r61 control and native-candidate restoration.
+
+B01-HR11 [ ] Subject to Author authorization, flash retained hybrid image
+`uart-excom-console-r61-b2026-09-28-03-12-48Z` at factory SHA-256
+`f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`,
+repeat the same ExCom `/test/nurples/nurples.bin` late-switch observation, then
+restore and independently verify native candidate
+`build001-e7b35fd5-console-prelcd`. Do not repair the late-mode20 defect in
+BUILD-001; use the control only to decide build equivalence and preserve the
+failure for its owning post-audit work.

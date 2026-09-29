@@ -290,18 +290,24 @@ defines that behavior directly and preserves the private reset endpoint through
 a non-tracked wrapper argument. The amended exact-candidate procedure requires
 renewed Author acceptance before another flash.
 
-B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
+B01-06a [x] Verify flash, boot, EMOS transport, Legacy and ExCom output,
 keyboard/input, SD service, browser service and clean recovery using targeted
 tests chosen to detect build-migration regressions. Do not enable or test LCD in
 this baseline qualification.
 
-B01-06b [ ] Run the mode20 static-grid control as an automated fixture with its
+B01-06b [x] Run the mode20 static-grid control as an automated fixture with its
 mode selected only in `/autoexec.txt`. After all automated passes finish, the
 Author manually runs Nurples and other real applications that switch modes
 after loading significant VDP-buffer assets. Record the pre-LCD mode-switch,
 browser and gameplay result as an equivalence baseline. Do not grant automated
 fixtures a mode-switch exception or infer anything about the later LCD resource
 failure from a pre-LCD pass.
+
+The controls and human runs are recorded in the accepted procedure and hardware
+results. Static mode20 and the asset-heavy transition pass in Legacy; the same
+Nurples executable retains 320-by-240 geometry after its late mode20 request in
+native pre-LCD ExCom. B01-HR11 must compare the exact hybrid r61 image before
+this can be classified as inherited behavior or a migration regression.
 
 B01-06c [ ] Keep runtime monitoring bounded. Reusable unattended tests must print
 progress on the legacy mainboard display where practical and invoke the existing
