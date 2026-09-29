@@ -166,7 +166,7 @@ that LCD code is not necessary for the symptom. Because the installed candidate
 is a native-CMake reproduction, it does not yet prove that the original hybrid
 r61 binary behaved the same way.
 
-B01-PE10a [ ] With separate authorization, flash the retained exact hybrid r61
+B01-PE10a [x] With separate authorization, flash the retained exact hybrid r61
 factory image, repeat only the same ExCom Nurples sequence, then restore and
 independently verify the exact native candidate. A matching failure establishes
 the defect as inherited pre-migration behavior; a hybrid pass makes the native
@@ -174,15 +174,29 @@ build difference a blocking BUILD-001 migration regression. Preserve the
 original startup and do not alter EMOS, application files or production
 selection.
 
-B01-PE11 [ ] Run the accepted ordinary boot smoke and recovery check. On a full
+The Author authorized the control. Exact hybrid r61 reproduced the same failed
+late switch and retained 320-by-240 geometry. The operator then restored all
+four native-candidate regions; each independently matched before boot. Serial
+identified build `build001-e7b35fd5-console-prelcd`, source `e7b35fd5`, USB-host
+and HTTP readiness without panic or assertion. A fresh Agon reset restored
+ready/neutral input, HTTP and staged WebDAV passed, and the original startup
+read back at its accepted hash. The defect is inherited r61 behavior, not a
+native-build migration regression.
+
+B01-PE11 [x] Run the accepted ordinary boot smoke and recovery check. On a full
 pass, leave the final Legacy result visible and invoke the spoken completion
 cue. On failure, use the failure cue only if the admitted recovery path can then
 restore the durable failure identity as the final visible text.
 
-B01-PE12 [ ] After evidence capture, restore the selected production P4 firmware
+B01-PE12 [x] After evidence capture, restore the selected production P4 firmware
 unless the Author explicitly directs the candidate to remain for continued
 review. Independently verify restored bytes and identity. Restoration is
 rollback, not promotion of either build.
+
+The Author explicitly authorized restoration of the native candidate after the
+hybrid control, so production r55 was not selected. The candidate restoration
+and recovery checks above satisfy this item without changing production
+selection.
 
 ## Acceptance boundary
 

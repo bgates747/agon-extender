@@ -112,7 +112,7 @@ ready/neutral keyboard admission with one ordinary Agon reset, invoked the
 spoken failure cue, and left `BUILD-001 FAIL: STAGED WEBDAV OMITTED` visible.
 Production selection and SD contents were unchanged.
 
-B01-HR10 [ ] Flash and qualify corrected candidate
+B01-HR10 [x] Flash and qualify corrected candidate
 `build001-e7b35fd5-console-prelcd` only after the Author accepts the amended
 exact-candidate procedure. Host evidence proves the selected compile actions
 carry `AGON_EXTENDER_STAGED_WEBDAV=1` and the isolated embedded page carries the
@@ -181,7 +181,7 @@ code is not necessary for the failure, but it does not yet distinguish inherited
 hybrid-r61 behavior from a native-build regression. B01-HR10 therefore remains
 open pending one exact hybrid-r61 control and native-candidate restoration.
 
-B01-HR11 [ ] Subject to Author authorization, flash retained hybrid image
+B01-HR11 [x] Subject to Author authorization, flash retained hybrid image
 `uart-excom-console-r61-b2026-09-28-03-12-48Z` at factory SHA-256
 `f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`,
 repeat the same ExCom `/test/nurples/nurples.bin` late-switch observation, then
@@ -189,3 +189,22 @@ restore and independently verify native candidate
 `build001-e7b35fd5-console-prelcd`. Do not repair the late-mode20 defect in
 BUILD-001; use the control only to decide build equivalence and preserve the
 failure for its owning post-audit work.
+
+The Author authorized this control. The exact retained factory image matched its
+recorded hash, wrote and independently verified, and its serial boot identified
+the original hybrid r61 build with USB-host readiness. After a fresh Agon reset,
+the identical ExCom Nurples sequence reproduced the failed late mode20 switch
+and retained 320-by-240 geometry. Thus the defect is inherited behavior present
+in hybrid r61 and is not caused by native CMake or LCD code.
+
+The operator recovered Nurples with Escape and explicitly returned EMOS to
+Legacy. All four native-candidate regions were then restored and independently
+verified before boot. Serial identified source `e7b35fd5`, build
+`build001-e7b35fd5-console-prelcd`, ELF prefix `887af158d`, USB-host and HTTP
+readiness without failure markers. One readiness loop briefly exhausted the
+HTTP accept path; a clean settled reboot with no connection pressure restored
+HTTP normally. A fresh Agon reset established ready/neutral input, HTTP and
+staged-WebDAV checks passed, and the original startup independently read back at
+SHA-256 `7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`.
+The exact candidate remains installed under the Author's explicit restoration
+direction; selected production remains unchanged.

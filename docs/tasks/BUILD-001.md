@@ -255,7 +255,7 @@ compare it with retained hardware-tested r61 build
 The completed combined-LCD comparison remains failed/deferred evidence and does
 not satisfy this replacement baseline.
 
-### B01-06 [ ] Perform bounded hardware equivalence qualification
+### B01-06 [x] Perform bounded hardware equivalence qualification
 
 After B01-05 passes, prepare a run sheet that names the exact firmware, bench
 state, expected observations, rollback image, evidence paths and stopping
@@ -364,7 +364,7 @@ maintained P4 profile from clean project-scoped state.
 B01-G05 [x] Material configuration, dependency, section, size and binary
 differences are explained, and targeted host tests pass.
 
-B01-G06 [ ] Author-approved hardware equivalence checks pass with rollback
+B01-G06 [x] Author-approved hardware equivalence checks pass with rollback
 available and without changing production selection.
 
 B01-G07 [ ] Maintained consumers and documentation use the native path; obsolete
