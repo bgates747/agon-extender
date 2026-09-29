@@ -1,8 +1,8 @@
 # BUILD-001 pre-LCD functional-equivalence procedure
 
-State: amended after B01-HR09; awaiting renewed Author acceptance because the
-exact candidate bytes changed. The Author's 2026-09-28 acceptance applies only
-to the superseded d17 candidate and does not authorize this replacement flash.
+State: amended after B01-HR09 and accepted by the Author on 2026-09-29. The
+renewed acceptance authorizes the exact replacement candidate and bounded
+operations below.
 This procedure qualifies the native pre-LCD build boundary only. It neither
 enables LCD output nor promotes production firmware.
 
@@ -30,7 +30,7 @@ and commands.
 
 ## Preconditions and stopping conditions
 
-B01-PE01 [ ] The Author accepts this exact procedure and authorizes the P4 flash,
+B01-PE01 [x] The Author accepts this exact procedure and authorizes the P4 flash,
 ordinary Agon resets, temporary startup/fixture deployment, read-only service
 checks and final rollback described below.
 
@@ -104,8 +104,8 @@ fixture streams contain no mode switch. It uses the foreground EMOS listener in
 fast mode for every deployment, preserves and restores the original startup,
 records browser captures and text evidence, and attempts startup restoration on
 failure. The terminal hooks enter Legacy, invoke `/extender/attention.txt`, then
-print and capture the durable final result. Invocation remains prohibited until
-B01-PE01 is accepted. Three isolated runner tests pass: startup mode precedes
+print and capture the durable final result. Three isolated runner tests pass:
+startup mode precedes
 fixture load, a complete two-fixture sequence restores the exact original
 startup bytes, and an injected first-capture failure also restores those bytes
 while retaining a failed verdict.
