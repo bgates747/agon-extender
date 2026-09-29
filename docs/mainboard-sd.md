@@ -277,10 +277,11 @@ An authorized unattended qualification may pass `--terminal-hooks` before the
 `--` separator. The named JSON file contains optional `success` and `failure`
 argv arrays; the worker invokes exactly one after the wrapped command returns,
 without a shell. Hooks are notifications, not result reporters. A hardware
-wrapper must print and retain its own failure identity before returning nonzero,
-then use a failure hook that does not clear or overwrite that display. A failed
-success hook makes the job status `failure` while preserving the primary
-command's separate status and exit code.
+test driver must record its failure identity durably before returning nonzero.
+Because an alert player may print status text, the failure hook must restore
+that recorded identity as the final visible Legacy result after playing the
+cue. A failed success hook makes the job status `failure` while preserving the
+primary command's separate status and exit code.
 
 ## Opt-in fast transfer — bounded physical pass
 

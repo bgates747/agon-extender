@@ -78,14 +78,16 @@ The maintained build produces a 1,691-byte `grid.bin` with SHA-256
 B01-PE09 [ ] Each automated case prints concise progress on Legacy output where
 practical and durably records start, end and duration. The runner invokes the
 accepted spoken cue on terminal success or detected failure. A failure identity
-is printed before the cue and retained afterward; the alert player must not
-overwrite it. The agent does not poll merely to wait for completion.
+is recorded durably before the cue; after alert-player output, the failure hook
+reprints that identity as the final visible Legacy result. The agent does not
+poll merely to wait for completion.
 
 The maintained `scripts/bench_job.py` terminal-hook contract supplies the
 detached duration/result record and selects exactly one argv-only success or
 failure notification after the test driver exits. The reviewed run-specific
 driver and ignored hook file must still bind those generic hooks to the accepted
-Legacy voice cue and prove that its failure path preserves the preceding error.
+Legacy voice cue and prove that its failure path restores the recorded error as
+the last visible text.
 
 ## Manual application pass and closeout
 
@@ -98,8 +100,8 @@ automated-fixture exception.
 
 B01-PE11 [ ] Run the accepted ordinary boot smoke and recovery check. On a full
 pass, leave the final Legacy result visible and invoke the spoken completion
-cue. On failure, retain the visible failure identity and use the failure cue
-only if the admitted recovery path can do so without overwriting it.
+cue. On failure, use the failure cue only if the admitted recovery path can then
+restore the durable failure identity as the final visible text.
 
 B01-PE12 [ ] After evidence capture, restore the selected production P4 firmware
 unless the Author explicitly directs the candidate to remain for continued

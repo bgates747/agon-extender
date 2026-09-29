@@ -7,9 +7,10 @@ must be fresh and should be ignored machine-local paths. A missing terminal
 result after host loss is unknown, never success.
 
 An optional JSON hook file may provide ``success`` and ``failure`` argv arrays.
-The selected hook runs after the wrapped command terminates. A hardware wrapper
-must print and retain its own failure identity before returning nonzero; the
-hook is a notification, not a result reporter.
+The selected hook runs after the wrapped command terminates. A hardware failure
+hook must restore the test driver's durable failure identity after any alert
+player output so the alert cannot become the final visible result. The hook is
+a notification/visibility adapter, not the authority for the verdict.
 """
 import argparse
 import datetime
