@@ -105,7 +105,10 @@ fast mode for every deployment, preserves and restores the original startup,
 records browser captures and text evidence, and attempts startup restoration on
 failure. The terminal hooks enter Legacy, invoke `/extender/attention.txt`, then
 print and capture the durable final result. Invocation remains prohibited until
-B01-PE01 is accepted.
+B01-PE01 is accepted. Three isolated runner tests pass: startup mode precedes
+fixture load, a complete two-fixture sequence restores the exact original
+startup bytes, and an injected first-capture failure also restores those bytes
+while retaining a failed verdict.
 
 ## Manual application pass and closeout
 
