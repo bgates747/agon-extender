@@ -81,11 +81,10 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
     client = wait_sd_service(url, run / "sd-stage.json")
     target = "/extender/install/hwval-" + commit[:12] + ".bin"
     try:
-        client.make_directory("/extender", parents=True)
-        client.make_directory("/extender/install", parents=True)
-        client.make_directory("/agents", parents=True)
-        client.make_directory("/agents/extender", parents=True)
-        client.make_directory("/agents/extender/results", parents=True)
+        for required in ("/extender/install", "/agents/extender/results"):
+            _, attributes = client.stat_entry(required)
+            if not attributes & 16:
+                raise RuntimeError(f"required SD path is not a directory: {required}")
         client.upload(target, firmware.read_bytes(), True, fast=True)
         if client.download(target) != firmware.read_bytes():
             raise RuntimeError("fast firmware transfer failed independent readback")

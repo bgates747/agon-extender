@@ -64,8 +64,10 @@ def run_retained_suite(extender: Path, emos: Path, output: Path) -> dict:
     return summary
 
 
-def ensure_directory(client, path: str) -> None:
-    client.make_directory(path, parents=True)
+def require_directory(client, path: str) -> None:
+    _, attributes = client.stat_entry(path)
+    if not attributes & 16:
+        raise RuntimeError(f"required SD path is not a directory: {path}")
 
 
 def parse_result(data: bytes) -> dict[str, str]:
@@ -130,9 +132,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     staged = False
     try:
         original_startup = client.download("/autoexec.txt")
-        for directory in ("/extender", "/extender/fixtures", "/agents",
-                          "/agents/extender", "/agents/extender/results"):
-            ensure_directory(client, directory)
+        for directory in ("/extender/fixtures", "/agents/extender/results"):
+            require_directory(client, directory)
         target = "/extender/fixtures/FWBUG008.bin"
         client.upload(target, binary.read_bytes(), True, fast=True)
         if client.download(target) != binary.read_bytes():
