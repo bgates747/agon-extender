@@ -257,7 +257,7 @@ complete area/source/service/generated-state/test map is in
 and changed no executable product source. The ledger is now at the Author
 review boundary; do not begin A10-03 until that review is complete.
 
-### A10-03 [ ] Functional and resource architecture
+### A10-03 [x] Functional and resource architecture
 
 Trace representative pre-LCD operations end to end and produce actor-explicit
 maps for boot, mode change, ordinary drawing/presentation, browser connection,
@@ -280,6 +280,14 @@ and regression cases protecting previously passed behavior. Diagnostic code
 must not contain a proposed fix or silently replace the baseline under review.
 Every diagnostic build and hardware run still requires its own bounded procedure
 and explicit Author authorization.
+
+The Author accepted A10-02 on 2026-09-29. The completed static trace and
+source-derived budgets are in
+[ARCHITECTURE-RESOURCES.md](AUDIT-010/ARCHITECTURE-RESOURCES.md). It records the
+seven required operation maps, fifteen resource rows, coexistence matrix,
+worked mode-8/mode-20/browser comparison, five A10-05 review inputs and four
+explicit measurement unknowns. It made no executable change, target
+measurement or repair finding. Stop for Author review before A10-04 execution.
 
 ### A10-04 [ ] Automated analysis
 
