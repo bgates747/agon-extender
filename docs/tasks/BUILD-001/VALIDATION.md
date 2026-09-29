@@ -6,8 +6,92 @@ satisfies BUILD-001's replacement baseline. B01-05e must repeat the applicable
 controls for the retained working pre-LCD r61 source closure before AUDIT-010
 freezes its baseline.
 
-State: host equivalence review in progress; no firmware in this document is
-authorized for deployment. Date: 2026-09-28.
+State: pre-LCD host equivalence passed; hardware functional equivalence remains
+subject to the separately reviewed procedure. Date: 2026-09-28.
+
+## Pre-LCD replacement baseline
+
+The replacement baseline is the clean `codex/build001-prelcd` build at
+`d17cae7968a7640d37a9ced36a681f063ef78913`. Commit
+`6f4750b14a410528c3650e45e7a248959e8e150d` subsequently added only the
+validated Clang action-database adapter and its unit test; it did not change the
+firmware inputs.
+
+| Profile | Retained run | Selected units | Application bytes | Result |
+|---|---|---:|---:|---|
+| `p4-console` | `native-prelcd-05` | 33 | 1,491,072 | Build and graph validation pass |
+| `p4-mos-recovery` | `native-recovery-wired-03` | 1 | 461,440 | Build, generated-payload and graph validation pass |
+| `p4-port008-nonrelease-qualification` | `native-port008-wired-02` | 28 | 1,181,008 | Build and graph validation pass |
+
+B01-PV01 [x] The console validator inspected 1,842 actual compile actions,
+selected all 33 declared units exactly once, rejected all 11 forbidden units,
+proved the selected objects entered `libagon_vdp.a`, and proved that archive
+entered the application ELF. The source set is the retained r61 closure's 22
+project and 11 vendored units, with no LCD unit or dependency.
+
+B01-PV02 [x] The recovery profile now generates its payload inside the isolated
+native component from explicitly named, SHA-256-gated MOS and flash-agent
+inputs. The wrapper retains both the generated header and its provenance JSON;
+the generated header is not a hand-maintained second authority.
+
+B01-PV03 [x] All project Python test programs passed in the aggregate retained
+run `host-tests-d17cae79-r02.log`; the WebDAV runtime suite recorded its one
+expected environment-dependent skip. The nested worktree required a temporary
+ignored `agon-emos` adjacency symlink, which was removed by the runner and did
+not alter either repository.
+
+B01-PV04 [x] `scripts/prepare_p4_clang_database.py` validated and translated
+exactly the console profile's 33 canonical GCC actions. Cppcheck 2.22.0 parsed
+the representative presentation unit with no reported result. Clang-Tidy
+23.1.2 parsed the same unit and reported review candidates, including adjacent
+convertible parameters and signed bitwise operands. Those are AUDIT-010 inputs,
+not migration repairs.
+
+## Pre-LCD hybrid/native comparison
+
+The hybrid control is hardware-tested r61 build
+`uart-excom-console-r61-b2026-09-28-03-12-48Z` from source
+`6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d`. Its application is 1,671,408
+bytes with SHA-256
+`7b53397f7261d547c61c4fc12e90f029d621d8e96a0f83577406a8c0064e2da2`;
+its retained factory image has the task-contract SHA-256
+`f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`.
+The native application SHA-256 is
+`861cb25c9c96e6b3e845cf5268ce922378649f4594e9f231ae9a85a1256ba8df`.
+
+Worst percentage changes are listed first. Debug-only ELF sections are
+excluded.
+
+| Region/artifact (bytes) | Hybrid r61 | Native pre-LCD | Difference | Difference % |
+|---|---:|---:|---:|---:|
+| Flash rodata | 295,776 | 241,324 | -54,452 | -18.41% |
+| Application binary | 1,671,408 | 1,491,072 | -180,336 | -10.79% |
+| Flash text | 1,250,120 | 1,124,700 | -125,420 | -10.03% |
+| DRAM0 BSS | 47,960 | 45,544 | -2,416 | -5.04% |
+| DRAM0 data | 21,116 | 20,840 | -276 | -1.31% |
+| IRAM text | 103,516 | 103,342 | -174 | -0.17% |
+
+B01-PV05 [x] The size reduction is explained by the only intentional product
+configuration correction: the native profile explicitly disables unused
+`CONFIG_ESP_WIFI_REMOTE_ENABLED` and `CONFIG_ESP_HOSTED_ENABLED`. The hybrid
+outer link happened not to retain ESP-Hosted's whole-archive constructor;
+native ESP-IDF correctly retained it, exposed its early SDIO allocation crash,
+and now excludes that unused wired-product dependency by configuration. This
+removes remote-Wi-Fi RPC/protobuf/SDIO code without removing maintained wired
+Ethernet behavior.
+
+B01-PV06 [x] The partition table remains byte-identical at SHA-256
+`e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a`.
+The five embedded browser assets retain their r61 source bytes and linker
+ownership. Native CMake makes Arduino-ESP32 3.3.11 an explicit managed
+component; all other retained managed dependency versions match the hybrid
+lock. No unexplained source, partition, asset or material memory delta remains.
+
+B01-PV07 [x] Corrected candidate `build001-eadc2925-wired-prelcd` already passed
+the bounded hardware boot canary twice, initialized USB input and wired
+Ethernet, and returned HTTP 200 without the assertion or a reset loop. This
+supports the configuration explanation but does not substitute for B01-06's
+functional-equivalence procedure.
 
 ## Validated native profiles
 

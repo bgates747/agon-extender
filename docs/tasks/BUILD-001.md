@@ -35,23 +35,23 @@ compilation database suitable for AUDIT-010's analysis tools.
 
 The migration must answer these immutable questions:
 
-B01-Q01 [ ] Which checked-in artifact is the single authority for selected source
+B01-Q01 [x] Which checked-in artifact is the single authority for selected source
 files, and how does CMake consume it without a competing PlatformIO selection?
 
-B01-Q02 [ ] How are the ESP-IDF release, tools, Arduino-ESP32 component, managed
+B01-Q02 [x] How are the ESP-IDF release, tools, Arduino-ESP32 component, managed
 components and non-managed third-party sources pinned and reproduced without
 depending on unrecorded global developer state?
 
-B01-Q03 [ ] How does each maintained P4 build profile express configuration,
+B01-Q03 [x] How does each maintained P4 build profile express configuration,
 feature flags, dependencies, embedded files, partitions and output identity?
 
 B01-Q04 [x] Which current PlatformIO environments are maintained product or
 diagnostic profiles that must migrate, and which are obsolete or frozen evidence
 that must be disposed explicitly rather than copied forward?
 
-B01-Q05 [ ] What evidence demonstrates functional equivalence and explains every
+B01-Q05 [x] What evidence demonstrates build equivalence and explains every
 material ELF, map, image-size, dependency or runtime difference introduced by
-the build migration?
+the build migration? Hardware functional equivalence remains B01-06.
 
 B01-Q06 [ ] When can PlatformIO/SCons source selection and its generated CMake
 facade be removed from the maintained P4 path without losing rollback,
@@ -185,7 +185,7 @@ handling for framework and third-party component internals.
 B01-03c [x] Define rollback so an unsuccessful native migration can restore the
 preserved hybrid build without altering production or discarding evidence.
 
-### B01-04 [ ] Implement the native ESP-IDF/CMake build
+### B01-04 [x] Implement the native ESP-IDF/CMake build
 
 Introduce the minimum checked-in CMake components, profile data and project-owned
 wrapper needed to build the preserved P4 source closure with native ESP-IDF.
@@ -214,14 +214,15 @@ later LCD implementation. Preserve the existing native infrastructure changes
 as a reviewable build-only delta and prove that selected project sources match
 the retained r61 closure.
 
-The resulting clean branch is `codex/build001-prelcd` at
-`595286dd9ed05d0ff228d8ecba195c116197367f`. Candidate
-`build001-595286dd-console-prelcd` selects exactly the retained r61 product
+The resulting clean branch is `codex/build001-prelcd`. Candidate
+`build001-d17cae79-console-prelcd`, built at
+`d17cae7968a7640d37a9ced36a681f063ef78913`, selects exactly the retained r61 product
 closure's 22 project and 11 vendored translation units and no LCD source or
-dependency. Its boot-only procedure is
+dependency. The branch subsequently added analysis-only tooling at
+`6f4750b14a410528c3650e45e7a248959e8e150d`. The initial boot-only procedure is
 [PRELCD-BOOT-PROCEDURE.md](BUILD-001/PRELCD-BOOT-PROCEDURE.md).
 
-### B01-05 [ ] Validate build-graph and artifact equivalence
+### B01-05 [x] Validate build-graph and artifact equivalence
 
 Host evidence and the one remaining static-analysis smoke are recorded in
 [VALIDATION.md](BUILD-001/VALIDATION.md).
@@ -246,7 +247,7 @@ accepted compiler/static-analysis smoke checks against the canonical database.
 Tool findings remain audit inputs and are not repaired inside this migration
 unless they prove a migration error.
 
-B01-05e [ ] Repeat B01-05a through B01-05d for the pre-LCD native closure and
+B01-05e [x] Repeat B01-05a through B01-05d for the pre-LCD native closure and
 compare it with retained hardware-tested r61 build
 `uart-excom-console-r61-b2026-09-28-03-12-48Z`, factory SHA-256
 `f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`.
@@ -342,10 +343,10 @@ complete before the native design is accepted.
 B01-G03 [x] One checked-in authority selects sources and profiles; CMake's actual
 compiled and linked graph agrees with it.
 
-B01-G04 [ ] The pinned native toolchain and Arduino component build every accepted
+B01-G04 [x] The pinned native toolchain and Arduino component build every accepted
 maintained P4 profile from clean project-scoped state.
 
-B01-G05 [ ] Material configuration, dependency, section, size and binary
+B01-G05 [x] Material configuration, dependency, section, size and binary
 differences are explained, and targeted host tests pass.
 
 B01-G06 [ ] Author-approved hardware equivalence checks pass with rollback
