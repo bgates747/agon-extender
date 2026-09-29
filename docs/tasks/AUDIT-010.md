@@ -235,7 +235,7 @@ artifact hashes, actual linked graph and accepted analysis entry points are in
 [BASELINE.md](AUDIT-010/BASELINE.md). The selected production bundle remains a
 separate unchanged comparison.
 
-### A10-02 [ ] Freeze the review baseline and coverage ledger
+### A10-02 [x] Freeze the review baseline and coverage ledger
 
 After A10-01 review, record exact Extender, component-owner, official-reference,
 tool and production/installed identities. Inventory active source, generated
@@ -249,6 +249,13 @@ evidence only as bounded comparisons for regressions, ownership changes and
 resource growth; do not run a second exhaustive audit of either superseded
 source closure. Preserve the experimental LCD implementation outside this
 baseline for the post-audit redeployment delta.
+
+The frozen repository, build, artifact, production, installed/reference and
+analysis-tool records are in [IDENTITIES.md](AUDIT-010/IDENTITIES.md). The
+complete area/source/service/generated-state/test map is in
+[COVERAGE-LEDGER.md](AUDIT-010/COVERAGE-LEDGER.md). A10-02 opened no findings
+and changed no executable product source. The ledger is now at the Author
+review boundary; do not begin A10-03 until that review is complete.
 
 ### A10-03 [ ] Functional and resource architecture
 
