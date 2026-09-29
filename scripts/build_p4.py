@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import os
 from pathlib import Path
@@ -12,6 +13,7 @@ import re
 import shutil
 import subprocess
 import sys
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -55,14 +57,16 @@ def cmake_quote(value: str) -> str:
     return '"' + value.replace("\\", "/").replace('"', '\\"') + '"'
 
 
-def render_component(profile: dict, common: dict, generated: Path) -> None:
+def render_component(profile: dict, common: dict, generated: Path,
+                     asset_overrides: dict[str, Path]) -> None:
     sources = [checked_path(item) for item in profile["sources"]]
     if len(sources) != len(set(sources)):
         raise SystemExit("duplicate selected source")
     forbidden = {checked_path(item) for item in profile["forbidden_sources"]}
     if forbidden.intersection(sources):
         raise SystemExit("selected source is also forbidden")
-    assets = [checked_path(item) for item in profile["embedded_text"]]
+    assets = [asset_overrides.get(item, checked_path(item))
+              for item in profile["embedded_text"]]
     include_dirs = [checked_dir(item) for item in common["include_dirs"]
                     if item != "video"]
     include_dirs.append(generated)
@@ -115,6 +119,8 @@ def main() -> None:
     parser.add_argument("--mos", type=Path)
     parser.add_argument("--mos-sha256")
     parser.add_argument("--flash-agent", type=Path)
+    parser.add_argument("--reset-url",
+                        help="embed a machine-local HTTP(S) reset endpoint")
     args = parser.parse_args()
     if not SAFE_NAME.fullmatch(args.build_id):
         parser.error("build ID contains unsupported characters")
@@ -132,6 +138,10 @@ def main() -> None:
             parser.error("recovery profile requires --mos, --mos-sha256 and --flash-agent")
     elif any(payload_arguments):
         parser.error("recovery payload arguments require a recovery profile")
+    if args.reset_url and args.profile != "p4-console":
+        parser.error("--reset-url is supported only by p4-console")
+    if args.reset_url and urlsplit(args.reset_url).scheme not in ("http", "https"):
+        parser.error("reset URL must use HTTP(S)")
     if subprocess.check_output(["git", "-C", str(IDF), "rev-parse", "HEAD"],
                                text=True).strip() != IDF_COMMIT:
         raise SystemExit("wrong ESP-IDF checkout identity")
@@ -141,7 +151,21 @@ def main() -> None:
     shutil.copyfile(VDP / "native/CMakeLists.txt", project / "CMakeLists.txt")
     generated = project / "components/agon_vdp"
     generated.mkdir(parents=True)
-    render_component(profile, document["common"], generated)
+    asset_overrides: dict[str, Path] = {}
+    if args.reset_url:
+        relative = "video/extender/web/index.html"
+        page = generated / "embedded/index.html"
+        page.parent.mkdir()
+        source = checked_path(relative).read_text()
+        marker = 'name="agon-reset-url" content=""'
+        if source.count(marker) != 1:
+            raise SystemExit("reset URL marker missing or ambiguous")
+        page.write_text(source.replace(
+            marker,
+            'name="agon-reset-url" content="' +
+            html.escape(args.reset_url, quote=True) + '"'))
+        asset_overrides[relative] = page
+    render_component(profile, document["common"], generated, asset_overrides)
     payload_artifacts = []
     if profile.get("mos_recovery_payload"):
         payload_header = generated / "generated/mos_recovery_payload.hpp"
@@ -223,6 +247,9 @@ def main() -> None:
         "source_dirty": bool(subprocess.check_output(
             ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
         ).strip()),
+        "reset_url_configured": bool(args.reset_url),
+        "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
+                             if args.reset_url else None),
         "artifacts": [artifact_record(path) for path in artifact_paths],
     }
     (output / "manifest.json").write_text(json.dumps(record, indent=2) + "\n")

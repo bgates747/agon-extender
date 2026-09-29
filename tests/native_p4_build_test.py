@@ -52,6 +52,10 @@ class NativeP4ProfilesTest(unittest.TestCase):
         definitions = self.document["profiles"]["p4-console"]["definitions"]
         self.assertIn("AGON_EXTENDER_STAGED_WEBDAV=1", definitions)
 
+    def test_console_source_asset_has_one_reset_url_marker(self):
+        page = (VDP / "video/extender/web/index.html").read_text()
+        self.assertEqual(page.count('name="agon-reset-url" content=""'), 1)
+
     def test_clang_translation_changes_only_known_gcc_target_flags(self):
         script = ROOT / "scripts/prepare_p4_clang_database.py"
         spec = importlib.util.spec_from_file_location("clang_db", script)
