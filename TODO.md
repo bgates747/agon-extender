@@ -27,6 +27,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
+- [ ] **[REMOTE-006 — Independent browser-requested Extender reset](docs/tasks/REMOTE-006.md)** — Add a Reset Extender button beside Reset Agon while preserving two independent actions. Select an external P4 reset executor capable of recovering more than a responsive self-restart; define Legacy/ExCom and in-flight-service outcomes before implementation. Queued behind the active AUDIT-010 review/repair gate unless explicitly reprioritized.
+
 - [ ] **[RESEARCH-006 — Mainboard VDP via Pico 2/Cowbell](docs/tasks/RESEARCH-006.md)** — Initial assessment recorded; investigate header-only serial transport versus digital VGA taps, fidelity and bandwidth. Research only; no implementation or bench work selected.
 
 - [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; common Ethernet boundary extracted for detached build evaluation; hybrid feasibility and image leases remain open.
