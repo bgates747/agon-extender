@@ -19,6 +19,7 @@ class NativeP4ProfilesTest(unittest.TestCase):
         cls.document = json.loads((VDP / "build/p4-profiles.json").read_text())
 
     def test_three_accepted_profiles_only(self):
+        self.assertEqual(self.document["schema_version"], 2)
         self.assertEqual(set(self.document["profiles"]), {
             "p4-console", "p4-mos-recovery",
             "p4-port008-nonrelease-qualification",
@@ -49,6 +50,53 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertFalse(any("/display/lcd/" in item for item in sources))
         self.assertNotIn("espressif/esp_lcd_st7701",
                          self.document["common"]["dependencies"])
+
+    def test_exactly_one_product_display_owner_and_isolated_families(self):
+        script = ROOT / "scripts/build_p4.py"
+        spec = importlib.util.spec_from_file_location("build_p4_display", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        module.checked_display_ownership(self.document)
+
+        families = self.document["display_families"]
+        self.assertEqual(
+            [name for name, family in families.items() if family["product_owner"]],
+            ["stock-shaped"],
+        )
+        owners = [name for name, profile in self.document["profiles"].items()
+                  if profile["product_display_role"] == "product-owner"]
+        self.assertEqual(owners, ["p4-console"])
+        self.assertEqual(
+            self.document["profiles"]["p4-port008-nonrelease-qualification"]
+                         ["product_display_role"],
+            "bounded-qualification",
+        )
+        self.assertEqual(
+            families["port008-parallel-nonrelease"]["bounded_owner"],
+            "PORT-008",
+        )
+        self.assertEqual(
+            families["port008-parallel-nonrelease"]["retirement_conditions"],
+            ["PORT-008-2.e", "PORT-008-2.f", "A10-RP02-O03"],
+        )
+
+    def test_display_ownership_rejects_mixed_or_unbounded_profiles(self):
+        script = ROOT / "scripts/build_p4.py"
+        spec = importlib.util.spec_from_file_location("build_p4_display_failures", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+
+        document = deepcopy(self.document)
+        document["profiles"]["p4-console"]["sources"].append(
+            "video/extender/display/p4_display_controller.cpp")
+        with self.assertRaisesRegex(SystemExit, "mixes display families"):
+            module.checked_display_ownership(document)
+
+        document = deepcopy(self.document)
+        document["display_families"]["port008-parallel-nonrelease"].pop(
+            "retirement_conditions")
+        with self.assertRaisesRegex(SystemExit, "lacks a retirement contract"):
+            module.checked_display_ownership(document)
 
     def test_console_definition_policy_is_explicit_and_minimal(self):
         profile = self.document["profiles"]["p4-console"]

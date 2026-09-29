@@ -3,7 +3,7 @@
 - Status: Accepted
 - Completeness: Complete
 - Date: 2026-08-22
-- Last amended: 2026-09-10
+- Last amended: 2026-09-29
 - Documentation reconciled: 2026-09-24
 - Related tasks: PORT-003, AUDIT-006
 
@@ -155,6 +155,15 @@ creating separate VDP renderers or clocks.
     neither drawing nor a consumer. Preserve the stock cadence as the reference
     and qualify actual target jitter. Neither queue-drain exclusion nor a
     whole-frame drawing suspension is authorized by this decision.
+14. The selected stock-shaped controller/service/scanline family is the sole
+    product display owner. The older project-owned generic controller,
+    compositor, storage and frame-service family is not a supported alternate
+    backend. It may remain selected only by the explicitly non-release
+    PORT-008 qualification profile until PORT-008 Work 2.e and 2.f are accepted
+    and its transport/provenance oracles no longer require that closure. Product
+    repairs are made only in the selected family; they are not copied into the
+    older family. The build manifest must reject a profile that mixes families
+    or creates a second product owner.
 
 ## Rationale
 
@@ -215,6 +224,11 @@ records remain evidence of their identified builds.
     future isolating regression design. They do not authorize present product
     changes or independently block the bounded forward-parallel transport work
     unless the trigger threshold in decision item 11 is met.
+11. Frozen PORT-003 tests of the older family retain historical evidence, not
+    product-regression authority. Independent mode/lifecycle vectors and
+    stock-row/presentation expectations already extracted into selected-family
+    tests remain reusable. The older family and its non-release profile are
+    retired when the bounded PORT-008 dependency in decision 14 is disposed.
 
 ## Corrective amendment
 

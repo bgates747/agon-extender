@@ -116,6 +116,18 @@ waits and counters, callbacks, and mode failure/fallback behavior as closely as
 practical. The old GPIO-matrix, I2S1, DMA-chain, and VSync-ISR engine remains
 vendored reference material, not the P4 physical backend.
 
+This stock-shaped family is the **sole product display owner**. The neutral
+P4 profile manifest names it explicitly and requires every display-bearing
+profile to select exactly one complete, mutually excluded family. The older
+project-owned `P4DisplayController`/`P4FrameService`/`PlaneStorage`/
+`PaletteState`/`PresentationCompositor` family is not an alternate product
+backend and must receive no copied product repair. It remains buildable only in
+the non-release PORT-008 qualification profile while that task completes its
+actual-action provenance and retained-parser fault-injection gates. Once those
+gates are accepted and their transport oracles no longer depend on the older
+display closure, the profile and older family are removed; frozen PORT-003
+evidence remains historical rather than executable product guidance.
+
 The video backend preserves stock framebuffer formats, memory organization,
 row access, rendering algorithms and fast paths as faithfully as possible.
 Reuse upstream code exactly wherever processor facilities and video-output

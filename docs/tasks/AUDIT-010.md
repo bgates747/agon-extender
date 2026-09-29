@@ -441,7 +441,10 @@ static analysis.
 
 The Author accepted RP01's minimal profile and host/build evidence on 2026-09-29;
 see [RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md). RP02 is authorized as the sole
-active repair item and will stop for acceptance before RP03.
+active repair item. Its [display-owner candidate](AUDIT-010/RP02-DISPLAY-OWNER.md)
+now records the enforced family split, extracted-oracle disposition, concrete
+PORT-008 retirement gate and passing native build/profile evidence. RP02 has
+stopped for Author acceptance; RP03 has not started.
 
 ### A10-09 [ ] Validate, review and close out repairs
 

@@ -108,6 +108,70 @@ def checked_definition_groups(profile: dict) -> dict[str, list[str]]:
     return groups
 
 
+def checked_display_ownership(document: dict) -> None:
+    """Reject ambiguous product display ownership or mixed display families."""
+    families = document.get("display_families", {})
+    if not families:
+        raise SystemExit("display family declaration is missing")
+    family_sources: dict[str, set[str]] = {}
+    all_family_sources: set[str] = set()
+    for name, family in families.items():
+        sources = list(family.get("sources", []))
+        if not sources or len(sources) != len(set(sources)):
+            raise SystemExit(f"display family {name} has missing or duplicate sources")
+        overlap = all_family_sources.intersection(sources)
+        if overlap:
+            raise SystemExit(f"display family sources overlap: {sorted(overlap)}")
+        for source in sources:
+            checked_path(source)
+        family_sources[name] = set(sources)
+        all_family_sources.update(sources)
+
+    owners = [name for name, family in families.items()
+              if family.get("product_owner") is True]
+    if len(owners) != 1:
+        raise SystemExit(f"expected one product display family owner, found {owners}")
+
+    product_profiles = []
+    for name, profile in document.get("profiles", {}).items():
+        selected = set(profile["sources"])
+        forbidden = set(profile["forbidden_sources"])
+        family_name = profile.get("display_family")
+        role = profile.get("product_display_role")
+        if role not in {"product-owner", "bounded-qualification", "none"}:
+            raise SystemExit(f"profile {name} has unsupported product display role: {role}")
+        if family_name is None:
+            if role != "none" or selected.intersection(all_family_sources):
+                raise SystemExit(f"profile {name} has an undeclared display family")
+            continue
+        if family_name not in families:
+            raise SystemExit(f"profile {name} selects unknown display family: {family_name}")
+        missing = family_sources[family_name] - selected
+        if missing:
+            raise SystemExit(f"profile {name} omits display family sources: {sorted(missing)}")
+        alternatives = all_family_sources - family_sources[family_name]
+        mixed = selected.intersection(alternatives)
+        if mixed:
+            raise SystemExit(f"profile {name} mixes display families: {sorted(mixed)}")
+        unguarded = alternatives - forbidden
+        if unguarded:
+            raise SystemExit(f"profile {name} does not forbid alternate display sources: {sorted(unguarded)}")
+        if role == "product-owner":
+            product_profiles.append(name)
+            if family_name != owners[0]:
+                raise SystemExit(f"profile {name} does not select the product display family")
+        elif role == "bounded-qualification":
+            family = families[family_name]
+            if family.get("product_owner") or profile.get("status") != "nonrelease-diagnostic":
+                raise SystemExit(f"profile {name} is not a bounded nonrelease display profile")
+            if not family.get("bounded_owner") or len(family.get("retirement_conditions", [])) < 2:
+                raise SystemExit(f"display family {family_name} lacks a retirement contract")
+        else:
+            raise SystemExit(f"profile {name} selects a display family with role none")
+    if len(product_profiles) != 1:
+        raise SystemExit(f"expected one product display profile, found {product_profiles}")
+
+
 def render_component(profile: dict, common: dict, generated: Path,
                      asset_overrides: dict[str, Path]) -> None:
     sources = [checked_path(item) for item in profile["sources"]]
@@ -188,6 +252,7 @@ def main() -> None:
     if output.exists() or output.is_symlink():
         parser.error("output must be a fresh nonexisting path")
     document = json.loads(MANIFEST.read_text())
+    checked_display_ownership(document)
     try:
         profile = document["profiles"][args.profile]
     except KeyError:
@@ -299,6 +364,8 @@ def main() -> None:
     ]
     record = {
         "schema_version": 1, "profile": args.profile, "lcd": False,
+        "display_family": profile["display_family"],
+        "product_display_role": profile["product_display_role"],
         "build_id": args.build_id, "manifest_sha256": sha(MANIFEST),
         "idf_commit": IDF_COMMIT, "sdkconfig_sha256": sha(sdkconfig),
         "dependencies_lock_sha256": sha(lock),

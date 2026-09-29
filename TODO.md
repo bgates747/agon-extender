@@ -15,7 +15,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — The Author accepted RP01's minimal product-development profile and browser-oracle follow-up. RP02 now establishes the sole product display owner, extracts unique nonrelease test value and defines/enacts the alternative family's retirement boundary before pausing for acceptance. LCD support is reintroduced afterward as a separately reviewed delta.
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — RP02's candidate makes the stock-shaped family the sole product display owner, mechanically contains the older family to PORT-008 qualification, and defines its three-gate retirement boundary. Both native profiles and applicable host contracts pass; RP02 awaits Author acceptance before RP03. LCD support is reintroduced after the audit as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 

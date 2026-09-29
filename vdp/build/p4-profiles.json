@@ -1,5 +1,37 @@
 {
-  "schema_version": 1,
+  "schema_version": 2,
+  "display_families": {
+    "stock-shaped": {
+      "product_owner": true,
+      "sources": [
+        "video/extender/display/stock_native_access.cpp",
+        "video/extender/display/stock_p4_service.cpp",
+        "video/extender/display/stock_runtime_controller.cpp",
+        "video/extender/display/stock_scanline.cpp",
+        "video/extender/port/stock_render_utils.cpp"
+      ]
+    },
+    "port008-parallel-nonrelease": {
+      "product_owner": false,
+      "bounded_owner": "PORT-008",
+      "retirement_conditions": [
+        "PORT-008-2.e",
+        "PORT-008-2.f",
+        "A10-RP02-O03"
+      ],
+      "sources": [
+        "video/extender/display/logical_frame_service.cpp",
+        "video/extender/display/native_pixel_codec.cpp",
+        "video/extender/display/p4_display_controller.cpp",
+        "video/extender/display/p4_frame_service.cpp",
+        "video/extender/display/palette_state.cpp",
+        "video/extender/display/plane_storage.cpp",
+        "video/extender/display/presentation_compositor.cpp",
+        "video/extender/display/screen_facade_p4_binding.cpp",
+        "video/extender/port/fabutils_port.cpp"
+      ]
+    }
+  },
   "common": {
     "sdkconfig": "pio/p4-console.sdkconfig",
     "partition_table": "partitions.csv",
@@ -35,6 +67,8 @@
   "profiles": {
     "p4-console": {
       "status": "product-development",
+      "display_family": "stock-shaped",
+      "product_display_role": "product-owner",
       "sources": [
         "video/extender/boot/p4_console.cpp",
         "video/extender/display/cursor_position_adapter.cpp",
@@ -123,6 +157,8 @@
     },
     "p4-mos-recovery": {
       "status": "recovery",
+      "display_family": null,
+      "product_display_role": "none",
       "sources": ["video/extender/recovery/mos_recovery.cpp"],
       "forbidden_sources": [], "embedded_text": [],
       "definitions": ["AGON_EXTENDER_CANARY=1"], "dependencies": {},
@@ -130,6 +166,8 @@
     },
     "p4-port008-nonrelease-qualification": {
       "status": "nonrelease-diagnostic",
+      "display_family": "port008-parallel-nonrelease",
+      "product_display_role": "bounded-qualification",
       "sources": [
         "video/extender/boot/p4_parallel_qualification_vdp.cpp",
         "video/extender/display/cursor_position_adapter.cpp",
@@ -162,7 +200,12 @@
       "forbidden_sources": [
         "video/extender/boot/p4_browser_vdp.cpp",
         "video/extender/transport/disconnected_stream.cpp",
-        "video/extender/transport/forward_parallel_stream.cpp"
+        "video/extender/transport/forward_parallel_stream.cpp",
+        "video/extender/display/stock_native_access.cpp",
+        "video/extender/display/stock_p4_service.cpp",
+        "video/extender/display/stock_runtime_controller.cpp",
+        "video/extender/display/stock_scanline.cpp",
+        "video/extender/port/stock_render_utils.cpp"
       ],
       "embedded_text": [
         "video/extender/web/index.html", "video/extender/web/style.css",

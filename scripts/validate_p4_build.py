@@ -9,7 +9,7 @@ from pathlib import Path
 import shlex
 import sys
 
-from build_p4 import checked_definition_groups
+from build_p4 import checked_definition_groups, checked_display_ownership
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -28,6 +28,7 @@ def main() -> None:
     args = parser.parse_args()
     output = args.output.resolve()
     document = json.loads(PROFILES.read_text())
+    checked_display_ownership(document)
     if args.profile not in document["profiles"]:
         parser.error("unknown profile")
     profile = document["profiles"][args.profile]
@@ -99,6 +100,8 @@ def main() -> None:
     report = {
         "schema_version": 1,
         "profile": args.profile,
+        "display_family": profile["display_family"],
+        "product_display_role": profile["product_display_role"],
         "lcd": False,
         "compile_actions": len(commands),
         "selected_sources": len(selected),

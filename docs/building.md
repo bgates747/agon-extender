@@ -30,6 +30,14 @@ rejects excluded definitions on compiled sources. Do not enable a diagnostic or
 experiment by editing the ordinary profile. A recurring diagnostic requires an
 explicitly named profile and owning task contract.
 
+The same manifest declares the selected stock-shaped display family as the
+single product display owner. `p4-port008-nonrelease-qualification` selects a
+different, older family solely to close PORT-008's bounded provenance and
+retained-parser work; it is not a product, deployment, fallback or repair
+target. The builder rejects mixed display families, a second product owner, or
+a non-release family without an explicit task owner and retirement contract.
+Do not copy a product display fix into the non-release family.
+
 An identified build uses a project-approved ID in place of the unversioned
 sentinel and requires a clean committed checkout. The wrapper rejects an
 existing output, a wrong ESP-IDF checkout, unsafe manifest paths, unsupported
