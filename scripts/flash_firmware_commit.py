@@ -71,9 +71,10 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
     snapshot, firmware, manifest = build_emos(config, commit, run)
     url = config["extender_url"]
     reset_config = Path(config["reset_config"]).resolve(strict=True)
+    before_reset = wait_keyboard(url)
     subprocess.run([str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
                     "--config", str(reset_config)], check=True)
-    ready = wait_keyboard(url)
+    wait_keyboard(url, old_boot=before_reset["boot"])
     type_line(url, run / "keyboard-clear.json", "VDU 12")
     type_line(url, run / "keyboard-legacy.json", "EMOS LEGACY")
     type_line(url, run / "keyboard-service.json", "EMOS sdserve --fast /")
@@ -91,7 +92,7 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
         client.rpc(11)
     finally:
         client.lock.close()
-    old_boot = ready["boot"]
+    old_boot = wait_keyboard(url)["boot"]
     type_line(url, run / "keyboard-flash.json", f"FLASH mos {target} -f")
     wait_keyboard(url, old_boot=old_boot, timeout=100)
 

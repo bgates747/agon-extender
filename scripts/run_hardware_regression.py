@@ -85,6 +85,12 @@ def parse_result(data: bytes) -> dict[str, str]:
     return result
 
 
+def reset_and_wait(reset: list[str], url: str) -> dict:
+    before = wait_keyboard(url)
+    subprocess.run(reset, check=True)
+    return wait_keyboard(url, old_boot=before["boot"])
+
+
 def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     output.mkdir(parents=True, exist_ok=False)
     receipt_source = Path(receipt["component_snapshot"]).resolve(strict=True)
@@ -115,8 +121,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
 
     # Start from the reviewed default startup, then use the service only long
     # enough to stage the one-shot startup and fixture.
-    subprocess.run(reset, check=True)
-    wait_keyboard(url)
+    reset_and_wait(reset, url)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
     type_line(url, output / "keyboard-stage-service.json", "EMOS sdserve --fast /")
@@ -149,13 +154,17 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         client.lock.close()
 
     started = time.monotonic()
+    before_test_boot = wait_keyboard(url)["boot"]
     subprocess.run(reset, check=True)
     try:
         client = wait_sd_service(url, output / "sd-result.json", timeout=120)
     except TimeoutError:
         # The fixture disarms its one-shot startup before raw access. One reset
         # therefore enters its recovery service rather than replaying the test.
+        wait_keyboard(url, old_boot=before_test_boot)
+        recovery_boot = wait_keyboard(url)["boot"]
         subprocess.run(reset, check=True)
+        wait_keyboard(url, old_boot=recovery_boot)
         client = wait_sd_service(url, output / "sd-result-recovery.json", timeout=60)
     result_data = b""
     result_error = None
@@ -176,8 +185,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         client.lock.close()
     if cleanup_error:
         raise RuntimeError(f"RP04 collection/startup restoration failed: {cleanup_error}")
-    subprocess.run(reset, check=True)
-    wait_keyboard(url)
+    reset_and_wait(reset, url)
     if result_error:
         raise RuntimeError(f"RP04 result collection failed after startup restoration: {result_error}")
     parsed = parse_result(result_data)
