@@ -51,6 +51,23 @@ dependency lock and assertion evidence; do not repair that LCD-inclusive
 candidate before the audit. If the native pre-LCD build reproduces the same
 assertion, diagnose it there as a BUILD-001 migration defect.
 
-B01-HR05 [ ] Prepare a new hardware procedure for the immutable pre-LCD native
+B01-HR05 [x] Prepare a new hardware procedure for the immutable pre-LCD native
 candidate with EMOS v0.1.23, exact replacement identity and unchanged rollback
 boundary before another flash authorization request.
+
+## B01-HR06 — pre-LCD boot result
+
+B01-HR06 [x] Candidate `build001-595286dd-console-prelcd` reproduced the exact
+same startup failure without any selected LCD source, definition or dependency.
+Serial identified the expected clean pre-LCD application and then repeatedly
+asserted at `sdio_mempool_create sdio_drv.c:258 (buf_mp_g)`. This rules out the
+LCD implementation as a necessary cause of the boot loop. The defect belongs to
+BUILD-001's native ESP-IDF dependency/configuration/initialization boundary and
+must be diagnosed there before another candidate is prepared.
+
+B01-HR07 [ ] Compare the native and working hybrid r61 `esp_hosted`, remote-Wi-Fi
+and SDIO component selection, linker retention, initialization registration and
+Kconfig closure. Explain why native whole-archive linkage reaches
+`sdio_mempool_create` without its required pool, then implement the smallest
+build-boundary correction with host evidence. Do not alter product behavior or
+reintroduce LCD while resolving this migration defect.

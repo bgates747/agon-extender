@@ -1,8 +1,8 @@
 # BUILD-001 pre-LCD native boot procedure
 
-State: authorized by the Author's 2026-09-28 direction to flash the prepared
-pre-LCD build and determine whether it boots. This is a boot canary, not
-functional equivalence, audit-baseline acceptance or production promotion.
+State: executed 2026-09-28; candidate failed the boot canary and selected
+production P4 firmware was restored. This is not functional equivalence,
+audit-baseline acceptance or production promotion.
 
 ## Exact candidate and rollback
 
@@ -26,28 +26,40 @@ Generated flash arguments select DIO, 80 MHz and 16 MiB with these exact inputs:
 
 ## Boot-only execution
 
-B01-PB01 [ ] Reverify the expected revision-v1.3 P4 stable USB identity,
+B01-PB01 [x] Reverify the expected revision-v1.3 P4 stable USB identity,
 candidate manifest and all local/remote staged hashes. Reverify the selected
 production rollback archive before mutation.
 
-B01-PB02 [ ] Confirm the current EMOS v0.1.23 development baseline has admitted
+B01-PB02 [x] Confirm the current EMOS v0.1.23 development baseline has admitted
 Extender input and a recoverable Legacy CLI. At that prompt clear the Legacy
 screen with `VDU 12`. Do not modify EMOS, startup or SD files.
 
-B01-PB03 [ ] Flash only the P4 using the candidate's generated arguments. Keep
+B01-PB03 [x] Flash only the P4 using the candidate's generated arguments. Keep
 the P4 in the loader until every written region independently compares with its
 input, then hard-reset it once.
 
-B01-PB04 [ ] Capture bounded serial startup. Passing this canary requires exact
+B01-PB04 [x] Capture bounded serial startup. Passing this canary requires exact
 application identity `595286dd`, completion beyond application initialization,
 no panic/assert/reset loop, and restoration of the HTTP status endpoint. Do not
 start an LCD, ExCom, fixture, browser-viewer or game test in this run.
 
-B01-PB05 [ ] On boot failure, stop immediately and restore/independently verify
+B01-PB05 [x] On boot failure, stop immediately and restore/independently verify
 the selected production P4 image. Issue one ordinary Agon reset only if needed
 to restore fresh EMOS admission. Invoke the established Legacy failure cue and
 leave a concise failure identity visible.
 
-B01-PB06 [ ] On boot success, leave the candidate installed and report the
+B01-PB06 [x] On boot success, leave the candidate installed and report the
 bounded result for Author review. A later exact procedure and authorization are
 still required for functional equivalence.
+
+Execution disposition: B01-PB01 through B01-PB03 passed. B01-PB04 is checked as
+disposed by failure: serial repeatedly identified application `595286dd`, ELF
+prefix `954196438` and ESP-IDF v5.5.5, then asserted at
+`sdio_mempool_create sdio_drv.c:258 (buf_mp_g)` and rebooted before services
+initialized. B01-PB05 passed. B01-PB06 is checked as inapplicable/disposed; the
+candidate was not left installed.
+
+The selected production r55 image was restored and all four regions matched
+before boot. One ordinary Agon reset restored fresh ready/neutral Extender
+input. The accepted Legacy spoken failure cue ran before the final visible
+`BUILD-001 PRELCD FAIL: SDIO INIT` line. EMOS and SD files were unchanged.

@@ -266,6 +266,12 @@ safely; see [HARDWARE-RESULTS.md](BUILD-001/HARDWARE-RESULTS.md). No functional
 equivalence subitem passed. A corrected immutable candidate and reviewed
 procedure dependency are required before B01-06 resumes.
 
+The subsequent native pre-LCD boot canary failed at the identical
+`sdio_mempool_create` assertion. Because that candidate selected no LCD source
+or dependency, LCD is no longer a candidate cause of this boot loop. B01-HR07
+owns diagnosis of the native `esp_hosted`/SDIO build boundary before another
+hardware candidate.
+
 B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
 keyboard/input, SD service, browser service and clean recovery using targeted
 tests chosen to detect build-migration regressions. Do not enable or test LCD in
