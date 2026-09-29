@@ -339,40 +339,48 @@ build, target or hardware operation was used, and no conclusion authorizes a
 repair or physical diagnostic. Proceed through the later Author clarification
 in A10-05a before findings assembly under A10-06 and the Author review gate.
 
-### A10-05a [ ] Source lineage and functional-duplication reconciliation
+### A10-05a [x] Source lineage and functional-duplication reconciliation
 
 Added by Author clarification on 2026-09-29 after the initial A10-05 manual
 pass. Complete this bounded reconciliation before A10-06 assigns final finding
 IDs. It supplements rather than discards the A10-05 conclusions and does not
 authorize implementation changes.
 
-A10-05a01 [ ] Classify every retained A10-MR conclusion and every applicable existing
+A10-05a01 [x] Classify every retained A10-MR conclusion and every applicable existing
    FWBUG input as `upstream-unchanged`, `upstream-ported/adapted`, or
    `project-new`. Record the exact source/reference boundary and the actor that
    owns any eventual repair.
 
-A10-05a02 [ ] For every closely ported/adapted function, compare the selected local
+A10-05a02 [x] For every closely ported/adapted function, compare the selected local
    implementation with the applicable upstream implementation and distinguish
    inherited behavior from port-introduced behavior. Handle the two origins as
    separate findings or repair items when their owners or remedies differ.
 
-A10-05a03 [ ] For every project-new function or capability implicated by a conclusion,
+A10-05a03 [x] For every project-new function or capability implicated by a conclusion,
    search the selected official VDP/MOS source and bundled upstream/component
    interfaces for an existing implementation before proposing new code. Record
    reuse, adaptation or the exact missing contract that justifies a new owner.
    This is a current-source comparison, not permission to inspect history.
 
-A10-05a04 [ ] Search the project-owned P4, EMOS, host-tool and active-fixture closure
+A10-05a04 [x] Search the project-owned P4, EMOS, host-tool and active-fixture closure
    for materially equivalent functions, services, state machines and resource
    owners. Distinguish intentional target-specific adapters from functional
    duplicates. Record the canonical owner and consolidation/removal condition
    for every duplicate candidate.
 
-A10-05a05 [ ] Publish the complete classification and comparison evidence in
+A10-05a05 [x] Publish the complete classification and comparison evidence in
    `AUDIT-010/LINEAGE-AND-DUPLICATION.md`. Every retained A10-06 finding and
    every proposed repair must reference its lineage result; unresolved
    equivalence becomes an explicit finding/validation question rather than an
    assumed reason to rewrite code.
+
+Completed on 2026-09-29. The current-source comparison is recorded in
+[LINEAGE-AND-DUPLICATION.md](AUDIT-010/LINEAGE-AND-DUPLICATION.md). It classifies
+all eleven A10-MR conclusions and all seven applicable FWBUG inputs, separates
+inherited behavior from P4 adaptations, checks every project-new conclusion
+against selected upstream facilities, and records thirteen duplicate/parallel
+implementation candidates with canonical owners or explicit dispositions. No
+history, executable change, build, target or hardware operation was used.
 
 ### A10-06 [ ] Findings and independent validation proposals
 
