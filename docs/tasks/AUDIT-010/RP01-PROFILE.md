@@ -16,8 +16,7 @@ excluded definition on an actual compile action. No new maintained diagnostic
 profile is created: the removed probes remain default-off source facilities and
 frozen task evidence, not an accepted recurring configuration.
 
-State: implementation and host/build validation complete; Author acceptance
-pending before RP02.
+State: accepted by the Author on 2026-09-29. RP02 may proceed.
 Finding: `AUDIT-010-F005`. Plan item: `A10-RP01`.
 
 ## Definition disposition
@@ -125,5 +124,6 @@ path and accepted `rle2=1`/`packed=2` negotiation parameters instead of requirin
 the URL to end before its query. Both complete browser suites pass; no product
 asset or behavior changed.
 
-No physical hardware state changed. RP01 now stops for Author acceptance under
-`A10-RP-C02`; RP02 has not started.
+No physical hardware state changed. The Author accepted RP01 after reviewing
+the implementation, build/host evidence and browser-oracle follow-up. RP02 is
+now authorized under `A10-RP-C02`.

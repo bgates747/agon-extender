@@ -164,13 +164,17 @@ written or a test launched.
 
 ### Authority prerequisites
 
-`A10-RP01` [ ] **F005 — Minimal authoritative product-development profile.**
+`A10-RP01` [x] **F005 — Minimal authoritative product-development profile.**
 Classify every selected definition/source as required, diagnostic or rejected;
 move retained diagnostics to explicitly named profiles; reject conflicting draw
 flags; rebuild the native graph and prove one deterministic ordinary profile.
 Validation: manifest/profile tests, native build, linked-source/definition graph
 and unchanged required service inventory. This medium item precedes high repairs
 because all later build and test identities depend on it.
+
+Accepted by the Author on 2026-09-29 after the minimal-profile build/graph and
+neighbor regressions passed and the audit-impacting browser oracles were repaired
+and rerun. Implementation commits: `2105f50b`, `36131e8d`.
 
 `A10-RP02` [ ] **F012 — Sole product display owner and retirement boundary.**
 Confirm the selected stock-shaped display family as product owner, inventory and

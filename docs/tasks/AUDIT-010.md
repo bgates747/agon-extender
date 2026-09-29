@@ -439,9 +439,9 @@ correction changes those authorities. Use source-contract and host validation
 during implementation, but do not claim physical behavior from compilation or
 static analysis.
 
-RP01's minimal-profile candidate and host/build evidence are complete in
-[RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md). It awaits Author acceptance under
-the frozen per-item pause; RP02 has not begun.
+The Author accepted RP01's minimal profile and host/build evidence on 2026-09-29;
+see [RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md). RP02 is authorized as the sole
+active repair item and will stop for acceptance before RP03.
 
 ### A10-09 [ ] Validate, review and close out repairs
 
