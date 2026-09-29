@@ -37,7 +37,7 @@ listed.
 
 | ID | Owner / capability | Calculated or configured demand | Lifetime and contiguous-allocation rule | Static limit not captured |
 |---|---|---:|---|---|
-| A10-RES01 | Stock presentation pool / PSRAM + 8-bit | 3 x (1024 x 768 x 1) = **2,359,296 B** | Product lifetime after first controller creation; three separate **786,432 B** contiguous allocations; all three must succeed or the optional pool disables and frees earlier slots. | Pool object, mutex and allocator metadata. |
+| A10-RES01 | Stock presentation pool / PSRAM + 8-bit | 3 x (1024 x 768 x 1) = **2,359,296 B** | Product lifetime after first controller creation; three separate **786,432 B** contiguous allocations. The pool frees earlier slots and disables if any allocation fails, but A10-05 found that `StockP4Service::attach` then refuses every display mode: operationally this is mandatory, not optional. | Pool object, mutex and allocator metadata. |
 | A10-RES02 | Browser codec scratch / PSRAM + 8-bit | pair **786,432 B**; packed **589,828 B**; RLE2 **786,446 B**; total **2,162,706 B** | HTTP-service lifetime after first start; three separate persistent blocks; allocation failure disables only that encoding. | Codec/object metadata and HTTP/lwIP buffers. |
 | A10-RES03 | Mode 8 VGA64 native plane / normally PSRAM + 8-bit | 320 x 240 = **76,800 B** single-buffer plane | Mode lifetime; allocator may split rows over at most 128 pools while retaining a 4,000 B largest-block reserve. Each pool is individually contiguous. | Up to 129 pool pointers; allocator metadata. |
 | A10-RES04 | Mode 20 VGA64 native plane / internal diagnostic policy, else PSRAM | 512 x 384 = **196,608 B** single-buffer plane | Mode lifetime. Active profile tries internal pools only for 512x384, requires total internal free >= 200,608 B, and rejects a shortened allocation before PSRAM fallback. | Capability overlap means this cannot be added blindly to general 8-bit free memory. |
@@ -102,6 +102,11 @@ A10-RV03 — The three maximum-size snapshot slots are also eagerly allocated at
 first display-service construction. Their fixed capacity makes ownership safe,
 but A10-05 must review whether product-lifetime maximum dimensions are required
 for an on-demand consumer.
+
+**A10-05 correction:** `StockP4Service::attach` requires the pool to be enabled.
+The pool's internal failure path disables cleanly, but the selected stock display
+cannot then attach, so this allocation is operationally mandatory. See
+`MANUAL-REVIEW.md` A10-MR02.
 
 A10-RV04 — WebDAV startup can create its accept task before application-task
 creation fails. The source returns failure without an evident rollback of the

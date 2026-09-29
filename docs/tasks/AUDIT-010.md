@@ -310,7 +310,7 @@ in the ignored local task silo because they contain machine-local paths. No
 candidate is yet a confirmed finding or authorization to repair. Proceed to
 the complete A10-05 review before findings assembly.
 
-### A10-05 [ ] Manual integration review
+### A10-05 [x] Manual integration review
 
 Review every coverage-ledger area using A10-01's risk checklist and A10-03's maps.
 Trace ownership and failure behavior across files and tasks rather than limiting
@@ -319,6 +319,14 @@ official contracts and accepted decisions. Look specifically for incremental
 features that reserve resources globally, silently fall back, leave stale
 published state, conflate logical completion with physical presentation, or
 make unrelated services depend on allocation order.
+
+Completed on 2026-09-29. [MANUAL-REVIEW.md](AUDIT-010/MANUAL-REVIEW.md)
+records the complete disposition of all 35 coverage rows and all eleven A10-04
+candidates. It carries eleven manual-review conclusions plus the applicable
+existing firmware-bug identities into A10-06. No history, executable source,
+build, target or hardware operation was used, and no conclusion authorizes a
+repair or physical diagnostic. Proceed to complete findings assembly under
+A10-06 before the Author review gate.
 
 ### A10-06 [ ] Findings and independent validation proposals
 
