@@ -70,6 +70,36 @@ def require_directory(client, path: str) -> None:
         raise RuntimeError(f"required SD path is not a directory: {path}")
 
 
+def close_retained_backup(client, path: str, evidence: Path) -> None:
+    from sdcard import path_payload
+    flags = client.rpc(10, b"\0" + path_payload(path))[0]
+    if flags & 8:
+        evidence.write_bytes(client.download(path + ".p17bak"))
+        if flags != 9:
+            raise RuntimeError(f"{path}: unsafe transfer-recovery state 0x{flags:02x}")
+        remaining = client.rpc(10, b"\3" + path_payload(path))
+        if remaining != b"\x01":
+            raise RuntimeError(f"{path}: retained-backup close returned {remaining.hex()}")
+
+
+def remove_if_present(client, path: str) -> None:
+    from sdcard import RemoteError
+    try:
+        client.stat_entry(path)
+    except RemoteError as error:
+        if error.status == 6 and error.detail in (b"\x04", b"\x05"):
+            return
+        raise
+    client.remove(path)
+    try:
+        client.stat_entry(path)
+    except RemoteError as error:
+        if error.status == 6 and error.detail in (b"\x04", b"\x05"):
+            return
+        raise
+    raise RuntimeError(f"{path}: stale result remained after removal")
+
+
 def parse_result(data: bytes) -> dict[str, str]:
     result = {}
     for raw in data.decode("ascii").splitlines():
@@ -81,7 +111,8 @@ def parse_result(data: bytes) -> dict[str, str]:
         result[key] = value
     required = {"schema", "case", "status", "sector", "test_rc", "restore_rc",
                 "restore_verify_rc", "before_crc32", "pattern_crc32",
-                "observed_crc32", "restored_crc32"}
+                "observed_crc32", "restored_crc32", "detail",
+                "first_partition_lba", "write_attempted"}
     if set(result) != required or result["schema"] != "1":
         raise ValueError("physical result has the wrong schema")
     return result
@@ -134,16 +165,20 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         original_startup = client.download("/autoexec.txt")
         for directory in ("/extender/fixtures", "/agents/extender/results"):
             require_directory(client, directory)
+        remove_if_present(client, "/agents/extender/results/a10-rp04.txt")
         target = "/extender/fixtures/FWBUG008.bin"
+        close_retained_backup(client, target, output / "prior-fixture-backup.bin")
         client.upload(target, binary.read_bytes(), True, fast=True)
         if client.download(target) != binary.read_bytes():
             raise RuntimeError("RP04 fixture fast transfer failed independent readback")
+        close_retained_backup(client, target, output / "replaced-fixture-backup.bin")
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
                    b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n"
                    b"EMOS sdserve --fast /\r\n")
         client.upload("/autoexec.txt", startup, True, fast=True)
         if client.download("/autoexec.txt") != startup:
             raise RuntimeError("one-shot startup failed independent readback")
+        close_retained_backup(client, "/autoexec.txt", output / "original-autoexec.txt")
         staged = True
         client.rpc(11)
     finally:
@@ -179,6 +214,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         client.upload("/autoexec.txt", original_startup, True, fast=True)
         if client.download("/autoexec.txt") != original_startup:
             raise RuntimeError("original startup restoration failed independent readback")
+        close_retained_backup(client, "/autoexec.txt", output / "recovery-autoexec.txt")
         client.rpc(11)
     except BaseException as error:
         cleanup_error = error
@@ -192,15 +228,17 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     parsed = parse_result(result_data)
     record = {
         "id": "a10-rp04-raw-sd-write", "component": "emos",
-        "status": "pass" if parsed["status"] == "pass" else "test-failure",
+        "status": ("infrastructure-error" if parsed["status"] == "infrastructure-error"
+                   else "pass" if parsed["status"] == "pass" else "test-failure"),
         "duration_seconds": time.monotonic() - started,
         "flashed_commit": receipt["component_commit"],
         "flashed_artifact_sha256": receipt["artifact_sha256"],
         "fixture_sha256": binary_hash, "oracle": parsed,
         "startup_restored": True,
     }
-    if parsed["restore_rc"] != "0" or parsed["restore_verify_rc"] != "0" or \
-            parsed["before_crc32"] != parsed["restored_crc32"]:
+    if parsed["write_attempted"] == "1" and (
+            parsed["restore_rc"] != "0" or parsed["restore_verify_rc"] != "0" or
+            parsed["before_crc32"] != parsed["restored_crc32"]):
         record["status"] = "infrastructure-error"
         record["critical"] = "raw sector restoration was not independently verified"
     return record
@@ -278,7 +316,7 @@ def main() -> int:
         emos_source = Path(config["emos_repository"]).resolve(strict=True)
         emos_commit = resolve_commit(emos_source, args.emos_commit)
         emos = clean_snapshot(emos_source, emos_commit, run / "source-emos")
-    announce("RUN retained 54-case regression suite")
+    announce("RUN retained regression suite")
     retained = run_retained_suite(extender, emos, run / "retained-suite")
     announce("RETAINED " + retained["status"].upper())
 

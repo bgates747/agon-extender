@@ -39,6 +39,7 @@ class HardwareValidationTests(unittest.TestCase):
             b"test_rc=0\nrestore_rc=0\nrestore_verify_rc=0\n"
             b"before_crc32=12345678\npattern_crc32=87654321\n"
             b"observed_crc32=87654321\nrestored_crc32=12345678\n"
+            b"detail=completed\nfirst_partition_lba=8192\nwrite_attempted=1\n"
         )
         self.assertEqual(runner.parse_result(record)["status"], "pass")
         with self.assertRaisesRegex(ValueError, "wrong schema"):
