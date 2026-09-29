@@ -213,10 +213,11 @@ duplicate it in Extender. Validation: existing emulator/host controls, rebuilt
 EMOS identity, and a separately authorized physical destructive-sector test
 using a disposable controlled sector with restoration evidence.
 
-Candidate complete; see [RP04-RAW-SD-WRITE.md](RP04-RAW-SD-WRITE.md). Source,
-linked-image and four independent raw-image cases pass. RP04 is paused for
-Author acceptance. The physical destructive-sector test remains separately
-gated and was not run.
+Candidate and two-command hardware workflow complete; see
+[RP04-RAW-SD-WRITE.md](RP04-RAW-SD-WRITE.md). Source, linked-image, four
+independent raw-image cases, exact-commit build and the expanded 55-case
+retained closure pass. RP04 now awaits the commit-pinned flash and registered
+physical raw-sector case; RP05 remains unauthorized.
 
 `A10-RP05` [ ] **F001a — Checked display allocations.** Add complete failure
 checks and local cleanup for inherited viewport pool/table and paletted DMA-row

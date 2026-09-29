@@ -71,6 +71,16 @@ the repaired API's effects, restores through the distinct C dispatch, and
 independently verifies the exact restored bytes. Tool/fixture structural tests
 and a target build pass; no physical write has yet run.
 
+`A10-RP04-R08` [x] Frozen-tool dry runs rebuild EMOS commit
+`19b8b6f9e9983190edb7b0beca95355e257b6851` from fresh EMOS and MOS-builder
+snapshots. The identified 128,579-byte image has SHA-256
+`2cf26c42ee956b95c6e4a732ddaebc108b4864ffb89c34bb02034ea17fe897e1`;
+the exact-commit 10,288-byte physical fixture has SHA-256
+`ebdaabf78ef01974df64d5744e34edea05d3c1231eb4a99e167077ee63baa6fd`.
+The expanded retained closure at Extender commit `87d8eabb` passes all 55 cases
+in 143.86 monotonic seconds with zero failure, infrastructure error, timeout or
+blocked case. These are preparation gates, not physical RP04 acceptance.
+
 ## Acceptance boundary
 
 `A10-RP04-A01` [x] The selected headless emulator cases passed. The Author then
