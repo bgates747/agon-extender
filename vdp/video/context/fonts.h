@@ -2,6 +2,7 @@
 #define CONTEXT_FONTS_H
 
 #include <algorithm>
+#include <bitset>
 
 #ifdef AGON_EXTENDER_P4_BOOT
 #include "extender/compat/p4_vdp_gl.hpp"
@@ -18,15 +19,15 @@
 // Get pointer to our currently selected font
 //
 const fabgl::FontInfo * Context::getFont() {
-	return font == nullptr ? canvas->getFontInfo() : font.get();
+	return font == nullptr ? canvas->getFontInfo() : &font->info;
 }
 
-void Context::changeFont(std::shared_ptr<fabgl::FontInfo> newFont, std::shared_ptr<BufferStream> fontData, uint8_t flags) {
+void Context::changeFont(std::shared_ptr<AgonManagedFont> newFont, uint8_t flags) {
 	if (ttxtMode) {
 		debug_log("changeFont: teletext mode does not support font changes\n\r");
 		return;
 	}
-	auto newFontPtr = newFont == nullptr ? &FONT_AGON : newFont.get();
+	auto newFontPtr = newFont == nullptr ? &FONT_AGON : &newFont->info;
 	auto oldFontPtr = getFont();
 
 	if (newFontPtr->flags & FONTINFOFLAGS_VARWIDTH) {
@@ -63,21 +64,10 @@ void Context::changeFont(std::shared_ptr<fabgl::FontInfo> newFont, std::shared_p
 	font = newFont;
 	if (textCursorActive()) {
 		textFont = newFont;
-		textFontData = fontData;
 		updateTextCursorBitmap();
 	} else {
 		graphicsFont = newFont;
-		graphicsFontData = fontData;
 	}
-}
-
-bool Context::cmpChar(uint8_t * c1, uint8_t *c2, uint8_t len) {
-	for (uint8_t i = 0; i < len; i++) {
-		if (*c1++ != *c2++) {
-			return false;
-		}
-	}
-	return true;
 }
 
 char Context::getScreenChar(Point p) {
@@ -86,8 +76,11 @@ char Context::getScreenChar(Point p) {
 		debug_log("getScreenChar: variable width fonts not supported\n\r");
 		return 0;
 	}
-	uint8_t fontWidth = fontPtr->width;
-	uint8_t fontHeight = fontPtr->height;
+	const uint8_t fontWidth = fontPtr->width;
+	const uint8_t fontHeight = fontPtr->height;
+	if (fontWidth == 0 || fontHeight == 0) {
+		return 0;
+	}
 
 	// Do some bounds checking first
 	//
@@ -98,18 +91,19 @@ char Context::getScreenChar(Point p) {
 		return ttxt_instance.get_screen_char(p.X, p.Y);
 	} else {
 		waitPlotCompletion();
-		uint8_t charWidthBytes = (fontWidth + 7) / 8;
-		uint8_t charSize = charWidthBytes * fontHeight;
-		uint8_t	charData[charSize];
+		const std::size_t charWidthBytes = (std::size_t(fontWidth) + 7) / 8;
+		std::bitset<256> candidates;
+		candidates.set();
 		uint8_t R = tbg.R;
 		uint8_t G = tbg.G;
 		uint8_t B = tbg.B;
 
-		// Now scan the screen and get the 8 byte pixel representation in charData
+		// Scan the screen once and discard nonmatching characters byte by byte.
+		// The fixed 256-bit candidate set replaces application-sized stack scratch.
 		//
-		for (uint8_t y = 0; y < fontHeight; y++) {
+		for (std::size_t y = 0; y < fontHeight; y++) {
 			uint8_t readByte = 0;
-			for (uint8_t x = 0; x < fontWidth; x++) {
+			for (std::size_t x = 0; x < fontWidth; x++) {
 				if ((x % 8) == 0) {
 					readByte = 0;
 				}
@@ -117,11 +111,16 @@ char Context::getScreenChar(Point p) {
 				if (!(pixel.R == R && pixel.G == G && pixel.B == B)) {
 					readByte |= (0x80 >> (x % 8));
 				}
-				if ((x % 8) == 7) {
-					charData[(y * charWidthBytes) + (x / 8)] = readByte;
+				if ((x % 8) == 7 || x + 1 == fontWidth) {
+					const std::size_t byteIndex = y * charWidthBytes + x / 8;
+					for (std::size_t character = 0; character < 256; ++character) {
+						if (candidates[character] &&
+							getCharPtr(font, static_cast<uint8_t>(character))[byteIndex] != readByte) {
+							candidates.reset(character);
+						}
+					}
 				}
 			}
-			charData[((y + 1) * charWidthBytes) - 1] = readByte;
 		}
 
 		// Finally try and match with the character set array
@@ -132,7 +131,7 @@ char Context::getScreenChar(Point p) {
 		//
 		for (auto i = 32; i <= (255 + 31); i++) {
 			uint8_t c = i & 0xFF;
-			if (cmpChar(charData, getCharPtr(font, c), charSize)) {
+			if (candidates[c]) {
 				debug_log("getScreenChar: matched character %d\n\r", c);
 				return c;
 			}
@@ -165,8 +164,7 @@ void Context::changeFont(uint16_t newFontId, uint8_t flags) {
 	}
 
 	auto newFont = isSystemFont ? nullptr : fonts[newFontId];
-	auto fontData = isSystemFont ? nullptr : buffers[newFontId][0];
-	changeFont(newFont, fontData, flags);
+	changeFont(newFont, flags);
 }
 
 void Context::resetFonts() {
@@ -176,8 +174,6 @@ void Context::resetFonts() {
 	font = nullptr;
 	textFont = nullptr;
 	graphicsFont = nullptr;
-	textFontData = nullptr;
-	graphicsFontData = nullptr;
 	setCharacterOverwrite(textCursorActive() && !transparentText);
 
 	// reset the text cursor sprite, as it's size may have changed

@@ -199,6 +199,10 @@ maximum/short/mutated/destroyed-offset cases, screen-character capture, P4
 compile and declared neighboring text regressions. Upstream publication remains
 a separate decision.
 
+Candidate complete; see [RP03-MUTABLE-FONTS.md](RP03-MUTABLE-FONTS.md).
+Sanitizer, screen-capture, neighboring renderer/text and actual selected P4
+build evidence pass. RP03 is paused for Author acceptance; RP04 has not started.
+
 `A10-RP04` [ ] **FWBUG-008 — EMOS raw SD write dispatch.** Correct only the
 EMOS/MOS API wrapper so valid write requests invoke the write path and preserve
 status/ABI behavior. Reuse the owning mos-tests fixture and controls; do not

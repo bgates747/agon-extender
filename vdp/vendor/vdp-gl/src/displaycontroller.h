@@ -2306,7 +2306,6 @@ protected:
     int16_t glyphHeight       = glyph.height;
     uint8_t const * glyphData = glyph.data;
     int16_t glyphWidthByte    = (glyphWidth + 7) / 8;
-    int16_t glyphSize         = glyphHeight * glyphWidthByte;
 
     bool fillBackground = glyphOptions.fillBackground;
     bool bold           = glyphOptions.bold;
@@ -2315,17 +2314,10 @@ protected:
     bool underline      = glyphOptions.underline;
     int doubleWidth     = glyphOptions.doubleWidth;
 
-    // modify glyph to handle top half and bottom half double height
-    // doubleWidth = 1 is handled directly inside drawing routine
-    if (doubleWidth > 1) {
-      uint8_t * newGlyphData = (uint8_t*) alloca(glyphSize);
-      // doubling top-half or doubling bottom-half?
-      int offset = (doubleWidth == 2 ? 0 : (glyphHeight >> 1));
-      for (int y = 0; y < glyphHeight ; ++y)
-        for (int x = 0; x < glyphWidthByte; ++x)
-          newGlyphData[x + y * glyphWidthByte] = glyphData[x + (offset + (y >> 1)) * glyphWidthByte];
-      glyphData = newGlyphData;
-    }
+    // Double-height rows are selected directly from the source. The previous
+    // application-sized alloca could consume nearly the P4 drawing task's stack.
+    const int doubleHeightOffset = doubleWidth > 1
+      ? (doubleWidth == 2 ? 0 : (glyphHeight >> 1)) : 0;
 
     // a very simple and ugly skew (italic) implementation!
     int skewAdder = 0, skewH1 = 0, skewH2 = 0;
@@ -2393,7 +2385,8 @@ protected:
       bool prevSet = false;
 
       auto dstrow = rawGetRow(destY);
-      auto srcrow = glyphData + y * glyphWidthByte;
+      const int sourceY = doubleWidth > 1 ? doubleHeightOffset + (y >> 1) : y;
+      auto srcrow = glyphData + sourceY * glyphWidthByte;
 
       if (underline && y == glyphHeight - FABGLIB_UNDERLINE_POSITION - 1) {
 
@@ -3079,5 +3072,4 @@ protected:
 
 
 } // end of namespace
-
 

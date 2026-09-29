@@ -15,12 +15,16 @@
 #endif
 
 #include "agon.h"
+#include "managed_font.h"
 #include "sprites.h"
 
 extern bool isVDPVariableSet(uint16_t flag);
 extern uint16_t getVDPVariable(uint16_t flag);
 extern void setVDPVariable(uint16_t flag, uint16_t value);
 uint		lastFrameCounter = 0;			// Last frame counter for VSYNC callbacks
+
+class BufferStream;
+using AgonManagedFont = ManagedFont<fabgl::FontInfo, BufferStream>;
 
 // Type declarations for ContextVector and ContextVectorPtr are after the Context class
 // contextStacks global variable also defined after the Context class
@@ -60,11 +64,9 @@ class Context {
 	private:
 		// Font tracking
 		// "activating" a context will need to set the font to the current font
-		std::shared_ptr<fabgl::FontInfo>	font;				// Current active font
-		std::shared_ptr<fabgl::FontInfo>	textFont;			// Current active font for text cursor
-		std::shared_ptr<fabgl::FontInfo>	graphicsFont;		// Current active font for graphics cursor
-		std::shared_ptr<BufferStream>		textFontData;
-		std::shared_ptr<BufferStream>		graphicsFontData;
+		std::shared_ptr<AgonManagedFont>	font;				// Current active font and backing owners
+		std::shared_ptr<AgonManagedFont>	textFont;			// Current text-cursor font and owners
+		std::shared_ptr<AgonManagedFont>	graphicsFont;		// Current graphics-cursor font and owners
 
 		// VDU command processor state info
 		VDUProcessorState		processorState = VDUProcessorState::Active;	// Current VDU command processor state
@@ -186,8 +188,7 @@ class Context {
 
 		// Font management functions
 		const fabgl::FontInfo * getFont();
-		void changeFont(std::shared_ptr<fabgl::FontInfo> newFont, std::shared_ptr<BufferStream> fontData, uint8_t flags);
-		bool cmpChar(uint8_t * c1, uint8_t *c2, uint8_t len);
+		void changeFont(std::shared_ptr<AgonManagedFont> newFont, uint8_t flags);
 		char getScreenChar(Point p);
 		inline void setCharacterOverwrite(bool overwrite);		// TODO integrate into setActiveCursor?
 		inline std::shared_ptr<Bitmap> getBitmapFromChar(uint8_t c) {
@@ -382,8 +383,6 @@ Context::Context(const Context &c) {
 	font = c.font;
 	textFont = c.textFont;
 	graphicsFont = c.graphicsFont;
-	textFontData = c.textFontData;
-	graphicsFontData = c.graphicsFontData;
 
 	// Text cursor management data
 	cursorEnabled = c.cursorEnabled;
@@ -811,43 +810,43 @@ bool Context::readVariable(uint16_t var, uint16_t * value) {
 		// NB Agon currently doesn't support changing font spacing
 		case 0xA2:	// X font size, graphics cursor
 			if (value) {
-				*value = graphicsFont ? graphicsFont->width : 8;
+				*value = graphicsFont ? graphicsFont->info.width : 8;
 			}
 			break;
 		case 0xA3:	// Y font size, graphics cursor
 			if (value) {
-				*value = graphicsFont ? graphicsFont->height : 8;
+				*value = graphicsFont ? graphicsFont->info.height : 8;
 			}
 			break;
 		case 0xA4:	// X font spacing, graphics cursor
 			if (value) {
-				*value = graphicsFont ? graphicsFont->width : 8;
+				*value = graphicsFont ? graphicsFont->info.width : 8;
 			}
 			break;
 		case 0xA5:	// Y font spacing, graphics cursor
 			if (value) {
-				*value = graphicsFont ? graphicsFont->height : 8;
+				*value = graphicsFont ? graphicsFont->info.height : 8;
 			}
 			break;
 		// &A6 omitted as it is not relevant on Agon ("address of horizontal line-draw routine")
 		case 0xA7:	// X font size, text cursor
 			if (value) {
-				*value = textFont ? textFont->width : 8;
+				*value = textFont ? textFont->info.width : 8;
 			}
 			break;
 		case 0xA8:	// Y font size, text cursor
 			if (value) {
-				*value = textFont ? textFont->height : 8;
+				*value = textFont ? textFont->info.height : 8;
 			}
 			break;
 		case 0xA9:	// X font spacing, text cursor
 			if (value) {
-				*value = textFont ? textFont->width : 8;
+				*value = textFont ? textFont->info.width : 8;
 			}
 			break;
 		case 0xAA:	// Y font spacing, text cursor
 			if (value) {
-				*value = textFont ? textFont->height : 8;
+				*value = textFont ? textFont->info.height : 8;
 			}
 			break;
 		// NB we have more font info available so may add more variables to expose some of it

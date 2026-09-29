@@ -1002,7 +1002,7 @@ void Context::activate() {
 	setCharacterOverwrite(textCursorActive() && !transparentText);
 	plottingText = false;
 	if (!ttxtMode) {
-		canvas->selectFont(font == nullptr ? &FONT_AGON : font.get());
+		canvas->selectFont(font == nullptr ? &FONT_AGON : &font->info);
 	}
 	setLineThickness(lineThickness);
 	// reset line pattern

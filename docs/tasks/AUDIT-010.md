@@ -445,7 +445,9 @@ sole-display-owner boundary on 2026-09-29; see
 [RP02-DISPLAY-OWNER.md](AUDIT-010/RP02-DISPLAY-OWNER.md). The Author explicitly
 deferred causal investigation of the newly passing Nurples mode switch until
 the entire audit/repair sequence is complete. RP03 is now the sole active item
-and will stop for acceptance before RP04.
+and its [mutable-font candidate](AUDIT-010/RP03-MUTABLE-FONTS.md) now passes the
+planned sanitizer, capture, neighboring text/renderer and P4-build regressions.
+RP03 has stopped for Author acceptance; RP04 has not started.
 
 ### A10-09 [ ] Validate, review and close out repairs
 

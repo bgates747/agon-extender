@@ -585,8 +585,8 @@ bool processTerminal() {
 					uint32_t fontnum = textToWord(seq + 1);
 					if (fontnum >= 0) {
 						auto font = fonts[fontnum]; 	// get shared_ptr to font -- was fonts[bufferID]
-						if (font != nullptr && font->chptr == nullptr) {	// check it's defined
-							Terminal->loadFont(font.get());
+						if (font != nullptr && font->info.chptr == nullptr) {	// check it's defined
+							Terminal->loadFont(&font->info);
 						}
 					}
 				}

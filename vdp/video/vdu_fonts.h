@@ -72,7 +72,7 @@ void VDUStreamProcessor::vdu_sys_font() {
                 debug_log("fontCopySystem: failed to create font %d\n\r", bufferId);
                 return;
             }
-            fontCopy->pointSize = FONT_AGON.pointSize;
+            fontCopy->info.pointSize = FONT_AGON.pointSize;
             sendModeInformation();
         } break;
         case FONT_SELECT_BY_NAME: {
@@ -88,7 +88,8 @@ void VDUStreamProcessor::vdu_sys_font() {
             }
             auto font = fonts[bufferId];
             debug_log("Font %d: %dx%d, ascent %d, flags %d, point size %d, inleading %d, exleading %d, weight %d, charset %d, codepage %d\n\r",
-                bufferId, font->width, font->height, font->ascent, font->flags, font->pointSize, font->inleading, font->exleading, font->weight, font->charset, font->codepage);
+                bufferId, font->info.width, font->info.height, font->info.ascent, font->info.flags, font->info.pointSize,
+                font->info.inleading, font->info.exleading, font->info.weight, font->info.charset, font->info.codepage);
         } break;
     }
 }

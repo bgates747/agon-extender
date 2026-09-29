@@ -47,11 +47,14 @@
 
 #include "agon.h"
 #include "buffers.h"
+#include "managed_font.h"
 #include "types.h"
 
-std::unordered_map<uint16_t, std::shared_ptr<fabgl::FontInfo>,
+using AgonManagedFont = ManagedFont<fabgl::FontInfo, BufferStream>;
+
+std::unordered_map<uint16_t, std::shared_ptr<AgonManagedFont>,
 	std::hash<uint16_t>, std::equal_to<uint16_t>,
-	psram_allocator<std::pair<const uint16_t, std::shared_ptr<fabgl::FontInfo>>>> fonts;	// Storage for our fonts
+	psram_allocator<std::pair<const uint16_t, std::shared_ptr<AgonManagedFont>>>> fonts;	// Storage for our fonts
 
 uint8_t FONT_AGON_DATA[256*8]; 
 
@@ -348,7 +351,7 @@ void redefineCharacter(uint8_t c, uint8_t * data) {
 	memcpy(&FONT_AGON_DATA[c * 8], data, 8);
 }
 
-std::shared_ptr<fabgl::FontInfo> createFontFromBuffer(uint16_t bufferId, uint8_t width, uint8_t height, uint8_t ascent, uint8_t flags) {
+std::shared_ptr<AgonManagedFont> createFontFromBuffer(uint16_t bufferId, uint8_t width, uint8_t height, uint8_t ascent, uint8_t flags) {
 	if (bufferId == 65535 || (buffers.find(bufferId) == buffers.end())) {
 		debug_log("createFontFromBuffer: buffer %d not found\n\r", bufferId);
 		return nullptr;
@@ -358,10 +361,10 @@ std::shared_ptr<fabgl::FontInfo> createFontFromBuffer(uint16_t bufferId, uint8_t
 		return nullptr;
 	}
 
-	if (~flags & FONTINFOFLAGS_VARWIDTH) {
+	if (!(flags & FONTINFOFLAGS_VARWIDTH)) {
 		// Font is fixed width, so we can calculate the size that our font data should be
-		auto size = ((width + 7) >> 3) * height * 256;
-		if (buffers[bufferId][0]->size() != size) {
+		auto size = AgonManagedFont::fontBytes(width, height);
+		if (width == 0 || height == 0 || buffers[bufferId][0]->size() != size) {
 			debug_log("createFontFromBuffer: buffer %d is not the correct size for a fixed width font\n\r", bufferId);
 			return nullptr;
 		}
@@ -371,23 +374,15 @@ std::shared_ptr<fabgl::FontInfo> createFontFromBuffer(uint16_t bufferId, uint8_t
 		return nullptr;
 	}
 
-	auto data = buffers[bufferId][0]->getBuffer();
-
-	auto font = make_shared_psram<fabgl::FontInfo>();
-	font->width = width;
-	font->height = height;
-	font->ascent = ascent;
-	font->flags = flags;
-	font->data = data;
+	auto font = make_shared_psram<AgonManagedFont>(buffers[bufferId][0], width, height, ascent, flags);
 
 	// Fill in default/empty values for the rest of the fields
-	font->chptr = nullptr;
-	font->pointSize = 0;
-	font->inleading = 0;
-	font->exleading = 0;
-	font->weight = 400;
-	font->charset = 255;
-	font->codepage = 1252;
+	font->info.pointSize = 0;
+	font->info.inleading = 0;
+	font->info.exleading = 0;
+	font->info.weight = 400;
+	font->info.charset = 255;
+	font->info.codepage = 1252;
 
 	fonts[bufferId] = font;
 
@@ -403,16 +398,24 @@ void setFontInfo(uint16_t bufferId, uint8_t field, uint16_t value) {
 	auto font = fonts[bufferId];
 	switch (field) {
 		case FONT_INFO_WIDTH: {
-			font->width = (uint8_t) value;
+			if (!font->setWidth((uint8_t) value)) {
+				debug_log("setFontInfo: width %d is invalid for font %d backing/offsets\n\r", value, bufferId);
+			}
 		} break;
 		case FONT_INFO_HEIGHT: {
-			font->height = (uint8_t) value;
+			if (!font->setHeight((uint8_t) value)) {
+				debug_log("setFontInfo: height %d is invalid for font %d backing/offsets\n\r", value, bufferId);
+			}
 		} break;
 		case FONT_INFO_ASCENT: {
-			font->ascent = (uint8_t) value;
+			font->info.ascent = (uint8_t) value;
 		} break;
 		case FONT_INFO_FLAGS: {
-			font->flags = (uint8_t) value;
+			if (value & FONTINFOFLAGS_VARWIDTH) {
+				debug_log("setFontInfo: variable width fonts not yet supported\n\r");
+				return;
+			}
+			font->info.flags = (uint8_t) value;
 		} break;
 		case FONT_INFO_CHARPTRS_BUFFER: {
 			if (buffers.find(value) == buffers.end()) {
@@ -423,25 +426,27 @@ void setFontInfo(uint16_t bufferId, uint8_t field, uint16_t value) {
 				debug_log("setFontInfo: buffer %d is not a singular buffer and cannot be used for a font character pointer source\n\r", value);
 				return;
 			}
-			font->chptr = (const uint32_t*) (buffers[value][0]->getBuffer());
+			if (!font->setCharacterPointers(buffers[value][0])) {
+				debug_log("setFontInfo: buffer %d contains invalid character pointers\n\r", value);
+			}
 		} break;
 		case FONT_INFO_POINTSIZE: {
-			font->pointSize = (uint8_t) value;
+			font->info.pointSize = (uint8_t) value;
 		} break;
 		case FONT_INFO_INLEADING: {
-			font->inleading = (uint8_t) value;
+			font->info.inleading = (uint8_t) value;
 		} break;
 		case FONT_INFO_EXLEADING: {
-			font->exleading = (uint8_t) value;
+			font->info.exleading = (uint8_t) value;
 		} break;
 		case FONT_INFO_WEIGHT: {
-			font->weight = value;
+			font->info.weight = value;
 		} break;
 		case FONT_INFO_CHARSET: {
-			font->charset = value;
+			font->info.charset = value;
 		} break;
 		case FONT_INFO_CODEPAGE: {
-			font->codepage = value;
+			font->info.codepage = value;
 		} break;
 	}
 }
@@ -458,16 +463,12 @@ void resetFonts() {
 	fonts.clear();
 }
 
-uint8_t * getCharPtr(std::shared_ptr<fabgl::FontInfo> font, uint8_t c) {
+const uint8_t * getCharPtr(std::shared_ptr<AgonManagedFont> const &font, uint8_t c) {
 	if (!font) {
 		// system font
 		return FONT_AGON_DATA + (c * 8);
 	}
 
-	if (font->chptr == nullptr) {
-		return (uint8_t *) (font->data + (c * font->height * ((font->width + 7) >> 3)));
-	} else {
-		return (uint8_t *) (font->data + font->chptr[c]);
-	}
+	return font->glyph(c);
 }
 
