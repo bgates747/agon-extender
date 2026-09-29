@@ -1,6 +1,7 @@
 # BUILD-001 pre-LCD functional-equivalence procedure
 
-State: proposed for Author review; do not execute until explicitly accepted.
+State: accepted by the Author on 2026-09-28; execution authorized within the
+exact scope and stopping conditions below.
 This procedure qualifies the native pre-LCD build boundary only. It neither
 enables LCD output nor promotes production firmware.
 
@@ -28,7 +29,7 @@ endpoints and commands.
 
 ## Preconditions and stopping conditions
 
-B01-PE01 [ ] The Author accepts this exact procedure and authorizes the P4 flash,
+B01-PE01 [x] The Author accepts this exact procedure and authorizes the P4 flash,
 ordinary Agon resets, temporary startup/fixture deployment, read-only service
 checks and final rollback described below.
 
