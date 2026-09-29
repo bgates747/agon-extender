@@ -1,0 +1,49 @@
+{
+  "schema_version": 1,
+  "date": "2026-09-29",
+  "baseline": "755d6f37d332ba95b09519f86b24d352ebb03660",
+  "local_silo": "agents/audit010/a10-04",
+  "raw": {
+    "clang-tidy-summary.json": "aa3f3c95a73e7d8a8ac0b5fa8555928d8a80f5e2ecb7e4aa352a45f8bfa09745",
+    "cppcheck-full.xml": "d000489fe39bed3f347fc8a88489af093c9a092e2451b630332e6d24d2ce503e",
+    "ruff-bounded.json": "c1455bb8a429eef696a5005fb85e68ea2805ae051c0a42df1df6a4bcba47ff22",
+    "mypy-full.txt": "ebb30fa49523645ec443b20f57eb8b32b179c2ec42e56c24addee8c889a26beb",
+    "shellcheck-full.json": "37517e5f3dc66819f61f5a7bb8ace1921282415f10551d2defa5c3eb0985b570",
+    "semgrep-full.json": "37a436073e495d0fdd407d4da73608a5432560ac9d40ac5a2578f872b6608bde",
+    "osv-full.json": "70a2ff2807e7a2db48187bf1ed1f586efee9e8fd886a1325f8754875af5ed4a6",
+    "extender-unittest-prefix.txt": "a0b9e286bcb8cb145400c1daa129ef6a0ca584c90c09fc55062f66a64be67098",
+    "extender-unittest.txt": "5aa8b3782d5020b61019376978481c94826ce0c5348ea8bb0d2def57c30f2552",
+    "installation-package-test.txt": "00e365b7573b528f36000dafe658f979d7cd4c26744e3c445c7f8a005af4d549",
+    "emos-unittest-bounded.txt": "45d16f26ce613a06e21693825dc89b3caa591be0802109aea5f03dbfa345d110",
+    "p4-graph-validation.txt": "fca6aebba6dea853495ff2d6a89433ef77dc994f8c717698a7cb97a4e769b751",
+    "browser-bundle-test.txt": "7add936cf7ca6674faf7f670ab3c359675555dd280a7de71fab9015525988ca2",
+    "size-sections.txt": "327b665cb18b24d13a4e804d560b07dd13a87414bfb8bdd4b6bc9989aa14c755",
+    "nm-size.txt": "5054d83caa4ffdd7739752f82004103a9e3ad1b7ad837e1b37dc4fa6c932b777"
+  },
+  "input_manifests": {
+    "python-inputs-bounded.txt": "377adb7f358319eecf3ff4574d647c6b835cbc9f36472b34bd938a6530452e5f",
+    "mypy-inputs.txt": "50e783be43c897d622b078426ceb91330fb89d64a60d9d53a9cff6e9555492ac",
+    "shell-inputs.txt": "0d7685c7584842c62da758edfa62c6d7ec91f8a43dbfe043e55be4024b50edd1",
+    "sanitizer-inputs-extender.txt": "0667ecdbab8f07c97fb070ed79c2ad8be139019fa07d6b8ebdb8bccc69f1b630",
+    "sanitizer-inputs-emos.txt": "010b253ba7e262c87a750f19dbf55fae3dfdeecb53cf1b21748aa3034902e6b1"
+  },
+  "results": {
+    "p4_graph": "pass",
+    "browser_vectors": 48,
+    "extender_tests_passed": 86,
+    "extender_tests_skipped": 1,
+    "emos_tests_passed": 132,
+    "emos_tests_skipped": 2,
+    "clang_units_attempted": 33,
+    "clang_units_complete": 15,
+    "clang_units_incomplete": 18,
+    "cppcheck_reports": 976,
+    "ruff_reports": 2760,
+    "mypy_reports": 107,
+    "shellcheck_reports": 0,
+    "semgrep_matches": 7,
+    "semgrep_partial_parse_files": 3,
+    "osv_packages_recognized": 5,
+    "osv_vulnerabilities": 0
+  }
+}

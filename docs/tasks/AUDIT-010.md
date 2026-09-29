@@ -289,7 +289,7 @@ worked mode-8/mode-20/browser comparison, five A10-05 review inputs and four
 explicit measurement unknowns. It made no executable change, target
 measurement or repair finding. Stop for Author review before A10-04 execution.
 
-### A10-04 [ ] Automated analysis
+### A10-04 [x] Automated analysis
 
 Run only the A10-01 tool set accepted by the Author. Pin tool identities and exact
 commands; prefer existing project environments, package-manager isolation or
@@ -299,6 +299,16 @@ Retain raw machine-readable results in the task silo and triage every reported
 item as confirmed, false positive, accepted exception or unresolved. A clean
 tool run is not evidence that architecture, concurrency or target memory use is
 correct.
+
+Completed on 2026-09-29. [AUTOMATED-ANALYSIS.md](AUDIT-010/AUTOMATED-ANALYSIS.md)
+records exact identities, commands/scopes, canaries, parse coverage, grouped
+triage and eleven stable A10-05 candidates. The three reviewed local rules are
+frozen in [A10-04-SEMGREP.yml](AUDIT-010/A10-04-SEMGREP.yml), and
+[A10-04-EVIDENCE.json](AUDIT-010/A10-04-EVIDENCE.json) hash-binds the local raw
+receipts and input manifests. Raw outputs remain
+in the ignored local task silo because they contain machine-local paths. No
+candidate is yet a confirmed finding or authorization to repair. Proceed to
+the complete A10-05 review before findings assembly.
 
 ### A10-05 [ ] Manual integration review
 

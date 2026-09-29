@@ -1,0 +1,17 @@
+rules:
+  - id: a10-python-shell-true
+    languages: [python]
+    message: subprocess shell=True requires manual contract review
+    severity: WARNING
+    patterns:
+      - pattern: subprocess.$F(..., shell=True, ...)
+  - id: a10-cpp-unchecked-task-create
+    languages: [cpp]
+    message: task creation result is not visibly checked in this statement
+    severity: WARNING
+    pattern: xTaskCreate(...);
+  - id: a10-cpp-direct-mode-change
+    languages: [cpp]
+    message: direct changeMode call requires the retained VDU-owner exception
+    severity: INFO
+    pattern: changeMode(...)
