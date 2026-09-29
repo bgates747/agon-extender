@@ -9,7 +9,6 @@
 #define AGON_EXTENDER_BUILD_IDENTITY_HEADER \
  "../../../.pio/build-identities/p4-console/build_identity.hpp"
 #endif
-#include "../display/lcd/output.hpp"
 #include "p4_browser_vdp.cpp"
 #include "../transport/console_hardware.inc"
 #if defined(AGON_EXTENDER_MUTEX_PROBE)

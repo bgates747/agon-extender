@@ -32,8 +32,9 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 
 | Tool | Scope |
 |---|---|
-| [vdp-pio.sh](vdp-pio.sh), [prepare_console.py](prepare_console.py) | In-place compile / clean isolated P4 bundle; [build guide](../docs/building.md) records accepted r55 reconstruction and the limits of subsequent builds |
-| [package_installation.py](package_installation.py), [verify_installation.py](verify_installation.py) | Local installation packaging / extracted-package integrity; [production entry point](../production/README.md). Neither installs or selects a bundle |
+| [build_p4.py](build_p4.py), [validate_p4_build.py](validate_p4_build.py) | Canonical native ESP-IDF/CMake P4 build and actual-action graph validation; [build guide](../docs/building.md) owns commands and output contract |
+| [prepare_console.py](prepare_console.py) | Compatibility name delegating to `build_p4.py`; obsolete LCD/diagnostic switches fail closed |
+| [package_installation.py](package_installation.py), [verify_installation.py](verify_installation.py) | Exact selected v0.1.0/r02 hybrid-bundle reproduction and extracted-package integrity; neither accepts a new native build, installs or selects a bundle. A native production proposal requires its own reviewed package schema |
 | [reproduce_sd_components.py](reproduce_sd_components.py) | Isolated exact-hash EMOS/MOSlet reproduction using owning repositories; no deployment |
 | [check_numeric_port.py](check_numeric_port.py) | Bounded pinned-input and sanitized host regressions; [import procedure](../docs/procedures/numeric-upstream-import-r01.md) still requires fresh source/target review |
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |
@@ -50,6 +51,7 @@ The [procedure index](../docs/procedures/README.md) and
 
 | Family / tools | Evidence owner and limits |
 |---|---|
+| [vdp-pio.sh](vdp-pio.sh) | BUILD-001 historical hybrid rollback only; requires an explicit acknowledgement variable and is not a maintained firmware build path |
 | [prepare_uart_forward.py](prepare_uart_forward.py), [prepare_uart_roundtrip.py](prepare_uart_roundtrip.py), [capture_uart_roundtrip.py](capture_uart_roundtrip.py) | PORT-009/010 historical paired transport diagnostics |
 | [prepare_uart_flow.py](prepare_uart_flow.py), [capture_uart_flow.py](capture_uart_flow.py) | PORT-011/012 flow-control diagnostics |
 | [prepare_general_poll.py](prepare_general_poll.py), [capture_general_poll.py](capture_general_poll.py) | PORT-013 retained-parser poll fixture |

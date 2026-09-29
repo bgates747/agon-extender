@@ -19,16 +19,6 @@ dependencies:
       registry_url: https://components.espressif.com
       type: service
     version: 1.7.19~2
-  espressif/cmake_utilities:
-    component_hash: 351350613ceafba240b761b4ea991e0f231ac7a9f59a9ee901f751bddc0bb18f
-    dependencies:
-    - name: idf
-      require: private
-      version: '>=4.1'
-    source:
-      registry_url: https://components.espressif.com
-      type: service
-    version: 0.5.3
   espressif/dl_fft:
     component_hash: a955ca29581de2177ddf25759273bd83f082b3c805e735fe6ee105858643989b
     dependencies:
@@ -137,23 +127,6 @@ dependencies:
       registry_url: https://components.espressif.com/
       type: service
     version: 2.12.12
-  espressif/esp_lcd_st7701:
-    component_hash: 0b11e8733e51e12da83003b9d475777eaf47bfbdce01379879bd2504d14f4f83
-    dependencies:
-    - name: espressif/cmake_utilities
-      registry_url: https://components.espressif.com
-      require: private
-      version: 0.*
-    - name: idf
-      require: private
-      version: '>5.0.4,!=5.1.1'
-    source:
-      registry_url: https://components.espressif.com/
-      type: service
-    targets:
-    - esp32s3
-    - esp32p4
-    version: 1.1.5
   espressif/esp_modem:
     component_hash: 06abed971065e9cb88039e011fd85ec1412c7416d3a3d84541a7a432e8d3f94d
     dependencies:
@@ -331,7 +304,6 @@ direct_dependencies:
 - espressif/esp-modbus
 - espressif/esp-sr
 - espressif/esp_hosted
-- espressif/esp_lcd_st7701
 - espressif/esp_modem
 - espressif/esp_wifi_remote
 - espressif/lan867x
@@ -341,6 +313,6 @@ direct_dependencies:
 - espressif/usb_host_hid
 - idf
 - joltwallet/littlefs
-manifest_hash: 895979911bea15b89bd41510ee60a467fb09105af77c26e3154d27eca60326bf
+manifest_hash: 7d0d332dd9c0423ae840f77c61898aecce493dfc30c3892b745e7099f424fae4
 target: esp32p4
 version: 2.0.0

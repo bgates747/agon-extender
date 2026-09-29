@@ -7,7 +7,7 @@ Network services use plain HTTP/WebSocket on a trusted LAN without authenticatio
 
 **Maintained builds and the installed image remain distinct.**
 RELEASE-001 consolidated the retained raw, RLE2, packed and pair-RLE decoders
-here. `prepare_console.py` builds this composition from clean committed inputs;
+here. `build_p4.py --profile p4-console` builds this composition from clean committed inputs;
 `tests/browser_bundle_test.py` verifies the actual embedded assets, requested
 compression and paired codecs. The corrected client requests `?rle2=1&packed=2`
 without changing presentation-credit pacing. These drafts have not been flashed
@@ -22,8 +22,8 @@ or hardware-equivalence accepted. Consult the
 | Optional browser reset button and Pi bridge | [Reset guide](../../../../docs/bench-reset.md) |
 | Exact browser-capture candidate checks | [REMOTE-001 implementation](../../../../docs/tasks/REMOTE-001/B04-implementation.md) |
 
-The source selection in `vdp/pio/p4-console-source-selection.json` identifies
-embedded files. `app.js` connects the page, presenter, credit flow, display status
+The source selection in `vdp/build/p4-profiles.json` identifies embedded files.
+`app.js` connects the page, presenter, credit flow, display status
 and browser input. `frame_protocol.js` decodes the selected wire formats and validates frames/credits;
 `webgl2_presenter.js` handles final RGB888/RGB222 pixels with nearest-neighbour
 sampling. `index.html` and `style.css` own page layout. The build manifest identifies the exact embedded asset hashes.

@@ -4460,23 +4460,6 @@ CONFIG_CJSON_CIRCULAR_LIMIT=10000
 # end of cJSON
 
 #
-# CMake Utilities
-#
-# default:
-# CONFIG_CU_RELINKER_ENABLE is not set
-# default:
-# CONFIG_CU_DIAGNOSTICS_COLOR_NEVER is not set
-# default:
-CONFIG_CU_DIAGNOSTICS_COLOR_ALWAYS=y
-# default:
-# CONFIG_CU_DIAGNOSTICS_COLOR_AUTO is not set
-# default:
-# CONFIG_CU_GCC_LTO_ENABLE is not set
-# default:
-# CONFIG_CU_GCC_STRING_1BYTE_ALIGN is not set
-# end of CMake Utilities
-
-#
 # eppp_link
 #
 # default:
@@ -4644,7 +4627,7 @@ CONFIG_FMB_MDNS_INTEGRATION_ENABLE=y
 # end of Modbus configuration
 
 # default:
-CONFIG_ESP_HOSTED_ENABLED=y
+# CONFIG_ESP_HOSTED_ENABLED is not set
 
 #
 # ESP-Hosted config
@@ -4913,7 +4896,7 @@ CONFIG_ESP_MODEM_USE_PPP_MODE=y
 # Wi-Fi Remote
 #
 # default:
-CONFIG_ESP_WIFI_REMOTE_ENABLED=y
+# CONFIG_ESP_WIFI_REMOTE_ENABLED is not set
 # default:
 CONFIG_ESP_WIFI_REMOTE_IDF_SPECIFIC_ADDED=y
 # default:

@@ -4,10 +4,13 @@ The optional LCD build presents EDP output on the Olimex MIPI-LCD2.8-640x480
 V2 panel, landscape with its ribbon edge at the left. This is a development
 candidate under [LCD-001](tasks/LCD-001.md), not selected production firmware.
 
-Build from clean committed inputs using `scripts/prepare_console.py --lcd
---output <new-directory>`, retaining any other explicitly needed build options.
-The ordinary build leaves LCD output disabled. Panel connection and deployment
-use the machine-local bench record. The LCD is attached to DSI, not CSI.
+BUILD-001 deliberately excludes this experimental implementation from the
+native pre-LCD audit baseline. There is currently no maintained LCD build
+profile. LCD-001 must reintroduce the implementation after AUDIT-010 as a
+separately reviewed delta and add a native profile before another build. Do not
+reuse the historical `prepare_console.py --lcd` command. Panel connection and
+deployment use the machine-local bench record. The LCD is attached to DSI, not
+CSI.
 
 EMOS still selects Legacy or ExCom and owns VDU routing. In ExCom, normal output
 is rendered by EDP and shown on the LCD without a browser connection. In Legacy,

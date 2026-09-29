@@ -10,49 +10,48 @@ before using an existing bench.
 
 ## Building the P4 firmware
 
-Use **`p4-console` explicitly**. The default environment in `platformio.ini`
-is still `p4-canary`, an earlier bring-up target. Many other named environments
-are isolated diagnostics or historical experiments; their presence does not
-make them alternative supported firmware configurations.
-
-The current build uses PlatformIO with the Arduino/ESP-IDF hybrid framework.
-The repository pins pioarduino `55.03.311` and Arduino-ESP32 `3.3.11`. The
-maintainer's Linux build environment uses PlatformIO Core `6.1.19`. From a
-POSIX shell with Git and Python 3 available (use Python 3.11 or newer if
-also running the installation packaging/verifier tools):
+Native ESP-IDF/CMake is the sole maintained outer build authority. Arduino-ESP32
+3.3.11 remains a pinned ESP-IDF component. The project-scoped ESP-IDF 5.5.5
+source, Python environment and tools are provisioned under ignored
+`agents/build001/native-tools/`; the exact ESP-IDF commit is enforced by the
+wrapper. Use **`p4-console` explicitly** and a fresh output path:
 
 ```sh
-git clone https://github.com/bgates747/agon-extender.git
-cd agon-extender
-python3 -m venv .venv
-.venv/bin/python -m pip install platformio==6.1.19 PyYAML==6.0.3
-.venv/bin/python scripts/prepare_console.py --output agents/release-build
+.venv/bin/python scripts/build_p4.py \
+  --profile p4-console \
+  --output agents/builds/console-local \
+  --build-id UNVERSIONED-DO-NOT-DEPLOY
 ```
 
-[prepare_console.py](../scripts/prepare_console.py) requires a clean committed
-checkout, exports `vdp/` into a fresh output directory, and invokes the selected
-target there. It records identity, output/asset hashes, managed-component hashes,
-effective SDK configuration and verbose compiler/tool logs. Downloaded tool
-packages may be reused, but previous build objects and agent snapshots are not.
-The output directory must not exist. Do not modify tracked inputs during a build.
+An identified build uses a project-approved ID in place of the unversioned
+sentinel and requires a clean committed checkout. The wrapper rejects an
+existing output, a wrong ESP-IDF checkout, unsafe manifest paths, unsupported
+profiles and dirty identified inputs. It generates disposable CMake component
+files, invokes IDF/Ninja, validates declared/compiled/archived/linked agreement,
+and writes a manifest, dependency lock, effective SDK configuration, build log,
+section report, validation report, canonical compilation database, ELF, map,
+individual flash segments and offset-zero factory image.
 
 Use optional `--reset-url "$RESET_BRIDGE_URL"` to configure the browser reset
 bridge. The default is unset, leaving the reset button disabled. The endpoint is
-recorded only in the local build manifest and generated page; never commit a
-private endpoint. Request pacing is unchanged; the browser requests
+recorded only by hash in the local manifest and inserted into the generated
+embedded page; never commit a private endpoint. Request pacing is unchanged; the browser requests
 `?rle2=1&packed=2` for the retained lossless compression selection.
 
 After building, with Playwright and Chromium installed in the local environment:
 
 ```sh
-.venv/bin/python tests/browser_bundle_test.py --bundle agents/release-build
+.venv/bin/python tests/browser_bundle_test.py \
+  --build-output agents/builds/console-local
 ```
 
 This checks actual embedded asset bytes, browser negotiation and paired codec
-outputs without a board connection. It does not measure P4 performance. The
-[wrapper](../scripts/vdp-pio.sh) remains a low-level in-place compile convenience,
-not the clean identified-bundle entry point. PlatformIO downloads pinned tools;
-fresh-machine setup and packaging remain separate validation gates.
+outputs without a board connection. It does not measure P4 performance.
+[prepare_console.py](../scripts/prepare_console.py) is only a compatibility name
+that delegates ordinary console builds to the native wrapper. The old
+[PlatformIO wrapper](../scripts/vdp-pio.sh) is retained for accepted bounded
+reproduction of identified hybrid evidence and fails unless its historical-use
+acknowledgement is supplied.
 
 ### Selected DevKit configuration
 
@@ -67,9 +66,9 @@ profile.
 |---|---|
 | Silicon | Pre-v3 P4 (`esp32p4_es`); generated revision bounds must be checked for the selected build |
 | CPU | SDK selects 360 MHz. The board JSON's descriptive 400 MHz field is not runtime proof; [ADR-0010](decisions/ADR-0010-cpu-frequency.md) records why forced 400 MHz was rejected |
-| Flash | 16 MiB, QIO at 80 MHz. A DIO first-stage image header is expected for this toolchain; verify the second-stage handoff rather than patching that header |
+| Flash | 16 MiB, 80 MHz. Effective IDF flash settings and the first-stage image header are recorded by the selected native build |
 | PSRAM | 32 MiB target, hex mode at 200 MHz, boot memory test; distinct from internal SRAM |
-| Internal-memory budget | PlatformIO reports 512,000 bytes; this is not physical SRAM capacity and does not include all PSRAM |
+| Internal-memory budget | The historical board metadata's 512,000-byte figure is not physical SRAM capacity and does not include all PSRAM; use IDF map/size output and runtime heap evidence |
 | Application partitions | Two 7 MiB OTA slots, plus NVS, OTA metadata, coredump and reserved data. Partition presence does not implement a network updater or qualify durable crash reporting |
 
 The [recorded bring-up](tasks/SETUP-001.md) passed its bounded canary scope;
@@ -78,36 +77,22 @@ do not necessarily overwrite a previously generated configuration. Inspect the
 selected build's effective SDK settings when defaults or targets change; retain
 candidate provenance rather than treating an old generated file as authority.
 
-For the clean builder, intermediate outputs are under
-`<output>/source/vdp/.pio/build/p4-console/`. Identified `.bin`, `.elf` and
-`.factory.bin` files are copied to the requested output directory and listed
-in its build manifest. Only the low-level in-place wrapper writes to the
-working checkout's `vdp/.pio/build/p4-console/`. An ordinary build without an explicit
-build identity carries **`UNVERSIONED-DO-NOT-DEPLOY`**. For an identified bundle
-from clean, committed source, use the existing builder with a new output path:
-
-```sh
-.venv/bin/python scripts/prepare_console.py --output agents/builds/console-local
-```
-
-[prepare_console.py](../scripts/prepare_console.py) builds and records binary,
-source and dependency identities. It does not flash a board. A successful build
-alone does not qualify its firmware for a particular assembly; consult the
+Build products are under `<output>/build/`; `<output>/manifest.json` records
+their hashes and identities. The wrapper never flashes a board. An ordinary
+build should carry **`UNVERSIONED-DO-NOT-DEPLOY`**. A successful build alone
+does not qualify its firmware for a particular assembly; consult the
 [version/build conventions](versions/README.md) and the relevant physical
 acceptance record before deployment.
 
 ### Which files actually get compiled?
 
-The definitive list for this target is
-[p4-console-source-selection.json](../vdp/pio/p4-console-source-selection.json).
-It names the compiled project/library files, embedded browser assets and
-excluded implementations. This matters: several generations of renderer and
-transport code coexist in the tree.
-
-[select_sources.py](../vdp/pio/select_sources.py) turns that list into the hybrid
-build's generated CMake inputs. Edit the maintained source and selection files;
-generated `vdp/CMakeLists.txt`, `vdp/video/CMakeLists.txt`, component manifests
-and `.pio/` outputs are disposable. Start tracing execution at
+The definitive source/profile authority is
+[p4-profiles.json](../vdp/build/p4-profiles.json). It names compiled sources,
+forbidden alternatives, embedded browser assets, dependencies, definitions and
+profile-specific integration settings. Generated project/component CMake files
+inside a fresh output are disposable and must not be edited. The validator
+compares this declaration to the actual compile database and Ninja archive/link
+edges. Start tracing execution at
 [p4_console.cpp](../vdp/video/extender/boot/p4_console.cpp), which includes the
 retained browser-VDP boot code and
 [console transport](../vdp/video/extender/transport/console_hardware.inc).

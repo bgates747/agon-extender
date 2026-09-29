@@ -15,8 +15,9 @@ The [Extender handbook](docs/README.md) is the current documentation entry point
 1. **Using an existing installation:** [operator and external-agent entry point](docs/using-extender.md).
 2. **Transferring files:** [mainboard SD guide](docs/mainboard-sd.md), including the
    foreground `EMOS sdserve` EMOSlet and paired `--fast` option.
-3. **Building:** [component build guide](docs/building.md). Select `p4-console`
-   explicitly; PlatformIO's default target is a historical bring-up target.
+3. **Building:** [component build guide](docs/building.md). Select the native
+   `p4-console` profile explicitly; the retained PlatformIO files are historical
+   rollback material.
    The accepted r55 console was reconstructed from maintained source; select
    exact approved bytes through [production](production/README.md), not Git HEAD.
 4. **Unfinished work:** [TODO](TODO.md). Task records preserve dated evidence;
@@ -53,7 +54,7 @@ Do not treat the planned board as the installed DevKit.
 
 | Component / subject | Entry point |
 |---|---|
-| Integrated P4 console | [vdp/platformio.ini](vdp/platformio.ini), [p4_console.cpp](vdp/video/extender/boot/p4_console.cpp), [source selection](vdp/pio/p4-console-source-selection.json) |
+| Integrated P4 console | [native profile authority](vdp/build/p4-profiles.json), [native builder](scripts/build_p4.py), [p4_console.cpp](vdp/video/extender/boot/p4_console.cpp) |
 | EDP / adapted VDP | [vdp/video/extender](vdp/video/extender/), [vdp/video](vdp/video/), [retained libraries](vdp/vendor/) |
 | EMOS and SD listener | [agon-emos](https://github.com/bgates747/agon-emos), including `src/` and `projects/sdserve/` |
 | Host SD client | [scripts/sdcard.py](scripts/sdcard.py) |

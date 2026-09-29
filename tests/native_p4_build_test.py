@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 """Static contract checks for BUILD-001's native P4 profile authority."""
 
+import importlib.util
 import json
 from pathlib import Path
+import tempfile
 import unittest
-import importlib.util
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -40,12 +41,21 @@ class NativeP4ProfilesTest(unittest.TestCase):
         for version in dependencies.values():
             self.assertRegex(version, r"^[0-9]+\.[0-9]+\.[0-9]+(?:~[0-9]+)?$")
 
-    def test_console_owns_one_boot_entry_and_lcd_sources(self):
+    def test_console_owns_one_boot_entry_without_lcd_sources(self):
         sources = self.document["profiles"]["p4-console"]["sources"]
         self.assertEqual([item for item in sources if "/boot/" in item],
                          ["video/extender/boot/p4_console.cpp"])
-        self.assertIn("video/extender/display/lcd/output.cpp", sources)
-        self.assertIn("video/extender/display/lcd/panel.c", sources)
+        self.assertFalse(any("/display/lcd/" in item for item in sources))
+        self.assertNotIn("espressif/esp_lcd_st7701",
+                         self.document["common"]["dependencies"])
+
+    def test_console_explicitly_enables_staged_webdav(self):
+        definitions = self.document["profiles"]["p4-console"]["definitions"]
+        self.assertIn("AGON_EXTENDER_STAGED_WEBDAV=1", definitions)
+
+    def test_console_source_asset_has_one_reset_url_marker(self):
+        page = (VDP / "video/extender/web/index.html").read_text()
+        self.assertEqual(page.count('name="agon-reset-url" content=""'), 1)
 
     def test_clang_translation_changes_only_known_gcc_target_flags(self):
         script = ROOT / "scripts/prepare_p4_clang_database.py"
@@ -66,6 +76,22 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertIn("-march=rv32imafc_zicsr_zifencei", translated)
         self.assertNotIn("-fstrict-volatile-bitfields", translated)
         self.assertNotIn("-fno-tree-switch-conversion", translated)
+
+    def test_factory_image_uses_idf_flash_offsets(self):
+        script = ROOT / "scripts/build_p4.py"
+        spec = importlib.util.spec_from_file_location("build_p4", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        with tempfile.TemporaryDirectory() as temporary:
+            build = Path(temporary)
+            (build / "boot").mkdir()
+            (build / "boot/boot.bin").write_bytes(b"BOOT")
+            (build / "app.bin").write_bytes(b"APP")
+            (build / "flasher_args.json").write_text(json.dumps({
+                "flash_files": {"0x2": "boot/boot.bin", "0x9": "app.bin"}
+            }))
+            factory = module.assemble_factory_image(build)
+            self.assertEqual(factory.read_bytes(), b"\xff\xffBOOT\xff\xff\xffAPP")
 
 
 if __name__ == "__main__":

@@ -274,10 +274,6 @@ void setup() {
 		initAudio();
 	#endif
 	boot_screen();
-#if defined(AGON_EXTENDER_LCD) && AGON_EXTENDER_LCD
-	if (!agon::extender::display::startLcdOutput(displaySnapshotPool()))
-		ESP_LOGE("lcd", "output task creation failed");
-#endif
 	#if defined(AGON_EXTENDER_P4_BOOT) && !defined(AGON_EXTENDER_GENERAL_POLL_QUALIFICATION) && !defined(AGON_EXTENDER_USB_CLI)
 		if (_VGAController == nullptr) {
 			ESP_LOGE("extender_boot", "browser service has no display controller");

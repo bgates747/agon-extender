@@ -7,7 +7,6 @@ extern "C" IRAM_ATTR void agon_owner_switch(unsigned c,unsigned kind,void *task,
 #include "extender/display/stock_p4_service.hpp"
 #include "extender/diagnostics/video_timing.hpp"
 #include <cassert>
-#include "esp_log.h"
 #include "extender/display/drawing_cadence.hpp"
 
 namespace agon::extender::display {
@@ -245,20 +244,43 @@ void StockP4Service::publish() {
 #endif
   diagnostics::VideoTimingScope timing(diagnostics::VideoPhase::Snapshot,
       (static_cast<std::uint32_t>(view.width) << 16) | view.height);
-  if (view.width != published_width_ || view.height != published_height_) {
-    ESP_LOGI("stock-output", "snapshot mode %ux%u",
-             unsigned(view.width), unsigned(view.height));
-    published_width_ = view.width;
-    published_height_ = view.height;
-  }
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+  static_assert(VGA64_LinesCount / 2 == 2, "Recheck stock scanline batch contract");
+  constexpr unsigned rowsPerBatch = 2;
+#else
+  constexpr unsigned rowsPerBatch = 1;
+#endif
+  alignas(8) std::uint8_t signal[rowsPerBatch * kPresentationSnapshotMaximumWidth];
+  bool complete = true;
+  {
 #ifdef AGON_EXTENDER_SNAPSHOT_PRIORITY
   // P01f W: one ceiling per admitted snapshot, outside every native lock.
   // Normalization also runs at this priority; restore before publication.
   // This is a diagnostic scope change, not a qualified scheduling policy.
   agon_row_priority::Scope snapshotPriority(agon_row_priority::enabled.load());
 #endif
-  const bool complete = !stopping_.load(std::memory_order_acquire) &&
-      controller_->prepareFrame(view.packed_pixels, view.width, view.height);
+  for (std::size_t y = 0; y < view.height; y += rowsPerBatch) {
+    if (stopping_.load(std::memory_order_acquire)) { complete = false; break; }
+    const unsigned count = view.height-y < rowsPerBatch ? view.height-y : rowsPerBatch;
+    {
+#ifdef AGON_EXTENDER_ROW_PRIORITY
+    // P01f S: raise before acquisition; restore only after prepareRows releases
+    // native exclusion, before normalization. SDK inheritance stays intact.
+    agon_row_priority::Scope priority(agon_row_priority::enabled.load());
+#endif
+#if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
+    controller_->prepareRows(y, count, signal, kPresentationSnapshotMaximumWidth);
+#else
+    controller_->prepareRow(y, signal);
+#endif
+    }
+    // Normalization remains outside native exclusion, in exact row order.
+    for (unsigned i=0;i<count;++i)
+      StockScanlineController<fabgl::VGA2Controller>::normalizeRow(
+          signal+i*kPresentationSnapshotMaximumWidth,
+          view.packed_pixels+(y+i)*view.width, view.width);
+  }
+  }
   snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION

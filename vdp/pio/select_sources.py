@@ -158,7 +158,7 @@ cmake_text += ")\n"
 # normatively C++17 (ADR-0011), so pin the generated application component at
 # its actual compiler boundary. Without this line the visible platformio.ini
 # setting is silently ineffective.
-cmake_text += 'target_compile_options(${COMPONENT_LIB} PRIVATE "$<$<COMPILE_LANGUAGE:CXX>:-std=gnu++17>")\n'
+cmake_text += 'target_compile_options(${COMPONENT_LIB} PRIVATE "-std=gnu++17")\n'
 if component_compile_definitions:
     cmake_text += "target_compile_definitions(${COMPONENT_LIB} PRIVATE\n"
     cmake_text += "".join(

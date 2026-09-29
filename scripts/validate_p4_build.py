@@ -23,7 +23,6 @@ def main() -> None:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--profile", required=True)
     parser.add_argument("--output", required=True, type=Path)
-    parser.add_argument("--lcd", action="store_true")
     args = parser.parse_args()
     output = args.output.resolve()
     document = json.loads(PROFILES.read_text())
@@ -55,8 +54,6 @@ def main() -> None:
             problems.append(f"forbidden source compiled: {source.relative_to(VDP)}")
 
     required_definitions = ["AGON_EXTENDER_NATIVE_BUILD=1", *profile["definitions"]]
-    if args.lcd:
-        required_definitions.append("AGON_EXTENDER_LCD=1")
     for command in selected_commands:
         argv = command.get("arguments") or shlex.split(command["command"])
         joined = "\n".join(argv)
@@ -90,7 +87,7 @@ def main() -> None:
     report = {
         "schema_version": 1,
         "profile": args.profile,
-        "lcd": args.lcd,
+        "lcd": False,
         "compile_actions": len(commands),
         "selected_sources": len(selected),
         "forbidden_sources": len(forbidden),

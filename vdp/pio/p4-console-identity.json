@@ -1,6 +1,6 @@
 {
   "artifact_id": "uart-excom-console",
-  "source_identity": "uart-excom-console-r72",
+  "source_identity": "uart-excom-console-r61",
   "status": "draft",
-  "note": "LCD-001 diagnostic: r71 LCD mapping plus whole-frame native snapshot exclusion and mode-dimension logging; not production."
+  "note": "REMOTE-005 A09-A11 candidate; --staged-webdav explicitly enables Legacy finite-job runtime. Ordinary builds remain disabled."
 }

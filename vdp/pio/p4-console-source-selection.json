@@ -33,9 +33,7 @@
     "video/extender/storage/webdav/adapter.cpp",
     "video/extender/storage/webdav/wire_backend.cpp",
     "video/extender/storage/webdav/connection.cpp",
-    "video/extender/storage/webdav/runtime.cpp",
-    "video/extender/display/lcd/output.cpp",
-    "video/extender/display/lcd/panel.c"
+    "video/extender/storage/webdav/runtime.cpp"
   ],
   "forbidden_project_translation_units": [
     "video/extender/boot/p4_parallel_qualification_vdp.cpp",
@@ -107,8 +105,7 @@
     "espressif/usb_host_hid": "1.2.1",
     "espressif/dl_fft": "0.6.0",
     "espressif/esp-dl": "3.3.9",
-    "espressif/esp_hosted": "2.12.12",
-    "espressif/esp_lcd_st7701": "1.1.5"
+    "espressif/esp_hosted": "2.12.12"
   },
   "dependency_lock": "pio/p4-console-dependencies.lock",
   "component_compile_definitions": [

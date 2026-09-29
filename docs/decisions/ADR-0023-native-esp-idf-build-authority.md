@@ -59,9 +59,9 @@ separate accepted promotion.
    source/tool identities and checked-in solver locks.
 4. The native compilation database becomes eligible for AUDIT-010 only after a
    validator proves correspondence with linked project objects.
-5. Current PlatformIO procedures remain the operational build authority during
-   the additive migration and rollback interval; acceptance of this direction
-   alone does not make an unfinished native build deployable.
+5. Following accepted BUILD-001 equivalence, native ESP-IDF/CMake is the
+   operational development-build authority. PlatformIO procedures remain only
+   for explicit bounded reproduction of identified hybrid evidence.
 
 ## Superseded decisions
 

@@ -5,6 +5,7 @@ from __future__ import annotations
 
 import argparse
 import hashlib
+import html
 import json
 import os
 from pathlib import Path
@@ -12,6 +13,7 @@ import re
 import shutil
 import subprocess
 import sys
+from urllib.parse import urlsplit
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -31,6 +33,30 @@ def sha(path: Path) -> str:
 def artifact_record(path: Path) -> dict:
     return {"path": str(path), "bytes": path.stat().st_size,
             "sha256": sha(path)}
+
+
+def assemble_factory_image(build: Path) -> Path:
+    """Assemble the exact IDF flash segments into one offset-zero image."""
+    flash = json.loads((build / "flasher_args.json").read_text())
+    segments = []
+    for raw_offset, relative in flash["flash_files"].items():
+        path = build / relative
+        if not path.is_file():
+            raise SystemExit(f"missing factory segment: {relative}")
+        segments.append((int(raw_offset, 0), path))
+    segments.sort()
+    end = 0
+    image = bytearray()
+    for offset, path in segments:
+        data = path.read_bytes()
+        if offset < end:
+            raise SystemExit(f"overlapping factory segment: {path.name}")
+        image.extend(b"\xff" * (offset - len(image)))
+        image.extend(data)
+        end = offset + len(data)
+    target = build / "agon_extender.factory.bin"
+    target.write_bytes(image)
+    return target
 
 
 def checked_path(relative: str) -> Path:
@@ -55,14 +81,16 @@ def cmake_quote(value: str) -> str:
     return '"' + value.replace("\\", "/").replace('"', '\\"') + '"'
 
 
-def render_component(profile: dict, common: dict, generated: Path) -> None:
+def render_component(profile: dict, common: dict, generated: Path,
+                     asset_overrides: dict[str, Path]) -> None:
     sources = [checked_path(item) for item in profile["sources"]]
     if len(sources) != len(set(sources)):
         raise SystemExit("duplicate selected source")
     forbidden = {checked_path(item) for item in profile["forbidden_sources"]}
     if forbidden.intersection(sources):
         raise SystemExit("selected source is also forbidden")
-    assets = [checked_path(item) for item in profile["embedded_text"]]
+    assets = [asset_overrides.get(item, checked_path(item))
+              for item in profile["embedded_text"]]
     include_dirs = [checked_dir(item) for item in common["include_dirs"]
                     if item != "video"]
     include_dirs.append(generated)
@@ -112,10 +140,22 @@ def main() -> None:
     parser.add_argument("--profile", required=True)
     parser.add_argument("--output", required=True, type=Path)
     parser.add_argument("--build-id", default="UNVERSIONED-DO-NOT-DEPLOY")
-    parser.add_argument("--lcd", action="store_true")
+    parser.add_argument("--mos", type=Path)
+    parser.add_argument("--mos-sha256")
+    parser.add_argument("--flash-agent", type=Path)
+    parser.add_argument("--reset-url",
+                        help="embed a machine-local HTTP(S) reset endpoint")
     args = parser.parse_args()
     if not SAFE_NAME.fullmatch(args.build_id):
         parser.error("build ID contains unsupported characters")
+    source_commit = subprocess.check_output(
+        ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True
+    ).strip()
+    source_dirty = bool(subprocess.check_output(
+        ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
+    ).strip())
+    if args.build_id != "UNVERSIONED-DO-NOT-DEPLOY" and source_dirty:
+        parser.error("identified builds require clean committed inputs")
     output = args.output.resolve()
     if output.exists() or output.is_symlink():
         parser.error("output must be a fresh nonexisting path")
@@ -124,8 +164,16 @@ def main() -> None:
         profile = document["profiles"][args.profile]
     except KeyError:
         parser.error("unknown profile")
-    if args.lcd and args.profile != "p4-console":
-        parser.error("--lcd is supported only by p4-console")
+    payload_arguments = (args.mos, args.mos_sha256, args.flash_agent)
+    if profile.get("mos_recovery_payload"):
+        if not all(payload_arguments):
+            parser.error("recovery profile requires --mos, --mos-sha256 and --flash-agent")
+    elif any(payload_arguments):
+        parser.error("recovery payload arguments require a recovery profile")
+    if args.reset_url and args.profile != "p4-console":
+        parser.error("--reset-url is supported only by p4-console")
+    if args.reset_url and urlsplit(args.reset_url).scheme not in ("http", "https"):
+        parser.error("reset URL must use HTTP(S)")
     if subprocess.check_output(["git", "-C", str(IDF), "rev-parse", "HEAD"],
                                text=True).strip() != IDF_COMMIT:
         raise SystemExit("wrong ESP-IDF checkout identity")
@@ -135,10 +183,32 @@ def main() -> None:
     shutil.copyfile(VDP / "native/CMakeLists.txt", project / "CMakeLists.txt")
     generated = project / "components/agon_vdp"
     generated.mkdir(parents=True)
-    if args.lcd:
-        profile = dict(profile)
-        profile["definitions"] = [*profile["definitions"], "AGON_EXTENDER_LCD=1"]
-    render_component(profile, document["common"], generated)
+    asset_overrides: dict[str, Path] = {}
+    if args.reset_url:
+        relative = "video/extender/web/index.html"
+        page = generated / "embedded/index.html"
+        page.parent.mkdir()
+        source = checked_path(relative).read_text()
+        marker = 'name="agon-reset-url" content=""'
+        if source.count(marker) != 1:
+            raise SystemExit("reset URL marker missing or ambiguous")
+        page.write_text(source.replace(
+            marker,
+            'name="agon-reset-url" content="' +
+            html.escape(args.reset_url, quote=True) + '"'))
+        asset_overrides[relative] = page
+    render_component(profile, document["common"], generated, asset_overrides)
+    payload_artifacts = []
+    if profile.get("mos_recovery_payload"):
+        payload_header = generated / "generated/mos_recovery_payload.hpp"
+        subprocess.run([
+            sys.executable, str(ROOT / "scripts/prepare_mos_recovery.py"),
+            "--mos", str(args.mos.resolve()),
+            "--mos-sha256", args.mos_sha256,
+            "--flash-agent", str(args.flash_agent.resolve()),
+            "--output", str(payload_header),
+        ], check=True)
+        payload_artifacts = [payload_header, payload_header.with_suffix(".json")]
     header = (
         "// Generated by scripts/build_p4.py; do not edit.\n#pragma once\n"
         f'#define AGON_EXTENDER_SOURCE_IDENTITY "{args.profile}-native"\n'
@@ -181,10 +251,9 @@ def main() -> None:
                                    stderr=subprocess.STDOUT)
     if completed.returncode:
         raise SystemExit(f"native build failed; inspect {output / 'build.log'}")
+    factory = assemble_factory_image(build)
     validation = [sys.executable, str(ROOT / "scripts/validate_p4_build.py"),
                   "--profile", args.profile, "--output", str(output)]
-    if args.lcd:
-        validation.append("--lcd")
     subprocess.run(validation, check=True)
     size_tool = next(TOOLS.glob("tools/riscv32-esp-elf/*/riscv32-esp-elf/bin/riscv32-esp-elf-size"))
     elf = build / "agon_extender.elf"
@@ -192,24 +261,24 @@ def main() -> None:
                                  check=True, text=True, capture_output=True)
     (output / "size-sections.txt").write_text(size_result.stdout)
     artifact_paths = [
-        elf, build / "agon_extender.bin", build / "agon_extender.map",
+        elf, build / "agon_extender.bin", factory, build / "agon_extender.map",
         build / "bootloader/bootloader.bin",
         build / "partition_table/partition-table.bin",
         build / "ota_data_initial.bin", build / "flasher_args.json",
         build / "compile_commands.json", output / "validation.json",
         output / "size-sections.txt",
+        *payload_artifacts,
     ]
     record = {
-        "schema_version": 1, "profile": args.profile, "lcd": args.lcd,
+        "schema_version": 1, "profile": args.profile, "lcd": False,
         "build_id": args.build_id, "manifest_sha256": sha(MANIFEST),
         "idf_commit": IDF_COMMIT, "sdkconfig_sha256": sha(sdkconfig),
         "dependencies_lock_sha256": sha(lock),
-        "source_commit": subprocess.check_output(
-            ["git", "-C", str(ROOT), "rev-parse", "HEAD"], text=True
-        ).strip(),
-        "source_dirty": bool(subprocess.check_output(
-            ["git", "-C", str(ROOT), "status", "--porcelain"], text=True
-        ).strip()),
+        "source_commit": source_commit,
+        "source_dirty": source_dirty,
+        "reset_url_configured": bool(args.reset_url),
+        "reset_url_sha256": (hashlib.sha256(args.reset_url.encode()).hexdigest()
+                             if args.reset_url else None),
         "artifacts": [artifact_record(path) for path in artifact_paths],
     }
     (output / "manifest.json").write_text(json.dumps(record, indent=2) + "\n")

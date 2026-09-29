@@ -14,6 +14,9 @@ import tempfile
 from playwright.sync_api import sync_playwright
 
 
+ROOT = Path(__file__).resolve().parents[1]
+
+
 def codec_vectors(project):
     # Compile the same maintained headers selected by this firmware build.
     with tempfile.TemporaryDirectory() as tmp:
@@ -46,11 +49,21 @@ extern "C" size_t encode(int kind,const unsigned char*s,size_t n,unsigned char*d
 
 def main():
     parser=argparse.ArgumentParser(description=__doc__)
-    parser.add_argument('--bundle', type=Path, required=True)
+    inputs=parser.add_mutually_exclusive_group(required=True)
+    inputs.add_argument('--build-output', type=Path,
+                        help='canonical native scripts/build_p4.py output')
+    inputs.add_argument('--bundle', type=Path,
+                        help='historical hybrid bundle retained for evidence replay')
     parser.add_argument('--expect', choices=('raw','compressed'), default='compressed')
     args=parser.parse_args()
-    project=args.bundle/'source/vdp'
-    image=(project/'.pio/build/p4-console/firmware.bin').read_bytes()
+    if args.build_output:
+        result_root=args.build_output
+        project=ROOT/'vdp'
+        image=(result_root/'build/agon_extender.bin').read_bytes()
+    else:
+        result_root=args.bundle
+        project=args.bundle/'source/vdp'
+        image=(project/'.pio/build/p4-console/firmware.bin').read_bytes()
     web=project/'video/extender/web'
     hashes={}
     for name in ('index.html','app.js','style.css','frame_protocol.js','webgl2_presenter.js'):
@@ -92,7 +105,7 @@ def main():
             browser.close()
     finally: server.shutdown()
     result={'outcome':'pass','expected_negotiation':args.expect,'embedded_assets':hashes,'codec_vectors':48,'formats':sorted(formats)}
-    (args.bundle/'browser-check.json').write_text(json.dumps(result,indent=2)+'\n')
+    (result_root/'browser-check.json').write_text(json.dumps(result,indent=2)+'\n')
     print(json.dumps(result))
 
 if __name__=='__main__': main()

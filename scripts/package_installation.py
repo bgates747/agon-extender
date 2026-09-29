@@ -1,5 +1,10 @@
 #!/usr/bin/env python3
-"""Assemble an explicit pinned local bundle; never select, deploy or overwrite it."""
+"""Reproduce the pinned v0.1.0 hybrid bundle; never build current P4 source.
+
+This retained RELEASE-001 packager consumes only the immutable r02 selection.
+A future native-firmware promotion must define and review a native package
+schema rather than teaching this historical recipe to accept changed inputs.
+"""
 import argparse
 import hashlib
 import io
@@ -49,6 +54,8 @@ def main():
     result=json.loads(a.selection.read_text());NAME=result['name']
     import re
     if not re.fullmatch(r'extender-installation-r[0-9]+',NAME):raise ValueError('invalid bundle identity')
+    if NAME != 'extender-installation-r02':
+        raise ValueError('historical packager accepts only selected production r02')
     out=(a.output or ROOT/'dist/production'/NAME).absolute();out.mkdir(parents=True,exist_ok=False)
     runtime=out/NAME;runtime.mkdir();support=out/(NAME+'-sources');support.mkdir()
     selected=result['p4'];project=a.p4_build/'source/vdp'

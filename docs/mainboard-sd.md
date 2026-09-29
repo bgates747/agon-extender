@@ -223,10 +223,12 @@ EMOS source and both listener layouts belong to `agon-emos`. See the
 [build guide](building.md#building-emos-and-the-sd-application) for the MOSlet versus
 ordinary application build distinction. Its wrappers
 are `scripts/prepare_boot_review.py` and `scripts/prepare_sdserve.py`; they
-require clean committed candidates and record source/tool hashes. P4 uses this
-repository's `scripts/prepare_console.py`. Supply project-local paths from the
-environment guidance; do not edit generated MOS port worktrees or runtime
-snapshots. Use new evidence directories for each identified build/run.
+require clean committed candidates and record source/tool hashes. Supply
+project-local paths from the environment guidance; do not edit generated MOS
+port worktrees or runtime snapshots. P4 uses this repository's canonical
+`scripts/build_p4.py` native
+wrapper with the `p4-console` profile. Use new evidence directories for each
+identified build/run.
 
 The retained `scripts/qualify_sdcard.py` controller implements ten
 unattended cycles against fresh names under `/extender/sdtest`, retaining audit,

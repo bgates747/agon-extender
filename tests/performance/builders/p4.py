@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Add timing diagnostics to a preserved P4 build bundle, retaining its backend."""
+"""Historical PlatformIO timing-bundle adapter retained for evidence replay."""
 import argparse
 from pathlib import Path
 p=argparse.ArgumentParser(description=__doc__)
@@ -9,6 +9,8 @@ args=p.parse_args()
 if args.output.exists():p.error('output must be a fresh directory')
 from pathlib import Path
 import subprocess, shutil, os, json, datetime, hashlib
+if os.environ.get('AGON_EXTENDER_HYBRID_ROLLBACK') != 'I_UNDERSTAND_THIS_IS_HISTORICAL':
+ raise SystemExit('historical hybrid performance builder is not a maintained build path')
 root=Path(__file__).resolve().parents[3]; stage=args.output.resolve(); parent=args.baseline.resolve()
 stage.mkdir(parents=True,exist_ok=True)
 source=stage/'source/vdp'

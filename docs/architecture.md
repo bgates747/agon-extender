@@ -616,9 +616,9 @@ semantics are tracked under SETUP-005-D006.
 
 Native ESP-IDF/CMake is the accepted outer project, dependency and build
 authority. The project retains Arduino-ESP32 as a pinned ESP-IDF component
-rather than selecting two competing outer frameworks. BUILD-001 owns the
-additive migration and cutover; until that work is accepted, the existing
-PlatformIO/SCons workflow remains the operational comparison and rollback path.
+rather than selecting two competing outer frameworks. BUILD-001 completed the
+maintained-path cutover; PlatformIO/SCons remains identified historical rollback
+material only.
 
 Arduino preserves the application-level structure expected by official
 `agon-vdp`, including its sketch entry point and Arduino-oriented APIs and
@@ -782,11 +782,10 @@ and its compilation database is authoritative only after validation against the
 linked objects. See
 [ADR-0023](decisions/ADR-0023-native-esp-idf-build-authority.md).
 
-BUILD-001 is implementing that accepted direction additively. Until its
-equivalence evidence and cutover are accepted, `scripts/vdp-pio.sh` and the
-hybrid PlatformIO/SCons build remain the operational build and rollback path;
-they are not the target architecture. Neither the accepted direction nor a
-development build changes the selected production bundle.
+BUILD-001 implemented that accepted direction after host and hardware
+equivalence. `scripts/vdp-pio.sh` now fails closed unless an operator explicitly
+acknowledges a bounded historical rollback reproduction. Neither the cutover nor
+a development build changes the selected production bundle.
 
 The primary Rev-D1 pre-v3 board environment configures the CPU at 360 MHz. A
 forced 400 MHz candidate repeatedly asserted during clock initialization on the

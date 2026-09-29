@@ -4,6 +4,14 @@
 # particular subcommands and are not reliably accepted as global options, so
 # the wrapper changes to vdp/ and otherwise passes the command through intact.
 # See docs/decisions/ADR-0009-platformio-wrapper.md.
+
+# BUILD-001 retained this only to reproduce identified hybrid evidence. Routine
+# firmware builds use scripts/build_p4.py and must not silently fall back here.
+if [ "${AGON_EXTENDER_HYBRID_ROLLBACK:-}" != "I_UNDERSTAND_THIS_IS_HISTORICAL" ]; then
+  echo "This is the historical PlatformIO rollback path, not the maintained build." >&2
+  echo "Use scripts/build_p4.py, or set AGON_EXTENDER_HYBRID_ROLLBACK=I_UNDERSTAND_THIS_IS_HISTORICAL for an accepted bounded reproduction." >&2
+  exit 2
+fi
 set -euo pipefail
 
 repo_root=$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")/.." && pwd)

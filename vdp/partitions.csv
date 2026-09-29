@@ -1,6 +1,6 @@
 # Project-authored table required by ADR-0007; this is not generated output.
-# Keep its selection synchronized in both platformio.ini and sdkconfig.defaults
-# or PlatformIO packaging and ESP-IDF flash_args can disagree about offsets.
+# Keep its selection synchronized with pio/p4-console.sdkconfig; native IDF
+# flash_args and the offset-zero factory image are generated from this table.
 # Name,     Type, SubType, Offset,   Size,     Flags
 nvs,        data, nvs,     0x9000,   0x6000,
 otadata,    data, ota,     0xF000,   0x2000,
