@@ -2,7 +2,8 @@
 
 ## Result
 
-`A10-RP03-S01` [ ] Candidate complete; awaiting Author acceptance.
+`A10-RP03-S01` [x] Accepted by the Author on 2026-09-29; implementation commit
+`c789d45a`. RP04 was then authorized.
 
 The selected VDP compatibility layer now gives every application-defined font
 one `ManagedFont` owner containing its FabGL metadata, source `BufferStream`
@@ -114,6 +115,6 @@ in `Context::readVariable`; those reads now use the owned `FontInfo`. The failed
 output was ordinary development feedback and is not retained as diagnostic
 evidence.
 
-`A10-RP03-T02` [ ] Author acceptance is required before marking RP03 complete
-or beginning RP04. No P4 flash, reset, Agon/EMOS operation, SD mutation,
-production promotion or upstream submission occurred.
+`A10-RP03-T02` [x] The Author accepted the candidate and authorized RP04. No P4
+flash, reset, Agon/EMOS operation, SD mutation, production promotion or upstream
+submission occurred as part of RP03.

@@ -439,15 +439,16 @@ correction changes those authorities. Use source-contract and host validation
 during implementation, but do not claim physical behavior from compilation or
 static analysis.
 
-The Author accepted RP01's minimal profile and host/build evidence and RP02's
-sole-display-owner boundary on 2026-09-29; see
+The Author accepted RP01's minimal profile and host/build evidence, RP02's
+sole-display-owner boundary and RP03's mutable-font repair on 2026-09-29; see
 [RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md) and
-[RP02-DISPLAY-OWNER.md](AUDIT-010/RP02-DISPLAY-OWNER.md). The Author explicitly
+[RP02-DISPLAY-OWNER.md](AUDIT-010/RP02-DISPLAY-OWNER.md), and
+[RP03-MUTABLE-FONTS.md](AUDIT-010/RP03-MUTABLE-FONTS.md). The Author explicitly
 deferred causal investigation of the newly passing Nurples mode switch until
-the entire audit/repair sequence is complete. RP03 is now the sole active item
-and its [mutable-font candidate](AUDIT-010/RP03-MUTABLE-FONTS.md) now passes the
-planned sanitizer, capture, neighboring text/renderer and P4-build regressions.
-RP03 has stopped for Author acceptance; RP04 has not started.
+the entire audit/repair sequence is complete. RP04 is now the sole active item;
+its [raw-SD dispatch candidate](AUDIT-010/RP04-RAW-SD-WRITE.md) passes source,
+linked-image and independent raw-image controls and has stopped for Author
+acceptance. No physical destructive-sector test was authorized or run.
 
 ### A10-09 [ ] Validate, review and close out repairs
 
@@ -522,6 +523,16 @@ invoke the accepted Legacy spoken terminal hook without reset. It deliberately
 uses host records rather than mainboard per-case messages because the host suite
 does not own the foreground. Physical and manual fixtures retain their own
 case-specific implementation obligations under A10-T01 through A10-T09.
+
+The Author-launched first complete run passed all 54 cases on 2026-09-29 in
+143.542507419 seconds, with unchanged clean Extender
+`a8e6c5dc549f355f2264c1423609d2b147410a60` and EMOS
+`21a9ba27f1f346473d767c2c3053ee18e8911335` source closures. The terminal hook
+also succeeded; total detached-job duration was 163.236620222 seconds. The
+[maintained suite guide](../testing/regression-suite.md) records exact phase
+timings and evidence hashes. Because the run deliberately pins pre-RP04 EMOS,
+it is the neighboring regression baseline, not acceptance of the raw-SD
+candidate.
 
 ## Findings standard
 

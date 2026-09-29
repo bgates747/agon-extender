@@ -63,9 +63,11 @@ profile and applicable cross-processor/wire contracts. Passing a targeted test
 does not waive those regression checks.
 
 `A10-RP-C05` — Source-contract, host, sanitizer, build and static checks are
-normal item validation. Any physical build, flash, reset, SD mutation or target
-run still requires its bounded procedure and explicit authorization. Hardware
-evidence is not inferred from host success.
+normal item validation. Each executable repair uses the maintained independent
+exact-commit flash command followed by the complete retained suite plus its
+registered repair-specific physical case. Running either command is the bounded
+operator invocation of its documented mutations; hardware evidence is never
+inferred from host or emulator success.
 
 `A10-RP-C06` — Reusable target suites run unattended where practical, print
 progress on the Legacy/mainboard screen, preserve failure text, record durable
@@ -191,7 +193,7 @@ commit: `f8458a31`; hardware-observation record: `4307e94d`.
 
 ### High severity
 
-`A10-RP03` [ ] **F006 — Mutable font bounds, lifetime and fixed scratch.**
+`A10-RP03` [x] **F006 — Mutable font bounds, lifetime and fixed scratch.**
 Refresh the official font contract, retain backing/offset ownership and size,
 validate every metadata mutation/use, and replace unbounded or wrapped stack
 scratch with a fixed safe strategy. Validation: `A10-VP07` under ASan/UBSan,
@@ -199,9 +201,10 @@ maximum/short/mutated/destroyed-offset cases, screen-character capture, P4
 compile and declared neighboring text regressions. Upstream publication remains
 a separate decision.
 
-Candidate complete; see [RP03-MUTABLE-FONTS.md](RP03-MUTABLE-FONTS.md).
-Sanitizer, screen-capture, neighboring renderer/text and actual selected P4
-build evidence pass. RP03 is paused for Author acceptance; RP04 has not started.
+Accepted by the Author on 2026-09-29 after sanitizer, screen-capture,
+neighboring renderer/text and actual selected P4 build evidence passed.
+Implementation commit: `c789d45a`; see
+[RP03-MUTABLE-FONTS.md](RP03-MUTABLE-FONTS.md).
 
 `A10-RP04` [ ] **FWBUG-008 — EMOS raw SD write dispatch.** Correct only the
 EMOS/MOS API wrapper so valid write requests invoke the write path and preserve
@@ -209,6 +212,11 @@ status/ABI behavior. Reuse the owning mos-tests fixture and controls; do not
 duplicate it in Extender. Validation: existing emulator/host controls, rebuilt
 EMOS identity, and a separately authorized physical destructive-sector test
 using a disposable controlled sector with restoration evidence.
+
+Candidate complete; see [RP04-RAW-SD-WRITE.md](RP04-RAW-SD-WRITE.md). Source,
+linked-image and four independent raw-image cases pass. RP04 is paused for
+Author acceptance. The physical destructive-sector test remains separately
+gated and was not run.
 
 `A10-RP05` [ ] **F001a — Checked display allocations.** Add complete failure
 checks and local cleanup for inherited viewport pool/table and paletted DMA-row

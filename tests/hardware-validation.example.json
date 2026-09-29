@@ -1,0 +1,15 @@
+{
+  "schema": 1,
+  "extender_url": "http://EXTENDER-IP",
+  "reset_config": "/absolute/path/to/reset-config.json",
+  "emos_repository": "/absolute/path/to/agon-emos",
+  "builder_repository": "/absolute/path/to/mos-agondev",
+  "fab_root": "/absolute/path/to/fab-agon-emulator",
+  "p4": {
+    "ssh": ["ssh", "-o", "BatchMode=yes", "bench-host"],
+    "stable_port": "/dev/serial/by-id/EXACT-P4-IDENTITY",
+    "usb_serial": "EXPECTED-SERIAL",
+    "esptool": "/absolute/path/to/esptool.py",
+    "flash_bytes": 16777216
+  }
+}

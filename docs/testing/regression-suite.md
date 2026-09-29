@@ -1,10 +1,21 @@
-# Unattended regression suite
+# Unattended regression and repair hardware validation
+
+The maintained workflow has two independent commands. The first command builds
+and flashes one exact component commit and independently verifies the installed
+bytes and boot identity. The second command accepts only that flash receipt,
+runs the entire retained regression closure, and then runs every selected
+repair-specific physical case. A host or emulator pass is never described as
+hardware validation.
 
 The maintained regression runner exercises the current Extender host, browser
 and native `p4-console` build closure without flashing or resetting either
 board, changing either SD card, launching a foreground application, or attaching
 an extra browser consumer to the P4. The explicit case and exclusion inventory
-is `tests/regression-suite.json`.
+is `tests/regression-suite.json`. Physical additions are registered separately
+in `tests/hardware-repair-suite.json`. They do not weaken or replace any retained
+case. `scripts/run_hardware_regression.py` composes both inventories and refuses
+to run a physical case for a component other than the one named by the verified
+flash receipt.
 
 The launcher resolves the selected Extender commit once and materializes it in
 an ignored local shared clone. The suite runs only from that pinned snapshot and
@@ -53,6 +64,53 @@ case: it does not own the foreground, and taking that ownership could alter a
 concurrent physical workload. The durable host records are its progress channel.
 Only the terminal notification interacts with the admitted Extender keyboard.
 
+## Commit-pinned hardware workflow
+
+The machine-local `agents/hardware-validation.local.json` follows
+`tests/hardware-validation.example.json`. It identifies the component-owner
+checkouts, exact P4 USB identity and remote flashing tool, Extender endpoint,
+and the independently commissioned Agon reset controller. It remains ignored;
+tracked files contain no bench addresses, credentials or unique device values.
+
+The flash command is independent of the test command:
+
+```sh
+.venv/bin/python scripts/flash_firmware_commit.py \
+  --target emos --commit EMOS_COMMIT
+```
+
+Use `--target p4 --commit EXTENDER_COMMIT` for an Extender/P4 repair. The
+command resolves the revision to a full commit, builds from a fresh detached
+snapshot, performs exactly one component-appropriate flash, verifies the full
+EMOS ROM or P4 flash plus observed boot identity, and prints the durable local
+receipt path. It never accepts a dirty working tree as the requested firmware.
+
+The hardware test command is separately invoked with that receipt:
+
+```sh
+.venv/bin/python scripts/run_hardware_regression.py \
+  --flash-receipt /absolute/path/to/flash-receipt.json \
+  --extender-commit EXTENDER_COMMIT
+```
+
+For a P4 receipt, also pass `--emos-commit EMOS_COMMIT` so the retained suite
+uses a second exact clean component snapshot. An EMOS receipt already supplies
+that identity.
+
+It streams current case and pass/fail status to the invoking SSH console. It
+runs the complete `tests/regression-suite.json` snapshot first, then all
+applicable physical cases. It writes an overall `summary.json`, restores each
+case's startup state, sends the accepted Legacy spoken cue, and leaves a failure
+verdict on the Legacy screen after alert playback. The operator does not need an
+agent to monitor the run.
+
+The initial physical addition is `a10-rp04-raw-sd-write`. Its eZ80 fixture
+refuses to write unless the card has a valid MBR whose first partition begins
+after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
+write API, independently reads the result, restores through MOS's distinct C
+write dispatch, and independently verifies the exact preimage before reporting.
+An unverified restoration is an infrastructure failure and stops advancement.
+
 ## Bounded development checks
 
 `--case CASE_ID` or repeated `--phase host|browser|build` options select a
@@ -65,3 +123,26 @@ An output folder is never reused. Success means every selected independent case
 passed, the native source identities stayed fixed and clean, and the terminal
 notification hook succeeded. A missing terminal `result.json` after a host
 interruption is unknown, not success.
+
+## First retained complete pre-hardware run
+
+The Author launched the first full pinned run from the Lenovo on 2026-09-29.
+The ignored local evidence directory is
+`agents/regression-runs/2026-09-29-21-25-50Z-a8e6c5dc549f/`.
+
+| Field | Result |
+| --- | --- |
+| Extender source | `a8e6c5dc549f355f2264c1423609d2b147410a60`, clean and unchanged |
+| EMOS source | `21a9ba27f1f346473d767c2c3053ee18e8911335`, clean and unchanged |
+| Cases | 54 passed; zero failure, infrastructure error, timeout or blocked |
+| Suite duration | 143.542507419 seconds monotonic |
+| Phase duration | host 35.843347309 s; browser 24.551770785 s; build 82.770066925 s |
+| Terminal hook | success; 19.632202248 seconds; 108 keyboard events accepted, zero discarded/pending/held |
+| Complete detached job | success; 163.236620222 seconds |
+| `suite/summary.json` SHA-256 | `798f69c986f301b4d91bfec01adee98e046ca8cfb80e363e24be83d173b6db5f` |
+| `result.json` SHA-256 | `4a21029917fff5357344ba11ce80298617704df8e23233f9b47456db40ad0241` |
+
+The terminal-hook receipt proves accepted keyboard injection, not that the
+Author heard the cue or observed Legacy pixels. This run establishes the pinned
+pre-RP04 host/browser/native baseline; its EMOS commit predates the uncommitted
+RP04 raw-SD repair and therefore is not RP04 acceptance evidence.
