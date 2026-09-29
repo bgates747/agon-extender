@@ -77,6 +77,12 @@ accepted spoken cue on terminal success or detected failure. A failure identity
 is printed before the cue and retained afterward; the alert player must not
 overwrite it. The agent does not poll merely to wait for completion.
 
+The maintained `scripts/bench_job.py` terminal-hook contract supplies the
+detached duration/result record and selects exactly one argv-only success or
+failure notification after the test driver exits. The reviewed run-specific
+driver and ignored hook file must still bind those generic hooks to the accepted
+Legacy voice cue and prove that its failure path preserves the preceding error.
+
 ## Manual application pass and closeout
 
 B01-PE10 [ ] Only after all automated cases terminate, the Author manually runs

@@ -66,7 +66,7 @@ The [procedure index](../docs/procedures/README.md) and
 | [rally_drive.py](rally_drive.py), [rally_trial.py](rally_trial.py), [rally_race.py](rally_race.py) | BENCH-001 and AgonArcade Rally protocols; task-specific live input, not generic automation |
 | [qualify_rally_drive.py](qualify_rally_drive.py), [qualify_rally_headless.py](qualify_rally_headless.py), [qualify_rally_traffic.py](qualify_rally_traffic.py) | Local/emulator Rally checks with different scopes; none alone establishes hardware gameplay |
 | [plot_rally_learning.py](plot_rally_learning.py), [report_rally_learning.py](report_rally_learning.py) | Archived-result visualization/reporting; no new run or benchmark implied |
-| [bench_job.py](bench_job.py) | Detached remote command runner; only for an already-authorized, explicitly bounded bench job |
+| [bench_job.py](bench_job.py) | Detached remote command runner with optional argv-only success/failure notification hooks; only for an already-authorized, explicitly bounded bench job |
 
 The documentation audit inspected tool descriptions and selected active contracts;
 it did not rerun these historical helpers or certify their current deployment

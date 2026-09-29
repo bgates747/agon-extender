@@ -273,6 +273,15 @@ deployment script when additional verified steps are required. A running record
 without a terminal result after host interruption is unknown, not success.
 Only one SD client may use the service at a time, even with different journals.
 
+An authorized unattended qualification may pass `--terminal-hooks` before the
+`--` separator. The named JSON file contains optional `success` and `failure`
+argv arrays; the worker invokes exactly one after the wrapped command returns,
+without a shell. Hooks are notifications, not result reporters. A hardware
+wrapper must print and retain its own failure identity before returning nonzero,
+then use a failure hook that does not clear or overwrite that display. A failed
+success hook makes the job status `failure` while preserving the primary
+command's separate status and exit code.
+
 ## Opt-in fast transfer — bounded physical pass
 
 The deployed draft sdserve v0.2.0 uses the same executable and transport. Start
