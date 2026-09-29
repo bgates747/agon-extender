@@ -2,7 +2,7 @@
 
 ## Result
 
-`A10-RP02-S01` [ ] Candidate complete; awaiting Author acceptance.
+`A10-RP02-S01` [x] Accepted by the Author on 2026-09-29. RP03 may proceed.
 
 The stock-shaped `StockRuntimeController`/`StockP4Service`/stock-scanline
 family is the sole product display owner. The older project-owned generic
@@ -127,5 +127,6 @@ separately bounded discriminator; the successful current behavior itself may
 be retained as the regression baseline.
 
 No Agon reset, EMOS/SD mutation or production promotion was performed by the
-agent for this flash. The informal result does not waive RP02's Author-
-acceptance pause or authorize RP03.
+agent for this flash. The Author subsequently accepted RP02; causal
+investigation of the newly passing Nurples mode switch is explicitly deferred
+until the complete audit and repair sequence is finished.

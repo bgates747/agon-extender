@@ -176,13 +176,18 @@ Accepted by the Author on 2026-09-29 after the minimal-profile build/graph and
 neighbor regressions passed and the audit-impacting browser oracles were repaired
 and rerun. Implementation commits: `2105f50b`, `36131e8d`.
 
-`A10-RP02` [ ] **F012 — Sole product display owner and retirement boundary.**
+`A10-RP02` [x] **F012 — Sole product display owner and retirement boundary.**
 Confirm the selected stock-shaped display family as product owner, inventory and
 extract unique nonrelease oracles, define the nonrelease family's removal or
 archive condition, and prove exactly one family links in each admitted profile.
 Do not copy repairs between families. Validation: `A10-VP06`, architecture and
 profile checks, plus build proof. This is the second and final severity-order
 exception.
+
+Accepted by the Author on 2026-09-29 after both isolated native profiles,
+applicable host contracts, flash verification, boot/service smoke and the
+Author-observed Nurples late ExCom mode-switch regression passed. Implementation
+commit: `f8458a31`; hardware-observation record: `4307e94d`.
 
 ### High severity
 

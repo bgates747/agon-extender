@@ -15,7 +15,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — RP02's candidate makes the stock-shaped family the sole product display owner, mechanically contains the older family to PORT-008 qualification, and defines its three-gate retirement boundary. Both native profiles and applicable host contracts pass; RP02 awaits Author acceptance before RP03. LCD support is reintroduced after the audit as a separately reviewed delta.
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — RP01 and RP02 are accepted. RP03 now repairs mutable-font bounds, backing/offset lifetime and unsafe scratch use, with sanitizer, capture and P4-build regressions before its own acceptance pause. Nurples mode-switch causality is deferred until the complete audit/repair sequence ends; LCD returns afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 

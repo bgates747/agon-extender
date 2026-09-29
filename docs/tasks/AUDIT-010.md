@@ -439,12 +439,13 @@ correction changes those authorities. Use source-contract and host validation
 during implementation, but do not claim physical behavior from compilation or
 static analysis.
 
-The Author accepted RP01's minimal profile and host/build evidence on 2026-09-29;
-see [RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md). RP02 is authorized as the sole
-active repair item. Its [display-owner candidate](AUDIT-010/RP02-DISPLAY-OWNER.md)
-now records the enforced family split, extracted-oracle disposition, concrete
-PORT-008 retirement gate and passing native build/profile evidence. RP02 has
-stopped for Author acceptance; RP03 has not started.
+The Author accepted RP01's minimal profile and host/build evidence and RP02's
+sole-display-owner boundary on 2026-09-29; see
+[RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md) and
+[RP02-DISPLAY-OWNER.md](AUDIT-010/RP02-DISPLAY-OWNER.md). The Author explicitly
+deferred causal investigation of the newly passing Nurples mode switch until
+the entire audit/repair sequence is complete. RP03 is now the sole active item
+and will stop for acceptance before RP04.
 
 ### A10-09 [ ] Validate, review and close out repairs
 
