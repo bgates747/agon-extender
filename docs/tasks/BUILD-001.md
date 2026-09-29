@@ -214,12 +214,13 @@ later LCD implementation. Preserve the existing native infrastructure changes
 as a reviewable build-only delta and prove that selected project sources match
 the retained r61 closure.
 
-The resulting clean branch is `codex/build001-prelcd`. Candidate
-`build001-d17cae79-console-prelcd`, built at
-`d17cae7968a7640d37a9ced36a681f063ef78913`, selects exactly the retained r61 product
-closure's 22 project and 11 vendored translation units and no LCD source or
-dependency. The branch subsequently added analysis-only tooling at
-`6f4750b14a410528c3650e45e7a248959e8e150d`. The initial boot-only procedure is
+The resulting clean branch is `codex/build001-prelcd`. Corrected candidate
+`build001-e7b35fd5-console-prelcd`, built at
+`e7b35fd5bb5ab88b619a9a433a78ffa132119d19`, selects exactly the retained r61
+product closure's 22 project and 11 vendored translation units and no LCD source
+or dependency. It explicitly retains r61's staged-WebDAV profile setting and
+accepts the private browser-reset endpoint only as a machine-local build input.
+The initial boot-only procedure is
 [PRELCD-BOOT-PROCEDURE.md](BUILD-001/PRELCD-BOOT-PROCEDURE.md).
 
 ### B01-05 [x] Validate build-graph and artifact equivalence
@@ -280,6 +281,14 @@ unused remote-Wi-Fi/ESP-Hosted configuration. The exact corrected candidate
 booted twice without assertion, initialized USB input and wired Ethernet, and
 served HTTP successfully. This is a boot-canary pass, not completion of the
 functional-equivalence items below.
+
+The first functional pass then exposed B01-HR09: candidate `d17cae79` booted and
+passed Legacy, ExCom, keyboard and HTTP checks, but did not listen on staged
+WebDAV port 8081. The migration had reproduced the source closure while omitting
+r61's explicit `--staged-webdav` build variant. The corrected native profile now
+defines that behavior directly and preserves the private reset endpoint through
+a non-tracked wrapper argument. The amended exact-candidate procedure requires
+renewed Author acceptance before another flash.
 
 B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
 keyboard/input, SD service, browser service and clean recovery using targeted

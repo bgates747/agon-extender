@@ -1,7 +1,8 @@
 # BUILD-001 pre-LCD functional-equivalence procedure
 
-State: accepted by the Author on 2026-09-28; execution authorized within the
-exact scope and stopping conditions below.
+State: amended after B01-HR09; awaiting renewed Author acceptance because the
+exact candidate bytes changed. The Author's 2026-09-28 acceptance applies only
+to the superseded d17 candidate and does not authorize this replacement flash.
 This procedure qualifies the native pre-LCD build boundary only. It neither
 enables LCD output nor promotes production firmware.
 
@@ -9,27 +10,27 @@ enables LCD output nor promotes production firmware.
 
 | Role | Identity | Application SHA-256 |
 |---|---|---|
-| Native candidate | `build001-d17cae79-console-prelcd`; source `d17cae7968a7640d37a9ced36a681f063ef78913` | `861cb25c9c96e6b3e845cf5268ce922378649f4594e9f231ae9a85a1256ba8df` |
+| Native candidate | `build001-e7b35fd5-console-prelcd`; source `e7b35fd5bb5ab88b619a9a433a78ffa132119d19` | `655565e602688204b926d957b034c02a0ae0befad19137f7cf38d034cbce69bc` |
 | Hardware-tested predecessor | `build001-eadc2925-wired-prelcd`; source `eadc2925e436754f5b7e0beddf088b01ded504ba` | `7fea756ec20eb28dd0d2ef5238fa02115b99d6fc813923fe56d05b02daf57e3b` |
 | Production rollback | `uart-excom-console-r55-b2026-09-25-02-18-28Z`; production v0.1.0 bundle `extender-installation-r02` | `a2d41a29ee9f5b42a10df9c3d724202b1db5ab561f3c3fc29f134f4f15fe54cb` |
 
-The candidate differs from the boot-tested predecessor only in native build
-infrastructure for the recovery profile; its console product inputs retain the
-same wired-network correction. The operator must nevertheless treat the d17
-bytes as a new immutable candidate and independently compare every written
-flash region before boot. The machine-local bench record supplies private
-endpoints and commands.
+The candidate retains the wired-network correction, makes r61's staged-WebDAV
+variant an explicit console-profile definition, and embeds the private browser
+reset endpoint from a machine-local wrapper argument. The operator must treat
+these as new immutable bytes and independently compare every written flash
+region before boot. The machine-local bench record supplies private endpoints
+and commands.
 
 | Offset | Candidate artifact | SHA-256 |
 |---:|---|---|
-| `0x2000` | `bootloader/bootloader.bin` | `da2cbcab6f4b4efed454e91c1800eb82db39fb44715e124d6f12b352c66f9cd7` |
+| `0x2000` | `bootloader/bootloader.bin` | `92ff08e3858689e868ec22e835d4a70e5896ba70a24bb2fd3f50d6f820536e74` |
 | `0x8000` | `partition_table/partition-table.bin` | `e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a` |
 | `0xf000` | `ota_data_initial.bin` | `7d2c7ac4888bfd75cd5f56e8d61f69595121183afc81556c876732fd3782c62f` |
-| `0x20000` | `agon_extender.bin` | `861cb25c9c96e6b3e845cf5268ce922378649f4594e9f231ae9a85a1256ba8df` |
+| `0x20000` | `agon_extender.bin` | `655565e602688204b926d957b034c02a0ae0befad19137f7cf38d034cbce69bc` |
 
 ## Preconditions and stopping conditions
 
-B01-PE01 [x] The Author accepts this exact procedure and authorizes the P4 flash,
+B01-PE01 [ ] The Author accepts this exact procedure and authorizes the P4 flash,
 ordinary Agon resets, temporary startup/fixture deployment, read-only service
 checks and final rollback described below.
 

@@ -92,3 +92,28 @@ four regions matched before boot. Serial identified app `eadc2925`, ELF prefix
 Two HTTP checks returned `200 OK`; a second reset reproduced the clean boot.
 The corrected candidate remains installed. This passes the migration boot
 defect only; broader B01-06 functional equivalence remains open.
+
+## B01-HR09 — first functional-equivalence attempt
+
+B01-HR09 [x] Candidate `build001-d17cae79-console-prelcd` passed independent
+flash-region comparisons, booted without panic or reset, identified the expected
+source and ESP-IDF v5.5.5, initialized USB keyboard and wired Ethernet, returned
+HTTP 200, and passed Legacy-to-ExCom-to-Legacy text transport. The operator then
+found TCP port 8081 refused an `OPTIONS` connection. Testing stopped before SD
+or visual fixtures.
+
+The retained r61 manifest proves `staged_webdav: true`; the native profile had
+selected the service sources but left `AGON_EXTENDER_STAGED_WEBDAV` at its
+source-safe default of zero. This is a BUILD-001 configuration-equivalence
+defect, not a runtime WebDAV failure. The operator restored production r55 from
+the verified rollback image, independently read back all 1,617,920 bytes at the
+same SHA-256, confirmed its exact serial identity and HTTP 200, restored fresh
+ready/neutral keyboard admission with one ordinary Agon reset, invoked the
+spoken failure cue, and left `BUILD-001 FAIL: STAGED WEBDAV OMITTED` visible.
+Production selection and SD contents were unchanged.
+
+B01-HR10 [ ] Flash and qualify corrected candidate
+`build001-e7b35fd5-console-prelcd` only after the Author accepts the amended
+exact-candidate procedure. Host evidence proves the selected compile actions
+carry `AGON_EXTENDER_STAGED_WEBDAV=1` and the isolated embedded page carries the
+machine-local reset endpoint without tracking it.

@@ -6,20 +6,23 @@ satisfies BUILD-001's replacement baseline. B01-05e must repeat the applicable
 controls for the retained working pre-LCD r61 source closure before AUDIT-010
 freezes its baseline.
 
-State: pre-LCD host equivalence passed; hardware functional equivalence remains
-subject to the separately reviewed procedure. Date: 2026-09-28.
+State: corrected pre-LCD host equivalence passed; hardware functional
+equivalence remains subject to the amended procedure. Date: 2026-09-28.
 
 ## Pre-LCD replacement baseline
 
-The replacement baseline is the clean `codex/build001-prelcd` build at
-`d17cae7968a7640d37a9ced36a681f063ef78913`. Commit
-`6f4750b14a410528c3650e45e7a248959e8e150d` subsequently added only the
-validated Clang action-database adapter and its unit test; it did not change the
-firmware inputs.
+The corrected replacement baseline is the clean `codex/build001-prelcd` build
+at `e7b35fd5bb5ab88b619a9a433a78ffa132119d19`. The earlier `d17cae79`
+candidate proved at hardware that boot, Legacy, ExCom, keyboard and browser HTTP
+worked, but also proved staged WebDAV absent. That result invalidated the prior
+claim that source-closure equality alone reproduced r61's complete build
+variant. Commits `01f067aa` and `e7b35fd5` make the staged service explicit in
+the profile and restore the private reset asset as a machine-local wrapper
+input.
 
 | Profile | Retained run | Selected units | Application bytes | Result |
 |---|---|---:|---:|---|
-| `p4-console` | `native-prelcd-05` | 33 | 1,491,072 | Build and graph validation pass |
+| `p4-console` | `native-output-e7b35fd5-console-prelcd` | 33 | 1,582,976 | Build and graph validation pass |
 | `p4-mos-recovery` | `native-recovery-wired-03` | 1 | 461,440 | Build, generated-payload and graph validation pass |
 | `p4-port008-nonrelease-qualification` | `native-port008-wired-02` | 28 | 1,181,008 | Build and graph validation pass |
 
@@ -56,19 +59,19 @@ bytes with SHA-256
 `7b53397f7261d547c61c4fc12e90f029d621d8e96a0f83577406a8c0064e2da2`;
 its retained factory image has the task-contract SHA-256
 `f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`.
-The native application SHA-256 is
-`861cb25c9c96e6b3e845cf5268ce922378649f4594e9f231ae9a85a1256ba8df`.
+The corrected native application SHA-256 is
+`655565e602688204b926d957b034c02a0ae0befad19137f7cf38d034cbce69bc`.
 
 Worst percentage changes are listed first. Debug-only ELF sections are
 excluded.
 
 | Region/artifact (bytes) | Hybrid r61 | Native pre-LCD | Difference | Difference % |
 |---|---:|---:|---:|---:|
-| Flash rodata | 295,776 | 241,324 | -54,452 | -18.41% |
-| Application binary | 1,671,408 | 1,491,072 | -180,336 | -10.79% |
-| Flash text | 1,250,120 | 1,124,700 | -125,420 | -10.03% |
-| DRAM0 BSS | 47,960 | 45,544 | -2,416 | -5.04% |
+| Flash rodata | 295,776 | 243,764 | -52,012 | -17.59% |
+| Application binary | 1,671,408 | 1,582,976 | -88,432 | -5.29% |
+| Flash text | 1,250,120 | 1,214,140 | -35,980 | -2.88% |
 | DRAM0 data | 21,116 | 20,840 | -276 | -1.31% |
+| DRAM0 BSS | 47,960 | 47,608 | -352 | -0.73% |
 | IRAM text | 103,516 | 103,342 | -174 | -0.17% |
 
 B01-PV05 [x] The size reduction is explained by the only intentional product
@@ -82,8 +85,10 @@ Ethernet behavior.
 
 B01-PV06 [x] The partition table remains byte-identical at SHA-256
 `e29396a4f5ecc129c0e275d2df19d69adb5ee33389e3d5659e9a50932ac6864a`.
-The five embedded browser assets retain their r61 source bytes and linker
-ownership. Native CMake makes Arduino-ESP32 3.3.11 an explicit managed
+The five embedded browser assets retain their r61 behavior and linker ownership;
+the source page remains generic while the wrapper embeds the machine-local reset
+endpoint into an isolated generated copy and records only its digest. Native
+CMake makes Arduino-ESP32 3.3.11 an explicit managed
 component; all other retained managed dependency versions match the hybrid
 lock. No unexplained source, partition, asset or material memory delta remains.
 
@@ -92,6 +97,14 @@ the bounded hardware boot canary twice, initialized USB input and wired
 Ethernet, and returned HTTP 200 without the assertion or a reset loop. This
 supports the configuration explanation but does not substitute for B01-06's
 functional-equivalence procedure.
+
+B01-PV08 [x] Candidate `d17cae79` proved that the native profile had omitted
+r61's staged-WebDAV variant: HTTP port 80 was ready but port 8081 refused the
+connection. Candidate `e7b35fd5` compiles all 33 selected units with
+`AGON_EXTENDER_STAGED_WEBDAV=1`; the graph validator passes, its application
+contains exactly one configured reset endpoint, its manifest contains no
+private URL, and two fresh builds retained the already documented timestamp
+variance boundary. Hardware confirmation remains open.
 
 ## Validated native profiles
 
