@@ -64,12 +64,16 @@ B01-PE07 [ ] With mode selected only by `/autoexec.txt`, the runner executes the
 mode0 asymmetric color/edge fixture. The Author later confirms correct colors,
 orientation and all four source edges on Legacy output; one bounded browser
 capture must agree with the source image. LCD is absent from this comparison.
+The maintained build produces an 812-byte `bars.bin` with SHA-256
+`ce783bcb3a517b4be48e6522d186d3409af04cf0bfb182531ed7334b0beed47f`.
 
 B01-PE08 [ ] With `/autoexec.txt` selecting mode20 before launch, the runner
 executes the static grid fixture without allowing the fixture to switch modes.
 Expected Legacy and browser geometry is the complete A1-through-H6 grid in
 order with all asymmetric edge markers at the native 512-by-384 extent. There
 is no letterbox or pillarbox requirement on these non-LCD outputs.
+The maintained build produces a 1,691-byte `grid.bin` with SHA-256
+`a44d9e4ba6f23c603158130ac3d47039e411047bb34435fb52458968e7492e8d`.
 
 B01-PE09 [ ] Each automated case prints concise progress on Legacy output where
 practical and durably records start, end and duration. The runner invokes the
