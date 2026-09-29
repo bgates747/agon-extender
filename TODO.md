@@ -15,8 +15,6 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[BUILD-001 — Native ESP-IDF/CMake P4 build authority](docs/tasks/BUILD-001.md)** — Apply the accepted native build authority to the latest working pre-LCD r61 closure with current EMOS v0.1.23; validate equivalence and provide AUDIT-010 with the actual linked compilation graph before its baseline freeze. The combined LCD candidate remains failed evidence, not the audit baseline.
-
 - [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — Audit the latest working pre-LCD P4 product with current EMOS v0.1.23 for architectural cohesion, ownership, allocation/lifetime, failure handling and accumulated ad hoc behavior. Complete audit and review before itemized fixes; LCD support is reintroduced afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.

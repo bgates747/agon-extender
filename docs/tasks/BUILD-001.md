@@ -309,10 +309,15 @@ Nurples executable retains 320-by-240 geometry after its late mode20 request in
 native pre-LCD ExCom. B01-HR11 must compare the exact hybrid r61 image before
 this can be classified as inherited behavior or a migration regression.
 
-B01-06c [ ] Keep runtime monitoring bounded. Reusable unattended tests must print
+B01-06c [x] Keep runtime monitoring bounded. Reusable unattended tests must print
 progress on the legacy mainboard display where practical and invoke the existing
 audible success/failure notification without overwriting a retained failure
 message.
+
+The accepted detached `bench_job.py` terminal-hook contract, focused host tests
+and retained hardware result demonstrate this behavior. The failure path plays
+its cue before restoring the durable Legacy failure message; the success path
+leaves its terminal result visible.
 
 ### B01-07 [x] Cut over maintained build consumers
 
@@ -380,8 +385,8 @@ production promotion.
 The native authority was cut over at `755d6f37`; the exact accepted audit
 handoff is recorded in [AUDIT-010/BASELINE.md](AUDIT-010/BASELINE.md). Hybrid
 r61 material remains explicitly gated rollback evidence. Selected production
-v0.1.0/r02 is unchanged. Final BUILD-001 queue closure awaits the Author's
-acceptance of this completed migration result.
+v0.1.0/r02 is unchanged. The Author accepted the completed migration result on
+2026-09-29; BUILD-001 is closed and removed from the active queue.
 
 ## Evidence and change discipline
 
