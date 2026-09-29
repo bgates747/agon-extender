@@ -38,24 +38,24 @@ checklists and controls; repository evidence determines findings.
 
 The audit must answer these immutable review questions:
 
-A10-Q01 [ ] Which processor, task, service or application owns every persistent and
+A10-Q01 [x] Which processor, task, service or application owns every persistent and
    transition-time allocation, mutable state object, worker, queue and output
    buffer?
 
-A10-Q02 [ ] Which functions must coexist, which are mutually exclusive, and what are
+A10-Q02 [x] Which functions must coexist, which are mutually exclusive, and what are
    their steady-state and peak internal-RAM, PSRAM, DMA-capable-memory, stack,
    socket and file-handle requirements?
 
-A10-Q03 [ ] Are initialization, reconfiguration, failure rollback and teardown complete
+A10-Q03 [x] Are initialization, reconfiguration, failure rollback and teardown complete
    transactions, with truthful state visible to EMOS, applications, browser
    clients and diagnostics? Apply the same question to LCD during its later
    integration-delta review.
 
-A10-Q04 [ ] Where have local feature additions duplicated responsibility, bypassed an
+A10-Q04 [x] Where have local feature additions duplicated responsibility, bypassed an
    architectural owner, retained maximum-size resources unnecessarily, or made
    one output/service impair another?
 
-A10-Q05 [ ] Which defects can automated analysis demonstrate, which require manual
+A10-Q05 [x] Which defects can automated analysis demonstrate, which require manual
    contract tracing, and which remain hypotheses requiring bounded tests?
 
 ## Scope
@@ -76,25 +76,25 @@ diagnostic is production by assumption.
 
 The source review has these immutable coverage items:
 
-A10-S01 [ ] VDP mode selection, native controller replacement, allocation/fallback,
+A10-S01 [x] VDP mode selection, native controller replacement, allocation/fallback,
    graphics-context reset and published mode state.
 
-A10-S02 [ ] Native drawing storage, retained buffers/assets, snapshot ownership,
+A10-S02 [x] Native drawing storage, retained buffers/assets, snapshot ownership,
    browser encoding scratch and HTTP connection/task resources in the pre-LCD
    baseline. LCD composition, DSI scanout and PPA additions are excluded from
    exhaustive baseline review and become a post-audit integration delta.
 
-A10-S03 [ ] Renderer, snapshot, browser, UART, keyboard, storage and diagnostic
+A10-S03 [x] Renderer, snapshot, browser, UART, keyboard, storage and diagnostic
    task ownership in the pre-LCD baseline; locks, suspension, queues, callbacks
    and teardown ordering. LCD task ownership is reviewed with the later delta.
 
-A10-S04 [ ] Error propagation, rollback, degraded operation and observability across the
+A10-S04 [x] Error propagation, rollback, degraded operation and observability across the
    eZ80/P4 UART boundary and each P4 service boundary.
 
-A10-S05 [ ] Build-time feature combinations, compile-time branches, dead/stubbed paths,
+A10-S05 [x] Build-time feature combinations, compile-time branches, dead/stubbed paths,
    duplicated facilities, exceptional workarounds and missing integration tests.
 
-A10-S06 [ ] Host Python tools and fixture builders where unsafe assumptions, weak receipt
+A10-S06 [x] Host Python tools and fixture builders where unsafe assumptions, weak receipt
    handling or test-only transformations could misstate target behavior.
 
 Do not reopen accepted product decisions merely because alternatives exist.
@@ -382,7 +382,7 @@ against selected upstream facilities, and records thirteen duplicate/parallel
 implementation candidates with canonical owners or explicit dispositions. No
 history, executable change, build, target or hardware operation was used.
 
-### A10-06 [ ] Findings and independent validation proposals
+### A10-06 [x] Findings and independent validation proposals
 
 Publish stable findings with severity, confidence, exact evidence, affected
 actors, user-visible consequence, scope, proposed owner and removal/acceptance
@@ -396,6 +396,17 @@ after A10-05a is complete. It must keep upstream-unchanged,
 upstream-ported/adapted and project-new findings separate, and must not propose
 a new implementation until the upstream-equivalent and project-duplicate
 checks are recorded.
+
+Completed on 2026-09-29. [FINDINGS.md](AUDIT-010/FINDINGS.md) records fourteen
+new stable findings, carries seven existing FWBUG identities without aliases,
+ranks evidence and severity, supplies all nine required finding fields, and
+defines thirteen smallest-discriminating validation proposals. The final
+thirty-five-row disposition is linked from
+[COVERAGE-LEDGER.md](AUDIT-010/COVERAGE-LEDGER.md). Five explicit limits prevent
+tool gaps, deferred LCD work or unrelated historical evidence from being
+reported as clean coverage. No executable source, build, target or hardware
+state changed. Proceed to the complete A10-07 Author review; no finding yet
+authorizes implementation or physical testing.
 
 ### A10-07 [ ] Author findings review and repair authorization
 

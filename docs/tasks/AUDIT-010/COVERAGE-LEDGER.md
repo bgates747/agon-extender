@@ -2,13 +2,13 @@
 
 ## Executive summary
 
-This ledger freezes the complete review map before conclusions are drawn. Its
+This ledger froze the complete review map before conclusions were drawn. Its
 stable `A10-COVnnn` rows partition the pre-LCD product by owning actor and
-resource/transition boundary. Every row is queued for A10-03 architecture and
+resource/transition boundary. Every row was queued for A10-03 architecture and
 resource tracing, A10-04 applicable automation, and A10-05 manual review unless
-its disposition explicitly narrows it. No row currently asserts a defect;
-future findings receive stable `AUDIT-010-Fnnn` identifiers and are linked here
-without renumbering coverage.
+its disposition explicitly narrows it. The original table cells preserve that
+pre-review state; A10-06's final crosswalk at the end now links stable
+`AUDIT-010-Fnnn` and existing FWBUG identities without renumbering coverage.
 
 ## Disposition vocabulary
 
@@ -131,7 +131,47 @@ under A10-COV018–A10-COV019.
 
 ## Finding register
 
-No findings are opened during A10-02. A10-03 through A10-06 allocate immutable
-IDs beginning at `AUDIT-010-F001`, link every finding to one or more coverage rows,
-and state whether evidence is demonstrated, source-proven, tool-reported or
-hypothetical. Coverage gaps are findings rather than silent row deletion.
+No findings were opened during A10-02; the original disposition cells above
+preserve that pre-review freeze. A10-06 completed the findings set in
+[FINDINGS.md](FINDINGS.md). The final crosswalk below is now authoritative for
+review status without rewriting the frozen source-coverage description.
+
+## A10-06 final coverage crosswalk
+
+| Coverage ID | Final review disposition and findings |
+|---|---|
+| `A10-COV001` | Complete. `AUDIT-010-F002` mandatory browser resources and `AUDIT-010-F005` product-profile drift apply. Boot fail-stop paths otherwise remain explicit. |
+| `A10-COV002` | Complete; no new finding. UART framing, sole-writer ownership, admission and fault containment remain coherent. |
+| `A10-COV003` | Complete. `AUDIT-010-F001` mode transaction, `AUDIT-010-F002` display/snapshot coupling and `AUDIT-010-F012` parallel display ownership apply. |
+| `A10-COV004` | Complete. `AUDIT-010-F001`, `AUDIT-010-F011`, `AUDIT-010-F012` and existing `FWBUG-001` apply. |
+| `A10-COV005` | Complete. `AUDIT-010-F006`, `AUDIT-010-F008`, `AUDIT-010-F011`, `AUDIT-010-F012`, `FWBUG-001`, `FWBUG-007` and `FWBUG-012` apply. |
+| `A10-COV006` | Complete. Slot ownership is bounded; mandatory eager lifetime is `AUDIT-010-F002`. |
+| `A10-COV007` | Complete. Codec bounds and lease release are coherent; maximum persistent allocation policy is `AUDIT-010-F002`. |
+| `A10-COV008` | Complete. Callback/one-viewer ownership is coherent; socket composition is `AUDIT-010-F004`. |
+| `A10-COV009` | Complete. `AUDIT-010-F002`, `AUDIT-010-F003` and `AUDIT-010-F004` apply. |
+| `A10-COV010` | Complete. Runtime input arbitration is coherent; repeated checksum implementation is `AUDIT-010-F013`. The frozen standalone USB diagnostic remains disposed, not a finding. |
+| `A10-COV011` | Complete. File/lease lifecycle is coherent; global socket composition is `AUDIT-010-F004`. |
+| `A10-COV012` | Complete. WebDAV partial startup is `AUDIT-010-F003`; global socket composition is `AUDIT-010-F004`; repeated SD checksum implementation contributes to `AUDIT-010-F013`. |
+| `A10-COV013` | Complete; no finding. Embedded asset identity and browser error/status paths are accounted for. |
+| `A10-COV014` | Complete; no finding. EMOS prepare/commit/recover and truthful committed-route publication remain coherent. |
+| `A10-COV015` | Complete; no finding. Admission generations, deadlines, terminal proof and fail-closed exhaustion remain coherent. |
+| `A10-COV016` | Complete; no finding. Keyboard/UART1 transitions and held-key cleanup remain coherent; documented silent-idle peer loss remains an accepted hardware limit. |
+| `A10-COV017` | Complete. Gateway/mailbox ownership is coherent; repeated checksum primitive is `AUDIT-010-F013`. |
+| `A10-COV018` | Complete. Transfer transaction behavior is coherent; implicit shared path policy is `AUDIT-010-F014`. |
+| `A10-COV019` | Complete. Finite job/admission behavior is coherent; implicit shared path policy is `AUDIT-010-F014`. |
+| `A10-COV020` | Complete; no finding. AgonDev selection, translation, link and provenance are identity-validated. |
+| `A10-COV021` | Complete. Native graph authority remains sound; `AUDIT-010-F005` and `AUDIT-010-F012` apply to selected/maintained profile ownership. |
+| `A10-COV022` | Complete. Profile isolation passes; `AUDIT-010-F005` and `AUDIT-010-F012` govern retained profile/qualification boundaries. Retired ZDI and frozen USB predecessors remain disposed, not findings. |
+| `A10-COV023` | Complete. Historical gates are sound; stale maintained invocation is `AUDIT-010-F010`. |
+| `A10-COV024` | Complete; no new client finding. Recovery implementation duplication is owned by `A10-COV021`/`022`, not attributed to client wrappers. |
+| `A10-COV025` | Complete; no finding. Maintained automation propagates failure and separates production/development identities. |
+| `A10-COV026` | Complete. Dynamic effect gap `AUDIT-010-F008`, browser oracle `AUDIT-010-F009` and shape validation `AUDIT-010-F011` apply. |
+| `A10-COV027` | Deferred LCD delta. Post-audit redeployment must regress `AUDIT-010-F001`, `AUDIT-010-F002` and `AUDIT-010-F008`; no LCD-baseline finding is assigned. |
+| `A10-COV028` | Complete exclusion. Historical helpers remain outside active runtime; exact helper/fixture duplicates are disposed in A10-05a rather than promoted to findings. |
+| `A10-COV029` | Complete reference use; no finding assigned to read-only official authorities. Inherited origins are recorded in finding lineage. |
+| `A10-COV030` | Complete bounded comparison. Retained mode20 behavior is consistent evidence for `AUDIT-010-F001` but not proof of its cause. |
+| `A10-COV031` | Complete; no finding. Compiled EMOS parallel facilities remain isolated from the ordinary UART profile. |
+| `A10-COV032` | Complete. Existing `FWBUG-008`, `FWBUG-009` and `FWBUG-010` apply; no duplicate A10 IDs were created. |
+| `A10-COV033` | Complete. `AUDIT-010-F006`, `AUDIT-010-F007`, `FWBUG-006`, `FWBUG-007` and `FWBUG-012` apply. |
+| `A10-COV034` | Complete selected-component integration. `AUDIT-010-F004` applies; incomplete OSV ecosystem coverage remains an explicit audit limit, not a clean result. |
+| `A10-COV035` | Complete. `AUDIT-010-F004` socket limits and `AUDIT-010-F005` feature-definition composition apply. |
