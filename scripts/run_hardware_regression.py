@@ -139,9 +139,6 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     reset_and_wait(reset, url)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
-    type_line(url, output / "keyboard-remove-result.json",
-              "IFTHERE /agents/extender/results/a10-rp04.txt Then "
-              "DELETE /agents/extender/results/a10-rp04.txt")
     type_line(url, output / "keyboard-stage-service.json", "EMOS sdserve --fast /")
     client = wait_sd_service(url, output / "sd-stage.json")
     original_startup = b""
@@ -157,6 +154,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             raise RuntimeError("RP04 fixture fast transfer failed independent readback")
         close_retained_backup(client, target, output / "replaced-fixture-backup.bin")
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
+                   b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
+                   b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
                    b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n"
                    b"EMOS sdserve --fast /\r\n")
         client.upload("/autoexec.txt", startup, True, fast=True)
