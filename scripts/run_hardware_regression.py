@@ -153,6 +153,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         if client.download(target) != binary.read_bytes():
             raise RuntimeError("RP04 fixture fast transfer failed independent readback")
         close_retained_backup(client, target, output / "replaced-fixture-backup.bin")
+        close_retained_backup(client, "/autoexec.txt",
+                              output / "prior-autoexec-backup.txt")
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
