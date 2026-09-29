@@ -447,8 +447,8 @@ sole-display-owner boundary and RP03's mutable-font repair on 2026-09-29; see
 deferred causal investigation of the newly passing Nurples mode switch until
 the entire audit/repair sequence is complete. RP04 is now the sole active item;
 its [raw-SD dispatch candidate](AUDIT-010/RP04-RAW-SD-WRITE.md) passes source,
-linked-image and independent raw-image controls and has stopped for Author
-acceptance. No physical destructive-sector test was authorized or run.
+linked-image, emulator, full-ROM installation, retained regression and physical
+write/readback/restoration controls and has stopped for Author acceptance.
 
 ### A10-09 [ ] Validate, review and close out repairs
 

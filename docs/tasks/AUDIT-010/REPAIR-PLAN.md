@@ -215,9 +215,9 @@ using a disposable controlled sector with restoration evidence.
 
 Candidate and two-command hardware workflow complete; see
 [RP04-RAW-SD-WRITE.md](RP04-RAW-SD-WRITE.md). Source, linked-image, four
-independent raw-image cases, exact-commit build and the expanded 55-case
-retained closure pass. RP04 now awaits the commit-pinned flash and registered
-physical raw-sector case; RP05 remains unauthorized.
+independent raw-image cases, exact-commit full-ROM verification, the expanded
+55-case retained closure and the registered physical write/readback/restoration
+case pass. RP04 now awaits Author acceptance; RP05 remains unauthorized.
 
 `A10-RP05` [ ] **F001a — Checked display allocations.** Add complete failure
 checks and local cleanup for inherited viewport pool/table and paletted DMA-row

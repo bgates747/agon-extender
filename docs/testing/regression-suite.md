@@ -43,10 +43,11 @@ The launcher prints the fresh job path, then streams concise phase, current-case
 and case-result lines to the SSH console. The actual worker is detached: closing
 SSH or pressing Ctrl-C stops only the status stream and does not stop the suite.
 `--detach` returns immediately when no live console display is wanted. Do not
-poll the run with an agent. On completion or detected failure, the terminal hook selects Legacy,
-plays the accepted `/extender/attention.txt` spoken cue, and then prints the
-final result so alert output cannot erase a failure message. The hook does not
-reset either board.
+poll the run with an agent. On completion or detected failure, the terminal hook
+selects Legacy, plays the accepted `/extender/attention.txt` spoken cue,
+explicitly exits the listener started by that batch, and then prints the final
+result so alert output cannot erase a failure message. The hook does not reset
+either board.
 
 The printed paths identify these durable records:
 
@@ -110,6 +111,32 @@ after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
 write API, independently reads the result, restores through MOS's distinct C
 write dispatch, and independently verifies the exact preimage before reporting.
 An unverified restoration is an infrastructure failure and stops advancement.
+
+## First complete RP04 hardware run
+
+Exact EMOS commit `8ecea5bc6cb4f9f563bc570316afbdaa08648632` was
+built, flashed and verified by full installed-ROM readback. Exact Extender
+runner commit `1b79083038b83fc4a60265b3d05db1e554e51c15` then
+produced the retained local run
+`agents/hardware-validation/regression-2026-09-29-23-07-38Z-1b79083038b8/`.
+
+| Field | Result |
+| --- | --- |
+| EMOS artifact | 128,579 bytes; SHA-256 `7c7ac79fcbdb4a9d67885aede552e808e0111bcc7e2d54b012c43add0305317a` |
+| Installed ROM | 131,072 bytes; exact padded match; SHA-256 `4fab4a413ff3e7d163ee8bd605ef9390503ba25db116a5c9e6137e300932a729` |
+| Retained closure | 55 passed; zero failure, infrastructure error, timeout or blocked; 150.491329 monotonic seconds |
+| Physical fixture | pass; 142.566509 monotonic seconds; fixture SHA-256 `9ed1064702f339ca8b6f3bb4ba852cdb9ccf724b59446ff4859b69eb85a47ce3` |
+| Card safety | sector 2; first partition LBA 8192 |
+| Test oracle | write/read pattern CRC32 `3b3befd6`; test status 0 |
+| Restoration oracle | preimage/restored CRC32 `b2aa7578`; restore and verification statuses 0 |
+| Startup | exact original 85-byte `/autoexec.txt` restored; final ready reset observed |
+| Overall summary | success; SHA-256 `b3a2124ed85416e4788570b956a73dca8bb4239e35a3fdfe500d39f5ba9bf04a` |
+
+The spoken Legacy cue ran. The run exposed that the retained attention batch
+leaves its SD listener in the foreground; the maintained notifier now exits
+that listener before printing its durable verdict. That follow-up has a
+targeted structural test and was manually exercised against the run's actual
+listener without replaying the already-heard alert.
 
 ## Bounded development checks
 
