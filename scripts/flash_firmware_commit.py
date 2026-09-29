@@ -80,6 +80,10 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
     type_line(url, run / "keyboard-service.json", "EMOS sdserve --fast /")
     client = wait_sd_service(url, run / "sd-stage.json")
     target = "/extender/install/hwval-" + commit[:12] + ".bin"
+    rom_name = "/agents/extender/results/hwval-rom-" + commit[:12] + ".bin"
+    verify_batch = "/extender/install/hwval-" + commit[:12] + ".verify.txt"
+    verify_commands = (f"SAVE {rom_name} &0 &20000\r\n"
+                       "EMOS sdserve --fast /\r\n").encode("ascii")
     try:
         for required in ("/extender/install", "/agents/extender/results"):
             _, attributes = client.stat_entry(required)
@@ -88,6 +92,9 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
         client.upload(target, firmware.read_bytes(), True, fast=True)
         if client.download(target) != firmware.read_bytes():
             raise RuntimeError("fast firmware transfer failed independent readback")
+        client.upload(verify_batch, verify_commands, True, fast=True)
+        if client.download(verify_batch) != verify_commands:
+            raise RuntimeError("verification batch failed independent readback")
         client.rpc(11)
     finally:
         client.lock.close()
@@ -95,9 +102,7 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
     type_line(url, run / "keyboard-flash.json", f"FLASH mos {target} -f")
     wait_keyboard(url, old_boot=old_boot, timeout=100)
 
-    rom_name = "/agents/extender/results/hwval-rom-" + commit[:12] + ".bin"
-    type_line(url, run / "keyboard-save.json", f"SAVE {rom_name} &0 &20000")
-    type_line(url, run / "keyboard-verify-service.json", "EMOS sdserve --fast /")
+    type_line(url, run / "keyboard-verify-batch.json", f"EXEC {verify_batch}")
     client = wait_sd_service(url, run / "sd-verify.json")
     try:
         rom = client.download(rom_name)
