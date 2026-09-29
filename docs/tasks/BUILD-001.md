@@ -208,11 +208,18 @@ B01-04d [x] Ensure a clean checkout can provision or locate the pinned tools and
 components through documented, project-scoped commands. Do not modify global
 developer packages or hide machine-specific paths in tracked files.
 
-B01-04e [ ] Apply the accepted native build authority to the bounded pre-LCD
+B01-04e [x] Apply the accepted native build authority to the bounded pre-LCD
 Extender source `6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d` without importing
 later LCD implementation. Preserve the existing native infrastructure changes
 as a reviewable build-only delta and prove that selected project sources match
 the retained r61 closure.
+
+The resulting clean branch is `codex/build001-prelcd` at
+`595286dd9ed05d0ff228d8ecba195c116197367f`. Candidate
+`build001-595286dd-console-prelcd` selects exactly the retained r61 product
+closure's 22 project and 11 vendored translation units and no LCD source or
+dependency. Its boot-only procedure is
+[PRELCD-BOOT-PROCEDURE.md](BUILD-001/PRELCD-BOOT-PROCEDURE.md).
 
 ### B01-05 [ ] Validate build-graph and artifact equivalence
 
