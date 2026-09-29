@@ -25,3 +25,5 @@ class EmbeddedIdentityTests(unittest.TestCase):
             image = Path(directory) / 'firmware.bin'
             image.write_bytes(b'probe-r01\0new-build\0candidate\0')
             module.verify_embedded_identity(image, 'probe-r01', 'new-build', 'candidate')
+
+if __name__=='__main__': unittest.main()

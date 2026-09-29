@@ -63,6 +63,7 @@ Other boards and complete peripheral compatibility remain unqualified.
 | Current fixture constraints and accepted input exceptions | [Bench constraints](qualification/bench-constraints.md) |
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Timing scopes, PRT units and package reuse boundary | [Game timing](testing/game-timing.md) |
+| Unattended host/browser/native regression | [Regression suite](testing/regression-suite.md) |
 | Compatibility evidence / generated-matrix status | [Qualification index](qualification/README.md) |
 
 Bench access, endpoints and installed-build receipts remain machine-local.

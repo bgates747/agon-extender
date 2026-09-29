@@ -49,6 +49,8 @@ class BenchJobTest(unittest.TestCase):
             self.assertEqual(result['terminal_hook'], 'failure')
             self.assertEqual(result['terminal_hook_exit_code'], 0)
             self.assertEqual(result['status'], 'failure')
+            self.assertGreaterEqual(result['command_elapsed_seconds'], 0)
+            self.assertGreaterEqual(result['terminal_hook_elapsed_seconds'], 0)
             self.assertEqual(marker.read_text(), 'failure')
 
     def test_success_hook_failure_prevents_success_claim(self):

@@ -59,6 +59,7 @@ def worker(folder):
     save(folder / 'result.json', result)
     start = time.monotonic()
     command_code = None
+    command_started = time.monotonic()
     try:
         command_code = subprocess.call(
             spec['argv'], cwd=spec['cwd'], stdin=subprocess.DEVNULL)
@@ -67,19 +68,24 @@ def worker(folder):
     except BaseException:
         traceback.print_exc()
         result.update(command_exit_code=None, command_status='failure')
+    result['command_elapsed_seconds'] = time.monotonic() - command_started
     hook_name = 'success' if command_code == 0 else 'failure'
     hook_code = None
+    hook_elapsed = None
     hook = spec.get('terminal_hooks', {}).get(hook_name)
     if hook:
+        hook_started = time.monotonic()
         try:
             hook_code = subprocess.call(
                 hook, cwd=spec['cwd'], stdin=subprocess.DEVNULL)
         except BaseException:
             traceback.print_exc()
+        hook_elapsed = time.monotonic() - hook_started
     status = 'success' if command_code == 0 and (hook is None or hook_code == 0) else 'failure'
     result.update(exit_code=command_code, status=status,
                   terminal_hook=hook_name if hook else None,
                   terminal_hook_exit_code=hook_code,
+                  terminal_hook_elapsed_seconds=hook_elapsed,
                   ended_at=stamp(), elapsed_seconds=time.monotonic() - start)
     save(folder / 'result.json', result)
     print(json.dumps(result), flush=True)

@@ -21,3 +21,5 @@ class CaptureTests(unittest.TestCase):
         self.assertTrue(M['receiver_ready'](('GENERAL POLL WAIT received=0 cts=1 build='+BUILD+'\n').encode(),BUILD))
         for bad in [b'GENERAL POLL WAIT received=1 cts=1 build='+BUILD.encode()+b'\n',b'GENERAL POLL START build='+BUILD.encode()+b'\n']:
             with self.assertRaises(RuntimeError):M['receiver_ready'](bad,BUILD)
+
+if __name__=='__main__': unittest.main()

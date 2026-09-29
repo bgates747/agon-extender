@@ -1,8 +1,8 @@
 """Portable paired control/engine qualification, no emulator or bench access."""
 from pathlib import Path
-import subprocess,tempfile,unittest
+import os,subprocess,tempfile,unittest
 ROOT=Path(__file__).resolve().parents[1]
-EMOS=ROOT.parent/'agon-emos'
+EMOS=Path(os.environ.get('AGON_EMOS_ROOT', ROOT.parent/'agon-emos'))
 class FiniteJobTests(unittest.TestCase):
  def test_actual_utility_peer_and_engine(self):
   with tempfile.TemporaryDirectory() as directory:
@@ -19,3 +19,5 @@ class FiniteJobTests(unittest.TestCase):
     subprocess.run(['g++','-std=c++17','-Wall','-Wextra','-Werror','-g','-fsanitize=address,undefined','-pthread',
      '-I'+str(ROOT/'vdp/video'),str(ROOT/'tests/storage/webdav'/(name+'.cpp')),*extra,*objects,'-o',str(exe)],check=True)
     subprocess.run([str(exe)],check=True,timeout=30)
+
+if __name__=='__main__': unittest.main()

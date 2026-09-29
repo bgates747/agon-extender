@@ -514,6 +514,15 @@ and runner cleanup must not overwrite or obscure the failure display; if the
 failure prevents any Legacy display, the durable terminal record states that
 explicitly.
 
+The maintained [host/browser/native regression suite](../testing/regression-suite.md)
+implements this contract for its nonphysical closure: 55 explicit cases run
+from an isolated shared clone of the resolved Extender commit and a fixed clean
+EMOS commit, use durable phase/case records and a live SSH-console status stream, and
+invoke the accepted Legacy spoken terminal hook without reset. It deliberately
+uses host records rather than mainboard per-case messages because the host suite
+does not own the foreground. Physical and manual fixtures retain their own
+case-specific implementation obligations under A10-T01 through A10-T09.
+
 ## Findings standard
 
 Use IDs `AUDIT-010-F001` onward. Each finding uses these immutable fields:

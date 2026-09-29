@@ -1,8 +1,8 @@
 """Real linked application helper with portable P4 card service, no hardware."""
 from pathlib import Path
-import subprocess,tempfile,unittest
+import os,subprocess,tempfile,unittest
 ROOT=Path(__file__).resolve().parents[1]
-EMOS=ROOT.parent/'agon-emos'
+EMOS=Path(os.environ.get('AGON_EMOS_ROOT', ROOT.parent/'agon-emos'))
 class ApplicationCardTests(unittest.TestCase):
  def test_paired_card_engine(self):
   with tempfile.TemporaryDirectory() as d:
@@ -14,3 +14,5 @@ class ApplicationCardTests(unittest.TestCase):
    exe=work/'test'
    subprocess.run(['g++','-std=c++17','-Wall','-Wextra','-Werror','-g','-fsanitize=address,undefined','-I'+str(ROOT/'vdp/video'),'-I'+str(EMOS/'lib/sdapp'),str(ROOT/'tests/storage/webdav/application_card_test.cpp'),*objects,'-o',str(exe)],check=True)
    subprocess.run([str(exe)],check=True,timeout=30)
+
+if __name__=='__main__': unittest.main()

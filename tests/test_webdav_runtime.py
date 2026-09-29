@@ -13,3 +13,5 @@ class RuntimeTests(unittest.TestCase):
                     "-fsanitize=address,undefined", "-g", "-I"+str(ROOT/"vdp/video"),
                     str(ROOT/"tests/storage"/(name+".cpp")), "-o", str(exe)],check=True)
                 subprocess.run([str(exe)],check=True,timeout=30)
+
+if __name__=='__main__': unittest.main()

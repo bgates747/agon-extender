@@ -30,3 +30,5 @@ class CaptureTests(unittest.TestCase):
         self.assertTrue(M['receiver_ready'](('VISIBLE TEXT WAIT received=0 cts=1 build='+BUILD+'\n').encode(),BUILD))
         for bad in [b'VISIBLE TEXT WAIT received=1 cts=1 build='+BUILD.encode()+b'\n',b'VISIBLE TEXT START build='+BUILD.encode()+b'\n']:
             with self.assertRaises(RuntimeError):M['receiver_ready'](bad,BUILD)
+
+if __name__=='__main__': unittest.main()

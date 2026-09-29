@@ -4,6 +4,7 @@ import io
 import subprocess
 import importlib.util
 import json
+import os
 from pathlib import Path
 import struct
 import tempfile
@@ -11,6 +12,7 @@ import unittest
 import zlib
 
 ROOT=Path(__file__).resolve().parents[1]
+EMOS=Path(os.environ.get('AGON_EMOS_ROOT', ROOT.parent/'agon-emos'))
 spec=importlib.util.spec_from_file_location('sdcard',ROOT/'scripts/sdcard.py')
 sd=importlib.util.module_from_spec(spec);spec.loader.exec_module(sd)
 
@@ -55,7 +57,7 @@ class ClientTests(unittest.TestCase):
 class RealEngineUploadTests(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        cls.build=tempfile.TemporaryDirectory();root=ROOT.parent/'agon-emos'
+        cls.build=tempfile.TemporaryDirectory();root=EMOS
         lib=Path(cls.build.name)/'sd.so'
         subprocess.run(['cc','-std=c17','-Wall','-Wextra','-Werror',
             '-Wno-misleading-indentation','-fsanitize=undefined','-fPIC','-shared',

@@ -39,6 +39,7 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [check_numeric_port.py](check_numeric_port.py) | Bounded pinned-input and sanitized host regressions; [import procedure](../docs/procedures/numeric-upstream-import-r01.md) still requires fresh source/target review |
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |
 | [validate-hardware-objects.py](validate-hardware-objects.py) | Hardware vocabulary schema/references, not electrical qualification; [object authority](../hardware/objects/README.md) |
+| [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Maintained detached AUDIT-010 host/browser/native-build closure, durable case evidence and accepted Legacy terminal cue; [regression guide](../docs/testing/regression-suite.md) owns scope and invocation |
 
 ## Retained development and test helpers
 
