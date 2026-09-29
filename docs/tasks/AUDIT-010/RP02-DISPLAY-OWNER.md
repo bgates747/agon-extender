@@ -110,5 +110,22 @@ those runtime cases must create or refresh a current-source regression owner
 under that repair's explicit contract rather than weakening frozen provenance
 or treating old-family tests as substitutes.
 
-No physical build, flash, reset, SD mutation or target run is required or
-authorized by RP02.
+## Subsequent informal hardware observation
+
+`A10-RP02-H01` [x] At the Author's explicit request after the candidate commit,
+the unversioned `p4-console` image was written and independently verified on the
+P4. Boot identity, PSRAM, USB keyboard, Ethernet/DHCP and HTTP startup passed.
+The Author then reported that Nurples now completes the previously failing late
+ExCom transition from its low-resolution splash to mode 20.
+
+This is useful regression evidence but not a causal attribution to RP02. RP02
+changed profile ownership metadata and validation, not display behavior. The
+flashed image also incorporates RP01's removal of rejected/default-off profile
+experiments and other current-tree differences from the earlier installed
+candidate. A claim about which difference fixed mode switching requires a
+separately bounded discriminator; the successful current behavior itself may
+be retained as the regression baseline.
+
+No Agon reset, EMOS/SD mutation or production promotion was performed by the
+agent for this flash. The informal result does not waive RP02's Author-
+acceptance pause or authorize RP03.
