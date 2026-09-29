@@ -27,6 +27,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Next-work candidates and remaining implementation
 
+- [ ] **[FWBUG-013 — ExCom prompt cursor stops flashing at column zero](docs/tasks/FWBUG-013.md)** — Author-reported physical defect: the cursor does not flash initially at the first prompt position and stops after Backspace returns there, but continues flashing when left-arrow returns to the same coordinate. Reconcile the installed build and isolate EMOS cursor-command state from EDP rendering after the AUDIT-010 review gate.
+
 - [ ] **[REMOTE-006 — Independent browser-requested Extender reset](docs/tasks/REMOTE-006.md)** — Add a Reset Extender button beside Reset Agon while preserving two independent actions. Select an external P4 reset executor capable of recovering more than a responsive self-restart; define Legacy/ExCom and in-flight-service outcomes before implementation. Queued behind the active AUDIT-010 review/repair gate unless explicitly reprioritized.
 
 - [ ] **[RESEARCH-006 — Mainboard VDP via Pico 2/Cowbell](docs/tasks/RESEARCH-006.md)** — Initial assessment recorded; investigate header-only serial transport versus digital VGA taps, fidelity and bandwidth. Research only; no implementation or bench work selected.
