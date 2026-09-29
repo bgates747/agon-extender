@@ -408,7 +408,7 @@ reported as clean coverage. No executable source, build, target or hardware
 state changed. Proceed to the complete A10-07 Author review; no finding yet
 authorizes implementation or physical testing.
 
-### A10-07 [ ] Author findings review and repair authorization
+### A10-07 [x] Author findings review and repair authorization
 
 Present the coverage ledger, architecture/resource maps, automated-analysis
 triage and findings for Author review. Record an explicit disposition for every
@@ -420,12 +420,12 @@ the accepted findings, dependencies, order and validation requirements. The
 Author approves that plan as a whole before A10-08 begins. Partial findings do
 not authorize early implementation.
 
-The Author reviewed and approved the complete A10-06 findings on 2026-09-29
-and accepted one-at-a-time implementation, validation and acceptance pauses.
-[REPAIR-PLAN.md](AUDIT-010/REPAIR-PLAN.md) records every coverage/finding
-disposition and the proposed dependency-ordered plan. A10-07 remains open until
-the Author reviews that complete itemization and it is frozen in its own commit;
-no A10-08 executable work is yet authorized.
+The Author reviewed and approved the complete A10-06 findings and the complete
+itemized A10-07 plan on 2026-09-29, including one-at-a-time implementation,
+validation and acceptance pauses. [REPAIR-PLAN.md](AUDIT-010/REPAIR-PLAN.md)
+records every coverage/finding disposition and the frozen dependency order.
+The dedicated A10-07 documentation freeze precedes all executable repair work;
+the Author authorized `A10-RP01` as the first A10-08 item.
 
 ### A10-08 [ ] Implement accepted fixes
 

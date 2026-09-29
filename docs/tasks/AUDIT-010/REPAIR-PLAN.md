@@ -15,11 +15,10 @@ high-severity display repair can produce meaningful evidence. Within a severity
 class, direct memory/lifetime risk, demonstrated impact and dependency order
 take precedence over the numerical finding ID.
 
-This plan is **prepared for Author review, not yet frozen or authorized for
-execution**. Approval of the findings and cadence does not substitute for the
-required approval of this complete itemized order. No executable source may
-change until the Author approves this plan and A10-07 is frozen in its own
-commit.
+The Author approved this complete itemization on 2026-09-29. A10-07 is frozen
+by its dedicated documentation commit before any executable A10-08 change.
+Execution is authorized only one item at a time under the acceptance cadence
+below; the first authorized item is `A10-RP01`.
 
 ## Review state
 
@@ -29,11 +28,11 @@ commit.
 `A10-RP-S02` [x] The Author accepted one-at-a-time correction and validation,
 with a mandatory pause for Author acceptance before the next item.
 
-`A10-RP-S03` [ ] The Author has reviewed and approved this complete disposition
-matrix, dependency order and validation plan as a whole.
+`A10-RP-S03` [x] The Author reviewed and approved this complete disposition
+matrix, dependency order and validation plan as a whole on 2026-09-29.
 
-`A10-RP-S04` [ ] A10-07 is frozen in its own commit after `A10-RP-S03`; A10-08
-may begin only from that commit.
+`A10-RP-S04` [x] A10-07 is frozen in its own dedicated documentation commit
+after `A10-RP-S03`; A10-08 begins from that boundary with `A10-RP01` only.
 
 `A10-RP-S05` — The later Author-reported `FWBUG-013` cursor defect was filed
 after the frozen A10-06 findings set. It remains visible in its own task and does
