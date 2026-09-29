@@ -48,6 +48,10 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertNotIn("espressif/esp_lcd_st7701",
                          self.document["common"]["dependencies"])
 
+    def test_console_explicitly_enables_staged_webdav(self):
+        definitions = self.document["profiles"]["p4-console"]["definitions"]
+        self.assertIn("AGON_EXTENDER_STAGED_WEBDAV=1", definitions)
+
     def test_clang_translation_changes_only_known_gcc_target_flags(self):
         script = ROOT / "scripts/prepare_p4_clang_database.py"
         spec = importlib.util.spec_from_file_location("clang_db", script)
