@@ -34,7 +34,7 @@ B01-PE01 [x] The Author accepts this exact procedure and authorizes the P4 flash
 ordinary Agon resets, temporary startup/fixture deployment, read-only service
 checks and final rollback described below.
 
-B01-PE02 [ ] The operator verifies the expected P4 identity, current EMOS
+B01-PE02 [x] The operator verifies the expected P4 identity, current EMOS
 v0.1.23 development identity, foreground EMOSlet, admitted Extender keyboard,
 recoverable Legacy CLI and current bench constraints. Any conflict stops the
 run before mutation.
@@ -49,20 +49,31 @@ this procedure and the clean local manifest. The retained production-r55
 rollback archive was rechecked at SHA-256
 `882581b298ce731cf475a9aff72fb459e638f3c303e93fc60e6216601839f194`.
 
-B01-PE04 [ ] The operator records start time, identities and initial state in
+B01-PE04 [x] The operator records start time, identities and initial state in
 ignored evidence. A flash comparison failure, boot loop, panic, unexplained
 reset, loss of both admitted input and noninteractive recovery, or filesystem
 corruption indication stops candidate testing and invokes rollback.
 
 ## Automated pass
 
-B01-PE05 [ ] At a verified Legacy prompt, the runner clears the mainboard screen
+B01-PE05 [x] At a verified Legacy prompt, the runner clears the mainboard screen
 with `VDU 12`. The operator flashes only the P4 candidate, independently
 compares all generated regions while the P4 remains in its loader, then boots
 once and records the exact serial identity. EMOS and eZ80 flash remain
 unchanged.
 
-B01-PE06 [ ] The runner verifies stable ordinary Legacy output, ExCom
+The verified preflight established EMOS v0.1.23, ready/neutral admitted input,
+the recoverable Legacy CLI, the foreground fast listener and the exact P4 USB
+identity. The first write command incorrectly supplied explicit flash-header
+overrides; its pre-boot readback caught the resulting bootloader-byte change and
+stopped while the P4 remained in its loader. Rewriting only the bootloader with
+`keep` parameters restored exact bytes. All four regions then matched their
+reviewed hashes before boot. A controlled serial reset retained for the ordinary
+boot smoke recorded source `e7b35fd5`, build ID
+`build001-e7b35fd5-console-prelcd`, ELF prefix `887af158d`, ESP-IDF v5.5.5,
+USB readiness, wired DHCP and HTTP readiness without panic or reboot.
+
+B01-PE06 [x] The runner verifies stable ordinary Legacy output, ExCom
 activation/return, admitted Extender keyboard press/release behavior, the SD
 service and the HTTP status endpoint. It records browser-disconnected and
 browser-connected checks separately and makes no performance claim from this
@@ -75,6 +86,11 @@ capture must agree with the source image. LCD is absent from this comparison.
 The maintained build produces an 812-byte `bars.bin` with SHA-256
 `ce783bcb3a517b4be48e6522d186d3409af04cf0bfb182531ed7334b0beed47f`.
 
+The automated portion passed and retained a complete 960-by-720 browser
+framebuffer capture with the expected bar order and asymmetric edge markers.
+The Author's Legacy-output observation remains the open acceptance part of this
+item.
+
 B01-PE08 [ ] With `/autoexec.txt` selecting mode20 before launch, the runner
 executes the static grid fixture without allowing the fixture to switch modes.
 Expected Legacy and browser geometry is the complete A1-through-H6 grid in
@@ -83,7 +99,12 @@ is no letterbox or pillarbox requirement on these non-LCD outputs.
 The maintained build produces a 1,691-byte `grid.bin` with SHA-256
 `a44d9e4ba6f23c603158130ac3d47039e411047bb34435fb52458968e7492e8d`.
 
-B01-PE09 [ ] Each automated case prints concise progress on Legacy output where
+The automated portion passed and retained a complete 768-by-576 browser
+framebuffer capture with A1 through H6 in order and all four asymmetric corner
+markers. The Author's Legacy-output observation remains the open acceptance
+part of this item.
+
+B01-PE09 [x] Each automated case prints concise progress on Legacy output where
 practical and durably records start, end and duration. The runner invokes the
 accepted spoken cue on terminal success or detected failure. A failure identity
 is recorded durably before the cue; after alert-player output, the failure hook
@@ -109,6 +130,14 @@ startup mode precedes
 fixture load, a complete two-fixture sequence restores the exact original
 startup bytes, and an injected first-capture failure also restores those bytes
 while retaining a failed verdict.
+
+Run09 completed successfully in 105.29 seconds including its terminal hook; the
+test driver itself completed in 82.21 seconds. It retained ExCom, mode-0 and
+mode-20 browser captures, restored and independently read back the exact
+38-byte startup at SHA-256
+`7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`,
+ended with ready/neutral admitted input, invoked the accepted spoken cue and
+left `BUILD-001 AUTOMATED PASS` as its final Legacy result.
 
 ## Manual application pass and closeout
 

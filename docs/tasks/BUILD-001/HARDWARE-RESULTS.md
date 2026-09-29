@@ -122,3 +122,41 @@ rechecked. The finite ignored runner, fast-transfer deployment flow, startup
 restoration path and spoken terminal hooks are prepared and statically checked.
 Mocked success and injected mid-run failure paths both restore the exact original
 startup bytes and retain the expected terminal verdict.
+
+On the authorized run, preflight passed against EMOS v0.1.23, ready/neutral
+input, the Legacy CLI, fast listener and exact P4 USB identity. An initial
+explicit flash-header override changed two bootloader regions (the mode byte and
+image digest); the mandatory pre-boot comparison detected it. The P4 remained
+in its loader while the operator rewrote only the bootloader with `keep`
+parameters. All four reviewed regions then matched exactly before boot. Serial
+identified source `e7b35fd5`, build ID `build001-e7b35fd5-console-prelcd`, ELF
+prefix `887af158d`, ESP-IDF v5.5.5, USB keyboard readiness, wired DHCP and HTTP
+readiness with no panic or restart. After one ordinary Agon reset, staged
+WebDAV returned HTTP 200 on port 8081 and fresh EMOS admission became
+ready/neutral. The finite detached equivalence suite was then launched; its
+terminal result and Author visual review remain pending.
+
+Preliminary suite invocations stopped before startup mutation on ordinary
+runner setup omissions: the fixture directory was absent, directory creation
+was assigned to services that could not complete it in the current state, and
+the automatic and foreground SD responders were initially distinguished only
+by an insufficient boolean readiness check. The corrected runner assigns
+directory creation to the EMOS CLI, requires a new SD-service boot identity
+before opening the fast client, closes its listener session on every exit path
+and preserves only the concise corrective result rather than treating these
+attempts as candidate failures.
+
+The corrected finite run09 passed the automated functional sequence. It
+verified HTTP and staged-WebDAV availability, entered ExCom, reset back through
+a fresh Legacy admission, used fast foreground transfers to launch the mode-0
+bars and mode-20 grid from startup-selected modes, captured both browser
+framebuffers, exited each fixture and restored the original startup. The driver
+completed in 82.21 seconds; its spoken success hook brought total detached job
+duration to 105.29 seconds. Final input was ready/neutral and an independent
+post-run readback matched the original 38 bytes at SHA-256
+`7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`.
+The bars capture shows the expected black-red-green-blue-cyan-magenta-yellow-
+white order and asymmetric edge markers. The grid capture shows A1 through H6
+in order with all asymmetric corner markers. Legacy visual observations and
+the deliberately deferred manual asset-heavy applications remain open, so
+B01-HR10 is not yet accepted or complete.
