@@ -112,7 +112,8 @@
       "status": "recovery",
       "sources": ["video/extender/recovery/mos_recovery.cpp"],
       "forbidden_sources": [], "embedded_text": [],
-      "definitions": ["AGON_EXTENDER_CANARY=1"], "dependencies": {}
+      "definitions": ["AGON_EXTENDER_CANARY=1"], "dependencies": {},
+      "mos_recovery_payload": true
     },
     "p4-port008-nonrelease-qualification": {
       "status": "nonrelease-diagnostic",
