@@ -24,6 +24,7 @@ TOOLS = ROOT / "agents/build001/native-tools/espressif"
 PYTHON_ENV = ROOT / "agents/build001/native-tools/python-env"
 IDF_COMMIT = "b774170ff46c393eeb5e495ea37936038d3f4f4f"
 SAFE_NAME = re.compile(r"[A-Za-z0-9][A-Za-z0-9.-]*")
+SAFE_DEFINITION = re.compile(r"[A-Z][A-Z0-9_]*(?:=[A-Za-z0-9_.-]+)?")
 
 
 def sha(path: Path) -> str:
@@ -81,6 +82,32 @@ def cmake_quote(value: str) -> str:
     return '"' + value.replace("\\", "/").replace('"', '\\"') + '"'
 
 
+def checked_definition_groups(profile: dict) -> dict[str, list[str]]:
+    """Return disjoint required/diagnostic/rejected compile definitions."""
+    policy = profile.get("definition_policy", {})
+    unexpected = set(policy) - {"diagnostic", "rejected"}
+    if unexpected:
+        raise SystemExit(f"unsupported definition policy groups: {sorted(unexpected)}")
+    groups = {
+        "required": list(profile["definitions"]),
+        "diagnostic": list(policy.get("diagnostic", [])),
+        "rejected": list(policy.get("rejected", [])),
+    }
+    owners: dict[str, str] = {}
+    for group, definitions in groups.items():
+        if len(definitions) != len(set(definitions)):
+            raise SystemExit(f"duplicate {group} definition")
+        for definition in definitions:
+            if not SAFE_DEFINITION.fullmatch(definition):
+                raise SystemExit(f"unsafe {group} definition: {definition}")
+            previous = owners.setdefault(definition, group)
+            if previous != group:
+                raise SystemExit(
+                    f"definition classified as both {previous} and {group}: {definition}"
+                )
+    return groups
+
+
 def render_component(profile: dict, common: dict, generated: Path,
                      asset_overrides: dict[str, Path]) -> None:
     sources = [checked_path(item) for item in profile["sources"]]
@@ -106,7 +133,8 @@ def render_component(profile: dict, common: dict, generated: Path,
     if profile.get("force_vdp_architecture"):
         options += ["-include",
                     str(VDP / "video/extender/compat/p4_vdp_gl_architecture.hpp")]
-    definitions = ["AGON_EXTENDER_NATIVE_BUILD=1", *profile["definitions"]]
+    definitions = ["AGON_EXTENDER_NATIVE_BUILD=1",
+                   *checked_definition_groups(profile)["required"]]
     text = "idf_component_register(\n  SRCS\n"
     text += "".join(f"    {cmake_quote(str(path))}\n" for path in sources)
     text += "  INCLUDE_DIRS\n"

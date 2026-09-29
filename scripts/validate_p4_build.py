@@ -9,6 +9,8 @@ from pathlib import Path
 import shlex
 import sys
 
+from build_p4 import checked_definition_groups
+
 
 ROOT = Path(__file__).resolve().parents[1]
 VDP = ROOT / "vdp"
@@ -53,13 +55,23 @@ def main() -> None:
         if by_source.get(source):
             problems.append(f"forbidden source compiled: {source.relative_to(VDP)}")
 
-    required_definitions = ["AGON_EXTENDER_NATIVE_BUILD=1", *profile["definitions"]]
+    definition_groups = checked_definition_groups(profile)
+    required_definitions = ["AGON_EXTENDER_NATIVE_BUILD=1",
+                            *definition_groups["required"]]
+    excluded_definitions = [*definition_groups["diagnostic"],
+                            *definition_groups["rejected"]]
     for command in selected_commands:
         argv = command.get("arguments") or shlex.split(command["command"])
-        joined = "\n".join(argv)
-        missing = [item for item in required_definitions if f"-D{item}" not in joined]
+        missing = [item for item in required_definitions
+                   if f"-D{item}" not in argv]
         if missing:
             problems.append(f"{Path(command['file']).name} missing definitions: {missing}")
+        unexpected = [item for item in excluded_definitions
+                      if f"-D{item}" in argv]
+        if unexpected:
+            problems.append(
+                f"{Path(command['file']).name} has excluded definitions: {unexpected}"
+            )
         if "-std=gnu++17" not in argv and Path(command["file"]).suffix != ".c":
             problems.append(f"{Path(command['file']).name} missing C++17 boundary")
 

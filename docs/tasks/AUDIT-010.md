@@ -439,6 +439,10 @@ correction changes those authorities. Use source-contract and host validation
 during implementation, but do not claim physical behavior from compilation or
 static analysis.
 
+RP01's minimal-profile candidate and host/build evidence are complete in
+[RP01-PROFILE.md](AUDIT-010/RP01-PROFILE.md). It awaits Author acceptance under
+the frozen per-item pause; RP02 has not begun.
+
 ### A10-09 [ ] Validate, review and close out repairs
 
 Prepare bounded qualification for the changed functions, including hardware

@@ -23,6 +23,13 @@ wrapper. Use **`p4-console` explicitly** and a fresh output path:
   --build-id UNVERSIONED-DO-NOT-DEPLOY
 ```
 
+`p4-console` is the minimal ordinary product-development profile. Its manifest
+records required definitions separately from default-off historical diagnostics
+and rejected experiments; the builder rejects overlap, and the action validator
+rejects excluded definitions on compiled sources. Do not enable a diagnostic or
+experiment by editing the ordinary profile. A recurring diagnostic requires an
+explicitly named profile and owning task contract.
+
 An identified build uses a project-approved ID in place of the unversioned
 sentinel and requires a clean committed checkout. The wrapper rejects an
 existing output, a wrong ESP-IDF checkout, unsafe manifest paths, unsupported

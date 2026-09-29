@@ -15,7 +15,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — The Author approved the complete pre-LCD findings and itemized one-defect-at-a-time repair plan. A10-07 is frozen; A10-08 begins with RP01's authoritative minimal product-development profile and pauses for acceptance before RP02. LCD support is reintroduced afterward as a separately reviewed delta.
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — The Author approved the complete pre-LCD findings and itemized one-defect-at-a-time repair plan. RP01's minimal product-development profile candidate passes native graph/build, embedded browser/codec and neighboring host regressions and now awaits Author acceptance before RP02. LCD support is reintroduced afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 

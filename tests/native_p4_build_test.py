@@ -6,6 +6,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+from copy import deepcopy
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -49,9 +50,51 @@ class NativeP4ProfilesTest(unittest.TestCase):
         self.assertNotIn("espressif/esp_lcd_st7701",
                          self.document["common"]["dependencies"])
 
-    def test_console_explicitly_enables_staged_webdav(self):
-        definitions = self.document["profiles"]["p4-console"]["definitions"]
-        self.assertIn("AGON_EXTENDER_STAGED_WEBDAV=1", definitions)
+    def test_console_definition_policy_is_explicit_and_minimal(self):
+        profile = self.document["profiles"]["p4-console"]
+        self.assertEqual(profile["definitions"], [
+            "AGON_EXTENDER_P4_BOOT=1",
+            "AGON_EXTENDER_STOCK_RUNTIME=1",
+            "AGON_EXTENDER_SD_SERVICE=1",
+            "AGON_EXTENDER_STAGED_WEBDAV=1",
+            "AGON_EXTENDER_REMOTE_KEYBOARD=1",
+            "AGON_EXTENDER_TELEMETRY=1",
+            "AGON_EXTENDER_VIDEO_POLL_MS=1",
+            "AGON_EXTENDER_SNAPSHOT_MUTEX=1",
+            "AGON_EXTENDER_SNAPSHOT_LOOKAHEAD=1",
+            "AGON_EXTENDER_PACKED_ROW=1",
+        ])
+        self.assertEqual(profile["definition_policy"], {
+            "diagnostic": [
+                "AGON_EXTENDER_VIDEO_TIMING=1",
+                "AGON_EXTENDER_REFRESH_TRACE=1",
+                "AGON_EXTENDER_VIDEO_DISPATCH_TIMING=1",
+            ],
+            "rejected": [
+                "AGON_EXTENDER_CANARY=1",
+                "AGON_EXTENDER_INTERNAL_POOLS=1",
+                "AGON_EXTENDER_DRAW_FOUR=1",
+                "AGON_EXTENDER_DRAW_TWICE=1",
+                "AGON_EXTENDER_OUTPUT_ROW_PAIR=1",
+                "AGON_EXTENDER_INTERNAL_GAME_MODE=1",
+                "AGON_EXTENDER_INTERNAL_FRAMEBUFFER=1",
+                "AGON_EXTENDER_OUTPUT_BELOW_PARSER=1",
+            ],
+        })
+
+    def test_build_rejects_overlapping_definition_policy(self):
+        script = ROOT / "scripts/build_p4.py"
+        spec = importlib.util.spec_from_file_location("build_p4_policy", script)
+        module = importlib.util.module_from_spec(spec)
+        spec.loader.exec_module(module)
+        profile = deepcopy(self.document["profiles"]["p4-console"])
+        profile["definition_policy"]["rejected"].append(profile["definitions"][0])
+        with self.assertRaisesRegex(SystemExit, "classified as both"):
+            module.checked_definition_groups(profile)
+        profile = deepcopy(self.document["profiles"]["p4-console"])
+        profile["definitions"].append("AGON_EXTENDER_BAD=1;COMMAND")
+        with self.assertRaisesRegex(SystemExit, "unsafe required definition"):
+            module.checked_definition_groups(profile)
 
     def test_console_source_asset_has_one_reset_url_marker(self):
         page = (VDP / "video/extender/web/index.html").read_text()
