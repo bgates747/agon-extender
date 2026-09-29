@@ -1,5 +1,11 @@
 # BUILD-001 native host validation
 
+Sequencing amendment: this document preserves the completed combined ExCom+LCD
+host comparison and the candidate that later failed at boot. It no longer
+satisfies BUILD-001's replacement baseline. B01-05e must repeat the applicable
+controls for the retained working pre-LCD r61 source closure before AUDIT-010
+freezes its baseline.
+
 State: host equivalence review in progress; no firmware in this document is
 authorized for deployment. Date: 2026-09-28.
 

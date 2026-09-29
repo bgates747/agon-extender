@@ -12,14 +12,15 @@ map complete functions and resource ownership, run selected tools, perform the
 manual review those tools cannot replace, pause for Author review, and implement
 the accepted repairs without changing the audit baseline mid-review.
 
-The immediate trigger is LCD-001's allocation-order result: mode20 and Nurples
-render correctly when the P4 VDP allocates mode storage before game assets, but
-the later mode20 request falls back to320×240 after those assets are loaded.
-Allocating mode20 first coincided with a live P4 that answered ICMP while HTTP
-connections reset. This reciprocal failure pattern makes the total P4 memory
-and service lifecycle the first concrete audit case, not proof that LCD code is
-the sole cause. No implementation, firmware build, flash, reset, SD mutation,
-hardware run or production decision occurs before the audit findings review.
+The immediate trigger is LCD-001's allocation-order result, but the Author has
+now selected the last working pre-LCD product as the audit baseline. The LCD
+experiment demonstrated that mode20 allocation order can affect both rendering
+and HTTP availability; it is retained as a post-audit integration regression,
+not folded into the source closure being audited. Complete the pre-LCD audit,
+review and itemized fixes first. Only afterward may LCD-001 redeploy LCD support
+as a separately reviewed delta. No implementation, firmware build, flash,
+reset, SD mutation, hardware run or production decision occurs before the
+applicable review gate.
 
 Created: 2026-09-28. Owning queue: `TODO.md`. Related implementation and
 evidence owners: [LCD-001](LCD-001.md), [PORT-003](PORT-003.md),
@@ -46,8 +47,9 @@ A10-Q02 [ ] Which functions must coexist, which are mutually exclusive, and what
    socket and file-handle requirements?
 
 A10-Q03 [ ] Are initialization, reconfiguration, failure rollback and teardown complete
-   transactions, with truthful state visible to EMOS, applications, LCD,
-   browser clients and diagnostics?
+   transactions, with truthful state visible to EMOS, applications, browser
+   clients and diagnostics? Apply the same question to LCD during its later
+   integration-delta review.
 
 A10-Q04 [ ] Where have local feature additions duplicated responsibility, bypassed an
    architectural owner, retained maximum-size resources unnecessarily, or made
@@ -77,12 +79,14 @@ The source review has these immutable coverage items:
 A10-S01 [ ] VDP mode selection, native controller replacement, allocation/fallback,
    graphics-context reset and published mode state.
 
-A10-S02 [ ] Native drawing storage, retained buffers/assets, immutable snapshot slots,
-   LCD composition and DSI scanout, PPA resources, browser encoding scratch and
-   HTTP connection/task resources.
+A10-S02 [ ] Native drawing storage, retained buffers/assets, snapshot ownership,
+   browser encoding scratch and HTTP connection/task resources in the pre-LCD
+   baseline. LCD composition, DSI scanout and PPA additions are excluded from
+   exhaustive baseline review and become a post-audit integration delta.
 
-A10-S03 [ ] Renderer, snapshot, LCD, browser, UART, keyboard, storage and diagnostic task
-   ownership; locks, suspension, queues, callbacks and teardown ordering.
+A10-S03 [ ] Renderer, snapshot, browser, UART, keyboard, storage and diagnostic
+   task ownership in the pre-LCD baseline; locks, suspension, queues, callbacks
+   and teardown ordering. LCD task ownership is reviewed with the later delta.
 
 A10-S04 [ ] Error propagation, rollback, degraded operation and observability across the
    eZ80/P4 UART boundary and each P4 service boundary.
@@ -195,7 +199,7 @@ papers and official vulnerability databases. Preserve source dates and exact
 tool versions available at research time. Do not submit source, firmware or
 private bench data to hosted scanners or proprietary analysis services.
 
-### A10-P01 [ ] Consolidate the development baseline under LCD-001
+### A10-P01 [x] Consolidate the development baseline under LCD-001 — superseded
 
 Complete this prerequisite after A10-01 review and before A10-02 freezes the
 source-audit baseline. LCD-001 owns the source/build work: retain the working
@@ -207,6 +211,25 @@ development configuration and perform only the bounded checks needed to show
 that the intended baseline was assembled. Do not call this production, complete
 LCD qualification or remediation of an AUDIT-010 finding.
 
+The Author superseded this unexecuted prerequisite on 2026-09-28. It is retained
+verbatim as the frozen contract's earlier direction; no combined ExCom+LCD
+baseline is to be assembled for AUDIT-010.
+
+### A10-P02 [ ] Establish the last working pre-LCD baseline
+
+Before A10-02, BUILD-001 must reproduce the last retained working P4 product
+before LCD integration: Extender source
+`6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d`, hardware-tested build
+`uart-excom-console-r61-b2026-09-28-03-12-48Z`, paired with the current accepted
+development EMOS v0.1.23 source
+`21a9ba27f1f346473d767c2c3053ee18e8911335`. Verify the retained identities and
+functional evidence, express that P4 closure through the native ESP-IDF/CMake
+authority, and complete host and bounded hardware equivalence before freezing
+the audit baseline. This is the accepted A10-H02/A10-H04 bounded historical
+review: inspect only the named retained source/build and the minimum current
+build-infrastructure delta required to reproduce it; stop once identity,
+closure and equivalence are established.
+
 ### A10-02 [ ] Freeze the review baseline and coverage ledger
 
 After A10-01 review, record exact Extender, component-owner, official-reference,
@@ -215,26 +238,28 @@ code, build branches and services before drawing conclusions. Create a coverage
 ledger under `docs/tasks/AUDIT-010/` with stable area and finding identifiers.
 Each row names the actor, files/symbols, function, state/resources, callers,
 consumers, prior evidence, automated checks, manual checks and disposition.
-The A10-P01 consolidated ExCom+LCD development configuration is the sole
-exhaustive audit target. Use selected production v0.1.0 only as a bounded
-comparison for regressions, ownership changes and resource growth; do not run a
-second exhaustive audit of its superseded source closure.
+The A10-P02 native pre-LCD development configuration is the sole exhaustive
+audit target. Use selected production v0.1.0 and retained later pre-LCD hardware
+evidence only as bounded comparisons for regressions, ownership changes and
+resource growth; do not run a second exhaustive audit of either superseded
+source closure. Preserve the experimental LCD implementation outside this
+baseline for the post-audit redeployment delta.
 
 ### A10-03 [ ] Functional and resource architecture
 
-Trace representative operations end to end and produce actor-explicit maps for
-boot, mode change, ordinary drawing/presentation, browser connection, LCD-only
-operation, simultaneous LCD/browser operation, storage transfer, input and
-shutdown/recovery. For each transition record allocation order, capability,
-size, lifetime, largest-contiguous-block requirement, failure return, rollback,
-published state and consumer-visible consequence. Calculate budgets from source
-and configuration, then distinguish those calculations from target measurements.
+Trace representative pre-LCD operations end to end and produce actor-explicit
+maps for boot, mode change, ordinary drawing/presentation, browser connection,
+storage transfer, input and shutdown/recovery. For each transition record
+allocation order, capability, size, lifetime, largest-contiguous-block
+requirement, failure return, rollback, published state and consumer-visible
+consequence. Calculate budgets from source and configuration, then distinguish
+those calculations from target measurements.
 
-Use the two Nurples allocation orders as the first worked comparison. Explain
-why late mode20 falls back while early mode20 renders and why HTTP resets only
-in the observed early-mode20 case. Treat total exhaustion, fragmentation,
-capability-specific heaps, leaked/retained resources and connection-task failure
-as alternatives until evidence discriminates them.
+Use ordinary pre-LCD mode allocation and browser coexistence as the first worked
+resource comparison. Retain the two LCD/Nurples allocation orders as a required
+post-audit redeployment regression: the audit may identify baseline ownership
+or lifetime risks relevant to it, but it must not import LCD code into the
+frozen source closure or claim to explain that later failure without evidence.
 
 Targeted diagnostic code changes are permitted when a discrete source question
 cannot be resolved statically. Before each change, record the exact symbols and
@@ -430,7 +455,7 @@ approves one bounded, complete, itemized repair plan; A10-08 then executes each
 accepted fix individually with its own commit and validation. No partial finding
 authorizes early implementation.
 
-AUDIT-010-D004 [x] **Accepted, 2026-09-28:** exhaustively audit the current
+AUDIT-010-D004 [x] **Accepted, 2026-09-28; amended by D011:** exhaustively audit the current
 maintained implementation and selected build closure. Exclude Git history and
 superseded implementations unless one of A10-H01 through A10-H07 establishes a
 bounded, recorded need and the Author accepts the proposed question, historical
@@ -447,7 +472,7 @@ to bundled third-party source. Cover every project modification, selection,
 configuration, wrapper, active interface and evidenced dependency, but do not
 duplicate AUDIT-007 with a line-by-line review of untouched vendor internals.
 
-AUDIT-010-D007 [x] **Accepted, 2026-09-28:** consolidate current development
+AUDIT-010-D007 [x] **Accepted, 2026-09-28; superseded by D011:** consolidate current development
 ExCom and the substantially complete LCD implementation before A10-02 freezes
 the audited baseline. Remove the failed r72 whole-frame-lock diagnostic, retain
 accepted LCD behavior, and deliberately preserve the demonstrated allocation-
@@ -455,7 +480,7 @@ order/resource defect for audit. A10-P01 is a one-time baseline-preparation
 exception to the audit-before-fix sequence, not authorization for opportunistic
 remediation or production promotion.
 
-AUDIT-010-D008 [x] **Accepted, 2026-09-28:** make the A10-P01 consolidated
+AUDIT-010-D008 [x] **Accepted, 2026-09-28; superseded by D011:** make the A10-P01 consolidated
 ExCom+LCD development configuration the sole exhaustive audit target. Use
 selected production v0.1.0 as a bounded comparison baseline for regressions,
 ownership changes and resource growth, not as a second exhaustive target.
@@ -477,10 +502,26 @@ requires explicit advance authorization in that suite's contract. When the
 mainboard remains controllable, the runner must also leave the failure identity
 visible on the Legacy screen without notification output overwriting it.
 
+AUDIT-010-D011 [x] **Accepted, 2026-09-28:** make the latest retained working
+pre-LCD product the sole exhaustive audit target. BUILD-001 reproduces Extender
+commit `6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d` through native ESP-IDF/CMake and
+pairs it with current development EMOS v0.1.23 at
+`21a9ba27f1f346473d767c2c3053ee18e8911335`. This supersedes D007 and D008
+before their combined-baseline prerequisite executed.
+
+AUDIT-010-D012 [x] **Accepted, 2026-09-28:** complete the exhaustive audit,
+Author findings review and itemized accepted fixes on the pre-LCD baseline
+before attempting to redeploy LCD support. LCD-001 then reapplies the LCD work
+as a separately reviewable delta and reruns its geometry, mode-allocation,
+browser-coexistence, service and gameplay regressions. Prior experimental LCD
+success is evidence and reusable implementation material, not audited baseline
+code or permission to merge it unchanged.
+
 ## Contract review gate
 
 A10-G01 [x] The Author reviews this draft, corrects its scope and accepts or
-revises AUDIT-010-D001 through D010.
+revises AUDIT-010-D001 through D010. The Author subsequently accepted the
+pre-LCD sequencing amendment in D011 and D012.
 
 A10-G02 [x] The agent commits the accepted contract as its own frozen checkpoint.
 

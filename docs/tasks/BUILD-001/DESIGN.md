@@ -4,6 +4,11 @@ Status: design and additive implementation through host equivalence accepted by
 the Author on 2026-09-28. Hardware procedure and deployment remain a separate
 review gate. No hardware action is authorized here.
 
+The Author amended sequencing on 2026-09-28: apply this accepted build design
+first to the retained working pre-LCD r61 source closure. The optional LCD
+feature remains representable by the design but is not enabled in BUILD-001's
+replacement equivalence candidate or AUDIT-010 baseline.
+
 ## Design outcome
 
 One project-owned Python entry point prepares a profile-specific native
@@ -141,7 +146,7 @@ contains three buildable profiles:
 
 | Profile | Native purpose |
 |---|---|
-| `p4-console` | Maintained ExCom/browser/USB/SD product-development firmware, with LCD as an explicit recorded feature switch. |
+| `p4-console` | Maintained ExCom/browser/USB/SD product-development firmware. BUILD-001 first qualifies the pre-LCD r61 closure; LCD remains an explicit later feature delta. |
 | `p4-mos-recovery` | Maintained operator-armed external MOS recovery programmer. |
 | `p4-port008-nonrelease-qualification` | Non-release diagnostic retained until PORT-008 disposes its unfinished qualification and actual-action evidence needs. |
 

@@ -45,11 +45,12 @@ B01-HR03 [x] Stop this candidate run at the boot-loop gate. Do not proceed to
 fixtures or manual games and do not count any functional-equivalence item as
 tested.
 
-B01-HR04 [ ] Diagnose the native-only startup assertion from the retained ELF,
-map, configuration, dependency lock and hybrid control. Any source or
-configuration repair requires targeted host checks and a new immutable candidate
-identity.
+B01-HR04 [x] Superseded as the immediate next action by the Author's pre-LCD
+baseline amendment. Preserve the combined candidate's ELF, map, configuration,
+dependency lock and assertion evidence; do not repair that LCD-inclusive
+candidate before the audit. If the native pre-LCD build reproduces the same
+assertion, diagnose it there as a BUILD-001 migration defect.
 
-B01-HR05 [ ] Prepare a corrected hardware procedure or accepted amendment with
-the actual EMOS dependency, exact replacement candidate and unchanged rollback
+B01-HR05 [ ] Prepare a new hardware procedure for the immutable pre-LCD native
+candidate with EMOS v0.1.23, exact replacement identity and unchanged rollback
 boundary before another flash authorization request.

@@ -3,6 +3,14 @@
 Status: inventory and profile dispositions accepted by the Author on
 2026-09-28. Captured: 2026-09-28. No hardware was changed.
 
+Sequencing amendment: the combined ExCom+LCD control below remains frozen
+evidence of the first BUILD-001 attempt, but it is no longer the equivalence or
+AUDIT-010 baseline. The replacement baseline is the retained working pre-LCD
+r61 closure at Extender commit
+`6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d`, paired with EMOS v0.1.23 source
+`21a9ba27f1f346473d767c2c3053ee18e8911335`. B01-04e and B01-05e own its native
+reproduction and new inventory evidence.
+
 ## Bound identities
 
 | Actor or artifact | Identity |
@@ -79,7 +87,7 @@ rejection record but no buildable native target.
 
 | Profile | Proposed class | Reason |
 |---|---|---|
-| `p4-console` | Migrate — product development | Sole documented maintained P4 product target; combined ExCom+LCD baseline owner. |
+| `p4-console` | Migrate — product development | Sole documented maintained P4 product target; first reproduce the retained pre-LCD r61 closure. LCD becomes a later LCD-001 integration delta. |
 | `p4-mos-recovery` | Migrate — recovery | Current documented external MOS recovery programmer; operational capability must survive build cutover. |
 | `p4-port008-nonrelease-qualification` | Migrate — active diagnostic | PORT-008 retains unfinished qualification work and this profile owns actual-action provenance controls that inform the native graph validator. It remains non-release. |
 | `p4-canary` | Freeze; convert common settings, not executable target | Earlier bring-up target and accidental default. Native profiles still inherit its board/configuration facts through common profile data. |

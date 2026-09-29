@@ -15,13 +15,13 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[BUILD-001 — Native ESP-IDF/CMake P4 build authority](docs/tasks/BUILD-001.md)** — Accepted contract frozen for execution. Replace the PlatformIO/SCons outer P4 build with native ESP-IDF/CMake while retaining pinned Arduino-ESP32 as a component; validate equivalence and provide AUDIT-010 with the actual linked compilation graph before its baseline freeze.
+- [ ] **[BUILD-001 — Native ESP-IDF/CMake P4 build authority](docs/tasks/BUILD-001.md)** — Apply the accepted native build authority to the latest working pre-LCD r61 closure with current EMOS v0.1.23; validate equivalence and provide AUDIT-010 with the actual linked compilation graph before its baseline freeze. The combined LCD candidate remains failed evidence, not the audit baseline.
 
-- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — Accepted contract frozen for execution. Research model-associated large-project risks and suitable free/open-source analysis tools first; pause for Author review, then audit the Extender implementation for architectural cohesion, ownership, allocation/lifetime, failure handling and accumulated ad hoc behavior.
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — Audit the latest working pre-LCD P4 product with current EMOS v0.1.23 for architectural cohesion, ownership, allocation/lifetime, failure handling and accumulated ad hoc behavior. Complete audit and review before itemized fixes; LCD support is reintroduced afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 
-- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. sdserve now runs from `/emos` on EMOS v0.1.19 after bounded physical transfer/memory checks. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration, interactive session handling and R05-10 qualification-procedure refresh remain.
+- [ ] **[REMOTE-005](docs/tasks/REMOTE-005.md)** — Ad hoc fast-transfer implementation deployed; local and bounded physical checks accepted; broader research/discussion: human-friendly access to Agon SD through P4; compare browser, FTP, SMB and WebDAV. Selected production retains EMOS v0.1.19, while development EMOS v0.1.23 and its finite application-card path have bounded hardware evidence and form AUDIT-010's current pre-LCD baseline. YMODEM comparison complete; external protocol unselected. SD layout cleanup recorded; `/tmp/extender` transaction migration, interactive session handling and R05-10 qualification-procedure refresh remain.
 
 - [ ] **[AUDIT-008 — EMOS ROM headroom and SD-loaded EMOSlets](docs/tasks/AUDIT-008.md)** — Delivered tranche closed out; further extraction and broader qualification parked. Revisit for measured ROM pressure or a concrete utility benefit, not routine splitting for its own sake.
 
@@ -33,7 +33,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[TRS-80-003 — Shared P4 services and native-eZ80/MAME bridge](docs/tasks/TRS-80-003.md)** — Feasibility study first: coordinate detached MAME reuse, then native Agon execution with P4 device models, EMOS bridge and eight-bit parallel transport. Cross-project orientation recorded; common Ethernet boundary extracted for detached build evaluation; hybrid feasibility and image leases remain open.
 
-- [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — V2 panel and bounded EDP sink are working experimentally. Mode0 color/edge output passes with HBP/HFP19/11 and ordinary B,G,R packing; try centered1:1 Nurples mapping, adapt the paired Ethernet/browser performance suite for LCD, then complete services, application/gameplay review and production decision.
+- [ ] **[LCD-001 — Olimex MIPI LCD exploration](docs/tasks/LCD-001.md)** — Preserve the working experimental panel evidence and implementation. After AUDIT-010 reviews and fixes the pre-LCD baseline, redeploy LCD support as a separately reviewed delta and rerun geometry, late-mode, browser/service, performance and gameplay regressions.
 
 - [ ] **[PORT-003](docs/tasks/PORT-003.md)** — Display backend works; wider command consumption and faithful coverage remain incomplete. Primary implementation owner for T03; retain accepted key-query/audio slices and all explicit command deferrals.
 

@@ -7,10 +7,11 @@ contract.** Replace
 the P4 firmware's PlatformIO/SCons outer build with native ESP-IDF/CMake while
 retaining Arduino-ESP32 as a pinned ESP-IDF component. The migration establishes
 one authoritative build graph for source selection, compiler options,
-dependencies, generated assets, partitions and linked objects. It must preserve
-the current combined ExCom and LCD behavior; it must not become a VDP rewrite or
-silently repair the resource-lifecycle defect that AUDIT-010 is intended to
-examine.
+dependencies, generated assets, partitions and linked objects. Under the
+Author's 2026-09-28 sequencing amendment, it must first reproduce the latest
+working pre-LCD ExCom product and provide that closure to AUDIT-010. LCD support
+is redeployed only after the audit, review and accepted fixes; it is no longer
+part of BUILD-001's initial equivalence baseline.
 
 BUILD-001 is the prerequisite to AUDIT-010's baseline freeze. The
 migration must finish, be reviewed and have its resulting source/build identity
@@ -65,13 +66,15 @@ dependencies, generated assets, tests and current build documentation. Inspect
 P4 build identity. Official `../../agon-docs`, `../../agon-vdp` and
 `../../agon-mos` remain read-only references.
 
-Preserve the current application behavior and selected source closure unless a
+Preserve the selected pre-LCD application behavior and source closure unless a
 change is strictly necessary to express the same program under ESP-IDF. Small
 compatibility adapters are permitted only when identified individually and
 covered by targeted tests. Porting Arduino-dependent application code to pure
-ESP-IDF is outside scope. Repairing LCD behavior, the late-mode20 allocation
-failure, browser resource exhaustion, rendering semantics or unrelated defects
-is outside scope; record newly exposed defects for their owning tasks.
+ESP-IDF is outside scope. LCD code and its post-r61 source changes are outside
+the initial native-equivalence and audit baseline; retain them for LCD-001's
+later delta. Repairing LCD behavior, the late-mode20 allocation failure, browser
+resource exhaustion, rendering semantics or unrelated defects is outside scope;
+record newly exposed defects for their owning tasks.
 
 Production firmware and `production/current.yaml` remain unchanged throughout
 the migration. A successful development migration does not authorize production
@@ -98,6 +101,7 @@ The Author accepted these decisions with the contract on 2026-09-28.
 | B01-D06 | [x] Accepted | Judge migration by source/configuration equivalence, explained binary differences and runtime qualification, not presumed byte identity. | Link ordering and native build metadata may change, but unexplained behavioral or material image differences block acceptance. |
 | B01-D07 | [x] Accepted | Freeze AUDIT-010's source baseline only after BUILD-001 acceptance. | Static analysis observes the actual native CMake build graph rather than the current hybrid graph's unused object descriptions. |
 | B01-D08 | [x] Accepted | Retire the maintained PlatformIO/SCons path only after rollback and clean-build evidence are retained. | The migration remains reversible until the replacement is accepted; frozen historical evidence is not rewritten. |
+| B01-D09 | [x] Accepted 2026-09-28 | Rebase BUILD-001 equivalence on the last working pre-LCD Extender commit `6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d`, paired with EMOS v0.1.23 source `21a9ba27f1f346473d767c2c3053ee18e8911335`. | The combined LCD candidate and its startup failure remain evidence, but AUDIT-010 receives a proven pre-LCD closure; LCD-001 redeploys LCD only after audit fixes. |
 
 ## Work contract
 
@@ -181,7 +185,7 @@ handling for framework and third-party component internals.
 B01-03c [x] Define rollback so an unsuccessful native migration can restore the
 preserved hybrid build without altering production or discarding evidence.
 
-### B01-04 [x] Implement the native ESP-IDF/CMake build
+### B01-04 [ ] Implement the native ESP-IDF/CMake build
 
 Introduce the minimum checked-in CMake components, profile data and project-owned
 wrapper needed to build the preserved P4 source closure with native ESP-IDF.
@@ -204,7 +208,13 @@ B01-04d [x] Ensure a clean checkout can provision or locate the pinned tools and
 components through documented, project-scoped commands. Do not modify global
 developer packages or hide machine-specific paths in tracked files.
 
-### B01-05 [x] Validate build-graph and artifact equivalence
+B01-04e [ ] Apply the accepted native build authority to the bounded pre-LCD
+Extender source `6c6bea3beb2f8abc89c5b1f40a0e7dd0890a084d` without importing
+later LCD implementation. Preserve the existing native infrastructure changes
+as a reviewable build-only delta and prove that selected project sources match
+the retained r61 closure.
+
+### B01-05 [ ] Validate build-graph and artifact equivalence
 
 Host evidence and the one remaining static-analysis smoke are recorded in
 [VALIDATION.md](BUILD-001/VALIDATION.md).
@@ -229,6 +239,13 @@ accepted compiler/static-analysis smoke checks against the canonical database.
 Tool findings remain audit inputs and are not repaired inside this migration
 unless they prove a migration error.
 
+B01-05e [ ] Repeat B01-05a through B01-05d for the pre-LCD native closure and
+compare it with retained hardware-tested r61 build
+`uart-excom-console-r61-b2026-09-28-03-12-48Z`, factory SHA-256
+`f794a8bba96f9afbfc1dae6eaa4554eb676880d76ffe74bda97bbebc7e160fea`.
+The completed combined-LCD comparison remains failed/deferred evidence and does
+not satisfy this replacement baseline.
+
 ### B01-06 [ ] Perform bounded hardware equivalence qualification
 
 After B01-05 passes, prepare a run sheet that names the exact firmware, bench
@@ -243,15 +260,17 @@ equivalence subitem passed. A corrected immutable candidate and reviewed
 procedure dependency are required before B01-06 resumes.
 
 B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
-keyboard/input, SD service, browser service, native LCD output and clean recovery
-using targeted tests chosen to detect build-migration regressions.
+keyboard/input, SD service, browser service and clean recovery using targeted
+tests chosen to detect build-migration regressions. Do not enable or test LCD in
+this baseline qualification.
 
 B01-06b [ ] Run the mode20 static-grid control as an automated fixture with its
 mode selected only in `/autoexec.txt`. After all automated passes finish, the
 Author manually runs Nurples and other real applications that switch modes
-after loading significant VDP-buffer assets. Preserve those late-switch
-failures as separately owned defects outside this audit; do not grant automated
-fixtures a mode-switch exception or repair the defect opportunistically.
+after loading significant VDP-buffer assets. Record the pre-LCD mode-switch,
+browser and gameplay result as an equivalence baseline. Do not grant automated
+fixtures a mode-switch exception or infer anything about the later LCD resource
+failure from a pre-LCD pass.
 
 B01-06c [ ] Keep runtime monitoring bounded. Reusable unattended tests must print
 progress on the legacy mainboard display where practical and invoke the existing
@@ -281,15 +300,16 @@ under the repository's normal promotion rules.
 
 Record the accepted native-build commit, exact tool/component locks, selected
 profile, build identity, artifact hashes and canonical compilation database in
-AUDIT-010's baseline ledger. Amend AUDIT-010's accepted contract only as needed
-to replace its A10-P01 hybrid-build assumption, preserving the original frozen
-contract and documenting Author acceptance of the sequencing change.
+AUDIT-010's baseline ledger. Implement its accepted A10-P02 pre-LCD baseline
+amendment while preserving the original frozen A10-P01 combined-LCD direction
+as superseded decision history.
 
 B01-08a [ ] Demonstrate that AUDIT-010 analysis commands consume actual linked
 project actions rather than unused CMake object descriptions.
 
-B01-08b [ ] Leave the known LCD/mode20/browser resource behavior as an audit case
-unless the Author separately accepts a finding and itemized repair.
+B01-08b [ ] Preserve known LCD/mode20/browser behavior as deferred LCD-001
+integration evidence. Do not include LCD code in the exhaustive audit baseline;
+after AUDIT-010 review and fixes, require it as a redeployment regression.
 
 ## Gates and success criteria
 
@@ -301,10 +321,10 @@ complete before the native design is accepted.
 B01-G03 [x] One checked-in authority selects sources and profiles; CMake's actual
 compiled and linked graph agrees with it.
 
-B01-G04 [x] The pinned native toolchain and Arduino component build every accepted
+B01-G04 [ ] The pinned native toolchain and Arduino component build every accepted
 maintained P4 profile from clean project-scoped state.
 
-B01-G05 [x] Material configuration, dependency, section, size and binary
+B01-G05 [ ] Material configuration, dependency, section, size and binary
 differences are explained, and targeted host tests pass.
 
 B01-G06 [ ] Author-approved hardware equivalence checks pass with rollback
