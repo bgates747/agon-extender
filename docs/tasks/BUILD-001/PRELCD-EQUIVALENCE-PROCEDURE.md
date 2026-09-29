@@ -200,6 +200,9 @@ selection.
 
 ## Acceptance boundary
 
-B01-PE13 [ ] The Author reviews the Legacy observations and any requested browser
+B01-PE13 [x] The Author reviews the Legacy observations and any requested browser
 captures. Host checks and unattended machine results may establish their named
 facts, but they cannot self-accept visual equivalence or BUILD-001 cutover.
+
+The Author accepted the recorded equivalence result and authorized cutover on
+2026-09-29.

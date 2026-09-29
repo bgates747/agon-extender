@@ -67,7 +67,12 @@ def main():
     web=project/'video/extender/web'
     hashes={}
     for name in ('index.html','app.js','style.css','frame_protocol.js','webgl2_presenter.js'):
-        data=(web/name).read_bytes()
+        source=web/name
+        if args.build_output and name == 'index.html':
+            generated=result_root/'project/components/agon_vdp/embedded/index.html'
+            if generated.is_file():
+                source=generated
+        data=source.read_bytes()
         assert data+b'\0' in image, f'{name} not embedded in actual binary'
         hashes[name]=hashlib.sha256(data).hexdigest()
     class Quiet(SimpleHTTPRequestHandler):

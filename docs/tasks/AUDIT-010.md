@@ -215,7 +215,7 @@ The Author superseded this unexecuted prerequisite on 2026-09-28. It is retained
 verbatim as the frozen contract's earlier direction; no combined ExCom+LCD
 baseline is to be assembled for AUDIT-010.
 
-### A10-P02 [ ] Establish the last working pre-LCD baseline
+### A10-P02 [x] Establish the last working pre-LCD baseline
 
 Before A10-02, BUILD-001 must reproduce the last retained working P4 product
 before LCD integration: Extender source
@@ -229,6 +229,11 @@ the audit baseline. This is the accepted A10-H02/A10-H04 bounded historical
 review: inspect only the named retained source/build and the minimum current
 build-infrastructure delta required to reproduce it; stop once identity,
 closure and equivalence are established.
+
+BUILD-001 completed this prerequisite on 2026-09-29. The immutable identities,
+artifact hashes, actual linked graph and accepted analysis entry points are in
+[BASELINE.md](AUDIT-010/BASELINE.md). The selected production bundle remains a
+separate unchanged comparison.
 
 ### A10-02 [ ] Freeze the review baseline and coverage ledger
 

@@ -314,7 +314,7 @@ progress on the legacy mainboard display where practical and invoke the existing
 audible success/failure notification without overwriting a retained failure
 message.
 
-### B01-07 [ ] Cut over maintained build consumers
+### B01-07 [x] Cut over maintained build consumers
 
 After the Author accepts B01-05 and B01-06 evidence, update maintained build,
 test, package and operator entry points to use native ESP-IDF/CMake. Update the
@@ -322,18 +322,18 @@ handbook and `docs/building.md`; preserve machine-local details only in ignored
 records. Remove or quarantine PlatformIO/SCons generation only after every
 B01-02 consumer has migrated or received an explicit disposition.
 
-B01-07a [ ] Retain enough identified hybrid-build material and instructions to
+B01-07a [x] Retain enough identified hybrid-build material and instructions to
 reproduce the pre-migration baseline during the agreed rollback interval without
 presenting it as the current build authority.
 
-B01-07b [ ] Verify that maintained documentation contains one canonical P4 build
+B01-07b [x] Verify that maintained documentation contains one canonical P4 build
 procedure and does not direct operators to stale PlatformIO output paths.
 
-B01-07c [ ] Present production impact separately. Do not promote, version, tag or
+B01-07c [x] Present production impact separately. Do not promote, version, tag or
 publish a native-built firmware until the Author accepts a production proposal
 under the repository's normal promotion rules.
 
-### B01-08 [ ] Hand the canonical baseline to AUDIT-010
+### B01-08 [x] Hand the canonical baseline to AUDIT-010
 
 Record the accepted native-build commit, exact tool/component locks, selected
 profile, build identity, artifact hashes and canonical compilation database in
@@ -341,10 +341,10 @@ AUDIT-010's baseline ledger. Implement its accepted A10-P02 pre-LCD baseline
 amendment while preserving the original frozen A10-P01 combined-LCD direction
 as superseded decision history.
 
-B01-08a [ ] Demonstrate that AUDIT-010 analysis commands consume actual linked
+B01-08a [x] Demonstrate that AUDIT-010 analysis commands consume actual linked
 project actions rather than unused CMake object descriptions.
 
-B01-08b [ ] Preserve known LCD/mode20/browser behavior as deferred LCD-001
+B01-08b [x] Preserve known LCD/mode20/browser behavior as deferred LCD-001
 integration evidence. Do not include LCD code in the exhaustive audit baseline;
 after AUDIT-010 review and fixes, require it as a redeployment regression.
 
@@ -367,15 +367,21 @@ differences are explained, and targeted host tests pass.
 B01-G06 [x] Author-approved hardware equivalence checks pass with rollback
 available and without changing production selection.
 
-B01-G07 [ ] Maintained consumers and documentation use the native path; obsolete
+B01-G07 [x] Maintained consumers and documentation use the native path; obsolete
 PlatformIO profiles and helpers have explicit dispositions.
 
-B01-G08 [ ] AUDIT-010 receives a trustworthy canonical compilation database and
+B01-G08 [x] AUDIT-010 receives a trustworthy canonical compilation database and
 an immutable accepted baseline before its exhaustive review begins.
 
 BUILD-001 is complete only when B01-G01 through B01-G08 are satisfied and the
 Author accepts the migration result. Completion does not by itself constitute
 production promotion.
+
+The native authority was cut over at `755d6f37`; the exact accepted audit
+handoff is recorded in [AUDIT-010/BASELINE.md](AUDIT-010/BASELINE.md). Hybrid
+r61 material remains explicitly gated rollback evidence. Selected production
+v0.1.0/r02 is unchanged. Final BUILD-001 queue closure awaits the Author's
+acceptance of this completed migration result.
 
 ## Evidence and change discipline
 
