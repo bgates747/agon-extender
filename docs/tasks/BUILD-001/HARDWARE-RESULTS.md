@@ -157,6 +157,14 @@ post-run readback matched the original 38 bytes at SHA-256
 `7b500d81030020f893aee64338889efd21630f7db9a893d0919d1084a69bb3a5`.
 The bars capture shows the expected black-red-green-blue-cyan-magenta-yellow-
 white order and asymmetric edge markers. The grid capture shows A1 through H6
-in order with all asymmetric corner markers. Legacy visual observations and
-the deliberately deferred manual asset-heavy applications remain open, so
-B01-HR10 is not yet accepted or complete.
+in order with all asymmetric corner markers.
+
+The first human staging startup incorrectly retained `EMOS EXCOM`, so its web
+pass could not simultaneously exercise the Legacy connector. After the route
+was removed, the Author confirmed that the physical Legacy mode-0 output looked
+correct. The Author's direct fullscreen web capture also matches the fixture.
+Its upper-right yellow marker is a solid 27-by-27 component (729 of 729 pixels),
+disposing a later apparent one-pixel indentation as a viewing-presentation
+artifact rather than retained framebuffer evidence. The corrected Legacy-only
+mode-20 observation and deliberately deferred manual asset-heavy applications
+remain open, so B01-HR10 is not yet accepted or complete.

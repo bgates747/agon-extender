@@ -79,23 +79,30 @@ service and the HTTP status endpoint. It records browser-disconnected and
 browser-connected checks separately and makes no performance claim from this
 functional smoke.
 
-B01-PE07 [ ] With mode selected only by `/autoexec.txt`, the runner executes the
-mode0 asymmetric color/edge fixture. The Author later confirms correct colors,
-orientation and all four source edges on Legacy output; one bounded browser
-capture must agree with the source image. LCD is absent from this comparison.
+B01-PE07 [x] With mode selected only by `/autoexec.txt`, the runner executes the
+mode0 asymmetric color/edge fixture. The Author confirms correct colors,
+orientation and all four source edges in a separate Legacy-routed run; one
+bounded ExCom/browser run must agree with the source image. The startup must not
+select ExCom for the Legacy observation because EMOS owns one active output
+route. LCD is absent from this comparison.
 The maintained build produces an 812-byte `bars.bin` with SHA-256
 `ce783bcb3a517b4be48e6522d186d3409af04cf0bfb182531ed7334b0beed47f`.
 
-The automated portion passed and retained a complete 960-by-720 browser
-framebuffer capture with the expected bar order and asymmetric edge markers.
-The Author's Legacy-output observation remains the open acceptance part of this
-item.
+The automated portion retained a complete 960-by-720 browser framebuffer
+capture with the expected bar order and asymmetric edge markers. The Author
+then supplied a direct 1600-by-900 fullscreen web capture and confirmed that a
+corrected Legacy-only startup looked correct on the physical monitor. Pixel
+analysis found the web capture's upper-right yellow marker to be a solid
+27-by-27 rectangle (729 of 729 pixels); a later apparent one-pixel indentation
+was introduced only while viewing the retained image and is not framebuffer
+evidence.
 
 B01-PE08 [ ] With `/autoexec.txt` selecting mode20 before launch, the runner
 executes the static grid fixture without allowing the fixture to switch modes.
 Expected Legacy and browser geometry is the complete A1-through-H6 grid in
 order with all asymmetric edge markers at the native 512-by-384 extent. There
-is no letterbox or pillarbox requirement on these non-LCD outputs.
+is no letterbox or pillarbox requirement on these non-LCD outputs. As with
+B01-PE07, ExCom/browser and Legacy observations are separate routed runs.
 The maintained build produces a 1,691-byte `grid.bin` with SHA-256
 `a44d9e4ba6f23c603158130ac3d47039e411047bb34435fb52458968e7492e8d`.
 
