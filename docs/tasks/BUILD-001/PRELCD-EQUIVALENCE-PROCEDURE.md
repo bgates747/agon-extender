@@ -39,9 +39,15 @@ v0.1.23 development identity, foreground EMOSlet, admitted Extender keyboard,
 recoverable Legacy CLI and current bench constraints. Any conflict stops the
 run before mutation.
 
-B01-PE03 [ ] The operator verifies the candidate manifest and every candidate
+B01-PE03 [x] The operator verifies the candidate manifest and every candidate
 flash artifact, plus the immutable production rollback archive and its exact
 flash bytes. Missing or mismatched bytes stop the run.
+
+The corrected candidate's four flash inputs and manifest were copied to an
+isolated Pi staging directory and independently hashed there. All values match
+this procedure and the clean local manifest. The retained production-r55
+rollback archive was rechecked at SHA-256
+`882581b298ce731cf475a9aff72fb459e638f3c303e93fc60e6216601839f194`.
 
 B01-PE04 [ ] The operator records start time, identities and initial state in
 ignored evidence. A flash comparison failure, boot loop, panic, unexplained
@@ -90,6 +96,16 @@ failure notification after the test driver exits. The reviewed run-specific
 driver and ignored hook file must still bind those generic hooks to the accepted
 Legacy voice cue and prove that its failure path restores the recorded error as
 the last visible text.
+
+The ignored run-specific driver and hook binding are prepared under the local
+BUILD-001 evidence directory. Static validation proves that the driver selects
+mode 0 and mode 20 in generated `/autoexec.txt` content before `LOAD`, while the
+fixture streams contain no mode switch. It uses the foreground EMOS listener in
+fast mode for every deployment, preserves and restores the original startup,
+records browser captures and text evidence, and attempts startup restoration on
+failure. The terminal hooks enter Legacy, invoke `/extender/attention.txt`, then
+print and capture the durable final result. Invocation remains prohibited until
+B01-PE01 is accepted.
 
 ## Manual application pass and closeout
 

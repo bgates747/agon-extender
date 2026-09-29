@@ -116,4 +116,7 @@ B01-HR10 [ ] Flash and qualify corrected candidate
 `build001-e7b35fd5-console-prelcd` only after the Author accepts the amended
 exact-candidate procedure. Host evidence proves the selected compile actions
 carry `AGON_EXTENDER_STAGED_WEBDAV=1` and the isolated embedded page carries the
-machine-local reset endpoint without tracking it.
+machine-local reset endpoint without tracking it. Its four flash inputs and
+manifest are staged on the Pi with exact matching hashes; the rollback was
+rechecked. The finite ignored runner, fast-transfer deployment flow, startup
+restoration path and spoken terminal hooks are prepared and statically checked.
