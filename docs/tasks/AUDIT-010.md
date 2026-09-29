@@ -515,7 +515,7 @@ failure prevents any Legacy display, the durable terminal record states that
 explicitly.
 
 The maintained [host/browser/native regression suite](../testing/regression-suite.md)
-implements this contract for its nonphysical closure: 55 explicit cases run
+implements this contract for its nonphysical closure: 54 explicit cases run
 from an isolated shared clone of the resolved Extender commit and a fixed clean
 EMOS commit, use durable phase/case records and a live SSH-console status stream, and
 invoke the accepted Legacy spoken terminal hook without reset. It deliberately

@@ -53,11 +53,12 @@ def main() -> int:
                snapshot / "agents/build001/native-tools", target_is_directory=True)
     os.symlink(ROOT / "vdp/managed_components",
                snapshot / "vdp/managed_components", target_is_directory=True)
+    os.symlink(ROOT / ".venv", snapshot / ".venv", target_is_directory=True)
     # A directory ignore does not match a symlink bearing that directory name.
     # This private clone-only exclusion covers the reviewed dependency link;
     # tracked source still has to remain clean throughout the run.
     with (snapshot / ".git/info/exclude").open("a") as exclude:
-        exclude.write("\n/vdp/managed_components\n")
+        exclude.write("\n/vdp/managed_components\n/.venv\n")
     suite = job / "suite"
     command = [str(PYTHON), str(ROOT / "scripts/run_regression_suite.py"),
                "--output", str(suite), "--source-root", str(snapshot),

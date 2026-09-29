@@ -150,15 +150,16 @@ def run(args: argparse.Namespace) -> int:
     dirty = [name for name, record in repositories.items() if record["dirty"]]
     if dirty:
         raise RuntimeError(f"clean frozen checkouts required: {', '.join(dirty)} is dirty")
-    if not args.python.is_file():
-        raise RuntimeError(f"project Python is missing: {args.python}")
+    python = args.python.absolute()
+    if not python.is_file():
+        raise RuntimeError(f"project Python is missing: {python}")
     if not args.idf_root.is_dir():
         raise RuntimeError(f"pinned ESP-IDF checkout is missing: {args.idf_root}")
     provenance = {
         "recorded_at": utc(), "repositories": repositories,
-        "python": str(args.python.resolve()),
+        "python": str(python),
         "python_version": subprocess.check_output(
-            [str(args.python), "--version"], text=True, stderr=subprocess.STDOUT
+            [str(python), "--version"], text=True, stderr=subprocess.STDOUT
         ).strip(),
         "idf_root": str(args.idf_root.resolve()),
         "manifest_sha256": subprocess.check_output(
@@ -214,7 +215,7 @@ def run(args: argparse.Namespace) -> int:
             atomic_json(output / "progress.json", state)
             break
 
-        argv = expand(case, output, args.python.resolve(), args.idf_root.resolve(),
+        argv = expand(case, output, python, args.idf_root.resolve(),
                       source_root)
         log_path = output / "cases" / (case["id"] + ".log")
         log_path.parent.mkdir(parents=True, exist_ok=True)

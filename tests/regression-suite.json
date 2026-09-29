@@ -6,7 +6,6 @@
     {"id": "host-audio-framing", "phase": "host", "argv": ["{python}", "tests/audio_framing_test.py"], "timeout_seconds": 120},
     {"id": "host-bench-job", "phase": "host", "argv": ["{python}", "tests/bench_job_test.py"], "timeout_seconds": 60},
     {"id": "host-browser-keyboard", "phase": "host", "argv": ["{python}", "tests/browser_keyboard_test.py"], "timeout_seconds": 120},
-    {"id": "host-browser-keyboard-dispatch", "phase": "host", "argv": ["{python}", "tests/browser_keyboard_dispatch_test.py", "--idf-root", "{idf_root}"], "timeout_seconds": 120},
     {"id": "host-browser-network-containment", "phase": "host", "argv": ["{python}", "tests/browser_network_containment_test.py"], "timeout_seconds": 180},
     {"id": "host-browser-timing-analysis", "phase": "host", "argv": ["{python}", "tests/browser_timing_analysis_test.py"], "timeout_seconds": 60},
     {"id": "host-browser-trace", "phase": "host", "argv": ["{python}", "tests/browser_trace_test.py"], "timeout_seconds": 120},
@@ -60,6 +59,7 @@
   ],
   "excluded": [
     {"path": "tests/installation_package_test.py", "reason": "Requires a separately selected immutable production package; a source-tree run must not infer one."},
+    {"path": "tests/browser_keyboard_dispatch_test.py", "reason": "Frozen WebSocket-keyboard handshake oracle names retired KeyTraceContext and keyboardPostHandshake actors; current browser input uses the separately covered admitted HTTP RPC path."},
     {"path": "tests/video_takeover_test.py", "reason": "Byte-identical compatibility alias of browser_network_containment_test.py; the canonical entry point runs once."},
     {"path": "tests/performance", "reason": "Performance results are invalid while development work may run concurrently and require a separate bounded baseline."},
     {"path": "tests/fixtures", "reason": "Physical and manual fixtures require per-case deployment, mode, and observation contracts; Nurples and late loaded-asset cases remain manual by Author decision."}
