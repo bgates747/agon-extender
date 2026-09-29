@@ -15,7 +15,7 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
-- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — Audit the latest working pre-LCD P4 product with current EMOS v0.1.23 for architectural cohesion, ownership, allocation/lifetime, failure handling and accumulated ad hoc behavior. Complete audit and review before itemized fixes; LCD support is reintroduced afterward as a separately reviewed delta.
+- [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — The Author approved the complete pre-LCD findings set. The A10-07 itemized one-defect-at-a-time repair plan is prepared for whole-plan review; executable repairs remain gated until that plan is approved and frozen. LCD support is reintroduced afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.
 
