@@ -23,6 +23,7 @@ def load(name: str, path: Path):
 
 shared = load("hardware_validation", ROOT / "scripts/hardware_validation.py")
 runner = load("hardware_regression", ROOT / "scripts/run_hardware_regression.py")
+notifier = load("regression_notify", ROOT / "scripts/regression_notify.py")
 
 
 class HardwareValidationTests(unittest.TestCase):
@@ -58,6 +59,37 @@ class HardwareValidationTests(unittest.TestCase):
         commit = shared.resolve_commit(ROOT, "HEAD")
         self.assertEqual(len(commit), 40)
         self.assertTrue(all(character in "0123456789abcdef" for character in commit))
+
+    def test_notification_exits_attention_listener_before_verdict(self):
+        calls = []
+
+        class Lock:
+            def close(self):
+                calls.append("close")
+
+        class Client:
+            def __init__(self, url, state):
+                calls.append((url, state.name))
+                self.lock = Lock()
+
+            def status(self):
+                return {"online": True}
+
+            def connect(self):
+                calls.append("connect")
+
+            def rpc(self, operation):
+                calls.append(("rpc", operation))
+
+        original = notifier.SdClient
+        notifier.SdClient = Client
+        try:
+            notifier.exit_attention_service("http://device", Path("state.json"),
+                                             timeout=0.1)
+        finally:
+            notifier.SdClient = original
+        self.assertIn(("rpc", 11), calls)
+        self.assertEqual(calls[-1], "close")
 
 
 if __name__ == "__main__":

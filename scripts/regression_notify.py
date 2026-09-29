@@ -14,7 +14,8 @@ from urllib.request import urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from keyboard import Client, key_usage, text_events  # noqa: E402
+from keyboard import Client as KeyboardClient, key_usage, text_events  # noqa: E402
+from sdcard import Client as SdClient  # noqa: E402
 
 
 def save(path: Path, value: object) -> None:
@@ -33,7 +34,7 @@ def status(url: str) -> dict:
 
 
 def send(url: str, journal: Path, events: list[tuple[int, int]]) -> None:
-    client = Client(url, journal)
+    client = KeyboardClient(url, journal)
     try:
         observed = client.status()
         client.open(observed)
@@ -46,6 +47,26 @@ def send(url: str, journal: Path, events: list[tuple[int, int]]) -> None:
 def type_line(url: str, journal: Path, value: str) -> None:
     observed = status(url)
     send(url, journal, text_events(value + "\n", observed["locale"], observed["caps"]))
+
+
+def exit_attention_service(url: str, journal: Path, timeout: float = 15) -> None:
+    deadline = time.monotonic() + timeout
+    last: object = "no response"
+    while time.monotonic() < deadline:
+        client = SdClient(url, journal)
+        try:
+            observed = client.status()
+            last = observed
+            if observed.get("online"):
+                client.connect()
+                client.rpc(11)
+                return
+        except Exception as error:
+            last = repr(error)
+        finally:
+            client.lock.close()
+        time.sleep(0.2)
+    raise TimeoutError(f"attention listener did not become ready for exit: {last}")
 
 
 def main() -> int:
@@ -85,6 +106,7 @@ def main() -> int:
         # The retained player has no completion endpoint. Preserve its proven
         # bounded playback allowance, then restore the durable verdict last.
         time.sleep(15)
+        exit_attention_service(args.url, args.job / "notification-sd.json")
         type_line(args.url, journal, "ECHO " + label)
         final = status(args.url)
         if not final.get("ready") or not final.get("physical_neutral") or final.get("pending"):
@@ -92,6 +114,7 @@ def main() -> int:
         save(receipt, {"status": "success", "label": label,
                        "suite_status": suite_status,
                        "duration_seconds": time.monotonic() - started,
+                       "attention_listener_exited": True,
                        "proof": "accepted keyboard event stream acknowledged; human hearing and Legacy pixels remain operator observations",
                        "keyboard": final})
         return 0
