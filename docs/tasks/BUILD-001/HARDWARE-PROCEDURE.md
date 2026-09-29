@@ -1,8 +1,9 @@
 # BUILD-001 hardware-equivalence procedure
 
-State: proposed; execution requires explicit Author authorization. This
-procedure performs no production promotion and does not modify EMOS or SD
-application assets.
+State: executed 2026-09-28; failed at candidate boot and rolled back. This
+procedure performed no production promotion and did not modify EMOS or SD
+application assets. Results and the precondition-conformance finding are in
+[HARDWARE-RESULTS.md](HARDWARE-RESULTS.md).
 
 ## Exact candidates and rollback
 
@@ -22,41 +23,45 @@ belongs in this procedure.
 
 ## Preconditions and stopping conditions
 
-B01-H01 [ ] The Author explicitly authorizes this exact procedure.
+B01-H01 [x] The Author explicitly authorizes this exact procedure.
 
-B01-H02 [ ] The operator confirms the current P4 identity, EMOS v0.1.19,
+B01-H02 [x] The operator confirms the current P4 identity, EMOS v0.1.19,
 foreground `sdserve` v0.2.0, admitted Extender keyboard and recoverable MOS CLI.
 Unknown or conflicting identity stops the run.
 
-B01-H03 [ ] The operator confirms the immutable production rollback archive is
+B01-H03 [x] The operator confirms the immutable production rollback archive is
 available and hash-correct before flashing. Missing rollback bytes stop the run.
 
-B01-H04 [ ] The operator records start time, candidate hashes and bench state in
+B01-H04 [x] The operator records start time, candidate hashes and bench state in
 ignored evidence. Any flash verification failure, boot loop, panic, loss of both
 admitted input and noninteractive recovery, filesystem corruption indication or
 unexplained reset stops candidate testing and invokes the recorded rollback.
 
+Execution disposition: B01-H02 is checked as disposed, not passed, because the
+operator failed to reconcile the written v0.1.19 dependency with the v0.1.23
+bench record before flashing. B01-H03 and B01-H04 passed.
+
 ## Execution order
 
-B01-H05 [ ] At a verified MOS prompt, clear the Legacy screen with `VDU 12` so
+B01-H05 [x] At a verified MOS prompt, clear the Legacy screen with `VDU 12` so
 an older completion cue cannot be mistaken for this run's result. The Linux
 operator then flashes only the P4 candidate using its generated flash arguments
 and verifies every written region. EMOS, the eZ80 flash and SD files remain
 unchanged.
 
-B01-H06 [ ] After ordinary boot, the operator records the candidate's exact
+B01-H06 [x] After ordinary boot, the operator records the candidate's exact
 serial identity and confirms stable Legacy output, ExCom activation/return and
 native LCD initialization. The Author compares the known mode0 asymmetric
 color/edge fixture on Legacy and LCD; all colors, four source edges and the
 accepted LCD mapping must remain correct.
 
-B01-H07 [ ] The Author exercises admitted Extender keyboard input at the EMOS
+B01-H07 [x] The Author exercises admitted Extender keyboard input at the EMOS
 CLI and confirms ordinary Legacy/ExCom return. The operator performs bounded
 read-only checks of the SD service, browser status endpoint and one browser
 frame while the LCD sink remains active. Browser disconnected and connected
 observations remain separate; no performance equivalence is inferred.
 
-B01-H08 [ ] Run a mode20 static-grid control only after `/autoexec.txt` selects
+B01-H08 [x] Run a mode20 static-grid control only after `/autoexec.txt` selects
 mode20 before fixture launch. The automated fixture must not switch modes. The
 Author must observe A1 through H6 in order, all asymmetric edges, 64-pixel
 pillarboxes and 48-pixel letterboxes. One bounded raw Ethernet snapshot must
@@ -66,7 +71,7 @@ The maintained generator produces a 1,691-byte `grid.bin` with SHA-256
 `a44d9e4ba6f23c603158130ac3d47039e411047bb34435fb52458968e7492e8d`;
 its first VDU byte is20 (viewport reset), not22 (mode selection).
 
-B01-H09 [ ] After every automated hardware pass has terminated, hand control to
+B01-H09 [x] After every automated hardware pass has terminated, hand control to
 the Author for manual execution of Nurples and any other real game that changes
 mode after loading significant VDP-buffer assets. Record LCD layout,
 keyboard/Escape behavior, HTTP availability and any allocation/fallback report
@@ -75,7 +80,7 @@ own resolution outside this audit; they do not authorize an automated fixture
 to switch modes or an opportunistic fix. A changed result is evidence to
 investigate, not automatic acceptance or failure attribution.
 
-B01-H10 [ ] Exercise the accepted ordinary boot smoke and clean recovery path.
+B01-H10 [x] Exercise the accepted ordinary boot smoke and clean recovery path.
 If all required checks pass, leave the final Legacy status visible and invoke
 the established spoken hardware attention cue. On failure, leave the failure
 identity visible and invoke the failure cue only when the admitted recovery path
@@ -83,10 +88,16 @@ can do so without overwriting that text. The runner, not an agent polling loop,
 owns progress, durable duration and terminal notification where automation is
 available.
 
-B01-H11 [ ] Restore the selected production P4 firmware after evidence capture
+B01-H11 [x] Restore the selected production P4 firmware after evidence capture
 unless the Author explicitly directs the candidate to remain temporarily for
 continued BUILD-001 review. Independently verify restored identity. This is
 rollback, not production promotion of the candidate.
+
+Execution disposition: B01-H05 completed the candidate flash and independent
+region verification, but its Legacy clear acknowledgement was uncertain.
+B01-H06 through B01-H09 are checked as disposed at B01-H06's boot-loop stopping
+condition; none is a functional pass. B01-H10 and B01-H11 passed through the
+failure-recovery branch.
 
 ## Mode-selection disposition
 

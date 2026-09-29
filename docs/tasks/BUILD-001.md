@@ -237,6 +237,11 @@ conditions. Read `HARDWARE.local.md` and current bench constraints, then obtain
 explicit Author authorization before flashing or resetting the P4 or deploying
 fixtures.
 
+The first authorized attempt failed during ESP-IDF startup and rolled back
+safely; see [HARDWARE-RESULTS.md](BUILD-001/HARDWARE-RESULTS.md). No functional
+equivalence subitem passed. A corrected immutable candidate and reviewed
+procedure dependency are required before B01-06 resumes.
+
 B01-06a [ ] Verify flash, boot, EMOS transport, Legacy and ExCom output,
 keyboard/input, SD service, browser service, native LCD output and clean recovery
 using targeted tests chosen to detect build-migration regressions.
