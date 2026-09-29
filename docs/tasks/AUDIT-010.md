@@ -112,6 +112,17 @@ only when an active call path, retained finding or demonstrated behavior makes
 it material; record any newly uncovered exhaustive-upstream question for the
 parked AUDIT-007 owner rather than silently expanding this scope.
 
+The Author clarified the source-lineage and duplication boundary on 2026-09-29.
+Treat unchanged upstream code, closely ported/adapted upstream code and
+project-new feature/capability code as three separate review and repair classes.
+Do not attribute an inherited defect to a new Extender feature, or hide a
+port-introduced defect inside an upstream finding. Before accepting a
+project-new implementation or repair, establish whether the selected official
+or bundled upstream already supplies the function. Also search project-owned
+code for a second function or service with materially equivalent behavior and
+ownership. Prefer reuse or consolidation; retain two implementations only with
+an explicit difference in contract, actor, lifecycle or target.
+
 Git history and superseded implementations are outside exhaustive coverage.
 A bounded historical review is permitted only when one of these immutable
 triggers applies. Before inspecting history, the auditor must pause and present
@@ -325,8 +336,43 @@ records the complete disposition of all 35 coverage rows and all eleven A10-04
 candidates. It carries eleven manual-review conclusions plus the applicable
 existing firmware-bug identities into A10-06. No history, executable source,
 build, target or hardware operation was used, and no conclusion authorizes a
-repair or physical diagnostic. Proceed to complete findings assembly under
-A10-06 before the Author review gate.
+repair or physical diagnostic. Proceed through the later Author clarification
+in A10-05a before findings assembly under A10-06 and the Author review gate.
+
+### A10-05a [ ] Source lineage and functional-duplication reconciliation
+
+Added by Author clarification on 2026-09-29 after the initial A10-05 manual
+pass. Complete this bounded reconciliation before A10-06 assigns final finding
+IDs. It supplements rather than discards the A10-05 conclusions and does not
+authorize implementation changes.
+
+A10-05a01 [ ] Classify every retained A10-MR conclusion and every applicable existing
+   FWBUG input as `upstream-unchanged`, `upstream-ported/adapted`, or
+   `project-new`. Record the exact source/reference boundary and the actor that
+   owns any eventual repair.
+
+A10-05a02 [ ] For every closely ported/adapted function, compare the selected local
+   implementation with the applicable upstream implementation and distinguish
+   inherited behavior from port-introduced behavior. Handle the two origins as
+   separate findings or repair items when their owners or remedies differ.
+
+A10-05a03 [ ] For every project-new function or capability implicated by a conclusion,
+   search the selected official VDP/MOS source and bundled upstream/component
+   interfaces for an existing implementation before proposing new code. Record
+   reuse, adaptation or the exact missing contract that justifies a new owner.
+   This is a current-source comparison, not permission to inspect history.
+
+A10-05a04 [ ] Search the project-owned P4, EMOS, host-tool and active-fixture closure
+   for materially equivalent functions, services, state machines and resource
+   owners. Distinguish intentional target-specific adapters from functional
+   duplicates. Record the canonical owner and consolidation/removal condition
+   for every duplicate candidate.
+
+A10-05a05 [ ] Publish the complete classification and comparison evidence in
+   `AUDIT-010/LINEAGE-AND-DUPLICATION.md`. Every retained A10-06 finding and
+   every proposed repair must reference its lineage result; unresolved
+   equivalence becomes an explicit finding/validation question rather than an
+   assumed reason to rewrite code.
 
 ### A10-06 [ ] Findings and independent validation proposals
 
@@ -337,7 +383,11 @@ tool warnings and hypotheses. Propose the smallest discriminating host or bench
 validation for unresolved high-impact findings. A10-06 is complete only when
 the complete audit coverage and findings set are ready for review; partial
 findings do not advance independently to review or repair. This audit stage does
-not itself authorize firmware changes or physical tests.
+not itself authorize firmware changes or physical tests. A10-06 begins only
+after A10-05a is complete. It must keep upstream-unchanged,
+upstream-ported/adapted and project-new findings separate, and must not propose
+a new implementation until the upstream-equivalent and project-duplicate
+checks are recorded.
 
 ### A10-07 [ ] Author findings review and repair authorization
 
@@ -445,6 +495,13 @@ A10-FIELD05 — Runtime/user consequence and affected configurations.
 A10-FIELD06 — Confidence and unresolved alternatives.
 
 A10-FIELD07 — Proposed owner, validation and disposition.
+
+A10-FIELD08 — Source lineage: upstream-unchanged, upstream-ported/adapted or
+project-new; exact reference/delta boundary and defect origin.
+
+A10-FIELD09 — Upstream-equivalent and project-functional-duplicate check;
+canonical owner, reuse/consolidation decision and justification for any retained
+parallel implementation.
 
 Never label code defective solely because an AI model may have produced it.
 Never infer which model authored a change unless retained provenance establishes

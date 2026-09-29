@@ -24,8 +24,9 @@ The review also carries the already-authoritative unresolved current defects
 from `docs/firmware-bugs.md`; it does not give them duplicate identities.
 Automated warnings that did not survive semantic review are disposed below.
 No conclusion in this document authorizes a fix or physical diagnostic.
-A10-06 must now assemble the stable findings and smallest independent
-validation proposals for the Author's complete review.
+A10-05a must now reconcile source lineage, upstream equivalents and internal
+functional duplicates. A10-06 then assembles stable findings and the smallest
+independent validation proposals for the Author's complete review.
 
 ## Method and evidence boundary
 
@@ -349,5 +350,8 @@ A10-MR08 needs a deterministic visual/byte scene. A10-MR11 needs the smallest
 host-renderer shape matrix that distinguishes the unreachable edge path.
 
 `A10-HAND04` — No A10-05 conclusion authorizes diagnostic code, hardware
-operation or repair. A10-06 remains documentation/proposal work, followed by
-the complete A10-07 Author review gate.
+operation or repair. The Author's later source-lineage clarification adds
+A10-05a as a prerequisite: classify upstream-unchanged, upstream-ported/adapted
+and project-new code, check upstream equivalents and internal functional
+duplicates, then begin A10-06. A10-06 remains documentation/proposal work,
+followed by the complete A10-07 Author review gate.
