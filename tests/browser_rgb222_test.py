@@ -120,9 +120,14 @@ def main():
               state.disconnected(); canvas.remove();
               return {colours,rejected,formatSwitches:true,paddedRows:true,credit:true};
             }''')
+            # The local pattern is intentionally inside the collapsed
+            # diagnostics disclosure. Exercise the user-visible opener before
+            # clicking it; Playwright correctly rejects hidden controls.
+            page.click('.diagnostics summary')
             page.click('#demo')
             page.wait_for_timeout(1500)
-            assert page.locator('#surface').inner_text().endswith('RGB222')
+            assert page.locator('#surface').inner_text() == 'Local pattern 320x240'
+            assert page.locator('#state').inner_text() == 'local RGB222 test pattern'
             assert float(page.locator('#fps').inner_text()) > 5
             assert not errors, errors
             page.screenshot(path=str(output/'browser.png'))

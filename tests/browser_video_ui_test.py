@@ -73,7 +73,12 @@ window.WebSocket=class extends EventTarget {
             page.wait_for_timeout(100)
             assert page.evaluate('sockets.length') == 1
             assert page.evaluate('sockets[0].sent') == ['frame', 'frame']
-            assert page.evaluate('sockets[0].url.endsWith("/video")')
+            assert page.evaluate('''() => {
+              const endpoint = new URL(sockets[0].url);
+              return endpoint.pathname === '/video' &&
+                endpoint.searchParams.get('rle2') === '1' &&
+                endpoint.searchParams.get('packed') === '2';
+            }''')
             page.evaluate('sockets[0].close()')
             assert not page.locator('#connect').evaluate("e => e.classList.contains('connected')")
             page.click('#connect')

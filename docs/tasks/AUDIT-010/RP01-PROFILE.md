@@ -113,13 +113,17 @@ dirty RP01 candidate, and was not flashed.
 | Embedded browser/codec suite | PASS; exact embedded assets, compressed negotiation and 48 vectors across EVF1/EVP1/EVQ1/EVR1. |
 | Neighbor regressions | PASS; mode lifecycle, video timing seam, remote keyboard, telemetry, SD service, WebDAV runtime/adapter and RGB222/snapshot C++ checks. |
 
-`A10-RP01-L01` — The broader `browser_rgb222_test.py` reached and passed its
-C++ RGB222/snapshot/network checks, then its Playwright phase timed out because
-the test clicks `#demo` while the enclosing diagnostics `<details>` is closed.
-This is an existing UI-test invocation mismatch, not an RP01 profile symptom;
-the actual embedded-asset/codec suite passed. RP01 did not silently repair this
-second test-infrastructure defect. It remains visible for Author disposition,
-potentially with the later browser-test infrastructure item RP20.
+`A10-RP01-L01` [x] — The broader `browser_rgb222_test.py` initially reached and
+passed its C++ RGB222/snapshot/network checks, then timed out because it clicked
+`#demo` while the enclosing diagnostics `<details>` was closed. The Author
+directed correction because a broken regression would affect the ongoing audit.
+The test now exercises the user-visible diagnostics summary before clicking the
+pattern control, matching the already-correct video UI test, and asserts the
+current separate surface geometry and RGB222 state fields instead of the former
+combined status literal. The companion video UI oracle now validates the `/video`
+path and accepted `rle2=1`/`packed=2` negotiation parameters instead of requiring
+the URL to end before its query. Both complete browser suites pass; no product
+asset or behavior changed.
 
 No physical hardware state changed. RP01 now stops for Author acceptance under
 `A10-RP-C02`; RP02 has not started.
