@@ -242,6 +242,9 @@ Validation: the remaining `A10-VP01` failures, early/late mode transitions and,
 after explicit authorization, `A10-VP02` mode8↔20 hardware cases. This item does
 not absorb palette or browser-resource policy.
 
+Authorized implementation contract:
+[RP06-MODE-TRANSACTION.md](RP06-MODE-TRANSACTION.md).
+
 `A10-RP07` [ ] **FWBUG-001 — Palette erase iterator lifetime.** Repair the
 selected vdp-gl cleanup loop without selecting the parallel display family.
 Validation: retained ASan host reproducer, multiple-palette/all-palette cleanup,
