@@ -210,6 +210,11 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             "contain the injected marker", output / "marker-transition")
         (output / "screen.txt").write_text(text)
 
+        type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
+        # Completing a capture requested after the handoff gives EMOS/P4 time
+        # to consume the mode command before keyboard input is routed to Legacy.
+        legacy_handoff = capture_text(url)
+        (output / "screen-after-legacy-handoff.txt").write_text(legacy_handoff)
         type_line(url, output / "keyboard-sd.json", "EMOS sdserve --fast /")
         client = wait_sd_service(url, output / "sd.json")
         target = "/extender/qualification/live-" + uuid.uuid4().hex + ".bin"

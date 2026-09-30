@@ -55,3 +55,9 @@ infrastructure failure because the runner sent consecutive commands after
 transport acceptance without waiting for EMOS execution. Its capture retained
 the prior Legacy screen and lacked the marker. This was a runner synchronization
 defect, not a firmware failure; Q05-08 preserves the failure and its remedy.
+
+The second attempt proved every ExCom synchronization gate, including the
+unique captured marker and returned prompt, then failed because the runner tried
+to launch the mainboard SD listener while EMOS still owned ExCom. The listener
+correctly remained offline. The runner now performs `EMOS LEGACY` and completes
+a fresh capture as a parser-progress barrier before issuing `EMOS sdserve`.
