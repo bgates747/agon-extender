@@ -50,6 +50,18 @@ mode 0 at 640×480, offline SD listener and a fresh Legacy screen capture were
 all observed. This establishes one working recovery order; it does not explain
 the lost admission or satisfy D02-06's complete reset-order matrix.
 
+D02-S06 — A later AUDIT-010 qualification run reproduced the lost admission
+without any operator intervention. Earlier runner-owned resets admitted
+successfully through P4 epoch `3114281159`. After RP04 restored and independently
+read back the exact 42-byte startup, the runner itself pulsed Agon reset and
+waited for admission. P4 advanced to epoch `3114281161` but remained
+`ready=false`, physical-neutral, locale 1, admission reason 1 until the 60-second
+verification deadline. This removes operator reset timing as an explanation for
+that occurrence. The concurrently retained browser page was explicitly
+disconnected with keyboard capture released; its canvas still displayed old
+`P4QUAL` pixels, which is relevant to screen-capture oracle design but is not an
+active browser transport session.
+
 ## Required behavior
 
 D02-B01 [ ] During ordinary startup, EMOS reports an actor-explicit Extender

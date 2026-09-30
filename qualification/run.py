@@ -242,20 +242,14 @@ def wait_screen(url: str, predicate, description: str, output: Path,
     raise TimeoutError(f"screen did not {description}; last capture was saved")
 
 
-def completed_at_prompt(text: str, marker: str) -> bool:
-    """Accept only a completion marker followed by a visible MOS prompt."""
+def marker_followed_by_prompt(text: str, marker: str) -> bool:
+    """Accept only a run-specific marker followed by a visible MOS prompt."""
     visible = [line.rstrip("?").rstrip() for line in text.splitlines()]
     try:
         marker_line = visible.index(marker)
     except ValueError:
         return False
     return any(line.endswith(" *") for line in visible[marker_line + 1:])
-
-
-def has_mos_prompt(text: str) -> bool:
-    """Recognize a returned MOS prompt in fixed-width screen-text capture."""
-    return any(line.rstrip("?").rstrip().endswith(" *")
-               for line in text.splitlines())
 
 
 def wait_display(url: str, mode: int, width: int, height: int,
@@ -534,10 +528,12 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     passed("emos-receipt-and-fixture-source", fixture_sha256=binary_hash)
     url = config["extender_url"]
     completion_token = uuid.uuid4().hex[:16].upper()
+    start_marker = "A10-RP04 START " + completion_token
     completion_marker = "A10-RP04 COMPLETE " + completion_token
     atomic_json(output / "completion-contract.json", {
-        "schema": 1, "token": completion_token, "marker": completion_marker,
-        "meaning": "fixture returned after raw I/O ended; result determines pass/fail",
+        "schema": 1, "token": completion_token,
+        "start_marker": start_marker, "completion_marker": completion_marker,
+        "meaning": "START proves this ExCom launch reached RUN; COMPLETE plus a later prompt proves raw I/O ended",
     })
     reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
              "--config", str(Path(config["reset_config"]).resolve(strict=True))]
@@ -570,7 +566,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         close_retained_backup(client, "/autoexec.txt",
                               output / "prior-autoexec-backup.txt")
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n"
-                   b"EMOS LEGACY\r\nVDU 22 3\r\n"
+                   b"EMOS EXCOM\r\nVDU 22 3\r\nECHO " +
+                   start_marker.encode("ascii") + b"\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
                    b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN . " +
@@ -608,16 +605,16 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     announce("Waiting up to 20 seconds for the fixture completion token and returned MOS prompt")
     try:
         completion_screen = wait_screen(
-            url, lambda text: completed_at_prompt(text, completion_marker),
+            url, lambda text: marker_followed_by_prompt(text, completion_marker),
             "show the per-run fixture completion token followed by a MOS prompt",
             output / "completion-transition", timeout=RP04_COMPLETION_TIMEOUT)
         (output / "completion-screen.txt").write_text(completion_screen)
     except BaseException as error:
-        # Absence of the positive marker and prompt cannot prove that a raw
-        # write is safe to interrupt. A fresh visible MOS prompt does prove
-        # that no application remains in flight, including a launch failure.
-        # Restore through that prompt; otherwise use only an independently
-        # active service and never type or reset an unknown foreground.
+        # A bare prompt can be a stale Legacy-era P4 capture and proves nothing.
+        # Only this run's ExCom START marker followed by a later prompt proves
+        # that the launch sequence returned without leaving an app in flight.
+        # Otherwise use only an independently active service and never type or
+        # reset an unknown foreground.
         prompt_text = ""
         try:
             prompt_text = capture_text(url)
@@ -626,8 +623,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             atomic_json(output / "completion-failure-capture.json", {
                 "status": "failed", "detail": repr(capture_error),
             })
-        if has_mos_prompt(prompt_text):
-            announce("Completion marker absent but MOS prompt is visible; restoring the exact startup")
+        if marker_followed_by_prompt(prompt_text, start_marker):
+            announce("Completion marker absent but this run returned to MOS; restoring the exact startup")
             prompt_client = None
             try:
                 type_line(url, output / "keyboard-prompt-recovery-legacy.json",
@@ -651,7 +648,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             reset_and_wait(reset, url)
             raise RuntimeError(
                 "RP04 fixture did not produce its per-run completion marker; "
-                "a returned MOS prompt proved the foreground safe and the exact "
+                "its START token and later prompt proved the foreground safe and the exact "
                 "pre-suite startup was restored"
             ) from error
         announce("Safe-completion observation failed; attempting exact startup restoration without a reset")

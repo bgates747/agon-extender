@@ -148,31 +148,34 @@ class HardwareValidationTests(unittest.TestCase):
         source = inspect.getsource(runner.run_fwbug008)
         self.assertEqual(runner.RP04_COMPLETION_TIMEOUT, 20)
         self.assertIn("completion_token", source)
-        self.assertIn("completed_at_prompt", source)
+        self.assertIn("marker_followed_by_prompt", source)
         self.assertIn("host-owned result listener", source)
         self.assertIn("Agon was not reset", source)
         self.assertIn("try_restore_startup_from_active_service", source)
         self.assertNotIn("fixture-owned completion service", source)
 
-    def test_completion_requires_marker_then_prompt(self):
+    def test_run_marker_requires_marker_then_prompt(self):
         marker = "A10-RP04 COMPLETE 0123456789ABCDEF"
-        self.assertFalse(runner.completed_at_prompt("/ *\n" + marker, marker))
-        self.assertFalse(runner.completed_at_prompt(marker + "\nnot a prompt", marker))
-        self.assertTrue(runner.completed_at_prompt(
+        self.assertFalse(runner.marker_followed_by_prompt("/ *\n" + marker, marker))
+        self.assertFalse(runner.marker_followed_by_prompt(marker + "\nnot a prompt", marker))
+        self.assertTrue(runner.marker_followed_by_prompt(
             marker + "                                           ?\n"
             "/ *                                                   ?\n", marker))
 
-    def test_prompt_recognition_ignores_commands_and_accepts_prompt(self):
-        self.assertFalse(runner.has_mos_prompt("/ *RUN . TOKEN                  ?\n"))
-        self.assertTrue(runner.has_mos_prompt("/ *                              ?\n"))
+    def test_bare_or_pre_marker_prompt_is_not_a_safe_boundary(self):
+        marker = "A10-RP04 START 0123456789ABCDEF"
+        self.assertFalse(runner.marker_followed_by_prompt("/ *\n", marker))
+        self.assertFalse(runner.marker_followed_by_prompt("/ *\n" + marker, marker))
 
-    def test_raw_sd_startup_selects_legacy_before_mode_and_fixture(self):
+    def test_raw_sd_startup_selects_excom_before_marker_mode_and_fixture(self):
         source = inspect.getsource(runner.run_fwbug008)
-        legacy = source.index('b"EMOS LEGACY')
-        mode = source.index('VDU 22 3', legacy)
+        excom = source.index('b"EMOS EXCOM')
+        mode = source.index('VDU 22 3', excom)
+        marker = source.index('start_marker.encode', mode)
         load = source.index('LOAD /extender/fixtures', mode)
-        self.assertLess(legacy, mode)
+        self.assertLess(excom, mode)
         self.assertLess(mode, load)
+        self.assertLess(marker, load)
         self.assertIn('b"LOAD /extender/fixtures/FWBUG008.bin\\r\\nRUN . "', source)
 
     def test_startup_restoration_is_exact_and_stops_listener(self):

@@ -52,9 +52,12 @@ client and then while retaining one browser-video WebSocket, checking committed
 status and decoded frame geometry at every edge. The EMOS case builds its
 receipt-bound fixture, stages it with restoration safeguards, exercises real
 raw-sector write/read/restore with independent CRC oracles, observes a unique
-post-I/O completion token and returned MOS prompt before starting its result
-listener, and restores the original startup file. A missing prerequisite,
-receipt or check fails closed.
+ExCom start marker, then requires its unique post-I/O completion token and a
+returned MOS prompt before starting its result listener and restoring the
+original startup file. If completion is absent, only that run's start marker
+followed by a later prompt permits recovery input; a bare prompt or retained
+framebuffer content is not a foreground oracle. A missing prerequisite, receipt
+or check fails closed.
 
 QUAL-003 and QUAL-004 remain provenance for broad graphics and exact paired-
 pixel testing. Their private adapters, diagnostic mainboard firmware, and

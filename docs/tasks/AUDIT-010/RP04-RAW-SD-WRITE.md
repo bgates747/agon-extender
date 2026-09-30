@@ -127,12 +127,17 @@ read back.
 
 The second replacement gives every run a unique 16-digit token. The fixture
 writes that token into its result, prints the matching completion marker only
-after all raw I/O ends, and returns. The host requires the marker followed by a
-visible MOS prompt, then starts `sdserve` from MOS, verifies the result token,
-restores the exact prior startup and closes the listener. Missing completion
-still forbids reset or keyboard injection. The manifest now declares five RP04
-checks and 25 complete-suite physical checks. Source/build checks pass; fresh
-physical validation is required before closing this protocol correction.
+after all raw I/O ends, and returns. The one-shot startup now selects ExCom and
+prints a matching per-run start marker before `LOAD`/`RUN`, making both markers
+observable through fresh P4 screen capture. The host requires the completion
+marker followed by a visible MOS prompt, then starts `sdserve` from MOS, verifies
+the result token, restores the exact prior startup and closes the listener. If
+completion is absent, only this run's start marker followed by a later prompt
+can prove a safe returned foreground; a bare prompt or retained framebuffer
+content cannot. Without that proof, missing completion still forbids reset or
+keyboard injection. The manifest now declares five RP04 checks and 25
+complete-suite physical checks. Source/build checks pass; fresh physical
+validation is required before closing this protocol correction.
 
 The first tokenized hardware attempt stopped before executing the fixture:
 the launcher emitted `RUN <token>`, so official MOS parsed the token as the
@@ -140,14 +145,21 @@ optional numeric address and returned `FR_INVALID_PARAMETER`. Official MOS
 `mos_cmdRUN` at tag `v3.0.2`, commit
 `8336409351ee5314e02801a7b72a4f1bb5282519`, requires `RUN . <arguments>` to
 select the default address while passing arguments. The corrected launcher uses
-that syntax. The same failure exposed an incomplete cleanup branch: although a
-fresh capture showed a returned MOS prompt and therefore proved no application
-was in flight, the runner treated every missing marker as ambiguous and left
-the one-shot startup installed. The runner now uses only a freshly captured
-MOS prompt as the alternate safe boundary, starts the listener from that prompt,
-restores and independently verifies the exact saved startup, closes the
-listener, and reports the original fixture failure. Without either the token
-plus prompt or a fresh prompt, its no-input/no-reset safety rule is unchanged.
+that syntax. The same failure exposed an incomplete cleanup branch: the one-shot
+startup remained installed after MOS rejected the malformed launch. An initial
+cleanup revision accepted a freshly requested screen containing a MOS prompt as
+an alternate safe boundary. A later complete run proved that insufficient:
+RP04 selected Legacy, so neither its marker nor current output could reach P4
+screen capture, while the P4 retained an older `P4QUAL` prompt. The runner
+mistook that stale prompt for current execution evidence. It nevertheless
+restored and independently verified the exact saved 42-byte startup before its
+own subsequent Agon reset reproduced the separate Extender-admission failure
+recorded in DIAG-002. The corrected cleanup requires this run's ExCom start
+marker before a later prompt, starts the listener only from that proved
+boundary, restores and independently verifies the exact saved startup, closes
+the listener, and reports the original fixture failure. Without either
+completion-plus-prompt or this run-specific start-plus-prompt proof, its
+no-input/no-reset safety rule is unchanged.
 
 ## Acceptance boundary
 
