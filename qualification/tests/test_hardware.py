@@ -10,6 +10,7 @@ from pathlib import Path
 import tempfile
 import unittest
 import struct
+from unittest import mock
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -101,6 +102,18 @@ class HardwareValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(RuntimeError, "unavailable mainboard"):
             runner.require_extender_startup(
                 b"EMOS KEYINPUT extender\r\nEMOS KEYINPUT mainboard\r\n")
+
+    def test_reset_helper_owns_fresh_boot_and_input_verification(self):
+        status = {"boot": 12, "ready": True, "physical_neutral": True,
+                  "pending": 0, "held": 0}
+        with (mock.patch.object(runner.subprocess, "run") as invoke,
+              mock.patch.object(runner, "keyboard_status", return_value=status)):
+            result = runner.reset_and_wait(["reset-helper", "--config", "bench.json"],
+                                           "http://device")
+        invoke.assert_called_once_with(
+            ["reset-helper", "--config", "bench.json", "--verify-url",
+             "http://device", "--verify-timeout", "60"], check=True)
+        self.assertEqual(result, status)
 
     def test_raw_sd_fixture_requires_positive_completion_without_reset_fallback(self):
         source = inspect.getsource(runner.run_fwbug008)

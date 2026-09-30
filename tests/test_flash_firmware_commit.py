@@ -91,27 +91,28 @@ class FinishP4InstallTests(unittest.TestCase):
             config = {"extender_url": "http://p4.invalid",
                       "reset_config": str(reset_config)}
 
+            statuses = iter((
+                {"boot": 17, "ready": False},
+                {"boot": 18, "ready": True, "physical_neutral": True},
+            ))
+
             def status(_url: str) -> dict:
                 events.append("status")
-                return {"boot": 17, "ready": False}
+                return next(statuses)
 
-            def reset(*_args, **_kwargs):
+            def reset(argv, **kwargs):
                 events.append("reset")
+                self.assertIn("--verify-url", argv)
+                self.assertIn("http://p4.invalid", argv)
+                self.assertEqual(kwargs, {"check": True})
                 return mock.Mock(returncode=0)
 
-            def wait(_url: str, *, old_boot: int, timeout: float) -> dict:
-                self.assertEqual(old_boot, 17)
-                self.assertEqual(timeout, 60)
-                events.append("wait")
-                return {"boot": 18, "ready": True}
-
             with (mock.patch.object(FLASH, "keyboard_status", side_effect=status),
-                  mock.patch.object(FLASH.subprocess, "run", side_effect=reset),
-                  mock.patch.object(FLASH, "wait_keyboard", side_effect=wait)):
+                  mock.patch.object(FLASH.subprocess, "run", side_effect=reset)):
                 receipt = FLASH.finish_p4_install(config, verified_receipt(),
                                                   reset_agon=True)
 
-        self.assertEqual(events, ["status", "reset", "wait"])
+        self.assertEqual(events, ["status", "reset", "status"])
         self.assertTrue(receipt["agon_reset_performed"])
         self.assertTrue(receipt["agon_connection_verified"])
         self.assertEqual(receipt["agon_boot_before"], 17)
@@ -145,10 +146,10 @@ class FinishP4InstallTests(unittest.TestCase):
                       "reset_config": str(reset_config)}
             with (mock.patch.object(FLASH, "keyboard_status",
                                     return_value={"boot": 20, "ready": False}),
-                  mock.patch.object(FLASH.subprocess, "run"),
-                  mock.patch.object(FLASH, "wait_keyboard",
-                                    side_effect=TimeoutError("not connected"))):
-                with self.assertRaisesRegex(TimeoutError, "not connected"):
+                  mock.patch.object(
+                      FLASH.subprocess, "run",
+                      side_effect=FLASH.subprocess.CalledProcessError(1, ["reset"]))):
+                with self.assertRaises(FLASH.subprocess.CalledProcessError):
                     FLASH.finish_p4_install(config, verified_receipt(),
                                             reset_agon=True)
 

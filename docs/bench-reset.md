@@ -55,8 +55,11 @@ For an automated reset that must establish usable Extender input, add
 before pulsing, then requires a different epoch with admitted, neutral Extender
 keyboard input before printing `AGON RESET VERIFIED`; timeout exits nonzero.
 Without that option it reports `PULSE-ONLY COMPLETE` and makes no boot-success
-claim. Bridge callers may retain pulse-only behavior when the browser owns the
-separate post-reset observation.
+claim; its message identifies the caller as the owner of subsequent
+verification. Automated boot and qualification workflows must use the verified
+form so that the pulse is immediately followed by an explicit verification
+attempt. Bridge callers may retain pulse-only behavior when the browser owns
+the separate post-reset observation.
 
 `RESET_CONFIG` is an owner-provided local JSON file with `ssh` (complete SSH argv),
 `chip` (gpiochip name) and `gpio` (line number). The wrapper uses noninteractive

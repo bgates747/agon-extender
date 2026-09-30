@@ -19,7 +19,7 @@ RP04_COMPLETION_TIMEOUT = 20
 sys.path.insert(0, str(ROOT / "qualification"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
-                                 resolve_commit, sha256,
+                                 keyboard_status, resolve_commit, sha256,
                                  type_line, utc_stamp, wait_keyboard, wait_sd_service)
 from video import VideoSession, capture as capture_video
 
@@ -121,9 +121,16 @@ def require_extender_startup(data: bytes) -> None:
 
 
 def reset_and_wait(reset: list[str], url: str) -> dict:
-    before = wait_keyboard(url)
-    subprocess.run(reset, check=True)
-    return wait_keyboard(url, old_boot=before["boot"])
+    # The reset helper owns both the pulse and its fresh-boot/input proof.  This
+    # keeps the terminal contract truthful and also permits recovery when the
+    # pre-reset keyboard is not admitted.
+    subprocess.run(reset + ["--verify-url", url, "--verify-timeout", "60"],
+                   check=True)
+    after = keyboard_status(url)
+    if (not after.get("ready") or not after.get("physical_neutral") or
+            after.get("pending") or after.get("held")):
+        raise RuntimeError("verified reset helper returned without usable Extender input")
+    return after
 
 
 def read_json(url: str, path: str, timeout: float = 5) -> dict:

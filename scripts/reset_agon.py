@@ -51,7 +51,7 @@ echo '100 ms reset pulse sent and GPIO released.'
 '''
     subprocess.run(c['ssh']+['sudo -n bash -s'],input=script,text=True,check=True,timeout=15)
     if not a.verify_url:
-        print('PULSE-ONLY COMPLETE — Agon boot and Extender connectivity were not verified.')
+        print('PULSE-ONLY COMPLETE — the caller owns subsequent boot/application verification.')
         return
     print('Attempting to verify a fresh EMOS boot and working Extender keyboard input.', flush=True)
     after = wait_boot(a.verify_url, before['boot'], a.verify_timeout)

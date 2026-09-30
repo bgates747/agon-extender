@@ -153,22 +153,21 @@ def flash_emos(config: dict, commit: str, run: Path, *, reset_p4: bool = True) -
     # keyboard layout/poll admission exchange.  That leaves mainboard input
     # selected, so host automation cannot issue a retry through MOS.  A second
     # reset is safe here because no transfer or FLASH command has begun.
-    status = keyboard_status(url)
     admission_error = None
     for attempt in range(2):
         progress(f"Resetting the Agon before staging (attempt {attempt + 1} of 2)")
-        subprocess.run([str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-                        "--config", str(reset_config)], check=True)
         try:
-            progress("Waiting for EMOS boot and Extender keyboard admission")
-            wait_keyboard(url, old_boot=status["boot"])
+            subprocess.run([
+                str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
+                "--config", str(reset_config), "--verify-url", url,
+                "--verify-timeout", "45",
+            ], check=True)
             admission_error = None
             break
-        except TimeoutError as error:
+        except subprocess.CalledProcessError as error:
             admission_error = error
-            status = keyboard_status(url)
             if attempt == 0:
-                print("Extender keyboard admission timed out; retrying one pre-flash reset",
+                print("Verified Agon boot/admission failed; retrying one pre-flash reset",
                       file=sys.stderr)
     if admission_error is not None:
         raise admission_error
@@ -293,10 +292,15 @@ def finish_p4_install(config: dict, receipt: dict, *, reset_agon: bool) -> dict:
 
     reset_config = Path(config["reset_config"]).resolve(strict=True)
     progress("Resetting the Agon through the bench Pi to establish a fresh EMOS-to-P4 session")
-    subprocess.run([str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
-                    "--config", str(reset_config)], check=True)
-    progress("Waiting for a new EMOS boot epoch and verified Extender keyboard connectivity")
-    after = wait_keyboard(url, old_boot=before["boot"], timeout=60)
+    subprocess.run([
+        str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
+        "--config", str(reset_config), "--verify-url", url,
+        "--verify-timeout", "60",
+    ], check=True)
+    after = keyboard_status(url)
+    if (after.get("boot") == before["boot"] or not after.get("ready") or
+            not after.get("physical_neutral")):
+        raise RuntimeError("verified reset helper returned without a fresh ready boot")
     receipt.update(
         agon_reset_performed=True,
         agon_connection_verified=True,
