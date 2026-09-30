@@ -152,6 +152,24 @@ def capture_text(url: str, timeout: float = 30) -> str:
     raise TimeoutError("live P4 screen-text capture did not complete")
 
 
+def wait_screen(url: str, predicate, description: str, output: Path,
+                timeout: float = 45) -> str:
+    """Request fresh captures until an observable screen condition is true."""
+    output.mkdir(parents=True, exist_ok=False)
+    deadline = time.monotonic() + timeout
+    attempt = 0
+    last = "no capture"
+    while time.monotonic() < deadline:
+        attempt += 1
+        remaining = max(1.0, deadline - time.monotonic())
+        last = capture_text(url, timeout=min(remaining, 15))
+        (output / f"screen-{attempt:02d}.txt").write_text(last)
+        if predicate(last):
+            return last
+        time.sleep(0.25)
+    raise TimeoutError(f"screen did not {description}; last capture was saved")
+
+
 def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
     """Exercise the installed P4, EMOS wire, browser assets and reset bridge."""
     output.mkdir(parents=True, exist_ok=False)
@@ -169,20 +187,29 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             raise RuntimeError("installed browser asset does not contain the configured reset bridge")
 
         bridge_reset(config, url, output)
+        legacy_text = capture_text(url)
+        (output / "screen-legacy-before.txt").write_text(legacy_text)
         marker = "P4QUAL" + uuid.uuid4().hex[:8].upper()
         type_line(url, output / "keyboard-excom.json", "EMOS EXCOM")
+        excom_text = wait_screen(
+            url, lambda text: text != legacy_text,
+            "change after EMOS EXCOM", output / "excom-transition")
+        (output / "screen-excom-before-clear.txt").write_text(excom_text)
         type_line(url, output / "keyboard-clear.json", "VDU 12")
+        # A complete fresh capture is also a parser-progress barrier. The clear
+        # can legitimately leave an already blank screen byte-for-byte equal.
+        cleared_text = capture_text(url)
+        (output / "screen-after-clear.txt").write_text(cleared_text)
         type_line(url, output / "keyboard-marker.json", "ECHO " + marker)
         display = read_json(url, "/display/status")
         if (not display.get("available") or display.get("width", 0) < 1 or
                 display.get("height", 0) < 1 or display.get("colors", 0) < 2):
             raise RuntimeError(f"installed P4 reports an invalid display: {display}")
-        text = capture_text(url)
+        text = wait_screen(
+            url, lambda captured: marker in captured,
+            "contain the injected marker", output / "marker-transition")
         (output / "screen.txt").write_text(text)
-        if marker not in text:
-            raise RuntimeError("installed P4 screen capture did not contain injected marker")
 
-        type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
         type_line(url, output / "keyboard-sd.json", "EMOS sdserve --fast /")
         client = wait_sd_service(url, output / "sd.json")
         target = "/extender/qualification/live-" + uuid.uuid4().hex + ".bin"

@@ -93,6 +93,23 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertIn(("rpc", 11), calls)
         self.assertEqual(calls[-1], "close")
 
+    def test_screen_gate_retries_fresh_captures_until_observable(self):
+        captures = iter(("old", "old", "marker"))
+        original = runner.capture_text
+        runner.capture_text = lambda url, timeout=30: next(captures)
+        try:
+            with tempfile.TemporaryDirectory() as folder:
+                output = Path(folder) / "captures"
+                result = runner.wait_screen(
+                    "http://device", lambda text: text == "marker",
+                    "contain marker", output, timeout=2)
+                self.assertEqual(result, "marker")
+                self.assertEqual(
+                    [path.read_text() for path in sorted(output.iterdir())],
+                    ["old", "old", "marker"])
+        finally:
+            runner.capture_text = original
+
 
 if __name__ == "__main__":
     unittest.main()
