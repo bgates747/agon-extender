@@ -199,6 +199,10 @@ public:
 
   virtual void setResolution(VGATimings const& timings, int viewPortWidth = -1, int viewPortHeight = -1, bool doubleBuffered = false);
 
+  // AUDIT-010 RP05: false means the requested native rows were not assembled.
+  // Callers must not construct or publish consumers of the viewport in that case.
+  bool isViewPortAllocated() const                 { return m_viewPortAllocated; }
+
   /**
    * @brief Determines horizontal position of the viewport.
    *
@@ -333,8 +337,8 @@ protected:
 
   void volatile * getDMABuffer(int index, int * length);
 
-  void allocateViewPort(uint32_t allocCaps, int rowlen);
-  virtual void allocateViewPort() = 0;
+  bool allocateViewPort(uint32_t allocCaps, int rowlen);
+  virtual bool allocateViewPort() = 0;
   virtual void checkViewPortSize() { };
 
   // abstract method of BitmappedDisplayController
@@ -409,6 +413,7 @@ private:
   volatile uint8_t *     m_HBlankLine;
 
   uint8_t * *            m_viewPortMemoryPool;  // array ends with nullptr
+  bool                   m_viewPortAllocated;
 
   int16_t                m_rawFrameHeight;
 

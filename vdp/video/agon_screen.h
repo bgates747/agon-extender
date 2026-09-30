@@ -305,6 +305,10 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	agon::extender::display::OfficialModeLine timing{};
 	if (!agon::extender::display::parseOfficialModeline(modeLine, timing)) return 2;
 	_VGAController->setResolution(modeLine, -1, -1, doubleBuffered);
+	if (!_VGAController->isViewPortAllocated()) {
+		debug_log("changeResolution: native viewport allocation failed\n\r");
+		return 2;
+	}
 	if (!_stockFrameService->startClock(agon::extender::display::periodForRefresh(timing.refresh_hz))) return 2;
 #else
 	auto configureResult = _screenFacadeAdapter->configure(colours, modeLine, doubleBuffered);

@@ -98,15 +98,17 @@ void VGAController::resumeBackgroundPrimitiveExecution()
 }
 
 
-void VGAController::allocateViewPort()
+bool VGAController::allocateViewPort()
 {
-  VGABaseController::allocateViewPort(MALLOC_CAP_DMA, m_viewPortWidth);
+  return VGABaseController::allocateViewPort(MALLOC_CAP_DMA, m_viewPortWidth);
 }
 
 
 void VGAController::setResolution(VGATimings const& timings, int viewPortWidth, int viewPortHeight, bool doubleBuffered)
 {
   VGABaseController::setResolution(timings, viewPortWidth, viewPortHeight, doubleBuffered);
+  if (!isViewPortAllocated())
+    return;
 
   // fill view port
   for (int i = 0; i < m_viewPortHeight; ++i)

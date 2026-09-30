@@ -32,6 +32,7 @@
     {"id": "host-usb-source-selection", "phase": "host", "argv": ["{python}", "tests/usb_source_selection_test.py"], "timeout_seconds": 60},
     {"id": "host-video-asset-close", "phase": "host", "argv": ["{python}", "tests/video_asset_close_test.py"], "timeout_seconds": 120},
     {"id": "host-video-timing", "phase": "host", "argv": ["{python}", "tests/video_timing_test.py"], "timeout_seconds": 180},
+    {"id": "host-viewport-allocation", "phase": "host", "argv": ["{python}", "tests/viewport_allocation_test.py"], "timeout_seconds": 120},
     {"id": "host-visible-text-capture", "phase": "host", "argv": ["{python}", "tests/visible_text_capture_test.py"], "timeout_seconds": 60},
     {"id": "host-visible-text-harness", "phase": "host", "argv": ["{python}", "tests/visible_text_hardware_test.py"], "timeout_seconds": 120},
     {"id": "host-agentcoms", "phase": "host", "argv": ["{python}", "tests/test_agentcoms.py"], "timeout_seconds": 60},

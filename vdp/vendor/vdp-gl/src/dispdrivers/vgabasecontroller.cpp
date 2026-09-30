@@ -49,12 +49,23 @@
 #include "devdrivers/swgenerator.h"
 #endif
 #include "dispdrivers/vgabasecontroller.h"
+#include "extender/display/checked_viewport_allocation.hpp"
 
 
 #pragma GCC optimize ("O2")
 
 
 namespace fabgl {
+
+namespace {
+
+struct CapabilityHeap {
+  void * allocate(size_t bytes, uint32_t caps) { return heap_caps_malloc(bytes, caps); }
+  void release(void * pointer) { heap_caps_free(pointer); }
+  size_t largest(uint32_t caps) { return heap_caps_get_largest_free_block(caps); }
+};
+
+} // namespace
 
 
 #if FABGLIB_VGAXCONTROLLER_PERFORMANCE_CHECK
@@ -86,7 +97,9 @@ void VGABaseController::init()
   m_isr_handle                   = nullptr;
   m_doubleBufferOverDMA          = false;
   m_viewPort                     = nullptr;
+  m_viewPortVisible              = nullptr;
   m_viewPortMemoryPool           = nullptr;
+  m_viewPortAllocated            = false;
   m_taskProcessingPrimitives     = false;
   m_primitiveExecTask            = nullptr;
   m_processPrimitivesOnBlank     = false;
@@ -207,6 +220,7 @@ void VGABaseController::freeViewPort()
   if (isDoubleBuffered())
     heap_caps_free(m_viewPortVisible);
   m_viewPortVisible = nullptr;
+  m_viewPortAllocated = false;
 }
 
 
@@ -446,19 +460,19 @@ void VGABaseController::setResolution(VGATimings const& timings, int viewPortWid
   m_viewPortRow = m_viewPortRow & ~3;
 
   m_rawFrameHeight = m_timings.VVisibleArea + m_timings.VFrontPorch + m_timings.VSyncPulse + m_timings.VBackPorch;
-  s_scanWidth = m_viewPortWidth;
-  s_viewPortHeight = m_viewPortHeight;
-
 #if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
   // allocate DMA descriptors
   setDMABuffersCount(calcRequiredDMABuffersCount(m_viewPortHeight));
 #endif
 
   // allocate the viewport
-  allocateViewPort();
+  if (!allocateViewPort())
+    return;
 
   // adjust again view port size if necessary
   checkViewPortSize();
+  s_scanWidth = m_viewPortWidth;
+  s_viewPortHeight = m_viewPortHeight;
 
 #if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
   // this may free space if m_viewPortHeight has been reduced
@@ -482,53 +496,24 @@ void VGABaseController::setResolution(VGATimings const& timings, int viewPortWid
 }
 
 
-// this method may adjust m_viewPortHeight to the actual number of allocated rows.
-// to reduce memory allocation overhead try to allocate the minimum number of blocks.
-void VGABaseController::allocateViewPort(uint32_t allocCaps, int rowlen)
+// AUDIT-010 RP05: inherited FabGL shortened and published a viewport while
+// allocations were still in progress. Keep the original pool policy but commit
+// pointers only after every pool and row table has been checked.
+bool VGABaseController::allocateViewPort(uint32_t allocCaps, int rowlen)
 {
-  int linesCount[FABGLIB_VIEWPORT_MEMORY_POOL_COUNT]; // where store number of lines for each pool
-  int poolsCount = 0; // number of allocated pools
-  int remainingLines = m_viewPortHeight;
-  m_viewPortHeight = 0; // m_viewPortHeight needs to be recalculated
+  CapabilityHeap heap;
+  agon::extender::display::PreparedViewport prepared;
+  if (!agon::extender::display::prepareViewport<FABGLIB_VIEWPORT_MEMORY_POOL_COUNT>(
+        heap, m_viewPortHeight, rowlen, isDoubleBuffered(), allocCaps,
+        MALLOC_CAP_32BIT | MALLOC_CAP_INTERNAL,
+        FABGLIB_MINFREELARGESTBLOCK, prepared))
+    return false;
 
-  if (isDoubleBuffered())
-    remainingLines *= 2;
-
-  // allocate pools
-  m_viewPortMemoryPool = (uint8_t * *) heap_caps_malloc(sizeof(uint8_t*) * (FABGLIB_VIEWPORT_MEMORY_POOL_COUNT + 1), MALLOC_CAP_32BIT);
-  while (remainingLines > 0 && poolsCount < FABGLIB_VIEWPORT_MEMORY_POOL_COUNT) {
-    int largestBlock = heap_caps_get_largest_free_block(allocCaps);
-    if (largestBlock < FABGLIB_MINFREELARGESTBLOCK)
-      break;
-    linesCount[poolsCount] = tmax(1, tmin(remainingLines, (largestBlock - FABGLIB_MINFREELARGESTBLOCK) / rowlen));
-    m_viewPortMemoryPool[poolsCount] = (uint8_t*) heap_caps_malloc(linesCount[poolsCount] * rowlen, allocCaps);
-    if (m_viewPortMemoryPool[poolsCount] == nullptr)
-      break;
-    remainingLines -= linesCount[poolsCount];
-    m_viewPortHeight += linesCount[poolsCount];
-    ++poolsCount;
-  }
-  m_viewPortMemoryPool[poolsCount] = nullptr;
-
-  // fill m_viewPort[] with line pointers
-  if (isDoubleBuffered()) {
-    m_viewPortHeight /= 2;
-    m_viewPortVisible = (volatile uint8_t * *) heap_caps_malloc(sizeof(uint8_t*) * m_viewPortHeight, MALLOC_CAP_32BIT | MALLOC_CAP_INTERNAL);
-  }
-  m_viewPort = (volatile uint8_t * *) heap_caps_malloc(sizeof(uint8_t*) * m_viewPortHeight, MALLOC_CAP_32BIT | MALLOC_CAP_INTERNAL);
-  if (!isDoubleBuffered())
-    m_viewPortVisible = m_viewPort;
-  for (int p = 0, l = 0; p < poolsCount; ++p) {
-    uint8_t * pool = m_viewPortMemoryPool[p];
-    for (int i = 0; i < linesCount[p]; ++i) {
-      if (l + i < m_viewPortHeight)
-        m_viewPort[l + i] = pool;
-      else
-        m_viewPortVisible[l + i - m_viewPortHeight] = pool; // set only when double buffered is enabled
-      pool += rowlen;
-    }
-    l += linesCount[p];
-  }
+  m_viewPortMemoryPool = prepared.pools;
+  m_viewPort = prepared.drawing_rows;
+  m_viewPortVisible = prepared.visible_rows;
+  m_viewPortAllocated = true;
+  return true;
 }
 
 
@@ -879,5 +864,4 @@ void VGABaseController::calculateAvailableCyclesForDrawings()
 #endif
 
 } // end of namespace
-
 

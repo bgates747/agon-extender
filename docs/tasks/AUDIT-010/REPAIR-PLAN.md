@@ -228,6 +228,11 @@ allocation subset of `A10-VP01`, null/failure injection at every allocation,
 sanitizers where host execution is meaningful, native build, and proof that no
 partial object is published or dereferenced.
 
+Candidate implementation and validation are recorded in
+[RP05-CHECKED-DISPLAY-ALLOCATIONS.md](RP05-CHECKED-DISPLAY-ALLOCATIONS.md).
+RP05 remains open pending clean-commit qualification, exact-commit hardware
+evidence, the required manual loaded-asset transition and Author acceptance.
+
 `A10-RP06` [ ] **F001b — P4 mode prepare/commit/rollback.** Build one selected-
 family transaction that prepares geometry/controller/clock/workers before
 retiring the live mode, publishes only after success, and retains a usable old

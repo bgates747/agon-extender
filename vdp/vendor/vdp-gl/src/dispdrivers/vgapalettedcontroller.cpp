@@ -56,6 +56,7 @@
 
 #include "fabutils.h"
 #include "vgapalettedcontroller.h"
+#include "extender/display/checked_viewport_allocation.hpp"
 #if !defined(AGON_EXTENDER_STOCK_ROWS_PROOF) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 #include "devdrivers/swgenerator.h"
 #endif
@@ -67,6 +68,16 @@
 
 
 namespace fabgl {
+
+namespace {
+
+struct CapabilityHeap {
+  void * allocate(size_t bytes, uint32_t caps) { return heap_caps_malloc(bytes, caps); }
+  void release(void * pointer) { heap_caps_free(pointer); }
+  size_t largest(uint32_t caps) { return heap_caps_get_largest_free_block(caps); }
+};
+
+} // namespace
 
 
 
@@ -86,6 +97,9 @@ VGAPalettedController::VGAPalettedController(int linesCount, int columnsQuantum,
 {
   m_linesCount = linesCount;
   m_lines   = (volatile uint8_t**) heap_caps_malloc(sizeof(uint8_t*) * m_linesCount, MALLOC_CAP_32BIT | MALLOC_CAP_INTERNAL);
+  if (m_lines)
+    for (int index = 0; index < m_linesCount; ++index)
+      m_lines[index] = nullptr;
   m_palette = (RGB222*) heap_caps_malloc(sizeof(RGB222) * getPaletteSize(), MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
   createPalette(0);
   uint16_t signalList[2] = { 0, 0 };
@@ -135,8 +149,9 @@ void VGAPalettedController::checkViewPortSize()
 }
 
 
-void VGAPalettedController::allocateViewPort()
+bool VGAPalettedController::allocateViewPort()
 {
+  bool allocated = false;
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
   uint32_t caps = MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM;
 #if defined(AGON_EXTENDER_INTERNAL_FRAMEBUFFER)
@@ -157,23 +172,12 @@ void VGAPalettedController::allocateViewPort()
           && m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul == 512;
 #endif
 #if defined(AGON_EXTENDER_INTERNAL_POOLS)
-  // QUAL-003 N04ab: the unchanged stock allocator accepts multiple pools.
-  // A shortened attempt must be discarded before any row pointers publish.
+  // QUAL-003 N04ab: allow multiple internal pools. RP05 makes a failed
+  // internal attempt atomic, so the PSRAM retry never observes partial rows.
   const size_t total = heap_caps_get_free_size(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL);
   if (eligible && total >= required + FABGLIB_MINFREELARGESTBLOCK
       && available >= FABGLIB_MINFREELARGESTBLOCK)
     caps = MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL;
-  const int requestedHeight = m_viewPortHeight;
-  VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
-  if ((caps & MALLOC_CAP_INTERNAL) && m_viewPortHeight != requestedHeight) {
-    VGABaseController::freeViewPort();
-    m_viewPortHeight = requestedHeight;
-    caps = MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM;
-    VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
-  }
-  ESP_LOGI("np-fb-pools", "requested=%d actual=%d free_before=%u free_after=%u",
-           requestedHeight, m_viewPortHeight, unsigned(total),
-           unsigned(heap_caps_get_free_size(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL)));
 #else
   if (eligible && available >= required + FABGLIB_MINFREELARGESTBLOCK)
     caps = MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL;
@@ -182,15 +186,34 @@ void VGAPalettedController::allocateViewPort()
            m_viewPortWidth, m_viewPortHeight, unsigned(required), unsigned(available),
            caps & MALLOC_CAP_INTERNAL ? "internal" : "psram-fallback");
 #endif
-#if !defined(AGON_EXTENDER_INTERNAL_POOLS)
-  VGABaseController::allocateViewPort(caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  allocated = VGABaseController::allocateViewPort(
+    caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  if (!allocated && (caps & MALLOC_CAP_INTERNAL)) {
+    caps = MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM;
+    allocated = VGABaseController::allocateViewPort(
+      caps, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  }
+#if defined(AGON_EXTENDER_INTERNAL_FRAMEBUFFER) && defined(AGON_EXTENDER_INTERNAL_POOLS)
+  ESP_LOGI("np-fb-pools", "requested=%d allocated=%d free_before=%u free_after=%u",
+           m_viewPortHeight, allocated, unsigned(total),
+           unsigned(heap_caps_get_free_size(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL)));
 #endif
 #else
-  VGABaseController::allocateViewPort(MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL, m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
+  allocated = VGABaseController::allocateViewPort(
+    MALLOC_CAP_8BIT | MALLOC_CAP_INTERNAL,
+    m_viewPortWidth / m_viewPortRatioDiv * m_viewPortRatioMul);
 #endif
 
-  for (int i = 0; i < m_linesCount; ++i)
-    m_lines[i] = (uint8_t*) heap_caps_malloc(m_viewPortWidth, MALLOC_CAP_DMA);
+  if (!allocated)
+    return false;
+
+  CapabilityHeap heap;
+  if (!agon::extender::display::prepareRows(
+        heap, m_lines, m_linesCount, m_viewPortWidth, MALLOC_CAP_DMA)) {
+    VGABaseController::freeViewPort();
+    return false;
+  }
+  return true;
 }
 
 
@@ -198,16 +221,16 @@ void VGAPalettedController::freeViewPort()
 {
   VGABaseController::freeViewPort();
 
-  for (int i = 0; i < m_linesCount; ++i) {
-    heap_caps_free((void*)m_lines[i]);
-    m_lines[i] = nullptr;
-  }
+  CapabilityHeap heap;
+  agon::extender::display::releasePreparedRows(heap, m_lines, m_linesCount);
 }
 
 
 void VGAPalettedController::setResolution(VGATimings const& timings, int viewPortWidth, int viewPortHeight, bool doubleBuffered)
 {
   VGABaseController::setResolution(timings, viewPortWidth, viewPortHeight, doubleBuffered);
+  if (!isViewPortAllocated())
+    return;
 
   s_viewPort        = m_viewPort;
   s_viewPortVisible = m_viewPortVisible;
@@ -573,4 +596,3 @@ void IRAM_ATTR VGAPalettedController::drawSpriteScanLine(uint8_t * pixelData, in
 }
 
 } // end of namespace
-

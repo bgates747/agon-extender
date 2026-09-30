@@ -197,7 +197,7 @@ protected:
 
 private:
 
-  void allocateViewPort();
+  bool allocateViewPort();
   void freeViewPort();
   void checkViewPortSize();
   void onSetupDMABuffer(lldesc_t volatile * buffer, bool isStartOfVertFrontPorch, int scan, bool isVisible, int visibleRow);
@@ -223,7 +223,6 @@ private:
 
 
 } // end of namespace
-
 
 
 
