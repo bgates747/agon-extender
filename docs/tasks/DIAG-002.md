@@ -33,6 +33,15 @@ D02-S03 — Filing this task authorizes no EMOS/P4 source change, build, flash,
 reset, deployment, protocol allocation, production promotion, or sparse-checkout
 change.
 
+D02-S04 — During AUDIT-010 qualification on 2026-09-30, keyboard capture was
+working at P4 admission epoch `618040141`. The Author then independently reset
+only the Agon. The P4 HTTP service remained reachable and advanced its keyboard
+epoch to `618040142`, but reported `ready=false`, admission reason 1; fresh
+screen capture remained pending and the Author observed that the P4 no longer
+accepted the Agon connection. This is direct one-sided-reset evidence for
+D02-02/D02-06. It does not authorize advancing this deferred task during the
+audit.
+
 ## Required behavior
 
 D02-B01 [ ] During ordinary startup, EMOS reports an actor-explicit Extender
