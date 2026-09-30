@@ -45,7 +45,7 @@ class HardwareValidationTests(unittest.TestCase):
                          ["p4", "p4", "emos"])
         self.assertEqual(document["cases"][2]["depends_on"],
                          ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction"])
-        self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 24)
+        self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 25)
 
     def test_manifest_rejects_unknown_self_or_duplicate_dependency(self):
         document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
@@ -98,6 +98,7 @@ class HardwareValidationTests(unittest.TestCase):
             b"before_crc32=12345678\npattern_crc32=87654321\n"
             b"observed_crc32=87654321\nrestored_crc32=12345678\n"
             b"detail=completed\nfirst_partition_lba=8192\nwrite_attempted=1\n"
+            b"token=0123456789ABCDEF\n"
         )
         self.assertEqual(runner.parse_result(record)["status"], "pass")
         with self.assertRaisesRegex(ValueError, "wrong schema"):
@@ -124,14 +125,23 @@ class HardwareValidationTests(unittest.TestCase):
              "http://device", "--verify-timeout", "60"], check=True)
         self.assertEqual(result, status)
 
-    def test_raw_sd_fixture_requires_positive_completion_without_reset_fallback(self):
+    def test_raw_sd_fixture_requires_token_and_prompt_without_unsafe_reset(self):
         source = inspect.getsource(runner.run_fwbug008)
         self.assertEqual(runner.RP04_COMPLETION_TIMEOUT, 20)
-        self.assertIn("fixture-owned completion service", source)
+        self.assertIn("completion_token", source)
+        self.assertIn("completed_at_prompt", source)
+        self.assertIn("host-owned result listener", source)
         self.assertIn("Agon was not reset", source)
         self.assertIn("try_restore_startup_from_active_service", source)
-        self.assertNotIn("first result listener", source)
-        self.assertNotIn("recovery_boot", source)
+        self.assertNotIn("fixture-owned completion service", source)
+
+    def test_completion_requires_marker_then_prompt(self):
+        marker = "A10-RP04 COMPLETE 0123456789ABCDEF"
+        self.assertFalse(runner.completed_at_prompt("/ *\n" + marker, marker))
+        self.assertFalse(runner.completed_at_prompt(marker + "\nnot a prompt", marker))
+        self.assertTrue(runner.completed_at_prompt(
+            marker + "                                           ?\n"
+            "/ *                                                   ?\n", marker))
 
     def test_raw_sd_startup_selects_legacy_before_mode_and_fixture(self):
         source = inspect.getsource(runner.run_fwbug008)

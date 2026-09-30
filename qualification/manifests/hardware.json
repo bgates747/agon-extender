@@ -30,12 +30,12 @@
       "applies_to": ["emos"],
       "receipt_target": "emos",
       "depends_on": ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction"],
-      "required_checks": 4,
+      "required_checks": 5,
       "driver": "fwbug008-physical",
       "acceptance_required": true,
       "destructive": true,
       "timeout_seconds": 180,
-      "description": "Prove RST 08h raw SD write effects on MBR-proven pre-partition sector 2, then restore and verify the exact preimage through the independent C dispatch."
+      "description": "Prove RST 08h raw SD write effects on MBR-proven pre-partition sector 2, observe a per-run completion token after all raw I/O ends, then restore and verify the exact preimage through the independent C dispatch."
     }
   ]
 }

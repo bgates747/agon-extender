@@ -115,11 +115,24 @@ in the one-shot startup and explicitly preserves/closes retained backups.
 `A10-RP04-R11` [ ] A 2026-09-30 full-suite reuse exposed that the nominal
 fixture-result path always fell through to a 120-second timeout and reset-based
 recovery. That timeout was not a completion oracle and could not establish that
-an in-flight raw write was safe to interrupt. The replacement fixture opens its
-own result service only after no-write completion or verified restoration; the
-runner waits 20 seconds for that positive handoff and never resets on its
-absence. Source/build checks pass. Fresh physical validation is required before
-closing this protocol correction.
+an in-flight raw write was safe to interrupt. A first replacement made the
+fixture open its own result service after raw I/O, but a 2026-09-30 run proved
+that an ordinary application cannot recursively launch an EMOS utility: the raw
+write, readback and restoration all passed, while `sdserve` never appeared.
+The recovered record again reports zero test/restore/verify statuses, pattern
+CRC32 `3b3befd6`, and preimage/restored CRC32 `b2aa7578`; run-summary SHA-256 is
+`5fd55d5d08d79ae51d3f6a0fd73e2c210049039d8e8ccaf1021ba69040f78146`.
+The exact original 42-byte startup was subsequently restored and independently
+read back.
+
+The second replacement gives every run a unique 16-digit token. The fixture
+writes that token into its result, prints the matching completion marker only
+after all raw I/O ends, and returns. The host requires the marker followed by a
+visible MOS prompt, then starts `sdserve` from MOS, verifies the result token,
+restores the exact prior startup and closes the listener. Missing completion
+still forbids reset or keyboard injection. The manifest now declares five RP04
+checks and 25 complete-suite physical checks. Source/build checks pass; fresh
+physical validation is required before closing this protocol correction.
 
 ## Acceptance boundary
 

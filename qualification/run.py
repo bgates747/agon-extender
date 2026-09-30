@@ -153,7 +153,7 @@ def parse_result(data: bytes) -> dict[str, str]:
     required = {"schema", "case", "status", "sector", "test_rc", "restore_rc",
                 "restore_verify_rc", "before_crc32", "pattern_crc32",
                 "observed_crc32", "restored_crc32", "detail",
-                "first_partition_lba", "write_attempted"}
+                "first_partition_lba", "write_attempted", "token"}
     if set(result) != required or result["schema"] != "1":
         raise ValueError("physical result has the wrong schema")
     return result
@@ -240,6 +240,16 @@ def wait_screen(url: str, predicate, description: str, output: Path,
             return last
         time.sleep(0.25)
     raise TimeoutError(f"screen did not {description}; last capture was saved")
+
+
+def completed_at_prompt(text: str, marker: str) -> bool:
+    """Accept only a completion marker followed by a visible MOS prompt."""
+    visible = [line.rstrip("?").rstrip() for line in text.splitlines()]
+    try:
+        marker_line = visible.index(marker)
+    except ValueError:
+        return False
+    return any(line.endswith(" *") for line in visible[marker_line + 1:])
 
 
 def wait_display(url: str, mode: int, width: int, height: int,
@@ -511,6 +521,12 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     binary_hash = sha256(binary)
     passed("emos-receipt-and-fixture-source", fixture_sha256=binary_hash)
     url = config["extender_url"]
+    completion_token = uuid.uuid4().hex[:16].upper()
+    completion_marker = "A10-RP04 COMPLETE " + completion_token
+    atomic_json(output / "completion-contract.json", {
+        "schema": 1, "token": completion_token, "marker": completion_marker,
+        "meaning": "fixture returned after raw I/O ended; result determines pass/fail",
+    })
     reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
              "--config", str(Path(config["reset_config"]).resolve(strict=True))]
 
@@ -545,7 +561,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
                    b"EMOS LEGACY\r\nVDU 22 3\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
-                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n")
+                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN " +
+                   completion_token.encode("ascii") + b"\r\n")
         client.upload("/autoexec.txt", startup, True, fast=True)
         if client.download("/autoexec.txt") != startup:
             raise RuntimeError("one-shot startup failed independent readback")
@@ -576,15 +593,18 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     started = time.monotonic()
     announce("Resetting the Agon to run the one-shot raw-sector fixture")
     subprocess.run(reset, check=True)
-    announce("Waiting up to 20 seconds for the fixture-owned completion service")
+    announce("Waiting up to 20 seconds for the fixture completion token and returned MOS prompt")
     try:
-        client = wait_sd_service(
-            url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT)
-    except TimeoutError as error:
-        # Absence of the positive handoff cannot prove that a raw write is safe
-        # to interrupt.  Try exact restoration only if the fixture has already
-        # exposed an active service; never reset or type into an unknown app.
-        announce("Safe-completion handoff timed out; attempting exact startup restoration without a reset")
+        completion_screen = wait_screen(
+            url, lambda text: completed_at_prompt(text, completion_marker),
+            "show the per-run fixture completion token followed by a MOS prompt",
+            output / "completion-transition", timeout=RP04_COMPLETION_TIMEOUT)
+        (output / "completion-screen.txt").write_text(completion_screen)
+    except BaseException as error:
+        # Absence of the positive marker and prompt cannot prove that a raw
+        # write is safe to interrupt. Try exact restoration only through an
+        # independently active service; never reset or type into an unknown app.
+        announce("Safe-completion observation failed; attempting exact startup restoration without a reset")
         restored, detail = try_restore_startup_from_active_service(
             url, original_startup, output)
         if restored:
@@ -595,6 +615,29 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             "RP04 fixture gave no safe-completion handoff; exact startup "
             f"restoration was attempted but unavailable ({detail}); Agon was not reset"
         ) from error
+    passed("emos-fixture-completion-handoff", token=completion_token)
+
+    announce("Fixture returned to MOS; starting the host-owned result listener")
+    try:
+        type_line(url, output / "keyboard-result-legacy.json", "EMOS LEGACY")
+        type_line(url, output / "keyboard-result-service.json", "EMOS sdserve --fast /")
+        client = wait_sd_service(
+            url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT)
+    except BaseException as first_error:
+        announce("Result listener did not start; completion was proven, so resetting once for guarded recovery")
+        try:
+            reset_and_wait(reset, url)
+            type_line(url, output / "keyboard-result-recovery-legacy.json", "EMOS LEGACY")
+            type_line(url, output / "keyboard-result-recovery-service.json",
+                      "EMOS sdserve --fast /")
+            client = wait_sd_service(
+                url, output / "sd-result-recovery.json",
+                timeout=RP04_COMPLETION_TIMEOUT)
+        except BaseException as recovery_error:
+            raise UnsafeMainboardState(
+                "fixture completion was proven, but its result service could not "
+                f"be established: first={first_error!r}; recovery={recovery_error!r}"
+            ) from recovery_error
     result_data = b""
     result_error = None
     cleanup_error = None
@@ -618,6 +661,10 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     if result_error:
         raise RuntimeError(f"RP04 result collection failed after startup restoration: {result_error}")
     parsed = parse_result(result_data)
+    if parsed["token"] != completion_token:
+        raise RuntimeError(
+            f"RP04 result token {parsed['token']!r} does not match run token "
+            f"{completion_token!r}")
     if parsed["status"] == "pass":
         passed("emos-raw-sector-write-read-restore", sector=int(parsed["sector"]),
                before_crc32=parsed["before_crc32"], pattern_crc32=parsed["pattern_crc32"])
