@@ -2,7 +2,7 @@
 
 ## State
 
-`A10-RP05-S01` [ ] Candidate implementation and source qualification complete.
+`A10-RP05-S01` [x] Candidate implementation and source qualification complete.
 Exact-commit hardware qualification and Author acceptance remain required.
 
 `A10-RP05-S02` [ ] RP05 accepted. RP06 remains unauthorized until this box is
@@ -56,12 +56,20 @@ offline qualification manifest. Neighboring mode lifecycle, display profile,
 browser capture, visible-text and native-build cases remain mandatory in the
 complete clean-commit run.
 
-`A10-RP05-R06` [x] A fresh unversioned `p4-console` build passes the native
-source/definition/action validation and compilation. The build is development
-evidence only and is not deployable or a hardware result.
+`A10-RP05-R06` [x] A fresh unversioned `p4-console` build from exact candidate
+commit `f5036ca210a3d2cb0291c4b405f4094b3a3d609f` passes native
+source/definition/action validation and compilation. Its 1,706,304-byte factory
+image has SHA-256
+`1c84d9ff51f5e6444bb842163085b5a9eb16b07caba4575efbc2c35e8bb742cb`.
+The build is development evidence only and is not deployable or a hardware
+result.
 
-`A10-RP05-R07` [ ] The complete clean-commit offline suite passes and records
-the exact candidate identity and durable summary.
+`A10-RP05-R07` [x] The complete clean-commit offline suite passes all 56 cases
+in 145.173471 monotonic seconds with no test failure, infrastructure error,
+timeout or blocked case. The source closure remained clean and unchanged at
+Extender `f5036ca2` and the frozen EMOS baseline `21a9ba27`. The retained local
+summary under `agents/qualification-rp05-f5036ca2/summary.json` has SHA-256
+`f571665881af9c99a79711790317cebbc284b0ff662c1584a15786d2e9cef29e`.
 
 `A10-RP05-R08` [ ] The exact candidate P4 image is flashed and independently
 verified, then the full paired installed-system qualification passes against
