@@ -36,6 +36,9 @@ never satisfy this gate.
 - [x] Q05-09 — Separate installed-firmware qualification from the offline source
   suite so physical retries neither rebuild unrelated commits nor repeat passed
   host tests.
+- [x] Q05-10 — Require paired P4 and EMOS installation receipts for a full run;
+  expand the ordinary-firmware suite to 17 named checks including fresh decoded
+  WebSocket frames and the destructive/restored EMOS raw-sector oracle.
 - [ ] Q05-07 — Run the canonical suite against the currently verified P4 and
   EMOS pair and obtain Author acceptance of its physical behavior.
 - [x] Q05-08 — Correct the first physical run's command-ordering defect: use

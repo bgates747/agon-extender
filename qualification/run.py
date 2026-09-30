@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Qualify already installed firmware using its verified flash receipt."""
+"""Run the complete physical suite against verified installed P4 and EMOS."""
 
 from __future__ import annotations
 
@@ -15,10 +15,12 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(ROOT / "qualification"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
                                  resolve_commit, sha256,
                                  type_line, utc_stamp, wait_keyboard, wait_sd_service)
+from video import capture as capture_video
 
 
 def announce(message: str) -> None:
@@ -41,6 +43,10 @@ def validate_repair_manifest(document: dict) -> None:
             raise ValueError(f"{case_id}: invalid applies_to")
         if case.get("driver") not in ("fwbug008-physical", "installed-p4-smoke"):
             raise ValueError(f"{case_id}: unknown physical driver")
+        if case.get("receipt_target") not in ("emos", "p4"):
+            raise ValueError(f"{case_id}: invalid receipt_target")
+        if not isinstance(case.get("required_checks"), int) or case["required_checks"] < 1:
+            raise ValueError(f"{case_id}: invalid required_checks")
         if case.get("acceptance_required") is not True:
             raise ValueError(f"{case_id}: every canonical hardware case must be acceptance-required")
         if not isinstance(case.get("timeout_seconds"), int) or case["timeout_seconds"] < 1:
@@ -156,28 +162,46 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
              "--config", str(Path(config["reset_config"]).resolve(strict=True))]
     started = time.monotonic()
     cleanup_error = None
+    checks = []
+
+    def passed(check_id: str, **evidence) -> None:
+        checks.append({"id": check_id, "status": "pass", **evidence})
+        atomic_json(output / "checks.json", checks)
+        announce("PASS " + check_id)
+
     try:
+        announce("RUN p4-web-assets")
         with urlopen(url.rstrip("/") + "/", timeout=5) as response:
             page = response.read().decode("utf-8")
         if "<title>Agon Extender</title>" not in page:
             raise RuntimeError("installed browser asset has the wrong product title")
         if f'name="agon-reset-url" content="{config["reset_url"]}"' not in page:
             raise RuntimeError("installed browser asset does not contain the configured reset bridge")
+        passed("p4-web-assets")
 
+        announce("RUN agon-reset-and-keyboard-readmission")
         bridge_reset(config, url, output)
+        passed("agon-reset-and-keyboard-readmission")
+        announce("RUN legacy-screen-capture")
         legacy_text = capture_text(url)
         (output / "screen-legacy-before.txt").write_text(legacy_text)
+        passed("legacy-screen-capture", bytes=len(legacy_text.encode()))
         marker = "P4QUAL" + uuid.uuid4().hex[:8].upper()
+        announce("RUN excom-mode-handoff")
         type_line(url, output / "keyboard-excom.json", "EMOS EXCOM")
         excom_text = wait_screen(
             url, lambda text: text != legacy_text,
             "change after EMOS EXCOM", output / "excom-transition")
         (output / "screen-excom-before-clear.txt").write_text(excom_text)
+        passed("excom-mode-handoff")
+        announce("RUN excom-clear")
         type_line(url, output / "keyboard-clear.json", "VDU 12")
         # A complete fresh capture is also a parser-progress barrier. The clear
         # can legitimately leave an already blank screen byte-for-byte equal.
         cleared_text = capture_text(url)
         (output / "screen-after-clear.txt").write_text(cleared_text)
+        passed("excom-clear")
+        announce("RUN excom-keyboard-and-text-render")
         type_line(url, output / "keyboard-marker.json", "ECHO " + marker)
         display = read_json(url, "/display/status")
         if (not display.get("available") or display.get("width", 0) < 1 or
@@ -187,27 +211,45 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             url, lambda captured: marker in captured,
             "contain the injected marker", output / "marker-transition")
         (output / "screen.txt").write_text(text)
+        passed("excom-keyboard-and-text-render", marker=marker)
+        announce("RUN display-status-contract")
+        passed("display-status-contract", mode=display["mode"], width=display["width"],
+               height=display["height"], colors=display["colors"])
 
+        announce("RUN websocket-video-frames")
+        video = capture_video(url, output / "video", 3)
+        if any((item["width"], item["height"]) !=
+               (display["width"], display["height"]) for item in video):
+            raise RuntimeError("video frames disagree with display status geometry")
+        passed("websocket-video-frames", frames=video)
+
+        announce("RUN legacy-mode-handoff")
         type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
         # Completing a capture requested after the handoff gives EMOS/P4 time
         # to consume the mode command before keyboard input is routed to Legacy.
         legacy_handoff = capture_text(url)
         (output / "screen-after-legacy-handoff.txt").write_text(legacy_handoff)
+        passed("legacy-mode-handoff")
+        announce("RUN mainboard-sd-service")
         type_line(url, output / "keyboard-sd.json", "EMOS sdserve --fast /")
         client = wait_sd_service(url, output / "sd.json")
+        passed("mainboard-sd-service")
         target = "/extender/.qualification-" + uuid.uuid4().hex + ".bin"
         payload = (receipt["component_commit"] + "\n" + receipt["artifact_sha256"] + "\n").encode()
         try:
+            announce("RUN mainboard-sd-round-trip")
             client.upload(target, payload, True, fast=True)
             if client.download(target) != payload:
                 raise RuntimeError("installed P4/EMOS SD round trip changed bytes")
             client.rpc(11)
+            passed("mainboard-sd-round-trip", bytes=len(payload))
         finally:
             client.lock.close()
 
         # The production listener predates directory capability 0x20, so its
         # wire protocol cannot remove even a single file. Use MOS's independent
         # file command, then restart the listener to verify absence remotely.
+        announce("RUN mainboard-sd-cleanup")
         type_line(url, output / "keyboard-delete.json", "DELETE " + target)
         delete_barrier = capture_text(url)
         (output / "screen-after-delete.txt").write_text(delete_barrier)
@@ -223,11 +265,14 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             else:
                 raise RuntimeError("MOS DELETE left the temporary qualification file present")
             cleanup.rpc(11)
+            passed("mainboard-sd-cleanup")
         finally:
             cleanup.lock.close()
+        announce("RUN final-startup-recovery")
         final = reset_and_wait(reset, url)
         if not final.get("ready") or not final.get("physical_neutral"):
             raise RuntimeError("final reset did not restore admitted neutral input")
+        passed("final-startup-recovery")
         return {
             "id": "installed-p4-integrated-smoke", "component": "integrated",
             "status": "pass", "duration_seconds": time.monotonic() - started,
@@ -236,7 +281,7 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             "browser_reset": True, "keyboard": True, "excom": True,
             "display_status": display, "screen_marker": marker,
             "sd_round_trip_bytes": len(payload), "sd_cleanup_verified": True,
-            "startup_restored": True,
+            "startup_restored": True, "checks": checks,
         }
     except BaseException:
         try:
@@ -250,6 +295,14 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
 
 def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     output.mkdir(parents=True, exist_ok=False)
+    checks = []
+
+    def passed(check_id: str, **evidence) -> None:
+        checks.append({"id": check_id, "status": "pass", **evidence})
+        atomic_json(output / "checks.json", checks)
+        announce("PASS " + check_id)
+
+    announce("RUN emos-receipt-and-fixture-source")
     receipt_source = Path(receipt["component_snapshot"]).resolve(strict=True)
     if resolve_commit(receipt_source, "HEAD") != receipt["component_commit"]:
         raise RuntimeError("EMOS snapshot no longer matches the flashed commit")
@@ -272,12 +325,14 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         raise RuntimeError("RP04 physical fixture failed to build")
     binary = fixture / "bin/FWBUG008.bin"
     binary_hash = sha256(binary)
+    passed("emos-receipt-and-fixture-source", fixture_sha256=binary_hash)
     url = config["extender_url"]
     reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
              "--config", str(Path(config["reset_config"]).resolve(strict=True))]
 
     # Start from the reviewed default startup, then use the service only long
     # enough to stage the one-shot startup and fixture.
+    announce("RUN emos-fixture-staging")
     reset_and_wait(reset, url)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
@@ -308,6 +363,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         close_retained_backup(client, "/autoexec.txt", output / "original-autoexec.txt")
         staged = True
         client.rpc(11)
+        passed("emos-fixture-staging")
     finally:
         if not staged and original_startup:
             try:
@@ -316,6 +372,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
                 pass
         client.lock.close()
 
+    announce("RUN emos-raw-sector-write-read-restore")
     started = time.monotonic()
     before_test_boot = wait_keyboard(url)["boot"]
     subprocess.run(reset, check=True)
@@ -353,6 +410,11 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     if result_error:
         raise RuntimeError(f"RP04 result collection failed after startup restoration: {result_error}")
     parsed = parse_result(result_data)
+    if parsed["status"] == "pass":
+        passed("emos-raw-sector-write-read-restore", sector=int(parsed["sector"]),
+               before_crc32=parsed["before_crc32"], pattern_crc32=parsed["pattern_crc32"])
+    announce("RUN emos-startup-restoration")
+    passed("emos-startup-restoration")
     record = {
         "id": "a10-rp04-raw-sd-write", "component": "emos",
         "status": ("infrastructure-error" if parsed["status"] == "infrastructure-error"
@@ -361,7 +423,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         "flashed_commit": receipt["component_commit"],
         "flashed_artifact_sha256": receipt["artifact_sha256"],
         "fixture_sha256": binary_hash, "oracle": parsed,
-        "startup_restored": True,
+        "startup_restored": True, "checks": checks,
     }
     if parsed["write_attempted"] == "1" and (
             parsed["restore_rc"] != "0" or parsed["restore_verify_rc"] != "0" or
@@ -390,50 +452,62 @@ def notify(config: dict, run: Path, success: bool, detail: str) -> dict:
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
-    parser.add_argument("--flash-receipt", required=True, type=Path)
+    parser.add_argument("--flash-receipt", required=True, action="append", type=Path,
+                        help="verified receipt; repeat once each for P4 and EMOS")
     parser.add_argument("--config", type=Path,
                         default=ROOT / "agents/hardware-validation.local.json")
     parser.add_argument("--repair-manifest", type=Path,
                         default=ROOT / "qualification/manifests/hardware.json")
-    parser.add_argument("--case", action="append", help="run selected repair case; default all for the flashed component")
+    parser.add_argument("--case", action="append",
+                        help="targeted diagnostic only; default runs the full paired-component suite")
     parser.add_argument("--output", type=Path)
     args = parser.parse_args()
     config = load_config(args.config.resolve(strict=True))
-    receipt = json.loads(args.flash_receipt.resolve(strict=True).read_text())
-    if receipt.get("schema") != 1 or receipt.get("status") != "verified":
-        parser.error("flash receipt is not a verified schema-1 installation")
-    if receipt.get("target") not in ("p4", "emos"):
-        parser.error("flash receipt has an unsupported target")
+    receipts = {}
+    receipt_paths = {}
+    for path in args.flash_receipt:
+        resolved = path.resolve(strict=True)
+        receipt = json.loads(resolved.read_text())
+        if receipt.get("schema") != 1 or receipt.get("status") != "verified":
+            parser.error(f"{path}: not a verified schema-1 installation")
+        target = receipt.get("target")
+        if target not in ("p4", "emos") or target in receipts:
+            parser.error(f"duplicate or unsupported flash-receipt target: {target}")
+        receipts[target] = receipt
+        receipt_paths[target] = str(resolved)
     manifest = json.loads(args.repair_manifest.resolve(strict=True).read_text())
     validate_repair_manifest(manifest)
     selected = [case for case in manifest["cases"]
-                if receipt["target"] in case["applies_to"]]
+                if case["receipt_target"] in receipts]
     if args.case:
         wanted = set(args.case)
         selected = [case for case in selected if case["id"] in wanted]
         missing = wanted - {case["id"] for case in selected}
         if missing:
             parser.error(f"unknown or wrong-component repair cases: {sorted(missing)}")
+    if not args.case and set(receipts) != {"p4", "emos"}:
+        parser.error("full qualification requires verified P4 and EMOS flash receipts")
     if not selected:
         parser.error("firmware acceptance requires at least one applicable installed-hardware case")
     run = (args.output or ROOT / "agents/hardware-validation" /
            ("qualification-" + utc_stamp() + "-" +
-            receipt["component_commit"][:12])).resolve()
+            "-".join(receipts[key]["component_commit"][:8] for key in sorted(receipts)))).resolve()
     if run.exists() or run.is_symlink():
         parser.error("output must be a fresh nonexisting path")
     run.mkdir(parents=True)
     started_at = utc_stamp()
     atomic_json(run / "request.json", {
-        "flash_receipt": str(args.flash_receipt.resolve()),
+        "flash_receipts": receipt_paths,
         "hardware_cases": [case["id"] for case in selected],
     })
     started = time.monotonic()
-    announce(f"INSTALLED FIRMWARE QUALIFICATION START — {len(selected)} hardware case(s)")
+    announce(f"FULL INSTALLED-SYSTEM QUALIFICATION START — {len(selected)} hardware case(s)")
 
     physical = []
     for case in selected:
         announce("RUN " + case["id"])
         try:
+            receipt = receipts[case["receipt_target"]]
             if case["driver"] == "installed-p4-smoke":
                 record = run_p4_smoke(config, receipt, run / case["id"])
             elif case["driver"] == "fwbug008-physical":
@@ -443,6 +517,14 @@ def main() -> int:
         except BaseException as error:
             record = {"id": case["id"], "applies_to": case["applies_to"],
                       "status": "infrastructure-error", "error": repr(error)}
+            checks_path = run / case["id"] / "checks.json"
+            if checks_path.is_file():
+                record["checks"] = json.loads(checks_path.read_text())
+        if (record["status"] == "pass" and
+                len(record.get("checks", ())) != case["required_checks"]):
+            record["status"] = "infrastructure-error"
+            record["error"] = (f"case reported {len(record.get('checks', ()))} checks; "
+                               f"manifest requires {case['required_checks']}")
         physical.append(record)
         atomic_json(run / (case["id"] + ".json"), record)
         announce(record["status"].upper() + " " + case["id"])
@@ -455,13 +537,18 @@ def main() -> int:
     summary = {
         "schema": 1, "status": status, "started_at": started_at,
         "duration_seconds": time.monotonic() - started,
-        "flashed": {key: receipt.get(key) for key in
-                    ("target", "component_commit", "build_id", "artifact_sha256")},
+        "flashed": {target: {key: receipt.get(key) for key in
+                    ("target", "component_commit", "build_id", "artifact_sha256")}
+                    for target, receipt in receipts.items()},
         "physical_cases": physical,
         "counts": {
             "pass": sum(item["status"] == "pass" for item in physical),
             "test-failure": sum(item["status"] == "test-failure" for item in physical),
             "infrastructure-error": sum(item["status"] == "infrastructure-error" for item in physical),
+        },
+        "check_counts": {
+            "pass": sum(len(item.get("checks", ())) for item in physical),
+            "required": sum(case["required_checks"] for case in selected),
         },
     }
     atomic_json(run / "summary.json", summary)

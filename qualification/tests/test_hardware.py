@@ -8,6 +8,7 @@ import json
 from pathlib import Path
 import tempfile
 import unittest
+import struct
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -24,6 +25,7 @@ def load(name: str, path: Path):
 shared = load("hardware_validation", ROOT / "scripts/hardware_validation.py")
 runner = load("firmware_qualification", ROOT / "qualification/run.py")
 notifier = load("qualification_notify", ROOT / "qualification/notify.py")
+video = load("qualification_video", ROOT / "qualification/video.py")
 
 
 class HardwareValidationTests(unittest.TestCase):
@@ -35,6 +37,19 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertFalse(document["cases"][0]["destructive"])
         self.assertTrue(document["cases"][1]["destructive"])
         self.assertTrue(all(case["acceptance_required"] for case in document["cases"]))
+        self.assertEqual([case["receipt_target"] for case in document["cases"]],
+                         ["p4", "emos"])
+        self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 17)
+
+    def test_video_decoder_accepts_exact_rgb222_frame(self):
+        pixels = bytes((0, 1, 62, 63))
+        raw = (b"EVF1" + bytes((1, 32, 2, 1)) +
+               struct.pack("<IHHIIII", 7, 2, 2, 2, 4, 16667, 0) + pixels)
+        record = video.decode_evf(raw)
+        self.assertEqual((record["sequence"], record["width"], record["height"]),
+                         (7, 2, 2))
+        with self.assertRaisesRegex(ValueError, "RGB222"):
+            video.decode_evf(raw[:-1] + b"\x40")
 
     def test_physical_result_requires_complete_restore_oracle(self):
         record = (

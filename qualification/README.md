@@ -7,9 +7,10 @@ under `scripts/` may delegate here but contain no qualification logic.
 
 ## Acceptance policy
 
-A firmware revision is eligible for Author acceptance only when the flash tool
-has produced a verified receipt for the exact installed bytes and one invocation
-of `qualification/run.py` records all of the following against that receipt:
+An installed Extender/EMOS combination is eligible for Author acceptance only
+when the flash tool has produced verified receipts for both exact installed
+components and one invocation of `qualification/run.py` records all of the
+following against those receipts:
 
 1. every `acceptance_required` case in `manifests/hardware.json` whose
    `applies_to` includes the flashed component passes on the installed boards;
@@ -39,11 +40,14 @@ not substitute for installed-hardware qualification.
 | `config.example.json` | Tracked schema for the ignored bench configuration |
 | `tests/` | Structural tests for this qualification authority |
 
-The first promoted installed-hardware case exercises the actual browser assets
-and configured Agon-reset bridge, Agon reset/readmission, remote keyboard,
-Legacy/ExCom routing, live P4 display metadata and text capture, an actual
-P4-to-EMOS SD-service round trip, cleanup, and final startup restoration. EMOS
-RP04 additionally retains its destructive raw-sector write/restoration oracle.
+The full default run currently requires 17 independently reported checks across
+two physical cases. The P4 case exercises actual browser assets and reset bridge,
+Agon reset/readmission, Legacy and ExCom routing, keyboard input, display status,
+text capture, three fresh decoded WebSocket video frames, an exact mainboard-SD
+round trip, independently verified cleanup, and final startup recovery. The EMOS
+case builds its receipt-bound fixture, stages it with restoration safeguards,
+exercises real raw-sector write/read/restore with independent CRC oracles, and
+restores the original startup file. A missing receipt or check fails closed.
 
 QUAL-003 and QUAL-004 remain provenance for broad graphics and exact paired-
 pixel testing. Their private adapters, diagnostic mainboard firmware, and
@@ -55,8 +59,11 @@ oracles before they become mandatory.
 
 ```sh
 .venv/bin/python qualification/run.py \
-  --flash-receipt /absolute/path/to/flash-receipt.json
+  --flash-receipt /absolute/path/to/p4-flash-receipt.json \
+  --flash-receipt /absolute/path/to/emos-flash-receipt.json
 ```
 
-The runner owns its documented board resets, temporary
+The default run requires one verified receipt for each component. `--case` is
+reserved for targeted diagnostics and cannot establish full acceptance. The
+runner owns its documented board resets, temporary
 qualification SD file, cleanup, and terminal notification. It never flashes.
