@@ -25,6 +25,10 @@ from hardware_validation import (atomic_json, clean_snapshot, load_config,
 from video import VideoSession, capture as capture_video
 
 
+class UnsafeMainboardState(RuntimeError):
+    """The runner must not inject input or reset while resolving this failure."""
+
+
 def announce(message: str) -> None:
     print(f"[{utc_stamp()}] {message}", flush=True)
 
@@ -70,6 +74,10 @@ def validate_repair_manifest(document: dict) -> None:
 def unmet_dependencies(case: dict, results_by_id: dict) -> list[str]:
     return [dependency for dependency in case.get("depends_on", [])
             if results_by_id.get(dependency, {}).get("status") != "pass"]
+
+
+def notification_blockers(results: list[dict]) -> list[str]:
+    return [item["id"] for item in results if item.get("foreground_unsafe")]
 
 
 def require_directory(client, path: str) -> None:
@@ -556,7 +564,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
                 staging_cleanup_error = error
         client.lock.close()
     if staging_cleanup_error is not None:
-        raise RuntimeError(
+        raise UnsafeMainboardState(
             f"fixture staging and exact startup restoration failed: "
             f"staging={staging_error!r}; restoration={staging_cleanup_error!r}"
         ) from staging_cleanup_error
@@ -582,7 +590,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             raise RuntimeError(
                 "RP04 fixture gave no timely safe-completion handoff; " + detail
             ) from error
-        raise RuntimeError(
+        raise UnsafeMainboardState(
             "RP04 fixture gave no safe-completion handoff; exact startup "
             f"restoration was attempted but unavailable ({detail}); Agon was not reset"
         ) from error
@@ -602,7 +610,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     finally:
         client.lock.close()
     if cleanup_error:
-        raise RuntimeError(f"RP04 collection/startup restoration failed: {cleanup_error}")
+        raise UnsafeMainboardState(
+            f"RP04 collection/startup restoration failed: {cleanup_error}")
     announce("Resetting the Agon and verifying ordinary startup after result collection")
     reset_and_wait(reset, url)
     if result_error:
@@ -730,6 +739,8 @@ def main() -> int:
         except BaseException as error:
             record = {"id": case["id"], "applies_to": case["applies_to"],
                       "status": "infrastructure-error", "error": repr(error)}
+            if isinstance(error, UnsafeMainboardState):
+                record["foreground_unsafe"] = True
             checks_path = run / case["id"] / "checks.json"
             if checks_path.is_file():
                 record["checks"] = json.loads(checks_path.read_text())
@@ -769,7 +780,17 @@ def main() -> int:
     atomic_json(run / "summary.json", summary)
     detail = next((item["id"] for item in physical if item["status"] != "pass"),
                   "installed-hardware")
-    summary["notification"] = notify(config, run, success, detail)
+    blockers = notification_blockers(physical)
+    if blockers:
+        summary["notification"] = {
+            "status": "skipped", "reason": "unsafe-mainboard-foreground",
+            "blocked_by": blockers,
+            "detail": "No reset or keyboard input was sent after ambiguous fixture completion",
+        }
+        announce("NOTIFICATION SKIPPED — unsafe mainboard foreground: " +
+                 ", ".join(blockers))
+    else:
+        summary["notification"] = notify(config, run, success, detail)
     atomic_json(run / "summary.json", summary)
     announce("FIRMWARE QUALIFICATION " + status.upper())
     print("Summary: " + str(run / "summary.json"))

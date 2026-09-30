@@ -526,6 +526,9 @@ Every failure path attempts the same restoration when an already-active service
 makes that safe. If fixture completion is ambiguous, the runner must not reset or
 type into the running program merely to recover startup; it records why exact
 restoration was unavailable and leaves the recovery listener for operator action.
+An ambiguous fixture or failed startup-restoration state also suppresses any
+terminal notifier that would inject keyboard input; the durable record explains
+why the otherwise required audible and visible notification could not run safely.
 
 The maintained [host/browser/native regression suite](../testing/regression-suite.md)
 implements this contract for its nonphysical closure: 54 explicit cases run

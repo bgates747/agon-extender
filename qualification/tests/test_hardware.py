@@ -72,6 +72,15 @@ class HardwareValidationTests(unittest.TestCase):
             [],
         )
 
+    def test_unsafe_foreground_blocks_keyboard_notification(self):
+        results = [
+            {"id": "safe", "status": "pass"},
+            {"id": "raw", "status": "infrastructure-error",
+             "foreground_unsafe": True},
+        ]
+        self.assertEqual(runner.notification_blockers(results), ["raw"])
+        self.assertEqual(runner.notification_blockers(results[:1]), [])
+
     def test_video_decoder_accepts_exact_rgb222_frame(self):
         pixels = bytes((0, 1, 62, 63))
         raw = (b"EVF1" + bytes((1, 32, 2, 1)) +
