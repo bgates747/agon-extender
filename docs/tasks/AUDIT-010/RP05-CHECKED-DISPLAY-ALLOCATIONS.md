@@ -2,8 +2,9 @@
 
 ## State
 
-`A10-RP05-S01` [x] Candidate implementation and source qualification complete.
-Exact-commit hardware qualification and Author acceptance remain required.
+`A10-RP05-S01` [x] Candidate implementation, source qualification and automated
+exact-commit hardware qualification complete. Manual loaded-asset validation
+and Author acceptance remain required.
 
 `A10-RP05-S02` [ ] RP05 accepted. RP06 remains unauthorized until this box is
 accepted and the final RP05 disposition is committed.
@@ -71,10 +72,26 @@ Extender `f5036ca2` and the frozen EMOS baseline `21a9ba27`. The retained local
 summary under `agents/qualification-rp05-f5036ca2/summary.json` has SHA-256
 `f571665881af9c99a79711790317cebbc284b0ff662c1584a15786d2e9cef29e`.
 
-`A10-RP05-R08` [ ] The exact candidate P4 image is flashed and independently
-verified, then the full paired installed-system qualification passes against
-verified P4 and EMOS receipts. A manual loaded-asset Nurples mode transition is
-required because that case remains intentionally outside automation.
+`A10-RP05-R08` [x] The exact candidate P4 image was flashed and independently
+verified. Its 1,706,304-byte factory image has SHA-256
+`ce61953b72cded8e7c7ce770987c679f8313aa4d598650112f0c63916f7937e9`;
+the verified receipt under
+`agents/hardware-validation/flash-p4-2026-09-30-02-55-05Z-f5036ca210a3/`
+has SHA-256
+`337284bf9a1e084607784fb7f0f8eb0a8044c4dc4ba3359f499043b960428949`.
+The full paired installed-system qualification then passed both physical cases
+and all 17 required checks in 232.798482 monotonic seconds against P4
+`f5036ca2` and verified EMOS `8ecea5bc`. It verified browser reset, Legacy and
+ExCom handoff, text and video capture, display status, SD service and round
+trip, ordinary startup recovery, raw-sector write/read/restore and final
+startup restoration. The retained summary under
+`agents/hardware-validation/qualification-2026-09-30-03-14-25Z-8ecea5bc-f5036ca2/`
+has SHA-256
+`26f6962e70c93ddc5ed91992120455a8fe3cc8ef62c266be9ad0f34c5f328487`.
+
+`A10-RP05-R09` [ ] Manually run the loaded-asset Nurples mode transition on the
+exact candidate because that case remains intentionally outside automation.
+Record mode-switch, rendering, input, exit and restart observations.
 
 ## Acceptance boundary
 
