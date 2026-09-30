@@ -22,7 +22,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
                                  keyboard_status, resolve_commit, sha256,
                                  type_line, utc_stamp, wait_keyboard, wait_sd_service)
-from video import VideoSession, capture as capture_video
+from video import VideoSession
 
 
 class UnsafeMainboardState(RuntimeError):
@@ -350,10 +350,16 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
                height=display["height"], colors=display["colors"])
 
         announce("RUN websocket-video-frames")
-        video = capture_video(url, output / "video", 3)
-        if any((item["width"], item["height"]) !=
-               (display["width"], display["height"]) for item in video):
-            raise RuntimeError("video frames disagree with display status geometry")
+        video_dir = output / "video"
+        video_dir.mkdir()
+        video = []
+        with VideoSession(url) as session:
+            for index in range(3):
+                video.append(wait_video_geometry(
+                    session, video_dir, f"frame-{index + 1}",
+                    display["width"], display["height"]))
+        if len({item["sequence"] for item in video}) != len(video):
+            raise RuntimeError("video endpoint returned a stale frame generation")
         passed("websocket-video-frames", frames=video)
 
         announce("RUN legacy-mode-handoff")

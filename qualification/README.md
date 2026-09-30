@@ -45,7 +45,9 @@ three physical cases. The integrated P4 case exercises actual browser assets and
 reset bridge, Agon reset/readmission, Legacy and ExCom routing, keyboard input,
 display status, text capture, three fresh decoded WebSocket video frames, an
 exact mainboard-SD round trip, independently verified cleanup, and final startup
-recovery. The RP06 P4 case exercises mode 8→20→8 first without a browser
+recovery. WebSocket acquisition retains but discards queued transition geometry,
+then requires three distinct frames matching the committed display status. The
+RP06 P4 case exercises mode 8→20→8 first without a browser
 client and then while retaining one browser-video WebSocket, checking committed
 status and decoded frame geometry at every edge. The EMOS case builds its
 receipt-bound fixture, stages it with restoration safeguards, exercises real

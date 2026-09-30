@@ -91,6 +91,25 @@ class HardwareValidationTests(unittest.TestCase):
         with self.assertRaisesRegex(ValueError, "RGB222"):
             video.decode_evf(raw[:-1] + b"\x40")
 
+    def test_video_geometry_wait_discards_transition_frame(self):
+        records = [
+            {"sequence": 1, "width": 320, "height": 240},
+            {"sequence": 2, "width": 640, "height": 480},
+        ]
+
+        class Session:
+            def frame(self, path):
+                Path(path).write_bytes(b"frame")
+                return records.pop(0)
+
+        with tempfile.TemporaryDirectory() as folder, \
+                mock.patch.object(runner.time, "sleep"):
+            result = runner.wait_video_geometry(
+                Session(), Path(folder), "expected", 640, 480, timeout=1)
+            attempts = sorted(Path(folder).glob("expected-*.evf"))
+        self.assertEqual(result["sequence"], 2)
+        self.assertEqual(len(attempts), 2)
+
     def test_physical_result_requires_complete_restore_oracle(self):
         record = (
             b"schema=1\ncase=a10-rp04-raw-sd-write\nstatus=pass\nsector=2\n"
