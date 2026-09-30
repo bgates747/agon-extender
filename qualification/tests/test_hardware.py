@@ -120,8 +120,69 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertEqual(runner.RP04_COMPLETION_TIMEOUT, 20)
         self.assertIn("fixture-owned completion service", source)
         self.assertIn("Agon was not reset", source)
+        self.assertIn("try_restore_startup_from_active_service", source)
         self.assertNotIn("first result listener", source)
         self.assertNotIn("recovery_boot", source)
+
+    def test_startup_restoration_is_exact_and_stops_listener(self):
+        calls = []
+
+        class Client:
+            def upload(self, path, data, activate, *, fast):
+                calls.append(("upload", path, data, activate, fast))
+
+            def download(self, path):
+                calls.append(("download", path))
+                return b"original\r\n"
+
+            def rpc(self, operation, payload=None):
+                calls.append(("rpc", operation, payload))
+                if operation == 10:
+                    return b"\0"
+                if operation == 11:
+                    return b""
+                raise AssertionError(operation)
+
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            runner.restore_startup(Client(), b"original\r\n", output,
+                                   "replaced.txt")
+            evidence = json.loads((output / "startup-restoration.json").read_text())
+        self.assertEqual(evidence["status"], "restored")
+        self.assertTrue(evidence["independent_readback"])
+        self.assertTrue(evidence["listener_stopped"])
+        self.assertEqual(calls[0],
+                         ("upload", "/autoexec.txt", b"original\r\n", True, True))
+        self.assertEqual(calls[1], ("download", "/autoexec.txt"))
+        self.assertEqual(calls[-1], ("rpc", 11, None))
+
+    def test_unavailable_failure_cleanup_attempt_does_not_reset(self):
+        calls = []
+
+        class Lock:
+            def close(self):
+                calls.append("close")
+
+        class Client:
+            def __init__(self, url, state):
+                calls.append((url, state.name))
+                self.lock = Lock()
+
+            def status(self):
+                calls.append("status")
+                return {"online": False, "pending": False}
+
+        with tempfile.TemporaryDirectory() as folder:
+            output = Path(folder)
+            with mock.patch("sdcard.Client", Client):
+                restored, detail = runner.try_restore_startup_from_active_service(
+                    "http://device", b"original\r\n", output)
+            evidence = json.loads((output / "startup-restoration.json").read_text())
+        self.assertFalse(restored)
+        self.assertIn("not active", detail)
+        self.assertEqual(evidence["status"], "unavailable")
+        self.assertFalse(evidence["reset_attempted"])
+        self.assertEqual(calls[-2:], ["status", "close"])
 
     def test_config_requires_exact_p4_identity_even_for_shared_tool(self):
         document = json.loads((ROOT / "qualification/config.example.json").read_text())

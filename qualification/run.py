@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import argparse
+import hashlib
 import json
 import os
 from pathlib import Path
@@ -87,6 +88,49 @@ def close_retained_backup(client, path: str, evidence: Path) -> None:
         remaining = client.rpc(10, b"\3" + path_payload(path))
         if remaining != b"\x01":
             raise RuntimeError(f"{path}: retained-backup close returned {remaining.hex()}")
+
+
+def restore_startup(client, original: bytes, output: Path, backup_name: str) -> None:
+    """Restore the pre-suite startup exactly and retain independent evidence."""
+    client.upload("/autoexec.txt", original, True, fast=True)
+    observed = client.download("/autoexec.txt")
+    if observed != original:
+        raise RuntimeError("original startup restoration failed independent readback")
+    close_retained_backup(client, "/autoexec.txt", output / backup_name)
+    client.rpc(11)
+    atomic_json(output / "startup-restoration.json", {
+        "status": "restored", "bytes": len(original),
+        "sha256": hashlib.sha256(original).hexdigest(),
+        "independent_readback": True, "listener_stopped": True,
+    })
+
+
+def try_restore_startup_from_active_service(url: str, original: bytes,
+                                            output: Path) -> tuple[bool, str]:
+    """Attempt cleanup without resetting or assuming the fixture is safe to stop."""
+    from sdcard import Client
+    client = Client(url, output / "sd-cleanup-attempt.json")
+    try:
+        current = client.status()
+        if not current.get("online"):
+            detail = f"SD service is not active: {current}"
+            atomic_json(output / "startup-restoration.json", {
+                "status": "unavailable", "attempted": True, "detail": detail,
+                "reset_attempted": False,
+            })
+            return False, detail
+        client.connect()
+        restore_startup(client, original, output, "failure-autoexec-backup.txt")
+        return True, "exact pre-suite startup restored through active SD service"
+    except BaseException as error:
+        detail = repr(error)
+        atomic_json(output / "startup-restoration.json", {
+            "status": "failed", "attempted": True, "detail": detail,
+            "reset_attempted": False,
+        })
+        return False, detail
+    finally:
+        client.lock.close()
 
 
 def parse_result(data: bytes) -> dict[str, str]:
@@ -473,6 +517,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     client = wait_sd_service(url, output / "sd-stage.json")
     original_startup = b""
     staged = False
+    staging_error = None
+    staging_cleanup_error = None
     try:
         original_startup = client.download("/autoexec.txt")
         require_extender_startup(original_startup)
@@ -498,13 +544,24 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         staged = True
         client.rpc(11)
         passed("emos-fixture-staging")
+    except BaseException as error:
+        staging_error = error
     finally:
         if not staged and original_startup:
             try:
-                client.upload("/autoexec.txt", original_startup, True, fast=True)
-            except Exception:
-                pass
+                announce("Fixture staging failed; restoring and verifying the exact pre-suite startup")
+                restore_startup(client, original_startup, output,
+                                "staging-failure-autoexec-backup.txt")
+            except BaseException as error:
+                staging_cleanup_error = error
         client.lock.close()
+    if staging_cleanup_error is not None:
+        raise RuntimeError(
+            f"fixture staging and exact startup restoration failed: "
+            f"staging={staging_error!r}; restoration={staging_cleanup_error!r}"
+        ) from staging_cleanup_error
+    if staging_error is not None:
+        raise staging_error
 
     announce("RUN emos-raw-sector-write-read-restore")
     started = time.monotonic()
@@ -516,10 +573,18 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
             url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT)
     except TimeoutError as error:
         # Absence of the positive handoff cannot prove that a raw write is safe
-        # to interrupt.  Leave the disarmed recovery startup in place and do
-        # not reset automatically; the operator must inspect and recover.
+        # to interrupt.  Try exact restoration only if the fixture has already
+        # exposed an active service; never reset or type into an unknown app.
+        announce("Safe-completion handoff timed out; attempting exact startup restoration without a reset")
+        restored, detail = try_restore_startup_from_active_service(
+            url, original_startup, output)
+        if restored:
+            raise RuntimeError(
+                "RP04 fixture gave no timely safe-completion handoff; " + detail
+            ) from error
         raise RuntimeError(
-            "RP04 fixture gave no safe-completion handoff; Agon was not reset"
+            "RP04 fixture gave no safe-completion handoff; exact startup "
+            f"restoration was attempted but unavailable ({detail}); Agon was not reset"
         ) from error
     result_data = b""
     result_error = None
@@ -531,11 +596,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         result_error = error
     try:
         announce("Restoring and independently verifying the original startup file")
-        client.upload("/autoexec.txt", original_startup, True, fast=True)
-        if client.download("/autoexec.txt") != original_startup:
-            raise RuntimeError("original startup restoration failed independent readback")
-        close_retained_backup(client, "/autoexec.txt", output / "recovery-autoexec.txt")
-        client.rpc(11)
+        restore_startup(client, original_startup, output, "recovery-autoexec.txt")
     except BaseException as error:
         cleanup_error = error
     finally:

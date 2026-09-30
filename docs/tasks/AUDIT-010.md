@@ -519,6 +519,14 @@ and runner cleanup must not overwrite or obscure the failure display; if the
 failure prevents any Legacy display, the durable terminal record states that
 explicitly.
 
+A10-T10 [ ] Before a physical case replaces `/autoexec.txt`, the runner retains
+the exact prior bytes. Every successful terminal path restores those bytes,
+independently reads them back, closes the listener and records the restoration.
+Every failure path attempts the same restoration when an already-active service
+makes that safe. If fixture completion is ambiguous, the runner must not reset or
+type into the running program merely to recover startup; it records why exact
+restoration was unavailable and leaves the recovery listener for operator action.
+
 The maintained [host/browser/native regression suite](../testing/regression-suite.md)
 implements this contract for its nonphysical closure: 54 explicit cases run
 from an isolated shared clone of the resolved Extender commit and a fixed clean
