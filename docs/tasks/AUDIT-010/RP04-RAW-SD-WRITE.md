@@ -2,9 +2,9 @@
 
 ## State
 
-`A10-RP04-S01` [ ] Candidate and hardware-validation tooling complete; the
-commit-pinned physical run passed and awaits Author acceptance. Publication
-remains outside this gate.
+`A10-RP04-S01` [x] Candidate and canonical paired-component hardware
+qualification complete and accepted by the Author on 2026-09-30. Publication
+remains governed by the audit-wide closeout gate.
 
 `A10-RP04-S02` [x] Physical destructive-sector qualification passed against the
 verified installed EMOS bytes. This disposes the execution gate but does not
@@ -123,6 +123,9 @@ repositories, flash the exact EMOS commit with `flash_firmware_commit.py`, and
 run `run_hardware_regression.py` against its receipt. Do not begin RP05 before
 physical acceptance and the final RP04 disposition commit.
 
-`A10-RP04-A03` [ ] Present the complete retained-suite and physical-case evidence
-for Author acceptance. The prepared physical procedure fails closed unless the
-card layout proves sector 2 pre-partition and exact restoration succeeds.
+`A10-RP04-A03` [x] The Author accepted the complete evidence on 2026-09-30.
+The canonical run passed both registered physical cases and all 17 required
+checks. Sector 2 was before partition LBA 8192; write/read CRC32 `3b3befd6` and
+preimage/restored CRC32 `b2aa7578` matched, with all fixture statuses zero. The
+Author's subsequent manual Nurples run passed ExCom mode switching and gameplay
+at an observed 25–29 frames per second.

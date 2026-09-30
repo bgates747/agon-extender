@@ -206,7 +206,7 @@ neighboring renderer/text and actual selected P4 build evidence passed.
 Implementation commit: `c789d45a`; see
 [RP03-MUTABLE-FONTS.md](RP03-MUTABLE-FONTS.md).
 
-`A10-RP04` [ ] **FWBUG-008 — EMOS raw SD write dispatch.** Correct only the
+`A10-RP04` [x] **FWBUG-008 — EMOS raw SD write dispatch.** Correct only the
 EMOS/MOS API wrapper so valid write requests invoke the write path and preserve
 status/ABI behavior. Reuse the owning mos-tests fixture and controls; do not
 duplicate it in Extender. Validation: existing emulator/host controls, rebuilt
@@ -217,7 +217,9 @@ Candidate and two-command hardware workflow complete; see
 [RP04-RAW-SD-WRITE.md](RP04-RAW-SD-WRITE.md). Source, linked-image, four
 independent raw-image cases, exact-commit full-ROM verification, the expanded
 55-case retained closure and the registered physical write/readback/restoration
-case pass. RP04 now awaits Author acceptance; RP05 remains unauthorized.
+case pass. The Author accepted RP04 on 2026-09-30 after the canonical paired
+hardware suite passed all 17 checks and a manual Nurples ExCom run passed.
+RP05 is now the next authorized repair item.
 
 `A10-RP05` [ ] **F001a — Checked display allocations.** Add complete failure
 checks and local cleanup for inherited viewport pool/table and paletted DMA-row

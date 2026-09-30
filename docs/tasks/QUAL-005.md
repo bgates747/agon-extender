@@ -2,8 +2,8 @@
 
 ## State
 
-Active. The Author authorized immediate consolidation after an offline-only run
-was incorrectly presented as hardware regression.
+Accepted on 2026-09-30. The canonical paired-component run passed all 17
+mandatory physical checks, and the Author accepted its scope and result.
 
 ## Scope and policy
 
@@ -39,7 +39,7 @@ never satisfy this gate.
 - [x] Q05-10 — Require paired P4 and EMOS installation receipts for a full run;
   expand the ordinary-firmware suite to 17 named checks including fresh decoded
   WebSocket frames and the destructive/restored EMOS raw-sector oracle.
-- [ ] Q05-07 — Run the canonical suite against the currently verified P4 and
+- [x] Q05-07 — Run the canonical suite against the currently verified P4 and
   EMOS pair and obtain Author acceptance of its physical behavior.
 - [x] Q05-08 — Correct the first physical run's command-ordering defect: use
   fresh screen captures as parser-progress barriers and require observed ExCom
@@ -56,6 +56,19 @@ repeatable for ordinary installed firmware.
 Loaded-asset mode-switch cases such as Nurples remain the agreed manual tail of
 the audit cycle. Their manual disposition must be recorded before accepting a
 revision when the changed code can affect that behavior.
+
+## Accepted run
+
+The accepted run used P4 commit
+`9537350a59a2d7b7f6ab359190ea04d1aec89c10` and EMOS commit
+`8ecea5bc6cb4f9f563bc570316afbdaa08648632`. Both physical cases and all 17
+required checks passed; startup restoration and notification also passed. The
+retained local summary is
+`agents/hardware-validation/qualification-2026-09-30-02-23-05Z-8ecea5bc-9537350a/summary.json`,
+SHA-256 `db60257fd4fad20e89a41990ccdff44953a2877bb4b63c87abfc89a908aef4d5`.
+The Author then ran Nurples manually in ExCom: mode switching and gameplay
+passed at an observed 25–29 frames per second. This satisfies the loaded-asset
+manual tail for the present audit stage; it is not a general performance target.
 
 The first Q05-07 attempt passed all 55 offline cases but was classified as an
 infrastructure failure because the runner sent consecutive commands after
