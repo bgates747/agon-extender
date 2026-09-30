@@ -201,10 +201,28 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             client.upload(target, payload, True, fast=True)
             if client.download(target) != payload:
                 raise RuntimeError("installed P4/EMOS SD round trip changed bytes")
-            client.remove(target)
             client.rpc(11)
         finally:
             client.lock.close()
+
+        # The production listener predates directory capability 0x20, so its
+        # wire protocol cannot remove even a single file. Use MOS's independent
+        # file command, then restart the listener to verify absence remotely.
+        type_line(url, output / "keyboard-delete.json", "DELETE " + target)
+        type_line(url, output / "keyboard-cleanup-sd.json", "EMOS sdserve --fast /")
+        cleanup = wait_sd_service(url, output / "sd-cleanup.json")
+        try:
+            from sdcard import RemoteError
+            try:
+                cleanup.download(target)
+            except RemoteError as error:
+                if error.status != 6:
+                    raise
+            else:
+                raise RuntimeError("MOS DELETE left the temporary qualification file present")
+            cleanup.rpc(11)
+        finally:
+            cleanup.lock.close()
         final = reset_and_wait(reset, url)
         if not final.get("ready") or not final.get("physical_neutral"):
             raise RuntimeError("final reset did not restore admitted neutral input")
@@ -215,7 +233,8 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             "flashed_artifact_sha256": receipt["artifact_sha256"],
             "browser_reset": True, "keyboard": True, "excom": True,
             "display_status": display, "screen_marker": marker,
-            "sd_round_trip_bytes": len(payload), "startup_restored": True,
+            "sd_round_trip_bytes": len(payload), "sd_cleanup_verified": True,
+            "startup_restored": True,
         }
     except BaseException:
         try:

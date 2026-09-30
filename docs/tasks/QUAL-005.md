@@ -65,3 +65,10 @@ unique captured marker and returned prompt, then failed because the runner tried
 to launch the mainboard SD listener while EMOS still owned ExCom. The listener
 correctly remained offline. The runner now performs `EMOS LEGACY` and completes
 a fresh capture as a parser-progress barrier before issuing `EMOS sdserve`.
+
+The third attempt passed through listener startup, fast upload activation and
+exact download, then failed only because the runner used the optional protocol
+directory/remove capability absent from the installed production listener. The
+runner now exits the listener, deletes its owned temporary file through MOS's
+independent `DELETE` command, restarts the listener, and requires a remote
+not-found result before recording cleanup success.
