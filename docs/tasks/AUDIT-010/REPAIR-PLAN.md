@@ -221,17 +221,18 @@ case pass. The Author accepted RP04 on 2026-09-30 after the canonical paired
 hardware suite passed all 17 checks and a manual Nurples ExCom run passed.
 RP05 is now the next authorized repair item.
 
-`A10-RP05` [ ] **F001a — Checked display allocations.** Add complete failure
+`A10-RP05` [x] **F001a — Checked display allocations.** Add complete failure
 checks and local cleanup for inherited viewport pool/table and paletted DMA-row
 allocation without yet redesigning the outer P4 transaction. Validation: the
 allocation subset of `A10-VP01`, null/failure injection at every allocation,
 sanitizers where host execution is meaningful, native build, and proof that no
 partial object is published or dereferenced.
 
-Candidate implementation and validation are recorded in
+Accepted implementation and validation are recorded in
 [RP05-CHECKED-DISPLAY-ALLOCATIONS.md](RP05-CHECKED-DISPLAY-ALLOCATIONS.md).
-RP05 remains open pending clean-commit qualification, exact-commit hardware
-evidence, the required manual loaded-asset transition and Author acceptance.
+The Author accepted RP05 on 2026-09-30 after clean-commit qualification,
+exact-commit paired hardware evidence and the required manual loaded-asset
+transition passed. RP06 is now the next authorized repair item.
 
 `A10-RP06` [ ] **F001b — P4 mode prepare/commit/rollback.** Build one selected-
 family transaction that prepares geometry/controller/clock/workers before

@@ -449,7 +449,10 @@ the entire audit/repair sequence is complete. The Author accepted RP04 on
 2026-09-30 after its [raw-SD dispatch candidate](AUDIT-010/RP04-RAW-SD-WRITE.md)
 passed source, linked-image, emulator, full-ROM installation, the canonical
 17-check paired hardware suite, and a manual Nurples ExCom run at 25–29 fps.
-RP05 is now the next repair item.
+The Author accepted RP05 on 2026-09-30 after its checked-allocation candidate
+passed clean-commit source qualification, exact-commit paired hardware
+qualification and manual loaded-asset Nurples validation. RP06 is now the next
+authorized repair item.
 
 ### A10-09 [ ] Validate, review and close out repairs
 

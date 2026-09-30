@@ -6,8 +6,9 @@
 exact-commit hardware qualification complete. Manual loaded-asset validation
 and Author acceptance remain required.
 
-`A10-RP05-S02` [ ] RP05 accepted. RP06 remains unauthorized until this box is
-accepted and the final RP05 disposition is committed.
+`A10-RP05-S02` [x] Accepted by the Author on 2026-09-30 after the exact
+candidate passed the complete offline suite, full paired installed-system
+qualification and manual loaded-asset Nurples validation. RP06 may proceed.
 
 ## Boundary and lineage
 
