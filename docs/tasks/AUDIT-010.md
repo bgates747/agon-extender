@@ -454,6 +454,15 @@ passed clean-commit source qualification, exact-commit paired hardware
 qualification and manual loaded-asset Nurples validation. RP06 is now the next
 authorized repair item.
 
+The first RP06 paired run passed its integrated smoke and all seven mode
+transactions, but the dependent RP04 fixture did not publish its completion
+listener. Later result retrieval proved the raw write and exact sector restore
+had passed; the handoff failed because the P4 retained ExCom across reset and
+the fixture startup used `VDU 22 3` without first requesting `EMOS LEGACY`.
+Extender's one-shot startup and EMOS fixture commit `60c5ddf8` now select Legacy
+before mode 3. Fresh paired qualification remains required; the partial run is
+not RP06 acceptance.
+
 ### A10-09 [ ] Validate, review and close out repairs
 
 Prepare bounded qualification for the changed functions, including hardware

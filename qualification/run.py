@@ -541,7 +541,8 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         announce("Fixture transfer verified; staging the one-shot startup file")
         close_retained_backup(client, "/autoexec.txt",
                               output / "prior-autoexec-backup.txt")
-        startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
+        startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n"
+                   b"EMOS LEGACY\r\nVDU 22 3\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
                    b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n")

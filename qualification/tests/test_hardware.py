@@ -133,6 +133,14 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertNotIn("first result listener", source)
         self.assertNotIn("recovery_boot", source)
 
+    def test_raw_sd_startup_selects_legacy_before_mode_and_fixture(self):
+        source = inspect.getsource(runner.run_fwbug008)
+        legacy = source.index('b"EMOS LEGACY')
+        mode = source.index('VDU 22 3', legacy)
+        load = source.index('LOAD /extender/fixtures', mode)
+        self.assertLess(legacy, mode)
+        self.assertLess(mode, load)
+
     def test_startup_restoration_is_exact_and_stops_listener(self):
         calls = []
 
