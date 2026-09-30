@@ -209,6 +209,8 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         # wire protocol cannot remove even a single file. Use MOS's independent
         # file command, then restart the listener to verify absence remotely.
         type_line(url, output / "keyboard-delete.json", "DELETE " + target)
+        delete_barrier = capture_text(url)
+        (output / "screen-after-delete.txt").write_text(delete_barrier)
         type_line(url, output / "keyboard-cleanup-sd.json", "EMOS sdserve --fast /")
         cleanup = wait_sd_service(url, output / "sd-cleanup.json")
         try:

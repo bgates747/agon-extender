@@ -72,3 +72,10 @@ directory/remove capability absent from the installed production listener. The
 runner now exits the listener, deletes its owned temporary file through MOS's
 independent `DELETE` command, restarts the listener, and requires a remote
 not-found result before recording cleanup success.
+
+The fourth attempt again passed the transfer and reached cleanup, but injected
+the cleanup listener command immediately after `DELETE`; P4 accepted both input
+batches while EMOS had not yet returned to its prompt, so the listener never
+started. The runner now completes a fresh screen capture as the same bounded
+parser-progress barrier already proven by the Legacy handoff before launching
+the cleanup listener.
