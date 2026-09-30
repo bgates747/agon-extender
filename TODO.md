@@ -15,6 +15,8 @@ classification does not grant new execution or waive human acceptance.
 
 ## Do now — PLAN-001
 
+- [ ] **[QUAL-005 — Canonical firmware acceptance suite](docs/tasks/QUAL-005.md)** — The maintained suite is consolidated under `qualification/`; firmware acceptance requires its offline prerequisite and every applicable installed-hardware case to pass against a verified flash receipt. Initial end-to-end physical execution awaits Author observation.
+
 - [ ] **[AUDIT-010 — Implementation integrity and resource-lifecycle audit](docs/tasks/AUDIT-010.md)** — RP01–RP03 are accepted. RP04's exact EMOS raw-SD write-dispatch candidate passes source, linked-image, emulator, full-ROM installation, 55-case retained regression and physical write/readback/restoration controls and awaits Author acceptance. A detached clean-source host/browser/native-build regression suite supports unattended concurrent runs; Nurples mode-switch causality is deferred until the complete audit/repair sequence ends, and LCD returns afterward as a separately reviewed delta.
 
 - [ ] **[AUDIT-009 — Documentation accuracy and consolidation](docs/tasks/AUDIT-009.md)** — Current-handbook closeout complete through N25; broader historical inventory remains incomplete. [Closeout](docs/tasks/AUDIT-009/CLOSEOUT.md) identifies usable guides and remaining owners. No automatic archive-review or bench tranche; revisit unresolved records when current work depends on them.

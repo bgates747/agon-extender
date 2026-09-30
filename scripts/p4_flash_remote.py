@@ -14,6 +14,11 @@ import subprocess
 import time
 
 
+def progress(message: str) -> None:
+    stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d-%H-%M-%SZ")
+    print(f"[{stamp}] {message}", flush=True)
+
+
 def sha(path: Path) -> str:
     digest = hashlib.sha256()
     with path.open("rb") as stream:
@@ -47,6 +52,7 @@ def main() -> int:
         raise RuntimeError("stable path resolved to the wrong USB serial")
     if not os.access(stable, os.R_OK | os.W_OK):
         raise RuntimeError("stable P4 serial path is not readable and writable")
+    progress(f"Verified ESP32-P4 USB identity at {stable}")
 
     stamp = dt.datetime.now(dt.timezone.utc).strftime("%Y-%m-%d-%H-%M-%SZ")
     evidence = root / ("deploy-" + stamp)
@@ -67,11 +73,14 @@ def main() -> int:
             raise subprocess.CalledProcessError(completed.returncode, argv)
 
     backup = evidence / "preflash-16MiB.bin"
+    progress("Reading and preserving all 16 MiB of existing P4 flash; this can take several minutes")
     run("readback", ["--before", "usb_reset", "--after", "no_reset",
                      "read_flash", "0x0", hex(int(config["flash_bytes"])), str(backup)])
+    progress("Writing the candidate P4 factory image")
     run("write", ["--before", "no_reset", "--after", "no_reset", "write_flash",
                   "--flash_mode", "keep", "--flash_freq", "keep",
                   "--flash_size", "keep", "0x0", str(image)])
+    progress("Independently verifying the written P4 flash and hard-resetting the P4")
     run("verify", ["--before", "no_reset", "--after", "hard_reset",
                    "verify_flash", "0x0", str(image)])
 
@@ -85,6 +94,7 @@ def main() -> int:
     port.rts = False
     port.port = str(stable)
     port.open()
+    progress("Collecting the reboot log and waiting for build identity plus USB-host readiness")
     boot = bytearray()
     try:
         deadline = time.monotonic() + 15
@@ -116,4 +126,3 @@ def main() -> int:
 
 if __name__ == "__main__":
     raise SystemExit(main())
-

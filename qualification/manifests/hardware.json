@@ -1,0 +1,24 @@
+{
+  "schema": 1,
+  "description": "Canonical installed-hardware qualification cases. Every accepted firmware revision must pass all applicable mandatory cases after the offline prerequisite.",
+  "cases": [
+    {
+      "id": "installed-p4-integrated-smoke",
+      "applies_to": ["p4", "emos"],
+      "driver": "installed-p4-smoke",
+      "acceptance_required": true,
+      "destructive": false,
+      "timeout_seconds": 180,
+      "description": "Exercise the installed browser assets and reset bridge, Agon reset/readmission, live ExCom keyboard and renderer text capture, display status, P4/EMOS SD round trip, and final startup restoration."
+    },
+    {
+      "id": "a10-rp04-raw-sd-write",
+      "applies_to": ["emos"],
+      "driver": "fwbug008-physical",
+      "acceptance_required": true,
+      "destructive": true,
+      "timeout_seconds": 180,
+      "description": "Prove RST 08h raw SD write effects on MBR-proven pre-partition sector 2, then restore and verify the exact preimage through the independent C dispatch."
+    }
+  ]
+}

@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Structural tests for the durable unattended regression runner."""
+"""Structural tests for the canonical offline qualification runner."""
 
 from __future__ import annotations
 
@@ -10,9 +10,9 @@ import tempfile
 import unittest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 SPEC = importlib.util.spec_from_file_location(
-    "regression_runner", ROOT / "scripts/run_regression_suite.py"
+    "qualification_offline", ROOT / "qualification/offline.py"
 )
 runner = importlib.util.module_from_spec(SPEC)
 assert SPEC.loader is not None
@@ -21,7 +21,7 @@ SPEC.loader.exec_module(runner)
 
 class RegressionSuiteTests(unittest.TestCase):
     def setUp(self):
-        self.manifest = json.loads((ROOT / "tests/regression-suite.json").read_text())
+        self.manifest = json.loads((ROOT / "qualification/manifests/offline.json").read_text())
 
     def test_manifest_is_valid_and_classifies_maintained_entry_points(self):
         runner.validate_manifest(self.manifest)

@@ -10,7 +10,7 @@ import tempfile
 import unittest
 
 
-ROOT = Path(__file__).resolve().parents[1]
+ROOT = Path(__file__).resolve().parents[2]
 
 
 def load(name: str, path: Path):
@@ -22,17 +22,19 @@ def load(name: str, path: Path):
 
 
 shared = load("hardware_validation", ROOT / "scripts/hardware_validation.py")
-runner = load("hardware_regression", ROOT / "scripts/run_hardware_regression.py")
-notifier = load("regression_notify", ROOT / "scripts/regression_notify.py")
+runner = load("firmware_qualification", ROOT / "qualification/run.py")
+notifier = load("qualification_notify", ROOT / "qualification/notify.py")
 
 
 class HardwareValidationTests(unittest.TestCase):
     def test_repair_manifest_is_explicit_and_valid(self):
-        document = json.loads((ROOT / "tests/hardware-repair-suite.json").read_text())
+        document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
         runner.validate_repair_manifest(document)
         self.assertEqual([case["id"] for case in document["cases"]],
-                         ["a10-rp04-raw-sd-write"])
-        self.assertTrue(document["cases"][0]["destructive"])
+                         ["installed-p4-integrated-smoke", "a10-rp04-raw-sd-write"])
+        self.assertFalse(document["cases"][0]["destructive"])
+        self.assertTrue(document["cases"][1]["destructive"])
+        self.assertTrue(all(case["acceptance_required"] for case in document["cases"]))
 
     def test_physical_result_requires_complete_restore_oracle(self):
         record = (
@@ -47,7 +49,7 @@ class HardwareValidationTests(unittest.TestCase):
             runner.parse_result(record.replace(b"restore_rc=0\n", b""))
 
     def test_config_requires_exact_p4_identity_even_for_shared_tool(self):
-        document = json.loads((ROOT / "tests/hardware-validation.example.json").read_text())
+        document = json.loads((ROOT / "qualification/config.example.json").read_text())
         document["p4"].pop("usb_serial")
         with tempfile.TemporaryDirectory() as folder:
             path = Path(folder) / "config.json"

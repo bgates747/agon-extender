@@ -80,6 +80,8 @@ def load_config(path: Path) -> dict:
         raise ValueError("hardware validation config must use schema 1")
     if not isinstance(document.get("extender_url"), str) or not document["extender_url"].startswith("http://"):
         raise ValueError("extender_url must be a local HTTP endpoint")
+    if not isinstance(document.get("reset_url"), str) or not document["reset_url"].startswith("http://"):
+        raise ValueError("reset_url must be a local HTTP endpoint")
     for key in ("reset_config", "emos_repository", "builder_repository", "fab_root"):
         if not isinstance(document.get(key), str) or not document[key]:
             raise ValueError(f"hardware validation config is missing {key}")
@@ -115,6 +117,17 @@ def wait_keyboard(url: str, *, old_boot: int | None = None,
                 last = repr(error)
             time.sleep(0.2)
         raise TimeoutError(f"keyboard readiness deadline exceeded: {last}")
+    finally:
+        client.lock.close()
+
+
+def keyboard_status(url: str) -> dict:
+    """Read status without requiring an admitted Extender keyboard."""
+    from keyboard import Client
+    journal = ROOT / "agents/hardware-validation" / ("status-" + str(time.time_ns()) + ".json")
+    client = Client(url, journal)
+    try:
+        return client.status()
     finally:
         client.lock.close()
 

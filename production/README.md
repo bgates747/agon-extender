@@ -28,7 +28,10 @@ and [packaging checks](../docs/tasks/RELEASE-001/R01-08.md) define the scope.
 The firmware embeds this bench's private reset endpoint. It is local-only;
 other endpoints require a new identified build. Public redistribution remains
 subject to [source/license review](NOTICES.md). No blanket all-mode, other-board
-or performance qualification is implied. Historical component draft labels are
+or performance qualification is implied. A firmware revision may be accepted
+or promoted only after the canonical [`../qualification/`](../qualification/README.md)
+suite passes against its verified installed bytes; a build, flash receipt, or
+offline-only pass is insufficient. Historical component draft labels are
 retained; the installation baseline records bounded qualification. See the
 [status interpretation](../docs/versions/README.md#status-belongs-to-a-record-and-its-declared-scope):
 a build-time draft label does not negate its later recorded acceptance.

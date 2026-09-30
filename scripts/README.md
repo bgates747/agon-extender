@@ -39,9 +39,9 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [check_numeric_port.py](check_numeric_port.py) | Bounded pinned-input and sanitized host regressions; [import procedure](../docs/procedures/numeric-upstream-import-r01.md) still requires fresh source/target review |
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |
 | [validate-hardware-objects.py](validate-hardware-objects.py) | Hardware vocabulary schema/references, not electrical qualification; [object authority](../hardware/objects/README.md) |
-| [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Maintained detached AUDIT-010 host/browser/native-build closure, durable case evidence and accepted Legacy terminal cue; [regression guide](../docs/testing/regression-suite.md) owns scope and invocation |
+| [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Compatibility launchers into the canonical [`qualification/`](../qualification/README.md) authority; these wrappers contain no qualification logic |
 | [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; emit the receipt required by hardware validation |
-| [run_hardware_regression.py](run_hardware_regression.py) | Run the complete retained closure plus registered repair-specific physical cases against the verified flash receipt; [regression guide](../docs/testing/regression-suite.md) owns the contract |
+| [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the complete offline-plus-installed-hardware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
 
 ## Retained development and test helpers
 

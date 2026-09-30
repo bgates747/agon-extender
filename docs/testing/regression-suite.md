@@ -1,19 +1,21 @@
-# Unattended regression and repair hardware validation
+# Firmware qualification suite
 
+The canonical executable authority is [`../../qualification/`](../../qualification/README.md).
 The maintained workflow has two independent commands. The first command builds
 and flashes one exact component commit and independently verifies the installed
 bytes and boot identity. The second command accepts only that flash receipt,
 runs the entire retained regression closure, and then runs every selected
-repair-specific physical case. A host or emulator pass is never described as
-hardware validation.
+applicable physical case. A host or emulator pass is never described as
+hardware validation or firmware acceptance. Acceptance requires a successful
+complete canonical run against verified installed bytes.
 
 The maintained regression runner exercises the current Extender host, browser
 and native `p4-console` build closure without flashing or resetting either
 board, changing either SD card, launching a foreground application, or attaching
 an extra browser consumer to the P4. The explicit case and exclusion inventory
-is `tests/regression-suite.json`. Physical additions are registered separately
-in `tests/hardware-repair-suite.json`. They do not weaken or replace any retained
-case. `scripts/run_hardware_regression.py` composes both inventories and refuses
+is `qualification/manifests/offline.json`. Physical additions are registered in
+`qualification/manifests/hardware.json`. They do not weaken or replace any retained
+case. `qualification/run.py` composes both inventories and refuses
 to run a physical case for a component other than the one named by the verified
 flash receipt.
 
@@ -68,7 +70,7 @@ Only the terminal notification interacts with the admitted Extender keyboard.
 ## Commit-pinned hardware workflow
 
 The machine-local `agents/hardware-validation.local.json` follows
-`tests/hardware-validation.example.json`. It identifies the component-owner
+`qualification/config.example.json`. It identifies the component-owner
 checkouts, exact P4 USB identity and remote flashing tool, Extender endpoint,
 and the independently commissioned Agon reset controller. It remains ignored;
 tracked files contain no bench addresses, credentials or unique device values.
@@ -89,7 +91,7 @@ receipt path. It never accepts a dirty working tree as the requested firmware.
 The hardware test command is separately invoked with that receipt:
 
 ```sh
-.venv/bin/python scripts/run_hardware_regression.py \
+.venv/bin/python qualification/run.py \
   --flash-receipt /absolute/path/to/flash-receipt.json \
   --extender-commit EXTENDER_COMMIT
 ```
@@ -99,13 +101,16 @@ uses a second exact clean component snapshot. An EMOS receipt already supplies
 that identity.
 
 It streams current case and pass/fail status to the invoking SSH console. It
-runs the complete `tests/regression-suite.json` snapshot first, then all
+runs the complete `qualification/manifests/offline.json` inventory first, then all
 applicable physical cases. It writes an overall `summary.json`, restores each
 case's startup state, sends the accepted Legacy spoken cue, and leaves a failure
 verdict on the Legacy screen after alert playback. The operator does not need an
 agent to monitor the run.
 
-The initial physical addition is `a10-rp04-raw-sd-write`. Its eZ80 fixture
+The mandatory integrated smoke exercises the installed P4 web assets, browser
+reset bridge, P4-to-EMOS keyboard path, ExCom display/status/text capture, and a
+temporary exact-byte mainboard-SD round trip, then restores the ordinary startup
+state. The additional EMOS physical case is `a10-rp04-raw-sd-write`. Its eZ80 fixture
 refuses to write unless the card has a valid MBR whose first partition begins
 after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
 write API, independently reads the result, restores through MOS's distinct C

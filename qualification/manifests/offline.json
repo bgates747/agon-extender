@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Maintained unattended host/browser/native-build regression closure. Physical, destructive, performance, and manual game cases are deliberately separate.",
+  "description": "Canonical unattended host/browser/native-build qualification prerequisite. Installed-hardware cases remain separately mandatory for firmware acceptance.",
   "cases": [
     {"id": "host-audio-dispatch-source", "phase": "host", "argv": ["{python}", "tests/audio_dispatch_source_test.py"], "timeout_seconds": 60},
     {"id": "host-audio-framing", "phase": "host", "argv": ["{python}", "tests/audio_framing_test.py"], "timeout_seconds": 120},
@@ -14,7 +14,7 @@
     {"id": "host-dsp-matrix-lifetime", "phase": "host", "argv": ["{python}", "tests/dsp_matrix_lifetime_test.py", "--output", "{output}/artifacts/dsp-matrix"], "timeout_seconds": 240},
     {"id": "host-font-safety", "phase": "host", "argv": ["{python}", "tests/font_safety_test.py"], "timeout_seconds": 120},
     {"id": "host-general-poll-capture", "phase": "host", "argv": ["{python}", "tests/general_poll_capture_test.py"], "timeout_seconds": 60},
-    {"id": "host-hardware-validation", "phase": "host", "argv": ["{python}", "tests/hardware_validation_test.py"], "timeout_seconds": 60},
+    {"id": "host-hardware-validation", "phase": "host", "argv": ["{python}", "qualification/tests/test_hardware.py"], "timeout_seconds": 60},
     {"id": "host-key-query", "phase": "host", "argv": ["{python}", "tests/key_query_test.py"], "timeout_seconds": 120},
     {"id": "host-keyboard-harness", "phase": "host", "argv": ["{python}", "tests/keyboard_hardware_test.py"], "timeout_seconds": 120},
     {"id": "host-native-build-contract", "phase": "host", "argv": ["{python}", "tests/native_p4_build_test.py"], "timeout_seconds": 120},
@@ -22,7 +22,7 @@
     {"id": "host-numeric-parser", "phase": "host", "argv": ["{python}", "tests/numeric_parser_test.py"], "timeout_seconds": 120},
     {"id": "host-numeric-renderer", "phase": "host", "argv": ["{python}", "tests/numeric_renderer_test.py"], "timeout_seconds": 180},
     {"id": "host-processed-keyboard", "phase": "host", "argv": ["{python}", "tests/processed_keyboard_test.py"], "timeout_seconds": 120},
-    {"id": "host-regression-suite", "phase": "host", "argv": ["{python}", "tests/regression_suite_test.py"], "timeout_seconds": 60},
+    {"id": "host-regression-suite", "phase": "host", "argv": ["{python}", "qualification/tests/test_offline.py"], "timeout_seconds": 60},
     {"id": "host-uart-flow-capture", "phase": "host", "argv": ["{python}", "tests/uart_flow_capture_test.py"], "timeout_seconds": 60},
     {"id": "host-uart-forward-capture", "phase": "host", "argv": ["{python}", "tests/uart_forward_capture_test.py"], "timeout_seconds": 60},
     {"id": "host-uart-roundtrip-capture", "phase": "host", "argv": ["{python}", "tests/uart_roundtrip_capture_test.py"], "timeout_seconds": 60},

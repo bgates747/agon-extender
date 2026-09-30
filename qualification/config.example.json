@@ -1,6 +1,7 @@
 {
   "schema": 1,
   "extender_url": "http://EXTENDER-IP",
+  "reset_url": "http://RESET-BRIDGE/reset",
   "reset_config": "/absolute/path/to/reset-config.json",
   "emos_repository": "/absolute/path/to/agon-emos",
   "builder_repository": "/absolute/path/to/mos-agondev",

@@ -86,7 +86,7 @@ Allowed status values are:
 |---|---|
 | `draft` | Defined or under construction; this record makes no qualification claim. |
 | `experimental` | Exercised for investigation; no qualification claim. |
-| `candidate` | Frozen for a stated qualification procedure. |
+| `candidate` | Frozen for a stated qualification procedure. Firmware candidates must use the canonical [`../../qualification/`](../../qualification/README.md) suite. |
 | `qualified` | Passed the recorded procedure for a declared compatibility scope. |
 | `released` | Deliberately published for normal use. |
 | `deprecated` | Still identifiable but discouraged or scheduled for removal. |
