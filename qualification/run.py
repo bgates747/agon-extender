@@ -53,6 +53,20 @@ def validate_repair_manifest(document: dict) -> None:
             raise ValueError(f"{case_id}: positive integer timeout required")
     if len(ids) != len(set(ids)):
         raise ValueError("repair case ids must be unique")
+    preceding_ids = set()
+    for case in document["cases"]:
+        case_id = case["id"]
+        dependencies = case.get("depends_on", [])
+        if (not isinstance(dependencies, list) or
+                len(dependencies) != len(set(dependencies)) or
+                any(item not in preceding_ids for item in dependencies)):
+            raise ValueError(f"{case_id}: depends_on must name unique preceding cases")
+        preceding_ids.add(case_id)
+
+
+def unmet_dependencies(case: dict, results_by_id: dict) -> list[str]:
+    return [dependency for dependency in case.get("depends_on", [])
+            if results_by_id.get(dependency, {}).get("status") != "pass"]
 
 
 def require_directory(client, path: str) -> None:
@@ -333,6 +347,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     # Start from the reviewed default startup, then use the service only long
     # enough to stage the one-shot startup and fixture.
     announce("RUN emos-fixture-staging")
+    announce("Resetting the Agon and waiting for Extender keyboard admission before staging")
     reset_and_wait(reset, url)
     type_line(url, output / "keyboard-clear.json", "VDU 12")
     type_line(url, output / "keyboard-legacy.json", "EMOS LEGACY")
@@ -350,6 +365,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         if client.download(target) != binary.read_bytes():
             raise RuntimeError("RP04 fixture fast transfer failed independent readback")
         close_retained_backup(client, target, output / "replaced-fixture-backup.bin")
+        announce("Fixture transfer verified; staging the one-shot startup file")
         close_retained_backup(client, "/autoexec.txt",
                               output / "prior-autoexec-backup.txt")
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
@@ -375,16 +391,21 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     announce("RUN emos-raw-sector-write-read-restore")
     started = time.monotonic()
     before_test_boot = wait_keyboard(url)["boot"]
+    announce("Resetting the Agon to run the one-shot raw-sector fixture")
     subprocess.run(reset, check=True)
     try:
+        announce("Waiting up to 120 seconds for the fixture result listener; no output is expected during execution")
         client = wait_sd_service(url, output / "sd-result.json", timeout=120)
     except TimeoutError:
         # The fixture disarms its one-shot startup before raw access. One reset
         # therefore enters its recovery service rather than replaying the test.
+        announce("The first result listener did not appear; waiting for fixture boot completion before guarded recovery")
         wait_keyboard(url, old_boot=before_test_boot)
         recovery_boot = wait_keyboard(url)["boot"]
+        announce("Resetting the Agon once to enter the disarmed recovery startup")
         subprocess.run(reset, check=True)
         wait_keyboard(url, old_boot=recovery_boot)
+        announce("Waiting up to 60 seconds for the recovery result listener")
         client = wait_sd_service(url, output / "sd-result-recovery.json", timeout=60)
     result_data = b""
     result_error = None
@@ -395,6 +416,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     except BaseException as error:
         result_error = error
     try:
+        announce("Restoring and independently verifying the original startup file")
         client.upload("/autoexec.txt", original_startup, True, fast=True)
         if client.download("/autoexec.txt") != original_startup:
             raise RuntimeError("original startup restoration failed independent readback")
@@ -406,6 +428,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         client.lock.close()
     if cleanup_error:
         raise RuntimeError(f"RP04 collection/startup restoration failed: {cleanup_error}")
+    announce("Resetting the Agon and verifying ordinary startup after result collection")
     reset_and_wait(reset, url)
     if result_error:
         raise RuntimeError(f"RP04 result collection failed after startup restoration: {result_error}")
@@ -504,7 +527,20 @@ def main() -> int:
     announce(f"FULL INSTALLED-SYSTEM QUALIFICATION START — {len(selected)} hardware case(s)")
 
     physical = []
+    results_by_id = {}
     for case in selected:
+        blocked_by = unmet_dependencies(case, results_by_id)
+        if blocked_by:
+            record = {
+                "id": case["id"], "applies_to": case["applies_to"],
+                "status": "blocked", "blocked_by": blocked_by,
+                "error": "prerequisite physical case did not pass",
+            }
+            physical.append(record)
+            results_by_id[case["id"]] = record
+            atomic_json(run / (case["id"] + ".json"), record)
+            announce("BLOCKED " + case["id"] + " — prerequisite: " + ", ".join(blocked_by))
+            continue
         announce("RUN " + case["id"])
         try:
             receipt = receipts[case["receipt_target"]]
@@ -526,6 +562,7 @@ def main() -> int:
             record["error"] = (f"case reported {len(record.get('checks', ()))} checks; "
                                f"manifest requires {case['required_checks']}")
         physical.append(record)
+        results_by_id[case["id"]] = record
         atomic_json(run / (case["id"] + ".json"), record)
         announce(record["status"].upper() + " " + case["id"])
 
@@ -545,6 +582,7 @@ def main() -> int:
             "pass": sum(item["status"] == "pass" for item in physical),
             "test-failure": sum(item["status"] == "test-failure" for item in physical),
             "infrastructure-error": sum(item["status"] == "infrastructure-error" for item in physical),
+            "blocked": sum(item["status"] == "blocked" for item in physical),
         },
         "check_counts": {
             "pass": sum(len(item.get("checks", ())) for item in physical),

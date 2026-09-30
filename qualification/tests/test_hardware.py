@@ -39,7 +39,34 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertTrue(all(case["acceptance_required"] for case in document["cases"]))
         self.assertEqual([case["receipt_target"] for case in document["cases"]],
                          ["p4", "emos"])
+        self.assertEqual(document["cases"][1]["depends_on"],
+                         ["installed-p4-integrated-smoke"])
         self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 17)
+
+    def test_manifest_rejects_unknown_self_or_duplicate_dependency(self):
+        document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
+        document["cases"][1]["depends_on"] = ["missing"]
+        with self.assertRaisesRegex(ValueError, "depends_on"):
+            runner.validate_repair_manifest(document)
+        document["cases"][1]["depends_on"] = [document["cases"][1]["id"]]
+        with self.assertRaisesRegex(ValueError, "depends_on"):
+            runner.validate_repair_manifest(document)
+        dependency = document["cases"][0]["id"]
+        document["cases"][1]["depends_on"] = [dependency, dependency]
+        with self.assertRaisesRegex(ValueError, "depends_on"):
+            runner.validate_repair_manifest(document)
+
+    def test_failed_prerequisite_blocks_dependent_case(self):
+        case = {"depends_on": ["first"]}
+        self.assertEqual(runner.unmet_dependencies(case, {}), ["first"])
+        self.assertEqual(
+            runner.unmet_dependencies(case, {"first": {"status": "test-failure"}}),
+            ["first"],
+        )
+        self.assertEqual(
+            runner.unmet_dependencies(case, {"first": {"status": "pass"}}),
+            [],
+        )
 
     def test_video_decoder_accepts_exact_rgb222_frame(self):
         pixels = bytes((0, 1, 62, 63))

@@ -17,6 +17,7 @@
       "id": "a10-rp04-raw-sd-write",
       "applies_to": ["emos"],
       "receipt_target": "emos",
+      "depends_on": ["installed-p4-integrated-smoke"],
       "required_checks": 4,
       "driver": "fwbug008-physical",
       "acceptance_required": true,
