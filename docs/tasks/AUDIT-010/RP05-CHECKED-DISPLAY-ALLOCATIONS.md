@@ -89,12 +89,13 @@ startup restoration. The retained summary under
 has SHA-256
 `26f6962e70c93ddc5ed91992120455a8fe3cc8ef62c266be9ad0f34c5f328487`.
 
-`A10-RP05-R09` [ ] Manually run the loaded-asset Nurples mode transition on the
-exact candidate because that case remains intentionally outside automation.
-Record mode-switch, rendering, input, exit and restart observations.
+`A10-RP05-R09` [x] The Author manually ran the loaded-asset Nurples mode
+transition on the exact installed candidate and reported the run successful.
+This case remains intentionally outside automation. The observation completes
+RP05's exact-candidate validation without expanding its scope into RP06.
 
 ## Acceptance boundary
 
-`A10-RP05-A01` [ ] Present exact commits, source and hardware evidence,
+`A10-RP05-A01` [x] Present exact commits, source and hardware evidence,
 remaining RP06 boundary and manual observation to the Author. Stop for explicit
 acceptance; do not begin RP06.
