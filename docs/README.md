@@ -63,7 +63,7 @@ Other boards and complete peripheral compatibility remain unqualified.
 | Current fixture constraints and accepted input exceptions | [Bench constraints](qualification/bench-constraints.md) |
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Timing scopes, PRT units and package reuse boundary | [Game timing](testing/game-timing.md) |
-| Firmware acceptance: offline and installed-hardware suite | [Qualification suite](../qualification/README.md) |
+| Installed-firmware acceptance suite | [Qualification suite](../qualification/README.md) |
 | Qualification operation and retained runs | [Qualification procedure](testing/regression-suite.md) |
 | Compatibility evidence / generated-matrix status | [Qualification index](qualification/README.md) |
 

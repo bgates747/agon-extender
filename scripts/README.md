@@ -41,7 +41,7 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [validate-hardware-objects.py](validate-hardware-objects.py) | Hardware vocabulary schema/references, not electrical qualification; [object authority](../hardware/objects/README.md) |
 | [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Compatibility launchers into the canonical [`qualification/`](../qualification/README.md) authority; these wrappers contain no qualification logic |
 | [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; emit the receipt required by hardware validation |
-| [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the complete offline-plus-installed-hardware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
+| [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the installed-firmware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
 
 ## Retained development and test helpers
 

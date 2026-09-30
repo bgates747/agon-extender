@@ -1,6 +1,6 @@
 {
   "schema": 1,
-  "description": "Canonical installed-hardware qualification cases. Every accepted firmware revision must pass all applicable mandatory cases after the offline prerequisite.",
+  "description": "Canonical installed-hardware qualification cases. Every accepted firmware revision must pass all applicable mandatory cases against verified installed bytes.",
   "cases": [
     {
       "id": "installed-p4-integrated-smoke",

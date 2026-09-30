@@ -7,21 +7,22 @@ under `scripts/` may delegate here but contain no qualification logic.
 
 ## Acceptance policy
 
-A firmware revision is eligible for Author acceptance only when one invocation
-of `qualification/run.py` records all of the following against a verified flash
-receipt and exact paired component commits:
+A firmware revision is eligible for Author acceptance only when the flash tool
+has produced a verified receipt for the exact installed bytes and one invocation
+of `qualification/run.py` records all of the following against that receipt:
 
-1. every case in `manifests/offline.json` passes from clean pinned source;
-2. every `acceptance_required` case in `manifests/hardware.json` whose
+1. every `acceptance_required` case in `manifests/hardware.json` whose
    `applies_to` includes the flashed component passes on the installed boards;
-3. the runner restores ordinary startup and admitted neutral keyboard state;
-4. the durable summary identifies the flashed artifact, exact source commits,
+2. the runner restores ordinary startup and admitted neutral keyboard state;
+3. the durable summary identifies the flashed artifact and exact source commit,
    case results, elapsed times, and notification outcome; and
-5. the Author completes any separately declared manual cases, including loaded-
+4. the Author completes any separately declared manual cases, including loaded-
    asset mode switches, before accepting a revision whose changes intersect
    those cases.
 
-Offline, build, emulator, browser-simulation, flash-write, boot-identity, and
+Offline source regression remains a separate development gate in `offline.py`;
+it is not rerun by installed-firmware qualification and cannot substitute for
+it. Build, emulator, browser-simulation, flash-write, boot-identity, and
 human observations remain distinct evidence. No zero-hardware run may report
 firmware qualification success. A flash receipt proves installation; it does
 not substitute for installed-hardware qualification.
@@ -30,8 +31,8 @@ not substitute for installed-hardware qualification.
 
 | Path | Authority |
 |---|---|
-| `run.py` | Complete offline-plus-installed-hardware acceptance runner |
-| `offline.py` | Offline prerequisite runner only |
+| `run.py` | Installed-firmware acceptance runner |
+| `offline.py` | Separate pinned-source development regression runner |
 | `notify.py` | Terminal spoken cue and durable visible verdict |
 | `manifests/offline.json` | Complete maintained host/browser/build inventory |
 | `manifests/hardware.json` | Applicable mandatory physical cases and drivers |
@@ -54,11 +55,8 @@ oracles before they become mandatory.
 
 ```sh
 .venv/bin/python qualification/run.py \
-  --flash-receipt /absolute/path/to/flash-receipt.json \
-  --extender-commit EXTENDER_COMMIT \
-  --emos-commit EMOS_COMMIT
+  --flash-receipt /absolute/path/to/flash-receipt.json
 ```
 
-`--emos-commit` is required with a P4 receipt. An EMOS receipt already binds the
-EMOS source snapshot. The runner owns its documented board resets, temporary
+The runner owns its documented board resets, temporary
 qualification SD file, cleanup, and terminal notification. It never flashes.

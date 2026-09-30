@@ -4,8 +4,8 @@ The canonical executable authority is [`../../qualification/`](../../qualificati
 The maintained workflow has two independent commands. The first command builds
 and flashes one exact component commit and independently verifies the installed
 bytes and boot identity. The second command accepts only that flash receipt,
-runs the entire retained regression closure, and then runs every selected
-applicable physical case. A host or emulator pass is never described as
+runs every applicable installed-hardware case. The separate offline source
+suite remains available for development regressions. A host or emulator pass is never described as
 hardware validation or firmware acceptance. Acceptance requires a successful
 complete canonical run against verified installed bytes.
 
@@ -15,7 +15,7 @@ board, changing either SD card, launching a foreground application, or attaching
 an extra browser consumer to the P4. The explicit case and exclusion inventory
 is `qualification/manifests/offline.json`. Physical additions are registered in
 `qualification/manifests/hardware.json`. They do not weaken or replace any retained
-case. `qualification/run.py` composes both inventories and refuses
+case. `qualification/run.py` consumes the hardware inventory and refuses
 to run a physical case for a component other than the one named by the verified
 flash receipt.
 
@@ -92,17 +92,12 @@ The hardware test command is separately invoked with that receipt:
 
 ```sh
 .venv/bin/python qualification/run.py \
-  --flash-receipt /absolute/path/to/flash-receipt.json \
-  --extender-commit EXTENDER_COMMIT
+  --flash-receipt /absolute/path/to/flash-receipt.json
 ```
 
-For a P4 receipt, also pass `--emos-commit EMOS_COMMIT` so the retained suite
-uses a second exact clean component snapshot. An EMOS receipt already supplies
-that identity.
-
 It streams current case and pass/fail status to the invoking SSH console. It
-runs the complete `qualification/manifests/offline.json` inventory first, then all
-applicable physical cases. It writes an overall `summary.json`, restores each
+runs all applicable physical cases against the already installed firmware. It
+does not rebuild or reflash. It writes an overall `summary.json`, restores each
 case's startup state, sends the accepted Legacy spoken cue, and leaves a failure
 verdict on the Legacy screen after alert playback. The operator does not need an
 agent to monitor the run.

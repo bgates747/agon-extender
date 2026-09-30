@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Run the canonical offline closure and installed-hardware qualification cases."""
+"""Qualify already installed firmware using its verified flash receipt."""
 
 from __future__ import annotations
 
@@ -16,8 +16,8 @@ from urllib.request import Request, urlopen
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT / "scripts"))
-from hardware_validation import (atomic_json, clean_snapshot, copy_tree_dependency,
-                                 link_ignored, load_config, resolve_commit, sha256,
+from hardware_validation import (atomic_json, clean_snapshot, load_config,
+                                 resolve_commit, sha256,
                                  type_line, utc_stamp, wait_keyboard, wait_sd_service)
 
 
@@ -47,28 +47,6 @@ def validate_repair_manifest(document: dict) -> None:
             raise ValueError(f"{case_id}: positive integer timeout required")
     if len(ids) != len(set(ids)):
         raise ValueError("repair case ids must be unique")
-
-
-def prepare_extender_snapshot(commit: str, run: Path) -> Path:
-    snapshot = clean_snapshot(ROOT, commit, run / "source-extender")
-    copy_tree_dependency(snapshot, "agents/build001/native-tools",
-                         ROOT / "agents/build001/native-tools")
-    copy_tree_dependency(snapshot, "vdp/managed_components", ROOT / "vdp/managed_components")
-    link_ignored(snapshot, ".venv", ROOT / ".venv")
-    return snapshot
-
-
-def run_retained_suite(extender: Path, emos: Path, output: Path) -> dict:
-    command = [str(ROOT / ".venv/bin/python"), str(ROOT / "qualification/offline.py"),
-               "--output", str(output), "--source-root", str(extender),
-               "--manifest", str(ROOT / "qualification/manifests/offline.json"),
-               "--python", str(extender / ".venv/bin/python"),
-               "--idf-root", str(extender / "agents/build001/native-tools/esp-idf"),
-               "--emos-root", str(emos)]
-    completed = subprocess.run(command, cwd=extender)
-    summary = json.loads((output / "summary.json").read_text())
-    summary["command_exit_code"] = completed.returncode
-    return summary
 
 
 def require_directory(client, path: str) -> None:
@@ -217,10 +195,9 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
         (output / "screen-after-legacy-handoff.txt").write_text(legacy_handoff)
         type_line(url, output / "keyboard-sd.json", "EMOS sdserve --fast /")
         client = wait_sd_service(url, output / "sd.json")
-        target = "/extender/qualification/live-" + uuid.uuid4().hex + ".bin"
+        target = "/extender/.qualification-" + uuid.uuid4().hex + ".bin"
         payload = (receipt["component_commit"] + "\n" + receipt["artifact_sha256"] + "\n").encode()
         try:
-            client.make_directory("/extender/qualification", parents=True)
             client.upload(target, payload, True, fast=True)
             if client.download(target) != payload:
                 raise RuntimeError("installed P4/EMOS SD round trip changed bytes")
@@ -393,9 +370,6 @@ def notify(config: dict, run: Path, success: bool, detail: str) -> dict:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--flash-receipt", required=True, type=Path)
-    parser.add_argument("--extender-commit", required=True)
-    parser.add_argument("--emos-commit",
-                        help="required for a P4 receipt; EMOS commit paired with the retained suite")
     parser.add_argument("--config", type=Path,
                         default=ROOT / "agents/hardware-validation.local.json")
     parser.add_argument("--repair-manifest", type=Path,
@@ -409,8 +383,6 @@ def main() -> int:
         parser.error("flash receipt is not a verified schema-1 installation")
     if receipt.get("target") not in ("p4", "emos"):
         parser.error("flash receipt has an unsupported target")
-    if receipt["target"] == "p4" and not args.emos_commit:
-        parser.error("--emos-commit is required when validating a P4 flash receipt")
     manifest = json.loads(args.repair_manifest.resolve(strict=True).read_text())
     validate_repair_manifest(manifest)
     selected = [case for case in manifest["cases"]
@@ -423,31 +395,19 @@ def main() -> int:
             parser.error(f"unknown or wrong-component repair cases: {sorted(missing)}")
     if not selected:
         parser.error("firmware acceptance requires at least one applicable installed-hardware case")
-    extender_commit = resolve_commit(ROOT, args.extender_commit)
     run = (args.output or ROOT / "agents/hardware-validation" /
-           ("qualification-" + utc_stamp() + "-" + extender_commit[:12])).resolve()
+           ("qualification-" + utc_stamp() + "-" +
+            receipt["component_commit"][:12])).resolve()
     if run.exists() or run.is_symlink():
         parser.error("output must be a fresh nonexisting path")
     run.mkdir(parents=True)
     started_at = utc_stamp()
     atomic_json(run / "request.json", {
         "flash_receipt": str(args.flash_receipt.resolve()),
-        "extender_commit": extender_commit,
-        "emos_commit": args.emos_commit or receipt.get("component_commit"),
         "hardware_cases": [case["id"] for case in selected],
     })
     started = time.monotonic()
-    announce(f"FIRMWARE QUALIFICATION START — offline suite plus {len(selected)} installed-hardware case(s)")
-    extender = prepare_extender_snapshot(extender_commit, run)
-    if receipt["target"] == "emos":
-        emos = Path(receipt["component_snapshot"]).resolve(strict=True)
-    else:
-        emos_source = Path(config["emos_repository"]).resolve(strict=True)
-        emos_commit = resolve_commit(emos_source, args.emos_commit)
-        emos = clean_snapshot(emos_source, emos_commit, run / "source-emos")
-    announce("RUN canonical offline qualification prerequisite")
-    retained = run_retained_suite(extender, emos, run / "retained-suite")
-    announce("RETAINED " + retained["status"].upper())
+    announce(f"INSTALLED FIRMWARE QUALIFICATION START — {len(selected)} hardware case(s)")
 
     physical = []
     for case in selected:
@@ -466,12 +426,9 @@ def main() -> int:
         atomic_json(run / (case["id"] + ".json"), record)
         announce(record["status"].upper() + " " + case["id"])
 
-    success = retained["status"] == "success" and all(
-        item["status"] == "pass" for item in physical
-    )
-    infrastructure_failed = (retained["status"] == "infrastructure-failure" or
-                             any(item["status"] == "infrastructure-error"
-                                 for item in physical))
+    success = all(item["status"] == "pass" for item in physical)
+    infrastructure_failed = any(item["status"] == "infrastructure-error"
+                                for item in physical)
     status = ("success" if success else
               "infrastructure-failure" if infrastructure_failed else "test-failure")
     summary = {
@@ -479,9 +436,7 @@ def main() -> int:
         "duration_seconds": time.monotonic() - started,
         "flashed": {key: receipt.get(key) for key in
                     ("target", "component_commit", "build_id", "artifact_sha256")},
-        "extender_commit": extender_commit,
-        "emos_commit": resolve_commit(emos, "HEAD"),
-        "retained_suite": retained, "physical_cases": physical,
+        "physical_cases": physical,
         "counts": {
             "pass": sum(item["status"] == "pass" for item in physical),
             "test-failure": sum(item["status"] == "test-failure" for item in physical),
@@ -490,7 +445,7 @@ def main() -> int:
     }
     atomic_json(run / "summary.json", summary)
     detail = next((item["id"] for item in physical if item["status"] != "pass"),
-                  "retained-suite")
+                  "installed-hardware")
     summary["notification"] = notify(config, run, success, detail)
     atomic_json(run / "summary.json", summary)
     announce("FIRMWARE QUALIFICATION " + status.upper())

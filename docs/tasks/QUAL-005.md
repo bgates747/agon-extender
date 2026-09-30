@@ -13,8 +13,9 @@ do not become recurring acceptance tests unless deliberately promoted into the
 canonical manifests.
 
 A firmware revision is not accepted unless one complete run, bound to a verified
-flash receipt, passes the full offline inventory and every applicable mandatory
-installed-hardware case, restores startup state, and writes a durable summary.
+flash receipt, passes every applicable mandatory installed-hardware case,
+restores startup state, and writes a durable summary. The offline source suite
+is a separate development regression and is not repeated during hardware tests.
 Zero selected hardware cases, an offline-only pass, or a flash receipt alone can
 never satisfy this gate.
 
@@ -32,6 +33,9 @@ never satisfy this gate.
   hardware-manifest entry acceptance-required.
 - [x] Q05-06 — Publish the acceptance rule in current testing, handbook,
   production and versioning documentation.
+- [x] Q05-09 — Separate installed-firmware qualification from the offline source
+  suite so physical retries neither rebuild unrelated commits nor repeat passed
+  host tests.
 - [ ] Q05-07 — Run the canonical suite against the currently verified P4 and
   EMOS pair and obtain Author acceptance of its physical behavior.
 - [x] Q05-08 — Correct the first physical run's command-ordering defect: use
