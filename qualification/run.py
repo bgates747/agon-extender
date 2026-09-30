@@ -252,6 +252,12 @@ def completed_at_prompt(text: str, marker: str) -> bool:
     return any(line.endswith(" *") for line in visible[marker_line + 1:])
 
 
+def has_mos_prompt(text: str) -> bool:
+    """Recognize a returned MOS prompt in fixed-width screen-text capture."""
+    return any(line.rstrip("?").rstrip().endswith(" *")
+               for line in text.splitlines())
+
+
 def wait_display(url: str, mode: int, width: int, height: int,
                  timeout: float = 30) -> dict:
     deadline = time.monotonic() + timeout
@@ -561,7 +567,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
                    b"EMOS LEGACY\r\nVDU 22 3\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
-                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN " +
+                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN . " +
                    completion_token.encode("ascii") + b"\r\n")
         client.upload("/autoexec.txt", startup, True, fast=True)
         if client.download("/autoexec.txt") != startup:
@@ -602,8 +608,46 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         (output / "completion-screen.txt").write_text(completion_screen)
     except BaseException as error:
         # Absence of the positive marker and prompt cannot prove that a raw
-        # write is safe to interrupt. Try exact restoration only through an
-        # independently active service; never reset or type into an unknown app.
+        # write is safe to interrupt. A fresh visible MOS prompt does prove
+        # that no application remains in flight, including a launch failure.
+        # Restore through that prompt; otherwise use only an independently
+        # active service and never type or reset an unknown foreground.
+        prompt_text = ""
+        try:
+            prompt_text = capture_text(url)
+            (output / "completion-failure-screen.txt").write_text(prompt_text)
+        except BaseException as capture_error:
+            atomic_json(output / "completion-failure-capture.json", {
+                "status": "failed", "detail": repr(capture_error),
+            })
+        if has_mos_prompt(prompt_text):
+            announce("Completion marker absent but MOS prompt is visible; restoring the exact startup")
+            prompt_client = None
+            try:
+                type_line(url, output / "keyboard-prompt-recovery-legacy.json",
+                          "EMOS LEGACY")
+                type_line(url, output / "keyboard-prompt-recovery-service.json",
+                          "EMOS sdserve --fast /")
+                prompt_client = wait_sd_service(
+                    url, output / "sd-prompt-recovery.json",
+                    timeout=RP04_COMPLETION_TIMEOUT)
+                restore_startup(prompt_client, original_startup, output,
+                                "prompt-recovery-autoexec.txt")
+            except BaseException as restoration_error:
+                raise UnsafeMainboardState(
+                    "RP04 returned to MOS without its completion marker, but "
+                    f"exact startup restoration failed: {restoration_error!r}"
+                ) from restoration_error
+            finally:
+                if prompt_client is not None:
+                    prompt_client.lock.close()
+            announce("Exact startup restored after fixture launch/completion failure")
+            reset_and_wait(reset, url)
+            raise RuntimeError(
+                "RP04 fixture did not produce its per-run completion marker; "
+                "a returned MOS prompt proved the foreground safe and the exact "
+                "pre-suite startup was restored"
+            ) from error
         announce("Safe-completion observation failed; attempting exact startup restoration without a reset")
         restored, detail = try_restore_startup_from_active_service(
             url, original_startup, output)

@@ -143,6 +143,10 @@ class HardwareValidationTests(unittest.TestCase):
             marker + "                                           ?\n"
             "/ *                                                   ?\n", marker))
 
+    def test_prompt_recognition_ignores_commands_and_accepts_prompt(self):
+        self.assertFalse(runner.has_mos_prompt("/ *RUN . TOKEN                  ?\n"))
+        self.assertTrue(runner.has_mos_prompt("/ *                              ?\n"))
+
     def test_raw_sd_startup_selects_legacy_before_mode_and_fixture(self):
         source = inspect.getsource(runner.run_fwbug008)
         legacy = source.index('b"EMOS LEGACY')
@@ -150,6 +154,7 @@ class HardwareValidationTests(unittest.TestCase):
         load = source.index('LOAD /extender/fixtures', mode)
         self.assertLess(legacy, mode)
         self.assertLess(mode, load)
+        self.assertIn('b"LOAD /extender/fixtures/FWBUG008.bin\\r\\nRUN . "', source)
 
     def test_startup_restoration_is_exact_and_stops_listener(self):
         calls = []

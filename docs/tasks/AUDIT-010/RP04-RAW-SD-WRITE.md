@@ -134,6 +134,21 @@ still forbids reset or keyboard injection. The manifest now declares five RP04
 checks and 25 complete-suite physical checks. Source/build checks pass; fresh
 physical validation is required before closing this protocol correction.
 
+The first tokenized hardware attempt stopped before executing the fixture:
+the launcher emitted `RUN <token>`, so official MOS parsed the token as the
+optional numeric address and returned `FR_INVALID_PARAMETER`. Official MOS
+`mos_cmdRUN` at tag `v3.0.2`, commit
+`8336409351ee5314e02801a7b72a4f1bb5282519`, requires `RUN . <arguments>` to
+select the default address while passing arguments. The corrected launcher uses
+that syntax. The same failure exposed an incomplete cleanup branch: although a
+fresh capture showed a returned MOS prompt and therefore proved no application
+was in flight, the runner treated every missing marker as ambiguous and left
+the one-shot startup installed. The runner now uses only a freshly captured
+MOS prompt as the alternate safe boundary, starts the listener from that prompt,
+restores and independently verifies the exact saved startup, closes the
+listener, and reports the original fixture failure. Without either the token
+plus prompt or a fresh prompt, its no-input/no-reset safety rule is unchanged.
+
 ## Acceptance boundary
 
 `A10-RP04-A01` [x] The selected headless emulator cases passed. The Author then
