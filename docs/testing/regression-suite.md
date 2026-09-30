@@ -86,6 +86,12 @@ command resolves the revision to a full commit, builds from a fresh detached
 snapshot, performs exactly one component-appropriate flash, verifies the full
 EMOS ROM or P4 flash plus observed boot identity, and prints the durable local
 receipt path. It never accepts a dirty working tree as the requested firmware.
+After a verified P4 flash and boot, the command normally uses the bench Pi's
+independent reset actuator to reset the Agon, then requires a new EMOS boot
+epoch and working Extender keyboard admission before reporting complete
+success. Use `--no-reset-agon` only for deliberate P4-only work where preserving
+the running Agon is more important than restoring and proving the paired
+connection. A failed or uncertain P4 flash never triggers the Agon reset.
 
 The hardware test command is separately invoked with that receipt:
 
@@ -118,6 +124,11 @@ after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
 write API, independently reads the result, restores through MOS's distinct C
 write dispatch, and independently verifies the exact preimage before reporting.
 An unverified restoration is an infrastructure failure and stops advancement.
+The raw-sector fixture itself starts the result service only after no write was
+attempted or after exact restoration was independently verified. The runner
+allows 20 seconds for that positive completion handoff. If it is absent, the
+runner fails without automatically resetting the Agon; a timeout is never
+treated as evidence that interrupting raw media work is safe.
 
 ## First complete RP04 hardware run
 

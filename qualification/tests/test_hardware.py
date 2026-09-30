@@ -4,6 +4,7 @@
 from __future__ import annotations
 
 import importlib.util
+import inspect
 import json
 from pathlib import Path
 import tempfile
@@ -91,6 +92,23 @@ class HardwareValidationTests(unittest.TestCase):
         self.assertEqual(runner.parse_result(record)["status"], "pass")
         with self.assertRaisesRegex(ValueError, "wrong schema"):
             runner.parse_result(record.replace(b"restore_rc=0\n", b""))
+
+    def test_bench_startup_requires_extender_and_rejects_mainboard(self):
+        runner.require_extender_startup(
+            b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\n")
+        with self.assertRaisesRegex(RuntimeError, "does not explicitly select"):
+            runner.require_extender_startup(b"SET KEYBOARD 1\r\n")
+        with self.assertRaisesRegex(RuntimeError, "unavailable mainboard"):
+            runner.require_extender_startup(
+                b"EMOS KEYINPUT extender\r\nEMOS KEYINPUT mainboard\r\n")
+
+    def test_raw_sd_fixture_requires_positive_completion_without_reset_fallback(self):
+        source = inspect.getsource(runner.run_fwbug008)
+        self.assertEqual(runner.RP04_COMPLETION_TIMEOUT, 20)
+        self.assertIn("fixture-owned completion service", source)
+        self.assertIn("Agon was not reset", source)
+        self.assertNotIn("first result listener", source)
+        self.assertNotIn("recovery_boot", source)
 
     def test_config_requires_exact_p4_identity_even_for_shared_tool(self):
         document = json.loads((ROOT / "qualification/config.example.json").read_text())

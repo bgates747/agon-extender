@@ -112,6 +112,15 @@ operation, CLI-command timing and retained transfer-journal state; none
 attempted a raw write. The maintained runner now serializes stale-result cleanup
 in the one-shot startup and explicitly preserves/closes retained backups.
 
+`A10-RP04-R11` [ ] A 2026-09-30 full-suite reuse exposed that the nominal
+fixture-result path always fell through to a 120-second timeout and reset-based
+recovery. That timeout was not a completion oracle and could not establish that
+an in-flight raw write was safe to interrupt. The replacement fixture opens its
+own result service only after no-write completion or verified restoration; the
+runner waits 20 seconds for that positive handoff and never resets on its
+absence. Source/build checks pass. Fresh physical validation is required before
+closing this protocol correction.
+
 ## Acceptance boundary
 
 `A10-RP04-A01` [x] The selected headless emulator cases passed. The Author then

@@ -15,6 +15,7 @@ from urllib.request import Request, urlopen
 
 
 ROOT = Path(__file__).resolve().parents[1]
+RP04_COMPLETION_TIMEOUT = 20
 sys.path.insert(0, str(ROOT / "qualification"))
 sys.path.insert(0, str(ROOT / "scripts"))
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
@@ -104,6 +105,19 @@ def parse_result(data: bytes) -> dict[str, str]:
     if set(result) != required or result["schema"] != "1":
         raise ValueError("physical result has the wrong schema")
     return result
+
+
+def require_extender_startup(data: bytes) -> None:
+    """Reject a bench startup that cannot restore the only working key path."""
+    try:
+        lines = [line.strip().lower() for line in data.decode("ascii").splitlines()
+                 if line.strip() and not line.lstrip().startswith("#")]
+    except UnicodeDecodeError as error:
+        raise RuntimeError("bench startup is not ASCII") from error
+    if "emos keyinput mainboard" in lines:
+        raise RuntimeError("bench startup selects the unavailable mainboard keyboard")
+    if "emos keyinput extender" not in lines:
+        raise RuntimeError("bench startup does not explicitly select Extender keyboard input")
 
 
 def reset_and_wait(reset: list[str], url: str) -> dict:
@@ -454,6 +468,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
     staged = False
     try:
         original_startup = client.download("/autoexec.txt")
+        require_extender_startup(original_startup)
         for directory in ("/extender/fixtures", "/agents/extender/results"):
             require_directory(client, directory)
         target = "/extender/fixtures/FWBUG008.bin"
@@ -468,8 +483,7 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
         startup = (b"SET KEYBOARD 1\r\nEMOS KEYINPUT extender\r\nVDU 22 3\r\n"
                    b"IFTHERE /agents/extender/results/a10-rp04.txt Then "
                    b"DELETE /agents/extender/results/a10-rp04.txt\r\n"
-                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n"
-                   b"EMOS sdserve --fast /\r\n")
+                   b"LOAD /extender/fixtures/FWBUG008.bin\r\nRUN\r\n")
         client.upload("/autoexec.txt", startup, True, fast=True)
         if client.download("/autoexec.txt") != startup:
             raise RuntimeError("one-shot startup failed independent readback")
@@ -487,23 +501,19 @@ def run_fwbug008(config: dict, receipt: dict, output: Path) -> dict:
 
     announce("RUN emos-raw-sector-write-read-restore")
     started = time.monotonic()
-    before_test_boot = wait_keyboard(url)["boot"]
     announce("Resetting the Agon to run the one-shot raw-sector fixture")
     subprocess.run(reset, check=True)
+    announce("Waiting up to 20 seconds for the fixture-owned completion service")
     try:
-        announce("Waiting up to 120 seconds for the fixture result listener; no output is expected during execution")
-        client = wait_sd_service(url, output / "sd-result.json", timeout=120)
-    except TimeoutError:
-        # The fixture disarms its one-shot startup before raw access. One reset
-        # therefore enters its recovery service rather than replaying the test.
-        announce("The first result listener did not appear; waiting for fixture boot completion before guarded recovery")
-        wait_keyboard(url, old_boot=before_test_boot)
-        recovery_boot = wait_keyboard(url)["boot"]
-        announce("Resetting the Agon once to enter the disarmed recovery startup")
-        subprocess.run(reset, check=True)
-        wait_keyboard(url, old_boot=recovery_boot)
-        announce("Waiting up to 60 seconds for the recovery result listener")
-        client = wait_sd_service(url, output / "sd-result-recovery.json", timeout=60)
+        client = wait_sd_service(
+            url, output / "sd-result.json", timeout=RP04_COMPLETION_TIMEOUT)
+    except TimeoutError as error:
+        # Absence of the positive handoff cannot prove that a raw write is safe
+        # to interrupt.  Leave the disarmed recovery startup in place and do
+        # not reset automatically; the operator must inspect and recover.
+        raise RuntimeError(
+            "RP04 fixture gave no safe-completion handoff; Agon was not reset"
+        ) from error
     result_data = b""
     result_error = None
     cleanup_error = None

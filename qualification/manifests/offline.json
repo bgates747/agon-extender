@@ -40,6 +40,7 @@
     {"id": "host-application-card", "phase": "host", "argv": ["{python}", "tests/test_application_card.py"], "timeout_seconds": 180},
     {"id": "host-browser-capture", "phase": "host", "argv": ["{python}", "tests/test_browser_capture.py"], "timeout_seconds": 120},
     {"id": "host-finite-sdjob", "phase": "host", "argv": ["{python}", "tests/test_finite_sdjob.py"], "timeout_seconds": 180},
+    {"id": "host-flash-firmware-commit", "phase": "host", "argv": ["{python}", "tests/test_flash_firmware_commit.py"], "timeout_seconds": 60},
     {"id": "host-general-poll-build-identity", "phase": "host", "argv": ["{python}", "tests/test_general_poll_build_identity.py"], "timeout_seconds": 60},
     {"id": "host-keyboard-capture", "phase": "host", "argv": ["{python}", "tests/test_keyboard_capture.py"], "timeout_seconds": 60},
     {"id": "host-keyboard-client", "phase": "host", "argv": ["{python}", "tests/test_keyboard_client.py"], "timeout_seconds": 120},

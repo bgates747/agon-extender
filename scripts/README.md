@@ -40,7 +40,7 @@ must not be confused with the Agon-card `sdcard.py`/EMOSlet protocol.
 | [validate-version-records.py](validate-version-records.py) | Registry/manifest structure and integrity; [version policy](../docs/versions/README.md). A passing validator does not qualify an artifact |
 | [validate-hardware-objects.py](validate-hardware-objects.py) | Hardware vocabulary schema/references, not electrical qualification; [object authority](../hardware/objects/README.md) |
 | [launch_regression_suite.py](launch_regression_suite.py), [run_regression_suite.py](run_regression_suite.py), [regression_notify.py](regression_notify.py) | Compatibility launchers into the canonical [`qualification/`](../qualification/README.md) authority; these wrappers contain no qualification logic |
-| [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; emit the receipt required by hardware validation |
+| [flash_firmware_commit.py](flash_firmware_commit.py), [p4_flash_remote.py](p4_flash_remote.py) | Build, flash and independently verify one exact EMOS or P4 commit; after verified P4 installation, reset the Agon through the Pi and prove fresh EMOS/P4 connectivity unless explicitly suppressed; emit the receipt required by hardware validation |
 | [run_hardware_regression.py](run_hardware_regression.py) | Compatibility launcher for the installed-firmware suite; [qualification policy](../qualification/README.md) owns firmware acceptance |
 
 ## Retained development and test helpers

@@ -191,7 +191,53 @@ def build_p4(config: dict, commit: str, run: Path) -> tuple[Path, Path, dict]:
     return snapshot, factory, manifest
 
 
-def flash_p4(config: dict, commit: str, run: Path) -> dict:
+def finish_p4_install(config: dict, receipt: dict, *, reset_agon: bool) -> dict:
+    """Restore and verify the EMOS-to-P4 relationship after a verified P4 flash."""
+    if (receipt.get("status") != "verified" or
+            not receipt.get("write_verified") or
+            not receipt.get("boot_identity_observed")):
+        raise RuntimeError("refusing post-flash Agon reset before verified P4 write and boot")
+    if not reset_agon:
+        progress("Skipping the post-flash Agon reset and connectivity check by explicit request")
+        receipt.update(agon_reset_performed=False,
+                       agon_connection_verified=False,
+                       workflow_completed_at=utc_stamp())
+        return receipt
+
+    url = config["extender_url"]
+    progress("Waiting for the newly flashed P4 HTTP status endpoint")
+    deadline = time.monotonic() + 60
+    before = None
+    last_error: object = "no response"
+    while time.monotonic() < deadline:
+        try:
+            before = keyboard_status(url)
+            break
+        except Exception as error:
+            last_error = repr(error)
+            time.sleep(0.25)
+    if before is None:
+        raise TimeoutError(f"P4 status endpoint deadline exceeded: {last_error}")
+
+    reset_config = Path(config["reset_config"]).resolve(strict=True)
+    progress("Resetting the Agon through the bench Pi to establish a fresh EMOS-to-P4 session")
+    subprocess.run([str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
+                    "--config", str(reset_config)], check=True)
+    progress("Waiting for a new EMOS boot epoch and verified Extender keyboard connectivity")
+    after = wait_keyboard(url, old_boot=before["boot"], timeout=60)
+    receipt.update(
+        agon_reset_performed=True,
+        agon_connection_verified=True,
+        agon_boot_before=before["boot"],
+        agon_boot_after=after["boot"],
+        keyboard_ready=after["ready"],
+        workflow_completed_at=utc_stamp(),
+    )
+    progress("Post-flash Agon reset completed; EMOS and the P4 are connected")
+    return receipt
+
+
+def flash_p4(config: dict, commit: str, run: Path, *, reset_agon: bool = True) -> dict:
     snapshot, factory, manifest = build_p4(config, commit, run)
     p4 = config["p4"]
     remote = p4.get("stage_root", "/home/smith/agon-bench/agon-extender/hardware-validation")
@@ -232,7 +278,28 @@ def flash_p4(config: dict, commit: str, run: Path) -> dict:
         raise RuntimeError("remote P4 worker returned no receipt")
     receipt = json.loads(lines[-1])
     receipt.update(component_snapshot=str(snapshot), remote_stage=remote)
-    return receipt
+    return finish_p4_install(config, receipt, reset_agon=reset_agon)
+
+
+def print_success(receipt: dict, receipt_path: Path) -> None:
+    target = receipt["target"].upper()
+    print("", flush=True)
+    print(f"{target} FLASH WORKFLOW SUCCEEDED", flush=True)
+    print(f"Installed commit: {receipt['component_commit']}", flush=True)
+    print(f"Installed build: {receipt['build_id']}", flush=True)
+    if receipt["target"] == "p4":
+        print("P4 flash verification: every required written region verified", flush=True)
+        print("P4 boot verification: installed build identity observed", flush=True)
+        if receipt.get("agon_connection_verified"):
+            print("Agon reset: completed through the bench Pi", flush=True)
+            print("EMOS-to-P4 connectivity: verified after the fresh Agon boot", flush=True)
+        else:
+            print("Agon reset and EMOS-to-P4 connectivity: SKIPPED BY --no-reset-agon",
+                  flush=True)
+    else:
+        print("EMOS ROM verification: all 131,072 installed bytes verified", flush=True)
+        print("EMOS reboot and Extender keyboard admission: verified", flush=True)
+    print("Receipt: " + str(receipt_path), flush=True)
 
 
 def main() -> int:
@@ -243,7 +310,13 @@ def main() -> int:
     parser.add_argument("--config", type=Path,
                         default=ROOT / "agents/hardware-validation.local.json")
     parser.add_argument("--output", type=Path)
+    parser.add_argument(
+        "--no-reset-agon", action="store_true",
+        help="after a P4 flash, leave the Agon untouched and skip EMOS-to-P4 connectivity verification",
+    )
     args = parser.parse_args()
+    if args.no_reset_agon and args.target != "p4":
+        parser.error("--no-reset-agon is valid only with --target p4")
     config = load_config(args.config.resolve(strict=True))
     repository = ROOT if args.target == "p4" else Path(config["emos_repository"])
     commit = resolve_commit(repository.resolve(strict=True), args.commit)
@@ -253,13 +326,13 @@ def main() -> int:
         parser.error("output must be a fresh nonexisting path")
     run.mkdir(parents=True)
     atomic_json(run / "request.json", {"target": args.target, "commit": commit,
-                                        "config": str(args.config.resolve())})
-    receipt = flash_p4(config, commit, run) if args.target == "p4" else flash_emos(config, commit, run)
+                                        "config": str(args.config.resolve()),
+                                        "reset_agon_after_p4": not args.no_reset_agon})
+    receipt = (flash_p4(config, commit, run, reset_agon=not args.no_reset_agon)
+               if args.target == "p4" else flash_emos(config, commit, run))
     receipt["receipt_path"] = str(run / "flash-receipt.json")
     atomic_json(run / "flash-receipt.json", receipt)
-    print("FLASH VERIFIED")
-    print("Receipt: " + str(run / "flash-receipt.json"))
-    print(json.dumps(receipt, sort_keys=True))
+    print_success(receipt, run / "flash-receipt.json")
     return 0
 
 
