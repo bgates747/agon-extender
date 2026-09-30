@@ -33,6 +33,56 @@ def verified_receipt() -> dict:
 
 
 class FinishP4InstallTests(unittest.TestCase):
+    def test_existing_sd_service_is_stopped_before_cli_typing(self) -> None:
+        calls = []
+
+        class Lock:
+            def close(self):
+                calls.append("close")
+
+        class Client:
+            def __init__(self, url, state):
+                calls.append((url, state.name))
+                self.lock = Lock()
+
+            def status(self):
+                return {"online": True}
+
+            def connect(self):
+                calls.append("connect")
+
+            def rpc(self, operation):
+                calls.append(("rpc", operation))
+
+        with mock.patch.object(FLASH, "SdClient", Client):
+            stopped = FLASH.stop_existing_sd_service(
+                "http://device", Path("preexisting.json"))
+        self.assertTrue(stopped)
+        self.assertEqual(calls[-3:], ["connect", ("rpc", 11), "close"])
+
+    def test_offline_sd_service_is_left_alone(self) -> None:
+        calls = []
+
+        class Lock:
+            def close(self):
+                calls.append("close")
+
+        class Client:
+            def __init__(self, _url, _state):
+                self.lock = Lock()
+
+            def status(self):
+                return {"online": False}
+
+            def connect(self):
+                calls.append("connect")
+
+        with mock.patch.object(FLASH, "SdClient", Client):
+            stopped = FLASH.stop_existing_sd_service(
+                "http://device", Path("preexisting.json"))
+        self.assertFalse(stopped)
+        self.assertEqual(calls, ["close"])
+
     def test_verified_flash_resets_agon_then_requires_new_ready_epoch(self) -> None:
         events: list[str] = []
         with tempfile.TemporaryDirectory() as temporary:

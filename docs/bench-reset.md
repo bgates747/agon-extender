@@ -50,6 +50,14 @@ bench state:
 .venv/bin/python scripts/reset_agon.py --config "$RESET_CONFIG"
 ```
 
+For an automated reset that must establish usable Extender input, add
+`--verify-url http://P4_ADDRESS`. The wrapper reads the current boot epoch
+before pulsing, then requires a different epoch with admitted, neutral Extender
+keyboard input before printing `AGON RESET VERIFIED`; timeout exits nonzero.
+Without that option it reports `PULSE-ONLY COMPLETE` and makes no boot-success
+claim. Bridge callers may retain pulse-only behavior when the browser owns the
+separate post-reset observation.
+
 `RESET_CONFIG` is an owner-provided local JSON file with `ssh` (complete SSH argv),
 `chip` (gpiochip name) and `gpio` (line number). The wrapper uses noninteractive
 `sudo -n bash -s` on the Pi; the existing authorized SSH/sudo setup must already

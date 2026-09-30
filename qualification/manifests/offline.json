@@ -46,6 +46,7 @@
     {"id": "host-keyboard-client", "phase": "host", "argv": ["{python}", "tests/test_keyboard_client.py"], "timeout_seconds": 120},
     {"id": "host-mos-recovery", "phase": "host", "argv": ["{python}", "tests/test_mos_recovery.py"], "timeout_seconds": 60},
     {"id": "host-remote-keyboard", "phase": "host", "argv": ["{python}", "tests/test_remote_keyboard.py"], "timeout_seconds": 120},
+    {"id": "host-reset-agon", "phase": "host", "argv": ["{python}", "tests/test_reset_agon.py"], "timeout_seconds": 60},
     {"id": "host-reset-bridge", "phase": "host", "argv": ["{python}", "tests/test_reset_bridge.py"], "timeout_seconds": 60},
     {"id": "host-sd-service", "phase": "host", "argv": ["{python}", "tests/test_sd_service.py"], "timeout_seconds": 120},
     {"id": "host-sd-wire", "phase": "host", "argv": ["{python}", "tests/test_sd_wire.py"], "timeout_seconds": 120},

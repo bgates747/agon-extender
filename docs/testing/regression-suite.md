@@ -81,6 +81,14 @@ The flash command is independent of the test command:
   --target emos --commit EMOS_COMMIT
 ```
 
+Before an EMOS flash, the command normally verifies and resets the P4 over its
+stable USB identity, waits for the P4 HTTP service, resets the Agon, verifies
+fresh Extender input admission, and stops any foreground SD listener before
+typing at the EMOS prompt. This closes browser video/input and stale agent
+sessions automatically; the operator does not inspect or release them by hand.
+Use `--no-reset-p4` only for a deliberate expert run that preserves those
+sessions and accepts responsibility for an input-ownership conflict.
+
 Use `--target p4 --commit EXTENDER_COMMIT` for an Extender/P4 repair. The
 command resolves the revision to a full commit, builds from a fresh detached
 snapshot, performs exactly one component-appropriate flash, verifies the full

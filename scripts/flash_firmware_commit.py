@@ -18,6 +18,7 @@ from hardware_validation import (atomic_json, clean_snapshot, copy_tree_dependen
                                  git, keyboard_status, link_ignored, load_config, resolve_commit,
                                  run_logged, sha256, type_line, utc_stamp, wait_keyboard,
                                  wait_sd_service)
+from sdcard import Client as SdClient
 
 
 def progress(message: str) -> None:
@@ -74,11 +75,80 @@ def build_emos(config: dict, commit: str, run: Path) -> tuple[Path, Path, dict]:
     return snapshot, firmware, manifest
 
 
-def flash_emos(config: dict, commit: str, run: Path) -> dict:
+def reset_p4_for_maintenance(config: dict, run: Path) -> dict:
+    """Close all P4 sessions through a verified no-flash USB reset."""
+    p4 = config["p4"]
+    url = config["extender_url"]
+    try:
+        old_boot = keyboard_status(url)["boot"]
+    except Exception:
+        old_boot = None
+    stamp = utc_stamp()
+    remote = p4.get("stage_root", "/home/smith/agon-bench/agon-extender/hardware-validation")
+    remote = remote.rstrip("/") + "/maintenance-reset-" + stamp
+    local_config = run / "p4-maintenance-reset.json"
+    atomic_json(local_config, {
+        "stable_port": p4["stable_port"], "usb_serial": p4["usb_serial"],
+        "esptool": p4["esptool"],
+    })
+    ssh = p4["ssh"]
+    progress("Preparing a verified no-flash P4 maintenance reset on the bench Pi")
+    subprocess.run(ssh + ["mkdir -p " + remote], check=True)
+    subprocess.run(["scp", *ssh[1:-1], str(local_config),
+                    str(ROOT / "scripts/p4_flash_remote.py"),
+                    ssh[-1] + ":" + remote + "/"], check=True)
+    command = (p4.get("python", "python3") + " " + remote +
+               "/p4_flash_remote.py --reset-only --config " + remote +
+               "/p4-maintenance-reset.json")
+    progress("Resetting the verified P4 to close all browser and agent sessions")
+    output = subprocess.check_output(ssh + [command], text=True, stderr=subprocess.STDOUT)
+    (run / "p4-maintenance-reset.log").write_text(output)
+    lines = [line for line in output.splitlines() if line.startswith("{")]
+    if not lines:
+        raise RuntimeError("P4 maintenance reset returned no receipt")
+    receipt = json.loads(lines[-1])
+    if receipt.get("status") != "reset-issued":
+        raise RuntimeError("P4 maintenance reset returned an invalid receipt")
+    progress("Waiting for the P4 application and HTTP service after reset")
+    deadline = time.monotonic() + 45
+    last: object = "no response"
+    while time.monotonic() < deadline:
+        try:
+            current = keyboard_status(url)
+            last = current
+            if old_boot is None or current.get("boot") != old_boot:
+                receipt["http_boot"] = current.get("boot")
+                atomic_json(run / "p4-maintenance-reset-receipt.json", receipt)
+                progress("P4 reset verified; all prior browser and agent sessions are closed")
+                return receipt
+        except Exception as error:
+            last = repr(error)
+        time.sleep(0.25)
+    raise TimeoutError(f"P4 did not restore its HTTP service after reset: {last}")
+
+
+def stop_existing_sd_service(url: str, state: Path) -> bool:
+    """Return the foreground to MOS when startup already launched sdserve."""
+    client = SdClient(url, state)
+    try:
+        if not client.status().get("online"):
+            return False
+        client.connect()
+        client.rpc(11)
+        return True
+    finally:
+        client.lock.close()
+
+
+def flash_emos(config: dict, commit: str, run: Path, *, reset_p4: bool = True) -> dict:
     snapshot, firmware, manifest = build_emos(config, commit, run)
     url = config["extender_url"]
     reset_config = Path(config["reset_config"]).resolve(strict=True)
     build_id = manifest["build"]["build_id"]
+    if reset_p4:
+        reset_p4_for_maintenance(config, run)
+    else:
+        progress("Preserving current P4/browser sessions by explicit request")
     # A reset can very occasionally reach MOS before the P4 completes the
     # keyboard layout/poll admission exchange.  That leaves mainboard input
     # selected, so host automation cannot issue a retry through MOS.  A second
@@ -102,6 +172,8 @@ def flash_emos(config: dict, commit: str, run: Path) -> dict:
                       file=sys.stderr)
     if admission_error is not None:
         raise admission_error
+    if stop_existing_sd_service(url, run / "sd-preexisting.json"):
+        progress("Stopped the pre-existing foreground SD listener and returned to the EMOS prompt")
     progress("Preparing a clean Legacy prompt and starting the fast SD listener")
     type_line(url, run / "keyboard-clear.json", "VDU 12")
     type_line(url, run / "keyboard-legacy.json", "EMOS LEGACY")
@@ -314,9 +386,15 @@ def main() -> int:
         "--no-reset-agon", action="store_true",
         help="after a P4 flash, leave the Agon untouched and skip EMOS-to-P4 connectivity verification",
     )
+    parser.add_argument(
+        "--no-reset-p4", action="store_true",
+        help="before an EMOS flash, preserve P4/browser sessions instead of normalizing them",
+    )
     args = parser.parse_args()
     if args.no_reset_agon and args.target != "p4":
         parser.error("--no-reset-agon is valid only with --target p4")
+    if args.no_reset_p4 and args.target != "emos":
+        parser.error("--no-reset-p4 is valid only with --target emos")
     config = load_config(args.config.resolve(strict=True))
     repository = ROOT if args.target == "p4" else Path(config["emos_repository"])
     commit = resolve_commit(repository.resolve(strict=True), args.commit)
@@ -327,9 +405,11 @@ def main() -> int:
     run.mkdir(parents=True)
     atomic_json(run / "request.json", {"target": args.target, "commit": commit,
                                         "config": str(args.config.resolve()),
-                                        "reset_agon_after_p4": not args.no_reset_agon})
+                                        "reset_agon_after_p4": not args.no_reset_agon,
+                                        "reset_p4_before_emos": not args.no_reset_p4})
     receipt = (flash_p4(config, commit, run, reset_agon=not args.no_reset_agon)
-               if args.target == "p4" else flash_emos(config, commit, run))
+               if args.target == "p4" else
+               flash_emos(config, commit, run, reset_p4=not args.no_reset_p4))
     receipt["receipt_path"] = str(run / "flash-receipt.json")
     atomic_json(run / "flash-receipt.json", receipt)
     print_success(receipt, run / "flash-receipt.json")

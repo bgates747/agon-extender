@@ -34,11 +34,12 @@ def normalized(value: str) -> str:
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True, type=Path)
+    parser.add_argument("--reset-only", action="store_true")
     args = parser.parse_args()
     config = json.loads(args.config.read_text())
     root = args.config.resolve().parent
-    image = root / config["image"]
-    if sha(image) != config["image_sha256"]:
+    image = None if args.reset_only else root / config["image"]
+    if image is not None and sha(image) != config["image_sha256"]:
         raise RuntimeError("staged factory image hash mismatch")
     stable = Path(config["stable_port"])
     resolved = stable.resolve(strict=True)
@@ -71,6 +72,19 @@ def main() -> int:
             completed = subprocess.run(argv, stdout=log, stderr=subprocess.STDOUT)
         if completed.returncode:
             raise subprocess.CalledProcessError(completed.returncode, argv)
+
+    if args.reset_only:
+        progress("Resetting the verified P4 without erasing or writing flash")
+        run("reset", ["--before", "usb_reset", "--after", "hard_reset", "run"])
+        receipt = {
+            "schema": 1, "status": "reset-issued", "target": "p4",
+            "usb_serial": properties["ID_SERIAL_SHORT"],
+            "stable_port": str(stable), "evidence": str(evidence),
+            "completed_at": stamp,
+        }
+        (evidence / "reset-receipt.json").write_text(json.dumps(receipt, indent=2) + "\n")
+        print(json.dumps(receipt))
+        return 0
 
     backup = evidence / "preflash-16MiB.bin"
     progress("Reading and preserving all 16 MiB of existing P4 flash; this can take several minutes")
