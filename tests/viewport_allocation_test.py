@@ -38,10 +38,10 @@ class ViewportAllocationTests(unittest.TestCase):
         screen = (ROOT / "vdp/video/agon_screen.h").read_text()
         self.assertIn("if (!allocateViewPort())\n    return;", base)
         self.assertIn("if (!isViewPortAllocated())\n    return;", paletted)
-        self.assertIn("if (!_VGAController->isViewPortAllocated())", screen)
+        self.assertIn("if (!vga.isViewPortAllocated()", screen)
         self.assertLess(
-            screen.index("if (!_VGAController->isViewPortAllocated())"),
-            screen.index("_stockFrameService->startClock"),
+            screen.index("if (!vga.isViewPortAllocated()"),
+            screen.index("service.startClock"),
         )
 
 

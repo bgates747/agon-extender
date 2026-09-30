@@ -7,6 +7,7 @@ extern "C" IRAM_ATTR void agon_owner_switch(unsigned c,unsigned kind,void *task,
 #include "extender/display/stock_p4_service.hpp"
 #include "extender/diagnostics/video_timing.hpp"
 #include <cassert>
+#include <new>
 #include "extender/display/drawing_cadence.hpp"
 
 namespace agon::extender::display {
@@ -46,7 +47,19 @@ constexpr unsigned kOutputTaskCore = 1;
 #endif
 } // namespace
 StockP4Service::StockP4Service(Allocator allocator)
-    : snapshots_(allocator, SnapshotPixelFormat::RGB222, 0, true, true, kSnapshotLookahead) {
+    : owned_snapshots_(new (std::nothrow) PresentationSnapshotPool(
+          allocator, SnapshotPixelFormat::RGB222, 0, true, true,
+          kSnapshotLookahead)),
+      snapshots_(owned_snapshots_.get()) {
+  initializeSynchronization();
+}
+
+StockP4Service::StockP4Service(PresentationSnapshotPool &snapshots)
+    : snapshots_(&snapshots) {
+  initializeSynchronization();
+}
+
+void StockP4Service::initializeSynchronization() {
   barrier_done_ = xSemaphoreCreateBinary();
   draw_done_ = xSemaphoreCreateBinary();
   output_done_ = xSemaphoreCreateBinary();
@@ -75,7 +88,6 @@ bool StockP4Service::startClock(std::uint32_t period_us) {
   if (controller_) return false; // change cadence only at a detached mode boundary
   stopClock();
   period_us_ = period_us;
-  clock_.start(esp_timer_get_time(), period_us);
   esp_timer_create_args_t args{};
   args.callback = timerEntry;
   args.arg = this;
@@ -110,6 +122,7 @@ void StockP4Service::barrierEntry(void *semaphore) { xSemaphoreGive(static_cast<
 
 void StockP4Service::timerEntry(void *context) {
   auto &self = *static_cast<StockP4Service *>(context);
+  if (!self.active_.load(std::memory_order_acquire)) return;
   const bool logicalFrame = self.clock_.observe(esp_timer_get_time()) != 0;
   if (!logicalFrame && kDrawingOpportunities == 1) return;
   // Coalesced task notifications carry opportunities, not a backlog of frames.
@@ -123,8 +136,9 @@ void StockP4Service::timerEntry(void *context) {
   if (logicalFrame && output) xTaskNotifyGive(output);
 }
 
-bool StockP4Service::attach(StockRuntimeController &controller) {
-  if (!timer_ || controller_ || !draw_done_ || !output_done_ || !snapshots_.enabled()) return false;
+bool StockP4Service::prepare(StockRuntimeController &controller) {
+  if (!timer_ || controller_ || !draw_done_ || !output_done_ ||
+      snapshots_ == nullptr || !snapshots_->enabled()) return false;
   controller_ = &controller;
   controller_->display().enableBackgroundPrimitiveExecution(true);
   stopping_.store(false, std::memory_order_release);
@@ -146,8 +160,22 @@ bool StockP4Service::attach(StockRuntimeController &controller) {
   return true;
 }
 
+void StockP4Service::activate() {
+  assert(timer_ && controller_ && draw_task_.load(std::memory_order_acquire) &&
+         output_task_.load(std::memory_order_acquire));
+  clock_.start(esp_timer_get_time(), period_us_);
+  active_.store(true, std::memory_order_release);
+}
+
+bool StockP4Service::attach(StockRuntimeController &controller) {
+  if (!prepare(controller)) return false;
+  activate();
+  return true;
+}
+
 void StockP4Service::detach() {
   if (!controller_) return;
+  active_.store(false, std::memory_order_release);
   stopping_.store(true, std::memory_order_release);
   auto drawing = draw_task_.load(std::memory_order_acquire);
   auto output = output_task_.load(std::memory_order_acquire);
@@ -218,21 +246,21 @@ void StockP4Service::publish() {
   if (isolation == agon_output_isolation::Mode::Discard) {
     // Synthetic local demand at the same logical opportunities, no network.
     PresentationSnapshotLease lease;
-    if (snapshots_.tryAcquireLatest(discard_generation_, lease)) {
+    if (snapshots_->tryAcquireLatest(discard_generation_, lease)) {
       discard_generation_ = lease.view().generation;
       lease.release();
     }
   }
 #endif
   MutableSnapshotView view{};
-  if (snapshots_.tryBegin(display.getViewPortWidth(), display.getViewPortHeight(),
+  if (snapshots_->tryBegin(display.getViewPortWidth(), display.getViewPortHeight(),
                           esp_timer_get_time(), view) != SnapshotBeginResult::Ok) return;
   assert(view.packed_pixels && !view.pixels);
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   if (isolation == agon_output_isolation::Mode::Prebuilt) {
     agon_output_isolation::Scope scope(agon_output_isolation::Phase::Prebuilt);
     const bool ok = prebuilt_.prepare(view.packed_pixels, view.width, view.height);
-    snapshots_.finish(ok ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
+    snapshots_->finish(ok ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
     scope.finish(ok ? view.width*view.height : 0, ok);
     return;
   }
@@ -281,7 +309,7 @@ void StockP4Service::publish() {
           view.packed_pixels+(y+i)*view.width, view.width);
   }
   }
-  snapshots_.finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
+  snapshots_->finish(complete ? CompositionResult::Ok : CompositionResult::InvalidRegion, period_us_);
   timing.finish(complete ? view.width * view.height : 0);
 #ifdef AGON_EXTENDER_OUTPUT_ISOLATION
   composition.finish(complete ? view.width*view.height : 0, complete);

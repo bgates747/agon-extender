@@ -310,7 +310,8 @@ void VDUStreamProcessor::vdu_mode(uint8_t mode) {
 		errVal = changeMode(videoMode);
 		if (errVal != 0) {
 			debug_log("vdu_mode: Error %d changing back to mode %d\n\r", errVal, videoMode);
-			videoMode = 1;
+			// changeMode publishes videoMode only after a committed replacement.
+			// If mode 1 also fails, retain the still-live prior mode identity.
 			changeMode(1);
 		}
 	}

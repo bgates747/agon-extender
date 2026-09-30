@@ -13,6 +13,7 @@
 // bitmapped-controller integration boundary.
 
 #include <memory>
+#include <new>
 #if defined(ESP_PLATFORM)
 #include "extender/display/mode_status.hpp"
 static unsigned browserNominalRefreshHz = 0;
@@ -29,6 +30,7 @@ using fabgl::RGB888;
 #include "agon_palette.h"						// Colour lookup table
 #include "extender/display/cursor_position_adapter.hpp"
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
+#include "extender/display/mode_transaction.hpp"
 #include "extender/display/stock_p4_service.hpp"
 #else
 #include "extender/display/p4_frame_service.hpp"
@@ -41,9 +43,10 @@ std::unique_ptr<fabgl::Canvas>	canvas;			// The canvas class
 // detach joins both native owners before Canvas/controller replacement.
 std::unique_ptr<agon::extender::display::StockRuntimeController> _stockController;
 fabgl::VGAPalettedController * _VGAController = nullptr;
+std::unique_ptr<agon::extender::display::PresentationSnapshotPool> _stockSnapshotPool;
 std::unique_ptr<agon::extender::display::StockP4Service> _stockFrameService;
 inline fabgl::BitmappedDisplayController * activeDisplayController() { return _VGAController; }
-inline auto & displaySnapshotPool() { return _stockFrameService->snapshotPool(); }
+inline auto & displaySnapshotPool() { return *_stockSnapshotPool; }
 #else
 std::unique_ptr<agon::extender::display::P4DisplayController>	_VGAController;		// Upstream-shaped active controller owner
 std::unique_ptr<agon::extender::display::P4FrameService>	_P4FrameService;
@@ -239,23 +242,17 @@ bool updateVGAController(uint8_t colours) {
 		return false;
 	}
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
-	if (!_stockFrameService) {
+	if (!_stockSnapshotPool) {
 		using namespace agon::extender::display;
 		Allocator outputAllocator{nullptr,
 			[](void *, std::size_t n) -> void * { return heap_caps_malloc(n, MALLOC_CAP_8BIT | MALLOC_CAP_SPIRAM); },
 			[](void *, void * p) { heap_caps_free(p); }};
-		_stockFrameService.reset(new StockP4Service(outputAllocator));
-	}
-	_stockFrameService->detach(); // clock continues through native mode allocation
-	resetMousePositioner(0, 0, nullptr);
-	canvas.reset();
-	if (!_stockController || colours != _VGAColourDepth) {
-		_VGAController = nullptr;
-		_stockController.reset(); // original native aliases require one active instance
-		_stockController = agon::extender::display::makeStockRuntimeController(colours);
-		if (!_stockController) return false;
-		_VGAController = &_stockController->paletted();
-		_VGAController->begin();
+		_stockSnapshotPool.reset(new (std::nothrow) PresentationSnapshotPool(
+			outputAllocator, SnapshotPixelFormat::RGB222, 0, true, true));
+		if (!_stockSnapshotPool || !_stockSnapshotPool->enabled()) {
+			_stockSnapshotPool.reset();
+			return false;
+		}
 	}
 #else
 	if (_VGAController) {
@@ -285,31 +282,106 @@ bool updateVGAController(uint8_t colours) {
 // - 2: Not enough memory for mode
 //
 int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffered = false) {
-#if defined(ESP_PLATFORM)
+#if defined(ESP_PLATFORM) && !defined(AGON_EXTENDER_STOCK_RUNTIME)
 	agon::extender::display::modeStatus.invalidate();
 #endif
+#if defined(AGON_EXTENDER_STOCK_RUNTIME)
+	agon::extender::display::NativePixelFormat candidateFormat;
+	if (!agon::extender::display::nativeFormatForColourDepth(colours, candidateFormat)) return 1;
+	(void) candidateFormat;
+	if (!updateVGAController(colours)) return 2;
+#else
 	if (!updateVGAController(colours)) {			// If we can't update the controller then
 		return 1;									// Return the error
 	}
-
 	canvas.reset();									// Delete the canvas
+#endif
 
 	if (!modeLine) {
 		debug_log("changeResolution: modeLine is null\n\r");
 		return 2;
 	}
 #if defined(AGON_EXTENDER_STOCK_RUNTIME)
-	// Retain official modelines and their nominal output period. Original
-	// setResolution owns native geometry/allocation; official vdu_mode owns
-	// requested/old/mode-1 fallback. No generic storage or drawing conversion.
+	// Prepare every fallible P4 mode resource beside the live mode. Official
+	// vdu_mode still owns requested/old/mode-1 fallback and modeline selection.
+	using namespace agon::extender::display;
 	agon::extender::display::OfficialModeLine timing{};
 	if (!agon::extender::display::parseOfficialModeline(modeLine, timing)) return 2;
-	_VGAController->setResolution(modeLine, -1, -1, doubleBuffered);
-	if (!_VGAController->isViewPortAllocated()) {
-		debug_log("changeResolution: native viewport allocation failed\n\r");
+	using Candidate = PreparedModeCandidate<StockRuntimeController,
+		fabgl::Canvas, StockP4Service>;
+	Candidate candidate{};
+	candidate.colours = colours;
+	candidate.refresh_hz = timing.refresh_hz;
+	candidate.double_buffered = doubleBuffered;
+	if (!prepareModeCandidate(candidate,
+		[&] { return makeStockRuntimeController(colours); },
+		[&](StockRuntimeController &controller) {
+			auto &vga = controller.paletted();
+			vga.begin();
+			{
+				// Original FabGL drawing helpers retain static viewport aliases.
+				// Exclude both native readers while the candidate temporarily binds
+				// them, then restore the live controller until commit.
+				StockNativeGuard nativeGuard(stockNativeMutex());
+				vga.setResolution(modeLine, -1, -1, doubleBuffered);
+				if (_stockController) _stockController->bindNativeAliases();
+			}
+			if (!vga.isViewPortAllocated() ||
+				vga.getScreenHeight() != vga.getViewPortHeight()) return false;
+			candidate.width = vga.getViewPortWidth();
+			candidate.height = vga.getViewPortHeight();
+			return true;
+		},
+		[&](StockRuntimeController &controller) {
+			auto &vga = controller.paletted();
+			vga.enableBackgroundPrimitiveExecution(true);
+			vga.enableBackgroundPrimitiveTimeout(false);
+			return std::unique_ptr<fabgl::Canvas>(
+				new (std::nothrow) fabgl::Canvas(&vga));
+		},
+		[&] { return std::unique_ptr<StockP4Service>(
+			new (std::nothrow) StockP4Service(*_stockSnapshotPool)); },
+		[&](StockP4Service &service, StockRuntimeController &controller) {
+			return service.startClock(periodForRefresh(timing.refresh_hz)) &&
+				service.prepare(controller);
+		})) {
+		debug_log("changeResolution: P4 candidate preparation failed\n\r");
 		return 2;
 	}
-	if (!_stockFrameService->startClock(agon::extender::display::periodForRefresh(timing.refresh_hz))) return 2;
+
+	commitPreparedMode(std::move(candidate),
+		[&] {
+			if (_stockFrameService) _stockFrameService->detach();
+			resetMousePositioner(0, 0, nullptr);
+		},
+		[](StockRuntimeController &controller) { controller.bindNativeAliases(); },
+		[](StockP4Service &service) { service.activate(); },
+		[&](Candidate &&prepared) {
+			auto *candidateVGA = &prepared.controller->paletted();
+			auto oldController = std::move(_stockController);
+			auto oldCanvas = std::move(canvas);
+			auto oldService = std::move(_stockFrameService);
+			_stockController = std::move(prepared.controller);
+			_stockFrameService = std::move(prepared.service);
+			_VGAController = candidateVGA;
+			canvas = std::move(prepared.canvas);
+			_VGAColourDepth = prepared.colours;
+			canvasW = prepared.width;
+			canvasH = prepared.height;
+			logicalScaleX = LOGICAL_SCRW / (double)canvasW;
+			logicalScaleY = LOGICAL_SCRH / (double)canvasH;
+			rectangularPixels = ((float)canvasW / (float)canvasH) > 2;
+			browserNominalRefreshHz = prepared.refresh_hz;
+#if defined(ESP_PLATFORM)
+			// The caller publishes the requested logical mode after this commit.
+			// Do not expose the old geometry during that bounded handoff.
+			modeStatus.invalidate();
+#endif
+			oldCanvas.reset();
+			oldController.reset();
+			oldService.reset();
+		});
+	return 0;
 #else
 	auto configureResult = _screenFacadeAdapter->configure(colours, modeLine, doubleBuffered);
 	if (configureResult != agon::extender::display::FacadeConfigureResult::Ok) {
@@ -317,6 +389,8 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 		return configureResult == agon::extender::display::FacadeConfigureResult::InvalidColourDepth ? 1 : 2;
 	}
 #endif
+
+#if !defined(AGON_EXTENDER_STOCK_RUNTIME)
 	_VGAColourDepth = colours;
 
 	_VGAController->enableBackgroundPrimitiveExecution(true);
@@ -342,9 +416,6 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 	if (_VGAController->getScreenHeight() != _VGAController->getViewPortHeight()) {
 		return 2;
 	}
-#if defined(AGON_EXTENDER_STOCK_RUNTIME)
-	if (!_stockFrameService->attach(*_stockController)) return 2;
-#endif
 #if defined(ESP_PLATFORM)
 	// Read the selected modeline, not a browser frame-delivery interval.
 	agon::extender::display::OfficialModeLine browserTiming{};
@@ -353,6 +424,7 @@ int8_t changeResolution(uint8_t colours, const char * modeLine, bool doubleBuffe
 #endif
 	// Return with no errors
 	return 0;
+#endif
 }
 
 // Do the mode change

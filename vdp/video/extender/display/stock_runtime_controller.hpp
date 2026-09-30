@@ -17,6 +17,7 @@ class StockRuntimeController {
   virtual ~StockRuntimeController() = default;
   virtual fabgl::VGABaseController &display() noexcept = 0;
   virtual fabgl::VGAPalettedController &paletted() noexcept = 0;
+  virtual void bindNativeAliases() noexcept = 0;
   virtual std::size_t drain() = 0;
   virtual void prepareRow(int y, std::uint8_t *signal) = 0;
 #if defined(AGON_EXTENDER_OUTPUT_ROW_PAIR)
@@ -35,6 +36,13 @@ class StockBoundController : public StockScanlineController<Depth>, public Stock
   ~StockBoundController() override { end(); }
   fabgl::VGABaseController &display() noexcept override { return *this; }
   fabgl::VGAPalettedController &paletted() noexcept override { return *this; }
+
+  void bindNativeAliases() noexcept override {
+    fabgl::VGABaseController::s_viewPort = this->m_viewPort;
+    fabgl::VGABaseController::s_viewPortVisible = this->m_viewPortVisible;
+    fabgl::VGABaseController::s_scanWidth = this->m_viewPortWidth;
+    fabgl::VGABaseController::s_viewPortHeight = this->m_viewPortHeight;
+  }
 
   void suspendBackgroundPrimitiveExecution() override { execution_.suspend(); }
   void resumeBackgroundPrimitiveExecution() override { execution_.resume(); }
