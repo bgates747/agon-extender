@@ -161,6 +161,13 @@ the listener, and reports the original fixture failure. Without either
 completion-plus-prompt or this run-specific start-plus-prompt proof, its
 no-input/no-reset safety rule is unchanged.
 
+Exact Extender commit `09450012` passed all 59 pinned offline qualification
+cases in 148.74 monotonic seconds with zero test failures, infrastructure
+errors, timeouts or blocked cases. Summary SHA-256 is
+`67421d28e5228816e4a45b3b6a65052ea9a18cfb3fc9ade9ebfab5a8263ee2a6`.
+This is the source/build gate; the run-specific ExCom marker protocol still
+requires physical execution.
+
 ## Acceptance boundary
 
 `A10-RP04-A01` [x] The selected headless emulator cases passed. The Author then
