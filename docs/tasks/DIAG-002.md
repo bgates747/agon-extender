@@ -42,6 +42,14 @@ accepted the Agon connection. This is direct one-sided-reset evidence for
 D02-02/D02-06. It does not authorize advancing this deferred task during the
 audit.
 
+D02-S05 — The Author authorized bounded recovery. The host verified the exact
+P4 USB identity, issued a no-flash P4-only reset, and observed fresh P4 HTTP
+epoch `3114281151`. It then reset only the Agon and required—not inferred—a
+fresh ready/neutral Extender admission at epoch `3114281152`. Keyboard locale 1,
+mode 0 at 640×480, offline SD listener and a fresh Legacy screen capture were
+all observed. This establishes one working recovery order; it does not explain
+the lost admission or satisfy D02-06's complete reset-order matrix.
+
 ## Required behavior
 
 D02-B01 [ ] During ordinary startup, EMOS reports an actor-explicit Extender
