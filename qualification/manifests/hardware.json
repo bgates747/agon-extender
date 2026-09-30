@@ -14,10 +14,22 @@
       "description": "Exercise the installed browser assets and reset bridge, Agon reset/readmission, live ExCom keyboard and renderer text capture, display status, P4/EMOS SD round trip, and final startup restoration."
     },
     {
+      "id": "a10-rp06-mode-transaction",
+      "applies_to": ["p4"],
+      "receipt_target": "p4",
+      "depends_on": ["installed-p4-integrated-smoke"],
+      "required_checks": 7,
+      "driver": "rp06-mode-transaction",
+      "acceptance_required": true,
+      "destructive": false,
+      "timeout_seconds": 180,
+      "description": "Prove mode 8 to mode 20 to mode 8 commits with no browser client and with one retained browser-video connection, then restore ordinary startup."
+    },
+    {
       "id": "a10-rp04-raw-sd-write",
       "applies_to": ["emos"],
       "receipt_target": "emos",
-      "depends_on": ["installed-p4-integrated-smoke"],
+      "depends_on": ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction"],
       "required_checks": 4,
       "driver": "fwbug008-physical",
       "acceptance_required": true,

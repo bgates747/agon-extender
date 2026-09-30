@@ -20,7 +20,7 @@ sys.path.insert(0, str(ROOT / "scripts"))
 from hardware_validation import (atomic_json, clean_snapshot, load_config,
                                  resolve_commit, sha256,
                                  type_line, utc_stamp, wait_keyboard, wait_sd_service)
-from video import capture as capture_video
+from video import VideoSession, capture as capture_video
 
 
 def announce(message: str) -> None:
@@ -41,7 +41,8 @@ def validate_repair_manifest(document: dict) -> None:
                 any(item not in ("emos", "p4") for item in applies) or
                 len(applies) != len(set(applies))):
             raise ValueError(f"{case_id}: invalid applies_to")
-        if case.get("driver") not in ("fwbug008-physical", "installed-p4-smoke"):
+        if case.get("driver") not in ("fwbug008-physical", "installed-p4-smoke",
+                                      "rp06-mode-transaction"):
             raise ValueError(f"{case_id}: unknown physical driver")
         if case.get("receipt_target") not in ("emos", "p4"):
             raise ValueError(f"{case_id}: invalid receipt_target")
@@ -166,6 +167,35 @@ def wait_screen(url: str, predicate, description: str, output: Path,
             return last
         time.sleep(0.25)
     raise TimeoutError(f"screen did not {description}; last capture was saved")
+
+
+def wait_display(url: str, mode: int, width: int, height: int,
+                 timeout: float = 30) -> dict:
+    deadline = time.monotonic() + timeout
+    last = {}
+    while time.monotonic() < deadline:
+        last = read_json(url, "/display/status")
+        if (last.get("available") and last.get("mode") == mode and
+                last.get("width") == width and last.get("height") == height):
+            return last
+        time.sleep(0.2)
+    raise TimeoutError(
+        f"display did not commit mode {mode} at {width}x{height}: {last}")
+
+
+def wait_video_geometry(session: VideoSession, output: Path, label: str,
+                        width: int, height: int, timeout: float = 30) -> dict:
+    deadline = time.monotonic() + timeout
+    attempt = 0
+    last = {}
+    while time.monotonic() < deadline:
+        attempt += 1
+        last = session.frame(output / f"{label}-{attempt:02d}.evf")
+        if (last["width"], last["height"]) == (width, height):
+            return last
+        time.sleep(0.2)
+    raise TimeoutError(
+        f"browser video did not publish {width}x{height} for {label}: {last}")
 
 
 def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
@@ -304,6 +334,73 @@ def run_p4_smoke(config: dict, receipt: dict, output: Path) -> dict:
             cleanup_error = repr(error)
         if cleanup_error:
             raise RuntimeError("P4 smoke failed and final startup recovery failed: " + cleanup_error)
+        raise
+
+
+def run_rp06_mode_transaction(config: dict, receipt: dict, output: Path) -> dict:
+    """Exercise mode 8/20 commit with zero and active browser demand."""
+    output.mkdir(parents=True, exist_ok=False)
+    url = config["extender_url"]
+    reset = [str(ROOT / ".venv/bin/python"), str(ROOT / "scripts/reset_agon.py"),
+             "--config", str(Path(config["reset_config"]).resolve(strict=True))]
+    checks = []
+    started = time.monotonic()
+
+    def passed(check_id: str, **evidence) -> None:
+        checks.append({"id": check_id, "status": "pass", **evidence})
+        atomic_json(output / "checks.json", checks)
+        announce("PASS " + check_id)
+
+    def switch(mode: int, width: int, height: int, label: str) -> dict:
+        announce(f"Switching the P4 display to mode {mode} ({width}x{height}) for {label}")
+        type_line(url, output / f"keyboard-{label}.json", f"VDU 22 {mode}")
+        return wait_display(url, mode, width, height)
+
+    try:
+        announce("Resetting the Agon and entering ExCom for RP06 mode qualification")
+        reset_and_wait(reset, url)
+        legacy_text = capture_text(url)
+        type_line(url, output / "keyboard-excom.json", "EMOS EXCOM")
+        wait_screen(url, lambda text: text != legacy_text,
+                    "change after EMOS EXCOM", output / "excom-transition")
+
+        mode8 = switch(8, 320, 240, "browser-absent-mode8")
+        passed("rp06-browser-absent-mode8", display=mode8)
+        mode20 = switch(20, 512, 384, "browser-absent-mode20")
+        passed("rp06-browser-absent-mode20", display=mode20)
+        returned8 = switch(8, 320, 240, "browser-absent-return-mode8")
+        passed("rp06-browser-absent-return-mode8", display=returned8)
+
+        video_dir = output / "browser-present-video"
+        video_dir.mkdir()
+        announce("Opening one retained browser-video connection for mode transitions")
+        with VideoSession(url) as video:
+            frame8 = wait_video_geometry(
+                video, video_dir, "mode8-before", 320, 240)
+            passed("rp06-browser-present-mode8", frame=frame8)
+            active20 = switch(20, 512, 384, "browser-present-mode20")
+            frame20 = wait_video_geometry(video, video_dir, "mode20", 512, 384)
+            passed("rp06-browser-present-mode20", display=active20, frame=frame20)
+            active8 = switch(8, 320, 240, "browser-present-return-mode8")
+            final_frame = wait_video_geometry(
+                video, video_dir, "mode8-after", 320, 240)
+            passed("rp06-browser-present-return-mode8",
+                   display=active8, frame=final_frame)
+
+        announce("Resetting the Agon and verifying ordinary startup after RP06 transitions")
+        final = reset_and_wait(reset, url)
+        if not final.get("ready") or not final.get("physical_neutral"):
+            raise RuntimeError("RP06 final reset did not restore admitted neutral input")
+        passed("rp06-final-startup-recovery")
+        return {
+            "id": "a10-rp06-mode-transaction", "component": "p4",
+            "status": "pass", "duration_seconds": time.monotonic() - started,
+            "flashed_commit": receipt["component_commit"],
+            "flashed_artifact_sha256": receipt["artifact_sha256"],
+            "checks": checks, "startup_restored": True,
+        }
+    except BaseException:
+        reset_and_wait(reset, url)
         raise
 
 
@@ -546,6 +643,8 @@ def main() -> int:
             receipt = receipts[case["receipt_target"]]
             if case["driver"] == "installed-p4-smoke":
                 record = run_p4_smoke(config, receipt, run / case["id"])
+            elif case["driver"] == "rp06-mode-transaction":
+                record = run_rp06_mode_transaction(config, receipt, run / case["id"])
             elif case["driver"] == "fwbug008-physical":
                 record = run_fwbug008(config, receipt, run / case["id"])
             else:

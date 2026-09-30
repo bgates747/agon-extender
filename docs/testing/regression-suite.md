@@ -106,7 +106,13 @@ agent to monitor the run.
 The mandatory integrated smoke exercises the installed P4 web assets, browser
 reset bridge, P4-to-EMOS keyboard path, ExCom display/status/text capture, and a
 temporary exact-byte mainboard-SD round trip, then restores the ordinary startup
-state. The additional EMOS physical case is `a10-rp04-raw-sd-write`. Its eZ80 fixture
+state. The dependent `a10-rp06-mode-transaction` case then switches mode
+8→20→8 without a browser consumer and repeats the sequence while retaining
+one browser-video WebSocket. It checks committed display status and decoded
+frame geometry at each edge, closes the browser connection and restores
+ordinary startup. Loaded-asset Nurples remains a separate manual case.
+
+The additional EMOS physical case is `a10-rp04-raw-sd-write`. Its eZ80 fixture
 refuses to write unless the card has a valid MBR whose first partition begins
 after sector 2. It retains sector 2 in RAM, exercises the repaired RST `0x08`
 write API, independently reads the result, restores through MOS's distinct C

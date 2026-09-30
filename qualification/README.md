@@ -40,14 +40,17 @@ not substitute for installed-hardware qualification.
 | `config.example.json` | Tracked schema for the ignored bench configuration |
 | `tests/` | Structural tests for this qualification authority |
 
-The full default run currently requires 17 independently reported checks across
-two physical cases. The P4 case exercises actual browser assets and reset bridge,
-Agon reset/readmission, Legacy and ExCom routing, keyboard input, display status,
-text capture, three fresh decoded WebSocket video frames, an exact mainboard-SD
-round trip, independently verified cleanup, and final startup recovery. The EMOS
-case builds its receipt-bound fixture, stages it with restoration safeguards,
-exercises real raw-sector write/read/restore with independent CRC oracles, and
-restores the original startup file. A missing receipt or check fails closed.
+The full default run currently requires 24 independently reported checks across
+three physical cases. The integrated P4 case exercises actual browser assets and
+reset bridge, Agon reset/readmission, Legacy and ExCom routing, keyboard input,
+display status, text capture, three fresh decoded WebSocket video frames, an
+exact mainboard-SD round trip, independently verified cleanup, and final startup
+recovery. The RP06 P4 case exercises mode 8→20→8 first without a browser
+client and then while retaining one browser-video WebSocket, checking committed
+status and decoded frame geometry at every edge. The EMOS case builds its
+receipt-bound fixture, stages it with restoration safeguards, exercises real
+raw-sector write/read/restore with independent CRC oracles, and restores the
+original startup file. A missing prerequisite, receipt or check fails closed.
 
 QUAL-003 and QUAL-004 remain provenance for broad graphics and exact paired-
 pixel testing. Their private adapters, diagnostic mainboard firmware, and

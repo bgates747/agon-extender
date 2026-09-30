@@ -76,31 +76,60 @@ def decode_evf(raw):
             "sha256": hashlib.sha256(pixels).hexdigest()}
 
 
-def capture(url, output, count=3):
-    output = Path(output)
-    output.mkdir(parents=True, exist_ok=False)
-    parsed = urlparse(url)
-    records = []
-    with socket.create_connection((parsed.hostname, parsed.port or 80), timeout=30) as stream:
+class VideoSession:
+    """One retained browser-video consumer for transition qualification."""
+
+    def __init__(self, url):
+        self.parsed = urlparse(url)
+        self.stream = None
+
+    def __enter__(self):
+        parsed = self.parsed
+        self.stream = socket.create_connection(
+            (parsed.hostname, parsed.port or 80), timeout=30)
         key = base64.b64encode(os.urandom(16)).decode()
-        stream.sendall(
+        self.stream.sendall(
             f"GET /video HTTP/1.1\r\nHost: {parsed.netloc}\r\nUpgrade: websocket\r\n"
             f"Connection: Upgrade\r\nSec-WebSocket-Key: {key}\r\n"
             "Sec-WebSocket-Version: 13\r\n\r\n".encode())
         response = bytearray()
         while not response.endswith(b"\r\n\r\n"):
-            response.extend(_exact(stream, 1))
+            response.extend(_exact(self.stream, 1))
         expected = base64.b64encode(hashlib.sha1(
             (key + "258EAFA5-E914-47DA-95CA-C5AB0DC85B11").encode()).digest())
         if b"101 Switching Protocols" not in response or expected not in response:
+            self.stream.close()
+            self.stream = None
             raise RuntimeError("video WebSocket upgrade failed")
+        return self
+
+    def frame(self, path):
+        _send(self.stream, b"frame")
+        raw = _receive(self.stream)
+        Path(path).write_bytes(raw)
+        return decode_evf(raw)
+
+    def __exit__(self, exc_type, exc, traceback):
+        if self.stream is None:
+            return
+        try:
+            try:
+                _send(self.stream, struct.pack("!H", 1000), 8)
+            except OSError:
+                pass
+        finally:
+            self.stream.close()
+            self.stream = None
+
+
+def capture(url, output, count=3):
+    output = Path(output)
+    output.mkdir(parents=True, exist_ok=False)
+    records = []
+    with VideoSession(url) as session:
         for index in range(count):
-            _send(stream, b"frame")
-            raw = _receive(stream)
-            (output / f"{index:02}.evf").write_bytes(raw)
-            records.append(decode_evf(raw))
+            records.append(session.frame(output / f"{index:02}.evf"))
             time.sleep(0.2)
-        _send(stream, struct.pack("!H", 1000), 8)
     if len({item["sequence"] for item in records}) != len(records):
         raise RuntimeError("video endpoint returned a stale frame generation")
     return records

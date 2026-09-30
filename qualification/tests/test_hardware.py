@@ -33,26 +33,28 @@ class HardwareValidationTests(unittest.TestCase):
         document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
         runner.validate_repair_manifest(document)
         self.assertEqual([case["id"] for case in document["cases"]],
-                         ["installed-p4-integrated-smoke", "a10-rp04-raw-sd-write"])
+                         ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction",
+                          "a10-rp04-raw-sd-write"])
         self.assertFalse(document["cases"][0]["destructive"])
-        self.assertTrue(document["cases"][1]["destructive"])
+        self.assertFalse(document["cases"][1]["destructive"])
+        self.assertTrue(document["cases"][2]["destructive"])
         self.assertTrue(all(case["acceptance_required"] for case in document["cases"]))
         self.assertEqual([case["receipt_target"] for case in document["cases"]],
-                         ["p4", "emos"])
-        self.assertEqual(document["cases"][1]["depends_on"],
-                         ["installed-p4-integrated-smoke"])
-        self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 17)
+                         ["p4", "p4", "emos"])
+        self.assertEqual(document["cases"][2]["depends_on"],
+                         ["installed-p4-integrated-smoke", "a10-rp06-mode-transaction"])
+        self.assertEqual(sum(case["required_checks"] for case in document["cases"]), 24)
 
     def test_manifest_rejects_unknown_self_or_duplicate_dependency(self):
         document = json.loads((ROOT / "qualification/manifests/hardware.json").read_text())
-        document["cases"][1]["depends_on"] = ["missing"]
+        document["cases"][2]["depends_on"] = ["missing"]
         with self.assertRaisesRegex(ValueError, "depends_on"):
             runner.validate_repair_manifest(document)
-        document["cases"][1]["depends_on"] = [document["cases"][1]["id"]]
+        document["cases"][2]["depends_on"] = [document["cases"][2]["id"]]
         with self.assertRaisesRegex(ValueError, "depends_on"):
             runner.validate_repair_manifest(document)
         dependency = document["cases"][0]["id"]
-        document["cases"][1]["depends_on"] = [dependency, dependency]
+        document["cases"][2]["depends_on"] = [dependency, dependency]
         with self.assertRaisesRegex(ValueError, "depends_on"):
             runner.validate_repair_manifest(document)
 
@@ -151,6 +153,20 @@ class HardwareValidationTests(unittest.TestCase):
                     ["old", "old", "marker"])
         finally:
             runner.capture_text = original
+
+    def test_video_gate_retries_until_new_mode_geometry_is_published(self):
+        class Session:
+            def __init__(self):
+                self.frames = iter(((320, 240), (512, 384)))
+
+            def frame(self, path):
+                width, height = next(self.frames)
+                return {"width": width, "height": height, "sequence": width}
+
+        with tempfile.TemporaryDirectory() as folder:
+            result = runner.wait_video_geometry(
+                Session(), Path(folder), "mode20", 512, 384, timeout=1)
+        self.assertEqual((result["width"], result["height"]), (512, 384))
 
 
 if __name__ == "__main__":

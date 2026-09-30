@@ -87,7 +87,14 @@ screen capture and native selected-profile compilation.
 Record exact commit, counts, duration and artifact identity without claiming
 hardware behavior.
 
-`A10-RP06-V05` [ ] After source review, prepare the bounded `A10-VP02`
+`A10-RP06-V05` [x] The bounded automated portion of `A10-VP02` is registered as
+the mandatory `a10-rp06-mode-transaction` installed-P4 case. It performs
+mode8→20→8 first without a browser consumer and then with one retained
+browser-video WebSocket, checking committed status and decoded frame geometry
+at every edge before final startup recovery. The case depends on the integrated
+P4 smoke; the later destructive EMOS case also depends on this case so a failed
+display prerequisite blocks raw-media work. The loaded-asset Nurples transition
+remains manual. After source review, execute the bounded `A10-VP02`
 mode8↔20 hardware procedure with browser absent/present and assets
 absent/loaded. Flashing and physical execution require the Author's explicit
 authorization; the automated suite and manual Nurples case remain distinct.
