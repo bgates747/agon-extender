@@ -15,6 +15,7 @@
     {"id": "host-font-safety", "phase": "host", "argv": ["{python}", "tests/font_safety_test.py"], "timeout_seconds": 120},
     {"id": "host-general-poll-capture", "phase": "host", "argv": ["{python}", "tests/general_poll_capture_test.py"], "timeout_seconds": 60},
     {"id": "host-hardware-validation", "phase": "host", "argv": ["{python}", "qualification/tests/test_hardware.py"], "timeout_seconds": 60},
+    {"id": "host-performance-qualification", "phase": "host", "argv": ["{python}", "qualification/tests/test_performance.py"], "timeout_seconds": 60},
     {"id": "host-key-query", "phase": "host", "argv": ["{python}", "tests/key_query_test.py"], "timeout_seconds": 120},
     {"id": "host-keyboard-harness", "phase": "host", "argv": ["{python}", "tests/keyboard_hardware_test.py"], "timeout_seconds": 120},
     {"id": "host-mode-transaction", "phase": "host", "argv": ["{python}", "tests/mode_transaction_test.py"], "timeout_seconds": 120},

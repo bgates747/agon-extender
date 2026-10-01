@@ -2,9 +2,11 @@
 
 ## Executive summary
 
-Experimental diagnostic support for mainboard VDP and P4 EDP. The retained host
-runner is **not ready for another bench run** until its procedure is refreshed
-under [BENCH-007](../tasks/BENCH-007.md). Offline analysis remains available. Scoped controls and
+Experimental diagnostic support for mainboard VDP and P4 EDP. The original
+single-case host runner remains frozen historical machinery and must not be
+invoked. Its maintained installed-hardware successor is
+`qualification/performance.py`, pending its first physical validation under
+[BENCH-007](../tasks/BENCH-007.md). Offline analysis remains available. Scoped controls and
 paired game captures passed; see the [retained results](../tasks/BENCH-007/RESULTS.md)
 for limits and the unresolved mainboard sequential-run panic. Artifact status
 remains experimental; this is not general production qualification. Shared
@@ -75,6 +77,42 @@ selection in `/autoexec.txt`, before invocation. This documentation audit does
 not alter a frozen runner or authorize that exception. BENCH-007 owns its next
 procedure refresh. Preserve old evidence and do not rerun old command sequences
 as though documentation review qualified a new deployment.
+
+## Installed-hardware cadence and video-delivery runner
+
+`qualification/performance.py` is the maintained successor for the current
+bounded P4 investigation. It requires verified P4 and EMOS installation
+receipts and does not flash either processor. The host runner builds a clean,
+commit-pinned no-marker empty control and deterministic Nurples derivative,
+stages only their executables under `/extender/fixtures`, and uses the isolated
+Nurples assets already installed under `/test/nurples`. It does not read or
+modify production `/mystuff` game files.
+
+The runner executes nine finite 1,800-update cases (30 nominal seconds at the
+60-Hz target): empty controls in modes 0,
+8 and 20 with controlled video demand absent and capped at 60 requests/s,
+followed by Nurples mode 20 with demand absent, capped at 30 requests/s, and
+capped at 60 requests/s. The 30/60 Nurples pair directly controls the known
+browser-credit change between the retained good result and current client. Each one-shot startup
+selects Extender input, enters ExCom, selects the mode with `VDU 22 n`, and only
+then loads the fixture. The fixture binaries contain no video-mode switch. The
+video-present cases use one host-owned direct WebSocket frame consumer; the
+video-absent cases require the P4 snapshot and socket-send diagnostic counters
+to remain unchanged. Reported application updates/s come from the fixture's
+MOS run clock; delivered frames/s comes from host receive timestamps. Neither
+metric is physical LCD/monitor scanout.
+
+The fixed update count makes each cohort directly comparable to the retained
+1,800-update Nurples evidence. A slowed case takes longer than 30 wall-clock
+seconds; the runner does not truncate it and mislabel an incomplete sample.
+
+The runner stores each device result under `/agents/extender/results`, retains
+host evidence under `agents/hardware-validation`, restores `/autoexec.txt`
+byte-for-byte, stops the listener, and verifies an ordinary boot with admitted
+Extender input. On failure it restores startup only through an independently
+active SD service; it does not reset an ambiguous foreground. The operator
+must keep the ordinary browser video connection disconnected because the
+runner creates and measures its own controlled consumer.
 
 ## Package components and preparation requirements
 

@@ -10,7 +10,11 @@ parser.add_argument('--open-ended',action='store_true',
                     help='Build visual LCD fixture that runs until Escape, without timing records')
 parser.add_argument('--early-mode20',action='store_true',
                     help='Open-ended diagnostic: enter mode 20 before loading assets and omit the gameplay mode switch')
+parser.add_argument('--frames',type=int,default=120,
+                    help='Finite timing updates to retain (default: 120)')
 args=parser.parse_args()
+if not 1<=args.frames<=10000:
+ parser.error('--frames must be in 1..10000')
 if args.no_markers and args.open_ended:
  parser.error('--no-markers and --open-ended are separate fixture variants')
 if args.early_mode20 and not args.open_ended:
@@ -56,7 +60,7 @@ p=out/'asm/player_state.inc';p.write_text(p.read_text().replace('ld bc,0*256','l
 p=out/'asm/player_shields.inc';s=p.read_text().replace('update_shields:\n','update_shields:\n    ld a,64\n    ld (player_shields),a\n    or a\n    ret\n; Test-only invulnerability; production damage code retained below.\n');p.write_text(s)
 # Preserve MOS map polling but use an all-released private input map.
 p=out/'asm/player_input.inc';s=p.read_text().replace('MOSCALL    mos_getkbmap ;ix = pointer to MOS virtual keys table','MOSCALL    mos_getkbmap ; retain ordinary polling\n    ld ix,gt_keys ; deterministic no human control during capture');p.write_text(s)
-(out/'asm/gt.inc').write_text('''; RAM-only loop records. Marker commands use admitted MOS output.
+timing='''; RAM-only loop records. Marker commands use admitted MOS output.
 gt_keys: ds 16
 gt_packet: db 23,0,0efh,5,0,0,0
 gt_count: dl 0
@@ -133,13 +137,16 @@ gt_end:
     sbc hl,de
     ccf
     ret
-''')
+'''
+timing=timing.replace('gt_rows: ds 1440',f'gt_rows: ds {args.frames*12}')
+timing=timing.replace('    ld de,120',f'    ld de,{args.frames}')
+(out/'asm/gt.inc').write_text(timing)
 prt=(r/'tests/performance/ez80/prt.asm').read_text()
 prt='\n'.join(x for x in prt.splitlines() if not x.strip().startswith(('.section','.global','.assume'))).replace('_gt_prt','gt_prt')
 with (out/'asm/gt.inc').open('a') as f:f.write('\n'+prt+'\n')
 if args.no_markers:
  p=out/'asm/gt.inc';p.write_text(p.read_text().replace('gt_send:\n','gt_send:\n    ret ; Pacing-only control: suppress renderer markers\n'))
-binary='ntiming.bin'
+binary='ntiming0.bin' if args.no_markers else 'ntiming.bin'
 if args.open_ended:
  p=out/'asm/nurples.asm';s=p.read_text()
  for call in ('gt_reset','gt_begin','gt_submit','gt_end','gt_prt_close'):

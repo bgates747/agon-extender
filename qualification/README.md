@@ -33,6 +33,7 @@ not substitute for installed-hardware qualification.
 | Path | Authority |
 |---|---|
 | `run.py` | Installed-firmware acceptance runner |
+| `performance.py` | Separate installed P4 application/video cadence runner; not an acceptance substitute |
 | `offline.py` | Separate pinned-source development regression runner |
 | `notify.py` | Terminal spoken cue and durable visible verdict |
 | `manifests/offline.json` | Complete maintained host/browser/build inventory |
@@ -77,3 +78,17 @@ The default run requires one verified receipt for each component. `--case` is
 reserved for targeted diagnostics and cannot establish full acceptance. The
 runner owns its documented board resets, temporary
 qualification SD file, cleanup, and terminal notification. It never flashes.
+
+The separate performance runner also requires both verified receipts, but it
+does not replace the mandatory acceptance suite:
+
+```sh
+.venv/bin/python qualification/performance.py \
+  --flash-receipt /absolute/path/to/p4-flash-receipt.json \
+  --flash-receipt /absolute/path/to/emos-flash-receipt.json
+```
+
+Keep ordinary browser video disconnected. The runner supplies its own controlled
+video consumer for the observer-present half of each matched pair and reports
+application updates/s separately from delivered frames/s. Empty controls use
+the current 60-Hz request cap; Nurples adds the retained 30-Hz comparison.

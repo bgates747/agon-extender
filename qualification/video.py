@@ -103,6 +103,12 @@ class VideoSession:
             raise RuntimeError("video WebSocket upgrade failed")
         return self
 
+    def next_frame(self):
+        """Request and decode one frame without retaining its pixel payload."""
+        _send(self.stream, b"frame")
+        raw = _receive(self.stream)
+        return decode_evf(raw)
+
     def frame(self, path):
         _send(self.stream, b"frame")
         raw = _receive(self.stream)

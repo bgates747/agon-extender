@@ -3,12 +3,12 @@
 import argparse,csv,json
 from pathlib import Path
 
-def summarize(path,prt_divider=16):
+def summarize(path,prt_divider=16,expected_updates=120):
     if prt_divider not in (16,64):raise ValueError("Unsupported PRT divider")
     frequency=18432000/prt_divider
     with Path(path).open(newline='') as f:rows=[{k:int(v) for k,v in row.items()} for row in csv.DictReader(f)]
-    if len(rows)!=120 or [r['frame'] for r in rows]!=list(range(120)):
-        raise ValueError('Expected exactly 120 sequential updates')
+    if len(rows)!=expected_updates or [r['frame'] for r in rows]!=list(range(expected_updates)):
+        raise ValueError(f'Expected exactly {expected_updates} sequential updates')
     sources={r['source'] for r in rows}
     if len(sources)!=1 or not sources<={0,1,255}:raise ValueError('Inconsistent source')
     for r in rows:
@@ -33,5 +33,5 @@ def summarize(path,prt_divider=16):
             out[field]={'mean':sum(v)/len(v),'p50':v[len(v)//2],'p95':v[(len(v)*95+99)//100-1],'max':v[-1]}
     return out
 if __name__=='__main__':
-    p=argparse.ArgumentParser(description=__doc__);p.add_argument('csv',nargs='+',type=Path);p.add_argument('--prt-divider',type=int,choices=[16,64],default=16);a=p.parse_args()
-    print(json.dumps({str(f):summarize(f,a.prt_divider) for f in a.csv},indent=2))
+    p=argparse.ArgumentParser(description=__doc__);p.add_argument('csv',nargs='+',type=Path);p.add_argument('--prt-divider',type=int,choices=[16,64],default=16);p.add_argument('--expected-updates',type=int,default=120);a=p.parse_args()
+    print(json.dumps({str(f):summarize(f,a.prt_divider,a.expected_updates) for f in a.csv},indent=2))
