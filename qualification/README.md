@@ -94,4 +94,7 @@ application updates/s separately from delivered frames/s. Empty controls use
 the current 60-Hz request cap; Nurples adds the retained 30-Hz comparison. Each
 application sample spans 30 seconds of MOS wall time. Nurples starts only after
 loading and gameplay initialization; a post-sample white frame bounds the same
-30-second host receive window without including loading or result cleanup.
+30-second host receive window without including loading or result cleanup. The
+optional video-work counter endpoint strengthens no-video cases when present;
+its absence is recorded and leaves browser disconnection as an operator-owned
+precondition rather than rejecting an otherwise measurable firmware image.

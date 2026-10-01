@@ -98,9 +98,13 @@ selects Extender input, enters ExCom, selects the mode with `VDU 22 n`, and only
 then loads the fixture. The fixture binaries contain no video-mode switch. The
 video-present cases use one host-owned direct WebSocket frame consumer; the
 video-absent cases require the P4 snapshot and socket-send diagnostic counters
-to remain unchanged. Reported application updates/s come from the fixture's
-MOS run clock; delivered frames/s comes from host receive timestamps. Neither
-metric is physical LCD/monitor scanout. Nurples starts its device clock only
+to remain unchanged when that optional build instrumentation is present. A P4
+image without `/diagnostics/video-timing` remains measurable, but the runner
+records that browser exclusion is operator-enforced rather than counter-proven.
+The capability probe occurs before any SD or startup mutation. Reported
+application updates/s come from the fixture's MOS run clock; delivered frames/s
+comes from host receive timestamps. Neither metric is physical LCD/monitor
+scanout. Nurples starts its device clock only
 after `game_init` has loaded the assets, drawn the gameplay scene and committed
 `game_state == game_playing`; its loading and title screens are outside the
 sample. Each fixture emits an all-white synchronization frame only after its

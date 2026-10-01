@@ -21,6 +21,7 @@ import sys
 import threading
 import time
 import uuid
+from urllib.error import HTTPError
 
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -86,6 +87,16 @@ def wait_result_service(url: str, state: Path, case_id: str,
 def phase_count(document: dict, name: str) -> int:
     return next(item["count"] for item in document["phases"]
                 if item["name"] == name)
+
+
+def video_timing_capability(url: str) -> tuple[bool, dict | None]:
+    """Treat the diagnostic counter endpoint as optional build instrumentation."""
+    try:
+        return True, read_json(url, "/diagnostics/video-timing")
+    except HTTPError as error:
+        if error.code == 404:
+            return False, None
+        raise
 
 
 def summarize_video(records: list[dict], start: float, stop: float,
@@ -353,7 +364,7 @@ def cases() -> list[dict]:
 def run_case(config: dict, case: dict, client, fixture_path: str,
              result_path: str, output: Path,
              symbols: Path, raw_start: int | None, raw_size: int | None,
-             reset: list[str]) -> tuple[dict, object]:
+             reset: list[str], video_timing_available: bool) -> tuple[dict, object]:
     output.mkdir(parents=True, exist_ok=False)
     url = config["extender_url"]
     next_client = None
@@ -370,10 +381,11 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
         if observer:
             announce(f"Opening one controlled {case['video_hz']}-Hz video consumer before stopping the staging listener")
             observer.start()
+        before = (read_json(url, "/diagnostics/video-timing")
+                  if video_timing_available and not case["video_hz"] else None)
         client.rpc(11)
         client.lock.close()
 
-        before = read_json(url, "/diagnostics/video-timing")
         announce(f"Pulsing Agon reset; {case['id']} then measures "
                  f"{PERFORMANCE_SECONDS} seconds of wall time unattended")
         started = time.monotonic()
@@ -383,7 +395,8 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
             url, output / "sd-result.json", case["id"], timeout=240)
         finished = time.monotonic()
         video = observer.finish(started, finished, geometry) if observer else None
-        after = read_json(url, "/diagnostics/video-timing")
+        after = (read_json(url, "/diagnostics/video-timing")
+                 if before is not None else None)
         display = read_json(url, "/display/status")
         if (display.get("mode"), display.get("width"), display.get("height")) != (
                 case["mode"], geometry[0], geometry[1]):
@@ -395,7 +408,7 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
             timing = parse_nurples(data, symbols, output / "combined.csv")
         else:
             timing = parse_pacing(data, output / "combined.csv")
-        if not case["video_hz"]:
+        if before is not None and after is not None:
             deltas = {name: phase_count(after, name) - phase_count(before, name)
                       for name in ("snapshot", "socket_send")}
             if any(deltas.values()):
@@ -409,6 +422,10 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
             "geometry": list(geometry), "workload": case["kind"],
             "video_consumer": bool(case["video_hz"]),
             "video_request_cap_hz": case["video_hz"],
+            "no_video_counter_check": (
+                "pass" if deltas is not None else
+                "not-applicable" if case["video_hz"] else
+                "optional-endpoint-unavailable; operator browser exclusion required"),
             "host_fixture_seconds": finished - started,
             "application": timing, "video": video, "no_video_phase_deltas": deltas,
             "display": display,
@@ -444,6 +461,12 @@ def main() -> int:
         parser.error(str(error))
     config = load_config(args.config.resolve(strict=True))
     nurples_source = args.nurples_source.resolve(strict=True)
+    video_timing_available, _ = video_timing_capability(config["extender_url"])
+    if video_timing_available:
+        announce("Optional P4 video-work counters are available for no-video checks")
+    else:
+        announce("Optional P4 video-work counters are not present in this build; "
+                 "recording operator-enforced browser exclusion")
     token = uuid.uuid4().hex[:8]
     run = (args.output or ROOT / "agents/hardware-validation" /
            ("performance-" + utc_stamp() + "-" + token)).resolve()
@@ -456,6 +479,7 @@ def main() -> int:
         "wall_seconds_per_case": PERFORMANCE_SECONDS,
         "mos_ticks_per_case": PERFORMANCE_TICKS,
         "maximum_updates_per_case": PERFORMANCE_CAPACITY,
+        "optional_video_timing_available": video_timing_available,
         "cases": [item["id"] for item in cases()],
     })
     artifacts = build_fixtures(nurples_source, run)
@@ -474,6 +498,7 @@ def main() -> int:
     try:
         original = client.download("/autoexec.txt")
         require_extender_startup(original)
+        (run / "original-autoexec.txt").write_bytes(original)
         for asset, expected_size in NURPLES_ASSETS.items():
             size, attributes = client.stat_entry(asset)
             if attributes & 16 or size != expected_size:
@@ -505,7 +530,8 @@ def main() -> int:
                 config, case, active_client, remote[case["kind"]], result_path,
                 run / case["id"], artifacts["symbols"],
                 raw_start if case["kind"] == "nurples" else None,
-                raw_size if case["kind"] == "nurples" else None, reset)
+                raw_size if case["kind"] == "nurples" else None, reset,
+                video_timing_available)
             results.append(record)
             app_fps = record["application"]["updates_per_second"]
             message = f"PASS {case['id']} — application {app_fps:.2f} updates/s"
@@ -549,6 +575,7 @@ def main() -> int:
         "fixtures": {"nurples_source_commit": artifacts["nurples_commit"],
                      "empty_sha256": sha256(artifacts["empty"]),
                      "nurples_sha256": sha256(artifacts["nurples"])},
+        "optional_video_timing_available": video_timing_available,
         "cases": results, "startup_restored": startup_restored,
     }
     if failure is not None:

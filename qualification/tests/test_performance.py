@@ -9,6 +9,8 @@ from pathlib import Path
 import struct
 import tempfile
 import unittest
+from unittest import mock
+from urllib.error import HTTPError
 
 
 ROOT = Path(__file__).resolve().parents[2]
@@ -27,6 +29,21 @@ performance = load()
 
 
 class PerformanceQualificationTests(unittest.TestCase):
+    def test_missing_optional_video_timing_endpoint_is_not_fatal(self):
+        missing = HTTPError("http://device/diagnostics/video-timing", 404,
+                            "Not Found", {}, None)
+        with mock.patch.object(performance, "read_json", side_effect=missing):
+            self.assertEqual(
+                performance.video_timing_capability("http://device"),
+                (False, None))
+
+    def test_other_video_timing_http_errors_remain_fatal(self):
+        failed = HTTPError("http://device/diagnostics/video-timing", 500,
+                           "Failure", {}, None)
+        with mock.patch.object(performance, "read_json", side_effect=failed):
+            with self.assertRaises(HTTPError):
+                performance.video_timing_capability("http://device")
+
     def test_all_modes_have_observer_on_and_off_controls(self):
         matrix = {(case["mode"], case["kind"], case["video_hz"])
                   for case in performance.cases()}

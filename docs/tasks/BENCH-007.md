@@ -41,6 +41,14 @@ post-measurement white frame bounds the matching video window. Host tests and
 fresh fixture builds pass. Keep B07-R01 open until the Author's first physical
 run confirms all nine cases, evidence retrieval and final restoration.
 
+First-invocation correction, 2026-09-30: the installed native P4 image does not
+serve the optional `/diagnostics/video-timing` counters. The initial runner
+incorrectly queried that endpoint after replacing startup and stopping the SD
+listener, so it aborted before resetting or measuring the first case and could
+not restore startup automatically. The corrected runner probes before any
+mutation, records whether no-video exclusion is counter-proven or operator-
+enforced, and persists the exact original startup before case staging.
+
 ## Frozen work contract — 2026-09-20
 
 1. Record exact game, compiler, EMOS, VDP and P4 source/build identities and
