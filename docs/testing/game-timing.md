@@ -88,8 +88,8 @@ stages only their executables under `/extender/fixtures`, and uses the isolated
 Nurples assets already installed under `/test/nurples`. It does not read or
 modify production `/mystuff` game files.
 
-The runner executes nine finite 1,800-update cases (30 nominal seconds at the
-60-Hz target): empty controls in modes 0,
+The runner executes nine finite 30-second wall-time cases, measured by 3,600
+nominal 120-Hz MOS ticks: empty controls in modes 0,
 8 and 20 with controlled video demand absent and capped at 60 requests/s,
 followed by Nurples mode 20 with demand absent, capped at 30 requests/s, and
 capped at 60 requests/s. The 30/60 Nurples pair directly controls the known
@@ -100,11 +100,20 @@ video-present cases use one host-owned direct WebSocket frame consumer; the
 video-absent cases require the P4 snapshot and socket-send diagnostic counters
 to remain unchanged. Reported application updates/s come from the fixture's
 MOS run clock; delivered frames/s comes from host receive timestamps. Neither
-metric is physical LCD/monitor scanout.
+metric is physical LCD/monitor scanout. Nurples starts its device clock only
+after `game_init` has loaded the assets, drawn the gameplay scene and committed
+`game_state == game_playing`; its loading and title screens are outside the
+sample. Each fixture emits an all-white synchronization frame only after its
+device clock stops. The controlled video observer measures the preceding 30
+host-wall-clock seconds, excluding both loading and result-save/cleanup frames.
 
-The fixed update count makes each cohort directly comparable to the retained
-1,800-update Nurples evidence. A slowed case takes longer than 30 wall-clock
-seconds; the runner does not truncate it and mislabel an incomplete sample.
+The update count is an outcome, not a stopping rule. Each fixture has a
+2,400-update safety capacity and stops at the first update boundary at or after
+3,600 MOS ticks. The no-marker empty control writes a variable-length compact
+`GTPRT2` record of 13 header bytes plus 7 bytes per completed update rather
+than a large CSV. The Nurples RAM block records its actual count ahead of the
+fixed safety-capacity area. The host validates the elapsed clock, parses only
+completed rows and expands both formats to the common analyzed CSV form.
 
 The runner stores each device result under `/agents/extender/results`, retains
 host evidence under `agents/hardware-validation`, restores `/autoexec.txt`

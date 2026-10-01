@@ -35,8 +35,10 @@ installed P4 comparison. The new runner builds pinned no-marker empty and
 Nurples fixtures, covers modes 0/8/20 with video demand off/60-Hz and adds the
 historically relevant 30-Hz Nurples control, selects every
 mode in one-shot startup before fixture entry, uses the current foreground
-`EMOS sdserve --fast /`, and restores the exact original startup. Host tests and
-fresh 1,800-update fixture builds pass. Keep B07-R01 open until the Author's first physical
+`EMOS sdserve --fast /`, and restores the exact original startup. Its corrected
+30-wall-second fixtures count completed updates only after loading; a
+post-measurement white frame bounds the matching video window. Host tests and
+fresh fixture builds pass. Keep B07-R01 open until the Author's first physical
 run confirms all nine cases, evidence retrieval and final restoration.
 
 ## Frozen work contract — 2026-09-20

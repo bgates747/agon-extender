@@ -15,6 +15,7 @@ namespace gt {
 // Read once outside timing: timing.cfg contains ASCII 0 (host only) or 1 (markers).
 static bool markers=true;
 constexpr unsigned Frames=120;
+constexpr uint24_t DurationTicks=0;
 struct HostRow {uint24_t active,logic,submit,pacing,total,overflow,mos_ticks;};
 static HostRow host[Frames];
 static volatile uint8_t *sv;
@@ -44,7 +45,7 @@ static bool init(){
 static void loop_begin(){mos_entry=now();if(frame==0)run_start=mos_entry;gt_prt_begin();entry=0;}
 static void drawing_begin(){logic_end=gt_prt_read();if(markers&&!send(6,frame))transport_fault=true;}
 static void drawing_end(){submit_end=gt_prt_read();if(markers&&!send(7,frame))transport_fault=true;pace_begin=gt_prt_read();}
-static bool loop_end(){auto end=gt_prt_read();host[frame]={uint24_t(pace_begin-entry),uint24_t(logic_end-entry),uint24_t(submit_end-logic_end),uint24_t(end-pace_begin),uint24_t(end-entry),uint24_t(end==65535),uint24_t(now()-mos_entry)};bool done=++frame>=Frames||transport_fault;if(done)run_end=now();return done;}
+static bool loop_end(){auto end=gt_prt_read();host[frame]={uint24_t(pace_begin-entry),uint24_t(logic_end-entry),uint24_t(submit_end-logic_end),uint24_t(end-pace_begin),uint24_t(end-entry),uint24_t(end==65535),uint24_t(now()-mos_entry)};bool done=++frame>=Frames||transport_fault||(DurationTicks&&uint24_t(now()-run_start)>=DurationTicks);if(done)run_end=now();return done;}
 static bool save(const char*path){
  gt_prt_close();
  if(transport_fault||(markers&&(!request(9,0)||value||count!=frame))){mos_setkbvector(nullptr,0);return false;}
@@ -60,6 +61,29 @@ static bool save(const char*path){
  }
  if(f)mos_fclose(f);
  mos_setkbvector(nullptr,0);return ok;
+}
+static bool save_pacing(const char*path){
+ gt_prt_close();
+ if(markers||transport_fault){mos_setkbvector(nullptr,0);return false;}
+ uint8_t f=mos_fopen(path,FA_WRITE|FA_CREATE_ALWAYS);bool ok=f!=0;
+ uint24_t elapsed=uint24_t(run_end-run_start);
+ uint8_t header[]={'G','T','P','R','T','2','!','!',uint8_t(frame),uint8_t(frame>>8),
+                   uint8_t(elapsed),uint8_t(elapsed>>8),uint8_t(elapsed>>16)};
+ if(ok)ok=mos_fwrite(f,(char*)header,sizeof header)==sizeof header;
+ for(unsigned i=0;i<frame&&ok;i++){
+  auto&r=host[i];uint8_t row[]={uint8_t(r.active),uint8_t(r.active>>8),
+   uint8_t(r.total),uint8_t(r.total>>8),uint8_t(r.mos_ticks),
+   uint8_t(r.mos_ticks>>8),uint8_t(r.mos_ticks>>16)};
+  ok=mos_fwrite(f,(char*)row,sizeof row)==sizeof row;
+ }
+ if(f)mos_fclose(f);mos_setkbvector(nullptr,0);return ok;
+}
+// Post-measurement synchronization frame for the host video observer.  It is
+// deliberately emitted only after run_end, so it cannot affect cadence.
+static void boundary(){
+ uint8_t marker[]={23,1,0,26,18,0,191,16};
+ bench_count(marker,sizeof marker);
+ for(unsigned i=0;i<10;i++)waitvblank();
 }
 }
 extern "C" void graphics_receive(const uint8_t*p){

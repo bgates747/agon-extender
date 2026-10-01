@@ -91,4 +91,7 @@ does not replace the mandatory acceptance suite:
 Keep ordinary browser video disconnected. The runner supplies its own controlled
 video consumer for the observer-present half of each matched pair and reports
 application updates/s separately from delivered frames/s. Empty controls use
-the current 60-Hz request cap; Nurples adds the retained 30-Hz comparison.
+the current 60-Hz request cap; Nurples adds the retained 30-Hz comparison. Each
+application sample spans 30 seconds of MOS wall time. Nurples starts only after
+loading and gameplay initialization; a post-sample white frame bounds the same
+30-second host receive window without including loading or result cleanup.

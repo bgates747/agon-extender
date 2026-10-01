@@ -4,7 +4,10 @@
 from __future__ import annotations
 
 import importlib.util
+import hashlib
 from pathlib import Path
+import struct
+import tempfile
 import unittest
 
 
@@ -82,6 +85,52 @@ class PerformanceQualificationTests(unittest.TestCase):
         self.assertEqual(summary["request_cap_hz"], 30)
         self.assertEqual(summary["delivered_frames_per_second"], 2.0)
         self.assertEqual(summary["source_sequence_per_second"], 6.0)
+
+    def test_white_boundary_selects_first_post_measurement_marker(self):
+        white = hashlib.sha256(bytes([63]) * 4).hexdigest()
+        records = [
+            {"received_monotonic": 1.0, "width": 2, "height": 2,
+             "format": 2, "sha256": "not-white"},
+            {"received_monotonic": 31.0, "width": 2, "height": 2,
+             "format": 2, "sha256": white},
+            {"received_monotonic": 32.0, "width": 2, "height": 2,
+             "format": 2, "sha256": white},
+        ]
+        self.assertEqual(performance.white_boundary(records, (2, 2), 30.0), 31.0)
+
+    def test_compact_pacing_parser_retains_variable_wall_time_updates(self):
+        frames = 450
+        header = b"GTPRT2!!" + struct.pack("<H", frames) + (3600).to_bytes(3, "little")
+        row = struct.pack("<HH", 100, 200) + (2).to_bytes(3, "little")
+        with tempfile.TemporaryDirectory() as folder:
+            summary = performance.parse_pacing(
+                header + row * frames, Path(folder) / "combined.csv")
+        self.assertEqual(summary["updates"], frames)
+        self.assertEqual(summary["updates_per_second"], 15.0)
+
+    def test_nurples_parser_uses_retained_count_not_capacity(self):
+        def u24(value):
+            return value.to_bytes(3, "little")
+
+        row1 = b"".join(map(u24, (100, 200, 100, 1900)))
+        row2 = b"".join(map(u24, (100, 200, 1900, 3700)))
+        raw = (b"GTPRN2!!" + u24(2) + row1 + row2 +
+               bytes((performance.PERFORMANCE_CAPACITY - 2) * 12))
+        with tempfile.TemporaryDirectory() as folder:
+            root = Path(folder)
+            symbols = root / "nurples.symbols"
+            symbols.write_text(
+                f"gt_data $40000\n"
+                f"gt_data_end ${0x40000 + len(raw):X}\n")
+            summary = performance.parse_nurples(
+                raw, symbols, root / "combined.csv")
+        self.assertEqual(summary["updates"], 2)
+        self.assertEqual(summary["mos_run_ticks"], 3600)
+
+    def test_compact_empty_is_explicit_build_option(self):
+        source = (ROOT / "tests/performance/builders/controls.py").read_text()
+        self.assertIn("--compact-empty", source)
+        self.assertIn("gt::save_pacing(result)", source)
 
 
 if __name__ == "__main__":

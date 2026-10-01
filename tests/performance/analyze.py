@@ -7,8 +7,10 @@ def summarize(path,prt_divider=16,expected_updates=120):
     if prt_divider not in (16,64):raise ValueError("Unsupported PRT divider")
     frequency=18432000/prt_divider
     with Path(path).open(newline='') as f:rows=[{k:int(v) for k,v in row.items()} for row in csv.DictReader(f)]
-    if len(rows)!=expected_updates or [r['frame'] for r in rows]!=list(range(expected_updates)):
-        raise ValueError(f'Expected exactly {expected_updates} sequential updates')
+    if (expected_updates is not None and len(rows)!=expected_updates) or [r['frame'] for r in rows]!=list(range(len(rows))):
+        expectation='a variable nonempty set of' if expected_updates is None else f'exactly {expected_updates}'
+        raise ValueError(f'Expected {expectation} sequential updates')
+    if not rows:raise ValueError('Expected a variable nonempty set of sequential updates')
     sources={r['source'] for r in rows}
     if len(sources)!=1 or not sources<={0,1,255}:raise ValueError('Inconsistent source')
     for r in rows:

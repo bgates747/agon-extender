@@ -31,7 +31,9 @@ NURPLES_ASSETS = {
     "/test/nurples/fonts/Lat38-VGA8_8x8.font": 2048,
 }
 MODES = {0: (640, 480), 8: (320, 240), 20: (512, 384)}
-PERFORMANCE_UPDATES = 1800
+PERFORMANCE_SECONDS = 30
+PERFORMANCE_TICKS = PERFORMANCE_SECONDS * 120
+PERFORMANCE_CAPACITY = 2400
 
 sys.path.insert(0, str(ROOT / "scripts"))
 sys.path.insert(0, str(ROOT / "qualification"))
@@ -87,9 +89,12 @@ def phase_count(document: dict, name: str) -> int:
 
 
 def summarize_video(records: list[dict], start: float, stop: float,
-                    geometry: tuple[int, int], request_cap_hz: int) -> dict:
+                    geometry: tuple[int, int], request_cap_hz: int,
+                    *, stop_inclusive: bool = True) -> dict:
     selected = [item for item in records
-                if start <= item["received_monotonic"] <= stop and
+                if start <= item["received_monotonic"] and
+                (item["received_monotonic"] <= stop if stop_inclusive else
+                 item["received_monotonic"] < stop) and
                 (item["width"], item["height"]) == geometry]
     if len(selected) < 2:
         raise RuntimeError(f"only {len(selected)} matching video frames were received")
@@ -108,6 +113,25 @@ def summarize_video(records: list[dict], start: float, stop: float,
         "last_sequence": selected[-1]["sequence"],
         "width": geometry[0], "height": geometry[1],
     }
+
+
+def white_boundary(records: list[dict], geometry: tuple[int, int],
+                   not_before: float) -> float:
+    """Return the first received all-white frame for this geometry."""
+    expected = {
+        pixel_format: hashlib.sha256(
+            bytes([63 if pixel_format == 2 else 255]) *
+            geometry[0] * geometry[1] * (1 if pixel_format == 2 else 3)
+        ).hexdigest()
+        for pixel_format in (1, 2)
+    }
+    marker = next((item for item in records
+                   if item["received_monotonic"] >= not_before and
+                   (item["width"], item["height"]) == geometry and
+                   item["sha256"] == expected.get(item["format"])), None)
+    if marker is None:
+        raise RuntimeError("post-measurement white video boundary was not observed")
+    return marker["received_monotonic"]
 
 
 def validate_receipts(paths: list[Path]) -> tuple[dict, dict]:
@@ -195,20 +219,33 @@ class VideoObserver:
             raise TimeoutError("controlled video observer did not close")
         if self.error is not None:
             raise RuntimeError("controlled video observer failed") from self.error
-        return summarize_video(self.records, start, stop, geometry,
-                               self.request_cap_hz)
+        boundary = white_boundary(
+            self.records, geometry, start + PERFORMANCE_SECONDS)
+        window_start = boundary - PERFORMANCE_SECONDS
+        if window_start < start:
+            raise RuntimeError("video boundary arrived before a complete 30-second window")
+        result = summarize_video(self.records, window_start, boundary, geometry,
+                                 self.request_cap_hz, stop_inclusive=False)
+        result["window_alignment"] = (
+            "30 wall seconds ending at the first post-measurement white boundary; "
+            "loading and result cleanup excluded")
+        result["boundary_received_monotonic"] = boundary
+        return result
 
 
 def parse_nurples(raw: bytes, symbols: Path, destination: Path) -> dict:
     syms = {match.group(1): int(match.group(2), 16) for match in re.finditer(
         r"^(\w+) \$([0-9a-fA-F]+)", symbols.read_text(), re.M)}
     size = syms["gt_data_end"] - syms["gt_data"]
-    expected_size = 8 + PERFORMANCE_UPDATES * 12
-    if size != expected_size or len(raw) != size or raw[:8] != b"GT1PRT!!":
+    expected_size = 11 + PERFORMANCE_CAPACITY * 12
+    if size != expected_size or len(raw) != size or raw[:8] != b"GTPRN2!!":
         raise ValueError("Nurples raw timing block does not match its exact symbols")
-    records = [[int.from_bytes(raw[8 + index * 12 + offset:
-                                  11 + index * 12 + offset], "little")
-                for offset in (0, 3, 6, 9)] for index in range(PERFORMANCE_UPDATES)]
+    count = int.from_bytes(raw[8:11], "little")
+    if not 1 <= count <= PERFORMANCE_CAPACITY:
+        raise ValueError("Nurples raw timing count is outside its retained capacity")
+    records = [[int.from_bytes(raw[11 + index * 12 + offset:
+                                  14 + index * 12 + offset], "little")
+                for offset in (0, 3, 6, 9)] for index in range(count)]
     if not all(0 < active <= total <= 65535 for active, total, _, _ in records):
         raise ValueError("Nurples contains incomplete or invalid PRT rows")
     rows = []
@@ -227,7 +264,48 @@ def parse_nurples(raw: bytes, symbols: Path, destination: Path) -> dict:
         writer = csv.DictWriter(stream, fieldnames=rows[0])
         writer.writeheader()
         writer.writerows(rows)
-    return summarize(destination, expected_updates=PERFORMANCE_UPDATES)
+    summary = summarize(destination, expected_updates=None)
+    summary["mos_run_ticks"] = run_ticks
+    summary["measured_wall_seconds_nominal"] = run_ticks / 120
+    if not PERFORMANCE_TICKS - 10 <= run_ticks <= PERFORMANCE_TICKS + 240:
+        raise ValueError(f"Nurples did not retain the requested 30-second window: {run_ticks} ticks")
+    return summary
+
+
+def parse_pacing(raw: bytes, destination: Path) -> dict:
+    if len(raw) < 20 or raw[:8] != b"GTPRT2!!":
+        raise ValueError("empty-control compact timing block has the wrong identity or size")
+    frames = int.from_bytes(raw[8:10], "little")
+    run_ticks = int.from_bytes(raw[10:13], "little")
+    if (not 1 <= frames <= PERFORMANCE_CAPACITY or
+            len(raw) != 13 + frames * 7 or not run_ticks):
+        raise ValueError("empty-control compact timing header is incomplete")
+    rows = []
+    for index in range(frames):
+        at = 13 + index * 7
+        active = int.from_bytes(raw[at:at + 2], "little")
+        total = int.from_bytes(raw[at + 2:at + 4], "little")
+        mos_ticks = int.from_bytes(raw[at + 4:at + 7], "little")
+        if not 0 <= active <= total <= 65535:
+            raise ValueError("empty-control compact timing row is invalid")
+        rows.append({
+            "source": 255, "frame": index,
+            "active_prt": active, "logic_prt": 0, "submit_prt": active,
+            "pacing_prt": total - active, "total_prt": total,
+            "overflow": int(total == 65535), "mos_ticks": mos_ticks,
+            "run_ticks": run_ticks, "submitted_us": 0,
+            "completed_us": 0, "drain_us": 0,
+        })
+    with destination.open("w", newline="") as stream:
+        writer = csv.DictWriter(stream, fieldnames=rows[0])
+        writer.writeheader()
+        writer.writerows(rows)
+    summary = summarize(destination, expected_updates=None)
+    summary["mos_run_ticks"] = run_ticks
+    summary["measured_wall_seconds_nominal"] = run_ticks / 120
+    if not PERFORMANCE_TICKS - 10 <= run_ticks <= PERFORMANCE_TICKS + 240:
+        raise ValueError(f"empty control did not retain the requested 30-second window: {run_ticks} ticks")
+    return summary
 
 
 def build_fixtures(nurples_source: Path, run: Path) -> dict:
@@ -238,14 +316,16 @@ def build_fixtures(nurples_source: Path, run: Path) -> dict:
     announce("Building the fixed no-marker empty-frame control")
     subprocess.run([
         sys.executable, str(ROOT / "tests/performance/builders/controls.py"),
-        "--output", str(build / "controls"), "--no-markers",
-        "--frames", str(PERFORMANCE_UPDATES),
+        "--output", str(build / "controls"), "--no-markers", "--compact-empty",
+        "--frames", str(PERFORMANCE_CAPACITY),
+        "--duration-ticks", str(PERFORMANCE_TICKS),
     ], check=True)
-    announce("Building deterministic 120-update Nurples from its pinned source")
+    announce("Building deterministic 30-wall-second Nurples from its pinned source")
     subprocess.run([
         sys.executable, str(ROOT / "tests/performance/builders/nurples.py"),
         "--source", str(source), "--output", str(build / "nurples"),
-        "--no-markers", "--frames", str(PERFORMANCE_UPDATES),
+        "--no-markers", "--frames", str(PERFORMANCE_CAPACITY),
+        "--duration-ticks", str(PERFORMANCE_TICKS),
     ], check=True)
     empty = build / "controls/empty/bin/empty.bin"
     nurples = build / "nurples/ntiming0.bin"
@@ -294,12 +374,11 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
         client.lock.close()
 
         before = read_json(url, "/diagnostics/video-timing")
-        announce(f"Pulsing Agon reset; {case['id']} then runs unattended for "
-                 f"{PERFORMANCE_UPDATES} updates (30 nominal seconds)")
+        announce(f"Pulsing Agon reset; {case['id']} then measures "
+                 f"{PERFORMANCE_SECONDS} seconds of wall time unattended")
         started = time.monotonic()
         subprocess.run(reset, check=True)
-        announce("Waiting for fixture completion and its result listener; "
-                 "slowed cases can exceed 30 wall-clock seconds")
+        announce("Waiting for the 30-second measurement, boundary frame, result save, and listener")
         next_client = wait_result_service(
             url, output / "sd-result.json", case["id"], timeout=240)
         finished = time.monotonic()
@@ -311,13 +390,11 @@ def run_case(config: dict, case: dict, client, fixture_path: str,
             raise RuntimeError(f"fixture ended with unexpected display status: {display}")
 
         data = next_client.download(result_path)
-        (output / ("raw.bin" if case["kind"] == "nurples" else "device.csv")).write_bytes(data)
+        (output / "raw.bin").write_bytes(data)
         if case["kind"] == "nurples":
             timing = parse_nurples(data, symbols, output / "combined.csv")
         else:
-            (output / "combined.csv").write_bytes(data)
-            timing = summarize(output / "combined.csv",
-                               expected_updates=PERFORMANCE_UPDATES)
+            timing = parse_pacing(data, output / "combined.csv")
         if not case["video_hz"]:
             deltas = {name: phase_count(after, name) - phase_count(before, name)
                       for name in ("snapshot", "socket_send")}
@@ -375,8 +452,10 @@ def main() -> int:
     run.mkdir(parents=True)
     atomic_json(run / "request.json", {
         "flash_receipts": receipt_paths, "nurples_source": str(nurples_source),
-        "nurples_commit": NURPLES_COMMIT, "updates_per_case": PERFORMANCE_UPDATES,
-        "nominal_seconds_per_case": PERFORMANCE_UPDATES / 60,
+        "nurples_commit": NURPLES_COMMIT,
+        "wall_seconds_per_case": PERFORMANCE_SECONDS,
+        "mos_ticks_per_case": PERFORMANCE_TICKS,
+        "maximum_updates_per_case": PERFORMANCE_CAPACITY,
         "cases": [item["id"] for item in cases()],
     })
     artifacts = build_fixtures(nurples_source, run)
@@ -419,8 +498,7 @@ def main() -> int:
         for case in cases():
             announce("RUN " + case["id"])
             suffix = case["id"].replace("-", "")
-            result_path = (f"/agents/extender/results/p{token}-{suffix}." +
-                           ("raw" if case["kind"] == "nurples" else "csv"))
+            result_path = f"/agents/extender/results/p{token}-{suffix}.raw"
             active_client = client
             client = None
             record, client = run_case(

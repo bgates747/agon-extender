@@ -12,9 +12,13 @@ parser.add_argument('--early-mode20',action='store_true',
                     help='Open-ended diagnostic: enter mode 20 before loading assets and omit the gameplay mode switch')
 parser.add_argument('--frames',type=int,default=120,
                     help='Finite timing updates to retain (default: 120)')
+parser.add_argument('--duration-ticks',type=int,default=0,
+                    help='Stop after this many nominal 120-Hz MOS ticks (0 disables)')
 args=parser.parse_args()
 if not 1<=args.frames<=10000:
  parser.error('--frames must be in 1..10000')
+if not 0<=args.duration_ticks<=0xffffff:
+ parser.error('--duration-ticks must be in 0..16777215')
 if args.no_markers and args.open_ended:
  parser.error('--no-markers and --open-ended are separate fixture variants')
 if args.early_mode20 and not args.open_ended:
@@ -34,7 +38,7 @@ end=s.index('; escape not pressed so loop',start)
 tail=s[start:end];s=s[:start]+s[end:];s=s.replace('    call gt_submit\n',tail+'    call gt_submit\n',1)
 if not args.open_ended:
  s=s.replace('    call vdu_set_screen_mode','    ; Startup/CLI owns video mode')
-s=s.replace('main_end:\n','main_end:\n    call gt_prt_close\n')
+s=s.replace('main_end:\n','main_end:\n    call gt_boundary\n    call gt_prt_close\n')
 s=s.replace('; --- MAIN PROGRAM FILE ---','    include "gt.inc"\n; --- MAIN PROGRAM FILE ---')
 (out/'asm/nurples.asm').write_text(s)
 p=out/'asm/state_game_init.inc';s=p.read_text()
@@ -63,11 +67,12 @@ p=out/'asm/player_input.inc';s=p.read_text().replace('MOSCALL    mos_getkbmap ;i
 timing='''; RAM-only loop records. Marker commands use admitted MOS output.
 gt_keys: ds 16
 gt_packet: db 23,0,0efh,5,0,0,0
-gt_count: dl 0
 gt_pointer: dl gt_rows
 gt_t0: dl 0
 gt_t1: dl 0
-gt_data: db "GT1PRT!!"
+gt_run_start: dl 0
+gt_data: db "GTPRN2!!"
+gt_count: dl 0
 gt_rows: ds 1440
 gt_data_end:
 gt_send:
@@ -84,6 +89,9 @@ gt_reset:
     ld a,5
     ld (gt_packet+3),a
     call gt_send
+    MOSCALL mos_sysvars
+    ld hl,(ix+sysvar_time)
+    ld (gt_run_start),hl
     or a
     ret
 gt_begin:
@@ -136,10 +144,41 @@ gt_end:
     or a
     sbc hl,de
     ccf
+    ret c
+__DURATION_CHECK__
+    or a
+    ret
+gt_boundary:
+    ld hl,@marker
+    ld bc,@marker_end-@marker
+    rst.lil 18h
+    ld b,10
+@wait:
+    push bc
+    call vdu_vblank
+    pop bc
+    djnz @wait
+    ret
+@marker: db 23,1,0,26,18,0,191,16
+@marker_end:
+'''
+duration='''
+    MOSCALL mos_sysvars
+    ld hl,(ix+sysvar_time)
+    ld de,(gt_run_start)
+    or a
+    sbc hl,de
+    ld de,DURATION
+    or a
+    sbc hl,de
+    ccf
     ret
 '''
 timing=timing.replace('gt_rows: ds 1440',f'gt_rows: ds {args.frames*12}')
 timing=timing.replace('    ld de,120',f'    ld de,{args.frames}')
+timing=timing.replace('__DURATION_CHECK__',
+                      duration.replace('DURATION',str(args.duration_ticks))
+                      if args.duration_ticks else '')
 (out/'asm/gt.inc').write_text(timing)
 prt=(r/'tests/performance/ez80/prt.asm').read_text()
 prt='\n'.join(x for x in prt.splitlines() if not x.strip().startswith(('.section','.global','.assume'))).replace('_gt_prt','gt_prt')
@@ -149,7 +188,7 @@ if args.no_markers:
 binary='ntiming0.bin' if args.no_markers else 'ntiming.bin'
 if args.open_ended:
  p=out/'asm/nurples.asm';s=p.read_text()
- for call in ('gt_reset','gt_begin','gt_submit','gt_end','gt_prt_close'):
+ for call in ('gt_reset','gt_begin','gt_submit','gt_end','gt_boundary','gt_prt_close'):
   s=s.replace('    call '+call, '    or a ; Open-ended visual fixture: '+call+' disabled')
  p.write_text(s)
  binary='nvisual.bin'
