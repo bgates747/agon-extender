@@ -54,6 +54,15 @@ architecture is not a claim that every mode/peripheral has been implemented.
 The selected r55 DevKit composition has a clean build and bounded physical
 acceptance; use the production manifests rather than historical overlay recipes.
 Other boards and complete peripheral compatibility remain unqualified.
+The native [build guide](building.md#board-selection-and-compile-time-pin-mapping)
+provides separate DevKit and candidate P4-PC board selections from one VDP source
+tree. P4-PC pin and USB-hub configuration is compile-time input; it does not
+establish hardware qualification or add HDMI output. A separately selected
+experimental [P4-PC HDMI output](tasks/HDMI-001.md) provides fixed720p RGB888,
+centered unscaled images with cropping, and retained browser keyboard/services.
+r03 passes bounded Author startup and gameplay checks. Excess sprite flicker,
+presentation throughput and full mode coverage remain open; this output remains
+outside selected production and has no complete product HDMI acceptance.
 
 ## Test and qualify
 
@@ -63,6 +72,8 @@ Other boards and complete peripheral compatibility remain unqualified.
 | Current fixture constraints and accepted input exceptions | [Bench constraints](qualification/bench-constraints.md) |
 | Capture failures and uninstrumented controls | [Capture protocol](qualification/capture-failure-protocol.md) |
 | Timing scopes, PRT units and package reuse boundary | [Game timing](testing/game-timing.md) |
+| Deterministic rendering load, indefinite visual fixtures and paired mainboard/P4 measurements | [Rendering load suite](testing/render-load.md), experimental; campaign paused with partial results and an offline plotting tool |
+| Permanent representative rendering fixtures and local-card result collection | [Resident rendering suite](testing/resident-render-suite.md), exact existing files and bounded acceptance |
 | Installed-firmware acceptance suite | [Qualification suite](../qualification/README.md) |
 | Qualification operation and retained runs | [Qualification procedure](testing/regression-suite.md) |
 | Compatibility evidence / generated-matrix status | [Qualification index](qualification/README.md) |
@@ -76,6 +87,6 @@ candidate. Historical runner scripts require review before reuse.
 [TODO](../TODO.md) is the unfinished-work index. [Task records](tasks/README.md),
 [decision records](decisions/README.md), dated development logs and qualification
 receipts hold history and rationale. [P4-PC references](hardware/esp32-p4-pc/README.md)
-are a pinned documentation library for the planned board, not evidence of its
-arrival or successful integration. Routine users should not need these archives
+identify the official reference for the received Rev C replacement board and
+retain the historical Rev B snapshot. Integration remains unqualified. Routine users should not need these archives
 to reconstruct the instructions in this handbook.

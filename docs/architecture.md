@@ -200,6 +200,23 @@ Pingo's mainboard-tested callback supplies a precedent without prescribing the
 general callback mechanism or ABI. See
 [ADR-0017](decisions/ADR-0017-generalized-edp-callbacks.md).
 
+## EMOS lifecycle observability
+
+Resident EMOS is the authoritative owner of its startup, foreground,
+mode/route, failure and admitted-job lifecycle state. The P4 EDP may issue a
+bounded read-only query and cache the current-epoch EMOS report for host tools;
+P4 keyboard counters, rendered pixels, elapsed time and P4-local service state
+are not substitutes for that report. A query grants the P4 no authority to
+launch, cancel, reset, select a mode, commit a route, or mutate EMOS state.
+
+QUAL-006 owns the incomplete protocol design. Its recommended no-rewire carrier
+uses the existing full-duplex r03 UART1 epoch: P4's transmit lane carries a
+private query and EMOS's sole output serializer emits one complete private
+response between complete VDU/service records. RTS/CTS remain flow control, not
+request signalling. The exact framing and whether queries must work before
+explicit Extender UART admission remain open; no new wire or early-boot service
+is selected merely by this architecture requirement.
+
 One shared output path reuses stock per-depth packed row expansion, palette
 tables, Copper traversal and sprite/cursor decoration without changing
 logical framebuffer state or readback. Network/browser and later local-display
@@ -209,6 +226,21 @@ their own tasks. Slow sinks may drop reported presentation generations; they
 must not block rendering, grow an unbounded queue, or redefine logical frame
 timing. See
 [ADR-0015](decisions/ADR-0015-p4-display-backend-and-frame-service.md).
+
+The planned P4-PC HDMI adapter presents fitting mode images unscaled and
+centered in a fixed 1280×720 nominal 60 Hz output buffer, with black
+letterboxing and pillarboxing, cropping centered oversized images. Each logical
+pixel occupies one output pixel; RGB888 conversion and composition remain at
+the output boundary. HDMI follows logical mode double buffering where feasible,
+otherwise single buffering, with completed double-buffer publication at a
+hardware frame boundary. VDP frames follow the hardware cadence independently
+of conversion success. HDMI replaces browser video in this build selection;
+browser keyboard and other web services remain available. Future runtime output
+selection is owned by EMOS. This accepted
+geometry is implemented with bounded hardware evidence; full qualification
+remains pending. See
+[ADR-0024](decisions/ADR-0024-centered-unscaled-hdmi.md); HDMI-001 owns remaining
+implementation and qualification.
 
 The separate FabGL `VGATextController` is retained in the complete vendored
 vdp-gl source but excluded from Extender builds. Official VDP text remains on
@@ -861,3 +893,17 @@ including bulk selection and whole-directory operations. The browser uses P4
 HTTP and EMOS-owned mainboard service access. Final interface selection is reopened after usability review. Library selection
 and added operations remain investigation scope; this is not implemented browser behavior.
 See [the decision](decisions/ADR-2026-09-27-browser-file-access.md).
+
+### Bounded direct RGB888 experiment
+
+The explicitly selected RGB-001 experimental P4-PC HDMI build may replace the
+mode20/8/13664-colour logical storage with BGR888 rows in the LCD-owned720p
+buffers while retaining colour semantics, EMOS routing and the independent frame
+clock. The row spacing is3840bytes. Double-buffer swaps release the former front
+only after DMA adopts the completed back; physical scrolling moves pixel contents.
+Ordinary builds retain native storage. The initial separate-plane/copy variant
+remains retained evidence. This scoped experiment is recorded in
+[ADR-0025](decisions/ADR-0025-rgb888-rendering-experiment.md); production selection
+and performance acceptance remain separate. Double-buffer overlay changes are
+presented with explicit application swaps; autonomous overlay timing remains
+outside this variant's qualified scope.

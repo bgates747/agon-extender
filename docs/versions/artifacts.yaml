@@ -1,10 +1,116 @@
 # Registry of project-controlled artifact lineages. This file names artifacts;
 # exact build provenance and test combinations belong in their own manifests.
 schema_version: 1
-registry_revision: r125
-updated_at: 2026-09-28T04:50:52Z
+registry_revision: r142
+updated_at: 2026-10-07T00:49:06Z
 
 artifacts:
+  - artifact_id: scan-scroll-suite
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: scan-scroll-suite-r02
+    status: experimental
+    variants: [primary, window-marked, natural, no-timing]
+    description: Nine finite mode20 scrolling/software-sprite cases including deterministic current repaired Nurples.
+    notes:
+      - SCAN-001 S05; mainboard and P4 share executable/assets, EMOS owns routing and startup selects mode.
+      - Experimental fixtures deployed separately from production games; emulator correctness is not hardware timing qualification.
+      - S05 freezes r01; S06 r02 adds optional aggregate window carriers and a fresh post-warm-up pacing epoch. Drawing streams and assets remain identical.
+      - Exact builds, transformations and validation are recorded in the S05/S06 task evidence; r02 is not a silent replacement of r01 results.
+  - artifact_id: resident-render-suite
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: resident-render-suite-r01
+    status: experimental
+    variants: []
+    description: Permanent SD catalogue of the existing representative rendering workloads and passed visual checks.
+    notes:
+      - Author requests permanent known-working fixtures; BENCH-009 B09-09 records the bounded selection.
+      - Existing frozen executable/data and passed colour/art binaries retain exact build identities and hashes; no new fixture bytes or firmware.
+      - Routine runs change tiny plans/startup only; local-card raw validation remains separate from execution.
+  - artifact_id: game-art-visual
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: game-art-visual-r02
+    status: experimental
+    variants: []
+    description: Visual-only familiar Nurples sprites over AgonWolf3D wall panels with slow motion and manual stepping.
+    notes:
+      - Original RGBA2222 source assets are explicit local inputs with dimensions and byte hashes.
+      - RGB-001; no benchmark timings; frozen render-load-r04 executable and data remain unchanged.
+      - EMOS and startup select route/mode; single-buffer software backgrounds and explicit double-buffer redraw follow stock behaviour.
+      - r02 corrects the visual-only redraw lifecycle: CLG avoids CLS sprite deactivation; sprites are inactive during back-plane redraw and reactivated before refresh/swap.
+      - Original r01 binaries remain retained; exact r01 mainboard control precedes corrected mode136 validation.
+  - artifact_id: rgb-001
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: rgb-001-r02
+    status: experimental
+    variants: [normal, off, convert-off, panel-normal, panel-off, panel-convert-off, panel-copy-normal]
+    description: CPU RGB888 experiment with copied and panel-direct storage variants.
+    notes:
+      - RGB-001; selected64-colour geometries only; ordinary native renderer remains the default.
+      - Initial copied-buffer builds retained; Author selects panel borrowing with DMA-gated swaps for subsequent measurements.
+      - r02 SCAN-001 bounded remedy reuses stock copy/fill vertical scrolling for fixed panel rows; r01 exchange-based evidence remains frozen.
+      - No PPA, expanded-asset cache or production promotion.
+  - artifact_id: bench-009-recovery
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: bench-009-recovery-r01
+    status: experimental
+    variants: []
+    description: SD-only archival of the specifically identified interrupted benchmark upload spool.
+    notes:
+      - Verifies ownership and staging records before rename; preserves bytes, deletes nothing, formats no card.
+      - No Agon GPIO, video or network services; restore an independently verified normal image afterward.
+  - artifact_id: render-load
+    kind: fixture
+    identity_scheme: revision
+    latest_identity: render-load-r04
+    status: draft
+    variants: []
+    description: Frozen deterministic progressively loaded shared mainboard and P4 VDU benchmark.
+    notes:
+      - r04 explicitly configures every active sprite and deactivates old sprites before reset; measured frame bytes are unchanged.
+      - r03 corrects continuous-prototype record allocation to the official Agon module-safe RAM limit; no workload changes.
+      - r02 implements Author-requested indefinite Space/Escape fixtures and wall-clock scripted advances; r01 pilot evidence retained.
+      - BENCH-009; Author delegates contract freeze and execution, including flashing, deployment and resets. No production qualification.
+  - artifact_id: bench-009
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: bench-009-r01
+    status: draft
+    variants: [normal, hold, off]
+    description: Optional P4 measurement windows and HDMI conversion or scanout controls.
+    notes:
+      - BENCH-009; experimental diagnostic derivative of HDMI r03; ordinary firmware restored after measurement.
+  - artifact_id: hdmi-001
+    kind: experimental_firmware
+    identity_scheme: revision
+    latest_identity: hdmi-001-r03
+    status: experimental
+    variants: []
+    description: Fixed 720p RGB888 P4-PC HDMI adapter in the maintained VDP source tree.
+    notes:
+      - HDMI-001; Author-authorized pre-flash implementation with explicit dirty experimental source snapshots. No physical qualification or production promotion.
+  - artifact_id: olimex-p4-devkit-revd1
+    kind: board_profile
+    identity_scheme: revision
+    latest_identity: olimex-p4-devkit-revd1-r01
+    status: candidate
+    variants: []
+    description: Native build hardware configuration preserving the maintained DevKit GPIO tuple.
+    notes:
+      - BOARD-001; compile-time board selection, separate from historical PlatformIO metadata. No new hardware qualification claimed.
+  - artifact_id: olimex-p4-pc-revc
+    kind: board_profile
+    identity_scheme: revision
+    latest_identity: olimex-p4-pc-revc-r01
+    status: candidate
+    variants: []
+    description: Native build hardware configuration and proposed eleven-signal direct harness for P4-PC Rev C.
+    notes:
+      - BOARD-001; physical wiring and keyboard/SD/UART qualification remain open. Browser-only output; no HDMI integration.
   - artifact_id: lcd-vendor-demo
     kind: test_fixture
     identity_scheme: revision

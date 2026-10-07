@@ -5,6 +5,10 @@ subtasks, gates and evidence. Completed history remains in task records and the
 development log. Ordering below replaces historical competing priority headings;
 classification does not grant new execution or waive human acceptance.
 
+## Active board-build preparation
+
+- [ ] **[BOARD-001 — Board-selectable P4 builds and compile-time pin profiles](docs/tasks/BOARD-001.md)** — Board profiles, shared pin consumers, ARM builds and validation pass for DevKit/PC. Web keyboard/video works; Author reports Nurples at 16–17 fps. The tested full-speed USB experiment bypasses the previous transaction-translation rejection, but serial now confirms failure of the keyboard's initial device-descriptor transfer. Try an alternative keyboard as the next hardware control. SD checks, electrical review and canonical qualification/acceptance remain.
+
 ## Networking prior-art review — awaiting review
 
 - [ ] **[NET-002 — Agon networking prior art and Extender reuse](docs/tasks/NET-002.md)** — Review PerryZi/Zimodem, get/zget and related Agon tools against our networking capabilities; recommend reusable code/interfaces and bounded adaptations. Source review N02-01–05 complete; recommendations await Author review. Preserve the existing SD service; proposed AT compatibility is a separate decision.
@@ -26,6 +30,17 @@ classification does not grant new execution or waive human acceptance.
 - [ ] **[PLAN-001 — Timing closeout and next-work selection](docs/tasks/PLAN-001.md)**. T01 committed; T02 reconciliation prepared for review in [the disposition table](docs/tasks/PLAN-001/QUEUE-REVIEW.md). T03 source audit and mode-startup investigation delivered; inherited palette defect recorded, with upstream/Extender patches deferred for credits. Aginvadors optimization and further browser-performance experiments are deferred.
 
 ## Next-work candidates and remaining implementation
+
+- [ ] **[HDMI-001 — Fixed 720p HDMI presentation for existing Agon modes](docs/tasks/HDMI-001.md)** — r03 startup, EMOS prompt modes0/3/8/20 and Author gameplay checks pass for Nurples and 320×240 Aginvadors/Rally. Excess sprite flicker remains open; passive timing records about19.2 complete updates/s versus60 DMA frames/s without an identified controlled game scene. Full mode coverage, fidelity/performance and promotion remain pending.
+- [ ] **[BENCH-009 — Deterministic rendering load suite](docs/tasks/BENCH-009.md)** — Long r04 campaign paused. Supplemental five-mode static controls complete. Permanent resident selection and card collection pass; the separate bounded RGB888 report is complete. No full-campaign resumption selected.
+
+- [ ] **[PPA-001 — Identify PPA rendering acceleration opportunities](docs/tasks/PPA-001.md)** — Deferred, not started; Author requests task recording only. Assess current clears, rectangular fills, bitmap/sprite compositing and transforms against IDF5.5.5 PPA capabilities, then rank source-linked opportunities and proposed comparisons. No implementation or bench work selected.
+
+- [ ] **[RGB-001 — Direct RGB888 rendering experiment](docs/tasks/RGB-001.md)** — Original r01 measurements and gameplay failure retained. SCAN-001 copy-scroll remedy r02 passes Author Nurples review; Rally steering remains an unchanged separate issue. Broader firmware qualification/promotion remains pending. Aginvadors held-fire slowdown is an application bug. Caches, PPA and the long campaign stay deferred.
+
+- [ ] **[SCAN-001 — Segmented HDMI scanout and transparent partial scrolling](docs/tasks/SCAN-001.md)** — S01–S05 complete. S06-R01 copy-scroll remedy built/flashed; 13 bounded cases pass, short Nurples returns to 60 updates/s and scrolling with 32 software sprites reaches 54–55 versus 26 before. Normal startup/configurations restored; Author passes Nurples, with Rally input still an unchanged separate issue. Production qualification/promotion and remaining S06 controls/mechanism gates stay open. Segmented DMA and dependent integration are explicitly deferred by the Author after this pass.
+
+- [ ] **[QUAL-006 — Modern automated hardware-test control plane](docs/tasks/QUAL-006.md)** — Audit complete; Author review and contract decisions remain. Generalize EMOS's existing finite safe-point admission so ordinary qualification can stage, launch, observe and finish correlated jobs without rewriting `/autoexec.txt`, rebooting per case, scraping stale prompt pixels, or guessing listener readiness. Retain boot-script launch only where startup, first admission, reset or recovery is the behavior under test. QUAL-005 remains authoritative until an accepted migration.
 
 - [ ] **[DIAG-002 — Report Extender connection and P4 identity at EMOS startup](docs/tasks/DIAG-002.md)** — After AUDIT-010 and the separately reviewed sparse-checkout/workspace reduction, make EMOS report bounded Extender connection state and the installed P4 firmware/build identity at startup. Preserve usable Legacy boot when the P4 is absent and do not merge or automate the independent reset actions.
 
@@ -97,7 +112,7 @@ classification does not grant new execution or waive human acceptance.
 
 - [ ] **[AUDIO-001](docs/tasks/AUDIO-001.md)** — SD feasibility measured; integrated parallel/audio stages not executed. Keep behind current porting priority; AF02 needs its own bounded contract.
 
-- [ ] **[P4PC-001](docs/tasks/P4PC-001.md)** — Board backordered; plan only, delivered revision/HDMI qualification absent. Resume with hardware availability and authorization; preserve current DevKit bench.
+- [ ] **[P4PC-001 — Ad hoc P4-PC setup and experimentation](docs/tasks/P4PC-001.md)** — Standalone ESP-IDF HDMI/audio experiments. Working 720p at near-60 Hz scanout renders circles at 12 fps; native 640×480 r12 renders about 30 fps but fails physical picture review. Paired capacity averages 31.77 fps scanout on / 34.02 off; drawing remains the main limit. r13 render-only RGB332 measures 3.786 ms drawing / 200 fps versus RGB888 13.758 ms / 66.667 fps, excluding scanout. Author confirms r13 fresh static bars also fail; usable native HDMI and 60-fps animation remain open.
 
 - [ ] **[TRS-80-001](docs/tasks/TRS-80-001.md)** — Ecosystem survey/reference acquisition complete; architecture unselected. Retain future design work; no new implementation implied.
 
