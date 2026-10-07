@@ -1,0 +1,5402 @@
+{
+  "fixture_manifest": "S06-FIXTURES.json",
+  "scope": "Mainboard/native/direct diagnostic tranches plus the bounded copy-scroll candidate; prior failed control finalization remains explicitly marked. Hook-free r02 firmware controls pending. Nominal PRT72kHz/MOS120units per second; submissions and scanout are distinct from game updates.",
+  "runs": [
+    {
+      "run_id": "SCAN-001-2026-10-07-01-05-19Z",
+      "label": "copy-marked",
+      "endpoint": "p4",
+      "control": "marked",
+      "cases": [
+        1,
+        3,
+        7,
+        8,
+        9
+      ],
+      "window_tag": 13708023,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r02-b2026-10-07-00-49-06Z",
+      "p4_image_sha256": "7203465ac7022065ac574514c2e0c4e65d9e0a083c98ee14b7352fc156360d11",
+      "cases_data": [
+        {
+          "case": 1,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 13708023,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1472,
+          "window_end": 1712,
+          "calibration_prt": 35034,
+          "calibration_mos": 60,
+          "drain": 27,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 0.0,
+            "p95_counts": 0,
+            "max_counts": 0,
+            "median_budget_percent": 0.0,
+            "p95_budget_percent": 0.0,
+            "median_ms": 0.0,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 28.0,
+            "p95_counts": 30,
+            "max_counts": 30,
+            "median_budget_percent": 2.3333333333333335,
+            "p95_budget_percent": 2.5,
+            "median_ms": 0.3888888888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 1171.0,
+            "p95_counts": 1171,
+            "max_counts": 1171,
+            "median_budget_percent": 97.58333333333333,
+            "p95_budget_percent": 97.58333333333333,
+            "median_ms": 16.26388888888889,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 100.0,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 2.777777777777768,
+          "raw_sha256": "b67996fea4b75e4ab57b2f7aacd8dabe616505d47b132d75bd46dd00c817f9aa",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 0.0,
+                "p95_counts": 0,
+                "max_counts": 0,
+                "median_budget_percent": 0.0,
+                "p95_budget_percent": 0.0,
+                "median_ms": 0.0,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001928,
+            "scanouts_per_second": 59.94221570406128,
+            "submissions_per_second": 59.94221570406128,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 3764,
+                "max_us": 38,
+                "boundary_drops": 0,
+                "mean_us": 31.366666666666667
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 1198,
+                "max_us": 18,
+                "boundary_drops": 0,
+                "mean_us": 9.983333333333333
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 6295,
+                "max_us": 59,
+                "boundary_drops": 0,
+                "mean_us": 52.458333333333336
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 3,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 13708023,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2290,
+          "window_end": 2530,
+          "calibration_prt": 35134,
+          "calibration_mos": 60,
+          "drain": 29,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 167.0,
+            "p95_counts": 167,
+            "max_counts": 167,
+            "median_budget_percent": 13.916666666666666,
+            "p95_budget_percent": 13.916666666666666,
+            "median_ms": 2.3194444444444446,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 784.0,
+            "p95_counts": 789,
+            "max_counts": 814,
+            "median_budget_percent": 65.33333333333333,
+            "p95_budget_percent": 65.75,
+            "median_ms": 10.88888888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 415.0,
+            "p95_counts": 422,
+            "max_counts": 424,
+            "median_budget_percent": 34.583333333333336,
+            "p95_budget_percent": 35.166666666666664,
+            "median_ms": 5.763888888888889,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 86.08333333333333,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 2.763888888888788,
+          "raw_sha256": "77eea6b31c0db5a2dacb7efadf58df8ab810eeb50a2e0cc4c4c8f5ce93565abd",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 167.0,
+                "p95_counts": 167,
+                "max_counts": 167,
+                "median_budget_percent": 13.916666666666666,
+                "p95_budget_percent": 13.916666666666666,
+                "median_ms": 2.3194444444444446,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001998,
+            "scanouts_per_second": 59.94011982029952,
+            "submissions_per_second": 59.94011982029952,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 555648,
+                "max_us": 4928,
+                "boundary_drops": 0,
+                "mean_us": 4630.4
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 117798,
+                "max_us": 1045,
+                "boundary_drops": 0,
+                "mean_us": 981.65
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 14262,
+                "max_us": 154,
+                "boundary_drops": 0,
+                "mean_us": 118.85
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 13708023,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 3194,
+          "window_end": 3460,
+          "calibration_prt": 36030,
+          "calibration_mos": 60,
+          "drain": 40,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 405.0,
+            "p95_counts": 438,
+            "max_counts": 459,
+            "median_budget_percent": 33.75,
+            "p95_budget_percent": 36.5,
+            "median_ms": 5.625,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 1295.5,
+            "p95_counts": 1445,
+            "max_counts": 1558,
+            "median_budget_percent": 107.95833333333333,
+            "p95_budget_percent": 120.41666666666667,
+            "median_ms": 17.993055555555557,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 1296.0,
+            "p95_counts": 1446,
+            "max_counts": 1559,
+            "median_budget_percent": 108.0,
+            "p95_budget_percent": 120.5,
+            "median_ms": 18.0,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.25,
+          "fault_rows": 0,
+          "late_rows": 115,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 266,
+          "nominal_updates_per_second": 54.13533834586466,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -9.763888888888683,
+          "raw_sha256": "a8c7b898480191a242b7f52dc56b8e7f8265a1a48c0949f2b12fcc91908e4a91",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 405.0,
+                "p95_counts": 438,
+                "max_counts": 459,
+                "median_budget_percent": 33.75,
+                "p95_budget_percent": 36.5,
+                "median_ms": 5.625,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1296.0,
+                "p95_counts": 1446,
+                "max_counts": 1559,
+                "median_budget_percent": 108.0,
+                "p95_budget_percent": 120.5,
+                "median_ms": 18.0,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2231073,
+            "scanouts_per_second": 60.06078689491559,
+            "submissions_per_second": 60.06078689491559,
+            "phases": {
+              "drain": {
+                "calls": 134,
+                "us": 235847,
+                "max_us": 7589,
+                "boundary_drops": 0,
+                "mean_us": 1760.05223880597
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 134,
+                "us": 108787,
+                "max_us": 944,
+                "boundary_drops": 0,
+                "mean_us": 811.8432835820895
+              },
+              "conversion": {
+                "calls": 134,
+                "us": 255939,
+                "max_us": 5594,
+                "boundary_drops": 0,
+                "mean_us": 1909.9925373134329
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 13708023,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 4088,
+          "window_end": 4328,
+          "calibration_prt": 35364,
+          "calibration_mos": 60,
+          "drain": 27,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 231,
+            "max_counts": 232,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 489.0,
+            "p95_counts": 492,
+            "max_counts": 499,
+            "median_budget_percent": 40.75,
+            "p95_budget_percent": 41.0,
+            "median_ms": 6.791666666666667,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 710.0,
+            "p95_counts": 712,
+            "max_counts": 712,
+            "median_budget_percent": 59.166666666666664,
+            "p95_budget_percent": 59.333333333333336,
+            "median_ms": 9.86111111111111,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 2.8055555555555056,
+          "raw_sha256": "dbfb6fe4cfca122b557e747387c17903a8bc0745c452604db9db6d919bf9a2b0",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 231,
+                "max_counts": 232,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001958,
+            "scanouts_per_second": 59.94131745021624,
+            "submissions_per_second": 59.94131745021624,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 3975,
+                "max_us": 42,
+                "boundary_drops": 0,
+                "mean_us": 33.125
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 40594,
+                "max_us": 357,
+                "boundary_drops": 0,
+                "mean_us": 338.28333333333336
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 89722,
+                "max_us": 766,
+                "boundary_drops": 0,
+                "mean_us": 747.6833333333333
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 13708023,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 6606,
+          "window_end": 6846,
+          "calibration_prt": 35571,
+          "calibration_mos": 60,
+          "drain": 158,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 392.0,
+            "p95_counts": 415,
+            "max_counts": 432,
+            "median_budget_percent": 32.666666666666664,
+            "p95_budget_percent": 34.583333333333336,
+            "median_ms": 5.444444444444445,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1191.0,
+            "p95_counts": 1193,
+            "max_counts": 1193,
+            "median_budget_percent": 99.25,
+            "p95_budget_percent": 99.41666666666667,
+            "median_ms": 16.541666666666668,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 799.0,
+            "p95_counts": 871,
+            "max_counts": 886,
+            "median_budget_percent": 66.58333333333333,
+            "p95_budget_percent": 72.58333333333333,
+            "median_ms": 11.097222222222221,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 67.33333333333334,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 18.291666666666593,
+          "raw_sha256": "020a0b53aa1f49e4e3bc5cd9e7c1d3ea48a936a662b4b0d68abfd6ac4958a16a",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 392.0,
+                "p95_counts": 415,
+                "max_counts": 432,
+                "median_budget_percent": 32.666666666666664,
+                "p95_budget_percent": 34.583333333333336,
+                "median_ms": 5.444444444444445,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191.0,
+                "p95_counts": 1193,
+                "max_counts": 1193,
+                "median_budget_percent": 99.25,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.541666666666668,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2000580,
+            "scanouts_per_second": 59.98260504453708,
+            "submissions_per_second": 59.98260504453708,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 639858,
+                "max_us": 5683,
+                "boundary_drops": 0,
+                "mean_us": 5332.15
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 110335,
+                "max_us": 973,
+                "boundary_drops": 0,
+                "mean_us": 919.4583333333334
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 76834,
+                "max_us": 727,
+                "boundary_drops": 0,
+                "mean_us": 640.2833333333333
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-01-07-57Z",
+      "label": "copy-natural",
+      "endpoint": "p4",
+      "control": "natural",
+      "cases": [
+        7,
+        8
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r02-b2026-10-07-00-49-06Z",
+      "p4_image_sha256": "7203465ac7022065ac574514c2e0c4e65d9e0a083c98ee14b7352fc156360d11",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1552,
+          "window_end": 1812,
+          "calibration_prt": 35434,
+          "calibration_mos": 60,
+          "drain": 9612,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 821.5,
+            "p95_counts": 2223,
+            "max_counts": 2248,
+            "median_budget_percent": 68.45833333333333,
+            "p95_budget_percent": 185.25,
+            "median_ms": 11.409722222222221,
+            "over_budget_percent": 40.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 2225,
+            "max_counts": 2249,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 185.41666666666666,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 40.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 817,
+            "max_counts": 818,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 68.08333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 31.54166666666667,
+          "fault_rows": 0,
+          "late_rows": 74,
+          "longest_over_budget_streak": 3,
+          "window_raw_mos_ticks": 260,
+          "nominal_updates_per_second": 55.38461538461539,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -14.930555555555891,
+          "raw_sha256": "5a2b116915c1d67f1cdbea98aa076af1edd2753bd008bc0a016345b8ed676c15",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 821.5,
+                "p95_counts": 2223,
+                "max_counts": 2248,
+                "median_budget_percent": 68.45833333333333,
+                "p95_budget_percent": 185.25,
+                "median_ms": 11.409722222222221,
+                "over_budget_percent": 40.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 2225,
+                "max_counts": 2249,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 185.41666666666666,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 40.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2456,
+          "window_end": 2696,
+          "calibration_prt": 34986,
+          "calibration_mos": 60,
+          "drain": 164,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 231,
+            "max_counts": 232,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 968.0,
+            "p95_counts": 968,
+            "max_counts": 968,
+            "median_budget_percent": 80.66666666666667,
+            "p95_budget_percent": 80.66666666666667,
+            "median_ms": 13.444444444444445,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6666666666667052,
+          "raw_sha256": "27595d6c7d9bef05bf12a4d54643117821a2863b5f98c742b72a27b2b695a088",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 231,
+                "max_counts": 232,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-01-14-16Z",
+      "label": "copy-no-timing",
+      "endpoint": "p4",
+      "control": "no-timing",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r02-b2026-10-07-00-49-06Z",
+      "p4_image_sha256": "7203465ac7022065ac574514c2e0c4e65d9e0a083c98ee14b7352fc156360d11",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1584,
+          "window_end": 1852,
+          "calibration_prt": 34872,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 53.73134328358209,
+          "fault_rows": 0,
+          "raw_sha256": "fc99adff3771b321d49ac441336b1c78ad1a6178b33e34de2bf85b352a525e5a",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2506,
+          "window_end": 2746,
+          "calibration_prt": 35621,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "c569a67e6b7b760e5ef5051a352dec5c948061b23fb8ac5149a66fb865f7feb8",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 3,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 5060,
+          "window_end": 5300,
+          "calibration_prt": 34978,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "504d27821830320c7d3f83729e746927a14db5c930d76c74fa9f20fefc1f5a76",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-01-11-08Z",
+      "label": "copy-unmarked",
+      "endpoint": "p4",
+      "control": "unmarked",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r02-b2026-10-07-00-49-06Z",
+      "p4_image_sha256": "7203465ac7022065ac574514c2e0c4e65d9e0a083c98ee14b7352fc156360d11",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1580,
+          "window_end": 1848,
+          "calibration_prt": 35048,
+          "calibration_mos": 60,
+          "drain": 38,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 405.0,
+            "p95_counts": 430,
+            "max_counts": 440,
+            "median_budget_percent": 33.75,
+            "p95_budget_percent": 35.833333333333336,
+            "median_ms": 5.625,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 1294.0,
+            "p95_counts": 1515,
+            "max_counts": 1562,
+            "median_budget_percent": 107.83333333333333,
+            "p95_budget_percent": 126.25,
+            "median_ms": 17.97222222222222,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 1295.0,
+            "p95_counts": 1516,
+            "max_counts": 1562,
+            "median_budget_percent": 107.91666666666667,
+            "p95_budget_percent": 126.33333333333333,
+            "median_ms": 17.98611111111111,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.25,
+          "fault_rows": 0,
+          "late_rows": 117,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 268,
+          "nominal_updates_per_second": 53.73134328358209,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -5.458333333333343,
+          "raw_sha256": "a24f9d3429522517c7c044917a2dedc273976e167ad9c0b4b09325320085c825",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 405.0,
+                "p95_counts": 430,
+                "max_counts": 440,
+                "median_budget_percent": 33.75,
+                "p95_budget_percent": 35.833333333333336,
+                "median_ms": 5.625,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1295.0,
+                "p95_counts": 1516,
+                "max_counts": 1562,
+                "median_budget_percent": 107.91666666666667,
+                "p95_budget_percent": 126.33333333333333,
+                "median_ms": 17.98611111111111,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2488,
+          "window_end": 2728,
+          "calibration_prt": 35131,
+          "calibration_mos": 60,
+          "drain": 28,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 231,
+            "max_counts": 231,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 570.5,
+            "p95_counts": 575,
+            "max_counts": 631,
+            "median_budget_percent": 47.541666666666664,
+            "p95_budget_percent": 47.916666666666664,
+            "median_ms": 7.923611111111111,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 628.5,
+            "p95_counts": 634,
+            "max_counts": 653,
+            "median_budget_percent": 52.375,
+            "p95_budget_percent": 52.833333333333336,
+            "median_ms": 8.729166666666666,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6388888888889674,
+          "raw_sha256": "2707245da9ff89a5a760054b9ebc7b2c1549a6507eaac930c31164618f8faba9",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 231,
+                "max_counts": 231,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 5012,
+          "window_end": 5252,
+          "calibration_prt": 35998,
+          "calibration_mos": 60,
+          "drain": 46,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 401.5,
+            "p95_counts": 434,
+            "max_counts": 466,
+            "median_budget_percent": 33.458333333333336,
+            "p95_budget_percent": 36.166666666666664,
+            "median_ms": 5.576388888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1191.5,
+            "p95_counts": 1193,
+            "max_counts": 1193,
+            "median_budget_percent": 99.29166666666667,
+            "p95_budget_percent": 99.41666666666667,
+            "median_ms": 16.54861111111111,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 789.0,
+            "p95_counts": 863,
+            "max_counts": 875,
+            "median_budget_percent": 65.75,
+            "p95_budget_percent": 71.91666666666667,
+            "median_ms": 10.958333333333334,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.54166666666666,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 13.944444444444537,
+          "raw_sha256": "b01d29a8a54e1a7cd96982d7c1dde0cce5c0c628b25fae8231151e7bda02cd66",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 401.5,
+                "p95_counts": 434,
+                "max_counts": 466,
+                "median_budget_percent": 33.458333333333336,
+                "p95_budget_percent": 36.166666666666664,
+                "median_ms": 5.576388888888889,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191.5,
+                "p95_counts": 1193,
+                "max_counts": 1193,
+                "median_budget_percent": 99.29166666666667,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.54861111111111,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-00-15-39Z",
+      "label": "direct-marked",
+      "endpoint": "p4",
+      "control": "marked",
+      "cases": [
+        1,
+        3,
+        7,
+        8,
+        9
+      ],
+      "window_tag": 7354746,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r01-b2026-10-05-23-30-11Z",
+      "p4_image_sha256": "913f8a34af1180ffde67272d337c7f4b998c6202e6f2a502163978d766760fa7",
+      "cases_data": [
+        {
+          "case": 1,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 7354746,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1442,
+          "window_end": 1682,
+          "calibration_prt": 35619,
+          "calibration_mos": 60,
+          "drain": 27,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 0.0,
+            "p95_counts": 0,
+            "max_counts": 0,
+            "median_budget_percent": 0.0,
+            "p95_budget_percent": 0.0,
+            "median_ms": 0.0,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 28.0,
+            "p95_counts": 29,
+            "max_counts": 30,
+            "median_budget_percent": 2.3333333333333335,
+            "p95_budget_percent": 2.4166666666666665,
+            "median_ms": 0.3888888888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 1171.0,
+            "p95_counts": 1171,
+            "max_counts": 1172,
+            "median_budget_percent": 97.58333333333333,
+            "p95_budget_percent": 97.58333333333333,
+            "median_ms": 16.26388888888889,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 100.0,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 2.763888888888788,
+          "raw_sha256": "d54378365f98b4f0d170ec5f7dcf3a368ad105fe0fcc14bf35d3e1a540adff99",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 0.0,
+                "p95_counts": 0,
+                "max_counts": 0,
+                "median_budget_percent": 0.0,
+                "p95_budget_percent": 0.0,
+                "median_ms": 0.0,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001921,
+            "scanouts_per_second": 59.94242530049887,
+            "submissions_per_second": 59.94242530049887,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 3748,
+                "max_us": 38,
+                "boundary_drops": 0,
+                "mean_us": 31.233333333333334
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 1185,
+                "max_us": 16,
+                "boundary_drops": 0,
+                "mean_us": 9.875
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 6273,
+                "max_us": 57,
+                "boundary_drops": 0,
+                "mean_us": 52.275
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 3,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 7354746,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2296,
+          "window_end": 2712,
+          "calibration_prt": 35068,
+          "calibration_mos": 60,
+          "drain": 39,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 167.0,
+            "p95_counts": 167,
+            "max_counts": 168,
+            "median_budget_percent": 13.916666666666666,
+            "p95_budget_percent": 13.916666666666666,
+            "median_ms": 2.3194444444444446,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 2074.0,
+            "p95_counts": 2090,
+            "max_counts": 2106,
+            "median_budget_percent": 172.83333333333334,
+            "p95_budget_percent": 174.16666666666666,
+            "median_ms": 28.805555555555557,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 2074.5,
+            "p95_counts": 2091,
+            "max_counts": 2107,
+            "median_budget_percent": 172.875,
+            "p95_budget_percent": 174.25,
+            "median_ms": 28.8125,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 2,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 86.08333333333333,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 416,
+          "nominal_updates_per_second": 34.61538461538461,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 13.791666666666647,
+          "raw_sha256": "c1b0629045cc97f2b2dda0d41a135c42c214aff922b9d4b8072557f556d882d3",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 167.0,
+                "p95_counts": 167,
+                "max_counts": 168,
+                "median_budget_percent": 13.916666666666666,
+                "p95_budget_percent": 13.916666666666666,
+                "median_ms": 2.3194444444444446,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 2074.5,
+                "p95_counts": 2091,
+                "max_counts": 2107,
+                "median_budget_percent": 172.875,
+                "p95_budget_percent": 174.25,
+                "median_ms": 28.8125,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 3457576,
+            "scanouts_per_second": 59.86853217398547,
+            "submissions_per_second": 59.86853217398547,
+            "phases": {
+              "drain": {
+                "calls": 207,
+                "us": 503558,
+                "max_us": 22882,
+                "boundary_drops": 0,
+                "mean_us": 2432.647342995169
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 207,
+                "us": 100421,
+                "max_us": 907,
+                "boundary_drops": 0,
+                "mean_us": 485.1256038647343
+              },
+              "conversion": {
+                "calls": 207,
+                "us": 1532368,
+                "max_us": 21840,
+                "boundary_drops": 0,
+                "mean_us": 7402.743961352657
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 7354746,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 3456,
+          "window_end": 4006,
+          "calibration_prt": 35293,
+          "calibration_mos": 60,
+          "drain": 29,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 405.0,
+            "p95_counts": 411,
+            "max_counts": 426,
+            "median_budget_percent": 33.75,
+            "p95_budget_percent": 34.25,
+            "median_ms": 5.625,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 2719.0,
+            "p95_counts": 2991,
+            "max_counts": 3006,
+            "median_budget_percent": 226.58333333333334,
+            "p95_budget_percent": 249.25,
+            "median_ms": 37.763888888888886,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 2720.0,
+            "p95_counts": 2991,
+            "max_counts": 3007,
+            "median_budget_percent": 226.66666666666666,
+            "p95_budget_percent": 249.25,
+            "median_ms": 37.77777777777778,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.25,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 550,
+          "nominal_updates_per_second": 26.181818181818183,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 12.333333333333307,
+          "raw_sha256": "70a1f79be3189373a3f6e67fba25ba4864eb997a1b17685fa87f326bca3bdb6d",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 405.0,
+                "p95_counts": 411,
+                "max_counts": 426,
+                "median_budget_percent": 33.75,
+                "p95_budget_percent": 34.25,
+                "median_ms": 5.625,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 2720.0,
+                "p95_counts": 2991,
+                "max_counts": 3007,
+                "median_budget_percent": 226.66666666666666,
+                "p95_budget_percent": 249.25,
+                "median_ms": 37.77777777777778,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 4576649,
+            "scanouts_per_second": 60.08763180222036,
+            "submissions_per_second": 60.08763180222036,
+            "phases": {
+              "drain": {
+                "calls": 275,
+                "us": 1391618,
+                "max_us": 25854,
+                "boundary_drops": 0,
+                "mean_us": 5060.4290909090905
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 275,
+                "us": 120897,
+                "max_us": 834,
+                "boundary_drops": 0,
+                "mean_us": 439.62545454545455
+              },
+              "conversion": {
+                "calls": 275,
+                "us": 1558457,
+                "max_us": 22992,
+                "boundary_drops": 0,
+                "mean_us": 5667.1163636363635
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 7354746,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 4572,
+          "window_end": 4812,
+          "calibration_prt": 35774,
+          "calibration_mos": 60,
+          "drain": 28,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 249,
+            "max_counts": 254,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 20.75,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 490.0,
+            "p95_counts": 508,
+            "max_counts": 517,
+            "median_budget_percent": 40.833333333333336,
+            "p95_budget_percent": 42.333333333333336,
+            "median_ms": 6.805555555555555,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 709.0,
+            "p95_counts": 712,
+            "max_counts": 713,
+            "median_budget_percent": 59.083333333333336,
+            "p95_budget_percent": 59.333333333333336,
+            "median_ms": 9.847222222222221,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 3.6249999999999893,
+          "raw_sha256": "b371f93cfee55301bfbe45e53f8ff0b639d85b07210f22a47a1d5e15649dc077",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 249,
+                "max_counts": 254,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 20.75,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001128,
+            "scanouts_per_second": 59.9661790750017,
+            "submissions_per_second": 59.9661790750017,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 4066,
+                "max_us": 44,
+                "boundary_drops": 0,
+                "mean_us": 33.88333333333333
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 120,
+                "us": 41747,
+                "max_us": 404,
+                "boundary_drops": 0,
+                "mean_us": 347.89166666666665
+              },
+              "conversion": {
+                "calls": 120,
+                "us": 90087,
+                "max_us": 1032,
+                "boundary_drops": 0,
+                "mean_us": 750.725
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 7354746,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 7174,
+          "window_end": 7538,
+          "calibration_prt": 35254,
+          "calibration_mos": 60,
+          "drain": 30698,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 387.0,
+            "p95_counts": 3669,
+            "max_counts": 4509,
+            "median_budget_percent": 32.25,
+            "p95_budget_percent": 305.75,
+            "median_ms": 5.375,
+            "over_budget_percent": 26.666666666666668
+          },
+          "total": {
+            "median_counts": 1192.0,
+            "p95_counts": 4795,
+            "max_counts": 4800,
+            "median_budget_percent": 99.33333333333333,
+            "p95_budget_percent": 399.5833333333333,
+            "median_ms": 16.555555555555557,
+            "over_budget_percent": 27.5
+          },
+          "wait": {
+            "median_counts": 812.5,
+            "p95_counts": 1006,
+            "max_counts": 1190,
+            "median_budget_percent": 67.70833333333333,
+            "p95_budget_percent": 83.83333333333333,
+            "median_ms": 11.284722222222221,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 67.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 2,
+          "window_raw_mos_ticks": 364,
+          "nominal_updates_per_second": 39.56043956043956,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 24.930555555555234,
+          "raw_sha256": "e59a01bf2ecabefe02b543bd7972b40844f0241bf8e2af0bfc1dcca4adfb5928",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 387.0,
+                "p95_counts": 3669,
+                "max_counts": 4509,
+                "median_budget_percent": 32.25,
+                "p95_budget_percent": 305.75,
+                "median_ms": 5.375,
+                "over_budget_percent": 26.666666666666668
+              },
+              "total": {
+                "median_counts": 1192.0,
+                "p95_counts": 4795,
+                "max_counts": 4800,
+                "median_budget_percent": 99.33333333333333,
+                "p95_budget_percent": 399.5833333333333,
+                "median_ms": 16.555555555555557,
+                "over_budget_percent": 27.5
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 3452802,
+            "scanouts_per_second": 59.9513091106875,
+            "submissions_per_second": 35.91286149625724,
+            "phases": {
+              "drain": {
+                "calls": 125,
+                "us": 2769317,
+                "max_us": 114831,
+                "boundary_drops": 0,
+                "mean_us": 22154.536
+              },
+              "row_wait": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "row_compose": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "expand": {
+                "calls": 0,
+                "us": 0,
+                "max_us": 0,
+                "boundary_drops": 0,
+                "mean_us": null
+              },
+              "cache": {
+                "calls": 124,
+                "us": 45116,
+                "max_us": 832,
+                "boundary_drops": 0,
+                "mean_us": 363.83870967741933
+              },
+              "conversion": {
+                "calls": 124,
+                "us": 64340,
+                "max_us": 625,
+                "boundary_drops": 0,
+                "mean_us": 518.8709677419355
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-00-18-59Z",
+      "label": "direct-natural",
+      "endpoint": "p4",
+      "control": "natural",
+      "cases": [
+        7,
+        8
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r01-b2026-10-05-23-30-11Z",
+      "p4_image_sha256": "913f8a34af1180ffde67272d337c7f4b998c6202e6f2a502163978d766760fa7",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1634,
+          "window_end": 2172,
+          "calibration_prt": 35818,
+          "calibration_mos": 60,
+          "drain": 20446,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 2760.0,
+            "p95_counts": 4576,
+            "max_counts": 5136,
+            "median_budget_percent": 230.0,
+            "p95_budget_percent": 381.3333333333333,
+            "median_ms": 38.333333333333336,
+            "over_budget_percent": 67.5
+          },
+          "total": {
+            "median_counts": 2761.5,
+            "p95_counts": 4577,
+            "max_counts": 5137,
+            "median_budget_percent": 230.125,
+            "p95_budget_percent": 381.4166666666667,
+            "median_ms": 38.354166666666664,
+            "over_budget_percent": 67.5
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": -130.0,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 3,
+          "window_raw_mos_ticks": 538,
+          "nominal_updates_per_second": 26.765799256505577,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 0.34722222222249854,
+          "raw_sha256": "2e42157c30be78f7472225b519b16c02286dc91b2a08e76f473c0f534764a5b0",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 2760.0,
+                "p95_counts": 4576,
+                "max_counts": 5136,
+                "median_budget_percent": 230.0,
+                "p95_budget_percent": 381.3333333333333,
+                "median_ms": 38.333333333333336,
+                "over_budget_percent": 67.5
+              },
+              "total": {
+                "median_counts": 2761.5,
+                "p95_counts": 4577,
+                "max_counts": 5137,
+                "median_budget_percent": 230.125,
+                "p95_budget_percent": 381.4166666666667,
+                "median_ms": 38.354166666666664,
+                "over_budget_percent": 67.5
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2794,
+          "window_end": 3034,
+          "calibration_prt": 35186,
+          "calibration_mos": 60,
+          "drain": 35,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 231,
+            "max_counts": 231,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 968.0,
+            "p95_counts": 968,
+            "max_counts": 968,
+            "median_budget_percent": 80.66666666666667,
+            "p95_budget_percent": 80.66666666666667,
+            "median_ms": 13.444444444444445,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6666666666667052,
+          "raw_sha256": "adf155125772306bcddd2bd815d7f4fda919ba253206545811b5f95fd0a66238",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 231,
+                "max_counts": 231,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-00-21-32Z",
+      "label": "direct-no-timing",
+      "endpoint": "p4",
+      "control": "no-timing",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "fail",
+      "frames": 120,
+      "p4_build": "rgb-001-r01-b2026-10-05-23-30-11Z",
+      "p4_image_sha256": "913f8a34af1180ffde67272d337c7f4b998c6202e6f2a502163978d766760fa7",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1680,
+          "window_end": 2240,
+          "calibration_prt": 34961,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 25.714285714285715,
+          "fault_rows": 0,
+          "raw_sha256": "40327d5feea984cdafd9b31dc269062c2bb6012284d7ae18dd2df13a29e5e621",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2844,
+          "window_end": 3084,
+          "calibration_prt": 35728,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "426212828ce7c6c72eae25b5d87603807b374cbb46685da8ec0b9f5ad6e29f6e",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 3,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": true,
+          "window_start": 5458,
+          "window_end": 5866,
+          "calibration_prt": 34881,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": false,
+          "scope": "unfenced game submission/pacing",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 35.294117647058826,
+          "fault_rows": 0,
+          "raw_sha256": "4bae62efa38a486442c58b3c1db0429a5b8b72eef9aaeeeecb69ee79af1aa847",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        }
+      ],
+      "validation_note": "T07/T08 complete. T09 has all120 rows/no row faults but header abort=true. Retain as failed finalization control; likely final completion-query poll budget, not a demonstrated game crash. No per-finalization reason field, so exact cause not proven."
+    },
+    {
+      "run_id": "SCAN-001-2026-10-07-00-25-15Z",
+      "label": "direct-unmarked",
+      "endpoint": "p4",
+      "control": "unmarked",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "rgb-001-r01-b2026-10-05-23-30-11Z",
+      "p4_image_sha256": "913f8a34af1180ffde67272d337c7f4b998c6202e6f2a502163978d766760fa7",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1698,
+          "window_end": 2256,
+          "calibration_prt": 35929,
+          "calibration_mos": 60,
+          "drain": 37,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 404.0,
+            "p95_counts": 405,
+            "max_counts": 406,
+            "median_budget_percent": 33.666666666666664,
+            "p95_budget_percent": 33.75,
+            "median_ms": 5.611111111111111,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 2778.0,
+            "p95_counts": 2995,
+            "max_counts": 3010,
+            "median_budget_percent": 231.5,
+            "p95_budget_percent": 249.58333333333334,
+            "median_ms": 38.583333333333336,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 2778.5,
+            "p95_counts": 2996,
+            "max_counts": 3010,
+            "median_budget_percent": 231.54166666666666,
+            "p95_budget_percent": 249.66666666666666,
+            "median_ms": 38.59027777777778,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.33333333333334,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 558,
+          "nominal_updates_per_second": 25.806451612903224,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -2.583333333332938,
+          "raw_sha256": "a232c7e59b6c37db2aedd38c8d917a75a599cd1a166e794a1613c8d9624ed9e0",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 404.0,
+                "p95_counts": 405,
+                "max_counts": 406,
+                "median_budget_percent": 33.666666666666664,
+                "p95_budget_percent": 33.75,
+                "median_ms": 5.611111111111111,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 2778.5,
+                "p95_counts": 2996,
+                "max_counts": 3010,
+                "median_budget_percent": 231.54166666666666,
+                "p95_budget_percent": 249.66666666666666,
+                "median_ms": 38.59027777777778,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2876,
+          "window_end": 3116,
+          "calibration_prt": 35061,
+          "calibration_mos": 60,
+          "drain": 28,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 231.0,
+            "p95_counts": 231,
+            "max_counts": 231,
+            "median_budget_percent": 19.25,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.2083333333333335,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 569.0,
+            "p95_counts": 575,
+            "max_counts": 577,
+            "median_budget_percent": 47.416666666666664,
+            "p95_budget_percent": 47.916666666666664,
+            "median_ms": 7.902777777777778,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 630.0,
+            "p95_counts": 634,
+            "max_counts": 656,
+            "median_budget_percent": 52.5,
+            "p95_budget_percent": 52.833333333333336,
+            "median_ms": 8.75,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.75,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6666666666667052,
+          "raw_sha256": "20c0a58bc47a59da54e1b129528ed09ce4307d9e7bbf49614bda35f7b0b813b6",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 231.0,
+                "p95_counts": 231,
+                "max_counts": 231,
+                "median_budget_percent": 19.25,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.2083333333333335,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 5492,
+          "window_end": 5896,
+          "calibration_prt": 35416,
+          "calibration_mos": 60,
+          "drain": 31175,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 421.5,
+            "p95_counts": 3931,
+            "max_counts": 4967,
+            "median_budget_percent": 35.125,
+            "p95_budget_percent": 327.5833333333333,
+            "median_ms": 5.854166666666667,
+            "over_budget_percent": 35.0
+          },
+          "total": {
+            "median_counts": 1192.0,
+            "p95_counts": 4795,
+            "max_counts": 5996,
+            "median_budget_percent": 99.33333333333333,
+            "p95_budget_percent": 399.5833333333333,
+            "median_ms": 16.555555555555557,
+            "over_budget_percent": 35.0
+          },
+          "wait": {
+            "median_counts": 814.0,
+            "p95_counts": 1075,
+            "max_counts": 1200,
+            "median_budget_percent": 67.83333333333333,
+            "p95_budget_percent": 89.58333333333333,
+            "median_ms": 11.305555555555555,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 64.875,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 3,
+          "window_raw_mos_ticks": 404,
+          "nominal_updates_per_second": 35.64356435643565,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 13.222222222222246,
+          "raw_sha256": "b4a7a2e2180997532f2944ee2bab7074a56e58aa886ac6d5a286824b305e20c6",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 421.5,
+                "p95_counts": 3931,
+                "max_counts": 4967,
+                "median_budget_percent": 35.125,
+                "p95_budget_percent": 327.5833333333333,
+                "median_ms": 5.854166666666667,
+                "over_budget_percent": 35.0
+              },
+              "total": {
+                "median_counts": 1192.0,
+                "p95_counts": 4795,
+                "max_counts": 5996,
+                "median_budget_percent": 99.33333333333333,
+                "p95_budget_percent": 399.5833333333333,
+                "median_ms": 16.555555555555557,
+                "over_budget_percent": 35.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-21-54Z",
+      "label": "mainboard-full",
+      "endpoint": "mainboard",
+      "control": "full",
+      "cases": [
+        9
+      ],
+      "window_tag": 14573013,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 3600,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 9,
+          "count": 3600,
+          "expected": 3600,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 14573013,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 3974,
+          "window_end": 11174,
+          "calibration_prt": 34975,
+          "calibration_mos": 60,
+          "drain": 221,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 421.5,
+            "p95_counts": 792,
+            "max_counts": 1036,
+            "median_budget_percent": 35.125,
+            "p95_budget_percent": 66.0,
+            "median_ms": 5.854166666666667,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1190.0,
+            "p95_counts": 1192,
+            "max_counts": 1192,
+            "median_budget_percent": 99.16666666666667,
+            "p95_budget_percent": 99.33333333333333,
+            "median_ms": 16.52777777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 768.0,
+            "p95_counts": 973,
+            "max_counts": 994,
+            "median_budget_percent": 64.0,
+            "p95_budget_percent": 81.08333333333333,
+            "median_ms": 10.666666666666666,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 64.875,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 7200,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 512.9444444444431,
+          "raw_sha256": "990f3d00cdd749dd4c51c5c97f5424950e14795eb38f52a9bef7ffafd2478b02",
+          "trajectory_sha256": "b7ec738c97812018efe155118120359d13eaf7b6688c17ed24a0b005d78c9ade",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 5
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 684,
+              "active": {
+                "median_counts": 236.0,
+                "p95_counts": 516,
+                "max_counts": 883,
+                "median_budget_percent": 19.666666666666668,
+                "p95_budget_percent": 43.0,
+                "median_ms": 3.2777777777777777,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191.0,
+                "p95_counts": 1192,
+                "max_counts": 1192,
+                "median_budget_percent": 99.25,
+                "p95_budget_percent": 99.33333333333333,
+                "median_ms": 16.541666666666668,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            },
+            {
+              "actor_min": 1,
+              "actor_max": 2,
+              "rows": 1921,
+              "active": {
+                "median_counts": 411,
+                "p95_counts": 773,
+                "max_counts": 1036,
+                "median_budget_percent": 34.25,
+                "p95_budget_percent": 64.41666666666667,
+                "median_ms": 5.708333333333333,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1190,
+                "p95_counts": 1191,
+                "max_counts": 1192,
+                "median_budget_percent": 99.16666666666667,
+                "p95_budget_percent": 99.25,
+                "median_ms": 16.52777777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            },
+            {
+              "actor_min": 3,
+              "actor_max": 255,
+              "rows": 995,
+              "active": {
+                "median_counts": 595,
+                "p95_counts": 845,
+                "max_counts": 1009,
+                "median_budget_percent": 49.583333333333336,
+                "p95_budget_percent": 70.41666666666667,
+                "median_ms": 8.26388888888889,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1189,
+                "p95_counts": 1190,
+                "max_counts": 1191,
+                "median_budget_percent": 99.08333333333333,
+                "p95_budget_percent": 99.16666666666667,
+                "median_ms": 16.51388888888889,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-11-34Z",
+      "label": "mainboard-marked",
+      "endpoint": "mainboard",
+      "control": "marked",
+      "cases": [
+        1,
+        3,
+        7,
+        8,
+        9
+      ],
+      "window_tag": 16431002,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 1,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 16431002,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1402,
+          "window_end": 1642,
+          "calibration_prt": 35115,
+          "calibration_mos": 60,
+          "drain": 28,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 0.0,
+            "p95_counts": 0,
+            "max_counts": 0,
+            "median_budget_percent": 0.0,
+            "p95_budget_percent": 0.0,
+            "median_ms": 0.0,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 28.0,
+            "p95_counts": 32,
+            "max_counts": 35,
+            "median_budget_percent": 2.3333333333333335,
+            "p95_budget_percent": 2.6666666666666665,
+            "median_ms": 0.3888888888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1198.0,
+            "p95_counts": 1198,
+            "max_counts": 1198,
+            "median_budget_percent": 99.83333333333333,
+            "p95_budget_percent": 99.83333333333333,
+            "median_ms": 16.63888888888889,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 1170.0,
+            "p95_counts": 1170,
+            "max_counts": 1171,
+            "median_budget_percent": 97.5,
+            "p95_budget_percent": 97.5,
+            "median_ms": 16.25,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 100.0,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 4.541666666666666,
+          "raw_sha256": "1700e1d40b7e20a0e287f99615aeca24cb93bbe9b334839af6fbc9d8d5f35cf1",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 0.0,
+                "p95_counts": 0,
+                "max_counts": 0,
+                "median_budget_percent": 0.0,
+                "p95_budget_percent": 0.0,
+                "median_ms": 0.0,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1198.0,
+                "p95_counts": 1198,
+                "max_counts": 1198,
+                "median_budget_percent": 99.83333333333333,
+                "p95_budget_percent": 99.83333333333333,
+                "median_ms": 16.63888888888889,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 3,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 16431002,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2082,
+          "window_end": 2322,
+          "calibration_prt": 35263,
+          "calibration_mos": 60,
+          "drain": 31,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 157.0,
+            "p95_counts": 159,
+            "max_counts": 160,
+            "median_budget_percent": 13.083333333333334,
+            "p95_budget_percent": 13.25,
+            "median_ms": 2.1805555555555554,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 649.0,
+            "p95_counts": 657,
+            "max_counts": 663,
+            "median_budget_percent": 54.083333333333336,
+            "p95_budget_percent": 54.75,
+            "median_ms": 9.01388888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1198.0,
+            "p95_counts": 1198,
+            "max_counts": 1198,
+            "median_budget_percent": 99.83333333333333,
+            "p95_budget_percent": 99.83333333333333,
+            "median_ms": 16.63888888888889,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 549.0,
+            "p95_counts": 555,
+            "max_counts": 558,
+            "median_budget_percent": 45.75,
+            "p95_budget_percent": 46.25,
+            "median_ms": 7.625,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 86.91666666666667,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 4.652777777777839,
+          "raw_sha256": "b887a5e1be799f5a13082a34f8af3b517e9ba2109c23e808497dcad26ed56edc",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 157.0,
+                "p95_counts": 159,
+                "max_counts": 160,
+                "median_budget_percent": 13.083333333333334,
+                "p95_budget_percent": 13.25,
+                "median_ms": 2.1805555555555554,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1198.0,
+                "p95_counts": 1198,
+                "max_counts": 1198,
+                "median_budget_percent": 99.83333333333333,
+                "p95_budget_percent": 99.83333333333333,
+                "median_ms": 16.63888888888889,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 16431002,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2872,
+          "window_end": 3234,
+          "calibration_prt": 35959,
+          "calibration_mos": 60,
+          "drain": 28,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 888.0,
+            "p95_counts": 1242,
+            "max_counts": 1267,
+            "median_budget_percent": 74.0,
+            "p95_budget_percent": 103.5,
+            "median_ms": 12.333333333333334,
+            "over_budget_percent": 10.833333333333334
+          },
+          "complete": {
+            "median_counts": 1804.5,
+            "p95_counts": 2137,
+            "max_counts": 2169,
+            "median_budget_percent": 150.375,
+            "p95_budget_percent": 178.08333333333334,
+            "median_ms": 25.0625,
+            "over_budget_percent": 100.0
+          },
+          "total": {
+            "median_counts": 1805.0,
+            "p95_counts": 2138,
+            "max_counts": 2169,
+            "median_budget_percent": 150.41666666666666,
+            "p95_budget_percent": 178.16666666666666,
+            "median_ms": 25.069444444444443,
+            "over_budget_percent": 100.0
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 26.0,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 120,
+          "window_raw_mos_ticks": 362,
+          "nominal_updates_per_second": 39.77900552486188,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 14.694444444444343,
+          "raw_sha256": "798467b897d3f3a710b0e2c635725c19f7f427c329e09dd45cd4a82cc0d70b16",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 888.0,
+                "p95_counts": 1242,
+                "max_counts": 1267,
+                "median_budget_percent": 74.0,
+                "p95_budget_percent": 103.5,
+                "median_ms": 12.333333333333334,
+                "over_budget_percent": 10.833333333333334
+              },
+              "total": {
+                "median_counts": 1805.0,
+                "p95_counts": 2138,
+                "max_counts": 2169,
+                "median_budget_percent": 150.41666666666666,
+                "p95_budget_percent": 178.16666666666666,
+                "median_ms": 25.069444444444443,
+                "over_budget_percent": 100.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 16431002,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 3698,
+          "window_end": 3938,
+          "calibration_prt": 34799,
+          "calibration_mos": 60,
+          "drain": 27,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 230.0,
+            "p95_counts": 231,
+            "max_counts": 231,
+            "median_budget_percent": 19.166666666666668,
+            "p95_budget_percent": 19.25,
+            "median_ms": 3.1944444444444446,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 892.0,
+            "p95_counts": 894,
+            "max_counts": 895,
+            "median_budget_percent": 74.33333333333333,
+            "p95_budget_percent": 74.5,
+            "median_ms": 12.38888888888889,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1198.0,
+            "p95_counts": 1198,
+            "max_counts": 1198,
+            "median_budget_percent": 99.83333333333333,
+            "p95_budget_percent": 99.83333333333333,
+            "median_ms": 16.63888888888889,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 306.0,
+            "p95_counts": 311,
+            "max_counts": 313,
+            "median_budget_percent": 25.5,
+            "p95_budget_percent": 25.916666666666668,
+            "median_ms": 4.25,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.83333333333333,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 4.611111111111121,
+          "raw_sha256": "49311a5feee5b99faa566734774bbf195bb87829dd5d934a2e432d11fe2b145d",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 230.0,
+                "p95_counts": 231,
+                "max_counts": 231,
+                "median_budget_percent": 19.166666666666668,
+                "p95_budget_percent": 19.25,
+                "median_ms": 3.1944444444444446,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1198.0,
+                "p95_counts": 1198,
+                "max_counts": 1198,
+                "median_budget_percent": 99.83333333333333,
+                "p95_budget_percent": 99.83333333333333,
+                "median_ms": 16.63888888888889,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 16431002,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 6926,
+          "window_end": 7166,
+          "calibration_prt": 35284,
+          "calibration_mos": 60,
+          "drain": 182,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 254.0,
+            "p95_counts": 509,
+            "max_counts": 619,
+            "median_budget_percent": 21.166666666666668,
+            "p95_budget_percent": 42.416666666666664,
+            "median_ms": 3.5277777777777777,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1190.0,
+            "p95_counts": 1192,
+            "max_counts": 1192,
+            "median_budget_percent": 99.16666666666667,
+            "p95_budget_percent": 99.33333333333333,
+            "median_ms": 16.52777777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 936.0,
+            "p95_counts": 983,
+            "max_counts": 994,
+            "median_budget_percent": 78.0,
+            "p95_budget_percent": 81.91666666666667,
+            "median_ms": 13.0,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 78.83333333333333,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 19.638888888888985,
+          "raw_sha256": "4d32b053be3cdc4a196abf2c047447987d56a84d543a2249dbfb716a8ca59aff",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 254.0,
+                "p95_counts": 509,
+                "max_counts": 619,
+                "median_budget_percent": 21.166666666666668,
+                "p95_budget_percent": 42.416666666666664,
+                "median_ms": 3.5277777777777777,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1190.0,
+                "p95_counts": 1192,
+                "max_counts": 1192,
+                "median_budget_percent": 99.16666666666667,
+                "p95_budget_percent": 99.33333333333333,
+                "median_ms": 16.52777777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-28-33Z",
+      "label": "mainboard-natural",
+      "endpoint": "mainboard",
+      "control": "natural",
+      "cases": [
+        7,
+        8
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1554,
+          "window_end": 1894,
+          "calibration_prt": 35931,
+          "calibration_mos": 60,
+          "drain": 588,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 1733.0,
+            "p95_counts": 2468,
+            "max_counts": 3074,
+            "median_budget_percent": 144.41666666666666,
+            "p95_budget_percent": 205.66666666666666,
+            "median_ms": 24.069444444444443,
+            "over_budget_percent": 76.66666666666667
+          },
+          "total": {
+            "median_counts": 1734.5,
+            "p95_counts": 2469,
+            "max_counts": 3075,
+            "median_budget_percent": 144.54166666666666,
+            "p95_budget_percent": 205.75,
+            "median_ms": 24.09027777777778,
+            "over_budget_percent": 76.66666666666667
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": -44.41666666666666,
+          "fault_rows": 0,
+          "late_rows": 120,
+          "longest_over_budget_streak": 12,
+          "window_raw_mos_ticks": 340,
+          "nominal_updates_per_second": 42.35294117647059,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -2.1388888888886903,
+          "raw_sha256": "982756378f2390751803f8f87fd0e92c4d9a7ebdc6ec87995c80a91559eb8307",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 1733.0,
+                "p95_counts": 2468,
+                "max_counts": 3074,
+                "median_budget_percent": 144.41666666666666,
+                "p95_budget_percent": 205.66666666666666,
+                "median_ms": 24.069444444444443,
+                "over_budget_percent": 76.66666666666667
+              },
+              "total": {
+                "median_counts": 1734.5,
+                "p95_counts": 2469,
+                "max_counts": 3075,
+                "median_budget_percent": 144.54166666666666,
+                "p95_budget_percent": 205.75,
+                "median_ms": 24.09027777777778,
+                "over_budget_percent": 76.66666666666667
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2414,
+          "window_end": 2654,
+          "calibration_prt": 35122,
+          "calibration_mos": 60,
+          "drain": 326,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 512.5,
+            "p95_counts": 595,
+            "max_counts": 655,
+            "median_budget_percent": 42.708333333333336,
+            "p95_budget_percent": 49.583333333333336,
+            "median_ms": 7.118055555555555,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1198.0,
+            "p95_counts": 1198,
+            "max_counts": 1198,
+            "median_budget_percent": 99.83333333333333,
+            "p95_budget_percent": 99.83333333333333,
+            "median_ms": 16.63888888888889,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 685.5,
+            "p95_counts": 840,
+            "max_counts": 861,
+            "median_budget_percent": 57.125,
+            "p95_budget_percent": 70.0,
+            "median_ms": 9.520833333333334,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 57.291666666666664,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 3.3333333333334103,
+          "raw_sha256": "28c7690c26dabef2d95411ab90adb035985cb02d010f9962367b190d750bc693",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 512.5,
+                "p95_counts": 595,
+                "max_counts": 655,
+                "median_budget_percent": 42.708333333333336,
+                "p95_budget_percent": 49.583333333333336,
+                "median_ms": 7.118055555555555,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1198.0,
+                "p95_counts": 1198,
+                "max_counts": 1198,
+                "median_budget_percent": 99.83333333333333,
+                "p95_budget_percent": 99.83333333333333,
+                "median_ms": 16.63888888888889,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-35-46Z",
+      "label": "mainboard-no-timing",
+      "endpoint": "mainboard",
+      "control": "no-timing",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1572,
+          "window_end": 1930,
+          "calibration_prt": 35501,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 40.22346368715084,
+          "fault_rows": 0,
+          "raw_sha256": "c32fff5cfb74778fdf6da42f7270398d73302fd36d64c593773ddb2c307409a7",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2474,
+          "window_end": 2714,
+          "calibration_prt": 34999,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "ba3c35ce86ede7eef45cefaf556876ab080977fd2bc7eccf9b3ef2076db2e804",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 3,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 5784,
+          "window_end": 6024,
+          "calibration_prt": 35574,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "2d51f806463b834d53a0091f981ecd137f4f52308ac4e36c59885f64860b2935",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-17-56Z",
+      "label": "native-full",
+      "endpoint": "p4",
+      "control": "full",
+      "cases": [
+        9
+      ],
+      "window_tag": 13847470,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 3600,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 9,
+          "count": 3600,
+          "expected": 3600,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 13847470,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2828,
+          "window_end": 10028,
+          "calibration_prt": 35283,
+          "calibration_mos": 60,
+          "drain": 208,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 511.0,
+            "p95_counts": 635,
+            "max_counts": 840,
+            "median_budget_percent": 42.583333333333336,
+            "p95_budget_percent": 52.916666666666664,
+            "median_ms": 7.097222222222222,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1191.0,
+            "p95_counts": 1193,
+            "max_counts": 1197,
+            "median_budget_percent": 99.25,
+            "p95_budget_percent": 99.41666666666667,
+            "median_ms": 16.541666666666668,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 679.5,
+            "p95_counts": 866,
+            "max_counts": 895,
+            "median_budget_percent": 56.625,
+            "p95_budget_percent": 72.16666666666667,
+            "median_ms": 9.4375,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 57.416666666666664,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 7200,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 438.20833333333553,
+          "raw_sha256": "6e383d00f240f7f0689ae08b3c1924726b6b8eefb7f9258c6cbf42ae35bddeec",
+          "trajectory_sha256": "b7ec738c97812018efe155118120359d13eaf7b6688c17ed24a0b005d78c9ade",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 5
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 684,
+              "active": {
+                "median_counts": 355.0,
+                "p95_counts": 468,
+                "max_counts": 651,
+                "median_budget_percent": 29.583333333333332,
+                "p95_budget_percent": 39.0,
+                "median_ms": 4.930555555555555,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1193.0,
+                "p95_counts": 1193,
+                "max_counts": 1193,
+                "median_budget_percent": 99.41666666666667,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.569444444444443,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            },
+            {
+              "actor_min": 1,
+              "actor_max": 2,
+              "rows": 1921,
+              "active": {
+                "median_counts": 507,
+                "p95_counts": 628,
+                "max_counts": 799,
+                "median_budget_percent": 42.25,
+                "p95_budget_percent": 52.333333333333336,
+                "median_ms": 7.041666666666667,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191,
+                "p95_counts": 1193,
+                "max_counts": 1197,
+                "median_budget_percent": 99.25,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.541666666666668,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            },
+            {
+              "actor_min": 3,
+              "actor_max": 255,
+              "rows": 995,
+              "active": {
+                "median_counts": 571,
+                "p95_counts": 663,
+                "max_counts": 840,
+                "median_budget_percent": 47.583333333333336,
+                "p95_budget_percent": 55.25,
+                "median_ms": 7.930555555555555,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191,
+                "p95_counts": 1192,
+                "max_counts": 1192,
+                "median_budget_percent": 99.25,
+                "p95_budget_percent": 99.33333333333333,
+                "median_ms": 16.541666666666668,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 60060536,
+            "scanouts_per_second": 59.989474619407325,
+            "submissions_per_second": 21.028783359509145,
+            "phases": {
+              "drain": {
+                "calls": 3603,
+                "us": 15064508,
+                "max_us": 7164,
+                "boundary_drops": 0,
+                "mean_us": 4181.101304468499
+              },
+              "row_wait": {
+                "calls": 485043,
+                "us": 12618234,
+                "max_us": 3326,
+                "boundary_drops": 0,
+                "mean_us": 26.014670864232656
+              },
+              "row_compose": {
+                "calls": 485042,
+                "us": 4751541,
+                "max_us": 500,
+                "boundary_drops": 1,
+                "mean_us": 9.796143426754796
+              },
+              "expand": {
+                "calls": 485042,
+                "us": 36446428,
+                "max_us": 728,
+                "boundary_drops": 0,
+                "mean_us": 75.14076719129477
+              },
+              "cache": {
+                "calls": 1264,
+                "us": 668221,
+                "max_us": 762,
+                "boundary_drops": 0,
+                "mean_us": 528.6558544303797
+              },
+              "conversion": {
+                "calls": 1263,
+                "us": 58118162,
+                "max_us": 49884,
+                "boundary_drops": 1,
+                "mean_us": 46015.963578780684
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-07-49Z",
+      "label": "native-marked",
+      "endpoint": "p4",
+      "control": "marked",
+      "cases": [
+        1,
+        3,
+        7,
+        8,
+        9
+      ],
+      "window_tag": 12382489,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 1,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 12382489,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1370,
+          "window_end": 1610,
+          "calibration_prt": 34846,
+          "calibration_mos": 60,
+          "drain": 53,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 0.0,
+            "p95_counts": 0,
+            "max_counts": 0,
+            "median_budget_percent": 0.0,
+            "p95_budget_percent": 0.0,
+            "median_ms": 0.0,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 53.0,
+            "p95_counts": 57,
+            "max_counts": 84,
+            "median_budget_percent": 4.416666666666667,
+            "p95_budget_percent": 4.75,
+            "median_ms": 0.7361111111111112,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 1146.0,
+            "p95_counts": 1149,
+            "max_counts": 1153,
+            "median_budget_percent": 95.5,
+            "p95_budget_percent": 95.75,
+            "median_ms": 15.916666666666666,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 100.0,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 3.277777777777713,
+          "raw_sha256": "60ab42b62fca189e639b8004528141e8cc107b1e02e68d02a57c9b80d8ecb508",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 0.0,
+                "p95_counts": 0,
+                "max_counts": 0,
+                "median_budget_percent": 0.0,
+                "p95_budget_percent": 0.0,
+                "median_ms": 0.0,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001945,
+            "scanouts_per_second": 59.94170669024374,
+            "submissions_per_second": 26.97376801060968,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 10430,
+                "max_us": 127,
+                "boundary_drops": 0,
+                "mean_us": 86.91666666666667
+              },
+              "row_wait": {
+                "calls": 21103,
+                "us": 68786,
+                "max_us": 44,
+                "boundary_drops": 0,
+                "mean_us": 3.2595365587831115
+              },
+              "row_compose": {
+                "calls": 21103,
+                "us": 181966,
+                "max_us": 50,
+                "boundary_drops": 0,
+                "mean_us": 8.622755058522484
+              },
+              "expand": {
+                "calls": 21102,
+                "us": 1505546,
+                "max_us": 141,
+                "boundary_drops": 1,
+                "mean_us": 71.34612832906834
+              },
+              "cache": {
+                "calls": 55,
+                "us": 36140,
+                "max_us": 1238,
+                "boundary_drops": 0,
+                "mean_us": 657.0909090909091
+              },
+              "conversion": {
+                "calls": 54,
+                "us": 1880114,
+                "max_us": 35033,
+                "boundary_drops": 1,
+                "mean_us": 34816.92592592593
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 3,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 12382489,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2016,
+          "window_end": 2256,
+          "calibration_prt": 35189,
+          "calibration_mos": 60,
+          "drain": 52,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 167.0,
+            "p95_counts": 169,
+            "max_counts": 190,
+            "median_budget_percent": 13.916666666666666,
+            "p95_budget_percent": 14.083333333333334,
+            "median_ms": 2.3194444444444446,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 735.0,
+            "p95_counts": 748,
+            "max_counts": 752,
+            "median_budget_percent": 61.25,
+            "p95_budget_percent": 62.333333333333336,
+            "median_ms": 10.208333333333334,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1199,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 464.0,
+            "p95_counts": 521,
+            "max_counts": 544,
+            "median_budget_percent": 38.666666666666664,
+            "p95_budget_percent": 43.416666666666664,
+            "median_ms": 6.444444444444445,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 86.08333333333333,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 3.374999999999906,
+          "raw_sha256": "d2da3459dac100e374fc9c01970ebc40345b81775dc7030f8f7556728a41f9dd",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 167.0,
+                "p95_counts": 169,
+                "max_counts": 190,
+                "median_budget_percent": 13.916666666666666,
+                "p95_budget_percent": 14.083333333333334,
+                "median_ms": 2.3194444444444446,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1199,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001960,
+            "scanouts_per_second": 59.94125756758377,
+            "submissions_per_second": 21.478950628384183,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 10249,
+                "max_us": 234,
+                "boundary_drops": 0,
+                "mean_us": 85.40833333333333
+              },
+              "row_wait": {
+                "calls": 16715,
+                "us": 422418,
+                "max_us": 3520,
+                "boundary_drops": 0,
+                "mean_us": 25.27179180376907
+              },
+              "row_compose": {
+                "calls": 16714,
+                "us": 143043,
+                "max_us": 62,
+                "boundary_drops": 1,
+                "mean_us": 8.558274500418811
+              },
+              "expand": {
+                "calls": 16714,
+                "us": 1224302,
+                "max_us": 409,
+                "boundary_drops": 0,
+                "mean_us": 73.25008974512384
+              },
+              "cache": {
+                "calls": 44,
+                "us": 24087,
+                "max_us": 756,
+                "boundary_drops": 0,
+                "mean_us": 547.4318181818181
+              },
+              "conversion": {
+                "calls": 43,
+                "us": 1905948,
+                "max_us": 46486,
+                "boundary_drops": 1,
+                "mean_us": 44324.37209302326
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 12382489,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2710,
+          "window_end": 2966,
+          "calibration_prt": 35565,
+          "calibration_mos": 60,
+          "drain": 39,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 396.5,
+            "p95_counts": 416,
+            "max_counts": 433,
+            "median_budget_percent": 33.041666666666664,
+            "p95_budget_percent": 34.666666666666664,
+            "median_ms": 5.506944444444445,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 1261.0,
+            "p95_counts": 1370,
+            "max_counts": 1385,
+            "median_budget_percent": 105.08333333333333,
+            "p95_budget_percent": 114.16666666666667,
+            "median_ms": 17.51388888888889,
+            "over_budget_percent": 90.83333333333333
+          },
+          "total": {
+            "median_counts": 1262.0,
+            "p95_counts": 1371,
+            "max_counts": 1385,
+            "median_budget_percent": 105.16666666666667,
+            "p95_budget_percent": 114.25,
+            "median_ms": 17.52777777777778,
+            "over_budget_percent": 90.83333333333333
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.95833333333334,
+          "fault_rows": 0,
+          "late_rows": 118,
+          "longest_over_budget_streak": 20,
+          "window_raw_mos_ticks": 256,
+          "nominal_updates_per_second": 56.25,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 8.12500000000016,
+          "raw_sha256": "7f6bc3f4db4a6e5ea5217e2c2dfc33e6f517874be0f7da7f34912bc7ceba373d",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 396.5,
+                "p95_counts": 416,
+                "max_counts": 433,
+                "median_budget_percent": 33.041666666666664,
+                "p95_budget_percent": 34.666666666666664,
+                "median_ms": 5.506944444444445,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1262.0,
+                "p95_counts": 1371,
+                "max_counts": 1385,
+                "median_budget_percent": 105.16666666666667,
+                "p95_budget_percent": 114.25,
+                "median_ms": 17.52777777777778,
+                "over_budget_percent": 90.83333333333333
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2130082,
+            "scanouts_per_second": 60.09158332871692,
+            "submissions_per_second": 18.778619790224038,
+            "phases": {
+              "drain": {
+                "calls": 128,
+                "us": 279647,
+                "max_us": 5194,
+                "boundary_drops": 0,
+                "mean_us": 2184.7421875
+              },
+              "row_wait": {
+                "calls": 15487,
+                "us": 616080,
+                "max_us": 4760,
+                "boundary_drops": 0,
+                "mean_us": 39.78046103183315
+              },
+              "row_compose": {
+                "calls": 15487,
+                "us": 160221,
+                "max_us": 460,
+                "boundary_drops": 0,
+                "mean_us": 10.345515593723768
+              },
+              "expand": {
+                "calls": 15486,
+                "us": 1151081,
+                "max_us": 419,
+                "boundary_drops": 1,
+                "mean_us": 74.33042748288777
+              },
+              "cache": {
+                "calls": 41,
+                "us": 19611,
+                "max_us": 650,
+                "boundary_drops": 0,
+                "mean_us": 478.3170731707317
+              },
+              "conversion": {
+                "calls": 40,
+                "us": 2052465,
+                "max_us": 56837,
+                "boundary_drops": 1,
+                "mean_us": 51311.625
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 4,
+          "window_tag": 12382489,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 3398,
+          "window_end": 3638,
+          "calibration_prt": 35094,
+          "calibration_mos": 60,
+          "drain": 55,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 232.0,
+            "p95_counts": 253,
+            "max_counts": 274,
+            "median_budget_percent": 19.333333333333332,
+            "p95_budget_percent": 21.083333333333332,
+            "median_ms": 3.2222222222222223,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 643.0,
+            "p95_counts": 660,
+            "max_counts": 670,
+            "median_budget_percent": 53.583333333333336,
+            "p95_budget_percent": 55.0,
+            "median_ms": 8.930555555555555,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 555.5,
+            "p95_counts": 624,
+            "max_counts": 631,
+            "median_budget_percent": 46.291666666666664,
+            "p95_budget_percent": 52.0,
+            "median_ms": 7.715277777777778,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.66666666666667,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 3.3333333333334103,
+          "raw_sha256": "303cdb9c15868675ffdb5afaa9c3349bc945ffb6f3085913cd4a096966e715fd",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 232.0,
+                "p95_counts": 253,
+                "max_counts": 274,
+                "median_budget_percent": 19.333333333333332,
+                "p95_budget_percent": 21.083333333333332,
+                "median_ms": 3.2222222222222223,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2002449,
+            "scanouts_per_second": 59.92661985398879,
+            "submissions_per_second": 23.970647941595516,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 10606,
+                "max_us": 143,
+                "boundary_drops": 0,
+                "mean_us": 88.38333333333334
+              },
+              "row_wait": {
+                "calls": 18561,
+                "us": 233629,
+                "max_us": 1485,
+                "boundary_drops": 0,
+                "mean_us": 12.587091212757933
+              },
+              "row_compose": {
+                "calls": 18561,
+                "us": 192118,
+                "max_us": 60,
+                "boundary_drops": 0,
+                "mean_us": 10.350627660147621
+              },
+              "expand": {
+                "calls": 18561,
+                "us": 1340276,
+                "max_us": 530,
+                "boundary_drops": 0,
+                "mean_us": 72.20925596681214
+              },
+              "cache": {
+                "calls": 49,
+                "us": 27600,
+                "max_us": 748,
+                "boundary_drops": 0,
+                "mean_us": 563.265306122449
+              },
+              "conversion": {
+                "calls": 48,
+                "us": 1904719,
+                "max_us": 40646,
+                "boundary_drops": 0,
+                "mean_us": 39681.645833333336
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 5,
+          "window_tag": 12382489,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 5472,
+          "window_end": 5712,
+          "calibration_prt": 35040,
+          "calibration_mos": 60,
+          "drain": 57,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 402.0,
+            "p95_counts": 423,
+            "max_counts": 444,
+            "median_budget_percent": 33.5,
+            "p95_budget_percent": 35.25,
+            "median_ms": 5.583333333333333,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1191.0,
+            "p95_counts": 1193,
+            "max_counts": 1193,
+            "median_budget_percent": 99.25,
+            "p95_budget_percent": 99.41666666666667,
+            "median_ms": 16.541666666666668,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 788.0,
+            "p95_counts": 874,
+            "max_counts": 886,
+            "median_budget_percent": 65.66666666666667,
+            "p95_budget_percent": 72.83333333333333,
+            "median_ms": 10.944444444444445,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 66.5,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 16.06944444444447,
+          "raw_sha256": "0e0832fd52ed9052d0545525dcaa1bc1a0f942f7ef67226c0158e1b20bd29449",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 402.0,
+                "p95_counts": 423,
+                "max_counts": 444,
+                "median_budget_percent": 33.5,
+                "p95_budget_percent": 35.25,
+                "median_ms": 5.583333333333333,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191.0,
+                "p95_counts": 1193,
+                "max_counts": 1193,
+                "median_budget_percent": 99.25,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.541666666666668,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ],
+          "p4": {
+            "duration_us": 2001451,
+            "scanouts_per_second": 59.956501558119584,
+            "submissions_per_second": 20.984775545341854,
+            "phases": {
+              "drain": {
+                "calls": 120,
+                "us": 466137,
+                "max_us": 4163,
+                "boundary_drops": 0,
+                "mean_us": 3884.475
+              },
+              "row_wait": {
+                "calls": 16201,
+                "us": 419904,
+                "max_us": 2429,
+                "boundary_drops": 1,
+                "mean_us": 25.918400098759335
+              },
+              "row_compose": {
+                "calls": 16201,
+                "us": 157216,
+                "max_us": 56,
+                "boundary_drops": 0,
+                "mean_us": 9.704092339979013
+              },
+              "expand": {
+                "calls": 16201,
+                "us": 1218527,
+                "max_us": 577,
+                "boundary_drops": 0,
+                "mean_us": 75.21307326708228
+              },
+              "cache": {
+                "calls": 42,
+                "us": 21244,
+                "max_us": 673,
+                "boundary_drops": 0,
+                "mean_us": 505.8095238095238
+              },
+              "conversion": {
+                "calls": 42,
+                "us": 1929657,
+                "max_us": 47610,
+                "boundary_drops": 1,
+                "mean_us": 45944.21428571428
+              }
+            },
+            "scope_note": "Opening acknowledgement through final drain/close; nested/concurrent wall scopes, not CPU utilization. No frame-marker or sprite-visibility claim."
+          }
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-26-14Z",
+      "label": "native-natural",
+      "endpoint": "p4",
+      "control": "natural",
+      "cases": [
+        7,
+        8
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1480,
+          "window_end": 1720,
+          "calibration_prt": 35491,
+          "calibration_mos": 60,
+          "drain": 3752,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 382.0,
+            "p95_counts": 399,
+            "max_counts": 438,
+            "median_budget_percent": 31.833333333333332,
+            "p95_budget_percent": 33.25,
+            "median_ms": 5.305555555555555,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1202,
+            "max_counts": 1206,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 100.16666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 5.833333333333333
+          },
+          "wait": {
+            "median_counts": 817.0,
+            "p95_counts": 821,
+            "max_counts": 825,
+            "median_budget_percent": 68.08333333333333,
+            "p95_budget_percent": 68.41666666666667,
+            "median_ms": 11.347222222222221,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 68.16666666666667,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 1,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 2.0000000000000018,
+          "raw_sha256": "9d95cd9862ec9d1e359a776fa62e19b605301484b9b4cdafeebde9d788ea876d",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 382.0,
+                "p95_counts": 399,
+                "max_counts": 438,
+                "median_budget_percent": 31.833333333333332,
+                "p95_budget_percent": 33.25,
+                "median_ms": 5.305555555555555,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1202,
+                "max_counts": 1206,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 100.16666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 5.833333333333333
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2216,
+          "window_end": 2456,
+          "calibration_prt": 35433,
+          "calibration_mos": 60,
+          "drain": 54,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 232.0,
+            "p95_counts": 251,
+            "max_counts": 270,
+            "median_budget_percent": 19.333333333333332,
+            "p95_budget_percent": 20.916666666666668,
+            "median_ms": 3.2222222222222223,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 967.0,
+            "p95_counts": 967,
+            "max_counts": 967,
+            "median_budget_percent": 80.58333333333333,
+            "p95_budget_percent": 80.58333333333333,
+            "median_ms": 13.430555555555555,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.66666666666667,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6388888888889674,
+          "raw_sha256": "ea86ad5e5c6fd3ab7503f50ae3a59024fe2fa006ca9fdf470c11137f35480ac6",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 232.0,
+                "p95_counts": 251,
+                "max_counts": 270,
+                "median_budget_percent": 19.333333333333332,
+                "p95_budget_percent": 20.916666666666668,
+                "median_ms": 3.2222222222222223,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-32-11Z",
+      "label": "native-no-timing",
+      "endpoint": "p4",
+      "control": "no-timing",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1486,
+          "window_end": 1736,
+          "calibration_prt": 35903,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 57.6,
+          "fault_rows": 0,
+          "raw_sha256": "1194e970c07044e1c87b9840f905badab9befdd327d06c1990aeba800bcd4459",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 2,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2256,
+          "window_end": 2496,
+          "calibration_prt": 35943,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "749870cbd4a04e3ddacca6e31a62965fe0753444d7d8257259ff5bb673c6284c",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 3,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 4396,
+          "window_end": 4636,
+          "calibration_prt": 34844,
+          "calibration_mos": 60,
+          "drain": 0,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "timing_disabled": true,
+          "nominal_updates_per_second": 60.0,
+          "fault_rows": 0,
+          "raw_sha256": "9968670a6e6ea7d6fab0ac21027e52d1040df8901af24f76138562ffaca2d75f",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "run_id": "SCAN-001-2026-10-06-23-15-18Z",
+      "label": "native-unmarked",
+      "endpoint": "p4",
+      "control": "unmarked",
+      "cases": [
+        7,
+        8,
+        9
+      ],
+      "window_tag": 0,
+      "fixture_build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "outcome": "complete-no-recorded-faults",
+      "frames": 120,
+      "p4_build": "bench-009-r01-b2026-10-05-23-46-18Z",
+      "p4_image_sha256": "d4ff7ad7c427cc47cd7ee19eda20b442b2525931b65150fe5f40e6ea51674ff9",
+      "cases_data": [
+        {
+          "case": 7,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 1462,
+          "window_end": 1710,
+          "calibration_prt": 35196,
+          "calibration_mos": 60,
+          "drain": 37,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 396.0,
+            "p95_counts": 415,
+            "max_counts": 435,
+            "median_budget_percent": 33.0,
+            "p95_budget_percent": 34.583333333333336,
+            "median_ms": 5.5,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 1231.0,
+            "p95_counts": 1337,
+            "max_counts": 1359,
+            "median_budget_percent": 102.58333333333333,
+            "p95_budget_percent": 111.41666666666667,
+            "median_ms": 17.09722222222222,
+            "over_budget_percent": 81.66666666666667
+          },
+          "total": {
+            "median_counts": 1232.0,
+            "p95_counts": 1338,
+            "max_counts": 1360,
+            "median_budget_percent": 102.66666666666667,
+            "p95_budget_percent": 111.5,
+            "median_ms": 17.11111111111111,
+            "over_budget_percent": 82.5
+          },
+          "wait": {
+            "median_counts": 1.0,
+            "p95_counts": 1,
+            "max_counts": 1,
+            "median_budget_percent": 0.08333333333333333,
+            "p95_budget_percent": 0.08333333333333333,
+            "median_ms": 0.013888888888888888,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 67.0,
+          "fault_rows": 0,
+          "late_rows": 104,
+          "longest_over_budget_streak": 13,
+          "window_raw_mos_ticks": 248,
+          "nominal_updates_per_second": 58.064516129032256,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": -2.1388888888886903,
+          "raw_sha256": "4c0957b13957c4d0c60d27d2a7a9aecd1eb875c2115f518cc940ebf335894a83",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 396.0,
+                "p95_counts": 415,
+                "max_counts": 435,
+                "median_budget_percent": 33.0,
+                "p95_budget_percent": 34.583333333333336,
+                "median_ms": 5.5,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1232.0,
+                "p95_counts": 1338,
+                "max_counts": 1360,
+                "median_budget_percent": 102.66666666666667,
+                "p95_budget_percent": 111.5,
+                "median_ms": 17.11111111111111,
+                "over_budget_percent": 82.5
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 8,
+          "count": 120,
+          "expected": 120,
+          "warmup": 60,
+          "controls": 0,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 2182,
+          "window_end": 2422,
+          "calibration_prt": 35424,
+          "calibration_mos": 60,
+          "drain": 45,
+          "evidence_complete": true,
+          "scope": "whole-update pixel-query completion (includes reply overhead)",
+          "active": {
+            "median_counts": 232.0,
+            "p95_counts": 250,
+            "max_counts": 275,
+            "median_budget_percent": 19.333333333333332,
+            "p95_budget_percent": 20.833333333333332,
+            "median_ms": 3.2222222222222223,
+            "over_budget_percent": 0.0
+          },
+          "complete": {
+            "median_counts": 628.0,
+            "p95_counts": 641,
+            "max_counts": 650,
+            "median_budget_percent": 52.333333333333336,
+            "p95_budget_percent": 53.416666666666664,
+            "median_ms": 8.722222222222221,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1199.0,
+            "p95_counts": 1199,
+            "max_counts": 1200,
+            "median_budget_percent": 99.91666666666667,
+            "p95_budget_percent": 99.91666666666667,
+            "median_ms": 16.65277777777778,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 571.0,
+            "p95_counts": 625,
+            "max_counts": 631,
+            "median_budget_percent": 47.583333333333336,
+            "p95_budget_percent": 52.083333333333336,
+            "median_ms": 7.930555555555555,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 80.66666666666667,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 1.6527777777777253,
+          "raw_sha256": "3c9a65e2dcbbee959c70c2469c7673f0550915fb9e8140eb69842860fc541eba",
+          "trajectory_sha256": "6198d169b2f99c9cfc9725c72712c793f455035628e24f1ac76dcef9819f3754",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 0
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 232.0,
+                "p95_counts": 250,
+                "max_counts": 275,
+                "median_budget_percent": 19.333333333333332,
+                "p95_budget_percent": 20.833333333333332,
+                "median_ms": 3.2222222222222223,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1199.0,
+                "p95_counts": 1199,
+                "max_counts": 1200,
+                "median_budget_percent": 99.91666666666667,
+                "p95_budget_percent": 99.91666666666667,
+                "median_ms": 16.65277777777778,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        },
+        {
+          "case": 9,
+          "count": 120,
+          "expected": 120,
+          "warmup": 120,
+          "controls": 1,
+          "window_tag": 0,
+          "build_id": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+          "abort": false,
+          "window_start": 4268,
+          "window_end": 4508,
+          "calibration_prt": 35885,
+          "calibration_mos": 60,
+          "drain": 54,
+          "evidence_complete": true,
+          "scope": "unfenced game submission/pacing",
+          "active": {
+            "median_counts": 393.5,
+            "p95_counts": 423,
+            "max_counts": 443,
+            "median_budget_percent": 32.791666666666664,
+            "p95_budget_percent": 35.25,
+            "median_ms": 5.465277777777778,
+            "over_budget_percent": 0.0
+          },
+          "total": {
+            "median_counts": 1191.5,
+            "p95_counts": 1193,
+            "max_counts": 1193,
+            "median_budget_percent": 99.29166666666667,
+            "p95_budget_percent": 99.41666666666667,
+            "median_ms": 16.54861111111111,
+            "over_budget_percent": 0.0
+          },
+          "wait": {
+            "median_counts": 797.0,
+            "p95_counts": 874,
+            "max_counts": 886,
+            "median_budget_percent": 66.41666666666667,
+            "p95_budget_percent": 72.83333333333333,
+            "median_ms": 11.069444444444445,
+            "over_budget_percent": 0.0
+          },
+          "median_active_headroom_percent": 67.20833333333334,
+          "fault_rows": 0,
+          "late_rows": 0,
+          "longest_over_budget_streak": 0,
+          "window_raw_mos_ticks": 240,
+          "nominal_updates_per_second": 60.0,
+          "nominal_clock_note": "18.432 MHz /256 PRT; raw MOS nominal120 units/s, observed in steps of2. Not display fps.",
+          "unmeasured_tail_estimate_ms": 13.944444444444537,
+          "raw_sha256": "07f71bbc60e2623be03d11211e9d4812070fe238718baf6c3ba1ca10f49b1f71",
+          "trajectory_sha256": "d29d4e281395c0f16f16e643c677e5816cf076b400ce03fb7b0bfb8c2a5f7adf",
+          "activity": {
+            "actors": {
+              "min": 0,
+              "max": 0
+            },
+            "projectiles": {
+              "min": 0,
+              "max": 4
+            }
+          },
+          "actor_groups": [
+            {
+              "actor_min": 0,
+              "actor_max": 0,
+              "rows": 120,
+              "active": {
+                "median_counts": 393.5,
+                "p95_counts": 423,
+                "max_counts": 443,
+                "median_budget_percent": 32.791666666666664,
+                "p95_budget_percent": 35.25,
+                "median_ms": 5.465277777777778,
+                "over_budget_percent": 0.0
+              },
+              "total": {
+                "median_counts": 1191.5,
+                "p95_counts": 1193,
+                "max_counts": 1193,
+                "median_budget_percent": 99.29166666666667,
+                "p95_budget_percent": 99.41666666666667,
+                "median_ms": 16.54861111111111,
+                "over_budget_percent": 0.0
+              },
+              "fault_rows": 0
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

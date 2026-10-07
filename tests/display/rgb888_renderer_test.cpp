@@ -35,6 +35,13 @@ struct Panel {
   void guards() {
     for(auto &v:pixels)for(int i=0;i<Guard;++i)assert(v[i]==0x5a && v[v.size()-1-i]==0x5a);
   }
+  void margins(unsigned front,bool doubled) {
+    const int left=(PW-W)/2,top=(PH-H)/2;
+    for(unsigned i=0;i<2;++i)for(int y=0;y<PH;++y)for(int x=0;x<PW;++x) {
+      if(x>=left && x<left+W && y>=top && y<top+H)continue;
+      for(int c=0;c<3;++c)assert(buffer(i)[y*Stride+x*3+c]==(doubled || i==front ? 0 : 0x5a));
+    }
+  }
 };
 
 std::vector<RGB888> read(StockRuntimeController &r);
@@ -68,6 +75,23 @@ void commands(Canvas &c,StockRuntimeController &r,std::vector<std::vector<RGB888
   c.setScrollingRegion(0,0,W-1,H-1);c.scroll(5,-3);c.scroll(-7,2);
   checkpoint();
   c.setScrollingRegion(5,4,48,28);c.scroll(3,2);c.scroll(-2,-4);checkpoint();
+
+  // SCAN-001 copy-scroll remedy: compare the actual stock rasterizer with
+  // fixed RGB888 rows. Unequal rows expose wrong overlap direction; odd X
+  // bounds expose byte-offset/length errors. Oversized stock scrolls are out
+  // of scope (the upstream helper itself does not clamp them).
+  for(const auto &region : {Rect(5,4,48,28),Rect(0,0,W-1,H-1),
+                            Rect(7,5,7,25),Rect(2,6,60,6)}) {
+    for(int y=0;y<H;++y)for(int x=0;x<W;++x) {
+      const int v=(x+7*y)&63;
+      c.setPenColor((v&3)*85,((v>>2)&3)*85,((v>>4)&3)*85);c.setPixel(x,y);
+    }
+    c.setBrushColor(85,170,255);
+    c.setScrollingRegion(region.X1,region.Y1,region.X2,region.Y2);
+    for(int amount : {1,-1,region.Y2-region.Y1+1,-(region.Y2-region.Y1+1)}) {
+      c.scroll(0,amount);checkpoint();
+    }
+  }
 }
 
 std::vector<RGB888> read(StockRuntimeController &r) {
@@ -138,7 +162,25 @@ int main() {
         sprite.moveTo(3+step*2,9+step);r->display().refreshSprites();
         spriteStages[variant].push_back(read(*r));
       }
+      // Nurples-style partial scroll followed by one clipped incoming row.
+      // Keep the software sprite live, crossing the edge of that region, so
+      // hide/restore must not bake its old pixels into the background.
+      Canvas c(&r->paletted());
+      const std::uint8_t tilePixels[]={0xc1,0xc2,0xc3,0xc4,0xc5,0xc6,0xc7,0xc8,
+                                      0xc9,0xca,0xcb,0xcc,0xcd,0xce,0xcf,0xd0};
+      Bitmap tile(4,4,tilePixels,PixelFormat::RGBA2222);
+      for(int step=0;step<20;++step) {
+        c.setScrollingRegion(5,4,48,28);c.setBrushColor(85,0,170);
+        c.scroll(0,step<10?1:-1);
+        const int row=step<10?4:28;
+        c.setClippingRect(Rect(5,row,48,row));
+        for(int x=3;x<49;x+=4)c.drawBitmap(x,row-(step%4),&tile);
+        c.setClippingRect(Rect(0,0,W-1,H-1));
+        sprite.moveTo(4+step%5,4+step%4);r->display().refreshSprites();
+        spriteStages[variant].push_back(read(*r));
+      }
       r->display().removeSprites();++variant;
+      spriteStages[variant-1].push_back(read(*r));
     }
     for(unsigned i=0;i<spriteStages[0].size();++i)same(spriteStages[0][i],spriteStages[1][i]);
     if(doubled) {
@@ -165,6 +207,7 @@ int main() {
       assert(drawing[0]==0 && drawing[1]==0 && drawing[2]==255);
       // The panel owner retains both allocations through renderer teardown.
       panel.guards();
+      panel.margins(binding-1,doubled);
     }
     native.end();direct.end();
     if(binding)panel.guards();

@@ -290,7 +290,12 @@ void P4Rgb888Controller::rawInvertRow(int y, int x1, int x2)
 
 void P4Rgb888Controller::rawCopyRow(int x1, int x2, int srcY, int dstY)
 {
-    // This function does not seem to be used
+  // RGB-001 r02 / SCAN-001: the stock copy-scroll helper orders rows so a
+  // destination never destroys an unread source. Distinct panel rows have
+  // disjoint spans even with a centered viewport and the larger HDMI stride.
+  auto src = (uint8_t*)m_viewPort[srcY] + x1 * 3;
+  auto dst = (uint8_t*)m_viewPort[dstY] + x1 * 3;
+  memcpy(dst, src, (x2 - x1 + 1) * 3);
 }
 
 
@@ -349,14 +354,19 @@ void P4Rgb888Controller::clear(Rect & updateRect)
 // scroll > 0 -> scroll DOWN
 void P4Rgb888Controller::VScroll(int scroll, Rect & updateRect)
 {
+  if (panelStorage()) {
+    // Fixed DMA row addresses cannot follow pointer rotation. Reuse stock's
+    // copy/fill algorithm unchanged: copy only the scrolling field rather than
+    // exchanging both sidebars and then the entire physical row (r01). This
+    // reduces memory work; it does not make single-buffer scanout atomic.
+    genericVScroll(scroll, updateRect,
+                   [&] (int x1, int x2, int srcY, int dstY) { rawCopyRow(x1, x2, srcY, dstY); },
+                   [&] (int y, int x1, int x2, RGB888 color) { rawFillRow(y, x1, x2, preparePixel(color)); });
+    return;
+  }
   genericVScroll(scroll, updateRect,
                  [&] (int yA, int yB, int x1, int x2)      { swapRows(yA, yB, x1, x2); },              // swapRowsCopying
-                 [&] (int yA, int yB) {
-                   // LCD scanout has fixed row addresses. A pointer rotation
-                   // would scroll readback while leaving physical HDMI unchanged.
-                   if(panelStorage()) swapRows(yA,yB,0,m_viewPortWidth-1);
-                   else tswap(m_viewPort[yA], m_viewPort[yB]);
-                 },
+                 [&] (int yA, int yB)                    { tswap(m_viewPort[yA], m_viewPort[yB]); },
                  [&] (int y, int x1, int x2, RGB888 color) { rawFillRow(y, x1, x2, preparePixel(color)); }         // rawFillRow
                 );
 }

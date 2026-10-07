@@ -1,0 +1,814 @@
+{
+  "build": {
+    "build_id": "scan-scroll-suite-r01-b2026-10-06-21-30-09Z",
+    "status": "experimental",
+    "source_head": "0c741d5e2021927adfa440f45b8e04b950114889",
+    "source_pin_sha256": "6388120d6c5df720e91a9d10cd7a4709bed2c9046fa8475063ebe8f79f550c23",
+    "assembler_sha256": "0e4ea930cee1f1278ba88ef2454ff250031db9e160afdacf80ebd8e867e7ba51",
+    "contract_sha256": "2afd03b477969f836057dcd71d10f316dcfee811edb2792af1ce37a387bff07c",
+    "art_ids": [
+      371,
+      339,
+      383,
+      270
+    ],
+    "tile_ids": [
+      0,
+      89,
+      90,
+      91,
+      73,
+      75,
+      57,
+      58,
+      59,
+      129,
+      147,
+      206,
+      207,
+      208,
+      190,
+      192
+    ],
+    "cases": [
+      {
+        "id": "SCAN01-T01",
+        "sd_dir": "/extender/scan-r01/t01",
+        "binary_sha256": "508be1c0c0ca3e5c778284c10ab27e9b3d5e5cf34c7db2fec76345ae9cf12153",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 0
+      },
+      {
+        "id": "SCAN01-T02",
+        "sd_dir": "/extender/scan-r01/t02",
+        "binary_sha256": "d5445b84b05b2039eea3d3026e6d1389cd9907de4136b08e9bfc3b7ebf788f45",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 0
+      },
+      {
+        "id": "SCAN01-T03",
+        "sd_dir": "/extender/scan-r01/t03",
+        "binary_sha256": "59919249dda93cc14ed7342077776d1072426c4b376eeb6b46546bf98af4fe34",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 0
+      },
+      {
+        "id": "SCAN01-T04",
+        "sd_dir": "/extender/scan-r01/t04",
+        "binary_sha256": "acb4350666bf1bd276bc32318a1ee4d6a81973481c2583a6ddd496ae5d8be310",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 4
+      },
+      {
+        "id": "SCAN01-T05",
+        "sd_dir": "/extender/scan-r01/t05",
+        "binary_sha256": "92701f801d662637e40ba1ed72dfbc9cc316dddd7e586f5b698c9072e968351e",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 8
+      },
+      {
+        "id": "SCAN01-T06",
+        "sd_dir": "/extender/scan-r01/t06",
+        "binary_sha256": "7ab839eba265f5b6d967b9660944ef4465b9a568dc87f8f9e02ad2f4c2c4ae14",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 16
+      },
+      {
+        "id": "SCAN01-T07",
+        "sd_dir": "/extender/scan-r01/t07",
+        "binary_sha256": "333dd2f890305de21f4c61eac80385b997dfd347c280879989e2adcb0b59767b",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 32
+      },
+      {
+        "id": "SCAN01-T08",
+        "sd_dir": "/extender/scan-r01/t08",
+        "binary_sha256": "c586dba220d744058919eeb3e33ee30b9b397472d927ce8faa5a33531e858ddf",
+        "warmup": 60,
+        "frames": 600,
+        "software_sprites": 32
+      },
+      {
+        "id": "SCAN01-T09",
+        "sd_dir": "/test/nurples/scan-r01",
+        "binary_sha256": "faf8ed0655a749a96894638e4c8f3d8a7753c069da4dbb84e4b7cafe2085da73",
+        "warmup": 120,
+        "frames": 3600,
+        "software_sprites": "ordinary game allocation"
+      }
+    ],
+    "source_files": {
+      "runner.inc": "663b0b19f8c63b1ae27e3235136fa998fbcfdd769e656f4580ed31f2bef5b0a3",
+      "synthetic.asm": "fa2fc2dc54ffd4c647664fc160e7eab366a4410a082f386e43dc48f3f4225c90",
+      "records.py": "667bd139a0b19520863a1b97fad2f19d5a17113d6f471c1417996c7cf2beea9e",
+      "game.inc": "328284271125c5abf885fe6ec99565611664dc5301decd61fab6177a3acbd770",
+      "test_fixtures.py": "50457056ebc423c665fe6a2bf9256145f4bc7db6daec8512c7f8bd27cc35a830",
+      "build.py": "5d805c8ca3ebeaa08d92d5027b8e6764d5e8947a747b80fcb3fc1bf7ab890b12",
+      "visual_check.py": "f700ae497a40ad0ecd1a5096b7876fbe36c6c01f7a45b6ab82e40a4e5d04910d"
+    },
+    "files": [
+      {
+        "path": "extender/scan-r01/t01/frames.bin",
+        "bytes": 768,
+        "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8"
+      },
+      {
+        "path": "extender/scan-r01/t01/full.cfg",
+        "bytes": 128,
+        "sha256": "8b06dde8f3c96bd980448917f657899208af98563e7f7e3651a01fd3b3b9a1d4"
+      },
+      {
+        "path": "extender/scan-r01/t01/run.cfg",
+        "bytes": 128,
+        "sha256": "24a06329359ab8be767d5dc0f256762dbd0107185a1de91fafde3091679a730c"
+      },
+      {
+        "path": "extender/scan-r01/t01/scan.bin",
+        "bytes": 2642,
+        "sha256": "508be1c0c0ca3e5c778284c10ab27e9b3d5e5cf34c7db2fec76345ae9cf12153"
+      },
+      {
+        "path": "extender/scan-r01/t01/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t01/smoke.cfg",
+        "bytes": 128,
+        "sha256": "24a06329359ab8be767d5dc0f256762dbd0107185a1de91fafde3091679a730c"
+      },
+      {
+        "path": "extender/scan-r01/t02/frames.bin",
+        "bytes": 5632,
+        "sha256": "6f8dffbee178a9dd8b4f2d13dc1ff3689ac6c4f1a00d6253c5ee4f1de1bc35a3"
+      },
+      {
+        "path": "extender/scan-r01/t02/full.cfg",
+        "bytes": 128,
+        "sha256": "51b44c40c3059cce99e2a23b2cc4f9cfdc1763e1e09041a65a57265c2f21274b"
+      },
+      {
+        "path": "extender/scan-r01/t02/run.cfg",
+        "bytes": 128,
+        "sha256": "0815dc027c98d17dfe66336529171799fbd1c41a1d864297592b563bb98c163b"
+      },
+      {
+        "path": "extender/scan-r01/t02/scan.bin",
+        "bytes": 2642,
+        "sha256": "d5445b84b05b2039eea3d3026e6d1389cd9907de4136b08e9bfc3b7ebf788f45"
+      },
+      {
+        "path": "extender/scan-r01/t02/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t02/smoke.cfg",
+        "bytes": 128,
+        "sha256": "0815dc027c98d17dfe66336529171799fbd1c41a1d864297592b563bb98c163b"
+      },
+      {
+        "path": "extender/scan-r01/t03/frames.bin",
+        "bytes": 59392,
+        "sha256": "d845c6b0130cbf1c248c5f6218c429428ea68bba616645c6810118c0a24fc8bc"
+      },
+      {
+        "path": "extender/scan-r01/t03/full.cfg",
+        "bytes": 128,
+        "sha256": "7b7e433536544e1639f48e695fccc243035ee2a1b6867fbc733a646beed33307"
+      },
+      {
+        "path": "extender/scan-r01/t03/run.cfg",
+        "bytes": 128,
+        "sha256": "a5fbca7dc795ab89c7a80d6eaec8e1840c4691a0d19cd9ca012f25b7d85b23a5"
+      },
+      {
+        "path": "extender/scan-r01/t03/scan.bin",
+        "bytes": 2642,
+        "sha256": "59919249dda93cc14ed7342077776d1072426c4b376eeb6b46546bf98af4fe34"
+      },
+      {
+        "path": "extender/scan-r01/t03/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t03/smoke.cfg",
+        "bytes": 128,
+        "sha256": "a5fbca7dc795ab89c7a80d6eaec8e1840c4691a0d19cd9ca012f25b7d85b23a5"
+      },
+      {
+        "path": "extender/scan-r01/t04/frames.bin",
+        "bytes": 71424,
+        "sha256": "8a89872f2d7a5e86c9e9efeedf99fb3821625c3938877910e21c0990298955b3"
+      },
+      {
+        "path": "extender/scan-r01/t04/full.cfg",
+        "bytes": 128,
+        "sha256": "2285d8ea670e4a7444bbf7e1ef943e2397e089f0e19df3def26575d6480f79bb"
+      },
+      {
+        "path": "extender/scan-r01/t04/run.cfg",
+        "bytes": 128,
+        "sha256": "0df0e4f20e8310a042b5afc2d203a9f6899d0ad8a0513c1aa5061ec06874fc62"
+      },
+      {
+        "path": "extender/scan-r01/t04/scan.bin",
+        "bytes": 2642,
+        "sha256": "acb4350666bf1bd276bc32318a1ee4d6a81973481c2583a6ddd496ae5d8be310"
+      },
+      {
+        "path": "extender/scan-r01/t04/setup.bin",
+        "bytes": 75669,
+        "sha256": "b5986cf6ea0e256763019d4a207ee42d415dbe3b074bd0d62d1065cc80355495"
+      },
+      {
+        "path": "extender/scan-r01/t04/smoke.cfg",
+        "bytes": 128,
+        "sha256": "0df0e4f20e8310a042b5afc2d203a9f6899d0ad8a0513c1aa5061ec06874fc62"
+      },
+      {
+        "path": "extender/scan-r01/t05/frames.bin",
+        "bytes": 82688,
+        "sha256": "9ecf9282edeb7a328c66e4eb3a16d3fb760ebe94e84bea68f7a8627f420087e5"
+      },
+      {
+        "path": "extender/scan-r01/t05/full.cfg",
+        "bytes": 128,
+        "sha256": "64ad11177d69ec4c22e449e7d314e267791d7a934754566b46f93ff797ab7440"
+      },
+      {
+        "path": "extender/scan-r01/t05/run.cfg",
+        "bytes": 128,
+        "sha256": "07c453ebe3535c2e77c313f868ac413ea44eb422799284727d875fc0fdab8cae"
+      },
+      {
+        "path": "extender/scan-r01/t05/scan.bin",
+        "bytes": 2642,
+        "sha256": "92701f801d662637e40ba1ed72dfbc9cc316dddd7e586f5b698c9072e968351e"
+      },
+      {
+        "path": "extender/scan-r01/t05/setup.bin",
+        "bytes": 75757,
+        "sha256": "e54437ee0025e217f804b2fa09a5a22197ebe683a5029ca2739ae63825c0584d"
+      },
+      {
+        "path": "extender/scan-r01/t05/smoke.cfg",
+        "bytes": 128,
+        "sha256": "07c453ebe3535c2e77c313f868ac413ea44eb422799284727d875fc0fdab8cae"
+      },
+      {
+        "path": "extender/scan-r01/t06/frames.bin",
+        "bytes": 105216,
+        "sha256": "603f3ce0ea1b73d2a6bea4704d87387459a9bd2d83617908d84604ad2b2907e4"
+      },
+      {
+        "path": "extender/scan-r01/t06/full.cfg",
+        "bytes": 128,
+        "sha256": "507b815907e79c0c8fc610fd42d2600151844a21c4400930799628cfa659fe87"
+      },
+      {
+        "path": "extender/scan-r01/t06/run.cfg",
+        "bytes": 128,
+        "sha256": "65087c232f94aa6af099fd2f4b246446f3479fb56150c0eb91e5efa9adbdedfc"
+      },
+      {
+        "path": "extender/scan-r01/t06/scan.bin",
+        "bytes": 2642,
+        "sha256": "7ab839eba265f5b6d967b9660944ef4465b9a568dc87f8f9e02ad2f4c2c4ae14"
+      },
+      {
+        "path": "extender/scan-r01/t06/setup.bin",
+        "bytes": 75933,
+        "sha256": "4832e710a8e44314abbf9e9e645defaa4bbeb3062ea4b150dc2484c615df08b6"
+      },
+      {
+        "path": "extender/scan-r01/t06/smoke.cfg",
+        "bytes": 128,
+        "sha256": "65087c232f94aa6af099fd2f4b246446f3479fb56150c0eb91e5efa9adbdedfc"
+      },
+      {
+        "path": "extender/scan-r01/t07/frames.bin",
+        "bytes": 150272,
+        "sha256": "d15ae75b07070de3aed80c53a8d2774648fc687727f78db1203e9f25824207da"
+      },
+      {
+        "path": "extender/scan-r01/t07/full.cfg",
+        "bytes": 128,
+        "sha256": "effb1661b19daa5114601f1bddd53fcdc70365bd230cf48b01bd5f9438c50aae"
+      },
+      {
+        "path": "extender/scan-r01/t07/natural.cfg",
+        "bytes": 128,
+        "sha256": "3d1ced4b35de672a4eefe05d183ce704df6e0c40c9ca02ce8c6192a65e91d7c6"
+      },
+      {
+        "path": "extender/scan-r01/t07/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "1be54ca6c1e0cea82682dc3f70834905af9ddcfe931302cf106e9b4edffc48e4"
+      },
+      {
+        "path": "extender/scan-r01/t07/run.cfg",
+        "bytes": 128,
+        "sha256": "6525ffb7e382a357c4e33c8b242f664fce6b5526f5dd8c54e70a1df96f7d2893"
+      },
+      {
+        "path": "extender/scan-r01/t07/scan.bin",
+        "bytes": 2642,
+        "sha256": "333dd2f890305de21f4c61eac80385b997dfd347c280879989e2adcb0b59767b"
+      },
+      {
+        "path": "extender/scan-r01/t07/setup.bin",
+        "bytes": 76285,
+        "sha256": "207370367e02c4de2bfcc0abb562b7a0cb074cc17cf9f21a8e3eaa200531f3a6"
+      },
+      {
+        "path": "extender/scan-r01/t07/smoke.cfg",
+        "bytes": 128,
+        "sha256": "6525ffb7e382a357c4e33c8b242f664fce6b5526f5dd8c54e70a1df96f7d2893"
+      },
+      {
+        "path": "extender/scan-r01/t08/frames.bin",
+        "bytes": 91648,
+        "sha256": "b26ce83ec78c9540de36079589795d161a700d90dee81373342e56cda96cc620"
+      },
+      {
+        "path": "extender/scan-r01/t08/full.cfg",
+        "bytes": 128,
+        "sha256": "cd10b43549fa4e25b7385d349ec570f5354a4b0b3561598ffaf563a80a5edb59"
+      },
+      {
+        "path": "extender/scan-r01/t08/natural.cfg",
+        "bytes": 128,
+        "sha256": "dc8ace3db2dd53b6085757ddf227ab168ee50990bcdc50a0dff558e80865817d"
+      },
+      {
+        "path": "extender/scan-r01/t08/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "05e09f131a86887e3403067acf8b464b54897b316b39392a355091cb7ed314fe"
+      },
+      {
+        "path": "extender/scan-r01/t08/run.cfg",
+        "bytes": 128,
+        "sha256": "cee151639378b4daa6928d93578561171c7aa07cc1d69c8f197ef42cb01f5065"
+      },
+      {
+        "path": "extender/scan-r01/t08/scan.bin",
+        "bytes": 2642,
+        "sha256": "c586dba220d744058919eeb3e33ee30b9b397472d927ce8faa5a33531e858ddf"
+      },
+      {
+        "path": "extender/scan-r01/t08/setup.bin",
+        "bytes": 76285,
+        "sha256": "207370367e02c4de2bfcc0abb562b7a0cb074cc17cf9f21a8e3eaa200531f3a6"
+      },
+      {
+        "path": "extender/scan-r01/t08/smoke.cfg",
+        "bytes": 128,
+        "sha256": "cee151639378b4daa6928d93578561171c7aa07cc1d69c8f197ef42cb01f5065"
+      },
+      {
+        "path": "test/nurples/scan-r01/fonts/Lat38-VGA8_8x8.font",
+        "bytes": 2048,
+        "sha256": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
+      },
+      {
+        "path": "test/nurples/scan-r01/full.cfg",
+        "bytes": 128,
+        "sha256": "48dc8c597efa223f5627beb5199b2529e4ba218dce52c9799b2dea6c2e9fb623"
+      },
+      {
+        "path": "test/nurples/scan-r01/game.agnb",
+        "bytes": 367168,
+        "sha256": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98"
+      },
+      {
+        "path": "test/nurples/scan-r01/natural.cfg",
+        "bytes": 128,
+        "sha256": "b066c9d2b0a45b3b6ad2730d35e5ed657b89ec17c021d12b93c2c0e5fe70611c"
+      },
+      {
+        "path": "test/nurples/scan-r01/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "eecfa9fede4616422347973a7662737ea786100c5d4dd8be0cf53a926cb39556"
+      },
+      {
+        "path": "test/nurples/scan-r01/run.cfg",
+        "bytes": 128,
+        "sha256": "1128fc600505f64cc334fcbff61d0e031be90416b864ce05c4ec52a15cb62d4f"
+      },
+      {
+        "path": "test/nurples/scan-r01/scan.bin",
+        "bytes": 38539,
+        "sha256": "faf8ed0655a749a96894638e4c8f3d8a7753c069da4dbb84e4b7cafe2085da73"
+      },
+      {
+        "path": "test/nurples/scan-r01/smoke.cfg",
+        "bytes": 128,
+        "sha256": "1128fc600505f64cc334fcbff61d0e031be90416b864ce05c4ec52a15cb62d4f"
+      },
+      {
+        "path": "test/nurples/scan-r01/ui.agnb",
+        "bytes": 246844,
+        "sha256": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b"
+      }
+    ]
+  },
+  "memory": {
+    "nurples_table_end": "0x4db8b",
+    "scratch_start": "0x50000",
+    "record_begin": "0x80000",
+    "record_end": "0x95180",
+    "user_ram_end": "0xb0000",
+    "header_bytes": 128,
+    "record_bytes": 24,
+    "all_bounds_pass": true
+  },
+  "emulator": {
+    "completed_result_files": 17,
+    "emulator_sha256": "aec5f8c266117d5bf864c6124d3c8986d042802ed5cbaaf8813e04a9fb8d0bea",
+    "mos_sha256": "d564243283972690933a4554296ad6202ca4ef54572279533a942960846bebae",
+    "vdp_sha256": "14338aaeead48cb3df5987bf7fcc1b350d9e08d4a0ee0fcfc1a4a89cf79fae97",
+    "headless": true,
+    "stopped_test_emulator": true
+  },
+  "validation": {
+    "complete_files": 17,
+    "all_counts_valid": true,
+    "faults": 0,
+    "full_nurples_repetitions": 2,
+    "full_trajectory_equal": true,
+    "trajectory_sha256": "fe49126ee8b2284d00ef4ed43133ac23bcc0d1a80bd62f46c582bf63b6a69c53",
+    "game_control_trajectories_equal": true,
+    "live_enemies_range": [
+      0,
+      5
+    ],
+    "live_player_projectiles_range": [
+      0,
+      4
+    ],
+    "ending_map_rows_remaining": 24,
+    "scope": "emulator correctness only; no hardware performance claim"
+  },
+  "native_pixels": [
+    {
+      "case": 3,
+      "updates": 32,
+      "sidebars_unchanged": true,
+      "pixel_scroll_and_incoming_row": true
+    },
+    {
+      "case": 7,
+      "updates": 32,
+      "sidebars_unchanged": true,
+      "pixel_scroll_and_incoming_row": false
+    },
+    {
+      "case": 8,
+      "updates": 32,
+      "sidebars_unchanged": true,
+      "pixel_scroll_and_incoming_row": false
+    }
+  ],
+  "deployment": {
+    "verified_files": 65,
+    "startup_preserved": true,
+    "arcade_files_preserved": 91,
+    "card_left_mounted": true,
+    "files": [
+      {
+        "path": "extender/scan-r01/README.txt",
+        "bytes": 604,
+        "sha256": "b437579f6fd5ed0e6f97c395e3b1205254744273dd4dd3101f467f2aa2f63a1b"
+      },
+      {
+        "path": "extender/scan-r01/autoexec-excom.txt",
+        "bytes": 105,
+        "sha256": "4d41531d614954bc3e4823bcd1fefe6b467ac20288d4afaa9188856a0d6c0527"
+      },
+      {
+        "path": "extender/scan-r01/autoexec-legacy.txt",
+        "bytes": 106,
+        "sha256": "0422887de7a43ebe7d4fd10a92ddabdeae0b790058ae35597768947475e769f2"
+      },
+      {
+        "path": "extender/scan-r01/build-manifest.json",
+        "bytes": 13618,
+        "sha256": "e6cd3b6f600e1ed7f1f87f7fc4580fa6912e7f70c94ceed36257de8bf1ed424d"
+      },
+      {
+        "path": "extender/scan-r01/t01/frames.bin",
+        "bytes": 768,
+        "sha256": "ef115a0e0c15cdc41958ca46b5b14b456115f4baec5e3ca68599d2a8f435e3b8"
+      },
+      {
+        "path": "extender/scan-r01/t01/full.cfg",
+        "bytes": 128,
+        "sha256": "8b06dde8f3c96bd980448917f657899208af98563e7f7e3651a01fd3b3b9a1d4"
+      },
+      {
+        "path": "extender/scan-r01/t01/run.cfg",
+        "bytes": 128,
+        "sha256": "24a06329359ab8be767d5dc0f256762dbd0107185a1de91fafde3091679a730c"
+      },
+      {
+        "path": "extender/scan-r01/t01/scan.bin",
+        "bytes": 2642,
+        "sha256": "508be1c0c0ca3e5c778284c10ab27e9b3d5e5cf34c7db2fec76345ae9cf12153"
+      },
+      {
+        "path": "extender/scan-r01/t01/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t01/smoke.cfg",
+        "bytes": 128,
+        "sha256": "24a06329359ab8be767d5dc0f256762dbd0107185a1de91fafde3091679a730c"
+      },
+      {
+        "path": "extender/scan-r01/t02/frames.bin",
+        "bytes": 5632,
+        "sha256": "6f8dffbee178a9dd8b4f2d13dc1ff3689ac6c4f1a00d6253c5ee4f1de1bc35a3"
+      },
+      {
+        "path": "extender/scan-r01/t02/full.cfg",
+        "bytes": 128,
+        "sha256": "51b44c40c3059cce99e2a23b2cc4f9cfdc1763e1e09041a65a57265c2f21274b"
+      },
+      {
+        "path": "extender/scan-r01/t02/run.cfg",
+        "bytes": 128,
+        "sha256": "0815dc027c98d17dfe66336529171799fbd1c41a1d864297592b563bb98c163b"
+      },
+      {
+        "path": "extender/scan-r01/t02/scan.bin",
+        "bytes": 2642,
+        "sha256": "d5445b84b05b2039eea3d3026e6d1389cd9907de4136b08e9bfc3b7ebf788f45"
+      },
+      {
+        "path": "extender/scan-r01/t02/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t02/smoke.cfg",
+        "bytes": 128,
+        "sha256": "0815dc027c98d17dfe66336529171799fbd1c41a1d864297592b563bb98c163b"
+      },
+      {
+        "path": "extender/scan-r01/t03/frames.bin",
+        "bytes": 59392,
+        "sha256": "d845c6b0130cbf1c248c5f6218c429428ea68bba616645c6810118c0a24fc8bc"
+      },
+      {
+        "path": "extender/scan-r01/t03/full.cfg",
+        "bytes": 128,
+        "sha256": "7b7e433536544e1639f48e695fccc243035ee2a1b6867fbc733a646beed33307"
+      },
+      {
+        "path": "extender/scan-r01/t03/run.cfg",
+        "bytes": 128,
+        "sha256": "a5fbca7dc795ab89c7a80d6eaec8e1840c4691a0d19cd9ca012f25b7d85b23a5"
+      },
+      {
+        "path": "extender/scan-r01/t03/scan.bin",
+        "bytes": 2642,
+        "sha256": "59919249dda93cc14ed7342077776d1072426c4b376eeb6b46546bf98af4fe34"
+      },
+      {
+        "path": "extender/scan-r01/t03/setup.bin",
+        "bytes": 75581,
+        "sha256": "5d66b266c28298b9ab8e77c7eb5248e5609059c1b9f7c3b1046d2d96d91319ac"
+      },
+      {
+        "path": "extender/scan-r01/t03/smoke.cfg",
+        "bytes": 128,
+        "sha256": "a5fbca7dc795ab89c7a80d6eaec8e1840c4691a0d19cd9ca012f25b7d85b23a5"
+      },
+      {
+        "path": "extender/scan-r01/t04/frames.bin",
+        "bytes": 71424,
+        "sha256": "8a89872f2d7a5e86c9e9efeedf99fb3821625c3938877910e21c0990298955b3"
+      },
+      {
+        "path": "extender/scan-r01/t04/full.cfg",
+        "bytes": 128,
+        "sha256": "2285d8ea670e4a7444bbf7e1ef943e2397e089f0e19df3def26575d6480f79bb"
+      },
+      {
+        "path": "extender/scan-r01/t04/run.cfg",
+        "bytes": 128,
+        "sha256": "0df0e4f20e8310a042b5afc2d203a9f6899d0ad8a0513c1aa5061ec06874fc62"
+      },
+      {
+        "path": "extender/scan-r01/t04/scan.bin",
+        "bytes": 2642,
+        "sha256": "acb4350666bf1bd276bc32318a1ee4d6a81973481c2583a6ddd496ae5d8be310"
+      },
+      {
+        "path": "extender/scan-r01/t04/setup.bin",
+        "bytes": 75669,
+        "sha256": "b5986cf6ea0e256763019d4a207ee42d415dbe3b074bd0d62d1065cc80355495"
+      },
+      {
+        "path": "extender/scan-r01/t04/smoke.cfg",
+        "bytes": 128,
+        "sha256": "0df0e4f20e8310a042b5afc2d203a9f6899d0ad8a0513c1aa5061ec06874fc62"
+      },
+      {
+        "path": "extender/scan-r01/t05/frames.bin",
+        "bytes": 82688,
+        "sha256": "9ecf9282edeb7a328c66e4eb3a16d3fb760ebe94e84bea68f7a8627f420087e5"
+      },
+      {
+        "path": "extender/scan-r01/t05/full.cfg",
+        "bytes": 128,
+        "sha256": "64ad11177d69ec4c22e449e7d314e267791d7a934754566b46f93ff797ab7440"
+      },
+      {
+        "path": "extender/scan-r01/t05/run.cfg",
+        "bytes": 128,
+        "sha256": "07c453ebe3535c2e77c313f868ac413ea44eb422799284727d875fc0fdab8cae"
+      },
+      {
+        "path": "extender/scan-r01/t05/scan.bin",
+        "bytes": 2642,
+        "sha256": "92701f801d662637e40ba1ed72dfbc9cc316dddd7e586f5b698c9072e968351e"
+      },
+      {
+        "path": "extender/scan-r01/t05/setup.bin",
+        "bytes": 75757,
+        "sha256": "e54437ee0025e217f804b2fa09a5a22197ebe683a5029ca2739ae63825c0584d"
+      },
+      {
+        "path": "extender/scan-r01/t05/smoke.cfg",
+        "bytes": 128,
+        "sha256": "07c453ebe3535c2e77c313f868ac413ea44eb422799284727d875fc0fdab8cae"
+      },
+      {
+        "path": "extender/scan-r01/t06/frames.bin",
+        "bytes": 105216,
+        "sha256": "603f3ce0ea1b73d2a6bea4704d87387459a9bd2d83617908d84604ad2b2907e4"
+      },
+      {
+        "path": "extender/scan-r01/t06/full.cfg",
+        "bytes": 128,
+        "sha256": "507b815907e79c0c8fc610fd42d2600151844a21c4400930799628cfa659fe87"
+      },
+      {
+        "path": "extender/scan-r01/t06/run.cfg",
+        "bytes": 128,
+        "sha256": "65087c232f94aa6af099fd2f4b246446f3479fb56150c0eb91e5efa9adbdedfc"
+      },
+      {
+        "path": "extender/scan-r01/t06/scan.bin",
+        "bytes": 2642,
+        "sha256": "7ab839eba265f5b6d967b9660944ef4465b9a568dc87f8f9e02ad2f4c2c4ae14"
+      },
+      {
+        "path": "extender/scan-r01/t06/setup.bin",
+        "bytes": 75933,
+        "sha256": "4832e710a8e44314abbf9e9e645defaa4bbeb3062ea4b150dc2484c615df08b6"
+      },
+      {
+        "path": "extender/scan-r01/t06/smoke.cfg",
+        "bytes": 128,
+        "sha256": "65087c232f94aa6af099fd2f4b246446f3479fb56150c0eb91e5efa9adbdedfc"
+      },
+      {
+        "path": "extender/scan-r01/t07/frames.bin",
+        "bytes": 150272,
+        "sha256": "d15ae75b07070de3aed80c53a8d2774648fc687727f78db1203e9f25824207da"
+      },
+      {
+        "path": "extender/scan-r01/t07/full.cfg",
+        "bytes": 128,
+        "sha256": "effb1661b19daa5114601f1bddd53fcdc70365bd230cf48b01bd5f9438c50aae"
+      },
+      {
+        "path": "extender/scan-r01/t07/natural.cfg",
+        "bytes": 128,
+        "sha256": "3d1ced4b35de672a4eefe05d183ce704df6e0c40c9ca02ce8c6192a65e91d7c6"
+      },
+      {
+        "path": "extender/scan-r01/t07/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "1be54ca6c1e0cea82682dc3f70834905af9ddcfe931302cf106e9b4edffc48e4"
+      },
+      {
+        "path": "extender/scan-r01/t07/run.cfg",
+        "bytes": 128,
+        "sha256": "6525ffb7e382a357c4e33c8b242f664fce6b5526f5dd8c54e70a1df96f7d2893"
+      },
+      {
+        "path": "extender/scan-r01/t07/scan.bin",
+        "bytes": 2642,
+        "sha256": "333dd2f890305de21f4c61eac80385b997dfd347c280879989e2adcb0b59767b"
+      },
+      {
+        "path": "extender/scan-r01/t07/setup.bin",
+        "bytes": 76285,
+        "sha256": "207370367e02c4de2bfcc0abb562b7a0cb074cc17cf9f21a8e3eaa200531f3a6"
+      },
+      {
+        "path": "extender/scan-r01/t07/smoke.cfg",
+        "bytes": 128,
+        "sha256": "6525ffb7e382a357c4e33c8b242f664fce6b5526f5dd8c54e70a1df96f7d2893"
+      },
+      {
+        "path": "extender/scan-r01/t08/frames.bin",
+        "bytes": 91648,
+        "sha256": "b26ce83ec78c9540de36079589795d161a700d90dee81373342e56cda96cc620"
+      },
+      {
+        "path": "extender/scan-r01/t08/full.cfg",
+        "bytes": 128,
+        "sha256": "cd10b43549fa4e25b7385d349ec570f5354a4b0b3561598ffaf563a80a5edb59"
+      },
+      {
+        "path": "extender/scan-r01/t08/natural.cfg",
+        "bytes": 128,
+        "sha256": "dc8ace3db2dd53b6085757ddf227ab168ee50990bcdc50a0dff558e80865817d"
+      },
+      {
+        "path": "extender/scan-r01/t08/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "05e09f131a86887e3403067acf8b464b54897b316b39392a355091cb7ed314fe"
+      },
+      {
+        "path": "extender/scan-r01/t08/run.cfg",
+        "bytes": 128,
+        "sha256": "cee151639378b4daa6928d93578561171c7aa07cc1d69c8f197ef42cb01f5065"
+      },
+      {
+        "path": "extender/scan-r01/t08/scan.bin",
+        "bytes": 2642,
+        "sha256": "c586dba220d744058919eeb3e33ee30b9b397472d927ce8faa5a33531e858ddf"
+      },
+      {
+        "path": "extender/scan-r01/t08/setup.bin",
+        "bytes": 76285,
+        "sha256": "207370367e02c4de2bfcc0abb562b7a0cb074cc17cf9f21a8e3eaa200531f3a6"
+      },
+      {
+        "path": "extender/scan-r01/t08/smoke.cfg",
+        "bytes": 128,
+        "sha256": "cee151639378b4daa6928d93578561171c7aa07cc1d69c8f197ef42cb01f5065"
+      },
+      {
+        "path": "test/nurples/scan-r01/fonts/Lat38-VGA8_8x8.font",
+        "bytes": 2048,
+        "sha256": "23321abb10437db6b8bc8f21907268b46615d409b38975f6a195eb9643065a69"
+      },
+      {
+        "path": "test/nurples/scan-r01/full.cfg",
+        "bytes": 128,
+        "sha256": "48dc8c597efa223f5627beb5199b2529e4ba218dce52c9799b2dea6c2e9fb623"
+      },
+      {
+        "path": "test/nurples/scan-r01/game.agnb",
+        "bytes": 367168,
+        "sha256": "e06f127f6239fa435ccdf19f97a2cccfad9924f70b22a9035750c320388cdf98"
+      },
+      {
+        "path": "test/nurples/scan-r01/natural.cfg",
+        "bytes": 128,
+        "sha256": "b066c9d2b0a45b3b6ad2730d35e5ed657b89ec17c021d12b93c2c0e5fe70611c"
+      },
+      {
+        "path": "test/nurples/scan-r01/no-timing.cfg",
+        "bytes": 128,
+        "sha256": "eecfa9fede4616422347973a7662737ea786100c5d4dd8be0cf53a926cb39556"
+      },
+      {
+        "path": "test/nurples/scan-r01/run.cfg",
+        "bytes": 128,
+        "sha256": "1128fc600505f64cc334fcbff61d0e031be90416b864ce05c4ec52a15cb62d4f"
+      },
+      {
+        "path": "test/nurples/scan-r01/scan.bin",
+        "bytes": 38539,
+        "sha256": "faf8ed0655a749a96894638e4c8f3d8a7753c069da4dbb84e4b7cafe2085da73"
+      },
+      {
+        "path": "test/nurples/scan-r01/smoke.cfg",
+        "bytes": 128,
+        "sha256": "1128fc600505f64cc334fcbff61d0e031be90416b864ce05c4ec52a15cb62d4f"
+      },
+      {
+        "path": "test/nurples/scan-r01/ui.agnb",
+        "bytes": 246844,
+        "sha256": "655b3476bea1304b4ca8ea486d25e7e1e53cb8bdd9846a4139555d4b9947717b"
+      }
+    ]
+  }
+}

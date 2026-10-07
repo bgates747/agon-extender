@@ -1,0 +1,40 @@
+{
+  "binaries": [
+    {
+      "case": 1,
+      "build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "card_binary": "/extender/scan-r01/t01/window-r02.bin",
+      "sha256": "5cf12bd23aed3f55137a5febdc43c7c794da0aa295c64d8c4c41728df983b379",
+      "original_binary_preserved": true
+    },
+    {
+      "case": 3,
+      "build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "card_binary": "/extender/scan-r01/t03/window-r02.bin",
+      "sha256": "441d3a6dec873ab76a791fab0ca4cbca83bc20112a8ec2567c85255255841c62",
+      "original_binary_preserved": true
+    },
+    {
+      "case": 7,
+      "build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "card_binary": "/extender/scan-r01/t07/window-r02.bin",
+      "sha256": "e70369c40fb7bf1ac138ba25cb15ab8b49c91a1c9448117d7878c04e3e8660d3",
+      "original_binary_preserved": true
+    },
+    {
+      "case": 8,
+      "build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "card_binary": "/extender/scan-r01/t08/window-r02.bin",
+      "sha256": "d131d3530c57eb2986066d99c0674086e01fce5161d1d867d552482b14a3c887",
+      "original_binary_preserved": true
+    },
+    {
+      "case": 9,
+      "build": "scan-scroll-suite-r02-b2026-10-06-23-03-19Z",
+      "card_binary": "/test/nurples/scan-r01/window-r02.bin",
+      "sha256": "22edcf7e1772598775da6aaa32829438098027bd54e709a115c866ad011e4dc2",
+      "original_binary_preserved": true
+    }
+  ],
+  "asset_policy": "Identical r01 assets/streams reused; verified all generated r02 asset/stream bytes against the frozen r01 build. Existing production games unchanged."
+}
